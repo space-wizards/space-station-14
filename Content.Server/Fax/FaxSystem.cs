@@ -261,8 +261,9 @@ public sealed partial class FaxSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnPacketReceived(EntityUid uid, FaxMachineComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
         if (!HasComp<DeviceNetworkComponent>(uid) || string.IsNullOrEmpty(args.SenderAddress))
             return;
 

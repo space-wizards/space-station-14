@@ -54,14 +54,15 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Checks if both devices are limited to the same station
         /// </summary>
-        private void OnBeforePacketSent(EntityUid uid, StationLimitedNetworkComponent component, BeforePacketSentEvent args)
+        private void OnBeforePacketSent(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
         {
+            var (uid, component) = ent;
             if (!component.StationId.HasValue)
                 TrySetStationId(uid, component);
 
             if (!CheckStationId(args.Sender, component.AllowNonStationPackets, component.StationId))
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
 

@@ -18,10 +18,10 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Gets the position of both the sending and receiving entity and checks if the receiver is in range of the sender.
         /// </summary>
-        private void OnBeforePacketSent(EntityUid uid, WirelessNetworkComponent component, BeforePacketSentEvent args)
+        private void OnBeforePacketSent(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
         {
             var ownPosition = args.SenderPosition;
-            var xform = Transform(uid);
+            var xform = Transform(ent);
 
             // not a wireless to wireless connection, just let it happen
             if (!TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent))
@@ -30,7 +30,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (xform.MapID != args.SenderTransform.MapID
                 || (ownPosition - _transformSystem.GetWorldPosition(xform)).Length() > sendingComponent.Range)
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
     }

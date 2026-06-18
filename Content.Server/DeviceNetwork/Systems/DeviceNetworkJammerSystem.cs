@@ -37,10 +37,9 @@ public sealed partial class DeviceNetworkJammerSystem : SharedDeviceNetworkJamme
             if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
                 || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
             {
-                ev.Cancel();
+                ev.Cancelled = true;
                 return;
             }
         }
     }
-
 }

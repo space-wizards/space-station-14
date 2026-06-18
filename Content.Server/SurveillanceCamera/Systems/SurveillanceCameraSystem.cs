@@ -65,8 +65,10 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         InitializeCollide();
     }
 
-    private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
+
         if (!component.Active)
         {
             return;

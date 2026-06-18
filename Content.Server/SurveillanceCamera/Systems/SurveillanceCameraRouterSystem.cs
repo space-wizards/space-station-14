@@ -38,8 +38,9 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         router.Active = true;
     }
 
-    private void OnPacketReceive(EntityUid uid, SurveillanceCameraRouterComponent router, DeviceNetworkPacketEvent args)
+    private void OnPacketReceive(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, router) = ent;
         if (!router.Active
             || string.IsNullOrEmpty(args.SenderAddress)
             || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))

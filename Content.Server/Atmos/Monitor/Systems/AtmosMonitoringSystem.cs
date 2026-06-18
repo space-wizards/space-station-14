@@ -114,13 +114,16 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
+    private void BeforePacketRecv(Entity<AtmosMonitorComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (!component.NetEnabled) args.Cancel();
+        if (!ent.Comp.NetEnabled)
+            args.Cancelled = true;
     }
 
-    private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketRecv(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
+
         // sync the internal 'last alarm state' from
         // the other alarms, so that we can calculate
         // the highest network alarm state at any time

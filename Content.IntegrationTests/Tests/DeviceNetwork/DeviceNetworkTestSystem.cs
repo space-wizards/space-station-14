@@ -20,10 +20,11 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
 
     public void SendBaselineTestEvent(EntityUid uid)
     {
-        RaiseLocalEvent(uid, new DeviceNetworkPacketEvent(0, "", 0, "", uid, new NetworkPayload()));
+        var ev = new DeviceNetworkPacketEvent(0, "", 0, "", uid, new NetworkPayload());
+        RaiseLocalEvent(uid, ref ev);
     }
 
-    private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         LastPayload = args.Data;
     }

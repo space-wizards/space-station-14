@@ -532,8 +532,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
         SetData(uid, address, devData);
     }
 
-    private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, DeviceNetworkPacketEvent args)
+    private void OnPacketRecv(Entity<AirAlarmComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, controller) = ent;
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
             return;
 

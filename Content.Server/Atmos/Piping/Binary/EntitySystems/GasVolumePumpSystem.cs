@@ -107,8 +107,9 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVolumePumpComponent component, DeviceNetworkPacketEvent args)
+        private void OnPacketRecv(Entity<GasVolumePumpComponent> ent, ref DeviceNetworkPacketEvent args)
         {
+            var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? netConn)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
             {

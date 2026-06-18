@@ -88,7 +88,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         }
 
         // force using wireless network so things like atmos devices are able to send signals
-        var network = (int) DeviceNetworkComponent.DeviceNetIdDefaults.Wireless;
+        var network = (int) DeviceNetIdDefaults.Wireless;
         _deviceNetworkSystem.QueuePacket(source, sinkNetwork.Address, payload, sinkNetwork.ReceiveFrequency, network);
     }
 
@@ -126,8 +126,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     /// Checks if the payload has a port defined and if the port is present on the sink.
     /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, DeviceLinkSinkComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
         if (!args.Data.TryGetValue(InvokedPort, out string? port) || !(component.Ports?.Contains(port) ?? false))
             return;
 

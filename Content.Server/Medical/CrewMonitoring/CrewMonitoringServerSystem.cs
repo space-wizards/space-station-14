@@ -51,14 +51,14 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
     /// <summary>
     /// Adds or updates a sensor status entry if the received package is a sensor status update
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, CrewMonitoringServerComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<CrewMonitoringServerComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         var sensorStatus = _sensors.PacketToSuitSensor(args.Data);
         if (sensorStatus == null)
             return;
 
         sensorStatus.Timestamp = _gameTiming.CurTime;
-        component.SensorStatus[args.SenderAddress] = sensorStatus;
+        ent.Comp.SensorStatus[args.SenderAddress] = sensorStatus;
     }
 
     /// <summary>

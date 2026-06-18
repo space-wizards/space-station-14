@@ -216,8 +216,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, DeviceNetworkPacketEvent args)
+        private void OnPacketRecv(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent args)
         {
+            var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? netConn)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;

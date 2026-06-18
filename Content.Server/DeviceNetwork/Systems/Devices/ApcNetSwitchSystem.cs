@@ -45,8 +45,9 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         /// <summary>
         /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
         /// </summary>
-        private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, DeviceNetworkPacketEvent args)
+        private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent args)
         {
+            var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;

@@ -29,8 +29,9 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         component.ConnectedSensors.Clear();
     }
 
-    private void OnPacketReceived(EntityUid uid, CrewMonitoringConsoleComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<CrewMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
         var payload = args.Data;
 
         // Check command

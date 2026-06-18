@@ -117,8 +117,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnPacketRecv(EntityUid uid, GasThermoMachineComponent component, DeviceNetworkPacketEvent args)
+        private void OnPacketRecv(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent args)
         {
+            var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? netConn)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
