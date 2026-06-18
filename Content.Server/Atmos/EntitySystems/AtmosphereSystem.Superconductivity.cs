@@ -22,8 +22,8 @@ namespace Content.Server.Atmos.EntitySystems
                 if (adjacent == null || adjacent.ThermalConductivity == 0f)
                     continue;
 
-                if(adjacent.ArchivedCycle < gridAtmosphere.UpdateCounter)
-                    Archive(adjacent, gridAtmosphere.UpdateCounter);
+                if(adjacent.ArchivedCycle < gridAtmosphere.CycleCounter)
+                    Archive(adjacent, gridAtmosphere.CycleCounter);
 
                 NeighborConductWithSource(gridAtmosphere, adjacent, tile);
 
@@ -38,8 +38,8 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if(tile.Air == null)
             {
-                if(tile.ArchivedCycle < gridAtmosphere.UpdateCounter)
-                    Archive(tile, gridAtmosphere.UpdateCounter);
+                if(tile.ArchivedCycle < gridAtmosphere.CycleCounter)
+                    Archive(tile, gridAtmosphere.CycleCounter);
                 return AtmosDirection.All;
             }
 

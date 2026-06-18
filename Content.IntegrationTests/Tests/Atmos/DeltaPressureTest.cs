@@ -4,9 +4,12 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.CCVar;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
@@ -337,6 +340,100 @@ public sealed class DeltaPressureTest : AtmosTest
             });
 
             await Server.WaitRunTicks(30);
+        }
+    }
+
+    /// <summary>
+    /// A stale DeltaPressure ent (lost AirtightComponent, still listed) must be skipped without
+    /// aborting its bulk batch; a valid ent after it in the same range still takes damage.
+    /// </summary>
+    [Test]
+    public async Task StaleEntityDoesNotAbortBulkBatch()
+    {
+        Entity<DeltaPressureComponent> staleEnt = default;
+        Entity<DeltaPressureComponent> victimEnt = default;
+        var savedBatch = Server.CfgMan.GetCVar(CCVars.DeltaPressureParallelBatchSize);
+        var savedPerIteration = Server.CfgMan.GetCVar(CCVars.DeltaPressureParallelToProcessPerIteration);
+
+        try
+        {
+            await Server.WaitPost(() =>
+            {
+                // Force the stale ent and victim into one [start, end) call; both cvars size that range.
+                Server.CfgMan.SetCVar(CCVars.DeltaPressureParallelToProcessPerIteration, 1000);
+                Server.CfgMan.SetCVar(CCVars.DeltaPressureParallelBatchSize, 1000);
+                SAtmos.SetAtmosphereSimulation(ProcessEnt, false);
+
+                // Stale: spawned first, then stripped of AirtightComponent while still listed.
+                var staleUid = SEntMan.SpawnAtPosition("DeltaPressureSolidTest",
+                    new EntityCoordinates(ProcessEnt.Owner, new Vector2(1, 0)));
+                staleEnt = (staleUid, SEntMan.GetComponent<DeltaPressureComponent>(staleUid));
+                SEntMan.RemoveComponent<AirtightComponent>(staleUid);
+
+                // Victim: valid, spawned after the stale ent so it sits later in the same batch.
+                var victimUid = SEntMan.SpawnAtPosition("DeltaPressureSolidTest",
+                    new EntityCoordinates(ProcessEnt.Owner, Vector2.Zero));
+                victimEnt = (victimUid, SEntMan.GetComponent<DeltaPressureComponent>(victimUid));
+
+                using (Assert.EnterMultipleScope())
+                {
+                    Assert.That(SAtmos.IsDeltaPressureEntityInList(ProcessEnt.Owner, staleEnt),
+                        "Stale ent should remain in the list after losing AirtightComponent.");
+                    Assert.That(SAtmos.IsDeltaPressureEntityInList(ProcessEnt.Owner, victimEnt),
+                        "Victim ent should be in the list.");
+                }
+
+                // Pressurize the victim's north neighbour above its delta threshold.
+                var indices = Transform.GetGridOrMapTilePosition(victimEnt);
+                var tile = ProcessEnt.Comp1.Tiles[indices.Offset(AtmosDirection.North)];
+                Assert.That(tile.Air, Is.Not.Null, "Victim's north neighbour should have air.");
+
+                var toPressurize = victimEnt.Comp.MinPressureDelta + 10;
+                var moles = (toPressurize * tile.Air!.Volume) / (Atmospherics.R * Atmospherics.T20C);
+                tile.Air.AdjustMoles(Gas.Nitrogen, moles);
+            });
+
+            await Server.WaitPost(() =>
+            {
+                // Skip path logs an expected error; lift the failure threshold around just this call.
+                var savedLevel = Server.CfgMan.GetCVar(RTCVars.FailureLogLevel);
+                Server.CfgMan.SetCVar(RTCVars.FailureLogLevel, LogLevel.Fatal);
+                try
+                {
+                    SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+                }
+                finally
+                {
+                    Server.CfgMan.SetCVar(RTCVars.FailureLogLevel, savedLevel);
+                }
+            });
+
+            // Destruction queues deletion; let it resolve.
+            await Server.WaitRunTicks(30);
+
+            await Server.WaitAssertion(() =>
+            {
+                using (Assert.EnterMultipleScope())
+                {
+                    Assert.That(SEntMan.Deleted(victimEnt),
+                        "Victim after the stale ent in the batch was not processed; the batch aborted.");
+                    Assert.That(!SAtmos.IsDeltaPressureEntityInList(ProcessEnt.Owner, staleEnt),
+                        "Stale ent was not evicted from the processing list.");
+                }
+            });
+        }
+        finally
+        {
+            await Server.WaitPost(() =>
+            {
+                Server.CfgMan.SetCVar(CCVars.DeltaPressureParallelBatchSize, savedBatch);
+                Server.CfgMan.SetCVar(CCVars.DeltaPressureParallelToProcessPerIteration, savedPerIteration);
+                SAtmos.SetAtmosphereSimulation(ProcessEnt, true);
+                if (staleEnt.Owner != default && !SEntMan.Deleted(staleEnt))
+                    SEntMan.DeleteEntity(staleEnt);
+                foreach (var mix in SAtmos.GetAllMixtures(ProcessEnt))
+                    mix.Clear();
+            });
         }
     }
 }

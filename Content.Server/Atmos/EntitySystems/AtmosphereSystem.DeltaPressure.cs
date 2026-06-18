@@ -95,7 +95,13 @@ public sealed partial class AtmosphereSystem
                 {
                     _deltaPressureInvalidEntityQueue.Enqueue(ent);
                     Log.Error($"DeltaPressure entity without an AirtightComponent found in processing list! Ent: {ent}");
-                    return;
+
+                    // Skip this ent: null its slot/tiles so the downstream loops pass over it.
+                    airtightCompsArr[i] = null!;
+                    var skipBase = i * dirs;
+                    for (var j = 0; j < dirs; j++)
+                        tiles[skipBase + j] = null;
+                    continue;
                 }
 
                 airtightCompsArr[i] = airtightComp;
@@ -120,6 +126,8 @@ public sealed partial class AtmosphereSystem
             for (var i = 0; i < len; i++)
             {
                 var airtight = airtightCompsArr[i];
+                if (airtight is null)
+                    continue;
                 if (airtight.NoAirWhenFullyAirBlocked)
                     continue;
 
@@ -166,6 +174,9 @@ public sealed partial class AtmosphereSystem
             for (var i = 0; i < len; i++)
             {
                 var ent = entList[start + i];
+                // Entity lost its AirtightComponent during this batch; it is queued for removal.
+                if (airtightCompsArr[i] is null)
+                    continue;
                 // It is genuinely a massive pain in the ass to handle skipping in the beginning than it is to get that
                 // microboost from skipping work. As such, just skip at the very end.
                 if (!_random.Prob(ent.Comp.RandomDamageChance))

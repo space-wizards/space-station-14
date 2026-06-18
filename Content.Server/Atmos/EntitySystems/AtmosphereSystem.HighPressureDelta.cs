@@ -167,12 +167,12 @@ namespace Content.Server.Atmos.EntitySystems
                 if (_containers.IsEntityInContainer(entity)) continue;
 
                 var pressureMovements = EnsureComp<MovedByPressureComponent>(entity);
-                if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.Comp.UpdateCounter)
+                if (pressure.LastHighPressureMovementAirCycle < gridAtmosphere.Comp.CycleCounter)
                 {
                     // tl;dr YEET
                     ExperiencePressureDifference(
                         (entity, pressureMovements),
-                        gridAtmosphere.Comp.UpdateCounter,
+                        gridAtmosphere.Comp.CycleCounter,
                         tile.PressureDifference,
                         tile.PressureDirection, 0,
                         tile.PressureSpecificTarget != null ? _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.PressureSpecificTarget.GridIndices) : EntityCoordinates.Invalid,

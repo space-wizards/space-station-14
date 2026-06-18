@@ -262,7 +262,7 @@ public sealed class AtmosProcessingTest : AtmosTest
                 SAtmos.ProcessAtmosphereOnce(doomedEnt, mapUid, SAtmos.AtmosTime);
 
                 cursorWasSet = doomedEnt.Comp1.Processing.CycleCursor is not null;
-                counterBefore = doomedEnt.Comp1.UpdateCounter;
+                counterBefore = doomedEnt.Comp1.CycleCounter;
 
                 // Hold the component instance: after deletion we inspect the same object the
                 // bail-out path mutated, not a re-resolution of the dead entity.
@@ -270,7 +270,7 @@ public sealed class AtmosProcessingTest : AtmosTest
                 SEntMan.DeleteEntity(doomedEnt.Owner);
                 state = SAtmos.ProcessAtmosphereOnce(doomedEnt, mapUid, SAtmos.AtmosTime);
 
-                counterAfter = doomedAtmos.UpdateCounter;
+                counterAfter = doomedAtmos.CycleCounter;
                 cursorCleared = doomedAtmos.Processing.CycleCursor is null;
             }
             finally
@@ -286,7 +286,7 @@ public sealed class AtmosProcessingTest : AtmosTest
             Assert.That(state, Is.EqualTo(AtmosphereProcessingCompletionState.Continue),
                 "Deleted grid returned the wrong completion state.");
             Assert.That(counterAfter, Is.EqualTo(counterBefore),
-                "Deleted grid advanced UpdateCounter.");
+                "Deleted grid advanced the freshness marker on abandonment.");
             Assert.That(cursorCleared, Is.True,
                 "Deleted grid left the cycle cursor set.");
         }
@@ -352,10 +352,7 @@ public sealed class AtmosProcessingTest : AtmosTest
 
             try
             {
-                QueueRevalidateWork(MapData.Grid.Owner);
-
-                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 0f);
-                SAtmos.ProcessAtmosphereOnce(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+                BeginPausedCycle();
 
                 cursorInFlightBeforeRebuild = atmos.Processing.CycleCursor is not null;
                 pausedBeforeRebuild = atmos.Processing.ProcessingPaused;
@@ -393,6 +390,136 @@ public sealed class AtmosProcessingTest : AtmosTest
     }
 
     [Test]
+    public async Task SkippedGridResetsInFlightCycle()
+    {
+        var atmos = ProcessEnt.Comp1;
+        var savedBudget = Server.CfgMan.GetCVar(CCVars.AtmosMaxProcessTime);
+        var cursorSetBeforeSkip = false;
+        var pausedBeforeSkip = false;
+        var counterBefore = 0;
+        var cursorCleared = false;
+        var pausedAfterSkip = true;
+        var queueCountAfterSkip = -1;
+        var invalidatedCountAfterSkip = 0;
+        var counterAfter = 0;
+
+        try
+        {
+            await Server.WaitPost(() =>
+            {
+                SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+
+                BeginPausedCycle();
+
+                cursorSetBeforeSkip = atmos.Processing.CycleCursor is not null;
+                pausedBeforeSkip = atmos.Processing.ProcessingPaused;
+                counterBefore = atmos.CycleCounter;
+
+                // Generous budget so other grids cannot starve the scheduler before it skips ours.
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 100f);
+                SAtmos.SetAtmosphereSimulation((ProcessEnt.Owner, atmos), false);
+            });
+
+            await Server.WaitRunTicks(1);
+
+            await Server.WaitPost(() =>
+            {
+                cursorCleared = atmos.Processing.CycleCursor is null;
+                pausedAfterSkip = atmos.Processing.ProcessingPaused;
+                queueCountAfterSkip = atmos.Processing.CurrentRunInvalidatedTiles.Count;
+                invalidatedCountAfterSkip = atmos.InvalidatedCoords.Count;
+                counterAfter = atmos.CycleCounter;
+            });
+        }
+        finally
+        {
+            await Server.WaitPost(() =>
+            {
+                SAtmos.SetAtmosphereSimulation((ProcessEnt.Owner, atmos), true);
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, savedBudget);
+            });
+        }
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(cursorSetBeforeSkip, Is.True,
+                "Expected an in-flight cycle before the skip.");
+            Assert.That(pausedBeforeSkip, Is.True,
+                "Expected a paused phase before the skip.");
+            Assert.That(cursorCleared, Is.True,
+                "Skipped grid kept its cycle cursor.");
+            Assert.That(pausedAfterSkip, Is.False,
+                "Skipped grid kept ProcessingPaused set.");
+            Assert.That(queueCountAfterSkip, Is.EqualTo(0),
+                "Skipped grid kept stale resume work.");
+            Assert.That(invalidatedCountAfterSkip, Is.GreaterThan(0),
+                "Skipped grid lost pending revalidation work.");
+            Assert.That(counterAfter, Is.EqualTo(counterBefore),
+                "Skipped grid advanced the freshness marker on abandonment.");
+        }
+    }
+
+    [Test]
+    public async Task AbandonedCycleDoesNotReuseFreshnessMarker()
+    {
+        var atmos = ProcessEnt.Comp1;
+        var savedBudget = Server.CfgMan.GetCVar(CCVars.AtmosMaxProcessTime);
+        var cursorSetBeforeSkip = false;
+        var markerWhileAbandoned = 0;
+        var cursorClearedAfterSkip = false;
+        var markerOfNextRun = 0;
+
+        try
+        {
+            await Server.WaitPost(() =>
+            {
+                SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+
+                // Start a cycle and pause it mid-flight; this run owns the current marker.
+                BeginPausedCycle();
+
+                cursorSetBeforeSkip = atmos.Processing.CycleCursor is not null;
+                markerWhileAbandoned = atmos.CycleCounter;
+
+                // Desimulate so the in-flight cycle is abandoned, not resumed in place.
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 100f);
+                SAtmos.SetAtmosphereSimulation((ProcessEnt.Owner, atmos), false);
+            });
+
+            await Server.WaitRunTicks(1);
+
+            await Server.WaitPost(() =>
+            {
+                cursorClearedAfterSkip = atmos.Processing.CycleCursor is null;
+
+                // Re-simulate and start the next cycle; it must not reuse the abandoned run's marker.
+                SAtmos.SetAtmosphereSimulation((ProcessEnt.Owner, atmos), true);
+                BeginPausedCycle();
+
+                markerOfNextRun = atmos.CycleCounter;
+            });
+        }
+        finally
+        {
+            await Server.WaitPost(() =>
+            {
+                SAtmos.SetAtmosphereSimulation((ProcessEnt.Owner, atmos), true);
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, savedBudget);
+            });
+        }
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(cursorSetBeforeSkip, Is.True,
+                "Expected an in-flight cycle before the skip.");
+            Assert.That(cursorClearedAfterSkip, Is.True,
+                "Skipped grid kept its cycle cursor.");
+            Assert.That(markerOfNextRun, Is.GreaterThan(markerWhileAbandoned),
+                "Cycle after an abandoned run reused its freshness marker; stale tile markers will collide.");
+        }
+    }
+
+    [Test]
     public async Task MidCycleCVarFlipDoesNotMutateInFlightCycle()
     {
         var atmos = ProcessEnt.Comp1;
@@ -409,10 +536,7 @@ public sealed class AtmosProcessingTest : AtmosTest
                 Server.CfgMan.SetCVar(CCVars.ExcitedGroups, false);
                 SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
 
-                QueueRevalidateWork(MapData.Grid.Owner);
-
-                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 0f);
-                SAtmos.ProcessAtmosphereOnce(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+                BeginPausedCycle();
 
                 cursorSet = atmos.Processing.CycleCursor is not null;
                 flagsBeforeFlip = (atmos.Processing.CycleCursor?.Flags ?? AtmosPhases.None) & AtmosPhases.ExcitedGroups;
@@ -464,6 +588,15 @@ public sealed class AtmosProcessingTest : AtmosTest
         for (var x = 0; x < 8; x++)
         for (var y = 0; y < 8; y++)
             SAtmos.InvalidateTile(gridUid, new Vector2i(x, y));
+    }
+
+    // Queues revalidation work, zeroes the budget, and runs one ProcessAtmosphere call so the grid is
+    // left holding an in-flight cycle paused on the budget. Leaves the budget at zero for the caller.
+    private void BeginPausedCycle()
+    {
+        QueueRevalidateWork(MapData.Grid.Owner);
+        Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 0f);
+        SAtmos.ProcessAtmosphereOnce(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
     }
 
     private async Task DeleteProbe(EntityUid probe)
@@ -530,6 +663,64 @@ public sealed class AtmosProcessingTilePhaseTest : AtmosTest
                 "ActiveTiles did not finish after budget was restored.");
             Assert.That(resumedPausedFlag, Is.False,
                 "ActiveTiles left ProcessingPaused set after finishing.");
+        }
+    }
+
+    [Test]
+    public async Task TileDrainResumeVisitsEachTileExactlyOnce()
+    {
+        var atmos = ProcessEnt.Comp1;
+        var run = atmos.Processing.ActiveTilesRun;
+        var savedBudget = Server.CfgMan.GetCVar(CCVars.AtmosMaxProcessTime);
+
+        var snapshotCount = 0;
+        var distinctCount = -1;
+        var cursorAtPause = -1;
+        var snapshotStableAcrossResume = false;
+        var finalCursor = -1;
+
+        await Server.WaitPost(() =>
+        {
+            SAtmos.RunProcessingFull(ProcessEnt, MapData.MapUid, SAtmos.AtmosTime);
+
+            try
+            {
+                SAtmos.GetAllMixtures(ProcessEnt.Owner, excite: true).Count();
+                SAtmos.SetProcessingState((ProcessEnt.Owner, atmos), AtmosphereProcessingState.ActiveTiles);
+
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 0f);
+                SAtmos.RunProcessingStage(ProcessEnt, AtmosphereProcessingState.ActiveTiles);
+
+                // Snapshot captured when the phase first ran; resume must continue it, not rebuild it.
+                var pausedSnapshot = run.Tiles.ToList();
+                snapshotCount = pausedSnapshot.Count;
+                distinctCount = pausedSnapshot.Distinct().Count();
+                cursorAtPause = run.Cursor;
+
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, 100f);
+                SAtmos.RunProcessingStage(ProcessEnt, AtmosphereProcessingState.ActiveTiles);
+
+                snapshotStableAcrossResume = run.Tiles.SequenceEqual(pausedSnapshot);
+                finalCursor = run.Cursor;
+            }
+            finally
+            {
+                Server.CfgMan.SetCVar(CCVars.AtmosMaxProcessTime, savedBudget);
+            }
+        });
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(snapshotCount, Is.GreaterThan(31),
+                "Expected a snapshot larger than the lag-check granularity.");
+            Assert.That(distinctCount, Is.EqualTo(snapshotCount),
+                "Tile snapshot contained duplicate tiles.");
+            Assert.That(cursorAtPause, Is.InRange(1, snapshotCount - 1),
+                "Phase did not pause partway through the snapshot.");
+            Assert.That(snapshotStableAcrossResume, Is.True,
+                "Resume rebuilt the tile snapshot instead of continuing it.");
+            Assert.That(finalCursor, Is.EqualTo(snapshotCount),
+                "Resume did not drain every tile exactly once.");
         }
     }
 }

@@ -91,8 +91,8 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private static readonly TileWorker<
         (Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent,
-        int UpdateCounter)> EqualizeTileWorker =
-        static (self, ctx, tile) => self.EqualizePressureInZone(ctx.Ent, tile, ctx.UpdateCounter);
+        int CycleCounter)> EqualizeTileWorker =
+        static (self, ctx, tile) => self.EqualizePressureInZone(ctx.Ent, tile, ctx.CycleCounter);
 
     /// <summary>
     /// Runs Monstermos equalization over the active tiles, pausing if we run out of time.
@@ -105,15 +105,15 @@ public sealed partial class AtmosphereSystem
             ent.Comp1.Processing.EqualizeRun,
             ent.Comp1.ActiveTiles,
             EqualizeTileWorker,
-            (ent, ent.Comp1.UpdateCounter));
+            (ent, ent.Comp1.CycleCounter));
 
     /// <summary>
     /// Runs LINDA cell sharing and reactions for one active tile from the current phase snapshot.
     /// </summary>
     private static readonly TileWorker<
         (Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> Ent,
-        int UpdateCounter)> ActiveTileWorker =
-        static (self, ctx, tile) => self.ProcessCell(ctx.Ent, tile, ctx.UpdateCounter);
+        int CycleCounter)> ActiveTileWorker =
+        static (self, ctx, tile) => self.ProcessCell(ctx.Ent, tile, ctx.CycleCounter);
 
     /// <summary>
     /// Runs LINDA cell sharing and reactions over the active tiles, pausing if we run out of time.
@@ -127,7 +127,7 @@ public sealed partial class AtmosphereSystem
             ent.Comp1.Processing.ActiveTilesRun,
             ent.Comp1.ActiveTiles,
             ActiveTileWorker,
-            (ent, ent.Comp1.UpdateCounter));
+            (ent, ent.Comp1.CycleCounter));
 
     /// <summary>
     /// Advances one excited group's cooldown state from the current phase queue.

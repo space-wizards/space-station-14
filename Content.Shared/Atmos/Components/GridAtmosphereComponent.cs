@@ -34,13 +34,13 @@ public sealed partial class GridAtmosphereComponent : Component
     public AtmosphereProcessingState State => Processing.CycleCursor?.Phase ?? AtmosphereProcessingState.Revalidate;
 
     /// <summary>
-    /// Integer that is incremented every time the grid is processed by Atmospherics.
-    /// Used in multiple subsystems to prevent double-copy/processing of data.
+    /// Monotonic processing-cycle counter. Advanced when an atmos cycle starts so
+    /// per-tile cycle fields can distinguish stale work from the current cycle,
+    /// including after abandoned cycles.
     /// </summary>
-    /// <remarks>Do not set to zero by default.
-    /// You will break roundstart atmos otherwise.</remarks>
+    /// <remarks>Do not set to zero by default or you will break roundstart atmos.</remarks>
     [ViewVariables]
-    public int UpdateCounter = 1;
+    public int CycleCounter = 1;
 
     [ViewVariables]
     [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]

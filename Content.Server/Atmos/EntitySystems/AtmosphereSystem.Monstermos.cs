@@ -29,9 +29,9 @@ namespace Content.Server.Atmos.EntitySystems
         private void EqualizePressureInZone(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
-            int cycleNum)
+            int cycle)
         {
-            if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
+            if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycle))
                 return; // Already done.
 
             tile.MonstermosInfo = new MonstermosInfo();
@@ -54,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (!runAtmos) // There's no need so we don't bother.
             {
-                tile.MonstermosInfo.LastCycle = cycleNum;
+                tile.MonstermosInfo.LastCycle = cycle;
                 return;
             }
 
@@ -93,7 +93,7 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         // Looks like someone opened an airlock to space!
 
-                        ExplosivelyDepressurize(ent, tile, cycleNum);
+                        ExplosivelyDepressurize(ent, tile, cycle);
                         return;
                     }
                 }
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < tileCount; i++)
             {
                 var otherTile = _equalizeTiles[i]!;
-                otherTile.MonstermosInfo.LastCycle = cycleNum;
+                otherTile.MonstermosInfo.LastCycle = cycle;
                 otherTile.MonstermosInfo.MoleDelta -= averageMoles;
                 if (otherTile.MonstermosInfo.MoleDelta > 0)
                 {
@@ -373,7 +373,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void ExplosivelyDepressurize(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
-            int cycleNum)
+            int cycle)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -395,7 +395,7 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < tileCount; i++)
             {
                 var otherTile = _depressurizeTiles[i];
-                otherTile.MonstermosInfo.LastCycle = cycleNum;
+                otherTile.MonstermosInfo.LastCycle = cycle;
                 otherTile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                 // Tiles in the _depressurizeTiles array cannot have null air.
                 if (!otherTile.Space)

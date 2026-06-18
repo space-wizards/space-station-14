@@ -133,10 +133,19 @@ namespace Content.Server.Atmos.EntitySystems
 
         private static AtmosphereProcessingCompletionState FinishCycle(GridAtmosphereComponent atmosphere)
         {
+            // CycleCounter advances at cycle start; finishing must not advance it again.
             atmosphere.Processing.CycleCursor = null;
             atmosphere.Processing.ProcessingPaused = false;
-            atmosphere.UpdateCounter++;
             return AtmosphereProcessingCompletionState.Finished;
+        }
+
+        // Move skipped-grid revalidation work back to the main invalidation set before clearing scratch.
+        private static void RequeuePendingRevalidation(GridAtmosphereComponent atmosphere)
+        {
+            var runtime = atmosphere.Processing;
+            foreach (var tile in runtime.CurrentRunInvalidatedTiles)
+                atmosphere.InvalidatedCoords.Add(tile.GridIndices);
+            runtime.CurrentRunInvalidatedTiles.Clear();
         }
 
         private static AtmosphereProcessingCompletionState AbortCycle(GridAtmosphereComponent atmosphere)
@@ -215,7 +224,14 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || Paused(owner) || !atmosphere.Simulated)
+                {
+                    if (atmosphere.Processing.CycleCursor is not null)
+                    {
+                        RequeuePendingRevalidation(atmosphere);
+                        ResetCycleScratch(atmosphere);
+                    }
                     continue;
+                }
 
                 var map = new Entity<MapAtmosphereComponent?>(xform.MapUid.Value, _mapAtmosQuery.CompOrNull(xform.MapUid.Value));
 
@@ -234,7 +250,7 @@ namespace Content.Server.Atmos.EntitySystems
             var atmosphere = ent.Comp1;
 
             var runtime = atmosphere.Processing;
-            // Accumulates on every call including resumes, so dt reflects true wall time across pauses.
+            // Only grids reached by the scheduler accrue device dt; skipped grids do not build catch-up debt.
             runtime.TimeSinceLastDeviceUpdate += frameTime;
 
             // Charge Timer only at cycle start.
@@ -248,6 +264,9 @@ namespace Content.Server.Atmos.EntitySystems
                 runtime.CycleCursor = new AtmosphereCycleCursor(
                     AtmosphereProcessingState.Revalidate,
                     SnapshotPhaseFlags());
+
+                // Advance before phase work so abandoned runs cannot reuse stale tile cycle markers.
+                atmosphere.CycleCounter++;
             }
 
             while (true)
@@ -258,7 +277,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var cursor = runtime.CycleCursor!.Value;
 
-                // Recover from externally-stamped garbage without counting it as a cycle.
+                // Recover from externally-stamped garbage without advancing the freshness marker.
                 if ((uint)cursor.Phase >= (uint)AtmosphereProcessingState.NumStates)
                     return RecoverInvalidPhase(atmosphere);
 

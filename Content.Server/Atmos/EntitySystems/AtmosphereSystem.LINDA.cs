@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         private void ProcessCell(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
-            TileAtmosphere tile, int fireCount)
+            TileAtmosphere tile, int cycle)
         {
             var gridAtmosphere = ent.Comp1;
             // Can't process a tile without air
@@ -20,10 +20,10 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             }
 
-            if (tile.ArchivedCycle < fireCount)
-                Archive(tile, fireCount);
+            if (tile.ArchivedCycle < cycle)
+                Archive(tile, cycle);
 
-            tile.CurrentCycle = fireCount;
+            tile.CurrentCycle = cycle;
             var adjacentTileLength = 0;
 
             for (var i = 0; i < Atmospherics.Directions; i++)
@@ -41,8 +41,8 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // If the tile is null or has no air, we don't do anything for it.
                 if(enemyTile?.Air == null) continue;
-                if (fireCount <= enemyTile.CurrentCycle) continue;
-                Archive(enemyTile, fireCount);
+                if (cycle <= enemyTile.CurrentCycle) continue;
+                Archive(enemyTile, cycle);
 
                 var shouldShareAir = false;
 
@@ -114,7 +114,7 @@ namespace Content.Server.Atmos.EntitySystems
                 RemoveActiveTile(gridAtmosphere, tile);
         }
 
-        private void Archive(TileAtmosphere tile, int fireCount)
+        private void Archive(TileAtmosphere tile, int cycle)
         {
             if (tile.Air != null)
             {
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // Please make GasMixture a struct or use a FauxGasMixture with an InlineArray to handle copying this sanely.
                 tile.AirArchived = new GasMixture(tile.Air);
             }
-            tile.ArchivedCycle = fireCount;
+            tile.ArchivedCycle = cycle;
         }
 
         private void LastShareCheck(TileAtmosphere tile)

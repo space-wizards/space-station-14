@@ -234,7 +234,7 @@ public sealed partial class AtmosphereSystem
             {
                 Volume = exposedVolume * 25f,
                 Temperature = exposedTemperature,
-                SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
+                SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.CycleCounter,
                 Valid = true,
                 State = 1
             };
