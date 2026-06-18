@@ -118,10 +118,9 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         var xform = Transform(ent);
 
         // Attempt to damage entities when changing direction
-        if (ent.Comp.CurrentDirection != ev.Next)
+        if (ent.Comp.CurrentDirection != Direction.Invalid && ent.Comp.CurrentDirection != ev.Next)
         {
-            ent.Comp.DirectionChangeCount++;
-
+            // Apply damage
             if (ent.Comp.Container != null && ent.Comp.AccumulatedDamage < ent.Comp.MaxAllowedDamage)
             {
                 foreach (var held in ent.Comp.Container.ContainedEntities)
@@ -132,10 +131,33 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
                 ent.Comp.AccumulatedDamage += ent.Comp.DamageOnTurn.GetTotal();
             }
 
+            // Play clang sound
             if (_net.IsServer)
             {
                 _audio.PlayPvs(ent.Comp.ClangSound, xform.Coordinates);
             }
+
+            // If the disposed entity re-entered a suspect pipe, 
+            // it is likely caught in a loop and should try to escape
+            if (ent.Comp.SuspectPipes.Contains(tube))
+            {
+                ent.Comp.CanEscape = true;
+            }
+
+            // Calculate the change in the direction of travel, scaled so that
+            // -1 is a 90 degree left turn and 1 is a 90 degree right turn
+            var delta = 2 * Angle.ShortestDistance(ent.Comp.CurrentDirection.ToAngle(), ev.Next.ToAngle()).Theta / Math.PI;
+            ent.Comp.DirectionBias += (float)Math.Clamp(delta, -1, 1);
+
+            // If the updated travel direction bias exceeds the allowed threshold, 
+            // the pipe is marked as suspect.
+            if (Math.Abs(ent.Comp.DirectionBias) >= ent.Comp.DirectionBiasThreshold)
+            {
+                ent.Comp.SuspectPipes.Add(tube);
+                ent.Comp.DirectionBias = 0;
+            }
+
+            Dirty(ent);
 
             // Check if the holder can escape the current pipe
             if (TryEscaping(ent, (tube, tube.Comp)))

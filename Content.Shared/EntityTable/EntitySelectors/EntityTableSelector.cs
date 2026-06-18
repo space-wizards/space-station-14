@@ -26,7 +26,7 @@ public abstract partial class EntityTableSelector
     /// A simple chance that the selector will run.
     /// </summary>
     [DataField]
-    public double Prob = 1;
+    public float Prob = 1;
 
     /// <summary>
     /// A list of conditions that must evaluate to 'true' for the selector to apply.
@@ -41,7 +41,7 @@ public abstract partial class EntityTableSelector
     [DataField]
     public bool RequireAll = true;
 
-    public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
+    public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
@@ -112,7 +112,7 @@ public abstract partial class EntityTableSelector
         }
     }
 
-    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);

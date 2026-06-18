@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
@@ -82,11 +81,7 @@ public sealed class CargoTest : GameTest
                     var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
                     var price = pricing.GetPrice(ent);
 
-                    Assert.That(
-                        price,
-                        Is.AtMost(proto.Cost),
-                        $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!"
-                    );
+                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
                     SDeleteNow(ent);
                 }
             });
