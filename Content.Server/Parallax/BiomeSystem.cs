@@ -484,7 +484,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 // inadvertantly spawn too many near the edges.
                 var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
                 var markerSeed = seed + chunk.X * ChunkSize + chunk.Y + localIdx;
-                var rand = new Random(markerSeed);
+                var rand = new RobustRandom();
+                rand.SetSeed(markerSeed);
                 var buffer = (int)(layerProto.Radius / 2f);
                 var bounds = new Box2i(chunk + buffer, chunk + layerProto.Size - buffer);
                 var count = (int)(bounds.Area / (layerProto.Radius * layerProto.Radius));
@@ -567,7 +568,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         bool forced,
         Box2i bounds,
         int count,
-        Random rand,
+        IRobustRandom rand,
         out Dictionary<Vector2i, string?> spawnSet,
         out HashSet<EntityUid> existingEnts,
         bool emptyTiles = true)
@@ -638,7 +639,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             // While we have remaining tiles keep iterating
             while (groupSize > 0 && remainingTiles.Count > 0)
             {
-                var startNode = rand.PickAndTake(remainingTiles);
+                var startNode = rand.Pick(remainingTiles);
+                remainingTiles.Remove(startNode);
                 frontier.Clear();
                 frontier.Add(startNode);
 
