@@ -136,10 +136,6 @@
       sprite: Effects/creampie.rsi
       state: creampie_lizard
   - type: Vocal
-    defaultSoundsBySex:
-      Male: MaleReptilian
-      Female: FemaleReptilian
-      Unsexed: MaleReptilian
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
   - type: Damageable

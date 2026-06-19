@@ -162,10 +162,6 @@
   - type: TypingIndicator
     proto: vulpkanin
   - type: Vocal
-    defaultSoundsBySex:
-      Male: MaleVulpkanin
-      Female: FemaleVulpkanin
-      Unsexed: MaleVulpkanin
   - type: Damageable
     damageModifierSet: Vulpkanin
   - type: MeleeWeapon

@@ -115,7 +115,7 @@ namespace Content.Server.Preferences.Managers
                 species = HumanoidCharacterProfile.DefaultSpecies;
 
             var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species); // This needs to be deferred in case species is replaced above
-            var voice = profile.Voice ?? HumanoidCharacterProfile.GetDefaultSoundsFromPrototype(speciesPrototype, sex, _prototypeManager, _entityManager);
+            var voice = profile.Voice ?? speciesPrototype.DefaultSoundsBySex[sex];
 
             if (profile.OrganMarkings?.RootElement is { } element)
             {

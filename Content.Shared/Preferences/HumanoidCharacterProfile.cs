@@ -241,7 +241,6 @@ namespace Content.Shared.Preferences
             species ??= HumanoidCharacterProfile.DefaultSpecies;
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var sex = Sex.Unsexed;
@@ -251,7 +250,7 @@ namespace Content.Shared.Preferences
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
-                voice = GetDefaultSoundsFromPrototype(speciesPrototype, sex, prototypeManager, entityManager);
+                voice = speciesPrototype.DefaultSoundsBySex[sex];
             }
 
             var gender = Gender.Epicene;
@@ -518,7 +517,7 @@ namespace Content.Shared.Preferences
 
             var voice = Voice;
             if (voice is not { } real || !voices.Contains(real) && !prototypeManager.HasIndex(voice))
-                voice = GetDefaultSoundsFromPrototype(speciesPrototype, sex, prototypeManager, entityManager);
+                voice = speciesPrototype.DefaultSoundsBySex[sex];
 
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
@@ -843,26 +842,6 @@ namespace Content.Shared.Preferences
             var collection = IoCManager.Instance;
             profile.EnsureValid(session, collection!);
             return profile;
-        }
-
-        /// <summary>
-        /// Helps fetch default sounds when we have the species prototype
-        /// </summary>
-        /// <returns></returns>
-        public static ProtoId<EmoteSoundsPrototype>? GetDefaultSoundsFromPrototype(SpeciesPrototype speciesPrototype,
-            Sex? sex,
-            IPrototypeManager prototypeManager,
-            IEntityManager entityManager)
-        {
-            if (sex is not { } real)
-                return null;
-
-            var entityPrototype = prototypeManager.Index(speciesPrototype.Prototype);
-
-            if (!entityPrototype.Components.TryGetComponent<VocalComponent>(entityManager.ComponentFactory, out var vocalComponent))
-                return null;
-
-            return vocalComponent.DefaultSoundsBySex[real];
         }
     }
 }

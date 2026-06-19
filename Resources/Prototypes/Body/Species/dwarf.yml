@@ -59,10 +59,6 @@
         layer:
         - MobLayer
   - type: Vocal
-    defaultSoundsBySex:
-      Male: UnisexDwarf
-      Female: FemaleDwarf
-      Unsexed: UnisexDwarf
   - type: ReplacementAccent
     accent: scottish
   - type: Speech

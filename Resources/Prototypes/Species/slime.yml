@@ -6,6 +6,9 @@
   defaultSkinTone: "#b8b8b8"
   dollPrototype: AppearanceSlimePerson
   skinColoration: Hues
+  defaultSoundsBySex:
+    Male: MaleSlime
+    Female: FemaleSlime
   voices:
     MaleSlime: humanoid-profile-editor-voice-masculine
     FemaleSlime: humanoid-profile-editor-voice-feminine

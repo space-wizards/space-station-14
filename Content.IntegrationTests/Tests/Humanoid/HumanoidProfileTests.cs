@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Humanoid;
 public sealed class HumanoidProfileTests : GameTest
 {
     private static readonly EntProtoId BaseSpecies = "MobHuman";
-    private static readonly ProtoId<SpeciesPrototype> Vox = "Vox";
+    private static readonly ProtoId<SpeciesPrototype> Slime = "Slime";
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
     [SidedDependency(Side.Server)] private BodySystem _bodySystem = default!;
@@ -45,16 +45,18 @@ public sealed class HumanoidProfileTests : GameTest
                 .WithSex(Sex.Female)
                 .WithAge(67)
                 .WithGender(Gender.Neuter)
-                .WithSpecies(Vox));
+                .WithSpecies(Slime));
             var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
             Assert.That(humanoidComponent.Age, Is.EqualTo(67));
             Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
             Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
-            Assert.That(humanoidComponent.Species, Is.EqualTo(Vox));
+            Assert.That(humanoidComponent.Species, Is.EqualTo(Slime));
 
-            Assert.That(voiceComponent.DefaultSoundsBySex, Is.Not.Null, message: "the MobHuman spawned by this test needs to have sex-specific sound set");
-            Assert.That(voiceComponent.DefaultSoundsBySex![Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
+            var speciesProto = SProtoMan.Index(humanoidComponent.Species);
+
+            Assert.That(speciesProto.DefaultSoundsBySex.ContainsKey(Sex.Female), message: "the MobHuman spawned by this test needs to have sex-specific sound set");
+            Assert.That(speciesProto.DefaultSoundsBySex[Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
         });
     }
 
@@ -189,10 +191,8 @@ public sealed class HumanoidProfileTests : GameTest
             if (!proto.RoundStart)
                 return;
 
-            var body = SEntMan.Spawn(proto.Prototype);
-            var vocal = SEntMan.GetComponent<VocalComponent>(body);
             var voiceProtos = proto.Voices.Keys;
-            var sexedProtos = vocal.DefaultSoundsBySex.Values.ToHashSet();
+            var sexedProtos = proto.DefaultSoundsBySex.Values.ToHashSet();
 
             Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
             Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");

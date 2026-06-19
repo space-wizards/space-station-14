@@ -136,10 +136,6 @@
     speechSounds: Alto
   - type: DamageForceSay
   - type: Vocal
-    defaultSoundsBySex:
-      Male: MaleHuman
-      Female: FemaleHuman
-      Unsexed: MaleHuman
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes

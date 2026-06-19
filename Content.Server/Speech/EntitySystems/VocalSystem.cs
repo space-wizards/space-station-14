@@ -40,7 +40,6 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.DefaultSoundsBySex = source.Comp.DefaultSoundsBySex;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
@@ -53,7 +52,6 @@ public sealed partial class VocalSystem : EntitySystem
     {
         // try to add scream action when vocal comp added
         _actions.AddAction(uid, ref component.EmoteActionEntity, component.EmoteAction);
-        LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
@@ -112,12 +110,18 @@ public sealed partial class VocalSystem : EntitySystem
         return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
     }
 
+    /// <summary>
+    /// This only works on Humanoids, and Mobs should have their voice prototype set directly instead.
+    /// </summary>
     private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        var humanoid = CompOrNull<HumanoidProfileComponent>(uid);
+        if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
+            return;
 
-        var sex = humanoid?.Sex ?? Sex.Unsexed;
-        protoId ??= humanoid?.Voice ?? component.DefaultSoundsBySex[sex];
+        var speciesProto = _proto.Index(humanoid.Species);
+
+        var sex = humanoid.Sex;
+        protoId ??= humanoid.Voice ?? speciesProto.DefaultSoundsBySex[sex];
 
         if (!_proto.HasIndex(protoId))
             return;
