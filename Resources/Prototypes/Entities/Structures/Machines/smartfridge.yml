@@ -117,6 +117,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: Airtight
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: SmartFridge

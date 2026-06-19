@@ -1124,4 +1124,48 @@
   id: 138
   time: '2026-05-27T09:27:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44098
+- author: ProPeperos
+  changes:
+  - message: On Fland - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 139
+  time: '2026-05-28T10:03:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44097
+- author: ProPeperos
+  changes:
+  - message: On Exo - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  - message: On Exo - removed telecoms beacon from CE room
+    type: Fix
+  id: 140
+  time: '2026-05-28T10:03:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44093
+- author: ProPeperos
+  changes:
+  - message: On Snowball - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 141
+  time: '2026-05-28T16:01:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44124
+- author: ProPeperos
+  changes:
+  - message: On miscellaneous shuttles - Tweaked atmos systems and small fixes
+    type: Tweak
+  id: 142
+  time: '2026-05-29T19:30:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44151
+- author: ProPeperos
+  changes:
+  - message: On some ERT shuttles - Tweaked atmos systems
+    type: Tweak
+  id: 143
+  time: '2026-05-29T19:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44150
+- author: ProPeperos
+  changes:
+  - message: On Saltern - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  id: 144
+  time: '2026-05-30T01:23:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44119
 Order: 2
