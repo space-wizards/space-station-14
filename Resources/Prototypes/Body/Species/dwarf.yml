@@ -58,6 +58,8 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Vocal
+    emoteSounds: UnisexDwarf
   - type: ReplacementAccent
     accent: scottish
   - type: Speech

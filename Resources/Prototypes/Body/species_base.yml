@@ -136,6 +136,7 @@
     speechSounds: Alto
   - type: DamageForceSay
   - type: Vocal
+    emoteSounds: MaleHuman
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes
