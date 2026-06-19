@@ -18,7 +18,7 @@ public sealed partial class HumanoidProfileEditor
 
     private ColorSelectorSliders _rgbSkinColorSelector;
     private List<SpeciesPrototype> _species = new();
-    private List<ProtoId<EmoteSoundsPrototype>> _voices = new ();
+    private List<ProtoId<EmoteSoundsPrototype>> _voices = new();
     private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
     public void UpdateSpeciesGuidebookIcon()

@@ -87,7 +87,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>
     [DataField]
-    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> DefaultSoundsBySex = new ()
+    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> DefaultSoundsBySex = new()
     {
         {Sex.Male, "MaleHuman"},
         {Sex.Female, "FemaleHuman"},
@@ -98,7 +98,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     List of user selectable voices in the menu, with associated Loc.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId> Voices = new ()
+    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId> Voices = new()
     {
         {"MaleHuman", "humanoid-profile-editor-voice-masculine"},
         {"FemaleHuman", "humanoid-profile-editor-voice-feminine"},
