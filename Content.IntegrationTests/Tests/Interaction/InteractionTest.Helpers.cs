@@ -1507,8 +1507,16 @@ public abstract partial class InteractionTest
 
     #region Power
 
+    /// <summary>
+    /// Toggles whether or not <paramref name="target"/> needs power to run.
+    /// </summary>
+    /// <remarks>
+    /// <paramref name="target"/> must have an <see cref="ApcPowerReceiverComponent"/>.
+    /// </remarks>
+    /// <param name="target">The entity to toggle the power requirement on. If <see langword="null"/>, <see cref="Target"/> will be used.</param>
     protected void ToggleNeedPower(NetEntity? target = null)
     {
+        target ??= Target;
         var comp = Comp<ApcPowerReceiverComponent>(target);
         comp.NeedsPower = !comp.NeedsPower;
     }
