@@ -18,10 +18,6 @@ public sealed partial class AtmosSensorDataPayload : AtmosDeviceDataPayload
         GasThresholds = gasThresholds;
     }
 
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
-
     /// Most fields are readonly, because it's data that's meant to be transmitted.
 
     /// <summary>

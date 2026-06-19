@@ -6,9 +6,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
     [Serializable, NetSerializable]
     public sealed partial class GasVentPumpDataPayload : AtmosDeviceDataPayload
     {
-        public bool Enabled { get; set; }
-        public bool Dirty { get; set; }
-        public bool IgnoreAlarms { get; set; } = false;
         public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
         public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;

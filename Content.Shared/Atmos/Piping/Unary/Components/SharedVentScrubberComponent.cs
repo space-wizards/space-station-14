@@ -6,9 +6,6 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
     [Serializable, NetSerializable]
     public sealed partial class GasVentScrubberDataPayload : AtmosDeviceDataPayload
     {
-        public bool Enabled { get; set; }
-        public bool Dirty { get; set; }
-        public bool IgnoreAlarms { get; set; } = false;
         public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
         public float VolumeRate { get; set; } = 200f;
