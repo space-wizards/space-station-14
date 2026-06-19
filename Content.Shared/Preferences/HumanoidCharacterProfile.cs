@@ -89,7 +89,7 @@ namespace Content.Shared.Preferences
         public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
-        public ProtoId<EmoteSoundsPrototype>? Voice { get; set; }
+        public ProtoId<EmoteSoundsPrototype> Voice { get; set; } = "MaleHuman";
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
@@ -134,7 +134,7 @@ namespace Content.Shared.Preferences
             string species,
             int age,
             Sex sex,
-            ProtoId<EmoteSoundsPrototype>? voice,
+            ProtoId<EmoteSoundsPrototype> voice,
             Gender gender,
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
@@ -299,7 +299,7 @@ namespace Content.Shared.Preferences
             return new(this) { Sex = sex };
         }
 
-        public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype>? voice)
+        public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype> voice)
         {
             return new (this) { Voice = voice };
         }
@@ -497,7 +497,6 @@ namespace Content.Shared.Preferences
         {
             var configManager = collection.Resolve<IConfigurationManager>();
             var prototypeManager = collection.Resolve<IPrototypeManager>();
-            var entityManager = collection.Resolve<IEntityManager>();
 
             if (!prototypeManager.TryIndex(Species, out var speciesPrototype) || speciesPrototype.RoundStart == false)
             {
@@ -516,7 +515,7 @@ namespace Content.Shared.Preferences
             var availableVoices = speciesPrototype.Voices;
 
             var voice = Voice;
-            if (voice is not { } real || !availableVoices.Contains(real) && !prototypeManager.HasIndex(voice))
+            if (!availableVoices.Contains(voice) && !prototypeManager.HasIndex(voice))
                 voice = speciesPrototype.DefaultSoundsBySex[sex];
 
             // ensure the species can be that sex and their age fits the founds

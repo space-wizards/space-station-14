@@ -113,7 +113,7 @@ public sealed partial class HumanoidProfileEditor
 
         _voices.AddRange(availableVoices.Select(protoId => _prototypeManager.Index(protoId)));
 
-        if (Profile?.Voice is { } voice && _voices.All(proto => voice != proto.ID))
+        if (_voices.All(proto => Profile?.Voice != proto.ID))
             SetVoice(speciesPrototype.DefaultSoundsBySex[Profile.Sex]);
 
         for (var i = 0; i < availableVoices.Count; i++)

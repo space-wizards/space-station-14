@@ -118,10 +118,7 @@ public sealed partial class VocalSystem : EntitySystem
         if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
             return;
 
-        var speciesProto = _proto.Index(humanoid.Species);
-
-        var sex = humanoid.Sex;
-        protoId ??= humanoid.Voice ?? speciesProto.DefaultSoundsBySex[sex];
+        protoId ??= humanoid.Voice;
 
         if (!_proto.HasIndex(protoId))
             return;

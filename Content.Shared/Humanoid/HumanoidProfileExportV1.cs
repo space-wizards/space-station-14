@@ -81,7 +81,12 @@ public sealed partial class HumanoidCharacterProfileV1
 
     public HumanoidCharacterProfile ToV2()
     {
-        return new(Name, FlavorText, Species, Age, Sex, null, Gender, Appearance.ToV2(Species), SpawnPriority, JobPriorities, PreferenceUnavailable, AntagPreferences, TraitPreferences, Loadouts);
+        var prototypeManager = IoCManager.Resolve<PrototypeManager>();
+
+        var speciesPrototye = prototypeManager.Index(Species);
+        var defaultVoice = speciesPrototye.DefaultSoundsBySex[Sex];
+
+        return new(Name, FlavorText, Species, Age, Sex, defaultVoice, Gender, Appearance.ToV2(Species), SpawnPriority, JobPriorities, PreferenceUnavailable, AntagPreferences, TraitPreferences, Loadouts);
     }
 }
 
