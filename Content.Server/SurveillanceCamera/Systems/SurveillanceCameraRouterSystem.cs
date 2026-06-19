@@ -41,45 +41,31 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     private void OnPacketReceive(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         var (uid, router) = ent;
-        if (!router.Active
-            || string.IsNullOrEmpty(args.SenderAddress)
-            || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-        {
+        if (!router.Active || string.IsNullOrEmpty(args.SenderAddress))
             return;
-        }
 
-        switch (command)
+        switch (args.Data)
         {
-            case SurveillanceCameraSystem.CameraConnectMessage:
-                if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraAddressData, out string? address))
-                {
-                    return;
-                }
-
-                ConnectCamera(uid, args.SenderAddress, address, router);
+            case SurveillanceCameraConnectPayload connect:
+                ConnectCamera(uid, args.SenderAddress, connect.Address, router);
                 break;
-            case SurveillanceCameraSystem.CameraHeartbeatMessage:
-                if (!args.Data.TryGetValue(SurveillanceCameraSystem.CameraAddressData, out string? camera))
-                {
-                    return;
-                }
-
-                SendHeartbeat(uid, args.SenderAddress, camera, router);
+            case SurveillanceCameraHeartbeatPayload heartbeat:
+                SendHeartbeat(uid, args.SenderAddress, heartbeat.Address, router);
                 break;
-            case SurveillanceCameraSystem.CameraSubnetConnectMessage:
+            case SurveillanceCameraSubnetConnectPayload:
                 AddMonitorToRoute(uid, args.SenderAddress, router);
                 PingSubnet(uid, router);
                 break;
-            case SurveillanceCameraSystem.CameraSubnetDisconnectMessage:
+            case SurveillanceCameraSubnetDisconnectPayload:
                 RemoveMonitorFromRoute(uid, args.SenderAddress, router);
                 break;
-            case SurveillanceCameraSystem.CameraPingSubnetMessage:
+            case SurveillanceCameraPingSubnetPayload:
                 PingSubnet(uid, router);
                 break;
-            case SurveillanceCameraSystem.CameraPingMessage:
+            case SurveillanceCameraPingPayload:
                 SubnetPingResponse(uid, args.SenderAddress, router);
                 break;
-            case SurveillanceCameraSystem.CameraDataMessage:
+            case SurveillanceCameraDataPayload:
                 SendCameraInfo(uid, args.Data, router);
                 break;
         }
@@ -171,10 +157,9 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload()
+        var payload = new SurveillanceCameraHeartbeatPayload
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraHeartbeatMessage },
-            { SurveillanceCameraSystem.CameraAddressData, origin }
+            Address = origin,
         };
 
         _deviceNetworkSystem.QueuePacket(uid, destination, payload, router.SubnetFrequency);
@@ -187,10 +172,9 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload()
+        var payload = new SurveillanceCameraSubnetDataPayload
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraSubnetData },
-            { SurveillanceCameraSystem.CameraSubnetData, router.SubnetFrequencyId }
+            Subnet = router.SubnetFrequencyId,
         };
 
         _deviceNetworkSystem.QueuePacket(uid, origin, payload);
@@ -203,10 +187,9 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload()
+        var payload = new SurveillanceCameraConnectPayload
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraConnectMessage },
-            { SurveillanceCameraSystem.CameraAddressData, origin }
+            Address = origin,
         };
 
         _deviceNetworkSystem.QueuePacket(uid, address, payload, router.SubnetFrequency);
@@ -241,10 +224,9 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload()
+        var payload = new SurveillanceCameraPingPayload
         {
-            { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraPingMessage },
-            { SurveillanceCameraSystem.CameraSubnetData, router.SubnetName }
+            Subnet = router.SubnetName,
         };
 
         _deviceNetworkSystem.QueuePacket(uid, null, payload, router.SubnetFrequency);

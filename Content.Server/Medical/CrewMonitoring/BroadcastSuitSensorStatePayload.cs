@@ -1,10 +1,8 @@
 ﻿using Content.Shared.DeviceNetwork;
-using Content.Shared.Medical.SuitSensor;
-using Robust.Shared.Serialization;
+using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
-[Serializable, NetSerializable]
 public sealed partial class BroadcastSuitSensorStatePayload : NetworkPayload
 {
     [DataField]

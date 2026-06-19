@@ -8,12 +8,8 @@ namespace Content.Server.Fax;
 /// </summary>
 public sealed partial class FaxPingPayload : NetworkPayload
 {
-    /// <summary>
-    /// I!!!!! AM!!!!! SYNDICATE!!!!!!!!
-    /// </summary>
-    /// <remarks>
-    /// TODO this should probably be made a more general system in the future
-    /// </remarks>
+    // I!!!!! AM!!!!! SYNDICATE!!!!!!!!
+    // TODO this should probably be made a more general system in the future
     [DataField]
     public bool IsSyndicate;
 }
@@ -34,14 +30,4 @@ public sealed partial class FaxPrintPayload : NetworkPayload
 {
     [DataField]
     public FaxPrintout Data;
-}
-
-// Goobstation
-public sealed partial class FaxSendEntityPayload : NetworkPayload
-{
-    [DataField]
-    public EntityUid? Entity;
-
-    [DataField]
-    public bool CrossGrids;
 }

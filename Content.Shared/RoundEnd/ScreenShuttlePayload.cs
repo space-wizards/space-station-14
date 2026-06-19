@@ -3,7 +3,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.RoundEnd;
 
-[Serializable, NetSerializable]
 public sealed partial class ScreenShuttlePayload : NetworkPayload
 {
     [DataField]

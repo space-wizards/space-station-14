@@ -3,7 +3,7 @@ using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Medical.SuitSensor;
+namespace Content.Shared.Medical.SuitSensors;
 
 [Serializable, NetSerializable]
 public sealed partial class SuitSensorStatus : NetworkPayload

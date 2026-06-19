@@ -1,6 +1,3 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
@@ -91,9 +88,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        var data = new NetworkPayload
+        var data = new LogicStatePayload
         {
-            [DeviceNetworkConstants.LogicState] = signal ? SignalState.High : SignalState.Low
+            State = signal ? SignalState.High : SignalState.Low
         };
         InvokePort(uid, port, data, comp);
 

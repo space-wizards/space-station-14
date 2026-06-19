@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor.Components;
@@ -27,7 +28,6 @@ public enum AirAlarmWireStatus
     DeviceSync
 }
 
-[Serializable, NetSerializable]
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class AtmosDeviceDataPayload : NetworkPayload
 {
