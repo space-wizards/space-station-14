@@ -50,10 +50,14 @@ public sealed partial class EyeClosingComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool EyesClosed;
-
+    /// <summary>
+    /// the previous state of eyey closed. used to ensure relevant audio / visual effects are only emitted once per change.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool PreviousEyelidPosition;
-
+    /// <summary>
+    ///
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField]
     public bool NaturallyCreated;
 }

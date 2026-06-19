@@ -94,6 +94,11 @@ public sealed partial class EyeClosingSystem : EntitySystem
         DoAudioFeedback(eyelids, eyelids.Comp.EyesClosed);
     }
 
+    /// <summary>
+    /// checks if sound for an eyelid moving must be played.
+    /// </summary>
+    /// <param name="eyelids"></param>
+    /// <param name="eyelidTarget">ture if eyelids are closed now</param>
     public void DoAudioFeedback(Entity<EyeClosingComponent?> eyelids, bool eyelidTarget)
     {
         if (!Resolve(eyelids, ref eyelids.Comp))
@@ -111,6 +116,11 @@ public sealed partial class EyeClosingSystem : EntitySystem
             _audio.PlayGlobal(eyelidTarget ? eyelids.Comp.EyeCloseSound : eyelids.Comp.EyeOpenSound, session);
     }
 
+    /// <summary>
+    /// Update a eye closing component to agree with a blindable componet
+    /// (such as loosing the ability to close eyes, if they are destroyed).
+    /// </summary>
+    /// <param name="blindable"></param>
     public void UpdateEyesClosable(Entity<BlindableComponent?> blindable)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))

@@ -50,6 +50,14 @@ namespace Content.Shared.Examine
         /// </summary>
         public abstract void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor);
 
+        /// <summary>
+        /// checks if an entity is close enough to an examiner to show information classified as details.
+        /// Like you cannot read an ID card if the person is to far away.
+        /// Or discern the nature of an held item from far away besides size of the item.
+        /// </summary>
+        /// <param name="examiner"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             if (IsClientSide(entity))
@@ -76,6 +84,12 @@ namespace Content.Shared.Examine
             return _interactionSystem.CanAccessViaStorage(examiner, entity);
         }
 
+        /// <summary>
+        /// checks if an entity may be examined by another.
+        /// </summary>
+        /// <param name="examiner"></param>
+        /// <param name="examined"></param>
+        /// <returns></returns>
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
@@ -87,6 +101,15 @@ namespace Content.Shared.Examine
                 entity => entity == examiner || entity == examined, examined);
         }
 
+        /// <summary>
+        /// check if an entity can examine another entity.
+        /// </summary>
+        /// <param name="examiner"></param>
+        /// <param name="target"></param>
+        /// <param name="predicate">If true for an entity, return false</param>
+        /// <param name="examined"></param>
+        /// <param name="examinerComp"></param>
+        /// <returns></returns>
         [Pure]
         public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
@@ -161,7 +184,16 @@ namespace Content.Shared.Examine
         {
             return TryComp<EyeComponent>(uid, out var eye) && eye.DrawFov;
         }
-
+/// <summary>
+/// Checks if there is clear line of sight between two points and the distance to smale.
+/// </summary>
+/// <param name="origin"></param>
+/// <param name="other"></param>
+/// <param name="range"></param>
+/// <param name="predicate">if a blocking entity evaluates for true, the entity is ignored.</param>
+/// <param name="ignoreInsideBlocker">is predicate to be used?</param>
+/// <param name="entMan"></param>
+/// <returns></returns>
         public bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
             // No, rider. This is better.
@@ -172,6 +204,18 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(origin, other, range, predicate, wrapped, ignoreInsideBlocker, entMan);
         }
 
+/// <summary>
+/// Checks if there is clear line of sight between two points and the distance to smale.
+/// </summary>
+/// <param name="origin"></param>
+/// <param name="other"></param>
+/// <param name="range"></param>
+/// <param name="state">if a blocking entity evaluates for true, the entity is ignored.</param>
+/// <param name="predicate">if a blocking entity evaluates for true, the entity is ignored.</param>
+/// <param name="ignoreInsideBlocker">is predicate to be used?</param>
+/// <param name="entMan"></param>
+/// <typeparam name="TState"></typeparam>
+/// <returns></returns>
         public bool InRangeUnOccluded<TState>(MapCoordinates origin, MapCoordinates other, float range,
             TState state, Func<EntityUid, TState, bool> predicate, bool ignoreInsideBlocker = true, IEntityManager? entMan = null)
         {
@@ -222,6 +266,15 @@ namespace Content.Shared.Examine
             return true;
         }
 
+/// <summary>
+/// Checks if there is clear line of sight between to entities.
+/// </summary>
+/// <param name="origin"></param>
+/// <param name="other"></param>
+/// <param name="range"></param>
+/// <param name="predicate">if a blocking entity evaluates for true, the entity is ignored.</param>
+/// <param name="ignoreInsideBlocker">is predicate to be used?</param>
+/// <returns></returns>
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var ev = new InRangeOverrideEvent(origin, other);
@@ -237,7 +290,15 @@ namespace Content.Shared.Examine
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
-
+        /// <summary>
+        /// Checks if there is clear line of sight between an  entity and some space.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="other"></param>
+        /// <param name="range"></param>
+        /// <param name="predicate">if a blocking entity evaluates for true, the entity is ignored.</param>
+        /// <param name="ignoreInsideBlocker">is predicate to be used?</param>
+        /// <returns></returns>
         public bool InRangeUnOccluded(EntityUid origin, EntityCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var originPos = _transform.GetMapCoordinates(origin);
@@ -246,6 +307,15 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
+        /// <summary>
+        /// Checks if there is clear line of sight between an entity and some space.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="other"></param>
+        /// <param name="range"></param>
+        /// <param name="predicate">if a blocking entity evaluates for true, the entity is ignored.</param>
+        /// <param name="ignoreInsideBlocker">is predicate to be used?</param>
+        /// <returns></returns>
         public bool InRangeUnOccluded(EntityUid origin, MapCoordinates other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
             var originPos = _transform.GetMapCoordinates(origin);
@@ -253,6 +323,12 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
+        /// <summary>
+        /// Generate the examine message for a pair of examiner and an entity.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="examiner"></param>
+        /// <returns></returns>
         public FormattedMessage GetExamineText(EntityUid entity, EntityUid? examiner)
         {
             var message = new FormattedMessage();
