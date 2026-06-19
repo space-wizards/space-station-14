@@ -12,7 +12,10 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
 {
     [Dependency] private HungerSystem _hunger = default!;
 
-    protected override void Condition(Entity<HungerComponent> entity, HungerCondition condition, ref bool result)
+    protected override void Condition(Entity<HungerComponent> entity,
+        HungerCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         var total = _hunger.GetHunger(entity.Comp);
         result = total >= condition.Min && total <= condition.Max;

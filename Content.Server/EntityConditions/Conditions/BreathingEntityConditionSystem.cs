@@ -12,7 +12,10 @@ namespace Content.Server.EntityConditions.Conditions;
 public sealed partial class IsBreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, BreathingCondition>
 {
     [Dependency] private RespiratorSystem _respirator = default!;
-    protected override void Condition(Entity<RespiratorComponent> entity, BreathingCondition condition, ref bool result)
+    protected override void Condition(Entity<RespiratorComponent> entity,
+        BreathingCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         result = _respirator.IsBreathing(entity.AsNullable());
     }

@@ -21,8 +21,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
+    /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
+    /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if all conditions return true, false if any fail</returns>
-    public bool TryConditions(EntityUid target, EntityCondition[]? conditions)
+    public bool TryConditions<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null) where T : EntityCondition
     {
         // If there's no conditions we can't fail any of them...
         if (conditions == null)
@@ -30,7 +32,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 
         foreach (var condition in conditions)
         {
-            if (!TryCondition(target, condition))
+            if (!TryCondition(target, condition, sourceEnt))
                 return false;
         }
 
@@ -42,8 +44,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
+    /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
+    /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if any conditions return true</returns>
-    public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions)
+    public bool TryAnyCondition<T>(EntityUid target, T[]? conditions, EntityUid? sourceEnt = null) where T : EntityCondition
     {
         // If there's no conditions we can't meet any of them...
         if (conditions == null)
@@ -51,7 +55,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
 
         foreach (var condition in conditions)
         {
-            if (TryCondition(target, condition))
+            if (TryCondition(target, condition, sourceEnt))
                 return true;
         }
 
@@ -63,16 +67,18 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="condition">Condition we're checking</param>
+    /// <param name="sourceEnt">An optional "source entity" which is checking the condition on the entity this is being raised to.
+    /// Sometimes needed for additional context with conditions.</param>
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
-    public bool TryCondition(EntityUid target, EntityCondition condition)
+    public bool TryCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
-        return condition.Inverted != CheckCondition(target, condition);
+        return condition.Inverted != CheckCondition(target, condition, sourceEnt);
     }
 
-    private bool CheckCondition(EntityUid target, EntityCondition condition)
+    private bool CheckCondition(EntityUid target, EntityCondition condition, EntityUid? sourceEnt = null)
     {
         if (_handlers.TryGetValue(condition.GetType(), out var handler))
-            return handler.CheckCondition(target, condition);
+            return handler.CheckCondition(target, condition, sourceEnt);
         return false;
     }
 }
@@ -86,7 +92,8 @@ public abstract partial class EntityConditionHandler : EntitySystem
     [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
     public abstract Type ConditionType { get; }
-    public abstract bool CheckCondition(EntityUid target, EntityCondition condition);
+
+    public abstract bool CheckCondition(EntityUid target, EntityCondition condition, EntityUid? sourceEnt = null);
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -107,16 +114,16 @@ public abstract partial class EntityConditionSystem<T, TCon> : EntityConditionHa
 
     public override Type ConditionType => typeof(TCon);
 
-    protected abstract void Condition(Entity<T> entity, TCon condition, ref bool result);
+    protected abstract void Condition(Entity<T> entity, TCon condition, EntityUid? sourceEnt, ref bool result);
 
-    public override bool CheckCondition(EntityUid target, EntityCondition condition)
+    public override bool CheckCondition(EntityUid target, EntityCondition condition, EntityUid? sourceEnt = null)
     {
         if (condition is not TCon typed)
             return false;
         if (!_query.TryGetComponent(target, out var comp))
             return false;
         var result = false;
-        Condition((target, comp), typed, ref result);
+        Condition((target, comp), typed, sourceEnt, ref result);
         return result;
     }
 }

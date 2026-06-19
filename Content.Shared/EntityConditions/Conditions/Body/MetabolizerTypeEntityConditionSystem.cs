@@ -37,7 +37,10 @@ public sealed partial class MetabolizerTypeCondition : EntityCondition
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MetabolizerTypeEntityConditionSystem : EntityConditionSystem<MetabolizerComponent, MetabolizerTypeCondition>
 {
-    protected override void Condition(Entity<MetabolizerComponent> entity, MetabolizerTypeCondition condition, ref bool result)
+    protected override void Condition(Entity<MetabolizerComponent> entity,
+        MetabolizerTypeCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         if (entity.Comp.MetabolizerTypes == null)
             return;

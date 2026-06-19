@@ -11,7 +11,10 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
 {
-    protected override void Condition(Entity<SolutionComponent> entity, ReagentCondition condition, ref bool result)
+    protected override void Condition(Entity<SolutionComponent> entity,
+        ReagentCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         var soln = entity.Comp.Solution;
         var quant = soln.GetTotalPrototypeQuantity(condition.Reagent);

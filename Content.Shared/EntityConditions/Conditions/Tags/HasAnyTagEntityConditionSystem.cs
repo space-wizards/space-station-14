@@ -12,7 +12,10 @@ public sealed partial class HasAnyTagEntityConditionSystem : EntityConditionSyst
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, AnyTagCondition condition, ref bool result)
+    protected override void Condition(Entity<TagComponent> entity,
+        AnyTagCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         result = _tag.HasAnyTag(entity.Comp, condition.Tags);
     }

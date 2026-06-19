@@ -14,7 +14,10 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, JobCondition>
 {
-    protected override void Condition(Entity<MindContainerComponent> entity, JobCondition condition, ref bool result)
+    protected override void Condition(Entity<MindContainerComponent> entity,
+        JobCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         // We need a mind in our mind container...
         if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
