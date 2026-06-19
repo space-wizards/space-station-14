@@ -194,8 +194,12 @@ public sealed class HumanoidProfileTests : GameTest
             var voiceProtos = proto.Voices;
             var sexedProtos = proto.DefaultSoundsBySex.Values.ToHashSet();
 
-            Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
-            Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
+                Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");
+                Assert.That(proto.DefaultSoundsBySex.Keys.ToList(), Is.EqualTo(proto.Sexes), "Species should declare a defaultSoundsBySex for every sex of the species");
+            }
         });
     }
 }

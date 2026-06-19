@@ -91,7 +91,6 @@ public sealed partial class SpeciesPrototype : IPrototype
     {
         {Sex.Male, "MaleHuman"},
         {Sex.Female, "FemaleHuman"},
-        {Sex.Unsexed, "MaleHuman"},
     };
 
     /// <summary>
