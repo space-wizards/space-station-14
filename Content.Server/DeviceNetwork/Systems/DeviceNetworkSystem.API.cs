@@ -49,7 +49,9 @@ public sealed partial class DeviceNetworkSystem
         if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
-        return deviceNet.Add(ent!);
+        var success = deviceNet.Add(ent!);
+        Dirty(ent);
+        return success;
     }
 
     /// <summary>
@@ -119,6 +121,7 @@ public sealed partial class DeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
+        Dirty(ent);
     }
 
     [PublicAPI]
@@ -143,6 +146,7 @@ public sealed partial class DeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveAll = receiveAll;
         deviceNet.Add(ent!);
+        Dirty(ent);
     }
 
     [PublicAPI]
@@ -161,6 +165,7 @@ public sealed partial class DeviceNetworkSystem
         ent.Comp.CustomAddress = true;
         ent.Comp.Address = address;
         deviceNet.Add(ent!);
+        Dirty(ent);
     }
 
     [PublicAPI]
@@ -176,5 +181,6 @@ public sealed partial class DeviceNetworkSystem
         ent.Comp.CustomAddress = false;
         ent.Comp.Address = "";
         deviceNet.Add(ent!);
+        Dirty(ent);
     }
 }
