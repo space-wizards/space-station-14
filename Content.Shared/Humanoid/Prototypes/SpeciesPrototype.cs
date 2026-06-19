@@ -84,7 +84,6 @@ public sealed partial class SpeciesPrototype : IPrototype
 
     /// <summary>
     ///     Emote sounds prototype id for each sex (not gender).
-    ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
     /// </summary>
     [DataField]
     public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>> DefaultSoundsBySex = new()

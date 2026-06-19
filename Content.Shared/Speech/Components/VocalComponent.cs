@@ -49,7 +49,7 @@ public sealed partial class VocalComponent : Component
     /// <summary>
     ///     Currently loaded emote sounds prototype, based on entity sex on humanoids.
     ///     Null if no valid prototype for entity sex was found.
-    ///     Non-humanoids, as well as non-round-start species should set this directly to provide emote sounds.
+    ///     Generally everything should have this set. This provides the sounds for Urists as well.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
