@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer;
@@ -389,11 +388,11 @@ public sealed partial class TegSystem : EntitySystem
         }
     }
 
-    private TegSensorPayload.Circulator GetCirculatorSensorData(EntityUid circulator)
+    private Circulator GetCirculatorSensorData(EntityUid circulator)
     {
         var (inlet, outlet) = GetPipes(circulator);
 
-        return new TegSensorPayload.Circulator(
+        return new Circulator(
             inlet.Air.Pressure,
             outlet.Air.Pressure,
             inlet.Air.Temperature,

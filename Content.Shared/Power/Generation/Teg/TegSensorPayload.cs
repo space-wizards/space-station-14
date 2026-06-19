@@ -1,12 +1,27 @@
-using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Power.Generation.Teg;
+namespace Content.Shared.Power.Generation.Teg;
+
+/// <summary>
+/// Information for a single TEG circulator.
+/// </summary>
+/// <param name="InletPressure">Pressure measured at the circulator's input pipe</param>
+/// <param name="OutletPressure">Pressure measured at the circulator's output pipe</param>
+/// <param name="InletTemperature">Temperature measured at the circulator's input pipe</param>
+/// <param name="OutletTemperature">Temperature measured at the circulator's output pipe</param>
+[DataRecord]
+[Serializable, NetSerializable]
+public partial record struct Circulator(
+    float InletPressure,
+    float OutletPressure,
+    float InletTemperature,
+    float OutletTemperature);
 
 /// <summary>
 /// Sensor data reported by the <see cref="TegGeneratorComponent"/> when queried over the device network.
 /// </summary>
-/// <seealso cref="TegSystem"/>
+[Serializable, NetSerializable]
 public sealed partial class TegSensorPayload : NetworkPayload
 {
     /// <summary>
@@ -41,23 +56,10 @@ public sealed partial class TegSensorPayload : NetworkPayload
     /// <seealso cref="PowerSupplierComponent.CurrentSupply"/>
     [DataField]
     public float PowerOutput;
-
-    /// <summary>
-    /// Information for a single TEG circulator.
-    /// </summary>
-    /// <param name="InletPressure">Pressure measured at the circulator's input pipe</param>
-    /// <param name="OutletPressure">Pressure measured at the circulator's output pipe</param>
-    /// <param name="InletTemperature">Temperature measured at the circulator's input pipe</param>
-    /// <param name="OutletTemperature">Temperature measured at the circulator's output pipe</param>
-    [DataRecord]
-    public record struct Circulator(
-        float InletPressure,
-        float OutletPressure,
-        float InletTemperature,
-        float OutletTemperature);
 }
 
 /// <summary>
 /// Request to get <see cref="TegSensorPayload"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class TegSensorSyncPayload : NetworkPayload;

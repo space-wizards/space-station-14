@@ -11,7 +11,6 @@ using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Benchmarks;
 
@@ -140,17 +139,5 @@ public class DeviceNetworkingBenchmark
 
         await server.WaitRunTicks(1);
         await server.WaitIdleAsync();
-    }
-
-    private sealed partial class TestPayload : NetworkPayload
-    {
-        [DataField]
-        public string TestString;
-
-        [DataField]
-        public int TestNumber;
-
-        [DataField]
-        public bool TestBool;
     }
 }

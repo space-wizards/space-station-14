@@ -88,7 +88,7 @@ public sealed partial class BorgSystem
                 Disable(ent);
                 break;
             case RoboticsCyborgDestroyPayload:
-                Destroy(ent);
+                Destroy(ent.AsNullable());
                 break;
         }
     }

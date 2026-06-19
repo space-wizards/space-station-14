@@ -38,18 +38,18 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
 
     private void OnPacketReceived(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        if (!_power.IsPowered(uid))
+        if (!_power.IsPowered(ent.Owner))
             return;
 
         switch (args.Data)
         {
             case MailRequestTagPayload:
-                SendTagRequestResponse(uid, args, component.Tag);
+                SendTagRequestResponse(ent, args, ent.Comp.Tag);
                 break;
             case MailTagPayload payload:
                 //Add the received tag request response to the list of targets
-                component.TargetList.Add(payload.Tag);
-                Dirty(uid, component);
+                ent.Comp.TargetList.Add(payload.Tag);
+                Dirty(ent);
                 break;
         }
     }
@@ -98,11 +98,11 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
 
         var payload = new MailSendPayload
         {
-            Tag = component.Tag,
-            Target = component.Target
+            Tag = ent.Comp.Tag,
+            Target = ent.Comp.Target,
         };
 
-        _deviceNetworkSystem.QueuePacket((uid, device), null, payload);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     /// <summary>
@@ -115,8 +115,8 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
             return;
 
         var payload = new MailRequestTagPayload();
-        component.TargetList.Clear();
-        _deviceNetworkSystem.QueuePacket((uid, device), null, payload);
+        ent.Comp.TargetList.Clear();
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     /// <summary>

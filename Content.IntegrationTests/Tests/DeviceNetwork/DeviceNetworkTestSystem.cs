@@ -3,6 +3,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork;

@@ -1,5 +1,4 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
-using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
@@ -10,6 +9,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Power.Generation.Teg;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;

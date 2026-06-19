@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.RoundEnd;
 
+[Serializable, NetSerializable]
 public sealed partial class ScreenShuttlePayload : NetworkPayload
 {
     [DataField]
@@ -24,7 +25,7 @@ public sealed partial class ScreenShuttlePayload : NetworkPayload
     public TimeSpan DestinationTime;
 
     [DataField]
-    public bool? Docked;
+    public bool Docked;
 
     [DataField]
     public string? OverrideText;

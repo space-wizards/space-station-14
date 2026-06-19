@@ -1,11 +1,13 @@
 ﻿using Content.Shared.DeviceNetwork;
 using Content.Shared.Fax.Components;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Fax;
+namespace Content.Shared.Fax;
 
 /// <summary>
 /// Broadcasted from one fax to all other available faxes.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class FaxPingPayload : NetworkPayload
 {
     // I!!!!! AM!!!!! SYNDICATE!!!!!!!!
@@ -17,6 +19,7 @@ public sealed partial class FaxPingPayload : NetworkPayload
 /// <summary>
 /// Sent as a response to <see cref="FaxPingPayload"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class FaxPongPayload : NetworkPayload
 {
     [DataField]
@@ -26,6 +29,7 @@ public sealed partial class FaxPongPayload : NetworkPayload
 /// <summary>
 /// Payload to print a paper on the receiver fax.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class FaxPrintPayload : NetworkPayload
 {
     [DataField]

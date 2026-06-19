@@ -233,7 +233,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (connection.DeviceOwner == packet.Sender)
                 continue;
 
-            var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString());
+            var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
             RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
 
             if (!beforeEv.Cancelled)

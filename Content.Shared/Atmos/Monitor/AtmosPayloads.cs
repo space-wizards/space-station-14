@@ -6,16 +6,20 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosRegisterDevicePayload : NetworkPayload;
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosDeregisterDevicePayload : NetworkPayload;
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosSyncDevicePayload : NetworkPayload
 {
     [DataField]
     public AtmosDeviceDataPayload? Data;
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosDeviceSetDataPayload : NetworkPayload
 {
     [DataField]
@@ -23,12 +27,14 @@ public sealed partial class AtmosDeviceSetDataPayload : NetworkPayload
 }
 
 [ImplicitDataDefinitionForInheritors]
+[Serializable, NetSerializable]
 public abstract partial class AtmosAlarmableSourcePayload : NetworkPayload
 {
     [DataField]
     public HashSet<ProtoId<TagPrototype>> Source = new();
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosAlarmPayload : AtmosAlarmableSourcePayload
 {
     [DataField]
@@ -38,14 +44,17 @@ public sealed partial class AtmosAlarmPayload : AtmosAlarmableSourcePayload
     public AtmosMonitorThresholdTypeFlags TrippedThresholds;
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosAlarmableSyncAlertsPayload : AtmosAlarmableSourcePayload
 {
     [DataField]
     public Dictionary<string, AtmosAlarmType> AlarmStates = new();
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosAlarmableResetAllPayload : AtmosAlarmableSourcePayload;
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayload
 {
     [DataField]
@@ -58,12 +67,14 @@ public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayload
     public Gas? Gas;
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayload
 {
     [DataField]
     public AtmosSensorDataPayload Data;
 }
 
+[Serializable, NetSerializable]
 public sealed partial class AirAlarmSetModePayload : NetworkPayload
 {
     [DataField]

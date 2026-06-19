@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.SensorMonitoring;
 
 namespace Content.Server.SensorMonitoring;
 
@@ -22,12 +23,13 @@ public sealed partial class BatterySensorSystem : EntitySystem
         {
             case BatterySensorRequestPayload:
                 var battery = Comp<BatteryComponent>(ent);
+                var currentCharge = _battery.GetCharge((ent.Owner, battery));
                 var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
 
                 var payload = new BatterySensorSyncPayload
                 {
                     Data = new BatterySensorData(
-                        battery.CurrentCharge,
+                        currentCharge,
                         battery.MaxCharge,
                         netBattery.CurrentReceiving,
                         netBattery.MaxChargeRate,

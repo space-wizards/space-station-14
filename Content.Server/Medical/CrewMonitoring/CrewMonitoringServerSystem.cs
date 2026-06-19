@@ -1,10 +1,10 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Medical.SuitSensors;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Medical.SuitSensor;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Medical.CrewMonitoring;
+using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
@@ -92,7 +92,7 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
         if (!Resolve(uid, ref serverComponent, ref device))
             return;
 
-        var payload = new BroadcastSuitSensorStatePayload()
+        var payload = new BroadcastSuitSensorStatePayload
         {
             SensorStatus = serverComponent.SensorStatus,
         };

@@ -2,9 +2,6 @@ using Content.Server.Destructible;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
-using Content.Server.Power.Components;
-using Content.Server.TurretController;
-using Content.Shared.Access;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
@@ -18,7 +15,6 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Turrets;
@@ -81,7 +77,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         if (args.Data is TurretControllerSetArmamentPayload armamentPayload)
         {
             if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-                _fireModes.TrySetFireMode(ent, batteryWeaponFireModes, armamentPayload.ArmamentState);
+                _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), armamentPayload.ArmamentState);
 
             TrySetState(ent, armamentPayload.ArmamentState >= 0);
             return;

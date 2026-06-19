@@ -29,6 +29,7 @@ public enum AirAlarmWireStatus
 }
 
 [ImplicitDataDefinitionForInheritors]
+[Serializable, NetSerializable]
 public abstract partial class AtmosDeviceDataPayload : NetworkPayload
 {
     public bool Enabled { get; set; }
