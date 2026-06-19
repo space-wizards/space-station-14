@@ -112,5 +112,7 @@
   - ShuttleConsoleCircuitboard
   - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
+  - ThrusterWallmountCircuitboard
   - GyroscopeMachineCircuitboard
+  - GyroscopeFloorMachineCircuitboard
   - MiniGravityGeneratorCircuitboard

@@ -193,3 +193,80 @@
         steps:
           - tool: Prying
             doAfter: 5
+
+- type: constructionGraph
+  id: WallmountThrusterGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: WallmountThrusterFrameNode
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2.0
+  - node: WallmountThrusterFrameNode
+    entity: BaseThrusterWallmountFrame
+    edges:
+    - to: WallmountThrusterMechanismNode
+      steps:
+      - material: Manipulator
+        amount: 2
+        doAfter: 1
+      - tag: ThrusterWallmountElectronics
+        store: board
+        name: construction-graph-tag-wallmount-thruster-electronics
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 2.0
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+  - node: WallmountThrusterMechanismNode
+    entity: MechanisedThrusterWallmountFrame
+    edges:
+    - to: WallmountThrusterWiredNode
+      steps:
+      - material: Cable
+        amount: 1
+        doAfter: 2.0
+    - to: WallmountThrusterFrameNode
+      steps:
+      - tool: Prying
+        doAfter: 2.0
+      completed:
+      - !type:GivePrototype
+        prototype: ThrusterWallmountCircuitboard
+        amount: 1
+      - !type:GivePrototype
+        prototype: MicroManipulatorStockPart
+        amount: 2
+  - node: WallmountThrusterWiredNode
+    entity: WiredThrusterWallmountFrame
+    edges:
+    - to: WallmountThrusterNode
+      steps:
+      - tool: Anchoring
+        doAfter: 2.0
+    - to: WallmountThrusterMechanismNode
+      steps:
+      - tool: Cutting
+        doAfter: 2.0
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 1
+  - node: WallmountThrusterNode
+    entity: ThrusterWallmount
+    edges:
+    - to: WallmountThrusterWiredNode
+      steps:
+      - tool: Anchoring
+        doAfter: 2.0
