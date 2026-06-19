@@ -21,6 +21,9 @@
   - type: Tool
     qualities:
     - Prying
+  - type: CustomSpriteAmmoCounter
+    loadedAmmoSprite: Interface/ItemStatus/Tiles/tile.png
+    spentAmmoSprite: Interface/ItemStatus/Tiles/tile_empty.png
   - type: AmmoCounter
   - type: Gun
     fireRate: 4
