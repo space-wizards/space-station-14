@@ -184,6 +184,48 @@
         multiplier: 0.4
 
 - type: reagent
+  parent: BasePyrotechnic
+  id: XenoborgOil
+  name: reagent-name-xenoborg-oil
+  desc: reagent-desc-xenoborg-oil
+  physicalDesc: reagent-physical-desc-oily
+  evaporationSpeed: 0.2
+  slipData:
+    requiredSlipSpeed: 3.5
+  flavor: bitter
+  flavorMinimum: 0.01
+  color: "#3d5cff"
+  boilingPoint: -84.7 # Acetylene. Close enough.
+  meltingPoint: -80.7
+  friction: 0.4
+  tileReactions:
+  - !type:FlammableTileReaction {}
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:Flammable
+        multiplier: 0.2
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
+          inverted: true
+        damage:
+          types:
+            Poison: 1
+      - !type:Flammable
+        multiplier: 0.4
+
+- type: reagent
   id: Fluorosurfactant
   name: reagent-name-fluorosurfactant
   parent: BasePyrotechnic
