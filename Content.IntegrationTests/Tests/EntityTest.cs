@@ -213,7 +213,14 @@ namespace Content.IntegrationTests.Tests
                         sEntMan.DeleteEntity(uid);
                 }
 
-                Assert.That(sEntMan.EntityCount, Is.Zero);
+                var remaining = sEntMan.EntityQueryEnumerator<MetaDataComponent>();
+                var r = "";
+                while (remaining.MoveNext(out var uid, out var meta))
+                {
+                    r += $"Remainder entity: {meta} \n";
+                }
+
+                Assert.That(sEntMan.EntityCount, Is.Zero, r);
             });
         }
 

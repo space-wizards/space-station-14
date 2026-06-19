@@ -3,10 +3,12 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameTicking.Events;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.GameTicking;
 using Robust.Server.GameStates;
 
 namespace Content.Server.DeviceNetwork.Systems;
@@ -29,6 +31,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         base.Initialize();
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
         SubscribeLocalEvent<DeviceNetworkManagerComponent, MapInitEvent>(OnManagerInit);
         SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
@@ -36,13 +39,16 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
     public override void Update(float frameTime)
     {
-        var manager = EnsureManager();
-        while (manager.Comp.ActiveQueue.TryDequeue(out var packet))
+        if (!TryGetManager(out var manager))
+            return;
+
+        var comp = manager.Value.Comp;
+        while (comp.ActiveQueue.TryDequeue(out var packet))
         {
             SendPacket(ref packet);
         }
 
-        SwapQueues(manager.Comp);
+        SwapQueues(comp);
     }
 
     /// <summary>
@@ -63,6 +69,11 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         EnsureManager();
     }
 
+    private void OnCleanup(RoundRestartCleanupEvent ev)
+    {
+        ClearManager();
+    }
+
     private void OnManagerInit(Entity<DeviceNetworkManagerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.ActiveQueue = ent.Comp.QueueA;
@@ -72,15 +83,31 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
     private Entity<DeviceNetworkManagerComponent> EnsureManager()
     {
-        var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            return (uid, comp);
-        }
+        if (TryGetManager(out var found))
+            return found.Value;
 
         var manager = Spawn();
         var managerComp = AddComp<DeviceNetworkManagerComponent>(manager);
         return (manager, managerComp);
+    }
+
+    private bool TryGetManager([NotNullWhen(true)] out Entity<DeviceNetworkManagerComponent>? ent)
+    {
+        ent = null;
+        var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            ent = (uid, comp);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void ClearManager()
+    {
+        if (TryGetManager(out var found))
+            Del(found);
     }
 
     /// <summary>
@@ -129,29 +156,69 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             _configurator.OnDeviceShutdown(list, ent);
         }
 
-        GetNetwork(component.DeviceNetId).Remove(ent);
+        if (TryGetNetwork(component.DeviceNetId, out var network))
+            network.Remove(ent);
     }
 
     /// <summary>
     ///     Try to find a device on a network using its address.
     /// </summary>
-    private bool TryGetDevice(int netId, string address, out Device device) =>
-        GetNetwork(netId).Devices.TryGetValue(address, out device);
-
-    private DeviceNet GetNetwork(int netId)
+    private bool TryGetDevice(int netId, string address, [NotNullWhen(true)] out Device? device)
     {
-        var manager = EnsureManager();
-        if (manager.Comp.Networks.TryGetValue(netId, out var deviceNet))
-            return deviceNet;
+        device = null;
+        if (!TryGetNetwork(netId, out var network)
+            || !network.Devices.TryGetValue(address, out var foundDevice))
+            return false;
+
+        device = foundDevice;
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to get an already existing device network, and creates a new network if it doesn't exist.
+    /// </summary>
+    /// <returns>False if the manager is not initialized.</returns>
+    /// <returns></returns>
+    private bool TryEnsureNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
+    {
+        network = null;
+        if (!TryGetManager(out var manager))
+            return false;
+
+        if (manager.Value.Comp.Networks.TryGetValue(netId, out var deviceNet))
+        {
+            network = deviceNet;
+            return true;
+        }
 
         var newDeviceNet = new DeviceNet(netId, _random);
-        manager.Comp.Networks[netId] = newDeviceNet;
-        return newDeviceNet;
+        manager.Value.Comp.Networks[netId] = newDeviceNet;
+        network = newDeviceNet;
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to get an already existing network.
+    /// </summary>
+    /// <returns>False if the manager is not initialized, or the network wasn't found.</returns>
+    private bool TryGetNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
+    {
+        network = null;
+        if (!TryGetManager(out var manager))
+            return false;
+
+        if (!manager.Value.Comp.Networks.TryGetValue(netId, out var deviceNet))
+            return false;
+
+        network = deviceNet;
+        return true;
     }
 
     private void SendPacket(ref DeviceNetworkPacketEvent packet)
     {
-        var network = GetNetwork(packet.NetId);
+        if (!TryEnsureNetwork(packet.NetId, out var network))
+            return;
+
         if (packet.Address == null)
         {
             // Broadcast to all listening devices
@@ -171,9 +238,12 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             {
                 totalDevices += devices.Count;
             }
-            if (TryGetDevice(packet.NetId, packet.Address, out var device) &&
-                !device.ReceiveAll &&
-                device.ReceiveFrequency == packet.Frequency)
+
+            if (!TryGetDevice(packet.NetId, packet.Address, out var device))
+                return;
+
+            if (!device.Value.ReceiveAll &&
+                device.Value.ReceiveFrequency == packet.Frequency)
             {
                 totalDevices += 1;
                 hasTargetedDevice = true;
@@ -185,7 +255,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             }
             if (hasTargetedDevice)
             {
-                deviceCopy[totalDevices - 1] = device;
+                deviceCopy[totalDevices - 1] = device.Value;
             }
             SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
             ArrayPool<Device>.Shared.Return(deviceCopy);

@@ -18,6 +18,9 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
+        if (!TryGetManager(out var manager))
+            return false;
+
         var device = ent.Comp;
         if (device.Address == string.Empty)
             return false;
@@ -29,8 +32,7 @@ public sealed partial class DeviceNetworkSystem
 
         network ??= device.DeviceNetId;
 
-        var manager = EnsureManager();
-        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, ent, data));
+        manager.Value.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, ent, data));
         return true;
     }
 
@@ -41,11 +43,13 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool ConnectDevice(Entity<DeviceNetworkComponent?> ent)
     {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        return GetNetwork(deviceComp.DeviceNetId).Add((uid, deviceComp));
+        if (!TryEnsureNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+            return false;
+
+        return deviceNet.Add(ent!);
     }
 
     /// <summary>
@@ -54,15 +58,17 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool DisconnectDevice(Entity<DeviceNetworkComponent?> ent, bool preventAutoConnect = true)
     {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
         // If manually disconnected, don't auto reconnect when a game state is loaded.
         if (preventAutoConnect)
-            deviceComp.AutoConnect = false;
+            ent.Comp.AutoConnect = false;
 
-        return GetNetwork(deviceComp.DeviceNetId).Remove((uid, deviceComp));
+        return deviceNet.Remove(ent!);
     }
 
     /// <summary>
@@ -76,8 +82,8 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(uid, ref deviceComp, false))
             return false;
 
-        var manager = EnsureManager();
-        if (!manager.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
+        if (!TryGetManager(out var manager)
+            || !manager.Value.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
             return false;
 
         var device = new Device((uid, deviceComp));
@@ -90,8 +96,9 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool IsAddressPresent(int netId, string? address)
     {
-        var manager = EnsureManager();
-        if (address == null || !manager.Comp.Networks.TryGetValue(netId, out var network))
+        if (address == null
+            || !TryGetManager(out var manager)
+            || !manager.Value.Comp.Networks.TryGetValue(netId, out var network))
             return false;
 
         return network.Devices.ContainsKey(address);
@@ -106,7 +113,9 @@ public sealed partial class DeviceNetworkSystem
         if (ent.Comp.ReceiveFrequency == frequency)
             return;
 
-        var deviceNet = GetNetwork(ent.Comp.DeviceNetId);
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+            return;
+
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
@@ -122,35 +131,36 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public void SetReceiveAll(Entity<DeviceNetworkComponent?> ent, bool receiveAll)
     {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (deviceComp.ReceiveAll == receiveAll)
+        if (ent.Comp.ReceiveAll == receiveAll)
             return;
 
-        var deviceNet = GetNetwork(deviceComp.DeviceNetId);
-        deviceNet.Remove((uid, deviceComp));
-        deviceComp.ReceiveAll = receiveAll;
-        deviceNet.Add((uid, deviceComp));
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+            return;
+
+        deviceNet.Remove(ent!);
+        ent.Comp.ReceiveAll = receiveAll;
+        deviceNet.Add(ent!);
     }
 
     [PublicAPI]
     public void SetAddress(Entity<DeviceNetworkComponent?> ent, string address)
     {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (deviceComp.Address == address && deviceComp.CustomAddress)
+        if (ent.Comp.Address == address && ent.Comp.CustomAddress)
             return;
 
-        var deviceNet = GetNetwork(deviceComp.DeviceNetId);
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+            return;
 
-        deviceNet.Remove((uid, deviceComp));
-        deviceComp.CustomAddress = true;
-        deviceComp.Address = address;
-        deviceNet.Add((uid, deviceComp));
+        deviceNet.Remove(ent!);
+        ent.Comp.CustomAddress = true;
+        ent.Comp.Address = address;
+        deviceNet.Add(ent!);
     }
 
     [PublicAPI]
@@ -159,10 +169,12 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        var deviceNet = GetNetwork(ent.Comp.DeviceNetId);
-        deviceNet.Remove((ent.Owner, ent.Comp));
+        if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
+            return;
+
+        deviceNet.Remove(ent!);
         ent.Comp.CustomAddress = false;
         ent.Comp.Address = "";
-        deviceNet.Add((ent.Owner, ent.Comp));
+        deviceNet.Add(ent!);
     }
 }
