@@ -111,6 +111,23 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     }
 
     /// <summary>
+    /// Removes the <see cref="DeviceNetworkManagerComponent"/> if it no longer has any entities in its networks.
+    /// </summary>
+    private void CheckClearManager()
+    {
+        if (!TryGetManager(out var found))
+            return;
+
+        foreach (var network in found.Value.Comp.Networks.Values)
+        {
+            if (network.Devices.Count != 0)
+                return;
+        }
+
+        Del(found);
+    }
+
+    /// <summary>
     /// Automatically attempt to connect some devices when a map starts.
     /// </summary>
     private void OnMapInit(Entity<DeviceNetworkComponent> ent, ref MapInitEvent args)
@@ -161,6 +178,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
         if (TryGetNetwork(component.DeviceNetId, out var network))
             network.Remove(ent);
+
+        CheckClearManager();
     }
 
     /// <summary>

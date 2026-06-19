@@ -68,7 +68,9 @@ public sealed partial class DeviceNetworkSystem
         if (preventAutoConnect)
             ent.Comp.AutoConnect = false;
 
-        return deviceNet.Remove(ent!);
+        var result = deviceNet.Remove(ent!);
+        CheckClearManager();
+        return result;
     }
 
     /// <summary>
