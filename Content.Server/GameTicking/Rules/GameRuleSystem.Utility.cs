@@ -98,9 +98,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
                 continue;
 
-            // Get the whole list of tiles for the given grid.
-            // Ideally, we would be able to get the total count based on all of the grid's chunks
-            // And then find the Nth available tile within that grid (in some sane order) later.
+            // Get the tile count for the given grid.
             var tileCount = _map.GetFilledTileCount((possibleTarget, comp));
 
             // Just to be sure, no empty elements.
