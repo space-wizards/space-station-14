@@ -1,0 +1,12 @@
+<controls:RandomizeLockButton
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Lobby.UI"
+
+    StyleIdentifier="SpeciesRandomizerLockButton"
+    ToggleMode="True"
+    VerticalAlignment="Center"
+    Scale="0.25 0.25"
+    ToolTip="{Loc 'humanoid-profile-editor-species-randomizer-lock-tooltip'}"
+    >
+
+</controls:RandomizeLockButton>

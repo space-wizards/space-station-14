@@ -57,14 +57,7 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <TextureButton Name="SpeciesRandomizerLockButton"
-                                                   StyleIdentifier="SpeciesRandomizerLockButton"
-                                                   ToggleMode="True"
-                                                   VerticalAlignment="Center"
-                                                   Scale="0.25 0.25"
-                                                   ToolTip="{Loc 'humanoid-profile-editor-species-randomizer-lock-tooltip'}"
-                                    >
-                                    </TextureButton>
+                                    <ui:RandomizeLockButton For="Species" />
                                     <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3"
                                                    VerticalAlignment="Center"
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
@@ -74,18 +67,21 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
                                     <Control HorizontalExpand="True"/>
+                                    <ui:RandomizeLockButton For="Age" />
                                     <LineEdit Name="AgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Sex -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
                                     <Control HorizontalExpand="True"/>
+                                    <ui:RandomizeLockButton For="Sex" />
                                     <OptionButton Name="SexButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Pronouns -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
                                     <Control HorizontalExpand="True"/>
+                                    <ui:RandomizeLockButton For="Gender" />
                                     <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Show clothing -->
@@ -101,6 +97,7 @@
                                     <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </BoxContainer>
+                            <ui:RandomizeLockButton For="Gender" Text="Lock appearance" />
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
