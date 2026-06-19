@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Robust.Client.UserInterface;
@@ -17,6 +18,22 @@ public sealed class HumanoidProfileEditorSheetlet : Sheetlet<PalettedStylesheet>
                 .Identifier("SpeciesInfoDefault")
                 .Prop(TextureButton.StylePropertyTexture,
                     ResCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+
+            E<TextureButton>()
+                .Identifier("SpeciesRandomizerLockButton")
+                .PseudoNormal()
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .65f, 1f))),
+
+            E<TextureButton>()
+                .Identifier("SpeciesRandomizerLockButton")
+                .PseudoHovered()
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f))),
+
+            E<TextureButton>()
+                .Identifier("SpeciesRandomizerLockButton")
+                .PseudoPressed()
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f))),
+
             // copied from `StyleNano`, but this is unused
             // E<TextureButton>()
             //     .Identifier("SpeciesInfoWarning")

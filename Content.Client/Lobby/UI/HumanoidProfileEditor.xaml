@@ -58,6 +58,7 @@
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <TextureButton Name="SpeciesRandomizerLockButton"
+                                                   StyleIdentifier="SpeciesRandomizerLockButton"
                                                    ToggleMode="True"
                                                    VerticalAlignment="Center"
                                                    Scale="0.25 0.25"
