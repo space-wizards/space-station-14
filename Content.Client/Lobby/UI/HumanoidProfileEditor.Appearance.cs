@@ -121,7 +121,7 @@ public sealed partial class HumanoidProfileEditor
             var name = Loc.GetString(_voices[i].Name);
             VoiceButton.AddItem(name, i);
 
-            if (Profile?.Voice.Equals((ProtoId<EmoteSoundsPrototype>)_voices[i].ID) == true)
+            if (Profile?.Voice.Equals(_voices[i].ID) == true)
             {
                 VoiceButton.SelectId(i);
             }
