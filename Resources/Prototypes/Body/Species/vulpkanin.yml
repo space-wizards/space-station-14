@@ -161,7 +161,6 @@
     allowedEmotes: [ 'Bark', 'Snarl', 'Whine', 'Howl', 'Growl' ]
   - type: TypingIndicator
     proto: vulpkanin
-  - type: Vocal
   - type: Damageable
     damageModifierSet: Vulpkanin
   - type: MeleeWeapon

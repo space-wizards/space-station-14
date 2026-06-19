@@ -58,7 +58,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Vocal
   - type: ReplacementAccent
     accent: scottish
   - type: Speech

@@ -131,7 +131,6 @@
     speechVerb: Arachnid
     speechSounds: Arachnid
     allowedEmotes: ['Click', 'Chitter']
-  - type: Vocal
   - type: TypingIndicator
     proto: spider
   - type: CreamPied

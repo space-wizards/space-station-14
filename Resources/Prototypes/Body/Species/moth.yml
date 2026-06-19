@@ -166,7 +166,6 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: MothAccent
-  - type: Vocal
   - type: BodyEmotes
     soundsId: MothBodyEmotes
   - type: MovementSpeedModifier

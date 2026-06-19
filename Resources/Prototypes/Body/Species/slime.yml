@@ -107,7 +107,6 @@
     allowedEmotes: ['Squish']
   - type: TypingIndicator
     proto: slime
-  - type: Vocal
   - type: Damageable
     damageModifierSet: Slime
   - type: PassiveDamage # Around 8 damage a minute healed

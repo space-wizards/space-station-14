@@ -135,7 +135,6 @@
     sprite:
       sprite: Effects/creampie.rsi
       state: creampie_lizard
-  - type: Vocal
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
   - type: Damageable

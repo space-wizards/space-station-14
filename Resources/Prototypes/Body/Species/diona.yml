@@ -152,7 +152,6 @@
   - type: Speech
     speechVerb: Plant
     allowedEmotes: ['Chirp']
-  - type: Vocal
   - type: TypingIndicator
     proto: diona
   - type: BodyEmotes
