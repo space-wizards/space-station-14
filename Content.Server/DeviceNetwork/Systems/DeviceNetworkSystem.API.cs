@@ -18,9 +18,6 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (!TryGetManager(out var manager))
-            return false;
-
         var device = ent.Comp;
         if (device.Address == string.Empty)
             return false;
@@ -32,7 +29,8 @@ public sealed partial class DeviceNetworkSystem
 
         network ??= device.DeviceNetId;
 
-        manager.Value.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, ent, data));
+        var manager = EnsureManager();
+        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, ent, data));
         return true;
     }
 
