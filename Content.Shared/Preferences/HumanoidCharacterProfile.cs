@@ -513,10 +513,10 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
-            var voices = speciesPrototype.Voices.Keys.ToList();
+            var availableVoices = speciesPrototype.Voices;
 
             var voice = Voice;
-            if (voice is not { } real || !voices.Contains(real) && !prototypeManager.HasIndex(voice))
+            if (voice is not { } real || !availableVoices.Contains(real) && !prototypeManager.HasIndex(voice))
                 voice = speciesPrototype.DefaultSoundsBySex[sex];
 
             // ensure the species can be that sex and their age fits the founds

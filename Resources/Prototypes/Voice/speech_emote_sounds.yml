@@ -1,6 +1,7 @@
 # species
 - type: emoteSounds
   id: MaleHuman
+  name: humanoid-profile-editor-voice-masculine
   params:
     variation: 0.125
   sounds:
@@ -43,6 +44,7 @@
 
 - type: emoteSounds
   id: FemaleHuman
+  name: humanoid-profile-editor-voice-feminine
   params:
     variation: 0.125
   sounds:
@@ -85,6 +87,7 @@
 
 - type: emoteSounds
   id: MaleReptilian
+  name: humanoid-profile-editor-voice-masculine
   params:
     variation: 0.125
   sounds:
@@ -109,6 +112,7 @@
 
 - type: emoteSounds
   id: FemaleReptilian
+  name: humanoid-profile-editor-voice-feminine
   params:
     variation: 0.125
   sounds:
@@ -133,6 +137,7 @@
 
 - type: emoteSounds
   id: MaleSlime
+  name: humanoid-profile-editor-voice-masculine
   sounds:
     Squish:
       collection: Squishes
@@ -177,6 +182,7 @@
 
 - type: emoteSounds
   id: FemaleSlime
+  name: humanoid-profile-editor-voice-feminine
   sounds:
     Squish:
       collection: Squishes
@@ -221,6 +227,7 @@
 
 - type: emoteSounds
   id: UnisexVox
+  name: humanoid-profile-editor-voice-neutral
   sounds:
     Scream:
       path: /Audio/Voice/Vox/shriek1.ogg
@@ -254,6 +261,7 @@
 
 - type: emoteSounds
   id: UnisexDiona
+  name: humanoid-profile-editor-voice-neutral
   sounds:
     Scream:
       path: /Audio/Voice/Diona/diona_scream.ogg
@@ -278,6 +286,7 @@
 
 - type: emoteSounds
   id: UnisexArachnid
+  name: humanoid-profile-editor-voice-neutral
   params:
     variation: 0.125
   sounds:
@@ -302,6 +311,7 @@
 
 - type: emoteSounds
   id: UnisexDwarf
+  name: humanoid-profile-editor-voice-masculine
   sounds:
     Scream:
       collection: MaleScreams
@@ -345,6 +355,7 @@
 
 - type: emoteSounds
   id: FemaleDwarf
+  name: humanoid-profile-editor-voice-feminine
   sounds:
     Scream:
       collection: FemaleScreams
@@ -388,6 +399,7 @@
 
 - type: emoteSounds
   id: UnisexMoth
+  name: humanoid-profile-editor-voice-neutral
   params:
     variation: 0.125
   sounds:
@@ -479,6 +491,7 @@
 # Vulp Sounds
 - type: emoteSounds
   id: MaleVulpkanin
+  name: humanoid-profile-editor-voice-masculine
   params:
     variation: 0.125
   sounds:

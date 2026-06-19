@@ -14,4 +14,4 @@
   defaultSoundsBySex:
     Unsexed: UnisexVox
   voices:
-    UnisexVox: humanoid-profile-editor-voice-neutral
+  - UnisexVox

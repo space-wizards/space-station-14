@@ -13,5 +13,5 @@
     Male: MaleReptilian
     Female: FemaleReptilian
   voices:
-    MaleReptilian: humanoid-profile-editor-voice-masculine
-    FemaleReptilian: humanoid-profile-editor-voice-feminine
+  - MaleReptilian
+  - FemaleReptilian

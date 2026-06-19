@@ -10,5 +10,5 @@
     Male: MaleSlime
     Female: FemaleSlime
   voices:
-    MaleSlime: humanoid-profile-editor-voice-masculine
-    FemaleSlime: humanoid-profile-editor-voice-feminine
+  - MaleSlime
+  - FemaleSlime

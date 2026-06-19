@@ -13,4 +13,4 @@
     Male: UnisexMoth
     Female: UnisexMoth
   voices:
-    UnisexMoth: humanoid-profile-editor-voice-neutral
+  - UnisexMoth

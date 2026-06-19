@@ -15,4 +15,4 @@
   defaultSoundsBySex:
     Unsexed: UnisexDiona
   voices:
-    UnisexDiona: humanoid-profile-editor-voice-neutral
+  - UnisexDiona

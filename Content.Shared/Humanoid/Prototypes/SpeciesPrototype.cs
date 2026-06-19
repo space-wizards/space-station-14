@@ -98,11 +98,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     List of user selectable voices in the menu, with associated Loc.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<EmoteSoundsPrototype>, LocId> Voices = new()
-    {
-        {"MaleHuman", "humanoid-profile-editor-voice-masculine"},
-        {"FemaleHuman", "humanoid-profile-editor-voice-feminine"},
-    };
+    public HashSet<ProtoId<EmoteSoundsPrototype>> Voices = ["MaleHuman", "FemaleHuman"];
 
     /// <summary>
     ///     Characters younger than this are too young to be hired by Nanotrasen.

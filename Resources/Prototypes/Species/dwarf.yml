@@ -9,5 +9,5 @@
     Male: UnisexDwarf
     Female: FemaleDwarf
   voices:
-    UnisexDwarf: humanoid-profile-editor-voice-masculine
-    FemaleDwarf: humanoid-profile-editor-voice-feminine
+  - UnisexDwarf
+  - FemaleDwarf

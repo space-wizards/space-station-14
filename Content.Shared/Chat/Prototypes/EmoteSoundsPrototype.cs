@@ -14,6 +14,9 @@ public sealed partial class EmoteSoundsPrototype : IPrototype, IInheritingProtot
     [IdDataField]
     public string ID { get; private set; } = default!;
 
+    [DataField]
+    public LocId Name { get; private set; } = "humanoid-profile-editor-voice-none";
+
     /// <inheritdoc/>
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<EmoteSoundsPrototype>))]
     public string[]? Parents { get; private set; }

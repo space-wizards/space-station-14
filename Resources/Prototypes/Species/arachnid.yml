@@ -14,4 +14,4 @@
   defaultSoundsBySex:
     Unsexed: UnisexArachnid
   voices:
-    UnisexArachnid: humanoid-profile-editor-voice-neutral
+  - UnisexArachnid

@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Humanoid;
 public sealed class HumanoidProfileTests : GameTest
 {
     private static readonly EntProtoId BaseSpecies = "MobHuman";
-    private static readonly ProtoId<SpeciesPrototype> Slime = "Slime";
+    private static readonly ProtoId<SpeciesPrototype> SlimePerson = "SlimePerson";
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
     [SidedDependency(Side.Server)] private BodySystem _bodySystem = default!;
@@ -45,13 +45,13 @@ public sealed class HumanoidProfileTests : GameTest
                 .WithSex(Sex.Female)
                 .WithAge(67)
                 .WithGender(Gender.Neuter)
-                .WithSpecies(Slime));
+                .WithSpecies(SlimePerson));
             var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
             Assert.That(humanoidComponent.Age, Is.EqualTo(67));
             Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
             Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
-            Assert.That(humanoidComponent.Species, Is.EqualTo(Slime));
+            Assert.That(humanoidComponent.Species, Is.EqualTo(SlimePerson));
 
             var speciesProto = SProtoMan.Index(humanoidComponent.Species);
 
@@ -191,7 +191,7 @@ public sealed class HumanoidProfileTests : GameTest
             if (!proto.RoundStart)
                 return;
 
-            var voiceProtos = proto.Voices.Keys;
+            var voiceProtos = proto.Voices;
             var sexedProtos = proto.DefaultSoundsBySex.Values.ToHashSet();
 
             Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");

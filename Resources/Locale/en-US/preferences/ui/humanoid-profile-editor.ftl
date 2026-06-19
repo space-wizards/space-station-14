@@ -68,3 +68,4 @@ trait-category-quirks = Quirks
 humanoid-profile-editor-voice-masculine = Masculine
 humanoid-profile-editor-voice-feminine = Feminine
 humanoid-profile-editor-voice-neutral = Neutral
+humanoid-profile-editor-voice-none = Unnamed

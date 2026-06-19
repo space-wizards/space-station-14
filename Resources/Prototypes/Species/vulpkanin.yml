@@ -13,5 +13,5 @@
     Male: MaleVulpkanin
     Female: FemaleVulpkanin
   voices:
-    MaleVulpkanin: humanoid-profile-editor-voice-masculine
-    FemaleVulpkanin: humanoid-profile-editor-voice-feminine
+  - MaleVulpkanin
+  - FemaleVulpkanin

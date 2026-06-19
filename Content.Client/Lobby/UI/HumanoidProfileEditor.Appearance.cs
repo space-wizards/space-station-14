@@ -18,7 +18,7 @@ public sealed partial class HumanoidProfileEditor
 
     private ColorSelectorSliders _rgbSkinColorSelector;
     private List<SpeciesPrototype> _species = new();
-    private List<ProtoId<EmoteSoundsPrototype>> _voices = new();
+    private List<EmoteSoundsPrototype> _voices = new();
     private static readonly ProtoId<GuideEntryPrototype> DefaultSpeciesGuidebook = "Species";
 
     public void UpdateSpeciesGuidebookIcon()
@@ -109,21 +109,19 @@ public sealed partial class HumanoidProfileEditor
         _voices.Clear();
 
         var speciesPrototype = _prototypeManager.Index(Profile.Species);
-        var voices = speciesPrototype.Voices;
+        var availableVoices = speciesPrototype.Voices;
 
-        var voicesNames = voices.Values.ToList();
-        if (voices.Keys.ToList() is { } voiceIds)
-            _voices.AddRange(voiceIds);
+        _voices.AddRange(availableVoices.Select(protoId => _prototypeManager.Index(protoId)));
 
-        if (Profile?.Voice is { } voice && !_voices.Contains(voice))
+        if (Profile?.Voice is { } voice && _voices.All(proto => voice != proto.ID))
             SetVoice(speciesPrototype.DefaultSoundsBySex[Profile.Sex]);
 
-        for (var i = 0; i < voices.Count; i++)
+        for (var i = 0; i < availableVoices.Count; i++)
         {
-            var name = Loc.GetString(voicesNames[i]);
+            var name = Loc.GetString(_voices[i].Name);
             VoiceButton.AddItem(name, i);
 
-            if (Profile?.Voice.Equals(_voices[i]) == true)
+            if (Profile?.Voice.Equals((ProtoId<EmoteSoundsPrototype>)_voices[i].ID) == true)
             {
                 VoiceButton.SelectId(i);
             }
