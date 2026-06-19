@@ -9,6 +9,11 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class GasMinerComponent : Component
 {
     /// <summary>
+    /// If it should show the examine text
+    /// </summary>
+    public bool ShowExamineText = true;
+
+    /// <summary>
     ///     Operational state of the miner.
     /// </summary>
     [AutoNetworkedField]
