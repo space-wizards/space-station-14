@@ -144,5 +144,5 @@ seeds-anomaly-berry-name = anomaly berry
 seeds-anomaly-berry-display-name = anomaly berries
 seeds-bloonion-name = bloonion
 seeds-bloonion-display-name = bloonion bulbs
-seeds-sonion-name = sonion
-seeds-sonion-display-name = sonions
+seeds-sunion-name = sunion
+seeds-sunion-display-name = sunions

@@ -760,10 +760,10 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of sonion seeds
-  id: SonionSeeds
+  name: packet of sunion seeds
+  id: SunionSeeds
   components:
   - type: Seed
-    seedId: sonion
+    seedId: sunion
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/sonion.rsi
+    sprite: Objects/Specific/Hydroponics/sunion.rsi

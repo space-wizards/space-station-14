@@ -866,7 +866,7 @@
   productPrototypes:
     - FoodOnionRed
   mutationPrototypes:
-  - sonion
+  - sunion
   lifespan: 25
   maturation: 8
   production: 6
@@ -2030,14 +2030,14 @@
       PotencyDivisor: 10
 
 - type: seed
-  id: sonion
-  name: seeds-sonion-name
+  id: sunion
+  name: seeds-sunion-name
   noun: seeds-noun-seeds
-  displayName: seeds-sonion-display-name
-  plantRsi: Objects/Specific/Hydroponics/sonion.rsi
-  packetPrototype: SonionSeeds
+  displayName: seeds-sunion-display-name
+  plantRsi: Objects/Specific/Hydroponics/sunion.rsi
+  packetPrototype: SunionSeeds
   productPrototypes:
-  - FoodSonion
+  - FoodSunion
   lifespan: 25
   maturation: 15
   production: 3

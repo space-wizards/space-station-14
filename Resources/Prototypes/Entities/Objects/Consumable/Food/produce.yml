@@ -2811,21 +2811,21 @@
         - MobLayer
 
 - type: entity
-  name: sonion
+  name: sunion
   description: Shouldn't it be spelt with a u...?
   parent: [ SolutionCryo, ImpactGrenadeBase, ProduceBase, BaseMajorContraband ]
-  id: FoodSonion
+  id: FoodSunion
   components:
   - type: Appearance
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/sonion.rsi
+    sprite: Objects/Specific/Hydroponics/sunion.rsi
     state: produce
   - type: Item
     size: Normal
-    sprite: Objects/Specific/Hydroponics/sonion.rsi
+    sprite: Objects/Specific/Hydroponics/sunion.rsi
     heldPrefix: icon
   - type: Produce
-    seedId: sonion
+    seedId: sunion
   - type: Tag
     tags:
     - Vegetable
