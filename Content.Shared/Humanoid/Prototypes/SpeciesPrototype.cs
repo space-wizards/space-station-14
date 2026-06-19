@@ -93,7 +93,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     };
 
     /// <summary>
-    ///     List of user selectable voices in the menu, with associated Loc.
+    ///     List of user selectable voices in the menu. This should at least have the same sound banks as the defaults.
     /// </summary>
     [DataField]
     public HashSet<ProtoId<EmoteSoundsPrototype>> Voices = ["MaleHuman", "FemaleHuman"];
