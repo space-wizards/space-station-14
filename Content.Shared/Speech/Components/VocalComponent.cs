@@ -47,8 +47,9 @@ public sealed partial class VocalComponent : Component
     public EntityUid? EmoteActionEntity;
 
     /// <summary>
-    ///     Currently loaded emote sounds prototype, based on entity sex.
+    ///     Currently loaded emote sounds prototype, based on entity sex on humanoids.
     ///     Null if no valid prototype for entity sex was found.
+    ///     Non-humanoids, as well as non-round-start species should set this directly to provide emote sounds.
     /// </summary>
     [DataField]
     [AutoNetworkedField]

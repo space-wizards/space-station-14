@@ -111,7 +111,7 @@ public sealed partial class VocalSystem : EntitySystem
     }
 
     /// <summary>
-    /// This only works on Humanoids, and Mobs should have their voice prototype set directly instead.
+    /// This only works on Humanoids. Mobs should have emoteSounds on <see cref="VocalComponent"/> set directly instead.
     /// </summary>
     private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
