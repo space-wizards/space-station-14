@@ -92,7 +92,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         // Weight grid choice by tilecount
         var totalTiles = 0;
-        var grids = new List<(Entity<MapGridComponent> Entity, List<TileRef> Tiles)>();
+        var grids = new List<(Entity<MapGridComponent> Entity, int Count, List<TileRef> Tiles)>();
         foreach (var possibleTarget in station.Comp.Grids)
         {
             if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
@@ -101,13 +101,13 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             // Get the whole list of tiles for the given grid.
             // Ideally, we would be able to get the total count based on all of the grid's chunks
             // And then find the Nth available tile within that grid (in some sane order) later.
-            var tileList = _map.GetAllTiles(possibleTarget, comp).ToList();
+            var tileCount = _map.GetFilledTileCount((possibleTarget, comp));
 
             // Just to be sure, no empty elements.
-            if (tileList.Count > 0)
+            if (tileCount > 0)
             {
-                grids.Add(((possibleTarget, comp), tileList));
-                totalTiles += tileList.Count();
+                grids.Add(((possibleTarget, comp), tileCount, new()));
+                totalTiles += tileCount;
             }
         }
 
@@ -124,19 +124,52 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             TileRef? randomTileRef = null;
             MapGridComponent gridComp = default!;
             var startIndex = 0;
-            foreach (var grid in grids)
+            for (int j = 0; j < grids.Count; j++)
             {
+                var grid = grids[j];
                 // If the index is in this particular grid, find it and remove the tile to prevent selecting it twice.
-                if (startIndex + grid.Tiles.Count > nextTileIndex)
+                if (startIndex + grid.Count > nextTileIndex)
                 {
                     (targetGrid, gridComp) = grid.Entity;
-                    randomTileRef = grid.Tiles[nextTileIndex - startIndex];
-                    grid.Tiles.RemoveSwap(nextTileIndex - startIndex);
+
+                    // Empty list: hasn't been queried yet - get our tiles.
+                    if (grid.Tiles.Count <= 0)
+                    {
+                        grid.Tiles = _map.GetAllTiles(targetGrid, gridComp).ToList();
+
+                        // Actual list count doesn't match expected count (a bug), adjust total accordingly.
+                        // Total must match actual list count.
+                        if (grid.Tiles.Count != grid.Count)
+                        {
+                            totalTiles += grid.Tiles.Count - grid.Count;
+                            grid.Count = grid.Tiles.Count;
+
+                            // Empty list: remove list and reconsider this same index (good lord)
+                            if (grid.Tiles.Count <= 0)
+                            {
+                                grid.Tiles.RemoveSwap(j);
+                                j--;
+                                continue;
+                            }
+                        }
+                    }
+
+                    // Ensure tile index does not go out of bounds (needed due to list validation)
+                    var ourTileIndex = Math.Min(nextTileIndex - startIndex, grid.Tiles.Count - 1);
+
+                    randomTileRef = grid.Tiles[ourTileIndex];
+                    grid.Tiles.RemoveSwap(ourTileIndex);
+                    grid.Count--;
                     totalTiles--;
+
+                    // Empty list, remove element
+                    if (grid.Tiles.Count <= 0)
+                        grids.RemoveSwap(j);
+
                     break;
                 }
 
-                startIndex += grid.Tiles.Count;
+                startIndex += grid.Count;
             }
 
             // Out of valid tiles, or the lookup is buggy.
