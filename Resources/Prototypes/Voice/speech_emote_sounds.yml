@@ -534,6 +534,7 @@
 
 - type: emoteSounds
   id: FemaleVulpkanin
+  name: humanoid-profile-editor-voice-feminine
   params:
     variation: 0.125
   sounds:
