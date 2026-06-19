@@ -130,6 +130,9 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             device.TransmitFrequency = xmit.Frequency;
         }
 
+        // Needed for example for tests, so when there's a device, there's also always a manager that can handle it.
+        EnsureManager();
+
         if (device.AutoConnect)
             ConnectDevice(ent.AsNullable());
     }
