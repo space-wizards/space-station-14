@@ -1,0 +1,7 @@
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleHeavyLaserRecipe
+  result: XenoborgModuleHeavyLaser
+  materials:
+    Steel: 1500
+    Glass: 1500
