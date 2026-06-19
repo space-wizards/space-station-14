@@ -24,7 +24,7 @@ public sealed partial class HumanoidProfileComponent : Component
     /// or edit the <see cref="VocalComponent"/>
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<EmoteSoundsPrototype> Voice;
+    public ProtoId<EmoteSoundsPrototype> Voice = HumanoidCharacterProfile.DefaultVoice;
 
     [DataField, AutoNetworkedField]
     public Sex Sex;
