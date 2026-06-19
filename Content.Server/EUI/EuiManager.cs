@@ -32,6 +32,9 @@ namespace Content.Server.EUI
             _players.PlayerStatusChanged += PlayerStatusChanged;
         }
 
+        /// <summary>
+        /// Initialisation of the EuIManager.
+        /// </summary>
         public void Initialize()
         {
             _net.RegisterNetMessage<MsgEuiCtl>();
@@ -40,6 +43,9 @@ namespace Content.Server.EUI
             _sawmill = _log.GetSawmill("eui");
         }
 
+        /// <summary>
+        /// Dispatches all queued state updates to the respective clients.
+        /// </summary>
         public void SendUpdates()
         {
             while (_stateUpdateQueue.TryDequeue(out var tuple))
@@ -56,7 +62,12 @@ namespace Content.Server.EUI
                 ui.DoStateUpdate();
             }
         }
-
+        /// <summary>
+        /// sends an open message to a client.
+        /// </summary>
+        /// <param name="eui"></param>
+        /// <param name="player"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void OpenEui(BaseEui eui, ICommonSession player)
         {
             if (eui.Id != 0)
@@ -77,7 +88,10 @@ namespace Content.Server.EUI
 
             _net.ServerSendMessage(msg, player.Channel);
         }
-
+        /// <summary>
+        /// sends a close message to a client.
+        /// </summary>
+        /// <param name="eui"></param>
         public void CloseEui(BaseEui eui)
         {
             eui.Shutdown();
@@ -131,6 +145,10 @@ namespace Content.Server.EUI
             }
         }
 
+        /// <summary>
+        /// queues an update notification for a specific eui.
+        /// </summary>
+        /// <param name="eui"></param>
         public void QueueStateUpdate(BaseEui eui)
         {
             DebugTools.Assert(eui.Id != 0, "EUI has not been opened yet.");

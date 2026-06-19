@@ -16,6 +16,12 @@ namespace Content.Shared.Electrocution
             SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
         }
 
+        /// <summary>
+        /// Tries to set siemens Coefficient on an entities insulated component
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="siemensCoefficient"></param>
+        /// <param name="insulated"></param>
         public void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
         {
             if (!Resolve(uid, ref insulated))
@@ -41,6 +47,11 @@ namespace Content.Shared.Electrocution
             _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
         }
 
+        /// <summary>
+        /// Set a wires state.
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <param name="value"></param>
         public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
         {
             if (ent.Comp.IsWireCut == value)
@@ -52,6 +63,10 @@ namespace Content.Shared.Electrocution
             Dirty(ent);
         }
 
+        ///<summary>
+        /// Attempts to electrocute an entity interacting with electrified components.
+        /// Only call server side.
+        /// </summary>
         /// <param name="uid">Entity being electrocuted.</param>
         /// <param name="sourceUid">Source entity of the electrocution.</param>
         /// <param name="shockDamage">How much shock damage the entity takes.</param>

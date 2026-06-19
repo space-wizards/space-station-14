@@ -54,12 +54,25 @@ public sealed partial class ExplosionSystem
         ReloadMap();
     }
 
+
+    /// <summary>
+    /// Update the map of explosion blockers.
+    /// </summary>
+    /// <param name="gridId">The entity of the grid.</param>
+    /// <param name="tile">Coordinate of the tile</param>
+    /// <param name="grid">Ignore, function will resolve from grid id anyways.</param>
+    /// <see cref="UpdateAirtightMap(EntityUid, MapGridComponent, Vector2i)"/>
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null)
     {
         if (Resolve(gridId, ref grid, false))
             UpdateAirtightMap(gridId, grid, tile);
     }
-
+/// <summary>
+/// Gives copy of local tolerance data given its index.
+/// </summary>
+/// <param name="idx">A TileData.ToleranceCacheIndex value</param>
+/// <returns></returns>
+/// <see cref="TileData.ToleranceCacheIndex"/>
     [Access(typeof(ExplosionGridTileFlood))]
     public ToleranceValues GetToleranceValues(int idx)
     {
