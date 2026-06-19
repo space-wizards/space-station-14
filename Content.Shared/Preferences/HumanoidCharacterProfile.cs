@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -33,6 +34,7 @@ namespace Content.Shared.Preferences
     public sealed partial class HumanoidCharacterProfile
     {
         public static readonly ProtoId<SpeciesPrototype> DefaultSpecies = "Human";
+        public static readonly ProtoId<EmoteSoundsPrototype> DefaultVoice = "MaleHuman";
         private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-]");
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
@@ -89,7 +91,7 @@ namespace Content.Shared.Preferences
         public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
-        public ProtoId<EmoteSoundsPrototype> Voice { get; set; } = "MaleHuman";
+        public ProtoId<EmoteSoundsPrototype> Voice { get; set; } = DefaultVoice;
 
         [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
@@ -245,7 +247,7 @@ namespace Content.Shared.Preferences
 
             var sex = Sex.Unsexed;
             var age = 18;
-            var voice = "MaleHuman"; // Banishing someone to no voice would be unfortunate
+            var voice = DefaultVoice; // Banishing someone to no voice would be unfortunate
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
