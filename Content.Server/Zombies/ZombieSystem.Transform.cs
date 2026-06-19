@@ -17,6 +17,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.CombatMode;
+using Content.Shared.CombatMode.AttackWhitelist;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -45,6 +46,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.Roles;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Zombies;
@@ -57,6 +59,7 @@ namespace Content.Server.Zombies;
 /// </remarks>
 public sealed partial class ZombieSystem
 {
+    [Dependency] private IComponentFactory _compFactory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IChatManager _chatMan = default!;
@@ -78,8 +81,17 @@ public sealed partial class ZombieSystem
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     private static readonly ProtoId<NpcFactionPrototype> ZombieFaction = "Zombie";
     private static readonly string MindRoleZombie = "MindRoleZombie";
+    private static readonly List<Type> ComponentsZombieCantAttack = [typeof(ZombieComponent), typeof(IncurableZombieComponent)];
     private static readonly List<ProtoId<AntagPrototype>> BannableZombiePrototypes = ["Zombie"];
     internal static readonly HashSet<HumanoidVisualLayers> AdditionalZombieLayers = [HumanoidVisualLayers.Tail, HumanoidVisualLayers.HeadSide, HumanoidVisualLayers.HeadTop, HumanoidVisualLayers.Snout];
+
+    private static string[] NameComponentsZombieCantAttack = [];
+
+    public void TransformInitialize()
+    {
+        NameComponentsZombieCantAttack =
+            ComponentsZombieCantAttack.Select(type => _compFactory.GetComponentName(type)).ToArray();
+    }
 
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
@@ -146,6 +158,13 @@ public sealed partial class ZombieSystem
         RemComp<LegsParalyzedComponent>(target);
         RemComp<ComplexInteractionComponent>(target);
         RemComp<SentienceTargetComponent>(target);
+
+        //make sure they can't hit other zombies
+        var attackWhitelist = EnsureComp<AttackWhitelistComponent>(target);
+        attackWhitelist.Blacklist = new EntityWhitelist
+        {
+            Components = NameComponentsZombieCantAttack,
+        };
 
         //funny voice
         var accentType = "zombie";
