@@ -330,6 +330,9 @@ namespace Content.Server.Cargo.Systems
             CargoConsoleRemoveOrderMessage args
         )
         {
+            if (component.Mode == CargoOrderConsoleMode.PrintSlip)
+                return;
+
             var station = _station.GetOwningStation(uid);
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
