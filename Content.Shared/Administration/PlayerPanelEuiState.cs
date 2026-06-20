@@ -16,7 +16,9 @@ public sealed class PlayerPanelEuiState(
     bool? whitelisted,
     bool canFreeze,
     bool frozen,
-    bool canAhelp)
+    bool canAhelp,
+    float trustScore,
+    DateTime? accountCreationDate)
     : EuiStateBase
 {
     public readonly NetUserId Guid = guid;
@@ -30,6 +32,8 @@ public sealed class PlayerPanelEuiState(
     public readonly bool CanFreeze = canFreeze;
     public readonly bool Frozen = frozen;
     public readonly bool CanAhelp = canAhelp;
+    public readonly float TrustScore = trustScore;
+    public readonly DateTime? AccountCreationDate = accountCreationDate;
 }
 
 
