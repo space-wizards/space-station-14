@@ -118,7 +118,7 @@ public sealed partial class HumanoidProfileEditor
 
         for (var i = 0; i < availableVoices.Count; i++)
         {
-            var name = Loc.GetString(_voices[i].Name);
+            var name = Loc.GetString(_voices[i].VoiceSelectorName);
             VoiceButton.AddItem(name, i);
 
             if (Profile?.Voice.Equals(_voices[i].ID) == true)
