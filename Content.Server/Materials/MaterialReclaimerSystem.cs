@@ -258,10 +258,13 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             }
         }
 
-        if (totalChemicals.Volume > 0 &&
-            (reclaimerComponent.SolutionContainerId == null ||
+        // Transfer or spill the solution if there's anything to move.
+        if (totalChemicals.Volume <= 0)
+            return;
+
+        if (reclaimerComponent.SolutionContainerId == null ||
             !_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||
-            !_solutionContainer.TryTransferSolution(outputSolution.Value, totalChemicals, totalChemicals.Volume)))
+            !_solutionContainer.TryTransferSolution(outputSolution.Value, totalChemicals, totalChemicals.Volume))
         {
             _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);
         }
