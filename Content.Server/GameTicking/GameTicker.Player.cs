@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking
                     {
                         var userData = session.Channel.UserData;
                         var trust = userData.Trust;
-                        if (IPAddress.IsLoopback(session.Channel.RemoteEndPoint.Address))
+                        if (session.Name.StartsWith("localhost@")) // Lazy :3
                         {
                             trust = 1.0f; // Localhost should be inherently trusted.
                         }
