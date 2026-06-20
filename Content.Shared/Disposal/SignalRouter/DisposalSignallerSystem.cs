@@ -10,7 +10,7 @@ namespace Content.Shared.Disposal.SignalRouter;
 /// </summary>
 public sealed partial class DisposalSignallerSystem : EntitySystem
 {
-    [Dependency] private SharedDeviceLinkSystem _link = default!;
+    [Dependency] private DeviceLinkSystem _link = default!;
 
     public override void Initialize()
     {

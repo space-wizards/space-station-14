@@ -21,7 +21,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAnomalySystem _anomaly = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedTransformSystem _transform = default!;

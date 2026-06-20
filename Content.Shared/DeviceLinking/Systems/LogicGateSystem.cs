@@ -1,8 +1,5 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -10,7 +7,7 @@ using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class LogicGateSystem : EntitySystem
 {

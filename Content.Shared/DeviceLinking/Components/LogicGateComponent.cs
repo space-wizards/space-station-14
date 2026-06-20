@@ -1,15 +1,15 @@
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// A logic gate that sets its output port by doing an operation on its 2 input ports, A and B.
 /// </summary>
-[RegisterComponent, Access(typeof(LogicGateSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(LogicGateSystem))]
 public sealed partial class LogicGateComponent : Component
 {
     /// <summary>
@@ -22,7 +22,7 @@ public sealed partial class LogicGateComponent : Component
     /// Tool quality to use for cycling logic gate operations.
     /// Cannot be pulsing since linking uses that.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<ToolQualityPrototype> CycleQuality = "Screwing";
 
     /// <summary>
@@ -34,28 +34,28 @@ public sealed partial class LogicGateComponent : Component
     /// <summary>
     /// Name of the first input port.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SinkPortPrototype> InputPortA = "InputA";
 
     /// <summary>
     /// Name of the second input port.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SinkPortPrototype> InputPortB = "InputB";
 
     /// <summary>
     /// Name of the output port.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort = "Output";
 
     // Initial state, used to not spam invoke ports
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SignalState StateA = SignalState.Low;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SignalState StateB = SignalState.Low;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool LastOutput;
 }

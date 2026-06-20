@@ -3,17 +3,22 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
 
-public abstract partial class SharedDeviceLinkSystem : EntitySystem
+public sealed partial class DeviceLinkSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
@@ -23,9 +28,59 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
+        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentHandleState>(OnHandleState);
+
+        SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<DeviceLinkSourceComponent, NewLinkEvent>(OnNewLink);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
+    }
+
+    private void OnGetState(Entity<DeviceLinkSourceComponent> ent, ref ComponentGetState args)
+    {
+        var netOutputs = new Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>>(ent.Comp.Outputs.Count);
+        foreach (var (key, output) in ent.Comp.Outputs)
+        {
+            var set = GetNetEntitySet(output);
+            netOutputs.Add(key, set);
+        }
+
+        args.State = new DeviceLinkSourceComponentState(netOutputs, ent.Comp.LastSignals, GetNetEntityDictionary(ent.Comp.LinkedPorts));
+    }
+
+    private void OnHandleState(Entity<DeviceLinkSourceComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not DeviceLinkSourceComponentState state)
+            return;
+
+        var outputs = new Dictionary<ProtoId<SourcePortPrototype>, HashSet<EntityUid>>(state.Outputs.Count);
+        foreach (var (key, output) in state.Outputs)
+        {
+            var netSet = GetEntitySet(output);
+            var set = new HashSet<EntityUid>(netSet.Count);
+            foreach (var uid in netSet)
+            {
+                if (Exists(uid) && !TerminatingOrDeleted(uid))
+                    set.Add(uid);
+            }
+
+            outputs.Add(key, set);
+        }
+
+        var linked = new Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>>(state.LinkedPorts.Count);
+        foreach (var (net, value) in state.LinkedPorts)
+        {
+            if (TryGetEntity(net, out var uid))
+                linked.Add(uid.Value, value);
+        }
+
+        ent.Comp.Outputs = outputs;
+        ent.Comp.LinkedPorts = linked;
+        ent.Comp.LastSignals = state.LastSignals;
     }
 
     #region Link Validation
@@ -323,10 +378,13 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
             sourceComponent.LinkedPorts.GetOrNew(sinkUid).Add((source, sink));
 
             SendNewLinkEvent(userId, sourceUid, source, sinkUid, sink);
+            Dirty(sourceUid, sourceComponent);
         }
 
         if (links.Count > 0)
             sinkComponent.LinkedSources.Add(sourceUid);
+
+        DirtyField(sinkUid, sinkComponent, nameof(DeviceLinkSinkComponent.LinkedSources));
     }
 
     /// <summary>
@@ -399,6 +457,9 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         {
             outputList.Remove(sinkUid);
         }
+
+        DirtyField(sinkUid, sinkComponent, nameof(DeviceLinkSinkComponent.LinkedSources));
+        Dirty(sourceUid, sourceComponent);
     }
 
     /// <summary>
@@ -456,6 +517,8 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
             CreateLinkPopup(userId, sourceUid, source, sinkUid, sink, false);
         }
 
+        DirtyField(sinkUid, sinkComponent, nameof(DeviceLinkSinkComponent.LinkedSources));
+        Dirty(sourceUid, sourceComponent);
         return true;
     }
 
@@ -534,18 +597,129 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     #endregion
 
     #region Sending & Receiving
-    /// <summary>
-    /// Sends a network payload directed at the sink entity.
-    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
-    /// </summary>
-    /// <param name="uid">The source uid that invokes the port</param>
-    /// <param name="port">The port to invoke</param>
-    /// <param name="data">Optional data to send along</param>
-    /// <param name="sourceComponent"></param>
-    public virtual void InvokePort(EntityUid uid, string port, NetworkPayload? data = null,
-        DeviceLinkSourceComponent? sourceComponent = null)
+    public void InvokePort(EntityUid uid, string port, NetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
     {
-        // NOOP on client for the moment.
+        if (!Resolve(uid, ref sourceComponent) || !sourceComponent.Outputs.TryGetValue(port, out var sinks))
+            return;
+
+        foreach (var sinkUid in sinks)
+        {
+            if (!sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
+                continue;
+
+            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+                continue;
+
+            foreach (var (source, sink) in links)
+            {
+                if (source == port)
+                    InvokeDirect((uid, sourceComponent), (sinkUid, sinkComponent), source, sink, data);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Raises an event on or sends a network packet directly to a sink from a source.
+    /// </summary>
+    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, NetworkPayload? data)
+    {
+        if (!Resolve(sink, ref sink.Comp))
+            return;
+
+        var invokeCounter = GetEffectiveInvokeCounter(sink.Comp);
+        if (invokeCounter > sink.Comp.InvokeLimit)
+        {
+            SetInvokeCounter(sink!, 0);
+            var args = new DeviceLinkOverloadedEvent();
+            RaiseLocalEvent(sink, ref args);
+            RemoveAllFromSink(sink, sink.Comp);
+            return;
+        }
+
+        SetInvokeCounter(sink!, invokeCounter + 1);
+
+        //Just skip using device networking if the source or the sink doesn't support it
+        if (!HasComp<DeviceNetworkComponent>(source) || !TryComp<DeviceNetworkComponent>(sink, out var sinkNetwork))
+        {
+            var eventArgs = new SignalReceivedEvent(sinkPort, source);
+            RaiseLocalEvent(sink, ref eventArgs);
+            return;
+        }
+
+        var payload = new SignalPayload
+        {
+            InvokedPort = sinkPort,
+            Payload = data,
+        };
+
+        // force using wireless network so things like atmos devices are able to send signals
+        var network = (int) DeviceNetIdDefaults.Wireless;
+        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Address, payload, sinkNetwork.ReceiveFrequency, network);
+    }
+
+    /// <summary>
+    /// Helper function that invokes a port with a high/low binary logic signal.
+    /// </summary>
+    public void SendSignal(EntityUid uid, string port, bool signal, DeviceLinkSourceComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        var data = new LogicStatePayload
+        {
+            State = signal ? SignalState.High : SignalState.Low
+        };
+        InvokePort(uid, port, data, comp);
+
+        comp.LastSignals[port] = signal;
+    }
+
+    /// <summary>
+    /// Clears the last signals state for linking.
+    /// This is not to be confused with sending a low signal, this is the complete absence of anything.
+    /// Use if the device is in an invalid state and has no reasonable output signal.
+    /// </summary>
+    public void ClearSignal(Entity<DeviceLinkSourceComponent?> ent, string port)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.LastSignals.Remove(port);
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Checks if the payload has a port defined and if the port is present on the sink.
+    /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
+    /// </summary>
+    private void OnPacketReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent args)
+    {
+        var (uid, component) = ent;
+        if (args.Data is not SignalPayload payload
+            || !component.Ports.Contains(payload.InvokedPort))
+            return;
+
+        var eventArgs = new SignalReceivedEvent(payload.InvokedPort, args.Sender, args.Data);
+        RaiseLocalEvent(uid,  ref eventArgs);
+    }
+
+    /// <summary>
+    /// When linking from a port that currently has a signal being sent, invoke the new link with that signal.
+    /// </summary>
+    private void OnNewLink(Entity<DeviceLinkSourceComponent> ent, ref NewLinkEvent args)
+    {
+        if (args.Source != ent.Owner)
+            return;
+
+        // only do anything if a signal is being sent from a port
+        if (!ent.Comp.LastSignals.TryGetValue(args.SourcePort, out var signal))
+            return;
+
+        var payload = new LogicStatePayload
+        {
+            State = signal ? SignalState.High : SignalState.Low
+        };
+        InvokeDirect(ent, args.Sink, args.SourcePort, args.SinkPort, payload);
     }
     #endregion
 
@@ -569,9 +743,10 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
         return Math.Max(0, sink.InvokeCounter - (int)tickDelta);
     }
 
-    protected void SetInvokeCounter(DeviceLinkSinkComponent sink, int value)
+    private void SetInvokeCounter(Entity<DeviceLinkSinkComponent> sink, int value)
     {
-        sink.InvokeCounterTick = _gameTiming.CurTick;
-        sink.InvokeCounter = value;
+        sink.Comp.InvokeCounterTick = _gameTiming.CurTick;
+        sink.Comp.InvokeCounter = value;
+        DirtyFields(sink.AsNullable(), null, nameof(DeviceLinkSinkComponent.InvokeCounterTick), nameof(DeviceLinkSinkComponent.InvokeCounter));
     }
 }

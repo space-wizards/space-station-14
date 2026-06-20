@@ -1,14 +1,13 @@
-using Content.Server.DeviceLinking.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.MachineLinking;
 using Content.Shared.TextScreen;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class SignalTimerSystem : EntitySystem
 {
@@ -16,7 +15,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private DeviceLinkSystem _signalSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private AccessReaderSystem _accessReader = default!;
 
     /// <summary>
@@ -50,7 +49,9 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         if (_ui.HasUi(uid, SignalTimerUiKey.Key))
         {
-            _ui.SetUiState(uid, SignalTimerUiKey.Key, new SignalTimerBoundUserInterfaceState(component.Label,
+            _ui.SetUiState(uid,
+                SignalTimerUiKey.Key,
+                new SignalTimerBoundUserInterfaceState(component.Label,
                 TimeSpan.FromSeconds(component.Delay).Minutes.ToString("D2"),
                 TimeSpan.FromSeconds(component.Delay).Seconds.ToString("D2"),
                 component.CanEditLabel,
@@ -72,7 +73,9 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
         if (_ui.HasUi(uid, SignalTimerUiKey.Key))
         {
-            _ui.SetUiState(uid, SignalTimerUiKey.Key, new SignalTimerBoundUserInterfaceState(signalTimer.Label,
+            _ui.SetUiState(uid,
+                SignalTimerUiKey.Key,
+                new SignalTimerBoundUserInterfaceState(signalTimer.Label,
                 TimeSpan.FromSeconds(signalTimer.Delay).Minutes.ToString("D2"),
                 TimeSpan.FromSeconds(signalTimer.Delay).Seconds.ToString("D2"),
                 signalTimer.CanEditLabel,

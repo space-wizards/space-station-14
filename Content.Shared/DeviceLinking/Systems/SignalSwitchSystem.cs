@@ -1,11 +1,10 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class SignalSwitchSystem : EntitySystem
 {

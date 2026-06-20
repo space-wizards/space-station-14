@@ -85,7 +85,7 @@ public sealed class DeviceNet
     {
         var deviceComp = ent.Comp;
         var device = new Device(ent);
-        if (deviceComp.Address == null || !Devices.Remove(deviceComp.Address))
+        if (!Devices.Remove(deviceComp.Address))
             return false;
 
         if (deviceComp.ReceiveFrequency is not { } freq)

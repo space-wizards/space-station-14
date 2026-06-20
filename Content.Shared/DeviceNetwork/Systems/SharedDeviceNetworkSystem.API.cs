@@ -1,14 +1,23 @@
-﻿using Content.Shared.DeviceNetwork;
-using Content.Shared.DeviceNetwork.Components;
+﻿using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 
-namespace Content.Server.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceNetwork.Systems;
 
-public sealed partial class DeviceNetworkSystem
+public abstract partial class SharedDeviceNetworkSystem
 {
+    /// <summary>
+    /// Sends the given payload as a device network packet to the entity with the given address and frequency.
+    /// Addresses are given to the DeviceNetworkComponent of an entity when connecting.
+    /// </summary>
+    /// <param name="ent">The sending entity</param>
+    /// <param name="address">The address of the entity that the packet gets sent to. If null, the message is broadcast to all devices on that frequency (except the sender)</param>
+    /// <param name="frequency">The frequency to send on</param>
+    /// <param name="data">The data to be sent</param>
+    /// <param name="network">Device network override</param>
+    /// <returns>Returns true when the packet was successfully enqueued.</returns>
     [PublicAPI]
-    public override bool QueuePacket(
+    public bool QueuePacket(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         NetworkPayload data,
@@ -18,19 +27,18 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        var device = ent.Comp;
-        if (device.Address == string.Empty)
+        if (ent.Comp.Address == string.Empty)
             return false;
 
-        frequency ??= device.TransmitFrequency;
+        frequency ??= ent.Comp.TransmitFrequency;
 
         if (frequency == null)
             return false;
 
-        network ??= device.DeviceNetId;
+        network ??= ent.Comp.DeviceNetId;
 
         var manager = EnsureManager();
-        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, ent, data));
+        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, ent.Comp.Address, ent, data));
         return true;
     }
 
@@ -102,7 +110,7 @@ public sealed partial class DeviceNetworkSystem
             return false;
 
         var success = deviceNet.Add(ent!);
-        Dirty(ent);
+        DirtyField(ent, nameof(DeviceNetworkComponent.Address));
         return success;
     }
 
@@ -122,9 +130,7 @@ public sealed partial class DeviceNetworkSystem
         if (preventAutoConnect)
             ent.Comp.AutoConnect = false;
 
-        var result = deviceNet.Remove(ent!);
-        CheckClearManager();
-        return result;
+        return deviceNet.Remove(ent!);
     }
 
     /// <summary>
@@ -134,15 +140,14 @@ public sealed partial class DeviceNetworkSystem
     [PublicAPI]
     public bool IsDeviceConnected(Entity<DeviceNetworkComponent?> ent)
     {
-        var (uid, deviceComp) = ent;
-        if (!Resolve(uid, ref deviceComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
         if (!TryGetManager(out var manager)
-            || !manager.Value.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
+            || !manager.Value.Comp.Networks.TryGetValue(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
-        var device = new Device((uid, deviceComp));
+        var device = new Device(ent!);
         return deviceNet.Devices.ContainsValue(device);
     }
 
@@ -175,7 +180,7 @@ public sealed partial class DeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.ReceiveFrequency));
     }
 
     [PublicAPI]
@@ -183,6 +188,8 @@ public sealed partial class DeviceNetworkSystem
     {
         if (Resolve(ent.Owner, ref ent.Comp, false))
             ent.Comp.TransmitFrequency = frequency;
+
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.TransmitFrequency));
     }
 
     [PublicAPI]
@@ -200,7 +207,7 @@ public sealed partial class DeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveAll = receiveAll;
         deviceNet.Add(ent!);
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.ReceiveAll));
     }
 
     [PublicAPI]
@@ -219,7 +226,7 @@ public sealed partial class DeviceNetworkSystem
         ent.Comp.CustomAddress = true;
         ent.Comp.Address = address;
         deviceNet.Add(ent!);
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
     }
 
     [PublicAPI]
@@ -235,6 +242,6 @@ public sealed partial class DeviceNetworkSystem
         ent.Comp.CustomAddress = false;
         ent.Comp.Address = "";
         deviceNet.Add(ent!);
-        Dirty(ent);
+        DirtyFields(ent, null, nameof(DeviceNetworkComponent.Address), nameof(DeviceNetworkComponent.CustomAddress));
     }
 }

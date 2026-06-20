@@ -15,7 +15,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

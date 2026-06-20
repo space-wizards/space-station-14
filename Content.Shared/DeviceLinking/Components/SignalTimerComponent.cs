@@ -1,10 +1,10 @@
-using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.DeviceLinking.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SignalTimerComponent : Component
 {
     [DataField]
@@ -54,5 +54,5 @@ public sealed partial class SignalTimerComponent : Component
     ///     When a larger number is in the input box, the display will start counting down from this one instead
     /// </summary>
     [DataField]
-    public Double MaxDuration = 3599; // 59m 59s
+    public double MaxDuration = 3599; // 59m 59s
 }

@@ -4,11 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SharedDeviceNetworkSystem), typeof(DeviceNet))]
 public sealed partial class DeviceNetworkComponent : Component
 {
-    [DataField("deviceNetId")]
+    [DataField("deviceNetId"), AutoNetworkedField]
     public DeviceNetIdDefaults NetIdEnum { get; set; }
 
     public int DeviceNetId => (int) NetIdEnum;
@@ -16,7 +16,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// <summary>
     ///     The frequency that this device is listening on.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public uint? ReceiveFrequency;
 
     /// <summary>
@@ -29,7 +29,7 @@ public sealed partial class DeviceNetworkComponent : Component
     /// <summary>
     ///     The frequency that this device going to try transmit on.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public uint? TransmitFrequency;
 
     /// <summary>
@@ -50,20 +50,20 @@ public sealed partial class DeviceNetworkComponent : Component
     ///     If true, the address was customized and should be preserved across networks. If false, a randomly
     ///     generated address will be created whenever this device connects to a network.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CustomAddress;
 
     /// <summary>
     ///     Prefix to prepend to any automatically generated addresses. Helps players to identify devices. This gets
     ///     localized.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? Prefix;
 
     /// <summary>
     ///     Whether the device should listen for all device messages, regardless of the intended recipient.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ReceiveAll;
 
     /// <summary>
@@ -83,26 +83,26 @@ public sealed partial class DeviceNetworkComponent : Component
     ///     Whether to send the broadcast recipients list to the sender so it can be filtered.
     /// <see cref="DeviceListSystem"/>
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool SendBroadcastAttemptEvent;
 
     /// <summary>
     ///     Whether this device's address can be saved to device-lists
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool SavableAddress = true;
 
     /// <summary>
     ///     A list of device-lists that this device is on.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     [Access(typeof(SharedDeviceListSystem))]
     public HashSet<EntityUid> DeviceLists = new();
 
     /// <summary>
     ///     A list of configurators that this device is on.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     [Access(typeof(SharedNetworkConfiguratorSystem))]
     public HashSet<EntityUid> Configurators = new();
 }

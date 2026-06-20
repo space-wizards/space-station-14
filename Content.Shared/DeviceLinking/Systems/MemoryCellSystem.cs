@@ -1,8 +1,7 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.DeviceLinking.Events;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 /// <summary>
 /// Handles the control of output based on the input and enable ports.

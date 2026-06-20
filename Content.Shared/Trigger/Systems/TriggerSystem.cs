@@ -40,7 +40,7 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ItemToggleSystem _itemToggle = default!;
-    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedRoleSystem _role = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;

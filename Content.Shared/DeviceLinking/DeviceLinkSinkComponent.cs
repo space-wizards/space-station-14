@@ -1,13 +1,11 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.DeviceLinking;
 
-[RegisterComponent]
-[NetworkedComponent] // for interactions. Actual state isn't currently synced.
-[Access(typeof(SharedDeviceLinkSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[Access(typeof(DeviceLinkSystem))]
 public sealed partial class DeviceLinkSinkComponent : Component
 {
     /// <summary>
@@ -20,13 +18,14 @@ public sealed partial class DeviceLinkSinkComponent : Component
     /// Used for removing a sink from all linked sources when this component gets removed.
     /// This is not serialized to yaml as it can be inferred from source components.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public HashSet<EntityUid> LinkedSources = new();
 
     /// <summary>
     /// The tick <see cref="InvokeCounter"/> was set at. Used to calculate the real value for the current tick.
     /// </summary>
-    [Access(typeof(SharedDeviceLinkSystem), Other = AccessPermissions.None)]
+    [Access(typeof(DeviceLinkSystem), Other = AccessPermissions.None)]
+    [AutoNetworkedField]
     public GameTick InvokeCounterTick;
 
     /// <summary>
@@ -34,10 +33,10 @@ public sealed partial class DeviceLinkSinkComponent : Component
     /// </summary>
     /// <remarks>
     /// This is stored relative to <see cref="InvokeCounterTick"/>. For reading the real value,
-    /// <see cref="SharedDeviceLinkSystem.GetEffectiveInvokeCounter"/> should be used.
+    /// <see cref="DeviceLinkSystem.GetEffectiveInvokeCounter"/> should be used.
     /// </remarks>
-    [DataField]
-    [Access(typeof(SharedDeviceLinkSystem), Other = AccessPermissions.None)]
+    [DataField, AutoNetworkedField]
+    [Access(typeof(DeviceLinkSystem), Other = AccessPermissions.None)]
     public int InvokeCounter;
 
     /// <summary>

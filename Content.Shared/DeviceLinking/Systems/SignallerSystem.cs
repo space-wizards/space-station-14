@@ -1,15 +1,14 @@
-using Content.Server.Administration.Logs;
-using Content.Server.DeviceLinking.Components;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Timing;
 
-namespace Content.Server.DeviceLinking.Systems;
+namespace Content.Shared.DeviceLinking.Systems;
 
 public sealed partial class SignallerSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _link = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

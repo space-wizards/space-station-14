@@ -1,13 +1,13 @@
-using Content.Server.DeviceLinking.Systems;
-using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.DeviceLinking.Components;
+namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// Memory cell that sets the output to the input when enabled.
 /// </summary>
-[RegisterComponent, Access(typeof(MemoryCellSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(MemoryCellSystem))]
 public sealed partial class MemoryCellComponent : Component
 {
     /// <summary>
@@ -29,12 +29,12 @@ public sealed partial class MemoryCellComponent : Component
     public ProtoId<SourcePortPrototype> OutputPort = "Output";
 
     // State
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SignalState InputState = SignalState.Low;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SignalState EnableState = SignalState.Low;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool LastOutput;
 }

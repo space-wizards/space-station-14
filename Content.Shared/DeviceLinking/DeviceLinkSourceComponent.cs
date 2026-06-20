@@ -1,11 +1,11 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceLinking;
 
-[RegisterComponent]
-[NetworkedComponent] // for interactions. Actual state isn't currently synced.
-[Access(typeof(SharedDeviceLinkSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(DeviceLinkSystem))]
 public sealed partial class DeviceLinkSourceComponent : Component
 {
     /// <summary>
@@ -17,7 +17,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// <summary>
     /// Dictionary mapping each port to a set of linked sink entities.
     /// </summary>
-    [ViewVariables] // This is not serialized as it can be constructed from LinkedPorts
+    [ViewVariables] // This is not YAML serialized as it can be constructed from LinkedPorts
     public Dictionary<ProtoId<SourcePortPrototype>, HashSet<EntityUid>> Outputs = new();
 
     /// <summary>
@@ -39,4 +39,23 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// </summary>
     [DataField]
     public float Range = 30f;
+}
+
+[Serializable, NetSerializable]
+public sealed class DeviceLinkSourceComponentState : ComponentState
+{
+    // This component state exists just because of this   V   nested EntityUid hashset. Someone send help.
+    public Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> Outputs;
+    public Dictionary<ProtoId<SourcePortPrototype>, bool> LastSignals;
+    public Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts;
+
+    public DeviceLinkSourceComponentState(
+        Dictionary<ProtoId<SourcePortPrototype>, HashSet<NetEntity>> outputs,
+        Dictionary<ProtoId<SourcePortPrototype>, bool> lastSignals,
+        Dictionary<NetEntity, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> linkedPorts)
+    {
+        Outputs = outputs;
+        LastSignals = lastSignals;
+        LinkedPorts = linkedPorts;
+    }
 }

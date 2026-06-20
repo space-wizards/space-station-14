@@ -1,6 +1,6 @@
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Shared.DeviceLinking;
 
 namespace Content.Server.Shuttles.Systems;
 
