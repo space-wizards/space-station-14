@@ -11,7 +11,6 @@
       time: 10h
   access:
   - Maintenance
-  - Command
   - Service
   - External # to pick up people trapped in the tramway's space
   special: # we don't want it becoming an antag... for now at least
@@ -24,18 +23,16 @@
     shoes: ClothingShoesBootsLaceup
     id: TramDriverPDA
     ears: ClothingHeadsetService
- # storage:
- #   back:
- #  - RubberStampPsychologist
+    neck: ClothingNeckTieSerious
 
 - type: chameleonOutfit
   id: TramDriverChameleonOutfit
   job: TramDriver
   equipment:
-    head: ClothingHeadHatBeretMedic
-    eyes: ClothingEyesHudMedical
-    mask: ClothingMaskSterile
-    outerClothing: ClothingOuterCoatLab
-    neck: ClothingNeckStethoscope
-    belt: ClothingBeltMedical
-    gloves: ClothingHandsGlovesLatex
+    head: ClothingHeadHatTramDriver
+    eyes: ClothingEyesGlasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterSuitTramDriver
+    neck: ClothingNeckTieSerious
+    belt: ClothingBeltUtility
+    gloves: ClothingHandsGlovesWhite

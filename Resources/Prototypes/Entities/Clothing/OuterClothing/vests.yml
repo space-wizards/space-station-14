@@ -96,14 +96,3 @@
         shader: unshaded
       - state: equipped-OUTERCLOTHING-unshaded-vox
         shader: shaded
-
-- type: entity
-  parent: ClothingOuterBase
-  id: ClothingOuterTramDriverVest
-  name: tram driver vest
-  description: It protects from everything that could distract you. That is, nothing at all.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Vests/tramdriver.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Vests/tramdriver.rsi

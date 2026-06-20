@@ -211,3 +211,4 @@ loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
 loadout-group-tramdriver-jumpsuit = Tram driver jumpsuit
 loadout-group-tramdriver-outerclothing = Tram driver vest
 loadout-group-tramdriver-hat = Tram driver hat
+loadout-group-tramdriver-gloves = Tram driver gloves

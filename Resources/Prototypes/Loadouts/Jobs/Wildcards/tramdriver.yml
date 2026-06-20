@@ -6,12 +6,23 @@
 
 # Outer clothing
 - type: loadout
-  id: TramDriverVest
+  id: TramDriverSuit
   equipment:
-    outerClothing: ClothingOuterTramDriverVest
+    outerClothing: ClothingOuterSuitTramDriver
 
 # Hat
 - type: loadout
   id: TramDriverHat
   equipment:
     head: ClothingHeadHatTramDriver
+
+# Glove
+- type: loadout
+  id: TramDriverGlovesWhite
+  equipment:
+    head: ClothingHandsGlovesColorWhite
+
+- type: loadout
+  id: TramDriverGlovesBlack
+  equipment:
+    head: ClothingHandsGlovesColorBlack

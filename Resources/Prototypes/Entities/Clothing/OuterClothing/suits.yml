@@ -336,3 +336,13 @@
   - type: StaticPrice
     price: 1500
 
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitTramDriver
+  name: tram driver suit
+  description: It protects from everything that could distract you. That is, nothing at all.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/tramdriver.rsi
