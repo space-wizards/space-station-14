@@ -1,0 +1,32 @@
+- type: job
+  id: TramDriver
+  name: job-name-tram-driver
+  description: job-description-tram-driver
+  playTimeTracker: JobTramDriver
+  startingGear: TramDriverGear
+  icon: "JobIconTramDriver"
+  supervisors: job-supervisors-hop
+  access:
+  - Maintenance
+
+- type: startingGear
+  id: TramDriverGear
+  equipment:
+    shoes: ClothingShoesBootLaceup
+    id: TramDriverPDA
+    ears: ClothingHeadset
+ # storage:
+ #   back:
+ #  - RubberStampPsychologist
+
+- type: chameleonOutfit
+  id: TramDriverChameleonOutfit
+  job: TramDriver
+  equipment:
+    head: ClothingHeadHatBeretMedic
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    outerClothing: ClothingOuterCoatLab
+    neck: ClothingNeckStethoscope
+    belt: ClothingBeltMedical
+    gloves: ClothingHandsGlovesLatex
