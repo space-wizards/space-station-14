@@ -108,6 +108,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             list.Configurators.Remove(ent);
 
         ent.Comp.ActiveDeviceList = null;
+        DirtyField(ent.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceList));
     }
 
     private void OnMapInit(Entity<NetworkConfiguratorComponent> ent, ref MapInitEvent args)
@@ -142,7 +143,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             // the map after it being saved, are cleared upon mapinit.
             if (MetaData(target).EntityLifeStage == EntityLifeStage.MapInitialized)
             {
-                _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", target)),
+                _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-failed", ("device", target)),
                     userUid);
                 return;
             }
@@ -152,13 +153,16 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         if (configurator.Comp.Devices.ContainsValue(target))
         {
-            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", target)), userUid);
+            _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-already-saved", ("device", target)), userUid);
             return;
         }
 
         target.Comp.Configurators.Add(configurator);
         configurator.Comp.Devices.Add(address, target);
-        _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Address), ("device", target)),
+        DirtyField(target, nameof(DeviceNetworkComponent.Configurators));
+        DirtyField(configurator, nameof(NetworkConfiguratorComponent.Devices));
+
+        _popupSystem.PopupPredictedCursor(Loc.GetString("network-configurator-device-saved", ("address", target.Comp.Address), ("device", target)),
             userUid,
             PopupType.Medium);
 
@@ -174,7 +178,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
 
         if (configurator.Comp.ActiveDeviceLink == target)
         {
-            _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, user);
+            _popupSystem.PopupPredicted(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, user);
             configurator.Comp.ActiveDeviceLink = null;
             return;
         }
@@ -193,8 +197,9 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             || HasComp<DeviceLinkSinkComponent>(target) && HasComp<DeviceLinkSinkComponent>(configurator.Comp.ActiveDeviceLink))
             return;
 
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started", ("device", Name(target.Value))), target.Value, user);
+        _popupSystem.PopupPredicted(Loc.GetString("network-configurator-link-mode-started", ("device", Name(target.Value))), target.Value, user);
         configurator.Comp.ActiveDeviceLink = target;
+        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
     }
 
     private void TryLinkDefaults(EntityUid _, NetworkConfiguratorComponent configurator, EntityUid? targetUid, EntityUid user)
@@ -220,7 +225,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         }
     }
 
-    private bool AccessCheck(EntityUid target, EntityUid? user, NetworkConfiguratorComponent component)
+    private bool AccessCheck(EntityUid target, EntityUid? user, Entity<NetworkConfiguratorComponent> configurator)
     {
         if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
             return true;
@@ -228,8 +233,8 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         if (_accessSystem.IsAllowed(user.Value, target, reader))
             return true;
 
-        _audioSystem.PlayPvs(component.SoundNoAccess, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
+        _audioSystem.PlayPredicted(configurator.Comp.SoundNoAccess, configurator, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        _popupSystem.PopupPredicted(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
     }
@@ -248,12 +253,16 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             return;
 
         configurator.Comp.LinkModeActive = !configurator.Comp.LinkModeActive;
+        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.LinkModeActive));
 
         if (!userUid.HasValue)
             return;
 
         if (!configurator.Comp.LinkModeActive)
+        {
             configurator.Comp.ActiveDeviceLink = null;
+            DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
+        }
 
         UpdateModeAppearance(userUid.Value, configurator);
     }
@@ -269,6 +278,7 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
             configurator.Comp.ActiveDeviceLink = null;
 
         UpdateModeAppearance(userUid, configurator);
+        DirtyFields(configurator.AsNullable(), null, nameof(NetworkConfiguratorComponent.LinkModeActive), nameof(NetworkConfiguratorComponent.ActiveDeviceLink));
     }
 
     /// <summary>
@@ -280,19 +290,20 @@ public sealed partial class NetworkConfiguratorSystem : EntitySystem
         _appearanceSystem.SetData(configurator.Owner, NetworkConfiguratorVisuals.Mode, configurator.Comp.LinkModeActive);
 
         var pitch = configurator.Comp.LinkModeActive ? 1 : 0.8f;
-        _audioSystem.PlayPvs(configurator.Comp.SoundSwitchMode, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
+        _audioSystem.PlayPredicted(configurator.Comp.SoundSwitchMode, configurator, userUid, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
     }
 
     /// <summary>
     /// Returns true if the last time this method was called is earlier than the configurators use delay.
     /// </summary>
-    private bool Delay(NetworkConfiguratorComponent configurator)
+    private bool Delay(Entity<NetworkConfiguratorComponent> configurator)
     {
         var currentTime = _gameTiming.CurTime;
-        if (currentTime < configurator.LastUseAttempt + configurator.UseDelay)
+        if (currentTime < configurator.Comp.LastUseAttempt + configurator.Comp.UseDelay)
             return true;
 
-        configurator.LastUseAttempt = currentTime;
+        configurator.Comp.LastUseAttempt = currentTime;
+        DirtyField(configurator.AsNullable(), nameof(NetworkConfiguratorComponent.LastUseAttempt));
         return false;
     }
 }

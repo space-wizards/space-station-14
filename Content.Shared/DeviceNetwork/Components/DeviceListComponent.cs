@@ -1,10 +1,9 @@
 ﻿using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(DeviceListSystem))]
 public sealed partial class DeviceListComponent : Component
 {

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(NetworkConfiguratorSystem))]
 public sealed partial class NetworkConfiguratorComponent : Component
 {
@@ -28,12 +28,14 @@ public sealed partial class NetworkConfiguratorComponent : Component
     /// If this is set the configurator is in linking mode.
     /// </summary>
     // TODO handle device deletion
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? ActiveDeviceLink;
 
     /// <summary>
     /// The target device this configurator is currently linking with the <see cref="ActiveDeviceLink"/>
     /// </summary>
     // TODO handle device deletion
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? DeviceLinkTarget;
 
     /// <summary>

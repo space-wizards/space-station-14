@@ -25,7 +25,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     public void OnRemoveButtonPressed(string address)
     {
-        SendMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
+        SendPredictedMessage(new NetworkConfiguratorRemoveDeviceMessage(address));
     }
 
     protected override void Open()
@@ -54,17 +54,17 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _linkMenu = this.CreateWindow<NetworkConfiguratorLinkMenu>();
                 _linkMenu.OnLinkDefaults += args =>
                 {
-                    SendMessage(new NetworkConfiguratorLinksSaveMessage(args));
+                    SendPredictedMessage(new NetworkConfiguratorLinksSaveMessage(args));
                 };
 
                 _linkMenu.OnToggleLink += (left, right) =>
                 {
-                    SendMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
+                    SendPredictedMessage(new NetworkConfiguratorToggleLinkMessage(left, right));
                 };
 
                 _linkMenu.OnClearLinks += () =>
                 {
-                    SendMessage(new NetworkConfiguratorClearLinksMessage());
+                    SendPredictedMessage(new NetworkConfiguratorClearLinksMessage());
                 };
                 break;
         }
@@ -95,11 +95,11 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     private void OnClearButtonPressed()
     {
-        SendMessage(new NetworkConfiguratorClearDevicesMessage());
+        SendPredictedMessage(new NetworkConfiguratorClearDevicesMessage());
     }
 
     private void OnConfigButtonPressed(NetworkConfiguratorButtonKey buttonKey)
     {
-        SendMessage(new NetworkConfiguratorButtonPressedMessage(buttonKey));
+        SendPredictedMessage(new NetworkConfiguratorButtonPressedMessage(buttonKey));
     }
 }

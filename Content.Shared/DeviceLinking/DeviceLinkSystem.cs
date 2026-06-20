@@ -122,6 +122,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
             invalidLinks.Clear();
             sinkComponent.LinkedSources.Add(source.Owner);
+            DirtyField(sink, sinkComponent, nameof(DeviceLinkSinkComponent.LinkedSources));
         }
 
         foreach (var sink in invalidSinks)
@@ -129,6 +130,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             source.Comp.LinkedPorts.Remove(sink);
             Log.Warning($"Device source {ToPrettyString(source)} contains invalid sink: {ToPrettyString(sink)}");
         }
+        Dirty(source);
     }
     #endregion
 
@@ -177,6 +179,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             else
                 comp.Ports.Add(port);
         }
+        Dirty(uid, comp);
     }
 
     /// <summary>
@@ -195,6 +198,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             else
                 comp.Ports.Add(port);
         }
+        Dirty(uid, comp);
     }
 
     public ProtoId<SourcePortPrototype>[] GetSourcePortIds(Entity<DeviceLinkSourceComponent> source)
@@ -322,7 +326,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         SaveLinks(userId, source, sink, defaults);
 
         if (userId != null)
-            _popupSystem.PopupCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
+            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linking-verb-success", ("machine", source)), userId.Value);
     }
 
 
@@ -342,7 +346,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         if (!InRange(source, sink, source.Comp.Range))
         {
             if (userId != null)
-                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return;
         }
@@ -409,11 +413,13 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         {
             Log.Error($"Attempted to remove link between {ToPrettyString(source)} and {ToPrettyString(sink)}, but the source component was missing.");
             sink.Comp!.LinkedSources.Remove(source);
+            DirtyField(sink, nameof(DeviceLinkSinkComponent.LinkedSources));
         }
         else
         {
             Log.Error($"Attempted to remove link between {ToPrettyString(source)} and {ToPrettyString(sink)}, but the sink component was missing.");
             source.Comp.LinkedPorts.Remove(sink);
+            Dirty(source);
         }
     }
 
@@ -439,7 +445,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
             outputList.Remove(sink);
         }
 
-        DirtyField(sink.AsNullable(), nameof(DeviceLinkSinkComponent.LinkedSources));
+        DirtyField(sink, sink.Comp, nameof(DeviceLinkSinkComponent.LinkedSources));
         Dirty(source);
     }
 
@@ -520,7 +526,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         if (checkRange && !InRange(source, sinkUid, source.Comp.Range))
         {
             if (userId.HasValue)
-                _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
+                _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-out-of-range"), userId.Value);
 
             return false;
         }
@@ -530,14 +536,14 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         RaiseLocalEvent(source, linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
         RaiseLocalEvent(sinkUid, linkAttemptEvent, true);
         if (linkAttemptEvent.Cancelled && userId.HasValue)
         {
-            _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
+            _popupSystem.PopupPredictedCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", sourcePort)), userId.Value);
             return false;
         }
 
@@ -569,7 +575,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
 
         var locString = removed ? "signal-linker-component-unlinked-port" : "signal-linker-component-linked-port";
 
-        _popupSystem.PopupCursor(Loc.GetString(locString,
+        _popupSystem.PopupPredictedCursor(Loc.GetString(locString,
             ("machine1", sourceUid),
             ("port1", PortName<SourcePortPrototype>(source)),
             ("machine2", sinkUid),
@@ -656,6 +662,7 @@ public sealed partial class DeviceLinkSystem : EntitySystem
         InvokePort(ent, port, data);
 
         ent.Comp.LastSignals[port] = signal;
+        Dirty(ent);
     }
 
     /// <summary>

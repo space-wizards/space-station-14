@@ -1,12 +1,13 @@
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 public sealed partial class DeviceNetworkRequiresPowerSystem : BeforeDevicePayloadSystem<DeviceNetworkRequiresPowerComponent>
 {
-    [Dependency] private EntityQuery<SharedApcPowerReceiverComponent> _power = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -16,7 +17,7 @@ public sealed partial class DeviceNetworkRequiresPowerSystem : BeforeDevicePaylo
 
     private void OnBeforePacketSent(Entity<DeviceNetworkRequiresPowerComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (_power.TryComp(ent, out var receiver) && !receiver.Powered)
+        if (!_power.IsPowered(ent.Owner))
         {
             args.Cancelled = true;
         }

@@ -53,7 +53,7 @@ public sealed partial class NetworkConfiguratorSystem
             return;
         }
 
-        OpenDeviceListUi(configurator, target, user, configurator);
+        OpenDeviceListUi(configurator, target, user);
     }
 
     private void DetermineMode(Entity<NetworkConfiguratorComponent> configurator, EntityUid? target, EntityUid userUid)
