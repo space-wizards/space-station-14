@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       deviceNetId: Wired
       transmitFrequency: 0
       receiveFrequency: 0
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: ApcPowerReceiver
 
 - type: entity
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       transmitFrequency: 100
       receiveFrequency: 100
       deviceNetId: Wireless
-    - type: WirelessNetworkConnection
+    - type: WirelessNetwork
       range: 100
         ";
 

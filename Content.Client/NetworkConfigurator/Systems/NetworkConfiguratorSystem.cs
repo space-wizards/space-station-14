@@ -2,8 +2,8 @@ using Content.Client.Actions;
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.NetworkConfigurator.Systems;
 
-public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
+public sealed partial class NetworkConfiguratorOverlaySystem : EntitySystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IOverlayManager _overlay = default!;
@@ -106,7 +106,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
         private readonly NetworkConfiguratorComponent _configurator;
         private readonly string _keyBindingName;
 
-        private bool? _linkModeActive = null;
+        private bool? _linkModeActive;
 
         public StatusControl(NetworkConfiguratorComponent configurator, string keyBindingName)
         {
@@ -138,7 +138,7 @@ public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfigurato
 
 public sealed partial class ClearAllNetworkLinkOverlays : LocalizedEntityCommands
 {
-    [Dependency] private NetworkConfiguratorSystem _network = default!;
+    [Dependency] private NetworkConfiguratorOverlaySystem _network = default!;
 
     public override string Command => "clearnetworklinkoverlays";
 

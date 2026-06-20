@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.Medical.CrewMonitoring;
-using Content.Server.Station.Systems;
 using Content.Shared.Power;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Station;
 
-namespace Content.Server.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
 /// Keeps one active server entity per station. Activates another available one if the currently active server becomes unavailable
@@ -13,8 +11,8 @@ namespace Content.Server.DeviceNetwork.Systems;
 /// </summary>
 public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 {
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private SharedStationSystem _stationSystem = default!;
 
     public override void Initialize()
     {
@@ -57,7 +55,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
 
             if (!server.Available)
             {
-                DisconnectServer(uid,server, device);
+                DisconnectServer((uid, server, device));
                 continue;
             }
 
@@ -73,7 +71,7 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         //If there was no active server for the station make the last available inactive one active
         if (last.HasValue)
         {
-            ConnectServer(last.Value.id, last.Value.server, last.Value.device);
+            ConnectServer((last.Value.id, last.Value.server, last.Value.device));
             address = last.Value.device.Address;
             return true;
         }
@@ -85,44 +83,44 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     /// <summary>
     /// Disconnects the server losing power
     /// </summary>
-    private void OnPowerChanged(EntityUid uid, SingletonDeviceNetServerComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<SingletonDeviceNetServerComponent> ent, ref PowerChangedEvent args)
     {
-        component.Available = args.Powered;
+        ent.Comp.Available = args.Powered;
 
-        if (!args.Powered && component.Active)
-            DisconnectServer(uid, component);
+        if (!args.Powered && ent.Comp.Active)
+            DisconnectServer(ent!);
     }
 
-    private void ConnectServer(EntityUid uid, SingletonDeviceNetServerComponent? server = null, DeviceNetworkComponent? device = null)
+    private void ConnectServer(Entity<SingletonDeviceNetServerComponent?, DeviceNetworkComponent?> ent)
     {
-        if (!Resolve(uid, ref server, ref device))
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        server.Active = true;
+        ent.Comp1.Active = true;
 
         var connectedEvent = new DeviceNetServerConnectedEvent();
-        RaiseLocalEvent(uid, ref connectedEvent);
+        RaiseLocalEvent(ent, ref connectedEvent);
 
-        if (_deviceNetworkSystem.IsDeviceConnected((uid, device)))
+        if (_deviceNetworkSystem.IsDeviceConnected((ent.Owner, ent.Comp2)))
             return;
 
-        _deviceNetworkSystem.ConnectDevice((uid, device));
+        _deviceNetworkSystem.ConnectDevice((ent.Owner, ent.Comp2));
     }
 
     /// <summary>
     /// Disconnects a server from the device network and clears the currently active server
     /// </summary>
-    private void DisconnectServer(EntityUid uid, SingletonDeviceNetServerComponent? server = null, DeviceNetworkComponent? device = null)
+    private void DisconnectServer(Entity<SingletonDeviceNetServerComponent?, DeviceNetworkComponent?> ent)
     {
-        if (!Resolve(uid, ref server, ref device))
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return;
 
-        server.Active = false;
+        ent.Comp1.Active = false;
 
         var disconnectedEvent = new DeviceNetServerDisconnectedEvent();
-        RaiseLocalEvent(uid, ref disconnectedEvent);
+        RaiseLocalEvent(ent, ref disconnectedEvent);
 
-        _deviceNetworkSystem.DisconnectDevice((uid, device), false);
+        _deviceNetworkSystem.DisconnectDevice((ent.Owner, ent.Comp2), false);
     }
 }
 

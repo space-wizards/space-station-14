@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Pinpointer;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -13,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -262,7 +262,9 @@ public sealed partial class AtmosAlertsComputerSystem : SharedAtmosAlertsCompute
                 entDeviceNetwork.Address);
 
             // Get the list of sensors attached to the alarm
-            var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList) ? _deviceListSystem.GetDeviceList(ent, entDeviceList) : null;
+            var sensorList = TryComp<DeviceListComponent>(ent, out var entDeviceList)
+                ? _deviceListSystem.GetDeviceList((ent, entDeviceList))
+                : null;
 
             if (sensorList?.Any() == true)
             {

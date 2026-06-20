@@ -1,6 +1,25 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
+
+public sealed partial class ClearAllOverlaysEvent : InstantActionEvent
+{
+}
+
+
+[Serializable, NetSerializable]
+public enum NetworkConfiguratorVisuals
+{
+    Mode
+}
+
+[Serializable, NetSerializable]
+public enum NetworkConfiguratorLayers
+{
+    ModeLight
+}
+
 
 [Serializable, NetSerializable]
 public enum NetworkConfiguratorUiKey

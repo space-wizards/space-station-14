@@ -44,7 +44,7 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Eye
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: DeviceNetworkRequiresPower
   - type: Transform
     anchored: true

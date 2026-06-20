@@ -209,7 +209,7 @@
     deviceNetId: Wired
     receiveFrequencyId: MailingUnit
     transmitFrequencyId: MailingUnit
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: Configuration
     config:
       tag:

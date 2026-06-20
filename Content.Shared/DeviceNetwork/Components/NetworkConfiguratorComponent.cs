@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedNetworkConfiguratorSystem))]
+[Access(typeof(NetworkConfiguratorSystem))]
 public sealed partial class NetworkConfiguratorComponent : Component
 {
     // AAAAA ALL OF THESE FAA
@@ -15,7 +15,6 @@ public sealed partial class NetworkConfiguratorComponent : Component
     /// Determines whether the configurator is in linking mode or list mode
     /// </summary>
     [DataField, AutoNetworkedField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public bool LinkModeActive = true;
 
     /// <summary>
@@ -40,15 +39,14 @@ public sealed partial class NetworkConfiguratorComponent : Component
     /// <summary>
     /// The list of devices stored in the configurator
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, EntityUid> Devices = new();
 
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public TimeSpan LastUseAttempt;
 
     [DataField]

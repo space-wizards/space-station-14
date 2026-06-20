@@ -1,10 +1,11 @@
 ﻿using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedDeviceListSystem))]
+[Access(typeof(DeviceListSystem))]
 public sealed partial class DeviceListComponent : Component
 {
     /// <summary>
@@ -16,24 +17,22 @@ public sealed partial class DeviceListComponent : Component
     /// <summary>
     /// The limit of devices that can be linked to this device list.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public int DeviceLimit = 32;
 
     /// <summary>
     /// Whether the device list is used as an allow or deny list
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool IsAllowList = true;
 
     /// <summary>
     /// Whether this device list also handles incoming device net packets
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool HandleIncomingPackets;
 
-    [DataField, Access(typeof(SharedNetworkConfiguratorSystem))]
+    [DataField, AutoNetworkedField]
+    [Access(typeof(NetworkConfiguratorSystem))]
     public HashSet<EntityUid> Configurators = new();
 }

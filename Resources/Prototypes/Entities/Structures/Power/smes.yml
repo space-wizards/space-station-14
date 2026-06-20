@@ -97,7 +97,7 @@
       prefix: device-address-prefix-smes
       sendBroadcastAttemptEvent: true
       examinableAddress: true
-    - type: WiredNetworkConnection
+    - type: WiredNetwork
     - type: GuideHelp
       guides:
       - PowerStorage

@@ -68,6 +68,6 @@ public sealed partial class MemoryCellSystem : EntitySystem
             return;
 
         ent.Comp1.LastOutput = value;
-        _deviceLink.SendSignal(ent, ent.Comp1.OutputPort, value, ent.Comp2);
+        _deviceLink.SendSignal((ent.Owner, ent.Comp2), ent.Comp1.OutputPort, value);
     }
 }

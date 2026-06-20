@@ -49,7 +49,7 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
     savableAddress: false
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 1200
   - type: StationLimitedNetwork
 

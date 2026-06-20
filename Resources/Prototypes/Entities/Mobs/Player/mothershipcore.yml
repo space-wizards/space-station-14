@@ -99,7 +99,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: Mothership
     transmitFrequencyId: Mothership
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 10000 # mothership can see them from very far
   - type: WiresPanel
   - type: ActivatableUI

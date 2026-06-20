@@ -26,6 +26,6 @@ public sealed partial class DisposalSignallerSystem : EntitySystem
 
     private void OnGetNextDirection(Entity<DisposalSignallerComponent> ent, ref GetDisposalsNextDirectionEvent args)
     {
-        _link.InvokePort(ent, ent.Comp.Port);
+        _link.InvokePort(ent.Owner, ent.Comp.Port);
     }
 }

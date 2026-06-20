@@ -1,10 +1,44 @@
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-/// <inheritdoc cref="DeviceNetworkJammerComponent"/>
-public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
+/// <inheritdoc/>
+public sealed partial class DeviceNetworkJammerSystem : EntitySystem
 {
+    [Dependency] private SharedTransformSystem _transform = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<TransformComponent, BeforePacketSentEvent>(BeforePacketSent);
+    }
+
+    private void BeforePacketSent(Entity<TransformComponent> xform, ref BeforePacketSentEvent ev)
+    {
+        if (ev.Cancelled)
+            return;
+
+        var query = EntityQueryEnumerator<DeviceNetworkJammerComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var jammerComp, out var jammerXform))
+        {
+            if (!GetJammableNetworks((uid, jammerComp)).Contains(ev.NetId))
+                continue;
+
+            if (jammerComp.FrequenciesExcluded.Contains(ev.Frequency))
+                continue;
+
+            if (_transform.InRange(jammerXform.Coordinates, ev.SenderTransform.Coordinates, jammerComp.Range)
+                || _transform.InRange(jammerXform.Coordinates, xform.Comp.Coordinates, jammerComp.Range))
+            {
+                ev.Cancelled = true;
+                return;
+            }
+        }
+    }
+
     /// <summary>
     /// Sets the range of the jamming effect.
     /// </summary>
@@ -26,6 +60,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
 
     /// <summary>
     /// Returns the set of networks that this entity can jam.
+    /// </summary>
     public IReadOnlySet<int> GetJammableNetworks(Entity<DeviceNetworkJammerComponent> ent)
     {
         return ent.Comp.JammableNetworks;

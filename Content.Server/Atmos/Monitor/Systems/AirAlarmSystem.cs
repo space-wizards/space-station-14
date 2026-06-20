@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
@@ -12,7 +11,6 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
@@ -423,14 +421,12 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
         if (component.State != args.AlarmType)
         {
-            TryComp<DeviceLinkSourceComponent>(uid, out var source);
-
             // send low to old state's port
-            _deviceLink.SendSignal(uid, GetPort(component), false, source);
+            _deviceLink.SendSignal(uid, GetPort(component), false);
 
             // send high to new state's port, along with updating the cached state
             component.State = args.AlarmType;
-            _deviceLink.SendSignal(uid, GetPort(component), true, source);
+            _deviceLink.SendSignal(uid, GetPort(component), true);
         }
 
         UpdateUI(uid, component);

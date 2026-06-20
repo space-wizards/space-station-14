@@ -7,7 +7,7 @@ namespace Content.Shared.DeviceNetwork.Components;
 /// Allow entities to jam DeviceNetwork packets.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedDeviceNetworkJammerSystem))]
+[Access(typeof(DeviceNetworkJammerSystem))]
 public sealed partial class DeviceNetworkJammerComponent : Component
 {
     /// <summary>

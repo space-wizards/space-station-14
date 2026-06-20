@@ -136,7 +136,7 @@
     sendBroadcastAttemptEvent: true
     prefix: device-address-prefix-console
   - type: DeviceNetworkRequiresPower
-  - type: WiredNetworkConnection
+  - type: WiredNetwork
   - type: ActivatableUI
     key: enum.DeployableTurretControllerUiKey.Key
   - type: ActivatableUIRequiresPower

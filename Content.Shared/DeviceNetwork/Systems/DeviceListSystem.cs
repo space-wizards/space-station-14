@@ -1,15 +1,11 @@
 using System.Linq;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
-using JetBrains.Annotations;
 using Robust.Shared.Map.Events;
 
-namespace Content.Server.DeviceNetwork.Systems;
+namespace Content.Shared.DeviceNetwork.Systems;
 
-[UsedImplicitly]
-public sealed partial class DeviceListSystem : SharedDeviceListSystem
+public sealed partial class DeviceListSystem : EntitySystem
 {
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
@@ -23,19 +19,30 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
         SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
     }
 
-    private void OnShutdown(EntityUid uid, DeviceListComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<DeviceListComponent> ent, ref ComponentShutdown args)
     {
-        foreach (var conf in component.Configurators)
+        foreach (var conf in ent.Comp.Configurators)
         {
-            _configurator.OnDeviceListShutdown(conf, (uid, component));
+            _configurator.OnDeviceListShutdown(conf, ent);
         }
 
-        foreach (var device in component.Devices)
+        foreach (var device in ent.Comp.Devices)
         {
             if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
-                comp.DeviceLists.Remove(uid);
+                comp.DeviceLists.Remove(ent);
         }
-        component.Devices.Clear();
+
+        ent.Comp.Devices.Clear();
+    }
+
+    public IEnumerable<EntityUid> GetAllDevices(Entity<DeviceListComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+        {
+            return new EntityUid[] { };
+        }
+
+        return ent.Comp.Devices;
     }
 
     /// <summary>
@@ -44,14 +51,14 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
     /// <remarks>
     /// If any entity in the device list is pre-map init, it will show the entity UID of the device instead.
     /// </remarks>
-    public Dictionary<string, EntityUid> GetDeviceList(EntityUid uid, DeviceListComponent? deviceList = null)
+    public Dictionary<string, EntityUid> GetDeviceList(Entity<DeviceListComponent?> ent)
     {
-        if (!Resolve(uid, ref deviceList))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return new Dictionary<string, EntityUid>();
 
-        var devices = new Dictionary<string, EntityUid>(deviceList.Devices.Count);
+        var devices = new Dictionary<string, EntityUid>(ent.Comp.Devices.Count);
 
-        foreach (var deviceUid in deviceList.Devices)
+        foreach (var deviceUid in ent.Comp.Devices)
         {
             if (!TryComp(deviceUid, out DeviceNetworkComponent? deviceNet))
                 continue;
@@ -61,7 +68,6 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
                 : $"UID: {deviceUid.ToString()}";
 
             devices.Add(address, deviceUid);
-
         }
 
         return devices;
@@ -70,13 +76,12 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     /// Checks if the given address is present in a device list
     /// </summary>
-    /// <param name="uid">The entity uid that has the device list that should be checked for the address</param>
+    /// <param name="ent">The entity that has the device list that should be checked for the address</param>
     /// <param name="address">The address to check for</param>
-    /// <param name="deviceList">The device list component</param>
     /// <returns>True if the address is present. False if not</returns>
-    public bool ExistsInDeviceList(EntityUid uid, string address, DeviceListComponent? deviceList = null)
+    public bool ExistsInDeviceList(Entity<DeviceListComponent?> ent, string address)
     {
-        var addresses = GetDeviceList(uid).Keys;
+        var addresses = GetDeviceList(ent).Keys;
         return addresses.Contains(address);
     }
 
@@ -171,35 +176,34 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     ///     Updates the device list stored on this entity.
     /// </summary>
-    /// <param name="uid">The entity to update.</param>
+    /// <param name="ent">The entity to update.</param>
     /// <param name="devices">The devices to store.</param>
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
-    /// <param name="deviceList">Device list component</param>
-    public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
+    public DeviceListUpdateResult UpdateDeviceList(Entity<DeviceListComponent?> ent, IEnumerable<EntityUid> devices, bool merge = false)
     {
-        if (!Resolve(uid, ref deviceList))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return DeviceListUpdateResult.NoComponent;
 
         var list = devices.ToList();
         var newDevices = new HashSet<EntityUid>(list);
 
         if (merge)
-            newDevices.UnionWith(deviceList.Devices);
+            newDevices.UnionWith(ent.Comp.Devices);
 
-        if (newDevices.Count > deviceList.DeviceLimit)
+        if (newDevices.Count > ent.Comp.DeviceLimit)
         {
             return DeviceListUpdateResult.TooManyDevices;
         }
 
-        var oldDevices = deviceList.Devices.ToList();
+        var oldDevices = ent.Comp.Devices.ToList();
         foreach (var device in oldDevices)
         {
             if (newDevices.Contains(device))
                 continue;
 
-            deviceList.Devices.Remove(device);
+            ent.Comp.Devices.Remove(device);
             if (_deviceNetworkQuery.TryGetComponent(device, out var comp))
-                comp.DeviceLists.Remove(uid);
+                comp.DeviceLists.Remove(ent);
         }
 
         foreach (var device in newDevices)
@@ -207,15 +211,15 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
             if (!_deviceNetworkQuery.TryGetComponent(device, out var comp))
                 continue;
 
-            if (!deviceList.Devices.Add(device))
+            if (!ent.Comp.Devices.Add(device))
                 continue;
 
-            comp.DeviceLists.Add(uid);
+            comp.DeviceLists.Add(ent);
         }
 
-        RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, list));
+        RaiseLocalEvent(ent, new DeviceListUpdateEvent(oldDevices, list));
 
-        Dirty(uid, deviceList);
+        Dirty(ent);
 
         return DeviceListUpdateResult.UpdateOk;
     }

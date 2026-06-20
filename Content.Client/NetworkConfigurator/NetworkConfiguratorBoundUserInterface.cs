@@ -1,6 +1,5 @@
 ﻿using Content.Client.NetworkConfigurator.Systems;
 using Content.Shared.DeviceNetwork;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -8,7 +7,7 @@ namespace Content.Client.NetworkConfigurator;
 
 public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
-    private readonly NetworkConfiguratorSystem _netConfig;
+    private readonly NetworkConfiguratorOverlaySystem _netConfigOverlay;
 
     [ViewVariables]
     private NetworkConfiguratorConfigurationMenu? _configurationMenu;
@@ -21,7 +20,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     public NetworkConfiguratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        _netConfig = EntMan.System<NetworkConfiguratorSystem>();
+        _netConfigOverlay = EntMan.System<NetworkConfiguratorOverlaySystem>();
     }
 
     public void OnRemoveButtonPressed(string address)
@@ -48,7 +47,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
                 _configurationMenu.Clear.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Clear);
                 _configurationMenu.Copy.OnPressed += _ => OnConfigButtonPressed(NetworkConfiguratorButtonKey.Copy);
                 _configurationMenu.Show.OnPressed += OnShowPressed;
-                _configurationMenu.Show.Pressed = _netConfig.ConfiguredListIsTracked(Owner);
+                _configurationMenu.Show.Pressed = _netConfigOverlay.ConfiguredListIsTracked(Owner);
                 _configurationMenu.OnRemoveAddress += OnRemoveButtonPressed;
                 break;
             case NetworkConfiguratorUiKey.Link:
@@ -73,7 +72,7 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 
     private void OnShowPressed(BaseButton.ButtonEventArgs args)
     {
-        _netConfig.ToggleVisualization(Owner, args.Button.Pressed);
+        _netConfigOverlay.ToggleVisualization(Owner, args.Button.Pressed);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

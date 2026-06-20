@@ -92,7 +92,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
     transmitFrequencyId: ShuttleTimer
-  - type: WirelessNetworkConnection
+  - type: WirelessNetwork
     range: 500
   - type: StationLimitedNetwork
   - type: Thieving

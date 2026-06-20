@@ -1,4 +1,5 @@
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -96,13 +97,13 @@ public sealed partial class DeviceNetworkComponent : Component
     ///     A list of device-lists that this device is on.
     /// </summary>
     [DataField, AutoNetworkedField]
-    [Access(typeof(SharedDeviceListSystem))]
+    [Access(typeof(DeviceListSystem))]
     public HashSet<EntityUid> DeviceLists = new();
 
     /// <summary>
     ///     A list of configurators that this device is on.
     /// </summary>
     [DataField, AutoNetworkedField]
-    [Access(typeof(SharedNetworkConfiguratorSystem))]
+    [Access(typeof(NetworkConfiguratorSystem))]
     public HashSet<EntityUid> Configurators = new();
 }
