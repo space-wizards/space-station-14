@@ -51,15 +51,11 @@ namespace Content.Server.GameTicking
                     if (session.Data.ContentDataUncast == null)
                     {
                         var userData = session.Channel.UserData;
-                        var trust = userData.Trust;
-                        if (userData.IsLocal)
+                        var trust = session.AuthType switch
                         {
-                            trust = 1.0f; // Localhost should be inherently trusted.
-                        }
-                        else if (session.AuthType == LoginType.Guest)
-                        {
-                            trust = 0.0f; // Placeholder?
-                        }
+                            LoginType.LoggedIn => userData.Trust, // Auth trust is always leading
+                            _ => userData.IsLocal ? 1.0f : 0.0f // Local unauthenticated users are fully trusted, remote unauthenticated users are not.
+                        };
 
                         var data = new ContentPlayerData(session.UserId, args.Session.Name, trust, userData.CreatedTime);
                         data.Mind = mindId;
