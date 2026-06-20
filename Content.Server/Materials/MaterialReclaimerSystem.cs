@@ -219,10 +219,14 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         TransformComponent? xform = null,
         PhysicalCompositionComponent? composition = null)
     {
-        if (!Resolve(reclaimer, ref reclaimerComponent, ref xform) || reclaimerComponent.SolutionContainerId == null)
+        if (!Resolve(reclaimer, ref reclaimerComponent, ref xform))
             return;
 
         efficiency *= reclaimerComponent.Efficiency;
+
+        // Solution will be empty, nothing to do.
+        if (efficiency <= 0)
+            return;
 
         var totalChemicals = new Solution();
 
@@ -254,9 +258,10 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             }
         }
 
-        if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||
-            !_solutionContainer.TryTransferSolution(outputSolution.Value, totalChemicals, totalChemicals.Volume) ||
-            totalChemicals.Volume > 0)
+        if (totalChemicals.Volume > 0 &&
+            (reclaimerComponent.SolutionContainerId == null ||
+            !_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||
+            !_solutionContainer.TryTransferSolution(outputSolution.Value, totalChemicals, totalChemicals.Volume)))
         {
             _puddle.TrySpillAt(reclaimer, totalChemicals, out _, sound, transformComponent: xform);
         }
