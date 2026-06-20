@@ -176,7 +176,6 @@ public sealed partial class CCVars
     ///     If it is false, it'd use the actual rank name regardless of the individual's title.
     /// </summary>
     /// <seealso cref="AhelpAdminPrefix"/>
-    /// <seealso cref="AhelpAdminPrefixWebhook"/>
     public static readonly CVarDef<bool> AdminUseCustomNamesAdminRank =
         CVarDef.Create("admin.use_custom_names_admin_rank", true, CVar.SERVERONLY);
 
