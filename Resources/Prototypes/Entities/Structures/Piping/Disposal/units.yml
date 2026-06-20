@@ -40,11 +40,11 @@
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: disposal }
-          False: { state: disposal-charging }         
+          False: { state: disposal-charging }
       enum.DisposalUnitVisuals.IsFlushing:
         enum.DisposalUnitVisualLayers.OverlayFlushing:
           True: { visible: true }
-          False: { visible: false }      
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
           True: { visible: true }
@@ -67,7 +67,7 @@
           True: { state: disposal }
           False: { state: condisposal }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
@@ -149,6 +149,9 @@
     layers:
     - map: [ "enum.DisposalUnitVisualLayers.Base" ]
       state: mailing
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: disposal
+      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       state: dispover-ready
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
@@ -185,7 +188,7 @@
           True: { state: mailing }
           False: { state: conmailing }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
