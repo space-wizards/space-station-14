@@ -1341,6 +1341,26 @@
 #  minLimit: 0
 #  loadouts:
 
+- type: loadoutGroup
+  id: TramDriverJumpsuit
+  name: loadout-group-tramdriver-jumpsuit
+  minLimit: 1
+  maxLimit: 1
+  loadouts:
+  - TramDriverJumpsuit
+
+- type: loadoutGroup
+  id: TramDriverOuterClothing
+  name: loadout-group-tramdriver-outerclothing
+  loadouts:
+  - TramDriverVest
+
+- type: loadoutGroup
+  id: TramDriverHat
+  name: loadout-group-tramdriver-hat
+  loadouts:
+  - TramDriverHat
+
 # Other
 - type: loadoutGroup
   id: SurvivalSyndicate

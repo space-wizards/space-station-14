@@ -1547,3 +1547,19 @@
     sprite: Clothing/Head/Hats/mitre_clown.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/mitre_clown.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatTramDriver
+  name: tram driver hat
+  description: It smells like confidence.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/tramdriver.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

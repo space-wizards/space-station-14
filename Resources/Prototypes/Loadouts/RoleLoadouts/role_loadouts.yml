@@ -460,6 +460,20 @@
   #- PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
+- type: roleLoadout
+  id: JobTramDriver
+  groups:
+  - GroupTankHarness
+  - CommonBackpack
+  - TramDriverJumpsuit
+  - TramDriverOuterClothing #Vest and such
+  - TramDriverHat
+  - Glasses
+  - Survival
+  - Trinkets
+  #- PsychologistJobTrinkets
+  - GroupSpeciesBreathTool
+
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 

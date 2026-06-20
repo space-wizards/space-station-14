@@ -1,0 +1,17 @@
+# Jumpsuit
+- type: loadout
+  id: TramDriverJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitTramDriver
+
+# Outer clothing
+- type: loadout
+  id: TramDriverVest
+  equipment:
+    outerClothing: ClothingOuterTramDriverVest
+
+# Hat
+- type: loadout
+  id: TramDriverHat
+  equipment:
+    head: ClothingHeadHatTramDriver

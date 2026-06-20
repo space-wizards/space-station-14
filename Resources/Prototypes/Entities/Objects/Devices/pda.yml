@@ -1277,8 +1277,8 @@
        !type:String
        pda-tramdriver
   - type: PdaBorderColor
-    borderColor: "#ffc500"
-    accentVColor: "#454a50"
+    borderColor: "#454a50"
+    accentVColor: "#ffc500"
   - type: Icon
     state: pda-tramdriver
 

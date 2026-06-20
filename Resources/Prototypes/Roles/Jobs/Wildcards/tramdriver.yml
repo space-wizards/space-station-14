@@ -6,15 +6,24 @@
   startingGear: TramDriverGear
   icon: "JobIconTramDriver"
   supervisors: job-supervisors-hop
+  requirements:
+    - !type:OverallPlaytimeRequirement # someone that's not doing this job will just be a pain for the station
+      time: 10h
   access:
   - Maintenance
+  - Command
+  - Service
+  - External # to pick up people trapped in the tramway's space
+  special: # we don't want it becoming an antag... for now at least
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: TramDriverGear
   equipment:
-    shoes: ClothingShoesBootLaceup
+    shoes: ClothingShoesBootsLaceup
     id: TramDriverPDA
-    ears: ClothingHeadset
+    ears: ClothingHeadsetService
  # storage:
  #   back:
  #  - RubberStampPsychologist
