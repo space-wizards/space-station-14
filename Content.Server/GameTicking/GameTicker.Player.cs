@@ -1,3 +1,4 @@
+using System.Net;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -9,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -48,7 +50,18 @@ namespace Content.Server.GameTicking
                     // Always make sure the client has player data.
                     if (session.Data.ContentDataUncast == null)
                     {
-                        var data = new ContentPlayerData(session.UserId, args.Session.Name);
+                        var userData = session.Channel.UserData;
+                        var trust = userData.Trust;
+                        if (IPAddress.IsLoopback(session.Channel.RemoteEndPoint.Address))
+                        {
+                            trust = 1.0f; // Localhost should be inherently trusted.
+                        }
+                        else if (session.AuthType == LoginType.Guest)
+                        {
+                            trust = 0.0f; // Placeholder?
+                        }
+
+                        var data = new ContentPlayerData(session.UserId, args.Session.Name, trust, userData.CreatedTime);
                         data.Mind = mindId;
                         session.Data.ContentDataUncast = data;
                     }

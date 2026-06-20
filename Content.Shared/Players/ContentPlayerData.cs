@@ -26,6 +26,18 @@ public sealed class ContentPlayerData
     public string Name { get; }
 
     /// <summary>
+    ///     Wtf even is the trust score?
+    /// </summary>
+    [ViewVariables]
+    public float TrustScore { get; }
+
+    /// <summary>
+    ///     The account creation date of the player owning this data.
+    /// </summary>
+    [ViewVariables]
+    public DateTime? AccountCreationDate { get; }
+
+    /// <summary>
     ///     The currently occupied mind of the player owning this data.
     ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
     /// </summary>
@@ -37,9 +49,11 @@ public sealed class ContentPlayerData
     /// </summary>
     public bool Stealthed { get; set; }
 
-    public ContentPlayerData(NetUserId userId, string name)
+    public ContentPlayerData(NetUserId userId, string name, float trustScore, DateTime? accountCreationDate)
     {
         UserId = userId;
         Name = name;
+        TrustScore = trustScore;
+        AccountCreationDate = accountCreationDate;
     }
 }
