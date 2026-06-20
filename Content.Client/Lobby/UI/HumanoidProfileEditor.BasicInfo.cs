@@ -21,6 +21,9 @@ public sealed partial class HumanoidProfileEditor
         NameEdit.Text = Profile?.Name ?? "";
     }
 
+    /// <summary>
+    /// Randomize values selectively based on what values are locked.
+    /// </summary>
     private void Randomize()
     {
         Profile = Profile == null
@@ -30,6 +33,9 @@ public sealed partial class HumanoidProfileEditor
         SetDirty();
     }
 
+    /// <summary>
+    /// Randomize the name.
+    /// </summary>
     private void RandomizeName()
     {
         if (Profile == null) return;

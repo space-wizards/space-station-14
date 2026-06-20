@@ -356,6 +356,7 @@ namespace Content.Shared.Preferences
 
             profile.Sex = (randomizeConfig & RandomizeConfig.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
             profile.Gender = (randomizeConfig & RandomizeConfig.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
+            profile.Name = (randomizeConfig & RandomizeConfig.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
             profile.Age = (randomizeConfig & RandomizeConfig.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
 
             var appearanceRandomizeCfg = HumanoidCharacterAppearance.RandomizeConfig.None;

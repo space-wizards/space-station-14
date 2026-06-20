@@ -27,36 +27,23 @@ public sealed partial class RandomizeLockButton : TextureButton
     {
         RobustXamlLoader.Load(this);
 
-        const string lockTexture = "/Textures/Interface/VerbIcons/lock.svg.192dpi.png";
-        const string unlockTexture = "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png";
-        OnToggled += args =>
+        OnToggled += args => HandleToggle(args.Pressed);
+    }
+
+    private void HandleToggle(bool toggle)
+    {
+        if (For == default)
+            return;
+        if (toggle)
         {
-            if (For != default)
-            {
-                if (Pressed)
-                {
-                    // if pressed, disable randomize by setting bit 0
-                    Log.Info("Pressed, new value (pre): " + RandomizeConfig);
-                    RandomizeConfig &= ~For;
-                    Log.Info("Pressed, new value: " + RandomizeConfig);
-                    Log.Info("Pressed, new value: " +  (byte)RandomizeConfig);
-                }
-                else
-                {
-                    // if not pressed, enable randomize by setting bit 1
-                    Log.Info("Unpressed, new value (pre): " + RandomizeConfig);
-                    RandomizeConfig |= For;
-                    Log.Info("Unpressed, new value: " + RandomizeConfig);
-                }
-                TexturePath = lockTexture;
-            }
-            else
-            {
-                TexturePath = unlockTexture;
-            }
-        };
-        TexturePath = unlockTexture;
-        Pressed = false;
+            // if pressed, disable specific randomize by setting its bit to 0
+            RandomizeConfig &= ~For;
+        }
+        else
+        {
+            // if not pressed, enable specific randomize by setting its bit to 1
+            RandomizeConfig |= For;
+        }
     }
 }
 

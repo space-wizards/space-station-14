@@ -81,7 +81,6 @@
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <ui:RandomizeLockButton For="Gender" />
                                     <OptionButton Name="PronounsButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Show clothing -->
