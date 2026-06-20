@@ -6,7 +6,7 @@
     ToggleMode="True"
     VerticalAlignment="Center"
     Scale="0.25 0.25"
-    ToolTip="{Loc 'humanoid-profile-editor-species-randomizer-lock-tooltip'}"
+    ToolTip="{Loc 'humanoid-profile-editor-randomizer-lock-tooltip'}"
     >
 
 </controls:RandomizeLockButton>

@@ -213,17 +213,24 @@ namespace Content.Shared.Preferences
             };
         }
 
+        /// <summary>
+        /// An enum of value that can be locked down when randomizing.
+        /// </summary>
         [Flags]
         public enum RandomizeConfig
         {
-            Name,
-            Species,
-            Age,
-            Sex,
-            Gender,
-            Appearance,
+            None = 0,
+            Name = 1 << 0,
+            Species = 1 << 1,
+            Age = 1 << 2,
+            Sex = 1 << 3,
+            Gender = 1 << 4,
+            Appearance = 1 << 5,
         }
 
+        /// <summary>
+        /// A randomize config that covers all possible values.
+        /// </summary>
         public const RandomizeConfig RandomizeConfigAll =
             RandomizeConfig.Name
             | RandomizeConfig.Species
@@ -232,6 +239,9 @@ namespace Content.Shared.Preferences
             | RandomizeConfig.Gender
             | RandomizeConfig.Appearance;
 
+        /// <summary>
+        /// A randomize config that only covers the name.
+        /// </summary>
         public const RandomizeConfig RandomizeConfigNameOnly =
             RandomizeConfig.Name;
 
@@ -354,7 +364,6 @@ namespace Content.Shared.Preferences
             profile.Sex = (randomizeConfig & RandomizeConfig.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
             profile.Gender = (randomizeConfig & RandomizeConfig.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
             profile.Age = (randomizeConfig & RandomizeConfig.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
-            profile.Appearance = (randomizeConfig & RandomizeConfig.Appearance) != 0 ? RandomAppearance(speciesProto, profile.Sex) : baseProfile.Appearance;
 
             return profile;
         }

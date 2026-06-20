@@ -97,7 +97,10 @@
                                     <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </BoxContainer>
-                            <ui:RandomizeLockButton For="Gender" Text="Lock appearance" />
+                            <BoxContainer Margin="10,0">
+                                <ui:RandomizeLockButton For="Gender" ToolTip="{Loc humanoid-profile-editor-randomizer-appearance-lock-tooltip}" />
+                                <Label Text="Lock appearance" />
+                            </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />

@@ -200,24 +200,6 @@ namespace Content.Client.Lobby.UI
                 OnSkinColorOnValueChanged();
             };
 
-            // {
-            //     var lockTexture = "/Textures/Interface/VerbIcons/lock.svg.192dpi.png";
-            //     var unlockTexture = "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png";
-            //     SpeciesRandomizerLockButton.OnToggled += args =>
-            //     {
-            //         if (args.Pressed)
-            //         {
-            //             SpeciesRandomizerLockButton.TexturePath = lockTexture;
-            //         }
-            //         else
-            //         {
-            //             SpeciesRandomizerLockButton.TexturePath = unlockTexture;
-            //         }
-            //     };
-            //     SpeciesRandomizerLockButton.TexturePath = unlockTexture;
-            //     SpeciesRandomizerLockButton.Pressed = false;
-            // }
-
             #region Skin
 
             Skin.OnValueChanged += _ =>

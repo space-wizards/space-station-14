@@ -23,14 +23,9 @@ public sealed partial class HumanoidProfileEditor
 
     private void Randomize()
     {
-        // if (SpeciesRandomizerLockButton.Pressed && Profile != null)
-        // {
-        //     Profile = HumanoidCharacterProfile.Random(speciesOverride: Profile.Species);
-        // }
-        // else
-        // {
-        // }
-        Profile = HumanoidCharacterProfile.Random();
+        Profile = Profile == null
+            ? HumanoidCharacterProfile.Random()
+            : HumanoidCharacterProfile.Random(RandomizeLockButton.RandomizeConfig, Profile!);
         SetProfile(Profile, CharacterSlot);
         SetDirty();
     }

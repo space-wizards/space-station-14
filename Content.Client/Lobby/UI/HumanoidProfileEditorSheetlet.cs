@@ -21,18 +21,23 @@ public sealed class HumanoidProfileEditorSheetlet : Sheetlet<PalettedStylesheet>
 
             E<TextureButton>()
                 .Identifier("SpeciesRandomizerLockButton")
-                .PseudoNormal()
-                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .65f, 1f))),
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .65f, 1f)))
+                .Prop(TextureButton.StylePropertyTexture,
+                    ResCache.GetTexture("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png")),
 
             E<TextureButton>()
                 .Identifier("SpeciesRandomizerLockButton")
                 .PseudoHovered()
-                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f))),
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f)))
+                .Prop(TextureButton.StylePropertyTexture,
+                    ResCache.GetTexture("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
 
             E<TextureButton>()
                 .Identifier("SpeciesRandomizerLockButton")
                 .PseudoPressed()
-                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f))),
+                .Modulate(Color.FromHsl(new Vector4(0f, 0f, .9f, 1f)))
+                .Prop(TextureButton.StylePropertyTexture,
+                    ResCache.GetTexture("/Textures/Interface/VerbIcons/lock.svg.192dpi.png")),
 
             // copied from `StyleNano`, but this is unused
             // E<TextureButton>()
