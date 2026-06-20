@@ -11,7 +11,7 @@
       time: 10h
   access:
   - Maintenance
-  - Service
+  - Service # the tram has command + service access
   - External # to pick up people trapped in the tramway's space
   special: # we don't want it becoming an antag... for now at least
   - !type:AddImplantSpecial
