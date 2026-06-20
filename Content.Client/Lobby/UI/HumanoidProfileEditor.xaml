@@ -97,19 +97,21 @@
                                     <OptionButton Name="SpawnPriorityButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                             </BoxContainer>
-                            <BoxContainer Margin="10,0">
-                                <ui:RandomizeLockButton For="Gender" ToolTip="{Loc humanoid-profile-editor-randomizer-appearance-lock-tooltip}" />
-                                <Label Text="Lock appearance" />
-                            </BoxContainer>
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
-                                <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
+                                <BoxContainer>
+                                    <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
+                                    <ui:RandomizeLockButton For="AppearanceSkin" />
+                                </BoxContainer>
                                 <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" />
                                 <BoxContainer Name="RgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
                             </BoxContainer>
                             <!-- Eyes -->
                             <BoxContainer Margin="10" Orientation="Vertical">
-                                <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
+                                <BoxContainer>
+                                    <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
+                                    <ui:RandomizeLockButton For="AppearanceEyes" />
+                                </BoxContainer>
                                 <humanoid:EyeColorPicker Name="EyeColorPicker" />
                             </BoxContainer>
                         </BoxContainer>

@@ -214,7 +214,7 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// An enum of value that can be locked down when randomizing.
+        /// An enum of values to randomize..
         /// </summary>
         [Flags]
         public enum RandomizeConfig
@@ -225,7 +225,8 @@ namespace Content.Shared.Preferences
             Age = 1 << 2,
             Sex = 1 << 3,
             Gender = 1 << 4,
-            Appearance = 1 << 5,
+            AppearanceEyes = 1 << 5,
+            AppearanceSkin = 1 << 6,
         }
 
         /// <summary>
@@ -237,7 +238,8 @@ namespace Content.Shared.Preferences
             | RandomizeConfig.Age
             | RandomizeConfig.Sex
             | RandomizeConfig.Gender
-            | RandomizeConfig.Appearance;
+            | RandomizeConfig.AppearanceEyes
+            | RandomizeConfig.AppearanceSkin;
 
         /// <summary>
         /// A randomize config that only covers the name.
@@ -312,15 +314,6 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// Picks a random appearance using species and their sex;
-        /// </summary>
-        static HumanoidCharacterAppearance RandomAppearance(SpeciesPrototype species, Sex sex)
-        {
-            var appearance = HumanoidCharacterAppearance.Random(species.ID, sex);
-            return appearance;
-        }
-
-        /// <summary>
         /// Generates a randomized character profile.
         /// </summary>
         /// <returns>A new character profile with values randomized</returns>
@@ -341,7 +334,7 @@ namespace Content.Shared.Preferences
         /// </summary>
         /// <param name="randomizeConfig">Which values to randomize.</param>
         /// <param name="baseProfile">Profile to base the new profile on. Values that are not randomized will be taken from this profile.</param>
-        /// <returns>A new character profile with selected randomized</returns>
+        /// <returns>A new character profile with selected values randomized</returns>
         public static HumanoidCharacterProfile Random(RandomizeConfig randomizeConfig, HumanoidCharacterProfile baseProfile)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -364,6 +357,12 @@ namespace Content.Shared.Preferences
             profile.Sex = (randomizeConfig & RandomizeConfig.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
             profile.Gender = (randomizeConfig & RandomizeConfig.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
             profile.Age = (randomizeConfig & RandomizeConfig.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
+
+            var appearanceRandomizeCfg = HumanoidCharacterAppearance.RandomizeConfig.None;
+            appearanceRandomizeCfg |= (randomizeConfig & RandomizeConfig.AppearanceEyes) != 0 ? HumanoidCharacterAppearance.RandomizeConfig.Eyes : 0;
+            appearanceRandomizeCfg |= (randomizeConfig & RandomizeConfig.AppearanceSkin) != 0 ? HumanoidCharacterAppearance.RandomizeConfig.Skin : 0;
+
+            profile.Appearance = HumanoidCharacterAppearance.Random(appearanceRandomizeCfg, baseProfile.Appearance, speciesProto, profile.Sex);
 
             return profile;
         }

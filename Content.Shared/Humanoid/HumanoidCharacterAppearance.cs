@@ -83,30 +83,84 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         Color.Black
     };
 
-    public static HumanoidCharacterAppearance Random(string species, Sex sex)
+    /// <summary>
+    /// An enum of values to randomize.
+    /// </summary>
+    [Flags]
+    public enum RandomizeConfig
+    {
+        None = 0,
+        Eyes = 1 << 0,
+        Skin = 1 << 1,
+    }
+
+    /// <summary>
+    /// A randomize config that covers all possible values.
+    /// </summary>
+    public const RandomizeConfig RandomizeConfigAll =
+        RandomizeConfig.Eyes
+        | RandomizeConfig.Skin;
+
+    public static Color RandomEyes()
     {
         var random = IoCManager.Resolve<IRobustRandom>();
-        var markingManager = IoCManager.Resolve<MarkingManager>();
 
-        // TODO: Add random markings
+        var eyes = random.Pick(_realisticEyeColors);
+        return eyes;
+    }
 
-        var newEyeColor = random.Pick(_realisticEyeColors);
-
+    public static Color RandomSkin(ProtoId<SpeciesPrototype> species)
+    {
+        var random = IoCManager.Resolve<IRobustRandom>();
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
+
+        var speciesProto = protoMan.Index(species);
+        var skinType = speciesProto.SkinColoration;
         var strategy = protoMan.Index(skinType).Strategy;
 
-        var newSkinColor = strategy.InputType switch
+        var skinColor = strategy.InputType switch
         {
             SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
             SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
             _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
+        return skinColor;
+    }
+
+
+    public static HumanoidCharacterAppearance Random(string species, Sex sex)
+    {
+        // TODO: Add random markings
+
+        var appearance = Random(
+            RandomizeConfigAll,
+            new HumanoidCharacterAppearance(),
+            species,
+            sex
+        );
+
+        return appearance;
+    }
+
+    /// <summary>
+    /// Generates a randomized character appearance with selective randomizing.
+    /// </summary>
+    /// <param name="randomizeConfig">Which values to randomize.</param>
+    /// <param name="baseAppearance">Appearance to base the new appearance on. Values that are not randomized will be taken from this appearance.</param>
+    /// <param name="species">Species prototype ID.</param>
+    /// <param name="sex">Sex.</param>
+    /// <returns>A new character appearance with selected values randomized</returns>
+    public static HumanoidCharacterAppearance Random(RandomizeConfig randomizeConfig, HumanoidCharacterAppearance baseAppearance, ProtoId<SpeciesPrototype> species, Sex sex)
+    {
+        var appearance = new HumanoidCharacterAppearance();
+        appearance.EyeColor = (randomizeConfig & RandomizeConfig.Eyes) != 0 ? RandomEyes() : baseAppearance.EyeColor;
+        appearance.SkinColor = (randomizeConfig & RandomizeConfig.Skin) != 0 ? RandomSkin(species) : baseAppearance.SkinColor;
+
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
         return EnsureValid(
-            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
+            appearance,
             species,
             sex);
     }
