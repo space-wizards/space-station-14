@@ -260,7 +260,7 @@ public sealed partial class HumanoidProfileEditor
     private void SetVoice(ProtoId<EmoteSoundsPrototype> newVoice)
     {
         Profile = Profile?.WithVoice(newVoice);
-        SetDirty();
+        IsDirty = true;
     }
 
     private void SetGender(Gender newGender)
