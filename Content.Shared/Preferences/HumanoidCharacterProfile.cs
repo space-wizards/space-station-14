@@ -303,7 +303,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithVoice(ProtoId<EmoteSoundsPrototype> voice)
         {
-            return new (this) { Voice = voice };
+            return new(this) { Voice = voice };
         }
 
         public HumanoidCharacterProfile WithGender(Gender gender)

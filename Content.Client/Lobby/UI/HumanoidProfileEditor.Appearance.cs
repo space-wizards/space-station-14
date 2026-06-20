@@ -233,7 +233,7 @@ public sealed partial class HumanoidProfileEditor
     private void SetSex(Sex newSex)
     {
         Profile = Profile?.WithSex(newSex);
-        // for convenience, default to most common gender and voice when new sex is selected
+        // for convenience, default to most common gender when new sex is selected
         switch (newSex)
         {
             case Sex.Male:
@@ -247,6 +247,7 @@ public sealed partial class HumanoidProfileEditor
                 break;
         }
 
+        // this does the same as above but for voice
         if (_prototypeManager.TryIndex(Profile?.Species, out var prototype))
             SetVoice(prototype.DefaultSoundsBySex[newSex]);
 
@@ -259,7 +260,7 @@ public sealed partial class HumanoidProfileEditor
     private void SetVoice(ProtoId<EmoteSoundsPrototype> newVoice)
     {
         Profile = Profile?.WithVoice(newVoice);
-        IsDirty = true;
+        SetDirty();
     }
 
     private void SetGender(Gender newGender)
