@@ -732,7 +732,7 @@ namespace Content.Server.Administration.Systems
                 if (!admins.Contains(session.Channel))
                 {
                     var playerMsg = await FormatFullMessageForRecipient(forAdmin: false, senderAdmin, senderSession, message);
-                    RaiseNetworkEvent(playerMsg);
+                    RaiseNetworkEvent(playerMsg, session.Channel);
                 }
             }
 
