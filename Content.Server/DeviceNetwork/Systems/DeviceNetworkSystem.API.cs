@@ -34,6 +34,33 @@ public sealed partial class DeviceNetworkSystem
         return true;
     }
 
+    [PublicAPI]
+    public bool QueuePacketHandled(
+        Entity<DeviceNetworkComponent?> ent,
+        string? address,
+        HandledNetworkPayload data,
+        uint? frequency = null,
+        int? network = null)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        var device = ent.Comp;
+        if (device.Address == string.Empty)
+            return false;
+
+        frequency ??= device.TransmitFrequency;
+
+        if (frequency == null)
+            return false;
+
+        network ??= device.DeviceNetId;
+
+        var manager = EnsureManager();
+        manager.Comp.StaticNextQueue.Enqueue(new DeviceNetworkPacketHandledEvent(network.Value, address, frequency.Value, device.Address, ent, data));
+        return true;
+    }
+
     /// <summary>
     /// Connect an entity with a DeviceNetworkComponent. Note that this will re-use an existing address if the
     /// device already had one configured. If there is a clash, the device cannot join the network.

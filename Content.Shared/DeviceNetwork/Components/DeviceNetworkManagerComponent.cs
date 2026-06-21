@@ -25,4 +25,13 @@ public sealed partial class DeviceNetworkManagerComponent : Component
     /// </summary>
     [ViewVariables]
     public Queue<DeviceNetworkPacketEvent> NextQueue = null!;
+
+    public readonly Queue<DeviceNetworkPacketHandledEvent> QueueC = new();
+    public readonly Queue<DeviceNetworkPacketHandledEvent> QueueD = new();
+
+    [ViewVariables]
+    public Queue<DeviceNetworkPacketHandledEvent> StaticActiveQueue = null!;
+
+    [ViewVariables]
+    public Queue<DeviceNetworkPacketHandledEvent> StaticNextQueue = null!;
 }

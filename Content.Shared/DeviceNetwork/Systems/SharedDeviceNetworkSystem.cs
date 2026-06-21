@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
-public abstract class SharedDeviceNetworkSystem : EntitySystem
+public abstract partial class SharedDeviceNetworkSystem : EntitySystem
 {
     public override void Initialize()
     {

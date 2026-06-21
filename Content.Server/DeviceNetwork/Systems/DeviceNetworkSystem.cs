@@ -48,6 +48,11 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             SendPacket(ref packet);
         }
 
+        while (comp.StaticActiveQueue.TryDequeue(out var packet))
+        {
+            SendPacketHandled(ref packet);
+        }
+
         SwapQueues(comp);
     }
 
@@ -62,6 +67,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         manager.NextQueue = manager.ActiveQueue;
         manager.ActiveQueue = manager.ActiveQueue == manager.QueueA ? manager.QueueB : manager.QueueA;
+        manager.StaticNextQueue = manager.StaticActiveQueue;
+        manager.StaticActiveQueue = manager.StaticActiveQueue == manager.QueueC ? manager.QueueD : manager.QueueC;
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -78,6 +85,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         ent.Comp.ActiveQueue = ent.Comp.QueueA;
         ent.Comp.NextQueue = ent.Comp.QueueB;
+        ent.Comp.StaticActiveQueue = ent.Comp.QueueC;
+        ent.Comp.StaticNextQueue = ent.Comp.QueueD;
         _pvsOverride.AddGlobalOverride(ent);
     }
 
@@ -309,6 +318,31 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         return true;
     }
 
+    /// <summary>
+    /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
+    /// The recipients is set to the modified recipient list.
+    /// </summary>
+    /// <returns>false if the broadcast was canceled</returns>
+    private bool CheckRecipientsList(DeviceNetworkPacketHandledEvent packet, ref HashSet<Device> recipients)
+    {
+        var manager = EnsureManager();
+        if (!manager.Comp.Networks.ContainsKey(packet.NetId) || !manager.Comp.Networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
+            return false;
+
+        var sender = manager.Comp.Networks[packet.NetId].Devices[packet.SenderAddress];
+        if (!sender.SendBroadcastAttemptEvent)
+            return true;
+
+        var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
+        RaiseLocalEvent(packet.Sender, ref beforeBroadcastAttemptEvent, true);
+
+        if (beforeBroadcastAttemptEvent.Cancelled || beforeBroadcastAttemptEvent.ModifiedRecipients == null)
+            return false;
+
+        recipients = beforeBroadcastAttemptEvent.ModifiedRecipients;
+        return true;
+    }
+
     private void SendToConnections(ReadOnlySpan<Device> connections, DeviceNetworkPacketEvent packet)
     {
         if (Deleted(packet.Sender))
@@ -328,10 +362,91 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
             RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
 
-            if (!beforeEv.Cancelled)
-                RaiseLocalEvent(connection.DeviceOwner, ref packet);
-            else
-                beforeEv.Cancelled = false;
+            if (beforeEv.Cancelled)
+                continue;
+
+            RaiseLocalEvent(connection.DeviceOwner, ref packet);
+        }
+    }
+
+    private void SendPacketHandled(ref DeviceNetworkPacketHandledEvent packet)
+    {
+        if (!TryEnsureNetwork(packet.NetId, out var network))
+            return;
+
+        if (packet.Address == null)
+        {
+            // Broadcast to all listening devices
+            if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
+            {
+                var deviceCopy = ArrayPool<Device>.Shared.Rent(devices.Count);
+                devices.CopyTo(deviceCopy);
+                SendToConnectionsHandled(deviceCopy.AsSpan(0, devices.Count), packet);
+                ArrayPool<Device>.Shared.Return(deviceCopy);
+            }
+        }
+        else
+        {
+            var totalDevices = 0;
+            var hasTargetedDevice = false;
+            if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
+            {
+                totalDevices += devices.Count;
+            }
+
+            if (!TryGetDevice(packet.NetId, packet.Address, out var device))
+                return;
+
+            if (!device.Value.ReceiveAll &&
+                device.Value.ReceiveFrequency == packet.Frequency)
+            {
+                totalDevices += 1;
+                hasTargetedDevice = true;
+            }
+            var deviceCopy = ArrayPool<Device>.Shared.Rent(totalDevices);
+            if (devices != null)
+            {
+                devices.CopyTo(deviceCopy);
+            }
+            if (hasTargetedDevice)
+            {
+                deviceCopy[totalDevices - 1] = device.Value;
+            }
+            SendToConnectionsHandled(deviceCopy.AsSpan(0, totalDevices), packet);
+            ArrayPool<Device>.Shared.Return(deviceCopy);
+        }
+    }
+
+    private void SendToConnectionsHandled(ReadOnlySpan<Device> connections, DeviceNetworkPacketHandledEvent packet)
+    {
+        if (Deleted(packet.Sender))
+        {
+            return;
+        }
+
+        var xform = Transform(packet.Sender);
+
+        var senderPos = _transformSystem.GetWorldPosition(xform);
+
+        foreach (var connection in connections)
+        {
+            if (connection.DeviceOwner == packet.Sender)
+                continue;
+
+            var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
+            RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
+
+            if (beforeEv.Cancelled)
+                continue;
+
+            var data = new DeviceNetworkPacketData(
+                packet.NetId,
+                packet.Address,
+                packet.Frequency,
+                packet.SenderAddress,
+                packet.Sender);
+            var handledNetworkPayload = packet.Data;
+            RaisePayload(connection.DeviceOwner, ref handledNetworkPayload, ref data);
         }
     }
 }

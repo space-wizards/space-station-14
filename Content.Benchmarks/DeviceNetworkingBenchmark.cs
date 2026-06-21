@@ -28,6 +28,7 @@ public class DeviceNetworkingBenchmark
 
 
     private NetworkPayload _payload = default!;
+    private HandledNetworkPayload _staticPayload = default!;
 
     [TestPrototypes]
     private const string Prototypes = @"
@@ -72,6 +73,13 @@ public class DeviceNetworkingBenchmark
 
             var testValue = "test";
             _payload = new TestPayload
+            {
+                TestString = testValue,
+                TestNumber = 1,
+                TestBool = true,
+            };
+
+            _staticPayload = new TestPayloadStatic
             {
                 TestString = testValue,
                 TestNumber = 1,
@@ -135,6 +143,20 @@ public class DeviceNetworkingBenchmark
         _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceWirelessEntity, null, _payload, 100);
+        });
+
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
+    }
+
+    [Benchmark(Description = "Device Net Broadcast Handled Payload")]
+    public async Task DeviceNetworkBroadcastHandledPayload()
+    {
+        var server = _pair.Server;
+
+        _pair.Server.Post(() =>
+        {
+            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _staticPayload, 100);
         });
 
         await server.WaitRunTicks(1);
