@@ -205,6 +205,10 @@ public sealed partial class PlayerPanelEui : BaseEui
         {
             _canFreeze = session.AttachedEntity != null;
             _frozen = _entity.HasComponent<AdminFrozenComponent>(session.AttachedEntity);
+
+            var userData = session.Channel.UserData;
+            _trustScore = userData.Trust;
+            _accountCreationDate = userData.CreatedTime;
         }
         else
         {
@@ -218,13 +222,6 @@ public sealed partial class PlayerPanelEui : BaseEui
         else
         {
             _canAhelp = false;
-        }
-
-        if (_player.TryGetSessionById(_targetPlayer.UserId, out session))
-        {
-            var contentData = session.ContentData();
-            _trustScore = contentData?.TrustScore ?? 0.5f;
-            _accountCreationDate = contentData?.AccountCreationDate;
         }
 
         StateDirty();

@@ -1,4 +1,3 @@
-using System.Net;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -10,7 +9,6 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -50,14 +48,7 @@ namespace Content.Server.GameTicking
                     // Always make sure the client has player data.
                     if (session.Data.ContentDataUncast == null)
                     {
-                        var userData = session.Channel.UserData;
-                        var trust = session.AuthType switch
-                        {
-                            LoginType.LoggedIn => userData.Trust, // Auth trust is always leading
-                            _ => userData.IsLocal ? 1.0f : 0.0f // Local unauthenticated users are fully trusted, remote unauthenticated users are not.
-                        };
-
-                        var data = new ContentPlayerData(session.UserId, args.Session.Name, trust, userData.CreatedTime);
+                        var data = new ContentPlayerData(session.UserId, args.Session.Name);
                         data.Mind = mindId;
                         session.Data.ContentDataUncast = data;
                     }
