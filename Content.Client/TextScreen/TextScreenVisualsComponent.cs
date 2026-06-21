@@ -19,19 +19,19 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <remarks>
     ///     15,151,251 is the old ss13 color, from tg
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Color Color = new Color(15, 151, 251);
 
     /// <summary>
     ///     Offset for centering the text.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Vector2 TextOffset = Vector2.Zero;
 
     /// <summary>
     ///     Offset for centering the timer.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Vector2 TimerOffset = Vector2.Zero;
 
     /// <summary>
@@ -58,7 +58,7 @@ public sealed partial class TextScreenVisualsComponent : Component
     /// <summary>
     ///     Text the screen should show when it finishes a timer.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string?[] Text = new string?[2];
 
     /// <summary>
