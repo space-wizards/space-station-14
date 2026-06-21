@@ -18,22 +18,22 @@
       snapCardinals: true
       layers:
         - state: smes
-        - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeLevel" ]
-          state: "charge1"
+        - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
+          state: charge1
           shader: unshaded
           visible: false
-        - map: [ "enum.PowerNetworkBatteryVisualLayers.CanCharge" ]
-          state: "input"
+        - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
+          state: input
           shader: unshaded
           visible: false
-        - map: [ "enum.PowerNetworkBatteryVisualLayers.CanDischarge" ]
-          state: "output"
+        - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
+          state: output
           shader: unshaded
           visible: false
-        - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeState" ]
-          state: "still"
+        - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
+          state: still
           shader: unshaded
-        - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+        - map: [ enum.WiresVisualLayers.MaintenancePanel ]
           state: open
     - type: PowerNetworkBatteryVisuals
       chargeLevelZeroVisible: false
@@ -154,22 +154,22 @@
     snapCardinals: true
     layers:
     - state: advancedsmes
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeLevel" ]
-      state: "charge1"
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
+      state: charge1
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanCharge" ]
-      state: "input"
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
+      state: input
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanDischarge" ]
-      state: "output"
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
+      state: output
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeState" ]
-      state: "still"
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
+      state: still
       shader: unshaded
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - map: [ enum.WiresVisualLayers.MaintenancePanel ]
       state: open
   - type: Machine
     board: SMESAdvancedMachineCircuitboard

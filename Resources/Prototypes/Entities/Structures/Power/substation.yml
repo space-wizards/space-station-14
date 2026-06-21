@@ -87,21 +87,21 @@
     - state: substation
     - state: screen
       shader: unshaded
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeLevel" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
       state: charge0
       shader: unshaded
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanCharge" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
       state: input
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanDischarge" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
       state: output
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeState" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
       state: still
       shader: unshaded
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - map: [ enum.WiresVisualLayers.MaintenancePanel ]
       state: open
   - type: Appearance
   - type: PowerNetworkBatteryVisuals
@@ -205,21 +205,21 @@
     - state: frame
     - state: screen
       shader: unshaded
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeLevel" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
       state: charge0
       shader: unshaded
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanCharge" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
       state: input
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.CanDischarge" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
       state: output
       shader: unshaded
       visible: false
-    - map: [ "enum.PowerNetworkBatteryVisualLayers.ChargeState" ]
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
       state: still
       shader: unshaded
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - map: [ enum.WiresVisualLayers.MaintenancePanel ]
       state: open
   - type: Appearance
   - type: PowerNetworkBatteryVisuals

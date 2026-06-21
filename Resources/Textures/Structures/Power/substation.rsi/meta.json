@@ -1,83 +1,83 @@
 {
-  "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github), edited by whatston3 (GitHub)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "static"
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by EmoGarbage404 (github), edited by whatston3 (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "substation"
-    },
-    {
-      "name": "open"
-    },
-    {
-      "name": "input"
-    },
-    {
-      "name": "output"
-    },
-    {
-      "name": "screen"
-    },
-    {
-      "name": "charging",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "still",
-      "delays": [
-        [
-          1.0,
-          1.0
-        ]
-      ]
-    },
-    {
-      "name": "discharging",
-      "delays": [
-        [
-          0.25,
-          0.25
-        ]
-      ]
-    },
-    {
-      "name": "charge0",
-      "delays": [
-        [
-          1.0,
-          1.0
-        ]
-      ]
-    },
-    {
-      "name": "charge1",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "charge2"
-    },
-    {
-      "name": "charge3"
-    },
-    {
-      "name": "charge4"
-    }
-  ]
+    "states": [
+        {
+            "name": "static"
+        },
+        {
+            "name": "substation"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "input"
+        },
+        {
+            "name": "output"
+        },
+        {
+            "name": "screen"
+        },
+        {
+            "name": "charging",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "still",
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "discharging",
+            "delays": [
+                [
+                    0.25,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "charge0",
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "charge1",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "charge2"
+        },
+        {
+            "name": "charge3"
+        },
+        {
+            "name": "charge4"
+        }
+    ]
 }
