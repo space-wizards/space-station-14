@@ -27,7 +27,6 @@ namespace Content.Shared.Fluids.EntitySystems;
 public sealed partial class DrainSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -188,7 +187,7 @@ public sealed partial class DrainSystem : EntitySystem
                     var transferSolution = _solutionContainerSystem.SplitSolution(puddle.Comp.Solution.Value,
                         FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
-                    drainSolution.AddSolution(transferSolution, _prototype);
+                    drainSolution.AddSolution(transferSolution, ProtoMan);
 
                     if (puddleSolution.Volume <= 0)
                         PredictedQueueDel(puddle);

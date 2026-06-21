@@ -5,14 +5,11 @@ using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
-using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-
         private GasReactionPrototype[] _gasReactions = [];
 
         /// <summary>

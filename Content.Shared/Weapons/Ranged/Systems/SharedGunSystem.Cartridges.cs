@@ -38,7 +38,7 @@ public abstract partial class SharedGunSystem
 
     private DamageSpecifier? GetProjectileDamage(EntProtoId proto)
     {
-        if (!ProtoManager.TryIndex(proto, out var entityProto))
+        if (!ProtoMan.TryIndex(proto, out var entityProto))
             return null;
 
         if (!entityProto.TryGetComponent<ProjectileComponent>(out var projectile, Factory))

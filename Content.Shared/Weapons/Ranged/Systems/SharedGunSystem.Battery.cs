@@ -33,7 +33,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryDamageExamine(Entity<BatteryAmmoProviderComponent> ent, ref DamageExamineEvent args)
     {
-        var proto = ProtoManager.Index<EntityPrototype>(ent.Comp.Prototype);
+        var proto = ProtoMan.Index<EntityPrototype>(ent.Comp.Prototype);
         DamageSpecifier? damageSpec = null;
         var damageType = string.Empty;
 

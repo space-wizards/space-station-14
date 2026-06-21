@@ -27,7 +27,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -504,7 +503,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (implant != null && _proto.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
+        if (implant != null && ProtoMan.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
             ent.Comp.DeimplantChosen = proto;
 
         UpdateUi(ent!);

@@ -9,8 +9,6 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks;
 
@@ -21,7 +19,6 @@ namespace Content.Shared.Stacks;
 [UsedImplicitly]
 public abstract partial class SharedStackSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IViewVariablesManager _vvm = default!;
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedHandsSystem Hands = default!;

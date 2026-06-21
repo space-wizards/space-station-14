@@ -10,7 +10,6 @@ using Content.Shared.Tools.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -21,7 +20,6 @@ public abstract partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IMapManager _mapManager = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
     [Dependency] private ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
@@ -75,7 +73,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         // Loop through tool qualities and add localized names to the list
         foreach (var toolQuality in ent.Comp.Qualities)
         {
-            if (_protoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
+            if (ProtoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
             {
                 toolQualities.Add(Loc.GetString(protoToolQuality.Name));
             }

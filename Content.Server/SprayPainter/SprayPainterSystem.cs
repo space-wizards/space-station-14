@@ -118,7 +118,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private bool IsDecalValid(Decal decal)
     {
-        if (!Proto.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
+        if (!ProtoMan.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return false;
 
         return (decalProto.Tags.Contains("station")

@@ -48,7 +48,7 @@ public abstract partial class SharedSalvageSystem
         {
             case AsteroidOffering:
                 var configId = _asteroidConfigs[rand.Next(_asteroidConfigs.Count)];
-                var configProto = _proto.Index(configId);
+                var configProto = ProtoMan.Index(configId);
                 var layers = new Dictionary<string, int>();
 
                 var config = new DungeonConfig
@@ -62,11 +62,11 @@ public abstract partial class SharedSalvageSystem
                 };
 
                 var count = _asteroidOreCount.Next(rand);
-                var weightedProto = _proto.Index(_asteroidOreWeights);
+                var weightedProto = ProtoMan.Index(_asteroidOreWeights);
                 for (var i = 0; i < count; i++)
                 {
                     var ore = weightedProto.Pick(rand);
-                    config.Layers.Add(_proto.Index<OreDunGenPrototype>(ore));
+                    config.Layers.Add(ProtoMan.Index<OreDunGenPrototype>(ore));
 
                     var layerCount = layers.GetOrNew(ore);
                     layerCount++;
@@ -88,7 +88,7 @@ public abstract partial class SharedSalvageSystem
             case SalvageOffering:
                 // Salvage map seed
                 _salvageMaps.Clear();
-                _salvageMaps.AddRange(_proto.EnumeratePrototypes<SalvageMapPrototype>());
+                _salvageMaps.AddRange(ProtoMan.EnumeratePrototypes<SalvageMapPrototype>());
                 _salvageMaps.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
                 var mapIndex = rand.Next(_salvageMaps.Count);
                 var map = _salvageMaps[mapIndex];

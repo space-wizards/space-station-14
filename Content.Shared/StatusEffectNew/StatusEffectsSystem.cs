@@ -18,7 +18,6 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     [Dependency] private EntityQuery<StatusEffectContainerComponent> _containerQuery = default!;
     [Dependency] private EntityQuery<StatusEffectComponent> _effectQuery = default!;
@@ -77,7 +76,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     {
         StatusEffectPrototypes.Clear();
 
-        foreach (var ent in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var ent in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (ent.TryGetComponent<StatusEffectComponent>(out _, _factory))
                 StatusEffectPrototypes.Add(ent.ID);
@@ -165,7 +164,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
     public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
-        if (!_proto.Resolve(effectProto, out var effectProtoData))
+        if (!ProtoMan.Resolve(effectProto, out var effectProtoData))
             return false;
 
         if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))

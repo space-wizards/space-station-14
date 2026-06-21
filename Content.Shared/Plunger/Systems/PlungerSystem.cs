@@ -3,9 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Plunger.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Random;
@@ -17,7 +15,6 @@ namespace Content.Shared.Plunger.Systems;
 /// </summary>
 public sealed partial class PlungerSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
@@ -66,7 +63,7 @@ public sealed partial class PlungerSystem : EntitySystem
         _popup.PopupClient(Loc.GetString("plunger-unblock", ("target", target)), args.User, args.User, PopupType.Medium);
         plunge.Plunged = true;
 
-        var spawn = _proto.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(_random);
+        var spawn = ProtoMan.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(_random);
 
         _audio.PlayPredicted(plunge.Sound, uid, uid);
         Spawn(spawn, Transform(target).Coordinates);

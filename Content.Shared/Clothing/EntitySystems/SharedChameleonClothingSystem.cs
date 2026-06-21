@@ -19,7 +19,6 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract partial class SharedChameleonClothingSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ClothingSystem _clothingSystem = default!;
     [Dependency] private ContrabandSystem _contraband = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
@@ -89,7 +88,7 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
-            !_proto.Resolve(component.Default, out EntityPrototype? proto))
+            !ProtoMan.Resolve(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
@@ -212,7 +211,7 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
         {
             foreach (var proto in _data[slot])
             {
-                if (IsValidTarget(_proto.Index(proto), slot, tag))
+                if (IsValidTarget(ProtoMan.Index(proto), slot, tag))
                     validTargets.Add(proto);
             }
         }
@@ -235,7 +234,7 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
     protected void PrepareAllVariants()
     {
         _data.Clear();
-        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+        var prototypes = ProtoMan.EnumeratePrototypes<EntityPrototype>();
 
         foreach (var proto in prototypes)
         {

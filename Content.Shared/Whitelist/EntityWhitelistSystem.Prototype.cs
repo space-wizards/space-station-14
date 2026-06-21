@@ -11,7 +11,7 @@ public sealed partial class EntityWhitelistSystem
     /// </summary>
     public bool IsValid(EntityWhitelist list, [ForbidLiteral] EntProtoId protoId)
     {
-        return IsValid(list, _proto.Index(protoId));
+        return IsValid(list, ProtoMan.Index(protoId));
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public sealed partial class EntityWhitelistSystem
     /// </summary>
     public bool CheckBoth([ForbidLiteral] EntProtoId protoId, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
     {
-        return CheckBoth(_proto.Index(protoId), blacklist, whitelist);
+        return CheckBoth(ProtoMan.Index(protoId), blacklist, whitelist);
     }
 
     /// <summary>
