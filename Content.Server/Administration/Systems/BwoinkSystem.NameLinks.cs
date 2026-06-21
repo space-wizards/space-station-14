@@ -17,6 +17,13 @@ public sealed partial class BwoinkSystem
     [GeneratedRegex(@"^[()\-.\s]*$")]
     private static partial Regex IgnoredWordRegex();
 
+    private int _startWordMinSize;
+
+    private bool IsStartingWord(ReadOnlySpan<char> word)
+    {
+        return word.Length >= _startWordMinSize;
+    }
+
     private readonly record struct NameMatchOption(string Name, EntityUid Entity)
     {
         public readonly string[] NameWords = WordBoundRegex().Split(Name);
@@ -79,7 +86,7 @@ public sealed partial class BwoinkSystem
             for (var i = 0; i < words.Length; i++)
             {
                 var word = words[i];
-                if (IgnoredWordRegex().IsMatch(word))
+                if (!IsStartingWord(word) || IgnoredWordRegex().IsMatch(word))
                 {
                     output.AppendText(word);
                     continue;
@@ -128,6 +135,7 @@ public sealed partial class BwoinkSystem
 
                 output.PopTag();
                 var idsString = string.Join(',', candidates.Select(e => e.Entity));
+                output.AppendText(" ");
                 output.MakeCommandLinkTag(
                     Loc.GetString("bwoink-message-name-link"),
                     CommandParsing.EscapeCommand(QuickInfoShared.CommandName, idsString));
