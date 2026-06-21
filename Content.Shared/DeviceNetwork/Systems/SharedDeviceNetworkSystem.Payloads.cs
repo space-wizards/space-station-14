@@ -1,10 +1,13 @@
-﻿using Content.Shared.DeviceNetwork.Events;
+﻿using System.Collections.Frozen;
+using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract partial class SharedDeviceNetworkSystem
 {
-    protected Dictionary<Type, DeviceNetworkHandler> Handlers = new();
+    private FrozenDictionary<Type, DeviceNetworkHandler> _handlers = default!;
+
+    private readonly Dictionary<Type, DeviceNetworkHandler> _handlersCache = new();
 
     /// <summary>
     /// Method that registers this handler in <see cref="SharedDeviceNetworkSystem"/>.
@@ -14,8 +17,17 @@ public abstract partial class SharedDeviceNetworkSystem
     {
         foreach (var payload in handler.PayloadSubs.Keys)
         {
-            Handlers.Add(payload, handler);
+            _handlersCache.Add(payload, handler);
         }
+    }
+
+    /// <summary>
+    /// Must be called after all systems were initialized.
+    ///  TODO ENGINE implement EntitySystem.PostInit()
+    /// </summary>
+    public void PostInit()
+    {
+        _handlers = _handlersCache.ToFrozenDictionary();
     }
 
     /// <summary>
@@ -26,7 +38,7 @@ public abstract partial class SharedDeviceNetworkSystem
     /// <param name="args"></param>
     public void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (!Handlers.TryGetValue(payload.GetType(), out var handler))
+        if (!_handlers.TryGetValue(payload.GetType(), out var handler))
             return;
 
         handler.RaisePayload(uid, ref payload, ref args);
@@ -37,17 +49,15 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _device = default!;
 
+    protected void Register()
+    {
+        _device.RegisterHandler(this);
+    }
+
     /// <summary>
     /// Dictionary of payloads and the methods
     /// </summary>
-    public abstract Dictionary<Type, Delegate> PayloadSubs { get; }
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitializeDevice();
-        _device.RegisterHandler(this);
-    }
+    public abstract FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; }
 
     /// <summary>
     /// A method that fills the <see cref="PayloadSubs"/> dictionary with subscriptions.
@@ -65,10 +75,28 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler wher
 {
     [Dependency] private EntityQuery<T> _query = default!;
 
-    public override Dictionary<Type, Delegate> PayloadSubs { get; } = new();
+    public override FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
+    private readonly Dictionary<Type, Delegate> _payloadSubsCache = new();
+
+    private bool _isLocked;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        InitializeDevice();
+        PayloadSubs = _payloadSubsCache.ToFrozenDictionary();
+        Register();
+        _isLocked = true;
+    }
 
     protected void SubscribePayload<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
     {
+        if (_isLocked)
+        {
+            Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
+            return;
+        }
+
         // It needs to be wrapped so when raising the Delegate it can be down-casted without issues.
         DeviceNetworkPayloadHandlerWrapper<T> wrapper = (ent, ref basePayload, ref args) =>
         {
@@ -77,7 +105,7 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler wher
             basePayload = specificPayload;
         };
 
-        PayloadSubs.Add(typeof(TN), wrapper);
+        _payloadSubsCache.Add(typeof(TN), wrapper);
     }
 
     public override void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
