@@ -38,4 +38,9 @@ public sealed partial class SetDeadChatCommand : LocalizedCommands
 
         shell.WriteLine(Loc.GetString(deadchat ? "cmd-setdeadchat-looc-enabled" : "cmd-setdeadchat-looc-disabled"));
     }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return args.Length == 1 ? CompletionResult.FromOptions(["true", "false"]) : CompletionResult.Empty;
+    }
 }
