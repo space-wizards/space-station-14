@@ -41,6 +41,6 @@ public sealed partial class SetDeadChatCommand : LocalizedCommands
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        return args.Length == 1 ? CompletionResult.FromOptions(["true", "false"]) : CompletionResult.Empty;
+        return args.Length == 1 ? CompletionResult.FromOptions(CompletionHelper.Booleans) : CompletionResult.Empty;
     }
 }
