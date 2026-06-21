@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-dotnet run --project Content.Server
+dotnet run --no-build --project Content.Client
 read -p "Press enter to continue"
