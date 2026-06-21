@@ -84,7 +84,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     };
 
     /// <summary>
-    /// An enum of values to randomize.
+    /// An enum defining randomizable values.
     /// </summary>
     [Flags]
     public enum RandomizeConfig
@@ -101,6 +101,9 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         RandomizeConfig.Eyes
         | RandomizeConfig.Skin;
 
+    /// <summary>
+    /// Picks a random eye color.
+    /// </summary>
     public static Color RandomEyes()
     {
         var random = IoCManager.Resolve<IRobustRandom>();
@@ -109,6 +112,9 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         return eyes;
     }
 
+    /// <summary>
+    /// Picks a random skin color using species.
+    /// </summary>
     public static Color RandomSkin(ProtoId<SpeciesPrototype> species)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
@@ -128,7 +134,9 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         return skinColor;
     }
 
-
+    /// <summary>
+    /// Generates a randomized character appearance.
+    /// </summary>
     public static HumanoidCharacterAppearance Random(string species, Sex sex)
     {
         // TODO: Add random markings

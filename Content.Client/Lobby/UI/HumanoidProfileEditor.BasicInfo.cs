@@ -22,7 +22,7 @@ public sealed partial class HumanoidProfileEditor
     }
 
     /// <summary>
-    /// Randomize values selectively based on what values are locked.
+    /// Randomize values selectively while respecting locked values.
     /// </summary>
     private void Randomize()
     {
@@ -34,7 +34,7 @@ public sealed partial class HumanoidProfileEditor
     }
 
     /// <summary>
-    /// Randomize the name.
+    /// Randomize name.
     /// </summary>
     private void RandomizeName()
     {

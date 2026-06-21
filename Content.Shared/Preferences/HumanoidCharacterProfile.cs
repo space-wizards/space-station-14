@@ -214,7 +214,7 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// An enum of values to randomize..
+        /// An enum defining randomizable values.
         /// </summary>
         [Flags]
         public enum RandomizeConfig

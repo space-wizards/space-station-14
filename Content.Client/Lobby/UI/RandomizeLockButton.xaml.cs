@@ -14,12 +14,12 @@ namespace Content.Client.Lobby.UI;
 public sealed partial class RandomizeLockButton : TextureButton
 {
     /// <summary>
-    /// Which value the randomize locking should apply for?
+    /// Which value this lock meant for.
     /// </summary>
     public HumanoidCharacterProfile.RandomizeConfig For { get; set; }
 
     /// <summary>
-    /// Stores current randomizer config.
+    /// Which values to allow to be randomized.
     /// </summary>
     public static HumanoidCharacterProfile.RandomizeConfig RandomizeConfig = HumanoidCharacterProfile.RandomizeConfigAll;
 
