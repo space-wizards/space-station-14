@@ -64,6 +64,12 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     /// </summary>
     protected abstract void InitializeDevice();
 
+    /// <summary>
+    /// Raises a payload on a specified entity.
+    /// </summary>
+    /// <param name="uid">Uid of the target entity.</param>
+    /// <param name="payload">Payload to send.</param>
+    /// <param name="args">Other information about how the payload have been received.</param>
     public abstract void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
 }
 
@@ -78,20 +84,17 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler wher
     public override FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
     private readonly Dictionary<Type, Delegate> _payloadSubsCache = new();
 
-    private bool _isLocked;
-
     public override void Initialize()
     {
         base.Initialize();
         InitializeDevice();
         PayloadSubs = _payloadSubsCache.ToFrozenDictionary();
         Register();
-        _isLocked = true;
     }
 
     protected void SubscribePayload<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
     {
-        if (_isLocked)
+        if (EntityManager.Initialized)
         {
             Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
             return;
