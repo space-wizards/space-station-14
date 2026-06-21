@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the gas filter gas selection.
-    type: Fix
-  id: 9225
-  time: '2025-11-24T16:14:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41567
-- author: slarticodefast
-  changes:
-  - message: Power cells are now predicted. Please keep an eye out for bugs with any
-      battery powered device.
-    type: Tweak
-  id: 9226
-  time: '2025-11-24T17:04:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41379
-- author: YoungThugSS14
-  changes:
-  - message: Tourniquets can now fit in medical belts
-    type: Tweak
-  id: 9227
-  time: '2025-11-26T17:29:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41584
-- author: CDWimmer
-  changes:
-  - message: The Syndicate now commits one less war crime; the Syndicate medical bundle
-      cross is now blue.
-    type: Fix
-  id: 9228
-  time: '2025-11-26T21:13:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41541
 - author: Compilatron144
   changes:
   - message: Plasma got a Christmas makeover.
@@ -4094,3 +4064,39 @@
   id: 9736
   time: '2026-06-02T04:23:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44197
+- author: ScarKy0
+  changes:
+  - message: The "Crit Anomalies" objective will now correctly randomize the number
+      of anomalies to crit.
+    type: Fix
+  id: 9737
+  time: '2026-06-03T19:22:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44228
+- author: matriotic
+  changes:
+  - message: Added drum kit. It can be ordered in cargo for 1500 spesos.
+    type: Add
+  id: 9738
+  time: '2026-06-04T17:50:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42987
+- author: portfiend
+  changes:
+  - message: A couple of broken messages related to meatspiking have been fixed.
+    type: Fix
+  - message: Cotton buns, web winter coats, and web winter boots are now sliceable
+      again.
+    type: Fix
+  - message: A bunch of mobs that erroneously required a meat spike no longer need
+      to do so. The only mobs that should need meatspiking to butcher are humanoid
+      species, monkeys, kobolds, scurrets, and xenos.
+    type: Fix
+  id: 9739
+  time: '2026-06-04T21:18:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44225
+- author: maland1
+  changes:
+  - message: Updated Traitor guidebook to properly describe uplinks.
+    type: Tweak
+  id: 9740
+  time: '2026-06-04T22:38:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44240

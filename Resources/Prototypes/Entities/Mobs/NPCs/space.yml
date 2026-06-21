@@ -124,7 +124,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -167,8 +167,8 @@
       Unsexed: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: MobThresholds

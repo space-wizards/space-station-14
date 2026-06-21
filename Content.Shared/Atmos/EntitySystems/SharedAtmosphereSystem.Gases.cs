@@ -69,7 +69,7 @@ public abstract partial class SharedAtmosphereSystem
         {
             var idx = (int)gas;
             // Log an error if the corresponding prototype isn't found
-            if (!ProtoMan.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
+            if (!ProtoManager.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
             {
                 Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
                 continue;
