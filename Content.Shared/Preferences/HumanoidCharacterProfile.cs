@@ -84,10 +84,10 @@ namespace Content.Shared.Preferences
         public int Age { get; set; } = 18;
 
         [DataField]
-        public Sex Sex { get; set; } = Sex.Male;
+        public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
-        public Gender Gender { get; set; } = Gender.Male;
+        public Gender Gender { get; private set; } = Gender.Male;
 
         /// <summary>
         /// Stores markings, eye colors, etc for the profile.
