@@ -9,11 +9,6 @@ uniform highp float[10] times;
 uniform lowp int count;
 uniform sampler2D SCREEN_TEXTURE;
 
-// prng from https://stackoverflow.com/questions/4200224/random-noise-functions-for-glsl#4275343
-highp float rand(highp vec2 co){
-    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
-}
-
 void fragment()
 {
     // distortion and brightness will be accumulated for each instances
@@ -24,21 +19,14 @@ void fragment()
         // baseSt will be blended with st via fades
         highp vec2 baseSt = st;
         highp vec2 WaveCentre = positions[i];
-
         // useful so that a non-square rect wont result in ellipses instead of circles
         highp float ratio = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x * 0.5;
         WaveCentre.y *= ratio;
-
-        // Calculate the angle from the center, so that it distorts a bit different depending on the angle
-        highp vec2 delta = vec2(st.x, st.y * ratio) - WaveCentre;
-        highp float angle = round(atan(delta.y / delta.x) * 40.0);
-
         // calculate the distortion itself
-        highp float dist = (distance(vec2(st.x, st.y * ratio), WaveCentre)) * downScales[i] * rand(vec2(angle, 1.0));
+        highp float dist = distance(vec2(st.x, st.y * ratio), WaveCentre) * downScales[i];
         highp float val = dist;
         highp float a = 3.0;
-        highp float fac = val * 20.0 - times[i] * waveSpeeds[i];
-        highp float cosFuns = cos(fac);
+        highp float cosFuns = cos(val * 20.0 - times[i] * waveSpeeds[i]);
         highp float powFuns = pow(val * 2.5, a);
         highp float limtedPowFuns = 0.5 * pow(a / (a + powFuns), 2.0);
         highp float finalRes = smoothstep(0.0, 1.0, limtedPowFuns * cosFuns) * waveStrengths[i];
