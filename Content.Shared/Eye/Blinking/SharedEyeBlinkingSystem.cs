@@ -1,3 +1,4 @@
+using Content.Shared.Body;
 using Content.Shared.Changeling;
 using Content.Shared.Chat;
 using Content.Shared.Cloning.Events;
@@ -9,7 +10,7 @@ namespace Content.Shared.Eye.Blinking;
 
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _apperance = default!;
+    [Dependency] private SharedAppearanceSystem _apperance = default!;
 
     public override void Initialize()
     {
@@ -18,6 +19,13 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(MobStateChangedEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterChangelingTransformEvent>(AfterChangelingTransformEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, EmoteEvent>(EmoteEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, ApplyOrganMarkingsEvent>(OnApplyOrganMarkingEvent);
+
+    }
+
+    private void OnApplyOrganMarkingEvent(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
+    {
+        RaiseNetworkEvent(new UpdateEyelidsAfterApplyOrganMarkingsEvent(GetNetEntity(ent.Owner)));
     }
 
     private void AfterChangelingTransformEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterChangelingTransformEvent args)
@@ -78,10 +86,7 @@ public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class UpdateEyelidsAfterCloningEvent() : EntityEventArgs
+public sealed class UpdateEyelidsAfterApplyOrganMarkingsEvent(NetEntity entity) : EntityEventArgs
 {
-    /// <summary>
-    /// The entity who be cloned.
-    /// </summary>
-    //public readonly NetEntity NetEntity = netEntity;
+    public readonly NetEntity Entity = entity;
 }

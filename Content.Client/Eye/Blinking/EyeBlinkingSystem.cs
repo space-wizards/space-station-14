@@ -12,11 +12,11 @@ namespace Content.Client.Eye.Blinking;
 
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _apperance = default!;
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAppearanceSystem _apperance = default!;
+    [Dependency] private IResourceCache _resCache = default!;
 
     public override void Initialize()
     {
@@ -24,21 +24,21 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, ApplyOrganProfileDataEvent>(OnComponentInit);
+        SubscribeNetworkEvent<UpdateEyelidsAfterApplyOrganMarkingsEvent>(OnComponentInit);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
     }
 
     private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
+        Logger.Info($"AfterAutoHandleStateEventHandler called for entity {ent.Owner}");
         InitEyeBlinking(ent);
     }
 
-    private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ApplyOrganProfileDataEvent args)
+    private void OnComponentInit(UpdateEyelidsAfterApplyOrganMarkingsEvent args)
     {
-        InitEyeBlinking(ent);
+        var ent = GetEntity(args.Entity);
+        if(TryComp<EyeBlinkingComponent>(ent, out var comp))
+            InitEyeBlinking((ent, comp));
     }
 
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent)
@@ -108,12 +108,25 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         if (ent.Comp.EyelidsColor == null && TryComp<BodyComponent>(ent.Owner, out var body))
         {
-            var visualHead = body.Organs?.ContainedEntities
-                .Where(ent => TryComp<OrganComponent>(ent, out var organ) && organ.Category == "Head")
-                .Select(ent => CompOrNull<VisualOrganComponent>(ent))
-                .FirstOrDefault(comp => comp != null);
+            VisualOrganComponent? visualHead = null;
+            foreach (var organ in body.Organs?.ContainedEntities ?? Array.Empty<EntityUid>())
+            {
+                if (!TryComp<OrganComponent>(organ, out var organComp))
+                    continue;
+                if (organComp.Category != "Head")
+                {
 
-            var skinColor = visualHead?.Profile.SkinColor ?? Color.Red;
+                    Logger.Info($"Category {organComp.Category} is not Head");
+                    continue;
+                }
+                visualHead = CompOrNull<VisualOrganComponent>(organ);
+                if (visualHead != null)
+                    break;
+            }
+
+            Logger.Info($"visualHead is null? : {visualHead == null}; profile skin color: {visualHead?.Profile.SkinColor}");
+
+            var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
             var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
             eyelidColor = new Color(
                 skinColor.R * blinkFade,
