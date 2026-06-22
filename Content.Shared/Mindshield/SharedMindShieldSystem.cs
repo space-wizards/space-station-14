@@ -21,6 +21,58 @@ public abstract class SharedMindShieldSystem : EntitySystem
         SubscribeLocalEvent<MindShieldComponent, ImplantRelayEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((e, ref k) => OnStatusQuery(e, ref k.Args));
         SubscribeLocalEvent<MindShieldComponent, GetMindShieldStatusEvent>(OnStatusQuery);
+        SubscribeLocalEvent<MindShieldComponent, MapInitEvent>(OnMindshieldMapInit);
+        // these four events are to manage the mindshield's dirtying
+        SubscribeLocalEvent<RefreshMindshieldStatusEvent>(OnRefresh);
+        SubscribeLocalEvent<MindShieldComponent, ImplantImplantedEvent>(OnMindshieldImplanted);
+        SubscribeLocalEvent<MindShieldComponent, ImplantRemovedEvent>(OnMindshieldImplantRemoved);
+        SubscribeLocalEvent<MindShieldComponent, ComponentRemove>(OnMindshieldRemoved);
+    }
+
+    private void OnMindshieldRemoved(Entity<MindShieldComponent> ent, ref ComponentRemove args)
+    {
+        RequestRefresh(ent.Owner);
+    }
+
+    private void OnMindshieldImplantRemoved(Entity<MindShieldComponent> ent, ref ImplantRemovedEvent args)
+    {
+        RequestRefresh(args.Implanted);
+    }
+
+    private void OnMindshieldImplanted(Entity<MindShieldComponent> ent, ref ImplantImplantedEvent args)
+    {
+        RequestRefresh(args.Implanted);
+    }
+
+    private void OnMindshieldMapInit(Entity<MindShieldComponent> ent, ref MapInitEvent args)
+    {
+        // todo: make it not refresh on implant & clothing items
+        RequestRefresh(ent.Owner);
+    }
+
+    /// <summary>
+    /// This function raises an event that will eventually update <see cref="MindShieldStatusComponent"/>. It should be called when anything makes a modification of its mindshielded-ness.
+    /// </summary>
+    public void RequestRefresh(EntityUid ent)
+    {
+        RaiseLocalEvent(new RefreshMindshieldStatusEvent()
+        {
+            Entity = ent
+        });
+    }
+    private void OnRefresh(RefreshMindshieldStatusEvent ev)
+    {
+        GetMindshieldStatusInner(ev.Entity, out var mindshielded, out var visible);
+        if (!mindshielded && !visible)
+            RemComp<MindShieldStatusComponent>(ev.Entity);
+        else
+        {
+            AddComp(ev.Entity, new MindShieldStatusComponent
+            {
+                IsMindshielded = mindshielded,
+                IsVisible = visible
+            });
+        }
     }
 
     private void OnStatusQuery(Entity<MindShieldComponent> e, ref GetMindShieldStatusEvent args)
@@ -30,7 +82,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
     }
 
     /// <summary>
-    /// Retrieves mindshielding data of an entity.
+    /// Retrieves mindshielding data of an entity. Works via <see cref="MindShieldStatusComponent"/>, and so requires proper dirtying on the part of mindshield providers.
     /// </summary>
     /// <param name="entity">The entity to check the mindshield status of.</param>
     /// <param name="isMindshielded">If the entity has a functional mind shield</param>
@@ -38,11 +90,37 @@ public abstract class SharedMindShieldSystem : EntitySystem
     /// <remarks>You should never look for a mindshield component and instead use this function.</remarks>
     public void GetMindshieldStatus(EntityUid entity, out bool isMindshielded, out bool isVisible)
     {
+        if (TryComp<MindShieldStatusComponent>(entity, out var comp))
+        {
+            isMindshielded = comp.IsMindshielded;
+            isVisible = comp.IsVisible;
+        }
+        else
+        {
+            isMindshielded = isVisible = false;
+        }
+    }
+
+    // Used to refresh the cache
+    private void GetMindshieldStatusInner(EntityUid entity, out bool isMindshielded, out bool isVisible)
+    {
         var ev = new GetMindShieldStatusEvent();
         RaiseLocalEvent(entity, ref ev);
         isMindshielded = ev.IsMindshielded;
         isVisible = ev.IsVisible;
     }
+
+    /// <summary>
+    /// Raised when the MindShieldStatus component needs to be refreshed, or added, etc.
+    /// </summary>
+    private struct RefreshMindshieldStatusEvent
+    {
+        /// <summary>
+        /// The entity whose status needs to be refreshed
+        /// </summary>
+        public EntityUid Entity;
+    }
+
 }
 
 /// <summary>
