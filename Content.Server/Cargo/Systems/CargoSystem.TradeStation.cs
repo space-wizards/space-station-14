@@ -108,16 +108,26 @@ public sealed partial class CargoSystem
     {
         foreach (var pallet in GetCargoPallets(gridUid, requestType))
         {
-            var aabb = _lookup.GetAABBNoContainer(
-                pallet.Entity,
-                pallet.PalletXform.LocalPosition,
-                pallet.PalletXform.LocalRotation
-            );
-            if (_lookup.AnyLocalEntitiesIntersecting(gridUid, aabb, LookupFlags.Dynamic))
+            if (IsPalletOccupied(pallet))
                 continue;
 
             yield return (pallet.Entity, pallet.PalletXform);
         }
+    }
+
+    /// <summary>
+    /// Is the given pallet free of dynamic entities
+    /// </summary>
+    /// <param name="pallet"> The pallet to check. </param>
+    /// <returns> <c>true</c> if the pallet has no dynamic entities on it; otherwise <c>false</c>. </returns>
+    public bool IsPalletOccupied((Entity<CargoPalletComponent> Entity, TransformComponent PalletXform) pallet)
+    {
+        var aabb = _lookup.GetAABBNoContainer(
+            pallet.Entity,
+            pallet.PalletXform.LocalPosition,
+            pallet.PalletXform.LocalRotation
+        );
+        return _lookup.AnyLocalEntitiesIntersecting(pallet.PalletXform.ParentUid, aabb, LookupFlags.Dynamic);
     }
 
     /// <summary>
