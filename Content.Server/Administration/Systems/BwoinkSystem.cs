@@ -657,7 +657,7 @@ namespace Content.Server.Administration.Systems
             var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
             string messageText;
 
-            if (senderAHelpAdmin)
+            if (forAdmin)
             {
                 messageText = await GenerateNameLinks(input.Text);
             }
