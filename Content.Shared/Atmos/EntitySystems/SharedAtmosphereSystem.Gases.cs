@@ -1,3 +1,4 @@
+using System.Numerics.Tensors;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Atmos.Reactions;
@@ -68,7 +69,7 @@ public abstract partial class SharedAtmosphereSystem
         {
             var idx = (int)gas;
             // Log an error if the corresponding prototype isn't found
-            if (!ProtoMan.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
+            if (!ProtoManager.TryIndex<GasPrototype>(gas.ToString(), out var gasPrototype))
             {
                 Log.Error($"Failed to find corresponding {nameof(GasPrototype)} for gas ID {(int)gas} ({gas}) with expected ID \"{gas.ToString()}\". Is your prototype named correctly?");
                 continue;
@@ -110,7 +111,7 @@ public abstract partial class SharedAtmosphereSystem
     [PublicAPI]
     public void GetFlammableMoles(GasMixture mixture, float[] buffer)
     {
-        NumericsHelpers.Multiply(mixture.Moles, GasOxidiserFuelMask, buffer);
+        TensorPrimitives.Multiply(mixture.Moles, GasOxidiserFuelMask, buffer);
     }
 
     /// <summary>
@@ -213,7 +214,7 @@ public abstract partial class SharedAtmosphereSystem
             }
         }
 
-        NumericsHelpers.Add(receiver.Moles, giver.Moles);
+        TensorPrimitives.Add(receiver.Moles, giver.Moles, receiver.Moles);
     }
 
     /// <summary>
