@@ -64,7 +64,10 @@ public abstract class SharedMindShieldSystem : EntitySystem
     {
         GetMindshieldStatusInner(ev.Entity, out var mindshielded, out var visible);
         if (!mindshielded && !visible)
-            RemComp<MindShieldStatusComponent>(ev.Entity);
+        {
+            if (HasComp<MindShieldStatusComponent>(ev.Entity))
+                RemComp<MindShieldStatusComponent>(ev.Entity);
+        }
         else
         {
             AddComp(ev.Entity, new MindShieldStatusComponent
