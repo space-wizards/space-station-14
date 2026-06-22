@@ -144,6 +144,7 @@
 
 - type: playTimeTracker
   id: JobTramDriver
+
 - type: playTimeTracker
   id: JobVisitor
 
