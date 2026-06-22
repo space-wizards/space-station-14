@@ -20,18 +20,18 @@ namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IStateManager _state = default!;
-    [Dependency] private readonly RulesSystem _rules = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IStateManager _state = default!;
+    [Dependency] private RulesSystem _rules = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
-    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(30);
-    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(120);
 
     private const float AmbientMusicFadeTime = 10f;
     private static float _volumeSlider;
@@ -41,6 +41,7 @@ public sealed partial class ContentAudioSystem
 
     private EntityUid? _ambientMusicStream;
     private AmbientMusicPrototype? _musicProto;
+    private AmbientMusicPrototype? _lastMusicProto;
 
     /// <summary>
     /// If we find a better ambient music proto can we interrupt this one.
@@ -193,7 +194,7 @@ public sealed partial class ContentAudioSystem
 
         _musicProto = GetAmbience();
 
-        if (_musicProto == null)
+        if (_musicProto == null || _musicProto == _lastMusicProto)
         {
             _interruptable = false;
             return;
@@ -223,6 +224,8 @@ public sealed partial class ContentAudioSystem
         {
             RefreshTracks(_musicProto.Sound, tracks, track);
         }
+
+        _lastMusicProto = _musicProto;
     }
 
     private AmbientMusicPrototype? GetAmbience()

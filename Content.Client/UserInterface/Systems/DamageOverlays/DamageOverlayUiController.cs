@@ -16,10 +16,10 @@ using Robust.Shared.Player;
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
 [UsedImplicitly]
-public sealed class DamageOverlayUiController : UIController
+public sealed partial class DamageOverlayUiController : UIController
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [UISystemDependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -69,6 +69,7 @@ public sealed class DamageOverlayUiController : UIController
 
     private void ClearOverlay()
     {
+        _overlay.State = MobState.Alive;
         _overlay.DeadLevel = 0f;
         _overlay.CritLevel = 0f;
         _overlay.PainLevel = 0f;
@@ -76,11 +77,12 @@ public sealed class DamageOverlayUiController : UIController
     }
 
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
-    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null)
+    private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null, InjurableComponent? injurable = null)
     {
         if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState) ||
             thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds) ||
-            damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))
+            damageable == null && !EntityManager.TryGetComponent(entity, out  damageable) ||
+            injurable == null && !EntityManager.TryGetComponent(entity, out injurable))
             return;
 
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
@@ -105,7 +107,7 @@ public sealed class DamageOverlayUiController : UIController
 
                 if (!_statusEffects.TryEffectsWithComp<PainNumbnessStatusEffectComponent>(entity, out _))
                 {
-                    foreach (var painDamageType in damageable.PainDamageGroups)
+                    foreach (var painDamageType in injurable.PainDamageGroups)
                     {
 
                         damagePerGroup.TryGetValue(painDamageType, out var painDamage);

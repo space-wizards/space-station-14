@@ -13,12 +13,12 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// The entity system primarily responsible for managing <see cref="EventHorizonComponent"/>s.
 /// </summary>
-public abstract class SharedEventHorizonSystem : EntitySystem
+public abstract partial class SharedEventHorizonSystem : EntitySystem
 {
 
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] protected IViewVariablesManager Vvm = default!;
 
     public override void Initialize()
     {
@@ -157,18 +157,21 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         || !Resolve(uid, ref fixtures, logMissing: false))
             return;
 
+        // Negative event horizon radius disables periodic consumption, but physics shapes cannot have a negative radius.
+        var fixtureRadius = MathF.Max(0f, eventHorizon.Radius);
+
         // Update both fixtures the event horizon is associated with:
         var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
         if (consumer != null)
         {
-            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, consumerId, consumer, consumer.Shape, fixtureRadius, fixtures);
             _physics.SetHard(uid, consumer, false, fixtures);
         }
 
         var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
         if (collider != null)
         {
-            _physics.SetRadius(uid, colliderId, collider, collider.Shape, eventHorizon.Radius, fixtures);
+            _physics.SetRadius(uid, colliderId, collider, collider.Shape, fixtureRadius, fixtures);
             _physics.SetHard(uid, collider, true, fixtures);
         }
 

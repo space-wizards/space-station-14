@@ -75,8 +75,9 @@
   name: Urist McBones
   components:
   - type: Damageable
-    damageContainer: BiologicalMetaphysical
     damageModifierSet: Skeleton
+  - type: Injurable
+    damageContainer: BiologicalMetaphysical
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -184,7 +185,7 @@
     messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganSkeletonPerson
   abstract: true
   suffix: SkeletonPerson

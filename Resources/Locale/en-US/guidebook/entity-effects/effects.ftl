@@ -479,8 +479,8 @@ entity-effect-guidebook-plant-attribute =
         [1] Adjusts
         *[other] adjust
     } {$attribute} by {$positive ->
-    [true] [color=red]{$amount}[/color]
-    *[false] [color=green]{$amount}[/color]
+    [false] [color=red]{$amount}[/color]
+    *[true] [color=green]{$amount}[/color]
     }
 
 entity-effect-guidebook-plant-cryoxadone =
@@ -494,6 +494,12 @@ entity-effect-guidebook-plant-phalanximine =
         [1] Restores
         *[other] restore
     } viability to a plant rendered nonviable by a mutation
+
+entity-effect-guidebook-plant-remove-kudzu =
+    { $chance ->
+        [1] Removes
+        *[other] remove
+    } kudzu weed growth from a plant
 
 entity-effect-guidebook-plant-diethylamine =
     { $chance ->
@@ -524,3 +530,9 @@ entity-effect-guidebook-plant-mutate-chemicals =
         [1] Mutates
         *[other] mutate
     } a plant to produce {$name}
+
+entity-effect-guidebook-add-reagent-to-bloodstream =
+    { $chance ->
+        [1] Injects
+        *[other] inject
+    } {$quantity} of {$reagent} directly into the bloodstream

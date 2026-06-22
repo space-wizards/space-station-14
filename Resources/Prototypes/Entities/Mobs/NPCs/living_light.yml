@@ -62,8 +62,9 @@
         layer:
           - Opaque
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: LivingLight
+  - type: Injurable
+    damageContainer: Inorganic
   - type: PassiveDamage
     allowedStates:
     - Alive
@@ -91,15 +92,15 @@
       - SlowImmune
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 25
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
 
 - type: entity
   id: MobLuminousPerson
