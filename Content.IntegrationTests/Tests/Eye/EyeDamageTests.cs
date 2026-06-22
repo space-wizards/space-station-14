@@ -25,15 +25,15 @@ public sealed class EyeDamageTests: InteractionTest
     public async Task EyeDamageBlindsTest()
     {
         var blindableComponent = Comp<BlindableComponent>(Player);
-        var blinder = (SPlayer, SComp<BlindableComponent>(SPlayer));
+        var blinder = SEntity<BlindableComponent>(SPlayer);
 
         Assert.That(blindableComponent.IsBlind, Is.False);
 
         // Max eye damage inflicts blindness
-        await Server.WaitPost((() =>
+        await Server.WaitPost(() =>
         {
             _blindable.AdjustEyeDamage(blinder, blindableComponent.MaxDamage);
-        }));
+        });
 
         Assert.That(blindableComponent.IsBlind, Is.True);
     }
@@ -52,16 +52,16 @@ public sealed class EyeDamageTests: InteractionTest
 
         await InteractUsing(Weld);
 
-        Assert.That(blindableComponent.EyeDamage, !Is.Zero);
+        Assert.That(blindableComponent.EyeDamage, Is.GreaterThan(0));
 
         // Welding with protection prevents eye damage
-        var currentEyeDamage  = blindableComponent.EyeDamage;
+        var initialEyeDamage  = blindableComponent.EyeDamage;
 
         await PlaceInHands(WeldingMaskPrototype);
         await UseInHand();
         await AwaitDoAfters();
         await InteractUsing(Weld);
 
-        Assert.That(blindableComponent.EyeDamage, Is.EqualTo(currentEyeDamage));
+        Assert.That(blindableComponent.EyeDamage, Is.EqualTo(initialEyeDamage));
     }
 }
