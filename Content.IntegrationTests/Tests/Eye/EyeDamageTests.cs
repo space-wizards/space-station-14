@@ -55,7 +55,7 @@ public sealed class EyeDamageTests: InteractionTest
         Assert.That(blindableComponent.EyeDamage, Is.GreaterThan(0));
 
         // Welding with protection prevents eye damage
-        var initialEyeDamage  = blindableComponent.EyeDamage;
+        var initialEyeDamage = blindableComponent.EyeDamage;
 
         await PlaceInHands(WeldingMaskPrototype);
         await UseInHand();
