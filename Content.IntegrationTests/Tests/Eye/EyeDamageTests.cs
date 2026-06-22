@@ -15,6 +15,7 @@ public sealed class EyeDamageTests: InteractionTest
     protected override string PlayerPrototype => "MobHuman";
     private static readonly EntProtoId LockerPrototype = "LockerFreezer";
     private static readonly EntProtoId WeldingMaskPrototype = "ClothingHeadHatWelding";
+    private const int ExpectedWelderEyeDamage = 1; // 1 is a magic number in EyeProtectionSystem.cs. Test will fail if this is changed at some point.
 
     [SidedDependency(Side.Server)] private readonly BlindableSystem _blindable = default!;
 
@@ -25,17 +26,16 @@ public sealed class EyeDamageTests: InteractionTest
     public async Task EyeDamageBlindsTest()
     {
         var blindableComponent = Comp<BlindableComponent>(Player);
-        var blinder = SEntity<BlindableComponent>(SPlayer);
 
-        Assert.That(blindableComponent.IsBlind, Is.False);
+        Assert.That(blindableComponent.IsBlind, Is.False, "Initial blind check failed");
 
         // Max eye damage inflicts blindness
         await Server.WaitPost(() =>
         {
-            _blindable.AdjustEyeDamage(blinder, blindableComponent.MaxDamage);
+            _blindable.AdjustEyeDamage(SPlayer, blindableComponent.MaxDamage);
         });
 
-        Assert.That(blindableComponent.IsBlind, Is.True);
+        Assert.That(blindableComponent.IsBlind, Is.True, "Max eye damage did not inflict blindness");
     }
 
     /// <summary>
@@ -48,11 +48,11 @@ public sealed class EyeDamageTests: InteractionTest
         await SpawnTarget(LockerPrototype);
 
         // Welding without protection causes eye damage
-        Assert.That(blindableComponent.EyeDamage, Is.Zero);
+        Assert.That(blindableComponent.EyeDamage, Is.Zero, "Initial eye damage >0");
 
         await InteractUsing(Weld);
 
-        Assert.That(blindableComponent.EyeDamage, Is.GreaterThan(0));
+        Assert.That(blindableComponent.EyeDamage, Is.EqualTo(ExpectedWelderEyeDamage), "Unexpected eye damage amount");
 
         // Welding with protection prevents eye damage
         var initialEyeDamage = blindableComponent.EyeDamage;
@@ -62,6 +62,6 @@ public sealed class EyeDamageTests: InteractionTest
         await AwaitDoAfters();
         await InteractUsing(Weld);
 
-        Assert.That(blindableComponent.EyeDamage, Is.EqualTo(initialEyeDamage));
+        Assert.That(blindableComponent.EyeDamage, Is.EqualTo(initialEyeDamage), "Eye damage inflicted despite protection");
     }
 }
