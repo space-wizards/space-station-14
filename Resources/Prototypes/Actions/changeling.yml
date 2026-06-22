@@ -218,4 +218,4 @@
   - type: InstantAction
     event: !type:ScreechActionEvent # very much a placeholder until someone gives us nice audio for changelings
       screechSound:
-        path: /Audio/Animals/space_dragon_roar.ogg
+        path: /Audio/Effects/Screech/changeling_screech_strong.ogg
