@@ -23,18 +23,18 @@ namespace Content.Shared.Guardian
     /// <summary>
     /// A guardian has a host it's attached to that it fights for. A fighting spirit.
     /// </summary>
-    public sealed class GuardianSystem : EntitySystem
+    public sealed partial class GuardianSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = null!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = null!;
-        [Dependency] private readonly DamageableSystem _damageSystem = null!;
-        [Dependency] private readonly SharedActionsSystem _actionSystem = null!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = null!;
-        [Dependency] private readonly SharedAudioSystem _audio = null!;
-        [Dependency] private readonly GibbingSystem _gibbing = null!;
-        [Dependency] private readonly SharedContainerSystem _container = null!;
-        [Dependency] private readonly SharedTransformSystem _transform = null!;
-        [Dependency] private readonly IGameTiming _timing = null!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = null!;
+        [Dependency] private SharedPopupSystem _popupSystem = null!;
+        [Dependency] private DamageableSystem _damageSystem = null!;
+        [Dependency] private SharedActionsSystem _actionSystem = null!;
+        [Dependency] private SharedHandsSystem _handsSystem = null!;
+        [Dependency] private SharedAudioSystem _audio = null!;
+        [Dependency] private GibbingSystem _gibbing = null!;
+        [Dependency] private SharedContainerSystem _container = null!;
+        [Dependency] private SharedTransformSystem _transform = null!;
+        [Dependency] private IGameTiming _timing = null!;
 
         public override void Initialize()
         {
@@ -46,7 +46,7 @@ namespace Content.Shared.Guardian
 
             SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
-            SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
+            SubscribeLocalEvent<GuardianComponent, DamageDealtEvent>(OnGuardianDamaged);
             SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayerAttached);
             SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianPlayerDetached);
 
@@ -288,14 +288,14 @@ namespace Content.Shared.Guardian
         /// <summary>
         /// Handles guardian receiving damage and splitting it with the host according to his defense percent
         /// </summary>
-        private void OnGuardianDamaged(Entity<GuardianComponent> ent, ref DamageChangedEvent args)
+        private void OnGuardianDamaged(Entity<GuardianComponent> ent, ref DamageDealtEvent args)
         {
-            if (args.DamageDelta == null || ent.Comp.Host == null || ent.Comp.DamageShare == 0)
+            if (args.Damage == null! || ent.Comp.Host == null || ent.Comp.DamageShare == 0)
                 return;
 
             _damageSystem.ChangeDamage(
                 ent.Comp.Host.Value,
-                args.DamageDelta * ent.Comp.DamageShare,
+                args.Damage * ent.Comp.DamageShare,
                 origin: args.Origin,
                 ignoreResistances: true,
                 interruptsDoAfters: false);
