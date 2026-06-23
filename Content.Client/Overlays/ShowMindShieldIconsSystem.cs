@@ -23,7 +23,7 @@ public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowM
         if (!IsActive)
             return;
 
-        _mindShieldSystem.GetMindshieldStatus(entt.Owner, out var _, out var isVisible);
+        _mindShieldSystem.GetMindshieldStatus(ent.Owner, out var _, out var isVisible);
         if (isVisible && _prototype.Resolve(SharedMindShieldSystem.StatusIcon, out var statusIconPrototype))
             evnt.StatusIcons.Add(statusIconPrototype);
     }
