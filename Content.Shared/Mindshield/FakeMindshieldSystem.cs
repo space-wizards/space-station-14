@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Clothing;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.Mindshield.Components;
@@ -33,30 +34,42 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, InventoryRelayedEvent<GetMindShieldStatusEvent>>((a, ref k) => OnQueryStatus(a, ref k.Args));
         SubscribeLocalEvent<FakeMindShieldComponent, GetMindShieldStatusEvent>(OnQueryStatus);
 
-        // these four events are to manage the mindshield's dirtying
+        // these five events are to manage the mindshield's dirtying
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantImplantedEvent>(OnFakeMindshieldImplanted);
         SubscribeLocalEvent<FakeMindShieldComponent, ImplantRemovedEvent>(OnFakeMindshieldImplantRemoved);
         SubscribeLocalEvent<FakeMindShieldComponent, ComponentRemove>(OnFakeMindshieldRemoved);
+        SubscribeLocalEvent<FakeMindShieldComponent, ClothingGotEquippedEvent>(OnFakeMindshieldEquip);
+        SubscribeLocalEvent<FakeMindShieldComponent, ClothingGotUnequippedEvent>(OnFakeMindshieldUnequip);
 
         // Innate things
         SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnFakeMindshieldEquip(Entity<FakeMindShieldComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        _mindShields.RefreshMindshieldStatus(args.Wearer);
+    }
+
+    private void OnFakeMindshieldUnequip(Entity<FakeMindShieldComponent> ent, ref ClothingGotUnequippedEvent args)
+    {
+        _mindShields.RefreshMindshieldStatus(args.Wearer);
     }
 
     private void OnFakeMindshieldRemoved(Entity<FakeMindShieldComponent> ent, ref ComponentRemove args)
     {
         if (!ent.Comp.IsInnate)
             return;
-        _mindShields.RequestRefresh(ent.Owner);
+        _mindShields.RefreshMindshieldStatus(ent.Owner);
     }
 
     private void OnFakeMindshieldImplantRemoved(Entity<FakeMindShieldComponent> ent, ref ImplantRemovedEvent args)
     {
-        _mindShields.RequestRefresh(args.Implanted);
+        _mindShields.RefreshMindshieldStatus(args.Implanted);
     }
 
     private void OnFakeMindshieldImplanted(Entity<FakeMindShieldComponent> ent, ref ImplantImplantedEvent args)
     {
-        _mindShields.RequestRefresh(args.Implanted);
+        _mindShields.RefreshMindshieldStatus(args.Implanted);
     }
 
     private void OnMapInit(Entity<FakeMindShieldComponent> ent, ref MapInitEvent args)
@@ -65,7 +78,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
             return;
 
         _actions.AddAction(ent.Owner, ent.Comp.Action);
-        _mindShields.RequestRefresh(ent.Owner);
+        _mindShields.RefreshMindshieldStatus(ent.Owner);
     }
 
     private void OnQueryStatus(Entity<FakeMindShieldComponent> ent, ref GetMindShieldStatusEvent args)
@@ -82,7 +95,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         args.Toggle = true;
         args.Handled = true;
         Dirty(ent.Owner, ent.Comp);
-        _mindShields.RequestRefresh(args.Performer);
+        _mindShields.RefreshMindshieldStatus(args.Performer);
     }
 
     private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)

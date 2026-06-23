@@ -1,18 +1,12 @@
 ﻿{
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Old sprites created by Ubaser (Discord) for SS14, Modified for purpose by brassicaprime69 (Discord). Other two sprites by ketufaispikinut.",
+    "license": "CC-BY-3.0",
+    "copyright": "By ketufaispikinut",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
-        {
-            "name": "old-icon"
-        },
-        {
-            "name": "old-icon-on"
-        },
         {
             "name": "icon"
         },

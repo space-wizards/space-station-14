@@ -47,10 +47,9 @@ public abstract partial class SharedMindshieldImplantSystem : EntitySystem
                 TryLog(uid);
             }
 
-            var stunTime = TimeSpan.FromSeconds(comp.StunTime);
             var name = Identity.Entity(uid, EntityManager);
             RemComp<RevolutionaryComponent>(uid);
-            _sharedStun.TryUpdateParalyzeDuration(uid, stunTime);
+            _sharedStun.TryUpdateParalyzeDuration(uid, comp.StunTime);
             _popupSystem.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
         }
     }
