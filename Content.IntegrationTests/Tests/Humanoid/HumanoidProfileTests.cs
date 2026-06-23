@@ -4,6 +4,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Body;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -21,6 +22,8 @@ public sealed class HumanoidProfileTests : GameTest
 {
     private static readonly EntProtoId BaseSpecies = "MobHuman";
     private static readonly ProtoId<SpeciesPrototype> SlimePerson = "SlimePerson";
+    public static readonly ProtoId<EmoteSoundsPrototype> SlimeVoice = "FemaleSlime";
+
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
     [SidedDependency(Side.Server)] private BodySystem _bodySystem = default!;
@@ -45,13 +48,16 @@ public sealed class HumanoidProfileTests : GameTest
                 .WithSex(Sex.Female)
                 .WithAge(67)
                 .WithGender(Gender.Neuter)
-                .WithSpecies(SlimePerson));
+                .WithSpecies(SlimePerson)
+                .WithVoice(SlimeVoice));
+
             var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
             Assert.That(humanoidComponent.Age, Is.EqualTo(67));
             Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
             Assert.That(humanoidComponent.Gender, Is.EqualTo(Gender.Neuter));
             Assert.That(humanoidComponent.Species, Is.EqualTo(SlimePerson));
+            Assert.That(humanoidComponent.Voice, Is.EqualTo(SlimeVoice));
 
             var speciesProto = SProtoMan.Index(humanoidComponent.Species);
 
