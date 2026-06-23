@@ -75,7 +75,7 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem
         return condition.Inverted != CheckCondition(target, condition, sourceEnt);
     }
 
-    private bool CheckCondition(EntityUid target, EntityCondition condition, EntityUid? sourceEnt = null)
+    private bool CheckCondition<T>(EntityUid target, T condition, EntityUid? sourceEnt = null) where T : EntityCondition
     {
         if (_handlers.TryGetValue(condition.GetType(), out var handler))
             return handler.CheckCondition(target, condition, sourceEnt);

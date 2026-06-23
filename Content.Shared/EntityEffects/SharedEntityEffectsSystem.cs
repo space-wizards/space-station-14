@@ -8,7 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects;
 
-public readonly record struct EntityEffectData(EntityEffect Effect, float Scale, EntityUid? User);
+public readonly record struct EntityEffectData(EntityEffect Effect, float Scale, EntityUid? User)
+{
+    public static implicit operator EntityEffectData((EntityEffect effect, float scale, EntityUid? user) tuple)
+    {
+        return new EntityEffectData(tuple.effect, tuple.scale, tuple.user);
+    }
+}
 
 /// <summary>
 /// This handles entity effects.
@@ -67,8 +73,8 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc cref="ApplyEffects(EntityUid,EntityEffect[],float,EntityUid?)"/>
-    public void ApplyEffects(EntityUid target, EntityEffect[] effects, FixedPoint2 scale, EntityUid? user = null)
+    /// <inheritdoc cref="ApplyEffects{T}(EntityUid,T[],float,EntityUid?)"/>
+    public void ApplyEffects<T>(EntityUid target, T[] effects, FixedPoint2 scale, EntityUid? user = null) where T : EntityEffect
     {
         ApplyEffects(target, effects, scale.Float());
     }
@@ -80,7 +86,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
     /// <param name="effects">Effects we're applying to the entity</param>
     /// <param name="scale">Optional scale multiplier for the effects</param>
     /// <param name="user">The entity causing the effect.</param>
-    public void ApplyEffects(EntityUid target, EntityEffect[] effects, float scale = 1f, EntityUid? user = null)
+    public void ApplyEffects<T>(EntityUid target, T[] effects, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         // do all effects, if conditions apply
         foreach (var effect in effects)
@@ -97,7 +103,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
     /// <param name="scale">Optional scale multiplier for the effect.</param>
     /// <param name="user">The entity causing the effect.</param>
     /// <returns>True if all conditions pass!</returns>
-    public bool TryApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f, EntityUid? user = null)
+    public bool TryApplyEffect<T>(EntityUid target, T effect, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         if (scale < effect.MinScale)
             return false;
@@ -122,7 +128,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
     /// <param name="effect">Effect we're applying</param>
     /// <param name="scale">Optional scale multiplier for the effect.</param>
     /// <param name="user">The entity causing the effect.</param>
-    public void ApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f, EntityUid? user = null)
+    public void ApplyEffect<T>(EntityUid target, T effect, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         // Clamp the scale if the effect doesn't allow scaling.
         if (!effect.Scaling)
@@ -141,7 +147,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem
         }
 
         if (_handlers.TryGetValue(effect.GetType(), out var handler))
-            handler.ApplyEffect(target, new EntityEffectData(effect, scale, user));
+            handler.ApplyEffect(target,(effect, scale, user));
     }
 }
 
