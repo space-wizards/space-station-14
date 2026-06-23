@@ -779,7 +779,11 @@ namespace Content.Server.Administration.Systems
         protected override async void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
             base.OnBwoinkTextMessage(message, eventArgs);
-            await SendAHelpFromSession(eventArgs.SenderSession, message, true, true);
+            await SendAHelpFromSession(
+                senderSession: eventArgs.SenderSession,
+                message: message,
+                checkAuthorization: true,
+                applyRateLimit: true);
 
         }
 
