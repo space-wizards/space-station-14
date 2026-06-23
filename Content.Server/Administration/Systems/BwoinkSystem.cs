@@ -694,11 +694,13 @@ namespace Content.Server.Administration.Systems
                 adminOnly: input.AdminOnly);
         }
 
-        protected override async void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
+        private async Task SendAHelpFromSession(
+            ICommonSession senderSession,
+            BwoinkTextMessage message,
+            bool checkAuthorization,
+            bool applyRateLimit)
         {
-            base.OnBwoinkTextMessage(message, eventArgs);
             _activeConversations[message.UserId] = DateTime.Now;
-            var senderSession = eventArgs.SenderSession;
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
@@ -706,13 +708,13 @@ namespace Content.Server.Administration.Systems
             var senderAdmin = _adminManager.GetAdminData(senderSession);
             var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
             var authorized = personalChannel && !message.AdminOnly || senderAHelpAdmin;
-            if (!authorized)
+            if (checkAuthorization && !authorized)
             {
                 // Unauthorized bwoink (log?)
                 return;
             }
 
-            if (_rateLimit.CountAction(eventArgs.SenderSession, RateLimitKey) != RateLimitStatus.Allowed)
+            if (applyRateLimit && _rateLimit.CountAction(senderSession, RateLimitKey) != RateLimitStatus.Allowed)
                 return;
 
             // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
@@ -772,6 +774,29 @@ namespace Content.Server.Administration.Systems
             var systemText = Loc.GetString("bwoink-system-starmute-message-no-other-users");
             var starMuteMsg = new BwoinkTextMessage(message.UserId, SystemUserId, systemText);
             RaiseNetworkEvent(starMuteMsg, senderSession.Channel);
+        }
+
+        protected override async void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
+        {
+            base.OnBwoinkTextMessage(message, eventArgs);
+            await SendAHelpFromSession(eventArgs.SenderSession, message, true, true);
+
+        }
+
+        public async void SendAutomatedPlayerAHelp(ICommonSession playerSession, string text)
+        {
+            var message = new BwoinkTextMessage(
+                userId: playerSession.UserId,
+                trueSender: playerSession.UserId,
+                text: text,
+                playSound: true,
+                adminOnly: true);
+
+            await SendAHelpFromSession(
+                senderSession: playerSession,
+                message: message,
+                checkAuthorization: false,
+                applyRateLimit: false);
         }
 
         private IList<INetChannel> GetNonAfkAdmins()

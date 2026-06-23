@@ -30,6 +30,15 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> ChatRateLimitAnnounceAdminsDelay =
         CVarDef.Create("chat.rate_limit_announce_admins_delay", 15, CVar.SERVERONLY);
 
+    public static readonly CVarDef<bool> ChatBannedWordAhelpEnabled =
+        CVarDef.Create("chat.banned_word_ahelp_enabled", false, CVar.SERVERONLY);
+
+    public static readonly CVarDef<string> ChatBannedWordAhelpWords =
+        CVarDef.Create("chat.banned_word_ahelp_words", "", CVar.SERVERONLY);
+
+    public static readonly CVarDef<float> ChatBannedWordAhelpCooldown =
+        CVarDef.Create("chat.banned_word_ahelp_cooldown", 30f, CVar.SERVERONLY);
+
     public static readonly CVarDef<int> ChatMaxMessageLength =
         CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
 
