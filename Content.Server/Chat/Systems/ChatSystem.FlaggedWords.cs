@@ -64,7 +64,7 @@ public sealed partial class ChatSystem
             return;
 
         var report =
-            $"Automated report: I said \"{match.Value}\". \n" +
+            $"Automated report: I said \"{match.Value}\" " +
             $"in the context: \"{originalMessage}\"";
 
         _bwoink.SendAutomatedPlayerAHelp(player, report);
