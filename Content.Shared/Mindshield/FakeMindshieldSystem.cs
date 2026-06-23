@@ -82,7 +82,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         args.Toggle = true;
         args.Handled = true;
         Dirty(ent.Owner, ent.Comp);
-        _mindShields.RequestRefresh(ent.Owner);
+        _mindShields.RequestRefresh(args.Performer);
     }
 
     private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
