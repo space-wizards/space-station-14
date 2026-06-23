@@ -3,7 +3,10 @@ refined-butchered-success-others = The {$user} sliced {$target} with {$tool}.
 refined-slice-verb-message-default = Slice entity with sharp item.
 refined-slice-verb-target-isnt-dead = Needs to be dead.
 refined-slice-verb-message-tool = You are going to need a different tool to slice {$target}.
+
 refined-slice-verb-name = Slice
+refined-butchered-verb-name = Butcher
 
 tool-refinable-component-hint = {CAPITALIZE(SUBJECT($target))} can be refined by [color=cyan]{$quality}[/color].
 tool-refinable-component-hint-slicing = {CAPITALIZE(SUBJECT($target))} can be cut with a [color=cyan]{$quality}[/color] tool.
+tool-refinable-component-hint-butchering = {CAPITALIZE(SUBJECT($target))} can be butchered with a [color=cyan]{$quality}[/color] tool.

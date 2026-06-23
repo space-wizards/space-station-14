@@ -213,6 +213,15 @@
   components:
   - type: ToolRefinableSolution
 
+- type: entity
+  abstract: true
+  parent: BaseSlicingRefinable
+  id: BaseSlicingRefinableButchering
+  components:
+  - type: ToolRefinable
+    verbText: refined-butchered-verb-name
+    tooltipQualityHint: tool-refinable-component-hint-butchering
+
 # For entities with a hidden container slot that can be opened with a tool
 - type: entity
   abstract: true
