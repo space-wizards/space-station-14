@@ -214,32 +214,34 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// An enum defining randomizable values.
+        /// An enum defining randomizable values in character editor.
         /// </summary>
         [Flags]
-        public enum RandomizeConfig
+        public enum RandomizeCfg
         {
+            // profile
             None = 0,
             Name = 1 << 0,
             Species = 1 << 1,
             Age = 1 << 2,
             Sex = 1 << 3,
             Gender = 1 << 4,
-            AppearanceEyes = 1 << 5,
-            AppearanceSkin = 1 << 6,
+            // appearance
+            Eyes = 1 << 5,
+            Skin = 1 << 6,
         }
 
         /// <summary>
-        /// A randomize config that covers all possible values.
+        /// A randomize config that covers all possible values (including appearance).
         /// </summary>
-        public const RandomizeConfig RandomizeConfigAll =
-            RandomizeConfig.Name
-            | RandomizeConfig.Species
-            | RandomizeConfig.Age
-            | RandomizeConfig.Sex
-            | RandomizeConfig.Gender
-            | RandomizeConfig.AppearanceEyes
-            | RandomizeConfig.AppearanceSkin;
+        public const RandomizeCfg RandomizeConfigAll =
+            RandomizeCfg.Name
+            | RandomizeCfg.Species
+            | RandomizeCfg.Age
+            | RandomizeCfg.Sex
+            | RandomizeCfg.Gender
+            | RandomizeCfg.Eyes
+            | RandomizeCfg.Skin;
 
         /// <summary>
         /// Picks a random species from roundstart species.
@@ -326,15 +328,15 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Generates a randomized character profile with selective randomizing.
         /// </summary>
-        /// <param name="randomizeConfig">Which values to randomize.</param>
+        /// <param name="randomizeCfg">Which values to randomize.</param>
         /// <param name="baseProfile">Profile to base the new profile on. Values that are not randomized will be taken from this profile.</param>
         /// <returns>A new character profile with selected values randomized</returns>
-        public static HumanoidCharacterProfile Random(RandomizeConfig randomizeConfig, HumanoidCharacterProfile baseProfile)
+        public static HumanoidCharacterProfile Random(RandomizeCfg randomizeCfg, HumanoidCharacterProfile baseProfile)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
             var profile = new HumanoidCharacterProfile();
-            if ((randomizeConfig & RandomizeConfig.Species) != 0)
+            if ((randomizeCfg & RandomizeCfg.Species) != 0)
             {
                 profile.Species = RandomSpecies();
             }
@@ -348,16 +350,12 @@ namespace Content.Shared.Preferences
             }
             var speciesProto = prototypeManager.Index(profile.Species);
 
-            profile.Sex = (randomizeConfig & RandomizeConfig.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
-            profile.Gender = (randomizeConfig & RandomizeConfig.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
-            profile.Name = (randomizeConfig & RandomizeConfig.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
-            profile.Age = (randomizeConfig & RandomizeConfig.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
+            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
+            profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
+            profile.Name = (randomizeCfg & RandomizeCfg.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
+            profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
 
-            var appearanceRandomizeCfg = HumanoidCharacterAppearance.RandomizeConfig.None;
-            appearanceRandomizeCfg |= (randomizeConfig & RandomizeConfig.AppearanceEyes) != 0 ? HumanoidCharacterAppearance.RandomizeConfig.Eyes : 0;
-            appearanceRandomizeCfg |= (randomizeConfig & RandomizeConfig.AppearanceSkin) != 0 ? HumanoidCharacterAppearance.RandomizeConfig.Skin : 0;
-
-            profile.Appearance = HumanoidCharacterAppearance.Random(appearanceRandomizeCfg, baseProfile.Appearance, speciesProto, profile.Sex);
+            profile.Appearance = HumanoidCharacterAppearance.Random(randomizeCfg, baseProfile.Appearance, speciesProto, profile.Sex);
 
             return profile;
         }
@@ -369,10 +367,10 @@ namespace Content.Shared.Preferences
         /// <returns>A new character profile</returns>
         public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
         {
-            species ??= HumanoidCharacterProfile.DefaultSpecies;
+            species ??= DefaultSpecies;
 
             return Random(
-                RandomizeConfigAll ^ RandomizeConfig.Species,
+                RandomizeConfigAll ^ RandomizeCfg.Species,
                 new HumanoidCharacterProfile().WithSpecies(species)
             );
         }

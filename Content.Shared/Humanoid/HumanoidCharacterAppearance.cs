@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -7,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Shared.Humanoid;
 
@@ -84,24 +84,6 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     };
 
     /// <summary>
-    /// An enum defining randomizable values.
-    /// </summary>
-    [Flags]
-    public enum RandomizeConfig
-    {
-        None = 0,
-        Eyes = 1 << 0,
-        Skin = 1 << 1,
-    }
-
-    /// <summary>
-    /// A randomize config that covers all possible values.
-    /// </summary>
-    public const RandomizeConfig RandomizeConfigAll =
-        RandomizeConfig.Eyes
-        | RandomizeConfig.Skin;
-
-    /// <summary>
     /// Picks a random eye color.
     /// </summary>
     public static Color RandomEyes()
@@ -154,16 +136,16 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     /// <summary>
     /// Generates a randomized character appearance with selective randomizing.
     /// </summary>
-    /// <param name="randomizeConfig">Which values to randomize.</param>
+    /// <param name="charEditorRandomizeConfig">Which values to randomize.</param>
     /// <param name="baseAppearance">Appearance to base the new appearance on. Values that are not randomized will be taken from this appearance.</param>
     /// <param name="species">Species prototype ID.</param>
     /// <param name="sex">Sex.</param>
     /// <returns>A new character appearance with selected values randomized</returns>
-    public static HumanoidCharacterAppearance Random(RandomizeConfig randomizeConfig, HumanoidCharacterAppearance baseAppearance, ProtoId<SpeciesPrototype> species, Sex sex)
+    public static HumanoidCharacterAppearance Random(RandomizeCfg charEditorRandomizeConfig, HumanoidCharacterAppearance baseAppearance, ProtoId<SpeciesPrototype> species, Sex sex)
     {
         var appearance = new HumanoidCharacterAppearance();
-        appearance.EyeColor = (randomizeConfig & RandomizeConfig.Eyes) != 0 ? RandomEyes() : baseAppearance.EyeColor;
-        appearance.SkinColor = (randomizeConfig & RandomizeConfig.Skin) != 0 ? RandomSkin(species) : baseAppearance.SkinColor;
+        appearance.EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 ? RandomEyes() : baseAppearance.EyeColor;
+        appearance.SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 ? RandomSkin(species) : baseAppearance.SkinColor;
 
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.

@@ -28,7 +28,7 @@ public sealed partial class HumanoidProfileEditor
     {
         Profile = Profile == null
             ? HumanoidCharacterProfile.Random()
-            : HumanoidCharacterProfile.Random(RandomizeLockButton.RandomizeConfig, Profile!);
+            : HumanoidCharacterProfile.Random(RandomizeLockButton.RandomizeCfg, Profile!);
         SetProfile(Profile, CharacterSlot);
         SetDirty();
     }
