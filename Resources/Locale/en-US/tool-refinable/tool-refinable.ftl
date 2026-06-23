@@ -4,3 +4,6 @@ refined-slice-verb-message-default = Slice entity with sharp item.
 refined-slice-verb-target-isnt-dead = Needs to be dead.
 refined-slice-verb-message-tool = You are going to need a different tool to slice {$target}.
 refined-slice-verb-name = Slice
+
+tool-refinable-component-hint = {CAPITALIZE(SUBJECT($target))} can be refined by [color=cyan]{$quality}[/color].
+tool-refinable-component-hint-slicing = {CAPITALIZE(SUBJECT($target))} can be cut with a [color=cyan]{$quality}[/color] tool.

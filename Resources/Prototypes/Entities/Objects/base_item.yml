@@ -201,6 +201,7 @@
     startRefinePopupType: small
     popupForUser: refined-butchered-success
     popupForOther: refined-butchered-success-others
+    tooltipQualityHint: tool-refinable-component-hint-slicing
     verbIcon: Interface/VerbIcons/cutlery.svg.192dpi.png
     sound: !type:SoundPathSpecifier
       path: /Audio/Items/Culinary/chop.ogg

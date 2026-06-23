@@ -19,7 +19,7 @@ public sealed partial class ToolRefinableComponent : Component
     /// The items created when the item is refined.
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> RefineResult;
+    public List<EntitySpawnEntry> RefineResult = new();
 
     /// <summary>
     /// The amount of time it takes to refine a given item.
@@ -89,4 +89,11 @@ public sealed partial class ToolRefinableComponent : Component
     /// </summary>
     [DataField]
     public PopupType PopupType = PopupType.Small;
+
+    /// <summary>
+    /// Text to display on the examine tooltip for a refinable entity.
+    /// This has a `$quality` parameter, representing the name of the tool quality to use.
+    /// </summary>
+    [DataField]
+    public LocId? TooltipQualityHint = "tool-refinable-component-hint";
 }
