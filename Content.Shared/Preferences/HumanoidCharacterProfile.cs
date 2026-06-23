@@ -252,7 +252,7 @@ namespace Content.Shared.Preferences
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
-                voice = speciesPrototype.DefaultSoundsBySex[sex];
+                voice = speciesPrototype.DefaultSoundsBySex[(int)sex];
             }
 
             var gender = Gender.Epicene;
@@ -516,7 +516,7 @@ namespace Content.Shared.Preferences
 
             var voice = Voice;
             if (!speciesPrototype.Voices.Contains(voice))
-                voice = speciesPrototype.DefaultSoundsBySex[sex];
+                voice = speciesPrototype.DefaultSoundsBySex[(int)sex];
 
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))

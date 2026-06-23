@@ -12,6 +12,8 @@
   sexes:
   - Unsexed
   defaultSoundsBySex:
-    Unsexed: UnisexArachnid
+  - UnisexArachnid
+  - UnisexArachnid
+  - UnisexArachnid
   voices:
   - UnisexArachnid

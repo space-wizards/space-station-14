@@ -61,8 +61,7 @@ public sealed class HumanoidProfileTests : GameTest
 
             var speciesProto = SProtoMan.Index(humanoidComponent.Species);
 
-            Assert.That(speciesProto.DefaultSoundsBySex.ContainsKey(Sex.Female), message: "the MobHuman spawned by this test needs to have sex-specific sound set");
-            Assert.That(speciesProto.DefaultSoundsBySex[Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
+            Assert.That(speciesProto.DefaultSoundsBySex[(int)Sex.Female], Is.EqualTo(voiceComponent.EmoteSounds));
         });
     }
 
@@ -198,13 +197,13 @@ public sealed class HumanoidProfileTests : GameTest
                 return;
 
             var voiceProtos = proto.Voices;
-            var sexedProtos = proto.DefaultSoundsBySex.Values.ToHashSet();
+            var sexedProtos = proto.DefaultSoundsBySex.ToHashSet();
 
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(sexedProtos.IsSubsetOf(voiceProtos), "Species with modified `DefaultSoundsBySex` should have an entry added to the `voice` field in the `speciesPrototype`");
                 Assert.That(voiceProtos.Union(sexedProtos).Any(), "Species should have sex mappings for at least one voice set in speciesPrototype");
-                Assert.That(proto.DefaultSoundsBySex.Keys.ToList(), Is.EqualTo(proto.Sexes), "Species should declare a defaultSoundsBySex for every sex of the species");
+                Assert.That(proto.DefaultSoundsBySex, Has.Length.EqualTo(3), "Species should declare a defaultSoundsBySex for every sex");
             }
         });
     }

@@ -13,6 +13,8 @@
   sexes:
   - Unsexed
   defaultSoundsBySex:
-    Unsexed: UnisexDiona
+  - UnisexDiona
+  - UnisexDiona
+  - UnisexDiona
   voices:
   - UnisexDiona

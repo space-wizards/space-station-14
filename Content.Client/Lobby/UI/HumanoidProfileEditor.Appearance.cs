@@ -114,7 +114,7 @@ public sealed partial class HumanoidProfileEditor
         _voices.AddRange(availableVoices.Select(protoId => _prototypeManager.Index(protoId)));
 
         if (_voices.All(proto => Profile?.Voice != proto.ID))
-            SetVoice(speciesPrototype.DefaultSoundsBySex[Profile.Sex]);
+            SetVoice(speciesPrototype.DefaultSoundsBySex[(int)Profile.Sex]);
 
         for (var i = 0; i < availableVoices.Count; i++)
         {
@@ -249,7 +249,7 @@ public sealed partial class HumanoidProfileEditor
 
         // this does the same as above but for voice
         if (_prototypeManager.TryIndex(Profile?.Species, out var prototype))
-            SetVoice(prototype.DefaultSoundsBySex[newSex]);
+            SetVoice(prototype.DefaultSoundsBySex[(int)newSex]);
 
         UpdateGenderControls();
         UpdateVoiceControls();

@@ -116,7 +116,9 @@ namespace Content.Server.Preferences.Managers
                 speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
             }
 
-            var voice = profile.Voice ?? speciesPrototype.DefaultSoundsBySex[sex];
+            var voice = profile.Voice ?? speciesPrototype.DefaultSoundsBySex[(int)sex];
+            if (!_prototypeManager.HasIndex(voice))
+                voice = speciesPrototype.DefaultSoundsBySex[(int)sex];
 
             if (profile.OrganMarkings?.RootElement is { } element)
             {

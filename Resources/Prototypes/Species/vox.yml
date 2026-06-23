@@ -12,6 +12,8 @@
   sexes:
   - Unsexed
   defaultSoundsBySex:
-    Unsexed: UnisexVox
+  - UnisexVox
+  - UnisexVox
+  - UnisexVox
   voices:
   - UnisexVox

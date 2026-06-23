@@ -91,7 +91,7 @@ public sealed partial class HumanoidCharacterProfileV1
         var prototypeManager = IoCManager.Resolve<PrototypeManager>();
 
         var speciesPrototye = prototypeManager.Index(species);
-        return speciesPrototye.DefaultSoundsBySex[sex];
+        return speciesPrototye.DefaultSoundsBySex[(int)sex];
     }
 }
 
