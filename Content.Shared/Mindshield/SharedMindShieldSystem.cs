@@ -52,7 +52,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
     /// <summary>
     /// This function updates <see cref="MindShieldStatusComponent"/>. It should be called when anything makes a modification of its mindshielded-ness.
     /// </summary>
-    public void RequestRefresh(EntityUid ent)
+    public void RefreshMindshieldStatus(EntityUid ent)
     {
         GetMindshieldStatusInner(ent, out var mindshielded, out var visible);
         if (!mindshielded && !visible)
