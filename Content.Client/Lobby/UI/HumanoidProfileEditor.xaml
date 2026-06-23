@@ -99,7 +99,7 @@
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <BoxContainer>
-                                    <ui:RandomizeLockButton For="AppearanceSkin" />
+                                    <ui:RandomizeLockButton For="Skin" />
                                     <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
                                 </BoxContainer>
                                 <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" />
@@ -108,7 +108,7 @@
                             <!-- Eyes -->
                             <BoxContainer Margin="10" Orientation="Vertical">
                                 <BoxContainer>
-                                    <ui:RandomizeLockButton For="AppearanceEyes" />
+                                    <ui:RandomizeLockButton For="Eyes" />
                                     <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
                                 </BoxContainer>
                                 <humanoid:EyeColorPicker Name="EyeColorPicker" />

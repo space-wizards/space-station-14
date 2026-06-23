@@ -2,11 +2,11 @@
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Shared.Humanoid;
 
@@ -124,7 +124,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         // TODO: Add random markings
 
         var appearance = Random(
-            RandomizeConfigAll,
+            HumanoidCharacterProfile.RandomizeConfigAll,
             new HumanoidCharacterAppearance(),
             species,
             sex
@@ -141,11 +141,11 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     /// <param name="species">Species prototype ID.</param>
     /// <param name="sex">Sex.</param>
     /// <returns>A new character appearance with selected values randomized</returns>
-    public static HumanoidCharacterAppearance Random(RandomizeCfg charEditorRandomizeConfig, HumanoidCharacterAppearance baseAppearance, ProtoId<SpeciesPrototype> species, Sex sex)
+    public static HumanoidCharacterAppearance Random(HumanoidCharacterProfile.RandomizeCfg charEditorRandomizeConfig, HumanoidCharacterAppearance baseAppearance, ProtoId<SpeciesPrototype> species, Sex sex)
     {
         var appearance = new HumanoidCharacterAppearance();
-        appearance.EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 ? RandomEyes() : baseAppearance.EyeColor;
-        appearance.SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 ? RandomSkin(species) : baseAppearance.SkinColor;
+        appearance.EyeColor = (charEditorRandomizeConfig & HumanoidCharacterProfile.RandomizeCfg.Eyes) != 0 ? RandomEyes() : baseAppearance.EyeColor;
+        appearance.SkinColor = (charEditorRandomizeConfig & HumanoidCharacterProfile.RandomizeCfg.Skin) != 0 ? RandomSkin(species) : baseAppearance.SkinColor;
 
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
