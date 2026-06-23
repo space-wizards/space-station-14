@@ -10,13 +10,13 @@ namespace Content.Shared.Mindshield.Components;
 public sealed partial class MindShieldStatusComponent : Component
 {
     /// <summary>
-    /// Wether the entity is protected from mind control & co.
+    /// Whether the entity is protected from mind control & co.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsMindshielded = false;
 
     /// <summary>
-    /// Wether the sec HUD will show a mindshield icon
+    /// Whether the sec HUD will show a mindshield icon
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsVisible = false;
