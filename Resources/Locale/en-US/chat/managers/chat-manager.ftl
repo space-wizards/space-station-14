@@ -52,6 +52,8 @@ chat-manager-admin-channel-name = ADMIN
 chat-manager-rate-limited = You are sending messages too quickly!
 chat-manager-rate-limit-admin-announcement = Rate limit warning: { $player }
 
+chat-manager-follow-button = (F)
+
 ## Speech verbs for chat
 
 chat-speech-verb-suffix-exclamation = !
@@ -123,6 +125,10 @@ chat-speech-verb-name-goat = Goat
 chat-speech-verb-goat-1 = bleats
 chat-speech-verb-goat-2 = grunts
 chat-speech-verb-goat-3 = cries
+
+chat-speech-verb-name-sheep = Sheep
+chat-speech-verb-sheep-1 = bleats
+chat-speech-verb-sheep-2 = baas
 
 chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks

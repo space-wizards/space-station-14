@@ -341,6 +341,27 @@ public abstract partial class SharedHandsSystem
         return true;
     }
 
+    /// <summary>
+    ///     Cycles the currently active hand.
+    /// </summary>
+    public void SwapHands(Entity<HandsComponent?> ent, bool checkActionBlocker = false, bool reverse = false)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (checkActionBlocker && !_actionBlocker.CanInteract(ent.Owner, null))
+            return;
+
+        if (ent.Comp.ActiveHandId == null || ent.Comp.Hands.Count < 2)
+            return;
+
+        var currentIndex = ent.Comp.SortedHands.IndexOf(ent.Comp.ActiveHandId);
+        var newActiveIndex = (currentIndex + (reverse ? -1 : 1) + ent.Comp.Hands.Count) % ent.Comp.Hands.Count;
+        var nextHand = ent.Comp.SortedHands[newActiveIndex];
+
+        TrySetActiveHand(ent, nextHand);
+    }
+
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
     {
         return IsHolding(entity, item, out _);
