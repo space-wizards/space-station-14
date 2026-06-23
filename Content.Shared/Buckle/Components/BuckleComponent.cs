@@ -48,7 +48,7 @@ public sealed partial class BuckleComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
-    /// Wether or not this can buckled by pacifists
+    /// Whether or not this can buckled by pacifists
     /// </summary>
     [DataField]
     public bool PacifismAllowedMode = false;
@@ -118,6 +118,12 @@ public record struct UnstrapAttemptEvent(
 {
     public bool Cancelled;
 }
+
+/// <summary>
+/// Event raised on the user to see if they can buckle.
+/// </summary>
+[ByRefEvent]
+public record struct BuckleOtherAttemptEvent(EntityUid Target, bool Cancelled = false);
 
 
 /// <summary>

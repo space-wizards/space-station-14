@@ -11,4 +11,4 @@ pacified-cannot-throw-spill = I can't possibly throw { THE($projectile) }, that 
 pacified-cannot-harm-directly = I can't bring myself to hurt { THE($entity) }!
 pacified-cannot-harm-indirect = I can't damage { THE($entity) }, it could hurt someone!
 pacified-cannot-fire-gun = I can't fire { THE($entity) }, it could hurt someone!
-pacified-cannot-buckle = I can't buckle them too { THE($entity) }, it could hurt them!
+pacified-cannot-buckle = I can't buckle { THE($entity) }, it could hurt them!

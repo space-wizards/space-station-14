@@ -29,7 +29,7 @@ public sealed partial class PacificationSystem : EntitySystem
         SubscribeLocalEvent<PacifiedComponent, BeforeThrowEvent>(OnBeforeThrow);
         SubscribeLocalEvent<PacifiedComponent, AttackAttemptEvent>(OnAttackAttempt);
         SubscribeLocalEvent<PacifiedComponent, ShotAttemptedEvent>(OnShootAttempt);
-        SubscribeLocalEvent<PacifiedComponent, BuckleAttemptEvent>(OnBuckleAttempt);
+        SubscribeLocalEvent<PacifiedComponent, BuckleOtherAttemptEvent>(OnOtherBuckleAttempt);
         SubscribeLocalEvent<PacifismDangerousAttackComponent, AttemptPacifiedAttackEvent>(OnPacifiedDangerousAttack);
     }
 
@@ -77,11 +77,16 @@ public sealed partial class PacificationSystem : EntitySystem
         args.Cancel();
     }
 
-    private void OnBuckleAttempt(Entity<PacifiedComponent> ent, ref BuckleAttemptEvent user)
+
+    private void OnOtherBuckleAttempt(Entity<PacifiedComponent> user, ref BuckleOtherAttemptEvent args)
     {
         // Disallow buckling
-        ShowPopup(ent, user.Strap, "pacified-cannot-buckle");
-        user.Cancelled = true;
+        ShowPopup(user, args.Target,  "pacified-cannot-buckle");
+        args.Cancelled = true;
+        if (args.Target == user.Owner)
+        {
+            args.Cancelled = false;
+        }
     }
     private void OnAttackAttempt(EntityUid uid, PacifiedComponent component, AttackAttemptEvent args)
     {
