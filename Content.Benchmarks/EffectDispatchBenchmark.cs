@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
+using Content.Shared.EntityEffects;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -18,7 +17,7 @@ namespace Content.Benchmarks;
 /// New: static Dictionary{{Type, IEntityEffectHandler}} + direct interface call
 /// </summary>
 [Virtual]
-public class EffectDispatchBenchmark
+public partial class EffectDispatchBenchmark
 {
     private TestPair _pair = default!;
     private BenchSystem _sys = default!;
@@ -36,7 +35,9 @@ public class EffectDispatchBenchmark
         {
             var uid = entMan.Spawn();
             _sys.Target = new(uid, entMan.GetComponent<TransformComponent>(uid));
-        }).GetAwaiter().GetResult();
+        })
+            .GetAwaiter()
+            .GetResult();
     }
 
     [GlobalCleanup]
@@ -64,18 +65,18 @@ public class EffectDispatchBenchmark
         return _sys.RaiseViaCSharpEvent();
     }
 
-    public sealed class BenchSystem : EntitySystem
+    public sealed partial class BenchSystem : EntitySystem
     {
+        private SharedEntityEffectsSystem _effectsSystem = default!;
+
         public Entity<TransformComponent> Target;
 
-        private TestEffect _effect = new();
+        private EntityEffect _effect = new TestEffect();
+
         private int _counter;
 
         public delegate void EffectHandler(EntityUid uid);
         public event EffectHandler OnEffect;
-
-        private static readonly Dictionary<Type, ITestHandler> Handlers = new();
-        private static bool _registered;
 
         public override void Initialize()
         {
@@ -85,11 +86,7 @@ public class EffectDispatchBenchmark
 
             OnEffect += OnCSharpEvent;
 
-            if (!_registered)
-            {
-                Handlers[typeof(TestEffect)] = new TestHandler();
-                _registered = true;
-            }
+            _effectsSystem = EntityManager.System<SharedEntityEffectsSystem>();
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -115,9 +112,7 @@ public class EffectDispatchBenchmark
         public int RaiseViaStaticHandler()
         {
             _counter = 0;
-            var type = _effect.GetType();
-            if (Handlers.TryGetValue(type, out var handler))
-                handler.Handle(Target);
+            _effectsSystem.ApplyEffect(Target, _effect);
             return _counter;
         }
 
@@ -134,8 +129,10 @@ public class EffectDispatchBenchmark
     {
     }
 
-    public sealed class TestEffect
+
+    public sealed partial class TestEffect : EntityEffect
     {
+
     }
 
     public interface ITestHandler
