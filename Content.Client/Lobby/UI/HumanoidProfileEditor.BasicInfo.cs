@@ -24,7 +24,7 @@ public sealed partial class HumanoidProfileEditor
     /// <summary>
     /// Randomize values selectively while respecting locked values.
     /// </summary>
-    private void Randomize()
+    private void RandomizeProfile()
     {
         Profile = Profile == null
             ? HumanoidCharacterProfile.Random()

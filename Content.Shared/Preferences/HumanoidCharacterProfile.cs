@@ -242,16 +242,10 @@ namespace Content.Shared.Preferences
             | RandomizeConfig.AppearanceSkin;
 
         /// <summary>
-        /// A randomize config that only covers the name.
-        /// </summary>
-        public const RandomizeConfig RandomizeConfigNameOnly =
-            RandomizeConfig.Name;
-
-        /// <summary>
         /// Picks a random species from roundstart species.
         /// <param name="ignoredSpecies">Species to exclude from randomizer.</param>
         /// </summary>
-        static SpeciesPrototype RandomSpecies(HashSet<string>? ignoredSpecies = null)
+        public static SpeciesPrototype RandomSpecies(HashSet<string>? ignoredSpecies = null)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
@@ -266,7 +260,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Picks a random name using species and gender.
         /// </summary>
-        static string RandomName(SpeciesPrototype species, Gender gender)
+        public static string RandomName(SpeciesPrototype species, Gender gender)
         {
             var name = GetName(species.ID, gender);
             return name;
@@ -275,7 +269,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Picks a random age using species.
         /// </summary>
-        static int RandomAge(SpeciesPrototype species)
+        public static int RandomAge(SpeciesPrototype species)
         {
             var random = IoCManager.Resolve<IRobustRandom>();
 
@@ -286,7 +280,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Picks a random sex using species.
         /// </summary>
-        static Sex RandomSex(SpeciesPrototype species)
+        public static Sex RandomSex(SpeciesPrototype species)
         {
             var random = IoCManager.Resolve<IRobustRandom>();
 
@@ -297,7 +291,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         /// Picks a random gender using species sex;
         /// </summary>
-        static Gender RandomGender(Sex sex)
+        public static Gender RandomGender(Sex sex)
         {
             var gender = Gender.Epicene;
 

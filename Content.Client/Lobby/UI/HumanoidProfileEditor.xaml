@@ -55,9 +55,9 @@
                             <BoxContainer Margin="10" Orientation="Vertical" HorizontalExpand="True">
                                 <!-- Species -->
                                 <BoxContainer HorizontalExpand="True">
+                                    <ui:RandomizeLockButton For="Species" />
                                     <Label Text="{Loc 'humanoid-profile-editor-species-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <ui:RandomizeLockButton For="Species" />
                                     <TextureButton Name="SpeciesInfoButton" Scale="0.3 0.3"
                                                    VerticalAlignment="Center"
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
@@ -65,16 +65,16 @@
                                 </BoxContainer>
                                 <!-- Age -->
                                 <BoxContainer HorizontalExpand="True">
+                                    <ui:RandomizeLockButton For="Age" />
                                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <ui:RandomizeLockButton For="Age" />
                                     <LineEdit Name="AgeEdit" MinSize="40 0" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Sex -->
                                 <BoxContainer HorizontalExpand="True">
+                                    <ui:RandomizeLockButton For="Sex" />
                                     <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
                                     <Control HorizontalExpand="True"/>
-                                    <ui:RandomizeLockButton For="Sex" />
                                     <OptionButton Name="SexButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
                                 <!-- Pronouns -->
@@ -99,8 +99,8 @@
                             <!-- Skin -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <BoxContainer>
-                                    <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
                                     <ui:RandomizeLockButton For="AppearanceSkin" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-skin-color-label'}" />
                                 </BoxContainer>
                                 <Slider HorizontalExpand="True" Name="Skin" MinValue="0" MaxValue="100" Value="20" />
                                 <BoxContainer Name="RgbSkinColorContainer" Visible="False" Orientation="Vertical" HorizontalExpand="True"></BoxContainer>
@@ -108,8 +108,8 @@
                             <!-- Eyes -->
                             <BoxContainer Margin="10" Orientation="Vertical">
                                 <BoxContainer>
-                                    <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
                                     <ui:RandomizeLockButton For="AppearanceEyes" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
                                 </BoxContainer>
                                 <humanoid:EyeColorPicker Name="EyeColorPicker" />
                             </BoxContainer>

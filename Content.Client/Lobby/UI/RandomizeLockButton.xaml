@@ -5,7 +5,7 @@
     StyleIdentifier="RandomizerLockButton"
     ToggleMode="True"
     VerticalAlignment="Center"
-    Scale="0.25 0.25"
+    Scale="0.3 0.3"
     ToolTip="{Loc 'humanoid-profile-editor-randomizer-lock-tooltip'}"
     >
 
