@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using Content.Server.Administration.Systems;
 using System.Linq;
+using System.Text;
 using Content.Shared.CCVar;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -21,7 +22,19 @@ public sealed partial class ChatSystem
     private Regex? _FlaggedWordRegex;
     private void OnFlaggedWordListChanged(string value)
     {
-        var words = value
+        string decoded;
+        try
+        {
+            decoded = Encoding.UTF8.GetString(Convert.FromBase64String(value));
+        }
+        catch (FormatException)
+        {
+            // Invalid base64, fail gracefully?
+            _FlaggedWordRegex = null;
+            return;
+        }
+
+        var words = decoded
             .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
             .Select(Regex.Escape)
             .ToArray();
