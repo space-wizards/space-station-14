@@ -17,7 +17,7 @@ public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowM
         SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(Entity<StatusIconComponent> entt, ref GetStatusIconsEvent evnt)
+    private void OnGetStatusIconsEvent(Entity<StatusIconComponent> ent, ref GetStatusIconsEvent args)
     {
         // Is active checks for our ability to display status icons
         if (!IsActive)
