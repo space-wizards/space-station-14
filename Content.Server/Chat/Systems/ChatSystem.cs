@@ -62,6 +62,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.ChatBannedWordAhelpEnabled, value => _bannedWordAhelpEnabled = value, true);
         Subs.CVar(_configurationManager, CCVars.ChatBannedWordAhelpWords, OnBannedWordListChanged, true);
+        Subs.CVar(_configurationManager, CCVars.ChatBannedWordAhelpCooldown, value => _bannedWordAhelpCooldown = value, true);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
 
