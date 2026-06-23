@@ -8,6 +8,7 @@
     bodyStatus: InAir
     sleepingAllowed: false
   - type: CanMoveInAir
+  - type: TileFrictionModifier
   - type: ChasingWalk
     minSpeed: 1
     maxSpeed: 3
