@@ -78,6 +78,7 @@ public abstract class SharedMindShieldSystem : EntitySystem
             EnsureComp<MindShieldStatusComponent>(ent, out var c);
             c.IsMindshielded = mindshielded;
             c.IsVisible = visible;
+            Dirty(ent, c);
         }
     }
 
