@@ -12,6 +12,5 @@ public abstract partial class MindshieldImplantSystem : SharedMindshieldImplantS
     {
         // we actually log the message on the server side
         _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
-
     }
 }
