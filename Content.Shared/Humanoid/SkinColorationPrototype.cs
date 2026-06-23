@@ -342,6 +342,14 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 [Serializable, NetSerializable]
 public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrategy
 {
+    // FIXME: this is awful - why is it so large?
+    /// <summary>
+    /// The maximum amount of change that we can expect between generating an HSV value
+    /// at a threshold, converting it to RGB, then resaving it.
+    /// Found experimentally by running HumanoidProfileTests.EnsureValidRandomSpecies("Vulpkanin") many times.
+    /// </summary>
+    public const float HSVTolerance = 0.019f;
+
     /// <summary>
     /// List of valid nodes in this coloration.
     /// </summary>
@@ -369,14 +377,14 @@ public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrateg
         }
 
         // If a range is found, check if the saturation is within the provided ranges.
-        if (hsv.Y < range.Saturation.Min - SkinColorationUtils.Epsilon || hsv.Y > range.Saturation.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Y < range.Saturation.Min - HSVTolerance || hsv.Y > range.Saturation.Max + HSVTolerance)
         {
             reason = $"Saturation {hsv.Y} is outside of range of min {range.Saturation.Item1} max {range.Saturation.Item2}";
             return false;
         }
 
         // Check if the value is within provided ranges.
-        if (hsv.Z < range.Value.Min - SkinColorationUtils.Epsilon || hsv.Z > range.Value.Max + SkinColorationUtils.Epsilon)
+        if (hsv.Z < range.Value.Min - HSVTolerance || hsv.Z > range.Value.Max + HSVTolerance)
         {
             reason = $"Value {hsv.Z} is outside of range of min {range.Value.Min} max {range.Value.Max}";
             return false;
