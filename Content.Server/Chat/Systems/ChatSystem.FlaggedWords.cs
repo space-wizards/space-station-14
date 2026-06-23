@@ -15,52 +15,52 @@ public sealed partial class ChatSystem
     [Dependency] private BwoinkSystem _bwoink = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private float _bannedWordAhelpCooldown = 30f;
-    private readonly Dictionary<NetUserId, TimeSpan> _lastBannedWordAhelp = new();
-    private bool _bannedWordAhelpEnabled;
-    private Regex? _bannedWordRegex;
-    private void OnBannedWordListChanged(string value)
+    private float _FlaggedWordAhelpCooldown = 30f;
+    private readonly Dictionary<NetUserId, TimeSpan> _lastFlaggedWordAhelp = new();
+    private bool _FlaggedWordAhelpEnabled;
+    private Regex? _FlaggedWordRegex;
+    private void OnFlaggedWordListChanged(string value)
     {
         var words = value
             .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
             .Select(Regex.Escape)
             .ToArray();
 
-        _bannedWordRegex = words.Length == 0
+        _FlaggedWordRegex = words.Length == 0
             ? null
             : new Regex(
                 $@"(?<!\p{{L}}|\p{{N}})({string.Join("|", words)})(?!\p{{L}}|\p{{N}})",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
     }
 
-    private bool IsBannedWordAhelpOnCooldown(NetUserId userId)
+    private bool IsFlaggedWordAhelpOnCooldown(NetUserId userId)
     {
-        if (_bannedWordAhelpCooldown <= 0f)
+        if (_FlaggedWordAhelpCooldown <= 0f)
             return false;
 
         var now = _timing.CurTime;
-        var cooldown = TimeSpan.FromSeconds(_bannedWordAhelpCooldown);
+        var cooldown = TimeSpan.FromSeconds(_FlaggedWordAhelpCooldown);
 
-        if (_lastBannedWordAhelp.TryGetValue(userId, out var lastAlert) &&
+        if (_lastFlaggedWordAhelp.TryGetValue(userId, out var lastAlert) &&
             now - lastAlert < cooldown)
         {
             return true;
         }
 
-        _lastBannedWordAhelp[userId] = now;
+        _lastFlaggedWordAhelp[userId] = now;
         return false;
     }
 
-    private void CheckBannedWords(ICommonSession? player, string originalMessage)
+    private void CheckFlaggedWords(ICommonSession? player, string originalMessage)
     {
-        if (!_bannedWordAhelpEnabled || player == null || _bannedWordRegex == null)
+        if (!_FlaggedWordAhelpEnabled || player == null || _FlaggedWordRegex == null)
             return;
 
-        var match = _bannedWordRegex.Match(originalMessage);
+        var match = _FlaggedWordRegex.Match(originalMessage);
         if (!match.Success)
             return;
 
-        if (IsBannedWordAhelpOnCooldown(player.UserId))
+        if (IsFlaggedWordAhelpOnCooldown(player.UserId))
             return;
 
         var report =
