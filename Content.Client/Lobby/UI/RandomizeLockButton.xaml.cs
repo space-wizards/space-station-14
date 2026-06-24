@@ -7,7 +7,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Content.Client.Stylesheets.StylesheetHelpers;
-using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Client.Lobby.UI;
 
@@ -20,12 +19,12 @@ public sealed partial class RandomizeLockButton : TextureButton
     /// <summary>
     /// Which value this button locks.
     /// </summary>
-    public RandomizeCfg For { get; set; }
+    public HumanoidCharacterProfile.RandomizeCfg For { get; set; }
 
     /// <summary>
     /// Tracks which values are allowed to be randomized.
     /// </summary>
-    public static RandomizeCfg RandomizeCfg = RandomizeConfigAll;
+    public static HumanoidCharacterProfile.RandomizeCfg RandomizeCfg = HumanoidCharacterProfile.RandomizeConfigAll;
 
     public RandomizeLockButton()
     {
