@@ -73,6 +73,10 @@ public sealed partial class CargoSystem
         }
     }
 
+    #endregion
+
+    #region Pallets
+
     /// <summary>
     /// Returns all cargo pallets on a grid, filtered by buy/sell type.
     /// </summary>
@@ -135,14 +139,16 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
+    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored. </param>
     /// <returns>Distinct set of entity UIDs found on pallets.</returns>
     public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
         EntityUid gridUid,
-        BuySellType requestType = BuySellType.Sell
+        BuySellType requestType = BuySellType.Sell,
+        IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)>? pallets = null
     )
     {
         var entities = new HashSet<EntityUid>();
-        foreach (var pallet in GetCargoPallets(gridUid, requestType))
+        foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
         {
             var aabb = _lookup.GetAABBNoContainer(
                 pallet.Entity,
@@ -153,7 +159,6 @@ public sealed partial class CargoSystem
         }
         return entities;
     }
-
     #endregion
 
     #region Station
