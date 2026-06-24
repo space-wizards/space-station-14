@@ -179,7 +179,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
         // Spray the solution onto the ground and anyone nearby
         var coordinates = Transform(entity).Coordinates;
-        _puddle.TrySplashSpillAt(entity.Owner, coordinates, out _, out _, sound: false);
+        _puddle.TrySplashSpillAt(entity.Owner, coordinates, solution, out _, sound: false);
 
         var drinkName = Identity.Entity(entity, EntityManager);
 

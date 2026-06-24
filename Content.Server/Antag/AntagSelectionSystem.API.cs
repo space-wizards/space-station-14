@@ -95,7 +95,6 @@ public sealed partial class AntagSelectionSystem
                 continue;
 
             count += GetTargetAntagCount(antag, playerCount, ref runningCount);
-            runningCount += count * antag.PlayerRatio;
         }
 
         return count;
@@ -170,7 +169,7 @@ public sealed partial class AntagSelectionSystem
     [PublicAPI]
     public bool AllAntagsAssigned(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype proto, int players)
     {
-        return GetAssignedAntagCount(gameRule, proto) < GetTargetAntagCount(gameRule, players, proto);
+        return GetAssignedAntagCount(gameRule, proto) >= GetTargetAntagCount(gameRule, players, proto);
     }
 
     /// <summary>

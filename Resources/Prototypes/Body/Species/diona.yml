@@ -93,7 +93,6 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
-    butcheringType: Spike
     spawned:
       - id: FoodMeatPlant
         amount: 5
@@ -173,7 +172,7 @@
   - type: Rootable
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganDiona
   abstract: true
   suffix: Diona

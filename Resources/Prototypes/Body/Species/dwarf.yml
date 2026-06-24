@@ -155,7 +155,7 @@
     displacement: Dwarfism
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganDwarf
   abstract: true
   suffix: Dwarf

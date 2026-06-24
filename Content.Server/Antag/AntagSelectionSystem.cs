@@ -23,8 +23,6 @@ using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Mind;
-using Content.Shared.Players;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -138,9 +136,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
             AssignAntags((uid, component), players);
-
-        // Any antags not spawned we make ghost roles for!
-        SpawnGhostRoles((uid, component), players.Length);
+        else // Otherwise, we only spawn the ghost roles!
+            SpawnGhostRoles((uid, component), players.Length);
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
@@ -157,8 +154,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!Exists(rule) || !RuleQuery.TryComp(rule, out var select))
             return;
 
-        // This likely means player was banned or lacks playtime.
-        if (!CanBeAntag(args.Player, (rule, select), def, false))
+        // Ensure the player is allowed to play this antagonist!
+        if (IsAntagBanned(args.Player, def) || !_playTime.IsAllowed(args.Player, def.PrefRoles))
             return;
 
         if (!TrySpawnAntagonist((rule, select), def, args.Player, _transform.GetMapCoordinates(ent), out var uid))
@@ -644,6 +641,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
         }
 
+        // Re-check entity validity now that the player has spawned.
+        // Pre-selection bypasses the blacklist (AttachedEntity was null at that time),
+        // so we must verify here before applying antag components.
+        if (!IsEntityValid(antagEnt.Value, prototype))
+        {
+            if (antagEnt.Value != player.AttachedEntity)
+                QueueDel(antagEnt.Value);
+            DeSelectSession(gameRule, prototype, player);
+            return false;
+        }
+
         InitializeAntag(gameRule, prototype, antagEnt.Value, player);
         return true;
     }
@@ -727,6 +735,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 if (!IsSessionValid(session, gameRule, def))
                 {
                     DeSelectSession(gameRule, proto, session, set);
+                    SpawnGhostRole(gameRule, def);
                     continue;
                 }
 
@@ -782,8 +791,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
-        // Ensure that we have a mind for our entity!
-        if (player.GetMind() is not { } mind)
+        // Ensure that we have the right mind for our entity.
+        if (!_mind.TryGetMind(player, out var mind, out var mindComp) || mindComp.OwnedEntity != antag)
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
