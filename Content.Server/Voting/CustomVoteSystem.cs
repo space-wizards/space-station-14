@@ -18,6 +18,15 @@ namespace Content.Server.Voting
         [Dependency] private VoteWebhooks _voteWebhooks = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
 
+        /// <summary>
+        /// Starts a vote with custom options for some or all players
+        /// </summary>
+        /// <param name="initiator">who started the vote</param>
+        /// <param name="showResultsInChat">if the results should be shown in chat</param>
+        /// <param name="duration">how long the vote should last</param>
+        /// <param name="title">the title of the vote</param>
+        /// <param name="options">the list of options to vote from</param>
+        /// <param name="players">list of players to show the vote for (all players if null)</param>
         public void StartCustomVote(
             ICommonSession? initiator,
             bool showResultsInChat,
