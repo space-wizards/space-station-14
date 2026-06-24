@@ -274,7 +274,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     /// <param name="usingUid">The tool being used to (un)anchor the target entity.</param>
     /// <param name="anchoring">True if the target will be anchored, false if unanchored.</param>
     /// <param name="failMessage">On failure, may contain a message stating why the target could not be (un)anchored.</param>
-    /// <param name="actualDelay">On success, contains the actual delay that the entity should take to anchor.</param>
+    /// <param name="actualDelay">On success, contains the actual delay that the entity should take to anchor, in seconds.</param>
     /// <param name="anchorable">The AnchorableComponent of the target.</param>
     /// <param name="usingTool">The ToolComponent of the tool.</param>
     /// <returns>true if the target can be (un)anchored, false otherwise.</returns>
