@@ -45,7 +45,7 @@ namespace Content.Server.Voting
         public VoteManager.VoterEligibility VoterEligibility = VoteManager.VoterEligibility.All;
 
         /// <summary>
-        /// List of specific players to send the vote. Only used when <see cref="VoterEligibility"/> is set to SelectedPlayers
+        /// List of specific players to send the vote. Only used when <see cref="VoterEligibility"/> is set to SelectedPlayers.
         /// </summary>
         public HashSet<ICommonSession> SelectedVoters = new();
 
