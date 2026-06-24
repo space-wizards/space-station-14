@@ -685,7 +685,7 @@ namespace Content.Server.Administration.Systems
             bwoinkText = $"{statusPrefix} {bwoinkText}: {messageText}";
 
             // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
-            var playSound = (!senderAHelpAdmin || input.PlaySound) && !input.AdminOnly;
+            var playSound = !senderAHelpAdmin || (input.PlaySound && !input.AdminOnly);
             return new BwoinkTextMessage(
                 input.UserId,
                 senderSession.UserId,
