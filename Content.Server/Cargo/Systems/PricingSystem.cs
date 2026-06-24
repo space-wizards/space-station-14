@@ -1,9 +1,8 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Cargo.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Cargo;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -128,26 +127,6 @@ public sealed partial class PricingSystem : EntitySystem
             return;
 
         args.Price += entity.Comp.RandomPrice ?? 0;
-    }
-
-    private double GetSolutionPrice(EntityUid entity)
-    {
-        var price = 0.0;
-
-        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(entity))
-        {
-            var solution = soln.Comp.Solution;
-            foreach (var (reagent, quantity) in solution.Contents)
-            {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
-                    continue;
-
-                // TODO check ReagentData for price information?
-                price += (float) quantity * reagentProto.PricePerUnit;
-            }
-        }
-
-        return price;
     }
 
     private double GetMaterialPrice(PhysicalCompositionComponent component)
