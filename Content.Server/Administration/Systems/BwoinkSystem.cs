@@ -718,7 +718,7 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
-            var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
+            var playSound = !senderAHelpAdmin || (message.PlaySound && !message.AdminOnly);
 
             var admins = GetTargetAdmins();
             var adminMsg = await FormatFullMessageForRecipient(forAdmin: true, senderAdmin, senderSession, message);
@@ -796,6 +796,8 @@ namespace Content.Server.Administration.Systems
                 playSound: true,
                 adminOnly: true);
 
+            EntitySessionEventArgs eventArgs = new EntitySessionEventArgs(playerSession);
+            base.OnBwoinkTextMessage(message, eventArgs);
             await SendAHelpFromSession(
                 senderSession: playerSession,
                 message: message,
