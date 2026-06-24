@@ -7,7 +7,6 @@
         - to: stairs
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -15,7 +14,6 @@
         - to: stairsStage
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -23,7 +21,6 @@
         - to: stairsWhite
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -31,7 +28,6 @@
         - to: stairsStageWhite
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -39,7 +35,6 @@
         - to: stairsDark
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -47,7 +42,6 @@
         - to: stairsStageDark
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: Steel
               amount: 5
@@ -55,7 +49,6 @@
         - to: stairsWood
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: WoodPlank
               amount: 5
@@ -63,7 +56,6 @@
         - to: stairsStageWood
           completed:
             - !type:SnapToGrid
-              southRotation: true
           steps:
             - material: WoodPlank
               amount: 5
