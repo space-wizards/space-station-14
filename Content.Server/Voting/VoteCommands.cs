@@ -106,6 +106,11 @@ namespace Content.Server.Voting
 
         private CustomVoteSystem? _customVote;
 
+        /// <summary>
+        /// Starts a vote for all players
+        /// </summary>
+        /// <param name="title">title of the vote</param>
+        /// <param name="options">list of vote options</param>
         [CommandImplementation("startall")]
         public void StartAll(IInvocationContext ctx, string title, params string[] options)
         {
@@ -113,6 +118,14 @@ namespace Content.Server.Voting
             _customVote.StartCustomVote(ctx.Session, true, 30, title, options.ToList());
         }
 
+        /// <summary>
+        /// Starts a vote for only some players
+        /// </summary>
+        /// <param name="players">list of player entities (piped)</param>
+        /// <param name="showResultsInChat">If it should show the results in chat</param>
+        /// <param name="duration">how long the vote should last</param>
+        /// <param name="title">title of the vote</param>
+        /// <param name="options">list of vote options</param>
         [CommandImplementation("startfor")]
         public void StartFor(IInvocationContext ctx, [PipedArgument] IEnumerable<EntityUid> players, bool showResultsInChat, float duration, string title, params string[] options)
         {
