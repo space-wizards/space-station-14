@@ -37,7 +37,7 @@ public sealed partial class FoodRecipePrototype : IPrototype
     /// <summary>
     ///     The cooking ingredients used in this recipe.
     /// </summary>
-    [DataField(required: true)]
+    [IncludeDataField]
     public CookingIngredients Ingredients = default!;
 
     /// <summary>
