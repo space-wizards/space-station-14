@@ -30,7 +30,6 @@ namespace Content.Client.Damage;
 /// </summary>
 public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
 
@@ -156,7 +155,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         // If the damage container on our entity's DamageableComponent
         // is not null, we can try to check through its groups.
         if (injurableComponent.DamageContainer != null
-            && _prototypeManager.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
+            && ProtoMan.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
         {
             // Are we using damage overlay sprites by group?
             // Check if the container matches the supported groups,
@@ -192,7 +191,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         // Ditto above, but instead we go through every group.
         else // oh boy! time to enumerate through every single group!
         {
-            var damagePrototypeIdList = _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>()
+            var damagePrototypeIdList = ProtoMan.EnumeratePrototypes<DamageGroupPrototype>()
                 .Select((p, _) => p.ID)
                 .ToList();
             if (damageVisComp.DamageOverlayGroups != null)
@@ -363,7 +362,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             return;
 
         if (AppearanceSystem.TryGetData<string>(uid,  DamageVisualizerKeys.Displacement,  out var displacement, args.Component) &&
-            _prototypeManager.Resolve<DisplacementDataPrototype>(displacement, out var displacementProto))
+            ProtoMan.Resolve<DisplacementDataPrototype>(displacement, out var displacementProto))
             damageVisComp.Displacement = displacementProto.Displacement;
         else
             damageVisComp.Displacement = null;
@@ -537,7 +536,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             if (!damageVisComp.Overlay && damageGroup != damageVisComp.DamageGroup)
                 continue;
 
-            if (!_prototypeManager.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
+            if (!ProtoMan.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
                 || !damage.TryGetDamageInGroup(damageGroupPrototype, out var damageTotal))
                 continue;
 

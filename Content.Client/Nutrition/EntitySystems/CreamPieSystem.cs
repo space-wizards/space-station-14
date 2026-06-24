@@ -11,7 +11,6 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -69,7 +68,7 @@ public sealed partial class CreamPieSystem : SharedCreamPieSystem
         _sprite.LayerSetSprite((ent.Owner, sprite), index, creamPied.Sprite);
         _sprite.LayerSetVisible((ent.Owner, sprite), index, isCreamPied);
 
-        if (_prototype.Resolve(ent.Comp1.Displacement, out var displacementProto))
+        if (ProtoMan.Resolve(ent.Comp1.Displacement, out var displacementProto))
         {
             _displacement.TryAddDisplacement(displacementProto.Displacement, (ent.Owner, sprite), index, CreamPiedVisualLayer.Key, out _);
         }

@@ -11,7 +11,6 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
 {
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
 
     [Dependency] private EntityQuery<InnerBodyAnomalyVisualsComponent> _visualsQuery = default!;
 
@@ -46,7 +45,7 @@ public sealed partial class ClientInnerBodyAnomalySystem : SharedInnerBodyAnomal
 
         if (_visualsQuery.TryGetComponent(ent, out var visuals) && visuals.Displacement != null)
         {
-            if (_prototype.Resolve(visuals.Displacement, out var displacement))
+            if (ProtoMan.Resolve(visuals.Displacement, out var displacement))
             {
                 _displacement.TryAddDisplacement(displacement.Displacement,
                     (ent.Owner, sprite),

@@ -16,7 +16,6 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
 {
     [Dependency] private PointLightSystem _lights = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -91,7 +90,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
 
         if (component.Displacement != fireDisplacement)
         {
-            if (fireDisplacement != null && _prototype.Resolve<DisplacementDataPrototype>(fireDisplacement, out var displacementProto))
+            if (fireDisplacement != null && ProtoMan.Resolve<DisplacementDataPrototype>(fireDisplacement, out var displacementProto))
                 _displacement.TryAddDisplacement(displacementProto.Displacement, (uid, sprite), index, FireVisualLayers.Fire, out _);
             else
                 _displacement.EnsureDisplacementIsNotOnSprite((uid, sprite), FireVisualLayers.Fire);

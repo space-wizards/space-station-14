@@ -16,7 +16,6 @@ namespace Content.Client.Body;
 public sealed partial class VisualBodySystem : SharedVisualBodySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private MarkingManager _marking = default!;
     [Dependency] private SpriteSystem _sprite = default!;
@@ -78,7 +77,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         _sprite.LayerSetData(target, index, ent.Comp.Data);
 
         var displacement = ent.Comp.Displacement;
-        if (displacement != null && _prototype.Resolve(displacement, out var displacementProto))
+        if (displacement != null && ProtoMan.Resolve(displacement, out var displacementProto))
         {
             _displacement.TryAddDisplacement(displacementProto.Displacement,
                 (target, Comp<SpriteComponent>(target)),
@@ -162,7 +161,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (!censorNudity)
             yield break;
 
-        var group = _prototype.Index(ent.Comp.MarkingData.Group);
+        var group = ProtoMan.Index(ent.Comp.MarkingData.Group);
         foreach (var layer in ent.Comp.MarkingData.Layers)
         {
             if (!group.Limits.TryGetValue(layer, out var layerLimits))
