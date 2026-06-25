@@ -145,7 +145,7 @@ namespace Content.Client.VendingMachines.UI
         {
             if (categories == null)
             {
-                Categories.Orphan();
+                CategoryContainer.Orphan();
                 _category = "";
                 return;
             }
@@ -187,15 +187,11 @@ namespace Content.Client.VendingMachines.UI
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(
-            List<VendingMachineInventoryEntry> inventory,
-            bool enabled)
+        public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled)
         {
             _enabled = enabled;
             _listItems.Clear();
             _amounts.Clear();
-
-            var categorise = _category != "";
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -220,6 +216,7 @@ namespace Content.Client.VendingMachines.UI
 
             var longestEntry = string.Empty;
             var listData = new List<VendorItemsListData>();
+            var categorise = _category != "";
 
             for (var i = 0; i < inventory.Count; i++)
             {

@@ -5,7 +5,7 @@
     xmlns:co="clr-namespace:Content.Client.UserInterface.Controls"
     MinHeight="210">
     <BoxContainer Orientation="Horizontal">
-        <BoxContainer>
+        <BoxContainer Name="CategoryContainer">
             <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="4 4" MinWidth="70">
                 <BoxContainer Orientation="Vertical" Name="Categories" Margin="0 0 0 10" />
             </ScrollContainer>
