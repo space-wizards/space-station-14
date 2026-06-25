@@ -2,4 +2,4 @@
 
 namespace Content.Client.Body.Systems;
 
-public sealed class BloodStreamSystem : SharedBloodstreamSystem;
+public sealed partial class BloodStreamSystem : SharedBloodstreamSystem;
