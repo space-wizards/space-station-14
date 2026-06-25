@@ -505,6 +505,7 @@ public sealed partial class PathfindingSystem
                                         continue;
 
                                     intersects = true;
+                                    break;
                                 }
 
                                 if (!intersects)
