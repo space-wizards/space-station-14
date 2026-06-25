@@ -137,10 +137,12 @@ public sealed partial class PathfindingSystem
             // TODO: Inflate grid bounds slightly and get chunks.
             // This is for map <> grid pathfinding
             // Without parallel this is roughly 3x slower on my desktop.
+
             Parallel.For(0, dirt.Length, options, i =>
             {
                 BuildBreadcrumbs(dirt[i], (uid, mapGridComp));
             });
+
             const int Division = 4;
 
             // You can safely do this in parallel as long as no neighbor chunks are being touched in the same iteration.
@@ -422,7 +424,6 @@ public sealed partial class PathfindingSystem
         {
             for (var y = 0; y < ChunkSize; y++)
             {
-
                 // Tile
                 var tilePos = new Vector2i(x, y) + gridOrigin;
                 tilePolys.Clear();
@@ -495,7 +496,9 @@ public sealed partial class PathfindingSystem
                                     continue;
                                 }
 
+                                // Do an AABB check first as it's probably faster, then do an actual point check.
                                 var intersects = false;
+
                                 foreach (var proxy in fixture.Proxies)
                                 {
                                     if (!proxy.AABB.Contains(localPos))
@@ -509,6 +512,7 @@ public sealed partial class PathfindingSystem
                                 {
                                     continue;
                                 }
+                                
                                 if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
                                 {
                                     continue;
