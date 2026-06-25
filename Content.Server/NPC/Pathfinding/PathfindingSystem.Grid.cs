@@ -512,7 +512,7 @@ public sealed partial class PathfindingSystem
                                 {
                                     continue;
                                 }
-                                
+
                                 if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
                                 {
                                     continue;
@@ -523,6 +523,7 @@ public sealed partial class PathfindingSystem
                                 colliding = true;
                             }
 
+                            // If entity doesn't intersect this node (e.g. thindows) then ignore it.
                             if (!colliding)
                                 continue;
 
