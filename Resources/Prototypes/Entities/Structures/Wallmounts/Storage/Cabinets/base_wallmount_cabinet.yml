@@ -7,3 +7,21 @@
   parent: [BaseWallmountGlass, BaseItemCabinetGlass]
   id: BaseWallmountCabinetGlass
   abstract: true
+  components:
+  - type: GenericVisualizer # Distinct visualizer - lock layer disappears when open
+    visuals:
+      enum.ItemCabinetVisuals.ContainsItem:
+        enum.ItemCabinetVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: { state: glass-up }
+          False: { state: glass }
+        enum.LockVisualLayers.Lock:
+          True: { visible: false }
+          False: { visible: true }
+      enum.LockVisuals.Locked:
+        enum.LockVisualLayers.Lock:
+          True: { state: locked }
+          False: { state: unlocked }
