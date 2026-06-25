@@ -8,9 +8,19 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChannelsControl : Control
 {
+    /// <summary>
+    /// Raised when a channel is toggled.
+    /// </summary>
     public event Action<int, bool>? SwitchFilteredChannel;
+
+    /// <summary>
+    /// Raised when <see cref="DisplayTrackNames"/> is toggled in order to display different channel names.
+    /// </summary>
     public event Action? ChannelsUpdateRequest;
 
+    /// <summary>
+    /// Returns if channels should be displayed using their track name.
+    /// </summary>
     public bool DisplayTrackNames => DisplayTrackNamesButton.Pressed;
 
     public ChannelsControl()
@@ -58,6 +68,10 @@ public sealed partial class ChannelsControl : Control
         }
     }
 
+    /// <summary>
+    /// Replaces the current list of channels with the passed one.
+    /// </summary>
+    /// <param name="channels">List of channels consisting of their index, display name and state.</param>
     public void SetChannels(IEnumerable<(int, string, bool)> channels)
     {
         ChannelList.Clear();

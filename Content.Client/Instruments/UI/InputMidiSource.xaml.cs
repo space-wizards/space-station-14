@@ -7,7 +7,14 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class InputMidiSource : InstrumentMidiSourceBase
 {
+    /// <summary>
+    /// Raised when MIDI Input via system hardware should be opened.
+    /// </summary>
     public event Action? OpenInputRequest;
+
+    /// <summary>
+    /// Raised when MIDI Input should be closed.
+    /// </summary>
     public event Action? CloseInputRequest;
 
     public override string ButtonName => Loc.GetString("instruments-component-menu-input-midi-source-button");

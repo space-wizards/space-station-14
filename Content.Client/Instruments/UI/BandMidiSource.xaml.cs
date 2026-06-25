@@ -7,7 +7,14 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BandMidiSource : InstrumentMidiSourceBase
 {
+    /// <summary>
+    /// Raised when the list of currently available bands should be refreshed.
+    /// </summary>
     public event Action? RefreshBandRequest;
+
+    /// <summary>
+    /// Raised when a band should be joined.
+    /// </summary>
     public event Action<EntityUid>? JoinBandRequest;
 
     public override string ButtonName => Loc.GetString("instruments-component-menu-band-midi-source-button");
@@ -31,6 +38,10 @@ public sealed partial class BandMidiSource : InstrumentMidiSourceBase
         JoinBandRequest?.Invoke(instrumentEntity);
     }
 
+    /// <summary>
+    /// Replaces the current list of available bands with the passed one.
+    /// </summary>
+    /// <param name="entities">List of available entities for band joining.</param>
     public void Populate(IEnumerable<(EntityUid, string)> entities)
     {
         BandList.Clear();

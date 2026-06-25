@@ -44,21 +44,26 @@ namespace Content.Client.Instruments.UI
             }
         }
 
-        public void SetupSources(params InstrumentMidiSourceBase[] modes)
+        /// <summary>
+        /// Registers the passed midi source controls as children of this instrument menu and creates a button
+        /// for each one on the left hand side of the menu.
+        /// </summary>
+        /// <param name="sources">The sources to be registered</param>
+        public void SetupSources(params InstrumentMidiSourceBase[] sources)
         {
             var group = new ButtonGroup();
-            for (var i = 0; i < modes.Length; i++)
+            for (var i = 0; i < sources.Length; i++)
             {
-                var mode = modes[i];
+                var source = sources[i];
                 var button = new Button();
-                button.Text = mode.ButtonName;
+                button.Text = source.ButtonName;
                 button.Group = group;
-                button.OnPressed += _ => { SwitchMode(mode); };
+                button.OnPressed += _ => { SwitchMode(source); };
                 MidiSourceButtonsBoxContainer.Children.Add(button);
-                MidiSourcesContainer.Children.Add(mode);
-                mode.VerticalExpand = true;
-                mode.HorizontalExpand = true;
-                mode.Visible = false;
+                MidiSourcesContainer.Children.Add(source);
+                source.VerticalExpand = true;
+                source.HorizontalExpand = true;
+                source.Visible = false;
 
                 // Set nicer style classes depending on button position.
                 if (i == 0)
@@ -66,7 +71,7 @@ namespace Content.Client.Instruments.UI
                     button.Pressed = true;
                     button.StyleClasses.Add("OpenLeft");
                 }
-                else if (i == modes.Length - 1)
+                else if (i == sources.Length - 1)
                 {
                     button.StyleClasses.Add("OpenRight");
                 }
@@ -77,6 +82,11 @@ namespace Content.Client.Instruments.UI
             }
         }
 
+        /// <summary>
+        /// Takes the given control and registers it as an option for the configuration collapsible.
+        /// </summary>
+        /// <param name="name">The string to display on the collapsible button for this configuration.</param>
+        /// <param name="ctrl">The control used for this configuration.</param>
         public void AddConfigurationControl(string name, Control ctrl)
         {
             var collapsibleBody = new CollapsibleBody();
@@ -94,18 +104,32 @@ namespace Content.Client.Instruments.UI
             ConfigurationItemsContainer.AddChild(collapsible);
         }
 
-        public void SwitchMode(InstrumentMidiSourceBase mode)
+        /// <summary>
+        /// Disables & hides the currently active source control, then enables & shows the given one.
+        /// </summary>
+        /// <param name="source">The source control to enable.</param>
+        /// <remarks>The given source must be registered first using the <see cref="SetupSources"/> function.</remarks>
+        public void SwitchMode(InstrumentMidiSourceBase source)
         {
             _currentMode?.Disable();
-            _currentMode = mode;
+            _currentMode = source;
             _currentMode.Enable();
         }
 
+        /// <summary>
+        /// When true, overlays the menu with a notice that MIDI is currently not available.
+        /// </summary>
+        /// <param name="available">Set to true when MIDI is available.</param>
+        /// <remarks>This should be set to false when MIDI playback is not available on the system.</remarks>
         public void SetMidiAvailability(bool available)
         {
             UnavailableOverlay.Visible = !available;
         }
 
+        /// <summary>
+        /// Takes an entity with an <see cref="InstrumentComponent"/> and displays its sprite on the left hand side.
+        /// </summary>
+        /// <param name="entity">The entity to display.</param>
         public void SetInstrument(Entity<InstrumentComponent> entity)
         {
             InstrumentSpriteView.SetEntity(entity);

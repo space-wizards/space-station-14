@@ -159,7 +159,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private void OnMidiPlaybackEnded()
     {
         // Give the InstrumentSystem time to clear the renderer, preventing it from reusing the renderer it's about to dispose.
-        Timer.Spawn(1000, () => { _fileSource.PlayNextTrack(); });
+        Timer.Spawn(1000, () => { _fileSource.SelectNextTrack(); });
     }
 
     private void OnSetBandMasterRequest(EntityUid ent)
