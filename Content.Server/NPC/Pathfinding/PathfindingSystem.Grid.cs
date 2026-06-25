@@ -8,6 +8,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -135,13 +136,14 @@ public sealed partial class PathfindingSystem
 
             // TODO: Inflate grid bounds slightly and get chunks.
             // This is for map <> grid pathfinding
-
+            var sw = new Stopwatch();
+            sw.Start();
             // Without parallel this is roughly 3x slower on my desktop.
             Parallel.For(0, dirt.Length, options, i =>
             {
                 BuildBreadcrumbs(dirt[i], (uid, mapGridComp));
             });
-
+            Log.Error($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms.......");
             const int Division = 4;
 
             // You can safely do this in parallel as long as no neighbor chunks are being touched in the same iteration.
@@ -400,11 +402,13 @@ public sealed partial class PathfindingSystem
 
     private void BuildBreadcrumbs(GridPathfindingChunk chunk, Entity<MapGridComponent> grid)
     {
-        var sw = new Stopwatch();
-        sw.Start();
+        //var sw = new Stopwatch();
+        //sw.Start();
         var points = chunk.Points;
         var gridOrigin = chunk.Origin * ChunkSize;
-        var tileEntities = new ValueList<EntityUid>();
+        var tileEntities = new ValueList<Entity<FixturesComponent>>();
+        var fixtureList = new ValueList<(EntityUid, TransformComponent, ValueList<Fixture>)>();
+
         var chunkPolys = chunk.BufferPolygons;
 
         for (var i = 0; i < chunkPolys.Length; i++)
@@ -421,6 +425,7 @@ public sealed partial class PathfindingSystem
         {
             for (var y = 0; y < ChunkSize; y++)
             {
+
                 // Tile
                 var tilePos = new Vector2i(x, y) + gridOrigin;
                 tilePolys.Clear();
@@ -449,7 +454,24 @@ public sealed partial class PathfindingSystem
                         continue;
                     }
 
-                    tileEntities.Add(ent);
+                    tileEntities.Add((ent, fixtures));
+                }
+
+                // Cache fixtures list so we resolve everything once.
+                fixtureList.Clear();
+                foreach (var ent in tileEntities)
+                {
+                    if(!TryComp(ent, out TransformComponent? xform))
+                        continue;
+
+                    var entFixtures = new ValueList<Fixture>();
+                    foreach (var fixture in ent.Comp.Fixtures.Values)
+                    {
+                        if (fixture.Hard)
+                            entFixtures.Add(fixture);
+                    }
+
+                    fixtureList.Add((ent.Owner, xform, entFixtures));
                 }
 
                 for (var subX = 0; subX < SubStep; subX++)
@@ -465,26 +487,18 @@ public sealed partial class PathfindingSystem
                         var collisionLayer = 0x0;
                         var damage = 0f;
 
-                        foreach (var ent in tileEntities)
+                        foreach (var (ent, xform, fixtures) in fixtureList)
                         {
-                            if (!_fixturesQuery.TryGetComponent(ent, out var fixtures))
-                                continue;
-
                             var colliding = false;
-
-                            foreach (var fixture in fixtures.Fixtures.Values)
+                            foreach (var fixture in fixtures)
                             {
-                                // Don't need to re-do it.
-                                if (!fixture.Hard ||
-                                    (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                 {
                                     continue;
                                 }
 
-                                // Do an AABB check first as it's probably faster, then do an actual point check.
                                 var intersects = false;
-
                                 foreach (var proxy in fixture.Proxies)
                                 {
                                     if (!proxy.AABB.Contains(localPos))
@@ -493,13 +507,14 @@ public sealed partial class PathfindingSystem
                                     intersects = true;
                                 }
 
-                                if (!intersects ||
-                                    !TryComp(ent, out TransformComponent? xform))
+                                if (!intersects)
                                 {
                                     continue;
                                 }
-
-                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
+                                if (!_fixtures.TestPoint(
+                                        fixture.Shape,
+                                        new Transform(xform.LocalPosition, xform.LocalRotation),
+                                        localPos))
                                 {
                                     continue;
                                 }
@@ -509,8 +524,7 @@ public sealed partial class PathfindingSystem
                                 colliding = true;
                             }
 
-                            // If entity doesn't intersect this node (e.g. thindows) then ignore it.
-                            if (!colliding)
+                            if(!colliding)
                                 continue;
 
                             if (_accessReaderQuery.HasComponent(ent))
@@ -533,14 +547,6 @@ public sealed partial class PathfindingSystem
                                 damage += _destructible.DestroyedAt(ent, damageable).Float();
                             }
                         }
-
-                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
-                          to just get tiles at runtime.
-                        if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
-                        {
-                            // DebugTools.Assert(tileEntities.Count == 0);
-                        }
-                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {
@@ -628,7 +634,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        //Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid);
     }
 
