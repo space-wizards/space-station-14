@@ -136,14 +136,11 @@ public sealed partial class PathfindingSystem
 
             // TODO: Inflate grid bounds slightly and get chunks.
             // This is for map <> grid pathfinding
-            var sw = new Stopwatch();
-            sw.Start();
             // Without parallel this is roughly 3x slower on my desktop.
             Parallel.For(0, dirt.Length, options, i =>
             {
                 BuildBreadcrumbs(dirt[i], (uid, mapGridComp));
             });
-            Log.Error($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms.......");
             const int Division = 4;
 
             // You can safely do this in parallel as long as no neighbor chunks are being touched in the same iteration.
@@ -512,10 +509,7 @@ public sealed partial class PathfindingSystem
                                 {
                                     continue;
                                 }
-                                if (!_fixtures.TestPoint(
-                                        fixture.Shape,
-                                        new Transform(xform.LocalPosition, xform.LocalRotation),
-                                        localPos))
+                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
                                 {
                                     continue;
                                 }
@@ -525,7 +519,7 @@ public sealed partial class PathfindingSystem
                                 colliding = true;
                             }
 
-                            if(!colliding)
+                            if (!colliding)
                                 continue;
 
                             if (_accessReaderQuery.HasComponent(ent))
@@ -548,6 +542,14 @@ public sealed partial class PathfindingSystem
                                 damage += _destructible.DestroyedAt(ent, damageable).Float();
                             }
                         }
+
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
+                        if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                        {
+                            // DebugTools.Assert(tileEntities.Count == 0);
+                        }
+                        */
 
                         var crumb = new PathfindingBreadcrumb()
                         {
@@ -635,7 +637,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        //Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid);
     }
 
