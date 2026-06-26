@@ -8,66 +8,15 @@
     },
     "states": [
         {
-            "name": "static"
-        },
-        {
-            "name": "substation"
-        },
-        {
-            "name": "open"
-        },
-        {
-            "name": "input"
-        },
-        {
-            "name": "output"
-        },
-        {
-            "name": "screen"
-        },
-        {
-            "name": "charging",
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
-        },
-        {
-            "name": "still",
-            "delays": [
-                [
-                    1.0,
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "discharging",
-            "delays": [
-                [
-                    0.25,
-                    0.25
-                ]
-            ]
-        },
-        {
             "name": "charge0",
             "delays": [
-                [
-                    1.0,
-                    1.0
-                ]
+                [ 1.0, 1.0 ]
             ]
         },
         {
             "name": "charge1",
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ]
+                [ 0.5, 0.5 ]
             ]
         },
         {
@@ -78,6 +27,42 @@
         },
         {
             "name": "charge4"
+        },
+        {
+            "name": "charging",
+            "delays": [
+                [ 0.5, 0.5 ]
+            ]
+        },
+        {
+            "name": "discharging",
+            "delays": [
+                [ 0.25, 0.25 ]
+            ]
+        },
+        {
+            "name": "input"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "output"
+        },
+        {
+            "name": "screen"
+        },
+        {
+            "name": "static"
+        },
+        {
+            "name": "still",
+            "delays": [
+                [ 1.0, 1.0 ]
+            ]
+        },
+        {
+            "name": "substation"
         }
     ]
 }
