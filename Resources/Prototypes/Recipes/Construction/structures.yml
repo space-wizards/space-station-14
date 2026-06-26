@@ -1363,7 +1363,7 @@
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
-  canRotate: true
+  canRotate: false
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition {}

@@ -29,6 +29,10 @@
   - type: Construction
     graph: PosterGraph
     node: poster
+  - type: Appearance
+  - type: PaintableVisualizer
+  - type: Paintable
+    group: Posters
 
 - type: entity
   parent: BaseSign

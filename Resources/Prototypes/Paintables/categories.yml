@@ -23,3 +23,8 @@
   - Closet
   - WallLocker
   - WallCloset
+
+- type: paintableGroupCategory
+  id: Posters
+  groups:
+  - Posters
