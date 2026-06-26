@@ -726,7 +726,19 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 
     private void ItemOnHover(OptionButton.ItemHoverEventArgs args)
     {
-        OnItemHover?.Invoke(new ItemHoverEventArgs(this, args.OptionButton));
+        var data = _dropDown.Button.GetItemMetadata(args.Id);
+        if (data == null)
+        {
+            return;
+        }
+
+        OnItemHover?.Invoke(new ItemHoverEventArgs(this, (T)data));
+    }
+
+    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, T data) : EventArgs
+    {
+        public OptionDropDownCVar<T> DropDown { get; } = dropDown;
+        public T Data { get; } = data;
     }
 
     /// <summary>
@@ -752,11 +764,5 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     private struct ItemEntry
     {
         public T Key;
-    }
-
-    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, OptionButton itemButton) : EventArgs
-    {
-        public OptionDropDownCVar<T> DropDown { get; } = dropDown;
-        public OptionButton ItemButton { get; } = itemButton;
     }
 }
