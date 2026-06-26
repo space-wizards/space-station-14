@@ -143,10 +143,6 @@
             "name": "mailover-handle",
             "directions": 1
         },
-	    {
-	        "name": "mailover-handle-off",
-	        "directions": 1
-        },
         {
             "name": "dispover-ready",
             "directions": 1
