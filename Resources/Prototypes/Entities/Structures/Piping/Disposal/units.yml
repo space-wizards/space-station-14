@@ -40,11 +40,11 @@
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: disposal }
-          False: { state: disposal-charging }         
+          False: { state: disposal-charging }
       enum.DisposalUnitVisuals.IsFlushing:
         enum.DisposalUnitVisualLayers.OverlayFlushing:
           True: { visible: true }
-          False: { visible: false }      
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
           True: { visible: true }
@@ -67,7 +67,7 @@
           True: { state: disposal }
           False: { state: condisposal }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
@@ -156,6 +156,8 @@
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
       state: mailover-handle
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: disposal
       visible: false
   - type: GenericVisualizer
     visuals:
@@ -165,8 +167,8 @@
           False: { state: mailing-charging }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          True: { visible: true }
-          False: { visible: false }
+          True: { state: mailover-handle }
+          False: { state: mailover-handle-off }
       enum.DisposalUnitVisuals.IsCharging:
         enum.DisposalUnitVisualLayers.OverlayCharging:
           True: { state: dispover-charge, visible: true }
@@ -185,7 +187,7 @@
           True: { state: mailing }
           False: { state: conmailing }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
