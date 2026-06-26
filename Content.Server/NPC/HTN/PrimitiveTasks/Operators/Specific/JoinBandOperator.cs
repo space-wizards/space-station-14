@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 /// </summary>
 public sealed partial class JoinBandOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     [DataField]
     public string TargetKey = "Target";
@@ -21,7 +21,7 @@ public sealed partial class JoinBandOperator : HTNOperator
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         if (!_entManager.TryGetComponent<InstrumentComponent>(owner, out var instrument))
             return;
-        
+
         var instrumentSystem = _entManager.System<InstrumentSystem>();
 
         // If target is null, clean and deactivate instrument

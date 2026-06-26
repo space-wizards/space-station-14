@@ -8,9 +8,9 @@ namespace Content.Server.Instruments;
 /// Makes instruments toggle their appearance depending on whether they're playing music or not.
 /// </summary>
 /// <see cref="ToggleableVisuals"/>
-public sealed class InstrumentToggleVisualsSystem : EntitySystem
+public sealed partial class InstrumentToggleVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Update(float frameTime)
     {

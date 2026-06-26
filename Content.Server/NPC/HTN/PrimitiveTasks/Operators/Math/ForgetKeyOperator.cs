@@ -5,8 +5,6 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Math;
 /// </summary>
 public sealed partial class ForgetKeyOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-
     /// <summary>
     ///  The key to remove.
     /// </summary>
