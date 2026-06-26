@@ -479,6 +479,18 @@
     messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
+  parent: ActionPAIPlayMidi
+  id: ActionBoombotPlayMidi
+  name: Play MIDI
+  description: Open your portable MIDI interface to make music!
+  components:
+    - type: Action
+      itemIconStyle: NoItem
+      icon:
+        sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+        state: icon
+
+- type: entity
   parent: MobSiliconBase
   id: MobBoomBot
   name: boombot
@@ -505,6 +517,24 @@
   - type: Anchorable
   - type: Instrument
     program: 62
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+  - type: ActionGrant
+    actions:
+    - ActionBoombotPlayMidi
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-boombot-name
+    description: ghost-role-information-boombot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-boombot
     interactFailureString: petting-failure-boombot
