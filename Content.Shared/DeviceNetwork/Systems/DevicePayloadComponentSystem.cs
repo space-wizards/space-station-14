@@ -31,18 +31,9 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
             Log.Error($"Duplicate payload subscription for payload {payload.Name}");
             return;
         }
-        base.Register();
     }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitializeDevice();
-        FreezeSubs();
-        Register();
-    }
-
-    private void FreezeSubs()
+    protected override void LockSubscriptions()
     {
         // Cast a snowgrave spell onto this nested dictionary
         var dict = new Dictionary<Type, FrozenDictionary<Type, Delegate>>();
@@ -58,7 +49,7 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
         where TN : HandledNetworkPayload
         where TC : IComponent
     {
-        if (IsInitialized)
+        if (DeviceInitialized)
         {
             Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
             return;

@@ -14,16 +14,16 @@ namespace Content.Shared.DeviceNetwork.Systems;
 /// EXPERIMENTAL! Please use this with care and don't access any ECS methods while processing the code in parallel.
 /// </remarks>
 /// <typeparam name="T">Component that is being handled.</typeparam>
-public abstract partial class DevicePayloadParallelSystem<T> : DeviceNetworkHandler, IEntityDeviceNetworkHandler, IParallelDeviceNetworkHandler where T : IComponent
+public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSystem<T>, IParallelDeviceNetworkHandler where T : IComponent
 {
     [Dependency] protected IParallelManager ParallelManager = default!;
-    [Dependency] protected EntityQuery<T> Query = default!;
-
-    public FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
-    protected readonly Dictionary<Type, Delegate> PayloadSubsCache = new();
 
     public FrozenDictionary<Type, Delegate> ParallelPayloadSubs { get; protected set; } = default!;
     protected readonly Dictionary<Type, Delegate> ParallelPayloadSubsCache = new();
+
+    protected virtual int BatchSize => 1;
+
+    protected virtual int MinBatchSize => 1;
 
     private DeviceNetworkPacketJob<T> _job;
 
@@ -40,56 +40,21 @@ public abstract partial class DevicePayloadParallelSystem<T> : DeviceNetworkHand
         }
     }
 
-    protected virtual int BatchSize => 1; // TODO fine-tune this value
-
-    protected virtual int MinBatchSize => 1;
-
-    public override void Initialize()
+    protected override void InitializeDevice()
     {
-        base.Initialize();
-        InitializeDevice();
-        PayloadSubs = PayloadSubsCache.ToFrozenDictionary();
-        ParallelPayloadSubs = ParallelPayloadSubsCache.ToFrozenDictionary();
-        Register();
         _job = new DeviceNetworkPacketJob<T>(BatchSize, MinBatchSize);
     }
 
-    [UsedImplicitly]
-    protected void SubscribePayload<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
+    protected override void LockSubscriptions()
     {
-        if (IsInitialized)
-        {
-            Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
-            return;
-        }
-
-        // It needs to be wrapped so when raising the Delegate it can be down-casted without issues.
-        DeviceNetworkPayloadHandlerWrapper<T> wrapper = (ent, ref basePayload, ref args) =>
-        {
-            var specificPayload = (TN) basePayload;
-            handler(ent, ref specificPayload, ref args);
-            basePayload = specificPayload;
-        };
-
-        PayloadSubsCache.Add(typeof(TN), wrapper);
-    }
-
-    public void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
-    {
-        if (!PayloadSubs.TryGetValue(payload.GetType(), out var handler))
-            return;
-
-        if (!Query.TryComp(uid, out var comp))
-            return;
-
-        var del = (DeviceNetworkPayloadHandlerWrapper<T>) handler;
-        del.Invoke((uid, comp), ref payload, ref args);
+        PayloadSubs = PayloadSubsCache.ToFrozenDictionary();
+        ParallelPayloadSubs = ParallelPayloadSubsCache.ToFrozenDictionary();
     }
 
     [UsedImplicitly]
     protected void SubscribePayloadParallel<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
     {
-        if (IsInitialized)
+        if (DeviceInitialized)
         {
             Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
             return;

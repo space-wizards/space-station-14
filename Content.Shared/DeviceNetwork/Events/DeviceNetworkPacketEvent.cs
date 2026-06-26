@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Shared.DeviceNetwork.Events;
 
 /// <summary>
@@ -23,7 +25,8 @@ public record struct DeviceNetworkPacketData(
     string? Address,
     uint Frequency,
     string SenderAddress,
-    EntityUid Sender) : IDeviceNetworkPacket;
+    EntityUid Sender,
+    Vector2 SenderPos) : IDeviceNetworkPacket;
 
 [ByRefEvent]
 public record struct DeviceNetworkPacketHandledEvent(

@@ -54,18 +54,29 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
 {
     [Dependency] protected SharedDeviceNetworkSystem DeviceSystem = default!;
 
-    protected bool IsInitialized { get; private set; }
+    protected bool DeviceInitialized { get; private set; }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        InitializeDevice();
+        LockSubscriptions();
+        Register();
+        DeviceInitialized = true;
+    }
+
+    /// <summary>
+    /// Locks the subscriptions
+    /// </summary>
+    protected abstract void LockSubscriptions();
 
     /// <summary>
     /// Registers the handler in <see cref="SharedDeviceNetworkSystem"/>.
     /// </summary>
-    protected virtual void Register()
-    {
-        IsInitialized = true;
-    }
+    protected abstract void Register();
 
     /// <summary>
-    /// A method to prepare subscriptions dictionary.
+    /// A method to prepare subscriptions dictionary and other required objects.
     /// </summary>
     protected abstract void InitializeDevice();
 }

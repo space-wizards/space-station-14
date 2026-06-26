@@ -27,21 +27,17 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
         {
             DeviceSystem.HandlersCache.Add(payload, this);
         }
-        base.Register();
     }
 
-    public override void Initialize()
+    protected override void LockSubscriptions()
     {
-        base.Initialize();
-        InitializeDevice();
         PayloadSubs = PayloadSubsCache.ToFrozenDictionary();
-        Register();
     }
 
     [UsedImplicitly]
     protected void SubscribePayload<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
     {
-        if (IsInitialized)
+        if (DeviceInitialized)
         {
             Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
             return;

@@ -453,7 +453,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
                 packet.Address,
                 packet.Frequency,
                 packet.SenderAddress,
-                packet.Sender);
+                packet.Sender,
+                senderPos);
             var handledNetworkPayload = packet.Data;
             RaisePayload(connection.DeviceOwner, ref handledNetworkPayload, ref data);
         }
@@ -522,8 +523,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             packet.Address,
             packet.Frequency,
             packet.SenderAddress,
-            packet.Sender);
-
+            packet.Sender,
+            senderPos);
         var handledNetworkPayload = packet.Data;
         RaisePayloadParallel(connections, ref handledNetworkPayload, ref data);
     }
