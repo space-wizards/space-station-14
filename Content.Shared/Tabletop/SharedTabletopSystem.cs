@@ -39,6 +39,8 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
 
         SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
+
+        SubscribeAllEvent<TabletopMoveEvent>(OnTabletopMove);
     }
 
     private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
@@ -140,7 +142,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
         var transform = Comp<TransformComponent>(moved);
         _transforms.SetParent(moved, transform, _map.GetMapOrInvalid(transform.MapID));
-        _transforms.SetLocalPositionNoLerp(moved, msg.Coordinates.Position, transform);
+        _transforms.SetLocalPosition(moved, msg.Coordinates.Position, transform);
     }
 
     private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)

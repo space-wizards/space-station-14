@@ -22,8 +22,6 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
         SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
 
-        SubscribeAllEvent<TabletopMoveEvent>(OnTabletopMove);
-
         SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
         SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
         SubscribeLocalEvent<TabletopGamerComponent, PlayerDetachedEvent>(OnPlayerDetached);
