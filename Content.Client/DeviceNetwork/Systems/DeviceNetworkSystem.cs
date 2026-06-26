@@ -11,7 +11,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     public override void Initialize()
     {
         base.Initialize();
-        ArrayPool = new ClientRobustArrayPool<Device>(256, 8);
+        DeviceArrayPool = new ClientRobustArrayPool<Device>(256, 8);
+        EntityArrayPool = new ClientRobustArrayPool<EntityUid?>(256, 8);
         _playerMan.PlayerStatusChanged += PlayerManOnPlayerStatusChanged;
     }
 

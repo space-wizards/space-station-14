@@ -23,7 +23,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     public override void Initialize()
     {
         base.Initialize();
-        ArrayPool = new ServerRobustArrayPool<Device>();
+        DeviceArrayPool = new ServerRobustArrayPool<Device>();
+        EntityArrayPool = new ServerRobustArrayPool<EntityUid?>();
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
         SubscribeLocalEvent<DeviceNetworkManagerComponent, MapInitEvent>(OnManagerInit);

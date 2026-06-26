@@ -16,7 +16,8 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
 
-    protected SharedRobustArrayPool<Device> ArrayPool = default!;
+    protected SharedRobustArrayPool<Device> DeviceArrayPool = default!;
+    protected SharedRobustArrayPool<EntityUid?> EntityArrayPool = default!;
 
     public override void Initialize()
     {
@@ -191,10 +192,10 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
             // Broadcast to all listening devices
             if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
             {
-                var deviceCopy = ArrayPool.Rent(devices.Count);
+                var deviceCopy = DeviceArrayPool.Rent(devices.Count);
                 devices.CopyTo(deviceCopy);
                 SendToConnections(deviceCopy.AsSpan(0, devices.Count), packet);
-                ArrayPool.Return(deviceCopy);
+                DeviceArrayPool.Return(deviceCopy);
             }
         }
         else
@@ -215,7 +216,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 totalDevices += 1;
                 hasTargetedDevice = true;
             }
-            var deviceCopy = ArrayPool.Rent(totalDevices);
+            var deviceCopy = DeviceArrayPool.Rent(totalDevices);
             if (devices != null)
             {
                 devices.CopyTo(deviceCopy);
@@ -225,7 +226,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 deviceCopy[totalDevices - 1] = device.Value;
             }
             SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
-            ArrayPool.Return(deviceCopy);
+            DeviceArrayPool.Return(deviceCopy);
         }
     }
 
@@ -338,10 +339,10 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
             // Broadcast to all listening devices
             if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
             {
-                var deviceCopy = ArrayPool.Rent(devices.Count);
+                var deviceCopy = DeviceArrayPool.Rent(devices.Count);
                 devices.CopyTo(deviceCopy);
                 SendToConnectionsHandled(deviceCopy.AsSpan(0, devices.Count), packet);
-                ArrayPool.Return(deviceCopy);
+                DeviceArrayPool.Return(deviceCopy);
             }
         }
         else
@@ -362,7 +363,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 totalDevices += 1;
                 hasTargetedDevice = true;
             }
-            var deviceCopy = ArrayPool.Rent(totalDevices);
+            var deviceCopy = DeviceArrayPool.Rent(totalDevices);
             if (devices != null)
             {
                 devices.CopyTo(deviceCopy);
@@ -372,7 +373,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 deviceCopy[totalDevices - 1] = device.Value;
             }
             SendToConnectionsHandled(deviceCopy.AsSpan(0, totalDevices), packet);
-            ArrayPool.Return(deviceCopy);
+            DeviceArrayPool.Return(deviceCopy);
         }
     }
 
@@ -426,10 +427,10 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
             // Broadcast to all listening devices
             if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
             {
-                var deviceCopy = ArrayPool.Rent(devices.Count);
+                var deviceCopy = DeviceArrayPool.Rent(devices.Count);
                 devices.CopyTo(deviceCopy);
                 SendToConnectionsParallel(deviceCopy.AsSpan(0, devices.Count), packet);
-                ArrayPool.Return(deviceCopy);
+                DeviceArrayPool.Return(deviceCopy);
             }
         }
         else
@@ -450,7 +451,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 totalDevices += 1;
                 hasTargetedDevice = true;
             }
-            var deviceCopy = ArrayPool.Rent(totalDevices);
+            var deviceCopy = DeviceArrayPool.Rent(totalDevices);
             if (devices != null)
             {
                 devices.CopyTo(deviceCopy);
@@ -460,7 +461,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
                 deviceCopy[totalDevices - 1] = device.Value;
             }
             SendToConnectionsHandled(deviceCopy.AsSpan(0, totalDevices), packet);
-            ArrayPool.Return(deviceCopy);
+            DeviceArrayPool.Return(deviceCopy);
         }
     }
 
@@ -474,7 +475,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
         var xform = Transform(packet.Sender);
         var senderPos = _transformSystem.GetWorldPosition(xform);
 
-        Span<EntityUid?> ents = stackalloc EntityUid?[connections.Length];
+        var ents = EntityArrayPool.Rent(connections.Length);
         for (int i = 0; i < connections.Length; i++)
         {
             ents[i] = null;
