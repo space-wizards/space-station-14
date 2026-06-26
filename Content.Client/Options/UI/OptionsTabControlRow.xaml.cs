@@ -655,6 +655,7 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 {
     private readonly OptionDropDown _dropDown;
     private readonly ItemEntry[] _entries;
+    public event Action<ItemHoverEventArgs>? OnItemHover;
 
     protected override T Value
     {
@@ -690,6 +691,7 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         _entries = new ItemEntry[options.Count];
 
         var button = dropDown.Button;
+        button.OnItemHover += ItemOnHover;
         var i = 0;
         foreach (var option in options)
         {
@@ -722,6 +724,11 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         return 0;
     }
 
+    private void ItemOnHover(OptionButton.ItemHoverEventArgs args)
+    {
+        OnItemHover?.Invoke(new ItemHoverEventArgs(this, args.OptionButton));
+    }
+
     /// <summary>
     /// A single option for a drop-down.
     /// </summary>
@@ -745,5 +752,11 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     private struct ItemEntry
     {
         public T Key;
+    }
+
+    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, OptionButton itemButton) : EventArgs
+    {
+        public OptionDropDownCVar<T> DropDown { get; } = dropDown;
+        public OptionButton ItemButton { get; } = itemButton;
     }
 }
