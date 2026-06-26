@@ -169,10 +169,11 @@ public sealed partial class OptionsTabControlRow : Control
     public OptionDropDownCVar<T> AddOptionDropDown<T>(
         CVarDef<T> cVar,
         OptionDropDown dropDown,
-        IReadOnlyCollection<OptionDropDownCVar<T>.ValueOption> options)
+        IReadOnlyCollection<OptionDropDownCVar<T>.ValueOption> options,
+        bool enablePreview = false)
         where T : notnull
     {
-        return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options));
+        return AddOption(new OptionDropDownCVar<T>(this, _cfg, cVar, dropDown, options, enablePreview));
     }
 
     /// <summary>
@@ -682,7 +683,8 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         IConfigurationManager cfg,
         CVarDef<T> cVar,
         OptionDropDown dropDown,
-        IReadOnlyCollection<ValueOption> options) : base(controller, cfg, cVar)
+        IReadOnlyCollection<ValueOption> options,
+        bool enablePreview) : base(controller, cfg, cVar)
     {
         if (options.Count == 0)
             throw new ArgumentException("Need at least one option!");
@@ -691,7 +693,6 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         _entries = new ItemEntry[options.Count];
 
         var button = dropDown.Button;
-        button.OnItemHover += ItemOnHover;
         var i = 0;
         foreach (var option in options)
         {
@@ -710,6 +711,48 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
             dropDown.Button.SelectId(args.Id);
             ValueChanged();
         };
+
+        if (enablePreview)
+        {
+            var selectedIdWhenOpened = 0;
+            button.OnPopupToggled += args =>
+            {
+                if (args.Toggle)
+                {
+                    selectedIdWhenOpened = dropDown.Button.SelectedId;
+                }
+                else
+                {
+                    if (selectedIdWhenOpened != dropDown.Button.SelectedId)
+                    {
+                        // if user selected a value skip reset
+                        return;
+                    }
+
+                    // reset back to the initial value
+                    var idx = button.GetIdx(dropDown.Button.SelectedId);
+                    var meta = button.GetItemMetadata(idx);
+                    cfg.SetCVar(cVar.Name, meta!);
+                }
+            };
+
+            button.OnItemHover += ItemOnHover;
+
+            var lastHoverId = 0;
+            OnItemHover += args =>
+            {
+                // skip expensive SetCVar if hover didn't change
+                if (args.Id == lastHoverId)
+                {
+                    return;
+                }
+
+                var idx = button.GetIdx(args.Id);
+                var meta = button.GetItemMetadata(idx);
+                cfg.SetCVar(cVar.Name, meta!);
+                lastHoverId = args.Id;
+            };
+        }
     }
 
     private int FindValueId(T value)
@@ -726,19 +769,13 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 
     private void ItemOnHover(OptionButton.ItemHoverEventArgs args)
     {
-        var data = _dropDown.Button.GetItemMetadata(args.Id);
-        if (data == null)
-        {
-            return;
-        }
-
-        OnItemHover?.Invoke(new ItemHoverEventArgs(this, (T)data));
+        OnItemHover?.Invoke(new ItemHoverEventArgs(this, args.Id));
     }
 
-    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, T data) : EventArgs
+    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, int id) : EventArgs
     {
         public OptionDropDownCVar<T> DropDown { get; } = dropDown;
-        public T Data { get; } = data;
+        public int Id { get; } = id;
     }
 
     /// <summary>

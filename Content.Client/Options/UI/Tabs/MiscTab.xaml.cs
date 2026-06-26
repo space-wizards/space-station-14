@@ -42,11 +42,7 @@ public sealed partial class MiscTab : Control
         // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
         ShowOocPatronColor.Visible = _playerManager.LocalSession?.Channel?.UserData.PatronTier is { };
 
-        var uiThemeDropdown = Control.AddOptionDropDown(CVars.InterfaceTheme, DropDownHudTheme, themeEntries);
-        uiThemeDropdown.OnItemHover += args =>
-        {
-            _cfg.SetCVar(CVars.InterfaceTheme.Name, args.Data);
-        };
+        Control.AddOptionDropDown(CVars.InterfaceTheme, DropDownHudTheme, themeEntries, true);
         Control.AddOptionDropDown(CCVars.UILayout, DropDownHudLayout, layoutEntries);
 
         Control.AddOptionCheckBox(CVars.DiscordEnabled, DiscordRich);
