@@ -1365,5 +1365,5 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition {}
+#  conditions:
+#  - !type:WallmountCondition {}

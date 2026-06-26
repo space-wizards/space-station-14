@@ -31,6 +31,7 @@
     node: poster
   - type: Appearance
   - type: PaintableVisualizer
+  - type: PaintableName
   - type: Paintable
     group: Posters
 
