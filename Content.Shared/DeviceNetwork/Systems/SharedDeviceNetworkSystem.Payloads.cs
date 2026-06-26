@@ -97,6 +97,7 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     /// <summary>
     /// A method to prepare subscriptions dictionary and other required objects.
     /// </summary>
+    [MustCallBase]
     protected virtual void InitializeDevice() { }
 }
 

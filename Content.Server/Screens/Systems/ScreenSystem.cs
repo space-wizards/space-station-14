@@ -1,6 +1,7 @@
 using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.RoundEnd;
 using Content.Shared.Screens;
 using Robust.Shared.Timing;
@@ -10,34 +11,22 @@ namespace Content.Server.Screens.Systems;
 /// <summary>
 /// Controls the wallmounted screens on stations and shuttles displaying e.g. FTL duration, ETA
 /// </summary>
-public sealed partial class ScreenSystem : EntitySystem
+public sealed partial class ScreenSystem : DevicePayloadSystem<ScreenComponent>
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
-    public override void Initialize()
+    protected override void InitializeDevice()
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<ScreenComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-    }
-
-    /// <summary>
-    ///     Calls either a normal screen text update or shuttle timer update based on the presence of
-    ///     <see cref="ShuttleTimerMasks.ShuttleMap"/> in <see cref="args.Data"/>
-    /// </summary>
-    private void OnPacketReceived(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
-    {
-        if (args.Data is ScreenShuttlePayload)
-            ShuttleTimer(ent, ref args);
-        else
-            ScreenText(ent, ref args);
+        base.InitializeDevice();
+        SubscribePayload<ScreenShuttlePayload>(OnShuttleTimer);
+        SubscribePayload<ScreenTextPayload>(OnScreenText);
     }
 
     /// <summary>
     ///     Send a text update to every screen on the same MapUid as the originating comms console.
     /// </summary>
-    private void ScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnScreenText(Entity<ScreenComponent> ent, ref ScreenTextPayload payload, ref DeviceNetworkPacketData args)
     {
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
@@ -48,16 +37,14 @@ public sealed partial class ScreenSystem : EntitySystem
         var screenMap = Transform(ent).MapUid;
         var argsMap = Transform(args.Sender).MapUid;
 
-        if (screenMap != null
-            && argsMap != null
-            && screenMap == argsMap
-            && args.Data is ScreenTextPayload payload
-            && payload.Text != null
-            )
-        {
-            _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, payload.Text);
-            _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, payload.Text);
-        }
+        if (screenMap == null
+            || argsMap == null
+            || screenMap != argsMap
+            || payload.Text == null)
+            return;
+
+        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, payload.Text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, payload.Text);
     }
 
     /// <summary>
@@ -68,15 +55,12 @@ public sealed partial class ScreenSystem : EntitySystem
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
     /// </summary>
-    private void ShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnShuttleTimer(Entity<ScreenComponent> ent, ref ScreenShuttlePayload payload, ref DeviceNetworkPacketData args)
     {
         var timerXform = Transform(ent);
 
         // no false positives.
         if (timerXform.MapUid == null)
-            return;
-
-        if (args.Data is not ScreenShuttlePayload payload)
             return;
 
         string? text = null;

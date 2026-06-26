@@ -63,6 +63,7 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
 
     protected override void InitializeDevice()
     {
+        base.InitializeDevice();
         _job = new DeviceNetworkPacketJob<T>(BatchSize, MinBatchSize);
     }
 

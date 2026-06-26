@@ -44,6 +44,7 @@ public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadParall
 
     protected override void InitializeDevice()
     {
+        base.InitializeDevice();
         SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
         SubscribePayloadParallel<TestPayloadStatic>(OnStaticPacketReceived);
 

@@ -85,6 +85,7 @@ public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineCo
 
     protected override void InitializeDevice()
     {
+        base.InitializeDevice();
         SubscribePayloadParallel<FaxPingPayload>(OnPingPayload);
         SubscribePayload<FaxPongPayload>(OnPongPayload);
         SubscribePayload<FaxPrintPayload>(OnPrintPayload);
