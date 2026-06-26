@@ -202,7 +202,6 @@
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
 
 - type: entity
@@ -232,8 +231,18 @@
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterWizardFake
+  name: fake wizard robes
+  description: Covered in glittery stars and mystery stains. Instantly boosts your arcane fashion sense.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Misc/wizard_fake.rsi
 
 - type: entity
   parent: ClothingOuterBase

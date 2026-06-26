@@ -6,10 +6,10 @@ using Robust.Shared.Random;
 namespace Content.Server.Vocalization.Systems;
 
 /// <inheritdoc cref="DatasetVocalizerComponent"/>
-public sealed class DatasetVocalizationSystem : EntitySystem
+public sealed partial class DatasetVocalizationSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
