@@ -10,7 +10,7 @@ namespace Content.Client.Silicons.Laws.SiliconLawEditUi;
 [GenerateTypedNameReferences]
 public sealed partial class SiliconLawContainer : BoxContainer
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public const string StyleClassSiliconLawPositionLabel = "SiliconLawPositionLabel";
 
