@@ -28,7 +28,9 @@ public class DeviceNetworkingBenchmark
 
 
     private NetworkPayload _payload = default!;
-    private HandledNetworkPayload _staticPayload = default!;
+    private HandledNetworkPayload _handledPayload = default!;
+
+    private HandledNetworkPayload _pingPayload = default!;
 
     [TestPrototypes]
     private const string Prototypes = @"
@@ -55,7 +57,7 @@ public class DeviceNetworkingBenchmark
     //public static IEnumerable<int> EntityCountSource { get; set; }
 
     //[ParamsSource(nameof(EntityCountSource))]
-    public int EntityCount = 500;
+    public int EntityCount = 1000;
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -79,12 +81,14 @@ public class DeviceNetworkingBenchmark
                 TestBool = true,
             };
 
-            _staticPayload = new TestPayloadStatic
+            _handledPayload = new TestPayloadStatic
             {
                 TestString = testValue,
                 TestNumber = 1,
                 TestBool = true,
             };
+
+            _pingPayload = new TestPayloadPing();
 
             _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace);
             _sourceWirelessEntity = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
@@ -156,7 +160,7 @@ public class DeviceNetworkingBenchmark
 
         _pair.Server.Post(() =>
         {
-            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _staticPayload, 100);
+            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _handledPayload, 100);
         });
 
         await server.WaitRunTicks(1);
@@ -170,10 +174,38 @@ public class DeviceNetworkingBenchmark
 
         _pair.Server.Post(() =>
         {
-            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _staticPayload, 100);
+            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _handledPayload, 100);
         });
 
         await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
+    }
+
+    [Benchmark(Description = "Device Net Broadcast Ping Pong Handled")]
+    public async Task DeviceNetworkPingPongHandled()
+    {
+        var server = _pair.Server;
+
+        _pair.Server.Post(() =>
+        {
+            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _pingPayload, 100);
+        });
+
+        await server.WaitRunTicks(2);
+        await server.WaitIdleAsync();
+    }
+
+    [Benchmark(Description = "Device Net Broadcast Ping Pong Parallel")]
+    public async Task DeviceNetworkPingPongParallel()
+    {
+        var server = _pair.Server;
+
+        _pair.Server.Post(() =>
+        {
+            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _pingPayload, 100);
+        });
+
+        await server.WaitRunTicks(2);
         await server.WaitIdleAsync();
     }
 }

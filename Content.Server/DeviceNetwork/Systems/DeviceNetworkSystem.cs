@@ -530,6 +530,25 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         var xform = Transform(packet.Sender);
         var senderPos = _transformSystem.GetWorldPosition(xform);
 
+        Span<EntityUid?> ents = stackalloc EntityUid?[connections.Length];
+        for (int i = 0; i < connections.Length; i++)
+        {
+            ents[i] = null;
+
+            var beforeEv = new BeforePacketSentEvent(packet.NetId,
+                packet.Address,
+                packet.Frequency,
+                packet.SenderAddress,
+                packet.Sender,
+                xform,
+                senderPos);
+            RaiseBeforePayload(connections[i].DeviceOwner, ref beforeEv);
+            if (beforeEv.Cancelled)
+                continue;
+
+            ents[i] = connections[i].DeviceOwner;
+        }
+
         var data = new DeviceNetworkPacketData(
             packet.NetId,
             packet.Address,
@@ -539,6 +558,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             xform,
             senderPos);
         var handledNetworkPayload = packet.Data;
-        RaisePayloadParallel(connections, ref handledNetworkPayload, ref data);
+        RaisePayloadParallel(ents, ref handledNetworkPayload, ref data);
     }
 }

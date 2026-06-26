@@ -134,7 +134,7 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
         AfterPayloadSubsCache.Add(typeof(TN), wrapper);
     }
 
-    public void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
+    public void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!ParallelPayloadSubs.TryGetValue(payload.GetType(), out var handler))
             return;
@@ -142,10 +142,10 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
         var ents = new ValueList<Entity<T>>(devices.Length);
         foreach (var device in devices)
         {
-            if (!Query.TryComp(device.DeviceOwner, out var comp))
+            if (!Query.TryComp(device, out var comp))
                 continue;
 
-            ents.Add((device.DeviceOwner, comp));
+            ents.Add((device.Value, comp));
         }
 
         if (BeforePayloadSubs.TryGetValue(payload.GetType(), out var beforePayload))

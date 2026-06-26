@@ -60,7 +60,7 @@ public abstract partial class SharedDeviceNetworkSystem
     /// <param name="devices">Target entities to send the payload to.</param>
     /// <param name="payload">Payload to send.</param>
     /// <param name="args">Other info about how the payload have been received.</param>
-    public void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
+    public void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!_parallelHandlers.TryGetValue(payload.GetType(), out var handler))
             return;
@@ -130,7 +130,7 @@ public interface IParallelDeviceNetworkHandler
     /// <param name="devices">Target entities to send the payload to.</param>
     /// <param name="payload">Payload to send.</param>
     /// <param name="args">Other information about how the payload have been received.</param>
-    void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
+    void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
 }
 
 /// <summary>

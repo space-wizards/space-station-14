@@ -1,9 +1,11 @@
+using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
@@ -33,34 +35,36 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
 }
 
 [Reflect(false)]
-public sealed partial class DeviceNetworkTestEntityHandlerSystem : DevicePayloadSystem<DeviceNetworkComponent>
+public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadParallelSystem<DeviceNetworkComponent>
 {
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+
     public HandledNetworkPayload LastHandledPayload = default;
+    public HandledNetworkPayload LastHandledPongPayload = default;
 
     protected override void InitializeDevice()
     {
         SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
+        SubscribePayloadParallel<TestPayloadStatic>(OnStaticPacketReceived);
+
+        SubscribePayload<TestPayloadPing>(OnPingPacketReceived);
+        SubscribePayload<TestPayloadPong>(OnPongPacketReceived);
+        SubscribePayloadParallel<TestPayloadPing>(OnPingPacketReceived);
     }
 
     private void OnStaticPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadStatic payload, ref DeviceNetworkPacketData args)
     {
         LastHandledPayload = payload;
     }
-}
 
-[Reflect(false)]
-public sealed partial class DeviceNetworkTestParallelHandlerSystem : DevicePayloadParallelSystem<DeviceNetworkComponent>
-{
-    public HandledNetworkPayload LastHandledPayload = default;
-
-    protected override void InitializeDevice()
+    private void OnPingPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadPing payload, ref DeviceNetworkPacketData args)
     {
-        SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
+        _deviceNetwork.QueuePacketHandled(ent.AsNullable(), args.SenderAddress, new TestPayloadPong(), 100);
     }
 
-    private void OnStaticPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadStatic payload, ref DeviceNetworkPacketData args)
+    private void OnPongPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadPong payload, ref DeviceNetworkPacketData args)
     {
-        LastHandledPayload = payload;
+        LastHandledPongPayload = payload;
     }
 }
 
@@ -89,3 +93,7 @@ public sealed partial class TestPayloadStatic : HandledNetworkPayload
     [DataField]
     public bool TestBool;
 }
+
+public sealed partial class TestPayloadPing : HandledNetworkPayload;
+
+public sealed partial class TestPayloadPong : HandledNetworkPayload;
