@@ -50,10 +50,6 @@
           speech: !type:LocalizedSetSpeakOperatorSpeech
             lineSet: BoombotStart
           hidden: true
-      # Change visuals to bobbing up and down
-      - !type:HTNPrimitiveTask
-        operator: !type:ToggleVisualsOperator
-          enabled: true
       # Start accompanying music
       - !type:HTNPrimitiveTask
         operator: !type:JoinBandOperator
@@ -71,10 +67,6 @@
         speech: !type:LocalizedSetSpeakOperatorSpeech
           lineSet: BoombotStop
         hidden: true
-    # Change visuals back to normal
-    - !type:HTNPrimitiveTask
-      operator: !type:ToggleVisualsOperator
-        enabled: false
     # Forget target
     - !type:HTNPrimitiveTask
       operator: !type:ForgetKeyOperator

@@ -508,6 +508,7 @@
         enum.ToggleableVisuals.Layer:
           True: {state: boombot-dancing}
           False: {state: boombot}
+  - type: BoombotVisuals
   - type: Construction
     graph: BoomBot
     node: bot
