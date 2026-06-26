@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Lock;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Robotics;
 using Content.Shared.Robotics.Components;
 using Content.Shared.Robotics.Systems;
@@ -33,7 +32,6 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoboticsConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         Subs.BuiEvents<RoboticsConsoleComponent>(RoboticsConsoleUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpened);
@@ -41,6 +39,12 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
             subs.Event<RoboticsConsoleDestroyMessage>(OnDestroy);
             // TODO: camera stuff
         });
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<RoboticsCyborgDataPayload>(OnPacketReceived);
     }
 
     public override void Update(float frameTime)
@@ -70,12 +74,9 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         }
     }
 
-    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref RoboticsCyborgDataPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (args.Data is not RoboticsCyborgDataPayload dataPayload)
-            return;
-
-        var data = dataPayload.Data;
+        var data = payload.Data;
         data.Timeout = _timing.CurTime + ent.Comp.Timeout;
         ent.Comp.Cyborgs[args.SenderAddress] = data;
 

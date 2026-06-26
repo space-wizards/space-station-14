@@ -56,7 +56,7 @@ public sealed partial class BorgSystem
             {
                 Data = data,
             };
-            _deviceNetwork.QueuePacket((uid, device), null, payload);
+            _deviceNetwork.QueuePacketHandled((uid, device), null, payload);
 
             comp.NextBroadcast = now + comp.BroadcastDelay;
         }

@@ -143,7 +143,7 @@ public sealed partial class RoboticsCyborgDisablePayload : NetworkPayload;
 public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayload;
 
 [Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDataPayload : NetworkPayload
+public sealed partial class RoboticsCyborgDataPayload : HandledNetworkPayload
 {
     [DataField]
     public CyborgControlData Data;
