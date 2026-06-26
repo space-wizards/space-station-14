@@ -2,6 +2,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
@@ -16,7 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Turrets;
 
-public abstract partial class SharedDeployableTurretSystem : EntitySystem
+public abstract partial class SharedDeployableTurretSystem : DevicePayloadSystem<DeployableTurretComponent>
 {
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;

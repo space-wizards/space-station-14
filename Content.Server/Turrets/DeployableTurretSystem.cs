@@ -38,8 +38,15 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         SubscribeLocalEvent<DeployableTurretComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<DeployableTurretComponent, BreakageEventArgs>(OnBroken);
         SubscribeLocalEvent<DeployableTurretComponent, RepairedEvent>(OnRepaired);
-        SubscribeLocalEvent<DeployableTurretComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<DeployableTurretComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<TurretControllerSetArmamentPayload>(OnSetArmament);
+        SubscribePayload<TurretControllerSetAccessPayload>(OnSetAccess);
+        SubscribePayload<TurretControllerRequestPayload>(OnRequest);
     }
 
     private void OnAmmoShot(Entity<DeployableTurretComponent> ent, ref AmmoShotEvent args)
@@ -71,32 +78,25 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, false, appearance);
     }
 
-    private void OnPacketReceived(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnSetArmament(Entity<DeployableTurretComponent> ent, ref TurretControllerSetArmamentPayload payload, ref DeviceNetworkPacketData args)
     {
-        // Received a command to change armament state
-        if (args.Data is TurretControllerSetArmamentPayload armamentPayload)
-        {
-            if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-                _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), armamentPayload.ArmamentState);
+        if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
+            _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), payload.ArmamentState);
 
-            TrySetState(ent, armamentPayload.ArmamentState >= 0);
-            return;
-        }
+        TrySetState(ent, payload.ArmamentState >= 0);
+    }
 
-        // Received a command to change access exemptions
-        if (args.Data is TurretControllerSetAccessPayload accessExemptions
-            && TryComp<TurretTargetSettingsComponent>(ent, out var turretTargetSettings))
-        {
-            _turretTargetingSettings.SyncAccessLevelExemptions((ent, turretTargetSettings), accessExemptions.AccessExemptions);
+    private void OnSetAccess(Entity<DeployableTurretComponent> ent, ref TurretControllerSetAccessPayload payload, ref DeviceNetworkPacketData args)
+    {
+        if (!TryComp<TurretTargetSettingsComponent>(ent, out var targetSettings))
             return;
-        }
 
-        // Received a command to update the device network
-        if (args.Data is TurretControllerRequestPayload)
-        {
-            SendStateUpdateToDeviceNetwork(ent);
-            return;
-        }
+        _turretTargetingSettings.SyncAccessLevelExemptions((ent, targetSettings), payload.AccessExemptions);
+    }
+
+    private void OnRequest(Entity<DeployableTurretComponent> ent, ref TurretControllerRequestPayload payload, ref DeviceNetworkPacketData args)
+    {
+        SendStateUpdateToDeviceNetwork(ent);
     }
 
     private void OnBeforeBroadcast(Entity<DeployableTurretComponent> ent, ref BeforeBroadcastAttemptEvent args)
@@ -128,7 +128,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         {
             State = GetTurretState(ent),
         };
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
+        _deviceNetwork.QueuePacketHandled((ent.Owner, device), null, payload);
     }
 
     protected override void SetState(Entity<DeployableTurretComponent> ent, bool enabled, EntityUid? user = null)
