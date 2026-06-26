@@ -35,7 +35,7 @@ public sealed partial class DeviceNetworkSystem
     }
 
     [PublicAPI]
-    public bool QueuePacketHandled(
+    public override bool QueuePacketHandled(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         HandledNetworkPayload data,
@@ -62,7 +62,7 @@ public sealed partial class DeviceNetworkSystem
     }
 
     [PublicAPI]
-    public bool QueuePacketParallel(
+    public override bool QueuePacketParallel(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         HandledNetworkPayload data,
