@@ -28,7 +28,7 @@
         offset: 0
   - type: Construction
     graph: PosterGraph
-    node: start
+    node: poster
 
 - type: entity
   parent: BaseSign
@@ -56,6 +56,16 @@
   - type: Construction
     graph: PosterGraph
     node: tornPoster
+
+# Blank Poster
+- type: entity
+  parent: PosterBase
+  id: PosterBlank
+  name: "blank poster"
+  description: "This poster lacks any print. Maybe it is yet to be painted. Maybe the originator wishes to make a minimalist statement."
+  components:
+  - type: Sprite
+    state: poster_blank
 
 # Contraband
 - type: entity
