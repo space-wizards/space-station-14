@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Disposal.Mailing;
 
-public abstract partial class SharedMailingUnitSystem : EntitySystem
+public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<MailingUnitComponent>
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
@@ -24,11 +24,17 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MailingUnitComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<MailingUnitComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<MailingUnitComponent, BeforeDisposalFlushEvent>(OnBeforeFlush);
         SubscribeLocalEvent<MailingUnitComponent, ConfigurationUpdatedEvent>(OnConfigurationUpdated);
         SubscribeLocalEvent<MailingUnitComponent, ActivateInWorldEvent>(HandleActivate, before: new[] { typeof(SharedDisposalUnitSystem) });
         SubscribeLocalEvent<MailingUnitComponent, TargetSelectedMessage>(OnTargetSelected);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<MailRequestTagPayload>(OnRequestTag);
+        SubscribePayload<MailTagPayload>(OnTag);
     }
 
     private void OnComponentInit(Entity<MailingUnitComponent> ent, ref ComponentInit args)
@@ -36,38 +42,23 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
         UpdateTargetList(ent);
     }
 
-    private void OnPacketReceived(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnRequestTag(Entity<MailingUnitComponent> ent, ref MailRequestTagPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (!_power.IsPowered(ent.Owner))
+        if (ent.Comp.Tag == null)
             return;
 
-        switch (args.Data)
+        var tagPayload = new MailTagPayload
         {
-            case MailRequestTagPayload:
-                SendTagRequestResponse(ent, args, ent.Comp.Tag);
-                break;
-            case MailTagPayload payload:
-                //Add the received tag request response to the list of targets
-                ent.Comp.TargetList.Add(payload.Tag);
-                Dirty(ent);
-                break;
-        }
-    }
-
-    /// <summary>
-    /// Sends the given tag as a response to a <see cref="MailRequestTagPayload"/> if it's not null
-    /// </summary>
-    private void SendTagRequestResponse(EntityUid uid, DeviceNetworkPacketEvent args, string? tag)
-    {
-        if (tag == null)
-            return;
-
-        var payload = new MailTagPayload
-        {
-            Tag = tag,
+            Tag = ent.Comp.Tag,
         };
 
-        _deviceNetwork.QueuePacket(uid, args.Address, payload, args.Frequency);
+        _deviceNetwork.QueuePacketHandled(ent.Owner, args.Address, tagPayload, args.Frequency);
+    }
+
+    private void OnTag(Entity<MailingUnitComponent> ent, ref MailTagPayload payload, ref DeviceNetworkPacketData args)
+    {
+        ent.Comp.TargetList.Add(payload.Tag);
+        Dirty(ent);
     }
 
     /// <summary>
@@ -102,7 +93,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
             Target = ent.Comp.Target,
         };
 
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
+        _deviceNetwork.QueuePacketHandled((ent.Owner, device), null, payload);
     }
 
     /// <summary>
@@ -116,7 +107,7 @@ public abstract partial class SharedMailingUnitSystem : EntitySystem
 
         var payload = new MailRequestTagPayload();
         ent.Comp.TargetList.Clear();
-        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
+        _deviceNetwork.QueuePacketHandled((ent.Owner, device), null, payload);
     }
 
     /// <summary>
