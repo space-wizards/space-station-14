@@ -154,13 +154,17 @@
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
       state: dispover-full
       visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: mailing-flush
+      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
       state: mailover-handle
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
-      state: disposal
-      visible: false
   - type: GenericVisualizer
     visuals:
+      enum.DisposalUnitVisuals.IsFlushing:
+        enum.DisposalUnitVisualLayers.OverlayFlushing:
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: mailing }
