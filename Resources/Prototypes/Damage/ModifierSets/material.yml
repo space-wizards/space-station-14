@@ -25,7 +25,7 @@
     Piercing: 8
     Structural: 4
 
-# Common metal found all over the place
+# Common metal found all over the place.
 - type: damageModifierSet
   id: SteelMod
   coefficients:
@@ -71,40 +71,51 @@
 - type: damageModifierSet
   id: GlassReinforcedMod
   coefficients:
-    Blunt: 1.2
-    Heat: 1.1
+    Blunt: 1.3
+    Heat: 1.2
   flatReductions:
+    Blunt: 2
     Slash: 2
     Piercing: 2
-    Shock: 4
-    Caustic: 4
+    Heat: 3
+    Cold: 3
+    Shock: 3
     Structural: 1
 
 # Halfway between plasma and glass.
 - type: damageModifierSet
   id: GlassPlasmaMod
   coefficients:
+    Blunt: 1.5
     Piercing: 1.5
-    Cold: 1.4
-    Shock: 1.4
+    Cold: 1.5
+    Shock: 1.5
   flatReductions:
-    Slash: 6
-    Heat: 8
-    Caustic: 6
-    Structural: 4
+    Blunt: 3
+    Slash: 3
+    Heat: 6
+    Cold: 3
+    Shock: 3
+    Caustic: 3
+    Structural: 3
 
 # Halfway between reinforced glass and plasma.
 - type: damageModifierSet
   id: GlassReinforcedPlasmaMod
   coefficients:
-    Piercing: 1.5
-    Cold: 1.4
-    Shock: 1.4
+    Blunt: 1.3
+    Piercing: 1.3
+    Heat: 1.2
+    Cold: 1.5
+    Shock: 1.5
   flatReductions:
-    Blunt: 4
-    Slash: 6
-    Heat: 4
-    Caustic: 6
+    Blunt: 5
+    Slash: 5
+    Piercing: 2
+    Heat: 3
+    Cold: 3
+    Shock: 3
+    Caustic: 3
     Structural: 4
 
 #endregion
@@ -150,7 +161,7 @@
     Cold: 2
     Shock: 2
 
-# Standard "weak to everything" design. Meat is as good a place as any for it.
+# Generic "weak to everything" design. Meat is as good a place as any for it.
 - type: damageModifierSet
   id: MeatMod
   coefficients:
@@ -191,13 +202,13 @@
   coefficients:
     Structural: 3
   flatReductions:
-    Blunt: 6
-    Slash: 6
-    Piercing: 6
-    Heat: 6
-    Cold: 6
-    Shock: 6
-    Caustic: 6
+    Blunt: 4
+    Slash: 4
+    Piercing: 4
+    Heat: 4
+    Cold: 4
+    Shock: 4
+    Caustic: 4
 
 # A weird space rock which fills gaps for unusual weaknesses.
 - type: damageModifierSet
@@ -207,11 +218,11 @@
     Cold: 2
     Shock: 2
   flatReductions:
-    Blunt: 8
-    Slash: 8
-    Heat: 8
-    Caustic: 8
-    Structural: 8
+    Blunt: 6
+    Slash: 6
+    Heat: 6
+    Caustic: 6
+    Structural: 6
 
 # Resists everything. Space diamonds have solved the original design flaws of Earth diamonds.
 - type: damageModifierSet
