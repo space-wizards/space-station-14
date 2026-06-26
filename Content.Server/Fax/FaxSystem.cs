@@ -33,7 +33,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
-public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
+public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineComponent>
 {
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private IAdminManager _adminManager = default!;
@@ -85,7 +85,7 @@ public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
 
     protected override void InitializeDevice()
     {
-        SubscribePayload<FaxPingPayload>(OnPingPayload);
+        SubscribePayloadParallel<FaxPingPayload>(OnPingPayload);
         SubscribePayload<FaxPongPayload>(OnPongPayload);
         SubscribePayload<FaxPrintPayload>(OnPrintPayload);
     }
@@ -395,7 +395,7 @@ public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
             IsSyndicate = _emag.CheckFlag(uid, EmagType.Interaction),
         };
 
-        _deviceNetworkSystem.QueuePacketHandled(uid, null, payload);
+        _deviceNetworkSystem.QueuePacketParallel(uid, null, payload);
     }
 
     /// <summary>

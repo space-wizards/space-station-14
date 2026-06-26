@@ -9,21 +9,15 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.IntegrationTests.Tests.DeviceNetwork;
 
 [Reflect(false)]
-public sealed class DeviceNetworkTestSystem : DevicePayloadSystem<DeviceNetworkComponent>
+public sealed class DeviceNetworkTestSystem : EntitySystem
 {
     public NetworkPayload LastPayload = default;
-    public HandledNetworkPayload LastHandledPayload = default;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
-    }
-
-    protected override void InitializeDevice()
-    {
-        SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
     }
 
     public void SendBaselineTestEvent(EntityUid uid)
@@ -35,6 +29,33 @@ public sealed class DeviceNetworkTestSystem : DevicePayloadSystem<DeviceNetworkC
     private void OnPacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketEvent args)
     {
         LastPayload = args.Data;
+    }
+}
+
+[Reflect(false)]
+public sealed partial class DeviceNetworkTestEntityHandlerSystem : DevicePayloadSystem<DeviceNetworkComponent>
+{
+    public HandledNetworkPayload LastHandledPayload = default;
+
+    protected override void InitializeDevice()
+    {
+        SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
+    }
+
+    private void OnStaticPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadStatic payload, ref DeviceNetworkPacketData args)
+    {
+        LastHandledPayload = payload;
+    }
+}
+
+[Reflect(false)]
+public sealed partial class DeviceNetworkTestParallelHandlerSystem : DevicePayloadParallelSystem<DeviceNetworkComponent>
+{
+    public HandledNetworkPayload LastHandledPayload = default;
+
+    protected override void InitializeDevice()
+    {
+        SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
     }
 
     private void OnStaticPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadStatic payload, ref DeviceNetworkPacketData args)

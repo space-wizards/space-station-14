@@ -162,4 +162,18 @@ public class DeviceNetworkingBenchmark
         await server.WaitRunTicks(1);
         await server.WaitIdleAsync();
     }
+
+    [Benchmark(Description = "Device Net Broadcast Parallel Payload")]
+    public async Task DeviceNetworkBroadcastParallelPayload()
+    {
+        var server = _pair.Server;
+
+        _pair.Server.Post(() =>
+        {
+            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _staticPayload, 100);
+        });
+
+        await server.WaitRunTicks(1);
+        await server.WaitIdleAsync();
+    }
 }

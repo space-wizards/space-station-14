@@ -1,4 +1,5 @@
-﻿using Content.Shared.DeviceNetwork.Events;
+﻿using System.Collections.Concurrent;
+using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceNetwork.Components;
@@ -11,27 +12,36 @@ public sealed partial class DeviceNetworkManagerComponent : Component
 {
     public readonly Dictionary<int, DeviceNet> Networks = new(4);
 
-    public readonly Queue<DeviceNetworkPacketEvent> QueueA = new();
-    public readonly Queue<DeviceNetworkPacketEvent> QueueB = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketEvent> QueueA = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketEvent> QueueB = new();
 
     /// <summary>
     /// The queue being processed in the current tick
     /// </summary>
     [ViewVariables]
-    public Queue<DeviceNetworkPacketEvent> ActiveQueue = null!;
+    public ConcurrentQueue<DeviceNetworkPacketEvent> ActiveQueue = null!;
 
     /// <summary>
     /// The queue that will be processed in the next tick
     /// </summary>
     [ViewVariables]
-    public Queue<DeviceNetworkPacketEvent> NextQueue = null!;
+    public ConcurrentQueue<DeviceNetworkPacketEvent> NextQueue = null!;
 
-    public readonly Queue<DeviceNetworkPacketHandledEvent> QueueC = new();
-    public readonly Queue<DeviceNetworkPacketHandledEvent> QueueD = new();
-
-    [ViewVariables]
-    public Queue<DeviceNetworkPacketHandledEvent> StaticActiveQueue = null!;
+    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueC = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueD = new();
 
     [ViewVariables]
-    public Queue<DeviceNetworkPacketHandledEvent> StaticNextQueue = null!;
+    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> HandledActiveQueue = null!;
+
+    [ViewVariables]
+    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> HandledNextQueue = null!;
+
+    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueE = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueF = new();
+
+    [ViewVariables]
+    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> ParallelActiveQueue = null!;
+
+    [ViewVariables]
+    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> ParallelNextQueue = null!;
 }

@@ -48,9 +48,14 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             SendPacket(ref packet);
         }
 
-        while (comp.StaticActiveQueue.TryDequeue(out var packet))
+        while (comp.HandledActiveQueue.TryDequeue(out var packet))
         {
             SendPacketHandled(ref packet);
+        }
+
+        while (comp.ParallelActiveQueue.TryDequeue(out var packet))
+        {
+            SendPacketParallel(ref packet);
         }
 
         SwapQueues(comp);
@@ -67,8 +72,10 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         manager.NextQueue = manager.ActiveQueue;
         manager.ActiveQueue = manager.ActiveQueue == manager.QueueA ? manager.QueueB : manager.QueueA;
-        manager.StaticNextQueue = manager.StaticActiveQueue;
-        manager.StaticActiveQueue = manager.StaticActiveQueue == manager.QueueC ? manager.QueueD : manager.QueueC;
+        manager.HandledNextQueue = manager.HandledActiveQueue;
+        manager.HandledActiveQueue = manager.HandledActiveQueue == manager.QueueC ? manager.QueueD : manager.QueueC;
+        manager.ParallelNextQueue = manager.ParallelActiveQueue;
+        manager.ParallelActiveQueue = manager.ParallelActiveQueue == manager.QueueE ? manager.QueueF : manager.QueueE;
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -85,8 +92,10 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         ent.Comp.ActiveQueue = ent.Comp.QueueA;
         ent.Comp.NextQueue = ent.Comp.QueueB;
-        ent.Comp.StaticActiveQueue = ent.Comp.QueueC;
-        ent.Comp.StaticNextQueue = ent.Comp.QueueD;
+        ent.Comp.HandledActiveQueue = ent.Comp.QueueC;
+        ent.Comp.HandledNextQueue = ent.Comp.QueueD;
+        ent.Comp.ParallelActiveQueue = ent.Comp.QueueE;
+        ent.Comp.ParallelNextQueue = ent.Comp.QueueF;
         _pvsOverride.AddGlobalOverride(ent);
     }
 
@@ -448,5 +457,74 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             var handledNetworkPayload = packet.Data;
             RaisePayload(connection.DeviceOwner, ref handledNetworkPayload, ref data);
         }
+    }
+
+    private void SendPacketParallel(ref DeviceNetworkPacketHandledEvent packet)
+    {
+        if (!TryEnsureNetwork(packet.NetId, out var network))
+            return;
+
+        if (packet.Address == null)
+        {
+            // Broadcast to all listening devices
+            if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
+            {
+                var deviceCopy = ArrayPool<Device>.Shared.Rent(devices.Count);
+                devices.CopyTo(deviceCopy);
+                SendToConnectionsParallel(deviceCopy.AsSpan(0, devices.Count), packet);
+                ArrayPool<Device>.Shared.Return(deviceCopy);
+            }
+        }
+        else
+        {
+            var totalDevices = 0;
+            var hasTargetedDevice = false;
+            if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
+            {
+                totalDevices += devices.Count;
+            }
+
+            if (!TryGetDevice(packet.NetId, packet.Address, out var device))
+                return;
+
+            if (!device.Value.ReceiveAll &&
+                device.Value.ReceiveFrequency == packet.Frequency)
+            {
+                totalDevices += 1;
+                hasTargetedDevice = true;
+            }
+            var deviceCopy = ArrayPool<Device>.Shared.Rent(totalDevices);
+            if (devices != null)
+            {
+                devices.CopyTo(deviceCopy);
+            }
+            if (hasTargetedDevice)
+            {
+                deviceCopy[totalDevices - 1] = device.Value;
+            }
+            SendToConnectionsHandled(deviceCopy.AsSpan(0, totalDevices), packet);
+            ArrayPool<Device>.Shared.Return(deviceCopy);
+        }
+    }
+
+    private void SendToConnectionsParallel(ReadOnlySpan<Device> connections, DeviceNetworkPacketHandledEvent packet)
+    {
+        if (Deleted(packet.Sender))
+        {
+            return;
+        }
+
+        var xform = Transform(packet.Sender);
+        var senderPos = _transformSystem.GetWorldPosition(xform);
+
+        var data = new DeviceNetworkPacketData(
+            packet.NetId,
+            packet.Address,
+            packet.Frequency,
+            packet.SenderAddress,
+            packet.Sender);
+
+        var handledNetworkPayload = packet.Data;
+        RaisePayloadParallel(connections, ref handledNetworkPayload, ref data);
     }
 }

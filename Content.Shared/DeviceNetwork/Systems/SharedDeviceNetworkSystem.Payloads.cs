@@ -5,29 +5,20 @@ namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract partial class SharedDeviceNetworkSystem
 {
-    private FrozenDictionary<Type, DeviceNetworkHandler> _handlers = default!;
+    private FrozenDictionary<Type, IEntityDeviceNetworkHandler> _handlers = default!;
+    private FrozenDictionary<Type, IParallelDeviceNetworkHandler> _parallelHandlers = default!;
 
-    private readonly Dictionary<Type, DeviceNetworkHandler> _handlersCache = new();
-
-    /// <summary>
-    /// Method that registers this handler in <see cref="SharedDeviceNetworkSystem"/>.
-    /// Must be called after all <see cref="DeviceNetworkHandler.PayloadSubs"/>> are filled in.
-    /// </summary>
-    public void RegisterHandler(DeviceNetworkHandler handler)
-    {
-        foreach (var payload in handler.PayloadSubs.Keys)
-        {
-            _handlersCache.Add(payload, handler);
-        }
-    }
+    public readonly Dictionary<Type, IEntityDeviceNetworkHandler> HandlersCache = new();
+    public readonly Dictionary<Type, IParallelDeviceNetworkHandler> ParallelHandlersCache = new();
 
     /// <summary>
     /// Must be called after all systems were initialized.
-    ///  TODO ENGINE implement EntitySystem.PostInit()
+    /// TODO ENGINE implement EntitySystem.PostInit()
     /// </summary>
     public void PostInit()
     {
-        _handlers = _handlersCache.ToFrozenDictionary();
+        _handlers = HandlersCache.ToFrozenDictionary();
+        _parallelHandlers = ParallelHandlersCache.ToFrozenDictionary();
     }
 
     /// <summary>
@@ -43,93 +34,69 @@ public abstract partial class SharedDeviceNetworkSystem
 
         handler.RaisePayload(uid, ref payload, ref args);
     }
+
+    /// <summary>
+    /// Raises a network payload on a span of devices in parallel.
+    /// </summary>
+    /// <param name="devices">Target entities to send the payload to.</param>
+    /// <param name="payload">Payload to send.</param>
+    /// <param name="args">Other information about how the payload have been received.</param>
+    public void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
+    {
+        if (!_parallelHandlers.TryGetValue(payload.GetType(), out var handler))
+            return;
+
+        handler.RaisePayloadParallel(devices, ref payload, ref args);
+    }
 }
 
 public abstract partial class DeviceNetworkHandler : EntitySystem
 {
-    [Dependency] private SharedDeviceNetworkSystem _device = default!;
+    [Dependency] protected SharedDeviceNetworkSystem DeviceSystem = default!;
 
-    protected void Register()
+    protected bool IsInitialized { get; private set; }
+
+    /// <summary>
+    /// Registers the handler in <see cref="SharedDeviceNetworkSystem"/>.
+    /// </summary>
+    protected virtual void Register()
     {
-        _device.RegisterHandler(this);
+        IsInitialized = true;
     }
 
     /// <summary>
-    /// Dictionary of payloads and the methods
-    /// </summary>
-    public abstract FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; }
-
-    /// <summary>
-    /// A method that fills the <see cref="PayloadSubs"/> dictionary with subscriptions.
+    /// A method to prepare subscriptions dictionary.
     /// </summary>
     protected abstract void InitializeDevice();
+}
 
+public interface IEntityDeviceNetworkHandler
+{
     /// <summary>
     /// Raises a payload on a specified entity.
     /// </summary>
     /// <param name="uid">Uid of the target entity.</param>
     /// <param name="payload">Payload to send.</param>
     /// <param name="args">Other information about how the payload have been received.</param>
-    public abstract void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
+    void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
+}
+
+public interface IParallelDeviceNetworkHandler
+{
+    /// <summary>
+    /// Raises a network payload on a span of devices in parallel.
+    /// </summary>
+    /// <param name="devices">Target entities to send the payload to.</param>
+    /// <param name="payload">Payload to send.</param>
+    /// <param name="args">Other information about how the payload have been received.</param>
+    void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
 }
 
 /// <summary>
-/// System that handles <see cref="NetworkPayload"/>s for entities that have component of type <see cref="T"/>.
+/// A delegate for events that are defined in <see cref="DeviceNetworkHandler"/>s.
 /// </summary>
-/// <typeparam name="T">Component that is being handled.</typeparam>
-public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler where T : IComponent
-{
-    [Dependency] private EntityQuery<T> _query = default!;
-
-    public override FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
-    private readonly Dictionary<Type, Delegate> _payloadSubsCache = new();
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        InitializeDevice();
-        PayloadSubs = _payloadSubsCache.ToFrozenDictionary();
-        Register();
-    }
-
-    protected void SubscribePayload<TN>(DeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
-    {
-        if (EntityManager.Initialized)
-        {
-            Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
-            return;
-        }
-
-        // It needs to be wrapped so when raising the Delegate it can be down-casted without issues.
-        DeviceNetworkPayloadHandlerWrapper<T> wrapper = (ent, ref basePayload, ref args) =>
-        {
-            var specificPayload = (TN) basePayload;
-            handler(ent, ref specificPayload, ref args);
-            basePayload = specificPayload;
-        };
-
-        _payloadSubsCache.Add(typeof(TN), wrapper);
-    }
-
-    public override void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
-    {
-        if (!PayloadSubs.TryGetValue(payload.GetType(), out var handler))
-            return;
-
-        if (!_query.TryComp(uid, out var comp))
-            return;
-
-        var del = (DeviceNetworkPayloadHandlerWrapper<T>) handler;
-        del.Invoke((uid, comp), ref payload, ref args);
-    }
-}
-
+/// <typeparam name="TC">Type of the component.</typeparam>
+/// <typeparam name="TN">Type of the network payload.</typeparam>
 public delegate void DeviceNetworkPayloadHandler<TC, TN>(Entity<TC> ent, ref TN payload, ref DeviceNetworkPacketData args)
     where TC : IComponent
     where TN : HandledNetworkPayload;
-
-public delegate void DeviceNetworkPayloadHandlerWrapper<TC>(
-    Entity<TC> ent,
-    ref HandledNetworkPayload payload,
-    ref DeviceNetworkPacketData args)
-    where TC : IComponent;
