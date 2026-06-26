@@ -160,7 +160,7 @@ public class DeviceNetworkingBenchmark
 
         _pair.Server.Post(() =>
         {
-            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _handledPayload, 100);
+            _deviceNetworkSystem.QueuePacket(_sourceEntity, null, _handledPayload, 100);
         });
 
         await server.WaitRunTicks(1);
@@ -188,7 +188,7 @@ public class DeviceNetworkingBenchmark
 
         _pair.Server.Post(() =>
         {
-            _deviceNetworkSystem.QueuePacketHandled(_sourceEntity, null, _pingPayload, 100);
+            _deviceNetworkSystem.QueuePacket(_sourceEntity, null, _pingPayload, 100);
         });
 
         await server.WaitRunTicks(2);

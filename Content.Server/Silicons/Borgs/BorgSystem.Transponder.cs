@@ -1,4 +1,3 @@
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
@@ -16,9 +15,11 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-    private void InitializeTransponder()
+    protected override void InitializeDevice()
     {
-        SubscribeLocalEvent<BorgTransponderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        base.InitializeDevice();
+        SubscribePayload<RoboticsCyborgDisablePayload>(OnDisable);
+        SubscribePayload<RoboticsCyborgDestroyPayload>(OnDestroy);
     }
 
     public void UpdateTransponder(float frameTime)
@@ -56,7 +57,7 @@ public sealed partial class BorgSystem
             {
                 Data = data,
             };
-            _deviceNetwork.QueuePacketHandled((uid, device), null, payload);
+            _deviceNetwork.QueuePacket((uid, device), null, payload);
 
             comp.NextBroadcast = now + comp.BroadcastDelay;
         }
@@ -80,17 +81,14 @@ public sealed partial class BorgSystem
         _container.Remove(brain, ent.Comp2.BrainContainer);
     }
 
-    private void OnPacketReceived(Entity<BorgTransponderComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnDisable(Entity<BorgTransponderComponent> ent, ref RoboticsCyborgDisablePayload payload, ref DeviceNetworkPacketData args)
     {
-        switch (args.Data)
-        {
-            case RoboticsCyborgDisablePayload:
-                Disable(ent);
-                break;
-            case RoboticsCyborgDestroyPayload:
-                Destroy(ent.AsNullable());
-                break;
-        }
+        Disable(ent);
+    }
+
+    private void OnDestroy(Entity<BorgTransponderComponent> ent, ref RoboticsCyborgDestroyPayload payload, ref DeviceNetworkPacketData args)
+    {
+        Destroy(ent.AsNullable());
     }
 
     private void Disable(Entity<BorgTransponderComponent, BorgChassisComponent?> ent)

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DeviceLinking;
 
 [Serializable, NetSerializable]
-public sealed partial class LogicStatePayload : NetworkPayload
+public sealed partial class LogicStatePayload : HandledNetworkPayload
 {
     [DataField]
     public SignalState State;

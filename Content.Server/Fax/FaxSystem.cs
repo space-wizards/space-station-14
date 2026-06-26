@@ -277,7 +277,7 @@ public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineCo
             FaxName = ent.Comp.FaxName,
         };
 
-        _deviceNetworkSystem.QueuePacketHandled(ent.Owner, args.SenderAddress, pong);
+        _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, pong);
     }
 
     private void OnPongPayload(Entity<FaxMachineComponent> ent, ref FaxPongPayload payload, ref DeviceNetworkPacketData args)
@@ -516,7 +516,7 @@ public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineCo
                     paper.EditingDisabled),
         };
 
-        _deviceNetworkSystem.QueuePacketHandled(uid, component.DestinationFaxAddress, payload);
+        _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,

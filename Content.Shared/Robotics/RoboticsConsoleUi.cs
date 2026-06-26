@@ -137,10 +137,10 @@ public partial record struct CyborgControlData
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDisablePayload : NetworkPayload;
+public sealed partial class RoboticsCyborgDisablePayload : HandledNetworkPayload;
 
 [Serializable, NetSerializable]
-public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayload;
+public sealed partial class RoboticsCyborgDestroyPayload : HandledNetworkPayload;
 
 [Serializable, NetSerializable]
 public sealed partial class RoboticsCyborgDataPayload : HandledNetworkPayload

@@ -60,7 +60,7 @@ public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadParall
 
     private void OnPingPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadPing payload, ref DeviceNetworkPacketData args)
     {
-        _deviceNetwork.QueuePacketHandled(ent.AsNullable(), args.SenderAddress, new TestPayloadPong(), 100);
+        _deviceNetwork.QueuePacket(ent.AsNullable(), args.SenderAddress, new TestPayloadPong(), 100);
     }
 
     private void OnPongPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadPong payload, ref DeviceNetworkPacketData args)

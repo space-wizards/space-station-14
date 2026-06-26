@@ -286,7 +286,7 @@ namespace Content.Server.Communications
                 Text = message.Message,
             };
 
-            _deviceNetworkSystem.QueuePacketHandled(uid, null, payload, net.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, net.TransmitFrequency);
 
             _adminLogger.Add(LogType.DeviceNetwork, LogImpact.Low, $"{ToPrettyString(message.Actor):player} has sent the following broadcast: {message.Message:msg}");
         }

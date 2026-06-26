@@ -52,7 +52,7 @@ public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<Mail
             Tag = ent.Comp.Tag,
         };
 
-        _deviceNetwork.QueuePacketHandled(ent.Owner, args.Address, tagPayload, args.Frequency);
+        _deviceNetwork.QueuePacket(ent.Owner, args.Address, tagPayload, args.Frequency);
     }
 
     private void OnTag(Entity<MailingUnitComponent> ent, ref MailTagPayload payload, ref DeviceNetworkPacketData args)
@@ -93,7 +93,7 @@ public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<Mail
             Target = ent.Comp.Target,
         };
 
-        _deviceNetwork.QueuePacketHandled((ent.Owner, device), null, payload);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<Mail
 
         var payload = new MailRequestTagPayload();
         ent.Comp.TargetList.Clear();
-        _deviceNetwork.QueuePacketHandled((ent.Owner, device), null, payload);
+        _deviceNetwork.QueuePacket((ent.Owner, device), null, payload);
     }
 
     /// <summary>

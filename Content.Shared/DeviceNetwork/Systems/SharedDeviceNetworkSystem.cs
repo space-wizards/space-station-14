@@ -39,7 +39,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     }
 
     [PublicAPI]
-    public virtual bool QueuePacketHandled(
+    public virtual bool QueuePacket(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         HandledNetworkPayload data,

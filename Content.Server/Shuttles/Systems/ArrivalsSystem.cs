@@ -235,7 +235,7 @@ public sealed partial class ArrivalsSystem : EntitySystem
             payload.SourceMap = GetNetEntity(sourceMap);
             payload.SourceTime = ftlTime + TimeSpan.FromSeconds(arrivalsDelay);
 
-            _deviceNetworkSystem.QueuePacketHandled(shuttleUid, null, payload, netComp.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
         }
 
         // Don't do anything here when leaving arrivals.
@@ -292,7 +292,7 @@ public sealed partial class ArrivalsSystem : EntitySystem
                 SourceTime = dockTime,
                 Docked = true,
             };
-            _deviceNetworkSystem.QueuePacketHandled(uid, null, payload, netComp.TransmitFrequency);
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, netComp.TransmitFrequency);
         }
     }
 

@@ -35,7 +35,7 @@ public sealed partial class DeviceNetworkSystem
     }
 
     [PublicAPI]
-    public override bool QueuePacketHandled(
+    public override bool QueuePacket(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
         HandledNetworkPayload data,
