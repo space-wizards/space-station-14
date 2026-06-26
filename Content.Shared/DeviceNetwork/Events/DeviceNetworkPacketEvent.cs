@@ -26,6 +26,7 @@ public record struct DeviceNetworkPacketData(
     uint Frequency,
     string SenderAddress,
     EntityUid Sender,
+    TransformComponent SenderTransform,
     Vector2 SenderPos) : IDeviceNetworkPacket;
 
 [ByRefEvent]

@@ -1,11 +1,12 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public sealed class WiredNetworkSystem : EntitySystem
+    public sealed class WiredNetworkSystem : BeforeDevicePayloadSystem<WiredNetworkComponent>
     {
         public override void Initialize()
         {
@@ -28,5 +29,10 @@ namespace Content.Server.DeviceNetwork.Systems
         //Abstract out the connection between the apcExtensionCable and the apcPowerReceiver
         //Traverse the power cables using path traversal
         //Cache an optimized representation of the traversed path (Probably just cache Devices)
+
+        protected override void OnBeforePayload(Entity<WiredNetworkComponent> ent, ref BeforePacketSentEvent args)
+        {
+            OnBeforePacketSent(ent, ref args);
+        }
     }
 }

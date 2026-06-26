@@ -368,7 +368,13 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (connection.DeviceOwner == packet.Sender)
                 continue;
 
-            var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
+            var beforeEv = new BeforePacketSentEvent(packet.NetId,
+                packet.Address,
+                packet.Frequency,
+                packet.SenderAddress,
+                packet.Sender,
+                xform,
+                senderPos);
             RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
 
             if (beforeEv.Cancelled)
@@ -442,9 +448,14 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (connection.DeviceOwner == packet.Sender)
                 continue;
 
-            var beforeEv = new BeforePacketSentEvent(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
-            RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
-
+            var beforeEv = new BeforePacketSentEvent(packet.NetId,
+                packet.Address,
+                packet.Frequency,
+                packet.SenderAddress,
+                packet.Sender,
+                xform,
+                senderPos);
+            RaiseBeforePayload(connection.DeviceOwner, ref beforeEv);
             if (beforeEv.Cancelled)
                 continue;
 
@@ -454,6 +465,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
                 packet.Frequency,
                 packet.SenderAddress,
                 packet.Sender,
+                xform,
                 senderPos);
             var handledNetworkPayload = packet.Data;
             RaisePayload(connection.DeviceOwner, ref handledNetworkPayload, ref data);
@@ -524,6 +536,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             packet.Frequency,
             packet.SenderAddress,
             packet.Sender,
+            xform,
             senderPos);
         var handledNetworkPayload = packet.Data;
         RaisePayloadParallel(connections, ref handledNetworkPayload, ref data);

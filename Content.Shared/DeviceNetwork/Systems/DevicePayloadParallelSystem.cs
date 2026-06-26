@@ -6,6 +6,26 @@ using Robust.Shared.Threading;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
+public delegate void BeforeDeviceNetworkPayloadHandler<TC, TN>(Entity<TC> ent, ref TN payload, ref DeviceNetworkPacketData args)
+    where TC : IComponent
+    where TN : HandledNetworkPayload;
+
+public delegate void AfterDeviceNetworkPayloadHandler<TC, TN>(Entity<TC> ent, ref TN payload, ref DeviceNetworkPacketData args)
+    where TC : IComponent
+    where TN : HandledNetworkPayload;
+
+public delegate void BeforeParallelDeviceNetworkPayloadHandlerWrapper<TC>(
+    Entity<TC> ent,
+    ref HandledNetworkPayload payload,
+    ref DeviceNetworkPacketData args)
+    where TC : IComponent;
+
+public delegate void AfterDeviceNetworkPayloadHandlerWrapper<TC>(
+    Entity<TC> ent,
+    ref HandledNetworkPayload payload,
+    ref DeviceNetworkPacketData args)
+    where TC : IComponent;
+
 /// <summary>
 /// A version of <see cref="DevicePayloadSystem{T}"/> that raises the network payload in multiple threads.
 /// This is usually good for broadcast payloads in which the order of receiving doesn't matter, for example 'Ping' requests.
@@ -18,8 +38,13 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
 {
     [Dependency] protected IParallelManager ParallelManager = default!;
 
+    public FrozenDictionary<Type, Delegate> BeforePayloadSubs { get; protected set; } = default!;
     public FrozenDictionary<Type, Delegate> ParallelPayloadSubs { get; protected set; } = default!;
+    public FrozenDictionary<Type, Delegate> AfterPayloadSubs { get; protected set; } = default!;
+
+    protected readonly Dictionary<Type, Delegate> BeforePayloadSubsCache = new();
     protected readonly Dictionary<Type, Delegate> ParallelPayloadSubsCache = new();
+    protected readonly Dictionary<Type, Delegate> AfterPayloadSubsCache = new();
 
     protected virtual int BatchSize => 1;
 
@@ -29,11 +54,7 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
 
     protected override void Register()
     {
-        foreach (var payload in PayloadSubs.Keys)
-        {
-            DeviceSystem.HandlersCache.Add(payload, this);
-        }
-
+        base.Register();
         foreach (var payload in ParallelPayloadSubs.Keys)
         {
             DeviceSystem.ParallelHandlersCache.Add(payload, this);
@@ -47,8 +68,30 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
 
     protected override void LockSubscriptions()
     {
-        PayloadSubs = PayloadSubsCache.ToFrozenDictionary();
+        base.LockSubscriptions();
+        BeforePayloadSubs = BeforePayloadSubsCache.ToFrozenDictionary();
         ParallelPayloadSubs = ParallelPayloadSubsCache.ToFrozenDictionary();
+        AfterPayloadSubs = AfterPayloadSubsCache.ToFrozenDictionary();
+    }
+
+    [UsedImplicitly]
+    protected void SubscribeBeforeParallelPayload<TN>(BeforeDeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
+    {
+        if (DeviceInitialized)
+        {
+            Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
+            return;
+        }
+
+        // It needs to be wrapped so when raising the Delegate it can be down-casted without issues.
+        BeforeParallelDeviceNetworkPayloadHandlerWrapper<T> wrapper = (ent, ref basePayload, ref args) =>
+        {
+            var specificPayload = (TN) basePayload;
+            handler(ent, ref specificPayload, ref args);
+            basePayload = specificPayload;
+        };
+
+        BeforePayloadSubsCache.Add(typeof(TN), wrapper);
     }
 
     [UsedImplicitly]
@@ -71,6 +114,26 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
         ParallelPayloadSubsCache.Add(typeof(TN), wrapper);
     }
 
+    [UsedImplicitly]
+    protected void SubscribeAfterParallelPayload<TN>(AfterDeviceNetworkPayloadHandler<T, TN> handler) where TN : HandledNetworkPayload
+    {
+        if (DeviceInitialized)
+        {
+            Log.Error($"Tried to register a device network payload handler in type {typeof(TN).Name} after initialize!");
+            return;
+        }
+
+        // It needs to be wrapped so when raising the Delegate it can be down-casted without issues.
+        AfterDeviceNetworkPayloadHandlerWrapper<T> wrapper = (ent, ref basePayload, ref args) =>
+        {
+            var specificPayload = (TN) basePayload;
+            handler(ent, ref specificPayload, ref args);
+            basePayload = specificPayload;
+        };
+
+        AfterPayloadSubsCache.Add(typeof(TN), wrapper);
+    }
+
     public void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!ParallelPayloadSubs.TryGetValue(payload.GetType(), out var handler))
@@ -85,6 +148,15 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
             ents.Add((device.DeviceOwner, comp));
         }
 
+        if (BeforePayloadSubs.TryGetValue(payload.GetType(), out var beforePayload))
+        {
+            var beforeDel = (BeforeParallelDeviceNetworkPayloadHandlerWrapper<T>) beforePayload;
+            foreach (var ent in ents)
+            {
+                beforeDel.Invoke(ent, ref payload, ref args);
+            }
+        }
+
         var del = (DeviceNetworkPayloadHandlerWrapper<T>) handler;
         _job.Delegate = del;
         _job.Targets = ents.ToArray();
@@ -92,6 +164,15 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
         _job.PacketData = args;
 
         ParallelManager.ProcessNow(_job, _job.Targets.Length);
+
+        if (AfterPayloadSubs.TryGetValue(payload.GetType(), out var afterPayload))
+        {
+            var afterDel = (AfterDeviceNetworkPayloadHandlerWrapper<T>) afterPayload;
+            foreach (var ent in ents)
+            {
+                afterDel.Invoke(ent, ref payload, ref args);
+            }
+        }
     }
 
     private record struct DeviceNetworkPacketJob<TC> : IParallelRobustJob where TC : IComponent

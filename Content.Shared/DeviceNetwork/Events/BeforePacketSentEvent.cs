@@ -8,9 +8,11 @@ namespace Content.Shared.DeviceNetwork.Events;
 /// </summary>
 [ByRefEvent]
 public record struct BeforePacketSentEvent(
+    int NetId,
+    string? Address,
+    uint Frequency,
+    string SenderAddress,
     EntityUid Sender,
     TransformComponent SenderTransform,
     Vector2 SenderPosition,
-    string NetworkId,
-    uint Frequency,
-    bool Cancelled = false);
+    bool Cancelled = false) : IDeviceNetworkPacket;

@@ -6,9 +6,11 @@ namespace Content.Shared.DeviceNetwork.Systems;
 public abstract partial class SharedDeviceNetworkSystem
 {
     private FrozenDictionary<Type, IEntityDeviceNetworkHandler> _handlers = default!;
+    private FrozenDictionary<Type, IBeforeDeviceNetworkHandler> _beforeHandlers = default!;
     private FrozenDictionary<Type, IParallelDeviceNetworkHandler> _parallelHandlers = default!;
 
     public readonly Dictionary<Type, IEntityDeviceNetworkHandler> HandlersCache = new();
+    public readonly Dictionary<Type, IBeforeDeviceNetworkHandler> BeforeHandlersCache = new();
     public readonly Dictionary<Type, IParallelDeviceNetworkHandler> ParallelHandlersCache = new();
 
     /// <summary>
@@ -18,6 +20,7 @@ public abstract partial class SharedDeviceNetworkSystem
     public void PostInit()
     {
         _handlers = HandlersCache.ToFrozenDictionary();
+        _beforeHandlers = BeforeHandlersCache.ToFrozenDictionary();
         _parallelHandlers = ParallelHandlersCache.ToFrozenDictionary();
     }
 
@@ -36,11 +39,27 @@ public abstract partial class SharedDeviceNetworkSystem
     }
 
     /// <summary>
+    /// Runs network condition checks on an entity to determine if the payload should be sent or not.
+    /// </summary>
+    /// <param name="uid">UID of the entity that is receiving the payload.</param>
+    /// <param name="args">Info about how the payload have been received.</param>
+    public void RaiseBeforePayload(EntityUid uid, ref BeforePacketSentEvent args)
+    {
+        foreach (var (compType, handler) in _beforeHandlers)
+        {
+            if (!EntityManager.TryGetComponent(uid, compType, out var comp))
+                continue;
+
+            handler.RaiseBeforePayload(uid, comp, ref args);
+        }
+    }
+
+    /// <summary>
     /// Raises a network payload on a span of devices in parallel.
     /// </summary>
     /// <param name="devices">Target entities to send the payload to.</param>
     /// <param name="payload">Payload to send.</param>
-    /// <param name="args">Other information about how the payload have been received.</param>
+    /// <param name="args">Other info about how the payload have been received.</param>
     public void RaisePayloadParallel(ReadOnlySpan<Device> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!_parallelHandlers.TryGetValue(payload.GetType(), out var handler))
@@ -78,7 +97,7 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     /// <summary>
     /// A method to prepare subscriptions dictionary and other required objects.
     /// </summary>
-    protected abstract void InitializeDevice();
+    protected virtual void InitializeDevice() { }
 }
 
 public interface IEntityDeviceNetworkHandler
@@ -90,6 +109,17 @@ public interface IEntityDeviceNetworkHandler
     /// <param name="payload">Payload to send.</param>
     /// <param name="args">Other information about how the payload have been received.</param>
     void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
+}
+
+public interface IBeforeDeviceNetworkHandler
+{
+    /// <summary>
+    /// Runs checks before sending a network payload.
+    /// </summary>
+    /// <param name="uid">Uid of the target entity.</param>
+    /// <param name="component">Component of the target entity.</param>
+    /// <param name="args">Other information about how the payload have been received.</param>
+    void RaiseBeforePayload(EntityUid uid, IComponent component, ref BeforePacketSentEvent args);
 }
 
 public interface IParallelDeviceNetworkHandler

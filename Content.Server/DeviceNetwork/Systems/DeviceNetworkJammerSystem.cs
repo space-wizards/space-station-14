@@ -27,7 +27,7 @@ public sealed partial class DeviceNetworkJammerSystem : SharedDeviceNetworkJamme
 
         while (query.MoveNext(out var uid, out var jammerComp, out var jammerXform))
         {
-            if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetworkId))
+            if (!_jammer.GetJammableNetworks((uid, jammerComp)).Contains(ev.NetId))
                 continue;
 
             if (jammerComp.FrequenciesExcluded != null &&

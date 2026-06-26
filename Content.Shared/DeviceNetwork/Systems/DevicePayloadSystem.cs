@@ -19,6 +19,7 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
     [Dependency] protected EntityQuery<T> Query = default!;
 
     public FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
+
     protected readonly Dictionary<Type, Delegate> PayloadSubsCache = new();
 
     protected override void Register()
@@ -56,10 +57,10 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
 
     public void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (!PayloadSubs.TryGetValue(payload.GetType(), out var handler))
+        if (!Query.TryComp(uid, out var comp))
             return;
 
-        if (!Query.TryComp(uid, out var comp))
+        if (!PayloadSubs.TryGetValue(payload.GetType(), out var handler))
             return;
 
         var del = (DeviceNetworkPayloadHandlerWrapper<T>) handler;
