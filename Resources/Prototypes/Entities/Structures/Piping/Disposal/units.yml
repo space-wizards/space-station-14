@@ -150,7 +150,8 @@
     - map: [ "enum.DisposalUnitVisualLayers.Base" ]
       state: mailing
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      state: dispover-ready
+      state: mailing-charging
+      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
       state: dispover-full
       visible: false
@@ -175,8 +176,8 @@
           False: { state: mailover-handle-off }
       enum.DisposalUnitVisuals.IsCharging:
         enum.DisposalUnitVisualLayers.OverlayCharging:
-          True: { state: dispover-charge, visible: true }
-          False: { state: dispover-ready, visible: true }
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsFull:
         enum.DisposalUnitVisualLayers.OverlayFull:
           True: { visible: true }
