@@ -2,11 +2,8 @@
 
 namespace Content.Shared.DeviceNetwork.Payloads;
 
-/// <summary>
-/// Simple payload for toggling a device's state.
-/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TogglePayload : NetworkPayload
+public sealed partial class ApcNetTogglePayload : NetworkPayload
 {
     [DataField]
     public bool Enabled;

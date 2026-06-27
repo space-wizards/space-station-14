@@ -128,11 +128,11 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     }
 
     /// <summary>
-    /// Turns the light on or of when receiving a <see cref="TogglePayload"/>.
+    /// Turns the light on or of when receiving a <see cref="ApcNetTogglePayload"/>.
     /// </summary>
     private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
     {
-        if (args.Data is not TogglePayload toggle)
+        if (args.Data is not ApcNetTogglePayload toggle)
             return;
 
         SetState(uid, toggle.Enabled, component);

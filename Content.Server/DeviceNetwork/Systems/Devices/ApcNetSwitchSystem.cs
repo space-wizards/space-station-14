@@ -34,7 +34,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             if (networkComponent.TransmitFrequency == null)
                 return;
 
-            var payload = new TogglePayload
+            var payload = new ApcNetTogglePayload
             {
                 Enabled = component.State,
             };
@@ -51,7 +51,8 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         {
             var (uid, component) = ent;
             if (!TryComp(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
-            if (args.Data is not TogglePayload toggle) return;
+            if (args.Data is not ApcNetTogglePayload toggle)
+                return;
 
             component.State = toggle.Enabled;
         }

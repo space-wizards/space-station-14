@@ -11,6 +11,8 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
     - type: DeviceNetworkRequiresPower
+    - type: DeviceNetworkRouter
+    - type: SurveillanceCameraRouter
     - type: UserInterface
       interfaces:
         enum.SurveillanceCameraSetupUiKey.Router:
