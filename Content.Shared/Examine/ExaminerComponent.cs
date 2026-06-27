@@ -7,7 +7,7 @@ namespace Content.Shared.Examine
     public sealed partial class ExaminerComponent : Component
     {
         /// <summary>
-        /// skip all checks if an examiner can examine something.
+        /// If true, skip all checks if an examiner can examine something.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("skipChecks")]

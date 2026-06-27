@@ -41,7 +41,7 @@ public sealed partial class HealthChange : EntityEffectBase<HealthChange>
     public DamageSpecifier Damage = default!;
 
     /// <summary>
-    /// should this effect ignore damage resistances?
+    /// Should this effect ignore damage resistances?
     /// </summary>
     [DataField]
     public bool IgnoreResistances = true;

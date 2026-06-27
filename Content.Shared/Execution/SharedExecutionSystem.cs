@@ -95,11 +95,8 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     }
 
     /// <summary>
-    /// checks if someone can be executed.
+    /// Check if someone can be executed.
     /// </summary>
-    /// <param name="victim"></param>
-    /// <param name="attacker"></param>
-    /// <returns></returns>
     public bool CanBeExecuted(EntityUid victim, EntityUid attacker)
     {
         // No point executing someone if they can't take damage

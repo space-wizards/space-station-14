@@ -21,10 +21,8 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
     }
 
     /// <summary>
-    /// begins disassembly of an entity.
+    /// Begins disassembly of an entity.
     /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="user"></param>
     public void StartDisassembly(Entity<DisassembleOnAltVerbComponent> entity, EntityUid user)
     {
         // Doafter setup

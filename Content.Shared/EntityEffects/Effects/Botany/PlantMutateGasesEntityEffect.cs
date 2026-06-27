@@ -10,8 +10,9 @@ public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMuta
     /// </summary>
     [DataField]
     public float MinValue = 0.01f;
+
     /// <summary>
-    /// hen actualizing this mutation, this value is the maximum volume of gas, the plant could consume.
+    /// When actualizing this mutation, this value is the maximum volume of gas the plant could consume.
     /// </summary>
     [DataField]
     public float MaxValue = 0.5f;
@@ -24,8 +25,9 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
     /// </summary>
     [DataField]
     public float MinValue = 0.01f;
+
     /// <summary>
-    /// When actualizing this mutation, this value is the minimum volume of gas, the plant could produce.
+    /// When actualizing this mutation, this value is the minimum volume of gas the plant could produce.
     /// </summary>
     [DataField]
     public float MaxValue = 0.5f;

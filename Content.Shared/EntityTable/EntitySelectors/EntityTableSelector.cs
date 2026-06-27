@@ -44,11 +44,6 @@ public abstract partial class EntityTableSelector
     /// <summary>
     /// Samples an output for this selector.
     /// </summary>
-    /// <param name="rand"></param>
-    /// <param name="entMan"></param>
-    /// <param name="proto"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
@@ -69,13 +64,10 @@ public abstract partial class EntityTableSelector
             }
         }
     }
+
     /// <summary>
-    /// check if the condition for this selector are met.
+    /// Check if the condition for this selector are met.
     /// </summary>
-    /// <param name="entMan"></param>
-    /// <param name="proto"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         if (Conditions.Count == 0)

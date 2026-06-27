@@ -32,9 +32,9 @@ public abstract class ExplosionTileFlood
     protected UniqueVector2iSet EnteredBlockedTiles = new();
 
     /// <summary>
-    /// Initialisation of the ExplosionTile
+    /// Initialisation of the ExplosionTile.
     /// </summary>
-    /// <param name="initialTile">The absolute position from which the explosion originated</param>
+    /// <param name="initialTile">The absolute position from which the explosion originated.</param>
     public abstract void InitTile(Vector2i initialTile);
 
     protected abstract void ProcessNewTile(int iteration, Vector2i tile, AtmosDirection entryDirections);
@@ -140,8 +140,8 @@ public sealed class UniqueVector2iSet
     /// First layer of the lookup in the set.
     /// Finds the chunk adress which covers the vector's space.
     /// </summary>
-    /// <param name="indices">The Vector for which we need the chunk adress</param>
-    /// <returns>The chunk adress as a Vector2i</returns>
+    /// <param name="indices">The Vector for which we need the chunk adress.</param>
+    /// <returns>The chunk adress as a Vector2i.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2i ToChunkIndices(Vector2i indices)
     {
@@ -153,7 +153,7 @@ public sealed class UniqueVector2iSet
     /// <summary>
     /// Tries to add a new element into the set.
     /// </summary>
-    /// <param name="index">the new element</param>
+    /// <param name="index">The new element.</param>
     /// <returns>False if the element was already part of the set.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Add(Vector2i index)
@@ -174,8 +174,8 @@ public sealed class UniqueVector2iSet
     /// <summary>
     /// Checks if a given vector2i is already within the set.
     /// </summary>
-    /// <param name="index">the element we search for</param>
-    /// <returns></returns>
+    /// <param name="index">The element to search for.</param>
+    /// <returns>Returns true if the element existed.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(Vector2i index)
     {
@@ -192,10 +192,10 @@ public sealed class UniqueVector2iSet
         private readonly int[] _tiles = new int[ChunkSize];
 
         /// <summary>
-        /// Tries to add an element to the chunk
+        /// Tries to add an element to the chunk.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
+        /// <param name="index">The element to add.</param>
+        /// <returns>Returns true if the element could be added.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Add(Vector2i index)
         {

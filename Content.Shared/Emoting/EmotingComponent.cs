@@ -4,7 +4,7 @@ namespace Content.Shared.Emoting;
 
 /// <summary>
 /// Enables emoting of an entity.
-/// <see cref="EmoteAttemptEvent"/>
+/// <seealso cref="EmoteAttemptEvent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmotingComponent : Component

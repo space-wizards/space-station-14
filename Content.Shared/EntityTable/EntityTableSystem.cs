@@ -14,10 +14,6 @@ public sealed partial class EntityTableSystem : EntitySystem
     /// <summary>
     /// Compiles a random list of entity prototypes using constraints.
     /// </summary>
-    /// <param name="entTableProto"></param>
-    /// <param name="rand"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         // convenient
@@ -27,10 +23,6 @@ public sealed partial class EntityTableSystem : EntitySystem
     /// <summary>
     /// Compiles a random list of entity prototypes using constraints.
     /// </summary>
-    /// <param name="table"></param>
-    /// <param name="rand"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
@@ -44,9 +36,6 @@ public sealed partial class EntityTableSystem : EntitySystem
     /// <summary>
     /// Builds a list of all the spawns in an EntityTable as keys, and their modified weights as values.
     /// </summary>
-    /// <param name="entTableProto"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public IEnumerable<(EntProtoId spawn, double)> ListSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
     {
         return ListSpawns(entTableProto.Table, ctx);

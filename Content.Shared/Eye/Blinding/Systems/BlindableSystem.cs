@@ -46,7 +46,7 @@ public sealed partial class BlindableSystem : EntitySystem
     /// <summary>
     /// Checks and updates a blindable is blind state according to damage and other components to the entity.
     /// </summary>
-    /// <param name="blindable"></param>
+    /// <param name="blindable">The entity to update.</param>
     [PublicAPI]
     public void UpdateIsBlind(Entity<BlindableComponent?> blindable)
     {
@@ -74,11 +74,12 @@ public sealed partial class BlindableSystem : EntitySystem
         RaiseLocalEvent(blindable.Owner, ref changeEv);
         Dirty(blindable);
     }
+
     /// <summary>
     /// Adjust eye damage and updates the relevant sub components.
     /// </summary>
-    /// <param name="blindable"></param>
-    /// <param name="amount"></param>
+    /// <param name="blindable">Entity to adjust for.</param>
+    /// <param name="amount">How much to change the eye damage. Can be positive and negative.</param>
     public void AdjustEyeDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false) || amount == 0)
@@ -108,8 +109,8 @@ public sealed partial class BlindableSystem : EntitySystem
     /// Sets the minimum damage to an eye.
     /// Updates also sub components.
     /// </summary>
-    /// <param name="blindable"></param>
-    /// <param name="amount"></param>
+    /// <param name="blindable">The entity to update.</param>
+    /// <param name="amount">The minimum amount the entity can be blinded.</param>
     public void SetMinDamage(Entity<BlindableComponent?> blindable, int amount)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))

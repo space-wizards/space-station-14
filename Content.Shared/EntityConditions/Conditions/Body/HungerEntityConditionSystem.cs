@@ -27,6 +27,7 @@ public sealed partial class HungerCondition : EntityConditionBase<HungerConditio
     /// </summary>
     [DataField]
     public float Min;
+
     /// <summary>
     /// Maximum hunger required to fulfill this condition.
     /// </summary>

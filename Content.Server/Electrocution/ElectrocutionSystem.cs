@@ -199,16 +199,15 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     }
 
     /// <summary>
-    /// Handle Visuals and Logical response to an entity attempting to interact
-    /// with an electrified component that might end up electrocuting them.
+    /// Attempt to trigger an electrocution via an entity interacting with the electrified entity. Checks what type of electrocution to apply and handles daisy-chaining.
     /// </summary>
-    /// <param name="uid">The entity emitting elecriticy</param>
-    /// <param name="targetUid">The entity interacting</param>
-    /// <param name="siemens">The electric conductance. 0 means no elecricity can pass through, 1 means full force</param>
-    /// <param name="electrified">the electrified component of uid entity</param>
-    /// <param name="nodeContainer">the note container of uid entity.</param>
-    /// <param name="transform">the transform of the uid entity</param>
-    /// <returns>If the attempted caused electrocution.</returns>
+    /// <param name="uid">The entity emitting electricity.</param>
+    /// <param name="targetUid">The entity interacting.</param>
+    /// <param name="siemens">The electric conductance. 0 means no electricity can pass through, 1 means full force.</param>
+    /// <param name="electrified">The electrified component of uid entity.</param>
+    /// <param name="nodeContainer">The node container of uid entity.</param>
+    /// <param name="transform">The transform of the uid entity.</param>
+    /// <returns>If the attempt caused an electrocution.</returns>
     public bool TryDoElectrifiedAct(EntityUid uid,
         EntityUid targetUid,
         float siemens = 1,

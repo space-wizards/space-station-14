@@ -323,8 +323,7 @@ public sealed partial class ExplosionSystem
     /// <summary>
     /// Creates a visual state object reflecting a potential explosion.
     /// </summary>
-    /// <param name="request">Parameters of the explosion</param>
-    /// <returns></returns>
+    /// <param name="request">Parameters of the explosion.</param>
     public ExplosionVisualsState? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
     {
         var stopwatch = new Stopwatch();

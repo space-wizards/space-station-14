@@ -26,7 +26,7 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
 
     /// <summary>
     /// How often to mutate a float field.
-    /// see PlantChangeStatEntityEffectSystem.MutateFloat in Content.Server.
+    /// See PlantChangeStatEntityEffectSystem.MutateFloat in Content.Server.
     /// </summary>
     [DataField]
     public int Steps;

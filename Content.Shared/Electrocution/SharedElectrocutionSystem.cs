@@ -17,11 +17,8 @@ namespace Content.Shared.Electrocution
         }
 
         /// <summary>
-        /// Tries to set siemens Coefficient on an entities insulated component
+        /// Tries to set Siemens Coefficient on an entity's insulated component.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="siemensCoefficient"></param>
-        /// <param name="insulated"></param>
         public void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
         {
             if (!Resolve(uid, ref insulated))
@@ -48,10 +45,8 @@ namespace Content.Shared.Electrocution
         }
 
         /// <summary>
-        /// Set a wires state.
+        /// Set a wire's cut state.
         /// </summary>
-        /// <param name="ent"></param>
-        /// <param name="value"></param>
         public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
         {
             if (ent.Comp.IsWireCut == value)
@@ -63,7 +58,7 @@ namespace Content.Shared.Electrocution
             Dirty(ent);
         }
 
-        ///<summary>
+        /// <summary>
         /// Attempts to electrocute an entity interacting with electrified components.
         /// Only call server side.
         /// </summary>

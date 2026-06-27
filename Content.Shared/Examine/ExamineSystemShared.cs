@@ -55,10 +55,13 @@ namespace Content.Shared.Examine
             bool centerAtCursor);
 
         /// <summary>
-        /// checks if an entity is close enough to an examiner to show information classified as details.
+        /// Checks if an entity is close enough to an examiner to show information classified as details.
         /// Like you cannot read an ID card if the person is to far away.
         /// Or discern the nature of an held item from far away besides size of the item.
         /// </summary>
+        /// <param name="examiner">The entity doing the examining.</param>
+        /// <param name="entity">The entity being examined.</param>
+        /// <returns>Returns true if in details range.</returns>
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
             if (IsClientSide(entity))
@@ -102,13 +105,13 @@ namespace Content.Shared.Examine
         }
 
         /// <summary>
-        /// Checks if an entity can examine another entity.
+        /// Check if an entity can examine another entity at specific coordinates.
         /// </summary>
-        /// <param name="examiner">The entity doing the examination.</param>
-        /// <param name="target">The target space being examined.</param>
-        /// <param name="predicate">If true for an entity, return false.</param>
-        /// <param name="examined">The Entity being examined</param>
-        /// <param name="examinerComp">Examiner's examiner component.</param>
+        /// <param name="examiner">Entity doing the examining.</param>
+        /// <param name="target">Coordinates of the examination.</param>
+        /// <param name="predicate">Predicate to ignore entities blocking examining.</param>
+        /// <param name="examined">The entity being examined, if any.</param>
+        /// <param name="examinerComp">Examiner component for the examining entity.</param>
         /// <returns></returns>
         [Pure]
         public virtual bool CanExamine(EntityUid examiner,

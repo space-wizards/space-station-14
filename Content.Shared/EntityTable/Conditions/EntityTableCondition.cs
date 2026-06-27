@@ -17,13 +17,8 @@ public abstract partial class EntityTableCondition
     public bool Invert;
 
     /// <summary>
-    /// evaluates a condition for a given context.
+    /// Evaluates a condition for a given context.
     /// </summary>
-    /// <param name="root"></param>
-    /// <param name="entMan"></param>
-    /// <param name="proto"></param>
-    /// <param name="ctx"></param>
-    /// <returns></returns>
     public bool Evaluate(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         var res = EvaluateImplementation(root, entMan, proto, ctx);

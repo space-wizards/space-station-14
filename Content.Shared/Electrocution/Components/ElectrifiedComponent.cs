@@ -124,37 +124,37 @@ public sealed partial class ElectrifiedComponent : Component
     public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
-    /// sound to play when disabled
+    /// Sound to play when disabled.
     /// </summary>
     [DataField, AutoNetworkedField]
     public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_off.ogg");
 
     /// <summary>
-    /// sound to play when enabled.
+    /// Sound to play when enabled.
     /// </summary>
     [DataField, AutoNetworkedField]
     public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_on.ogg");
 
     /// <summary>
-    /// if sound should be played upon shocking something or someone.
+    /// If sound should be played upon shocking something or someone.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool PlaySoundOnShock = true;
 
     /// <summary>
-    /// volume of shock sound.
+    /// Volume of shock sound.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ShockVolume = 20;
 
     /// <summary>
-    /// the chance if it would shock someone
+    /// The chance if it would shock someone.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float Probability = 1f;
 
     /// <summary>
-    /// if the power wire of this component is cut, aka no longer electrified.
+    /// If the power wire of this component is cut, aka no longer electrified.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsWireCut = false;
