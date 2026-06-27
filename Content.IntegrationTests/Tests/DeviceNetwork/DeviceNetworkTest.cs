@@ -168,11 +168,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             await server.WaitRunTicks(2);
             await server.WaitIdleAsync();
 
+            var secondPayload = new SecondTestPayload();
+
             await server.WaitAssertion(() =>
             {
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload));
-
-                var secondPayload = new SecondTestPayload();
 
                 wirelessNetworkComponent.Range = 0;
 
@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(payload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload));
+                Assert.That(secondPayload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload));
             });
         }
 
