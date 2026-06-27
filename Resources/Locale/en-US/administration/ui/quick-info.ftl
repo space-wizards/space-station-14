@@ -11,4 +11,3 @@ admin-quick-info-job = Starting Job: [color=white]{ESCAPE($job)}[/color]
 admin-quick-info-role-type-subtype = Role: [color={ESCAPE-PARAM($color)}]{ESCAPE($symbol)} {ESCAPE($type)} - {ESCAPE($subtype)}[/color]
 admin-quick-info-role-type = Role: [color={$color}]{ESCAPE($symbol)} {ESCAPE($type)}[/color]
 admin-quick-info-no-role = No role
-admin-quick-info-separator = ---------------------
