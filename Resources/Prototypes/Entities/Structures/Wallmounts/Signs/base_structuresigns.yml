@@ -22,3 +22,6 @@
     price: 20
   - type: Transform
     anchored: false
+  - type: Construction
+    graph: SignGraph
+    node: sign

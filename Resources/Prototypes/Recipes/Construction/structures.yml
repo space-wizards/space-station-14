@@ -1365,5 +1365,35 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: true
-#  conditions:
-#  - !type:WallmountCondition {}
+
+- type: construction
+  id: SignBlank
+  graph: SignGraph
+  startNode: start
+  targetNode: sign
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: true
+
+- type: construction
+  id: SignWarningBlank
+  graph: SignWarningGraph
+  startNode: start
+  targetNode: sign_warning
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: true
+
+- type: construction
+  id: SignDirectionalBlank
+  graph: SignDirectionalGraph
+  startNode: start
+  targetNode: sign_directional
+  category: construction-category-structures
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true

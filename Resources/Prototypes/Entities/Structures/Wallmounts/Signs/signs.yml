@@ -7,14 +7,53 @@
   - type: Sprite
     state: monkey_painting
 
+- type: entity
+  parent: BaseSign
+  id: SignBlank
+  name: blank sign
+  description: A sign with nothing on it.
+  components:
+  - type: Sprite
+    state: blank
+
+- type: entity
+  parent: BaseSign
+  id: BaseWarningSign
+  abstract: true
+  components:
+  - type: Construction
+    graph: SignWarningGraph
+    node: sign_warning
+
+- type: entity
+  parent: BaseWarningSign
+  id: SignWarningBlank
+  name: blank warning sign
+  description: A blank triangular warning sign. Perhaps you are being cautioned to beware the unknown, or perhaps somebody forgot to paint it.
+  components:
+  - type: Sprite
+    state: hazard_blank
+
 # Directional Station Guide Signs
 - type: entity
   parent: BaseSign
   id: BaseSignDirectional
   abstract: true
   components:
-    - type: Sprite
-      snapCardinals: false
+  - type: Sprite
+    snapCardinals: false
+  - type: Construction
+    graph: SignDirectionalGraph
+    node: sign_directional
+
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalBlank
+  name: blank direction sign
+  description: A direction sign leading nowhere, just for show.
+  components:
+  - type: Sprite
+    state: direction_blank
 
 - type: entity
   parent: BaseSignDirectional
@@ -404,7 +443,7 @@
     state: bio
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignBiohazard
   name: biohazard sign
   description: A sign indicating a biohazard.
@@ -422,7 +461,7 @@
     state: bridge
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignCanisters
   name: canisters sign
   description: A sign warning the viewer about pressurised canisters.
@@ -872,7 +911,7 @@
     state: virology
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignCorrosives
   name: corrosives warning sign
   description: A sign indicating a corrosive materials hazard.
@@ -881,7 +920,7 @@
     state: corrosives
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignCryogenics
   name: cryogenics warning sign
   description: A sign indicating a cryogenic materials hazard. Bring a jacket!
@@ -890,7 +929,7 @@
     state: cryogenics
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignDanger
   name: danger warning sign
   description: A sign warning against some danger.
@@ -926,7 +965,7 @@
     state: laser
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignMagnetics
   name: magnetics warning sign
   description: A sign indicating a magnetic materials hazard.
@@ -935,7 +974,7 @@
     state: magnetics
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignMemetic
   name: memetic warning sign
   description: A sign indicating a memetic hazard.
@@ -944,7 +983,7 @@
     state: memetic
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignSecure
   name: secure sign
   description: A sign indicating that the area ahead is a secure area.
@@ -953,7 +992,7 @@
     state: secure
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignSecurearea
   name: secure area sign
   description: A sign indicating that the area ahead is a secure area.
@@ -963,7 +1002,7 @@
     snapCardinals: true
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignShock
   name: shock sign
   description: A sign indicating an electrical hazard.
@@ -972,7 +1011,7 @@
     state: shock
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignOptical
   name: optical warning sign
   description: A sign indicating an optical radiation hazard.
@@ -981,7 +1020,7 @@
     state: optical
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignOxidants
   name: oxidants warning sign
   description: A sign indicating an oxidizing agent hazard.
@@ -990,7 +1029,7 @@
     state: oxidants
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignRadiation
   name: radiation warning sign
   description: A sign indicating an ionizing radiation hazard.
@@ -1116,7 +1155,7 @@
     state: medium_radiation
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignFlammableMed
   name: flammable sign #when flammable component is done, this sign needs it
   description: A sign indicating flammable materials.
@@ -1125,7 +1164,7 @@
     state: medium_flammable
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignLaserMed
   name: laser sign
   description: A sign indicating a laser hazard.
