@@ -153,27 +153,34 @@
       state: disposal
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      state: dispover-ready
+      state: mailing-charging
+      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-      state: dispover-full
+      state: mailing-full
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: mailing-flush
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
       state: mailover-handle
-      visible: false
   - type: GenericVisualizer
     visuals:
+      enum.DisposalUnitVisuals.IsFlushing:
+        enum.DisposalUnitVisualLayers.OverlayFlushing:
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: mailing }
           False: { state: mailing-charging }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          True: { visible: true }
-          False: { visible: false }
+          True: { state: mailover-handle }
+          False: { state: mailover-handle-off }
       enum.DisposalUnitVisuals.IsCharging:
         enum.DisposalUnitVisualLayers.OverlayCharging:
-          True: { state: dispover-charge, visible: true }
-          False: { state: dispover-ready, visible: true }
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsFull:
         enum.DisposalUnitVisualLayers.OverlayFull:
           True: { visible: true }
