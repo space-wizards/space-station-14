@@ -1,6 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Mind.Components;
+using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems;
 
@@ -33,10 +35,15 @@ public sealed partial class AdminQuickInfoSystem : EntitySystem
         var responses = ev.Entities.Select(e =>
             {
                 if (!TryGetEntity(e, out var ent))
-                    return new QuickInfoShared.SingleEntityInfo(e, false, "", "");
+                    return new QuickInfoShared.SingleEntityInfo(e, false, "", "", null);
 
+                NetUserId? lastPlayer = null;
+                if (TryComp<MindContainerComponent>(ent, out var comp))
+                {
+                    lastPlayer = comp.LastPlayer;
+                }
                 var metadata = MetaData(ent.Value);
-                return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID);
+                return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID, lastPlayer);
             })
             .ToArray();
 
