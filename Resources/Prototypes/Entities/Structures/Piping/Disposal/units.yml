@@ -153,7 +153,7 @@
       state: mailing-charging
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-      state: dispover-full
+      state: mailing-full
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
       state: mailing-flush
