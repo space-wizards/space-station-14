@@ -334,8 +334,8 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
     /// </remarks>
     public event Action<TValue>? ImmediateValueChanged;
 
-    private readonly IConfigurationManager _cfg;
-    private readonly CVarDef<TValue> _cVar;
+    protected readonly IConfigurationManager _cfg;
+    protected readonly CVarDef<TValue> _cVar;
 
     /// <summary>
     /// Sets and gets the actual CVar value to/from the frontend UI state or control.
@@ -706,52 +706,64 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
             i += 1;
         }
 
+        // option ID that was selected at the moment when popup opened
+        var selectedOptionIdOnOpen = 0;
+
         dropDown.Button.OnItemSelected += args =>
         {
+            if (enablePreview)
+            {
+                // reset cvar back to the initial value after it was possibly changed in preview.
+                var idx = button.GetIdx(selectedOptionIdOnOpen);
+                var meta = button.GetItemMetadata(idx);
+                cfg.SetCVar(cVar.Name, meta!);
+            }
+
             dropDown.Button.SelectId(args.Id);
             ValueChanged();
         };
 
         if (enablePreview)
         {
-            var selectedIdWhenOpened = 0;
             button.OnPopupToggled += args =>
             {
                 if (args.Toggle)
                 {
-                    selectedIdWhenOpened = dropDown.Button.SelectedId;
+                    // when popup opens, remember selected value
+                    selectedOptionIdOnOpen = dropDown.Button.SelectedId;
                 }
                 else
                 {
-                    if (selectedIdWhenOpened != dropDown.Button.SelectedId)
+                    if (selectedOptionIdOnOpen != dropDown.Button.SelectedId)
                     {
-                        // if user selected a value skip reset
+                        // if user selected a value skip cvar reset
                         return;
                     }
 
-                    // reset back to the initial value
-                    var idx = button.GetIdx(dropDown.Button.SelectedId);
+                    // reset cvar back to the initial value after the popup closes without user changing the selected value
+                    var idx = button.GetIdx(selectedOptionIdOnOpen);
                     var meta = button.GetItemMetadata(idx);
                     cfg.SetCVar(cVar.Name, meta!);
                 }
             };
 
-            button.OnItemHover += ItemOnHover;
-
+            // last item id that was hovered over
             var lastHoverId = 0;
             OnItemHover += args =>
             {
-                // skip expensive SetCVar if hover didn't change
+                // skip expensive SetCVar if not dirty
                 if (args.Id == lastHoverId)
                 {
                     return;
                 }
 
+                // temporarily change the cvar without saving to simulate a "preview"
                 var idx = button.GetIdx(args.Id);
                 var meta = button.GetItemMetadata(idx);
                 cfg.SetCVar(cVar.Name, meta!);
                 lastHoverId = args.Id;
             };
+            button.OnItemHover += ItemOnHover;
         }
     }
 
