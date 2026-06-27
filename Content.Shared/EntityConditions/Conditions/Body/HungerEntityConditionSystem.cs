@@ -23,12 +23,12 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
 public sealed partial class HungerCondition : EntityConditionBase<HungerCondition>
 {
     /// <summary>
-    /// minimum hunger required to fulfill this condition.
+    /// Minimum hunger required to fulfill this condition.
     /// </summary>
     [DataField]
     public float Min;
     /// <summary>
-    /// maximum hunger required to fulfill this condition.
+    /// Maximum hunger required to fulfill this condition.
     /// </summary>
     [DataField]
     public float Max = float.PositiveInfinity;

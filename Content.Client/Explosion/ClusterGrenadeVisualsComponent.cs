@@ -1,7 +1,9 @@
+using Content.Shared.Explosion.EntitySystems;
 namespace Content.Client.Explosion;
 
 /// <summary>
 /// The Visual Component for the Cluster Grenade.
+/// <see cref="ScatteringGrenadeSystem"/>
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ClusterGrenadeVisualizerSystem))]

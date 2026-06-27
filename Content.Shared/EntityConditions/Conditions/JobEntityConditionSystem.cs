@@ -50,7 +50,7 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
 public sealed partial class JobCondition : EntityConditionBase<JobCondition>
 {
     /// <summary>
-    /// Jobs required to fulfill this condition (only needs single match)
+    /// Jobs required to fulfill this condition (only needs single match).
     /// </summary>
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
 

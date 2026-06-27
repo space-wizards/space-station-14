@@ -16,7 +16,7 @@ namespace Content.Server.Engineering.Components
         public string? Prototype { get; private set; }
 
         /// <summary>
-        /// If true will not work if not in reach.
+        /// Stops the spawn if the target space is no longer in reach, unless true.
         /// </summary>
         [DataField("ignoreDistance")]
         public bool IgnoreDistance { get; private set; }

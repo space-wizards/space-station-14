@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 public sealed partial class MetabolizerTypeCondition : EntityConditionBase<MetabolizerTypeCondition>
 {
     /// <summary>
-    /// Which metabolizer types would fulfill this condition. need only one match.
+    /// Which metabolizer types would fulfill this condition. Need only one match.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype>[] Type = default!;
