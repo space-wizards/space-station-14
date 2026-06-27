@@ -76,9 +76,7 @@ public sealed partial class ChatSystem
         if (IsFlaggedWordAhelpOnCooldown(player.UserId))
             return;
 
-        var report =
-            $"Automated report: I said \"{match.Value}\" " +
-            $"in the context: \"{originalMessage}\"";
+        var report = Loc.GetString("admin-flagged-word", ("flagged", match.Value), ("original", originalMessage));
 
         _bwoink.SendAutomatedPlayerAHelp(player, report);
     }
