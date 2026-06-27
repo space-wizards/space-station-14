@@ -67,13 +67,10 @@
         speech: !type:LocalizedSetSpeakOperatorSpeech
           lineSet: BoombotStop
         hidden: true
-    # Forget target
-    - !type:HTNPrimitiveTask
-      operator: !type:ForgetKeyOperator
-        key: Target
     # Stop accompanying music
     - !type:HTNPrimitiveTask
       operator: !type:JoinBandOperator
+        exitBand: true
 
 - type: utilityQuery
   id: NearbyMusic

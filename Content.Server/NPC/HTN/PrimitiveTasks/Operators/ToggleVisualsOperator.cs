@@ -11,14 +11,21 @@ public sealed partial class ToggleVisualsOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
 
+    private SharedAppearanceSystem _appearance = default!;
+
     [DataField]
     public bool Enabled = true;
+
+    public override void Initialize(IEntitySystemManager sysManager)
+    {
+        base.Initialize(sysManager);
+        _appearance = sysManager.GetEntitySystem<SharedAppearanceSystem>();
+    }
 
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var appearance = _entManager.System<SharedAppearanceSystem>();
-        appearance.SetData(owner, ToggleableVisuals.Enabled, Enabled);
+        _appearance.SetData(owner, ToggleableVisuals.Enabled, Enabled);
     }
 }
