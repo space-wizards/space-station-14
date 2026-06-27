@@ -86,7 +86,7 @@ public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineCo
     protected override void InitializeDevice()
     {
         base.InitializeDevice();
-        SubscribePayloadParallel<FaxPingPayload>(OnPingPayload);
+        SubscribePayload<FaxPingPayload>(OnPingPayload);
         SubscribePayload<FaxPongPayload>(OnPongPayload);
         SubscribePayload<FaxPrintPayload>(OnPrintPayload);
     }
@@ -396,7 +396,7 @@ public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineCo
             IsSyndicate = _emag.CheckFlag(uid, EmagType.Interaction),
         };
 
-        _deviceNetworkSystem.QueuePacketParallel(uid, null, payload);
+        _deviceNetworkSystem.QueuePacket(uid, null, payload);
     }
 
     /// <summary>
