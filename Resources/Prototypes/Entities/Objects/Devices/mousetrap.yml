@@ -59,7 +59,6 @@
           density: 30
           mask:
             - ItemMask
-    - type: Rotatable
 
 - type: entity
   name: mousetrap
