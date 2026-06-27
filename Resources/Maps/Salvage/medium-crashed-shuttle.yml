@@ -832,25 +832,21 @@ entities:
   - uid: 10
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 166
   - uid: 104
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 0.5,-6.5
       parent: 166
   - uid: 108
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -0.5,-6.5
       parent: 166
   - uid: 109
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -1.5,-6.5
       parent: 166
   - uid: 146
