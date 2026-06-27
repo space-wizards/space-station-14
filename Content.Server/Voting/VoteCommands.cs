@@ -18,7 +18,7 @@ namespace Content.Server.Voting
 
         public override string Command => "createvote";
 
-        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
