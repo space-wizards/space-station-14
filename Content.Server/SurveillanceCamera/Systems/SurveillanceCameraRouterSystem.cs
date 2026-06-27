@@ -1,6 +1,5 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
@@ -23,7 +22,6 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SurveillanceCameraRouterComponent, ComponentInit>(OnInitialize);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
@@ -38,26 +36,20 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
         SubscribePayload<SurveillanceCameraPingSubnetPayload>(OnSubnetPing);
     }
 
-    private void OnInitialize(EntityUid uid, SurveillanceCameraRouterComponent router, ComponentInit args)
-    {
-        if (router.SubnetFrequencyId == null ||
-            !_prototypeManager.TryIndex(router.SubnetFrequencyId, out DeviceFrequencyPrototype? subnetFrequency))
-        {
-            return;
-        }
-
-        router.SubnetFrequency = subnetFrequency.Frequency;
-        router.Active = true;
-        if (string.IsNullOrEmpty(router.SubnetName) && subnetFrequency.Name != null)
-            router.SubnetName = Loc.GetString(subnetFrequency.Name);
-    }
-
     private void OnMapInit(Entity<SurveillanceCameraRouterComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp(ent, out DeviceNetworkRouterComponent? router))
+        if (TryComp(ent, out DeviceNetworkRouterComponent? router))
+            router.TransmitFrequency = ent.Comp.SubnetFrequency;
+
+        if (ent.Comp.SubnetFrequencyId == null
+            || !_prototypeManager.TryIndex(ent.Comp.SubnetFrequencyId, out var subnetFrequency))
             return;
 
-        router.TransmitFrequency = ent.Comp.SubnetFrequency;
+        ent.Comp.SubnetFrequency = subnetFrequency.Frequency;
+        ent.Comp.Active = true;
+
+        if (string.IsNullOrEmpty(ent.Comp.SubnetName) && subnetFrequency.Name != null)
+            ent.Comp.SubnetName = Loc.GetString(subnetFrequency.Name);
     }
 
     private void OnSubnetConnect(
