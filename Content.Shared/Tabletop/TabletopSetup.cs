@@ -14,6 +14,6 @@ public abstract partial class TabletopSetup
     /// <param name="entityManager">Dependency that can be used for spawning entities.</param>
     public abstract void SetupTabletop(TabletopSession session, IEntityManager entityManager);
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string BoardPrototype = default!;
+    [DataField]
+    public EntProtoId BoardPrototype;
 }
