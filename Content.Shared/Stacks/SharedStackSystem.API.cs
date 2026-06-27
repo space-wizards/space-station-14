@@ -68,6 +68,9 @@ public abstract partial class SharedStackSystem
         if (amount > 0)
             transferred = Math.Min(transferred, amount.Value);
 
+        var mergeEvent = new MergeEvent(recipient, donor, transferred);
+        RaiseLocalEvent(recipient, ref mergeEvent, true);
+
         SetCount(donor, donor.Comp.Count - transferred);
         SetCount(recipient, recipient.Comp.Count + transferred);
         return true;

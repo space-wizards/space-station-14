@@ -24,7 +24,7 @@ namespace Content.Server.Stack
         /// <param name="spawnPosition">Where to spawn the new stack</param>
         /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
         [PublicAPI]
-        public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+        public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
         {
             if (!Resolve(ent.Owner, ref ent.Comp))
                 return null;
@@ -38,6 +38,9 @@ namespace Content.Server.Stack
 
             // Set the output parameter in the event instance to the newly split stack.
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
+            // If spawned in player hand it sets the parent to the player for the split event
+            // This should always be later overridden
+            Xform.SetParent(newEntity, spawnPosition.EntityId);
 
             // There should always be a StackComponent
             var stackComp = Comp<StackComponent>(newEntity);
@@ -277,28 +280,6 @@ namespace Content.Server.Stack
         }
 
         #endregion
-        #endregion
-        #region Event Handlers
-
-        /// <inheritdoc />
-        protected override void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
-        {
-            if (!Resolve(user.Owner, ref user.Comp, false))
-                return;
-
-            if (amount <= 0)
-            {
-                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
-                return;
-            }
-
-            if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
-                return;
-
-            Hands.PickupOrDrop(user.Owner, split);
-
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
-        }
         #endregion
     }
 }

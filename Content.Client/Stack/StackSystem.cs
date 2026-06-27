@@ -3,6 +3,7 @@ using Content.Client.Storage.Systems;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Client.Stack
 {
@@ -23,7 +24,7 @@ namespace Content.Client.Stack
 
         #region Appearance
 
-        private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
+        public void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
         {
             var (uid, comp) = ent;
 

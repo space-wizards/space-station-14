@@ -8,6 +8,7 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Stacks;
@@ -100,8 +101,11 @@ public abstract partial class SharedStackSystem : EntitySystem
                 break;
         }
 
-        var localRotation = Transform(args.Used).LocalRotation;
-        _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
+        if (ent.Comp.AnimatePickup)
+        {
+            var localRotation = Transform(args.Used).LocalRotation;
+            _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
+        }
     }
 
     private void OnStackStarted(Entity<StackComponent> ent, ref ComponentStartup args)
@@ -182,24 +186,15 @@ public abstract partial class SharedStackSystem : EntitySystem
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         var user = args.User; // Can't pass ref events into verbs
 
-        AlternativeVerb halve = new()
-        {
-            Text = Loc.GetString("comp-stack-split-halve"),
-            Category = VerbCategory.Split,
-            Act = () => UserSplit(ent, user, ent.Comp.Count / 2),
-            Priority = 1
-        };
-        args.Verbs.Add(halve);
-
         var priority = 0;
         foreach (var amount in DefaultSplitAmounts)
         {
-            if (amount >= ent.Comp.Count)
+            if (amount > ent.Comp.Count)
                 continue;
 
             AlternativeVerb verb = new()
@@ -210,11 +205,21 @@ public abstract partial class SharedStackSystem : EntitySystem
                 // we want to sort by size, not alphabetically by the verb text.
                 Priority = priority
             };
-
             priority--;
 
             args.Verbs.Add(verb);
         }
+
+        // round up on odd
+        int half = (ent.Comp.Count + 1) / 2;
+        AlternativeVerb halve = new()
+        {
+            Text = Loc.GetString("comp-stack-split-halve"),
+            Category = VerbCategory.Split,
+            Act = () => UserSplit(ent, user, half),
+            Priority = ent.Comp.HalfOnAltInteract ? 1 : priority - 1,
+        };
+        args.Verbs.Add(halve);
     }
 
     /// <remarks>
@@ -224,9 +229,30 @@ public abstract partial class SharedStackSystem : EntitySystem
     ///     This empty virtual method allows for UserSplit() to be called on the server from the client.
     ///     When prediction is improved, those two methods should be moved to shared, in order to predict the splitting itself (not just the verbs)
     /// </remarks>
-    protected virtual void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
+    public void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
     {
+        if (!Resolve(user.Owner, ref user.Comp, false))
+            return;
 
+        if (amount <= 0)
+            return;
+
+        if (Hands.TryGetActiveItem(user.Owner, out var recipient)
+            && TryComp<StackComponent>(recipient, out var recipientStack)
+            && TryMergeStacks((stack.Owner, stack.Comp), (recipient.Value, recipientStack), out var transferred, amount: amount))
+            return;
+
+        if (Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero)) is not { } split)
+            return;
+
+        Hands.PickupOrDrop(user.Owner, split);
+        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
+    }
+
+    [PublicAPI]
+    public virtual EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+    {
+        return null;
     }
 }
 

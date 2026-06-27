@@ -6,3 +6,6 @@
 /// <param name="NewId">The entity id of the new stack.</param>
 [ByRefEvent]
 public readonly record struct StackSplitEvent(EntityUid NewId);
+
+[ByRefEvent]
+public readonly record struct MergeEvent(EntityUid Donor, EntityUid Recipient, int Delta);
