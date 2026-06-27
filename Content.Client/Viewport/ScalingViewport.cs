@@ -179,13 +179,26 @@ namespace Content.Client.Viewport
             _queuedScreenshots.Add(callback);
         }
 
-        // Draw box in pixel coords to draw the viewport at.
-        private UIBox2i GetDrawBox()
+        /// <summary>
+        ///     Draw box in local pixel coordinates where the viewport content is rendered.
+        /// </summary>
+        public UIBox2i GetDrawBox()
         {
-            DebugTools.AssertNotNull(_viewport);
+            return GetDrawBox(PixelSize);
+        }
 
-            var vpSize = _viewport!.Size;
-            var ourSize = (Vector2) PixelSize;
+        /// <summary>
+        ///     Calculates the viewport draw box for a hypothetical control size.
+        /// </summary>
+        public UIBox2i GetDrawBox(Vector2i pixelSize)
+        {
+            return GetDrawBox(pixelSize, GetRenderTargetSize(pixelSize));
+        }
+
+        private UIBox2i GetDrawBox(Vector2i pixelSize, Vector2i viewportSize)
+        {
+            var vpSize = new Vector2i(Math.Max(1, viewportSize.X), Math.Max(1, viewportSize.Y));
+            var ourSize = (Vector2) pixelSize;
 
             if (FixedStretchSize == null)
             {
@@ -218,15 +231,22 @@ namespace Content.Client.Viewport
             }
         }
 
-        private void RegenerateViewport()
+        private Vector2i GetRenderTargetSize(Vector2i pixelSize)
         {
-            DebugTools.AssertNull(_viewport);
+            var renderScale = GetRenderScale(pixelSize);
+            return ViewportSize * renderScale;
+        }
 
+        private int GetRenderScale(Vector2i pixelSize)
+        {
             var vpSizeBase = ViewportSize;
-            var ourSize = PixelSize;
-            var (ratioX, ratioY) = ourSize / (Vector2) vpSizeBase;
+            if (vpSizeBase.X <= 0 || vpSizeBase.Y <= 0)
+                return 1;
+
+            var (ratioX, ratioY) = pixelSize / (Vector2) vpSizeBase;
             var ratio = Math.Min(ratioX, ratioY);
             var renderScale = 1;
+
             switch (_renderScaleMode)
             {
                 case ScalingViewportRenderScaleMode.CeilInt:
@@ -240,8 +260,14 @@ namespace Content.Client.Viewport
                     break;
             }
 
-            // Always has to be at least one to avoid passing 0,0 to the viewport constructor
-            renderScale = Math.Max(1, renderScale);
+            return Math.Max(1, renderScale);
+        }
+
+        private void RegenerateViewport()
+        {
+            DebugTools.AssertNull(_viewport);
+
+            var renderScale = GetRenderScale(PixelSize);
 
             _curRenderScale = renderScale;
 
