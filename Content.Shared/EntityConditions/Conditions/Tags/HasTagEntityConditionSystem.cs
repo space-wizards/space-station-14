@@ -21,7 +21,7 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
 public sealed partial class TagCondition : EntityConditionBase<TagCondition>
 {
     /// <summary>
-    /// Tag required to fullfill this condition.
+    /// Tag required to fulfill this condition.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;
