@@ -95,10 +95,10 @@ public sealed partial class EyeClosingSystem : EntitySystem
     }
 
     /// <summary>
-    /// checks if sound for an eyelid moving must be played.
+    /// Check if sound for an eyelid moving must be played.
     /// </summary>
-    /// <param name="eyelids"></param>
-    /// <param name="eyelidTarget">ture if eyelids are closed now</param>
+    /// <param name="eyelids">The entity to chick.</param>
+    /// <param name="eyelidTarget">True if eyelids are closed now.</param>
     public void DoAudioFeedback(Entity<EyeClosingComponent?> eyelids, bool eyelidTarget)
     {
         if (!Resolve(eyelids, ref eyelids.Comp))
@@ -120,7 +120,7 @@ public sealed partial class EyeClosingSystem : EntitySystem
     /// Update a eye closing component to agree with a blindable componet
     /// (such as loosing the ability to close eyes, if they are destroyed).
     /// </summary>
-    /// <param name="blindable"></param>
+    /// <param name="blindable">Blindable entity to update.</param>
     public void UpdateEyesClosable(Entity<BlindableComponent?> blindable)
     {
         if (!Resolve(blindable, ref blindable.Comp, false))

@@ -91,13 +91,14 @@ public sealed partial class ExplosionPrototype : IPrototype
     public float MaxCombineDistance = 1f;
 
     /// <summary>
-    /// Normal Sound of the explosion
+    /// Normal sound of the explosion.
     /// </summary>
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
+
 /// <summary>
 /// Sound if the explosion is small.
-/// <see cref="SmallSoundIterationThreshold"/>
+/// <seealso cref="SmallSoundIterationThreshold"/>
 /// </summary>
     [DataField("smallSound")]
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
@@ -107,6 +108,7 @@ public sealed partial class ExplosionPrototype : IPrototype
 /// </summary>
     [DataField("soundFar")]
     public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
+
     /// <summary>
     /// Secondary sound that will be projected farther than normal sound for a small explosion.
     /// </summary>
@@ -114,7 +116,7 @@ public sealed partial class ExplosionPrototype : IPrototype
     public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
     /// <summary>
-    /// the texture of the explosion.
+    /// The texture of the explosion.
     /// </summary>
     [DataField("texturePath")]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
@@ -126,7 +128,7 @@ public sealed partial class ExplosionPrototype : IPrototype
     public float IntensityPerState = 12;
 
     /// <summary>
-    /// number of states in the rsi of ResPath. To qoute the original author:
+    /// Number of states in the rsi of ResPath. To quote the original author:
     ///  Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     /// steal code from.
     /// </summary>
