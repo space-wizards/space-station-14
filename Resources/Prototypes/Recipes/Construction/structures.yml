@@ -1395,6 +1395,19 @@
   - !type:TileNotBlocked
 
 - type: construction
+  id: StairStageWhite
+  graph: Stairs
+  startNode: start
+  targetNode: stairsStageWhite
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   id: StairDark
   graph: Stairs
   startNode: start
