@@ -37,7 +37,7 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-    suffix: device-address-prefix-camera-router
+    prefix: device-address-prefix-camera-router
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
   - type: DeviceNetworkRouter
@@ -173,7 +173,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-    suffix: device-address-prefix-camera-router-wireless
+    prefix: device-address-prefix-camera-router-wireless
   - type: WirelessNetworkConnection
     range: 200
   - type: DeviceNetworkRequiresPower

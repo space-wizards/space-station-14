@@ -76,7 +76,7 @@
   - type: DeviceNetwork
     deviceNetId: Wired
     transmitFrequencyId: SurveillanceCamera
-    suffix: device-address-prefix-camera
+    prefix: device-address-prefix-camera
   - type: DeviceNetworkRequiresPower
   - type: WiredNetworkConnection
   - type: StationAiVision
@@ -124,7 +124,7 @@
   components:
   - type: DeviceNetwork
     receiveFrequencyId: SurveillanceCameraEngineering
-    suffix: device-address-prefix-camera
+    prefix: device-address-prefix-camera
   - type: SurveillanceCamera
     networkSet: true
 

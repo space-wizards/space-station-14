@@ -21,7 +21,7 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
-    suffix: device-address-prefix-crew-monitor
+    prefix: device-address-prefix-crew-monitor
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
