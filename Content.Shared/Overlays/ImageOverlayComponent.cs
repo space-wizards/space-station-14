@@ -27,4 +27,3 @@ public sealed partial class ImageOverlayComponent : Component
     [DataField]
     public bool Active = true;
 }
-

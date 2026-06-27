@@ -9,10 +9,10 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Creates overlay image placed over user screen
 /// </summary>
-public sealed class ImageOverlay : Overlay
+public sealed partial class ImageOverlay : Overlay
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
