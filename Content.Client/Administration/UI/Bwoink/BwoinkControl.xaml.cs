@@ -194,6 +194,12 @@ namespace Content.Client.Administration.UI.Bwoink
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
 
+            CheckAfk.OnPressed += _ =>
+            {
+                if (_currentPlayer is not null)
+                    _console.ExecuteCommand($"checkafk \"{_currentPlayer.SessionId}\"");
+            };
+
             PopOut.OnPressed += _ =>
             {
                 uiController.PopOut();
@@ -242,6 +248,9 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Respawn.Visible = _adminManager.CanCommand("respawn");
             Respawn.Disabled = !Respawn.Visible || disabled;
+
+            CheckAfk.Visible = _adminManager.CanCommand("checkafk");
+            CheckAfk.Disabled = !CheckAfk.Visible || disabled || _currentPlayer?.Connected != true;
 
             Follow.Visible = _adminManager.CanCommand("follow");
             Follow.Disabled = !Follow.Visible || disabled;

@@ -1,6 +1,7 @@
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.Instruments;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -16,13 +17,18 @@ namespace Content.Server.Afk;
 public sealed partial class AFKSystem : EntitySystem
 {
     [Dependency] private IAfkManager _afkManager = default!;
-    [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
-    private float _checkDelay;
-    private TimeSpan _checkTime;
+    /// <summary>
+    /// Don't need to do it every tick.
+    /// </summary>
+    private const float CheckDelay = 10f;
+
+    private TimeSpan _nextCheckTime;
+    private float _afkTime;
 
     private readonly HashSet<ICommonSession> _afkPlayers = new();
 
@@ -30,19 +36,56 @@ public sealed partial class AFKSystem : EntitySystem
     {
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
-        Subs.CVar(_configManager, CCVars.AfkTime, SetAfkDelay, true);
+        _afkManager.PlayerDidActionEvent += OnPlayerAction;
+        _afkTime = _cfg.GetCVar(CCVars.AfkTime);
+        _cfg.OnValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
 
         SubscribeNetworkEvent<FullInputCmdMessage>(HandleInputCmd);
+        // Temporary until instruments use BUIs like normal.
+        SubscribeNetworkEvent<InstrumentStartMidiEvent>(HandleMidiStart);
+        SubscribeNetworkEvent<InstrumentStopMidiEvent>(HandleMidiStop);
+        SubscribeNetworkEvent<InstrumentMidiEventEvent>(HandleMidiEvent);
+        SubscribeNetworkEvent<InstrumentSetChannelsEvent>(HandleMidiSetChannels);
+        SubscribeLocalEvent<BoundUserInterfaceMessageReceivedEvent>(OnBoundUiMessageReceived);
     }
 
     private void HandleInputCmd(FullInputCmdMessage msg, EntitySessionEventArgs args)
     {
+        if (!_playerManager.KeyMap.TryGetKeyFunction(msg.InputFunctionId, out _))
+            return;
+
+        if (!Enum.IsDefined(msg.State))
+            return;
+
         _afkManager.PlayerDidAction(args.SenderSession);
     }
 
-    private void SetAfkDelay(float obj)
+    private void HandleMidiStart(InstrumentStartMidiEvent msg, EntitySessionEventArgs args)
     {
-        _checkDelay = obj;
+        _afkManager.PlayerDidAction(args.SenderSession);
+    }
+
+    private void HandleMidiStop(InstrumentStopMidiEvent msg, EntitySessionEventArgs args)
+    {
+        _afkManager.PlayerDidAction(args.SenderSession);
+    }
+
+    private void HandleMidiEvent(InstrumentMidiEventEvent msg, EntitySessionEventArgs args)
+    {
+        _afkManager.PlayerDidAction(args.SenderSession);
+    }
+
+    private void HandleMidiSetChannels(InstrumentSetChannelsEvent msg, EntitySessionEventArgs args)
+    {
+        _afkManager.PlayerDidAction(args.SenderSession);
+    }
+
+    private void OnBoundUiMessageReceived(ref BoundUserInterfaceMessageReceivedEvent args)
+    {
+        if (!TryComp<ActorComponent>(args.Actor, out var actor))
+            return;
+
+        _afkManager.PlayerDidAction(actor.PlayerSession);
     }
 
     private void OnPlayerChange(object? sender, SessionStatusEventArgs e)
@@ -60,28 +103,46 @@ public sealed partial class AFKSystem : EntitySystem
         base.Shutdown();
         _afkPlayers.Clear();
         _playerManager.PlayerStatusChanged -= OnPlayerChange;
+        _afkManager.PlayerDidActionEvent -= OnPlayerAction;
+        _cfg.UnsubValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
+    }
+
+    private void OnPlayerAction(ICommonSession session)
+    {
+        if (!_afkPlayers.Remove(session))
+            return;
+
+        var ev = new UnAFKEvent(session);
+        RaiseLocalEvent(ref ev);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        if (_ticker.RunLevel != GameRunLevel.InRound)
+        // If disabled then ignore flagging anything.
+        if (_afkTime <= 0)
+            return;
+
+        if (_timing.CurTime < _nextCheckTime)
+            return;
+
+        _nextCheckTime = _timing.CurTime + TimeSpan.FromSeconds(CheckDelay);
+        // Flag everyone as non-afk unless the game is running.
+        if (!CanFlagAfk(_ticker.RunLevel))
         {
-            _afkPlayers.Clear();
-            _checkTime = TimeSpan.Zero;
+            MarkAllInGamePlayersActive();
+
+            // Technically we can double-fire afk events here but shouldn't matter.
+            // We just want AFK timers reset by the time we get into round.
             return;
         }
 
-        // TODO: Should also listen to the input events for more accurate timings.
-        if (_timing.CurTime < _checkTime)
-            return;
-
-        _checkTime = _timing.CurTime + TimeSpan.FromSeconds(_checkDelay);
-
         foreach (var pSession in Filter.GetAllPlayers())
         {
-            if (pSession.Status != SessionStatus.InGame) continue;
+            if (pSession.Status != SessionStatus.InGame)
+                continue;
+
             var isAfk = _afkManager.IsAfk(pSession);
 
             if (isAfk && _afkPlayers.Add(pSession))
@@ -96,6 +157,34 @@ public sealed partial class AFKSystem : EntitySystem
                 var ev = new UnAFKEvent(pSession);
                 RaiseLocalEvent(ref ev);
             }
+        }
+    }
+
+    private static bool CanFlagAfk(GameRunLevel runLevel)
+    {
+        return runLevel == GameRunLevel.InRound;
+    }
+
+    private void OnAfkTimeChanged(float value)
+    {
+        var wasEnabled = _afkTime > 0;
+        var isEnabled = value > 0;
+
+        // Reset AFK timers if we turn it on / off
+        if (wasEnabled != isEnabled)
+            MarkAllInGamePlayersActive();
+
+        _afkTime = value;
+    }
+
+    private void MarkAllInGamePlayersActive()
+    {
+        foreach (var pSession in Filter.GetAllPlayers())
+        {
+            if (pSession.Status != SessionStatus.InGame)
+                continue;
+
+            _afkManager.PlayerDidAction(pSession);
         }
     }
 }
