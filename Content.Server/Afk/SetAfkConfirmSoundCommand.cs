@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Afk;
 
-[AdminCommand(AdminFlags.VarEdit)]
+[AdminCommand(AdminFlags.Server)]
 public sealed partial class SetAfkConfirmSoundCommand : LocalizedEntityCommands
 {
     [Dependency] private IConfigurationManager _cfg = default!;

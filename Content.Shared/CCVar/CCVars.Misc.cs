@@ -33,21 +33,21 @@ public sealed partial class CCVars
     /// <summary>
     ///     How long a client can go without any input before being considered AFK.
     /// </summary>
-    [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
+    [CVarControl(AdminFlags.VarEdit, min: 60f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkTime =
         CVarDef.Create("afk.time", 300f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     How long a player has to confirm they are not AFK before being disconnected.
     /// </summary>
-    [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
+    [CVarControl(AdminFlags.Server, min: 10f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkConfirmTimeout =
         CVarDef.Create("afk.confirm_timeout", 60f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Sound played when the AFK confirmation window opens.
     /// </summary>
-    [CVarControl(AdminFlags.VarEdit)]
+    [CVarControl(AdminFlags.Server)]
     public static readonly CVarDef<string> AfkConfirmSound =
         CVarDef.Create("afk.confirm_sound", "/Audio/Effects/adminhelp.ogg", CVar.SERVER | CVar.REPLICATED);
 
