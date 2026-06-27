@@ -28,8 +28,8 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         Color skinColor,
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings)
     {
-        EyeColor = ClampColor(eyeColor);
-        SkinColor = ClampColor(skinColor);
+        EyeColor = eyeColor;
+        SkinColor = skinColor;
         Markings = markings;
     }
 
@@ -111,18 +111,12 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             sex);
     }
 
-    public static Color ClampColor(Color color)
-    {
-        return new(color.RByte, color.GByte, color.BByte);
-    }
-
     public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, ProtoId<SpeciesPrototype> species, Sex sex)
     {
-        var eyeColor = ClampColor(appearance.EyeColor);
-
         var proto = IoCManager.Resolve<IPrototypeManager>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
 
+        var eyeColor = appearance.EyeColor;
         var skinColor = appearance.SkinColor;
         var validatedMarkings = appearance.Markings.ShallowClone();
 
