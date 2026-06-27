@@ -15,7 +15,6 @@ public sealed class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponen
 
     private ImageOverlay _overlay = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();

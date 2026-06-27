@@ -48,7 +48,9 @@ public sealed class ImageOverlay : Overlay
 
 protected override void Draw(in OverlayDrawArgs args)
     {
-        var zoomFactor = _eyeManager.CurrentEye.Zoom.X;
+
+    protected override void Draw(in OverlayDrawArgs args)
+    {
 
         var screenRect = args.ViewportBounds;
 
