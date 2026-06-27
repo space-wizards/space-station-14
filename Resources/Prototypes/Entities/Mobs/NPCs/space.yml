@@ -74,7 +74,7 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, BaseSlicingRefinable]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -95,8 +95,8 @@
         Base: bear_dead
       Dead:
         Base: bear_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatBear
       amount: 3
     - id: MaterialHideBear
@@ -124,7 +124,7 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase]
+  parent: [MobSpaceBasic, StripableInventoryBase, BaseSlicingRefinable]
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -167,8 +167,8 @@
       Unsexed: Kangaroo
   - type: ReplacementAccent
     accent: kangaroo
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
       amount: 1
   - type: MobThresholds
@@ -186,7 +186,7 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, BaseSlicingRefinable]
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -211,8 +211,8 @@
         BaseUnshaded: glow
       Dead:
         Base: spacespider_dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSpider
       amount: 2
     - id: EggSpider
@@ -294,7 +294,7 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: MobSpaceBasic
+  parent: [MobSpaceBasic, BaseSlicingRefinable]
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -322,15 +322,15 @@
           BaseUnshaded: glow
         Dead:
           Base: dead_spacecobra
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatSnake
-          amount: 2
-        - id: UraniumOre1
-          amount: 1
-        - id: ClothingShoesSnakeskinBoots
-          amount: 1
-          prob: 0.3
+    - type: ToolRefinable
+      refineResult:
+      - id: FoodMeatSnake
+        amount: 2
+      - id: UraniumOre1
+        amount: 1
+      - id: ClothingShoesSnakeskinBoots
+        amount: 1
+        prob: 0.3
     - type: Bloodstream
       bloodReferenceSolution:
         reagents:
