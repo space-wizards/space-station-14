@@ -1,3 +1,4 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -16,6 +17,7 @@ namespace Content.Server.Afk;
 /// </summary>
 public sealed partial class AFKSystem : EntitySystem
 {
+    [Dependency] private IAdminManager _admin = default!;
     [Dependency] private IAfkManager _afkManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -28,6 +30,7 @@ public sealed partial class AFKSystem : EntitySystem
     private const float CheckDelay = 10f;
 
     private TimeSpan _nextCheckTime;
+    private float _adminAfkTime;
     private float _afkTime;
 
     private readonly HashSet<ICommonSession> _afkPlayers = new();
@@ -37,8 +40,8 @@ public sealed partial class AFKSystem : EntitySystem
         base.Initialize();
         _playerManager.PlayerStatusChanged += OnPlayerChange;
         _afkManager.PlayerDidActionEvent += OnPlayerAction;
-        _afkTime = _cfg.GetCVar(CCVars.AfkTime);
-        _cfg.OnValueChanged(CCVars.AfkTime, OnAfkTimeChanged);
+        Subs.CVar(_cfg, CCVars.AfkTime, OnAfkTimeChanged, true);
+        Subs.CVar(_cfg, CCVars.AdminAfkTime, OnAdminAfkTimeChanged, true);
 
         SubscribeNetworkEvent<FullInputCmdMessage>(HandleInputCmd);
         // Temporary until instruments use BUIs like normal.
@@ -120,7 +123,7 @@ public sealed partial class AFKSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // If disabled then ignore flagging anything.
+        // If disabled then ignore flagging anything (including admins).
         if (_afkTime <= 0)
             return;
 
@@ -145,6 +148,12 @@ public sealed partial class AFKSystem : EntitySystem
 
             var isAfk = _afkManager.IsAfk(pSession);
 
+            // If admin afk timer disabled then ignore them.
+            if (_adminAfkTime == 0f && _admin.IsAdmin(pSession))
+            {
+                isAfk = false;
+            }
+
             if (isAfk && _afkPlayers.Add(pSession))
             {
                 var ev = new AFKEvent(pSession);
@@ -163,6 +172,11 @@ public sealed partial class AFKSystem : EntitySystem
     private static bool CanFlagAfk(GameRunLevel runLevel)
     {
         return runLevel == GameRunLevel.InRound;
+    }
+
+    private void OnAdminAfkTimeChanged(float value)
+    {
+        _adminAfkTime = value;
     }
 
     private void OnAfkTimeChanged(float value)

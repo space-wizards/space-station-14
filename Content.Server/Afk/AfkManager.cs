@@ -58,6 +58,9 @@ namespace Content.Server.Afk
         private readonly Dictionary<ICommonSession, TimeSpan> _lastActionTimes = new();
         private ISawmill _sawmill = default!;
 
+        private TimeSpan _adminAfkTime;
+        private TimeSpan _afkTime;
+
         public event Action<ICommonSession>? PlayerDidActionEvent;
 
         public void Initialize()
@@ -67,6 +70,8 @@ namespace Content.Server.Afk
             _sawmill = _logManager.GetSawmill("afk");
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
+            _cfg.OnValueChanged(CCVars.AfkTime, value => _afkTime = TimeSpan.FromSeconds(value), true);
+            _cfg.OnValueChanged(CCVars.AdminAfkTime, value => _adminAfkTime = TimeSpan.FromSeconds(value), true);
         }
 
         public void PlayerDidAction(ICommonSession player)
@@ -94,9 +99,16 @@ namespace Content.Server.Afk
                 return true;
             }
 
-            var timeOut = _adminManager.IsAdmin(player)
-                ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AdminAfkTime))
-                : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AfkTime));
+            TimeSpan timeOut;
+
+            if (_adminManager.IsAdmin(player))
+            {
+                timeOut = _adminAfkTime;
+            }
+            else
+            {
+                timeOut = _afkTime;
+            }
 
             return _gameTiming.RealTime - time > timeOut;
         }
