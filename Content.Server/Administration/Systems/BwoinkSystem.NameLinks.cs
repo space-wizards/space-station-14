@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Shared.Administration;
@@ -50,9 +50,12 @@ public sealed partial class BwoinkSystem
         var q = EntityQueryEnumerator<MindContainerComponent>();
         var list = new List<NameMatchOption>();
 
-        while (q.MoveNext(out var entity, out _))
+        while (q.MoveNext(out var entity, out var comp))
         {
-            list.Add(new NameMatchOption(Name(entity), entity));
+            if (comp.LastPlayer != null)
+            {
+                list.Add(new NameMatchOption(Name(entity), entity));
+            }
         }
 
         return list;
