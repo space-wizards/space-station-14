@@ -7,10 +7,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Chemistry;
 
 [UsedImplicitly]
-public sealed class ReactiveSystem : EntitySystem
+public sealed partial class ReactiveSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
+    // TODO: Someone add documentation, I beg you
     public void DoEntityReaction(EntityUid uid, Solution solution, ReactionMethod method)
     {
         foreach (var reagent in solution.Contents.ToArray())
