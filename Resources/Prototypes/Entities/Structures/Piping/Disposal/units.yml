@@ -149,9 +149,6 @@
     layers:
     - map: [ "enum.DisposalUnitVisualLayers.Base" ]
       state: mailing
-    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
-      state: disposal
-      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       state: mailing-charging
       visible: false
