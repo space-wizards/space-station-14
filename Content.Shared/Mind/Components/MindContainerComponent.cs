@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Mind.Components;
 
@@ -27,6 +28,12 @@ public sealed partial class MindContainerComponent : Component
     /// </summary>
     [DataField]
     public bool GhostOnShutdown = true;
+
+    /// <summary>
+    ///     The user ID of the last player whose mind controlled this entity. If null, it was never controlled by a player.
+    /// </summary>
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public NetUserId? LastPlayer;
 }
 
 /// <summary>
