@@ -6,14 +6,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Monitor.Payloads;
 
-[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorRegisterDevicePayload : HandledNetworkPayload;
 
-[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorDeregisterDevicePayload : HandledNetworkPayload;
 
-
-[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorSetThresholdPayload : HandledNetworkPayload
 {
     [DataField]
@@ -26,7 +22,6 @@ public sealed partial class AtmosMonitorSetThresholdPayload : HandledNetworkPayl
     public Gas? Gas;
 }
 
-[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorSetAllThresholdsPayload : HandledNetworkPayload
 {
     [DataField]
@@ -37,5 +32,4 @@ public sealed partial class AtmosMonitorSetAllThresholdsPayload : HandledNetwork
 /// Sets the alarm state of a <see cref="AtmosMonitorComponent"/> to Normal
 /// and broadcasts it to all listening <see cref="AtmosAlarmableComponent"/>.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed partial class AtmosMonitorResetPayload : HandledNetworkPayload;
