@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Administration.Systems;
 using Content.Client.Stylesheets;
 using Content.Shared.Administration;
@@ -93,19 +93,21 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
     {
         private readonly AdminQuickInfoSystem _system;
         private readonly NetEntity _entity;
-        private readonly PlayerInfo? _playerInfo;
+        private readonly bool _activeControl;
+        private PlayerInfo? _playerInfo;
         private QuickInfoShared.SingleEntityInfo? _response;
 
         private readonly RichTextLabel _contents = new();
 
         private ILocalizationManager Loc => _system.Loc;
+        private AdminSystem Admin => _system._adminSystem;
 
         public InfoControl(AdminQuickInfoSystem system, NetEntity entity, PlayerInfo? playerInfo)
         {
             _system = system;
             _entity = entity;
             _playerInfo = playerInfo;
-
+            _activeControl = (playerInfo != null);
             AddChild(_contents);
 
             system.EntityResponseReceived += OnEntityResponseReceived;
@@ -120,6 +122,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 return;
 
             _response = ev;
+            _playerInfo ??= Admin.PlayerList.FirstOrDefault(p => p.SessionId == ev.LastPlayer);
             Rebuild();
         }
 
@@ -132,6 +135,10 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
         private void Rebuild()
         {
             var sb = new FormattedStringBuilder();
+            if (!_activeControl)
+            {
+                sb.AppendMarkupLine(Loc.GetString("admin-quick-info-inactive"));
+            }
 
             if (_playerInfo != null)
             {
@@ -231,6 +238,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 sb.AppendText(" ");
             }
 
+            sb.AppendMarkupLine(Loc.GetString("admin-quick-info-separator"));
             _contents.SetMessage(FormattedMessage.FromMarkupOrThrow(sb.ToString().Trim()), tagsAllowed: null);
         }
     }
