@@ -18,7 +18,7 @@ namespace Content.Server.Voting
 
         public override string Command => "createvote";
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1 && args[0] != StandardVoteType.Votekick.ToString())
             {
@@ -69,7 +69,7 @@ namespace Content.Server.Voting
 
         public override string Command => "customvote";
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length is < 3 or > MaxArgCount)
             {

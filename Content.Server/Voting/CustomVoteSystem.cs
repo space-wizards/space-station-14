@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Database;
 using Content.Server.Voting.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Discord.WebhookMessages;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Shared.Configuration;
@@ -17,6 +19,8 @@ namespace Content.Server.Voting
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private VoteWebhooks _voteWebhooks = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IServerDbManager _dbManager = default!;
+        [Dependency] private IEntitySystemManager _esm = default!;
 
         /// <summary>
         /// Starts a vote with custom options for some or all players
@@ -72,9 +76,15 @@ namespace Content.Server.Voting
 
             var vote = _voteManager.CreateVote(voteOptions);
 
+            var voteLogId = await _dbManager.CustomVoteLogAdd(
+                title,
+                GameTicker.GetRoundId(_esm),
+                shell.Player?.UserId,
+                [..voteOptions.Options.Select(x => x.text)]);
+
             var webhookState = _voteWebhooks.CreateWebhookIfConfigured(voteOptions, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
 
-            vote.OnFinished += (_, eventArgs) =>
+            vote.OnFinished += async (_, eventArgs) =>
             {
                 if (eventArgs.Winner == null)
                 {
@@ -97,11 +107,13 @@ namespace Content.Server.Voting
                 }
 
                 _voteWebhooks.UpdateWebhookIfConfigured(webhookState, eventArgs);
+                await _dbManager.CustomVoteLogFinish(voteLogId, [..eventArgs.Votes]);
             };
 
             vote.OnCancelled += _ =>
             {
                 _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState);
+                await _dbManager.CustomVoteLogCancel(voteLogId);
             };
         }
     }
