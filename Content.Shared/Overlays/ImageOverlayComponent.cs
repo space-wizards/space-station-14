@@ -6,7 +6,7 @@ namespace Content.Shared.Overlays;
 /// <summary>
 /// Adds a image overlay on screen when wearing an entity with this component.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ImageOverlayComponent : Component
 {
     /// <summary>

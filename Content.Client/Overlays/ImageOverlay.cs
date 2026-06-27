@@ -46,12 +46,10 @@ public sealed class ImageOverlay : Overlay
             _texturesToDraw.Remove(overlayPair);
     }
 
-protected override void Draw(in OverlayDrawArgs args)
-    {
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-
+        var zoomFactor = _eyeManager.CurrentEye.Zoom.X;
         var screenRect = args.ViewportBounds;
 
         foreach (var (path, color) in _texturesToDraw)
