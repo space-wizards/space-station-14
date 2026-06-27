@@ -22,7 +22,6 @@
                 <controls:ConfirmButton Visible="False" Name="Kick" Text="{Loc 'admin-player-actions-kick'}" ConfirmationText="{Loc 'admin-player-actions-confirm'}" StyleClasses="OpenBoth" />
                 <Button Visible="False" Name="Ban" Text="{Loc 'admin-player-actions-ban'}" StyleClasses="OpenBoth" />
                 <controls:ConfirmButton Visible="False" Name="Respawn" Text="{Loc 'admin-player-actions-respawn'}" ConfirmationText="{Loc 'admin-player-actions-confirm'}" StyleClasses="OpenBoth" />
-                <controls:ConfirmButton Visible="False" Name="CheckAfk" Text="{Loc 'admin-player-actions-check-afk'}" ConfirmationText="{Loc 'admin-player-actions-confirm'}" StyleClasses="OpenBoth" />
                 <Button Visible="False" Name="Follow" Text="{Loc 'admin-player-actions-follow'}" StyleClasses="OpenLeft" />
             </BoxContainer>
         </SplitContainer>
