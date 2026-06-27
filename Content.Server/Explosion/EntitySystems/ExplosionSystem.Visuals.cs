@@ -11,8 +11,9 @@ namespace Content.Server.Explosion.EntitySystems;
 // This part of the system handled send visual / overlay data to clients.
 public sealed partial class ExplosionSystem
 {
+
     /// <summary>
-    /// Initializes the visual parts of this system
+    /// Initializes the visual parts of this system.
     /// </summary>
     /// <see cref="Initialize"/>
     public void InitVisuals()

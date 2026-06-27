@@ -29,10 +29,11 @@ public sealed partial class EnsnareableComponent : Component
     public Container? Container = default!;
 
     /// <summary>
-    /// The sprite to show in the ensnared entity
+    /// The sprite to show in the ensnared entity.
     /// </summary>
     [DataField]
     public string? Sprite;
+
 /// <summary>
 /// The state layer of the sprite to be displayed.
 /// </summary>

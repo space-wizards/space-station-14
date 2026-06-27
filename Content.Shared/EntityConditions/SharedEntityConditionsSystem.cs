@@ -121,9 +121,6 @@ public abstract partial class EntityCondition
     /// <summary>
     /// Check this condition on a target.
     /// </summary>
-    /// <param name="target"></param>
-    /// <param name="raiser"></param>
-    /// <returns></returns>
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
     /// <summary>

@@ -338,7 +338,7 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
     /// Update the Ensnared alert for an entity.
     /// </summary>
     /// <param name="target">The entity that has been affected by a snare</param>
-    /// <param name="component"></param>
+    /// <param name="component">Entity's EnsareableComponent.</param>
     public void UpdateAlert(EntityUid target, EnsnareableComponent component)
     {
         if (!IsEnsnared(target))

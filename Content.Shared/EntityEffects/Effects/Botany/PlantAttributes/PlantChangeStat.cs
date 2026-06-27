@@ -13,7 +13,7 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
     public string TargetValue = string.Empty;
 
     /// <summary>
-    /// the minimum value a float value can assume.
+    /// The minimum value a float value can assume.
     /// </summary>
     [DataField]
     public float MinValue;
@@ -26,7 +26,7 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
 
     /// <summary>
     /// How often to mutate a float field.
-    /// see PlantChangeStatEntityEffectSystem.MutateFloat
+    /// See PlantChangeStatEntityEffectSystem.MutateFloat in Content.Server.
     /// </summary>
     [DataField]
     public int Steps;

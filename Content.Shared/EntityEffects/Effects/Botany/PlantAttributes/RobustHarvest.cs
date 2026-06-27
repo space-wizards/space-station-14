@@ -5,7 +5,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class RobustHarvest : EntityEffectBase<RobustHarvest>
 {
     /// <summary>
-    /// how hight potency can go
+    /// How high potency can go.
     /// </summary>
     [DataField]
     public int PotencyLimit = 50;

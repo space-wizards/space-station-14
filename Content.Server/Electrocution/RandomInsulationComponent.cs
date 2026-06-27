@@ -10,9 +10,9 @@ namespace Content.Server.Electrocution
     public sealed partial class RandomInsulationComponent : Component
     {
         /// <summary>
-        /// A list of possible Siemens Factors from which one will be picked for insulation component
+        /// A list of possible Siemens Factors from which one will be picked for insulation component.
         /// </summary>
-        /// <see cref="InsulatedComponent.Coefficient"/>
+        /// <seealso cref="InsulatedComponent.Coefficient"/>
         [DataField("list")]
         public float[] List = { 0f };
     }
