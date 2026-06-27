@@ -1557,3 +1557,17 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: TeaPowderBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    TeaPowder:
+      amount: 5
+  products:
+    Carbon: 2
+    Fluorine: 2
+    Hydrogen: 0.5
+    Oxygen: 0.5

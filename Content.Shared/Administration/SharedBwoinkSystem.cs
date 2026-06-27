@@ -21,10 +21,6 @@ namespace Content.Shared.Administration
             // Specific side code in target.
         }
 
-        protected void LogBwoink(BwoinkTextMessage message)
-        {
-        }
-
         [Serializable, NetSerializable]
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
