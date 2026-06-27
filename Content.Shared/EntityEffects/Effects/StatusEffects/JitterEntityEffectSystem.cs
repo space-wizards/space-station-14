@@ -26,19 +26,19 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 public sealed partial class Jitter : EntityEffectBase<Jitter>
 {
     /// <summary>
-    /// how intense the jitter is.
+    /// How intense the jitter is.
     /// </summary>
     [DataField]
     public float Amplitude = 10.0f;
 
     /// <summary>
-    /// the speed of the jitter
+    /// The speed of the jitter.
     /// </summary>
     [DataField]
     public float Frequency = 4.0f;
 
     /// <summary>
-    /// the duration of the effect.
+    /// The duration of the effect.
     /// </summary>
     [DataField]
     public float Time = 2.0f;

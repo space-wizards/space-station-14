@@ -9,7 +9,7 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 public sealed partial class AllSelector : EntityTableSelector
 {
     /// <summary>
-    /// all children selector to pick from.
+    /// All children selectors to pick from.
     /// </summary>
     [DataField(required: true)]
     public List<EntityTableSelector> Children;

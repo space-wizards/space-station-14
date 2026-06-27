@@ -8,7 +8,7 @@ namespace Content.Shared.EntityTable.ValueSelector;
 public sealed partial class RangeNumberSelector : NumberSelector
 {
     /// <summary>
-    /// the min and max value of this selector, both are inclusive.
+    /// The min and max value of this selector, both are inclusive.
     /// </summary>
     [DataField]
     public Vector2i Range = new(1, 1);

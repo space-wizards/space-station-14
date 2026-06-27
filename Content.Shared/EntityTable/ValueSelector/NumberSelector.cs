@@ -13,8 +13,6 @@ public abstract partial class NumberSelector
     /// <summary>
     /// Returns a value for this selector given a randomizer.
     /// </summary>
-    /// <param name="rand"></param>
-    /// <returns></returns>
     public abstract int Get(IRobustRandom rand);
 
     /// <summary>

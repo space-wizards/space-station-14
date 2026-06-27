@@ -41,7 +41,7 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatusEffect>
 {
     /// <summary>
-    /// Idenfitier
+    /// Identifier key for the status effect.
     /// </summary>
     [DataField(required: true)]
     public string Key = default!;
