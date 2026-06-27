@@ -18,7 +18,7 @@ public sealed partial class SensorInfo : BoxContainer
     [Dependency] private IEntityManager _entMan = default!;
 
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
-    public event Action<AtmosSensorDataPayload>? SensorDataCopied;
+    public event Action<AtmosMonitorDataPayload>? SensorDataCopied;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
@@ -27,7 +27,7 @@ public sealed partial class SensorInfo : BoxContainer
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
     private Button _copySettings => CCopySettings;
 
-    public SensorInfo(AtmosSensorDataPayload dataPayload, string address)
+    public SensorInfo(AtmosMonitorDataPayload dataPayload, string address)
     {
         IoCManager.InjectDependencies(this);
         var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
@@ -101,7 +101,7 @@ public sealed partial class SensorInfo : BoxContainer
         };
     }
 
-    public void ChangeData(AtmosSensorDataPayload dataPayload)
+    public void ChangeData(AtmosMonitorDataPayload dataPayload)
     {
         IoCManager.InjectDependencies(this);
         var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();

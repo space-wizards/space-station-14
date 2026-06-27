@@ -28,15 +28,6 @@ public enum AirAlarmWireStatus
     DeviceSync
 }
 
-[ImplicitDataDefinitionForInheritors]
-[Serializable, NetSerializable]
-public abstract partial class AtmosDeviceDataPayload : NetworkPayload
-{
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
-}
-
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {

@@ -2,13 +2,14 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Atmos.Piping.Binary.Systems;
 
-public abstract partial class SharedGasVolumePumpSystem : EntitySystem
+public abstract partial class SharedGasVolumePumpSystem : DevicePayloadSystem<GasVolumePumpComponent>
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;

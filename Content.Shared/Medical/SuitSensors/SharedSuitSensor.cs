@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.SuitSensors;
 
 [Serializable, NetSerializable]
-public sealed partial class SuitSensorStatus : NetworkPayload
+public sealed partial class SuitSensorStatus : HandledNetworkPayload
 {
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {

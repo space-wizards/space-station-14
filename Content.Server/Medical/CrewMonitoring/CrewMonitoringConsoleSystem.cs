@@ -1,16 +1,14 @@
 using System.Linq;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Systems;
-using Content.Shared.PowerCell;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
-public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
+public sealed partial class CrewMonitoringConsoleSystem : DevicePayloadSystem<CrewMonitoringConsoleComponent>
 {
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
@@ -19,8 +17,13 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, ComponentRemove>(OnRemove);
-        SubscribeLocalEvent<CrewMonitoringConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<BroadcastSuitSensorStatePayload>(OnSuitSensorBroadcast);
     }
 
     private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
@@ -28,14 +31,10 @@ public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
         component.ConnectedSensors.Clear();
     }
 
-    private void OnPacketReceived(Entity<CrewMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnSuitSensorBroadcast(Entity<CrewMonitoringConsoleComponent> ent, ref BroadcastSuitSensorStatePayload payload, ref DeviceNetworkPacketData args)
     {
-        var (uid, component) = ent;
-        if (args.Data is not BroadcastSuitSensorStatePayload broadcast)
-            return;
-
-        component.ConnectedSensors = broadcast.SensorStatus;
-        UpdateUserInterface(uid, component);
+        ent.Comp.ConnectedSensors = payload.SensorStatus;
+        UpdateUserInterface(ent, ent.Comp);
     }
 
     private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)

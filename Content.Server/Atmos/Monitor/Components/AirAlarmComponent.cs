@@ -20,7 +20,7 @@ public sealed partial class AirAlarmComponent : Component
     public readonly HashSet<string> KnownDevices = new();
     public readonly Dictionary<string, GasVentPumpDataPayload> VentData = new();
     public readonly Dictionary<string, GasVentScrubberDataPayload> ScrubberData = new();
-    public readonly Dictionary<string, AtmosSensorDataPayload> SensorData = new();
+    public readonly Dictionary<string, AtmosMonitorDataPayload> SensorData = new();
 
     public bool CanSync = true;
 

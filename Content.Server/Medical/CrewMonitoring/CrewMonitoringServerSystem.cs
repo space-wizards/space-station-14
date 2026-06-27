@@ -3,12 +3,13 @@ using Content.Server.Medical.SuitSensors;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Medical.SuitSensors;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
-public sealed partial class CrewMonitoringServerSystem : EntitySystem
+public sealed partial class CrewMonitoringServerSystem : DevicePayloadSystem<CrewMonitoringServerComponent>
 {
     [Dependency] private SuitSensorSystem _sensors = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
@@ -22,8 +23,13 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
-        SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetServerDisconnectedEvent>(OnDisconnected);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<SuitSensorStatus>(OnSensorStatus);
     }
 
     public override void Update(float frameTime)
@@ -51,13 +57,10 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
     /// <summary>
     /// Adds or updates a sensor status entry if the received package is a sensor status update
     /// </summary>
-    private void OnPacketReceived(Entity<CrewMonitoringServerComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnSensorStatus(Entity<CrewMonitoringServerComponent> ent, ref SuitSensorStatus payload, ref DeviceNetworkPacketData args)
     {
-        if (args.Data is not SuitSensorStatus status)
-            return;
-
-        status.Timestamp = _gameTiming.CurTime;
-        ent.Comp.SensorStatus[args.SenderAddress] = status;
+        payload.Timestamp = _gameTiming.CurTime;
+        ent.Comp.SensorStatus[args.SenderAddress] = payload;
     }
 
     /// <summary>

@@ -1,4 +1,6 @@
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components
@@ -73,6 +75,16 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             VolumeRate = 200f,
             WideNet = false
         };
+    }
+
+    [Serializable, NetSerializable]
+    public sealed partial class GasVentScrubberSyncDataPayload : HandledNetworkPayload;
+
+    [Serializable, NetSerializable]
+    public sealed partial class GasVentScrubberSetDataPayload : HandledNetworkPayload
+    {
+        [DataField]
+        public GasVentScrubberDataPayload Payload;
     }
 
     [Serializable, NetSerializable]

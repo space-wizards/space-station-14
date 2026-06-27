@@ -7,11 +7,10 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
+using Content.Server.SensorMonitoring;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -26,11 +25,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
+        }
 
-            // Device network
-            SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+        protected override void InitializeDevice()
+        {
+            base.InitializeDevice();
+            SubscribePayload<GasThermoMachineSyncDataPayload>(OnSyncPayload);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
@@ -116,26 +117,18 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnPacketRecv(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent args)
+        private void OnSyncPayload(Entity<GasThermoMachineComponent> ent, ref GasThermoMachineSyncDataPayload payload, ref DeviceNetworkPacketData args)
         {
-            var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn))
-                return;
-
-            switch (args.Data)
+            var data = new GasThermoMachineDataPayload
             {
-                case AtmosSyncDevicePayload:
-                    var payload = new AtmosSyncDevicePayload
-                    {
-                        Data = new GasThermoMachineData
-                        {
-                            EnergyDelta = component.LastEnergyDelta,
-                        },
-                    };
+                EnergyDelta = ent.Comp.LastEnergyDelta,
+            };
+            var sensor = new SensorMonitoringAtmosDataPayload
+            {
+                Payload = data,
+            };
 
-                    _deviceNetwork.QueuePacket((uid, netConn), args.SenderAddress, payload);
-                    return;
-            }
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, sensor);
         }
     }
 }

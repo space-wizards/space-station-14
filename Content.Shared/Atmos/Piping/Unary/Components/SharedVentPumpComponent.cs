@@ -1,4 +1,5 @@
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Monitor;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components
@@ -57,6 +58,16 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             InternalPressureBound = 0f,
             PressureLockoutOverride = false
         };
+    }
+
+    [Serializable, NetSerializable]
+    public sealed partial class GasVentPumpSyncDataPayload : HandledNetworkPayload;
+
+    [Serializable, NetSerializable]
+    public sealed partial class GasVentPumpSetDataPayload : HandledNetworkPayload
+    {
+        [DataField]
+        public GasVentPumpDataPayload Payload;
     }
 
     [Serializable, NetSerializable]

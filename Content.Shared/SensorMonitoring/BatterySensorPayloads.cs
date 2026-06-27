@@ -4,14 +4,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SensorMonitoring;
 
 [Serializable, NetSerializable]
-public sealed partial class BatterySensorSyncPayload : NetworkPayload
+public sealed partial class BatterySensorDataPayload : HandledNetworkPayload
 {
     [DataField]
     public BatterySensorData Data;
 }
 
+/// <summary>
+/// A request for <see cref="BatterySensorDataPayload"/>.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class BatterySensorRequestPayload : NetworkPayload;
+public sealed partial class BatterySensorSyncPayload : HandledNetworkPayload;
 
 /// <summary>
 /// Device network data sent by a <see cref="BatterySensorComponent"/>.

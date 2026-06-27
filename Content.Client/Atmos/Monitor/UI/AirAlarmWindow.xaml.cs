@@ -158,7 +158,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 }
 
                 break;
-            case AtmosSensorDataPayload sensor:
+            case AtmosMonitorDataPayload sensor:
                 if (!_sensors.TryGetValue(addr, out var sensorControl))
                 {
                     var control = new SensorInfo(sensor, addr);
