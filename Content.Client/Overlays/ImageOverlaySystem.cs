@@ -9,9 +9,9 @@ namespace Content.Client.Overlays;
 /// <summary>
 /// Adds image overlay when wearing item with ImageOverlayComponent
 /// </summary>
-public sealed class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
+public sealed partial class ImageOverlaySystem : EquipmentHudSystem<ImageOverlayComponent>
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     private ImageOverlay _overlay = default!;
 
