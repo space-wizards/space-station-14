@@ -94,8 +94,8 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
 
             if (!TryComp(uid, out ActorComponent? actor))
             {
-                RemComp<TabletopGamerComponent>(uid);
-                return;
+                RemCompDeferred<TabletopGamerComponent>(uid);
+                continue;
             }
 
             if (actor.PlayerSession.Status != SessionStatus.InGame || !CanSeeTable(uid, gamer.Tabletop))
