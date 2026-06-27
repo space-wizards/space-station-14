@@ -60,7 +60,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
 
     public void OpenPopupFor(NetEntity[] entities)
     {
-        var vBox = new VBox();
+        var vBox = new VBox() { SeparationOverride = 6 };;
         var popup = new Popup
         {
             Children =
@@ -75,9 +75,16 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 },
             },
         };
-
+        var first = true;
         foreach (var entity in entities)
         {
+            if (!first)
+                vBox.AddChild(new PanelContainer
+                {
+                    StyleClasses = { StyleClass.LowDivider },
+                    HorizontalExpand = true,
+                });
+            first = false;
             var playerInfo = _adminSystem.PlayerList.FirstOrDefault(p => p.NetEntity == entity);
             var control = new InfoControl(this, entity, playerInfo);
             popup.OnPopupHide += () => control.Unsubscribe();
@@ -238,7 +245,6 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
                 sb.AppendText(" ");
             }
 
-            sb.AppendMarkupLine(Loc.GetString("admin-quick-info-separator"));
             _contents.SetMessage(FormattedMessage.FromMarkupOrThrow(sb.ToString().Trim()), tagsAllowed: null);
         }
     }
