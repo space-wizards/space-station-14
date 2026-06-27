@@ -64,13 +64,18 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
         };
 
         _payloadSubsCache.TryAdd(typeof(TN), new Dictionary<Type, Delegate>());
-        if (!_payloadSubsCache[typeof(TN)].TryAdd(typeof(TC), wrapper))
-        {
-            Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}, component {typeof(TC).Name}");
+        if (_payloadSubsCache[typeof(TN)].TryAdd(typeof(TC), wrapper))
             return;
-        }
+
+        Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}, component {typeof(TC).Name}");
     }
 
+    /// <summary>
+    /// Raises a <see cref="HandledNetworkPayload"/> on an entity, and processes subscriptions for each component.
+    /// </summary>
+    /// <param name="uid">The target entity to raise the payload on.</param>
+    /// <param name="payload">The payload to raise.</param>
+    /// <param name="args">Other data about how the network packet was received.</param>
     public void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!PayloadSubs.TryGetValue(payload.GetType(), out var compDelegatePair))

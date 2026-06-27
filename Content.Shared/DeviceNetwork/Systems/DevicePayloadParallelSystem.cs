@@ -6,20 +6,38 @@ using Robust.Shared.Threading;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
+/// <summary>
+/// A delegate for events that are ran before the parallel processing of <see cref="DevicePayloadParallelSystem{T}"/>.
+/// </summary>
+/// <typeparam name="TC">Type of the component.</typeparam>
+/// <typeparam name="TN">Type of the network payload.</typeparam>
 public delegate void BeforeDeviceNetworkPayloadHandler<TC, TN>(Entity<TC> ent, ref TN payload, ref DeviceNetworkPacketData args)
     where TC : IComponent
     where TN : HandledNetworkPayload;
 
+/// <summary>
+/// A delegate for events that are ran after the parallel processing of <see cref="DevicePayloadParallelSystem{T}"/>.
+/// </summary>
+/// <typeparam name="TC">Type of the component.</typeparam>
+/// <typeparam name="TN">Type of the network payload.</typeparam>
 public delegate void AfterDeviceNetworkPayloadHandler<TC, TN>(Entity<TC> ent, ref TN payload, ref DeviceNetworkPacketData args)
     where TC : IComponent
     where TN : HandledNetworkPayload;
 
+/// <summary>
+/// A wrapper for the <see cref="BeforeDeviceNetworkPayloadHandler{TC, TN}"/> delegate.
+/// </summary>
+/// <typeparam name="TC">Type of the component.</typeparam>
 public delegate void BeforeParallelDeviceNetworkPayloadHandlerWrapper<TC>(
     Entity<TC> ent,
     ref HandledNetworkPayload payload,
     ref DeviceNetworkPacketData args)
     where TC : IComponent;
 
+/// <summary>
+/// A wrapper for the <see cref="AfterDeviceNetworkPayloadHandler{TC, TN}"/> delegate.
+/// </summary>
+/// <typeparam name="TC">Type of the component.</typeparam>
 public delegate void AfterDeviceNetworkPayloadHandlerWrapper<TC>(
     Entity<TC> ent,
     ref HandledNetworkPayload payload,
@@ -57,7 +75,11 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
         base.Register();
         foreach (var payload in ParallelPayloadSubs.Keys)
         {
-            DeviceSystem.ParallelHandlersCache.Add(payload, this);
+            if (DeviceSystem.ParallelHandlersCache.TryAdd(payload, this))
+                continue;
+
+            Log.Error($"Duplicate payload subscription for payload {payload.Name}");
+            return;
         }
     }
 
@@ -92,7 +114,10 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
             basePayload = specificPayload;
         };
 
-        BeforePayloadSubsCache.Add(typeof(TN), wrapper);
+        if (BeforePayloadSubsCache.TryAdd(typeof(TN), wrapper))
+            return;
+
+        Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}");
     }
 
     [UsedImplicitly]
@@ -112,7 +137,10 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
             basePayload = specificPayload;
         };
 
-        ParallelPayloadSubsCache.Add(typeof(TN), wrapper);
+        if (ParallelPayloadSubsCache.TryAdd(typeof(TN), wrapper))
+            return;
+
+        Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}");
     }
 
     [UsedImplicitly]
@@ -132,15 +160,24 @@ public abstract partial class DevicePayloadParallelSystem<T> : DevicePayloadSyst
             basePayload = specificPayload;
         };
 
-        AfterPayloadSubsCache.Add(typeof(TN), wrapper);
+        if (AfterPayloadSubsCache.TryAdd(typeof(TN), wrapper))
+            return;
+
+        Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}");
     }
 
+    /// <summary>
+    /// Raises a <see cref="HandledNetworkPayload"/> on a list of multiple entities in parallel.
+    /// </summary>
+    /// <param name="devices">The target entities to raise the payload on.</param>
+    /// <param name="payload">The payload to raise.</param>
+    /// <param name="args">Other data about how the network packet was received.</param>
     public void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
         if (!ParallelPayloadSubs.TryGetValue(payload.GetType(), out var handler))
             return;
 
-        var ents = new ValueList<Entity<T>>(devices.Length);
+        var ents = new ValueList<Entity<T>>(devices.Length); // TODO try out using an array pool here instead
         foreach (var device in devices)
         {
             if (!Query.TryComp(device, out var comp))

@@ -85,7 +85,13 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     }
 
     /// <summary>
-    /// Locks the subscriptions
+    /// A method to prepare subscriptions dictionary and other required objects.
+    /// </summary>
+    [MustCallBase]
+    protected virtual void InitializeDevice() { }
+
+    /// <summary>
+    /// Locks the subscriptions before registering the handler.
     /// </summary>
     protected abstract void LockSubscriptions();
 
@@ -93,14 +99,11 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     /// Registers the handler in <see cref="SharedDeviceNetworkSystem"/>.
     /// </summary>
     protected abstract void Register();
-
-    /// <summary>
-    /// A method to prepare subscriptions dictionary and other required objects.
-    /// </summary>
-    [MustCallBase]
-    protected virtual void InitializeDevice() { }
 }
 
+/// <summary>
+/// Handler that simply raises a <see cref="HandledNetworkPayload"/> on an entity.
+/// </summary>
 public interface IEntityDeviceNetworkHandler
 {
     /// <summary>
@@ -112,6 +115,9 @@ public interface IEntityDeviceNetworkHandler
     void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
 }
 
+/// <summary>
+/// Handler that supports running checks before sending a <see cref="HandledNetworkPayload"/> to the entity.
+/// </summary>
 public interface IBeforeDeviceNetworkHandler
 {
     /// <summary>
@@ -123,6 +129,9 @@ public interface IBeforeDeviceNetworkHandler
     void RaiseBeforePayload(EntityUid uid, IComponent component, ref BeforePacketSentEvent args);
 }
 
+/// <summary>
+/// Handler that supports sending <see cref="HandledNetworkPayload"/> to multiple entities in parallel.
+/// </summary>
 public interface IParallelDeviceNetworkHandler
 {
     /// <summary>
