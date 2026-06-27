@@ -32,8 +32,7 @@ public sealed partial class CheckAfkCommand : LocalizedEntityCommands
         }
 
         if (!_players.TryGetSessionById(located.UserId, out var session)
-            || session.Status == SessionStatus.Disconnected
-            || session.AttachedEntity == null)
+            || session.Status == SessionStatus.Disconnected)
         {
             shell.WriteError(Loc.GetString("cmd-checkafk-not-attached"));
             return;
