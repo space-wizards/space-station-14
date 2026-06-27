@@ -94,7 +94,8 @@ namespace Content.Client.Hands.Systems
             string handId,
             bool doDropInteraction = true,
             bool log = true,
-            EntityCoordinates? targetDropLocation = null)
+            EntityCoordinates? targetDropLocation = null
+        )
         {
             base.DoDrop(ent, handId, doDropInteraction, log, targetDropLocation);
 
