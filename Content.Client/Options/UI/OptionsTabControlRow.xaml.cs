@@ -164,6 +164,11 @@ public sealed partial class OptionsTabControlRow : Control
     /// <param name="options">
     /// The set of options that will be shown in the drop-down. Items are ordered as provided.
     /// </param>
+    /// <param name="enablePreview">
+    /// Whether to enable preview of option values.
+    /// With preview enabled, when user hovers over options,
+    /// the CVar is temporarily set to that option value, but without saving.
+    /// </param>
     /// <typeparam name="T">The type of the CVar being controlled.</typeparam>
     /// <returns>The option instance backing the added option.</returns>
     public OptionDropDownCVar<T> AddOptionDropDown<T>(
@@ -334,8 +339,8 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
     /// </remarks>
     public event Action<TValue>? ImmediateValueChanged;
 
-    protected readonly IConfigurationManager _cfg;
-    protected readonly CVarDef<TValue> _cVar;
+    protected readonly IConfigurationManager Cfg;
+    protected readonly CVarDef<TValue> CVar;
 
     /// <summary>
     /// Sets and gets the actual CVar value to/from the frontend UI state or control.
@@ -355,33 +360,33 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
         CVarDef<TValue> cVar)
         : base(controller)
     {
-        _cfg = cfg;
-        _cVar = cVar;
+        Cfg = cfg;
+        CVar = cVar;
     }
 
     public override void LoadValue()
     {
-        Value = _cfg.GetCVar(_cVar);
+        Value = Cfg.GetCVar(CVar);
     }
 
     public override void SaveValue()
     {
-        _cfg.SetCVar(_cVar, Value);
+        Cfg.SetCVar(CVar, Value);
     }
 
     public override void ResetToDefault()
     {
-        Value = _cVar.DefaultValue;
+        Value = CVar.DefaultValue;
     }
 
     public override bool IsModified()
     {
-        return !IsValueEqual(Value, _cfg.GetCVar(_cVar));
+        return !IsValueEqual(Value, Cfg.GetCVar(CVar));
     }
 
     public override bool IsModifiedFromDefault()
     {
-        return !IsValueEqual(Value, _cVar.DefaultValue);
+        return !IsValueEqual(Value, CVar.DefaultValue);
     }
 
     protected virtual bool IsValueEqual(TValue a, TValue b)
@@ -656,7 +661,6 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 {
     private readonly OptionDropDown _dropDown;
     private readonly ItemEntry[] _entries;
-    public event Action<ItemHoverEventArgs>? OnItemHover;
 
     protected override T Value
     {
@@ -678,6 +682,11 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     /// <param name="cVar">The CVar that is being controlled by this option.</param>
     /// <param name="dropDown">The UI control for the option.</param>
     /// <param name="options">The list of options shown to the user.</param>
+    /// <param name="enablePreview">
+    /// Whether to enable preview of option values.
+    /// With preview enabled, when user hovers over options,
+    /// the CVar is temporarily set to that option value, but without saving.
+    /// </param>
     public OptionDropDownCVar(
         OptionsTabControlRow controller,
         IConfigurationManager cfg,
@@ -707,14 +716,14 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
         }
 
         // option ID that was selected at the moment when popup opened
-        var selectedOptionIdOnOpen = 0;
+        var selectedOptionIdBeforePreview = 0;
 
         dropDown.Button.OnItemSelected += args =>
         {
             if (enablePreview)
             {
-                // reset cvar back to the initial value after it was possibly changed in preview.
-                var idx = button.GetIdx(selectedOptionIdOnOpen);
+                // reset cvar back to the initial value after it was likely changed in preview.
+                var idx = button.GetIdx(selectedOptionIdBeforePreview);
                 var meta = button.GetItemMetadata(idx);
                 cfg.SetCVar(cVar.Name, meta!);
             }
@@ -730,40 +739,39 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
                 if (args.Toggle)
                 {
                     // when popup opens, remember selected value
-                    selectedOptionIdOnOpen = dropDown.Button.SelectedId;
+                    selectedOptionIdBeforePreview = dropDown.Button.SelectedId;
                 }
                 else
                 {
-                    if (selectedOptionIdOnOpen != dropDown.Button.SelectedId)
+                    if (selectedOptionIdBeforePreview != dropDown.Button.SelectedId)
                     {
                         // if user selected a value skip cvar reset
                         return;
                     }
 
-                    // reset cvar back to the initial value after the popup closes without user changing the selected value
-                    var idx = button.GetIdx(selectedOptionIdOnOpen);
+                    // reset cvar back to the initial value after the popup closes without user selecting a new value
+                    var idx = button.GetIdx(selectedOptionIdBeforePreview);
                     var meta = button.GetItemMetadata(idx);
                     cfg.SetCVar(cVar.Name, meta!);
                 }
             };
 
             // last item id that was hovered over
-            var lastHoverId = 0;
-            OnItemHover += args =>
+            var lastHoveredOptionId = 0;
+            button.OnItemHover += args =>
             {
                 // skip expensive SetCVar if not dirty
-                if (args.Id == lastHoverId)
+                if (args.Id == lastHoveredOptionId)
                 {
                     return;
                 }
 
-                // temporarily change the cvar without saving to simulate a "preview"
+                // the "preview" happens here - temporarily change the cvar without saving
                 var idx = button.GetIdx(args.Id);
                 var meta = button.GetItemMetadata(idx);
                 cfg.SetCVar(cVar.Name, meta!);
-                lastHoverId = args.Id;
+                lastHoveredOptionId = args.Id;
             };
-            button.OnItemHover += ItemOnHover;
         }
     }
 
@@ -777,17 +785,6 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
 
         // This will just default select the first entry or whatever.
         return 0;
-    }
-
-    private void ItemOnHover(OptionButton.ItemHoverEventArgs args)
-    {
-        OnItemHover?.Invoke(new ItemHoverEventArgs(this, args.Id));
-    }
-
-    public sealed class ItemHoverEventArgs(OptionDropDownCVar<T> dropDown, int id) : EventArgs
-    {
-        public OptionDropDownCVar<T> DropDown { get; } = dropDown;
-        public int Id { get; } = id;
     }
 
     /// <summary>
