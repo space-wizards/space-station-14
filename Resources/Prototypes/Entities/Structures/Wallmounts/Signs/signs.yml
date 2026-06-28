@@ -33,6 +33,8 @@
   components:
   - type: Sprite
     state: hazard_blank
+  - type: Paintable
+    group: SignWarning
 
 # Directional Station Guide Signs
 - type: entity
@@ -45,6 +47,8 @@
   - type: Construction
     graph: SignDirectionalGraph
     node: sign_directional
+  - type: Paintable
+    group: SignDirectional
 
 - type: entity
   parent: BaseSignDirectional
@@ -606,7 +610,7 @@
     state: eva
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignElectrical
   name: electrical sign
   description: A sign indicating an electrical hazard.
@@ -624,7 +628,7 @@
     state: examroom
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignFire
   name: fire sign
   description: A sign indicating a fire hazard.
@@ -938,7 +942,7 @@
     state: danger
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignExplosives
   name: explosives warning sign
   description: A sign indicating an explosive materials hazard.
@@ -947,7 +951,7 @@
     state: explosives
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignFlammable
   name: flammable warning sign
   description: A sign indicating a flammable materials hazard.
@@ -956,7 +960,7 @@
     state: flammable
 
 - type: entity
-  parent: BaseSign
+  parent: BaseWarningSign
   id: SignLaser
   name: laser warning sign
   description: A sign indicating a laser hazard.

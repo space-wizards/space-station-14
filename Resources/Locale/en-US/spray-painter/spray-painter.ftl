@@ -49,6 +49,7 @@ spray-painter-tab-category-crates = Crates
 spray-painter-tab-category-lockers = Lockers
 spray-painter-tab-category-pipes = Pipes
 spray-painter-tab-category-posters = Posters
+spray-painter-tab-category-signs = Signs
 spray-painter-tab-category-decals = Decals
 
 # Groups (subtabs)

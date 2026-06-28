@@ -28,3 +28,10 @@
   id: Posters
   groups:
   - Posters
+
+- type: paintableGroupCategory
+  id: Signs
+  groups:
+  - SignStandard
+  - SignWarning
+  - SignDirectional
