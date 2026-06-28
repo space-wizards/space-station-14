@@ -26,7 +26,7 @@
   name: air vent
   description: Has a valve and a pump attached to it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -48,6 +48,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasVentPump
+        Secondary: GasVentPumpAlt1
+        Tertiary: GasVentPumpAlt2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -84,7 +89,7 @@
   name: passive vent
   description: It's an open vent.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -98,6 +103,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_passive
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasPassiveVent
+        Secondary: GasPassiveVentAlt1
+        Tertiary: GasPassiveVentAlt2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveVent
@@ -116,7 +126,7 @@
   name: air scrubber
   description: Has a valve and pump attached to it.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -138,6 +148,11 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      alternativePrototypes:
+        Primary: GasVentScrubber
+        Secondary: GasVentScrubberAlt1
+        Tertiary: GasVentScrubberAlt2
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -472,4 +487,3 @@
   - type: GuideHelp
     guides:
     - GasCondensing
-
