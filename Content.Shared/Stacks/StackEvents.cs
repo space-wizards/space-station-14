@@ -7,5 +7,12 @@
 [ByRefEvent]
 public readonly record struct StackSplitEvent(EntityUid NewId);
 
+/// <summary>
+///     Raised on the recipient stack entity when it is merged with another stack.
+///     This is raised before the stack counts have been updated
+/// </summary>
+/// <param name="Recipient">The entity id of the recipient stack.</param>
+/// <param name="Donor">The entity id of the donor stack. May get deleted after event is resolved from merging.</param>
+/// <param name="Amount">The amount in the stack transferred from the donor to the recipient</param>
 [ByRefEvent]
-public readonly record struct MergeEvent(EntityUid Donor, EntityUid Recipient, int Delta);
+public readonly record struct MergeEvent(EntityUid Recipient, EntityUid Donor, int Amount);

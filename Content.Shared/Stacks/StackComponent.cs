@@ -86,9 +86,15 @@ public sealed partial class StackComponent : Component
     [DataField]
     public StackLayerFunction LayerFunction = StackLayerFunction.None;
 
+    /// <summary>
+    /// Wether alt clicking on a stack should take half of the stack or only one.
+    /// </summary>
     [DataField]
     public bool HalfOnAltInteract = true;
 
+    /// <summary>
+    /// If the pickup animation should play when merging stacks. Useful if custom animation on stack pickup is wanted.
+    /// </summary>
     [DataField]
     public bool AnimatePickup = true;
 }

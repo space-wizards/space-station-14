@@ -39,8 +39,10 @@ public abstract partial class SharedStackSystem
     /// Moves as much stack count as we can from the donor to the recipient.
     /// Deletes the donor if count goes to 0.
     /// </summary>
-    /// <param name="transferred">How much stack count was moved.</param>
-    /// <param name="amount">Optional. Limits amount of stack count to move from the donor.</param>
+    /// <param name="recipient">Entity which will receive the amount to its stack</param>
+    /// <param name="donor">Entity which will give the amount from its stack</param>
+    /// <param name="transferred">How much stack count was actually moved.</param>
+    /// <param name="amount">Limits amount of stack count to move from the donor. Will not always be the actual amount moved</param>
     /// <returns> True if transferred is greater than 0. </returns>
     [PublicAPI]
     public bool TryMergeStacks(
