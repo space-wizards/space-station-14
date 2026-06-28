@@ -47,25 +47,19 @@ namespace Content.Shared.Kitchen.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
+    public sealed class MicrowaveUpdateUserInterfaceState(
+        NetEntity[] containedSolids,
+        bool isMicrowaveBusy,
+        int activeButtonIndex,
+        uint currentCookTime,
+        TimeSpan currentCookTimeEnd)
+        : BoundUserInterfaceState
     {
-        public NetEntity[] ContainedSolids;
-        public bool IsMicrowaveBusy;
-        public int ActiveButtonIndex;
-        public uint CurrentCookTime;
-
-        public TimeSpan CurrentCookTimeEnd;
-
-        public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
-            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime, TimeSpan currentCookTimeEnd)
-        {
-            ContainedSolids = containedSolids;
-            IsMicrowaveBusy = isMicrowaveBusy;
-            ActiveButtonIndex = activeButtonIndex;
-            CurrentCookTime = currentCookTime;
-            CurrentCookTimeEnd = currentCookTimeEnd;
-        }
-
+        public NetEntity[] ContainedSolids = containedSolids;
+        public bool IsMicrowaveBusy = isMicrowaveBusy;
+        public int ActiveButtonIndex = activeButtonIndex;
+        public uint CurrentCookTime = currentCookTime;
+        public TimeSpan CurrentCookTimeEnd = currentCookTimeEnd;
     }
 
     [Serializable, NetSerializable]

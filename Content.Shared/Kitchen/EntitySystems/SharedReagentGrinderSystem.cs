@@ -170,7 +170,10 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         // Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
         // Maybe I should have done that for the microwave too?
         if (ent.Comp.InputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
+        {
+            _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-interact-full"), ent.Owner, args.User);
             return;
+        }
 
         if (!_containerSystem.Insert(heldEnt, ent.Comp.InputContainer))
             return;
