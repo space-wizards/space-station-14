@@ -41,7 +41,7 @@ public abstract partial class SharedGunSystem
         if (!ProtoMan.TryIndex(proto, out var entityProto))
             return null;
 
-        if (!entityProto.TryGetComponent<ProjectileComponent>(out var projectile, Factory))
+        if (!entityProto.TryComp<ProjectileComponent>(out var projectile, Factory))
             return null;
 
         if (!projectile.Damage.Empty)

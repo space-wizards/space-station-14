@@ -67,7 +67,7 @@ namespace Content.Shared.Construction
                 var stackProto = ProtoMan.Index(stackId);
                 var defaultProto = ProtoMan.Index(stackProto.Spawn);
 
-                if (defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
+                if (defaultProto.TryComp<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
                     {
@@ -113,7 +113,7 @@ namespace Content.Shared.Construction
                     }
                 }
                 else if (ProtoMan.Resolve(defaultProtoId, out var defaultProto) &&
-                         defaultProto.TryGetComponent<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
+                         defaultProto.TryComp<PhysicalCompositionComponent>(out var physComp, EntityManager.ComponentFactory))
                 {
                     foreach (var (mat, matAmount) in physComp.MaterialComposition)
                     {

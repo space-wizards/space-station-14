@@ -282,14 +282,14 @@ public abstract partial class SharedItemSystem : EntitySystem
     [PublicAPI]
     public int CompareSize(EntProtoId a, EntProtoId b)
     {
-        var protoA = _prototype.Index(a);
-        var protoB = _prototype.Index(b);
+        var protoA = ProtoMan.Index(a);
+        var protoB = ProtoMan.Index(b);
         if (!protoA.TryGetComponent<ItemComponent>(out var compA, _compFactory) ||
             !protoB.TryGetComponent<ItemComponent>(out var compB, _compFactory))
         {
             return 0;
         }
 
-        return _prototype.Index(compA.Size).CompareTo(_prototype.Index(compB.Size));
+        return ProtoMan.Index(compA.Size).CompareTo(ProtoMan.Index(compB.Size));
     }
 }

@@ -271,7 +271,7 @@ public abstract partial class SharedStackSystem
     public int GetMaxCount(EntProtoId entityId)
     {
         var entProto = ProtoMan.Index<EntityPrototype>(entityId);
-        entProto.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        entProto.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
         return GetMaxCount(stackComp);
     }
 
@@ -279,7 +279,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetMaxCount(EntityPrototype entityId)
     {
-        entityId.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        entityId.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
         return GetMaxCount(stackComp);
     }
 

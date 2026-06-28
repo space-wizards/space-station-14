@@ -255,7 +255,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         bool errorOnMissing = false)
     {
         solution = null;
-        if (entProto.TryGetComponent<SolutionComponent>(out var sol, Factory) && sol.Id == name)
+        if (entProto.TryComp<SolutionComponent>(out var sol, Factory) && sol.Id == name)
         {
             solution = sol.Solution;
             return true;
@@ -269,7 +269,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (!ProtoMan.Resolve(protoId, out var proto))
                 continue;
 
-            if (!proto.TryGetComponent(out sol, Factory))
+            if (!proto.TryComp(out sol, Factory))
             {
                 Log.Error($"Entity prototype {proto}, tried to spawn in a solution container in prototype {entProto.ID}, but had no {nameof(SolutionComponent)}");
                 continue;
@@ -318,7 +318,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
             if (!ProtoMan.Resolve(protoId, out var proto))
                 continue;
 
-            if (!proto.TryGetComponent<SolutionComponent>(out var sol, Factory))
+            if (!proto.TryComp<SolutionComponent>(out var sol, Factory))
             {
                 Log.Error($"Entity prototype {proto}, tried to spawn in a solution container in prototype {entProto.ID}, but had no {nameof(SolutionComponent)}");
                 continue;
@@ -331,7 +331,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     private bool TryGetSolutionFill(EntityPrototype entProto, [NotNullWhen(true)] out EntProtoId[]? fill)
     {
         fill = null;
-        if (!entProto.TryGetComponent<SolutionManagerComponent>(out var manager, Factory))
+        if (!entProto.TryComp<SolutionManagerComponent>(out var manager, Factory))
             return false;
 
         fill = manager.SolutionEnts;

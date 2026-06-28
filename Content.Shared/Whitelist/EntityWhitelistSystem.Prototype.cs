@@ -35,13 +35,13 @@ public sealed partial class EntityWhitelistSystem
             }
         }
 
-        if (list.Sizes != null && prototype.TryGetComponent(_itemComponentName, out ItemComponent? itemComp))
+        if (list.Sizes != null && prototype.TryComp(_itemComponentName, out ItemComponent? itemComp))
         {
             if (list.Sizes.Contains(itemComp.Size))
                 return true;
         }
 
-        if (list.Tags != null && prototype.TryGetComponent(_tagComponentName, out TagComponent? tagComp))
+        if (list.Tags != null && prototype.TryComp(_tagComponentName, out TagComponent? tagComp))
         {
             return list.RequireAll
                 ? _tag.HasAllTags(tagComp, list.Tags)

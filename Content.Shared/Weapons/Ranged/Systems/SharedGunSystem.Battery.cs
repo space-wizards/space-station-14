@@ -37,7 +37,7 @@ public abstract partial class SharedGunSystem
         DamageSpecifier? damageSpec = null;
         var damageType = string.Empty;
 
-        if (proto.TryGetComponent<ProjectileComponent>(out var projectileComp, Factory))
+        if (proto.TryComp<ProjectileComponent>(out var projectileComp, Factory))
         {
             if (!projectileComp.Damage.Empty)
             {
@@ -45,7 +45,7 @@ public abstract partial class SharedGunSystem
                 damageSpec = projectileComp.Damage * Damageable.UniversalProjectileDamageModifier;
             }
         }
-        else if (proto.TryGetComponent<HitscanBasicDamageComponent>(out var hitscanComp, Factory))
+        else if (proto.TryComp<HitscanBasicDamageComponent>(out var hitscanComp, Factory))
         {
             if (!hitscanComp.Damage.Empty)
             {
