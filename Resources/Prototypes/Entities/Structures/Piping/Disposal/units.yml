@@ -40,11 +40,11 @@
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: disposal }
-          False: { state: disposal-charging }         
+          False: { state: disposal-charging }
       enum.DisposalUnitVisuals.IsFlushing:
         enum.DisposalUnitVisualLayers.OverlayFlushing:
           True: { visible: true }
-          False: { visible: false }      
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
           True: { visible: true }
@@ -67,7 +67,7 @@
           True: { state: disposal }
           False: { state: condisposal }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
@@ -87,12 +87,6 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -156,27 +150,34 @@
     - map: [ "enum.DisposalUnitVisualLayers.Base" ]
       state: mailing
     - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      state: dispover-ready
+      state: mailing-charging
+      visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-      state: dispover-full
+      state: mailing-full
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: mailing-flush
       visible: false
     - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
       state: mailover-handle
-      visible: false
   - type: GenericVisualizer
     visuals:
+      enum.DisposalUnitVisuals.IsFlushing:
+        enum.DisposalUnitVisualLayers.OverlayFlushing:
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsReady:
         enum.DisposalUnitVisualLayers.Base:
           True: { state: mailing }
           False: { state: mailing-charging }
       enum.DisposalUnitVisuals.IsEngaged:
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          True: { visible: true }
-          False: { visible: false }
+          True: { state: mailover-handle }
+          False: { state: mailover-handle-off }
       enum.DisposalUnitVisuals.IsCharging:
         enum.DisposalUnitVisualLayers.OverlayCharging:
-          True: { state: dispover-charge, visible: true }
-          False: { state: dispover-ready, visible: true }
+          True: { visible: true }
+          False: { visible: false }
       enum.DisposalUnitVisuals.IsFull:
         enum.DisposalUnitVisualLayers.OverlayFull:
           True: { visible: true }
@@ -191,7 +192,7 @@
           True: { state: mailing }
           False: { state: conmailing }
         enum.DisposalUnitVisualLayers.OverlayEngaged:
-          False: { visible: false } 
+          False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayCharging:
           False: { visible: false }
         enum.DisposalUnitVisualLayers.OverlayFull:
