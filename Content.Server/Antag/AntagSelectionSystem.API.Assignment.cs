@@ -332,7 +332,7 @@ public sealed partial class AntagSelectionSystem
         }
     }
 
-    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},AntagCount[],bool)"/>
+    /// <inheritdoc cref="SpawnGhostRoles(Entity{AntagSelectionComponent},List{AntagCount},bool)"/>
     [PublicAPI]
     public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, int playerCount, bool assert = false)
     {
@@ -346,7 +346,7 @@ public sealed partial class AntagSelectionSystem
     /// <param name="antagRules">Antags we want to make into ghost roles, with paired counts we need to spawn</param>
     /// <param name="assert">Whether we should throw if the spawner prototype doesn't exist.</param>
     [PublicAPI]
-    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, AntagCount[] antagRules, bool assert = false)
+    public void SpawnGhostRoles(Entity<AntagSelectionComponent> gameRule, List<AntagCount> antagRules, bool assert = false)
     {
         foreach (var rule in antagRules)
         {
