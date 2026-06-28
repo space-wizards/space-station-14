@@ -79,8 +79,8 @@ test-sandbox:
     just test SandboxTest
 # Run a particular test. Supply the name of the test's class.
 [group("test")]
-test +TEST_NAME:
-    dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj --filter {{ TEST_NAME }} -- NUnit.MapWarningTo=Failed
+test testname:
+    dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj --filter {{ testname }} -- NUnit.MapWarningTo=Failed
 # -----
 # Tools
 # -----
@@ -88,15 +88,14 @@ test +TEST_NAME:
 [group("tools")]
 lint-yaml:
     dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
-# Builds (and runs) packaging for the specified platform.
-# The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
-# This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
+# Builds (and runs) packaging for the specified platform. The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64. This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
 [group("tools")]
-build-packaging platform warninglevel=4:
+build-packaging platform warninglevel="4":
     dotnet run --project Content.Packaging server --hybrid-acz --platform {{ platform }} --property WarningLevel={{ warninglevel }}
-# Runs packaging for the specified platform.
-# The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
-# This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
+# Runs packaging for the specified platform. The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm6. This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
 [group("tools")]
-run-packaging platform warninglevel=4:
+run-packaging platform warninglevel="4":
     dotnet run --no-build --project Content.Packaging server --hybrid-acz --platform {{ platform }} --property WarningLevel={{ warninglevel }}
+[group("tools")]
+setup-project:
+    py RUN_THIS.py
