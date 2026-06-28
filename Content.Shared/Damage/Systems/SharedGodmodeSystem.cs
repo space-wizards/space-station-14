@@ -38,7 +38,7 @@ public abstract partial class SharedGodmodeSystem : EntitySystem
 
     private void OnBeforeStatusEffect(EntityUid uid, GodmodeComponent component, ref BeforeStatusEffectAddedEvent args)
     {
-        if (ProtoMan.Index(args.Effect).HasComponent<RejuvenateRemovedStatusEffectComponent>(Factory))
+        if (ProtoMan.Index(args.Effect).HasComp<RejuvenateRemovedStatusEffectComponent>(Factory))
             args.Cancelled = true;
     }
 
