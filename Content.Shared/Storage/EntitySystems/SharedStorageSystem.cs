@@ -84,7 +84,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     public bool NestedStorage = true;
 
     public static readonly ProtoId<ItemSizePrototype> DefaultStorageMaxItemSize = "Normal";
-    private static ProtoId<TagPrototype> _bypassOpenStorageLimitTag = "BypassOpenStorageLimit";
+    public static readonly ProtoId<TagPrototype> _bypassOpenStorageLimitTag = "BypassOpenStorageLimit";
 
     public const float AreaInsertDelayPerItem = 0.075f;
     private static AudioParams _audioParams = AudioParams.Default
