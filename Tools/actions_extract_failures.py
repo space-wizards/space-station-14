@@ -66,4 +66,4 @@ json_data = json.dumps(matrix).replace('@', '')
 
 # Write to the action step output
 with open(os.environ.get('GITHUB_OUTPUT'), 'a') as f:
-    f.write(f'matrix={json_data}\n')
+    f.write(f'matrix={json_data}\ncount={len(matrix)}\n')
