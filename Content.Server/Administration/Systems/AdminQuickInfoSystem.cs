@@ -39,13 +39,11 @@ public sealed partial class AdminQuickInfoSystem : EntitySystem
                     return new QuickInfoShared.SingleEntityInfo(e, false, "", "", null);
 
                 NetUserId? lastPlayer = null;
-                if (TryComp<MindContainerComponent>(ent, out var comp))
+
+                // Check the last mind that was attached to the entity and get its userid.
+                if (TryComp<MindContainerComponent>(ent, out var comp) && TryComp<MindComponent>(comp.LastMind, out var mindComp))
                 {
-                    var lastMind = comp.LastMind;
-                    if (TryComp<MindComponent>(lastMind, out var mindComp))
-                    {
-                        lastPlayer = mindComp.UserId;
-                    }
+                    lastPlayer = mindComp.UserId;
                 }
                 var metadata = MetaData(ent.Value);
                 return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID, lastPlayer);

@@ -52,10 +52,10 @@ public sealed partial class BwoinkSystem
 
         while (q.MoveNext(out var entity, out var comp))
         {
-            if (comp.LastMind != null)
-            {
-                list.Add(new NameMatchOption(Name(entity), entity));
-            }
+            if (comp.LastMind == null)
+                continue;
+
+            list.Add(new NameMatchOption(Name(entity), entity));
         }
 
         return list;

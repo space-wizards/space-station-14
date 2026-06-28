@@ -262,7 +262,7 @@ public sealed partial class MindSystem : SharedMindSystem
         if (entity != null)
         {
             component!.Mind = mindId;
-            component!.LastMind = mindId;
+            component.LastMind = mindId;
             component.HasMind = true;
             mind.OwnedEntity = entity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
