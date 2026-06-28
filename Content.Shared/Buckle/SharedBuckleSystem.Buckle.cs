@@ -560,7 +560,7 @@ public abstract partial class SharedBuckleSystem
         if (args.Target == null || args.Used == null)
             return;
 
-        if (TryComp<CuffableComponent>(args.Target, out var targetCuffableComp) && targetCuffableComp.CuffedHandCount > 0
+        if (TryComp<CuffableComponent>(args.Target, out var targetCuffableComp) && !targetCuffableComp.CanStillInteract
             || _mobState.IsIncapacitated(args.Target.Value))
         {
             ev.Cancel();

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
+using Content.Shared.Cuffs;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
@@ -28,6 +29,7 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private SharedCuffableSystem _cuffable = default!;
     [Dependency] private SharedJobSystem _job = default!;
 
     private IEnumerable<string>? _objectives;
@@ -270,12 +272,12 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
         EntityUid? originalEntity = GetEntity(mind.OriginalOwnedEntity);
         if (originalEntity.HasValue && originalEntity != mind.OwnedEntity)
         {
-            originalEntityInCustody = TryComp<CuffableComponent>(originalEntity, out var origCuffed) && origCuffed.CuffedHandCount > 0
+            originalEntityInCustody = _cuffable.IsCuffed(originalEntity.Value)
                    && _emergencyShuttle.IsTargetEscaping(originalEntity.Value);
         }
 
-        return originalEntityInCustody || (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0
-               && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value));
+        return originalEntityInCustody || mind.OwnedEntity.HasValue && _cuffable.IsCuffed(mind.OwnedEntity.Value)
+                                                                    && _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value);
     }
 
     /// <summary>

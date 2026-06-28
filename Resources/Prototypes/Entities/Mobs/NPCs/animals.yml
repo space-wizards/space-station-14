@@ -1592,7 +1592,7 @@
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
+      state: humanoid
       visible: false
     - map: [ "ears" ]
     - map: [ "id" ]
@@ -1825,7 +1825,7 @@
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
+      state: humanoid
       visible: false
     - map: [ "ears" ]
     - map: [ "id" ]
@@ -4052,7 +4052,7 @@
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
-      state: body-overlay-2
+      state: humanoid
       visible: false
   - type: UserInterface
     interfaces:

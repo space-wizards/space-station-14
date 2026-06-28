@@ -138,6 +138,8 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
+  - type: Cuffable
+    state: arachnid
   - type: CreamPied
     sprite:
       sprite: Effects/creampie.rsi

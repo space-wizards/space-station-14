@@ -158,6 +158,7 @@ public abstract partial class InteractionTest : GameTest
   - type: Stripping
   - type: Puller
   - type: Physics
+  - type: Cuffable
   - type: GravityAffected
   - type: Tag
     tags:
