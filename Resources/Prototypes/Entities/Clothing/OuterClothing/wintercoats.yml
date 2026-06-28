@@ -38,6 +38,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault
     slot: head
+    verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}

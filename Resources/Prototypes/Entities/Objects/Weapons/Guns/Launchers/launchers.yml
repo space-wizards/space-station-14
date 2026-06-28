@@ -278,22 +278,22 @@
           map: [ "unshaded" ]
           shader: unshaded
           visible: false
-        - type: ToggleableVisuals
-          spriteLayer: unshaded
-          inhandVisuals:
-            left:
-              - state: inhand-left-unshaded
-                shader: unshaded
-            right:
-              - state: inhand-right-unshaded
-                shader: unshaded
-        - type: Appearance
-        - type: GenericVisualizer
-          visuals:
-            enum.TetherVisualsStatus.Key:
-              unshaded:
-                True: { visible: true }
-                False: { visible: false }
+    - type: ToggleableVisuals
+      spriteLayer: unshaded
+      inhandVisuals:
+        left:
+          - state: inhand-left-unshaded
+            shader: unshaded
+        right:
+          - state: inhand-right-unshaded
+            shader: unshaded
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { visible: true }
+            False: { visible: false }
 
 - type: entity
   name: grappling gun
