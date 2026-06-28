@@ -81,7 +81,7 @@ namespace Content.Server.Afk
                 return;
 
             _lastActionTimes[player] = _gameTiming.RealTime;
-            _sawmill.Debug($"Reset AFK timer for {player.Name} ({player.UserId}).");
+            _sawmill.Verbose($"Reset AFK timer for {player.Name} ({player.UserId}).");
             PlayerDidActionEvent?.Invoke(player);
         }
 
