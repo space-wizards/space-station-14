@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Network;
 
@@ -40,7 +41,11 @@ public sealed partial class AdminQuickInfoSystem : EntitySystem
                 NetUserId? lastPlayer = null;
                 if (TryComp<MindContainerComponent>(ent, out var comp))
                 {
-                    lastPlayer = comp.LastPlayer;
+                    var lastMind = comp.LastMind;
+                    if (TryComp<MindComponent>(lastMind, out var mindComp))
+                    {
+                        lastPlayer = mindComp.UserId;
+                    }
                 }
                 var metadata = MetaData(ent.Value);
                 return new QuickInfoShared.SingleEntityInfo(e, true, metadata.EntityName, metadata.EntityPrototype?.ID, lastPlayer);

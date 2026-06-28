@@ -30,10 +30,10 @@ public sealed partial class MindContainerComponent : Component
     public bool GhostOnShutdown = true;
 
     /// <summary>
-    ///     The user ID of the last player whose mind controlled this entity. If null, it was never controlled by a player.
+    ///     Last mind who controlled this mob. If null, it was never controlled by a player.
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public NetUserId? LastPlayer;
+    [DataField, AutoNetworkedField]
+    public EntityUid? LastMind;
 }
 
 /// <summary>
