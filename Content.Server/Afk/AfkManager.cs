@@ -68,6 +68,7 @@ namespace Content.Server.Afk
             // Connecting, console commands and input commands all reset AFK status.
 
             _sawmill = _logManager.GetSawmill("afk");
+            _sawmill.Level = LogLevel.Info;
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
             _consoleHost.AnyCommandExecuted += ConsoleHostOnAnyCommandExecuted;
             _cfg.OnValueChanged(CCVars.AfkTime, value => _afkTime = TimeSpan.FromSeconds(value), true);
