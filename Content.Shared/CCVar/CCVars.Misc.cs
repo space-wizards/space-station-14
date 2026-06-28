@@ -33,7 +33,7 @@ public sealed partial class CCVars
     /// <summary>
     ///     How long a client can go without any input before being considered AFK.
     /// </summary>
-    [CVarControl(AdminFlags.VarEdit, min: 60f, max: float.MaxValue)]
+    [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AfkTime =
         CVarDef.Create("afk.time", 300f, CVar.SERVER | CVar.REPLICATED);
 

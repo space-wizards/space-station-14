@@ -150,7 +150,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit, min: 0f, max: float.MaxValue)]
     public static readonly CVarDef<float> AdminAfkTime =
-        CVarDef.Create("admin.afk_time",3600f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("admin.afk_time",10800f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     If true, admins are able to connect even if
