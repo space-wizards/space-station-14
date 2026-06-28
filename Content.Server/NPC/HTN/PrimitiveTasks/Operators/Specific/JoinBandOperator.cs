@@ -47,6 +47,6 @@ public sealed partial class JoinBandOperator : HTNOperator
         }
 
         _instrument.PrepareInstrument(owner);
-        _instrument.SetMaster(owner, target);
+        _instrument.SetMaster(owner, instrument, target);
     }
 }

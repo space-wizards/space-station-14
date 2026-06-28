@@ -184,15 +184,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     /// </summary>
     /// <param name="instrument">The instrument that will join or leave a band.</param>
     /// <param name="master">The target instrument to follow. If null, leaves all bands.</param>
-    public void SetMaster(Entity<InstrumentComponent?> instrument, EntityUid? master)
+    public void SetMaster(EntityUid uid, InstrumentComponent instrument, EntityUid? master)
     {
-        if (!HasComp<ActiveInstrumentComponent>(instrument))
+        if (!HasComp<ActiveInstrumentComponent>(uid))
             return;
 
-        if (!Resolve(instrument, ref instrument.Comp))
-            return;
-
-        if (instrument.Comp.Master == master)
+        if (instrument.Master == master)
             return;
 
         if (master != null)
@@ -203,17 +200,17 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             if (!TryComp<InstrumentComponent>(master, out var masterInstrument) || masterInstrument.Master != null)
                 return;
 
-            instrument.Comp.Master = master;
-            instrument.Comp.FilteredChannels.SetAll(false);
-            instrument.Comp.Playing = true;
-            Dirty(instrument, instrument.Comp);
+            instrument.Master = master;
+            instrument.FilteredChannels.SetAll(false);
+            instrument.Playing = true;
+            Dirty(uid, instrument);
             return;
         }
 
         // Cleanup when disabling master...
-        if (master == null && instrument.Comp.Master != null)
+        if (master == null && instrument.Master != null)
         {
-            Clean(instrument, instrument.Comp);
+            Clean(uid, instrument);
         }
     }
 
@@ -222,13 +219,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         var uid = GetEntity(msg.Uid);
         var master = GetEntity(msg.Master);
 
-        if (!TryComp(uid, out InstrumentComponent? instrument))
+        if (!TryComp<InstrumentComponent>(uid, out var instrument))
             return;
 
         if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
             return;
 
-        SetMaster(uid, master);
+        SetMaster(uid, instrument, master);
     }
 
     private void OnMidiSetFilteredChannel(InstrumentSetFilteredChannelEvent msg, EntitySessionEventArgs args)
@@ -259,9 +256,9 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     /// Make an instrument stop playing music by removing its active instrument component.
     /// </summary>
     /// <param name="uid">The instrument to deactivate.</param>
-    public void DeactivateInstrument(EntityUid uid)
+    public void DeactivateInstrument(EntityUid uid, ActiveInstrumentComponent? instrument = null)
     {
-         if (HasComp<ActiveInstrumentComponent>(uid))
+        if (Resolve(uid, ref instrument))
             RemComp<ActiveInstrumentComponent>(uid);
     }
 
