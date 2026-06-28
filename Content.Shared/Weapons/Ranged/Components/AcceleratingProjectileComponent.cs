@@ -1,23 +1,24 @@
 ﻿using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
 /// Projectile that does not start at full speed
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class AcceleratingProjectileComponent : Component
 {
     [DataField]
     public float TargetSpeed = SharedGunSystem.ProjectileSpeed;
 
     [DataField]
-    public float StartSpeed = SharedGunSystem.ProjectileSpeed * -0.15f;
+    public float StartSpeed = 0.0f;
 
     /// <summary>
     /// Time the projectile was fired
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan FireTime;
 
     /// <summary>
@@ -26,17 +27,8 @@ public sealed partial class AcceleratingProjectileComponent : Component
     [DataField]
     public TimeSpan FullAccelerationTime = TimeSpan.FromSeconds(0.6f);
 
-    public float CurrentSpeed(TimeSpan currentTime)
-    {
-        return float.Lerp(StartSpeed, TargetSpeed,
-            float.Clamp((float)((currentTime - FireTime) / FullAccelerationTime), 0.0f, 1.0f));
-    }
-
     /// <summary>
-    /// Ignoring prediction, should we remove the component?
+    /// Acceleration as metres per second.
     /// </summary>
-    public bool DeletionTime(TimeSpan currentTime)
-    {
-        return currentTime > FireTime + FullAccelerationTime;
-    }
+    public float Acceleration => (TargetSpeed - StartSpeed) / (float)FullAccelerationTime.TotalSeconds;
 }

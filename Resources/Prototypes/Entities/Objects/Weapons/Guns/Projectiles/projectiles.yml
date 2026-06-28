@@ -818,7 +818,6 @@
   - type: ExplodeOnTrigger
   - type: AcceleratingProjectile
     fullAccelerationTime: 1.0
-    startSpeed: 0
   - type: Explosive
     explosionType: Default
     maxIntensity: 40

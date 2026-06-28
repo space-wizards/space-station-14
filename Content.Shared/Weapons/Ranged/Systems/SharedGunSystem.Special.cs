@@ -1,5 +1,8 @@
-﻿using Content.Shared.Projectiles;
+﻿using System.Numerics;
+using Content.Shared.Movement.Systems;
+using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -8,27 +11,35 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 /// </summary>
 public partial class SharedGunSystem
 {
-    private void UpdateAcceleratingProjectiles()
+    public bool AcceleratingDone(AcceleratingProjectileComponent comp)
+    {
+        return Timing.CurTime > comp.FireTime + comp.FullAccelerationTime;
+    }
+
+    private void UpdateAcceleratingProjectiles(float deltaTime)
     {
         var query = EntityQueryEnumerator<AcceleratingProjectileComponent, ProjectileComponent>();
 
         while (query.MoveNext(out var uid, out var accProj, out var projectile))
         {
-            var direction = (TransformSystem.GetWorldRotation(uid) - projectile.Angle).ToWorldVec();
-            var currentSpeed = accProj.CurrentSpeed(Timing.CurTime);
-            var velocity = direction * currentSpeed;
-
-            Physics.SetLinearVelocity(uid, velocity);
-
-            if (accProj.DeletionTime(Timing.CurTime) && !Timing.InPrediction && !Timing.ApplyingState)
+            if (AcceleratingDone(accProj))
             {
-                RemComp(uid, accProj);
+                continue;
             }
+
+            var currentVelocity = Physics.GetLinearVelocity(uid, Vector2.Zero);
+            var direction = (TransformSystem.GetWorldRotation(uid) - projectile.Angle).ToWorldVec();
+            var accelerationTarget = Math.Min(deltaTime,
+                (float)(accProj.FullAccelerationTime - (Timing.CurTime - accProj.FireTime)).TotalSeconds);
+
+            var deltaVelocity = direction * accelerationTarget;
+
+            Physics.SetLinearVelocity(uid, currentVelocity + deltaVelocity);
         }
     }
 
-    public void UpdateSpecial(float dt)
+    public void UpdateSpecial(float deltaTime)
     {
-        UpdateAcceleratingProjectiles();
+        UpdateAcceleratingProjectiles(deltaTime);
     }
 }
