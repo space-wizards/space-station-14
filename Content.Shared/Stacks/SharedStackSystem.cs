@@ -28,6 +28,7 @@ public abstract partial class SharedStackSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     // TODO: These should be in the prototype.
     public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
@@ -237,16 +238,28 @@ public abstract partial class SharedStackSystem : EntitySystem
         if (amount <= 0)
             return;
 
-        if (Hands.TryGetActiveItem(user.Owner, out var recipient)
-            && TryComp<StackComponent>(recipient, out var recipientStack)
-            && TryMergeStacks((recipient.Value, recipientStack), (stack.Owner, stack.Comp), out var transferred, amount: amount))
+        // Tries to merge stack with a stack in hand. If not possible does the split
+        // Not an early return so that they can share visuals i.e. popups. Currently they share nothing due to bad prediction in popups.
+        if (
+            !Hands.TryGetActiveItem(user.Owner, out var split)
+            || !TryComp<StackComponent>(split, out var splitStack)
+            || !TryMergeStacks(
+                (split.Value, splitStack),
+                (stack.Owner, stack.Comp),
+                out var transferred,
+                amount: amount
+            )
+        )
+        {
+            split = Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero));
+            if (split == null)
+                return;
+            Hands.PickupOrDrop(user.Owner, split.Value);
+            // TODO: When popup prediction is better these should be combined
+            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
             return;
-
-        if (Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero)) is not { } split)
-            return;
-
-        Hands.PickupOrDrop(user.Owner, split);
-        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
+        }
+        Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
 
     [PublicAPI]
