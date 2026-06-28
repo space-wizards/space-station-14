@@ -82,12 +82,6 @@ public static class EntitySpawnCollection
         return GetSpawns(protoManager.Index(proto).Entries, random);
     }
 
-    public static List<string?> GetSpawns(ProtoId<EntitySpawnEntryPrototype> proto, System.Random random, IPrototypeManager? protoManager = null)
-    {
-        IoCManager.Resolve(ref protoManager);
-        return GetSpawns(protoManager.Index(proto).Entries, random);
-    }
-
     /// <summary>
     ///     Using a collection of entity spawn entries, picks a random list of entity prototypes to spawn from that collection.
     /// </summary>
@@ -155,71 +149,6 @@ public static class EntitySpawnCollection
         }
 
         return spawned;
-    }
-
-    public static List<string?> GetSpawns(IEnumerable<EntitySpawnEntry> entries,
-        System.Random random)
-    {
-        var spawned = new List<string?>();
-        var ungrouped = CollectOrGroups(entries, out var orGroupedSpawns);
-
-        foreach (var entry in ungrouped)
-        {
-            // Check random spawn
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (entry.SpawnProbability != 1f && !random.Prob(entry.SpawnProbability))
-                continue;
-
-            var amount = (int) entry.GetAmount(random);
-
-            for (var i = 0; i < amount; i++)
-            {
-                spawned.Add(entry.PrototypeId);
-            }
-        }
-
-        // Handle OrGroup spawns
-        foreach (var spawnValue in orGroupedSpawns)
-        {
-            // For each group use the added cumulative probability to roll a double in that range
-            var diceRoll = random.NextDouble() * spawnValue.CumulativeProbability;
-
-            // Add the entry's spawn probability to this value, if equals or lower, spawn item, otherwise continue to next item.
-            var cumulative = 0.0;
-
-            foreach (var entry in spawnValue.Entries)
-            {
-                cumulative += entry.SpawnProbability;
-                if (diceRoll > cumulative)
-                    continue;
-
-                // Dice roll succeeded, add item and break loop
-                var amount = (int) entry.GetAmount(random);
-
-                for (var i = 0; i < amount; i++)
-                {
-                    spawned.Add(entry.PrototypeId);
-                }
-
-                break;
-            }
-        }
-
-        return spawned;
-    }
-
-    public static double GetAmount(this EntitySpawnEntry entry, System.Random random, bool getAverage = false)
-    {
-        // Max amount is less or equal than amount, so just return the amount
-        if (entry.MaxAmount <= entry.Amount)
-            return entry.Amount;
-
-        // If we want the average, just calculate the expected amount
-        if (getAverage)
-            return (entry.Amount + entry.MaxAmount) / 2.0;
-
-        // Otherwise get a random value in between
-        return random.Next(entry.Amount, entry.MaxAmount);
     }
 
     /// <summary>

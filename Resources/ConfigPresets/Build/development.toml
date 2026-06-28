@@ -37,7 +37,11 @@ emergency = false
 arrivals = false
 preload_grids = false
 
+[afk]
+time = 0
+
 [admin]
+afk_time = 0
 see_own_notes = true
 new_player_threshold = 120
 
