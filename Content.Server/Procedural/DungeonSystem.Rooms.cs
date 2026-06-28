@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -251,7 +250,7 @@ public sealed partial class DungeonSystem
                 // but place 1 nanometre off grid and fail the add.
                 if (!_maps.TryGetTileRef(gridUid, grid, tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
                 {
-                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random.GetRandom()));
+                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random));
                 }
 
                 var result = _decals.TryAddDecal(

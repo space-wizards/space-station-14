@@ -479,8 +479,8 @@ entity-effect-guidebook-plant-attribute =
         [1] Adjusts
         *[other] adjust
     } {$attribute} by {$positive ->
-    [true] [color=red]{$amount}[/color]
-    *[false] [color=green]{$amount}[/color]
+    [false] [color=red]{$amount}[/color]
+    *[true] [color=green]{$amount}[/color]
     }
 
 entity-effect-guidebook-plant-cryoxadone =
