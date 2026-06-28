@@ -45,7 +45,11 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     private void ResizeActionContainer()
     {
         float indent = 20;
-        Actions.ActionsContainer.MaxGridWidth = ViewportContainer.Size.X - indent;
+        var width = ViewportContainer.Size.X - indent;
+        if (width <= 0)
+            return;
+
+        Actions.ActionsContainer.MaxGridWidth = width;
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
@@ -53,6 +57,8 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     public override void SetChatSize(Vector2 size)
     {
         ScreenContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
+        ScreenContainer.SetSplitFractionOnNextArrange(size.X);
+        ResizeActionContainer();
     }
 
     private void ScreenContainerOnSplitCenterChanging(SplitContainer.SplitCenterChangingEventArgs args)
@@ -70,12 +76,14 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         if (viewportWidth <= 0 || viewportHeight <= 0)
             return;
 
-        var drawWidth = MainViewport.Viewport.GetDrawBox(new Vector2i(viewportWidth, viewportHeight)).Width;
-        var fillerWidth = viewportWidth - drawWidth;
-
-        if (MathF.Abs(fillerWidth) > snapDistance * UIScale)
+        var viewportSize = MainViewport.Viewport.FixedStretchSize ?? MainViewport.Viewport.ViewportSize;
+        if (viewportSize.X <= 0 || viewportSize.Y <= 0)
             return;
 
-        args.SplitCenter = drawWidth / UIScale + ScreenContainer.SplitWidth / 2;
+        var targetWidth = viewportHeight * viewportSize.X / (float) viewportSize.Y;
+        if (MathF.Abs(viewportWidth - targetWidth) > snapDistance * UIScale)
+            return;
+
+        args.SplitCenter = targetWidth / UIScale + ScreenContainer.SplitWidth / 2;
     }
 }
