@@ -1287,6 +1287,9 @@
   id: Shiv # CargoBounty: BountyShiv
 
 - type: Tag
+  id: SmeltingImmune # for entities that should not be deleted industrial smelter's MaterialReclaimer
+
+- type: Tag
   id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
 
 - type: Tag
