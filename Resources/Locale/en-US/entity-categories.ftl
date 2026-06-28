@@ -6,5 +6,6 @@ entity-category-name-xeno-artifact-effects = Xeno Artifact Effects
 entity-category-name-mapping = Mapping
 entity-category-name-donotmap = Do not map
 entity-category-name-status-effects = Status Effects
+entity-category-name-xeno-artifact-effects = Xeno Artifact Effects
 
 entity-category-suffix-donotmap = DO NOT MAP

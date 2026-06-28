@@ -295,7 +295,9 @@
           Blunt: 4
       soundHit:
         path: /Audio/Weapons/bladeslice.ogg
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
 
 - type: entity
   parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
@@ -681,8 +683,8 @@
     - charge-artifact-popup
 
 - type: entity
-  id: XenoArtifactKnock
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactKnock
   description: Mild electromagnetic interference
   components:
   - type: XAEKnock
@@ -1206,7 +1208,7 @@
 - type: entity
   parent: BaseXenoArtifactEffect
   id: XenoArtifactHealAll
-  description: Miraclous healing
+  description: Miraculous healing
   components:
   - type: XAEDamageInArea
     damageChance: 1

@@ -4,6 +4,27 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build (C# Dev Kit)",
+            "detail": "needs C# Dev Kit extention. use the (build) task instead if you dont have the extention.",
+            "type": "dotnet",
+            "task": "build",
+            "icon": {
+                "id": "build",
+                "color": "terminal.ansiBlue"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile",
+            "runOptions": {
+                "instanceLimit": 1
+            }
+        },
+        {
             "label": "build",
             "command": "dotnet",
             "type": "shell",
@@ -13,13 +34,15 @@
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
             ],
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
             },
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "runOptions": {
+                "instanceLimit": 1
+            }
         },
         {
             "label": "build-yaml-linter",

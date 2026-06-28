@@ -37,3 +37,8 @@
   id: StatusEffects
   name: entity-category-name-status-effects
   hideSpawnMenu: true
+
+- type: entityCategory
+  id: XenoArtifactEffects
+  name: entity-category-name-xeno-artifact-effects
+  hideSpawnMenu: true
