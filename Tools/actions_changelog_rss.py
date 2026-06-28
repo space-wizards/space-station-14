@@ -29,7 +29,7 @@ CHANGELOG_RSS_KEY = os.environ.get("CHANGELOG_RSS_KEY")
 
 # Change these to suit your server settings
 # https://docs.fabfile.org/en/stable/getting-started.html#run-commands-via-connections-and-run
-SSH_HOST = "moon.playss14.com"
+SSH_HOST = "moon.spacestation14.com"
 SSH_USER = "changelog-rss"
 SSH_PORT = 22
 RSS_FILE = "changelog.xml"
@@ -40,11 +40,11 @@ HOST_KEYS = [
 
 # RSS feed parameters, change these
 FEED_TITLE       = "Space Station 14 Changelog"
-FEED_LINK        = "https://github.com/Space-Wizards-Federation/space-station-14"
+FEED_LINK        = "https://github.com/space-wizards/space-station-14/"
 FEED_DESCRIPTION = "Changelog for the official Wizard's Den branch of Space Station 14."
 FEED_LANGUAGE    = "en-US"
 FEED_GUID_PREFIX = "ss14-changelog-wizards-"
-FEED_URL         = "https://central.playss14.com/changelog.xml"
+FEED_URL         = "https://central.spacestation14.io/changelog.xml"
 
 CHANGELOG_FILE = "Resources/Changelog/Changelog.yml"
 
