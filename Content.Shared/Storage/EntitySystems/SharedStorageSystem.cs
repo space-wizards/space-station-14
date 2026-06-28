@@ -84,6 +84,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     public bool NestedStorage = true;
 
     public static readonly ProtoId<ItemSizePrototype> DefaultStorageMaxItemSize = "Normal";
+    private static ProtoId<TagPrototype> _bypassOpenStorageLimitTag = "BypassOpenStorageLimit";
 
     public const float AreaInsertDelayPerItem = 0.075f;
     private static AudioParams _audioParams = AudioParams.Default
@@ -424,7 +425,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         {
             // If you need something more sophisticated for multi-UI you'll need to code some smarter
             // interactions.
-            if (_openStorageLimit == 1)
+            if (_openStorageLimit == 1 && !_tag.HasTag(actor, _bypassOpenStorageLimitTag))
                 UI.CloseUserUis<StorageComponent.StorageUiKey>(actor);
 
             OpenStorageUIInternal(uid, actor, storageComp, silent: silent);
@@ -884,7 +885,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
                     count++;
 
-                    if (count >= _openStorageLimit)
+                    if (count >= _openStorageLimit && !_tag.HasTag(actor, _bypassOpenStorageLimitTag))
                     {
                         args.Cancel();
                     }
