@@ -53,11 +53,12 @@
     heatingCoefficient: 0.75
     coolingCoefficient: 0.5
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetEVALarge
-    slot: head
+    clothingPrototypes:
+      head:
+      - ClothingHeadHelmetEVALarge
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: Tag
     tags:
     - CorgiWearable
@@ -140,7 +141,9 @@
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetVoidParamed
+    clothingPrototypes:
+      head:
+      - ClothingHeadHelmetVoidParamed
   - type: ItemToggle
     onUse: false
     soundActivate:
@@ -167,7 +170,7 @@
     speed: 360
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: Tag
     tags:
     - WhitelistChameleon

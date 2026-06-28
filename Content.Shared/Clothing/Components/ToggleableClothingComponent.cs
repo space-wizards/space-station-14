@@ -26,17 +26,11 @@ public sealed partial class ToggleableClothingComponent : Component
     public EntityUid? ActionEntity;
 
     /// <summary>
-    ///     Default clothing entity prototype to spawn into the clothing container.
-    /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public EntProtoId ClothingPrototype = default!;
-
-    /// <summary>
-    ///     The inventory slot that the clothing is equipped to.
+    ///     Map of inventory slots to clothing entity prototypes to spawn into the clothing container.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField, AutoNetworkedField]
-    public string Slot = "head";
+    [DataField(required: true), AutoNetworkedField]
+    public Dictionary<string, List<EntProtoId>> ClothingPrototypes = new();
 
     /// <summary>
     ///     The inventory slot flags required for this component to function.
@@ -51,14 +45,14 @@ public sealed partial class ToggleableClothingComponent : Component
     public string ContainerId = DefaultClothingContainerId;
 
     [ViewVariables]
-    public ContainerSlot? Container;
+    public Container? Container;
 
     /// <summary>
-    ///     The Id of the piece of clothing that belongs to this component. Required for map-saving if the clothing is
-    ///     currently not inside of the container.
+    ///     The Ids of the pieces of clothing that belongs to this component, as well as the slot they belong in.
+    ///     Required for map-saving if the clothing is currently not inside the container.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? ClothingUid;
+    public Dictionary<EntityUid, string> ClothingUids = new();
 
     /// <summary>
     ///     Time it takes for this clothing to be toggled via the stripping menu verbs. Null prevents the verb from even showing up.
@@ -67,8 +61,8 @@ public sealed partial class ToggleableClothingComponent : Component
     public TimeSpan? StripDelay = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    ///     Text shown in the toggle-clothing verb. Defaults to using the name of the <see cref="ActionEntity"/> action.
+    ///     Text shown in the toggle-clothing verb.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? VerbText;
+    public string VerbText = "toggleable-clothing-verb-text";
 }
