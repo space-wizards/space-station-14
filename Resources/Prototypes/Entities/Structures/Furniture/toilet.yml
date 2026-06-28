@@ -8,22 +8,37 @@
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
     layers:
-    - state: condisposal
-      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-    - state: disposal
-      map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-    - state: dispover-charge
-      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-    - state: dispover-ready
-      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-    - state: dispover-full
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-    - state: dispover-handle
-      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: disposal
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      state: dispover-ready
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalUnitVisuals.IsReady:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: disposal-charging }
+      enum.DisposalUnitVisuals.IsCharging:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          True: { state: dispover-charge, visible: true }
+          False: { state: dispover-ready, visible: true }
+      enum.PowerDeviceVisuals.Powered:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+      enum.AnchorVisuals.Anchored:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: condisposal }
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.ToolOpenableVisuals.ToolOpenableVisualState:
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
   - type: Rotatable
   - type: Transform
     noRot: false
@@ -32,6 +47,10 @@
       components:
       - HumanoidProfile
   - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
     blacklist:
       components:
       - HumanoidProfile
@@ -47,7 +66,7 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
       solutions: !type:Container
   - type: Physics
     bodyType: Static
@@ -62,7 +81,6 @@
         - MachineMask
         layer:
         - None
-  - type: PlungerUse
   - type: Appearance
   - type: SecretStash
     secretStashName: secret-stash-toilet
@@ -81,17 +99,9 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
-  - type: Rummageable
-    table: !type:NestedSelector
-      tableId: RatKingLoot
   - type: SolutionManager
     solutions:
     - SolutionDrainNormal
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: Water
-        Quantity: 1
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
@@ -102,16 +112,23 @@
     solution: tank
     destroyOnEmpty: false
     utensil: Spoon
-  - type: GenericVisualizer
-    visuals:
-      enum.ToolOpenableVisuals.ToolOpenableVisualState:
-        ToolOpenableVisualState.StashOpen:
-          Open: { state: disposal-open }
-          Closed: { state: disposal-closed }
-      enum.ToiletVisuals.SeatVisualState:
-        SeatVisualState.SeatUp:
-          SeatUp: { state: disposal-up }
-          SeatDown: { state: disposal-down }
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
+
+# constructed toilets don't come with Rummageable or plungeruse component to avoid infinite item spawning.
+- type: entity
+  parent: BaseToilet
+  id: ConstructedToilet
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  suffix: Constructed, Unplungable
+  components:
+  - type: Construction
+    graph: Toilet
+    node: toilet
 
 - type: entity
   parent: BaseToilet
@@ -120,9 +137,10 @@
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   suffix: Empty
   components:
-  - type: Construction
-    graph: Toilet
-    node: toilet
+  - type: PlungerUse
+  - type: Rummageable
+    table: !type:NestedSelector
+      tableId: RatKingLoot
 
 # so theres not actually any way to replenish the gastrotoxin / gold in these.
 # I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
@@ -133,11 +151,11 @@
   components:
   - type: Solution
     solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 180
-      - ReagentId: GastroToxin
-        Quantity: 20
+        reagents:
+        - ReagentId: Water
+          Quantity: 180
+        - ReagentId: GastroToxin
+          Quantity: 20
 
 - type: entity
   parent: ToiletEmpty
@@ -178,12 +196,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -198,6 +210,10 @@
           IngotGold1:
             min: 5
             max: 5
+  - type: PlungerUse
+  - type: Rummageable
+    table: !type:NestedSelector
+      tableId: RatKingLoot
 
 - type: entity
   parent: ToiletGoldenEmpty
@@ -208,10 +224,10 @@
     stealGroup: ToiletGoldenDirtyWater
   - type: Solution
     solution:
-      reagents:
-      - ReagentId: Water
-        Quantity: 160
-      - ReagentId: Gold
-        Quantity: 20
-      - ReagentId: GastroToxin
-        Quantity: 20
+        reagents:
+        - ReagentId: Water
+          Quantity: 160
+        - ReagentId: Gold
+          Quantity: 20
+        - ReagentId: GastroToxin
+          Quantity: 20
