@@ -5,6 +5,7 @@
 - type: entity
   abstract: true
   id: GasPipeLayerAlt1
+  categories: [ HideSpawnMenuAllowCopy ]
   components:
   - type: AtmosPipeLayers
     pipeLayer: 1
@@ -13,6 +14,7 @@
 - type: entity
   abstract: true
   id: GasPipeLayerAlt2
+  categories: [ HideSpawnMenuAllowCopy ]
   components:
   - type: AtmosPipeLayers
     pipeLayer: 2
@@ -21,7 +23,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeStraight]
   id: GasPipeStraightAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -32,7 +33,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeStraight]
   id: GasPipeStraightAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -44,7 +44,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeHalf]
   id: GasPipeHalfAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -55,7 +54,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeHalf]
   id: GasPipeHalfAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -67,7 +65,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeBend]
   id: GasPipeBendAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -78,7 +75,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeBend]
   id: GasPipeBendAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -90,7 +86,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeTJunction]
   id: GasPipeTJunctionAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -101,7 +96,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeTJunction]
   id: GasPipeTJunctionAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -113,7 +107,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeFourway]
   id: GasPipeFourwayAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -124,7 +117,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeFourway]
   id: GasPipeFourwayAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -137,7 +129,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPressurePump]
   id: GasPressurePumpAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -153,7 +144,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPressurePump]
   id: GasPressurePumpAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
@@ -171,7 +161,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasVolumePump]
   id: GasVolumePumpAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -187,7 +176,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasVolumePump]
   id: GasVolumePumpAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
@@ -205,7 +193,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPassiveGate]
   id: GasPassiveGateAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -221,7 +208,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPassiveGate]
   id: GasPassiveGateAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
@@ -239,7 +225,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasValve]
   id: GasValveAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -255,7 +240,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasValve]
   id: GasValveAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
@@ -273,7 +257,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, SignalControlledValve]
   id: SignalControlledValveAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -289,7 +272,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, SignalControlledValve]
   id: SignalControlledValveAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
@@ -307,7 +289,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensor]
   id: GasPipeSensorAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -326,7 +307,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensor]
   id: GasPipeSensorAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -347,7 +327,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorDistribution]
   id: GasPipeSensorDistributionAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -364,7 +343,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensorDistribution]
   id: GasPipeSensorDistributionAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -383,7 +361,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorWaste]
   id: GasPipeSensorWasteAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -400,7 +377,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensorWaste]
   id: GasPipeSensorWasteAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -419,7 +395,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorMixedAir]
   id: GasPipeSensorMixedAirAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -436,7 +411,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensorMixedAir]
   id: GasPipeSensorMixedAirAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -455,7 +429,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorTEGHot]
   id: GasPipeSensorTEGHotAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -472,7 +445,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensorTEGHot]
   id: GasPipeSensorTEGHotAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -491,7 +463,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorTEGCold]
   id: GasPipeSensorTEGColdAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
@@ -508,7 +479,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPipeSensorTEGCold]
   id: GasPipeSensorTEGColdAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
@@ -527,7 +497,6 @@
 - type: entity
   parent: [GasPipeLayerAlt1, GasPressureRegulator]
   id: GasPressureRegulatorAlt1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
@@ -543,7 +512,6 @@
 - type: entity
   parent: [GasPipeLayerAlt2, GasPressureRegulator]
   id: GasPressureRegulatorAlt2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
