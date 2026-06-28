@@ -12,6 +12,7 @@
   - type: Rotatable
   - type: Physics
     canCollide: false
+  - type: Fixtures
   - type: Clickable
   - type: WallMount
   - type: InteractionOutline

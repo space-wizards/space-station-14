@@ -3,15 +3,11 @@ using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
-using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
 
@@ -27,7 +23,8 @@ public abstract partial class SharedSalvageSystem : EntitySystem
 
     public string GetFTLName(LocalizedDatasetPrototype dataset, int seed)
     {
-        var random = new System.Random(seed);
+        var random = new RobustRandom();
+        random.SetSeed(seed);
         return $"{Loc.GetString(dataset.Values[random.Next(dataset.Values.Count)])}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
     }
 
@@ -35,7 +32,8 @@ public abstract partial class SharedSalvageSystem : EntitySystem
     {
         // This is on shared to ensure the client display for missions and what the server generates are consistent
         var modifierBudget = difficulty.ModifierBudget;
-        var rand = new System.Random(seed);
+        var rand = new RobustRandom();
+        rand.SetSeed(seed);
 
         // Run budget in order of priority
         // - Biome
@@ -73,7 +71,7 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, light.Color, duration, mods);
     }
 
-    public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
+    public T GetBiomeMod<T>(string biome, IRobustRandom rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
     {
         var mods = _proto.EnumeratePrototypes<T>().ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
@@ -92,7 +90,7 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public T GetMod<T>(System.Random rand, ref float rating) where T : class, IPrototype, ISalvageMod
+    public T GetMod<T>(IRobustRandom rand, ref float rating) where T : class, IPrototype, ISalvageMod
     {
         var mods = _proto.EnumeratePrototypes<T>().ToList();
         mods.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
