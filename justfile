@@ -1,10 +1,12 @@
-# --------------------------------------------------------------------------------------------------------------------
+# -------------------------
 # Space Station 14 JustFile
-# --------------------------------------------------------------------------------------------------------------------
+# -------------------------
 # This is a file containing commands for Just. You can find Just here: https://github.com/casey/just
 # Just is a command runner that automates needing to remember common terminal commands, similar to Make's makefiles.
 # If you don't want to use Just, this file also serves as a handy reference for common console commands.
-# --------------------------------------------------------------------------------------------------------------------
+# -------------------------
+# Windows Shell assignation
+# -------------------------
 # This sets the terminal used on Windows.
 # This file path is the default installation location Git For Windows will install Git Bash to.
 # Given Space Station 14 is a Git-backed project, and you somehow have these files, we assume
@@ -13,9 +15,9 @@
 # If you don't have Git Bash, or it's not in this location, try deleting this line, but Just
 # may not work for you.
 set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe", "-c"]
-# --------------------------------------------------------------------------------------------------------------------
+# ---------------------------------
 # Windows installation instructions
-# --------------------------------------------------------------------------------------------------------------------
+# ---------------------------------
 # On Windows, you can install Just with winget:
 # `winget install Casey.Just`
 # To use Just's --choose option, you can also install fzf:
@@ -99,3 +101,18 @@ run-packaging platform warninglevel="4":
 [group("tools")]
 setup-project:
     py RUN_THIS.py
+# ------------
+# Git commands
+# ------------
+[group("git")]
+# Initializes and updates your submodules.
+update-submodules:
+    git submodule update --init --recursive
+[group("git")]
+# Creates a remote called upstream that points to Wizden. Change this if you're a downstream fork!
+set-upstream-remote:
+    git remote add upstream https://github.com/Space-Wizards/space-station-14.git
+[group("git")]
+# Updates your current branch with the latest state of Wizden upstream.
+pull-upstream-master:
+    git pull upstream master
