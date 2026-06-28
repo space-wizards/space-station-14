@@ -870,6 +870,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         var uid = args.Target;
         var actor = args.Actor;
         var count = 0;
+        var bypassLimit = _tag.HasTag(actor, _bypassOpenStorageLimitTag)
 
         if (_userQuery.TryComp(actor, out var userComp))
         {
@@ -885,7 +886,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
                     count++;
 
-                    if (count >= _openStorageLimit && !_tag.HasTag(actor, _bypassOpenStorageLimitTag))
+                    if (count >= _openStorageLimit && !bypassLimit)
                     {
                         args.Cancel();
                     }
