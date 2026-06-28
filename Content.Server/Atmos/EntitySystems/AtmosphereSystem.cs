@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Electrocution;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -10,6 +13,9 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Decals;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -41,15 +47,21 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private MapSystem _map = default!;
     [Dependency] public PuddleSystem Puddle = default!;
     [Dependency] private DamageableSystem _damage = default!;
+    [Dependency] private ElectrocutionSystem _electrocution = default!;
+    [Dependency] private BatterySystem _battery = default!;
 
     [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
-    [Dependency] private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
-    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
-    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
+    private EntityQuery<GridAtmosphereComponent> _atmosQuery;
+    private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
+    private EntityQuery<AirtightComponent> _airtightQuery;
+    private EntityQuery<FirelockComponent> _firelockQuery;
+    private EntityQuery<ApcPowerReceiverComponent> _powerReceiverQuery;
+    private EntityQuery<MobStateComponent> _mobQuery;
+    private EntityQuery<BatteryComponent> _batteryQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -65,6 +77,15 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeCVars();
         InitializeGridAtmosphere();
         InitializeMap();
+        InitializeChargedElectrovae();
+
+        _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
+        _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
+        _airtightQuery = GetEntityQuery<AirtightComponent>();
+        _firelockQuery = GetEntityQuery<FirelockComponent>();
+        _powerReceiverQuery = GetEntityQuery<ApcPowerReceiverComponent>();
+        _mobQuery = GetEntityQuery<MobStateComponent>();
+        _batteryQuery = GetEntityQuery<BatteryComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);

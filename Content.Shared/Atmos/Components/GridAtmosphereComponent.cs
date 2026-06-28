@@ -73,6 +73,12 @@ public sealed partial class GridAtmosphereComponent : Component
     public int HotspotTilesCount => HotspotTiles.Count;
 
     [ViewVariables]
+    public readonly HashSet<TileAtmosphere> ChargedElectrovaeTiles = new(1000);
+
+    [ViewVariables]
+    public int ChargedElectrovaeTilesCount => ChargedElectrovaeTiles.Count;
+
+    [ViewVariables]
     public readonly HashSet<TileAtmosphere> SuperconductivityTiles = new(1000);
 
     [ViewVariables]

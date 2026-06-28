@@ -16,3 +16,7 @@ gas-nitrous-oxide = Nitrous Oxide
 gas-nitrous-oxide-abbreviation = N₂O
 gas-frezon = Frezon
 gas-frezon-abbreviation = F
+gas-electrovae = Electrovae
+gas-electrovae-abbreviation = E
+gas-charged-electrovae = Charged Electrovae
+gas-charged-electrovae-abbreviation = E₂

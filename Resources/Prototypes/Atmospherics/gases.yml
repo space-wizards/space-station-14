@@ -117,3 +117,35 @@
   color: '#3a758c'
   reagent: Frezon
   pricePerMole: 1
+
+- type: gas
+  id: Electrovae
+  name: gas-electrovae
+  abbreviation: gas-electrovae-abbreviation
+  molarHeatCapacity: 250
+  heatCapacityRatio: 1.28
+  molarMass: 520
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: electrovae
+  gasMolesVisible: 0.1
+  gasVisibilityFactor: 2.0
+  color: '#0022ff'
+  reagent: Electrovae
+  pricePerMole: 0.05
+
+- type: gas
+  id: ChargedElectrovae
+  name: gas-charged-electrovae
+  abbreviation: gas-charged-electrovae-abbreviation
+  molarHeatCapacity: 150
+  heatCapacityRatio: 1.30
+  molarMass: 520
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: electrovae_charged
+  gasMolesVisible: 1.0
+  gasVisibilityFactor: 3.0
+  color: '#ddff00'
+  reagent: ChargedElectrovae
+  pricePerMole: 1.2

@@ -35,6 +35,7 @@ public sealed partial class AtmosphereSystem
             AtmosphereProcessingState.HighPressureDelta => ProcessHighPressureDelta(ent),
             AtmosphereProcessingState.DeltaPressure => ProcessDeltaPressure(ent),
             AtmosphereProcessingState.Hotspots => ProcessHotspots(ent),
+            AtmosphereProcessingState.ChargedElectrovae => ProcessChargedElectrovaeTiles(ent),
             AtmosphereProcessingState.Superconductivity => ProcessSuperconductivity(ent),
             AtmosphereProcessingState.PipeNet => ProcessPipeNets(ent),
             AtmosphereProcessingState.AtmosDevices => mapEnt is not null

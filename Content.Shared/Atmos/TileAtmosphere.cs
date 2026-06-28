@@ -105,6 +105,12 @@ public sealed class TileAtmosphere : IGasMixtureHolder
     public Hotspot Hotspot;
 
     /// <summary>
+    /// Current <see cref="ChargedElectrovaeEffect"/> information for this tile.
+    /// </summary>
+    [ViewVariables]
+    public ChargedElectrovaeEffect ChargedEffect;
+
+    /// <summary>
     /// Points to the direction of the recipient tile for pressure equalization logic
     /// (Monstermos or HighPressureDelta otherwise).
     /// </summary>
