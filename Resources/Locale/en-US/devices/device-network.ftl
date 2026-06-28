@@ -35,6 +35,7 @@ device-address-prefix-teg = TEG-
 device-address-prefix-heater = HTR-
 device-address-prefix-freezer = FZR-
 device-address-prefix-volume-pump = VPP-
+device-address-prefix-heat-pump = HTP-
 device-address-prefix-smes = SMS-
 device-address-prefix-turret = TRT-
 

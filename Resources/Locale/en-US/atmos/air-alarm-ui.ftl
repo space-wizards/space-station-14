@@ -37,6 +37,9 @@ air-alarm-ui-window-alarm-state-indicator = Status: [color={$color}]{-air-alarm-
 air-alarm-ui-window-tab-vents = Vents
 air-alarm-ui-window-tab-scrubbers = Scrubbers
 air-alarm-ui-window-tab-sensors = Sensors
+air-alarm-ui-window-tab-heat-pumps = Heat Pumps
+
+air-alarm-ui-heat-pump-target-temp-label = Target Temperature (K)
 
 air-alarm-ui-gases = {$gas}: {$amount} mol ({$percentage}%)
 air-alarm-ui-gases-indicator = {$gas}: [color={$color}]{$amount} mol ({$percentage}%)[/color]

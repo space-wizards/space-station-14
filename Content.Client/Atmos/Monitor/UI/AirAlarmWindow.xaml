@@ -70,6 +70,16 @@
                     <BoxContainer Name="CSensorContainer" Orientation="Vertical"/>
                 </ScrollContainer>
             </PanelContainer>
+            <!-- Heat Pumps -->
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                </PanelContainer.PanelOverride>
+
+                <ScrollContainer>
+                    <BoxContainer Name="CHeatPumpContainer" Orientation="Vertical"/>
+                </ScrollContainer>
+            </PanelContainer>
         </TabContainer>
         <!-- Mode buttons -->
         <BoxContainer Orientation="Horizontal">

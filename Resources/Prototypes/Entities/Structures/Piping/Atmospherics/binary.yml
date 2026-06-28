@@ -165,6 +165,92 @@
 
 - type: entity
   parent: GasBinaryBase
+  id: GasHeatPump
+  name: heat pump
+  description: A heat pump moves heat between two pipe networks. Target Temp is set from an air alarm.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: ExtensionCableReceiver
+    - type: LightningTarget
+      priority: 1
+    - type: ApcPowerReceiver
+      powerLoad: 5000
+    - type: Rotatable
+    - type: Transform
+      noRot: false
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
+    - type: Sprite
+      sprite: Structures/Piping/Atmospherics/heatpump.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+          map: ["enum.PipeVisualLayers.Pipe"]
+        - state: heatpump
+          map: ["enum.SubfloorLayers.FirstLayer", "enabled"]
+    - type: AtmosPipeLayers
+      spriteRsiPaths: {}
+      numberOfPipeLayers: 1
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.GasVolumePumpVisuals.State:
+          enabled:
+            On:      { state: heatpumpOn }
+            Off:     { state: heatpump }
+            Blocked: { state: heatpumpBlocked }
+    - type: PipeColorVisuals
+    - type: GasHeatPump
+      enabled: false
+      # Work term for the COP math, tune to avoid infinite energy
+      # workInput: 5000
+      # Hard cap on heat moved per second (Watt)
+      # maxHeatTransferRate: 14000
+      # Fraction of ideal Carnot reached, 1 = ideal
+      # carnotEfficiency: 0.65
+      # Min / Max temperatures that lock out the heat pump
+      # maxOperatingTemperature: 373.15
+      # minOperatingTemperature: 173.15
+      # Lock out if pressure is too low
+      # minPressure: 0.5
+      # targetTemperature: 293.15
+    - type: Construction
+      graph: GasBinary
+      node: heatpump
+    - type: NodeContainer
+      nodes:
+        regulated:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+        external:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+      prefix: device-address-prefix-heat-pump
+    - type: WiredNetworkConnection
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_pump.ogg
+    - type: GuideHelp
+      guides:
+      - Pumps
+
+- type: entity
+  parent: GasBinaryBase
   id: GasPressureRegulator
   name: inlet pressure regulator
   description: A valve that releases gas when the inlet pressure exceeds a certain threshold.
