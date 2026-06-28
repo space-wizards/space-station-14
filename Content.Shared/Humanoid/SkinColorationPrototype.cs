@@ -342,7 +342,7 @@ public sealed partial class ClampedHslColoration : ISkinColorationStrategy
 [Serializable, NetSerializable]
 public sealed partial class HueNodeClampedHsvColoration : ISkinColorationStrategy
 {
-    // FIXME: this is awful - why is it so large?
+    // TODO: this is awful - why is it so large?
     /// <summary>
     /// The maximum amount of change to the saturation that we can expect between generating an HSV value
     /// at a threshold, converting it to RGB, then resaving it.
