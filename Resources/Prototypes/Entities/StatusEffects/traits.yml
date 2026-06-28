@@ -16,3 +16,6 @@
   id: TraitStatusEffectPainNumbness
   name: pain numbness
 
+- type: entity
+  parent: [ MutedStatusEffectBase, TraitStatusEffectBase ]
+  id: TraitStatusEffectMuted

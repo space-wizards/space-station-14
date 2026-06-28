@@ -19,6 +19,7 @@ using Content.Shared.Objectives.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Storage;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
@@ -59,6 +60,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private TagSystem _tag = default!;
@@ -110,7 +112,7 @@ public abstract partial class SharedMagicSystem : EntitySystem
             }
         }
 
-        if (comp.RequiresSpeech && HasComp<MutedComponent>(args.Performer))
+        if (comp.RequiresSpeech && _statusEffects.HasEffectComp<MutedStatusEffectComponent>(args.Performer))
             hasReqs = false;
 
         if (hasReqs)
