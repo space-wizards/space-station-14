@@ -54,7 +54,14 @@
     node: barrel
   - type: Item
     sprite: Structures/Storage/barrels.rsi
-    size: Ginormous
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand
+      right:
+      - state: inhand
+    shape:
+    - 0,0,7,3
   - type: MultiHandedItem
   - type: HeldSpeedModifier
     walkModifier: 0.8
@@ -76,6 +83,14 @@
   - type: RadiationSource
     intensity: 1.0
     slope: 0.25
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-radbarrel
+      right:
+      - state: inhand-radbarrel
 
 - type: entityTable
   id: RandomChemicalBarrel
@@ -183,6 +198,14 @@
       reagents:
       - ReagentId: Silicon
         Quantity: 960
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-silicate
+      right:
+      - state: inhand-silicate
 
 - type: entity
   parent: BaseBarrelChem
@@ -197,6 +220,14 @@
       reagents:
       - ReagentId: SpaceLube
         Quantity: 960
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-silicate
+      right:
+      - state: inhand-silicate
 
 - type: entity
   parent: BaseBarrelChemRadioactive

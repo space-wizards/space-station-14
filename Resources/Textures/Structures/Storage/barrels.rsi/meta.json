@@ -38,13 +38,17 @@
     {
       "name": "radbarrel"
     },
-	{
-		"name": "inhand-right",
-		"directions": 4
-	},
-	{
-		"name": "inhand-left",
-		"directions": 4
-	}
+    {
+      "name": "inhand",
+      "directions": 4
+    },
+    {
+      "name": "inhand-radbarrel",
+      "directions": 4
+    },
+    {
+      "name": "inhand-silicate",
+      "directions": 4
+    }
   ]
 }
