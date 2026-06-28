@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public void CacheGases()
         {
-            _gasReactions = ProtoManager.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+            _gasReactions = ProtoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
         }
 
