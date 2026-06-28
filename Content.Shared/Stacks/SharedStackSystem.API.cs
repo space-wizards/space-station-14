@@ -43,10 +43,12 @@ public abstract partial class SharedStackSystem
     /// <param name="amount">Optional. Limits amount of stack count to move from the donor.</param>
     /// <returns> True if transferred is greater than 0. </returns>
     [PublicAPI]
-    public bool TryMergeStacks(Entity<StackComponent?> donor,
-                                Entity<StackComponent?> recipient,
-                                out int transferred,
-                                int? amount = null)
+    public bool TryMergeStacks(
+        Entity<StackComponent?> recipient,
+        Entity<StackComponent?> donor,
+        out int transferred,
+        int? amount = null
+    )
     {
         transferred = 0;
 
@@ -98,7 +100,7 @@ public abstract partial class SharedStackSystem
 
         foreach (var held in Hands.EnumerateHeld(user))
         {
-            TryMergeStacks(item, held, out _);
+            TryMergeStacks(held, item, out _);
 
             if (item.Comp.Count == 0)
                 return;
@@ -132,7 +134,7 @@ public abstract partial class SharedStackSystem
             if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
                 continue;
 
-            if (!TryMergeStacks((uid, stack), recipientStack.AsNullable(), out _))
+            if (!TryMergeStacks(recipientStack.AsNullable(), (uid, stack), out _))
                 continue;
             merged = true;
 

@@ -67,7 +67,7 @@ public abstract partial class SharedStackSystem : EntitySystem
             return;
 
         // Transfer stacks from ground to hand
-        if (!TryMergeStacks((ent.Owner, ent.Comp), (args.Used, recipientStack), out var transferred))
+        if (!TryMergeStacks((args.Used, recipientStack), (ent.Owner, ent.Comp), out var transferred))
             return; // if nothing transferred, leave without a pop-up
 
         args.Handled = true;
@@ -239,7 +239,7 @@ public abstract partial class SharedStackSystem : EntitySystem
 
         if (Hands.TryGetActiveItem(user.Owner, out var recipient)
             && TryComp<StackComponent>(recipient, out var recipientStack)
-            && TryMergeStacks((stack.Owner, stack.Comp), (recipient.Value, recipientStack), out var transferred, amount: amount))
+            && TryMergeStacks((recipient.Value, recipientStack), (stack.Owner, stack.Comp), out var transferred, amount: amount))
             return;
 
         if (Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero)) is not { } split)
