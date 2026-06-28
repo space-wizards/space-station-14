@@ -308,13 +308,25 @@ namespace Content.Server.Cargo.Systems
         {
             var station = _station.GetOwningStation(uid);
 
-            if (component.Mode != CargoOrderConsoleMode.DirectOrder)
+            if (component.Mode != CargoOrderConsoleMode.DirectOrder && component.Mode != CargoOrderConsoleMode.SendToPrimary)
                 return;
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            RemoveOrder(station.Value, component.Account, args.OrderId, orderDatabase);
+            var targetAccount = component.Account;
+
+            if (component.Mode == CargoOrderConsoleMode.SendToPrimary)
+            {
+                // In SendToPrimary, order is associated with the stations' bank account
+                // So we need to look that up, for consistency with OnAddOrderMessage
+                if (!TryComp<StationBankAccountComponent>(station, out var bank))
+                    return;
+
+                targetAccount = bank.PrimaryAccount;
+            }
+
+            RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
         }
 
         private void OnAddOrderMessageSlipPrinter(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args, CargoProductPrototype product)
