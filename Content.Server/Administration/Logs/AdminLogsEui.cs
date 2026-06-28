@@ -17,13 +17,13 @@ using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 
 namespace Content.Server.Administration.Logs;
 
-public sealed class AdminLogsEui : BaseEui
+public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IAdminLogManager _adminLogs = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private IAdminLogManager _adminLogs = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private IEntityManager _e = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -129,14 +129,14 @@ public sealed class AdminLogsEui : BaseEui
                 var roundId = _filter.Round ??= CurrentRoundId;
                 await LoadFromDb(roundId);
 
-                SendLogs(true);
+                SendLogs(true, _filter);
                 break;
             }
             case NextLogsRequest:
             {
                 _sawmill.Info($"Admin log next batch request from admin with id {Player.UserId.UserId} and name {Player.Name}");
 
-                SendLogs(false);
+                SendLogs(false, _filter);
                 break;
             }
         }
@@ -152,29 +152,32 @@ public sealed class AdminLogsEui : BaseEui
         SendMessage(message);
     }
 
-    private async void SendLogs(bool replace)
+    private async void SendLogs(bool replace, LogFilter filter)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogs.All(_filter, _adminLogListPool.Get),
-            _filter.CancellationToken);
+        var logs = await Task.Run(async () => await _adminLogs.All(filter, _adminLogListPool.Get),
+            filter.CancellationToken);
 
         if (logs.Count > 0)
         {
-            _filter.LogsSent += logs.Count;
+            filter.LogsSent += logs.Count;
 
-            var largestId = _filter.DateOrder switch
+            var largestId = filter.DateOrder switch
             {
                 DateOrder.Ascending => 0,
                 DateOrder.Descending => ^1,
-                _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(filter.DateOrder), filter.DateOrder, null)
             };
 
-            _filter.LastLogId = logs[largestId].Id;
+            filter.LastLogId = logs[largestId].Id;
         }
 
-        var message = new NewLogs(logs, replace, logs.Count >= _filter.Limit);
+        var message = new NewLogs(logs, replace, logs.Count >= filter.Limit);
+
+        if (filter.CancellationToken.IsCancellationRequested)
+            return;
 
         SendMessage(message);
 

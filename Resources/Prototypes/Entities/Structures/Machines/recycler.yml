@@ -58,6 +58,10 @@
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
   - type: RecyclerVisuals
+  - type: DirectionalArrowIndicator
+    arrows:
+    - offset: 0, -1.35
+    - offset: 0, 0
 
   - type: CollideMaterialReclaimer
   - type: MaterialReclaimer

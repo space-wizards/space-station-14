@@ -29,6 +29,7 @@
     guides:
     - SingularityTeslaEngine
   - type: Appearance
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   id: ParticleAcceleratorFinishedPart
