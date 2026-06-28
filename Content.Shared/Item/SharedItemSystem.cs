@@ -5,9 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
-using Robust.Shared.Collections;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -284,8 +282,8 @@ public abstract partial class SharedItemSystem : EntitySystem
     {
         var protoA = ProtoMan.Index(a);
         var protoB = ProtoMan.Index(b);
-        if (!protoA.TryGetComponent<ItemComponent>(out var compA, _compFactory) ||
-            !protoB.TryGetComponent<ItemComponent>(out var compB, _compFactory))
+        if (!protoA.TryComp<ItemComponent>(out var compA, _compFactory) ||
+            !protoB.TryComp<ItemComponent>(out var compB, _compFactory))
         {
             return 0;
         }
