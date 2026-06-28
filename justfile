@@ -26,102 +26,77 @@ set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe", "-c"]
 # Building the game
 # -----------------
 # Build everything.
-build:
-    dotnet build
-# Build everything but only show errors.
-build-no-warnings:
-    dotnet build --property WarningLevel=0
+[group("build")]
+build config="Debug" warninglevel="4":
+    dotnet build --configuration {{ config }} --property WarningLevel={{ warninglevel }}
 # -----------------------------
 # Building-and-running the game
 # -----------------------------
 # Build and run the specified project.
-build-and-run +PROJECT:
-    dotnet run --project {{ PROJECT }}
+[group("build-and-run")]
+build-and-run project config="Debug" warninglevel="4":
+    dotnet run --project {{ project }} --configuration {{ config }} --property WarningLevel={{ warninglevel }}
 # Build and run the server.
-build-and-run-server:
-    just build-and-run Content.Server
+[group("build-and-run")]
+build-and-run-server config="Debug" warninglevel="4":
+    just build-and-run Content.Server {{ config }} {{ warninglevel }}
 # Build and run the client.
-build-and-run-client:
-    just build-and-run Content.Client
-# Build and run the specified project.
-build-and-run-no-warnings +PROJECT:
-    dotnet run --project {{ PROJECT }} --property WarningLevel=0
-# Build and run the server.
-build-and-run-server-no-warnings:
-    just build-and-run-no-warnings Content.Server
-# Build and run the client.
-build-and-run-client-no-warnings:
-    just build-and-run-no-warnings Content.Client
-    # Build and run the game.
-build-and-run-game:
-    just build
+[group("build-and-run")]
+build-and-run-client config="Debug" warninglevel="4":
+    just build-and-run Content.Client {{ config }} {{ warninglevel }}
+[group("build-and-run")]
+build-and-run-game config="Debug" warninglevel="4":
+    just build {{ config }} {{ warninglevel }}
     just run-game
-# Build and run the game, but only show errors.
-build-and-run-game-no-warnings:
-    just build-no-warnings
-    just run-game
-# -----------------------------
+# ----------------
 # Running the game
-# -----------------------------
+# ----------------
 # Runs the specified project.
-run +PROJECT:
-    dotnet run --project {{ PROJECT }} --no-build
-# Runs the specified project, only showing errors.
-run-no-warnings +PROJECT:
-    dotnet run --project {{ PROJECT }} --no-build --property WarningLevel=0
+[group("run")]
+run project warninglevel="4":
+    dotnet run --project {{ project }} --no-build --property WarningLevel={{ warninglevel }}
 # Run the client.
-run-client:
-    just run Content.Client
+[group("run")]
+run-client warninglevel="4":
+    just run Content.Client {{ warninglevel }}
 # Run the server.
-run-server:
-    just run Content.Server
+[group("run")]
+run-server warninglevel="4":
+    just run Content.Server {{ warninglevel }}
 # Run the client and the server.
-[parallel]
-run-game: run-server run-client
-# Run the server without warnings.
-run-server-no-warnings:
-    just run-no-warnings Content.Server
-# Run the client without warnings.
-run-client-no-warnings:
-    just run-no-warnings Content.Client
-# Run the client and the server.
-[parallel]
-run-game-no-warnings: run-server-no-warnings run-client-no-warnings
+[group("run"), parallel]
+run-game warninglevel="4": (run-server warninglevel) (run-client warninglevel)
 # ---------
 # Tests
 # ---------
 # Run every integration test.
+[group("test")]
 test-all:
     dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.MapWarningTo=Failed
 # Run the sandbox validation test.
+[group("test")]
 test-sandbox:
     just test SandboxTest
 # Run a particular test. Supply the name of the test's class.
+[group("test")]
 test +TEST_NAME:
     dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj --filter {{ TEST_NAME }} -- NUnit.MapWarningTo=Failed
 # -----
 # Tools
 # -----
 # Run the YAML linter.
+[group("tools")]
 lint-yaml:
     dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
 # Builds (and runs) packaging for the specified platform.
 # The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
 # This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
-build-packaging +PLATFORM:
-    dotnet run --project Content.Packaging server --hybrid-acz --platform {{ PLATFORM }}
-# Builds (and runs) packaging for the specified platform, only displaying errors.
-# The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
-# This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
-build-packaging-no-warnings +PLATFORM:
-    dotnet run --property WarningLevel=0 --project Content.Packaging server --hybrid-acz --platform {{ PLATFORM }}
+[group("tools")]
+build-packaging platform warninglevel=4:
+    dotnet run --project Content.Packaging server --hybrid-acz --platform {{ platform }} --property WarningLevel={{ warninglevel }}
 # Runs packaging for the specified platform.
 # The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
 # This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
-run-packaging +PLATFORM:
-    dotnet run --no-build --project Content.Packaging server --hybrid-acz --platform {{ PLATFORM }}
-# Runs packaging for the specified platform, only displaying errors.
-# The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64
-# This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
-run-packaging-no-warnings +PLATFORM:
-    dotnet run --property WarningLevel=0 --no-build --project Content.Packaging server --hybrid-acz --platform {{ PLATFORM }}
+[group("tools")]
+run-packaging platform warninglevel=4:
+    dotnet run --no-build --project Content.Packaging server --hybrid-acz --platform {{ platform }} --property WarningLevel={{ warninglevel }}
