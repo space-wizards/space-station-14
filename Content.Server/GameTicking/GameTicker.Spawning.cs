@@ -285,11 +285,6 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
-            {
-                AddComp<OwOAccentComponent>(mob);
-            }
-
             _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
 
             if (lateJoin)

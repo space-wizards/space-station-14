@@ -1,4 +1,19 @@
 - type: entity
+  parent: SolutionMopNormal
+  id: SolutionMopMoproach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    preserve:
+      - Water
+    quantity: 10
+
+- type: entity
   name: moproach
   parent: MobMothroach
   id: MobMoproach
@@ -31,21 +46,7 @@
     delay: 0.5 # quick feet
   - type: SolutionManager
     solutions:
-    - SolutionMopRoach
+    - SolutionMopMoproach
   - type: InteractionPopup
     interactSuccessString: petting-success-cleanbot
     interactFailureString: petting-failure-cleanbot
-
-- type: entity
-  parent: SolutionMopNormal
-  id: SolutionMopRoach
-  components:
-  - type: SolutionRegeneration
-    generated:
-      reagents:
-      - ReagentId: Water
-        Quantity: 10
-  - type: SolutionPurge
-    preserve:
-    - Water
-    quantity: 10

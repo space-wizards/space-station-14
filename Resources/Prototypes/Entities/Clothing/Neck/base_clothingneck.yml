@@ -42,3 +42,6 @@
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.5
