@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -9,11 +8,6 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 /// </summary>
 public partial class SharedGunSystem
 {
-    public void InitializeSpecial()
-    {
-
-    }
-
     private void UpdateAcceleratingProjectiles()
     {
         var query = EntityQueryEnumerator<AcceleratingProjectileComponent, ProjectileComponent>();
@@ -24,12 +18,10 @@ public partial class SharedGunSystem
             var currentSpeed = accProj.CurrentSpeed(Timing.CurTime);
             var velocity = direction * currentSpeed;
 
-            Log.Debug("lord its physicsling");
             Physics.SetLinearVelocity(uid, velocity);
 
             if (accProj.DeletionTime(Timing.CurTime) && !Timing.InPrediction && !Timing.ApplyingState)
             {
-                Log.Debug("fuicing diye");
                 RemComp(uid, accProj);
             }
         }

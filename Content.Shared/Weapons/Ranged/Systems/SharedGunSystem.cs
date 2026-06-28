@@ -108,7 +108,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeClothing();
         InitializeContainer();
         InitializeSolution();
-        InitializeSpecial();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -450,10 +449,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
 
-        Log.Debug("asdfgasdfgdfdfgh");
         if (TryComp(uid, out AcceleratingProjectileComponent? accProj))
         {
-            Log.Debug("baf");
             accProj.TargetSpeed = speed;
             accProj.FireTime = Timing.CurTime;
             speed = accProj.StartSpeed;
