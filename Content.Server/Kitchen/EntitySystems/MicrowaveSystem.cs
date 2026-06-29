@@ -47,8 +47,6 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private ExplosionSystem _explosion = default!;
@@ -58,7 +56,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private LightningSystem _lightning = default!;
     [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
@@ -91,13 +88,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectIndex);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectTime);
 
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
-
         SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
-        SubscribeLocalEvent<ActivelyMicrowavedComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
 
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
@@ -112,17 +103,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
         while (query.MoveNext(out var uid, out var active, out var microwave))
             UpdateMicrowave((uid, active, microwave), frameTime);
-    }
-
-    /// <summary>
-    ///     Helper function to check if a microwave has ingredient contents.
-    /// </summary>
-    /// <param name="microwave">The microwave entity.</param>
-    /// <returns>Whether or not this microwave contains anything.</returns>
-    [PublicAPI]
-    public static bool HasContents(Entity<MicrowaveComponent> microwave)
-    {
-        return microwave.Comp.Storage.ContainedEntities.Any();
     }
 
     /// <summary>
@@ -171,7 +151,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
         _popupSystem.PopupEntity(selfMessage, victim, victim);
 
-        _audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
+        Audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
         Wzhzhzh(ent, args.Victim);
         UpdateUserInterfaceState(ent);
@@ -250,27 +230,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         if (active.CookTimeRemaining <= 0)
             CompleteCooking(ent);
-    }
-
-    /// <summary>
-    ///     Updates the microwave's appearance state.
-    /// </summary>
-    /// <param name="uid">The microwave entity.</param>
-    /// <param name="state">The visual state of the microwave.</param>
-    /// <param name="component">The entity's microwave component.</param>
-    /// <param name="appearanceComponent">The microwave's appearance component.</param>
-    private void SetAppearance(Entity<MicrowaveComponent?> ent,
-        MicrowaveVisualState state,
-        AppearanceComponent? appearanceComponent = null)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp, ref appearanceComponent, logMissing: false))
-            return;
-
-        var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
-        _appearance.SetData(ent.Owner,
-            PowerDeviceVisuals.VisualState,
-            display,
-            appearanceComponent);
     }
 
     /// <summary>

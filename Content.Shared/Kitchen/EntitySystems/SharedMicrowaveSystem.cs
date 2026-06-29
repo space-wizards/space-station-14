@@ -1,10 +1,38 @@
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
 public abstract partial class SharedMicrowaveSystem : EntitySystem
-{ }
+{
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
+
+    /// <summary>
+    ///     Updates the microwave's appearance state.
+    /// </summary>
+    /// <param name="uid">The microwave entity.</param>
+    /// <param name="state">The visual state of the microwave.</param>
+    /// <param name="component">The entity's microwave component.</param>
+    /// <param name="appearanceComponent">The microwave's appearance component.</param>
+    private void SetAppearance(Entity<MicrowaveComponent?> ent,
+        MicrowaveVisualState state,
+        AppearanceComponent? appearanceComponent = null)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, ref appearanceComponent, logMissing: false))
+            return;
+
+        var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
+        Appearance.SetData(ent.Owner,
+            PowerDeviceVisuals.VisualState,
+            display,
+            appearanceComponent);
+    }
+}
 
 /// <summary>
 ///     Sent from client to server to request the microwave to start cooking.
