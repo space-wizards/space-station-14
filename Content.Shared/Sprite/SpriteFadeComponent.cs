@@ -12,5 +12,5 @@ public sealed partial class SpriteFadeComponent : Component
     ///     If true, fades the item even if there is nothing else clickable behind the hovered point.
     /// </summary>
     [DataField]
-    public bool IgnoreClickableRestriction = false;
+    public bool AlwaysFade;
 }

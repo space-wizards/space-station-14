@@ -83,13 +83,13 @@ public sealed partial class SpriteFadeSystem : EntitySystem
                 var clickable = state.GetClickableEntities(mapPos, excludeFaded: false).ToList();
 
                 // Also want to handle large entities even if they may not be clickable.
-
-                for (int i = 0; i < clickable.Count; i++)
+                // We need to know if we're at the end of the list or not.
+                for (var i = 0; i < clickable.Count; i++)
                 {
                     var ent = clickable[i];
 
                     if (ent == player ||
-                        !_fadeQuery.HasComponent(ent) ||
+                        !_fadeQuery.TryGetComponent(ent, out var fadeComp) ||
                         !_spriteQuery.TryGetComponent(ent, out var sprite) ||
                         sprite.DrawDepth < playerSprite.DrawDepth)
                     {
@@ -120,11 +120,9 @@ public sealed partial class SpriteFadeSystem : EntitySystem
                             continue;
                         }
 
-                        if (_fadeQuery.TryGetComponent(ent, out var fadeComp) && !fadeComp.IgnoreClickableRestriction)
-                        {
-                            if (i + 1 == clickable.Count)
-                                continue;
-                        }
+                        // If this sprite doesn't always fade, and it's at the bottom of the stack, then don't fade!
+                        if (!fadeComp.AlwaysFade && i + 1 == clickable.Count)
+                            break;
                     }
 
                     if (!_fadingQuery.TryComp(ent, out var fading))
