@@ -4,14 +4,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build (C# Dev Kit)",
-            "detail": "Builds the game. This needs the C# Dev Kit extention to run. Use the (build) task instead if you don't have this extention (e.g. if you are using Resharper instead).",
-            "type": "dotnet",
-            "task": "build",
-            "icon": {
-                "id": "build",
-                "color": "terminal.ansiBlue"
-            },
+            "label": "build",
+            "detail": "Builds the game. This requires Just.",
+            "command": "just",
+            "type": "shell",
+            "args": [
+                "build"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -19,29 +18,7 @@
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile",
-            "runOptions": {
-                "instanceLimit": 1
-            }
-        },
-        {
-            "label": "build",
-            "detail": "Builds the game. This requires Just. Use (build (C# Dev Kit)) if you are using the C# Dev Kit extension for VS Code.",
-            "command": "just",
-            "type": "shell",
-            "args": [
-                "build"
-            ],
-            "group": {
-                "kind": "build"
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile",
-            "runOptions": {
-                "instanceLimit": 1
-            }
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "build-yaml-linter",
