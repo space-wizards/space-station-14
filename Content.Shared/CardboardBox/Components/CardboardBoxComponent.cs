@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -21,7 +22,7 @@ public sealed partial class CardboardBoxComponent : Component
     /// The entity used for the box opening effect
     /// </summary>
     [DataField]
-    public string Effect = "Exclamation";
+    public EntProtoId Effect = "Exclamation";
 
     /// <summary>
     /// Sound played upon effect creation

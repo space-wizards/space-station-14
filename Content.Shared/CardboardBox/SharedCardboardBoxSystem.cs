@@ -11,6 +11,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
@@ -20,6 +21,7 @@ public abstract partial class SharedCardboardBoxSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedEntityStorageSystem _storage = default!;
     [Dependency] private SharedMoverController _mover = default!;
@@ -86,7 +88,9 @@ public abstract partial class SharedCardboardBoxSystem : EntitySystem
         if (_timing.CurTime <= ent.Comp.EffectCooldown)
             return;
 
-        RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(ent), GetNetEntity(ent.Comp.Mover.Value)));
+        if (_net.IsServer)
+            RaiseNetworkEvent(new PlayBoxEffectMessage(GetNetEntity(ent), GetNetEntity(ent.Comp.Mover.Value)));
+
         _audio.PlayPredicted(ent.Comp.EffectSound, ent, ent.Comp.Mover.Value);
         ent.Comp.EffectCooldown = _timing.CurTime + ent.Comp.CooldownDuration;
         Dirty(ent);
@@ -114,6 +118,9 @@ public abstract partial class SharedCardboardBoxSystem : EntitySystem
     // Relay damage to the mover.
     private void OnDamage(Entity<CardboardBoxComponent> ent, ref DamageDealtEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (ent.Comp.Mover is not { } mover)
             return;
 
@@ -122,6 +129,9 @@ public abstract partial class SharedCardboardBoxSystem : EntitySystem
 
     private void OnEntInserted(Entity<CardboardBoxComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (!HasComp<MobMoverComponent>(args.Entity))
             return;
 
@@ -139,6 +149,9 @@ public abstract partial class SharedCardboardBoxSystem : EntitySystem
     /// </summary>
     private void OnEntRemoved(Entity<CardboardBoxComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Entity != ent.Comp.Mover)
             return;
 
