@@ -4,6 +4,7 @@ using Content.Shared.Temperature.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -14,6 +15,7 @@ namespace Content.Shared.Kitchen.Components;
 ///     and produce microwave recipes.
 /// </summary>
 [RegisterComponent]
+[NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MicrowaveComponent : Component
 {
     /// <summary>
@@ -25,7 +27,7 @@ public sealed partial class MicrowaveComponent : Component
     ///     microwave's timer will take 15 seconds instead. So, if you have a recipe with
     ///     a cookTime of 10 seconds, you can still make that recipe 3 at a time.
     /// </remarks>
-    [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float CookTimeMultiplier = 1;
 
     /// <summary>
@@ -36,13 +38,13 @@ public sealed partial class MicrowaveComponent : Component
     ///     This is multiplied by <see cref="ObjectHeatMultiplier"/> when applied to entities
     ///     that have a <see cref="TemperatureComponent"/> (as opposed to solutions).
     /// </remarks>
-    [DataField("baseHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float BaseHeatMultiplier = 100;
 
     /// <summary>
     ///     A multiplier for added heat on entities with a <see cref="TemperatureComponent"/>.
     /// </summary>
-    [DataField("objectHeatMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float ObjectHeatMultiplier = 100;
 
     /// <summary>
@@ -67,14 +69,14 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     Beep... beep... beep
     /// </remarks>
-    [DataField("foodDoneSound")]
+    [DataField]
     public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
 
     /// <summary>
     ///     A sound that is played when a player navigates the microwave's UI - for example, selecting
     ///     a new cooking time.
     /// </summary>
-    [DataField("clickSound")]
+    [DataField]
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
     /// <summary>
@@ -85,20 +87,21 @@ public sealed partial class MicrowaveComponent : Component
     /// <summary>
     ///     The humming sound played when a microwave is actively cooking.
     /// </summary>
-    [DataField("loopingSound")]
+    [DataField]
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
     #endregion
 
     /// <summary>
     ///     Whether or not this microwave is broken.
     /// </summary>
-    [ViewVariables]
+    [DataField]
+    [AutoNetworkedField]
     public bool Broken;
 
     /// <summary>
     ///     A port used to activate the microwave via remote signal.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SinkPortPrototype> OnPort = "On";
 
     /// <summary>
@@ -108,31 +111,35 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     For right now, I don't think any recipe cook time should be greater than 60 seconds.
     /// </remarks>
-    [DataField("currentCookTimerTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    [AutoNetworkedField]
     public uint CurrentCookTimerTime = 0;
 
     /// <summary>
     ///     Tracks the elapsed time of the current cook timer.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    [AutoNetworkedField]
     public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
 
     /// <summary>
     ///     The maximum number of seconds a microwave can be set to.
     ///     This is currently only used for validation and the client does not check this.
     /// </summary>
-    [DataField("maxCookTime"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public uint MaxCookTime = 30;
 
     /// <summary>
     ///     The max temperature that this microwave can heat objects to.
     /// </summary>
-    [DataField("temperatureUpperThreshold")]
+    [DataField]
     public float TemperatureUpperThreshold = 373.15f;
 
     /// <summary>
     ///     The index of the currently-selected "cook time" button.
     /// </summary>
+    [DataField]
+    [AutoNetworkedField]
     public int CurrentCookTimeButtonIndex;
 
     /// <summary>
@@ -149,13 +156,13 @@ public sealed partial class MicrowaveComponent : Component
     /// <summary>
     ///     How many items the microwave can hold.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int Capacity = 10;
 
     /// <summary>
     ///     The largest item size that can fit in the microwave.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
 
     /// <summary>
@@ -170,7 +177,7 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     This is rolled every <see cref="MalfunctionInterval"/>.
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float ExplosionChance = .1f;
 
     /// <summary>
@@ -179,13 +186,13 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     This is rolled every <see cref="MalfunctionInterval"/>.
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float LightningChance = .75f;
 
     /// <summary>
     ///     If this microwave can give ID cards new accesses without exploding.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanMicrowaveIdsSafely = true;
 
     /// <summary>
