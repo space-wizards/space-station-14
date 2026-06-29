@@ -33,10 +33,7 @@ using Content.Shared.Whitelist;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
-/// <summary>
-///     A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
-///     TODO: Replace with a more sophisticated(?) cooking system.
-/// </summary>
+/// <inheritdoc />
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

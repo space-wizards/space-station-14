@@ -1,5 +1,4 @@
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Audio.Systems;
@@ -9,6 +8,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
+/// <summary>
+///     A system that handles microwave logic, such as activation, malfunctions, and producing cooked recipes.
+///     TODO: Replace with a more sophisticated(?) cooking system.
+/// </summary>
 public abstract partial class SharedMicrowaveSystem : EntitySystem
 {
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
