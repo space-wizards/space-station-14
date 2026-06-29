@@ -26,7 +26,11 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((e, ref m) => Wzhzhzh(e, m.Actor));
+
         InitializeActive();
+        InitializeUI();
     }
 
     /// <summary>

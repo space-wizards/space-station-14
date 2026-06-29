@@ -8,6 +8,9 @@ namespace Content.Shared.Kitchen.EntitySystems;
 
 public abstract partial class SharedMicrowaveSystem
 {
+    /// <summary>
+    ///     Subscribe to events related to active microwaves.
+    /// </summary>
     private void InitializeActive()
     {
         SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);

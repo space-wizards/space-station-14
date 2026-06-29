@@ -1,9 +1,7 @@
-using Content.Server.Kitchen.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Kitchen.EntitySystems;
-using Robust.Shared.Audio;
+using Content.Shared.Kitchen.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Kitchen.EntitySystems;
@@ -17,7 +15,7 @@ public sealed partial class MicrowaveSystem
     // TODO: I'm not sure why this is here...?
     private void OnSolutionChange(Entity<MicrowaveComponent> ent, ref SolutionChangedEvent args)
     {
-        UpdateUserInterfaceState(ent);
+        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>
@@ -122,33 +120,6 @@ public sealed partial class MicrowaveSystem
 
         args.Handled = true;
         _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
-        UpdateUserInterfaceState(ent);
-    }
-
-    /// <summary>
-    ///     Ejects all ingredients from the microwave.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnEjectMessage(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
-    {
-        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent))
-            return;
-
-        _container.EmptyContainer(ent.Comp.Storage);
-        _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent);
-    }
-
-    /// <summary>
-    ///     Ejects an ingredient entity from the microwave.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnEjectIndex(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
-    {
-        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent))
-            return;
-
-        _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
-        UpdateUserInterfaceState(ent);
+        UpdateUserInterfaceState(ent.AsNullable());
     }
 }
