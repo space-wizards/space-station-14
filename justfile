@@ -81,7 +81,7 @@ run-integration-tests:
     dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed.ConsoleOut=0 NUnit.MapWarningTo=Failed
 # Run the sandbox validation test.
 [group("test")]
-run-sanbox-test:
+run-sandbox-test:
     just test SandboxTest
 # Run a particular test. Supply the name of the test's class.
 [group("test")]
