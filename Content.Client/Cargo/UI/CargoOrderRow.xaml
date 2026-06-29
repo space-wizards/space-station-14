@@ -4,77 +4,113 @@
     HorizontalExpand="True"
     StyleClasses="BackgroundPanel">
 
-    <!-- Main Container -->
-    <BoxContainer Orientation="Vertical"
-                  HorizontalExpand="True"
-                  SeparationOverride="6"
-                  Margin="-14 -2">
+    <!--  Main Container  -->
+    <BoxContainer
+        Margin="-14,-2"
+        HorizontalExpand="True"
+        Orientation="Vertical">
 
         <BoxContainer Orientation="Vertical">
-            <Control>
-                <PanelContainer StyleClasses="WindowHeadingBackground" />
+            <PanelContainer StyleClasses="WindowHeadingBackground" />
 
-                <BoxContainer Margin="6">
-                    <Label Name="Title"
-                           Access="Public"
-                           MaxHeight="28"
-                           StyleClasses="LabelKeyText"/>
-                </BoxContainer>
-            </Control>
-
-            <PanelContainer Name="Stride"
+            <BoxContainer Margin="5,0,15,3">
+                <Label
+                    Name="Title"
+                    MaxHeight="20"
+                    Access="Public"
+                    StyleClasses="LabelKeyText" />
+                <Control HorizontalExpand="True" />
+                <RichTextLabel
+                    Name="Requester"
+                    MaxHeight="20"
+                    HorizontalAlignment="Right"
+                    Access="Public" />
+            </BoxContainer>
+            <PanelContainer
+                Name="Stride"
                 Access="Public"
                 StyleClasses="LowDivider" />
         </BoxContainer>
-
-        <!-- Info -->
-        <BoxContainer>
-            <TextureRect Name="Icon"
-                         Access="Public"
-                         MinSize="32 32"
-                         Margin="4"
-                         Stretch="KeepAspectCentered"
-                         RectClipContent="True"
-                         VerticalAlignment="Center"/>
-
-            <PanelContainer StyleClasses="LowDivider" Margin="4 0"/>
-
-            <BoxContainer Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-
-                <RichTextLabel Name="ProductName"
-                       Access="Public"
-                       HorizontalExpand="True"
-                       VerticalExpand="True"
-                       StyleClasses="LabelSubText" />
-
-                <Label Name="Description"
-                       Access="Public"
-                       HorizontalExpand="True"
-                       VerticalExpand="True"
-                       StyleClasses="LabelSubText"
-                       ClipText="True" />
+        <!--  Products  -->
+        <BoxContainer
+            Name="Products"
+            Margin="0,2,0,0"
+            Access="Public"
+            HorizontalExpand="True"
+            Orientation="Vertical"
+            VerticalExpand="True">
+            <!--  Products are added here by code  -->
+        </BoxContainer>
+        <BoxContainer
+            Margin="12,2,15,0"
+            VerticalAlignment="Bottom"
+            HorizontalExpand="True"
+            Orientation="Vertical">
+            <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                <Label
+                    HorizontalAlignment="Left"
+                    Access="Public"
+                    Text="{Loc 'cargo-console-menu-cart-container-cost-label'}" />
+                <Control HorizontalExpand="True" />
+                <Label
+                    Name="ContainerCost"
+                    HorizontalAlignment="Right"
+                    Access="Public"
+                    Align="Right"
+                    Text="0" />
+            </BoxContainer>
+            <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                <Label
+                    HorizontalAlignment="Left"
+                    Access="Public"
+                    Text="{Loc 'cargo-console-menu-cart-total-label'}" />
+                <Control HorizontalExpand="True" />
+                <Label
+                    Name="BasketTotal"
+                    HorizontalAlignment="Right"
+                    Access="Public"
+                    Align="Right"
+                    Text="0" />
             </BoxContainer>
         </BoxContainer>
-
-        <BoxContainer Orientation="Vertical">
+        <PanelContainer
+            Name="StrideStride"
+            Access="Public"
+            StyleClasses="LowDivider" />
+        <BoxContainer
+            Margin="12,0,15,0"
+            VerticalAlignment="Bottom"
+            HorizontalExpand="True"
+            Orientation="Vertical">
+            <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
+                <RichTextLabel
+                    Name="Description"
+                    Access="Public"
+                    HorizontalExpand="True"
+                    StyleClasses="LabelSubText"
+                    VerticalExpand="True" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer
+            Name="Buttons"
+            Access="Public"
+            Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
+            <!--  Buttons  -->
+            <BoxContainer Margin="3">
+                <Button
+                    Name="Approve"
+                    Access="Public"
+                    HorizontalExpand="True"
+                    StyleClasses="OpenRight"
+                    Text="{Loc 'cargo-console-menu-order-row-button-approve'}" />
 
-            <!-- Buttons -->
-            <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
-            <BoxContainer Margin="6">
-                <Button Name="Approve"
-                        Access="Public"
-                        Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
-                        StyleClasses="OpenRight"
-                        HorizontalExpand="True"/>
-
-                <Button Name="Cancel"
-                        Access="Public"
-                        Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
-                        StyleClasses="OpenLeft"
-                        HorizontalExpand="True" />
+                <Button
+                    Name="Cancel"
+                    Access="Public"
+                    HorizontalExpand="True"
+                    StyleClasses="OpenLeft"
+                    Text="{Loc 'cargo-console-menu-order-row-button-cancel'}" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

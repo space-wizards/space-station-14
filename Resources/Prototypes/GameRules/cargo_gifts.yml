@@ -80,7 +80,9 @@
     description: cargo-gift-eng
     dest: cargo-gift-dest-eng
     gifts:
-      EngineeringCableBulk: 1
+      EngineeringCableLv: 1
+      EngineeringCableMv: 1
+      EngineeringCableHv: 1
       AirlockKit: 1
       MaterialSteel: 1
       MaterialPlasteel: 1
@@ -156,7 +158,11 @@
     description: cargo-gift-space-protection
     dest: cargo-gift-dest-supp
     gifts:
-      EmergencyInternalsLarge: 2
+      EmergencyOxygen: 6
+      EmergencyNitrogen: 6
+      EmergencyEVA: 6
+      EmergencyGasMask: 6
+      EmergencyMask: 6
       EmergencyInflatablewall: 1
       EmergencyAdvancedKit: 1
       MedicalBiosuit: 1
@@ -212,6 +218,11 @@
     dest: cargo-gift-dest-sec
     gifts:
       SecurityRiot: 2
-      SecurityRestraints: 2
-      SecurityNonLethal: 2
-      SecurityNonlethalThrowables: 1
+      SecurityBola: 2
+      SecurityTearGas: 2
+      SecurityStinger: 2
+      SecurityZiptie: 2
+      SecurityHandcuff: 2
+      SecurityFlashbang: 2
+      SecurityStunBaton: 2
+      SecurityDisabler: 2

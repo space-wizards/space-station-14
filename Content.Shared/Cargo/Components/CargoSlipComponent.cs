@@ -13,7 +13,7 @@ public sealed partial class CargoSlipComponent : Component
     /// The requested product
     /// </summary>
     [DataField]
-    public ProtoId<CargoProductPrototype> Product;
+    public List<CargoOrderItemData> Basket;
 
     /// <summary>
     /// The provided value for the requester form field
@@ -26,12 +26,6 @@ public sealed partial class CargoSlipComponent : Component
     /// </summary>
     [DataField]
     public string Reason;
-
-    /// <summary>
-    /// How many of the product to order
-    /// </summary>
-    [DataField]
-    public int OrderQuantity;
 
     /// <summary>
     /// How many of the product to order

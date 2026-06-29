@@ -3,8 +3,9 @@
   icon:
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
     state: icon
-  product: CrateSecurityArmor
-  cost: 1250
+  product: ClothingOuterArmorBulletproof
+  container: CrateSecgear
+  cost: 400
   category: cargoproduct-category-name-security
   group: market
 
@@ -13,38 +14,86 @@
   icon:
     sprite: Clothing/Head/Helmets/security.rsi
     state: icon
-  product: CrateSecurityHelmet
-  cost: 550
+  product: ClothingHeadHelmetBasic
+  container: CrateSecgear
+  cost: 175
   category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
-  id: SecurityNonLethal
+  id: SecurityDisabler
   icon:
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
-  product: CrateSecurityNonlethal
-  cost: 4000
-  category: cargoproduct-category-name-security
-  group: market
-
-- type: cargoProduct
-  id: SecuritySupplies
-  icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box_security
-  product: CrateSecuritySupplies
+  product: WeaponDisabler
+  container: CrateSecgear
   cost: 500
   category: cargoproduct-category-name-security
   group: market
 
 - type: cargoProduct
-  id: SecurityRestraints
+  id: SecurityStunBaton
+  icon:
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    state: stunbaton_off
+  product: Stunbaton
+  container: CrateSecgear
+  cost: 500
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityFlashbang
+  icon:
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    state: icon
+  product: BoxFlashbang
+  container: CrateSecgear
+  cost: 500
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityFlash
+  icon:
+    sprite: Objects/Weapons/Melee/flash.rsi
+    state: flash
+  product: Flash
+  container: CrateSecgear
+  cost: 200
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityHandcuff
   icon:
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-  product: CrateRestraints
-  cost: 1000
+  product: BoxHandcuff
+  container: CrateSecgear
+  cost: 200
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityHud
+  icon:
+    sprite: Clothing/Eyes/Hud/sec.rsi
+    state: icon
+  product: BoxSechud
+  container: CrateSecgear
+  cost: 200
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityZiptie
+  icon:
+    sprite: Objects/Misc/zipties.rsi
+    state: cuff
+  product: BoxZiptie
+  container: CrateSecgear
+  cost: 200
   category: cargoproduct-category-name-security
   group: market
 
@@ -53,8 +102,11 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/security.rsi
     state: icon
-  product: CrateSecurityBiosuit
-  cost: 1600
+  products:
+  - ClothingOuterBioSecurity
+  - ClothingHeadHatHoodBioSecurity
+  container: CrateSecgear
+  cost: 600
   category: cargoproduct-category-name-security
   group: market
 
@@ -69,12 +121,35 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityNonlethalThrowables
+  id: SecurityStinger
   icon:
     sprite: Objects/Weapons/Grenades/stingergrenade.rsi
     state: icon
-  product: CrateSecNonlethalThrowables
-  cost: 2500
+  product: BoxStinger
+  container: CrateSecgear
+  cost: 200
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityTearGas
+  icon:
+    sprite: Objects/Weapons/Grenades/tear_gas.rsi
+    state: icon
+  product: BoxTearGas
+  container: CrateSecgear
+  cost: 200
+  category: cargoproduct-category-name-security
+  group: market
+
+- type: cargoProduct
+  id: SecurityBola
+  icon:
+    sprite: Objects/Weapons/Throwable/bola.rsi
+    state: icon
+  product: Bola
+  container: CrateSecgear
+  cost: 200
   category: cargoproduct-category-name-security
   group: market
 

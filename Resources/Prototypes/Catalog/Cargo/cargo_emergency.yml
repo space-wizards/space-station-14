@@ -3,8 +3,11 @@
   icon:
     sprite: Clothing/Head/Helmets/bombsuit.rsi
     state: icon
-  product: CrateEmergencyExplosive
-  cost: 1000
+  products:
+    - ClothingOuterSuitBomb
+    - ClothingHeadHelmetBombSuit
+  container: CrateSecgear
+  cost: 700
   category: cargoproduct-category-name-emergency
   group: market
 
@@ -19,22 +22,57 @@
   group: market
 
 - type: cargoProduct
-  id: EmergencyInternals
+  id: EmergencyOxygen
   icon:
-    sprite: Clothing/Mask/breath.rsi
+    sprite: Objects/Tanks/oxygen.rsi
     state: icon
-  product: CrateEmergencyInternals
-  cost: 600
+  product: OxygenTankFilled
+  container: CrateInternals
+  cost: 50
   category: cargoproduct-category-name-emergency
   group: market
 
 - type: cargoProduct
-  id: EmergencyInternalsLarge
+  id: EmergencyNitrogen
+  icon:
+    sprite: Objects/Tanks/red.rsi
+    state: icon
+  product: NitrogenTankFilled
+  container: CrateInternals
+  cost: 50
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyEVA
+  icon:
+    sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
+    state: icon
+  product: ClothingOuterSuitEmergency
+  container: CrateInternals
+  cost: 100
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyMask
   icon:
     sprite: Clothing/Mask/breath.rsi
     state: icon
-  product: CrateEmergencyInternalsLarge
-  cost: 1200
+  product: ClothingMaskBreath
+  container: CrateInternals
+  cost: 30
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyGasMask
+  icon:
+    sprite: Clothing/Mask/gas.rsi
+    state: icon
+  product: ClothingMaskGas
+  container: CrateInternals
+  cost: 50
   category: cargoproduct-category-name-emergency
   group: market
 
@@ -43,8 +81,9 @@
   icon:
     sprite: Structures/Wallmounts/signs.rsi
     state: radiation
-  product: CrateEmergencyRadiation
-  cost: 1000
+  product: ClothingOuterSuitRad
+  container: CrateRadiation
+  cost: 450
   category: cargoproduct-category-name-emergency
   group: market
 
@@ -55,20 +94,8 @@
     sprite: Objects/Misc/inflatable_wall.rsi
     state: item_wall
   product: BoxInflatable
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 500
-  category: cargoproduct-category-name-emergency
-  group: market
-
-- type: cargoProduct
-  id: EmergencyNitrogenTanks
-  icon:
-    sprite: Objects/Tanks/red.rsi
-    state: icon
-  product: CrateNitrogenInternals
-  cost: 350
   category: cargoproduct-category-name-emergency
   group: market
 
@@ -77,7 +104,10 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/general.rsi
     state: icon
-  product: CrateGenericBiosuit
-  cost: 800
+  products:
+  - ClothingOuterBioGeneral
+  - ClothingHeadHatHoodBioGeneral
+  container: CratePlastic
+  cost: 600
   category: cargoproduct-category-name-emergency
   group: market

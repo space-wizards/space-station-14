@@ -1,3 +1,4 @@
+using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -47,7 +48,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _name = Loc.GetString(nameLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
+                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
                 {
                     _name = prototype.Name;
                 }
@@ -71,7 +72,7 @@ namespace Content.Shared.Cargo.Prototypes
                 {
                     _description = Loc.GetString(descLoc);
                 }
-                else if (IoCManager.Resolve<IPrototypeManager>().Resolve(Product, out var prototype))
+                else if (SpawnList.Count > 0 && IoCManager.Resolve<IPrototypeManager>().Resolve(SpawnList.First(), out var prototype))
                 {
                     _description = prototype.Description;
                 }
@@ -90,13 +91,37 @@ namespace Content.Shared.Cargo.Prototypes
         ///     The entity prototype ID of the product.
         /// </summary>
         [DataField]
-        public EntProtoId Product { get; private set; } = string.Empty;
+        public EntProtoId? Product { get; private set; }
 
         /// <summary>
-        /// The entity to spawn and insert the product into. If null, just the product is spawned.
+        ///     List of entity prototypes to spawn. If not set, falls back to <see cref="Product"/>.
         /// </summary>
         [DataField]
-        public CargoProductContainer? Container;
+        public List<EntProtoId>? Products { get; private set; }
+
+        /// <summary>
+        ///     Resolved list of entities to spawn. Always use this instead of <see cref="Product"/> directly.
+        /// </summary>
+        public List<EntProtoId> SpawnList
+        {
+            get
+            {
+                if (Products != null)
+                    return Products;
+                if (Product != null)
+                    return new List<EntProtoId> { Product.Value };
+                throw new InvalidOperationException($"CargoProductPrototype {ID} has neither Product nor Products defined.");
+            }
+        }
+
+
+        /// <summary>
+        /// The prototype of the container to be spawned
+        /// </summary>
+        // This prototype might be redundent as the capacity and access can porbably be gotten from the entity Id.
+        // For livestock crates and setting a lower max items than the capaicty this is currently useful
+        [DataField]
+        public ProtoId<CargoCratePrototype>? Container;
 
         /// <summary>
         ///     The point cost of the product.
@@ -117,20 +142,40 @@ namespace Content.Shared.Cargo.Prototypes
         public ProtoId<CargoMarketPrototype> Group { get; private set; } = "market";
     }
 
-    /// <see cref="CargoProductPrototype.Container"/>
-    [DataDefinition, Serializable, NetSerializable]
-    public sealed partial class CargoProductContainer
+    [Prototype]
+    public sealed partial class CargoCratePrototype : IPrototype
     {
+        /// <summary>
+        /// ID of prototype.
+        /// </summary>
+        [ViewVariables]
+        [IdDataField]
+        public string ID { get; private set; } = default!;
+
+        [DataField(required: true)]
         /// <summary>
         /// What entity to spawn as the container.
         /// </summary>
-        [DataField(required: true)]
         public EntProtoId<ContainerManagerComponent> Entity;
-
-        /// <summary>
-        /// What container in <see cref="Entity"/> the product should be inserted into.
-        /// </summary>
         [DataField(required: true)]
-        public string ContainerId;
+        /// <summary>
+        /// Component for spawning entities.
+        /// </summary>
+        public string ContainerId = string.Empty;
+        [DataField(required: true)]
+        /// <summary>
+        /// Max amount of items that can spawn in a container.
+        /// </summary>
+        public int MaxItems;
+        [DataField]
+        /// <summary>
+        /// Whether or not this container is required for the item to spawn into.
+        /// </summary>
+        public bool Required = false;
+        [DataField]
+        /// <summary>
+        /// Whether or not this container is required for the item to spawn into.
+        /// </summary>
+        public int Cost;
     }
 }

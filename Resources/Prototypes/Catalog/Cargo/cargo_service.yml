@@ -13,7 +13,8 @@
   icon:
     sprite: Objects/Weapons/Grenades/janitor.rsi
     state: icon
-  product: CrateServiceCleanerGrenades
+  product: BoxCleanerGrenades
+  container: CratePlastic
   cost: 400
   category: cargoproduct-category-name-service
   group: market
@@ -23,7 +24,10 @@
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceReplacementLights
+  products:
+  - BoxLighttube
+  - BoxLightbulb
+  container: CrateSteel
   cost: 600
   category: cargoproduct-category-name-service
   group: market
@@ -33,8 +37,9 @@
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceHolidayLights
-  cost: 800
+  product: BoxLighttubeHoliday
+  container: CrateSteel
+  cost: 400
   category: cargoproduct-category-name-service
   group: market
 
@@ -43,7 +48,10 @@
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceColorfulLights
+  products:
+  - BoxLightbulbColorfulMixed
+  - BoxLighttubeColorfulMixed
+  container: CrateSteel
   cost: 800
   category: cargoproduct-category-name-service
   group: market
@@ -54,9 +62,7 @@
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
   product: BoxMousetrap
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 500
   category: cargoproduct-category-name-service
   group: market
@@ -106,18 +112,31 @@
   icon:
     sprite: Structures/Machines/fax_machine.rsi
     state: icon
-  product: CrateServiceFaxMachine
-  cost: 2000
+  product: FaxMachineFlatpack
+  container: CrateSteel
+  cost: 1500
   category: cargoproduct-category-name-service
   group: market
 
 - type: cargoProduct
-  id: ServicePersonnel
+  id: ServicePersonnelPDA
+  icon:
+    sprite: Objects/Devices/pda.rsi
+    state: pda
+  product: BoxPDA
+  container: CrateCommandSecure
+  cost: 500
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServicePersonnelID
   icon:
     sprite: Objects/Misc/id_cards.rsi
     state: default
-  product: CrateServicePersonnel
-  cost: 1000
+  product: BoxID
+  container: CrateCommandSecure
+  cost: 500
   category: cargoproduct-category-name-service
   group: market
 
@@ -176,8 +195,11 @@
   icon:
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
     state: icon
-  product: CrateJanitorBiosuit
-  cost: 800
+  products:
+  - ClothingOuterBioJanitor
+  - ClothingHeadHatHoodBioJanitor
+  container: CratePlastic
+  cost: 600
   category: cargoproduct-category-name-service
   group: market
 
@@ -216,7 +238,10 @@
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
-  product: ClosetJanitorBombFilled
+  products:
+  - ClothingOuterSuitJanitorBomb
+  - ClothingHeadHelmetJanitorBombSuit
+  container: CrateSteel
   cost: 1000
   category: cargoproduct-category-name-service
   group: market
@@ -236,7 +261,10 @@
   icon:
     sprite: Objects/Misc/candles.rsi
     state: candle-big
-  product: CrateCandles
-  cost: 500
+  products:
+  - BoxCandle
+  - BoxCandleSmall
+  container: CrateSteel
+  cost: 200
   category: cargoproduct-category-name-service
   group: market

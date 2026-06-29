@@ -3,18 +3,21 @@
   icon:
     sprite: Objects/Materials/Sheets/glass.rsi
     state: glass_3
-  product: CrateMaterialGlass
-  cost: 1500
+  container: CrateSteel
+  product: SheetGlass
+  cost: 500
   category: cargoproduct-category-name-materials
   group: market
+
 
 - type: cargoProduct
   id: MaterialSteel
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: steel_3
-  product: CrateMaterialSteel
-  cost: 1500
+  container: CrateSteel
+  product: SheetSteel
+  cost: 500
   category: cargoproduct-category-name-materials
   group: market
 
@@ -23,8 +26,9 @@
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plastic_3
-  product: CrateMaterialPlastic
-  cost: 2000
+  container: CrateSteel
+  product: SheetPlastic
+  cost: 750
   category: cargoproduct-category-name-materials
   group: market
 
@@ -33,8 +37,9 @@
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: brass_3
-  product: CrateMaterialBrass
-  cost: 3000
+  product: SheetBrass
+  container: CrateSteel
+  cost: 1000
   category: cargoproduct-category-name-materials
   group: market
 
@@ -46,9 +51,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
   product: SheetPlasteel
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 1600
   category: cargoproduct-category-name-materials
   group: market
@@ -61,9 +64,7 @@
     sprite: Objects/Materials/ingots.rsi
     state: gold_3
   product: IngotGold
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 3225
   category: cargoproduct-category-name-materials
   group: market
@@ -76,9 +77,7 @@
     sprite: Objects/Materials/ingots.rsi
     state: silver_3
   product: IngotSilver
-  container:
-    entity: WrappedParcel
-    containerId: contents
+  container: CrateSteel
   cost: 2580
   category: cargoproduct-category-name-materials
   group: market
@@ -88,8 +87,9 @@
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cloth_3
-  product: CrateMaterialTextiles
-  cost: 1500
+  product: MaterialCloth
+  container: CrateSteel
+  cost: 500
   category: cargoproduct-category-name-materials
   group: market
 
@@ -98,8 +98,9 @@
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
-  product: CrateMaterialPlasma
-  cost: 1500
+  product: SheetPlasma
+  container: CratePlasma
+  cost: 1400
   category: cargoproduct-category-name-materials
   group: market
 
@@ -108,8 +109,9 @@
   icon:
     sprite: Objects/Materials/materials.rsi
     state: cardboard_3
-  product: CrateMaterialCardboard
-  cost: 330
+  product: MaterialCardboard
+  container: CrateSteel
+  cost: 110
   category: cargoproduct-category-name-materials
   group: market
 
@@ -118,18 +120,9 @@
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
     state: paper_3
-  product: CrateMaterialPaper
-  cost: 185
-  category: cargoproduct-category-name-materials
-  group: market
-
-- type: cargoProduct
-  id: MaterialBasic
-  icon:
-    sprite: Objects/Materials/Sheets/other.rsi
-    state: generic_materials
-  product: CrateMaterialBasicResource
-  cost: 1660
+  product: SheetPaper
+  container: CrateSteel
+  cost: 65
   category: cargoproduct-category-name-materials
   group: market
 
@@ -163,12 +156,3 @@
   category: cargoproduct-category-name-materials
   group: market
 
-- type: cargoProduct
-  id: AirGrenade
-  icon:
-    sprite: Objects/Weapons/Grenades/airboom.rsi
-    state: icon
-  product: CrateAirGrenade
-  cost: 2500
-  category: cargoproduct-category-name-atmospherics
-  group: market
