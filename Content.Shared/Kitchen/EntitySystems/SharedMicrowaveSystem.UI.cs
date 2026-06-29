@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
@@ -16,19 +17,8 @@ public abstract partial class SharedMicrowaveSystem
         if (!Resolve(microwave.Owner, ref microwave.Comp))
             return;
 
-        var uid = microwave.Owner;
-        var comp = microwave.Comp;
-
-        var containedItems = GetNetEntityArray(comp.Storage.ContainedEntities.ToArray());
-        var isActive = HasComp<ActiveMicrowaveComponent>(uid);
-        var state = new MicrowaveUpdateUserInterfaceState(
-            containedItems,
-            isActive,
-            comp.CurrentCookTimeButtonIndex,
-            comp.CurrentCookTimerTime,
-            comp.CurrentCookTimeEnd);
-
-        _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
+        if (_userInterface.TryGetOpenUi(microwave.Owner, MicrowaveUiKey.Key, out var bui))
+            bui.Update();
     }
 
     /// <summary>
@@ -48,7 +38,6 @@ public abstract partial class SharedMicrowaveSystem
 
         ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
-        ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
         Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
         UpdateUserInterfaceState(ent.AsNullable());
     }

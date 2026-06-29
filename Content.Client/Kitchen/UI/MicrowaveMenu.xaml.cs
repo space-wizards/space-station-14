@@ -3,6 +3,8 @@ using Robust.Client.UserInterface.Controls;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Kitchen.UI;
 
@@ -14,14 +16,18 @@ public sealed partial class MicrowaveMenu : FancyWindow
     public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
     public ButtonGroup CookTimeButtonGroup { get; }
-
     public bool IsBusy;
     public TimeSpan CurrentCooktimeEnd;
+
+    private readonly StyleBoxFlat _ingredientsStylebox = new();
 
     public MicrowaveMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        IngredientsPanel.PanelOverride = _ingredientsStylebox;
+
         CookTimeButtonGroup = new ButtonGroup();
         InstantCookButton.Group = CookTimeButtonGroup;
         InstantCookButton.OnPressed += args =>
@@ -79,6 +85,45 @@ public sealed partial class MicrowaveMenu : FancyWindow
             CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
             ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
         }
+    }
+
+    /// <summary>
+    ///     Set the "color light" state of the ingredient panel's ingredient box.
+    /// </summary>
+    /// <param name="value">Wheether or not the panel is "lit" (yellow) or "unlit" (gray).</param>
+    public void SetIngredientPanelLight(bool value)
+    {
+        var panelColor = value
+            ? Color.FromHex("#947300")
+            : Color.FromHex("#1B1B1E");
+
+        _ingredientsStylebox.BackgroundColor = panelColor;
+    }
+
+    /// <summary>
+    ///     Attempt to get the cook time button at the given index.
+    /// </summary>
+    /// <param name="index">The index to select.</param>
+    /// <param name="button">The cook time button, if found.</param>
+    /// <returns>Whether or not this operation was successful.</returns>
+    public bool TryGetCookTimeButton(int index,
+        [NotNullWhen(true)] out Button? button)
+    {
+        button = null;
+
+        if (index == 0)
+            button = InstantCookButton;
+        else
+        {
+            if (index <= CookTimeButtonVbox.ChildCount)
+            {
+                var control = CookTimeButtonVbox.GetChild(index - 1);
+                if (control is Button timeButton)
+                    button = timeButton;
+            }
+        }
+
+        return button != null;
     }
 
     public sealed class MicrowaveCookTimeButton : Button

@@ -115,16 +115,9 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     For right now, I don't think any recipe cook time should be greater than 60 seconds.
     /// </remarks>
-    [DataField]
+    [DataField, Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
     [AutoNetworkedField]
     public uint CurrentCookTimerTime = 0;
-
-    /// <summary>
-    ///     Tracks the elapsed time of the current cook timer.
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public TimeSpan CurrentCookTimeEnd = TimeSpan.Zero;
 
     /// <summary>
     ///     The maximum number of seconds a microwave can be set to.

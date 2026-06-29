@@ -170,9 +170,6 @@ public sealed partial class MicrowaveSystem
         activeComp.CookTimeRemaining = cookTime;
         activeComp.PortionedRecipe = recipe;
 
-        //Scale times with cook times
-        component.CurrentCookTimeEnd = _gameTiming.CurTime + TimeSpan.FromSeconds(cookTime);
-
         if (malfunctioning)
             activeComp.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.MalfunctionInterval);
     }

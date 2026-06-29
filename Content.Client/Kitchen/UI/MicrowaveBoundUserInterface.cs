@@ -1,5 +1,8 @@
+using System.Linq;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Effects;
 using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,6 +14,8 @@ namespace Content.Client.Kitchen.UI;
 [UsedImplicitly]
 public sealed class MicrowaveBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private SharedMicrowaveSystem _microwave = default!;
+
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
@@ -61,53 +66,42 @@ public sealed class MicrowaveBoundUserInterface : BoundUserInterface
         };
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    public override void Update()
     {
-        base.UpdateState(state);
-        if (state is not MicrowaveUpdateUserInterfaceState cState || _menu == null)
-        {
+        base.Update();
+
+        if (_menu is null || !EntMan.TryGetComponent<MicrowaveComponent>(Owner, out var comp))
             return;
-        }
 
-        _menu.IsBusy = cState.IsMicrowaveBusy;
-        _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
+        var microwave = (Owner, comp);
 
-        _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
         // TODO move this to a component state and ensure the net ids.
-        RefreshContentsDisplay(EntMan.GetEntityArray(cState.ContainedSolids));
+        var contents = _microwave.GetMicrowaveContents(microwave);
+        RefreshContentsDisplay(contents.ToArray());
 
-        //Set the cook time info label
-        var cookTime = cState.ActiveButtonIndex == 0
-            ? Loc.GetString("microwave-menu-instant-button")
-            : cState.CurrentCookTime.ToString();
+        // Update the currently-selected cook time label and button
+        var buttonIndex = comp.CurrentCookTimeButtonIndex;
+        if (_menu.TryGetCookTimeButton(buttonIndex, out var button))
+            button.Pressed = true;
 
-
+        var timeLabel = buttonIndex == 0 ? Loc.GetString("microwave-menu-instant-button") : comp.CurrentCookTimerTime.ToString();
         _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                     ("time", cookTime));
-        _menu.StartButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
-        _menu.EjectButton.Disabled = cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0;
+            ("time", timeLabel));
 
+        // Disable various UI controls if the microwave is active or empty
+        var isActive = EntMan.TryGetComponent<ActiveMicrowaveComponent>(Owner, out var activeComp);
+        var isEmpty = !_microwave.HasContents(microwave);
+        var disableInteraction = isActive || isEmpty;
+        _menu.IsBusy = isActive;
+        _menu.ToggleBusyDisableOverlayPanel(disableInteraction);
+        _menu.StartButton.Disabled = disableInteraction;
+        _menu.EjectButton.Disabled = disableInteraction;
 
-        //Set the correct button active button
-        if (cState.ActiveButtonIndex == 0)
-        {
-            _menu.InstantCookButton.Pressed = true;
-        }
-        else
-        {
-            var currentlySelectedTimeButton = (Button)_menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex - 1);
-            currentlySelectedTimeButton.Pressed = true;
-        }
+        if (activeComp != null)
+            _menu.CurrentCooktimeEnd = activeComp.CookTimeEnd;
 
-        //Set the "micowave light" ui color to indicate if the microwave is busy or not
-        if (cState.IsMicrowaveBusy && cState.ContainedSolids.Length > 0)
-        {
-            _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#947300") };
-        }
-        else
-        {
-            _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#1B1B1E") };
-        }
+        // Set the "microwave light" panel color
+        _menu.SetIngredientPanelLight(isActive && !isEmpty);
     }
 
     private void RefreshContentsDisplay(EntityUid[] containedSolids)

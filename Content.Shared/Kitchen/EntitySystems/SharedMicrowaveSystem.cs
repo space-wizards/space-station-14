@@ -56,8 +56,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             {
                 AddTemperature(microwave, (float)timeElapsed.TotalSeconds);
                 CompleteCooking((uid, active, microwave));
-
-                DirtyField(uid, microwave, nameof(MicrowaveComponent.CurrentCookTimeEnd));
                 continue;
             }
 
@@ -108,7 +106,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         UpdateUserInterfaceState(microwaveEnt);
 
         // Clean up the microwave.
-        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
         _container.EmptyContainer(microwave.Storage);
         StopCooking(microwaveEnt);
     }
@@ -191,43 +188,6 @@ public sealed class MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTi
     ///     The cooking time associated with the newly-selected button.
     /// </summary>
     public uint NewCookTime = inputTime;
-}
-
-/// <summary>
-///     Sent from server to client to display a list of items, whether or not the microwave is active, and the current cook time.
-/// </summary>
-[NetSerializable, Serializable]
-public sealed class MicrowaveUpdateUserInterfaceState(
-    NetEntity[] containedSolids,
-    bool isMicrowaveBusy,
-    int activeButtonIndex,
-    uint currentCookTime,
-    TimeSpan currentCookTimeEnd) : BoundUserInterfaceState
-{
-    /// <summary>
-    ///     A list of microwave entity contents.
-    /// </summary>
-    public NetEntity[] ContainedSolids = containedSolids;
-
-    /// <summary>
-    ///     Whether or not the microwave is currently running.
-    /// </summary>
-    public bool IsMicrowaveBusy = isMicrowaveBusy;
-
-    /// <summary>
-    ///     The currently-selected cook time button.
-    /// </summary>
-    public int ActiveButtonIndex = activeButtonIndex;
-
-    /// <summary>
-    ///     The amount of time remaining on the microwave.
-    /// </summary>
-    public uint CurrentCookTime = currentCookTime;
-
-    /// <summary>
-    ///     The time that this microwave will stop cooking.
-    /// </summary>
-    public TimeSpan CurrentCookTimeEnd = currentCookTimeEnd;
 }
 
 [Serializable, NetSerializable]
