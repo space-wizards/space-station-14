@@ -60,12 +60,12 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     {
         PaintableGroupsByCategory.Clear();
         PaintableStylesByGroup.Clear();
-        foreach (var category in Proto.EnumeratePrototypes<PaintableGroupCategoryPrototype>().OrderBy(x => x.ID))
+        foreach (var category in ProtoMan.EnumeratePrototypes<PaintableGroupCategoryPrototype>().OrderBy(x => x.ID))
         {
             var groupList = new List<string>();
             foreach (var groupId in category.Groups)
             {
-                if (!Proto.Resolve(groupId, out var group))
+                if (!ProtoMan.Resolve(groupId, out var group))
                     continue;
 
                 groupList.Add(groupId);
@@ -77,7 +77,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         }
 
         Decals.Clear();
-        foreach (var decalPrototype in Proto.EnumeratePrototypes<DecalPrototype>().OrderBy(x => x.ID))
+        foreach (var decalPrototype in ProtoMan.EnumeratePrototypes<DecalPrototype>().OrderBy(x => x.ID))
         {
             if (!decalPrototype.Tags.Contains("station")
                 && !decalPrototype.Tags.Contains("markings")

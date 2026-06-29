@@ -8,7 +8,6 @@ namespace Content.Shared.EntityTable;
 
 public sealed partial class EntityTableSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, IRobustRandom? rand = null, EntityTableContext? ctx = null)
@@ -24,7 +23,7 @@ public sealed partial class EntityTableSystem : EntitySystem
 
         rand ??= _random;
         ctx ??= new EntityTableContext();
-        return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
+        return table.GetSpawns(rand, EntityManager, ProtoMan, ctx);
     }
 
     public IEnumerable<(EntProtoId spawn, double)> ListSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
@@ -43,7 +42,7 @@ public sealed partial class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.ListSpawns(EntityManager, _prototypeManager, ctx);
+        return table.ListSpawns(EntityManager, ProtoMan, ctx);
     }
 
     /// <inheritdoc cref="AverageSpawns(EntityTableSelector?,EntityTableContext?)"/>
@@ -64,7 +63,7 @@ public sealed partial class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.AverageSpawns(EntityManager, _prototypeManager, ctx);
+        return table.AverageSpawns(EntityManager, ProtoMan, ctx);
     }
 }
 
