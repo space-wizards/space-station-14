@@ -10,7 +10,7 @@
     layers:
     - state: frame
     - state: portal
-      shader: unshadedpwd
+      shader: unshaded
     - state: on
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
