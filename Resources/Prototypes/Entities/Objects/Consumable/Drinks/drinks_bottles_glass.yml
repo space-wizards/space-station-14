@@ -25,12 +25,6 @@
     - Trash
   - type: Destructible # Same as parent, but spawns BrokenBottle instead of ShardGlass
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 5

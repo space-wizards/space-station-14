@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Reactions;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Atmos;
@@ -14,6 +15,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Threading;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -62,6 +64,9 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeMap();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
+        CacheGases();
     }
 
     public override void Shutdown()
@@ -77,6 +82,12 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         {
             InvalidateTile(ev.Entity.Owner, change.GridIndices);
         }
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        if (ev.WasModified<GasReactionPrototype>())
+            CacheGases();
     }
 
     public override void Update(float frameTime)

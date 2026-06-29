@@ -255,7 +255,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/rouny.rsi
     state: icon
-  - type: Rotatable
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/rouny.rsi
