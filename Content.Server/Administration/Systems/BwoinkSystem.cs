@@ -714,6 +714,8 @@ namespace Content.Server.Administration.Systems
 
             if (_rateLimit.CountAction(eventArgs.SenderSession, RateLimitKey) != RateLimitStatus.Allowed)
                 return;
+                
+            _afkManager.PlayerDidAction(senderSession);
 
             // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
             var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
