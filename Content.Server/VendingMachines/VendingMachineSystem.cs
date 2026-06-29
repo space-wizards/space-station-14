@@ -4,7 +4,6 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;
 using Content.Shared.Power;
@@ -44,7 +43,7 @@ namespace Content.Server.VendingMachines
 
             foreach (var entry in component.Inventory.Values)
             {
-                if (!PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
+                if (!ProtoMan.TryIndex<EntityPrototype>(entry.ID, out var proto))
                 {
                     Log.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
                     continue;
@@ -225,11 +224,11 @@ namespace Content.Server.VendingMachines
             {
                 double total = 0;
 
-                if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
+                if (ProtoMan.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
                     foreach (var (item, amount) in inventoryPrototype.StartingInventory)
                     {
-                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
+                        if (ProtoMan.TryIndex(item, out EntityPrototype? entity))
                             total += _pricing.GetEstimatedPrice(entity) * amount;
                     }
                 }

@@ -18,7 +18,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 
@@ -37,7 +36,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private IChatSanitizationManager _sanitizer = default!;
     [Dependency] private IAdminManager _adminManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
@@ -53,6 +51,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     private bool _critLoocEnabled;
     private readonly bool _adminLoocEnabled = true;
 
+    private bool _deadChatEnabled = true;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -63,6 +63,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpEnabled, value => _FlaggedWordAhelpEnabled = value, true);
         Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpWords, OnFlaggedWordListChanged, true);
         Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpCooldown, value => _FlaggedWordAhelpCooldown = value, true);
+        Subs.CVar(_configurationManager, CCVars.DeadChatEnabled, OnDeadChatEnabledChanged, true);
+
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
 
@@ -92,6 +94,16 @@ public sealed partial class ChatSystem : SharedChatSystem
         _critLoocEnabled = val;
         _chatManager.DispatchServerAnnouncement(
             Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
+    }
+
+    private void OnDeadChatEnabledChanged(bool val)
+    {
+        if (_deadChatEnabled == val)
+            return;
+
+        _deadChatEnabled = val;
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-dead-chat-enabled-message" : "chat-manager-dead-chat-disabled-message"));
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
