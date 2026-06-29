@@ -18,7 +18,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
             return;
 
         var chemicals = entity.Comp.Seed.Chemicals;
-        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
+        var randomChems = ProtoMan.Index(effect.RandomPickBotanyReagent);
 
         // Add a random amount of a random chemical to this set of chemicals
         var (chemicalId, quantity) = randomChems.Pick(_random);
