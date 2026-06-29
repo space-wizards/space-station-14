@@ -57,7 +57,7 @@ public sealed partial class MicrowaveComponent : Component
     /// <remarks>
     ///     The microwave will burn items that pass the <see cref="BurnWhenCookedWhitelist" />.
     /// </remarks>
-    [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [DataField("failureResult")]
     public EntProtoId BadRecipeEntityId = "FoodBadRecipe";
 
     #region  audio
