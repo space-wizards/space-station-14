@@ -52,7 +52,7 @@ public abstract partial class SharedMicrowaveSystem
         ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
         ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-        Audio.PlayPredicted(ent.Comp.ClickSound, ent, null, AudioParams.Default.WithVolume(-2));
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
         UpdateUserInterfaceState(ent.AsNullable());
     }
 }
