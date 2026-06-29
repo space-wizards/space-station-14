@@ -30,6 +30,9 @@
       soundDeactivate:
         path: /Audio/Items/Defib/defib_safety_off.ogg
     - type: Defibrillator
+      zapDamage:
+        types:
+          Shock: 5
       zapHeal:
         types:
           Asphyxiation: -40
@@ -88,6 +91,9 @@
   - type: PowerCellDraw
     useCharge: 100
   - type: Defibrillator
+    zapDamage:
+      types:
+        Shock: 5
     zapHeal:
       types:
         Asphyxiation: -40

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Electrocution;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Electrocution;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 
@@ -12,15 +14,19 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 public sealed partial class ElectrocuteEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, Electrocute>
 {
     [Dependency] private SharedElectrocutionSystem _electrocution = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
-    // TODO: When electrocution is new status, change this to new status
+    private static readonly ProtoId<DamageTypePrototype> ShockDamage = "Shock";
+
     protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<Electrocute> args)
     {
         var effect = args.Effect;
+        DamageSpecifier damage = new(_prototypes.Index(ShockDamage), (int)(args.Scale * effect.ShockDamage));
 
-        _electrocution.TryDoElectrocution(entity,
+        _electrocution.TryDoElectrocution(
+            entity,
             null,
-            (int)(args.Scale * effect.ShockDamage),
+            damage,
             effect.ElectrocuteTime,
             effect.Refresh,
             siemensCoefficient: effect.SiemensCoefficient,

@@ -1,0 +1,31 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectElectrocution
+  name: electrocution
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - StunImmune
+  - type: StunnedStatusEffect
+  - type: JitteringStatusEffect
+    amplitude: 80
+    frequency: 8
+    forceValueChange: true
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectElectrocutionWeak
+  name: electrocution
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+  - type: JitteringStatusEffect
+    amplitude: 80
+    frequency: 8
+    forceValueChange: true

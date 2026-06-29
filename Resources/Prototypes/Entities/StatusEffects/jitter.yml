@@ -1,0 +1,10 @@
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectJitter
+  name: jitter
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+  - type: JitteringStatusEffect
