@@ -13,7 +13,6 @@ namespace Content.Server.Speech.Muting
     public sealed partial class MutingSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -38,7 +37,7 @@ namespace Content.Server.Speech.Muting
             if (args.Handled)
                 return;
 
-            if (!_prototypeManager.Resolve(args.Emote, out var emote))
+            if (!ProtoMan.Resolve(args.Emote, out var emote))
                 return;
 
             if (!emote.Category.HasFlag(EmoteCategory.Vocal))

@@ -4,14 +4,12 @@ using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany;
 
 public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateChemicals>
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
@@ -20,7 +18,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
             return;
 
         var chemicals = entity.Comp.Seed.Chemicals;
-        var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent);
+        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
 
         // Add a random amount of a random chemical to this set of chemicals
         var (chemicalId, quantity) = randomChems.Pick(_random);

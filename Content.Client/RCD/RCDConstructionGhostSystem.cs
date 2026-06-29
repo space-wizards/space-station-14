@@ -5,7 +5,6 @@ using Content.Shared.RCD.Components;
 using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.RCD;
 
@@ -18,7 +17,6 @@ public sealed partial class RCDConstructionGhostSystem : EntitySystem
 
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IPlacementManager _placementManager = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private HandsSystem _hands = default!;
 
     private Direction _placementDirection = default;
@@ -56,7 +54,7 @@ public sealed partial class RCDConstructionGhostSystem : EntitySystem
             return;
         }
 
-        if(!_protoManager.TryIndex(rcd.ProtoId, out var prototype))
+        if(!ProtoMan.TryIndex(rcd.ProtoId, out var prototype))
             return;
 
         // Update the direction the RCD prototype based on the placer direction
