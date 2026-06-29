@@ -28,7 +28,6 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private SharedMindSystem _mind = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
@@ -265,14 +264,14 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     /// </summary>
     public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
     {
-        var proto = _prototype.Index(lawset);
+        var proto = ProtoMan.Index(lawset);
         var laws = new SiliconLawset()
         {
             Laws = new List<SiliconLaw>(proto.Laws.Count)
         };
         foreach (var law in proto.Laws)
         {
-            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
+            laws.Laws.Add(ProtoMan.Index<SiliconLawPrototype>(law).ShallowClone());
         }
         laws.ObeysTo = proto.ObeysTo;
 
