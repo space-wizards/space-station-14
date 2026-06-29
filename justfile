@@ -30,7 +30,7 @@ set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe", "-c"]
 # Build everything.
 [group("build")]
 build config="Debug" warninglevel="4":
-    dotnet build --configuration {{ config }} --property WarningLevel={{ warninglevel }}
+    dotnet build --configuration {{ config }} --property WarningLevel={{ warninglevel }} --property GenerateFullPaths=true --consoleLoggerParameters:'ForceNoAlign;NoSummary'
 # -----------------------------
 # Building-and-running the game
 # -----------------------------
@@ -66,29 +66,35 @@ run-client warninglevel="4":
 run-server warninglevel="4":
     just run Content.Server {{ warninglevel }}
 # Run the client and the server.
-[group("run"), parallel]
+[group("run")]
+[parallel]
 run-game warninglevel="4": (run-server warninglevel) (run-client warninglevel)
 # ---------
 # Tests
 # ---------
+[group("test")]
+run-tests:
+    dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0
 # Run every integration test.
 [group("test")]
-test-all:
-    dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.MapWarningTo=Failed
+run-integration-tests:
+    dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed.ConsoleOut=0 NUnit.MapWarningTo=Failed
 # Run the sandbox validation test.
 [group("test")]
-test-sandbox:
+run-sanbox-test:
     just test SandboxTest
 # Run a particular test. Supply the name of the test's class.
 [group("test")]
-test testname:
+run-integration-test testname:
     dotnet test --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj --filter {{ testname }} -- NUnit.MapWarningTo=Failed
 # -----
 # Tools
 # -----
 # Run the YAML linter.
 [group("tools")]
-lint-yaml:
+build-yaml-linter:
+    dotnet build --project Content.YAMLLinter/Content.YAMLLinter.csproj --property GenerateFullPaths=true --consoleLoggerParameters:'ForceNoAlign;NoSummary'
+run-yaml-linter:
     dotnet run --project Content.YAMLLinter/Content.YAMLLinter.csproj
 # Builds (and runs) packaging for the specified platform. The platforms are: win-x64, win-arm64, linux-x64, linux-arm64, osx-x64, and osx-arm64. This list may be out of date. See Content.Packaging/ServerPackaging.cs for the current list of build targets.
 [group("tools")]
@@ -104,15 +110,16 @@ setup-project:
 # ------------
 # Git commands
 # ------------
-[group("git")]
+
 # Initializes and updates your submodules.
+[group("git shortcuts")]
 update-submodules:
     git submodule update --init --recursive
-[group("git")]
 # Creates a remote called upstream that points to Wizden. Change this if you're a downstream fork!
+[group("git shortcuts")]
 set-upstream-remote:
     git remote add upstream https://github.com/Space-Wizards/space-station-14.git
-[group("git")]
 # Updates your current branch with the latest state of Wizden upstream.
+[group("git shortcuts")]
 pull-upstream-master:
     git pull upstream master

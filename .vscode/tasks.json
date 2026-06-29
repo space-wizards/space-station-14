@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "build (C# Dev Kit)",
-            "detail": "needs C# Dev Kit extention. use the (build) task instead if you dont have the extention.",
+            "detail": "Builds the game. This needs the C# Dev Kit extention to run. Use the (build) task instead if you don't have this extention (e.g. if you are using Resharper instead).",
             "type": "dotnet",
             "task": "build",
             "icon": {
@@ -26,12 +26,11 @@
         },
         {
             "label": "build",
-            "command": "dotnet",
+            "detail": "Builds the game. This requires Just. Use (build (C# Dev Kit)) if you are using the C# Dev Kit extension for VS Code.",
+            "command": "just",
             "type": "shell",
             "args": [
-                "build",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "build"
             ],
             "group": {
                 "kind": "build"
@@ -46,28 +45,21 @@
         },
         {
             "label": "build-yaml-linter",
-            "command": "dotnet",
+            "detail": "Builds the YAML Linter. This requires Just.",
+            "command": "just",
             "type": "process",
             "args": [
-                "build",
-                "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
+                "build-yaml-linter"
             ],
             "problemMatcher": "$msCompile"
         },
         {
             "label": "test",
-            "command": "dotnet",
+            "command": "just",
+            "detail": "Runs all unit tests. This requires Just.",
             "type": "shell",
             "args": [
-                "test",
-                "--no-build",
-                "--configuration",
-                "DebugOpt",
-                "Content.Tests/Content.Tests.csproj",
-                "--",
-                "NUnit.ConsoleOut=0"
+                "run-tests"
             ],
             "group": {
                 "kind": "test"
@@ -79,18 +71,11 @@
         },
         {
             "label": "integration-test",
-            "command": "dotnet",
+            "detail": "Runs all integration tests. This requires Just. These tests take a while.",
+            "command": "just",
             "type": "shell",
             "args": [
-                "test",
-                "--no-build",
-                "--configuration",
-                "DebugOpt",
-                "Content.IntegrationTests/Content.IntegrationTests.csproj",
-                "--",
-                "NUnit.ConsoleOut=0",
-                "NUnit.MapWarningTo=Failed.ConsoleOut=0",
-                "NUnit.MapWarningTo=Failed"
+                "run-integration-tests"
             ],
             "group": {
                 "kind": "test"
