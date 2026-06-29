@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
@@ -53,26 +54,24 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
-    ///     Given a microwave and a list of available ingredients, this function gets the first valid
+    ///     Given an appliance entity and a list of available ingredients, this function gets the first valid
     ///     usable recipe for cooking.
     /// </summary>
     /// <remarks>
-    ///     The microwave entity itself is used to determine cooking time and get secret recipes.
+    ///     The appliance entity itself is used to get secret recipes.
     /// </remarks>
-    /// <param name="microwave">The microwave entity.</param>
+    /// <param name="uid">An appliance to fetch a recipe for.</param>
     /// <param name="ingredients">A list of available ingredients.</param>
+    /// <param name="cookTime">How long we plan to cook for.</param>
     /// <returns>
     ///     The first valid recipe we can use. If there is none, this is (null, 0).
     /// </returns>
     [PublicAPI]
-    public (FoodRecipePrototype? recipe, uint count) GetRecipe(Entity<MicrowaveComponent?> microwave, CookingIngredients ingredients)
+    public (FoodRecipePrototype? recipe, uint count) GetRecipe(EntityUid uid,
+        CookingIngredients ingredients,
+        uint cookTime)
     {
-        (FoodRecipePrototype? recipe, uint count) emptyRecipe = (null, 0);
-        if (!Resolve(microwave.Owner, ref microwave.Comp))
-            return emptyRecipe;
-
-        var recipes = GetRecipesForMicrowave(microwave.Owner);
-        var cookTime = microwave.Comp.CurrentCookTimerTime;
+        var recipes = GetAvailableRecipes(uid);
         var recipePortions = recipes.Select(recipe =>
             {
                 var portions = GetRecipePortions(recipe, ingredients, cookTime);
@@ -80,6 +79,6 @@ public abstract partial class SharedMicrowaveSystem
             });
 
         return recipePortions.FirstOrNull(r => r.portions > 0)
-            ?? emptyRecipe;
+            ?? (null, 0);
     }
 }

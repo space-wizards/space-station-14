@@ -32,7 +32,8 @@ public sealed partial class MicrowaveSystem
             return;
 
         var ingredients = GetTotalIngredients(ingredientContents);
-        var recipe = GetRecipe(microwave, ingredients);
+        var cookTime = microwave.Comp.CurrentCookTimerTime;
+        var recipe = GetRecipe(microwave, ingredients, cookTime);
 
         ActivateMicrowave(microwave, recipe, malfunctioning);
         UpdateUserInterfaceState(microwave);

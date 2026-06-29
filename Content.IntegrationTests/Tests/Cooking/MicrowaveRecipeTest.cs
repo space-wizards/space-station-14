@@ -40,12 +40,10 @@ public sealed class MicrowaveRecipeTest
             Assert.That(entMan.TryGetComponent<MicrowaveComponent>(microwave, out var comp),
                 $"Microwave entity {microwaveString} lacks a {nameof(MicrowaveComponent)}!");
 
-            var microwaveEnt = (microwave, comp);
-
             // Get the parameters we need to make this recipe.
             var proto = protoMan.Index<FoodRecipePrototype>(protoKey);
             var ingredients = proto.Ingredients;
-            comp.CurrentCookTimerTime = proto.CookTime;
+            var cookTime = proto.CookTime;
 
             // Ensure this recipe is provided to the microwave if this is a secret recipe.
             if (proto.SecretRecipe)
@@ -55,7 +53,7 @@ public sealed class MicrowaveRecipeTest
             }
 
             // Get the recipe we *would* make, if we put these ingredients in the microwave.
-            var recipe = microwaveSystem.GetRecipe(microwaveEnt, ingredients);
+            var recipe = microwaveSystem.GetRecipe(microwave, ingredients, cookTime);
             var recipeDebugString = $"Ingredients for {nameof(FoodRecipePrototype)} {protoKey}";
 
             // Tried to get a recipe for these ingredients, but no valid recipe was found.

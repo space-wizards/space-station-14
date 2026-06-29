@@ -19,6 +19,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private RecipeManager _recipeManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 

@@ -28,30 +28,6 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Gets a complete list of usable recipes for this microwave - including secret recipes and
-    ///     all recipe prototypes.
-    /// </summary>
-    /// <remarks>
-    ///     Note that the order of recipes is meaningful. When a valid recipe is chosen, the first item
-    ///     in the list that satisfies the conditions of the recipe is selected.
-    ///
-    ///     Recipe prototypes are pre-sorted based on complexity, so more "specific" recipes will be selected first.
-    ///     Secret recipes come before all non-secret prototype recipes. Do not sort this!
-    /// </remarks>
-    /// <param name="microwave">The microwave entity.</param>
-    /// <returns>A complete list of usable recipe prototypes.</returns>
-    private List<FoodRecipePrototype> GetRecipesForMicrowave(EntityUid microwave)
-    {
-        var getRecipesEv = new GetSecretRecipesEvent();
-        RaiseLocalEvent(microwave, ref getRecipesEv);
-
-        var recipes = getRecipesEv.Recipes;
-        recipes.AddRange(_recipeManager.Recipes);
-
-        return recipes;
-    }
-
-    /// <summary>
     ///     Adds all usable ingredients from a given entity to an ingredient list.
     /// </summary>
     /// <remarks>
