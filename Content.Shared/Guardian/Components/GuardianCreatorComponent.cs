@@ -19,13 +19,13 @@ public sealed partial class GuardianCreatorComponent : Component
     public bool Used;
 
     /// <summary>
-    /// Popup shown when the injector has already been used and cannot create a guardian.
+    /// Popup shown when the creator has already been used and cannot create a guardian.
     /// </summary>
     [DataField]
     public LocId EmptyPopup = "guardian-injector-empty-invalid-creation";
 
     /// <summary>
-    /// Examine text shown for an exhausted injector creator.
+    /// Examine text shown for an exhausted creator.
     /// </summary>
     [DataField]
     public LocId EmptyExamine = "guardian-injector-empty-examine";
