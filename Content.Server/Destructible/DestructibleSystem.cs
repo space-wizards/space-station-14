@@ -28,9 +28,9 @@ namespace Content.Server.Destructible;
 public sealed partial class DestructibleSystem : SharedDestructibleSystem
 {
     [Dependency] public IAdminLogManager AdminLogger = default!;
-    [Dependency] public IPrototypeManager PrototypeManager = default!;
     [Dependency] public IRobustRandom Random = default!;
     public new IEntityManager EntityManager => base.EntityManager;
+    public IPrototypeManager PrototypeManager => base.ProtoMan;
 
     [Dependency] public AtmosphereSystem AtmosphereSystem = default!;
     [Dependency] public ConstructionSystem ConstructionSystem = default!;
