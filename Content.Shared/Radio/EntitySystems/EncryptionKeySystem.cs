@@ -222,7 +222,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
                 ("color", proto.Color),
                 ("key", key),
                 ("id", proto.LocalizedName),
-                ("freq", proto.Frequency / 10f)));
+                ("freq", proto.Frequency)));
         }
 
         if (defaultChannel != null && _protoManager.TryIndex(defaultChannel, out proto))

@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Radio;
@@ -20,8 +21,8 @@ public sealed partial class RadioChannelPrototype : IPrototype
     [DataField("keycode")]
     public char KeyCode { get; private set; } = '\0';
 
-    [DataField("frequency")]
-    public int Frequency { get; private set; } = 0;
+    [DataField]
+    public FixedPoint2 Frequency { get; private set; } = 0;
 
     [DataField("color")]
     public Color Color { get; private set; } = Color.Lime;
