@@ -4,6 +4,9 @@ alerts-low-oxygen-desc = There is [color=red]not enough oxygen[/color] in the ai
 alerts-low-nitrogen-name = [color=red]Low Nitrogen[/color]
 alerts-low-nitrogen-desc = There is [color=red]not enough nitrogen[/color] in the air you are breathing. Put on [color=green]internals[/color].
 
+alerts-low-air-name = [color=red]Low Air[/color]
+alerts-low-air-desc = There is [color=red]not enough air[/color] in the atmosphere you are breathing. Put on [color=green]internals[/color].
+
 alerts-high-toxin-name = [color=red]High Toxin Level[/color]
 alerts-high-toxin-desc = There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away.
 

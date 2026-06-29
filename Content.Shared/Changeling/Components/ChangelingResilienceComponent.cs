@@ -26,7 +26,7 @@ public sealed partial class ChangelingResilienceComponent : Component
     public bool PreventConversion = true;
 
     /// <summary>
-    /// Causes the organs of this changeling to be unable to turn into diona nymphs.
+    /// Causes the organs of this changeling to be unable to turn into nymphs.
     /// Works by removing their respective components on init.
     /// </summary>
     [DataField]

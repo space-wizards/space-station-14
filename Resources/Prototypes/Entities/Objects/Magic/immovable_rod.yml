@@ -12,6 +12,9 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    damage:
+      types:
+        Blunt: 190
   - type: GravityAffected
   - type: Physics
     bodyType: Dynamic
@@ -76,9 +79,6 @@
     destroyTiles: false
     randomizeVelocity: false
     shouldGib: false
-    damage:
-      types:
-        Blunt: 190
   - type: Physics
     bodyType: KinematicController
   - type: InputMover

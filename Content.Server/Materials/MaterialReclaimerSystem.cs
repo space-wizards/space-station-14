@@ -163,7 +163,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             if (component.ReclaimSolutions)
                 SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            _gibbing.TryGib(item, out _);
+            _gibbing.Gib(item);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
         else

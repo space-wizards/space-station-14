@@ -42,11 +42,6 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
         args.Cancelled |= ent.Comp.PreventGibbing;
     }
 
-    protected virtual void PreventGibbing(Entity<ChangelingResilienceComponent> ent)
-    {
-
-    }
-
     private void ReplaceOrgans(Entity<ChangelingResilienceComponent> ent)
     {
         if (!TryComp<ContainerManagerComponent>(ent, out var containerComp))
@@ -61,7 +56,10 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
             return;
         }
 
-        var organs = container.ContainedEntities.ToList(); // Copy it as to not delete organs we iterate over.
+        var organs = container.ContainedEntities.ToList();
+
+        // We will likely replace our lungs, empty them first and max out our saturation.
+        HandleGasp(ent);
 
         foreach (var organ in organs)
         {
@@ -72,7 +70,7 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
                     if (TrySpawnInContainer(replacement.Value, ent, BodyComponent.ContainerID, out _))
                     {
                         QueueDel(organ);
-                        break; // Only replace the first instance of the organ.
+                        break;
                     }
                 }
             }
@@ -81,4 +79,8 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
                 RemCompDeferred<NymphComponent>(organ);
         }
     }
+
+    protected virtual void PreventGibbing(Entity<ChangelingResilienceComponent> ent) { }
+
+    protected virtual void HandleGasp(EntityUid ent) { }
 }

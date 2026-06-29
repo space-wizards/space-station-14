@@ -19,9 +19,9 @@
   - type: ChangelingTransform
   - type: ChangelingResilience
     replacementOrgans:
-      Lungs: OrganVulpkaninLungs
-      Stomach: OrganVulpkaninStomach
-  - type: ZombieImmuneComponent
+      Lungs: OrganChangelingLungs
+      Stomach: OrganChangelingStomach
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
