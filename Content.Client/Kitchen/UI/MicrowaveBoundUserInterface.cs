@@ -6,26 +6,22 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
+public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey)
+    : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private SharedMicrowaveSystem _microwave = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
     [ViewVariables]
     private readonly Dictionary<int, EntityUid> _solids = new();
-
-    [ViewVariables]
-    private readonly Dictionary<int, ReagentQuantity> _reagents = new();
-
-    public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -51,15 +47,14 @@ public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
                 SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int)selectedCookTime / 5, actualButton.CookTime));
 
                 _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                                ("time", selectedCookTime));
+                    ("time", selectedCookTime));
             }
             else
             {
                 // args.Button is a normal button aka instant cook button
                 SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int)selectedCookTime, 0));
-
                 _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                                                     ("time", Loc.GetString("microwave-menu-instant-button")));
+                    ("time", Loc.GetString("microwave-menu-instant-button")));
             }
         };
     }
@@ -71,24 +66,34 @@ public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
         if (_menu is null || !EntMan.TryGetComponent<MicrowaveComponent>(Owner, out var comp))
             return;
 
-        var microwave = (Owner, comp);
-
-        // TODO move this to a component state and ensure the net ids.
-        var contents = _microwave.GetMicrowaveContents(microwave);
-        RefreshContentsDisplay(contents.ToArray());
+        RefreshContentsDisplay();
+        UpdateActiveDisplay(comp);
 
         // Update the currently-selected cook time label and button
         var buttonIndex = comp.CurrentCookTimeButtonIndex;
         if (_menu.TryGetCookTimeButton(buttonIndex, out var button))
             button.Pressed = true;
 
-        var timeLabel = buttonIndex == 0 ? Loc.GetString("microwave-menu-instant-button") : comp.CurrentCookTimerTime.ToString();
+        var timeLabel = buttonIndex == 0
+            ? Loc.GetString("microwave-menu-instant-button")
+            : comp.CurrentCookTimerTime.ToString();
+
         _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
             ("time", timeLabel));
+    }
+
+    /// <summary>
+    ///     Update the state of various controls in this menu based on the active / empty status of the microwave.
+    /// </summary>
+    /// <param name="comp">The microwave component associated with this entity.</param>
+    private void UpdateActiveDisplay(MicrowaveComponent? comp)
+    {
+        if (_menu is null)
+            return;
 
         // Disable various UI controls if the microwave is active or empty
         var isActive = EntMan.TryGetComponent<ActiveMicrowaveComponent>(Owner, out var activeComp);
-        var isEmpty = !_microwave.HasContents(microwave);
+        var isEmpty = !_microwave.HasContents((Owner, comp));
         var disableInteraction = isActive || isEmpty;
         _menu.IsBusy = isActive;
         _menu.ToggleBusyDisableOverlayPanel(disableInteraction);
@@ -102,40 +107,44 @@ public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
         _menu.SetIngredientPanelLight(isActive && !isEmpty);
     }
 
-    private void RefreshContentsDisplay(EntityUid[] containedSolids)
+    /// <summary>
+    ///     Update the panel containing all of the microwave's contents.
+    /// </summary>
+    private void RefreshContentsDisplay()
     {
-        _reagents.Clear();
-
-        if (_menu == null) return;
+        if (_menu == null)
+            return;
 
         _solids.Clear();
         _menu.IngredientsList.Clear();
+        var containedSolids = _microwave.GetMicrowaveContents(Owner);
+
         foreach (var entity in containedSolids)
         {
             if (EntMan.Deleted(entity))
-            {
-                return;
-            }
+                continue;
 
             // TODO just use sprite view
-
-            Texture? texture;
-            if (EntMan.TryGetComponent<IconComponent>(entity, out var iconComponent))
-            {
-                texture = EntMan.System<SpriteSystem>().GetIcon(iconComponent);
-            }
-            else if (EntMan.TryGetComponent<SpriteComponent>(entity, out var spriteComponent))
-            {
-                texture = spriteComponent.Icon?.Default;
-            }
-            else
-            {
-                continue;
-            }
-
-            var solidItem = _menu.IngredientsList.AddItem(EntMan.GetComponent<MetaDataComponent>(entity).EntityName, texture);
+            var itemIcon = GetEntityIcon(entity);
+            var itemName = EntMan.GetComponent<MetaDataComponent>(entity).EntityName;
+            var solidItem = _menu.IngredientsList.AddItem(itemName, itemIcon);
             var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
             _solids.Add(solidIndex, entity);
         }
+    }
+
+    /// <summary>
+    ///     Get the texture associated with an ingredient.
+    /// </summary>
+    /// <param name="uid">The ingredient entity.</param>
+    private Texture? GetEntityIcon(EntityUid uid)
+    {
+        if (EntMan.TryGetComponent<IconComponent>(uid, out var icon))
+            return _sprite.GetIcon(icon);
+
+        if (EntMan.TryGetComponent<SpriteComponent>(uid, out var sprite))
+            return sprite.Icon?.Default;
+
+        return null;
     }
 }
