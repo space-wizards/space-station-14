@@ -227,12 +227,19 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         var query = EntityQueryEnumerator<DisposalUnitComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var unit, out var metadata))
         {
-            UpdateDisposalUnit((uid, unit), metadata);
+            UpdateDisposalUnit((uid, unit), metadata, frameTime);
         }
     }
 
-    private void UpdateDisposalUnit(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata)
+    private void UpdateDisposalUnit(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata, float frameTime)
     {
+        // Don't build up pressure while unpowered.
+        if (ent.Comp.NextPressurized > _timing.CurTime && !_power.IsPowered(ent.Owner))
+        {
+            ent.Comp.NextPressurized += TimeSpan.FromSeconds(frameTime);
+            Dirty(ent);
+        }
+
         var state = GetState(ent);
 
         // Check if we need a state update
