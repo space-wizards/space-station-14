@@ -1,29 +1,35 @@
 using System.Linq;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Kitchen.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 
-namespace Content.Server.Kitchen.EntitySystems;
+namespace Content.Shared.Kitchen.EntitySystems;
 
-public sealed partial class MicrowaveSystem
+public abstract partial class SharedMicrowaveSystem
 {
     /// <summary>
     ///     Update the UI state of the microwave, including the microwave's current contents, cook time,
     ///     and whether or not it is actively cooking.
     /// </summary>
     /// <param name="microwave">The microwave to update.</param>
-    public void UpdateUserInterfaceState(Entity<MicrowaveComponent> microwave)
+    public void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
     {
+        if (!Resolve(microwave.Owner, ref microwave.Comp))
+            return;
+
         var uid = microwave.Owner;
-        var component = microwave.Comp;
-        var containedItems = GetNetEntityArray(component.Storage.ContainedEntities.ToArray());
+        var comp = microwave.Comp;
+
+        var containedItems = GetNetEntityArray(comp.Storage.ContainedEntities.ToArray());
         var isActive = HasComp<ActiveMicrowaveComponent>(uid);
         var state = new MicrowaveUpdateUserInterfaceState(
             containedItems,
             isActive,
-            component.CurrentCookTimeButtonIndex,
-            component.CurrentCookTimerTime,
-            component.CurrentCookTimeEnd);
+            comp.CurrentCookTimeButtonIndex,
+            comp.CurrentCookTimerTime,
+            comp.CurrentCookTimeEnd);
 
         _userInterface.SetUiState(uid, MicrowaveUiKey.Key, state);
     }
@@ -34,7 +40,9 @@ public sealed partial class MicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnSelectTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
-        if (!HasContents(ent) || HasComp<ActiveMicrowaveComponent>(ent) || !_power.IsPowered(ent.Owner))
+        if (!HasContents(ent.AsNullable())
+            || HasComp<ActiveMicrowaveComponent>(ent)
+            || !_power.IsPowered(ent.Owner))
             return;
 
         // some validation to prevent trollage
@@ -44,7 +52,7 @@ public sealed partial class MicrowaveSystem
         ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
         ent.Comp.CurrentCookTimeEnd = TimeSpan.Zero;
-        _audio.PlayPvs(ent.Comp.ClickSound, ent, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent);
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, null, AudioParams.Default.WithVolume(-2));
+        UpdateUserInterfaceState(ent.AsNullable());
     }
 }

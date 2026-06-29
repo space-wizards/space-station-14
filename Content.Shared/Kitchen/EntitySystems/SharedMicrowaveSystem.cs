@@ -11,7 +11,9 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
 {
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
@@ -21,7 +23,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
-
     }
 
     /// <summary>

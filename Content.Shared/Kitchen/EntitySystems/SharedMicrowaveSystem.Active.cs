@@ -19,7 +19,7 @@ public abstract partial class SharedMicrowaveSystem
 
         SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
         var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
-        var pvs = Audio.PlayPvs(microwaveComponent.LoopingSound, ent, audioParams);
+        var pvs = Audio.PlayPredicted(microwaveComponent.LoopingSound, ent, null, audioParams);
         microwaveComponent.PlayingStream = pvs?.Entity;
 
         _powerState.SetWorkingState(ent.Owner, true);
