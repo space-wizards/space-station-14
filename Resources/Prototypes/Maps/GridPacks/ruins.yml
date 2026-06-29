@@ -1,0 +1,18 @@
+- type: gridPack
+  id: DefaultRuinGridPack
+  gridPaths:
+    - /Maps/Ruins/abandoned_outpost.yml
+    - /Maps/Ruins/atmos_interchange.yml
+    - /Maps/Ruins/chunked_tcomms.yml
+    - /Maps/Ruins/biodome_satellite.yml
+    - /Maps/Ruins/derelict.yml
+    - /Maps/Ruins/djstation.yml
+    - /Maps/Ruins/empty_flagship.yml
+    - /Maps/Ruins/hydro_outpost.yml
+    - /Maps/Ruins/old_ai_sat.yml
+    - /Maps/Ruins/ruined_prison_ship.yml
+    - /Maps/Ruins/syndicate_dropship.yml
+    - /Maps/Ruins/whiteship_ancient.yml
+    - /Maps/Ruins/whiteship_bluespacejumper.yml
+    - /Maps/Ruins/wrecklaimer.yml
+    - /Maps/Ruins/displaced_telescience.yml
