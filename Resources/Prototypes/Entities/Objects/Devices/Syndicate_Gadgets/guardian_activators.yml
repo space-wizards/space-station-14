@@ -9,7 +9,6 @@
     state: combat_hypo
   - type: GuardianCreator
     guardianProto: MobHoloparasiteGuardian
-    injector: true
 
 - type: entity
   parent: HoloparasiteInjector
