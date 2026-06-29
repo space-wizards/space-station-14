@@ -27,7 +27,7 @@
 - type: entity
   id: PaperAgrichemManual
   name: NT "AgriChem Is Fun" manual
-  description: The single sheet of instructions that came in the kit. 
+  description: The single sheet of instructions that came in the kit.
   parent: Paper
   components:
   - type: Paper
@@ -41,3 +41,12 @@
   components:
   - type: Paper
     content: book-text-combat-bakery-kit
+
+- type: entity
+  id: PaperWrittenSyndicateZombieBundle
+  name: syndicate zombie bundle instructions
+  description: Burn zombies after reading.
+  parent: Paper
+  components:
+  - type: Paper
+    content: book-text-syndicate-zombie-bundle
