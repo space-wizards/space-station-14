@@ -2,7 +2,7 @@
             MinSize="650 290">
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="2">
-            <GridContainer Columns="3" HorizontalExpand="True">
+            <GridContainer Name="PrivilegedIdGrid" Columns="3" HorizontalExpand="True">
                 <Label Text="{Loc 'access-overrider-window-privileged-id'}" />
                 <Button Name="PrivilegedIdButton" Access="Public"/>
                 <Label Name="PrivilegedIdLabel" />

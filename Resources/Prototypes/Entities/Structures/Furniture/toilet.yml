@@ -1,42 +1,59 @@
 - type: entity
-  name: toilet
-  id: BaseToilet
-  parent: [ DisposalUnitBase, SeatBase ]
-  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   abstract: true
+  parent: [ SolutionTank, SolutionHuge, DisposalUnitBase, SeatBase]
+  id: BaseToilet
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
   components:
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
     layers:
-    - state: condisposal
-      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-    - state: disposal
-      map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-    - state: dispover-charge
-      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-    - state: dispover-ready
-      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-    - state: dispover-full
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-    - state: dispover-handle
-      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
-    - map: [ "DoorVisualState.DoorOpen" ]
-    - map: [ "SeatVisualState.SeatUp" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: disposal
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      state: dispover-ready
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalUnitVisuals.IsReady:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: disposal-charging }
+      enum.DisposalUnitVisuals.IsCharging:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          True: { state: dispover-charge, visible: true }
+          False: { state: dispover-ready, visible: true }
+      enum.PowerDeviceVisuals.Powered:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+      enum.AnchorVisuals.Anchored:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: condisposal }
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+      enum.ToiletVisuals.SeatVisualState:
+        SeatVisualState.SeatUp:
+          SeatUp: { state: disposal-up }
+          SeatDown: { state: disposal-down }
+      enum.ToolOpenableVisuals.ToolOpenableVisualState:
+        ToolOpenableVisualState.StashOpen:
+          Open: { state: disposal-open }
+          Closed: { state: disposal-closed }
   - type: Rotatable
   - type: Transform
     noRot: false
   - type: Strap
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
     blacklist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
       - Plunger
       - SolutionTransfer
       - EntityStorage
@@ -49,7 +66,8 @@
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
+      solutions: !type:Container
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -63,7 +81,6 @@
         - MachineMask
         layer:
         - None
-  - type: PlungerUse
   - type: Appearance
   - type: SecretStash
     secretStashName: secret-stash-toilet
@@ -82,19 +99,9 @@
     interfaces:
       enum.DisposalUnitUiKey.Key:
         type: DisposalUnitBoundUserInterface
-  - type: RatKingRummageable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
-  - type: SolutionRegeneration
-    solution: tank
-    generated:
-      reagents:
-      - ReagentId: Water
-        Quantity: 1
+    - SolutionDrainNormal
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
@@ -105,42 +112,45 @@
     solution: tank
     destroyOnEmpty: false
     utensil: Spoon
-  - type: GenericVisualizer
-    visuals:
-      enum.ToiletVisuals.SeatVisualState:
-        SeatVisualState.SeatUp:
-          SeatUp: { state: disposal-up }
-          SeatDown: { state: disposal-down }
-      enum.ToolOpenableVisuals.ToolOpenableVisualState:
-        ToolOpenableVisualState.StashOpen:
-          Open: { state: disposal-open }
-          Closed: { state: disposal-closed }
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
 
+# constructed toilets don't come with Rummageable or plungeruse component to avoid infinite item spawning.
 - type: entity
+  parent: BaseToilet
+  id: ConstructedToilet
   name: toilet
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
-  id: ToiletEmpty
-  parent: BaseToilet
-  suffix: Empty
+  suffix: Constructed, Unplungable
   components:
   - type: Construction
     graph: Toilet
     node: toilet
 
-# so theres not actually any way to replenish the gastrotoxin / gold in these. 
-# I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
-# I guess we just need to add shitting?
 - type: entity
-  id: ToiletDirtyWater
+  parent: BaseToilet
+  id: ToiletEmpty
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  suffix: Empty
+  components:
+  - type: PlungerUse
+  - type: Rummageable
+    table: !type:NestedSelector
+      tableId: RatKingLoot
+
+# so theres not actually any way to replenish the gastrotoxin / gold in these.
+# I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
+- type: entity
   parent: ToiletEmpty
+  id: ToiletDirtyWater
   suffix: Dirty Water
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: Water
           Quantity: 180
@@ -148,8 +158,32 @@
           Quantity: 20
 
 - type: entity
-  id: ToiletGoldenEmpty
+  parent: ToiletEmpty
+  id: ToiletFilled
+  suffix: Empty, Random Cistern Loot
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      stash: !type:NestedSelector
+        tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
+
+- type: entity
+  parent: ToiletDirtyWater
+  id: ToiletDirtyWaterFilled
+  suffix: Dirty Water, Random Cistern Loot
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      stash: !type:NestedSelector
+        tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
+
+- type: entity
   parent: BaseToilet
+  id: ToiletGoldenEmpty
   name: golden toilet
   description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
   suffix: Empty
@@ -160,12 +194,6 @@
     price: 1500
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -182,20 +210,20 @@
           IngotGold1:
             min: 5
             max: 5
+  - type: PlungerUse
+  - type: Rummageable
+    table: !type:NestedSelector
+      tableId: RatKingLoot
 
 - type: entity
-  id: ToiletGoldenDirtyWater
   parent: ToiletGoldenEmpty
+  id: ToiletGoldenDirtyWater
   suffix: Dirty Water, StealTarget
   components:
   - type: StealTarget
     stealGroup: ToiletGoldenDirtyWater
-  - type: SolutionContainerManager
-    solutions:
-      drainBuffer:
-        maxVol: 100
-      tank:
-        maxVol: 500
+  - type: Solution
+    solution:
         reagents:
         - ReagentId: Water
           Quantity: 160

@@ -9,37 +9,38 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// in an item slot before transferring consciousness.
 /// Used for borg stuff.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedBorgSystem))]
 public sealed partial class MMIComponent : Component
 {
     /// <summary>
     /// The ID of the itemslot that holds the brain.
     /// </summary>
-    [DataField("brainSlotId")]
+    [DataField]
     public string BrainSlotId = "brain_slot";
 
     /// <summary>
-    /// The <see cref="ItemSlot"/> for this implanter
+    /// The <see cref="ItemSlot"/> for this MMI. Holds the brain.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public ItemSlot BrainSlot = default!;
+    [DataField(required: true)]
+    public ItemSlot BrainSlot = new();
 
     /// <summary>
     /// The sprite state when the brain inserted has a mind.
     /// </summary>
-    [DataField("hasMindState")]
+    [DataField]
     public string HasMindState = "mmi_alive";
 
     /// <summary>
     /// The sprite state when the brain inserted doesn't have a mind.
     /// </summary>
-    [DataField("noMindState")]
+    [DataField]
     public string NoMindState = "mmi_dead";
 
     /// <summary>
     /// The sprite state when there is no brain inserted.
     /// </summary>
-    [DataField("noBrainState")]
+    [DataField]
     public string NoBrainState = "mmi_off";
 }
 

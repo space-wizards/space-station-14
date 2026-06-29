@@ -1,19 +1,20 @@
 using Content.Server.Actions;
-using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Polymorph.Components;
+using Content.Shared.Body;
 using Content.Shared.Buckle;
 using Content.Shared.Coordinates;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition;
 using Content.Shared.Polymorph;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Systems;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -25,23 +26,23 @@ namespace Content.Server.Polymorph.Systems;
 
 public sealed partial class PolymorphSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private readonly ServerInventorySystem _inventory = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private ServerInventorySystem _inventory = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private SharedMindSystem _mindSystem = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 
@@ -53,7 +54,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphableComponent, PolymorphActionEvent>(OnPolymorphActionEvent);
         SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
 
-        SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
+        SubscribeLocalEvent<PolymorphedEntityComponent, BeforeToolRefinedEvent>(OnBeforeToolRefined);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<PolymorphedEntityComponent, EntityTerminatingEvent>(OnPolymorphedTerminating);
 
@@ -126,12 +127,12 @@ public sealed partial class PolymorphSystem : EntitySystem
         Revert((ent, ent));
     }
 
-    private void OnBeforeFullySliced(Entity<PolymorphedEntityComponent> ent, ref BeforeFullySlicedEvent args)
+    private void OnBeforeToolRefined(Entity<PolymorphedEntityComponent> ent, ref BeforeToolRefinedEvent args)
     {
         if (ent.Comp.Reverted || !ent.Comp.Configuration.RevertOnEat)
             return;
 
-        args.Cancel();
+        args.Cancelled = true;
         Revert((ent, ent));
     }
 
@@ -228,7 +229,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
             damage != null)
         {
-            _damageable.SetDamage(child, damageParent, damage);
+            _damageable.SetDamage((child, damageParent), damage);
         }
 
         if (configuration.Inventory == PolymorphInventoryChange.Transfer)
@@ -261,7 +262,7 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (configuration.TransferHumanoidAppearance)
         {
-            _humanoid.CloneAppearance(child, uid);
+            _visualBody.CopyAppearanceFrom(uid, child);
         }
 
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
@@ -323,7 +324,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             _mobThreshold.GetScaledDamage(uid, parent, out var damage) &&
             damage != null)
         {
-            _damageable.SetDamage(parent, damageParent, damage);
+            _damageable.SetDamage((parent, damageParent), damage);
         }
 
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
@@ -335,7 +336,7 @@ public sealed partial class PolymorphSystem : EntitySystem
                 _hands.TryPickupAnyHand(parent, held, checkActionBlocker: false);
             }
         }
-        else if (component.Configuration.Inventory == PolymorphInventoryChange.Drop)
+        else
         {
             if (_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator))
             {

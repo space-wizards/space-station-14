@@ -13,20 +13,21 @@ namespace Content.Client.Outline;
 /// <summary>
 ///     System used to indicate whether an entity is a valid target based on some criteria.
 /// </summary>
-public sealed class TargetOutlineSystem : EntitySystem
+public sealed partial class TargetOutlineSystem : EntitySystem
 {
     private static readonly ProtoId<ShaderPrototype> ShaderTargetValid = "SelectionOutlineInrange";
     private static readonly ProtoId<ShaderPrototype> ShaderTargetInvalid = "SelectionOutline";
 
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     private bool _enabled = false;
 
@@ -130,11 +131,10 @@ public sealed class TargetOutlineSystem : EntitySystem
         var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition).Position;
         var bounds = new Box2(mousePos - LookupVector, mousePos + LookupVector);
         var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentEye.Position.MapId, bounds, LookupFlags.Approximate | LookupFlags.Static);
-        var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)
         {
-            if (!spriteQuery.TryGetComponent(entity, out var sprite) || !sprite.Visible)
+            if (!_spriteQuery.TryGetComponent(entity, out var sprite) || !sprite.Visible)
                 continue;
 
             // Check the predicate

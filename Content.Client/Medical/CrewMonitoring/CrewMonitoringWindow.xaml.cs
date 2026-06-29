@@ -23,8 +23,8 @@ namespace Content.Client.Medical.CrewMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class CrewMonitoringWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SharedTransformSystem _transformSystem;
     private readonly SpriteSystem _spriteSystem;
 
@@ -130,7 +130,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.StyleClasses.Add("font-large");
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -155,8 +155,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 HorizontalExpand = true,
             };
 
-            deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-user-interface-no-department"));
-            deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
+            deparmentLabel.SetMessage(Loc.GetString("crew-monitoring-ui-no-department-label"));
 
             SensorsTable.AddChild(deparmentLabel);
 
@@ -194,7 +193,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             if (sensor.SuitSensorUid == _trackedEntity)
-                sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                sensorButton.AddStyleClass(StyleClass.Positive);
 
             SensorsTable.AddChild(sensorButton);
 
@@ -364,10 +363,10 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             var castSensor = (CrewMonitoringButton) sensor;
 
             if (castSensor.SuitSensorUid == prevTrackedEntity)
-                castSensor.RemoveStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.RemoveStyleClass(StyleClass.Positive);
 
             else if (castSensor.SuitSensorUid == currTrackedEntity)
-                castSensor.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
+                castSensor.AddStyleClass(StyleClass.Positive);
 
             if (castSensor?.Coordinates == null)
                 continue;

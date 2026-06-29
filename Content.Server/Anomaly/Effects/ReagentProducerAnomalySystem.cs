@@ -12,7 +12,7 @@ namespace Content.Server.Anomaly.Effects;
 
 /// <see cref="ReagentProducerAnomalyComponent"/>
 
-public sealed class ReagentProducerAnomalySystem : EntitySystem
+public sealed partial class ReagentProducerAnomalySystem : EntitySystem
 {
     //The idea is to divide substances into several categories.
     //The anomaly will choose one of the categories with a given chance based on severity.
@@ -28,11 +28,11 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     //Useful:
     //Those reagents that the players are hunting for. Very low percentage of loss.
 
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PointLightSystem _light = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private PointLightSystem _light = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public const string FallbackReagent = "Water";
 

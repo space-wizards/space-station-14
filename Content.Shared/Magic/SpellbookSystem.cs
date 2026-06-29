@@ -10,14 +10,14 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Magic;
 
-public sealed class SpellbookSystem : EntitySystem
+public sealed partial class SpellbookSystem : EntitySystem
 {
-    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private SharedChargesSystem _sharedCharges = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private INetManager _netManager = default!;
 
     public override void Initialize()
     {

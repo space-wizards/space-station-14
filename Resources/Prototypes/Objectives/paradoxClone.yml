@@ -6,7 +6,7 @@
   - type: Objective
     # required but not used
     difficulty: 1
-    issuer: objective-issuer-paradox
+    issuer: Paradox
   - type: RoleRequirement
     roles:
     - ParadoxCloneRole
@@ -17,7 +17,7 @@
 - type: entity
   parent: [BaseParadoxCloneObjective, BaseLivingObjective]
   id: ParadoxCloneLivingObjective
-  name: Escape to centcomm alive and unrestrained.
+  name: Escape to CentComm alive and unrestrained via the escape shuttle.
   description: Return to your old life.
   components:
   - type: Objective

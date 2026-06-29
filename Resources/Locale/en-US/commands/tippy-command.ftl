@@ -1,5 +1,5 @@
 cmd-tippy-desc = Broadcast a message as Tippy the clown.
-cmd-tippy-help = tippy <user | all> <message> [entity prototype] [speak time] [slide time] [waddle interval]
+cmd-tippy-help = tippy <user | all> <message> [entity prototype | null] [speak time] [slide time] [waddle interval]
 cmd-tippy-auto-1 = <user | all>
 cmd-tippy-auto-2 = message
 cmd-tippy-auto-3 = entity prototype

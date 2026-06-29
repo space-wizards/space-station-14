@@ -1,41 +1,46 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Containers;
 using Content.Server.StationRecords.Systems;
-using Content.Shared.Access.Components;
-using static Content.Shared.Access.Components.IdCardConsoleComponent;
-using Content.Shared.Access.Systems;
 using Content.Shared.Access;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
+using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using static Content.Shared.Access.Components.IdCardConsoleComponent;
 
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
-public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
+public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly StationRecordsSystem _record = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly AccessSystem _access = default!;
-    [Dependency] private readonly IdCardSystem _idCard = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private StationRecordsSystem _record = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private AccessSystem _access = default!;
+    [Dependency] private IdCardSystem _idCard = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -83,7 +88,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         {
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
-                PrivilegedIdIsAuthorized(uid, component),
+                PrivilegedIdIsAuthorized(uid, component, out _),
                 false,
                 null,
                 null,
@@ -108,7 +113,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
             newState = new IdCardConsoleBoundUserInterfaceState(
                 component.PrivilegedIdSlot.HasItem,
-                PrivilegedIdIsAuthorized(uid, component),
+                PrivilegedIdIsAuthorized(uid, component, out _),
                 true,
                 targetIdComponent.FullName,
                 targetIdComponent.LocalizedJobTitle,
@@ -130,20 +135,30 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         string newFullName,
         string newJobTitle,
         List<ProtoId<AccessLevelPrototype>> newAccessList,
-        ProtoId<JobPrototype> newJobProto,
+        ProtoId<JobPrototype>? newJobProto,
         EntityUid player,
         IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component))
+        if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component, out var privilegedId))
             return;
+
+        // Limit name and job title lengths
+        var maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+        var maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+
+        if (newFullName.Length > maxNameLength)
+            newFullName = newFullName[..maxNameLength];
+
+        if (newJobTitle.Length > maxIdJobLength)
+            newJobTitle = newJobTitle[..maxIdJobLength];
 
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (_prototype.TryIndex<JobPrototype>(newJobProto, out var job)
+        if (_prototype.TryIndex(newJobProto, out var job)
             && _prototype.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
@@ -159,57 +174,61 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        if (!newAccessList.All(component.AccessLevels.Contains))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
         }
 
-        var oldTags = _access.TryGetTags(targetId) ?? new List<ProtoId<AccessLevelPrototype>>();
-        oldTags = oldTags.ToList();
-
-        var privilegedId = component.PrivilegedIdSlot.Item;
+        var oldTags = _access.TryGetTags(targetId)?.ToList() ?? new List<ProtoId<AccessLevelPrototype>>();
 
         if (oldTags.SequenceEqual(newAccessList))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
-        // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
-        var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
-        if (!difference.IsSubsetOf(privilegedPerms))
+        // Sets for the requested changes to the access card.
+        var addedTags = newAccessList.Except(oldTags);
+        var removedTags = oldTags.Except(newAccessList);
+        var changedTags = addedTags.Union(removedTags);
+
+        // Find tags that the console changed and knew about.
+        var visibleChanges = changedTags.Intersect(component.AccessLevels);
+        // Find tags that the original ID had that the console can't change.
+        var hiddenTags = oldTags.Except(component.AccessLevels);
+
+        var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
+        if (!visibleChanges.All(privilegedPerms.Contains))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
+        // Restore all hidden tags to the newly requested set.
+        newAccessList.AddRange(hiddenTags);
         _access.TrySetTags(targetId, newAccessList);
+
+        var changeStrings = addedTags.Select(tag => "+" + tag) // All added tags.
+            .Concat(removedTags.Except(newAccessList).Select(tag => "-" + tag)); // All removed tags (except new set due to hidden tags)
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{ToPrettyString(player):player} has modified {ToPrettyString(targetId):entity} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+        _adminLogger.Add(LogType.Action,
+            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", changeStrings)}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>
     /// Returns true if there is an ID in <see cref="IdCardConsoleComponent.PrivilegedIdSlot"/> and said ID satisfies the requirements of <see cref="AccessReaderComponent"/>.
     /// </summary>
-    /// <remarks>
-    /// Other code relies on the fact this returns false if privileged Id is null. Don't break that invariant.
-    /// </remarks>
-    private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent? component = null)
+    private bool PrivilegedIdIsAuthorized(EntityUid uid, IdCardConsoleComponent component, [NotNullWhen(true)] out EntityUid? id)
     {
-        if (!Resolve(uid, ref component))
-            return true;
+        id = null;
+        if (component.PrivilegedIdSlot.Item == null)
+            return false;
 
+        id = component.PrivilegedIdSlot.Item;
         if (!TryComp<AccessReaderComponent>(uid, out var reader))
             return true;
 
-        var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
+        return _accessReader.IsAllowed(id.Value, uid, reader);
     }
 
     private void UpdateStationRecord(EntityUid uid, EntityUid targetId, string newFullName, ProtoId<AccessLevelPrototype> newJobTitle, JobPrototype? newJobProto)

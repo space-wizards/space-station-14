@@ -1,5 +1,5 @@
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -23,16 +23,16 @@ namespace Content.Shared.Storage.EntitySystems;
 /// <summary>
 ///     Secret Stash allows an item to be hidden within.
 /// </summary>
-public sealed class SecretStashSystem : EntitySystem
+public sealed partial class SecretStashSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ToolOpenableSystem _toolOpenableSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ToolOpenableSystem _toolOpenableSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
 
     public override void Initialize()
     {
@@ -107,7 +107,7 @@ public sealed class SecretStashSystem : EntitySystem
 
         // check if item is too big to fit into secret stash or is in the blacklist
         if (_item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype(entity.Comp.MaxItemSize) ||
-            _whitelistSystem.IsBlacklistPass(entity.Comp.Blacklist, itemToHideUid))
+            _whitelistSystem.IsWhitelistPass(entity.Comp.Blacklist, itemToHideUid))
         {
             var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
                 ("item", itemToHideUid), ("stashname", GetStashName(entity)));

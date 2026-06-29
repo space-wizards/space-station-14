@@ -20,9 +20,9 @@ namespace Content.Client.Instruments.UI
     [GenerateTypedNameReferences]
     public sealed partial class InstrumentMenu : DefaultWindow
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IFileDialogManager _dialogs = default!;
-        [Dependency] private readonly IPlayerManager _player = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private IFileDialogManager _dialogs = default!;
+        [Dependency] private IPlayerManager _player = default!;
 
         private bool _isMidiFileDialogueWindowOpen;
 
@@ -129,7 +129,7 @@ namespace Content.Client.Instruments.UI
             // or focus the previously-opened window.
             _isMidiFileDialogueWindowOpen = true;
 
-            await using var file = await _dialogs.OpenFile(filters);
+            await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
 
             _isMidiFileDialogueWindowOpen = false;
 

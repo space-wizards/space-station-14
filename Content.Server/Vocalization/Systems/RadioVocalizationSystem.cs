@@ -1,9 +1,9 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Radio.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Chat;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -14,10 +14,10 @@ namespace Content.Server.Vocalization.Systems;
 /// </summary>
 public sealed partial class RadioVocalizationSystem : EntitySystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -42,9 +42,9 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// Selects a random radio channel from all ActiveRadio entities in a given entity's inventory
     /// If no channels are found, this returns false and sets channel to an empty string
     /// </summary>
-    private bool TryPickRandomRadioChannel(EntityUid entity, out string channel)
+    private bool TryPickRandomRadioChannel(EntityUid entity, out ProtoId<RadioChannelPrototype> channel)
     {
-        HashSet<string> potentialChannels = [];
+        HashSet<ProtoId<RadioChannelPrototype>> potentialChannels = [];
 
         // we don't have to check if this entity has an inventory. GetHandOrInventoryEntities will not yield anything
         // if an entity has no inventory or inventory slots

@@ -21,14 +21,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
 
-public sealed class AmeControllerSystem : EntitySystem
+public sealed partial class AmeControllerSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
 
     public override void Initialize()
     {
@@ -150,7 +150,7 @@ public sealed class AmeControllerSystem : EntitySystem
         // how much power can be produced at the current settings, in kW
         // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
         float targetedPowerSupply = 0;
-        if (TryGetAMENodeGroup(uid, out var group))
+        if (TryGetAMENodeGroup(uid, out var group) && group.CoreCount > 0)
         {
             coreCount = group.CoreCount;
             targetedPowerSupply = group.CalculatePower(controller.InjectionAmount, group.CoreCount) / 1000;

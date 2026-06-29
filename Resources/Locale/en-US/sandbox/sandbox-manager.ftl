@@ -19,3 +19,4 @@ sandbox-window-toggle-suicide-button = Suicide
 sandbox-window-show-spawns-button = Show Spawns
 sandbox-window-show-bb-button = Show BB
 sandbox-window-show-npc-button = Show NPC
+sandbox-window-toggle-thermal-vision = Toggle Thermal Vision

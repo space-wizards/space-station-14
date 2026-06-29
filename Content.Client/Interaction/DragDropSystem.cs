@@ -27,27 +27,28 @@ namespace Content.Client.Interaction;
 /// <summary>
 /// Handles clientside drag and drop logic
 /// </summary>
-public sealed class DragDropSystem : SharedDragDropSystem
+public sealed partial class DragDropSystem : SharedDragDropSystem
 {
     private static readonly ProtoId<ShaderPrototype> ShaderDropTargetInRange = "SelectionOutlineInrange";
 
     private static readonly ProtoId<ShaderPrototype> ShaderDropTargetOutOfRange = "SelectionOutline";
 
-    [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfgMan = default!;
-    [Dependency] private readonly InteractionOutlineSystem _outline = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly CombatModeSystem _combatMode = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IStateManager _stateManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IConfigurationManager _cfgMan = default!;
+    [Dependency] private InteractionOutlineSystem _outline = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private CombatModeSystem _combatMode = default!;
+    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
@@ -433,11 +434,9 @@ public sealed class DragDropSystem : SharedDragDropSystem
         var bounds = new Box2(mousePos.Position - expansion, mousePos.Position + expansion);
         var pvsEntities = _lookup.GetEntitiesIntersecting(mousePos.MapId, bounds);
 
-        var spriteQuery = GetEntityQuery<SpriteComponent>();
-
         foreach (var entity in pvsEntities)
         {
-            if (!spriteQuery.TryGetComponent(entity, out var inRangeSprite) ||
+            if (!_spriteQuery.TryGetComponent(entity, out var inRangeSprite) ||
                 !inRangeSprite.Visible ||
                 entity == _draggedEntity)
             {

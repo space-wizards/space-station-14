@@ -1,0 +1,24 @@
+﻿<Control xmlns="https://spacestation14.io"
+         MinHeight="100">
+    <PanelContainer StyleClasses="BackgroundPanel" ModulateSelfOverride="#2b2b31"/>
+    <BoxContainer Orientation="Vertical">
+
+        <!-- Title -->
+        <PanelContainer StyleIdentifier="FeedbackBorderThinBottom">
+            <RichTextLabel Name="TitleLabel" Margin="12 6 6 6" />
+        </PanelContainer>
+
+        <!-- Description -->
+        <RichTextLabel Name="DescriptionLabel" StyleClasses="LabelLight" Margin="12 4 12 8" VerticalExpand="True"/>
+
+        <!-- Footer -->
+        <PanelContainer StyleIdentifier="FeedbackBorderThinTop">
+            <BoxContainer>
+                <Label FontColorOverride="#b1b1b2" StyleClasses="LabelSmall" Name="TypeLabel" Margin="14 6 6 6" />
+                <Button Name="LinkButton" Text="{Loc feedbackpopup-control-button-text}" MinWidth="80"
+                        Margin="8 6 14 6" HorizontalExpand="True" HorizontalAlignment="Right" />
+            </BoxContainer>
+        </PanelContainer>
+
+    </BoxContainer>
+</Control>

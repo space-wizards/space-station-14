@@ -1,6 +1,8 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 
@@ -17,17 +19,16 @@ public sealed class WindowRepair : InteractionTest
 
         // Damage the entity.
         var sys = SEntMan.System<DamageableSystem>();
-        var comp = Comp<DamageableComponent>();
         var damageType = Server.ProtoMan.Index(BluntDamageType);
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(10));
-        Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
-        await Server.WaitPost(() => sys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));
+        Assert.That(sys.GetTotalDamage(STarget.Value), Is.EqualTo(FixedPoint2.Zero));
+        await Server.WaitPost(() => sys.TryChangeDamage(SEntMan.GetEntity(Target).Value, damage, ignoreResistances: true));
         await RunTicks(5);
-        Assert.That(comp.Damage.GetTotal(), Is.GreaterThan(FixedPoint2.Zero));
+        Assert.That(sys.GetTotalDamage(STarget.Value), Is.GreaterThan(FixedPoint2.Zero));
 
         // Repair the entity
         await InteractUsing(Weld);
-        Assert.That(comp.Damage.GetTotal(), Is.EqualTo(FixedPoint2.Zero));
+        Assert.That(sys.GetTotalDamage(STarget.Value), Is.EqualTo(FixedPoint2.Zero));
 
         // Validate that we can still deconstruct the entity (i.e., that welding deconstruction is not blocked).
         await Interact(

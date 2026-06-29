@@ -1,14 +1,15 @@
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Charges.Systems;
 
-public abstract class SharedChargesSystem : EntitySystem
+public abstract partial class SharedChargesSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming _timing = default!;
+    [Dependency] protected IGameTiming _timing = default!;
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
@@ -19,7 +20,7 @@ public abstract class SharedChargesSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LimitedChargesComponent, ExaminedEvent>(OnExamine);
-
+        SubscribeLocalEvent<LimitedChargesComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<LimitedChargesComponent, ActionAttemptEvent>(OnChargesAttempt);
         SubscribeLocalEvent<LimitedChargesComponent, MapInitEvent>(OnChargesMapInit);
         SubscribeLocalEvent<LimitedChargesComponent, ActionPerformedEvent>(OnChargesPerformed);
@@ -46,6 +47,11 @@ public abstract class SharedChargesSystem : EntitySystem
 
         var timeRemaining = GetNextRechargeTime(rechargeEnt);
         args.PushMarkup(Loc.GetString("limited-charges-recharging", ("seconds", timeRemaining.TotalSeconds.ToString("F1"))));
+    }
+
+    private void OnRejuvenate(Entity<LimitedChargesComponent> ent, ref RejuvenateEvent args)
+    {
+        ResetCharges(ent.AsNullable());
     }
 
     private void OnChargesAttempt(Entity<LimitedChargesComponent> ent, ref ActionAttemptEvent args)

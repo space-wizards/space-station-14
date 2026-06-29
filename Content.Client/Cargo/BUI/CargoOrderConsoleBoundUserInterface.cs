@@ -1,5 +1,5 @@
-using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
+using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
@@ -7,15 +7,15 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BaseButton;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
+    public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        private readonly SharedCargoSystem _cargoSystem;
+        [Dependency] private SharedCargoSystem _cargoSystem = default!;
+        [Dependency] private IdentitySystem _identity = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -44,11 +44,6 @@ namespace Content.Client.Cargo.BUI
         [ViewVariables]
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-            _cargoSystem = EntMan.System<SharedCargoSystem>();
-        }
-
         protected override void Open()
         {
             base.Open();
@@ -59,20 +54,17 @@ namespace Content.Client.Cargo.BUI
             var localPlayer = dependencies.Resolve<IPlayerManager>().LocalEntity;
             var description = new FormattedMessage();
 
-            string orderRequester;
-
+            var orderRequester = Loc.GetString("cargo-console-paper-approver-default");
             if (EntMan.EntityExists(localPlayer))
-                orderRequester = Identity.Name(localPlayer.Value, EntMan);
-            else
-                orderRequester = string.Empty;
+                orderRequester = _identity.GetIdentityShortInfo(localPlayer.Value, Owner) ?? orderRequester;
 
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
 
-            _menu.OnItemSelected += (args) =>
+            _menu.OnItemSelected += (row) =>
             {
-                if (args.Button.Parent is not CargoProductRow row)
+                if (row == null)
                     return;
 
                 description.Clear();
@@ -89,6 +81,7 @@ namespace Content.Client.Cargo.BUI
                 _orderMenu.Amount.Value = 1;
 
                 _orderMenu.OpenCentered();
+                _orderMenu.SetPositionLast();
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
@@ -142,6 +135,11 @@ namespace Content.Client.Cargo.BUI
                 return;
 
             _menu.ProductCatalogue = cState.Products;
+            _menu.ShuttleCapacityLabel.Text = Loc.GetString(
+                "cargo-console-menu-order-capacity-number",
+                ("count", OrderCount),
+                ("capacity", OrderCapacity)
+            );
 
             _menu?.UpdateStation(station);
             Populate(cState.Orders);
@@ -175,23 +173,23 @@ namespace Content.Client.Cargo.BUI
             return true;
         }
 
-        private void RemoveOrder(ButtonEventArgs args)
+        private void RemoveOrder(CargoOrderData? order)
         {
-            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+            if (order == null)
                 return;
 
-            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderId));
+            SendMessage(new CargoConsoleRemoveOrderMessage(order.OrderId));
         }
 
-        private void ApproveOrder(ButtonEventArgs args)
+        private void ApproveOrder(CargoOrderData? order)
         {
-            if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
+            if (order == null)
                 return;
 
             if (OrderCount >= OrderCapacity)
                 return;
 
-            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderId));
+            SendMessage(new CargoConsoleApproveOrderMessage(order.OrderId));
         }
     }
 }

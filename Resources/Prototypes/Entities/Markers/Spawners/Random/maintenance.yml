@@ -6,6 +6,9 @@
     - !type:GroupSelector
       weight: 75
       children:
+      - !type:NestedSelector
+        weight: 5 # Roughly 7% chance
+        tableId: AllToysTable
       # Smoker's specialty
       - !type:AllSelector
         children:
@@ -92,6 +95,7 @@
     - !type:GroupSelector
       weight: 23
       children:
+      - id: TravelCamera
       - id: ClothingNeckCloakHerald
       - id: ClothingHeadHelmetTemplar
       # Cloaks
@@ -111,13 +115,8 @@
         - id: ClothingNeckCloakGay
         - id: ClothingNeckCloakEnby
         - id: ClothingNeckCloakPan
-      - id: ToySkeleton
-      - id: Basketball
-      - id: Football
-      - id: BalloonNT
-      - id: BalloonCorgi
+      - id: ToyFigurineSkeleton
       - id: MysteryFigureBox
-      - id: RubberChicken
       # Cult
       - !type:AllSelector
         children:
@@ -163,17 +162,12 @@
     - !type:GroupSelector
       weight: 2
       children:
-      - id: Skub
-      - id: PonderingOrb
-      - id: CluwneHorn
-      - id: ClothingShoesSkates
       - id: DrinkMugDog
       - id: CigarGold
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
       - id: MysteryLighterBox
-      - id: GoldenPersonalAI
 
 - type: entity
   name: Maint Loot Spawner
@@ -227,7 +221,8 @@
       - id: Plunger
       - id: PowerCellMedium
       - id: PowerCellSmall
-      - id: Soap
+      - !type:NestedSelector
+        tableId: AllSoapsTable
       - id: Wirecutter
       - id: Screwdriver
       - id: Wrench
@@ -273,7 +268,7 @@
       - id: trayScanner
       - id: HandheldGPSBasic
       - id: HandLabeler
-      - id: GlowstickBase
+      - id: GlowstickGreen
       - id: Bucket
       - id: RadioHandheld
       - id: AppraisalTool
@@ -328,6 +323,7 @@
       weight: 95
       children:
       - id: Machete
+      - id: Claymore
       - id: BaseBallBat
       - id: CombatKnife
       - id: Spear
@@ -360,6 +356,8 @@
       - id: SawImprov
       - id: HydroponicsToolMiniHoe
       - id: ClothingHandsKnuckleDusters
+      - !type:NestedSelector
+        tableId: AllToyWeaponsTable
 
 - type: entity
   name: Maint Loot Spawner
@@ -383,16 +381,16 @@
   id: MaintenancePlantSpawner
   parent: MarkerBase
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Misc/spaceshroom.rsi
-          state: structure
-    - type: RandomSpawner
-      prototypes:
-        - Spaceshroom
-      chance: 0.6
-      offset: 0.0
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Misc/spaceshroom.rsi
+        state: structure
+  - type: EntityTableSpawner
+    table:
+      id: Spaceshroom
+      prob: 0.6
+    offset: 0.0
 
 
 - type: entityTable

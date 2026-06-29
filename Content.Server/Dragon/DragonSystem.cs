@@ -1,12 +1,13 @@
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Shared.Actions;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Dragon;
+using Content.Shared.Gibbing;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
@@ -20,18 +21,21 @@ namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
-    [Dependency] private readonly CarpRiftsConditionSystem _carpRifts = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private CarpRiftsConditionSystem _carpRifts = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private SmokeSystem _smoke = default!;
 
-    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
+    [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -48,8 +52,6 @@ public sealed partial class DragonSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
 
         SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
@@ -97,11 +99,14 @@ public sealed partial class DragonSystem : EntitySystem
             if (!_mobState.IsDead(uid))
                 comp.RiftAccumulator += frameTime;
 
-            // Delete it, naughty dragon!
+            // Gib it, naughty dragon!
             if (comp.RiftAccumulator >= comp.RiftMaxAccumulator)
             {
-                Roar(uid, comp);
-                QueueDel(uid);
+                Roar(uid, comp, Transform(uid).Coordinates);
+                var smoke = Spawn(comp.SmokePrototype, Transform(uid).Coordinates);
+                if (TryComp<SmokeComponent>(smoke, out var smokeComp))
+                    _smoke.StartSmoke(smoke, comp.SmokeSolution, smokeComp.Duration, smokeComp.SpreadAmount, smokeComp);
+                _gibbing.Gib(uid);
             }
         }
     }
@@ -167,6 +172,8 @@ public sealed partial class DragonSystem : EntitySystem
         }
 
         var carpUid = Spawn(component.RiftPrototype, _transform.GetMapCoordinates(uid, xform: xform));
+        Transform(carpUid).LocalRotation = Angle.Zero;
+
         component.Rifts.Add(carpUid);
         Comp<DragonRiftComponent>(carpUid).Dragon = uid;
     }
@@ -199,10 +206,15 @@ public sealed partial class DragonSystem : EntitySystem
         _faction.AddFaction(ent.Owner, ent.Comp.Faction);
     }
 
-    private void Roar(EntityUid uid, DragonComponent comp)
+    private void Roar(EntityUid uid, DragonComponent comp, EntityCoordinates? coords = null)
     {
         if (comp.SoundRoar != null)
-            _audio.PlayPvs(comp.SoundRoar, uid);
+        {
+            if (coords != null)
+                _audio.PlayPvs(comp.SoundRoar, coords.Value);
+            else
+                _audio.PlayPvs(comp.SoundRoar, uid);
+        }
     }
 
     /// <summary>
@@ -224,13 +236,12 @@ public sealed partial class DragonSystem : EntitySystem
         comp.Rifts.Clear();
 
         // stop here if not trying to reset the objective's rift count
-        if (!resetRole || !TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
+        if (!resetRole || !_mind.TryGetMind(uid, out _, out var mind))
             return;
 
-        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.ResetRifts(objId, obj);
                 break;
@@ -246,13 +257,12 @@ public sealed partial class DragonSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || !mindContainer.HasMind)
+        if (!_mind.TryGetMind(uid, out _, out var mind))
             return;
 
-        var mind = Comp<MindComponent>(mindContainer.Mind.Value);
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.RiftCharged(objId, obj);
                 break;
@@ -267,9 +277,6 @@ public sealed partial class DragonSystem : EntitySystem
     {
         if (!Resolve(uid, ref comp))
             return;
-
-        // do reset the rift count since crew destroyed the rift, not deleted by the dragon dying.
-        DeleteRifts(uid, true, comp);
 
         // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
         comp.WeakenedAccumulator = comp.WeakenedDuration;

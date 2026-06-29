@@ -1,66 +1,74 @@
 - type: entity
-  id: CrateEmergencyExplosive
   parent: CrateSecgear
+  id: CrateEmergencyExplosive
   name: bomb suit crate
   description: Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetBombSuit
-      - id: ClothingMaskGas
-      - id: Screwdriver
-      - id: Wirecutter
-      - id: Multitool
-      - id: ClothingOuterSuitBomb
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingHeadHelmetBombSuit
+        - id: ClothingMaskGas
+        - id: Screwdriver
+        - id: Wirecutter
+        - id: Multitool
+        - id: ClothingOuterSuitBomb
 
 - type: entity
-  id: CrateEmergencyFire
   parent: CrateGenericSteel
+  id: CrateEmergencyFire
   name: firefighting crate
   description: Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!
   components:
-  - type: StorageFill
-    contents:
-      - id: FlashlightLantern
-        amount: 2
-      - id: FireExtinguisher
-        amount: 2
-      - id: ClothingHeadHatHardhatRed
-        amount: 2
-      - id: ClothingMaskGas
-        amount: 2
-      - id: ClothingOuterSuitFire
-        amount: 2
-      - id: OxygenTankFilled
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: FlashlightLantern
+          amount: 2
+        - id: FireExtinguisher
+          amount: 2
+        - id: ClothingHeadHatHardhatRed
+          amount: 2
+        - id: ClothingMaskGas
+          amount: 2
+        - id: ClothingOuterSuitFire
+          amount: 2
+        - id: OxygenTankFilled
+          amount: 2
 
 - type: entity
+  parent: CrateInternals
   id: CrateEmergencyInternals
-  parent: CrateInternals
   name: internals crate
-  description: Master your life energy and control your breathing with 3 breath masks, emergency suits and large air tanks.
+  description: Master your life energy and control your breathing with three breath masks, three gas masks, three emergency EVA suits, three oxygen tanks, and three nitrogen tanks.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskGas
-        amount: 3
-      - id: ClothingMaskBreath
-        amount: 3
-      - id: OxygenTankFilled
-        amount: 3
-      - id: NitrogenTankFilled
-        amount: 3
-      - id: ClothingOuterSuitEmergency
-        amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskGas
+          amount: 3
+        - id: ClothingMaskBreath
+          amount: 3
+        - id: OxygenTankFilled
+          amount: 3
+        - id: NitrogenTankFilled
+          amount: 3
+        - id: ClothingOuterSuitEmergency
+          amount: 3
 
 - type: entity
-  id: CrateEmergencyInternalsLarge
   parent: CrateInternals
+  id: CrateEmergencyInternalsLarge
   name: internals crate (large)
-  description: Master your life energy and control your breathing with 6 breath masks, emergency suits and large air tanks.
+  description: Master your life energy and control your breathing with six breath masks, six gas masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
   components:
-    - type: StorageFill
-      contents:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
         - id: ClothingMaskGas
           amount: 6
         - id: ClothingMaskBreath
@@ -73,57 +81,63 @@
           amount: 6
 
 - type: entity
-  id: CrateNitrogenInternals
   parent: CrateInternals
+  id: CrateNitrogenInternals
   name: internals crate (nitrogen)
-  description: Contains four breath masks and four large nitrogen tanks. Intended for Slimepeople and Vox.
+  description: Contains two breath masks, two gas masks, and four nitrogen tanks. Intended for nitrogen-breathing species.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskGas
-        amount: 2
-      - id: ClothingMaskBreath
-        amount: 2
-      - id: NitrogenTankFilled
-        amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskGas
+          amount: 2
+        - id: ClothingMaskBreath
+          amount: 2
+        - id: NitrogenTankFilled
+          amount: 4
 
 - type: entity
-  id: CrateEmergencyRadiation
   parent: CrateRadiation
+  id: CrateEmergencyRadiation
   name: radiation protection crate
   description: Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitRad
-        amount: 2
-      - id: GeigerCounter
-        amount: 2
-      - id: DrinkVodkaBottleFull
-      - id: DrinkShotGlass
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterSuitRad
+          amount: 2
+        - id: GeigerCounter
+          amount: 2
+        - id: DrinkVodkaBottleFull
+        - id: DrinkShotGlass
+          amount: 2
 
 - type: entity
-  id: CrateEmergencyInflatablewall
   parent: CratePlastic
+  id: CrateEmergencyInflatablewall
   name: inflatable wall crate
   description: Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore.
   components:
-  - type: StorageFill
-    contents:
-      - id: BoxInflatable
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: BoxInflatable
 
 - type: entity
-  id: CrateGenericBiosuit
   parent: CratePlastic
+  id: CrateGenericBiosuit
   name: emergency bio suit crate
   description: Contains 2 biohazard suits to ensure that no disease will distract you from what you're doing there.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterBioGeneral
-        amount: 2
-      - id: ClothingHeadHatHoodBioGeneral
-        amount: 2
-      - id: ClothingMaskGas
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillBiohazardGearGeneric
+          rolls: 2
+        - id: ClothingMaskGas
+          amount: 2
