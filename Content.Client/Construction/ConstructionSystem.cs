@@ -312,9 +312,9 @@ namespace Content.Client.Construction
                 var dummy = EntityManager.SpawnEntity(targetProtoId, MapCoordinates.Nullspace);
                 var targetSprite = EnsureComp<SpriteComponent>(dummy);
                 EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
-
+                var ghostDrawDepth = sprite.DrawDepth;
                 _sprite.CopySprite((dummy, targetSprite), (ghost.Value, sprite));
-
+                _sprite.SetDrawDepth((ghost.Value, sprite), ghostDrawDepth);
                 for (var i = 0; i < sprite.AllLayers.Count(); i++)
                 {
                     sprite.LayerSetShader(i, "unshaded");
