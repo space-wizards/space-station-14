@@ -47,7 +47,6 @@ public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                     ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);
                 }
             }
-
         }
     }
 }

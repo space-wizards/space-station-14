@@ -9,7 +9,7 @@ namespace Content.Shared.Changeling.Components;
 /// Component responsible for Changelings immunity to certain effects, such as revolutionary conversion, gibbing, or zombification.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(ChangelingDevourSystem))]
+[Access(typeof(SharedChangelingResilienceSystem))]
 public sealed partial class ChangelingResilienceComponent : Component
 {
     /// <summary>

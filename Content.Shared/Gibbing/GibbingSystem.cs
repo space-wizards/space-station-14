@@ -49,7 +49,7 @@ public sealed partial class GibbingSystem : EntitySystem
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null, bool force = false)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
         // user is unused because of prediction woes, eventually it'll be used for audio
 
