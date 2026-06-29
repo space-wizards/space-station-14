@@ -24,3 +24,6 @@ changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Us
 
 changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
 changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
+
+changeling-catalog-voice-mindshield-name = Fake Mindshield
+changeling-catalog-voice-mindshield-desc = Modify your neuron's natural waves to copy those produced by Nanotransen mindshield implants, making you look mindshielded to security members. Can be toggled.

@@ -30,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
 using Robust.Shared.Player;
+using Content.Server.Mindshield;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -53,9 +54,12 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private StationSystem _stationSystem = default!;
 
+    [Dependency] private MindShieldSystem _mindShieldSystem = default!;
+
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
     public readonly ProtoId<NpcFactionPrototype> RevPrototypeId = "Rev";
+
 
     public override void Initialize()
     {
@@ -152,7 +156,8 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         var attemptConvertEv = new AttemptConvertRevolutionaryEvent();
         RaiseLocalEvent(ev.Target, ref attemptConvertEv);
 
-        if (attemptConvertEv.Cancelled)
+        _mindShieldSystem.GetMindshieldStatus(ev.Target, out var isMindshielded, out _);
+        if (attemptConvertEv.Cancelled || isMindshielded)
             return;
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
