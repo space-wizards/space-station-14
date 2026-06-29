@@ -408,9 +408,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
         _physics.SetBodyStatus(target, targetPhysics, BodyStatus.InAir, false);
         _physics.SetSleepingAllowed(target, targetPhysics, false);
         tethered.Tetherer = gunUid;
-        tethered.OriginalAngularDamping = targetPhysics.AngularDamping;
-        _physics.SetAngularDamping(target, targetPhysics, 0f);
-        _physics.SetLinearDamping(target, targetPhysics, 0f);
         _physics.SetAngularVelocity(target, SpinVelocity, body: targetPhysics);
         _physics.WakeBody(target, body: targetPhysics);
         var thrown = EnsureComp<ThrownItemComponent>(target);
@@ -488,8 +485,6 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
 
             _physics.SetBodyStatus(tethered, targetPhysics, BodyStatus.OnGround);
             _physics.SetSleepingAllowed(tethered, targetPhysics, true);
-            if (TryComp<TetheredComponent>(tethered, out var tetheredComp))
-                _physics.SetAngularDamping(tethered, targetPhysics, tetheredComp.OriginalAngularDamping);
         }
 
         if (!transfer)
