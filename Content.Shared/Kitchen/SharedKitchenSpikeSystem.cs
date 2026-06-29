@@ -26,6 +26,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen;
 
@@ -36,6 +37,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private ISharedAdminLogManager _logger = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private MetaDataSystem _metaDataSystem = default!;
@@ -130,8 +132,10 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || !victim.HasValue)
             return;
 
-        _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
-            ("target", Identity.Entity(victim.Value, EntityManager))),
+        var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+        _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+            ("target", Identity.Entity(victim.Value, EntityManager)),
+            ("quality", Loc.GetString(quality.Name))),
             ent,
             args.User,
             PopupType.Medium);
@@ -150,11 +154,13 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
-            _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
-                    ("target", Identity.Entity(victim.Value, EntityManager))),
-                    ent,
-                    args.User,
-                    PopupType.Medium);
+            var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+                ("target", Identity.Entity(victim.Value, EntityManager)),
+                ("quality", Loc.GetString(quality.Name))),
+                ent,
+                args.User,
+                PopupType.Medium);
 
             return;
         }
@@ -338,13 +344,6 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);
 
-        _popupSystem.PopupClient(Loc.GetString("butcherable-knife-butchered-success",
-            ("target", Identity.Entity(args.Target.Value, EntityManager)),
-            ("knife", args.Used.Value)),
-            ent,
-            args.User,
-            PopupType.Medium);
-
         args.Handled = true;
     }
 
@@ -488,11 +487,20 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
     }
 }
 
+/// <summary>
+///     DoAfter event for putting an entity on a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeHookDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+///     DoAfter event for removing an entity from a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeUnhookDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+///     DoAfter event for slicing an entity on a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeButcherDoAfterEvent : SimpleDoAfterEvent;

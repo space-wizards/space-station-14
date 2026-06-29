@@ -1,4 +1,5 @@
 using Content.Client.Popups;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Access.Systems;
 using Content.Shared.Holopad;
@@ -61,8 +62,8 @@ public sealed partial class HolopadWindow : FancyWindow
 
         // XML formatting
         AnswerCallButton.AddStyleClass("ButtonAccept");
-        EndCallButton.AddStyleClass("Caution");
-        StartBroadcastButton.AddStyleClass("Caution");
+        EndCallButton.AddStyleClass(StyleClass.Negative);
+        StartBroadcastButton.AddStyleClass(StyleClass.Negative);
 
         HolopadContactListPanel.PanelOverride = new StyleBoxFlat
         {

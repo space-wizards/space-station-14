@@ -55,23 +55,17 @@
     sprite: Structures/Furniture/Carpets/red_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemRed:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemRed:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetBlack
@@ -85,23 +79,17 @@
     sprite: Structures/Furniture/Carpets/black_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemBlack:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemBlack:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetPink
@@ -115,23 +103,17 @@
     sprite: Structures/Furniture/Carpets/pink_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemPink:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemPink:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetBlue
@@ -145,23 +127,17 @@
     sprite: Structures/Furniture/Carpets/blue_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemBlue:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemBlue:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetGreen
@@ -175,23 +151,17 @@
     sprite: Structures/Furniture/Carpets/green_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemGreen:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemGreen:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetOrange
@@ -205,23 +175,17 @@
     sprite: Structures/Furniture/Carpets/orange_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemOrange:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemOrange:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetSBlue
@@ -235,23 +199,17 @@
     sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemSkyBlue:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemSkyBlue:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetPurple
@@ -265,23 +223,17 @@
     sprite: Structures/Furniture/Carpets/purple_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemPurple:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemPurple:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetCyan
@@ -295,23 +247,17 @@
     sprite: Structures/Furniture/Carpets/cyan_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemCyan:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemCyan:
+            min: 1
+            max: 1
 
 - type: entity
   id: CarpetWhite
@@ -325,23 +271,17 @@
     sprite: Structures/Furniture/Carpets/white_carpet.rsi
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              FloorCarpetItemWhite:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FloorCarpetItemWhite:
+            min: 1
+            max: 1
 
 # TODO nuke this once tiles support rotating sprites
 - type: entity
@@ -367,12 +307,12 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: TrayScanReveal
 
 #cardpet
@@ -408,25 +348,18 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 40
-        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              MaterialCardboard:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 1
   - type: ToolRefinable
     refineResult:
     - id: MaterialCardboard1
-      amount: 1
   - type: TrayScanReveal

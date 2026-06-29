@@ -41,12 +41,6 @@
     price: 100
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger100
-        !type:DamageTrigger
-        damage: 100
-      behaviors: &OverkillBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 15 # stronger than base
@@ -86,8 +80,6 @@
       Glass: 10
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger100
-      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 5 # smaller so weaker
