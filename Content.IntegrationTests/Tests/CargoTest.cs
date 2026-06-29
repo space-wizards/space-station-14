@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
+
 public sealed class CargoTest : GameTest
 {
     /// <summary>
