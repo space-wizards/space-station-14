@@ -19,7 +19,6 @@
   components:
   - type: GuardianCreator
     guardianProto: MobHoloClownGuardian
-    injector: true
 
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]
@@ -33,7 +32,9 @@
       - state: lamp
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
-    deck: true
+    emptyPopup: guardian-deck-invalid-creation
+    deckUsedExamine: guardian-deck-used-examine
+    usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]

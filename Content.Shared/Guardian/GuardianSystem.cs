@@ -201,10 +201,8 @@ public sealed partial class GuardianSystem : EntitySystem
     {
         if (ent.Comp.Used)
         {
-            if (ent.Comp.Injector)
-                _popup.PopupPredicted(Loc.GetString(ent.Comp.InjectorEmptyPopup), user, user);
-            if (ent.Comp.Deck)
-                _popup.PopupPredicted(Loc.GetString(ent.Comp.DeckUsedPopup), user, user);
+            _popup.PopupPredicted(Loc.GetString(ent.Comp.EmptyPopup), user, user);
+
             return;
         }
 
@@ -240,12 +238,10 @@ public sealed partial class GuardianSystem : EntitySystem
 
     private void OnDoAfter(Entity<GuardianCreatorComponent> ent, ref GuardianCreatorDoAfterEvent args)
     {
-        if (args.Handled || args.Args.Target == null)
+        if (args.Handled || args.Args.Target == null || args.Cancelled || ent.Comp.Deleted || ent.Comp.Used)
             return;
 
-        if (args.Cancelled || ent.Comp.Deleted || ent.Comp.Used ||
-            !_hands.IsHolding(args.Args.User, ent.Owner, out _) ||
-            HasComp<GuardianHostComponent>(args.Args.Target))
+        if (!_hands.IsHolding(args.Args.User, ent.Owner) || HasComp<GuardianHostComponent>(args.Args.Target))
             return;
 
         var hostXform = Transform(args.Args.Target.Value);
@@ -260,7 +256,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (TryComp<GuardianComponent>(guardian, out var guardianComp))
         {
             guardianComp.Host = args.Args.Target.Value;
-            _audio.PlayPredicted(!ent.Comp.Deck ? guardianComp.InjectSound : guardianComp.DeckSound,
+            _audio.PlayPredicted(guardianComp.UsedSound,
                 ent.Owner,
                 args.Args.Target);
             _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHauntedPopup),
@@ -327,22 +323,18 @@ public sealed partial class GuardianSystem : EntitySystem
     /// </summary>
     private void OnCreatorExamine(Entity<GuardianCreatorComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.Used)
-        {
-            if (ent.Comp.Injector)
-                args.PushMarkup(Loc.GetString(ent.Comp.InjectorEmptyExamine));
+        if (!ent.Comp.Used)
+            return;
 
-            if (ent.Comp.Deck)
-                args.PushMarkup(Loc.GetString(ent.Comp.DeckUsedExamine));
-        }
+        args.PushMarkup(Loc.GetString(ent.Comp.EmptyExamine));
     }
 
     /// <summary>
-    /// Called every time the host moves, to make sure the distance between the host and the guardian are not too far.
+    /// Called every time the host moves, to make sure the host and the guardian are not too far away from each other.
     /// </summary>
     private void OnHostMove(Entity<GuardianHostComponent> ent, ref MoveEvent args)
     {
-        if (!TryComp(ent.Comp.HostedGuardian, out GuardianComponent? guardianComponent) ||
+        if (!TryComp<GuardianComponent>(ent.Comp.HostedGuardian, out var guardianComponent) ||
             !guardianComponent.GuardianLoose)
         {
             return;
@@ -409,6 +401,9 @@ public sealed partial class GuardianSystem : EntitySystem
 
     private void RetractGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent?> guardian)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (!Resolve(guardian, ref guardian.Comp))
             return;
 
@@ -417,9 +412,6 @@ public sealed partial class GuardianSystem : EntitySystem
             DebugTools.Assert(host.Comp.GuardianContainer.Contains(guardian));
             return;
         }
-
-        if (_timing.ApplyingState)
-            return;
 
         _container.Insert(guardian.Owner, host.Comp.GuardianContainer);
         _popup.PopupPredicted(Loc.GetString(host.Comp.GuardianHostRecall), host.Owner, host.Owner);

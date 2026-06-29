@@ -19,46 +19,16 @@ public sealed partial class GuardianCreatorComponent : Component
     public bool Used;
 
     /// <summary>
-    /// Whether the creator is an injector that injects the guardian into a host.
-    /// </summary>
-    /// <remarks>
-    /// For methods done through injection.
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public bool Injector;
-
-    /// <summary>
     /// Popup shown when the injector has already been used and cannot create a guardian.
     /// </summary>
     [DataField]
-    public LocId InjectorEmptyPopup = "guardian-injector-empty-invalid-creation";
+    public LocId EmptyPopup = "guardian-injector-empty-invalid-creation";
 
     /// <summary>
     /// Examine text shown for an exhausted injector creator.
     /// </summary>
     [DataField]
-    public LocId InjectorEmptyExamine = "guardian-injector-empty-examine";
-
-    /// <summary>
-    /// Whether the creator is a deck that grants a guardian to its user.
-    /// </summary>
-    /// <remarks>
-    /// For methods obtained through a deck.
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public bool Deck;
-
-    /// <summary>
-    /// Popup shown when the deck can no longer produce a guardian.
-    /// </summary>
-    [DataField]
-    public LocId DeckUsedPopup = "guardian-deck-invalid-creation";
-
-    /// <summary>
-    /// Examine text shown for a guardian deck that has already been used.
-    /// </summary>
-    [DataField]
-    public LocId DeckUsedExamine = "guardian-deck-used-examine";
+    public LocId EmptyExamine = "guardian-injector-empty-examine";
 
     /// <summary>
     /// Text shown to the host indicating the guardian creation was successful.

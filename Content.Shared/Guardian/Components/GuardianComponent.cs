@@ -40,16 +40,10 @@ public sealed partial class GuardianComponent : Component
     public LocId GuardianDamagePopup = "guardian-entity-taking-damage";
 
     /// <summary>
-    /// Sound played when a mob obtains a guardian through injection.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Effects/guardian_inject.ogg");
-
-    /// <summary>
     /// Sound played when a mob obtains a guardian through a guardian deck.
     /// </summary>
     [DataField]
-    public SoundSpecifier DeckSound = new SoundPathSpecifier("/Audio/Effects/guardian_deck_shuffle.ogg");
+    public SoundSpecifier UsedSound = new SoundPathSpecifier("/Audio/Effects/guardian_inject.ogg");
 
     /// <summary>
     /// Sound played when the guardian enters critical state.
