@@ -3,11 +3,9 @@ using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Kitchen.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
@@ -23,20 +21,15 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using System.Linq;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Whitelist;
-using JetBrains.Annotations;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -54,7 +47,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private HandsSystem _handsSystem = default!;
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private LightningSystem _lightning = default!;
-    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
@@ -91,18 +83,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
 
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
-    }
-
-    /// <summary>
-    ///     Processes every active microwave's ongoing cooking operation.
-    /// </summary>
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
-        while (query.MoveNext(out var uid, out var active, out var microwave))
-            UpdateMicrowave((uid, active, microwave), frameTime);
     }
 
     /// <summary>
@@ -210,26 +190,37 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             Wzhzhzh(ent, null);
     }
 
-    /// <summary>
-    ///     Heats up the contents of an active microwave. Has a random chance of exploding if the microwave
-    ///     is currently malfunctioning. Also finishes cooking, if the microwave timer expires.
-    /// </summary>
-    /// <remarks>
-    ///     This is called once per frame by <see cref="Update"/>.
-    /// </remarks>
-    /// <param name="ent">The microwave entity.</param>
-    /// <param name="time">The amount of time elapsed.</param>
-    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
+    protected override void AddTemperature(MicrowaveComponent component, float time)
     {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
+        var heatToAdd = time * component.BaseHeatMultiplier;
+        foreach (var entity in component.Storage.ContainedEntities)
+        {
+            _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, ignoreHeatResistance: false);
 
-        active.CookTimeRemaining -= time;
-        RollMalfunction(ent);
-        AddTemperature(microwave, time);
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
+            {
+                var solution = soln.Comp.Solution;
+                if (solution.Temperature > component.TemperatureUpperThreshold)
+                    continue;
 
-        if (active.CookTimeRemaining <= 0)
-            CompleteCooking(ent);
+                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
+            }
+        }
+    }
+
+    protected override void RollMalfunction(Entity<MicrowaveComponent> ent)
+    {
+        base.RollMalfunction(ent);
+        var comp = ent.Comp;
+
+        if (_random.Prob(comp.ExplosionChance))
+        {
+            Explode(ent);
+            return;
+        }
+
+        if (_random.Prob(comp.LightningChance))
+            _lightning.ShootRandomLightnings(ent, 1.0f, 2, comp.MalfunctionSpark, triggerLightningEvents: false);
     }
 
     /// <summary>
@@ -248,32 +239,5 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(ent)} exploded from unsafe cooking!");
-    }
-
-    /// <summary>
-    ///     Attempts to roll random "malfunction" events on a malfunctioning microwave on a given interval
-    ///     - usually 1 second. The microwave may shoot sparks or explode.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void RollMalfunction(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-
-        // Are we ready to roll a malfunction yet?
-        if (active.MalfunctionTime == TimeSpan.Zero
-            || active.MalfunctionTime > _gameTiming.CurTime)
-            return;
-
-        active.MalfunctionTime = _gameTiming.CurTime + TimeSpan.FromSeconds(microwave.MalfunctionInterval);
-
-        if (_random.Prob(microwave.ExplosionChance))
-        {
-            Explode((ent, microwave));
-            return;
-        }
-
-        if (_random.Prob(microwave.LightningChance))
-            _lightning.ShootRandomLightnings(ent, 1.0f, 2, microwave.MalfunctionSpark, triggerLightningEvents: false);
     }
 }

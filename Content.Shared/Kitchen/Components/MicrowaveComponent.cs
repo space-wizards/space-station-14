@@ -173,7 +173,7 @@ public sealed partial class MicrowaveComponent : Component
     ///     How frequently the microwave can malfunction.
     /// </summary>
     [DataField]
-    public float MalfunctionInterval = 1.0f;
+    public TimeSpan MalfunctionInterval = TimeSpan.FromSeconds(1.0f);
 
     /// <summary>
     ///     Chance of an explosion occurring when we microwave a metallic object.

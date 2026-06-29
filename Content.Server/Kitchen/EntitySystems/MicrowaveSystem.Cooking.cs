@@ -1,7 +1,5 @@
-using Content.Server.Kitchen.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Kitchen;
-using Content.Shared.Temperature.Components;
+using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -179,50 +177,6 @@ public sealed partial class MicrowaveSystem
     }
 
     /// <summary>
-    ///     Adds temperature to every item in the microwave based on the time it took to microwave.
-    /// </summary>
-    /// <param name="component">The microwave that is heating up.</param>
-    /// <param name="time">The heating time that has elapsed, in seconds.</param>
-    private void AddTemperature(MicrowaveComponent component, float time)
-    {
-        var heatToAdd = time * component.BaseHeatMultiplier;
-        foreach (var entity in component.Storage.ContainedEntities)
-        {
-            _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, ignoreHeatResistance: false);
-
-            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
-            {
-                var solution = soln.Comp.Solution;
-                if (solution.Temperature > component.TemperatureUpperThreshold)
-                    continue;
-
-                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
-            }
-        }
-    }
-
-    /// <summary>
-    ///     Finishes a cooking operation in the microwave, resulting in a finished food recipe,
-    ///     the ejection of all remaining ingredients, and a sound cue.
-    /// </summary>
-    /// <param name="ent">The micorawve entity.</param>
-    private void CompleteCooking(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-        var microwaveEnt = (ent.Owner, microwave);
-
-        if (active.PortionedRecipe.Recipe != null)
-            ProduceFinishedRecipe(microwaveEnt, active.PortionedRecipe.Recipe, active.PortionedRecipe.Count);
-
-        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
-        _container.EmptyContainer(microwave.Storage);
-        _audio.PlayPvs(microwave.FoodDoneSound, ent); // beep... beep... beep
-        UpdateUserInterfaceState(microwaveEnt);
-        StopCooking(microwaveEnt);
-    }
-
-    /// <summary>
     ///     Completes a recipe in a microwave, removing its relevant ingredient contents
     ///     from the microwave and producing finished dish entities in their place.
     /// </summary>
@@ -238,20 +192,5 @@ public sealed partial class MicrowaveSystem
         var coords = Transform(microwave).Coordinates;
         for (var i = 0; i < count; i++)
             Spawn(recipe.Result, coords);
-    }
-
-    /// <summary>
-    ///     Removes components from a microwave and its contents related to active microwave use.
-    /// </summary>
-    /// <remarks>
-    ///     When the ActiveMicrowaveComponent is removed, it will trigger <see cref="OnCookStop"/> on shutdown.
-    /// </remarks>
-    /// <param name="ent">The microwave entity.</param>
-    private void StopCooking(Entity<MicrowaveComponent> ent)
-    {
-        RemCompDeferred<ActiveMicrowaveComponent>(ent);
-
-        foreach (var solid in ent.Comp.Storage.ContainedEntities)
-            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
     }
 }
