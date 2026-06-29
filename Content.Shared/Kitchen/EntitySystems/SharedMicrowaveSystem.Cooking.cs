@@ -201,7 +201,7 @@ public abstract partial class SharedMicrowaveSystem
 
         var coords = Transform(microwave).Coordinates;
         for (var i = 0; i < count; i++)
-            Spawn(recipe.Result, coords);
+            PredictedSpawnAtPosition(recipe.Result, coords);
     }
 
     /// <summary>

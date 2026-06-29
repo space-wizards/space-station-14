@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -5,6 +6,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -29,6 +31,8 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
+    [Dependency] protected SharedSolutionContainerSystem Solution = default!;
+    [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -39,6 +43,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
 
         SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
 
         InitializeActive();
         InitializeContainer();

@@ -47,8 +47,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private TemperatureSystem _temperature = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
@@ -63,7 +61,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<MicrowaveComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
-        SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
     /// <summary>
@@ -175,13 +172,13 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         {
             _temperature.ChangeHeat(entity, objHeatToAdd, ignoreHeatResistance: false);
 
-            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
+            foreach (var (_, soln) in Solution.EnumerateSolutions(entity))
             {
                 var solution = soln.Comp.Solution;
                 if (solution.Temperature > component.TemperatureUpperThreshold)
                     continue;
 
-                _solutionContainer.AddThermalEnergy(soln, heatToAdd);
+                Solution.AddThermalEnergy(soln, heatToAdd);
             }
         }
     }
