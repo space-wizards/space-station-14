@@ -48,7 +48,7 @@
       FoodPizza: 1              # 4 pizzas
       FoodBarSupply: 1
       FoodSoftdrinks: 1
-      VendingMachineRestockRobustSoftdrinks: 1
+      CrateVendingMachineRestockRobustSoftdrinks: 1
 
 - type: entity
   id: GiftsPizzaPartyLarge
@@ -87,7 +87,7 @@
       MaterialSteel: 1
       MaterialPlasteel: 1
       MaterialGlass: 1
-      VendingMachineRestockEngineering: 1
+      CrateVendingMachineRestockEngineering: 1
 
 - type: entity
   id: GiftsVendingRestock
@@ -102,12 +102,12 @@
     description: cargo-gift-vending
     dest: cargo-gift-dest-supp
     gifts:
-      VendingMachineRestockHotDrinks: 3
-      VendingMachineRestockBooze: 1
-      VendingMachineRestockNutriMax: 1
-      VendingMachineRestockRobustSoftdrinks: 2
-      VendingMachineRestockVendomat: 1
-      VendingMachineRestockGetmoreChocolateCorp: 1
+      CrateVendingMachineRestockHotDrinks: 3
+      CrateVendingMachineRestockBooze: 1
+      CrateVendingMachineRestockNutriMax: 1
+      CrateVendingMachineRestockRobustSoftdrinks: 2
+      CrateVendingMachineRestockVendomat: 1
+      CrateVendingMachineRestockGetmoreChocolateCorp: 1
 
 - type: entity
   id: GiftsJanitor
