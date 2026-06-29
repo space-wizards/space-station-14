@@ -82,7 +82,7 @@ public sealed partial class MeleeThrowOnHitSystem : EntitySystem
         weapon.Comp.HitWhileThrown = true;
         DirtyField(weapon, weapon.Comp, nameof(MeleeThrowOnHitComponent.HitWhileThrown));
 
-        ThrowOnHitHelper(weapon, args.Component.Thrower, args.Target, weaponPhysics.LinearVelocity);
+        ThrowOnHitHelper(weapon, args.Thrown.Comp.Thrower, args.Target, weaponPhysics.LinearVelocity);
     }
 
     private void ThrowOnHitHelper(Entity<MeleeThrowOnHitComponent> ent, EntityUid? user, EntityUid target, Vector2 direction)

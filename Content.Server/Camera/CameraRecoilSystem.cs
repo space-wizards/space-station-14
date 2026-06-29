@@ -6,9 +6,9 @@ namespace Content.Server.Camera;
 
 public sealed class CameraRecoilSystem : SharedCameraRecoilSystem
 {
-    public override void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null)
+    public override void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null, bool predicted = false)
     {
-        if (!Resolve(euid, ref component, false))
+        if (predicted || !Resolve(euid, ref component, false))
             return;
 
         RaiseNetworkEvent(new CameraKickEvent(GetNetEntity(euid), kickback), euid);

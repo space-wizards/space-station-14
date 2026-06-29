@@ -98,7 +98,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
             return;
 
         // hand throwing not predicted sadly
-        TryEmitSound(uid, component, args.User, false);
+        TryEmitSound(uid, component, args.User);
     }
 
     private void OnEmitSoundOnUseInHand(EntityUid uid, EmitSoundOnUseComponent component, UseInHandEvent args)
@@ -112,7 +112,7 @@ public abstract partial class SharedEmitSoundSystem : EntitySystem
 
     private void OnEmitSoundOnThrown(EntityUid uid, BaseEmitSoundComponent component, ref ThrownEvent args)
     {
-        TryEmitSound(uid, component, args.User, false);
+        TryEmitSound(uid, component, args.User);
     }
 
     private void OnEmitSoundOnActivateInWorld(EntityUid uid, EmitSoundOnActivateComponent component, ActivateInWorldEvent args)

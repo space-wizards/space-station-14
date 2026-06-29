@@ -75,6 +75,7 @@ namespace Content.Client.Hands.Systems
             ent.Comp.SortedHands = new (state.SortedHands);
 
             SetActiveHand(ent.AsNullable(), state.ActiveHandId);
+            ent.Comp.NextThrowTime = state.NextThrowTime;
 
             _stripSys.UpdateUi(ent);
         }

@@ -544,6 +544,4 @@ public sealed partial class GunSystem : SharedGunSystem
         // If we cannot collide then we absolutely do not want to target it!
         return false;
     }
-
-    public override void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound) { }
 }

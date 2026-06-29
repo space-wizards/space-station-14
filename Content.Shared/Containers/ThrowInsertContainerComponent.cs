@@ -1,11 +1,12 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Containers;
+namespace Content.Shared.Containers;
 
 /// <summary>
 /// Allows objects to fall inside the Container when thrown
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(ThrowInsertContainerSystem))]
 public sealed partial class ThrowInsertContainerComponent : Component
 {

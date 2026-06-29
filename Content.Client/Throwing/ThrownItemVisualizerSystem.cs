@@ -2,6 +2,7 @@
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Throwing;
 
@@ -23,33 +24,33 @@ public sealed partial class ThrownItemVisualizerSystem : EntitySystem
         SubscribeLocalEvent<ThrownItemComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnAutoHandleState(EntityUid uid, ThrownItemComponent component, ref AfterAutoHandleStateEvent args)
+    private void OnAutoHandleState(Entity<ThrownItemComponent> thrown, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite) || !component.Animate)
+        if (!TryComp<SpriteComponent>(thrown, out var sprite) || !thrown.Comp.Animate)
             return;
 
-        var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+        var animationPlayer = EnsureComp<AnimationPlayerComponent>(thrown);
 
-        if (_anim.HasRunningAnimation(uid, animationPlayer, AnimationKey))
+        if (_anim.HasRunningAnimation(thrown, animationPlayer, AnimationKey))
             return;
 
-        var anim = GetAnimation((uid, component, sprite));
+        var anim = GetAnimation((thrown.Owner, thrown.Comp, sprite));
         if (anim == null)
             return;
 
-        component.OriginalScale = sprite.Scale;
-        _anim.Play((uid, animationPlayer), anim, AnimationKey);
+        thrown.Comp.OriginalScale = sprite.Scale;
+        _anim.Play((thrown, animationPlayer), anim, AnimationKey);
     }
 
-    private void OnShutdown(EntityUid uid, ThrownItemComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<ThrownItemComponent> thrown, ref ComponentShutdown args)
     {
-        if (!_anim.HasRunningAnimation(uid, AnimationKey))
+        if (!_anim.HasRunningAnimation(thrown, AnimationKey))
             return;
 
-        if (TryComp<SpriteComponent>(uid, out var sprite) && component.OriginalScale != null)
-            _sprite.SetScale((uid, sprite), component.OriginalScale.Value);
+        if (TryComp<SpriteComponent>(thrown, out var sprite) && thrown.Comp.OriginalScale != null)
+            _sprite.SetScale((thrown, sprite), thrown.Comp.OriginalScale.Value);
 
-        _anim.Stop(uid, AnimationKey);
+        _anim.Stop(thrown.Owner, AnimationKey);
     }
 
     private static Animation? GetAnimation(Entity<ThrownItemComponent, SpriteComponent> ent)

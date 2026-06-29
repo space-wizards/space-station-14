@@ -29,7 +29,7 @@ public sealed partial class CameraRecoilSystem : SharedCameraRecoilSystem
         KickCamera(GetEntity(ev.NetEntity), ev.Recoil);
     }
 
-    public override void KickCamera(EntityUid uid, Vector2 recoil, CameraRecoilComponent? component = null)
+    public override void KickCamera(EntityUid uid, Vector2 recoil, CameraRecoilComponent? component = null, bool predicted = false)
     {
         if (_intensity == 0)
             return;

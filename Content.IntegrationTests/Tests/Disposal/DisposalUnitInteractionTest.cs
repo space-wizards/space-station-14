@@ -47,7 +47,7 @@ public sealed class DisposalUnitInteractionTest : InteractionTest
         await RunTicks(10);
 
         // Make sure the trash is in the disposal unit
-        var throwInsertComp = Comp<ThrowInsertContainerComponent>();
+        var throwInsertComp = Comp<Shared.Containers.ThrowInsertContainerComponent>();
         var container = containerSys.GetContainer(ToServer(disposalUnit), throwInsertComp.ContainerId);
         Assert.That(container.ContainedEntities, Contains.Item(ToServer(trash)));
     }

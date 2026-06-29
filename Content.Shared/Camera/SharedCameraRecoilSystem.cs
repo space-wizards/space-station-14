@@ -50,7 +50,7 @@ public abstract partial class SharedCameraRecoilSystem : EntitySystem
     ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="EyeComponent" />,
     ///     this call will have no effect. It is safe to call this function on any entity.
     /// </remarks>
-    public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null);
+    public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null, bool predicted = false);
 
     private void UpdateEyes(float frameTime)
     {
