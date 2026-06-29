@@ -256,7 +256,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (TryComp<GuardianComponent>(guardian, out var guardianComp))
         {
             guardianComp.Host = args.Args.Target.Value;
-            _audio.PlayPredicted(guardianComp.UsedSound,
+            _audio.PlayPredicted(ent.Comp.UsedSound,
                 ent.Owner,
                 args.Args.Target);
             _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHauntedPopup),

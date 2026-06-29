@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -17,6 +18,12 @@ public sealed partial class GuardianCreatorComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public bool Used;
+
+    /// <summary>
+    /// Sound played when a mob obtains a guardian.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier UsedSound = new SoundPathSpecifier("/Audio/Effects/guardian_inject.ogg");
 
     /// <summary>
     /// Popup shown when the creator has already been used and cannot create a guardian.
