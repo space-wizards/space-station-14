@@ -318,6 +318,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
         ent.Comp.Expired = true;
+        ent.Comp.Permanent = false;
         Dirty(ent);
     }
 

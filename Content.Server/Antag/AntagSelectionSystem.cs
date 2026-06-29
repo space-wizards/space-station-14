@@ -23,7 +23,6 @@ using Content.Shared.Database;
 using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Players;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -313,24 +312,22 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
-    private AntagCount[]  GetAntags(Entity<AntagSelectionComponent> gameRule,
+    private List<AntagCount> GetAntags(Entity<AntagSelectionComponent> gameRule,
         int playerCount)
     {
         var runningCount = 0;
-        var antags = new AntagCount[gameRule.Comp.Antags.Length];
+        var antags = new List<AntagCount>(gameRule.Comp.Antags.Length);
 
         // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
         // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
-        var i = 0;
         foreach (var antag in gameRule.Comp.Antags)
         {
             if (!Proto.Resolve(antag.Proto, out var definition))
                 continue;
 
             // We do it this way in case our resolve fails.
-            antags[i] = (definition, GetTargetAntagCount(antag, playerCount, ref runningCount));
-            i++;
+            antags.Add((definition, GetTargetAntagCount(antag, playerCount, ref runningCount)));
         }
 
         return antags;
@@ -365,19 +362,19 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         gameRule.Comp.PreSelectionsComplete = true;
     }
 
-    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, AntagCount[] antags)
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, List<AntagCount> antags)
     {
         AssignAntags(gameRule, GetWeightedPlayerPool(players), antags);
     }
 
-    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, Dictionary<ICommonSession, float> weightedPool, AntagCount[] antags)
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, Dictionary<ICommonSession, float> weightedPool, List<AntagCount> antags)
     {
         while (RobustRandom.TryPickAndTake(weightedPool, out var session))
         {
             AssignAntag(gameRule, session, ref antags);
 
             // Assignment complete, return early.
-            if (antags.Length == 0)
+            if (antags.Count == 0)
                 return;
         }
 
@@ -501,13 +498,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Selects and assigns antags from a list.
     /// Is private because it has it should only ever be run in very specific scenarios.
     /// </summary>
-    private bool AssignAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player, ref AntagCount[] antags)
+    private bool AssignAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player, ref List<AntagCount> antags)
     {
         // If this session cannot be an antag, then get the next session!
         if (!TryGetValidAntagPreferences(player, out var prefs))
             return false;
 
-        for (var i = antags.Length - 1; i >= 0; i--)
+        for (var i = antags.Count - 1; i >= 0; i--)
         {
             var antag = antags[i];
 
@@ -792,8 +789,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
-        // Ensure that we have a mind for our entity!
-        if (player.GetMind() is not { } mind)
+        // Ensure that we have the right mind for our entity.
+        if (!_mind.TryGetMind(player, out var mind, out var mindComp) || mindComp.OwnedEntity != antag)
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);

@@ -96,6 +96,7 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
 
         var user = args.User;   // can't use ref parameter in lambdas
 
+        // Don't add the Label verb if the labeler's text is blank.
         if (ent.Comp.AssignedLabel != string.Empty)
         {
             var labelVerb = new UtilityVerb()
@@ -110,18 +111,22 @@ public abstract partial class SharedHandLabelerSystem : EntitySystem
             args.Verbs.Add(labelVerb);
         }
 
-        // add the unlabel verb to the menu even when the labeler has text
-        var unLabelVerb = new UtilityVerb()
+        // Add the Remove Label verb whether or not the labeler's text is blank,
+        // but only if the target is already labeled.
+        if (_labelSystem.HasLabel(target))
         {
-            Act = () =>
+            var unLabelVerb = new UtilityVerb()
             {
-                RemoveLabelFrom(ent, user, target);
-            },
-            Text = Loc.GetString("hand-labeler-remove-label-text"),
-            Priority = -1,
-        };
+                Act = () =>
+                {
+                    RemoveLabelFrom(ent, user, target);
+                },
+                Text = Loc.GetString("hand-labeler-remove-label-text"),
+                Priority = -1,
+            };
 
-        args.Verbs.Add(unLabelVerb);
+            args.Verbs.Add(unLabelVerb);
+        }
     }
 
     private void AfterInteractOn(Entity<HandLabelerComponent> ent, ref AfterInteractEvent args)
