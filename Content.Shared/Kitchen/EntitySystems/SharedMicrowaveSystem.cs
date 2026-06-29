@@ -100,14 +100,16 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         var microwave = ent.Comp2;
         var microwaveEnt = (ent.Owner, microwave);
 
+        // Spawn a finished recipe, if there is one.
         if (active.PortionedRecipe.Recipe != null)
             ProduceFinishedRecipe(microwaveEnt, active.PortionedRecipe.Recipe, active.PortionedRecipe.Count);
 
-        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
-        _container.EmptyContainer(microwave.Storage);
-
         Audio.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
         UpdateUserInterfaceState(microwaveEnt);
+
+        // Clean up the microwave.
+        microwave.CurrentCookTimeEnd = TimeSpan.Zero;
+        _container.EmptyContainer(microwave.Storage);
         StopCooking(microwaveEnt);
     }
 
