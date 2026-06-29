@@ -10,9 +10,9 @@ namespace Content.Client.Atmos.EntitySystems;
 /// This system handles sprite changes for a <see cref="IGasMaxPressureHolder"/>
 /// with a <see cref="MaxPressureVisualsComponent"/> when its <see cref="IGasMaxPressureHolder.Integrity"/> changes.
 /// </summary>
-public sealed class MaxPressureVisualsSystem : EntitySystem
+public sealed partial class MaxPressureVisualsSystem : EntitySystem
 {
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

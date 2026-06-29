@@ -3,9 +3,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sandbox
 {
-    public abstract class SharedSandboxSystem : EntitySystem
+    public abstract partial class SharedSandboxSystem : EntitySystem
     {
-        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+        [Dependency] protected IPrototypeManager PrototypeManager = default!;
 
         [Serializable, NetSerializable]
         protected sealed class MsgSandboxStatus : EntityEventArgs

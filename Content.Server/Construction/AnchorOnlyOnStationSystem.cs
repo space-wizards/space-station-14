@@ -5,10 +5,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Construction;
 
-public sealed class AnchorOnlyOnStationSystem : EntitySystem
+public sealed partial class AnchorOnlyOnStationSystem : EntitySystem
 {
-    [Dependency] private readonly StationSystem _stationSystem = null!;
-    [Dependency] private readonly TransformSystem _transform = null!;
+    [Dependency] private StationSystem _stationSystem = null!;
+    [Dependency] private TransformSystem _transform = null!;
 
     public override void Initialize()
     {

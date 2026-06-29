@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class WieldedPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     /// <summary>
     /// The wield state to check for.
@@ -40,6 +40,6 @@ public sealed partial class WieldedPrecondition : HTNPrecondition
             return false;
 
         var wieldableSystem = _entManager.System<SharedWieldableSystem>();
-        return wieldableSystem.CanWield(heldEntity.Value, wieldable, owner, quiet: true);
+        return wieldableSystem.CanWield((heldEntity.Value, wieldable), owner, quiet: true);
     }
 }
