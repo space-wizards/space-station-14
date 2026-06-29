@@ -8,6 +8,14 @@ namespace Content.Shared.Kitchen.EntitySystems;
 
 public abstract partial class SharedMicrowaveSystem
 {
+    private void InitializeActive()
+    {
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+    }
+
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>

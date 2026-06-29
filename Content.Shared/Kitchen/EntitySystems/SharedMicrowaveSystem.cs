@@ -25,11 +25,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+        InitializeActive();
     }
 
     /// <summary>
