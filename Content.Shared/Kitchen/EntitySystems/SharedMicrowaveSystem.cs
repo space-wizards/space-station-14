@@ -1,5 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
@@ -43,6 +45,10 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
 
         SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
+        SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
 
         InitializeActive();
@@ -110,6 +116,60 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
     {
         _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
+    }
+
+    /// <summary>
+    ///     When a microwave is broken, its appearance changes and it stops being usable for cooking.
+    ///     It will stop any ongoing cooking operations and empty its contents.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
+    {
+        ent.Comp.Broken = true;
+        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
+
+        StopCooking(ent);
+        _container.EmptyContainer(ent.Comp.Storage);
+        UpdateUserInterfaceState(ent.AsNullable());
+    }
+
+    /// <summary>
+    ///     Stop cooking if the microwave loses power.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnPowerChanged(Entity<MicrowaveComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+        {
+            SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
+            StopCooking(ent);
+        }
+
+        UpdateUserInterfaceState(ent.AsNullable());
+    }
+
+    /// <summary>
+    ///     Empty the microwave if it is unanchored.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (!args.Anchored)
+            _container.EmptyContainer(ent.Comp.Storage);
+    }
+
+    /// <summary>
+    ///     Turns the microwave on if its "on" port is activated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
+    {
+        if (ent.Comp.Broken || !_power.IsPowered(ent.Owner))
+            return;
+
+        if (args.Port == ent.Comp.OnPort)
+            StartCooking(ent, null);
     }
 
     /// <summary>

@@ -1,35 +1,20 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.DeviceLinking.Systems;
-using Content.Server.Hands.Systems;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Destructible;
-using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Content.Server.Lightning;
-using Content.Shared.Item;
-using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Kitchen.EntitySystems;
-using Content.Shared.Whitelist;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -38,28 +23,18 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private ExplosionSystem _explosion = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private HandsSystem _handsSystem = default!;
-    [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private LightningSystem _lightning = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private RecipeManager _recipeManager = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private TemperatureSystem _temperature = default!;
-    [Dependency] private UserInterfaceSystem _userInterface = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
-        SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<MicrowaveComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
-        SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
     }
 
@@ -107,58 +82,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
     {
         args.Result = HandleResult.False;
-    }
-
-    /// <summary>
-    ///     When a microwave is broken, its appearance changes and it stops being usable for cooking.
-    ///     It will stop any ongoing cooking operations and empty its contents.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
-    {
-        ent.Comp.Broken = true;
-        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
-        StopCooking(ent);
-        _container.EmptyContainer(ent.Comp.Storage);
-        UpdateUserInterfaceState(ent);
-    }
-
-    /// <summary>
-    ///     Stop cooking if the microwave loses power.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnPowerChanged(Entity<MicrowaveComponent> ent, ref PowerChangedEvent args)
-    {
-        if (!args.Powered)
-        {
-            SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
-            StopCooking(ent);
-        }
-
-        UpdateUserInterfaceState(ent);
-    }
-
-    /// <summary>
-    ///     Empty the microwave if it is unanchored.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        if (!args.Anchored)
-            _container.EmptyContainer(ent.Comp.Storage);
-    }
-
-    /// <summary>
-    ///     Turns the microwave on if its "on" port is activated.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnSignalReceived(Entity<MicrowaveComponent> ent, ref SignalReceivedEvent args)
-    {
-        if (ent.Comp.Broken || !_power.IsPowered(ent))
-            return;
-
-        if (args.Port == ent.Comp.OnPort)
-            StartCooking(ent, null);
     }
 
     /// <inheritdoc />
