@@ -90,7 +90,10 @@ public sealed partial class LawDisplay : Control
                 }
                 else
                 {
-                    _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio);
+                    var radioPrefix = radioChannelProto.KeyCode is { } keyCode
+                        ? $"{SharedChatSystem.RadioChannelPrefix}{keyCode} "
+                        : string.Empty;
+                    _chatManager.SendMessage($"{radioPrefix}{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio);
                 }
                 _nextAllowedPress[radioChannelButton] = _timing.CurTime + PressCooldown;
             };
