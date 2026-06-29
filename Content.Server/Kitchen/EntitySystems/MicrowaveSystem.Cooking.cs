@@ -16,8 +16,8 @@ public sealed partial class MicrowaveSystem
     /// </remarks>
     public void Wzhzhzh(Entity<MicrowaveComponent> microwave, EntityUid? user)
     {
-        if (!HasContents(microwave)
-            || HasComp<ActiveMicrowaveComponent>(microwave)
+        if (!HasContents(microwave.AsNullable())
+            || IsActiveMicrowave(microwave.AsNullable())
             || !_power.IsPowered(microwave.Owner))
             return;
 

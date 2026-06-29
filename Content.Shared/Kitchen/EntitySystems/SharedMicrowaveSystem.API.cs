@@ -8,10 +8,23 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class SharedMicrowaveSystem
 {
     /// <summary>
+    ///     Helper function to get if an entity is an active microwave.
+    /// </summary>
+    /// <param name="microwave">The microwave entity.</param>
+    /// <returns>Whether or not this entity is an active microwave.</returns>
+    [PublicAPI]
+    public bool IsActiveMicrowave(Entity<MicrowaveComponent?> microwave)
+    {
+        return Resolve(microwave.Owner, ref microwave.Comp)
+            && HasComp<ActiveMicrowaveComponent>(microwave.Owner);
+    }
+
+    /// <summary>
     ///     Helper function to get the contents of a microwave.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
     /// <returns>A list of microwave contents.</returns>
+    [PublicAPI]
     public IReadOnlyList<EntityUid> GetMicrowaveContents(Entity<MicrowaveComponent?> microwave)
     {
         if (!Resolve(microwave.Owner, ref microwave.Comp))

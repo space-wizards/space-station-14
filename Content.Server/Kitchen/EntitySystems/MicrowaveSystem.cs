@@ -58,24 +58,14 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
-        SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
-        SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(AnchorableSystem) });
-        SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
         SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<MicrowaveComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<MicrowaveComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
-
         SubscribeLocalEvent<MicrowaveComponent, SignalReceivedEvent>(OnSignalReceived);
-
         SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
-
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
-
-
 
     /// <summary>
     ///     Kills the user by microwaving their head.

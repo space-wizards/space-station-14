@@ -22,7 +22,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnEjectAll(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
     {
-        if (!HasContents(ent.AsNullable()) || HasComp<ActiveMicrowaveComponent>(ent))
+        if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
         _container.EmptyContainer(ent.Comp.Storage);
@@ -36,7 +36,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnEjectSolidIndexed(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
     {
-        if (!HasContents(ent.AsNullable()) || HasComp<ActiveMicrowaveComponent>(ent))
+        if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
         _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
@@ -50,7 +50,7 @@ public abstract partial class SharedMicrowaveSystem
     private void OnSelectCookTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
         if (!HasContents(ent.AsNullable())
-            || HasComp<ActiveMicrowaveComponent>(ent)
+            || IsActiveMicrowave(ent.AsNullable())
             || !_power.IsPowered(ent.Owner))
             return;
 

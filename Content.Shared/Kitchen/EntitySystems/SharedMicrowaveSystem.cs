@@ -1,5 +1,8 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
+using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Audio.Systems;
@@ -19,6 +22,9 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
@@ -33,6 +39,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
 
         InitializeActive();
+        InitializeContainer();
         InitializeUI();
     }
 
