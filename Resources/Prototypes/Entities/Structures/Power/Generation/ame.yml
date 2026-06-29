@@ -112,6 +112,7 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: ame
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   categories: [ HideSpawnMenu ]
