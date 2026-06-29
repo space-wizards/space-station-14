@@ -1,5 +1,4 @@
 using Content.IntegrationTests.Utility;
-using Content.Server.Kitchen.Components;
 using Content.Server.Kitchen.EntitySystems;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
