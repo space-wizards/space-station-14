@@ -18,7 +18,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            // Insert E before every S that is followed by a consonant that isn't H ([sh] makes a single sound)
+            // Insert E before every S that is followed by a consonant that makes a distinct sound (H is excluded because [sh] is a single sound)
             message = InsertS(message);
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
             message = ReplacePunctuation(message);
