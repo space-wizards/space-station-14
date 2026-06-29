@@ -153,12 +153,16 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             Wzhzhzh(ent, null);
     }
 
-    protected override void AddTemperature(MicrowaveComponent component, float time)
+    /// <inheritdoc />
+    protected override void AddTemperature(Entity<MicrowaveComponent> ent, float time)
     {
+        var component = ent.Comp;
         var heatToAdd = time * component.BaseHeatMultiplier;
+        var objHeatToAdd = heatToAdd * component.ObjectHeatMultiplier;
+
         foreach (var entity in component.Storage.ContainedEntities)
         {
-            _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, ignoreHeatResistance: false);
+            _temperature.ChangeHeat(entity, objHeatToAdd, ignoreHeatResistance: false);
 
             foreach (var (_, soln) in _solutionContainer.EnumerateSolutions(entity))
             {
@@ -171,6 +175,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         }
     }
 
+    /// <inheritdoc />
     protected override void RollMalfunction(Entity<MicrowaveComponent> ent)
     {
         base.RollMalfunction(ent);
