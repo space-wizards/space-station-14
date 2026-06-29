@@ -4,11 +4,31 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Margin="4"
     MinSize="50 50">
-    <GridContainer
-        Columns="4" >
-        <controls:ConfirmButton Name="ServerShutdownButton" Text="{Loc server-shutdown}" />
-        <cc:CommandButton Name="SetOocButton" Command="setooc" Text="{Loc server-ooc-toggle}" ToggleMode="True" />
-        <cc:CommandButton Name="SetLoocButton" Command="setlooc" Text="{Loc server-looc-toggle}" ToggleMode="True" />
-        <cc:CommandButton Name="SetDeadChatButton" Command="setdeadchat" Text="{Loc server-dead-chat-toggle}" ToggleMode="True" />
-    </GridContainer>
+    <BoxContainer Orientation="Vertical" SeparationOverride="8">
+        <GridContainer Columns="4">
+            <controls:ConfirmButton Name="ServerShutdownButton" Text="{Loc server-shutdown}" />
+            <cc:CommandButton Name="SetOocButton" Command="setooc" Text="{Loc server-ooc-toggle}" ToggleMode="True" />
+            <cc:CommandButton Name="SetLoocButton" Command="setlooc" Text="{Loc server-looc-toggle}" ToggleMode="True" />
+            <cc:CommandButton Name="SetDeadChatButton" Command="setdeadchat" Text="{Loc server-dead-chat-toggle}" ToggleMode="True" />
+        </GridContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc server-afk-timers}" />
+            <BoxContainer Orientation="Horizontal" Margin="2">
+                <Label Text="{Loc server-afk-time}" MinWidth="175" />
+                <LineEdit Name="AfkTime" MinWidth="70" Margin="0 0 5 0" PlaceHolder="300" />
+                <Label Text="{Loc generic-seconds}" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="2">
+                <Label Text="{Loc server-admin-afk-time}" MinWidth="175" />
+                <LineEdit Name="AdminAfkTime" MinWidth="70" Margin="0 0 5 0" PlaceHolder="600" />
+                <Label Text="{Loc generic-seconds}" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" Margin="2">
+                <Label Text="{Loc server-afk-confirm-timeout}" MinWidth="175" />
+                <LineEdit Name="AfkConfirmTimeout" MinWidth="70" Margin="0 0 5 0" PlaceHolder="60" />
+                <Label Text="{Loc generic-seconds}" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
 </Control>
