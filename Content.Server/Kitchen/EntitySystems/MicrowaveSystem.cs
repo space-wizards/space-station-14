@@ -58,8 +58,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentUpdate);
         SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentUpdate);
@@ -77,24 +75,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         SubscribeLocalEvent<FoodRecipeProviderComponent, GetSecretRecipesEvent>(OnGetSecretRecipes);
     }
 
-    /// <summary>
-    ///     Initializes the microwave's storage container.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
-    {
-        // this really does have to be in ComponentInit
-        ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
-    }
 
-    /// <summary>
-    ///     Adds an "on" port to this microwave.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
-    {
-        _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
-    }
 
     /// <summary>
     ///     Kills the user by microwaving their head.

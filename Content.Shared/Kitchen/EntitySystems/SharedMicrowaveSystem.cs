@@ -1,3 +1,4 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
@@ -17,6 +18,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
@@ -26,6 +28,9 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
 
         InitializeActive();
         InitializeUI();
@@ -72,6 +77,25 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
                 DirtyField(uid, active, nameof(ActiveMicrowaveComponent.LastCookUpdated));
             }
         }
+    }
+
+    /// <summary>
+    ///     Initializes the microwave's storage container.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
+    {
+        // this really does have to be in ComponentInit
+        ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
+    }
+
+    /// <summary>
+    ///     Adds an "on" port to this microwave.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnMapInit(Entity<MicrowaveComponent> ent, ref MapInitEvent args)
+    {
+        _deviceLink.EnsureSinkPorts(ent, ent.Comp.OnPort);
     }
 
     /// <summary>
