@@ -52,7 +52,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private TemperatureSystem _temperature = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
-    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -96,9 +95,21 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         Audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
-        Wzhzhzh(ent, args.Victim);
-        UpdateUserInterfaceState(ent);
+        StartCooking(ent, args.Victim);
+        UpdateUserInterfaceState(ent.AsNullable());
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///     Prevents construction graph operations as a result of temperature changes.
+    /// </summary>
+    /// <remarks>
+    ///     For example: raw meat will not turn into steak while it is actively being microwaved.
+    /// </remarks>
+    /// <param name="ent">An entity that is actively being microwaved.</param>
+    private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
+    {
+        args.Result = HandleResult.False;
     }
 
     /// <summary>
@@ -150,7 +161,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
             return;
 
         if (args.Port == ent.Comp.OnPort)
-            Wzhzhzh(ent, null);
+            StartCooking(ent, null);
     }
 
     /// <inheritdoc />
