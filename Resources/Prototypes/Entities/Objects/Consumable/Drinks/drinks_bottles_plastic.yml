@@ -14,7 +14,6 @@
       collection: bottleCloseSounds
     openEmptySound:
       collection: bottleOpenEmptySounds
-    hasDifferentOpenSoundWhenEmpty: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: TrashOnSolutionEmpty

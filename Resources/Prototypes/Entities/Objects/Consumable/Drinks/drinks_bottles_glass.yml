@@ -13,7 +13,6 @@
       collection: bottleCloseSounds
     openEmptySound:
       collection: bottleOpenEmptySounds
-    hasDifferentOpenSoundWhenEmpty: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
   - type: Tool
