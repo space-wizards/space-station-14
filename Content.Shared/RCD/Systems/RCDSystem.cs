@@ -104,8 +104,7 @@ public sealed partial class RCDSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var prototype = ProtoMan.Index(component.ProtoId);
-        if (!prototype)
+        if (!ProtoMan.TryIndex(component.ProtoId, out var prototype))
             return;
 
         var msg = Loc.GetString("rcd-component-examine-mode-details", ("mode", Loc.GetString(prototype.SetName)));
