@@ -123,9 +123,7 @@ public sealed partial class SpriteFadeSystem : EntitySystem
                         if (_fadeQuery.TryGetComponent(ent, out var fadeComp) && !fadeComp.IgnoreClickableRestriction)
                         {
                             if (i + 1 == clickable.Count)
-                            {
                                 continue;
-                            }
                         }
                     }
 
