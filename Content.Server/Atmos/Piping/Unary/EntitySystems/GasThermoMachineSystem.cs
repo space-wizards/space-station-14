@@ -6,11 +6,11 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
 
@@ -113,6 +113,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 if (!_nodeContainer.TryGetNode(uid, thermoMachine.InletName, out PipeNode? inlet))
                     return;
+
                 heatExchangeGasMixture = inlet.Air;
             }
         }

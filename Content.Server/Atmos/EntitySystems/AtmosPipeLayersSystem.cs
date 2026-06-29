@@ -1,10 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.Construction.Components;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
-using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 

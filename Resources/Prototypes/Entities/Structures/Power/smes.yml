@@ -59,12 +59,10 @@
       state: static
     - type: BatteryDischarger
       node: output
-    - type: PowerNetworkConnector
       voltage: High
     - type: BatteryCharger
-    - type: PowerNetworkConnector
-      voltage: High
       node: input
+      voltage: High
     - type: PowerNetworkBattery
       maxSupply: 150000
       maxChargeRate: 5000

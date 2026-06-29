@@ -29,6 +29,12 @@ public sealed partial class NodeGroupSystem : EntitySystem
     public Dictionary<Type, INodeGroupHandler> NodeGroupHandlers = new();
     private FrozenDictionary<Type, INodeGroupHandler> _nodeGroupHandlers = default!;
 
+    /// <summary>
+    /// A dictionary of <see cref="INode"/> Types and <see cref="INodeHandler"/>s.
+    /// </summary>
+    public Dictionary<Type, INodeHandler> NodeHandlers = new();
+    private FrozenDictionary<Type, INodeHandler> _nodeHandlers = default!;
+
     // TODO figure what the hell is going on here
     private readonly List<int> _visDeletes = new();
     private readonly List<BaseNodeGroup> _visSends = new();
@@ -73,6 +79,17 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         _nodeGroupTypes = NodeGroupTypes.ToFrozenDictionary();
         _nodeGroupHandlers = NodeGroupHandlers.ToFrozenDictionary();
+        _nodeHandlers = NodeHandlers.ToFrozenDictionary();
+    }
+
+    public INodeHandler GetNodeHandler(Type nodeType)
+    {
+        return _nodeHandlers[nodeType];
+    }
+
+    public INodeHandler GetNodeHandler(Node node)
+    {
+        return GetNodeHandler(node.GetType());
     }
 
     public override void Shutdown()
@@ -223,7 +240,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
             foreach (var compatible in GetCompatibleNodes(node))
             {
-                ClearReachableIfNecessary(compatible);
+                ClearReachableIfNecessary((Node) compatible);
 
                 if (compatible.NodeGroup?.Remaking == false)
                 {
@@ -233,7 +250,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
                     QueueRemakeGroup(group);
                 }
 
-                node.ReachableNodes.Add(compatible);
+                node.ReachableNodes.Add((Node) compatible);
                 compatible.ReachableNodes.Add(node);
             }
         }
@@ -356,20 +373,22 @@ public sealed partial class NodeGroupSystem : EntitySystem
         return allNodes;
     }
 
-    private IEnumerable<Node> GetCompatibleNodes(Node node)
+    private IEnumerable<INode> GetCompatibleNodes(Node node)
     {
         var xform = Transform(node.Owner);
         Entity<MapGridComponent>? gridEnt = TryComp<MapGridComponent>(xform.GridUid, out var grid) ? (xform.GridUid.Value, grid) : null;
 
-        if (!node.Connectable(EntityManager, xform))
+        var nodeHandler = _nodeHandlers[node.GetType()];
+        if (!nodeHandler.Connectable(node))
             yield break;
 
-        foreach (var reachable in node.GetReachableNodes((node.Owner, xform), _nodeContainerQuery, _xformQuery, gridEnt, EntityManager))
+        foreach (var reachable in nodeHandler.GetReachableNodes(node))
         {
             DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
+            var reachableNodeHandler = _nodeHandlers[node.GetType()];
             if (reachable.NodeGroupID == node.NodeGroupID
-                && reachable.Connectable(EntityManager, Transform(reachable.Owner)))
+                && reachableNodeHandler.Connectable(reachable))
             {
                 yield return reachable;
             }

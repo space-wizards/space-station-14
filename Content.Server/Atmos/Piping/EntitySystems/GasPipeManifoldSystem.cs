@@ -3,7 +3,8 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.NodeContainer;
 using System.Linq;
-using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.Atmos.Nodes;
+using Content.Shared.Atmos.Nodes.Handlers;
 using Content.Shared.NodeContainer.Systems;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
@@ -11,6 +12,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems;
 public sealed partial class GasPipeManifoldSystem : EntitySystem
 {
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private PipeNodeHandler _pipeHandler = default!;
 
     public override void Initialize()
     {
@@ -35,8 +37,8 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
                 if (!_nodeContainer.TryGetNode(nodeContainer, outletName, out PipeNode? outlet))
                     continue;
 
-                inlet.AddAlwaysReachable(outlet);
-                outlet.AddAlwaysReachable(inlet);
+                _pipeHandler.AddAlwaysReachable(inlet, outlet);
+                _pipeHandler.AddAlwaysReachable(outlet, inlet);
             }
         }
     }

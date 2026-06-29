@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
-using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Systems;
 
 namespace Content.Server.Atmos.EntitySystems;

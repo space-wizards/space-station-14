@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Nodes.Handlers;
 
 namespace Content.Shared.NodeContainer.Systems;
 
@@ -117,7 +118,8 @@ public sealed partial class NodeContainerSystem : EntitySystem
         foreach (var (key, node) in ent.Comp.Nodes)
         {
             node.Name = key;
-            node.Initialize(ent.Owner, EntityManager);
+            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            handler.InitializeNode(node, ent.Owner);
         }
     }
 
@@ -148,7 +150,8 @@ public sealed partial class NodeContainerSystem : EntitySystem
             if (!node.NeedAnchored)
                 continue;
 
-            node.OnAnchorStateChanged(EntityManager, args.Anchored);
+            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            handler.OnAnchorStateChanged(node, args.Anchored);
 
             if (args.Anchored)
                 _nodeGroupSystem.QueueReflood(node);
@@ -173,18 +176,17 @@ public sealed partial class NodeContainerSystem : EntitySystem
             return;
         }
 
-        var xform = ev.Component;
-
         foreach (var node in container.Nodes.Values)
         {
             if (node is not IRotatableNode rotatableNode)
                 continue;
 
+            var handler = (IRotatableNodeHandler) _nodeGroupSystem.GetNodeHandler(node);
             // Don't bother updating nodes that can't even be connected to anything atm.
-            if (!node.Connectable(EntityManager, xform))
+            if (!handler.Connectable(node))
                 continue;
 
-            if (rotatableNode.RotateNode(in ev))
+            if (handler.RotateNode(rotatableNode, in ev))
                 _nodeGroupSystem.QueueReflood(node);
         }
     }

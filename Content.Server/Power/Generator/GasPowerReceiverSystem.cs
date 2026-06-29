@@ -1,7 +1,7 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
 

@@ -1,0 +1,29 @@
+using Content.Shared.NodeContainer;
+using Robust.Shared.Map.Components;
+
+namespace Content.Shared.Atmos.Nodes.Handlers;
+
+public sealed class PortPipeNodeHandler : BasePipeNodeHandler<PortPipeNode>
+{
+    protected override IEnumerable<Node> GetReachableNodes(
+        PortPipeNode node,
+        Entity<TransformComponent> xform,
+        Entity<MapGridComponent>? grid)
+    {
+        if (!xform.Comp.Anchored || grid is not { } gridEnt)
+            yield break;
+
+        var gridIndex = MapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
+
+        foreach (var tileNode in GetNodesInTile(gridEnt, gridIndex))
+        {
+            if (tileNode is PortablePipeNode)
+                yield return tileNode;
+        }
+
+        foreach (var reachableNode in base.GetReachableNodes(node, xform, grid))
+        {
+            yield return reachableNode;
+        }
+    }
+}
