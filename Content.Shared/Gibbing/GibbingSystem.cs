@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Destructible;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
@@ -19,13 +20,36 @@ public sealed partial class GibbingSystem : EntitySystem
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
     /// <summary>
+    /// Attempts to gib an entity.
+    /// </summary>
+    /// <param name="ent">The entity to gib.</param>
+    /// <param name="giblets">A hashset of giblets this entity dropped. Not null if the gibbing was successful.</param>
+    /// <param name="dropGiblets">Whether or not to drop giblets.</param>
+    /// <param name="user">The user gibbing the entity, if any.</param>
+    /// <returns>True if the entity was gibbed, otherwise False.</returns>
+    public bool TryGib(EntityUid ent, [NotNullWhen(true)] out HashSet<EntityUid>? giblets, bool dropGiblets = true, EntityUid? user = null)
+    {
+        giblets = null;
+
+        var ev = new AttemptGibEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        giblets = Gib(ent, dropGiblets, user);
+
+        return true;
+    }
+
+    /// <summary>
     /// Gibs an entity.
     /// </summary>
     /// <param name="ent">The entity to gib.</param>
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null, bool force = false)
     {
         // user is unused because of prediction woes, eventually it'll be used for audio
 
@@ -68,6 +92,12 @@ public sealed partial class GibbingSystem : EntitySystem
         _physics.ApplyLinearImpulse(target, scatterVec);
     }
 }
+
+/// <summary>
+/// Raised on an entity when it attempts to gib.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptGibEvent(bool Cancelled);
 
 /// <summary>
 /// Raised on an entity when it is being gibbed.

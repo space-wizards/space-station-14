@@ -81,8 +81,9 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
-        _gibbing.Gib(victim);
-        _appearance.SetData(entity.Owner, RecyclerVisuals.Bloody, true);
+        if (_gibbing.TryGib(victim, out _))
+            _appearance.SetData(entity.Owner, RecyclerVisuals.Bloody, true);
+
         args.Handled = true;
     }
 
@@ -162,7 +163,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             if (component.ReclaimSolutions)
                 SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
-            _gibbing.Gib(item);
+            _gibbing.TryGib(item, out _);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
         else

@@ -154,8 +154,8 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (component.Sound != null)
             _audio.PlayPredicted(component.Sound, Transform(uid).Coordinates, args.User, AudioParams.Default.WithVolume(-2));
 
-        _gib.Gib(uid);
-        _destructible.DestroyEntity(uid);
+        if (_gib.TryGib(uid, out _))
+            _destructible.DestroyEntity(uid);
     }
 
     private void SpawnRefinement(List<EntitySpawnEntry> spawnList, EntityUid source, IRobustRandom rng)

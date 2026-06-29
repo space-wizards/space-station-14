@@ -17,6 +17,11 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: ChangelingResilience
+    replacementOrgans:
+      Lungs: OrganVulpkaninLungs
+      Stomach: OrganVulpkaninStomach
+  - type: ZombieImmuneComponent
   - type: ActionGrant
     actions:
     - ActionChangelingStore

@@ -133,7 +133,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
             var coords = Transform(uid).Coordinates;
             _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} gibbed {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
 
-            _gibbing.Gib(ent);
+            _gibbing.TryGib(ent, out _);
             return;
         }
 

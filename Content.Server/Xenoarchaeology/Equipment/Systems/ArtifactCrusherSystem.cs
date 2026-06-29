@@ -40,11 +40,14 @@ public sealed partial class ArtifactCrusherSystem : SharedArtifactCrusherSystem
                 }
             }
 
-            var gibs = _gibbing.Gib(contained);
-            foreach (var gib in gibs)
+            if (_gibbing.TryGib(contained, out var gibs))
             {
-                ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);
+                foreach (var gib in gibs)
+                {
+                    ContainerSystem.Insert((gib, null, null, null), crusher.OutputContainer);
+                }
             }
+
         }
     }
 }
