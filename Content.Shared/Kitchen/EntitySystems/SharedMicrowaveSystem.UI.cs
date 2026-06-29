@@ -1,9 +1,6 @@
 using System.Linq;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 

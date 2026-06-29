@@ -169,82 +169,66 @@ public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage
 ///     Sent from client to server to request ejecting an entity from the microwave.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
+public sealed class MicrowaveEjectSolidIndexedMessage(NetEntity entityId) : BoundUserInterfaceMessage
 {
     /// <summary>
     ///     The entity to eject from the microwave.
     /// </summary>
-    public NetEntity EntityID;
-    public MicrowaveEjectSolidIndexedMessage(NetEntity entityId)
-    {
-        EntityID = entityId;
-    }
+    public NetEntity EntityID = entityId;
 }
 
 /// <summary>
 ///     Sent from client to server to request changing the selected cook time button of the microwave.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
+public sealed class MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTime) : BoundUserInterfaceMessage
 {
     /// <summary>
     ///     The index of the cook time button to select.
     /// </summary>
-    public int ButtonIndex;
+    public int ButtonIndex = buttonIndex;
 
     /// <summary>
     ///     The cooking time associated with the newly-selected button.
     /// </summary>
-    public uint NewCookTime;
-
-    public MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTime)
-    {
-        ButtonIndex = buttonIndex;
-        NewCookTime = inputTime;
-    }
+    public uint NewCookTime = inputTime;
 }
 
 /// <summary>
 ///     Sent from server to client to display a list of items, whether or not the microwave is active, and the current cook time.
 /// </summary>
 [NetSerializable, Serializable]
-public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
+public sealed class MicrowaveUpdateUserInterfaceState(
+    NetEntity[] containedSolids,
+    bool isMicrowaveBusy,
+    int activeButtonIndex,
+    uint currentCookTime,
+    TimeSpan currentCookTimeEnd) : BoundUserInterfaceState
 {
     /// <summary>
     ///     A list of microwave entity contents.
     /// </summary>
-    public NetEntity[] ContainedSolids;
+    public NetEntity[] ContainedSolids = containedSolids;
 
     /// <summary>
     ///     Whether or not the microwave is currently running.
     /// </summary>
-    public bool IsMicrowaveBusy;
+    public bool IsMicrowaveBusy = isMicrowaveBusy;
 
     /// <summary>
     ///     The currently-selected cook time button.
     /// </summary>
-    public int ActiveButtonIndex;
+    public int ActiveButtonIndex = activeButtonIndex;
 
     /// <summary>
     ///     The amount of time remaining on the microwave.
     /// </summary>
-    public uint CurrentCookTime;
+    public uint CurrentCookTime = currentCookTime;
 
     /// <summary>
     ///     The time that this microwave will stop cooking.
     /// </summary>
-    public TimeSpan CurrentCookTimeEnd;
-
-    public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
-        bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime, TimeSpan currentCookTimeEnd)
-    {
-        ContainedSolids = containedSolids;
-        IsMicrowaveBusy = isMicrowaveBusy;
-        ActiveButtonIndex = activeButtonIndex;
-        CurrentCookTime = currentCookTime;
-        CurrentCookTimeEnd = currentCookTimeEnd;
-    }
-
+    public TimeSpan CurrentCookTimeEnd = currentCookTimeEnd;
 }
 
 [Serializable, NetSerializable]
