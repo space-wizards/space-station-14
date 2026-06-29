@@ -13,7 +13,6 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -27,7 +26,6 @@ public sealed partial class StoreSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private StackSystem _stack = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     private void InitializeUi()
     {
@@ -126,7 +124,7 @@ public sealed partial class StoreSystem
         //apply components
         if (listing.ProductComponents != null)
         {
-            if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
+            if (ProtoMan.Resolve(listing.ProductComponents, out var productComponentsEntity))
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
         }
 
