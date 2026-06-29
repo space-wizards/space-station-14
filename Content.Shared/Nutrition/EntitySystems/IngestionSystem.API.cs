@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.FixedPoint;
@@ -216,7 +215,7 @@ public sealed partial class IngestionSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
+            var reagent = ProtoMan.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 
@@ -267,7 +266,7 @@ public sealed partial class IngestionSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
+            var reagent = ProtoMan.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 
@@ -353,7 +352,7 @@ public sealed partial class IngestionSystem
         if (!CanIngest(user, ingested))
             return false;
 
-        var proto = _proto.Index(type);
+        var proto = ProtoMan.Index(type);
 
         verb = new()
         {
@@ -401,7 +400,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoNoun([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
-        var prototype = _proto.Index(proto);
+        var prototype = ProtoMan.Index(proto);
 
         return GetProtoNoun(prototype);
     }
@@ -427,7 +426,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoVerb([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
-        var prototype = _proto.Index(proto);
+        var prototype = ProtoMan.Index(proto);
 
         return GetProtoVerb(prototype);
     }

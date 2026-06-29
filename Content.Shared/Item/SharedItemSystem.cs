@@ -5,9 +5,7 @@ using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
-using Robust.Shared.Collections;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -15,7 +13,6 @@ namespace Content.Shared.Item;
 
 public abstract partial class SharedItemSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
     [Dependency] private IComponentFactory _compFactory = default!;
@@ -149,7 +146,7 @@ public abstract partial class SharedItemSystem : EntitySystem
 
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
     {
-        return _prototype.Index(id);
+        return ProtoMan.Index(id);
     }
 
     /// <summary>
@@ -283,14 +280,14 @@ public abstract partial class SharedItemSystem : EntitySystem
     [PublicAPI]
     public int CompareSize(EntProtoId a, EntProtoId b)
     {
-        var protoA = _prototype.Index(a);
-        var protoB = _prototype.Index(b);
-        if (!protoA.TryGetComponent<ItemComponent>(out var compA, _compFactory) ||
-            !protoB.TryGetComponent<ItemComponent>(out var compB, _compFactory))
+        var protoA = ProtoMan.Index(a);
+        var protoB = ProtoMan.Index(b);
+        if (!protoA.TryComp<ItemComponent>(out var compA, _compFactory) ||
+            !protoB.TryComp<ItemComponent>(out var compB, _compFactory))
         {
             return 0;
         }
 
-        return _prototype.Index(compA.Size).CompareTo(_prototype.Index(compB.Size));
+        return ProtoMan.Index(compA.Size).CompareTo(ProtoMan.Index(compB.Size));
     }
 }
