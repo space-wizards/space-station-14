@@ -8,9 +8,9 @@ namespace Content.Server.Silicons.Bots;
 /// Beyond what <see cref="SharedHugBotSystem"/> does, this system manages the "lifecycle" of
 /// <see cref="RecentlyHuggedByHugBotComponent"/>.
 /// </summary>
-public sealed class HugBotSystem : SharedHugBotSystem
+public sealed partial class HugBotSystem : SharedHugBotSystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {

@@ -12,7 +12,7 @@ namespace Content.Client.Shuttles;
 /// <summary>
 /// Plays a visualization whenever a shuttle is arriving from FTL.
 /// </summary>
-public sealed class FtlArrivalOverlay : Overlay
+public sealed partial class FtlArrivalOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
@@ -22,9 +22,9 @@ public sealed class FtlArrivalOverlay : Overlay
     private SharedMapSystem _maps;
     private SharedTransformSystem _transforms;
     private SpriteSystem _sprites;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _protos = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _protos = default!;
 
     private readonly HashSet<Entity<FtlVisualizerComponent>> _visualizers = new();
 

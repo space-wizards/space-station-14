@@ -12,7 +12,7 @@ namespace Content.Client.Info;
 [GenerateTypedNameReferences]
 public sealed partial class RulesControl : BoxContainer, ILinkClickHandler
 {
-    [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
+    [Dependency] private DocumentParsingManager _parsingMan = default!;
 
     private string? _currentEntry;
     private readonly Stack<string> _priorEntries = new();

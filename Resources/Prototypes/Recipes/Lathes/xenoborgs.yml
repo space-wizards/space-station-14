@@ -2,13 +2,6 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseXenoborgMachineRecipe
-  categories:
-  - Machines
-  completetime: 2
-
-- type: latheRecipe
-  abstract: true
   id: BaseXenoborgRecipe
   categories:
   - Robotics
@@ -21,15 +14,6 @@
   - Modules
   completetime: 2
 
-# machines
-
-- type: latheRecipe
-  parent: BaseXenoborgMachineRecipe
-  id: XenoborgExtractorRecipe
-  result: XenoborgExtractorFlatpack
-  materials:
-    Steel: 1000
-
 # xenoborgs
 
 - type: latheRecipe
@@ -37,28 +21,31 @@
   id: XenoborgEngiRecipe
   result: XenoborgEngiPrinted
   materials:
-    XenoborgCrystal: 100
+    Steel: 3000
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgHeavyRecipe
   result: XenoborgHeavyPrinted
   materials:
-    XenoborgCrystal: 100
+    Steel: 2000
+    Plasteel: 1000
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgScoutRecipe
   result: XenoborgScoutPrinted
   materials:
-    XenoborgCrystal: 100
+    Steel: 2000
+    Plastic: 1000
 
 - type: latheRecipe
   parent: BaseXenoborgRecipe
   id: XenoborgStealthRecipe
   result: XenoborgStealthPrinted
   materials:
-    XenoborgCrystal: 100
+    Steel: 2000
+    Glass: 1000
 
 # modules
 
@@ -69,7 +56,8 @@
   id: XenoborgModuleDoorControlRecipe
   result: XenoborgModuleDoorControl
   materials:
-    XenoborgCrystal: 100
+    Steel: 1500
+    Glass: 1500
 
 ## heavy xenoborg modules
 
@@ -78,7 +66,8 @@
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:
-    XenoborgCrystal: 100
+    Steel: 1500
+    Glass: 1500
 
 ## scout xenoborg modules
 
@@ -87,7 +76,8 @@
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
   materials:
-    XenoborgCrystal: 100
+    Steel: 1500
+    Glass: 1500
 
 ## stealth xenoborg modules
 
@@ -96,4 +86,4 @@
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
   materials:
-    XenoborgCrystal: 100
+    Glass: 3000

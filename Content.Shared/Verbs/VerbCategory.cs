@@ -78,16 +78,13 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory ChannelSelect = new("verb-categories-channel-select", null);
 
-        public static readonly VerbCategory SetSensor = new("verb-categories-set-sensor", null);
+        public static readonly VerbCategory SetSensor = new("verb-categories-set-sensor", "/Textures/Interface/VerbIcons/signal.svg.192dpi.png");
 
         public static readonly VerbCategory Lever = new("verb-categories-lever", null);
 
         public static readonly VerbCategory SelectType = new("verb-categories-select-type", null);
 
         public static readonly VerbCategory PowerLevel = new("verb-categories-power-level", null);
-
-        public static readonly VerbCategory VoltageLevel =
-            new("verb-categories-voltage-level", "/Textures/Interface/VerbIcons/zap.svg.192dpi.png");
 
         public static readonly VerbCategory Adjust =
             new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
