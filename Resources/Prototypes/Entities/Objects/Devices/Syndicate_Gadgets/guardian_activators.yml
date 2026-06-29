@@ -33,7 +33,7 @@
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
     emptyPopup: guardian-deck-invalid-creation
-    deckUsedExamine: guardian-deck-used-examine
+    emptyExamine: guardian-deck-used-examine
     usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
 
 - type: entity
