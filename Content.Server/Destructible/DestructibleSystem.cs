@@ -30,7 +30,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     [Dependency] public IAdminLogManager AdminLogger = default!;
     [Dependency] public IRobustRandom Random = default!;
     public new IEntityManager EntityManager => base.EntityManager;
-    public IPrototypeManager PrototypeManager => base.ProtoMan;
+    public IPrototypeManager PrototypeManager => ProtoMan;
 
     [Dependency] public AtmosphereSystem AtmosphereSystem = default!;
     [Dependency] public ConstructionSystem ConstructionSystem = default!;
