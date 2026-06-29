@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Kitchen.EntitySystems;

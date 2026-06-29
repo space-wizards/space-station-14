@@ -2,7 +2,7 @@ using Content.Server.Kitchen.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
