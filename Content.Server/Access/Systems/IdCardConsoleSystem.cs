@@ -174,7 +174,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
             Comp<IdCardComponent>(targetId).JobPrototype = newJobProto;
         }
 
-        if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
+        if (!newAccessList.All(component.AccessLevels.Contains))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to write unknown access tag.");
             return;
@@ -185,24 +185,34 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (oldTags.SequenceEqual(newAccessList))
             return;
 
-        // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
-        // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        // Sets for the requested changes to the access card.
+        var addedTags = newAccessList.Except(oldTags);
+        var removedTags = oldTags.Except(newAccessList);
+        var changedTags = addedTags.Union(removedTags);
+
+        // Find tags that the console changed and knew about.
+        var visibleChanges = changedTags.Intersect(component.AccessLevels);
+        // Find tags that the original ID had that the console can't change.
+        var hiddenTags = oldTags.Except(component.AccessLevels);
+
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId.Value);
-        if (!difference.IsSubsetOf(privilegedPerms))
+        if (!visibleChanges.All(privilegedPerms.Contains))
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions they could not give/take!");
             return;
         }
 
-        var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
-        var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
+        // Restore all hidden tags to the newly requested set.
+        newAccessList.AddRange(hiddenTags);
         _access.TrySetTags(targetId, newAccessList);
+
+        var changeStrings = addedTags.Select(tag => "+" + tag) // All added tags.
+            .Concat(removedTags.Except(newAccessList).Select(tag => "-" + tag)); // All removed tags (except new set due to hidden tags)
 
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action,
-            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
+            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", changeStrings)}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>

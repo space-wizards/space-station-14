@@ -132,6 +132,7 @@
         powered-closed:
           True: {visible: true}
           False: {visible: false}
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: SmartFridge

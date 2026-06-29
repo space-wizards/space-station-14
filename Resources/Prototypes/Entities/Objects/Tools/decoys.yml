@@ -6,7 +6,6 @@
   id: BaseDecoy
   abstract: true
   components:
-  - type: Rotatable
   - type: Sprite
     sprite: Objects/Tools/Decoys/operative_decoy.rsi
     layers:
@@ -21,11 +20,11 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            path: /Audio/Effects/pop_high.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/pop_high.ogg
   - type: Appearance
   - type: Item
     size: Normal

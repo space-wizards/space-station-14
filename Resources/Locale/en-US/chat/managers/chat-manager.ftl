@@ -11,6 +11,8 @@ chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
 chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
+chat-manager-dead-chat-enabled-message = Dead chat has been enabled.
+chat-manager-dead-chat-disabled-message = Dead chat has been disabled.
 
 chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit} character limit
 chat-manager-no-headset-on-message = You don't have a headset on!
@@ -51,6 +53,8 @@ chat-manager-admin-channel-name = ADMIN
 
 chat-manager-rate-limited = You are sending messages too quickly!
 chat-manager-rate-limit-admin-announcement = Rate limit warning: { $player }
+
+chat-manager-follow-button = (F)
 
 ## Speech verbs for chat
 
@@ -123,6 +127,10 @@ chat-speech-verb-name-goat = Goat
 chat-speech-verb-goat-1 = bleats
 chat-speech-verb-goat-2 = grunts
 chat-speech-verb-goat-3 = cries
+
+chat-speech-verb-name-sheep = Sheep
+chat-speech-verb-sheep-1 = bleats
+chat-speech-verb-sheep-2 = baas
 
 chat-speech-verb-name-small-mob = Mouse
 chat-speech-verb-small-mob-1 = squeaks

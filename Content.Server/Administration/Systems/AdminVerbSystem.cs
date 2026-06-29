@@ -1,7 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
-using Content.Server.Disposal.Tube;
+using Content.Server.Afk;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
@@ -14,6 +14,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
+using Content.Shared.Disposal.Tube;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -67,6 +68,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private AdminFrozenSystem _freeze = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private SiliconLawSystem _siliconLawSystem = default!;
+        [Dependency] private AfkConfirmSystem _afkConfirm = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -137,6 +139,7 @@ namespace Content.Server.Administration.Systems
                     args.Verbs.Add(new Verb()
                     {
                         Text = Loc.GetString("admin-player-actions-spawn"),
+                        Message = Loc.GetString("admin-player-actions-spawn-message"),
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
@@ -163,6 +166,7 @@ namespace Content.Server.Administration.Systems
                     args.Verbs.Add(new Verb()
                     {
                         Text = Loc.GetString("admin-player-actions-clone"),
+                        Message = Loc.GetString("admin-player-actions-clone-message"),
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
@@ -189,6 +193,14 @@ namespace Content.Server.Administration.Systems
                         Act = () => _console.ExecuteCommand(player, $"playerpanel \"{targetActor.PlayerSession.UserId}\""),
                         Impact = LogImpact.Low
                     });
+
+                    args.Verbs.Add(new Verb
+                    {
+                        Text = Loc.GetString("admin-player-actions-check-afk"),
+                        Category = VerbCategory.Admin,
+                        Act = () => _afkConfirm.TryStartConfirmation(targetActor.PlayerSession, requireAttached: true),
+                        Impact = LogImpact.Low
+                    });
                 }
 
                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp) && mindComp.UserId != null)
@@ -213,6 +225,7 @@ namespace Content.Server.Administration.Systems
                     args.Verbs.Add(new Verb
                     {
                         Text = Loc.GetString("admin-player-actions-respawn"),
+                        Message = Loc.GetString("admin-player-actions-respawn-message"),
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
@@ -543,7 +556,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("tube-direction-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
-                    Act = () => _disposalTubes.PopupDirections(args.Target, tube, args.User)
+                    Act = () => _disposalTubes.PopupDirections((args.Target, tube), args.User)
                 };
                 args.Verbs.Add(verb);
             }
