@@ -99,7 +99,7 @@ public sealed partial class GuardianSystem : EntitySystem
         if (!TryComp<GuardianHostComponent>(ent.Comp.Host, out var hostComponent) ||
             TerminatingOrDeleted(ent.Owner))
         {
-            PredictedDel(ent.Owner);
+            PredictedQueueDel(ent.Owner);
             ent.Comp.Host = null;
             Dirty(ent);
             return;
@@ -113,7 +113,7 @@ public sealed partial class GuardianSystem : EntitySystem
         var host = ent.Comp.Host;
         if (!HasComp<GuardianHostComponent>(host))
         {
-            PredictedDel(ent.Owner);
+            PredictedQueueDel(ent.Owner);
             ent.Comp.Host = null;
             Dirty(ent);
             return;
