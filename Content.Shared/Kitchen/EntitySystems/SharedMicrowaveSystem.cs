@@ -27,8 +27,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((e, ref m) => Wzhzhzh(e, m.Actor));
-
         InitializeActive();
         InitializeUI();
     }
@@ -149,49 +147,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             display,
             appearanceComponent);
     }
-}
-
-/// <summary>
-///     Sent from client to server to request the microwave to start cooking.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage
-{ }
-
-/// <summary>
-///     Sent from client to server to request ejecting all contents of the microwave.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage
-{ }
-
-/// <summary>
-///     Sent from client to server to request ejecting an entity from the microwave.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MicrowaveEjectSolidIndexedMessage(NetEntity entityId) : BoundUserInterfaceMessage
-{
-    /// <summary>
-    ///     The entity to eject from the microwave.
-    /// </summary>
-    public NetEntity EntityID = entityId;
-}
-
-/// <summary>
-///     Sent from client to server to request changing the selected cook time button of the microwave.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTime) : BoundUserInterfaceMessage
-{
-    /// <summary>
-    ///     The index of the cook time button to select.
-    /// </summary>
-    public int ButtonIndex = buttonIndex;
-
-    /// <summary>
-    ///     The cooking time associated with the newly-selected button.
-    /// </summary>
-    public uint NewCookTime = inputTime;
 }
 
 [Serializable, NetSerializable]
