@@ -234,6 +234,9 @@ public sealed partial class ChatSystem
 
     private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
+        if (!_adminManager.IsAdmin(player) && !_deadChatEnabled)
+            return;
+
         var clients = GetDeadChatClients();
         var playerName = Name(source);
         string wrappedMessage;
