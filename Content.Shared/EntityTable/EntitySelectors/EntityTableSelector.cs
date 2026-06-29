@@ -1,13 +1,17 @@
-using System.Linq;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
+/// <summary>
+/// A table of <see cref="EntProtoId"/>s with various configuration specifying how individual entries are selected.
+/// </summary>
+/// <seealso cref="EntityTableSystem"/>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+// Ideally this'd have `[Access(typeof(EntityTableSystem), typeof(IEntityTableVisitor)]`, but an interface with
+// unspecified generics isn't a type, so it doesn't work. Plus I think it wouldn't allow implementations access...
 public abstract partial class EntityTableSelector
 {
     /// <summary>
@@ -41,27 +45,9 @@ public abstract partial class EntityTableSelector
     [DataField]
     public bool RequireAll = true;
 
-    public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
-        IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx)
-    {
-        if (!CheckConditions(entMan, proto, ctx))
-            yield break;
-
-        var rolls = Rolls.Get(rand);
-        for (var i = 0; i < rolls; i++)
-        {
-            if (!rand.Prob(Prob))
-                continue;
-
-            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto, ctx))
-            {
-                yield return spawn;
-            }
-        }
-    }
-
+    /// <summary>
+    /// Checks if this table should be rolled at all, based on <see cref="Conditions"/>.
+    /// </summary>
     public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         if (Conditions.Count == 0)
@@ -78,50 +64,16 @@ public abstract partial class EntityTableSelector
             success |= res;
         }
 
-        if (RequireAll)
-            return true;
-
-        return success;
+        return RequireAll || success;
     }
 
     /// <summary>
-    /// Gets a list of every spawn in the table, and the odds of that spawn occuring, ignoring conditions.
+    /// Accepts <paramref name="visitor"/>, passing <paramref name="args"/> to it, and returning the result. Basically
+    /// an alias for invoking <c>visitor.Visit(this, args)</c>.
+    /// <br/>
+    /// You almost definitely want to be calling something on <see cref="EntityTableSystem"/> instead.
     /// </summary>
-    public IEnumerable<(EntProtoId spawn, double prob)> ListSpawns(IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx,
-        float mod = 1f)
-    {
-        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
-        {
-            yield return (spawn, prob * Prob * Rolls.Odds() * mod);
-        }
-    }
-
-    /// <summary>
-    /// Gets a list of every spawn in the table, and the average number of occurrences, ignoring conditions.
-    /// </summary>
-    public IEnumerable<(EntProtoId spawn, double prob)> AverageSpawns(IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx,
-        float mod = 1f)
-    {
-        foreach (var (spawn, prob) in AverageSpawnsImplementation(entMan, proto, ctx))
-        {
-            yield return (spawn, prob * Prob * Rolls.Average() * mod);
-        }
-    }
-
-    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
-        IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx);
-
-    protected abstract IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx);
-
-    protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx);
+    /// <seealso cref="IEntityTableVisitor{TArgs, TResult}"/>"/>
+    [Access(Other = AccessPermissions.Execute)]
+    public abstract TResult Accept<TArgs, TResult>(IEntityTableVisitor<TArgs, TResult> visitor, TArgs args);
 }

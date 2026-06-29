@@ -10,8 +10,6 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Toolshed.TypeParsers;
-using Robust.Shared.Utility;
 
 namespace Content.Server.StationEvents
 {
@@ -151,7 +149,7 @@ namespace Content.Server.StationEvents
         }
 
         [CommandImplementation("lsprob")]
-        public IEnumerable<(string, double)> LsProb([CommandArgument] EntProtoId eventSchedulerProto)
+        public IEnumerable<(string, float)> LsProb([CommandArgument] EntProtoId eventSchedulerProto)
         {
             _compFac ??= IoCManager.Resolve<IComponentFactory>();
             _stationEvent ??= GetSys<EventManagerSystem>();
@@ -173,7 +171,7 @@ namespace Content.Server.StationEvents
         }
 
         [CommandImplementation("lsprobtheoretical")]
-        public IEnumerable<(EntProtoId, double)> LsProbTime([CommandArgument] EntProtoId eventSchedulerProto, [CommandArgument] int playerCount, [CommandArgument] float time)
+        public IEnumerable<(EntProtoId, float)> LsProbTime([CommandArgument] EntProtoId eventSchedulerProto, [CommandArgument] int playerCount, [CommandArgument] float time)
         {
             _compFac ??= IoCManager.Resolve<IComponentFactory>();
             _stationEvent ??= GetSys<EventManagerSystem>();
@@ -200,7 +198,7 @@ namespace Content.Server.StationEvents
         }
 
         [CommandImplementation("prob")]
-        public double Prob([CommandArgument] EntProtoId eventSchedulerProto, [CommandArgument] string eventId)
+        public float Prob([CommandArgument] EntProtoId eventSchedulerProto, [CommandArgument] string eventId)
         {
             _compFac ??= IoCManager.Resolve<IComponentFactory>();
             _stationEvent ??= GetSys<EventManagerSystem>();
