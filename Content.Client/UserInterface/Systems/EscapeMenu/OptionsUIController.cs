@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
-public sealed class OptionsUIController : UIController
+public sealed partial class OptionsUIController : UIController
 {
-    [Dependency] private readonly IConsoleHost _con = default!;
+    [Dependency] private IConsoleHost _con = default!;
 
     public override void Initialize()
     {
@@ -26,7 +26,7 @@ public sealed class OptionsUIController : UIController
 
         if (!int.TryParse(args[0], out var tab))
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-int", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-integer", ("arg", args[0])));
             return;
         }
 

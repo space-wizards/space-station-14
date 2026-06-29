@@ -8,6 +8,21 @@
             <OptionButton Name="SolutionOption" HorizontalExpand="True"/>
         </BoxContainer>
 
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 4">
+            <Button Name="VVButton"
+                    Text="{Loc 'admin-solutions-window-vv-button'}"
+                    ToolTip="{Loc 'admin-solutions-window-vv-button-tooltip'}"
+                    Disabled="True"
+                    HorizontalExpand="True"
+                    StyleClasses="OpenRight"/>
+            <Button Name="SolutionButton"
+                    Text="{Loc 'admin-solutions-window-solution-button'}"
+                    ToolTip="{Loc 'admin-solutions-window-solution-button-tooltip'}"
+                    Disabled="True"
+                    HorizontalExpand="True"
+                    StyleClasses="OpenLeft"/>
+        </BoxContainer>
+
         <!-- The total volume / capacity of the solution -->
         <BoxContainer Name="VolumeBox" Orientation="Vertical" HorizontalExpand="True" Margin="0 4"/>
 

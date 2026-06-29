@@ -74,6 +74,34 @@
     {
       "name": "boxers_reptilian",
       "directions": 4
+    },
+    {
+      "name": "boxers_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "briefs_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "satin_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "classic_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "sports_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "binder_vulpkanin",
+      "directions": 4
     }
   ]
 }

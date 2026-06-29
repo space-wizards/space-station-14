@@ -6,9 +6,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Construction;
 
 /// <inheritdoc/>
-public sealed class FlatpackSystem : SharedFlatpackSystem
+public sealed partial class FlatpackSystem : SharedFlatpackSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -43,6 +44,6 @@ public sealed class FlatpackSystem : SharedFlatpackSystem
         }
 
         if (color != null)
-            args.Sprite.LayerSetColor(FlatpackVisualLayers.Overlay, color.Value);
+            _sprite.LayerSetColor((ent.Owner, args.Sprite), FlatpackVisualLayers.Overlay, color.Value);
     }
 }

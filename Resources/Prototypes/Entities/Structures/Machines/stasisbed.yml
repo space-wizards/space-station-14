@@ -18,15 +18,21 @@
     - state: icon
     - state: unlit
       shader: unshaded
-      map: ["enum.StasisBedVisualLayers.IsOn"]
-  - type: StasisBedVisuals
+      map: ["unlit"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        unlit:
+          True: { visible: true }
+          False: { visible: false }
   - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -58,5 +64,6 @@
         - LowImpassable
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
   - type: PowerSwitch
+  - type: AmbientMusicMarkerMedical

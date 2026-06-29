@@ -1,4 +1,6 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
@@ -8,14 +10,14 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Magic;
 
-public sealed class SpellbookSystem : EntitySystem
+public sealed partial class SpellbookSystem : EntitySystem
 {
-    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private SharedChargesSystem _sharedCharges = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -28,12 +30,19 @@ public sealed class SpellbookSystem : EntitySystem
     {
         foreach (var (id, charges) in ent.Comp.SpellActions)
         {
-            var spell = _actionContainer.AddAction(ent, id);
-            if (spell == null)
+            var action = _actionContainer.AddAction(ent, id);
+            if (action is not { } spell)
                 continue;
 
-            _sharedCharges.SetCharges(spell.Value, charges);
-            ent.Comp.Spells.Add(spell.Value);
+            // Null means infinite charges.
+            if (charges is { } count)
+            {
+                EnsureComp<LimitedChargesComponent>(spell, out var chargeComp);
+                _sharedCharges.SetMaxCharges((spell, chargeComp), count);
+                _sharedCharges.SetCharges((spell, chargeComp), count);
+            }
+
+            ent.Comp.Spells.Add(spell);
         }
     }
 
@@ -56,7 +65,7 @@ public sealed class SpellbookSystem : EntitySystem
 
         if (!ent.Comp.LearnPermanently)
         {
-            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent);
+            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent.Owner);
             return;
         }
 
@@ -72,8 +81,13 @@ public sealed class SpellbookSystem : EntitySystem
             foreach (var (id, charges) in ent.Comp.SpellActions)
             {
                 EntityUid? actionId = null;
-                if (_actions.AddAction(args.Args.User, ref actionId, id))
-                    _sharedCharges.SetCharges(actionId.Value, charges);
+                if (!_actions.AddAction(args.Args.User, ref actionId, id)
+                    || charges is not { } count // Null means infinite charges
+                    || !TryComp<LimitedChargesComponent>(actionId, out var chargeComp))
+                    continue;
+
+                _sharedCharges.SetMaxCharges((actionId.Value, chargeComp), count);
+                _sharedCharges.SetCharges((actionId.Value, chargeComp), count);
             }
         }
 

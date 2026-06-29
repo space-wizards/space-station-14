@@ -1,8 +1,8 @@
-﻿using Content.Shared.Bed.Sleep;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Damage;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -17,7 +17,7 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
-using Robust.Shared.Physics.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -46,6 +46,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<MobStateComponent, AttemptToolRefineEvent>(OnAttemptToolRefine);
 
         SubscribeLocalEvent<MobStateComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
     }
@@ -56,6 +57,13 @@ public partial class MobStateSystem
         // Shouldn't the interaction have already been blocked by a general interaction check?
         if (args.User == ent.Owner && IsIncapacitated(ent))
             args.Cancelled = true;
+    }
+
+    private void Down(EntityUid target)
+    {
+        _standing.Down(target);
+        var ev = new DropHandItemsEvent();
+        RaiseLocalEvent(target, ref ev);
     }
 
     private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)
@@ -102,23 +110,41 @@ public partial class MobStateSystem
         switch (state)
         {
             case MobState.Alive:
+            {
                 _standing.Stand(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
+            }
             case MobState.Critical:
-                _standing.Down(target);
+            {
+                Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
+            }
             case MobState.Dead:
+            {
                 EnsureComp<CollisionWakeComponent>(target);
-                _standing.Down(target);
+                Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;
+            }
             case MobState.Invalid:
+            {
                 //unused;
                 break;
+            }
             default:
+            {
                 throw new NotImplementedException();
+            }
+        }
+    }
+
+    private void OnAttemptToolRefine(Entity<MobStateComponent> ent, ref AttemptToolRefineEvent args)
+    {
+        if (!IsDead(ent, ent))
+        {
+            args = args with { IsCancelled = true, BlockCause = Loc.GetString("refined-slice-verb-target-isnt-dead") };
         }
     }
 
@@ -164,14 +190,14 @@ public partial class MobStateSystem
     private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
-        if (args.Equipee == target)
+        if (args.User == target)
             CheckAct(target, component, args);
     }
 
     private void OnUnequipAttempt(EntityUid target, MobStateComponent component, IsUnequippingAttemptEvent args)
     {
         // is this a self-equip, or are they being stripped?
-        if (args.Unequipee == target)
+        if (args.User == target)
             CheckAct(target, component, args);
     }
 

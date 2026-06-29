@@ -9,7 +9,7 @@ namespace Content.Client.SurveillanceCamera.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public Action<string>? OnNameConfirm;
     public Action<int>? OnNetworkConfirm;
@@ -38,7 +38,7 @@ public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
     }
 
     // Pass in a list of frequency prototype IDs.
-    public void LoadAvailableNetworks(uint currentNetwork, List<string> networks)
+    public void LoadAvailableNetworks(uint currentNetwork, List<ProtoId<DeviceFrequencyPrototype>> networks)
     {
         NetworkSelector.Clear();
 

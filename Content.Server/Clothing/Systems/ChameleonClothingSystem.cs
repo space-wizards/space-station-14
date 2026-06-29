@@ -1,17 +1,17 @@
-using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emp;
+using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
+public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     public override void Initialize()
     {
@@ -22,7 +22,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
-        SetSelectedPrototype(uid, component.Default, true, component);
+        SetSelectedPrototype(uid, component.Default, true, component: component);
     }
 
     private void OnSelected(EntityUid uid, ChameleonClothingComponent component, ChameleonPrototypeSelectedMessage args)
@@ -39,10 +39,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UI.SetUiState(uid, ChameleonUiKey.Key, state);
     }
 
-    /// <summary>
-    ///     Change chameleon items name, description and sprite to mimic other entity prototype.
-    /// </summary>
-    public void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false, bool validate = true,
         ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -56,8 +53,10 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         // make sure that it is valid change
         if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
-        if (!IsValidTarget(proto, component.Slot, component.RequireTag))
+
+        if (validate && !IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
+
         component.Default = protoId;
 
         UpdateIdentityBlocker(uid, component, proto);
@@ -66,9 +65,30 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         Dirty(uid, component);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        // Randomize EMP-affected clothing
+        var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
+        while (query.MoveNext(out var uid, out _, out var chameleon))
+        {
+            if (!chameleon.EmpContinuous)
+                continue;
+
+            if (Timing.CurTime < chameleon.NextEmpChange)
+                continue;
+
+            // randomly pick cloth element from available and apply it
+            var pick = GetRandomValidPrototype(chameleon.Slot, chameleon.RequireTag);
+            SetSelectedPrototype(uid, pick, component: chameleon);
+
+            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
+        }
+    }
+
     private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
     {
-        if (proto.HasComponent<IdentityBlockerComponent>(_factory))
+        if (proto.HasComponent<IdentityBlockerComponent>(Factory))
             EnsureComp<IdentityBlockerComponent>(uid);
         else
             RemComp<IdentityBlockerComponent>(uid);

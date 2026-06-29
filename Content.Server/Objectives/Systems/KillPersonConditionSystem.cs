@@ -10,12 +10,12 @@ namespace Content.Server.Objectives.Systems;
 /// <summary>
 /// Handles kill person condition logic and picking random kill targets.
 /// </summary>
-public sealed class KillPersonConditionSystem : EntitySystem
+public sealed partial class KillPersonConditionSystem : EntitySystem
 {
-    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly TargetObjectiveSystem _target = default!;
+    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private TargetObjectiveSystem _target = default!;
 
     public override void Initialize()
     {
@@ -39,7 +39,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return 1f;
 
         var targetDead = _mind.IsCharacterDeadIc(mind);
-        var targetOnShuttle = _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value);
+        var targetMarooned = !_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value) || _mind.IsCharacterUnrevivableIc(mind);
         if (!_config.GetCVar(CCVars.EmergencyShuttleEnabled) && requireMaroon)
         {
             requireDead = true;
@@ -55,11 +55,11 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         // If the shuttle hasn't left, give 50% progress if the target isn't on the shuttle as a "almost there!"
         if (requireMaroon && !_emergencyShuttle.ShuttlesLeft)
-            return targetOnShuttle ? 0f : 0.5f;
+            return targetMarooned ? 0.5f : 0f;
 
         // If the shuttle has already left, and the target isn't on it, 100%
         if (requireMaroon && _emergencyShuttle.ShuttlesLeft)
-            return targetOnShuttle ? 0f : 1f;
+            return targetMarooned ? 1f : 0f;
 
         return 1f; // Good job you did it woohoo
     }

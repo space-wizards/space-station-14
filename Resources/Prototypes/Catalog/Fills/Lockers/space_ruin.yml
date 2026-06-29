@@ -5,11 +5,18 @@
   suffix: NTSRA voidsuit locker
   parent: LockerSyndicate
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetAncient
-      - id: ClothingOuterHardsuitAncientEVA
-      - id: JetpackVoidFilled
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FilLockerOldAISat
+
+- type: entityTable
+  id: FilLockerOldAISat
+  table: !type:AllSelector
+    children:
+    - id: ClothingHeadHelmetAncient
+    - id: ClothingOuterHardsuitAncientEVA
+    - id: JetpackVoidFilled
 
 #Syndicate ship armory stuff
 - type: entity
@@ -17,35 +24,49 @@
   parent: LockerSyndicate
   suffix: Basic ship gear, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarRed
-        prob: 0.6
-      - id: ClothingShoesBootsCombat
-        prob: 0.4
-      - id: ClothingUniformJumpsuitOperative
-        prob: 0.4
-      - id: ClothingHandsGlovesCombat
-        prob: 0.2
-      - id: ClothingBeltMilitaryWebbing
-        prob: 0.2
-        
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FilLockerSyndicateShipGearBasic
+
+- type: entityTable
+  id: FilLockerSyndicateShipGearBasic
+  table: !type:AllSelector
+    children:
+    - id: CrowbarRed
+      prob: 0.6
+    - id: ClothingShoesBootsCombat
+      prob: 0.4
+    - id: ClothingUniformJumpsuitOperative
+      prob: 0.4
+    - id: ClothingHandsGlovesCombat
+      prob: 0.2
+    - id: ClothingBeltMilitaryWebbing
+      prob: 0.2
+
 #Garunteed chameleon kit spawn, for the syndicate dropship
 - type: entity
   id: LockerSyndicateShipGearBasicChameleonKit
   parent: LockerSyndicateShipGearBasic
   suffix: Basic ship gear, Random, Chameleon Kit
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingBackpackChameleonFill
-      - id: CrowbarRed
-        prob: 0.6
-      - id: ClothingShoesBootsCombat
-        prob: 0.4
-      - id: ClothingUniformJumpsuitOperative
-        prob: 0.4
-      - id: ClothingHandsGlovesCombat
-        prob: 0.2
-      - id: ClothingBeltMilitaryWebbing
-        prob: 0.2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FilLockerSyndicateShipGearBasicChameleonKit
+
+- type: entityTable
+  id: FilLockerSyndicateShipGearBasicChameleonKit
+  table: !type:AllSelector
+    children:
+    - id: ClothingBackpackChameleonFill
+    - id: CrowbarRed
+      prob: 0.6
+    - id: ClothingShoesBootsCombat
+      prob: 0.4
+    - id: ClothingUniformJumpsuitOperative
+      prob: 0.4
+    - id: ClothingHandsGlovesCombat
+      prob: 0.2
+    - id: ClothingBeltMilitaryWebbing
+      prob: 0.2

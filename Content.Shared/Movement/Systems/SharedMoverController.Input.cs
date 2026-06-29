@@ -8,7 +8,7 @@ using Content.Shared.Movement.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -57,6 +57,7 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentGetState>(OnMoverGetState);
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnMoverHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
+            SubscribeLocalEvent<InputMoverComponent, AnchorStateChangedEvent>(OnAnchorState);
 
             SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowedParentChange);
 
@@ -98,7 +99,7 @@ namespace Content.Shared.Movement.Systems
             RaiseLocalEvent(entity, ref moveEvent);
             Dirty(entity, entity.Comp);
 
-            var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+            var ev = new SpriteMoveEvent(entity.Comp.HasDirectionalMovement);
             RaiseLocalEvent(entity, ref ev);
         }
 
@@ -124,7 +125,7 @@ namespace Content.Shared.Movement.Systems
                 entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
                 RaiseLocalEvent(entity.Owner, ref moveEvent);
 
-                var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+                var ev = new SpriteMoveEvent(entity.Comp.HasDirectionalMovement);
                 RaiseLocalEvent(entity, ref ev);
             }
         }
@@ -210,12 +211,12 @@ namespace Content.Shared.Movement.Systems
             var diff = relativeRot - oldRelativeRot;
 
             // If we're going from a grid -> map then preserve the relative rotation so it's seamless if they go into space and back.
-            if (HasComp<MapComponent>(relative) && HasComp<MapGridComponent>(mover.RelativeEntity))
+            if (MapQuery.HasComp(relative) && MapGridQuery.HasComp(mover.RelativeEntity))
             {
                 mover.TargetRelativeRotation -= diff;
             }
-            // Snap to nearest cardinal if map -> grid
-            else if (HasComp<MapGridComponent>(relative) && HasComp<MapComponent>(mover.RelativeEntity))
+            // Snap to nearest cardinal if map -> grid or grid -> grid
+            else if (MapGridQuery.HasComp(relative) && (MapQuery.HasComp(mover.RelativeEntity) || MapGridQuery.HasComp(mover.RelativeEntity)))
             {
                 var targetDir = mover.TargetRelativeRotation - diff;
                 targetDir = targetDir.GetCardinalDir().ToAngle().Reduced();
@@ -296,28 +297,31 @@ namespace Content.Shared.Movement.Systems
             Dirty(entity.Owner, entity.Comp);
         }
 
-        private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
+        private void OnAnchorState(Entity<InputMoverComponent> entity, ref AnchorStateChangedEvent args)
+        {
+            if (!args.Anchored)
+                PhysicsSystem.SetBodyType(entity, BodyType.KinematicController);
+        }
+
+        private void HandleDirChange(Entity<InputMoverComponent?> entity, Direction dir, ushort subTick, bool state)
         {
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
             // the same as us.
+            if (!MoverQuery.Resolve(entity, ref entity.Comp))
+                return;
 
             // TODO: Should move this into HandleMobMovement itself.
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            if (entity.Comp.CanMove && RelayQuery.TryComp(entity, out var relayMover))
             {
-                DebugTools.Assert(relayMover.RelayEntity != entity);
+                DebugTools.Assert(relayMover.RelayEntity != entity.Owner);
                 DebugTools.AssertNotNull(relayMover.RelayEntity);
 
                 if (MoverQuery.TryGetComponent(entity, out var mover))
                     SetMoveInput((entity, mover), MoveButtons.None);
 
-                if (!_mobState.IsIncapacitated(entity))
-                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
-
+                HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
                 return;
             }
-
-            if (!MoverQuery.TryGetComponent(entity, out var moverComp))
-                return;
 
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
@@ -330,7 +334,7 @@ namespace Content.Shared.Movement.Systems
                 RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
             }
 
-            SetVelocityDirection((entity, moverComp), dir, subTick, state);
+            SetVelocityDirection((entity, entity.Comp), dir, subTick, state);
         }
 
         private void OnInputInit(Entity<InputMoverComponent> entity, ref ComponentInit args)

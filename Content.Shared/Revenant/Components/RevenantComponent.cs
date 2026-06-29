@@ -215,5 +215,16 @@ public sealed partial class RevenantComponent : Component
     public string HarvestingState = "harvesting";
     #endregion
 
-    [DataField] public EntityUid? Action;
+    /// <summary>
+    /// The scaling for passively chilling surroundings.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 ChillScaling = 7000;
+
+    /// <summary>
+    /// The upper limit for essence when passively chilling surroundings.
+    /// Beyond this point, more essence will not cause more chilling.
+    /// </summary>
+    [DataField]
+    public FixedPoint2 ChillUpperBound = 500;
 }

@@ -7,13 +7,18 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: StationAiWhitelist
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     drawdepth: BlastDoors
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -66,8 +71,9 @@
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -76,9 +82,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: IconSmooth
-    key: walls
-    mode: NoSprite
   - type: DoorSignalControl
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -104,7 +107,7 @@
 
 - type: entity
   id: ShuttersNormal
-  parent: BaseShutter
+  parent: [BaseDeltaPressureGlass, BaseShutter]
   components:
   - type: Occluder
   - type: Construction
@@ -131,7 +134,7 @@
 
 - type: entity
   id: ShuttersRadiation
-  parent: BaseShutter
+  parent: [BaseDeltaPressureGlass, BaseShutter]
   name: radiation shutters
   description: Why did they make these shutters radioactive?
   components:
@@ -140,6 +143,8 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Occluder
   - type: Construction
     graph: Shutters
@@ -167,7 +172,7 @@
 
 - type: entity
   id: ShuttersWindow
-  parent: BaseShutter
+  parent: [BaseDeltaPressureGlass, BaseShutter]
   name: window shutters
   description: The Best (TM) place to see your friends explode!
   components:
@@ -176,6 +181,8 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Construction
     graph: Shutters
     node: ShuttersWindow
@@ -215,8 +222,9 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,0 +1,34 @@
+{
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Displacement maps by Velken, corgi_belt_displacement by Sparlight",
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "mcgriff_eyes_displacement",
+            "directions": 4
+        },
+        {
+            "name": "mcgriff_head_displacement",
+            "directions": 4
+        },
+        {
+            "name": "corgi_belt_displacement",
+            "directions": 4
+        },
+        {
+            "name": "corgi_head_displacement",
+            "directions": 4
+        },
+        {
+            "name": "lisa_head_displacement",
+            "directions": 4
+        }
+    ]
+}

@@ -10,11 +10,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Doors;
 
 /// <inheritdoc/>
-public sealed class TurnstileSystem : SharedTurnstileSystem
+public sealed partial class TurnstileSystem : SharedTurnstileSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-
-    private static EntProtoId _examineArrow = "TurnstileArrow";
+    [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private const string AnimationKey = "Turnstile";
 
@@ -23,7 +22,6 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
         base.Initialize();
 
         SubscribeLocalEvent<TurnstileComponent, AnimationCompletedEvent>(OnAnimationCompleted);
-        SubscribeLocalEvent<TurnstileComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnAnimationCompleted(Entity<TurnstileComponent> ent, ref AnimationCompletedEvent args)
@@ -33,12 +31,7 @@ public sealed class TurnstileSystem : SharedTurnstileSystem
 
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
-        sprite.LayerSetState(TurnstileVisualLayers.Base, new RSI.StateId(ent.Comp.DefaultState));
-    }
-
-    private void OnExamined(Entity<TurnstileComponent> ent, ref ExaminedEvent args)
-    {
-        Spawn(_examineArrow, new EntityCoordinates(ent, 0, 0));
+        _sprite.LayerSetRsiState((ent.Owner, sprite), TurnstileVisualLayers.Base, new RSI.StateId(ent.Comp.DefaultState));
     }
 
     protected override void PlayAnimation(EntityUid uid, string stateId)

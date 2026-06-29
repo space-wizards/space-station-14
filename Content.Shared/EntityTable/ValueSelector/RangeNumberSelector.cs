@@ -1,3 +1,5 @@
+using Robust.Shared.Random;
+
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
@@ -8,10 +10,25 @@ public sealed partial class RangeNumberSelector : NumberSelector
     [DataField]
     public Vector2i Range = new(1, 1);
 
-    public override int Get(System.Random rand)
+    public RangeNumberSelector(Vector2i range)
+    {
+        Range = range;
+    }
+
+    public override int Get(IRobustRandom rand)
     {
         // rand.Next() is inclusive on the first number and exclusive on the second number,
         // so we add 1 to the second number.
         return rand.Next(Range.X, Range.Y + 1);
+    }
+
+    public override float Odds()
+    {
+        return Range.X == 0 ? 1f / (Range.Y + 1) : 1;
+    }
+
+    public override float Average()
+    {
+        return (Range.X + Range.Y) / 2f;
     }
 }

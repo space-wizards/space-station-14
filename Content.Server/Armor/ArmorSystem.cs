@@ -1,14 +1,14 @@
-using Content.Server.Cargo.Systems;
 using Content.Shared.Armor;
+using Content.Shared.Cargo;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.Armor;
 
 /// <inheritdoc/>
-public sealed class ArmorSystem : SharedArmorSystem
+public sealed partial class ArmorSystem : SharedArmorSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     public override void Initialize()
     {

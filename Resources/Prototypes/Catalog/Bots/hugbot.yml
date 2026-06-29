@@ -1,0 +1,17 @@
+﻿- type: localizedDataset
+  id: HugBotStarts
+  values:
+    prefix: hugbot-start-hug-
+    count: 8
+
+- type: localizedDataset
+  id: HugBotFinishes
+  values:
+    prefix: hugbot-finish-hug-
+    count: 8
+
+- type: localizedDataset
+  id: EmaggedHugBotFinishes
+  values:
+    prefix: hugbot-emagged-finish-hug-
+    count: 8

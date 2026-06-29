@@ -1,0 +1,92 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86, modified by FairlySadPanda (Github/Discord)",
+    "size": {"x": 32, "y": 32},
+    "states": [
+        {
+            "name": "adhara",
+            "directions": 4
+        },
+        {
+            "name": "anita",
+            "directions": 4
+        },
+        {
+            "name": "apollo",
+            "directions": 4
+        },
+        {
+            "name": "belle",
+            "directions": 4
+        },
+        {
+            "name": "braided",
+            "directions": 4
+        },
+        {
+            "name": "bun",
+            "directions": 4
+        },
+        {
+            "name": "clean_cut",
+            "directions": 4
+        },
+        {
+            "name": "curl",
+            "directions": 4
+        },
+        {
+            "name": "hawk",
+            "directions": 4
+        },
+        {
+            "name": "jagged",
+            "directions": 4
+        },
+        {
+            "name": "jeremy",
+            "directions": 4
+        },
+        {
+            "name": "kajam",
+            "directions": 4
+        },
+        {
+            "name": "keid",
+            "directions": 4
+        },
+        {
+            "name": "kleeia",
+            "directions": 4
+        },
+        {
+            "name": "mizar",
+            "directions": 4
+        },
+        {
+            "name": "punkbraided",
+            "directions": 4
+        },
+        {
+            "name": "raine",
+            "directions": 4
+        },
+        {
+            "name": "rough",
+            "directions": 4
+        },
+        {
+            "name": "short",
+            "directions": 4
+        },
+        {
+            "name": "short2",
+            "directions": 4
+        },
+        {
+            "name": "spike",
+            "directions": 4
+        }
+    ]
+}

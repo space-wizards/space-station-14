@@ -12,14 +12,14 @@ namespace Content.Client.Cargo.UI;
 [GenerateTypedNameReferences]
 public sealed partial class BountyHistoryEntry : BoxContainer
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public BountyHistoryEntry(CargoBountyHistoryData bounty)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        if (!_prototype.TryIndex(bounty.Bounty, out var bountyPrototype))
+        if (!_prototype.Resolve(bounty.Bounty, out var bountyPrototype))
             return;
 
         var items = new List<string>();

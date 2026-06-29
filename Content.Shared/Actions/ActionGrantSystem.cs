@@ -1,11 +1,13 @@
+using  Content.Shared.Inventory;
+
 namespace Content.Shared.Actions;
 
 /// <summary>
 /// <see cref="ActionGrantComponent"/>
 /// </summary>
-public sealed class ActionGrantSystem : EntitySystem
+public sealed partial class ActionGrantSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
 
     public override void Initialize()
     {
@@ -17,7 +19,11 @@ public sealed class ActionGrantSystem : EntitySystem
 
     private void OnItemGet(Entity<ItemActionGrantComponent> ent, ref GetItemActionsEvent args)
     {
+
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
+            return;
+
+        if (ent.Comp.ActiveIfWorn && (args.SlotFlags == null || args.SlotFlags == SlotFlags.POCKET))
             return;
 
         foreach (var action in grant.ActionEntities)

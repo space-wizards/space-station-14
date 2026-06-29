@@ -1,0 +1,18 @@
+# Spawn on client side when users examine a multipart machine
+# If a sprite is given then the default component's value will be overriden
+- type: entity
+  id: MultipartMachineGhost
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: MultipartMachineGhost
+    - type: Sprite
+      sprite: Markers/cross.rsi
+      layers:
+        - state: green
+      color: "#FFFFFF80"
+    - type: TimedDespawn
+      lifetime: 5
+    - type: Clickable
+    - type: Tag
+      tags:
+        - HideContextMenu

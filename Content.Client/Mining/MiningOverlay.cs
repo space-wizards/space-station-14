@@ -9,11 +9,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Mining;
 
-public sealed class MiningOverlay : Overlay
+public sealed partial class MiningOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
     private readonly EntityLookupSystem _lookup;
     private readonly SpriteSystem _sprite;
     private readonly TransformSystem _xform;
@@ -62,7 +62,7 @@ public sealed class MiningOverlay : Overlay
             if (xform.MapID != args.MapId || !sprite.Visible)
                 continue;
 
-            if (!sprite.LayerMapTryGet(MiningScannerVisualLayers.Overlay, out var idx))
+            if (!_sprite.LayerMapTryGet((ore, sprite), MiningScannerVisualLayers.Overlay, out var idx, false))
                 continue;
             var layer = sprite[idx];
 
@@ -85,10 +85,10 @@ public sealed class MiningOverlay : Overlay
 
             var alpha = animTime < viewerComp.AnimationDuration
                 ? 0
-                : (float) Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
+                : (float)Math.Clamp((animTime - viewerComp.AnimationDuration) / viewerComp.AnimationDuration, 0f, 1f);
             var color = Color.White.WithAlpha(alpha);
 
-            handle.DrawTexture(texture, -(Vector2) texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);
+            handle.DrawTexture(texture, -(Vector2)texture.Size / 2f / EyeManager.PixelsPerMeter, layer.Rotation, modulate: color);
 
         }
         handle.SetTransform(Matrix3x2.Identity);

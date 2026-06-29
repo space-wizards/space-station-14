@@ -21,26 +21,21 @@
           mask:
           - MobMask
     - type: Damageable
-      damageContainer: Inorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 400
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:EmptyAllContainersBehaviour
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
     - type: Appearance
     - type: UserInterface
       interfaces:
@@ -73,7 +68,6 @@
   description: Get out there and slang some dogs.
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:
@@ -154,7 +148,6 @@
   description: It's the Ice Cream Man! It's the Ice Cream Man!
   components:
     - type: Sprite
-      netSync: false
       noRot: true
       sprite: Objects/Specific/Kitchen/food_carts.rsi
       layers:

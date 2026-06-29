@@ -10,19 +10,18 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public abstract class ClothingSystem : EntitySystem
+public abstract partial class ClothingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _itemSys = default!;
-    [Dependency] private readonly InventorySystem _invSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedItemSystem _itemSys = default!;
+    [Dependency] private InventorySystem _invSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ClothingComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ClothingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
 
@@ -65,14 +64,14 @@ public abstract class ClothingSystem : EntitySystem
                 if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
                     continue;
 
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, true, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
+                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
                     continue;
 
                 _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
             }
             else
             {
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, true, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
+                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
                     continue;
             }
 
@@ -84,43 +83,37 @@ public abstract class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
         component.InSlotFlag = args.SlotFlags;
+        Dirty(uid, component);
 
         if ((component.Slots & args.SlotFlags) == SlotFlags.NONE)
             return;
 
-        var gotEquippedEvent = new ClothingGotEquippedEvent(args.Equipee, component);
+        var gotEquippedEvent = new ClothingGotEquippedEvent(args.EquipTarget, component);
         RaiseLocalEvent(uid, ref gotEquippedEvent);
 
         var didEquippedEvent = new ClothingDidEquippedEvent((uid, component));
-        RaiseLocalEvent(args.Equipee, ref didEquippedEvent);
+        RaiseLocalEvent(args.EquipTarget, ref didEquippedEvent);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         if ((component.Slots & args.SlotFlags) != SlotFlags.NONE)
         {
-            var gotUnequippedEvent = new ClothingGotUnequippedEvent(args.Equipee, component);
+            var gotUnequippedEvent = new ClothingGotUnequippedEvent(args.EquipTarget, component);
             RaiseLocalEvent(uid, ref gotUnequippedEvent);
 
             var didUnequippedEvent = new ClothingDidUnequippedEvent((uid, component));
-            RaiseLocalEvent(args.Equipee, ref didUnequippedEvent);
+            RaiseLocalEvent(args.EquipTarget, ref didUnequippedEvent);
         }
 
         component.InSlot = null;
         component.InSlotFlag = null;
+        Dirty(uid, component);
     }
 
-    private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
+    private void AfterAutoHandleState(Entity<ClothingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new ClothingComponentState(component.EquippedPrefix);
-    }
-
-    private void OnHandleState(EntityUid uid, ClothingComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ClothingComponentState state)
-            return;
-
-        SetEquippedPrefix(uid, state.EquippedPrefix, component);
+        _itemSys.VisualsChanged(ent.Owner);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
@@ -145,6 +138,21 @@ public abstract class ClothingSystem : EntitySystem
     }
 
     #region Public API
+
+    /// <summary>
+    /// Returns true if this clothing item is currently inside an inventory slot AND that slot is considered valid for equipping.
+    /// For example putting shoes into your pockets does not count as being equipped.
+    /// </summary>
+    public bool IsEquipped(Entity<ClothingComponent?> item)
+    {
+        if (!Resolve(item, ref item.Comp, false))
+            return false;
+
+        if ((item.Comp.Slots & item.Comp.InSlotFlag) != SlotFlags.NONE)
+            return true;
+
+        return false;
+    }
 
     public void SetEquippedPrefix(EntityUid uid, string? prefix, ClothingComponent? clothing = null)
     {

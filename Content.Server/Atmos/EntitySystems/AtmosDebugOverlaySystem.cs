@@ -1,6 +1,6 @@
 using System.Numerics;
-using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
@@ -15,13 +15,13 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
+    public sealed partial class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly MapSystem _mapSystem = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private MapSystem _mapSystem = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.

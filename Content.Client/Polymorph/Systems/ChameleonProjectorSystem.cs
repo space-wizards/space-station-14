@@ -4,23 +4,20 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
 using Robust.Client.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Client.Polymorph.Systems;
 
-public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
+public sealed partial class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
-    private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<SpriteComponent> _spriteQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, AfterAutoHandleStateEvent>(OnHandleState);
 
@@ -47,13 +44,13 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
             return;
 
         ent.Comp.WasVisible = sprite.Visible;
-        sprite.Visible = false;
+        _sprite.SetVisible((ent.Owner, sprite), false);
     }
 
     private void OnShutdown(Entity<ChameleonDisguisedComponent> ent, ref ComponentShutdown args)
     {
         if (_spriteQuery.TryComp(ent, out var sprite))
-            sprite.Visible = ent.Comp.WasVisible;
+            _sprite.SetVisible((ent.Owner, sprite), ent.Comp.WasVisible);
     }
 
     private void OnGetFlashEffectTargetEvent(Entity<ChameleonDisguisedComponent> ent, ref GetFlashEffectTargetEvent args)

@@ -19,7 +19,10 @@ namespace Content.Server.Entry
             "InventorySlots",
             "LightFade",
             "HolidayRsiSwap",
-            "OptionsVisualizer"
+            "OptionsVisualizer",
+            "AnomalyScannerScreen",
+            "MultipartMachineGhost",
+            "DirectionalArrowIndicator"
         };
     }
 }

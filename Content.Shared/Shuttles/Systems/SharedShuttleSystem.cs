@@ -8,32 +8,43 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] protected readonly SharedMapSystem Maps = default!;
-    [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] protected FixtureSystem Fixtures = default!;
+    [Dependency] protected SharedMapSystem Maps = default!;
+    [Dependency] protected SharedPhysicsSystem Physics = default!;
+    [Dependency] protected SharedTransformSystem XformSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float FTLRange = 256f;
     public const float FTLBufferRange = 8f;
+    public const float TileDensityMultiplier = 0.5f;
 
-    private EntityQuery<MapGridComponent> _gridQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     private List<Entity<MapGridComponent>> _grids = new();
 
     public override void Initialize()
     {
         base.Initialize();
-        _gridQuery = GetEntityQuery<MapGridComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
+
+        SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
+    }
+
+    private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
+    {
+        foreach (var fixture in args.NewFixtures)
+        {
+            Physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
+            Fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
+        }
     }
 
     /// <summary>
@@ -41,8 +52,8 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     /// </summary>
     public bool CanFTLTo(EntityUid shuttleUid, MapId targetMap, EntityUid consoleUid)
     {
-        var mapUid = _mapManager.GetMapEntityId(targetMap);
-        var shuttleMap = _xformQuery.GetComponent(shuttleUid).MapID;
+        var mapUid = Maps.GetMapOrInvalid(targetMap);
+        var shuttleMap = Transform(shuttleUid).MapID;
 
         if (shuttleMap == targetMap)
             return true;
@@ -174,7 +185,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     public bool FTLFree(EntityUid shuttleUid, EntityCoordinates coordinates, Angle angle, List<ShuttleExclusionObject>? exclusionZones)
     {
         if (!_physicsQuery.TryGetComponent(shuttleUid, out var shuttlePhysics) ||
-            !_xformQuery.TryGetComponent(shuttleUid, out var shuttleXform))
+            !TryComp(shuttleUid, out TransformComponent? shuttleXform))
         {
             return false;
         }

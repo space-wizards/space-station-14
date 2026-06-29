@@ -8,10 +8,10 @@ using Content.Client.Light.EntitySystems;
 
 namespace Content.Client.Light;
 
-public sealed class HandheldLightSystem : SharedHandheldLightSystem
+public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private LightBehaviorSystem _lightBehavior = default!;
 
     public override void Initialize()
     {
@@ -44,7 +44,7 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
             return;
         }
 
-        if (!_appearance.TryGetData<bool>(uid, ToggleableLightVisuals.Enabled, out var enabled, args.Component))
+        if (!_appearance.TryGetData<bool>(uid, ToggleableVisuals.Enabled, out var enabled, args.Component))
         {
             return;
         }

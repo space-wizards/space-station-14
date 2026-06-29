@@ -40,22 +40,19 @@ public abstract partial class SharedSalvageSystem
 
     public ISalvageMagnetOffering GetSalvageOffering(int seed)
     {
-        var rand = new System.Random(seed);
+        var rand = new RobustRandom();
+        rand.SetSeed(seed);
 
         var type = SharedRandomExtensions.Pick(_offeringWeights, rand);
         switch (type)
         {
             case AsteroidOffering:
                 var configId = _asteroidConfigs[rand.Next(_asteroidConfigs.Count)];
-                var configProto =_proto.Index(configId);
+                var configProto = _proto.Index(configId);
                 var layers = new Dictionary<string, int>();
-
-                var data = new DungeonData();
-                data.Apply(configProto.Data);
 
                 var config = new DungeonConfig
                 {
-                    Data = data,
                     Layers = new(configProto.Layers),
                     MaxCount = configProto.MaxCount,
                     MaxOffset = configProto.MaxOffset,

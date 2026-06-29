@@ -4,7 +4,7 @@
   id: BaseTraitorObjective
   components:
   - type: Objective
-    issuer: objective-issuer-syndicate
+    issuer: TheSyndicate
   - type: RoleRequirement
     roles:
     - TraitorRole
@@ -17,7 +17,7 @@
   - type: Objective
     icon:
       sprite: Objects/Misc/folders.rsi
-      state: folder-white
+      state: folder-colormap
   - type: MultipleTraitorsRequirement
 
 - type: entity
@@ -37,7 +37,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseLivingObjective]
   id: EscapeShuttleObjective
-  name: Escape to centcomm alive and unrestrained.
+  name: Escape to CentComm alive and unrestrained via the escape shuttle.
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
@@ -64,6 +64,8 @@
       - EscapeShuttleCondition
       - StealCondition
   - type: DieCondition
+  - type: ObjectiveLimit
+    limit: 1
 
 #- type: entity
 #  parent: [BaseTraitorObjective, BaseLivingObjective]
@@ -91,6 +93,12 @@
   - type: TargetObjective
     title: objective-condition-maroon-person-title
   - type: PickRandomPerson
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
   - type: KillPersonCondition
     requireMaroon: true
 
@@ -106,12 +114,47 @@
     unique: true
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
-  - type: PickRandomHead
+  - type: PickRandomPerson
+    filters:
+    - !type:BodyMindFilter
+      whitelist:
+        components:
+        - CommandStaff
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it
     requireDead: true
     requireMaroon: true
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseKillObjective]
+  id: KillStationAiObjective
+  description: Nanotrasen proudly boasts about their state of the art artificial intelligence. Remind them it's just another toy that can be broken.
+  components:
+  - type: Objective
+    difficulty: 3.0
+    # there's probably only one AI
+    unique: true
+    icon:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead # TODO: Change this to broken when we have a better objectives UI, broken sprite is currently too big!
+  - type: TargetObjective
+    title: objective-condition-kill-station-ai
+  - type: PickRandomPerson
+    pool: !type:AliveAiPool
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
+  - type: KillPersonCondition
+    requireDead: true
 
 # social
 
@@ -124,7 +167,18 @@
     difficulty: 1.75
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
-  - type: RandomTraitorAlive
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]
@@ -135,7 +189,25 @@
     difficulty: 2.5
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
-  - type: RandomTraitorProgress
+  - type: PickRandomPerson
+    filters:
+    - !type:HasRoleMindFilter
+      whitelist:
+        components:
+        - TraitorRole
+    # Can't help anyone who is tasked with helping:
+    # 1. thats boring
+    # 2. no cyclic progress dependencies!!!
+    - !type:ObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+    # Can't have multiple objectives to help/save the same person
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - HelpProgressCondition
+        - KeepAliveCondition
 
 # steal
 
@@ -147,7 +219,7 @@
   id: BaseCMOStealObjective
   components:
   - type: NotJobRequirement
-    job: ChiefMedicalOfficer
+    jobs: [ ChiefMedicalOfficer ]
   - type: StealCondition
     owner: job-name-cmo
 
@@ -173,7 +245,7 @@
   id: BaseRDStealObjective
   components:
   - type: NotJobRequirement
-    job: ResearchDirector
+    jobs: [ ResearchDirector ]
   - type: StealCondition
     owner: job-name-rd
 
@@ -198,15 +270,15 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: EnergyShotgunStealObjective
+  id: EnergyMagnumStealObjective
   components:
   - type: Objective
     # HoS will have this on them a lot of the time so..
     difficulty: 3
   - type: NotJobRequirement
-    job: HeadOfSecurity
+    jobs: [ HeadOfSecurity ]
   - type: StealCondition
-    stealGroup: WeaponEnergyShotgun
+    stealGroup: WeaponEnergyMagnum
     owner: job-name-hos
 
 ## ce
@@ -216,7 +288,7 @@
   id: MagbootsStealObjective
   components:
   - type: NotJobRequirement
-    job: ChiefEngineer
+    jobs: [ ChiefEngineer ]
   - type: StealCondition
     stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
@@ -228,7 +300,7 @@
   id: ClipboardStealObjective
   components:
   - type: NotJobRequirement
-    job: Quartermaster
+    jobs: [ Quartermaster ]
   - type: StealCondition
     stealGroup: BoxFolderQmClipboard
     owner: job-name-qm
@@ -238,7 +310,7 @@
   id: KnuckleDustersStealObjective
   components:
   - type: NotJobRequirement
-    job: Quartermaster
+    jobs: [ Quartermaster ]
   - type: StealCondition
     stealGroup: ClothingHandsKnuckleDustersQM
     owner: job-name-qm
@@ -250,7 +322,7 @@
   id: CorgiMeatStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel
+    jobs: [ HeadOfPersonnel ]
   - type: ObjectiveLimit
     limit: 3 # ian only has 2 slices, 3 obj for drama
   - type: StealCondition
@@ -268,7 +340,7 @@
     # sorry ce but your jordans are not as high security as the caps gear
     difficulty: 3.5
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
 
 - type: entity
   parent: BaseCaptainObjective
@@ -305,3 +377,57 @@
   - type: StealCondition
     stealGroup: NukeDisk
     owner: objective-condition-steal-station
+
+# sabotage
+- type: entity
+  parent: BaseTraitorObjective
+  id: SupercritAnomaliesObjective
+  description: Nanotrasen is very interested in anomalies with potentially catastrophic consequences. Introduce them to the fire they're playing with.
+  components:
+  - type: Objective
+    difficulty: 2
+    icon:
+      sprite: Structures/Specific/anomaly.rsi
+      state: anom1
+  - type: SupercriticalAnomaliesCondition
+  - type: NumberObjective
+    min: 3
+    max: 4
+    title: objective-condition-supercrit-anomalies-title
+  - type: ObjectiveLimit
+    limit: 1
+
+# other
+- type: entity
+  parent: BaseTraitorObjective
+  id: HijackTradeStationObjective
+  name: Hijack the Automated Trade Station.
+  description: Your uplink has been authorized one hijack beacon. Deploy it on the Automated Trade Station and defend it whilst it hijacks the trade station.
+  components:
+  - type: Objective
+    difficulty: 3
+    icon:
+      sprite: Objects/Tools/hijack_beacon.rsi
+      state: extraction_point
+  - type: HijackTradeStationCondition
+  - type: ObjectiveLimit
+    # There is only one trade station so there should never be more than one of these objectives.
+    limit: 1
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseCounterObjective]
+  id: MailFraudObjective
+  description: We're interested in Nanotrasen's correspondence. Letter opener not provided.
+  components:
+  - type: Objective
+    difficulty: 0.5
+    icon:
+      sprite: Objects/Specific/Cargo/mail_bag.rsi
+      state: icon
+  - type: MailFraudCondition
+  - type: NumberObjective
+    min: 8
+    max: 12
+    title: objective-condition-mail-fraud-title
+  - type: ObjectiveLimit
+    limit: 1

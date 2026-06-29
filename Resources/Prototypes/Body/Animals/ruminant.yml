@@ -1,0 +1,38 @@
+- type: entity
+  parent: [ OrganBaseStomach, OrganAnimalInternal, OrganAnimalMetabolizer ]
+  id: OrganRuminantStomach
+  suffix: Ruminant
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Ruminant
+      - Wheat
+      - BananaPeel
+  - type: SolutionManager
+    solutions:
+    - SolutionStomachRuminant
+
+- type: entity
+  parent: SolutionStomach
+  id: SolutionStomachRuminant
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    solution:
+      maxVol: 240
+
+- type: entity
+  id: BaseMobRuminant
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganAnimalHeart
+        - id: OrganRuminantStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

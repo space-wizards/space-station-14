@@ -58,7 +58,7 @@
   - Use [color=yellow][bold][keybind="Use"][/bold][/color] to [color=cyan]put[/color] a held item from your active hand somewhere else, or to [color=cyan]use it[/color] on something or someone, depending on the context.
   - Pay attention to your active hand when interacting with the world to prevent accidentally using held items.
 
-  [bold]Items can't be transferred by drag and drop.[/bold]
+  [bold]Items cannot be transferred by drag and drop.[/bold]
 
   ### Dropping and throwing
   Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (or place) an item from your hand within arm's reach.
@@ -81,8 +81,8 @@
 
   Standard interactions range from clicking [bold]tables[/bold] to put held items onto them, to [bold]using[/bold] objects in the world with empty hands, and most commonly, using held items to interact with mobs and with other items.
 
-  In some situations, you can directly [color=cyan]swap items[/color] by clicking.
-  For example, while holding a beaker, click on a machine that holds another beaker.
+  In some situations, you can directly [color=cyan]swap items[/color] by clicking on a machine while holding an item.
+  For example, while holding a beaker, click on a machine storing another beaker. This also works with air tanks and canisters.
 
   Some items have [color=cyan]alternative interactions[/color] — use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] to [bold]lock[/bold] lockers, [bold]eject[/bold] subitems such as batteries from other items, etc.
 
@@ -90,23 +90,24 @@
   Interact with objects such as containers even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
   This allows you to, for example, [bold]open containers[/bold] without picking them up, [bold]open doors[/bold] without using the item you're holding, and to [bold]cycle guns[/bold].
 
-  Notably, press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on a mob to open the [color=cyan]strip menu[/color], allowing you to view their inventory — which lets you try to take it.
+  Notably, press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on a mob to open the [color=cyan]strip menu[/color], allowing you to view their inventory — which lets you try to take off or steal items from them.
 
   ### In-hand
-  Many items also have [bold]use-in-hand interactions[/bold], such as opening bottles, [bold]wielding[/bold] two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.), or [bold]cycling[/bold] guns.
+  Many items also have [color=cyan]use-in-hand interactions[/color], such as [bold]opening[/bold] bottles, [bold]wielding[/bold] two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.), [bold]cycling[/bold] guns, or [bold]toggling[/bold] syringes between injecting and drawing.
 
-  You may just perform them by clicking on your active hand, but it's worth remembering the hotkeys — [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] and [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] for [color=cyan]standard[/color] and [color=cyan]alternative[/color] in-hand interactions, respectively.
+  You may just perform in-hand interactions by clicking [color=yellow][bold][keybind="Use"][/bold][/color] or [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on your active hand, but it's worth remembering the hotkeys — [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] and [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] for [color=cyan]standard[/color] and [color=cyan]alternative[/color] in-hand interactions, respectively.
 
   ### Click and drag
-  To "use" a mob (player or NPC) [italic]on[/italic] a static object, click and drag them onto said object with [color=yellow][bold][keybind="Use"][/bold][/color].
-  \n(Not to be confused with [italic]pulling[/italic].)
+  You can "use" an entity on another entity by dragging one onto another with [color=yellow][bold][keybind="Use"][/bold][/color]. (Not to be confused with [italic]pulling[/italic].)
 
   Use it to:
-  - [color=cyan]Put[/color] a mob on a chair, bed, into a cryogenic chamber, etc.
+  - [color=cyan]Place[/color] or force a mob (player or NPC) on a chair, bed, into a cryogenic chamber, disposal unit, etc.
 
   - [color=cyan]Climb[/color] yourself onto a table — you can also click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on the table.
 
   - Open the [color=cyan]strip menu[/color] by dragging another mob onto your character — which is also doable with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color], as mentioned earlier.
+
+  - [color=cyan]Pour[/color] the contents of a liquid container (janitorial trolley, bucket, beaker) into another container, a drain, a machine, etc. But first, remember to place the container on the ground — you can't do it from your inventory.
 
   ### Pointing
   Use [color=yellow][bold][keybind="Point"][/bold][/color] to [color=cyan]point[/color] at a location in the world, creating a temporary arrow visible to everyone.
@@ -118,11 +119,11 @@
   - [bold]activation[/bold] ([color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color]),
   - [bolditalic]use-in-hand[/bolditalic] ([color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color]),
   - [italic]alternative use-in-hand[/italic] ([color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color]),
-  - click and drag (which is unique for placing mobs onto objects).
+  - click and drag.
 
   Don't worry about having to memorize them — they're usually intuitive and consistent across entity categories, and you'll find that most entities only use one or two interactions.
 
-  [bold]Items are still interactable while stored in containers.[/bold]
+  [bold]Items stored in containers are still interactable.[/bold]
 
   ## Context menus
   Click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any interactive entity to open the [color=cyan]context menu[/color], which shows you additional interaction you can currently perform.
@@ -159,9 +160,12 @@
   If you have a bag or a belt, open their inventories with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] or by clicking the mini-icons in the [bold]bottom right[/bold] of their icons.
   You can also use the [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys for that.
 
-  Press [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] to [color=cyan]quick-equip[/color] — it quick-stores the item from your active hand into your bag, or if your hand is empty, quick-equips the most recently added item from the bag into your active hand.
-  \n[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
-  \n[italic]Tip: You can also quick-equip single items stored in the back slot.[/italic]
+  ### Smart-equipping
+  You can [color=cyan]quick-move[/color] items between your active hand and a corresponding slot. If that slot has a container in it, this action will [color=cyan]quick-store[/color] or [color=cyan]quick-take[/color] the most recent item from that container (signified with a golden star icon in the container).
+
+  - [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] smart-equips the back slot.
+  - [color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] smart-equips the belt slot.
+  - [color=yellow][bold][keybind="SmartEquipPocket1"][/bold][/color], [color=yellow][bold][keybind="SmartEquipPocket2"][/bold][/color], and [color=yellow][bold][keybind="SmartEquipSuitStorage"][/bold][/color] smart-equip the left pocket, right pocket, and suit storage slots, respectively.
 
   ### Organizing grid inventories
   [color=cyan]Rearrange[/color] items by dragging them with [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color].

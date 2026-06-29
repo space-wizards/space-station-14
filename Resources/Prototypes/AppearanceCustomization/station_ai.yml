@@ -1,0 +1,163 @@
+# Groups
+- type: stationAiCustomizationGroup
+  id: StationAiCoreIconography
+  name: station-ai-customization-core
+  category: CoreIconography
+  protoIds:
+  - StationAiIconAi
+  - StationAiIconAngel
+  - StationAiIconBliss
+  - StationAiIconClown
+  - StationAiIconDorf
+  - StationAiIconHeartline
+  - StationAiIconSmiley
+
+- type: stationAiCustomizationGroup
+  id: StationAiHolograms
+  name: station-ai-customization-hologram
+  category: Hologram
+  protoIds:
+  - StationAiHologramFemale
+  - StationAiHologramMale
+  - StationAiHologramFace
+  - StationAiHologramCat
+  - StationAiHologramDog
+
+# Iconography
+- type: stationAiCustomization
+  abstract: true
+  id: StationAiIconBase
+  previewKey: Occupied
+  previewBackground:
+    sprite: Mobs/Silicon/station_ai.rsi
+    state: base
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconAi
+  name: station-ai-icon-ai
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconAngel
+  name: station-ai-icon-angel
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_angel
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_angel_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconBliss
+  name: station-ai-icon-bliss
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_bliss
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconClown
+  name: station-ai-icon-clown
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_clown
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_clown_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconDorf
+  name: station-ai-icon-dorf
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dorf
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconHeartline
+  name: station-ai-icon-heartline
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_heartline"
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_heartline_dead"
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconSmiley
+  name: station-ai-icon-smiley
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_smiley"
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_dead"
+
+# Holograms
+- type: stationAiCustomization
+  id: StationAiHologramFemale
+  name: station-ai-hologram-female
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_female
+
+- type: stationAiCustomization
+  id: StationAiHologramMale
+  name: station-ai-hologram-male
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_male
+
+- type: stationAiCustomization
+  id: StationAiHologramFace
+  name: station-ai-hologram-face
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_face
+
+- type: stationAiCustomization
+  id: StationAiHologramCat
+  name: station-ai-hologram-cat
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_cat
+
+- type: stationAiCustomization
+  id: StationAiHologramDog
+  name: station-ai-hologram-dog
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_dog

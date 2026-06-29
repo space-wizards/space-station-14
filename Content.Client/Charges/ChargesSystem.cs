@@ -5,9 +5,9 @@ using Content.Shared.Charges.Systems;
 
 namespace Content.Client.Charges;
 
-public sealed class ChargesSystem : SharedChargesSystem
+public sealed partial class ChargesSystem : SharedChargesSystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private ActionsSystem _actions = default!;
 
     private Dictionary<EntityUid, int> _lastCharges = new();
     private Dictionary<EntityUid, int> _tempLastCharges = new();
@@ -25,16 +25,14 @@ public sealed class ChargesSystem : SharedChargesSystem
 
         while (query.MoveNext(out var uid, out var recharge, out var charges))
         {
-            BaseActionComponent? actionComp = null;
-
-            if (!_actions.ResolveActionData(uid, ref actionComp, logError: false))
+            if (_actions.GetAction(uid, false) is not {} action)
                 continue;
 
             var current = GetCurrentCharges((uid, charges, recharge));
 
             if (!_lastCharges.TryGetValue(uid, out var last) || current != last)
             {
-                _actions.UpdateAction(uid, actionComp);
+                _actions.UpdateAction(action);
             }
 
             _tempLastCharges[uid] = current;

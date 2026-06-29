@@ -11,7 +11,7 @@ public sealed partial class XenoArchTriggerPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Tip for user on how to activate this trigger.

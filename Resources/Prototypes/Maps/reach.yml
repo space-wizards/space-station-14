@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency.yml
         - type: StationJobs
-          availableJobs: # 15 jobs total w/o latejoins, 19 jobs total w/ latejoins
+          availableJobs: # 17 jobs total w/o latejoins, 21 jobs total w/ latejoins
             #command (2)
             Captain: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -38,6 +38,8 @@
             #supply (2)
             CargoTechnician: [ 1, 1 ]
             SalvageSpecialist: [ 1, 1 ]
-            #civilian (1+)
+            #civilian (3+)
             Passenger: [ -1, -1 ] #infinite, not counted
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]

@@ -18,10 +18,10 @@ namespace Content.Client.Guidebook;
 /// </summary>
 public sealed partial class DocumentParsingManager
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-    [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IReflectionManager _reflectionManager = default!;
+    [Dependency] private IResourceManager _resourceManager = default!;
+    [Dependency] private ISandboxHelper _sandboxHelper = default!;
 
     private readonly Dictionary<string, Parser<char, Control>> _tagControlParsers = new();
     private Parser<char, Control> _controlParser = default!;
@@ -51,22 +51,22 @@ public sealed partial class DocumentParsingManager
         _sawmill = Logger.GetSawmill("Guidebook");
     }
 
-    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId, bool log = true)
+    public bool TryAddMarkup(Control control, ProtoId<GuideEntryPrototype> entryId)
     {
-        if (!_prototype.TryIndex(entryId, out var entry))
+        if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, GuideEntry entry, bool log = true)
+    public bool TryAddMarkup(Control control, GuideEntry entry)
     {
         using var file = _resourceManager.ContentFileReadText(entry.Text);
-        return TryAddMarkup(control, file.ReadToEnd(), log);
+        return TryAddMarkup(control, file.ReadToEnd());
     }
 
-    public bool TryAddMarkup(Control control, string text, bool log = true)
+    public bool TryAddMarkup(Control control, string text)
     {
         try
         {

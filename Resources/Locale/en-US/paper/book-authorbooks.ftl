@@ -151,8 +151,6 @@ book-text-ian-arctic = Ian and Renault were no strangers to adventure, having ex
       Suddenly, they heard a loud roar from deep within the cave. They cautiously made their way forward, only to come face to face with a massive polar bear. The bear looked at them curiously, and Ian and Renault froze in fear.
       But then they remembered all the adventures they had been on before, and how they had always managed to help those in need. They bravely approached the bear, making soothing noises and offering it some fish they had brought with them.
       To their relief, the bear calmed down and even allowed them to pet its thick fur. They spent some time with the friendly bear before bidding it farewell and continuing their Arctic adventure.
-      At one point, they came across a lost kitten who had strayed too far from her home. Ian and Renault knew just what to do, having rescued stranded sea creatures and helped lost hikers in the past. They used their keen sense of smell to track down the kitten's owner and reunited her with her worried family.
-      As the day turned into night, they were exhausted but happy from their adventure in the city. They made their way back home, talking excitedly about all the new experiences they had just had.
       As their journey came to an end, they were sad to leave the frozen wonderland behind. But they knew that they had once again made incredible memories and had proven that no adventure was too big for a brave Corgi and a cunning fox.
 
 book-text-ian-desert = Ian and Renault were always up for a new adventure, so when they heard about the mysterious and beautiful desert, they knew they had to go explore it. They packed their bags and set off to experience all that the desert had to offer.

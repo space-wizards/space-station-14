@@ -1,5 +1,4 @@
-﻿using Content.Server.Ghost.Roles.Raffles;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost.Roles.Raffles;
 
