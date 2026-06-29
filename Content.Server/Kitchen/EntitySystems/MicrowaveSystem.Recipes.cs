@@ -23,7 +23,7 @@ public sealed partial class MicrowaveSystem
     private void OnGetSecretRecipes(Entity<FoodRecipeProviderComponent> ent, ref GetSecretRecipesEvent args)
     {
         foreach (var recipeId in ent.Comp.ProvidedRecipes)
-            if (_prototype.Resolve(recipeId, out var recipeProto))
+            if (ProtoMan.Resolve(recipeId, out var recipeProto))
                 args.Recipes.Add(recipeProto);
     }
 

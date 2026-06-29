@@ -59,7 +59,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
