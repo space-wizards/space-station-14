@@ -44,14 +44,14 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         while (query.MoveNext(out var uid, out var active, out var microwave))
         {
             var timeElapsed = curTime - active.LastCookUpdated;
-            var dirty = false;
 
             // Roll malfunctions
             if (active.NextMalfunction < curTime)
             {
                 RollMalfunction((uid, microwave));
                 active.NextMalfunction += microwave.MalfunctionInterval;
-                dirty = true;
+
+                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextMalfunction));
             }
 
             // Finish cooking
@@ -59,7 +59,8 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             {
                 AddTemperature(microwave, (float)timeElapsed.TotalSeconds);
                 CompleteCooking((uid, active, microwave));
-                Dirty(uid, active);
+
+                DirtyField(uid, microwave, nameof(MicrowaveComponent.CurrentCookTimeEnd));
                 continue;
             }
 
@@ -69,11 +70,10 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
                 active.NextCookUpdate += active.CookUpdateInterval;
                 active.LastCookUpdated = curTime;
                 AddTemperature(microwave, (float)timeElapsed.TotalSeconds);
-                dirty = true;
-            }
 
-            if (dirty)
-                Dirty(uid, active);
+                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextCookUpdate));
+                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.LastCookUpdated));
+            }
         }
     }
 

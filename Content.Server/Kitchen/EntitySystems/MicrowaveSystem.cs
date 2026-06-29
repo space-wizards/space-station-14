@@ -227,6 +227,8 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     public void Explode(Entity<MicrowaveComponent> ent)
     {
         ent.Comp.Broken = true; // Make broken so we stop processing stuff
+        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+
         _explosion.TriggerExplosive(ent);
         if (TryComp<MachineComponent>(ent, out var machine))
         {
