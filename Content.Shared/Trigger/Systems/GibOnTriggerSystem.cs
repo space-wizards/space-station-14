@@ -20,6 +20,7 @@ public sealed partial class GibOnTriggerSystem : XOnTriggerSystem<GibOnTriggerCo
             }
         }
 
-        args.Handled = _gibbing.TryGib(target, out _, user: args.User);
+        _gibbing.Gib(target, user: args.User);
+        args.Handled = true;
     }
 }
