@@ -26,7 +26,7 @@
     sprite: Objects/Weapons/Bombs/seismic.rsi
     state: icon
   product: SeismicCharge
-  container: SteelCrate
+  container: CrateSteel
   cost: 300
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward2
@@ -37,7 +37,7 @@
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
   product: WeaponCrusher
-  container: SteelCrate
+  container: CrateSteel
   cost: 2500
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward2
@@ -49,7 +49,7 @@
     state: icon
   product: ClothingOuterHardsuitSalvage
   cost: 6500
-  container: SteelCrate
+  container: CrateSteel
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward2
 
@@ -60,18 +60,18 @@
     sprite: /Textures/Objects/Tools/fulton.rsi
     state: extraction_pack
   product: Fulton
-  container: SteelCrate
+  container: CrateSteel
   cost: 300
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward3
 
 - type: cargoProduct
-  id: CargoFulton
+  id: CargoFultonBeacon
   icon:
     sprite: /Textures/Objects/Tools/fulton.rsi
     state: extraction_point
   product: FultonBeacon
-  container: SteelCrate
+  container: CrateSteel
   cost: 2000
   category: cargoproduct-category-name-cargo
   group: SalvageJobReward3
