@@ -224,7 +224,7 @@ public sealed partial class OpenableSystem : EntitySystem
 
         SetOpen(uid, true, comp, user);
         if (TryComp<SolutionComponent>(uid, out var solution) &&
-            comp.HasDifferentOpenSoundWhenEmpty && //if we have a different sound to play when it's empty
+            comp.OpenEmptySound != null && //if we have a different sound to play when it's empty
             solution.Solution.Volume == 0) //AND it's empty
         {
             _audio.PlayPredicted(comp.OpenEmptySound, uid, user);
