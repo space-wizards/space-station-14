@@ -146,9 +146,9 @@
   color: "#86530E"
 
 - type: reagent
-  id: Saxoite
-  name: reagent-name-saxoite
-  desc: reagent-desc-saxoite
+  id: Brass
+  name: reagent-name-brass
+  desc: reagent-desc-brass
   physicalDesc: reagent-physical-desc-ground-brass
   flavor: sax
   color: "#B8A603"

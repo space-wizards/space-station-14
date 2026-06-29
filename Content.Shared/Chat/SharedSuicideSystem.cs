@@ -8,12 +8,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chat;
 
-public sealed class SharedSuicideSystem : EntitySystem
+public sealed partial class SharedSuicideSystem : EntitySystem
 {
     private static readonly ProtoId<DamageTypePrototype> FallbackDamageType = "Blunt";
 
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Applies lethal damage spread out across the damage types given.

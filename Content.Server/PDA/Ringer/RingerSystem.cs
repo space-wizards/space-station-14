@@ -1,10 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Store.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
-using Content.Shared.Store.Components;
+using Content.Shared.Store;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -13,9 +12,9 @@ namespace Content.Server.PDA.Ringer;
 /// <summary>
 /// Handles the server-side logic for <see cref="SharedRingerSystem"/>.
 /// </summary>
-public sealed class RingerSystem : SharedRingerSystem
+public sealed partial class RingerSystem : SharedRingerSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public static Note[] AllowedNotes =
     {
