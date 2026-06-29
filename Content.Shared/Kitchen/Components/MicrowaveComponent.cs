@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking;
 using Content.Shared.Item;
+using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -14,7 +15,7 @@ namespace Content.Shared.Kitchen.Components;
 ///     A component applied to microwaves, which are used to heat entities/solutions
 ///     and produce microwave recipes.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
 [NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MicrowaveComponent : Component
 {
@@ -26,6 +27,9 @@ public sealed partial class MicrowaveComponent : Component
     ///     recipes will be processed as if you're portioning for 30 seconds, but the
     ///     microwave's timer will take 15 seconds instead. So, if you have a recipe with
     ///     a cookTime of 10 seconds, you can still make that recipe 3 at a time.
+    ///
+    ///     Note that faster cooking times make the microwave less useful for actual heating
+    ///     (temperature) as thermal energy added to the contents is based on elapsed time.
     /// </remarks>
     [DataField]
     public float CookTimeMultiplier = 1;
