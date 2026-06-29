@@ -120,6 +120,10 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
         enabled: false
+  - type: PowerNetworkConnector
+    voltages:
+      output_hv: High
+      output_mv: Medium
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
@@ -308,6 +312,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerNetworkConnector
+    voltage: Apc
+    node: output
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output

@@ -10,6 +10,7 @@
   - type: PowerConsumer
   - type: PowerNetworkConnector
     voltage: Medium
+    node: input
   - type: NodeContainer
     examinable: true
     nodes:

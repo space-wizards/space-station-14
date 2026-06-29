@@ -106,10 +106,11 @@ namespace Content.IntegrationTests.Tests.Power
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
-  - type: PowerNetworkConnector
-    voltage: High
   - type: BatteryDischarger
-    voltage: Medium
+  - type: PowerNetworkConnector
+    voltages:
+      input: High
+      output: Medium
   - type: PowerNetworkBattery
     maxChargeRate: 1000
     maxSupply: 1000
@@ -133,12 +134,12 @@ namespace Content.IntegrationTests.Tests.Power
     maxSupply: 1000
     supplyRampTolerance: 1000
   - type: BatteryCharger
-  - type: PowerNetworkConnector
-    voltage: Medium
   - type: BatteryDischarger
-    voltage: Apc
+  - type: PowerNetworkConnector
+    voltages:
+      input: Medium
+      output: Apc
   - type: Apc
-    voltage: Apc
   - type: NodeContainer
     nodes:
       input:

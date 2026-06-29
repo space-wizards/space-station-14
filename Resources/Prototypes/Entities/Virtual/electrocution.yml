@@ -23,6 +23,7 @@
     drawRate: 50000
   - type: PowerNetworkConnector
     voltage: High
+    node: electrocution
 
 - type: entity
   id: VirtualElectrocutionLoadMVPower
@@ -38,6 +39,7 @@
     drawRate: 50000
   - type: PowerNetworkConnector
     voltage: Medium
+    node: electrocution
 
 - type: entity
   id: VirtualElectrocutionLoadApc
@@ -53,3 +55,4 @@
     drawRate: 50000
   - type: PowerNetworkConnector
     voltage: Apc
+    node: electrocution

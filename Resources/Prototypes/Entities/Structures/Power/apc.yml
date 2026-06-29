@@ -82,11 +82,11 @@
     state: static
   - type: BatteryCharger
   - type: PowerNetworkConnector
-    voltage: Medium
+    voltages:
+      input: Medium
+      output: Apc
   - type: PowerProvider
-    voltage: Apc
   - type: Apc
-    voltage: Apc
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:

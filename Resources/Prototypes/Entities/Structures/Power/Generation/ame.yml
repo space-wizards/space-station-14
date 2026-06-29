@@ -87,6 +87,9 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: input
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: input

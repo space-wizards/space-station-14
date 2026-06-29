@@ -52,6 +52,7 @@
       drawRate: 10000000
     - type: PowerNetworkConnector
       voltage: High
+      node: input
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink

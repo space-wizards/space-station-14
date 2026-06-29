@@ -44,11 +44,21 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNet>
             if (!_connectorQuery.TryComp(node.Owner, out var comp))
                 continue;
 
-            if ((comp.NodeId == null ||
-                 comp.NodeId == node.Name) &&
-                (NodeGroupID) comp.Voltage == node.NodeGroupID)
+            if (comp.Voltage != null
+                && (comp.NodeId == null || comp.NodeId == node.Name)
+                && (NodeGroupID) comp.Voltage == node.NodeGroupID)
             {
-                SetNetConnectorNet(group, (node.Owner, comp));
+                comp.Net = group;
+            }
+            else if (comp.Voltages != null)
+            {
+                foreach (var (nodeId, voltage) in comp.Voltages)
+                {
+                    if (nodeId == node.Name && (NodeGroupID) voltage == node.NodeGroupID)
+                    {
+                        comp.Net = group;
+                    }
+                }
             }
         }
     }
@@ -57,11 +67,6 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNet>
     {
         base.AfterRemake(group, newGroups);
         _powerNetSystem.DestroyPowerNet(group);
-    }
-
-    public void SetNetConnectorNet(PowerNet group, Entity<PowerNetworkConnectorComponent> netConnectorComponent)
-    {
-        netConnectorComponent.Comp.Net = group;
     }
 
     public void AddDischarger(PowerNet group, Entity<BatteryDischargerComponent?, PowerNetworkBatteryComponent?> discharger)

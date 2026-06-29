@@ -58,11 +58,11 @@
       sprite: Structures/Power/smes.rsi
       state: static
     - type: BatteryDischarger
-      node: output
-      voltage: High
     - type: BatteryCharger
-      node: input
-      voltage: High
+    - type: PowerNetworkConnector
+      voltages:
+        input: High
+        output: High
     - type: PowerNetworkBattery
       maxSupply: 150000
       maxChargeRate: 5000

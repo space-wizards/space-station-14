@@ -51,6 +51,9 @@
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg
+    - type: PowerNetworkConnector
+      voltage: High
+      node: output
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output

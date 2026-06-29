@@ -31,9 +31,14 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
 
     public void TryFindAndSetNet(Entity<PowerNetworkConnectorComponent> ent)
     {
-        if (TryFindNet(ent, out var net))
+        if (ent.Comp.Voltage != null)
         {
-            ent.Comp.Net = net;
+            if (TryFindNet(ent, out var net))
+                ent.Comp.Net = net;
+        }
+        else
+        {
+            FindAndSetNets(ent);
         }
     }
 
@@ -51,7 +56,7 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         if (TryComp(ent, out NodeContainerComponent? container))
         {
             var compatibleNet = container.Nodes.Values
-                .Where(node => (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage)
+                .Where(node => (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage!)
                 .Select(node => node.NodeGroup)
                 .OfType<PowerNet>()
                 .FirstOrDefault();
@@ -64,6 +69,24 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         }
         foundNet = null;
         return false;
+    }
+
+    private void FindAndSetNets(Entity<PowerNetworkConnectorComponent> ent)
+    {
+        if (!TryComp(ent, out NodeContainerComponent? container)
+            || ent.Comp.Voltages == null)
+            return;
+
+        foreach (var net in container.Nodes.Values)
+        {
+            if (!ent.Comp.Voltages.TryGetValue(net.Name, out var voltage)
+                || net.NodeGroupID != (NodeGroupID) voltage
+                || net.NodeGroup is not PowerNet netGroup)
+                continue;
+
+            ent.Comp.Nets ??= new();
+            ent.Comp.Nets.Add(net.Name, netGroup);
+        }
     }
 
     public void SetNet(Entity<PowerNetworkConnectorComponent> ent, PowerNet? newNet)

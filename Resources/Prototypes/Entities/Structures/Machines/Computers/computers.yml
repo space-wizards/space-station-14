@@ -323,6 +323,9 @@
       hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: hv
   - type: ActivatableUI
     singleUser: true
     key: enum.PowerMonitoringConsoleUiKey.Key

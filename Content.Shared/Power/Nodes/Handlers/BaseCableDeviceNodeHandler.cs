@@ -7,9 +7,7 @@ namespace Content.Shared.Power.Nodes.Handlers;
 /// <summary>
 ///     Type of node that connects to a <see cref="CableNode"/> below it.
 /// </summary>
-[DataDefinition]
-[Virtual]
-public partial class BaseCableDeviceNodeHandler<T> : NodeHandler<T> where T : CableDeviceNode
+public abstract class BaseCableDeviceNodeHandler<T> : NodeHandler<T> where T : CableDeviceNode
 {
     protected override bool Connectable(T node)
     {
