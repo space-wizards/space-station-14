@@ -13,7 +13,7 @@ public sealed partial class PlacementDirectionIndicatorComponent : Component
     /// Sprite to use as the direction indicator.
     /// </summary>
     [DataField]
-    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Markers/teg_arrow.rsi"), "arrow");
+    public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Markers/directional_arrow_indicator.rsi"), "blue_arrow");
 
     /// <summary>
     /// Color modulation applied to the indicator texture.
