@@ -67,6 +67,15 @@ public sealed partial class OpenableComponent : Component
     public SoundSpecifier? Sound = new SoundCollectionSpecifier("canOpenSounds");
 
     /// <summary>
+    /// Sound played only when bottle is empty and being opened (no liquid slosh)
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? OpenEmptySound = new SoundCollectionSpecifier("bottleOpenEmptySounds");
+
+    [DataField]
+    public bool HasDifferentOpenSoundWhenEmpty = false;
+
+    /// <summary>
     /// Can this item be closed again after opening?
     /// </summary>
     [DataField, AutoNetworkedField]
