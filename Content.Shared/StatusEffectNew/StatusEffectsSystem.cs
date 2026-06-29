@@ -78,7 +78,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         foreach (var ent in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
-            if (ent.TryGetComponent<StatusEffectComponent>(out _, _factory))
+            if (ent.HasComp<StatusEffectComponent>(_factory))
                 StatusEffectPrototypes.Add(ent.ID);
         }
     }
@@ -167,7 +167,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         if (!ProtoMan.Resolve(effectProto, out var effectProtoData))
             return false;
 
-        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))
+        if (!effectProtoData.TryComp<StatusEffectComponent>(out var effectProtoComp, Factory))
             return false;
 
         if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))

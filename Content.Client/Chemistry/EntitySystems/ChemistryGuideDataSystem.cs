@@ -15,6 +15,7 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// <inheritdoc/>
 public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
+    [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
@@ -89,15 +90,15 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, EntityManager.ComponentFactory))
+            if (!entProto.TryComp(out ExtractableComponent? extractableComponent, EntityManager.ComponentFactory))
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComponent<OrganComponent>())
+            if (entProto.HasComp<OrganComponent>(_factory))
                 continue;
 
             //these feel obvious...
-            if (entProto.HasComponent<PillComponent>())
+            if (entProto.HasComp<PillComponent>(_factory))
                 continue;
 
             if (extractableComponent.JuiceSolution is { } juiceSolution)

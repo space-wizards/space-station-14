@@ -1,13 +1,11 @@
 using Content.Shared.SprayPainter.Prototypes;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Storage.Visualizers;
 
 public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
@@ -42,13 +40,13 @@ public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<Ent
         var forceRedrawBase = false;
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var prototype, args.Component))
         {
-            if (_prototypeManager.Resolve(prototype, out var proto))
+            if (ProtoMan.Resolve(prototype, out var proto))
             {
-                if (proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+                if (proto.TryComp(out SpriteComponent? sprite, _componentFactory))
                 {
                     SpriteSystem.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
                 }
-                if (proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
+                if (proto.TryComp(out EntityStorageVisualsComponent? visuals, _componentFactory))
                 {
                     comp.StateBaseOpen = visuals.StateBaseOpen;
                     comp.StateBaseClosed = visuals.StateBaseClosed;

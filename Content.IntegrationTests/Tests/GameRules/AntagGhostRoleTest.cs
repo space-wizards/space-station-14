@@ -40,7 +40,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
     public void TestAntagGhostRoles(string ruleId)
     {
         var rule = SProtoMan.Index<EntityPrototype>(ruleId);
-        Assert.That(rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
+        Assert.That(rule.TryComp<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
 
         STicker.StartGameRule(ruleId, out var gameRule);
 
@@ -88,7 +88,7 @@ public sealed partial class AntagGhostRoleTest : AntagTest
         foreach (var ruleId in AntagGameRules)
         {
             var rule = SProtoMan.Index<EntityPrototype>(ruleId);
-            Assert.That(rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
+            Assert.That(rule.TryComp<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory), Is.True);
             STicker.StartGameRule(ruleId);
         }
 
