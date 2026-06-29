@@ -2,6 +2,7 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -11,6 +12,17 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem Appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+
+    }
 
     /// <summary>
     ///     Updates the microwave's appearance state.
