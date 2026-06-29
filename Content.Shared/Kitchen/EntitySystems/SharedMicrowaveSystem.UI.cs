@@ -1,5 +1,6 @@
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
