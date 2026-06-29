@@ -198,8 +198,6 @@
         orGroup: Magics
       - id: WeaponWandFireball
         orGroup: Magics
-      - id: WeaponWandPolymorphDoor
-        orGroup: Magics
       - id: WeaponWandCluwne
         orGroup: Magics
       - id: WeaponWandPolymorphBread

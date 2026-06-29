@@ -6,10 +6,8 @@ namespace Content.Shared.Kitchen;
 /// <summary>
 ///     A manager that caches all available non-secret microwave recipes.
 /// </summary>
-public sealed partial class RecipeManager
+public sealed partial class RecipeManager : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
     /// <summary>
     ///     A list of all recipes available to the recipe manager.
     /// </summary>
@@ -21,55 +19,26 @@ public sealed partial class RecipeManager
     /// </remarks>
     public List<FoodRecipePrototype> Recipes { get; private set; } = new();
 
-    /// <summary>
-    ///     Caches all recipes and sorts them.
-    /// </summary>
-    public void Initialize()
+    public override void Initialize()
     {
-        CacheRecipes();
+        base.Initialize();
 
-        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+        ReloadRecipes();
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        // We need to re-cache recipes here, as recipes may be added or deleted,
-        // or ingredient changes may alter the order that recipes are sorted.
         if (args.WasModified<FoodRecipePrototype>())
-            CacheRecipes();
+            ReloadRecipes();
     }
 
-    private void CacheRecipes()
+    private void ReloadRecipes()
     {
-        Recipes = new();
-
-        foreach (var item in _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>())
-            if (!item.SecretRecipe)
-                Recipes.Add(item);
-
-        Recipes.Sort(new RecipeComparer());
-    }
-
-    /// <summary>
-    /// Check if a prototype ids appears in any of the recipes that exist.
-    /// </summary>
-    public bool SolidAppears(string solidId)
-    {
-        return Recipes.Any(recipe => recipe.Ingredients.Solids.ContainsKey(solidId));
-    }
-
-    private sealed class RecipeComparer : Comparer<FoodRecipePrototype>
-    {
-        public override int Compare(FoodRecipePrototype? x, FoodRecipePrototype? y)
-        {
-            if (x == null || y == null)
-            {
-                return 0;
-            }
-
-            var nx = x.Ingredients.Count();
-            var ny = y.Ingredients.Count();
-            return -nx.CompareTo(ny);
-        }
+        Recipes = ProtoMan
+            .EnumeratePrototypes<FoodRecipePrototype>()
+            .Where(x => !x.SecretRecipe)
+            .OrderByDescending(x => x.Ingredients.Count())
+            .ToList();
     }
 }
