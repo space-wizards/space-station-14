@@ -9,7 +9,8 @@ namespace Content.Shared.Cargo
     public sealed partial class CargoOrderData
     {
         /// <summary>
-        /// A unique (arbitrary) ID which identifies this order.
+        /// A unique ID which identifies this order.
+        /// Counts up from 1 with each order placed
         /// </summary>
         [DataField]
         public int OrderId { get; private set; }
@@ -20,6 +21,10 @@ namespace Content.Shared.Cargo
         [DataField]
         public List<CargoOrderItemData> Basket;
 
+        /// <summary>
+        /// Requester field on the order menu
+        /// Defaults to the name of the orderer
+        /// </summary>
         [DataField]
         public string Requester { get; private set; }
 
@@ -28,29 +33,47 @@ namespace Content.Shared.Cargo
         [DataField]
         public string Reason { get; private set; }
 
+        /// <summary>
+        /// Wether this order has been approved for delivery
+        /// </summary>
         [ViewVariables]
-        public bool Approved;
+        public bool Approved { get; set; }
 
+        /// <summary>
+        /// If this order has been assigned to be delivered differently from the
+        /// </summary>
         [ViewVariables]
-        public bool Assigned;
+        public bool Assigned { get; set; }
 
+        /// <summary>
+        /// The entity assigned to deliver, only not null if not the ATS
+        /// </summary>
         [ViewVariables]
-        public NetEntity? AssignedEntity;
+        public NetEntity? AssignedEntity { get; set; }
 
+        /// <summary>
+        /// The console which approved the order, used for telepad linking
+        /// </summary>
+        [ViewVariables]
+        public NetEntity? ApprovingConsole { get; set; }
+
+        /// <summary>
+        /// The ID of the person who approved the order
+        /// </summary>
         [DataField]
-        public string? Approver;
-        [ViewVariables]
-        public NetEntity? ApprovingConsole;
-
+        public string? Approver { get; set; }
 
         /// <summary>
         /// Which account to deduct funds from when ordering
         /// </summary>
         [DataField]
-        public ProtoId<CargoAccountPrototype> Account;
+        public ProtoId<CargoAccountPrototype> Account { get; private set; }
 
+        /// <summary>
+        /// If the order should be visible in any UI which displays orders
+        /// </summary>
         [DataField]
-        public bool Visible = true;
+        public bool Visible { get; set; } = true;
 
         public CargoOrderData(
             int orderId,

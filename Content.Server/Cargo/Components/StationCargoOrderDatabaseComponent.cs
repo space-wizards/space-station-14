@@ -35,7 +35,10 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// Not every console can order from every market, but a console can't order from a market not on this list.
     /// </summary>
     [DataField]
-    public List<ProtoId<CargoMarketPrototype>> Markets = new() { "market" };
+    public List<ProtoId<CargoMarketPrototype>> Markets = new()
+    {
+        "market",
+    };
 
     // TODO: Can probably dump this
     /// <summary>

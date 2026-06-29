@@ -12,18 +12,20 @@ using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
 using Content.Shared.Station.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
-        [Dependency] private SharedTransformSystem _transformSystem = default!;
-        [Dependency] private EmagSystem _emag = default!;
-        [Dependency] private IGameTiming _timing = default!;
+        [Dependency]
+        private TransformSystem _transformSystem = default!;
+
+        [Dependency]
+        private EmagSystem _emag = default!;
 
         private void InitializeConsole()
         {
@@ -34,10 +36,15 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, MapInitEvent>(OnMapInit);
+
+            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentInit>(OnStationInit);
         }
 
-        private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
+        private void OnInteractUsingCash(
+            EntityUid uid,
+            CargoOrderConsoleComponent component,
+            ref InteractUsingEvent args
+        )
         {
             var price = _pricing.GetPrice(args.Used);
 
@@ -55,11 +62,69 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
+        private void OnInteractUsingSlip(
+            Entity<CargoOrderConsoleComponent> ent,
+            ref InteractUsingEvent args,
+            CargoSlipComponent slip
+        )
+        {
+            var stationUid = _station.GetOwningStation(ent);
+
+            if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
+                return;
+
+            // Invalid order
+            if (!IsInAvailableProducts(ent, slip.Basket))
+            {
+                ConsolePopup(args.User, Loc.GetString("cargo-console-invalid-product"));
+                PlayDenySound(ent.Owner, ent.Comp);
+                return;
+            }
+
+            var order = new CargoOrderData(
+                GenerateOrderId(orderDatabase),
+                slip.Basket,
+                slip.Requester,
+                slip.Reason,
+                slip.Account
+            );
+
+            if (!TryAddOrder(stationUid.Value, order, orderDatabase))
+            {
+                PlayDenySound(ent, ent.Comp);
+                return;
+            }
+
+            _audio.PlayPvs(ent.Comp.ScanSound, ent);
+
+            // Log order addition
+            var adminString = "";
+            foreach (var product in slip.Basket)
+            {
+                adminString += $"{product.Quantity} {_protoMan.Index<CargoProductPrototype>(product.Product).Name},";
+            }
+
+            _adminLogger.Add(
+                LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(args.User):user} inserted order slip [orderId:{order.OrderId}, products:{adminString} requester:{order.Requester}, reason:{order.Reason}]"
+            );
+            QueueDel(args.Used);
+            args.Handled = true;
+        }
+
         private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
         {
             if (HasComp<CashComponent>(args.Used))
             {
                 OnInteractUsingCash(uid, component, ref args);
+            }
+            else if (
+                TryComp<CargoSlipComponent>(args.Used, out var slip)
+                && component.Mode == CargoOrderConsoleMode.DirectOrder
+            )
+            {
+                OnInteractUsingSlip((uid, component), ref args, slip);
             }
         }
 
@@ -69,9 +134,9 @@ namespace Content.Server.Cargo.Systems
             UpdateOrderState(uid, station);
         }
 
-        private void OnMapInit(Entity<StationCargoOrderDatabaseComponent> ent, ref MapInitEvent args)
+        private void OnStationInit(EntityUid uid, StationCargoOrderDatabaseComponent orderDatabase, ComponentInit args)
         {
-            ent.Comp.NextOrderCheck = Timing.CurTime + ent.Comp.OrderCheckDelay;
+            orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
         }
 
         private void OnEmagged(Entity<CargoOrderConsoleComponent> ent, ref GotEmaggedEvent args)
@@ -173,42 +238,16 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var emagged = _emag.CheckFlag(uid, EmagType.Interaction);
-
-            if (!emagged)
-            {
-                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
-            }
-
-            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
-            RaiseLocalEvent(ref ev);
-            ev.FulfillmentEntity ??= station.Value;
-
-            if (!ev.Handled)
-            {
-                ev.FulfillmentEntity = TryFulfillOrder((station.Value, stationData), order.Account, order, orderDatabase);
-
-                if (ev.FulfillmentEntity == null)
-                {
-                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-unfulfilled"));
-                    PlayDenySound(uid, component);
-                    order.Approver = null;
-                    return;
-                }
-            }
-
             order.Approved = true;
             order.ApprovingConsole = GetNetEntity(uid);
 
             _audio.PlayPvs(ApproveSound, uid);
 
-            if (!emagged)
+            if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {
-                var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
-                    ("productName", Loc.GetString(product.Name)),
-                    ("orderAmount", order.OrderQuantity),
-                    ("approver", order.Approver ?? string.Empty),
-                    ("cost", cost));
+                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
+
+                var message = GetApprovedRadioMessage(order);
                 _radio.SendRadioMessage(uid, message, account.RadioChannel, uid, escapeMarkup: false);
                 if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
                     _radio.SendRadioMessage(
@@ -303,39 +342,31 @@ namespace Content.Server.Cargo.Systems
                     break;
             }
 
-            return tradeDestination;
+            return containers.Count == 0;
         }
 
-        private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+        private void OnRemoveOrderMessage(
+            EntityUid uid,
+            CargoOrderConsoleComponent component,
+            CargoConsoleRemoveOrderMessage args
+        )
         {
-            foreach (var gridUid in data.Grids)
-            {
-                if (!_tradeStationQuery.HasComponent(gridUid))
-                    continue;
-
-                ents.Add(gridUid);
-            }
-        }
-
-        private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
-        {
-            var station = _station.GetOwningStation(uid);
-
             if (component.Mode == CargoOrderConsoleMode.PrintSlip)
                 return;
+
+            var station = _station.GetOwningStation(uid);
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            if (!TryComp<StationBankAccountComponent>(station, out var bank))
-                return;
-
-            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
-
-            RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
+            RemoveOrder(station.Value, args.OrderId, orderDatabase);
         }
 
-        private void OnAddOrderMessageSlipPrinter(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args, CargoProductPrototype product)
+        private void OnAddOrderMessageSlipPrinter(
+            EntityUid uid,
+            CargoOrderConsoleComponent component,
+            CargoConsoleAddOrderMessage args
+        )
         {
             if (!_protoMan.Resolve(component.Account, out var account))
                 return;
@@ -350,25 +381,21 @@ namespace Content.Server.Cargo.Systems
             var paper = EnsureComp<PaperComponent>(label);
             var msg = new FormattedMessage();
 
-            msg.AddMarkupPermissive(Loc.GetString("cargo-acquisition-slip-body",
-                ("product", product.Name),
-                ("description", product.Description),
-                ("unit", product.Cost),
-                ("amount", args.Amount),
-                ("cost", product.Cost * args.Amount),
-                ("orderer", args.Requester),
-                ("reason", args.Reason)));
+            msg.AddMarkupPermissive(GetApprovedRadioMessage(new CargoOrderData(0, args.Basket, args.Requester, args.Reason, component.Account)));
             _paperSystem.SetContent((label, paper), msg.ToMarkup());
 
             var slip = EnsureComp<CargoSlipComponent>(label);
-            slip.Product = product.ID;
+            slip.Basket = args.Basket;
             slip.Requester = args.Requester;
             slip.Reason = args.Reason;
-            slip.OrderQuantity = args.Amount;
             slip.Account = component.Account;
         }
 
-        private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
+        private void OnAddOrderMessage(
+            EntityUid uid,
+            CargoOrderConsoleComponent component,
+            CargoConsoleAddOrderMessage args
+        )
         {
             if (args.Actor is not { Valid: true } player)
                 return;
@@ -389,6 +416,12 @@ namespace Content.Server.Cargo.Systems
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
+                return;
+            }
+
+            if (component.Mode == CargoOrderConsoleMode.PrintSlip)
+            {
+                OnAddOrderMessageSlipPrinter(uid, component, args);
                 return;
             }
 
@@ -469,7 +502,7 @@ namespace Content.Server.Cargo.Systems
                 if (!order.Approved)
                     continue;
 
-                if (!order.Basket.Any(item => item.NumOrdered != item.Quantity))
+                if (!order.Basket.Any(item => item.NumOrdered < item.Quantity))
                 {
                     toDeliver.Add(order);
                     continue;
@@ -483,7 +516,7 @@ namespace Content.Server.Cargo.Systems
 
                 if (
                     TryFulfillOrder((ent, stationData), order, ent.Comp)
-                    && order.Basket.Any(item => item.NumOrdered != item.Quantity)
+                    && order.Basket.All(item => item.NumOrdered == item.Quantity)
                 )
                     toDeliver.Add(order);
             }
@@ -541,14 +574,17 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            if (_timing.CurTime >= component.NextDenySoundTime)
+            if (Timing.CurTime >= component.NextDenySoundTime)
             {
-                component.NextDenySoundTime = _timing.CurTime + component.DenySoundDelay;
+                component.NextDenySoundTime = Timing.CurTime + component.DenySoundDelay;
                 _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
             }
         }
 
-        public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
+        public int GetOutstandingOrderCount(
+            Entity<StationCargoOrderDatabaseComponent> station,
+            ProtoId<CargoAccountPrototype> account
+        )
         {
             return RelevantOrders(station, account, false).Count;
         }
@@ -700,46 +736,52 @@ namespace Content.Server.Cargo.Systems
 
             if (container.IsSingleProduct || container.Container == "")
             {
-                if (!_protoMan.TryIndex<CargoProductPrototype>(container.Products.First().Product, out var singleProto))
+                var first = container.Products.First();
+                if (!_protoMan.TryIndex<CargoProductPrototype>(first.Source.Product, out var singleProto))
                     return false;
                 containerEntity = Spawn(singleProto.SpawnList.First(), spawn);
-                container.Products.First().NumOrdered += 1;
-            }
-            else
-            {
-                containerEntity = Spawn(container.Container, spawn);
+                first.Source.NumOrdered++;
+                _transformSystem.Unanchor(containerEntity, Transform(containerEntity));
+                return true;
             }
 
+            containerEntity = Spawn(container.Container, spawn);
             if (!containerEntity.IsValid())
                 return false;
 
             _transformSystem.Unanchor(containerEntity, Transform(containerEntity));
 
-            if (!container.IsSingleProduct)
+            foreach (var item in container.Products)
             {
-                foreach (var item in container.Products)
+                if (!_protoMan.TryIndex<CargoProductPrototype>(item.Source.Product, out var productProto))
+                    return false;
+
+                if (!_container.TryGetContainer(containerEntity, container.ContainerID, out var slot))
                 {
-                    if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var productProto))
-                        return false;
-                    for (int i = 0; i < item.Quantity; i++)
+                    DebugTools.Assert(
+                        false,
+                        $"Failed to find container slot for cargo product. Check the container definition. {productProto.Name}: {(EntProtoId)container.Container}"
+                    );
+                    return false;
+                }
+
+                for (int i = 0; i < item.Quantity; i++)
+                {
+                    foreach (var product in productProto.SpawnList)
                     {
-                        foreach (var product in productProto.SpawnList)
+                        var itemEntity = Spawn(product, spawn);
+                        if (!_container.Insert(itemEntity, slot, force: true))
                         {
-                            var itemEntity = Spawn(product, spawn);
-                            if (
-                                !_container.TryGetContainer(containerEntity, container.ContainerID, out var container1)
-                                || !_container.Insert(itemEntity, container1, force: true)
-                            )
-                            {
-                                DebugTools.Assert(
-                                    $"Failed to insert cargo product into its specified container. This indicates an error in the cargo product definition's YAML as the product should be insertable into its container. {productProto.Name}: {(EntProtoId)container.Container}"
-                                );
-                            }
+                            DebugTools.Assert(
+                                false,
+                                $"Failed to insert cargo product into its specified container. This indicates an error in the cargo product definition's YAML as the product should be insertable into its container. {productProto.Name}: {(EntProtoId)container.Container}"
+                            );
                         }
-                        item.NumOrdered++;
                     }
+                    item.Source.NumOrdered++;
                 }
             }
+
             return true;
         }
 
@@ -752,11 +794,11 @@ namespace Content.Server.Cargo.Systems
         {
             var containers = PackBasketIntoContainers(ref order.Basket);
 
-            ApplyLabelsAndWrapSingletons(containers, order);
+            ApplyLabels(containers, order);
             return containers;
         }
 
-        private void ApplyLabelsAndWrapSingletons(List<CargoOrderContainerData> containers, CargoOrderData order)
+        private void ApplyLabels(List<CargoOrderContainerData> containers, CargoOrderData order)
         {
             foreach (var container in containers)
             {
@@ -766,9 +808,6 @@ namespace Content.Server.Cargo.Systems
         }
 
         /// <summary>
-        /// Count the number of items which will be spawned in a container
-        /// </summary>
-        /// <summary>
         /// Create the string which will go on the label of the container
         /// </summary>
         private string GetContainerLabel(CargoOrderContainerData container, CargoOrderData order)
@@ -777,7 +816,7 @@ namespace Content.Server.Cargo.Systems
             string message;
             if (container.IsSingleProduct)
             {
-                if (!_protoMan.TryIndex<CargoProductPrototype>(container.Products[0].Product, out var singleProto))
+                if (!_protoMan.TryIndex<CargoProductPrototype>(container.Products[0].Source.Product, out var singleProto))
                     return "";
                 message = Loc.GetString(
                     "cargo-console-paper-print-text",
@@ -799,44 +838,42 @@ namespace Content.Server.Cargo.Systems
                             : order.Approver
                     )
                 );
+                return message;
             }
-            else
+            message = Loc.GetString("cargo-console-paper-print-header", ("orderNumber", order.OrderId));
+            message += "\n";
+            foreach (var product in container.Products)
             {
-                message = Loc.GetString("cargo-console-paper-print-header", ("orderNumber", order.OrderId));
-                message += "\n";
-                foreach (var product in container.Products)
+                if (!_protoMan.TryIndex<CargoProductPrototype>(product.Source.Product, out var productProto))
                 {
-                    if (!_protoMan.TryIndex<CargoProductPrototype>(product.Product, out var productProto))
-                    {
-                        message += "\n";
-                        continue;
-                    }
-                    message += Loc.GetString(
-                        "cargo-console-paper-print-item",
-                        ("itemName", Loc.GetString(productProto.Name)),
-                        ("orderQuantity", product.Quantity)
-                    );
                     message += "\n";
+                    continue;
                 }
                 message += Loc.GetString(
-                    "cargo-console-paper-print-footer",
-                    ("requester", order.Requester),
-                    (
-                        "reason",
-                        string.IsNullOrWhiteSpace(order.Reason)
-                            ? Loc.GetString("cargo-console-paper-reason-default")
-                            : order.Reason
-                    ),
-                    ("account", Loc.GetString(accountProto.Name)),
-                    ("accountcode", Loc.GetString(accountProto.Code)),
-                    (
-                        "approver",
-                        string.IsNullOrWhiteSpace(order.Approver)
-                            ? Loc.GetString("cargo-console-paper-approver-default")
-                            : order.Approver
-                    )
+                    "cargo-console-paper-print-item",
+                    ("itemName", Loc.GetString(productProto.Name)),
+                    ("orderQuantity", product.Quantity)
                 );
+                message += "\n";
             }
+            message += Loc.GetString(
+                "cargo-console-paper-print-footer",
+                ("requester", order.Requester),
+                (
+                    "reason",
+                    string.IsNullOrWhiteSpace(order.Reason)
+                        ? Loc.GetString("cargo-console-paper-reason-default")
+                        : order.Reason
+                ),
+                ("account", Loc.GetString(accountProto.Name)),
+                ("accountcode", Loc.GetString(accountProto.Code)),
+                (
+                    "approver",
+                    string.IsNullOrWhiteSpace(order.Approver)
+                        ? Loc.GetString("cargo-console-paper-approver-default")
+                        : order.Approver
+                )
+            );
             return message;
         }
 
@@ -860,7 +897,6 @@ namespace Content.Server.Cargo.Systems
             }
 
             return true;
-
         }
 
         public List<ProtoId<CargoProductPrototype>> GetAvailableProducts(Entity<CargoOrderConsoleComponent> ent)

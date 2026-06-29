@@ -14,7 +14,7 @@ namespace Content.Shared.Cargo;
 public abstract partial class SharedCargoSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -226,7 +226,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
     {
         return basket.Sum(item =>
         {
-            var proto = _protoMan.Index<CargoProductPrototype>(item.Product);
+            var proto = ProtoMan.Index<CargoProductPrototype>(item.Product);
             return proto.Cost * item.Quantity;
         });
     }
@@ -252,7 +252,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
             if (!ShouldOrderItem(item))
                 continue;
 
-            if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var productProto))
+            if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var productProto))
                 continue;
 
             if (!item.WithContainer || productProto.Container == null)
@@ -264,7 +264,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
                 continue;
             }
 
-            if (!_protoMan.TryIndex<CargoCratePrototype>(productProto.Container, out var crate))
+            if (!ProtoMan.TryIndex<CargoCratePrototype>(productProto.Container, out var crate))
                 continue;
 
             PackItemIntoCrates(ref item, crate, containers);
@@ -297,7 +297,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
             var fitting =
                 Math.Min(remaining, container.MaxItems - GetContainerItemCount(container)) / GetItemEntityCount(item);
-            container.Products.Add(item with { Quantity = fitting });
+            container.Products.Add(new CargoOrderContainerSlot(item, fitting));
             remaining -= fitting * GetItemEntityCount(item);
         }
 
@@ -312,7 +312,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
                 maxItems: crate.MaxItems,
                 cost: crate.Cost
             );
-            container.Products.Add(item with { Quantity = batch });
+            container.Products.Add(new CargoOrderContainerSlot(item, batch));
             containers.Add(container);
             remaining -= batch * GetItemEntityCount(item);
         }
@@ -323,7 +323,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
                 !container.IsSingleProduct
                 && GetContainerItemCount(container) == 1
                 && !container.CrateRequired
-                && _protoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
+                && ProtoMan.Resolve<CargoCratePrototype>(parcel, out var parcelProto))
             {
                 container.Container = parcelProto.Entity;
                 container.ContainerID = parcelProto.ContainerId;
@@ -339,7 +339,7 @@ public abstract partial class SharedCargoSystem : EntitySystem
         CargoCratePrototype crate
     )
     {
-        if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+        if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
             return false;
         return container.Container != ""
             && (EntProtoId)container.Container == crate.Entity
@@ -349,12 +349,12 @@ public abstract partial class SharedCargoSystem : EntitySystem
 
     public int GetContainerItemCount(CargoOrderContainerData container)
     {
-        return container.Products.Sum(item => item.Quantity * GetItemEntityCount(item));
+        return container.Products.Sum(item => item.Quantity * GetItemEntityCount(item.Source));
     }
 
     public int GetItemEntityCount(CargoOrderItemData item)
     {
-        if (!_protoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
+        if (!ProtoMan.TryIndex<CargoProductPrototype>(item.Product, out var proto))
         {
             return 1;
         }

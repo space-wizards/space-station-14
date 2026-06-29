@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -44,6 +45,8 @@ namespace Content.Client.Cargo.BUI
         [ViewVariables]
         private CargoProductPrototype? _product;
 
+        [ViewVariables]
+        public List<CargoOrderItemData> Basket = new();
         protected override void Open()
         {
             base.Open();

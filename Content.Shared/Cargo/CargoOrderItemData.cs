@@ -12,22 +12,26 @@ namespace Content.Shared.Cargo
         /// </summary>
         [DataField]
         public ProtoId<CargoProductPrototype> Product;
+
         /// <summary>
         /// The number of products ordered.
         /// </summary>
         [DataField]
         public int Quantity;
+
         /// <summary>
         /// Whether or not this item should spawn with a container.
         /// </summary>
         // Currently unused
         [DataField]
         public bool WithContainer = true;
+
         /// <summary>
         /// Whether or not this item should be ordered with the rest of the basket.
         /// </summary>
         // Currently unused
         public bool ToBeOrdered = true;
+
         /// <summary>
         /// Tracks the number of spawned items out of the total quantity.
         /// </summary>

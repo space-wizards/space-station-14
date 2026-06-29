@@ -110,6 +110,24 @@ public sealed partial class CargoOrderConsoleComponent : Component
     public CargoOrderConsoleMode Mode = CargoOrderConsoleMode.DirectOrder;
 
     /// <summary>
+    /// The time at which the console will be able to print a slip again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextPrintTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between prints.
+    /// </summary>
+    [DataField]
+    public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// The sound made when printing occurs
+    /// </summary>
+    [DataField]
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("PrinterPrint");
+
+    /// <summary>
     /// The sound made when an order slip is scanned
     /// </summary>
     [DataField]
@@ -138,6 +156,12 @@ public enum CargoOrderConsoleMode : byte
     /// Place orders directly
     /// </summary>
     DirectOrder,
+
+    /// <summary>
+    /// Print a slip to be inserted into a DirectOrder console
+    /// </summary>
+    PrintSlip,
+
     /// <summary>
     /// Transfers the order to the primary account
     /// </summary>

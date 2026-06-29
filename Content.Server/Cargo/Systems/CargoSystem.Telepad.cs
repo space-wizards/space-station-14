@@ -27,9 +27,9 @@ public sealed partial class CargoSystem
     private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var tele, out var xform))
+        while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            if (tele.CurrentState != CargoTelepadState.Idle)
+            if (telepad.CurrentState != CargoTelepadState.Idle)
                 continue;
 
             if (!this.IsPowered(uid, EntityManager))
@@ -41,9 +41,7 @@ public sealed partial class CargoSystem
             if (!IsLinkedToConsole(uid, GetEntity(args.Order.ApprovingConsole)))
                 continue;
 
-            var containers = PackOrderIntoContainers(args.Order);
-            tele.CurrentOrders.Add(args.Order);
-            tele.Accumulator = tele.Delay;
+            telepad.CurrentOrders.Add(args.Order);
             args.Handled = true;
             args.FulfillmentEntity = uid;
             return;
@@ -78,53 +76,48 @@ public sealed partial class CargoSystem
     private void UpdateTelepad(float frameTime)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(uid, out var appearance);
 
-            if (comp.CurrentState == CargoTelepadState.Unpowered)
+            if (telepad.CurrentState == CargoTelepadState.Unpowered)
             {
-                comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
-                comp.Accumulator = comp.Delay;
-                continue;
-            }
-
-            comp.Accumulator -= frameTime;
-
-            // Uhh listen teleporting takes time and I just want the 1 float.
-            if (comp.Accumulator > 0f)
-            {
-                comp.CurrentState = CargoTelepadState.Idle;
+                telepad.CurrentState = CargoTelepadState.Idle;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
-            comp.CurrentOrders.RemoveAll(order => order.Basket.Count(item => item.NumOrdered == item.Quantity) == 0);
-            if (comp.CurrentOrders.Count == 0)
+            if (Timing.CurTime < telepad.NextTeleport)
             {
-                comp.Accumulator += comp.Delay;
+                telepad.CurrentState = CargoTelepadState.Idle;
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
-            var currentOrder = comp.CurrentOrders.First();
+            telepad.NextTeleport = Timing.CurTime + telepad.TeleportDelay;
+
+            telepad.CurrentOrders.RemoveAll(order => order.Basket.All(item => item.NumOrdered == item.Quantity));
+
+            if (telepad.CurrentOrders.Count == 0)
+                continue;
+
+            var currentOrder = telepad.CurrentOrders.First();
             var containers = PackOrderIntoContainers(currentOrder);
+
             if (
                 IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
-                && FulfillOrder(containers.First(), xform.Coordinates, comp.PrinterOutput)
+                && FulfillOrder(containers.First(), xform.Coordinates, telepad.PrinterOutput)
             )
             {
-                _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
+                _audio.PlayPvs(_audio.ResolveSound(telepad.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
                 if (_station.GetOwningStation(uid) is { } station)
                     UpdateOrders(station);
 
-                comp.CurrentState = CargoTelepadState.Teleporting;
+                telepad.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             }
-
-            comp.Accumulator += comp.Delay;
         }
     }
 

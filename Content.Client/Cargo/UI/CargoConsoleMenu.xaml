@@ -51,11 +51,12 @@
 
                             <PanelContainer Margin="0,-2,0,-1" StyleClasses="LowDivider" />
 
-                          <Label Name="ShuttleCapacityLabel"
-                              Text="0/0"
-                              Access="Public"
-                              Margin="4 0"/>
-                      </GridContainer>
+                            <Label
+                                Name="ShuttleCapacityLabel"
+                                Margin="4,0"
+                                Access="Public"
+                                Text="0/0" />
+                        </GridContainer>
 
                         <PanelContainer Margin="0,4.5,-8,0" StyleClasses="LowDivider" />
                     </BoxContainer>
@@ -197,7 +198,8 @@
             <BoxContainer
                 Margin="8,4,8,6"
                 Orientation="Horizontal"
-                VerticalExpand="True">
+                VerticalExpand="True"
+                Name="OrdersTab">
                 <BoxContainer HorizontalExpand="True" Orientation="Vertical">
                     <!--  Requests Part  -->
                     <BoxContainer

@@ -4,6 +4,7 @@ using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
+using Content.Shared.Cargo;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers;
 using Content.Shared.EntityTable;
@@ -24,8 +25,7 @@ public sealed class CargoTest : GameTest
     /// </summary>
     private static readonly HashSet<ProtoId<CargoProductPrototype>> Ignored =
     [
-        // This is ignored because it is explicitly intended to be able to sell for more than it costs.
-        new("FunCrateGambling"),
+
     ];
 
     [SidedDependency(Side.Server)]
@@ -37,6 +37,9 @@ public sealed class CargoTest : GameTest
     [SidedDependency(Side.Server)]
     private readonly CargoSystem _sCargo = null!;
 
+    [SidedDependency(Side.Server)]
+    private readonly EntityTableSystem _sTableSystem = null!;
+
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
@@ -45,20 +48,56 @@ public sealed class CargoTest : GameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (Ignored.Contains(proto.ID))
                         continue;
 
-                    var ent = entManager.SpawnEntity(proto.Product, testMap.MapCoords);
-                    var price = pricing.GetPrice(ent);
-
-                    Assert.That(price, Is.AtMost(proto.Cost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.Cost} but sell is {price}!");
-                    SDeleteNow(ent);
+                    if (proto.SpawnList.Count == 0)
+                    {
+                        Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
+                        continue;
+                    }
+                    List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 1)];
+                    var entProto = SProtoMan.Index<EntityPrototype>(proto.SpawnList.First());
+                    double price = 0;
+                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, _sCompFact))
+                    {
+                        var averageSpawns = _sTableSystem.AverageSpawns(fill.Containers.First().Value);
+                        // Randomness will lead to non interger expected values, if all the expected values are intergers then we skip
+                        // Compares against epsilon incase of any floating point stuff
+                        // Edge case of expected value being integers while still random
+                        // This might be, crate spawns 2 items from list of 2, each would have ev of 1
+                        if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
+                        {
+                            foreach (var item in averageSpawns)
+                            {
+                                var ent = SSpawnAtPosition(item.spawn, coordinates);
+                                price += _sPricing.GetPrice(ent) * item.Item2;
+                                SDeleteNow(ent);
+                            }
+                            // Price of container is not included right now
+                            Assert.That(price, Is.AtMost(_sCargo.GetBasketTotalCost(basket)),
+                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {_sCargo.GetBasketTotalCost(basket)} but mean sell price is {price}!");
+                            continue;
+                        }
+                    }
+                    var containers = _sCargo.PackBasketIntoContainers(ref basket);
+                    if (containers.Count() != 1)
+                    {
+                        Assert.Fail($"CargoProductPrototype {proto.ID} spawns packs into multiple containers.");
+                        continue;
+                    }
+                    if (!_sCargo.SpawnContainer(containers.First(), coordinates, out var containerEntity))
+                        Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+                    price += _sPricing.GetPrice(containerEntity);
+                    Assert.That(price, Is.AtMost(_sCargo.GetBasketTotalCost(basket)),
+                        $"Found arbitrage on {proto.ID} cargo product! Cost is {_sCargo.GetBasketTotalCost(basket)} but sell price is {price}!");
+                    SEntMan.DeleteEntity(containerEntity);
                 }
-            });
+            }
         });
     }
 
@@ -74,19 +113,37 @@ public sealed class CargoTest : GameTest
             {
                 foreach (var proto in SProtoMan.EnumeratePrototypes<CargoProductPrototype>())
                 {
-                    var ent = SSpawnAtPosition(proto.Product, coordinates);
+                    if (proto.SpawnList.Count == 0)
+                    {
+                        Assert.Fail($"CargoProductPrototype {proto.ID} has no products defined.");
+                        continue;
+                    }
+
+                    List<CargoOrderItemData> basket = [new CargoOrderItemData(proto.ID, 10)];
+                    var containers = _sCargo.PackBasketIntoContainers(ref basket);
+                    if (!_sCargo.SpawnContainer(containers.First(), coordinates, out var containerEntity))
+                        Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
 
                     foreach (var bounty in SProtoMan.EnumeratePrototypes<CargoBountyPrototype>())
                     {
-                        if (_sCargo.IsBountyComplete(ent, bounty))
-                            Assert.That(
-                                proto.Cost,
-                                Is.GreaterThanOrEqualTo(bounty.Reward),
-                                $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {proto.Cost} but fulfills bounty {bounty.ID} with reward {bounty.Reward}!"
-                            );
+                        if (_sCargo.IsBountyComplete(containerEntity, bounty))
+                        {
+                            basket.First().Quantity = bounty.Entries.First().Amount;
+                            basket.First().NumOrdered = 0;
+                            containers = _sCargo.PackBasketIntoContainers(ref basket);
+                            if (!_sCargo.SpawnContainer(containers.First(), coordinates, out var containerEntity1))
+                                Assert.Fail($"CargoProductPrototype {proto.ID} could not spawn.");
+                            var cost = _sCargo.GetBasketCost(basket) + _sCargo.GetContainersCost(containers);
+                            if (_sCargo.IsBountyComplete(containerEntity1, bounty))
+                            {
+                                Assert.That(cost, Is.GreaterThanOrEqualTo(bounty.Reward),
+                                    $"Found arbitrage on {bounty.ID} cargo bounty! Product {proto.ID} costs {cost} when buying {basket.First().Quantity} " +
+                                    $"but fulfills bounty {bounty.ID} with reward {bounty.Reward}!");
+                            }
+                            SDeleteNow(containerEntity1);
+                        }
                     }
-
-                    SDeleteNow(ent);
+                    SDeleteNow(containerEntity);
                 }
             }
         });
@@ -124,7 +181,7 @@ public sealed class CargoTest : GameTest
                         );
                     }
                 }
-            });
+            }
         });
     }
 
@@ -148,13 +205,11 @@ public sealed class CargoTest : GameTest
             {
                 var ent = SSpawnAtPosition(proto.ID, coordinates);
 
-                foreach (var proto in sliceableEntityProtos)
+                // Check each bounty
+                foreach (var bounty in bounties)
                 {
-                    var ent = SSpawnAtPosition(proto, coordinates);
-                    var sliceable = SEntMan.GetComponent<SliceableFoodComponent>(ent);
-
-                    // Check each bounty
-                    foreach (var bounty in bounties)
+                    // Check each entry in the bounty
+                    foreach (var entry in bounty.Entries)
                     {
                         // See if the entity counts as part of this bounty entry
                         if (!_sCargo.IsValidBountyEntry(ent, entry))
@@ -189,8 +244,9 @@ public sealed class CargoTest : GameTest
                             );
                         }
                     }
+                }
 
-                SDeleteNow(ent);
+                SEntMan.DeleteEntity(ent);
             }
         });
     }
