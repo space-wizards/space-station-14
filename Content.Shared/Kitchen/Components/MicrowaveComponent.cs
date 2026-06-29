@@ -7,7 +7,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Kitchen.Components;
+namespace Content.Shared.Kitchen.Components;
 
 /// <summary>
 ///     A component applied to microwaves, which are used to heat entities/solutions
