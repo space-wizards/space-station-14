@@ -8,7 +8,6 @@ using Content.Shared.Dragon;
 using Content.Shared.Gibbing;
 using Content.Shared.Maps;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
@@ -36,7 +35,7 @@ public sealed partial class DragonSystem : EntitySystem
     [Dependency] private GibbingSystem _gibbing = default!;
     [Dependency] private SmokeSystem _smoke = default!;
 
-    private EntityQuery<CarpRiftsConditionComponent> _objQuery;
+    [Dependency] private EntityQuery<CarpRiftsConditionComponent> _carpRiftsConditionQuery = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -53,8 +52,6 @@ public sealed partial class DragonSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _objQuery = GetEntityQuery<CarpRiftsConditionComponent>();
 
         SubscribeLocalEvent<DragonComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<DragonComponent, ComponentShutdown>(OnShutdown);
@@ -244,7 +241,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.ResetRifts(objId, obj);
                 break;
@@ -265,7 +262,7 @@ public sealed partial class DragonSystem : EntitySystem
 
         foreach (var objId in mind.Objectives)
         {
-            if (_objQuery.TryGetComponent(objId, out var obj))
+            if (_carpRiftsConditionQuery.TryGetComponent(objId, out var obj))
             {
                 _carpRifts.RiftCharged(objId, obj);
                 break;

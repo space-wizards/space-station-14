@@ -14,7 +14,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Construction
 {
@@ -45,6 +44,7 @@ namespace Content.Client.Construction
             WarmupRecipesCache();
 
             UpdatesOutsidePrediction = true;
+            SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypeReload);
             SubscribeLocalEvent<LocalPlayerAttachedEvent>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
@@ -76,11 +76,19 @@ namespace Content.Client.Construction
             return false;
         }
 
+        private void OnPrototypeReload(PrototypesReloadedEventArgs obj)
+        {
+            if (obj.WasModified<ConstructionPrototype>())
+                WarmupRecipesCache();
+        }
+
         private void WarmupRecipesCache()
         {
-            foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
+            _recipesMetadataCache.Clear();
+
+            foreach (var constructionProto in ProtoMan.EnumeratePrototypes<ConstructionPrototype>())
             {
-                if (!PrototypeManager.Resolve(constructionProto.Graph, out var graphProto))
+                if (!ProtoMan.Resolve(constructionProto.Graph, out var graphProto))
                     continue;
 
                 if (constructionProto.TargetNode is not { } targetNodeId)
@@ -121,7 +129,7 @@ namespace Content.Client.Construction
                     // If we got the id of the prototype, we exit the “recursion” by clearing the stack.
                     stack.Clear();
 
-                    if (!PrototypeManager.Resolve(entityId, out var proto))
+                    if (!ProtoMan.Resolve(entityId, out var proto))
                         continue;
 
                     var name = constructionProto.SetName.HasValue ? Loc.GetString(constructionProto.SetName) : proto.Name;
@@ -169,7 +177,7 @@ namespace Content.Client.Construction
                     "construction-ghost-examine-message",
                     ("name", component.Prototype.Name)));
 
-                if (!PrototypeManager.Resolve(component.Prototype.Graph, out var graph))
+                if (!ProtoMan.Resolve(component.Prototype.Graph, out var graph))
                     return;
 
                 var startNode = graph.Nodes[component.Prototype.StartNode];
@@ -270,7 +278,7 @@ namespace Content.Client.Construction
                 return false;
             }
 
-            if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !PrototypeManager.TryIndex(targetProtoId, out EntityPrototype? targetProto))
+            if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !ProtoMan.TryIndex(targetProtoId, out EntityPrototype? targetProto))
                 return false;
 
             if (GhostPresent(loc))
@@ -304,9 +312,9 @@ namespace Content.Client.Construction
                 var dummy = EntityManager.SpawnEntity(targetProtoId, MapCoordinates.Nullspace);
                 var targetSprite = EnsureComp<SpriteComponent>(dummy);
                 EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
-
+                var ghostDrawDepth = sprite.DrawDepth;
                 _sprite.CopySprite((dummy, targetSprite), (ghost.Value, sprite));
-
+                _sprite.SetDrawDepth((ghost.Value, sprite), ghostDrawDepth);
                 for (var i = 0; i < sprite.AllLayers.Count(); i++)
                 {
                     sprite.LayerSetShader(i, "unshaded");

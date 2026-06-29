@@ -203,6 +203,9 @@
 - type: Tag
   id: BypassInteractionRangeChecks # Tagged entities don't care about distance or walls when touching things (Aghost).
 
+- type: Tag
+  id: BypassOpenStorageLimit # Tagged entities can open several storage UIs at once (Aghost).
+
 ## C ##
 
 - type: Tag
@@ -356,9 +359,6 @@
 
 - type: Tag
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
-
-- type: Tag
-  id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
@@ -1275,6 +1275,9 @@
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
+  id: Sheep # Reproductive partner key
+
+- type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
@@ -1444,6 +1447,9 @@
 
 - type: Tag
   id: ToySidearm # Storage whitelist: ClothingShoesClownBase
+
+- type: Tag
+  id: ToyKnife # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.

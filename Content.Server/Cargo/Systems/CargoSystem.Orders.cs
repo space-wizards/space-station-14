@@ -173,16 +173,42 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
+            var emagged = _emag.CheckFlag(uid, EmagType.Interaction);
+
+            if (!emagged)
+            {
+                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
+            }
+
+            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
+            RaiseLocalEvent(ref ev);
+            ev.FulfillmentEntity ??= station.Value;
+
+            if (!ev.Handled)
+            {
+                ev.FulfillmentEntity = TryFulfillOrder((station.Value, stationData), order.Account, order, orderDatabase);
+
+                if (ev.FulfillmentEntity == null)
+                {
+                    ConsolePopup(args.Actor, Loc.GetString("cargo-console-unfulfilled"));
+                    PlayDenySound(uid, component);
+                    order.Approver = null;
+                    return;
+                }
+            }
+
             order.Approved = true;
             order.ApprovingConsole = GetNetEntity(uid);
 
             _audio.PlayPvs(ApproveSound, uid);
 
-            if (!_emag.CheckFlag(uid, EmagType.Interaction))
+            if (!emagged)
             {
-                order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
-
-                var message = GetApprovedRadioMessage(order);
+                var message = Loc.GetString("cargo-console-unlock-approved-order-broadcast",
+                    ("productName", Loc.GetString(product.Name)),
+                    ("orderAmount", order.OrderQuantity),
+                    ("approver", order.Approver ?? string.Empty),
+                    ("cost", cost));
                 _radio.SendRadioMessage(uid, message, account.RadioChannel, uid, escapeMarkup: false);
                 if (CargoOrderConsoleComponent.BaseAnnouncementChannel != account.RadioChannel)
                     _radio.SendRadioMessage(
@@ -277,17 +303,69 @@ namespace Content.Server.Cargo.Systems
                     break;
             }
 
-            return containers.Count == 0;
+            return tradeDestination;
+        }
+
+        private void GetTradeStations(StationDataComponent data, ref List<EntityUid> ents)
+        {
+            foreach (var gridUid in data.Grids)
+            {
+                if (!_tradeStationQuery.HasComponent(gridUid))
+                    continue;
+
+                ents.Add(gridUid);
+            }
         }
 
         private void OnRemoveOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleRemoveOrderMessage args)
         {
             var station = _station.GetOwningStation(uid);
 
+            if (component.Mode == CargoOrderConsoleMode.PrintSlip)
+                return;
+
             if (!TryGetOrderDatabase(station, out var orderDatabase))
                 return;
 
-            RemoveOrder(station.Value, args.OrderId, orderDatabase);
+            if (!TryComp<StationBankAccountComponent>(station, out var bank))
+                return;
+
+            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
+
+            RemoveOrder(station.Value, targetAccount, args.OrderId, orderDatabase);
+        }
+
+        private void OnAddOrderMessageSlipPrinter(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args, CargoProductPrototype product)
+        {
+            if (!_protoMan.Resolve(component.Account, out var account))
+                return;
+
+            if (Timing.CurTime < component.NextPrintTime)
+                return;
+
+            var label = Spawn(account.AcquisitionSlip, Transform(uid).Coordinates);
+            component.NextPrintTime = Timing.CurTime + component.PrintDelay;
+            _audio.PlayPvs(component.PrintSound, uid);
+
+            var paper = EnsureComp<PaperComponent>(label);
+            var msg = new FormattedMessage();
+
+            msg.AddMarkupPermissive(Loc.GetString("cargo-acquisition-slip-body",
+                ("product", product.Name),
+                ("description", product.Description),
+                ("unit", product.Cost),
+                ("amount", args.Amount),
+                ("cost", product.Cost * args.Amount),
+                ("orderer", args.Requester),
+                ("reason", args.Reason)));
+            _paperSystem.SetContent((label, paper), msg.ToMarkup());
+
+            var slip = EnsureComp<CargoSlipComponent>(label);
+            slip.Product = product.ID;
+            slip.Requester = args.Requester;
+            slip.Reason = args.Reason;
+            slip.OrderQuantity = args.Amount;
+            slip.Account = component.Account;
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)

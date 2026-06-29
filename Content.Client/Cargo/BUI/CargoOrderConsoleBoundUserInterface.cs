@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -13,10 +12,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
+    public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
-        private readonly SharedCargoSystem _cargoSystem;
-        private readonly IdentitySystem _identity;
+        [Dependency] private SharedCargoSystem _cargoSystem = default!;
+        [Dependency] private IdentitySystem _identity = default!;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;
@@ -44,16 +43,6 @@ namespace Content.Client.Cargo.BUI
         /// </summary>
         [ViewVariables]
         private CargoProductPrototype? _product;
-
-        [ViewVariables]
-        public List<CargoOrderItemData> Basket = new();
-
-        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey)
-            : base(owner, uiKey)
-        {
-            _cargoSystem = EntMan.System<SharedCargoSystem>();
-            _identity = EntMan.System<IdentitySystem>();
-        }
 
         protected override void Open()
         {
@@ -89,6 +78,7 @@ namespace Content.Client.Cargo.BUI
                 _orderMenu.PointCost.Text = row.PointCost.Text;
                 _orderMenu.Amount.Value = 1;
                 _orderMenu.OpenCentered();
+                _orderMenu.SetPositionLast();
             };
             _menu.Requester.Text = orderRequester;
             _menu.Reason.Text = "";
@@ -159,6 +149,11 @@ namespace Content.Client.Cargo.BUI
                 return;
 
             _menu.ProductCatalogue = cState.Products;
+            _menu.ShuttleCapacityLabel.Text = Loc.GetString(
+                "cargo-console-menu-order-capacity-number",
+                ("count", OrderCount),
+                ("capacity", OrderCapacity)
+            );
 
             _menu?.UpdateStation(station);
             Populate(cState.Orders, cState.OrderHistory);

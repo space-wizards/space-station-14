@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
@@ -18,8 +19,9 @@ public sealed partial class GameTicker
 {
     /// <summary>
     /// Designated game rule that spawns a fake antagonist to discourage metagaming.
+    /// Has to be a string since <see cref="EntProtoId"/> cannot be a const.
     /// </summary>
-    public static readonly EntProtoId DummyGameRule = "DummyNonAntag";
+    public const string DummyGameRule = "DummyNonAntag";
 
     [ViewVariables] private readonly List<(TimeSpan, string)> _allPreviousGameRules = new();
 
@@ -541,22 +543,24 @@ public sealed partial class GameTicker
         if (_allPreviousGameRules.Count > 0)
         {
             var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
-            var message = "\n";
+            var message = new StringBuilder();
+            message.AppendLine();
 
             if (!forChatWindow)
             {
                 var header = Loc.GetString("list-gamerule-admin-header");
-                message += $"\n{header}\n";
-                message += "|------------|------------------\n";
+                message.AppendLine();
+                message.AppendLine(header);
+                message.AppendLine("|------------|------------------");
             }
 
             foreach (var (time, rule) in sortedRules)
             {
                 var formattedTime = time.ToString(@"hh\:mm\:ss");
-                message += $"| {formattedTime,-10} | {rule,-16} \n";
+                message.AppendLine($"| {formattedTime,-10} | {rule,-16} ");
             }
 
-            return message;
+            return message.ToString().TrimEnd('\n');
         }
         else
         {
