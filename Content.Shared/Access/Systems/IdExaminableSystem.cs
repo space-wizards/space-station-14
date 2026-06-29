@@ -7,10 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Access.Systems;
 
-public sealed class IdExaminableSystem : EntitySystem
+public sealed partial class IdExaminableSystem : EntitySystem
 {
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -51,13 +51,13 @@ public sealed class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) &&
+            if (TryComp(idUid, out PdaComponent? pda) &&
                 TryComp<IdCardComponent>(pda.ContainedId, out var id))
             {
                 return GetNameAndJob(id);
             }
             // ID Card
-            if (EntityManager.TryGetComponent(idUid, out id))
+            if (TryComp(idUid, out id))
             {
                 return GetNameAndJob(id);
             }

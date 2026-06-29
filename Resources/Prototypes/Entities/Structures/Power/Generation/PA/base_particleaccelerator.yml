@@ -29,6 +29,7 @@
     guides:
     - SingularityTeslaEngine
   - type: Appearance
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   id: ParticleAcceleratorFinishedPart
@@ -43,7 +44,6 @@
       map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
       shader: unshaded
       visible: false
-  - type: ParticleAcceleratorPart
   - type: ParticleAcceleratorPartVisuals
     stateBase: unlit
   - type: Construction

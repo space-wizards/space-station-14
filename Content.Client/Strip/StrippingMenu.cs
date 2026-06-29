@@ -8,26 +8,26 @@ namespace Content.Client.Strip
     public sealed class StrippingMenu : DefaultWindow
     {
         public LayoutContainer InventoryContainer = new();
-        public BoxContainer HandsContainer = new() { Orientation = LayoutOrientation.Horizontal };
-        public BoxContainer SnareContainer = new();
+        public LayoutContainer HandsContainer = new();
+        public BoxContainer ButtonContainer = new() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 0, 0, 5 ) };
         public bool Dirty = true;
 
         public event Action? OnDirty;
 
         public StrippingMenu()
         {
-            var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 8) };
-            Contents.AddChild(box);
-            box.AddChild(SnareContainer);
+            var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical };
+            ContentsContainer.AddChild(box);
+            box.AddChild(ButtonContainer);
             box.AddChild(HandsContainer);
             box.AddChild(InventoryContainer);
         }
 
         public void ClearButtons()
         {
-            InventoryContainer.DisposeAllChildren();
-            HandsContainer.DisposeAllChildren();
-            SnareContainer.DisposeAllChildren();
+            InventoryContainer.RemoveAllChildren();
+            HandsContainer.RemoveAllChildren();
+            ButtonContainer.RemoveAllChildren();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

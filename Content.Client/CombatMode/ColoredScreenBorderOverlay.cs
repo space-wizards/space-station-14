@@ -6,9 +6,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.CombatMode
 {
-    public sealed class ColoredScreenBorderOverlay : Overlay
+    public sealed partial class ColoredScreenBorderOverlay : Overlay
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        private static readonly ProtoId<ShaderPrototype> Shader = "ColoredScreenBorder";
+
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
@@ -16,7 +18,7 @@ namespace Content.Client.CombatMode
         public ColoredScreenBorderOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("ColoredScreenBorder").Instance();
+            _shader = _prototypeManager.Index(Shader).Instance();
         }
 
         protected override void Draw(in OverlayDrawArgs args)

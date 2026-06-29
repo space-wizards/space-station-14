@@ -6,11 +6,11 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
-public sealed class FrictionContactsSystem : EntitySystem
+public sealed partial class FrictionContactsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private MovementSpeedModifierSystem _speedModifierSystem = default!;
 
     // Comment copied from "original" SlowContactsSystem.cs (now SpeedModifierContactsSystem.cs)
     // TODO full-game-save
@@ -77,14 +77,14 @@ public sealed class FrictionContactsSystem : EntitySystem
 
     private void OnRefreshFrictionModifiers(Entity<FrictionModifiedByContactComponent> entity, ref RefreshFrictionModifiersEvent args)
     {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
+        if (!TryComp<PhysicsComponent>(entity, out var physicsComponent))
             return;
 
         var friction = 0.0f;
         var frictionNoInput = 0.0f;
         var acceleration = 0.0f;
 
-        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity, physicsComponent);
+        var isAirborne = physicsComponent.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity.Owner);
 
         var remove = true;
         var entries = 0;

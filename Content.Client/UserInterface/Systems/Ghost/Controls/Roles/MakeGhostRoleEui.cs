@@ -1,7 +1,7 @@
 ﻿using Content.Client.Eui;
-using Content.Server.Ghost.Roles.Raffles;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Raffles;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Player;
@@ -10,11 +10,11 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles;
 
 [UsedImplicitly]
-public sealed class MakeGhostRoleEui : BaseEui
+public sealed partial class MakeGhostRoleEui : BaseEui
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IClientConsoleHost _consoleHost = default!;
 
     private readonly MakeGhostRoleWindow _window;
 

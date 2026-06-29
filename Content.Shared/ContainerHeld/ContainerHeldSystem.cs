@@ -7,11 +7,11 @@ using Content.Shared.Toggleable;
 
 namespace Content.Shared.ContainerHeld;
 
-public sealed class ContainerHeldSystem : EntitySystem
+public sealed partial class ContainerHeldSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
 
     public override void Initialize()
     {
@@ -32,12 +32,12 @@ public sealed class ContainerHeldSystem : EntitySystem
         if (_storage.GetCumulativeItemAreas(uid) >= comp.Threshold)
         {
             _item.SetHeldPrefix(uid, "full", component: item);
-            _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
+            _appearance.SetData(uid, ToggleableVisuals.Enabled, true, appearance);
         }
         else
         {
             _item.SetHeldPrefix(uid, "empty", component: item);
-            _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
+            _appearance.SetData(uid, ToggleableVisuals.Enabled, false, appearance);
         }
     }
 }

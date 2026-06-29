@@ -48,7 +48,7 @@ public sealed partial class AtmosAlarmableComponent : Component
     public HashSet<string> SyncWithTags { get; private set; } = new();
 
     [DataField("monitorAlertTypes")]
-    public HashSet<AtmosMonitorThresholdType>? MonitorAlertTypes { get; private set; }
+    public AtmosMonitorThresholdTypeFlags MonitorAlertTypes { get; private set; }
 
     /// <summary>
     ///     If this device should receive only. If it can only

@@ -1,13 +1,17 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Administration.Managers;
 using Content.Client.Examine;
+using Content.Client.Hands.Systems;
 using Content.Client.Strip;
-using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;
+using Content.Shared.CCVar;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Contraband;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
+using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -20,23 +24,45 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class StrippableBoundUserInterface : BoundUserInterface
+    public sealed partial class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private IPlayerManager _player = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
+        [Dependency] private IClientAdminManager _admin = default!;
+        [Dependency] private IPrototypeManager _proto = default!;
+        [Dependency] private IConfigurationManager _cvar = default!;
 
         private readonly ExamineSystem _examine;
+        private readonly HandsSystem _hands;
         private readonly InventorySystem _inv;
         private readonly SharedCuffableSystem _cuffable;
         private readonly StrippableSystem _strippable;
+        private readonly SharedEnsnareableSystem _snare;
+        private readonly ContrabandSystem _contraband;
+
+        // Is the BUI in admin view? If in admin view, has custom UI elements to help admins see things
+        // (E.g contraband status icon, is the item chameleon etc...)
+        private bool _isAdminView;
+
+        #region Admin overlay vars
+
+        private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/camo.png");
+        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/contra.png");
+
+        private readonly Color _chameleonColor = new(147, 112, 219);
+
+        #endregion
 
         [ViewVariables]
         private const int ButtonSeparation = 4;
@@ -50,14 +76,31 @@ namespace Content.Client.Inventory
         [ViewVariables]
         private readonly EntityUid _virtualHiddenEntity;
 
+        /// <summary>
+        /// The current amount of added hand buttons.
+        /// </summary>
+        [ViewVariables]
+        private int _handCount;
+
+        /// <summary>
+        /// The current shape of the inventory, needed to calculate the window size.
+        /// </summary>
+        [ViewVariables]
+        private Vector2i _inventoryDimensions;
+
         public StrippableBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             _examine = EntMan.System<ExamineSystem>();
+            _hands = EntMan.System<HandsSystem>();
             _inv = EntMan.System<InventorySystem>();
             _cuffable = EntMan.System<SharedCuffableSystem>();
             _strippable = EntMan.System<StrippableSystem>();
+            _contraband = EntMan.System<ContrabandSystem>();
+            _snare = EntMan.System<SharedEnsnareableSystem>();
 
             _virtualHiddenEntity = EntMan.SpawnEntity(HiddenPocketEntityId, MapCoordinates.Nullspace);
+
+            _isAdminView = _cvar.GetCVar(CCVars.AdminStripMenuOverlayDefault);
         }
 
         protected override void Open()
@@ -93,6 +136,8 @@ namespace Content.Client.Inventory
                 return;
 
             _strippingMenu.ClearButtons();
+            _handCount = 0;
+            _inventoryDimensions = Vector2i.Zero;
 
             if (EntMan.TryGetComponent<InventoryComponent>(Owner, out var inv))
             {
@@ -106,43 +151,62 @@ namespace Content.Client.Inventory
             {
                 // good ol hands shit code. there is a GuiHands comparer that does the same thing... but these are hands
                 // and not gui hands... which are different...
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Right)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
 
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Middle)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
 
-                foreach (var hand in handsComp.Hands.Values)
+                foreach (var (id, hand) in handsComp.Hands)
                 {
                     if (hand.Location != HandLocation.Left)
                         continue;
 
-                    AddHandButton(hand);
+                    AddHandButton((Owner, handsComp), id, hand);
                 }
             }
 
             // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
-            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && snare.IsEnsnared)
+            if (EntMan.TryGetComponent<EnsnareableComponent>(Owner, out var snare) && _snare.IsEnsnared((Owner, snare)))
             {
                 var button = new Button()
                 {
                     Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-ensnare-button"),
-                    StyleClasses = { StyleBase.ButtonOpenRight }
                 };
 
                 button.OnPressed += (_) => SendPredictedMessage(new StrippingEnsnareButtonPressed());
 
-                _strippingMenu.SnareContainer.AddChild(button);
+                _strippingMenu.ButtonContainer.AddChild(button);
+            }
+
+            if (_admin.IsAdmin())
+            {
+                var adminButton = new Button()
+                {
+                    Text = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button"),
+                    ToggleMode = true,
+                    Pressed = _isAdminView,
+                    ToolTip = Loc.GetString("strippable-bound-user-interface-stripping-menu-admin-button-tooltip")
+                };
+
+                adminButton.OnToggled += args =>
+                {
+                    _isAdminView = !_isAdminView;
+                    args.Button.Pressed = _isAdminView;
+                    UpdateMenu();
+                };
+
+                _strippingMenu.ButtonContainer.AddChild(adminButton);
             }
 
             // TODO fix layout container measuring (its broken atm).
@@ -152,26 +216,36 @@ namespace Content.Client.Inventory
             // TODO allow windows to resize based on content's desired size
 
             // for now: shit-code
-            // this breaks for drones (too many hands, lots of empty vertical space), and looks shit for monkeys and the like.
-            // but the window is realizable, so eh.
-            _strippingMenu.SetSize = new Vector2(220, snare?.IsEnsnared == true ? 550 : 530);
+            // calculate the window size manually
+            // +20 horizontally and vertically from the ContentsContainer margin
+            // +16 vertically from the BoxContainer margin
+            // +27 vertically from the window header
+            var horizontalMenuSize = Math.Max(200, Math.Max(_handCount, _inventoryDimensions.X + 1) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 20);
+            var verticalMenuSize = Math.Max(200, (_inventoryDimensions.Y + (_handCount > 0 ? 2 : 1)) * (SlotControl.DefaultButtonSize + ButtonSeparation) + 53);
+            verticalMenuSize += 25 * _strippingMenu.ButtonContainer.Children.Count();
+            _strippingMenu.SetSize = new Vector2(horizontalMenuSize, verticalMenuSize);
         }
 
-        private void AddHandButton(Hand hand)
+        private void AddHandButton(Entity<HandsComponent> ent, string handId, Hand hand)
         {
-            var button = new HandButton(hand.Name, hand.Location);
+            var button = new HandButton(handId, hand.Location);
 
             button.Pressed += SlotPressed;
 
-            if (EntMan.TryGetComponent<VirtualItemComponent>(hand.HeldEntity, out var virt))
+            var heldEntity = _hands.GetHeldItem(ent.AsNullable(), handId);
+            if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
             {
                 button.Blocked = true;
-                if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
+                if (_cuffable.TryGetAllCuffs(Owner, out var cuffs) && cuffs.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 
-            UpdateEntityIcon(button, hand.HeldEntity);
             _strippingMenu!.HandsContainer.AddChild(button);
+
+            UpdateEntityIcon(button, heldEntity);
+
+            LayoutContainer.SetPosition(button, new Vector2i(_handCount, 0) * (SlotControl.DefaultButtonSize + ButtonSeparation));
+            _handCount++;
         }
 
         private void SlotPressed(GUIBoundKeyEventArgs ev, SlotControl slot)
@@ -220,6 +294,10 @@ namespace Content.Client.Inventory
             UpdateEntityIcon(button, entity);
 
             LayoutContainer.SetPosition(button, slotDef.StrippingWindowPos * (SlotControl.DefaultButtonSize + ButtonSeparation));
+            if (slotDef.StrippingWindowPos.X > _inventoryDimensions.X)
+                _inventoryDimensions = new Vector2i(slotDef.StrippingWindowPos.X, _inventoryDimensions.Y);
+            if (slotDef.StrippingWindowPos.Y > _inventoryDimensions.Y)
+                _inventoryDimensions = new Vector2i(_inventoryDimensions.X, slotDef.StrippingWindowPos.Y);
         }
 
         private void UpdateEntityIcon(SlotControl button, EntityUid? entity)
@@ -243,6 +321,16 @@ namespace Content.Client.Inventory
                 return;
 
             button.SetEntity(viewEnt);
+
+            if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
+            {
+                button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
+            }
+
+            if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+            {
+                button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
+            }
         }
     }
 }

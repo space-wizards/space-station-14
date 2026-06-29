@@ -8,9 +8,9 @@ namespace Content.Client.Chemistry.Visualizers;
 /// <summary>
 /// The system responsible for ensuring <see cref="FoamVisualsComponent"/> plays the animation it's meant to when the foam dissolves.
 /// </summary>
-public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent>
+public sealed partial class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -71,7 +71,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            sprite.Visible = false;
+            SpriteSystem.SetVisible((uid, sprite), false);
     }
 }
 

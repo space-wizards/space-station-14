@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "All sprites by https://github.com/august-sun, inhands by TiniestShark (github)",
+    "copyright": "All sprites by https://github.com/august-sun, inhands by TiniestShark (GitHub), stripes by SeamLesss (GitHub)",
     "size": {
         "x": 32,
         "y": 32
@@ -11,16 +11,7 @@
             "name": "base"
         },
         {
-            "name": "practice"
-        },
-        {
-            "name": "red"
-        },
-        {
-            "name": "rubber"
-        },
-        {
-            "name": "uranium"
+            "name": "stripe"
         },
         {
             "name": "mag-1"

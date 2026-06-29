@@ -12,10 +12,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Decals.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed class AddDecalCommand : IConsoleCommand
+    public sealed partial class AddDecalCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
 
         public string Command => "adddecal";
         public string Description => "Creates a decal on the map";
@@ -54,8 +54,9 @@ namespace Content.Server.Decals.Commands
             }
 
             var mapSystem = _entManager.System<MapSystem>();
+            var turfSystem = _entManager.System<TurfSystem>();
             var coordinates = new EntityCoordinates(gridIdRaw.Value, new Vector2(x, y));
-            if (mapSystem.GetTileRef(gridIdRaw.Value, grid, coordinates).IsSpace())
+            if (turfSystem.IsSpace(mapSystem.GetTileRef(gridIdRaw.Value, grid, coordinates)))
             {
                 shell.WriteError($"Cannot create decal on space tile at {coordinates}.");
                 return;

@@ -8,7 +8,7 @@
       stripTime: 6
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
-      displayName: ID
+      displayName: Back
     - name: id
       slotTexture: id
       fullTextureName: template_small

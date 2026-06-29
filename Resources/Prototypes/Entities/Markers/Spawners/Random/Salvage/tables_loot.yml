@@ -104,7 +104,7 @@
       rolls: !type:RangeNumberSelector
         range: 1, 2
     - !type:NestedSelector
-      tableId: RandomInstrumentTable
+      tableId: SalvageInstrumentTable
 
 - type: entityTable
   id: SalvageTreasureUncommon
@@ -172,6 +172,7 @@
     - id: ClothingHeadHatFancyCrown
     - id: GoldenBikeHorn
     - id: ClothingHeadHatCatEars
+    - id: GoldenPersonalAI
     - id: TreasureCoinDiamond
       amount: !type:RangeNumberSelector
         range: 2, 5

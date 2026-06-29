@@ -1,8 +1,10 @@
 using System.Linq;
+using System.Numerics.Tensors;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Reactions;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -10,70 +12,70 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-        private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
-        private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+        private GasReactionPrototype[] _gasReactions = [];
 
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions;
 
-        /// <summary>
-        ///     Cached array of gas specific heats.
-        /// </summary>
-        public float[] GasSpecificHeats => _gasSpecificHeats;
-
-        public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
-
-        private void InitializeGases()
+        public override void InitializeGases()
         {
-            _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+            base.InitializeGases();
+        }
+
+        /// <summary>
+        ///     Caches all gas reactions into an array ordered by priority.
+        /// </summary>
+        public void CacheGases()
+        {
+            _gasReactions = ProtoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
-
-            Array.Resize(ref _gasSpecificHeats, MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4));
-
-            for (var i = 0; i < GasPrototypes.Length; i++)
-            {
-                _gasSpecificHeats[i] = GasPrototypes[i].SpecificHeat / HeatScale;
-                GasReagents[i] = GasPrototypes[i].Reagent;
-            }
         }
 
-        /// <summary>
-        ///     Calculates the heat capacity for a gas mixture.
-        /// </summary>
-        /// <param name="mixture">The mixture whose heat capacity should be calculated</param>
-        /// <param name="applyScaling"> Whether the internal heat capacity scaling should be applied. This should not be
-        /// used outside of atmospheric related heat transfer.</param>
-        /// <returns></returns>
-        public float GetHeatCapacity(GasMixture mixture, bool applyScaling)
+        public override float GetMass(GasMixture mix)
         {
-            var scale = GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
-
-            // By default GetHeatCapacityCalculation() has the heat-scale divisor pre-applied.
-            // So if we want the un-scaled heat capacity, we have to multiply by the scale.
-            return applyScaling ? scale : scale * HeatScale;
+            return GetMass(mix.Moles);
         }
 
-        private float GetHeatCapacity(GasMixture mixture)
-            =>  GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+        public override float GetMass(float[] moles)
+        {
+            Span<float> tmp = stackalloc float[moles.Length];
+            TensorPrimitives.Multiply(moles, GasMolarMasses, tmp);
+
+            // Conversion of grams to kilograms.
+            return TensorPrimitives.Sum(tmp) * Atmospherics.gToKg;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private float GetHeatCapacityCalculation(float[] moles, bool space)
+        protected override float GetHeatCapacityCalculation(float[] moles, bool space)
         {
             // Little hack to make space gas mixtures have heat capacity, therefore allowing them to cool down rooms.
-            if (space && MathHelper.CloseTo(NumericsHelpers.HorizontalAdd(moles), 0f))
+            if (space && MathHelper.CloseTo(TensorPrimitives.Sum(moles), 0f))
             {
                 return Atmospherics.SpaceHeatCapacity;
             }
 
             Span<float> tmp = stackalloc float[moles.Length];
-            NumericsHelpers.Multiply(moles, GasSpecificHeats, tmp);
+            TensorPrimitives.Multiply(moles, GasMolarHeatCapacities, tmp);
             // Adjust heat capacity by speedup, because this is primarily what
             // determines how quickly gases heat up/cool.
-            return MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            return MathF.Max(TensorPrimitives.Sum(tmp), Atmospherics.MinimumHeatCapacity);
+        }
+
+        public override bool IsMixtureFuel(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            TensorPrimitives.Multiply(mixture.Moles, GasFuelMask, tmp);
+            return TensorPrimitives.Sum(tmp) > epsilon;
+        }
+
+        public override bool IsMixtureOxidizer(GasMixture mixture, float epsilon = Atmospherics.Epsilon)
+        {
+            Span<float> tmp = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+            TensorPrimitives.Multiply(mixture.Moles, GasOxidizerMask, tmp);
+            return TensorPrimitives.Sum(tmp) > epsilon;
         }
 
         /// <summary>
@@ -85,22 +87,6 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        ///     Calculates the thermal energy for a gas mixture.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture)
-        {
-            return mixture.Temperature * GetHeatCapacity(mixture);
-        }
-
-        /// <summary>
-        ///     Calculates the thermal energy for a gas mixture, using a cached heat capacity value.
-        /// </summary>
-        public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
-        {
-            return mixture.Temperature * cachedHeatCapacity;
-        }
-
-        /// <summary>
         ///     Add 'dQ' Joules of energy into 'mixture'.
         /// </summary>
         public void AddHeat(GasMixture mixture, float dQ)
@@ -108,28 +94,6 @@ namespace Content.Server.Atmos.EntitySystems
             var c = GetHeatCapacity(mixture);
             float dT = dQ / c;
             mixture.Temperature += dT;
-        }
-
-        /// <summary>
-        ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
-        ///     The <see cref="giver"/> gas mixture is not modified by this method.
-        /// </summary>
-        public void Merge(GasMixture receiver, GasMixture giver)
-        {
-            if (receiver.Immutable) return;
-
-            if (MathF.Abs(receiver.Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var receiverHeatCapacity = GetHeatCapacity(receiver);
-                var giverHeatCapacity = GetHeatCapacity(giver);
-                var combinedHeatCapacity = receiverHeatCapacity + giverHeatCapacity;
-                if (combinedHeatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    receiver.Temperature = (GetThermalEnergy(giver, giverHeatCapacity) + GetThermalEnergy(receiver, receiverHeatCapacity)) / combinedHeatCapacity;
-                }
-            }
-
-            NumericsHelpers.Add(receiver.Moles, giver.Moles);
         }
 
         /// <summary>
@@ -173,8 +137,8 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 // transfer moles
-                NumericsHelpers.Multiply(source.Moles, fraction, buffer);
-                NumericsHelpers.Add(receiver.Moles, buffer);
+                TensorPrimitives.Multiply(source.Moles, fraction, buffer);
+                TensorPrimitives.Add(receiver.Moles, buffer, receiver.Moles);
             }
         }
 
@@ -319,10 +283,8 @@ namespace Content.Server.Atmos.EntitySystems
             return GasCompareResult.NoExchange;
         }
 
-        /// <summary>
-        ///     Performs reactions for a given gas mixture on an optional holder.
-        /// </summary>
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        [PublicAPI]
+        public override ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
         {
             var reaction = ReactionResult.NoReaction;
             var temperature = mixture.Temperature;
@@ -336,11 +298,8 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 var doReaction = true;
-                for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
+                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    if(i >= Atmospherics.TotalNumberOfGases)
-                        throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
-
                     var req = prototype.MinimumRequirements[i];
 
                     if (!(mixture.GetMoles(i) < req))
@@ -359,6 +318,21 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return reaction;
+        }
+
+        /// <summary>
+        /// Adds an array of moles to a <see cref="GasMixture"/>.
+        /// Guards against negative moles by clamping to zero.
+        /// </summary>
+        /// <param name="mixture">The <see cref="GasMixture"/> to add moles to.</param>
+        /// <param name="molsToAdd">The <see cref="ReadOnlySpan{T}"/> of moles to add.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of the <see cref="ReadOnlySpan{T}"/>
+        /// is not the same as the length of the <see cref="GasMixture"/> gas array.</exception>
+        [PublicAPI]
+        public static void AddMolsToMixture(GasMixture mixture, ReadOnlySpan<float> molsToAdd)
+        {
+            TensorPrimitives.Add(mixture.Moles, molsToAdd, mixture.Moles);
+            TensorPrimitives.Max(mixture.Moles, 0f, mixture.Moles);
         }
 
         public enum GasCompareResult

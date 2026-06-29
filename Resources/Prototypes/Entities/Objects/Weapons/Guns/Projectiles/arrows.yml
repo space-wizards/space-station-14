@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, SolutionDart]
   id: BaseArrow
   abstract: true
   components:
@@ -20,7 +20,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+          bounds: "-0.1,-0.3,0.1,-0.1"
         hard: false
         mask:
         - Impassable
@@ -41,17 +41,13 @@
     damage:
       types:
         Piercing: 25
-  - type: SolutionContainerManager
-    solutions:
-      ammo:
-        maxVol: 2
-  - type: RefillableSolution
-    solution: ammo
+  - type: RefillableSolution # This is sus. You can't really just run an arrowhead under a sink faucet.
+    solution: melee
   - type: InjectableSolution
-    solution: ammo
+    solution: melee
   - type: SolutionInjectOnEmbed
     transferAmount: 2
-    solution: ammo
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Appearance
@@ -185,3 +181,31 @@
   - type: Construction
     graph: ImprovisedArrowCarp
     node: ImprovisedArrowCarp
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowCard
+  name: cardboard arrow
+  description: Careful, you'll poke an eye out!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: brown
+    - state: tip
+      color: brown
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 10
+  - type: Construction
+    graph: CardArrow
+    node: CardArrow

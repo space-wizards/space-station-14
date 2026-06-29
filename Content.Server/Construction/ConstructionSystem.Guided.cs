@@ -12,7 +12,7 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
 
         private readonly Dictionary<ConstructionPrototype, ConstructionGuide> _guideCache = new();
 
@@ -145,7 +145,7 @@ namespace Content.Server.Construction
                 return guide;
 
             // If the graph doesn't actually exist, do nothing.
-            if (!PrototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph))
+            if (!PrototypeManager.Resolve(construction.Graph, out ConstructionGraphPrototype? graph))
                 return null;
 
             // If either the start node or the target node are missing, do nothing.

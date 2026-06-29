@@ -6,9 +6,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCriminalRecordIconsComponent>
+public sealed partial class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCriminalRecordIconsComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -22,7 +22,7 @@ public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCrimi
         if (!IsActive)
             return;
 
-        if (_prototype.TryIndex(component.StatusIcon, out var iconPrototype))
+        if (_prototype.Resolve(component.StatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

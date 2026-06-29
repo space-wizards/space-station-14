@@ -1,14 +1,16 @@
-﻿- type: entity
+- type: entity
+  parent: BaseAction
   id: ActionToggleInternals
   name: Toggle Internals
   description: Breathe from the equipped gas tank. Also requires equipped breath mask.
   components:
-  - type: InstantAction
+  - type: Action
+    useDelay: 1
     icon:
       sprite: Interface/Alerts/internals.rsi
       state: internal2
     iconOn:
       sprite: Interface/Alerts/internals.rsi
       state: internal1
+  - type: InstantAction
     event: !type:ToggleActionEvent
-    useDelay: 1

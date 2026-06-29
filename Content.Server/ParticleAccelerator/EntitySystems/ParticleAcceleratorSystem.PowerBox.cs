@@ -1,5 +1,7 @@
-﻿using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Machines.Components;
+using Content.Shared.ParticleAccelerator.Components;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -12,7 +14,7 @@ public sealed partial class ParticleAcceleratorSystem
 
     private void PowerBoxReceivedChanged(EntityUid uid, ParticleAcceleratorPowerBoxComponent component, ref PowerConsumerReceivedChanged args)
     {
-        if (!TryComp<ParticleAcceleratorPartComponent>(uid, out var part))
+        if (!TryComp<MultipartMachinePartComponent>(uid, out var part))
             return;
         if (!TryComp<ParticleAcceleratorControlBoxComponent>(part.Master, out var controller))
             return;

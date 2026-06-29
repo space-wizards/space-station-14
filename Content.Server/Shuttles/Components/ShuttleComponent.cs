@@ -19,7 +19,7 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// Maximum velocity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float BaseMaxLinearVelocity = 60f;
 
         public const float MaxAngularVelocity = 4f;
@@ -68,5 +68,12 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField]
         public float DampingModifier;
+
+        /// <summary>
+        /// Optional override for the FTL cooldown for this shuttle.
+        /// If not null, then the value will be used instead of the shuttle.cooldown CCVar.
+        /// </summary>
+        [DataField]
+        public TimeSpan? FTLCooldownOverride = null;
     }
 }

@@ -1345,6 +1345,16 @@
   description: flavor-hew
 
 - type: flavor
+  id: dogfood
+  flavorType: Base
+  description: flavor-complex-dog-food
+
+- type: flavor
+  id: cannedtuna
+  flavorType: Complex
+  description: flavor-complex-canned-tuna
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
@@ -1398,6 +1408,11 @@
   id: paper
   flavorType: Complex
   description: flavor-complex-paper
+
+- type: flavor
+  id: cotton
+  flavorType: Complex
+  description: flavor-complex-cotton
 
 - type: flavor
   id: compressed-meat
@@ -1474,3 +1489,17 @@
   flavorType: Base
   description: flavor-base-trashy
 
+- type: flavor
+  id: artifactglue
+  flavorType: Complex
+  description: flavor-complex-artifact-glue
+
+- type: flavor
+  id: alkaline
+  flavorType: Base
+  description: flavor-base-alkaline
+
+- type: flavor
+  id: motivating
+  flavorType: Base
+  description: flavor-base-motivating

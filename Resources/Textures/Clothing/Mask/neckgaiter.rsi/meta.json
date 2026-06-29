@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by belay5 (Discord) | equipped-MASK-vox sprited by PuroSlavKing (Github)",
+  "copyright": "Sprited by belay5 (Discord) | equipped-MASK-vox sprited by PuroSlavKing (Github) | equipped-MASK-vulpkanin sprited by TJohnson (Delta-V)",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vulpkanin",
       "directions": 4
     }
   ]

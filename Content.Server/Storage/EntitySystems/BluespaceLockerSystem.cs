@@ -21,17 +21,17 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Storage.EntitySystems;
 
-public sealed class BluespaceLockerSystem : EntitySystem
+public sealed partial class BluespaceLockerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private WeldableSystem _weldableSystem = default!;
+    [Dependency] private LockSystem _lockSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
 
     public override void Initialize()
     {
@@ -95,7 +95,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
                 foreach (var entity in target.Value.storageComponent.Contents.ContainedEntities.ToArray())
                 {
-                    if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                    if (HasComp<MindContainerComponent>(entity))
                     {
                         if (!component.BehaviorProperties.TransportSentient)
                             continue;
@@ -312,7 +312,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
-                if (EntityManager.HasComponent<MindContainerComponent>(entity))
+                if (HasComp<MindContainerComponent>(entity))
                 {
                     if (!component.BehaviorProperties.TransportSentient)
                         continue;

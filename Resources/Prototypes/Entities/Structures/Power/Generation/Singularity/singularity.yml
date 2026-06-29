@@ -13,6 +13,7 @@
     bodyType: Dynamic
     bodyStatus: InAir
   - type: CanMoveInAir
+  - type: TileFrictionModifier
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false
@@ -77,10 +78,10 @@
       - GhostOnlyWarp
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
-    shader: unshaded
     layers:
     - map: [ "VisualLevel" ]
       state: singularity_1
+      shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.SingularityAppearanceKeys.Singularity:

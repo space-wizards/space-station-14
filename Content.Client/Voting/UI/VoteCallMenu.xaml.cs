@@ -23,14 +23,14 @@ namespace Content.Client.Voting.UI
     [GenerateTypedNameReferences]
     public sealed partial class VoteCallMenu : BaseWindow
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEntityNetworkManager _entNetManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IStateManager _state = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IClientNetManager _netManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IEntityNetworkManager _entNetManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IStateManager _state = default!;
 
         private VotingSystem _votingSystem;
 
@@ -63,7 +63,7 @@ namespace Content.Client.Voting.UI
             RobustXamlLoader.Load(this);
             _votingSystem = _entityManager.System<VotingSystem>();
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             CloseButton.OnPressed += _ => Close();
             VoteNotTrustedLabel.Text = Loc.GetString("ui-vote-trusted-users-notice", ("timeReq", _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime)));
 
@@ -274,13 +274,11 @@ namespace Content.Client.Voting.UI
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class VoteMenuCommand : IConsoleCommand
+    public sealed class VoteMenuCommand : LocalizedCommands
     {
-        public string Command => "votemenu";
-        public string Description => Loc.GetString("ui-vote-menu-command-description");
-        public string Help => Loc.GetString("ui-vote-menu-command-help-text");
+        public override string Command => "votemenu";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             new VoteCallMenu().OpenCentered();
         }

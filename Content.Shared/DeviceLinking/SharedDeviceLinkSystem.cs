@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
@@ -9,13 +10,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
 
-public abstract class SharedDeviceLinkSystem : EntitySystem
+public abstract partial class SharedDeviceLinkSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+
+    [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
 
     public const string InvokedPort = "link_port";
 
@@ -81,10 +84,9 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// </summary>
     private void OnSourceRemoved(Entity<DeviceLinkSourceComponent> source, ref ComponentRemove args)
     {
-        var query = GetEntityQuery<DeviceLinkSinkComponent>();
         foreach (var sinkUid in source.Comp.LinkedPorts.Keys)
         {
-            if (query.TryGetComponent(sinkUid, out var sink))
+            if (_deviceLinkSinkQuery.TryGetComponent(sinkUid, out var sink))
                 RemoveSinkFromSourceInternal(source, sinkUid, source, sink);
             else
                 Log.Error($"Device source {ToPrettyString(source)} links to invalid entity: {ToPrettyString(sinkUid)}");
@@ -142,6 +144,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
     }
 
+    public ProtoId<SourcePortPrototype>[] GetSourcePortIds(Entity<DeviceLinkSourceComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
+    }
+
     /// <summary>
     /// Retrieves the available ports from a source
     /// </summary>
@@ -158,6 +165,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
 
         return sourcePorts;
+    }
+
+    public ProtoId<SinkPortPrototype>[] GetSinkPortIds(Entity<DeviceLinkSinkComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
     }
 
     /// <summary>
@@ -201,6 +213,17 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
             return new HashSet<(ProtoId<SourcePortPrototype>, ProtoId<SinkPortPrototype>)>();
 
         return links;
+    }
+
+    /// <summary>
+    /// Gets the entities linked to a specific source port.
+    /// </summary>
+    public HashSet<EntityUid> GetLinkedSinks(Entity<DeviceLinkSourceComponent?> source, ProtoId<SourcePortPrototype> port)
+    {
+        if (!Resolve(source, ref source.Comp) || !source.Comp.Outputs.TryGetValue(port, out var linked))
+            return new HashSet<EntityUid>(); // not a source or not linked
+
+        return new HashSet<EntityUid>(linked); // clone to prevent modifying the original
     }
 
     /// <summary>

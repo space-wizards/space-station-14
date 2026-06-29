@@ -10,14 +10,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
+public sealed partial class DamageOnHighSpeedImpactSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -30,7 +30,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
-        if (!EntityManager.HasComponent<DamageableComponent>(uid))
+        if (!HasComp<DamageableComponent>(uid))
             return;
 
         //TODO: This should solve after physics solves
@@ -46,7 +46,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         component.LastHit = _gameTiming.CurTime;
 
         if (_robustRandom.Prob(component.StunChance))
-            _stun.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds), true);
+            _stun.TryUpdateStunDuration(uid, TimeSpan.FromSeconds(component.StunSeconds));
 
         var damageScale = component.SpeedDamageFactor * speed / component.MinimumSpeed;
 

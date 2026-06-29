@@ -13,6 +13,7 @@ public sealed class CommandLineArguments
     public string OutputPath { get; set; } = DirectoryExtensions.MapImages().FullName;
     public bool ArgumentsAreFileNames { get; set; } = false;
     public bool ShowMarkers { get; set; } = false;
+    public bool OutputParallax { get; set; } = false;
 
     public static bool TryParse(IReadOnlyList<string> args, [NotNullWhen(true)] out CommandLineArguments? parsed)
     {
@@ -70,7 +71,17 @@ public sealed class CommandLineArguments
                     PrintHelp();
                     return false;
 
+                case "--parallax":
+                    parsed.OutputParallax = true;
+                    break;
+
                 default:
+                    if (argument.StartsWith('-'))
+                    {
+                        Console.WriteLine($"Unknown argument: {argument}");
+                        return false;
+                    }
+
                     parsed.Maps.Add(argument);
                     break;
             }
@@ -95,7 +106,6 @@ Options:
         Defaults to: png
     --viewer
         Causes the map renderer to create the map.json files required for use with the map viewer.
-        Also puts the maps in the required directory structure.
     -o / --output <output path>
         Changes the path the rendered maps will get saved to.
         Defaults to Resources/MapImages
@@ -104,6 +114,8 @@ Options:
         Example: Content.MapRenderer -f /Maps/box.yml /Maps/bagel.yml
     -m / --markers
         Show hidden markers on map render. Defaults to false.
+    --parallax
+        Output images and data used for map viewer parallax.
     -h / --help
         Displays this help text");
     }

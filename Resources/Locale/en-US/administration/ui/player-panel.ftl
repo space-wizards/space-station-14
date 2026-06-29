@@ -6,6 +6,8 @@ player-panel-rolebans = Total Role Bans: {$totalRoleBans}
 player-panel-notes = Total Notes: {$totalNotes}
 player-panel-playtime = Total Playtime: {$days}d:{$hours}h:{$minutes}m
 player-panel-shared-connections = Shared Connections: {$sharedConnections}
+player-panel-trust-score = Trust Score: {TOSTRING($trustScore, "P0")}
+player-panel-account-creation = Account Created: {TOSTRING($date, "yyyy-MM-dd")}
 
 player-panel-copy-username = Copy
 player-panel-show-notes = Notes
@@ -22,3 +24,4 @@ player-panel-rejuvenate = Rejuvenate
 player-panel-false = False
 player-panel-true = True
 player-panel-follow = Follow
+player-panel-camera = Camera

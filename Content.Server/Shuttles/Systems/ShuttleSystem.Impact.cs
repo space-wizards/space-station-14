@@ -2,14 +2,11 @@ using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
-using Content.Shared.Clothing;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
-using Content.Shared.Slippery;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -20,12 +17,16 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Shared.Damage.Components;
 
 namespace Content.Server.Shuttles.Systems;
 
 // shuttle impact damage ported from Goobstation (AGPLv3) with agreement of all coders involved
 public sealed partial class ShuttleSystem
 {
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<MovedByPressureComponent> _movedByPressureQuery = default!;
+
     private bool _enabled;
     private float _minimumImpactInertia;
     private float _minimumImpactVelocity;
@@ -53,9 +54,6 @@ public sealed partial class ShuttleSystem
     private readonly ProtoId<ContentTileDefinition> _platingId = "Plating";
     private readonly EntProtoId _sparkEffect = "EffectSparks";
 
-    private EntityQuery<DamageableComponent> _dmgQuery;
-    private EntityQuery<ProjectileComponent> _projQuery;
-
     private HashSet<EntityUid> _countedEnts = new();
     private HashSet<EntityUid> _intersecting = new();
     // for _adminLogSpacing
@@ -64,9 +62,6 @@ public sealed partial class ShuttleSystem
     private void InitializeImpact()
     {
         SubscribeLocalEvent<ShuttleComponent, StartCollideEvent>(OnShuttleCollide);
-
-        _dmgQuery = GetEntityQuery<DamageableComponent>();
-        _projQuery = GetEntityQuery<ProjectileComponent>();
 
         Subs.CVar(_cfg, CCVars.ImpactEnabled, value => _enabled = value, true);
         Subs.CVar(_cfg, CCVars.MinimumImpactInertia, value => _minimumImpactInertia = value, true);
@@ -107,6 +102,7 @@ public sealed partial class ShuttleSystem
         var ourXform = Transform(args.OurEntity);
         var otherXform = Transform(args.OtherEntity);
         var worldPoints = args.WorldPoints;
+        var worldNormal = args.WorldNormal;
 
         for (var i = 0; i < worldPoints.Length; i++)
         {
@@ -117,7 +113,14 @@ public sealed partial class ShuttleSystem
 
             var ourVelocity = _physics.GetLinearVelocity(args.OurEntity, ourPoint.Position, ourBody, ourXform);
             var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint.Position, otherBody, otherXform);
-            var jungleDiff = (ourVelocity - otherVelocity).Length();
+            var topDiff = (ourVelocity - otherVelocity);
+            var jungleDiff = topDiff.Length();
+
+            // Get the velocity in relation to the contact normal
+            // If this still causes issues see https://box2d.org/posts/2020/06/ghost-collisions/
+            // This should only be a potential problem on chunk seams.
+            var dotProduct = MathF.Abs(Vector2.Dot(topDiff.Normalized(), worldNormal.Normalized()));
+            jungleDiff *= dotProduct;
 
             // this is cursed but makes it so that collisions of small grid with large grid count the inertia as being approximately the small grid's
             var effectiveInertiaMult = (ourBody.FixturesMass * otherBody.FixturesMass) / (ourBody.FixturesMass + otherBody.FixturesMass);
@@ -218,37 +221,59 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void ThrowEntitiesOnGrid(EntityUid gridUid, TransformComponent xform, Vector2 direction)
     {
-        var movedByPressureQuery = GetEntityQuery<MovedByPressureComponent>();
         var knockdownTime = TimeSpan.FromSeconds(5);
 
         var minsq = _minThrowVelocity * _minThrowVelocity;
-        // iterate all entities on the grid
-        // TODO: only iterate non-static entities
-        var childEnumerator = xform.ChildEnumerator;
-        while (childEnumerator.MoveNext(out var uid))
-        {
-            // don't throw static bodies
-            if (!_physicsQuery.TryGetComponent(uid, out var physics) || (physics.BodyType & BodyType.Static) != 0)
-                continue;
 
+        // iterate all dynamic entities on the grid
+        if (!TryComp<BroadphaseComponent>(gridUid, out var lookup) || !_gridQuery.TryComp(gridUid, out var gridComp))
+            return;
+
+        var gridBox = gridComp.LocalAABB;
+        List<Entity<PhysicsComponent>> list = new();
+        HashSet<EntityUid> processed = new();
+        var state = (list, processed, _physicsQuery);
+        lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+
+        foreach (var ent in list)
+        {
             // don't throw if buckled
-            if (_buckle.IsBuckled(uid, _buckleQuery.CompOrNull(uid)))
+            if (_buckle.IsBuckled(ent, _buckleQuery.CompOrNull(ent)))
                 continue;
 
             // don't throw them if they have magboots
-            if (movedByPressureQuery.TryComp(uid, out var moved) && !moved.Enabled)
+            if (_movedByPressureQuery.TryComp(ent, out var moved) && !moved.Enabled)
                 continue;
 
             if (direction.LengthSquared() > minsq)
             {
-                _stuns.TryKnockdown(uid, knockdownTime, true);
-                _throwing.TryThrow(uid, direction, physics, Transform(uid), _projQuery, direction.Length(), playSound: false);
+                _stuns.TryCrawling(ent.Owner, knockdownTime);
+                _throwing.TryThrow(ent, direction, ent.Comp, Transform(ent), direction.Length(), playSound: false);
             }
             else
             {
-                _physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
+                _physics.ApplyLinearImpulse(ent, direction * ent.Comp.Mass, body: ent.Comp);
             }
         }
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in EntityUid uid)
+    {
+        if (state.Processed.Add(uid) && state.PhysicsQuery.TryComp(uid, out var body))
+            state.List.Add((uid, body));
+
+        return true;
+    }
+
+    private static bool GridQueryCallback(
+        ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
+        in FixtureProxy proxy)
+    {
+        var owner = proxy.Entity;
+        return GridQueryCallback(ref state, in owner);
     }
 
     /// <summary>
@@ -267,7 +292,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var tileRef in _mapSystem.GetLocalTilesIntersecting(uid, grid, new Circle(centerTile, radius)))
         {
-            var def = (ContentTileDefinition)_tileDefManager[tileRef.Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(tileRef);
             mass += def.Mass;
             tileCount++;
 
@@ -357,14 +382,14 @@ public sealed partial class ShuttleSystem
                 if (MathF.Abs(toCenter.X) > 0.5f || MathF.Abs(toCenter.Y) > 0.5f)
                     continue;
 
-                if (_dmgQuery.TryComp(localEnt, out var damageable))
+                if (_damageableQuery.TryComp(localEnt, out var damageable))
                 {
                     // Apply damage scaled by distance but capped to prevent gibbing
                     var scaledDamage = tileData.Energy * _damageMultiplier;
                     damageSpec.DamageDict["Blunt"] = scaledDamage;
                     damageSpec.DamageDict["Structural"] = scaledDamage * _structuralDamage;
 
-                    _damageSys.TryChangeDamage(localEnt, damageSpec, damageable: damageable);
+                    _damageSys.ChangeDamage((localEnt, damageable), damageSpec);
                 }
                 // might've been destroyed
                 if (TerminatingOrDeleted(localEnt) || EntityManager.IsQueuedForDeletion(localEnt))
@@ -382,7 +407,7 @@ public sealed partial class ShuttleSystem
                 else
                 {
                     var direction = throwDirection * tileData.DistanceFactor;
-                    _throwing.TryThrow(localEnt, direction, physics, localEnt.Comp, _projQuery, direction.Length(), playSound: false);
+                    _throwing.TryThrow(localEnt, direction, physics, localEnt.Comp, direction.Length(), playSound: false);
                 }
             }
 
@@ -394,7 +419,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // Mark tiles for breaking/effects
-            var def = (ContentTileDefinition)_tileDefManager[_mapSystem.GetTileRef(uid, grid, tileData.Tile).Tile.TypeId];
+            var def = _turf.GetContentTileDefinition(_mapSystem.GetTileRef(uid, grid, tileData.Tile));
             if (tileData.Energy > def.Mass * _tileBreakEnergyMultiplier)
                 brokenTiles.Add((tileData.Tile, Tile.Empty));
 

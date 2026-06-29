@@ -1,49 +1,84 @@
- - type: entity
-   id: ClosetL3Filled
-   suffix: Filled, Generic
-   parent: ClosetL3
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingOuterBioGeneral
-       - id: ClothingHeadHatHoodBioGeneral
+- type: entity
+  id: ClosetL3Filled
+  suffix: Filled, Generic
+  parent: ClosetL3
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillBiohazardGearGeneric
 
- - type: entity
-   id: ClosetL3VirologyFilled
-   suffix: Filled, Virology
-   parent: ClosetL3Virology
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingOuterBioVirology
-       - id: ClothingHeadHatHoodBioVirology
+- type: entityTable
+  id: FillBiohazardGearGeneric
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioGeneral
+    - id: ClothingHeadHatHoodBioGeneral
 
- - type: entity
-   id: ClosetL3SecurityFilled
-   suffix: Filled, Security
-   parent: ClosetL3Security
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingOuterBioSecurity
-       - id: ClothingHeadHatHoodBioSecurity
+- type: entity
+  id: ClosetL3VirologyFilled
+  suffix: Filled, Virology
+  parent: ClosetL3Virology
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillBiohazardGearVirology
 
- - type: entity
-   id: ClosetL3JanitorFilled
-   suffix: Filled, Janitor
-   parent: ClosetL3Janitor
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingOuterBioJanitor
-       - id: ClothingHeadHatHoodBioJanitor
+- type: entityTable
+  id: FillBiohazardGearVirology
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioVirology
+    - id: ClothingHeadHatHoodBioVirology
 
- - type: entity
-   id: ClosetL3ScienceFilled
-   suffix: Filled, Science
-   parent: ClosetL3Science
-   components:
-   - type: StorageFill
-     contents:
-       - id: ClothingOuterBioScientist
-       - id: ClothingHeadHatHoodBioScientist
+- type: entity
+  id: ClosetL3SecurityFilled
+  suffix: Filled, Security
+  parent: ClosetL3Security
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillBiohazardGearSecurity
+
+- type: entityTable
+  id: FillBiohazardGearSecurity
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioSecurity
+    - id: ClothingHeadHatHoodBioSecurity
+
+- type: entity
+  id: ClosetL3JanitorFilled
+  suffix: Filled, Janitor
+  parent: ClosetL3Janitor
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillBiohazardGearJanitor
+
+- type: entityTable
+  id: FillBiohazardGearJanitor
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioJanitor
+    - id: ClothingHeadHatHoodBioJanitor
+
+- type: entity
+  id: ClosetL3ScienceFilled
+  suffix: Filled, Science
+  parent: ClosetL3Science
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillBiohazardGearScience
+
+- type: entityTable
+  id: FillBiohazardGearScience
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioScientist
+    - id: ClothingHeadHatHoodBioScientist
