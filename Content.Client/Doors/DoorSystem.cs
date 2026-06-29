@@ -9,7 +9,6 @@ namespace Content.Client.Doors;
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -210,7 +209,7 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (!ProtoMan.Resolve(targetProto, out var target))
             return;
 
-        if (!target.TryComp(out SpriteComponent? targetSprite, _componentFactory))
+        if (!target.TryComp(out SpriteComponent? targetSprite, Factory))
             return;
 
         _sprite.SetBaseRsi(sprite.AsNullable(), targetSprite.BaseRSI);

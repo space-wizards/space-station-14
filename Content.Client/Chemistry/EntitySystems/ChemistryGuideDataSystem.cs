@@ -7,7 +7,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.EntitySystems;
@@ -15,7 +14,6 @@ namespace Content.Client.Chemistry.EntitySystems;
 /// <inheritdoc/>
 public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
-    [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
     private static readonly ProtoId<MixingCategoryPrototype> DefaultMixingCategory = "DummyMix";
@@ -90,15 +88,15 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryComp(out ExtractableComponent? extractableComponent, EntityManager.ComponentFactory))
+            if (!entProto.TryComp(out ExtractableComponent? extractableComponent, Factory))
                 continue;
 
             //these bloat the hell out of blood/fat
-            if (entProto.HasComp<OrganComponent>(_factory))
+            if (entProto.HasComp<OrganComponent>(Factory))
                 continue;
 
             //these feel obvious...
-            if (entProto.HasComp<PillComponent>(_factory))
+            if (entProto.HasComp<PillComponent>(Factory))
                 continue;
 
             if (extractableComponent.JuiceSolution is { } juiceSolution)

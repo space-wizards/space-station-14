@@ -6,8 +6,6 @@ namespace Content.Client.Storage.Visualizers;
 
 public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
-    [Dependency] private IComponentFactory _componentFactory = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -42,11 +40,11 @@ public sealed partial class EntityStorageVisualizerSystem : VisualizerSystem<Ent
         {
             if (ProtoMan.Resolve(prototype, out var proto))
             {
-                if (proto.TryComp(out SpriteComponent? sprite, _componentFactory))
+                if (proto.TryComp(out SpriteComponent? sprite, Factory))
                 {
                     SpriteSystem.SetBaseRsi((uid, args.Sprite), sprite.BaseRSI);
                 }
-                if (proto.TryComp(out EntityStorageVisualsComponent? visuals, _componentFactory))
+                if (proto.TryComp(out EntityStorageVisualsComponent? visuals, Factory))
                 {
                     comp.StateBaseOpen = visuals.StateBaseOpen;
                     comp.StateBaseClosed = visuals.StateBaseClosed;

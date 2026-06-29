@@ -14,7 +14,6 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class StatusEffectsSystem : EntitySystem
 {
-    [Dependency] private IComponentFactory _factory = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -78,7 +77,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         foreach (var ent in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
-            if (ent.HasComp<StatusEffectComponent>(_factory))
+            if (ent.HasComp<StatusEffectComponent>(Factory))
                 StatusEffectPrototypes.Add(ent.ID);
         }
     }

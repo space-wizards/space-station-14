@@ -15,7 +15,6 @@ public abstract partial class SharedItemSystem : EntitySystem
 {
     [Dependency] private SharedHandsSystem _handsSystem = default!;
     [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] private IComponentFactory _compFactory = default!;
 
     public override void Initialize()
     {
@@ -282,8 +281,8 @@ public abstract partial class SharedItemSystem : EntitySystem
     {
         var protoA = ProtoMan.Index(a);
         var protoB = ProtoMan.Index(b);
-        if (!protoA.TryComp<ItemComponent>(out var compA, _compFactory) ||
-            !protoB.TryComp<ItemComponent>(out var compB, _compFactory))
+        if (!protoA.TryComp<ItemComponent>(out var compA, Factory) ||
+            !protoB.TryComp<ItemComponent>(out var compB, Factory))
         {
             return 0;
         }
