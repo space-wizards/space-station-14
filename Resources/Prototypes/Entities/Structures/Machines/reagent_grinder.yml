@@ -38,9 +38,9 @@
     - map: [ "grinder" ]
       state: "grinder_empty"
   - type: ApcPowerReceiver
-    powerLoad: 0
+    powerLoad: 5
   - type: PowerState
-    idlePowerDraw: 0
+    idlePowerDraw: 5
     workingPowerDraw: 750 # medium power blender
   - type: ItemSlots
     slots:

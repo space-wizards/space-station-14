@@ -37,6 +37,7 @@ shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
 shell-invalid-bool = Invalid boolean.
+shell-invalid-bool-value = Invalid boolean: '{$value}'
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
 shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}

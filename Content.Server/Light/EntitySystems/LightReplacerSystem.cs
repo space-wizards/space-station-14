@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Light.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.EntitySystems;
@@ -7,7 +6,6 @@ using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -44,10 +42,9 @@ public sealed partial class LightReplacerSystem : SharedLightReplacerSystem
 
             args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
             var groups = new Dictionary<string, int>();
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
             foreach (var bulb in component.InsertedBulbs.ContainedEntities)
             {
-                var metaData = metaQuery.GetComponent(bulb);
+                var metaData = MetaData(bulb);
                 groups[metaData.EntityName] = groups.GetValueOrDefault(metaData.EntityName) + 1;
             }
 
