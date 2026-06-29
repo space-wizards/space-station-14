@@ -131,13 +131,9 @@ public sealed partial class RCDSystem : EntitySystem
 
         var user = args.User;
         var location = args.ClickLocation;
-<<<<<<< HEAD
 
-        if(!_protoManager.TryIndex(component.ProtoId, out var prototype))
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
             return;
-=======
-        var prototype = ProtoMan.Index(component.ProtoId);
->>>>>>> master
 
         // Initial validity checks
         if (!location.IsValid(EntityManager))
@@ -343,12 +339,8 @@ public sealed partial class RCDSystem : EntitySystem
 
     public bool IsRCDOperationStillValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid? target, EntityUid user, bool popMsgs = true)
     {
-<<<<<<< HEAD
-        if(!_protoManager.TryIndex(component.ProtoId, out var prototype))
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
             return false;
-=======
-        var prototype = ProtoMan.Index(component.ProtoId);
->>>>>>> master
 
         // Check that the RCD has enough ammo to get the job done
         var charges = _sharedCharges.GetCurrentCharges(uid);
@@ -393,12 +385,9 @@ public sealed partial class RCDSystem : EntitySystem
 
     private bool IsConstructionLocationValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid user, bool popMsgs = true)
     {
-<<<<<<< HEAD
-        if(!_protoManager.TryIndex(component.ProtoId, out var prototype))
+
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
             return false;
-=======
-        var prototype = ProtoMan.Index(component.ProtoId);
->>>>>>> master
 
         // Check rule: Must build on empty tile
         if (prototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnEmptyTile) && !tile.Tile.IsEmpty)
@@ -597,13 +586,7 @@ public sealed partial class RCDSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-<<<<<<< HEAD
-        if (!_protoManager.TryIndex(component.ProtoId, out var prototype) || prototype.Prototype == null)
-=======
-        var prototype = ProtoMan.Index(component.ProtoId);
-
-        if (prototype.Prototype == null)
->>>>>>> master
+        if (!ProtoMan.TryIndex(component.ProtoId, out var prototype) || prototype.Prototype == null)
             return;
 
         switch (prototype.Mode)
