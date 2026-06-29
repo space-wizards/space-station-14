@@ -4,9 +4,9 @@ using Content.Shared.GPS.Components;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
-public sealed class AstroNavCartridgeSystem : EntitySystem
+public sealed partial class AstroNavCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
 
     public override void Initialize()
     {

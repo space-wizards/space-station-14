@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 gitroot=$(git rev-parse --show-toplevel)
 

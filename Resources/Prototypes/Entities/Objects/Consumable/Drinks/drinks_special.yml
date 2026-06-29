@@ -4,44 +4,32 @@
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 5
+  - type: Solution
+    solution:
+      maxVol: 5 # Shot glass translates to about 5.3u so we round down because Nanotrasen is cheap.
   - type: Item
     size: Tiny
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
-    layers:
-    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFillOverlay"
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: fill1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-    - state: icon-front
-      map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerVisuals
     maxFillLevels: 2
-    fillBaseName: fill # TODO rename to "fill-" to match "DrinkVisualsFillOverlay"
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
-  parent: [DrinkBaseMaterialMetal, DrinkBase]
+  parent: [DrinkBaseMaterialMetal, SolutionLarge, DrinkBase]
   id: DrinkIceBucket
   name: ice bucket
   description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Ice
-          Quantity: 200
+  - type: Item
+    size: Large
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ice
+        Quantity: 240
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icebucket.rsi
     state: icon
@@ -50,18 +38,18 @@
       Steel: 75
 
 - type: entity
-  parent: [DrinkBaseMaterialPorcelain, DrinkBase]
+  parent: [DrinkBaseMaterialPorcelain, SolutionNormal, DrinkBase]
   id: DrinkTeapot
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: Tea
-          Quantity: 100
+  - type: Item
+    size: Normal
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tea
+        Quantity: 120
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
   - type: FitsInDispenser
@@ -99,10 +87,11 @@
       tags:
       - Cola
     hideStackVisualsWhenClosed: false
-  - type: StorageFill
-    contents:
-    - id: DrinkColaCan
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: DrinkColaCan
+        amount: 6
   - type: ItemCounter
     count:
       tags: [Cola]
@@ -119,15 +108,14 @@
 # Bartender tools
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
+  parent: [DrinkBaseMaterialStrongMetal, SolutionSmall, DrinkBase]
   id: DrinkShaker
   name: shaker
   description: The trusty mixing buddy of the bartender.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
+  - type: Solution
+    solution:
+      maxVol: 90 # Shakers are often about 700ml give or take and I like weird sizes so.
   - type: FitsInDispenser
     solution: drink
   - type: ExaminableSolution
@@ -137,14 +125,31 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/shaker.rsi
+    shape:
+    - 0,0,0,2 # 3 tall
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
   - type: Shakeable
   - type: ReactionMixer
-    mixOnInteract: false
+    mixerType: None
     reactionTypes:
     - Shake
+
+- type: entity
+  parent: DrinkShaker
+  id: DrinkShakerGold
+  name: golden shaker
+  description: A gold-plated shaker given as a token of appreciation for years of service. It doesn't make the drinks taste any different.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker_gold.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Gold: 10 # Gold plated, not solid gold
+      Steel: 40
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
@@ -152,10 +157,11 @@
   name: jigger
   description: Like a shaker, but smaller. Used to control the amount of ingredients.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 20
+  - type: Item
+    size: Tiny
+  - type: Solution
+    solution:
+      maxVol: 10 # Two shot glasses in size
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 1
@@ -173,22 +179,15 @@
       Steel: 20
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkVisualsFill]
+  parent: [DrinkBaseMaterialStrongMetal, SolutionNormal, DrinkBase, DrinkVisualsFill]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 60
+  - type: Item
+    size: Normal
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
-    layers:
-    - state: icon # TODO add "icon_empty" state to match "DrinkVisualsFill"
-    - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 2
@@ -207,9 +206,6 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: DrinkShakeBase

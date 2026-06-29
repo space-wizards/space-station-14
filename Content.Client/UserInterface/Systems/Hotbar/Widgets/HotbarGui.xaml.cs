@@ -11,8 +11,8 @@ public sealed partial class HotbarGui : UIWidget
     public HotbarGui()
     {
         RobustXamlLoader.Load(this);
-        StatusPanelRight.SetSide(HandUILocation.Right);
-        StatusPanelLeft.SetSide(HandUILocation.Left);
+        StatusPanelRight.SetSide(HandLocation.Right);
+        StatusPanelLeft.SetSide(HandLocation.Left);
         var hotbarController = UserInterfaceManager.GetUIController<HotbarUIController>();
 
         hotbarController.Setup(HandContainer);
@@ -29,10 +29,10 @@ public sealed partial class HotbarGui : UIWidget
         StatusPanelRight.Update(entity, hand);
     }
 
-    public void SetHighlightHand(HandUILocation? hand)
+    public void SetHighlightHand(HandLocation? hand)
     {
-        StatusPanelLeft.UpdateHighlight(hand is HandUILocation.Left);
-        StatusPanelRight.UpdateHighlight(hand is HandUILocation.Right);
+        StatusPanelLeft.UpdateHighlight(hand is HandLocation.Left);
+        StatusPanelRight.UpdateHighlight(hand is HandLocation.Right);
     }
 
     public void UpdateStatusVisibility(bool left, bool right)

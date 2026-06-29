@@ -7,7 +7,7 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
+    [Dependency] private SharedStorageSystem _storageSystem = default!;
 
     /// <summary>
     /// Yields all entities in hands or inventory slots with the specific flags.
@@ -47,12 +47,24 @@ public partial class InventorySystem
     }
 
     /// <summary>
-    ///     Returns true if the given entity is equipped to an inventory slot with the given inventory slot flags.
+    /// Returns true if the given entity is equipped to an inventory slot with exactly matching inventory slot flags.
     /// </summary>
+    /// <seealso cref="InSlotWithAnyFlags" />
     public bool InSlotWithFlags(Entity<TransformComponent?, MetaDataComponent?> entity, SlotFlags flags)
     {
         return TryGetContainingSlot(entity, out var slot)
                && (slot.SlotFlags & flags) == flags;
+    }
+
+    /// <summary>
+    /// Returns true if the given entity is equipped to an inventory slot that
+    /// has any flags in common with the given ones.
+    /// </summary>
+    /// <seealso cref="InSlotWithFlags" />
+    public bool InSlotWithAnyFlags(Entity<TransformComponent?, MetaDataComponent?> ent, SlotFlags flags)
+    {
+        return TryGetContainingSlot(ent, out var slot)
+               && (slot.SlotFlags & flags) != 0;
     }
 
     public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
@@ -69,7 +81,7 @@ public partial class InventorySystem
             return false;
 
         // If the prototype in question doesn't exist, we do nothing.
-        if (!_prototypeManager.HasIndex<EntityPrototype>(prototype))
+        if (!ProtoMan.HasIndex<EntityPrototype>(prototype))
             return false;
 
         // Let's spawn this first...

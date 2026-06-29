@@ -11,7 +11,7 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChannelsMenu : DefaultWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = null!;
+    [Dependency] private IEntityManager _entityManager = null!;
 
     private readonly InstrumentBoundUserInterface _owner;
 
@@ -37,7 +37,6 @@ public sealed partial class ChannelsMenu : DefaultWindow
 
     private void OnDisplayTrackNamesPressed(BaseButton.ButtonEventArgs obj)
     {
-        DisplayTrackNames.SetClickPressed(!DisplayTrackNames.Pressed);
         Populate();
     }
 

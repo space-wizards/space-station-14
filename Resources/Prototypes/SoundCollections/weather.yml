@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: Rain
+  files:
+    - /Audio/Effects/Weather/rain.ogg
+    - /Audio/Effects/Weather/rain2.ogg

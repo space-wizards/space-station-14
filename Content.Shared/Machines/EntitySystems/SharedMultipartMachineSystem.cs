@@ -8,15 +8,6 @@ namespace Content.Shared.Machines.EntitySystems;
 /// </summary>
 public abstract class SharedMultipartMachineSystem : EntitySystem
 {
-    protected EntityQuery<TransformComponent> XformQuery;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        XformQuery = GetEntityQuery<TransformComponent>();
-    }
-
     /// <summary>
     /// Returns whether each non-optional part of the machine has a matched entity
     /// </summary>

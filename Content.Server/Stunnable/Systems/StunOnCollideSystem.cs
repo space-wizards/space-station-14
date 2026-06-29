@@ -7,10 +7,10 @@ using Robust.Shared.Physics.Events;
 namespace Content.Server.Stunnable.Systems;
 
 [UsedImplicitly]
-internal sealed class StunOnCollideSystem : EntitySystem
+internal sealed partial class StunOnCollideSystem : EntitySystem
 {
-    [Dependency] private readonly StunSystem _stunSystem = default!;
-    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
+    [Dependency] private StunSystem _stunSystem = default!;
+    [Dependency] private MovementModStatusSystem _movementMod = default!;
 
     public override void Initialize()
     {
@@ -27,6 +27,7 @@ internal sealed class StunOnCollideSystem : EntitySystem
         if (ent.Comp.Refresh)
         {
             _stunSystem.TryUpdateStunDuration(target, ent.Comp.StunAmount);
+
             _movementMod.TryUpdateMovementSpeedModDuration(
                 target,
                 MovementModStatusSystem.TaserSlowdown,

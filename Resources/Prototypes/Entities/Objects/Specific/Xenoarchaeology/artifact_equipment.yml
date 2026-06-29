@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized ]
   id: CrateArtifactContainer
-  parent: BaseStructureDynamic
   name: artifact container
   description: Used to safely contain and move artifacts.
   components:
@@ -54,26 +54,17 @@
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: StructuralMetallicStrong
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 50
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-    - type: PaperLabel
-      labelSlot:
-        insertVerbText: comp-paper-label-insert
-        ejectVerbText: comp-paper-label-eject
-        whitelist:
-          components:
-            - Paper
-        blacklist:
-          tags:
-          - Book
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Appearance
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
@@ -95,7 +86,6 @@
             True: { offset: "0.0,0.3125" }
             False: { offset: "0.0,0.0" }
     - type: LockVisuals
-    - type: ItemSlots
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -147,16 +137,17 @@
       path: /Audio/Items/toolbox_drop.ogg
   - type: LockVisuals
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

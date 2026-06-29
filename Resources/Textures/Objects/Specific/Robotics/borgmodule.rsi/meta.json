@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github)",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github), icon-artistry by Kittygyat",
     "size": {
         "x": 32,
         "y": 32
@@ -54,6 +54,9 @@
         },
         {
             "name": "icon-fire-extinguisher"
+        },
+        {
+            "name": "icon-artistry"
         },
         {
             "name": "icon-gardening"
@@ -122,6 +125,9 @@
             "name": "icon-xenoborg-cloak"
         },
         {
+            "name": "icon-xenoborg-jump"
+        },
+        {
             "name": "icon-xenoborg-cloak2"
         },
         {
@@ -150,6 +156,9 @@
         },
         {
             "name": "icon-xenoborg-sword2"
+        },
+        {
+            "name": "icon-xenoborg-tile"
         },
         {
             "name": "icon-xenoborg-tools"

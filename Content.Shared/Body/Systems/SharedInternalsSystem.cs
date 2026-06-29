@@ -7,6 +7,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -17,13 +18,13 @@ namespace Content.Shared.Body.Systems;
 /// <summary>
 /// Handles lung breathing with gas tanks for entities.
 /// </summary>
-public abstract class SharedInternalsSystem : EntitySystem
+public abstract partial class SharedInternalsSystem : EntitySystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedGasTankSystem _gasTank = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedGasTankSystem _gasTank = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -258,11 +259,15 @@ public abstract class SharedInternalsSystem : EntitySystem
         Entity<HandsComponent?, InventoryComponent?, ContainerManagerComponent?> user)
     {
         // TODO use _respirator.CanMetabolizeGas() to prioritize metabolizable gasses
-        // Prioritise
-        // 1. back equipped tanks
-        // 2. exo-slot tanks
-        // 3. in-hand tanks
-        // 4. pocket/belt tanks
+        // Lookup order:
+        // 1. Back
+        // 2. Exo-slot
+        // 3. In-hand
+        // 4. Pocket/belt
+        // Jetpacks will only be used as a fallback if no other tank is found
+
+        // Store the first jetpack seen
+        Entity<GasTankComponent>? found = null;
 
         if (!Resolve(user, ref user.Comp2, ref user.Comp3))
             return null;
@@ -271,22 +276,36 @@ public abstract class SharedInternalsSystem : EntitySystem
             TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
             _gasTank.CanConnectToInternals((backEntity.Value, backGasTank)))
         {
-            return (backEntity.Value, backGasTank);
+            found = (backEntity.Value, backGasTank);
+            if (!HasComp<JetpackComponent>(backEntity.Value))
+            {
+                return found;
+            }
         }
 
         if (_inventory.TryGetSlotEntity(user, "suitstorage", out var entity, user.Comp2, user.Comp3) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&
             _gasTank.CanConnectToInternals((entity.Value, gasTank)))
         {
-            return (entity.Value, gasTank);
+            found ??= (entity.Value, gasTank);
+            if (!HasComp<JetpackComponent>(entity.Value))
+            {
+                return (entity.Value, gasTank);
+            }
         }
 
         foreach (var item in _inventory.GetHandOrInventoryEntities((user.Owner, user.Comp1, user.Comp2)))
         {
             if (TryComp(item, out gasTank) && _gasTank.CanConnectToInternals((item, gasTank)))
-                return (item, gasTank);
+            {
+                found ??= (item, gasTank);
+                if (!HasComp<JetpackComponent>(item))
+                {
+                    return (item, gasTank);
+                }
+            }
         }
 
-        return null;
+        return found;
     }
 }

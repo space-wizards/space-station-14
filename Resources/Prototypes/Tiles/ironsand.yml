@@ -1,0 +1,98 @@
+- type: tile
+  id: FloorIronsandTile
+  name: tiles-ironsand-tile
+  sprite: /Textures/Tiles/Asteroid/ironsand_tile.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorIronsandConcrete
+  name: tiles-ironsand-concrete-tile
+  sprite: /Textures/Tiles/Planet/Concrete/ironsandconcrete.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcrete
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorIronsandConcreteMono
+  name: tiles-ironsand-concrete-slab
+  sprite: /Textures/Tiles/Planet/Concrete/ironsandconcrete_mono.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcreteMono
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorIronsandConcreteSmooth
+  name: tiles-ironsand-concrete-smooth
+  sprite: /Textures/Tiles/Planet/Concrete/ironsandconcrete_smooth.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemIronsandConcreteSmooth
+  heatCapacity: 10000
+
+- type: tile
+  id: IronsandPacked
+  name: tiles-ironsand-packed
+  sprite: /Textures/Tiles/Asteroid/ironsand_packed.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 1.5
+  heatCapacity: 10000
+
+- type: tile
+  id: IronsandPaved
+  name: tiles-ironsand-paved
+  sprite: /Textures/Tiles/Asteroid/ironsand_uneven_paved.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Space
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepTile
+  friction: 1.5
+  heatCapacity: 10000

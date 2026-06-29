@@ -1,0 +1,34 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Sprites made by @Sir_Warock on Discord, remastered by @Phantasai on Github",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "jetinjector_base"
+		},
+        {
+			"name": "jetinjector_filled1"
+		},
+		{
+			"name": "jetinjector_filled2"
+		},
+		{
+			"name": "jetinjector_filled3"
+		},
+        {
+            "name": "jetinjector_filled4"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

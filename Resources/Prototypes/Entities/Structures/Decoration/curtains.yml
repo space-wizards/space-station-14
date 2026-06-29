@@ -35,16 +35,11 @@
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 5
@@ -136,6 +131,21 @@
     node: CurtainsBlue
 
 - type: entity
+  id: CurtainsSkyBlue
+  parent: BaseCurtains
+  suffix: Fancy sky blue
+  components:
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Decoration/Curtains/skyblue.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsSkyBlue
+
+- type: entity
   id: CurtainsBlueOpen
   parent: CurtainsBlue
   suffix: Open, Fancy blue
@@ -147,6 +157,21 @@
   - type: Construction
     graph: Curtains
     node: CurtainsBlueOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
+  id: CurtainsSkyBlueOpen
+  parent: CurtainsSkyBlue
+  suffix: Open, Fancy sky blue
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsSkyBlueOpen
   - type: Physics
     canCollide: false
 

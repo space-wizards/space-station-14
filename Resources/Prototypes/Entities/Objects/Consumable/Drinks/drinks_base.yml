@@ -3,7 +3,7 @@
 # Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [SolutionDrink, BaseItem]
   id: DrinkBase
   components:
   - type: Sprite
@@ -36,10 +36,6 @@
     solution: *sol
   - type: SolutionItemStatus
     solution: *sol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -52,12 +48,13 @@
 # This drink is empty trash
 - type: entity
   abstract: true
+  parent: SolutionDrink
   id: DrinkBaseEmptyTrash
   suffix: Empty
   components:
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
-    solution: *sol
+    solution: drink
   - type: Tag
     tags:
     - Trash
@@ -91,7 +88,7 @@
 #      map: ["enum.OpenableVisuals.Layer"]
 
 ## Bases for visuals
-# TODO standardize state names for fill levels and openable visuals
+# New drinks should mirror these state names to reduce clutter when creating new prototypes
 
 # Basic visualizer for an openable entity. Requires DrinkBaseOpenable
 - type: entity
@@ -103,13 +100,14 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
+          True: {state: "icon_open"} # lid off
+          False: {state: "icon"} # lid on
   - type: Sprite
     layers:
     - state: icon
       map: ["enum.OpenableVisuals.Layer"]
   - type: ExaminableSolution
+    solution: *sol
     examinableWhileClosed: false # If you can't see the fill levels on the sprite, we can assume it's opaque
     heldOnly: true # If it's opaque, you probably can't see through the open lid from a distance
 
@@ -121,11 +119,12 @@
   - type: Appearance
   - type: Sprite
     layers:
-    - state: icon_empty
+    - state: icon
     - state: fill-1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
   - type: SolutionContainerVisuals
+    solutionName: *sol
     maxFillLevels: 5
     fillBaseName: fill-
     inHandsMaxFillLevels: 3
@@ -139,7 +138,7 @@
   components:
   - type: Sprite
     layers:
-    - state: icon_empty
+    - state: icon
       map: [ "enum.SolutionContainerLayers.Base" ]
     - state: fill-1
       map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -169,8 +168,8 @@
     visuals:
       enum.OpenableVisuals.Opened:
         enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon_empty"}
+          True: {state: "icon_open"} # lid off
+          False: {state: "icon_empty"} # lid on
   - type: Sprite
     layers:
     - state: icon_empty

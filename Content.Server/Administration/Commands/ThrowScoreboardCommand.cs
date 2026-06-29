@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.VarEdit)]
-public sealed class ThrowScoreboardCommand : IConsoleCommand
+public sealed partial class ThrowScoreboardCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private IEntityManager _e = default!;
 
     public string Command => "throwscoreboard";
 

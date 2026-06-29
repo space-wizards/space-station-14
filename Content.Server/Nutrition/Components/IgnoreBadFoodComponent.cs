@@ -6,7 +6,5 @@ namespace Content.Server.Nutrition.Components;
 /// This component allows NPC mobs to eat food with BadFoodComponent.
 /// See MobMouseAdmeme for usage.
 /// </summary>
-[RegisterComponent, Access(typeof(FoodSystem))]
-public sealed partial class IgnoreBadFoodComponent : Component
-{
-}
+[RegisterComponent]
+public sealed partial class IgnoreBadFoodComponent : Component;

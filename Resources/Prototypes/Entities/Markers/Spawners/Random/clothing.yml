@@ -1,0 +1,16 @@
+- type: entityTable
+  id: AllPartyHatsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatPartyRed
+    - id: ClothingHeadHatPartyYellow
+    - id: ClothingHeadHatPartyGreen
+    - id: ClothingHeadHatPartyBlue
+
+- type: entityTable
+  id: AllSergicalHatsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatSurgcapBlue
+    - id: ClothingHeadHatSurgcapPurple
+    - id: ClothingHeadHatSurgcapGreen

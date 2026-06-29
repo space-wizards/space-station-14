@@ -9,9 +9,6 @@
   id: ClickTestBase
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

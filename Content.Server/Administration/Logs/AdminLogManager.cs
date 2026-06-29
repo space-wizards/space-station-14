@@ -12,29 +12,32 @@ using Content.Shared.Database;
 using Content.Shared.Mind;
 using Content.Shared.Players.PlayTimeTracking;
 using Prometheus;
+using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Configuration;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-    [Dependency] private readonly IReflectionManager _reflection = default!;
-    [Dependency] private readonly IDependencyCollection _dependencies = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
-    [Dependency] private readonly ISharedChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IDynamicTypeFactory _typeFactory = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] private IDependencyCollection _dependencies = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private ISharedPlaytimeManager _playtime = default!;
+    [Dependency] private ISharedChatManager _chat = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -248,18 +251,42 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
 
-        if (_metricsEnabled)
+        try
         {
-            LogsSent.Inc(copy.Count);
+            if (_metricsEnabled)
+            {
+                LogsSent.Inc(copy.Count);
 
-            using (DatabaseUpdateTime.NewTimer())
+                using (DatabaseUpdateTime.NewTimer())
+                {
+                    await task;
+                }
+            }
+            else
             {
                 await task;
-                return;
             }
         }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to save logs: {ex.Message}");
+            _sawmill.Warning("Re-enqueueing logs and retrying at the next update.");
 
-        await task;
+            foreach (var log in copy)
+            {
+                if (log.RoundId == _currentRoundId)
+                {
+                    _logQueue.Enqueue(log);
+                }
+                else
+                {
+                    _preRoundLogQueue.Enqueue(log);
+                }
+            }
+
+            Queue.Set(_logQueue.Count);
+            PreRoundQueue.Set(_preRoundLogQueue.Count);
+        }
     }
 
     public void RoundStarting(int id)
@@ -338,7 +365,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Players = players,
         };
 
-        DoAdminAlerts(players, message, impact);
+        DoAdminAlerts(players, message, impact, handler);
 
         if (preRound)
         {
@@ -380,6 +407,34 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         return players;
     }
 
+    /// <summary>
+    /// Get a list of coordinates from the <see cref="LogStringHandler"/>s values. Will transform all coordinate types
+    /// to map coordinates!
+    /// </summary>
+    /// <returns>A list of map coordinates that were found in the value input, can return an empty list.</returns>
+    private List<MapCoordinates> GetCoordinates(Dictionary<string, object?> values)
+    {
+        List<MapCoordinates> coordList = new();
+        EntityManager.TrySystem(out TransformSystem? transform);
+
+        foreach (var value in values.Values)
+        {
+            switch (value)
+            {
+                case EntityCoordinates entCords:
+                    if (transform != null)
+                        coordList.Add(transform.ToMapCoordinates(entCords));
+                    continue;
+
+                case MapCoordinates mapCord:
+                    coordList.Add(mapCord);
+                    continue;
+            }
+        }
+
+        return coordList;
+    }
+
     private void AddPlayer(List<AdminLogPlayer> players, Guid user, int logId)
     {
         // The majority of logs have a single player, or maybe two. Instead of allocating a List<AdminLogPlayer> and
@@ -397,10 +452,11 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         });
     }
 
-    private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact)
+    private void DoAdminAlerts(List<AdminLogPlayer> players, string message, LogImpact impact, LogStringHandler handler)
     {
         var adminLog = false;
         var logMessage = message;
+        var playerNetEnts = new List<(NetEntity, string)>();
 
         foreach (var player in players)
         {
@@ -419,6 +475,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                         ("name", cachedInfo.CharacterName),
                         ("subtype", subtype));
                 }
+                if (cachedInfo != null && cachedInfo.NetEntity != null)
+                    playerNetEnts.Add((cachedInfo.NetEntity.Value, cachedInfo.CharacterName));
             }
 
             if (adminLog)
@@ -442,7 +500,65 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         if (adminLog)
+        {
             _chat.SendAdminAlert(logMessage);
+
+            if (CreateTpLinks(playerNetEnts, out var tpLinks))
+                _chat.SendAdminAlertNoFormatOrEscape(tpLinks);
+
+            var coords = GetCoordinates(handler.Values);
+
+            if (CreateCordLinks(coords, out var cordLinks))
+                _chat.SendAdminAlertNoFormatOrEscape(cordLinks);
+        }
+    }
+
+    /// <summary>
+    /// Creates a list of tpto command links of the given players
+    /// </summary>
+    private bool CreateTpLinks(List<(NetEntity NetEnt, string CharacterName)> players, out string outString)
+    {
+        outString = string.Empty;
+
+        if (players.Count == 0)
+            return false;
+
+        outString = Loc.GetString("admin-alert-tp-to-players-header");
+
+        for (var i = 0; i < players.Count; i++)
+        {
+            var player = players[i];
+            outString += $"[cmdlink=\"{FormattedMessage.EscapeStringParameter(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+
+            if (i < players.Count - 1)
+                outString += ", ";
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Creates a list of toto command links for the given map coordinates.
+    /// </summary>
+    private bool CreateCordLinks(List<MapCoordinates> cords, out string outString)
+    {
+        outString = string.Empty;
+
+        if (cords.Count == 0)
+            return false;
+
+        outString = Loc.GetString("admin-alert-tp-to-coords-header");
+
+        for (var i = 0; i < cords.Count; i++)
+        {
+            var cord = cords[i];
+            outString += $"[cmdlink=\"{cord.ToString()}\" command=\"tp {cord.X} {cord.Y} {cord.MapId}\"/]";
+
+            if (i < cords.Count - 1)
+                outString += ", ";
+        }
+
+        return true;
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)
