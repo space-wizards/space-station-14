@@ -16,7 +16,7 @@ namespace Content.Shared.Kitchen.Components;
 ///     and produce microwave recipes.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
-[NetworkedComponent, AutoGenerateComponentState]
+[NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class MicrowaveComponent : Component
 {
     /// <summary>
