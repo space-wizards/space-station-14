@@ -8,7 +8,6 @@ using Content.Shared.Gibbing.Components;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -17,7 +16,6 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private CloningSystem _cloning = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SuitSensorSystem _sensor = default!;
     [Dependency] private TargetSystem _target = default!;
@@ -47,9 +45,6 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
     // we have to do the spawning here so we can transfer the mind to the correct entity and can assign the objectives correctly
     private void OnAntagSelectEntity(Entity<ParadoxCloneRuleComponent> ent, ref AntagSelectEntityEvent args)
     {
-        if (args.Session?.AttachedEntity is not { } spawner)
-            return;
-
         if (ent.Comp.OriginalBody != null) // target was overridden, for example by admin antag control
         {
             if (Deleted(ent.Comp.OriginalBody.Value) || !_mind.TryGetMind(ent.Comp.OriginalBody.Value, out var originalMindId, out var _))
@@ -78,7 +73,7 @@ public sealed partial class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxClone
 
         }
 
-        if (ent.Comp.OriginalBody == null || !_cloning.TryCloning(ent.Comp.OriginalBody.Value, _transform.GetMapCoordinates(spawner), ent.Comp.Settings, out var clone))
+        if (ent.Comp.OriginalBody == null || !_cloning.TryCloning(ent.Comp.OriginalBody.Value, args.Coords, ent.Comp.Settings, out var clone))
         {
             Log.Error($"Unable to make a paradox clone of entity {ToPrettyString(ent.Comp.OriginalBody)}");
             return;

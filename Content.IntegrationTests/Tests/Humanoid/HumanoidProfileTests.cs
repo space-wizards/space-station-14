@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Shared.Body;
 using Content.Shared.Humanoid;
@@ -21,10 +23,10 @@ public sealed class HumanoidProfileTests : GameTest
     private static readonly ProtoId<SpeciesPrototype> Vox = "Vox";
     private static string[] _species = GameDataScrounger.PrototypesOfKind<SpeciesPrototype>();
 
-    private BodySystem _bodySystem;
-    private HumanoidProfileSystem _humanoidProfile;
-    private MarkingManager _markingManager;
-    private SharedVisualBodySystem _visualBody;
+    [SidedDependency(Side.Server)] private BodySystem _bodySystem = default!;
+    [SidedDependency(Side.Server)] private HumanoidProfileSystem _humanoidProfile = default!;
+    [SidedDependency(Side.Server)] private MarkingManager _markingManager = default!;
+    [SidedDependency(Side.Server)] private SharedVisualBodySystem _visualBody = default!;
 
     [Test]
     public async Task EnsureValidLoading()
@@ -36,17 +38,15 @@ public sealed class HumanoidProfileTests : GameTest
 
         await server.WaitAssertion(() =>
         {
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var humanoidProfile = entityManager.System<HumanoidProfileSystem>();
-            var human = entityManager.Spawn(BaseSpecies);
-            humanoidProfile.ApplyProfileTo(human,
+            LoadDependencies(out var body, out var humanoidComponent);
+
+            _humanoidProfile.ApplyProfileTo(body,
                 new HumanoidCharacterProfile()
                 .WithSex(Sex.Female)
                 .WithAge(67)
                 .WithGender(Gender.Neuter)
                 .WithSpecies(Vox));
-            var humanoidComponent = entityManager.GetComponent<HumanoidProfileComponent>(human);
-            var voiceComponent = entityManager.GetComponent<VocalComponent>(human);
+            var voiceComponent = SEntMan.GetComponent<VocalComponent>(body);
 
             Assert.That(humanoidComponent.Age, Is.EqualTo(67));
             Assert.That(humanoidComponent.Sex, Is.EqualTo(Sex.Female));
@@ -71,6 +71,7 @@ public sealed class HumanoidProfileTests : GameTest
         await server.WaitAssertion(() =>
         {
             LoadDependencies(out var body, out var humanoidComponent);
+
             var profile = HumanoidCharacterProfile.Random();
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
@@ -91,17 +92,17 @@ public sealed class HumanoidProfileTests : GameTest
         {
             LoadDependencies(out var body, out var humanoidComponent);
 
-            var proto = Server.ProtoMan.Index<SpeciesPrototype>(species);
+            var proto = SProtoMan.Index<SpeciesPrototype>(species);
             var profile = HumanoidCharacterProfile.RandomWithSpecies(species);
             _humanoidProfile.ApplyProfileTo(body, profile);
             _visualBody.ApplyProfileTo(body, profile);
 
-            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge));
-            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge));
-            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True);
-            Assert.That(humanoidComponent.Species, Is.EqualTo(species));
+            Assert.That(humanoidComponent.Age, Is.LessThanOrEqualTo(proto.MaxAge), $"Expected age is above the maximum age limit! Current: {humanoidComponent.Age} Max: {proto.MaxAge}");
+            Assert.That(humanoidComponent.Age, Is.GreaterThanOrEqualTo(proto.MinAge), $"Expected age is below the minimum age limit! Current: {humanoidComponent.Age} Min: {proto.MinAge}");
+            Assert.That(proto.Sexes.Contains(humanoidComponent.Sex), Is.True, $"Character has sex not found in the species prototype! Current: {humanoidComponent.Sex}");
+            Assert.That(humanoidComponent.Species, Is.EqualTo(species), $"Species does not match! Expected: {species} Current: {humanoidComponent.Species}");
             var strategy = Server.ProtoMan.Index(proto.SkinColoration).Strategy;
-            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor), Is.True);
+            Assert.That(strategy.VerifySkinColor(profile.Appearance.SkinColor, out var reason), Is.True, $"Failed to verify the skin color from strategy {strategy}. Reason: {reason}");
 
             AssertValidProfile((body, humanoidComponent), profile);
         });
@@ -109,29 +110,24 @@ public sealed class HumanoidProfileTests : GameTest
 
     private void LoadDependencies(out EntityUid body, out HumanoidProfileComponent humanoidComponent)
     {
-        var entityManager = Server.ResolveDependency<IEntityManager>();
-        _humanoidProfile = entityManager.System<HumanoidProfileSystem>();
-        _markingManager = Server.ResolveDependency<MarkingManager>();
-        _visualBody = entityManager.System<SharedVisualBodySystem>();
-        _bodySystem = entityManager.System<BodySystem>();
-        body = entityManager.Spawn(BaseSpecies);
-        humanoidComponent = entityManager.GetComponent<HumanoidProfileComponent>(body);
+        body = SEntMan.Spawn(BaseSpecies);
+        humanoidComponent = SEntMan.GetComponent<HumanoidProfileComponent>(body);
     }
 
     private void AssertValidProfile(Entity<HumanoidProfileComponent> body, HumanoidCharacterProfile profile)
     {
         _bodySystem.TryGetOrgansWithComponent<VisualOrganComponent>(body.Owner, out var organs);
 
-        foreach (var (_, visualOrgan) in organs)
+        foreach (var (uid, visualOrgan) in organs)
         {
-            Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex));
-            Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor));
-            Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor));
+            Assert.That(visualOrgan.Profile.Sex, Is.EqualTo(profile.Sex), $"Organ {uid} has invalid sex appearance! Expected: {profile.Sex} Current: {visualOrgan.Profile.Sex}");
+            Assert.That(visualOrgan.Profile.EyeColor, Is.EqualTo(profile.Appearance.EyeColor), $"Organ {uid} has invalid eye color! Expected: {profile.Appearance.EyeColor} Current: {visualOrgan.Profile.EyeColor}");
+            Assert.That(visualOrgan.Profile.SkinColor, Is.EqualTo(profile.Appearance.SkinColor), $"Organ {uid} has invalid skin color! Expected: {profile.Appearance.SkinColor} Current: {visualOrgan.Profile.SkinColor}");
         }
 
         _bodySystem.TryGetOrgansWithComponent<VisualOrganMarkingsComponent>(body.Owner, out var markings);
 
-        foreach (var (_, markingOrgan) in markings)
+        foreach (var (uid, markingOrgan) in markings)
         {
             // Needed to avoid access restrictions
             var data = markingOrgan.MarkingData;
@@ -143,9 +139,9 @@ public sealed class HumanoidProfileTests : GameTest
             {
                 var markingProto = Server.ProtoMan.Index(marking.MarkingId);
 
-                Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count));
-                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True);
-                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True);
+                Assert.That(markingProto.Sprites.Count, Is.EqualTo(marking.MarkingColors.Count), $"Organ {uid} has invald amount of marking sprites! Expected: {marking.MarkingColors.Count} Current: {markingProto.Sprites.Count}");
+                Assert.That(_markingManager.CanBeApplied(data.Group, profile.Sex, markingProto), Is.True, $"Marking {markingProto.ID} cannot be applied to group {data.Group.Id} with sex {profile.Sex}");
+                Assert.That(data.Layers.Contains(markingProto.BodyPart), Is.True, $"Organ {uid} marking visual layers do not contain an entry for {markingProto.BodyPart}");
                 if (!markingProto.ForcedColoring && groupProto.Appearances.GetValueOrDefault(markingProto.BodyPart)?.MatchSkin != true)
                     freeMarkings.Add(marking);
 
@@ -172,7 +168,7 @@ public sealed class HumanoidProfileTests : GameTest
                     Is.EqualTo(MarkingColoring.GetMarkingLayerColors(markingProto, profile.Appearance.SkinColor, profile.Appearance.EyeColor, markingOrgan.AppliedMarkings)));
 
                 if (markingProto.SexRestriction != null)
-                    Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex));
+                    Assert.That(markingProto.SexRestriction, Is.EqualTo(profile.Sex), $"Marking {markingProto.ID} has invalid sex restriction! Expected: {profile.Sex} Current: {markingProto.SexRestriction}");
             }
         }
     }
