@@ -1,18 +1,16 @@
 using System.Linq;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Effects;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed class MicrowaveBoundUserInterface : BoundUserInterface
+public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
 {
     [Dependency] private SharedMicrowaveSystem _microwave = default!;
 
