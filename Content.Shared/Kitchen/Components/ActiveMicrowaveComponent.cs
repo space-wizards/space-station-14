@@ -12,10 +12,10 @@ namespace Content.Shared.Kitchen.Components;
 public sealed partial class ActiveMicrowaveComponent : Component
 {
     /// <summary>
-    ///     How frequently an active microwave will update, so we aren't running this every tick.
+    ///     How frequently an active microwave will update its cooking cycle, so we aren't running this every tick.
     /// </summary>
     [DataField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    public TimeSpan CookUpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///     The recipe we are currently cooking.
@@ -36,21 +36,21 @@ public sealed partial class ActiveMicrowaveComponent : Component
     public TimeSpan CookTimeEnd = TimeSpan.Zero;
 
     /// <summary>
-    ///     The last time that this microwave updated.
+    ///     The last time that this microwave updated its cooking cycle..
     /// </summary>
     /// <remarks>
     ///     This is used to calculate how much heat to add to the microwave.
     /// </remarks>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan LastUpdated = TimeSpan.Zero;
+    public TimeSpan LastCookUpdated = TimeSpan.Zero;
 
     /// <summary>
-    ///     The next time this microwave will update.
+    ///     The next time this microwave will update its cooking cycle.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextUpdate = TimeSpan.Zero;
+    public TimeSpan NextCookUpdate = TimeSpan.Zero;
 
     /// <summary>
     ///     The next time we attempt to roll a malfunction.

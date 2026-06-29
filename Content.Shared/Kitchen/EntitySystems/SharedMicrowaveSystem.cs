@@ -43,51 +43,38 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveMicrowaveComponent, MicrowaveComponent>();
         while (query.MoveNext(out var uid, out var active, out var microwave))
         {
+            var timeElapsed = curTime - active.LastCookUpdated;
             var dirty = false;
 
             // Roll malfunctions
-            if (active.NextMalfunction > curTime)
+            if (active.NextMalfunction < curTime)
             {
                 RollMalfunction((uid, microwave));
                 active.NextMalfunction += microwave.MalfunctionInterval;
                 dirty = true;
             }
 
-            // Process cooking
-            if (active.NextUpdate > curTime)
+            // Finish cooking
+            if (active.CookTimeEnd < curTime)
             {
-                var timeElapsed = curTime - active.LastUpdated;
-                active.NextUpdate += active.UpdateInterval;
-                active.LastUpdated = curTime;
-                dirty = true;
+                AddTemperature(microwave, (float)timeElapsed.TotalSeconds);
+                CompleteCooking((uid, active, microwave));
+                Dirty(uid, active);
+                continue;
+            }
 
-                UpdateMicrowave((uid, active, microwave), (float)timeElapsed.TotalSeconds);
+            // Otherwise, process the cooking cycle
+            if (active.NextCookUpdate < curTime)
+            {
+                active.NextCookUpdate += active.CookUpdateInterval;
+                active.LastCookUpdated = curTime;
+                AddTemperature(microwave, (float)timeElapsed.TotalSeconds);
+                dirty = true;
             }
 
             if (dirty)
                 Dirty(uid, active);
         }
-    }
-
-    /// <summary>
-    ///     Heats up the contents of an active microwave. Has a random chance of exploding if the microwave
-    ///     is currently malfunctioning. Also finishes cooking, if the microwave timer expires.
-    /// </summary>
-    /// <remarks>
-    ///     This is called once per frame by <see cref="Update"/>.
-    /// </remarks>
-    /// <param name="ent">The microwave entity.</param>
-    /// <param name="time">The amount of time elapsed.</param>
-    private void UpdateMicrowave(Entity<ActiveMicrowaveComponent, MicrowaveComponent> ent, float time)
-    {
-        var active = ent.Comp1;
-        var microwave = ent.Comp2;
-        var curTime = _timing.CurTime;
-
-        AddTemperature(microwave, time);
-
-        if (active.CookTimeEnd < curTime)
-            CompleteCooking(ent);
     }
 
     /// <summary>
