@@ -45,5 +45,10 @@ changeling-biodegrade-used-popup-self = We vomit acid over our {$restraint}!
 # stings
 changeling-sting-success = We silently sting {THE($target)}!
 
+# stings transform
+changeling-sting-transform-no-identities = We have no stored identities to sting with.
+changeling-sting-transform-target-popup = Your body twists into an unfamiliar form!
+changeling-sting-transform-revert-popup = Your body settles back into your original form.
+
 # other
 changeling-paused-map-name = Changeling identity storage map

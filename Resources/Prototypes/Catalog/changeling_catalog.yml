@@ -130,3 +130,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingHallucinogenic
+  
+- type: listing
+  id: ChangelingTransformationSting
+  name: changeling-catalog-transformation-sting-name
+  description: changeling-catalog-transformation-sting-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreStealth
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingTransformationSting

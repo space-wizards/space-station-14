@@ -24,3 +24,6 @@ changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Us
 
 changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
 changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
+
+changeling-catalog-transformation-sting-name = Transformation Sting
+changeling-catalog-transformation-sting-desc = Learn to temporarily transform victims into one of your stored identities.

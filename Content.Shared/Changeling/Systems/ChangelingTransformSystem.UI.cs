@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -26,8 +26,21 @@ public sealed class ChangelingTransformIdentityDropMessage(NetEntity targetIdent
     public readonly NetEntity TargetIdentity = targetIdentity;
 }
 
+/// <summary>
+/// Send when a player selects an identity for transformation sting.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class ChangelingStingTransformIdentitySelectMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
+{
+    /// <summary>
+    /// The uid of the stored identity.
+    /// </summary>
+    public readonly NetEntity TargetIdentity = targetIdentity;
+}
+
 [Serializable, NetSerializable]
 public enum ChangelingTransformUiKey : byte
 {
     Key,
+    StingKey,
 }

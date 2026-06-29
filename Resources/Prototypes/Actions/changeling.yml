@@ -103,6 +103,7 @@
     whitelist:
       components:
       - HumanoidProfile
+      requireAll: true
     event: !type:ChangelingStingDnaEvent
   - type: PopupOnAction
     popupType: Medium
@@ -202,3 +203,26 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingTransformationSting
+  name: Transformation Sting
+  description: Temporarily transform someone into one of your stored identities.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "transform_sting" }
+    itemIconStyle: BigAction
+    priority: 1
+    useDelay: 90
+    raiseOnAction: true
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+      - HumanoidProfile
+      requireAll: true
+    event: !type:ChangelingTransformationStingEvent
+  - type: ChangelingTransformationStingAbility

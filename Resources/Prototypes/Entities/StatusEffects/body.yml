@@ -80,3 +80,10 @@
   components:
   - type: StaminaModifierStatusEffect
     modifier: 1.5
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectHumanoidTransform
+  name: humanoid transformation
+  components:
+  - type: HumanoidTransformStatusEffect
