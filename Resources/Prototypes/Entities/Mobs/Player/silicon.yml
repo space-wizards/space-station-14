@@ -239,7 +239,7 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Mobs/Silicon/station_ai_cracks.rsi
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 500
   - type: ExtensionCableReceiver
   - type: Battery
@@ -250,7 +250,7 @@
     netsync: false
     maxCharge: 300000
     startingCharge: 300000
-  - type: ApcPowerReceiverBattery
+  - type: PowerReceiverBattery
     idleLoad: 500
     batteryRechargeRate: 1000
     batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed

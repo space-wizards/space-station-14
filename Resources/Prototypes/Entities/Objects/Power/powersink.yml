@@ -49,8 +49,9 @@
       pricePerJoule: 0.000009
     - type: ExaminableBattery
     - type: PowerConsumer
-      voltage: High
       drawRate: 10000000
+    - type: PowerNetworkConnector
+      voltage: High
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink

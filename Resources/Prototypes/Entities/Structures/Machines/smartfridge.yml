@@ -42,7 +42,7 @@
     - machine_board
     - smart_fridge_inventory
   - type: LitOnPowered
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
   - type: SmartFridge

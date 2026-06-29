@@ -1,12 +1,12 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
+using Content.Shared.Power.Nodes;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
@@ -99,8 +99,8 @@ public sealed partial class PowerSensorSystem : EntitySystem
         if (deviceNode.NodeGroup == null)
             return;
 
-        var group = (IBasePowerNet) deviceNode.NodeGroup;
-        var stats = _powerNet.GetNetworkStatistics(group.NetworkNode);
+        var group = (PowerNet) deviceNode.NodeGroup;
+        var stats = _powerNet.GetNetworkStatistics(group);
         var charge = comp.Output ? stats.OutStorageCurrent : stats.InStorageCurrent;
         var chargingState = charge > comp.LastCharge;
         var dischargingState = charge < comp.LastCharge;

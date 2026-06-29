@@ -37,7 +37,7 @@
   - type: InteractionOutline
   - type: Sprite
   - type: Appearance
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 1500
   - type: ExtensionCableReceiver
   - type: Damageable
@@ -140,7 +140,7 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 10000
   - type: Thruster
     thrust: 1600
@@ -185,7 +185,7 @@
   components:
   - type: Thruster
     requireSpace: false
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite
@@ -281,7 +281,7 @@
     thrusterType: Angular
     requireSpace: false
     thrust: 100
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     needsPower: false
     powerLoad: 0
   - type: Sprite

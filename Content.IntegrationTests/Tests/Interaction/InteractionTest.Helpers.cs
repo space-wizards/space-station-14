@@ -9,12 +9,12 @@ using Content.IntegrationTests.Tests.Helpers;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Gravity;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.CombatMode;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
+using Content.Shared.Power.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -1514,7 +1514,7 @@ public abstract partial class InteractionTest
 
     protected void ToggleNeedPower(NetEntity? target = null)
     {
-        var comp = Comp<ApcPowerReceiverComponent>(target);
+        var comp = Comp<PowerReceiverComponent>(target);
         comp.NeedsPower = !comp.NeedsPower;
     }
 

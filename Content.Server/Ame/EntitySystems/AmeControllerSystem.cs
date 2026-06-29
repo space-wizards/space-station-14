@@ -1,22 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.Administration.Managers;
 using Content.Server.Ame.Components;
-using Content.Server.Chat.Managers;
-using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
+using Content.Shared.Ame;
 using Content.Shared.Ame.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
 using Content.Shared.NodeContainer;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
@@ -29,6 +27,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private AmeNodeGroupHandler _ameHandler = default!;
 
     public override void Initialize()
     {
@@ -104,7 +103,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
             else
             {
                 var availableInject = Math.Min(controller.InjectionAmount, fuelContainer.FuelAmount);
-                var powerOutput = group.InjectFuel(availableInject, out var overloading);
+                var powerOutput = _ameHandler.InjectFuel(group, availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
 
@@ -120,13 +119,13 @@ public sealed partial class AmeControllerSystem : EntitySystem
             }
         }
 
-        controller.Stability = group.GetTotalStability();
+        controller.Stability = _ameHandler.GetTotalStability(group);
 
-        group.UpdateCoreVisuals();
+        _ameHandler.UpdateCoreVisuals(group);
         UpdateDisplay(uid, controller.Stability, controller);
 
         if (controller.Stability <= 0)
-            group.ExplodeCores();
+            _ameHandler.ExplodeCores(group);
     }
 
     public void UpdateUi(EntityUid uid, AmeControllerComponent? controller = null)
@@ -145,15 +144,15 @@ public sealed partial class AmeControllerSystem : EntitySystem
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
-        var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
+        var powered = !TryComp<PowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = 0;
         // how much power can be produced at the current settings, in kW
         // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
         float targetedPowerSupply = 0;
-        if (TryGetAMENodeGroup(uid, out var group) && group.CoreCount > 0)
+        if (TryGetAMENodeGroup(uid, out var group) && group.Cores.Count > 0)
         {
-            coreCount = group.CoreCount;
-            targetedPowerSupply = group.CalculatePower(controller.InjectionAmount, group.CoreCount) / 1000;
+            coreCount = group.Cores.Count;
+            targetedPowerSupply = _ameHandler.CalculatePower(controller.InjectionAmount, group.Cores.Count) / 1000;
         }
 
         // set current power statistics in kW
@@ -277,7 +276,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
 
         var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
-            safeLimit = group.CoreCount * 4;
+            safeLimit = group.Cores.Count * 4;
 
         var logImpact = (oldValue <= safeLimit && value > safeLimit) ? LogImpact.Extreme : LogImpact.Medium;
 
@@ -297,7 +296,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
     {
         if (!TryGetAMENodeGroup(ent, out var group))
             return 0;
-        return  group.CoreCount * 8;
+        return  group.Cores.Count * 8;
     }
 
     private void UpdateDisplay(EntityUid uid, int stability, AmeControllerComponent? controller = null, AppearanceComponent? appearance = null)
@@ -362,7 +361,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
         }
 
         if (TryGetAMENodeGroup(uid, out var group))
-            group.UpdateCoreVisuals();
+            _ameHandler.UpdateCoreVisuals(group);
 
         UpdateUi(uid, comp);
     }
@@ -382,7 +381,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
             return false;
 
         //Check if device is powered
-        if (needsPower && TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) && !powerSource.Powered)
+        if (needsPower && TryComp<PowerReceiverComponent>(uid, out var powerSource) && !powerSource.Powered)
             return false;
 
         return true;

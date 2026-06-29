@@ -22,7 +22,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 300
 
 - type: entity

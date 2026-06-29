@@ -1,64 +1,86 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.Power;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class PowerNetConnectorSystem : EntitySystem
+public sealed partial class PowerNetConnectorSystem : EntitySystem
 {
+    [Dependency] private PowerNetHandler _handler = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ApcComponent, ComponentInit>(OnApcInit);
-        SubscribeLocalEvent<ApcPowerProviderComponent, ComponentInit>(OnApcPowerProviderInit);
-        SubscribeLocalEvent<BatteryChargerComponent, ComponentInit>(OnBatteryChargerInit);
-        SubscribeLocalEvent<BatteryDischargerComponent, ComponentInit>(OnBatteryDischargerInit);
-
-        // TODO please end my life
-        SubscribeLocalEvent<ApcComponent, ComponentRemove>(OnRemove<ApcComponent, IApcNet>);
-        SubscribeLocalEvent<ApcPowerProviderComponent, ComponentRemove>(OnRemove<ApcPowerProviderComponent, IApcNet>);
-        SubscribeLocalEvent<BatteryChargerComponent, ComponentRemove>(OnRemove<BatteryChargerComponent, IPowerNet>);
-        SubscribeLocalEvent<BatteryDischargerComponent, ComponentRemove>(OnRemove<BatteryDischargerComponent, IPowerNet>);
-        SubscribeLocalEvent<PowerConsumerComponent, ComponentRemove>(OnRemove<PowerConsumerComponent, IBasePowerNet>);
-        SubscribeLocalEvent<PowerSupplierComponent, ComponentRemove>(OnRemove<PowerSupplierComponent, IBasePowerNet>);
+        SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentRemove>(OnRemove);
     }
 
-    private void OnRemove<TComp, TNet>(EntityUid uid, TComp component, ComponentRemove args)
-        where TComp : BaseNetConnectorComponent<TNet>
-        where TNet : class
+    private void OnRemove(Entity<PowerNetworkConnectorComponent> ent, ref ComponentRemove args)
     {
-        component.ClearNet();
+        ClearNet(ent);
     }
 
-    private void OnPowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
+    private void OnInit(Entity<PowerNetworkConnectorComponent> ent, ref ComponentInit args)
     {
-        BaseNetConnectorInit(component);
+        TryFindAndSetNet(ent);
     }
 
-    private void OnBatteryDischargerInit(EntityUid uid, BatteryDischargerComponent component, ComponentInit args)
+    public void TryFindAndSetNet(Entity<PowerNetworkConnectorComponent> ent)
     {
-        BaseNetConnectorInit(component);
-    }
-
-    private void OnBatteryChargerInit(EntityUid uid, BatteryChargerComponent component, ComponentInit args)
-    {
-        BaseNetConnectorInit(component);
-    }
-
-    private void OnApcPowerProviderInit(EntityUid uid, ApcPowerProviderComponent component, ComponentInit args)
-    {
-        BaseNetConnectorInit(component);
-    }
-
-    private void OnApcInit(EntityUid uid, ApcComponent component, ComponentInit args)
-    {
-        BaseNetConnectorInit(component);
-    }
-
-    public void BaseNetConnectorInit<T>(BaseNetConnectorComponent<T> component) where T : class
-    {
-        if (component.NeedsNet)
+        if (TryFindNet(ent, out var net))
         {
-            component.TryFindAndSetNet();
+            ent.Comp.Net = net;
         }
+    }
+
+    public void ClearNet(Entity<PowerNetworkConnectorComponent> ent)
+    {
+        if (ent.Comp.Net == null)
+            return;
+
+        _handler.RemoveConnector(ent.Comp.Net, ent);
+        ent.Comp.Net = null;
+    }
+
+    private bool TryFindNet(Entity<PowerNetworkConnectorComponent> ent, [NotNullWhen(true)] out PowerNet? foundNet)
+    {
+        if (TryComp(ent, out NodeContainerComponent? container))
+        {
+            var compatibleNet = container.Nodes.Values
+                .Where(node => (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage)
+                .Select(node => node.NodeGroup)
+                .OfType<PowerNet>()
+                .FirstOrDefault();
+
+            if (compatibleNet != null)
+            {
+                foundNet = compatibleNet;
+                return true;
+            }
+        }
+        foundNet = null;
+        return false;
+    }
+
+    public void SetNet(Entity<PowerNetworkConnectorComponent> ent, PowerNet? newNet)
+    {
+        if (ent.Comp.Net != null)
+            _handler.RemoveConnector(ent.Comp.Net, ent);
+
+        if (newNet != null)
+            _handler.AddConnector(newNet, ent);
+
+        ent.Comp.Net = newNet;
+    }
+
+    public void SetVoltage(Entity<PowerNetworkConnectorComponent> ent, Voltage newVoltage)
+    {
+        ClearNet(ent);
+        ent.Comp.Voltage = newVoltage;
+        TryFindAndSetNet(ent);
     }
 }

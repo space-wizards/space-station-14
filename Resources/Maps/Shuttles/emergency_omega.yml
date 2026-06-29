@@ -3073,7 +3073,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,11.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 426
     components:
@@ -3081,7 +3081,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,11.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 427
     components:
@@ -3089,7 +3089,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,11.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 429
     components:
@@ -3097,14 +3097,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,0.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 430
     components:
     - type: Transform
       pos: -8.5,-0.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 433
     components:
@@ -3112,7 +3112,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,2.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 585
     components:
@@ -3120,7 +3120,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -8.5,1.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 586
     components:
@@ -3128,7 +3128,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,1.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 612
     components:
@@ -3143,7 +3143,7 @@ entities:
     - type: Transform
       pos: -0.5,2.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 432
     components:
@@ -3151,7 +3151,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-1.5
       parent: 603
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 514
     components:

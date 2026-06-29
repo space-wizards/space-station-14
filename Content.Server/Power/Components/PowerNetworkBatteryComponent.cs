@@ -1,118 +1,95 @@
-﻿using Content.Server.Power.Pow3r;
+﻿using Content.Shared.Collections;
 using Content.Shared.Guidebook;
+using Content.Shared.Power.Pow3r.Nodes;
 
-namespace Content.Server.Power.Components
+namespace Content.Server.Power.Components;
+
+/// <summary>
+///     Glue component that manages the pow3r network node for batteries that are connected to the power network.
+/// </summary>
+/// <remarks>
+///     This needs components like <see cref="BatteryChargerComponent"/> to work correctly,
+///     and battery storage should be handed off to components like <see cref="BatteryComponent"/>.
+/// </remarks>
+[RegisterComponent]
+public sealed partial class PowerNetworkBatteryComponent : Component, IPowerBattery
 {
-    /// <summary>
-    ///     Glue component that manages the pow3r network node for batteries that are connected to the power network.
-    /// </summary>
-    /// <remarks>
-    ///     This needs components like <see cref="BatteryChargerComponent"/> to work correctly,
-    ///     and battery storage should be handed off to components like <see cref="BatteryComponent"/>.
-    /// </remarks>
-    [RegisterComponent]
-    public sealed partial class PowerNetworkBatteryComponent : Component
-    {
-        [ViewVariables] public float LastSupply = 0f;
+    [ViewVariables]
+    public float LastSupply = 0f;
 
-        [DataField("maxChargeRate")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxChargeRate
-        {
-            get => NetworkBattery.MaxChargeRate;
-            set => NetworkBattery.MaxChargeRate = value;
-        }
+    [ViewVariables]
+    public NodeId Id { get; set; }
 
-        [DataField("maxSupply")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        [GuidebookData]
-        public float MaxSupply
-        {
-            get => NetworkBattery.MaxSupply;
-            set => NetworkBattery.MaxSupply = value;
-        }
+    [DataField]
+    public bool Enabled { get; set; }
 
-        [DataField("supplyRampTolerance")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampTolerance
-        {
-            get => NetworkBattery.SupplyRampTolerance;
-            set => NetworkBattery.SupplyRampTolerance = value;
-        }
+    [DataField]
+    public bool Paused { get; set; }
 
-        [DataField("supplyRampRate")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampRate
-        {
-            get => NetworkBattery.SupplyRampRate;
-            set => NetworkBattery.SupplyRampRate = value;
-        }
+    [DataField]
+    public bool CanDischarge { get; set; }
 
-        [DataField("supplyRampPosition")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float SupplyRampPosition
-        {
-            get => NetworkBattery.SupplyRampPosition;
-            set => NetworkBattery.SupplyRampPosition = value;
-        }
+    [DataField]
+    public bool CanCharge { get; set; }
 
-        [DataField("currentSupply")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentSupply
-        {
-            get => NetworkBattery.CurrentSupply;
-            set => NetworkBattery.CurrentSupply = value;
-        }
+    [DataField]
+    public float Capacity { get; set; }
 
-        [DataField("currentReceiving")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentReceiving
-        {
-            get => NetworkBattery.CurrentReceiving;
-            set => NetworkBattery.CurrentReceiving = value;
-        }
+    [DataField]
+    public float MaxChargeRate { get; set; }
 
-        [DataField("loadingNetworkDemand")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float LoadingNetworkDemand
-        {
-            get => NetworkBattery.LoadingNetworkDemand;
-            set => NetworkBattery.LoadingNetworkDemand = value;
-        }
+    [DataField]
+    public float MaxThroughput { get; set; }
 
-        [DataField("enabled")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled
-        {
-            get => NetworkBattery.Enabled;
-            set => NetworkBattery.Enabled = value;
-        }
+    [DataField]
+    [GuidebookData]
+    public float MaxSupply { get; set; }
 
-        [DataField("canCharge")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanCharge
-        {
-            get => NetworkBattery.CanCharge;
-            set => NetworkBattery.CanCharge = value;
-        }
+    [DataField]
+    public float SupplyRampTolerance { get; set; }
 
-        [DataField("canDischarge")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanDischarge
-        {
-            get => NetworkBattery.CanDischarge;
-            set => NetworkBattery.CanDischarge = value;
-        }
+    [DataField]
+    public float SupplyRampRate { get; set; }
 
-        [DataField("efficiency")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float Efficiency
-        {
-            get => NetworkBattery.Efficiency;
-            set => NetworkBattery.Efficiency = value;
-        }
+    [DataField]
+    public float Efficiency { get; set; }
 
-        [ViewVariables]
-        public PowerState.Battery NetworkBattery { get; } = new();
-    }
+    [ViewVariables]
+    public float SupplyRampPosition { get; set; }
+
+    [ViewVariables]
+    public float CurrentSupply { get; set; }
+
+    [ViewVariables]
+    public float CurrentStorage { get; set; }
+
+    [ViewVariables]
+    public float CurrentReceiving { get; set; }
+
+    [ViewVariables]
+    public float LoadingNetworkDemand { get; set; }
+
+    [ViewVariables]
+    public bool SupplyingMarked { get; set; }
+
+    [ViewVariables]
+    public bool LoadingMarked { get; set; }
+
+    [ViewVariables]
+    public float AvailableSupply { get; set; }
+
+    [ViewVariables]
+    public float DesiredPower { get; set; }
+
+    [ViewVariables]
+    public float SupplyRampTarget { get; set; }
+
+    [ViewVariables]
+    public NodeId LinkedNetworkCharging { get; set; }
+
+    [ViewVariables]
+    public NodeId LinkedNetworkDischarging { get; set; }
+
+    [ViewVariables]
+    public float MaxEffectiveSupply { get; set; }
 }

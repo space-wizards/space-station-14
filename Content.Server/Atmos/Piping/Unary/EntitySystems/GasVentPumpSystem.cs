@@ -3,8 +3,6 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
@@ -22,6 +20,8 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -45,6 +45,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private PowerReceiverSystem _powerReceiverSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

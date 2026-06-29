@@ -3,11 +3,11 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Database;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -97,7 +97,7 @@ public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
-        if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
+        if (TryComp<PowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
         if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
             return false;

@@ -32,7 +32,7 @@ public sealed class BatterySystem : SharedBatterySystem
         if (!ent.Comp.NetSyncEnabled)
             return;
 
-        DebugTools.Assert(!HasComp<ApcPowerReceiverBatteryComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
+        DebugTools.Assert(!HasComp<PowerReceiverBatteryComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
         DebugTools.Assert(!HasComp<PowerNetworkBatteryComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
         DebugTools.Assert(!HasComp<PowerConsumerComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
     }
@@ -40,7 +40,7 @@ public sealed class BatterySystem : SharedBatterySystem
 
     private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
     {
-        ent.Comp.NetworkBattery.CurrentStorage = ent.Comp.NetworkBattery.Capacity;
+        ent.Comp.CurrentStorage = ent.Comp.Capacity;
     }
 
     private void PreSync(NetworkBatteryPreSync ev)
@@ -51,8 +51,8 @@ public sealed class BatterySystem : SharedBatterySystem
         {
             var currentCharge = GetCharge((uid, bat));
             DebugTools.Assert(currentCharge <= bat.MaxCharge && currentCharge >= 0);
-            netBat.NetworkBattery.Capacity = bat.MaxCharge;
-            netBat.NetworkBattery.CurrentStorage = currentCharge;
+            netBat.Capacity = bat.MaxCharge;
+            netBat.CurrentStorage = currentCharge;
         }
     }
 
@@ -62,7 +62,7 @@ public sealed class BatterySystem : SharedBatterySystem
         var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
         while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
         {
-            SetCharge((uid, bat), netBat.NetworkBattery.CurrentStorage);
+            SetCharge((uid, bat), netBat.CurrentStorage);
         }
     }
 }

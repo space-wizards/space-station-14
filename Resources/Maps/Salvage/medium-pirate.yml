@@ -671,14 +671,14 @@ entities:
     - type: Transform
       pos: 4.5,1.5
       parent: 52
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 91
     components:
     - type: Transform
       pos: -2.5,1.5
       parent: 52
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: ReinforcedWindow
   entities:

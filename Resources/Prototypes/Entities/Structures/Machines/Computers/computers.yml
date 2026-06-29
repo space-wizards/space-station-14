@@ -495,7 +495,7 @@
         type: ResearchClientBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50
@@ -549,7 +549,7 @@
         type: ResearchClientBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50
@@ -1542,7 +1542,7 @@
         type: RoboticsConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5
@@ -1591,7 +1591,7 @@
   - type: ActiveRadio
     channels:
     - Xenoborg
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50
@@ -1621,7 +1621,7 @@
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50
@@ -1700,7 +1700,7 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50

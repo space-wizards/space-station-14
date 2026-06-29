@@ -43,7 +43,7 @@
   parent: BaseMachine
   id: BaseMachinePowered
   components:
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
   - type: LightningTarget

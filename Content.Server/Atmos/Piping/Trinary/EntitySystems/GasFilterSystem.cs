@@ -1,8 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Trinary.Components;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
@@ -11,6 +9,8 @@ using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

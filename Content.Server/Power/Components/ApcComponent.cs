@@ -1,4 +1,3 @@
-using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -6,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent, AutoGenerateComponentPause]
-public sealed partial class ApcComponent : BaseApcNetComponent
+public sealed partial class ApcComponent : Component
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
@@ -59,16 +58,4 @@ public sealed partial class ApcComponent : BaseApcNetComponent
     /// </summary>
     [DataField]
     public bool TripFlag;
-
-    // TODO ECS power a little better!
-    // End the suffering
-    protected override void AddSelfToNet(IApcNet apcNet)
-    {
-        apcNet.AddApc(Owner, this);
-    }
-
-    protected override void RemoveSelfFromNet(IApcNet apcNet)
-    {
-        apcNet.RemoveApc(Owner, this);
-    }
 }

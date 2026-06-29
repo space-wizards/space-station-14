@@ -20,8 +20,9 @@
         nodeGroupID: HVPower
         needAnchored: false
   - type: PowerConsumer
-    voltage: High
     drawRate: 50000
+  - type: PowerNetworkConnector
+    voltage: High
 
 - type: entity
   id: VirtualElectrocutionLoadMVPower
@@ -34,8 +35,9 @@
         nodeGroupID: MVPower
         needAnchored: false
   - type: PowerConsumer
-    voltage: Medium
     drawRate: 50000
+  - type: PowerNetworkConnector
+    voltage: Medium
 
 - type: entity
   id: VirtualElectrocutionLoadApc
@@ -48,5 +50,6 @@
         nodeGroupID: Apc
         needAnchored: false
   - type: PowerConsumer
-    voltage: Apc
     drawRate: 50000
+  - type: PowerNetworkConnector
+    voltage: Apc

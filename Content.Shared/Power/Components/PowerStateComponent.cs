@@ -5,7 +5,7 @@ namespace Content.Shared.Power.Components;
 /// </summary>
 /// <remarks><para>Entities that have more complex power draw
 /// (ex. a thermomachine whose heating power is directly tied to its power consumption)
-/// should just directly set their load on the <see cref="SharedApcPowerReceiverComponent"/>.</para>
+/// should just directly set their load on the <see cref="PowerReceiverComponent"/>.</para>
 ///
 /// <para>This is also applicable if you would like to add
 /// more complex power behavior that is tied to a generic component.</para></remarks>

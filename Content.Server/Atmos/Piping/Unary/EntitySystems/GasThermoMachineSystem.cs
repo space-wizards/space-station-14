@@ -1,9 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
@@ -13,6 +10,9 @@ using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
         {
             thermoMachine.LastEnergyDelta = 0f;
-            if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver)))
+            if (!(_power.IsPowered(uid) && TryComp<PowerReceiverComponent>(uid, out var receiver)))
                 return;
 
             GetHeatExchangeGasMixture(uid, thermoMachine, out var heatExchangeGasMixture);
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     _atmosphereSystem.AddHeat(containingMixture, dQLeak);
             }
 
-            receiver.Load = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
+            receiver.DesiredPower = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
         }
 
         /// <summary>

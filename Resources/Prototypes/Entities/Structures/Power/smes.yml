@@ -58,9 +58,11 @@
       sprite: Structures/Power/smes.rsi
       state: static
     - type: BatteryDischarger
-      voltage: High
       node: output
+    - type: PowerNetworkConnector
+      voltage: High
     - type: BatteryCharger
+    - type: PowerNetworkConnector
       voltage: High
       node: input
     - type: PowerNetworkBattery

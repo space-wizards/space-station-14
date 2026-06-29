@@ -28,7 +28,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
       prefix: device-address-prefix-vent
@@ -118,7 +118,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
       prefix: device-address-prefix-scrubber
@@ -294,8 +294,8 @@
             False: { state: freezerOff }
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
-    - type: ApcPowerReceiver
-      powerDisabled: true #starts off
+    - type: PowerReceiver
+      enabled: false
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
     - type: DeviceNetwork
@@ -309,8 +309,8 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: ApcPowerReceiver
-    powerDisabled: false
+  - type: PowerReceiver
+    enabled: true
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -339,8 +339,8 @@
             False: { state: heaterOff }
     - type: GasThermoMachine
       coefficientOfPerformance: 0.95
-    - type: ApcPowerReceiver
-      powerDisabled: true #starts off
+    - type: PowerReceiver
+      enabled: false
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
     - type: DeviceNetwork
@@ -354,8 +354,8 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: ApcPowerReceiver
-    powerDisabled: false
+  - type: PowerReceiver
+    enabled: true
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -433,7 +433,7 @@
         Tertiary: Structures/Piping/Atmospherics/condenser_alt2.rsi
   - type: AtmosDevice
   - type: PipeRestrictOverlap
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 10000
   - type: Machine
     board: CondenserMachineCircuitBoard

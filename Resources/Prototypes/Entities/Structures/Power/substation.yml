@@ -21,8 +21,10 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
+  - type: PowerNetworkConnector
     voltage: High
   - type: BatteryDischarger
+  - type: PowerNetworkConnector
     voltage: Medium
   - type: PowerNetworkBattery
     maxSupply: 150000

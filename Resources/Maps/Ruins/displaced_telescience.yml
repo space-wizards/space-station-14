@@ -4462,7 +4462,7 @@ entities:
           ent: 179
     - type: PoweredLight
       on: True
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: DamageOnInteract
       isDamageActive: False

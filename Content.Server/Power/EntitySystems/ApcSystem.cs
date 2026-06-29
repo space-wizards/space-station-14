@@ -1,6 +1,5 @@
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.APC;
@@ -9,6 +8,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.Pow3r.Nodes;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -172,7 +172,7 @@ public sealed partial class ApcSystem : EntitySystem
 
         if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
-            var newState = CalcChargeState(uid, battery.NetworkBattery);
+            var newState = CalcChargeState(uid, battery);
             if (newState != apc.LastChargeState)
             {
                 apc.LastChargeState = newState;
@@ -185,7 +185,7 @@ public sealed partial class ApcSystem : EntitySystem
             }
         }
 
-        var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
+        var extPowerState = CalcExtPowerState(uid, battery);
         if (extPowerState != apc.LastExternalState)
         {
             apc.LastExternalState = extPowerState;
@@ -203,7 +203,7 @@ public sealed partial class ApcSystem : EntitySystem
         if (!Resolve(uid, ref apc, ref netBat, ref ui))
             return;
 
-        var battery = netBat.NetworkBattery;
+        var battery = netBat;
         const int ChargeAccuracy = 5;
 
         // TODO: Fix ContentHelpers or make a new one coz this is cooked.
@@ -218,7 +218,7 @@ public sealed partial class ApcSystem : EntitySystem
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
-    private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)
+    private ApcChargeState CalcChargeState(EntityUid uid, IPowerBattery battery)
     {
         if (_emag.CheckFlag(uid, EmagType.Interaction))
             return ApcChargeState.Emag;
@@ -232,7 +232,7 @@ public sealed partial class ApcSystem : EntitySystem
         return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
     }
 
-    private ApcExternalPowerState CalcExtPowerState(EntityUid uid, PowerState.Battery battery)
+    private ApcExternalPowerState CalcExtPowerState(EntityUid uid, IPowerBattery battery)
     {
         if (battery.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1))
         {

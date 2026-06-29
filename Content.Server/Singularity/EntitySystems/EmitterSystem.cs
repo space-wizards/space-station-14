@@ -11,11 +11,11 @@ using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -23,7 +23,6 @@ using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -113,7 +112,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            if (args.ReceivedPower < args.DrawRate)
+            if (args.ReceivedPower < args.DesiredPower)
             {
                 PowerOff(uid, component);
             }
@@ -144,9 +143,9 @@ namespace Content.Server.Singularity.EntitySystems
         {
             component.IsOn = false;
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
-                apcReceiver.Load = 1;
+                powerConsumer.DesiredPower = 1; // this needs to be not 0 so that the visuals still work.
+            if (TryComp<PowerReceiverComponent>(uid, out var apcReceiver))
+                apcReceiver.DesiredPower = 1;
             PowerOff(uid, component);
             UpdateAppearance(uid, component);
         }
@@ -155,10 +154,10 @@ namespace Content.Server.Singularity.EntitySystems
         {
             component.IsOn = true;
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
-                powerConsumer.DrawRate = component.PowerUseActive;
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
+                powerConsumer.DesiredPower = component.PowerUseActive;
+            if (TryComp<PowerReceiverComponent>(uid, out var apcReceiver))
             {
-                apcReceiver.Load = component.PowerUseActive;
+                apcReceiver.DesiredPower = component.PowerUseActive;
                 if (apcReceiver.Powered)
                     PowerOn(uid, component);
             }

@@ -81,7 +81,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
 
         SubscribeLocalEvent<StationAiCoreComponent, AfterConstructionChangeEntityEvent>(AfterConstructionChangeEntity);
         SubscribeLocalEvent<StationAiCoreComponent, ContainerSpawnEvent>(OnContainerSpawn);
-        SubscribeLocalEvent<StationAiCoreComponent, ApcPowerReceiverBatteryChangedEvent>(OnApcBatteryChanged);
+        SubscribeLocalEvent<StationAiCoreComponent, PowerReceiverBatteryChangedEvent>(OnApcBatteryChanged);
         SubscribeLocalEvent<StationAiCoreComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<StationAiCoreComponent, DestructionEventArgs>(OnDestruction);
@@ -216,7 +216,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         _stationJobs.TryAdjustJobSlot(station.Value, _stationAiJob, -1, false, true);
     }
 
-    private void OnApcBatteryChanged(Entity<StationAiCoreComponent> ent, ref ApcPowerReceiverBatteryChangedEvent args)
+    private void OnApcBatteryChanged(Entity<StationAiCoreComponent> ent, ref PowerReceiverBatteryChangedEvent args)
     {
         if (!args.Enabled)
             return;
@@ -277,7 +277,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
 
         _alerts.ShowAlert(held.Value, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));
 
-        if (TryComp<ApcPowerReceiverBatteryComponent>(ent, out var apcBattery) &&
+        if (TryComp<PowerReceiverBatteryComponent>(ent, out var apcBattery) &&
             apcBattery.Enabled &&
             chargePercent < 0.2)
         {
@@ -319,7 +319,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
 
         // Prevent AIs from being uploaded into an unpowered or broken AI core.
 
-        if (TryComp<ApcPowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
+        if (TryComp<PowerReceiverComponent>(ent, out var apcPower) && !apcPower.Powered)
         {
             _popups.PopupEntity(Loc.GetString("station-ai-has-no-power-for-upload"), ent, args.Event.User);
             args.Cancel();

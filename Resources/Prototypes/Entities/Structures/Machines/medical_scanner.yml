@@ -72,7 +72,7 @@
   - type: WiresPanel
   - type: Appearance
   - type: Climbable
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: EmptyOnMachineDeconstruct
     containers:

@@ -1,4 +1,3 @@
-using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Tools;
@@ -73,10 +72,10 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var node in nodeContainer.Nodes)
             {
-                if (!(node.Value.NodeGroup is IBasePowerNet))
+                if (!(node.Value.NodeGroup is PowerNet))
                     continue;
-                var p = (IBasePowerNet) node.Value.NodeGroup;
-                var ps = _pnSystem.GetNetworkStatistics(p.NetworkNode);
+                var p = (PowerNet) node.Value.NodeGroup;
+                var ps = _pnSystem.GetNetworkStatistics(p);
 
                 float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
                 float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);

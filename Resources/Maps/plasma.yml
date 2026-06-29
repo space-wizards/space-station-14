@@ -135322,7 +135322,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 22441
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: DeviceLinkSink
       invokeCounter: 2

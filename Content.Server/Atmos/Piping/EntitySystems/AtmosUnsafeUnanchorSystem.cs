@@ -1,13 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 

@@ -99,7 +99,7 @@
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -314,7 +314,7 @@
       light_bulb: !type:ContainerSlot
   - type: PoweredLight
     bulb: Bulb
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Wireless
@@ -435,7 +435,7 @@
     offset: "0, 0.4"
     color: "#7CFC00"
     mask: /Textures/Effects/LightMasks/double_cone.png
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Battery
     # Very important:

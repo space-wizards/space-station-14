@@ -1,105 +1,101 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Client.NodeContainer
+namespace Content.Client.NodeContainer;
+
+[UsedImplicitly]
+public sealed partial class NodeGroupVisualsSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed partial class NodeGroupSystem : EntitySystem
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+
+    public bool VisEnabled { get; private set; }
+
+    public Dictionary<int, NodeVis.GroupData> Groups { get; } = new();
+    public HashSet<string> Filtered { get; } = new();
+
+    public Dictionary<EntityUid, (NodeVis.GroupData group, NodeVis.NodeDatum node)[]>
+        Entities { get; private set; } = new();
+
+    public Dictionary<(int group, int node), NodeVis.NodeDatum> NodeLookup { get; private set; } = new();
+
+    public override void Initialize()
     {
-        [Dependency] private IOverlayManager _overlayManager = default!;
-        [Dependency] private EntityLookupSystem _entityLookup = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IInputManager _inputManager = default!;
-        [Dependency] private IResourceCache _resourceCache = default!;
+        base.Initialize();
 
-        public bool VisEnabled { get; private set; }
+        SubscribeNetworkEvent<NodeVis.MsgData>(DataMsgHandler);
+    }
 
-        public Dictionary<int, NodeVis.GroupData> Groups { get; } = new();
-        public HashSet<string> Filtered { get; } = new();
+    public override void Shutdown()
+    {
+        base.Shutdown();
 
-        public Dictionary<EntityUid, (NodeVis.GroupData group, NodeVis.NodeDatum node)[]>
-            Entities { get; private set; } = new();
+        _overlayManager.RemoveOverlay<NodeVisualizationOverlay>();
+    }
 
-        public Dictionary<(int group, int node), NodeVis.NodeDatum> NodeLookup { get; private set; } = new();
+    private void DataMsgHandler(NodeVis.MsgData ev)
+    {
+        if (!VisEnabled)
+            return;
 
-        public override void Initialize()
+        foreach (var deletion in ev.GroupDeletions)
         {
-            base.Initialize();
-
-            SubscribeNetworkEvent<NodeVis.MsgData>(DataMsgHandler);
+            Groups.Remove(deletion);
         }
 
-        public override void Shutdown()
+        foreach (var group in ev.Groups)
         {
-            base.Shutdown();
-
-            _overlayManager.RemoveOverlay<NodeVisualizationOverlay>();
+            Groups.Add(group.NetId, group);
         }
 
-        private void DataMsgHandler(NodeVis.MsgData ev)
+        foreach (var (groupId, debugData) in ev.GroupDataUpdates)
         {
-            if (!VisEnabled)
-                return;
-
-            foreach (var deletion in ev.GroupDeletions)
+            if (Groups.TryGetValue(groupId, out var group))
             {
-                Groups.Remove(deletion);
+                group.DebugData = debugData;
             }
-
-            foreach (var group in ev.Groups)
-            {
-                Groups.Add(group.NetId, group);
-            }
-
-            foreach (var (groupId, debugData) in ev.GroupDataUpdates)
-            {
-                if (Groups.TryGetValue(groupId, out var group))
-                {
-                    group.DebugData = debugData;
-                }
-            }
-
-            Entities = Groups.Values
-                .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
-                .GroupBy(n => GetEntity(n.nodeData.Entity))
-                .ToDictionary(g => g.Key, g => g.ToArray());
-
-            NodeLookup = Groups.Values
-                .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
-                .ToDictionary(n => (n.data.NetId, n.nodeData.NetId), n => n.nodeData);
         }
 
-        public void SetVisEnabled(bool enabled)
+        Entities = Groups.Values
+            .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
+            .GroupBy(n => GetEntity(n.nodeData.Entity))
+            .ToDictionary(g => g.Key, g => g.ToArray());
+
+        NodeLookup = Groups.Values
+            .SelectMany(g => g.Nodes, (data, nodeData) => (data, nodeData))
+            .ToDictionary(n => (n.data.NetId, n.nodeData.NetId), n => n.nodeData);
+    }
+
+    public void SetVisEnabled(bool enabled)
+    {
+        VisEnabled = enabled;
+
+        RaiseNetworkEvent(new NodeVis.MsgEnable(enabled));
+
+        if (enabled)
         {
-            VisEnabled = enabled;
+            var overlay = new NodeVisualizationOverlay(
+                this,
+                _entityLookup,
+                _mapManager,
+                _inputManager,
+                _resourceCache,
+                EntityManager);
 
-            RaiseNetworkEvent(new NodeVis.MsgEnable(enabled));
-
-            if (enabled)
-            {
-                var overlay = new NodeVisualizationOverlay(
-                    this,
-                    _entityLookup,
-                    _mapManager,
-                    _inputManager,
-                    _resourceCache,
-                    EntityManager);
-
-                _overlayManager.AddOverlay(overlay);
-            }
-            else
-            {
-                Groups.Clear();
-                Entities.Clear();
-            }
+            _overlayManager.AddOverlay(overlay);
+        }
+        else
+        {
+            Groups.Clear();
+            Entities.Clear();
         }
     }
 }

@@ -16,7 +16,6 @@ using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -63,7 +62,6 @@ namespace Content.Server.Entry
         [Dependency] private IEntitySystemManager _entSys = default!;
         [Dependency] private IGameMapManager _gameMap = default!;
         [Dependency] private ILogManager _log = default!;
-        [Dependency] private INodeGroupFactory _nodeFactory = default!;
         [Dependency] private IPrototypeManager _proto = default!;
         [Dependency] private IResourceManager _res = default!;
         [Dependency] private IServerDbManager _dbManager = default!;
@@ -126,7 +124,6 @@ namespace Content.Server.Entry
             _connection.Initialize();
             _dbManager.Init();
             _preferences.Init();
-            _nodeFactory.Initialize();
             _netResMan.Initialize();
             _ghostKick.Initialize();
             _serverInfo.Initialize();

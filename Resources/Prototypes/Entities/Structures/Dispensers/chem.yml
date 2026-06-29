@@ -14,7 +14,7 @@
     whitelist:
       tags:
       - ChemDispensable
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible
     thresholds:

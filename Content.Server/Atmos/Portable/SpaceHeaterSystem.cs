@@ -1,12 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
@@ -98,7 +98,7 @@ public sealed partial class SpaceHeaterSystem : EntitySystem
 
     private void OnToggle(EntityUid uid, SpaceHeaterComponent spaceHeater, SpaceHeaterToggleMessage args)
     {
-        ApcPowerReceiverComponent? powerReceiver = null;
+        PowerReceiverComponent? powerReceiver = null;
         if (!Resolve(uid, ref powerReceiver))
             return;
 
@@ -165,12 +165,12 @@ public sealed partial class SpaceHeaterSystem : EntitySystem
     {
         if (!Resolve(uid, ref spaceHeater)
             || !TryComp<GasThermoMachineComponent>(uid, out var thermoMachine)
-            || !TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver))
+            || !TryComp<PowerReceiverComponent>(uid, out var powerReceiver))
         {
             return;
         }
         _userInterfaceSystem.SetUiState(uid, SpaceHeaterUiKey.Key,
-            new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, spaceHeater.Mode, spaceHeater.PowerLevel));
+            new SpaceHeaterBoundUserInterfaceState(spaceHeater.MinTemperature, spaceHeater.MaxTemperature, thermoMachine.TargetTemperature, powerReceiver.Enabled, spaceHeater.Mode, spaceHeater.PowerLevel));
     }
 
     private void UpdateAppearance(EntityUid uid)

@@ -1,7 +1,7 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio.Jukebox;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
@@ -31,7 +31,7 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
 
     private void OnComponentInit(Entity<JukeboxComponent> ent, ref ComponentInit args)
     {
-        if (HasComp<ApcPowerReceiverComponent>(ent))
+        if (HasComp<PowerReceiverComponent>(ent))
         {
             TryUpdateVisualState(ent.AsNullable());
         }

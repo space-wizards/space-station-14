@@ -97,7 +97,7 @@
     intensitySlope: 5
     canCreateVacuum: false
     deleteAfterExplosion: false
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5

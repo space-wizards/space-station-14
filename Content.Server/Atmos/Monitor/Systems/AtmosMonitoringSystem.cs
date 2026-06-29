@@ -2,9 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
@@ -14,7 +11,10 @@ using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -107,7 +107,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosMonitorStartup(EntityUid uid, AtmosMonitorComponent component, ComponentStartup args)
     {
-        if (!HasComp<ApcPowerReceiverComponent>(uid)
+        if (!HasComp<PowerReceiverComponent>(uid)
             && TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
         {
             _atmosDeviceSystem.LeaveAtmosphere((uid, atmosDeviceComponent));

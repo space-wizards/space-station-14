@@ -981,7 +981,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,2.5
       parent: 173
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: ShuttleWindow
   entities:

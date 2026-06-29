@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Wires;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Wires;
 
 namespace Content.Server.Power;
@@ -53,11 +54,11 @@ public sealed partial class PowerWireAction : BaseWireAction
                && cut == 0;
     }
 
-    // I feel like these two should be within ApcPowerReceiverComponent at this point.
+    // I feel like these two should be within PowerReceiverComponent at this point.
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
     {
-        if (!EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
+        if (!EntityManager.TryGetComponent(owner, out PowerReceiverComponent? power))
         {
             return;
         }
@@ -168,7 +169,7 @@ public sealed partial class PowerWireAction : BaseWireAction
     }
 
     // This should add a wire into the entity's state, whether it be
-    // in WiresComponent or ApcPowerReceiverComponent.
+    // in WiresComponent or PowerReceiverComponent.
     public override bool AddWire(Wire wire, int count)
     {
         if (!WiresSystem.HasData(wire.Owner, PowerWireActionKey.CutWires))

@@ -256,7 +256,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
 
     protected void UpdateLight(EntityUid uid,
         PoweredLightComponent? light = null,
-        SharedApcPowerReceiverComponent? powerReceiver = null,
+        PowerReceiverComponent? powerReceiver = null,
         AppearanceComponent? appearance = null,
         EntityUid? user = null)
     {
@@ -282,7 +282,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         if (bulbUid == null || !TryComp<LightBulbComponent>(bulbUid.Value, out var lightBulb))
         {
             SetLight(uid, false, light: light);
-            powerReceiver.Load = 0;
+            powerReceiver.DesiredPower = 0;
             _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Empty, appearance);
             return;
         }
@@ -318,7 +318,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
                 break;
         }
 
-        powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
+        powerReceiver.DesiredPower = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
     }
 
     /// <summary>

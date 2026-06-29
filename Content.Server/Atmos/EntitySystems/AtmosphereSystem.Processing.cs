@@ -1,12 +1,9 @@
-using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -15,6 +12,7 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosphereSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private AtmosPipeNetHandler _handler = default!;
 
         private readonly Stopwatch _simulationStopwatch = new();
 
@@ -549,7 +547,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunPipeNet.TryDequeue(out var pipenet))
             {
-                pipenet.Update();
+                _handler.UpdateGroup(pipenet);
 
                 if (number++ < LagCheckIterations)
                     continue;

@@ -155,7 +155,7 @@
     locked: true
     unlockOnClick: false
   - type: LockedWiresPanel
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Electrified
     enabled: false

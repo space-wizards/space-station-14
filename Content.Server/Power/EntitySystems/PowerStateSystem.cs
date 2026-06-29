@@ -15,7 +15,7 @@ public sealed class PowerStateSystem : SharedPowerStateSystem
 
     private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
     {
-        EnsureComp<ApcPowerReceiverComponent>(ent);
+        EnsureComp<PowerReceiverComponent>(ent);
         SetWorkingState(ent.Owner, ent.Comp.IsWorking);
     }
 }

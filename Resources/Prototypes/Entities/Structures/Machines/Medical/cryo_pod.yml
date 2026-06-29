@@ -71,7 +71,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 3000
   - type: ExtensionCableReceiver
   - type: NodeContainer

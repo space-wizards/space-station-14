@@ -14,7 +14,7 @@
     - map: ["enum.EntityHeaterVisuals.Setting"]
       shader: unshaded
       visible: false
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 0 # off by default
   - type: EntityHeater
     settingSound:

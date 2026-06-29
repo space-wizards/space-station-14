@@ -902,7 +902,7 @@ entities:
           - 120
           - 121
           - 119
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: BorgChargerCircuitboard
   entities:
@@ -7934,7 +7934,7 @@ entities:
           - 303
           - 304
           - 302
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 306
     components:
@@ -7959,7 +7959,7 @@ entities:
           - 308
           - 309
           - 307
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: WeaponCapacitorRechargerCircuitboard
   entities:

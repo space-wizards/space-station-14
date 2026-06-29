@@ -4,10 +4,10 @@ using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
 using Content.Server.Item;
-using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Item;
+using Content.Shared.Power.Components;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
@@ -280,7 +280,7 @@ public sealed partial class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = _entManager.ComponentFactory.GetComponentName<PowerReceiverComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -291,15 +291,15 @@ public sealed partial class StatValuesCommand : IConsoleCommand
                 continue;
             }
 
-            var comp = (ApcPowerReceiverComponent) powerConsumer.Component;
+            var comp = (PowerReceiverComponent) powerConsumer.Component;
 
-            if (comp.Load == 0)
+            if (comp.DesiredPower == 0)
                 continue;
 
             values.Add(new[]
             {
                 proto.ID,
-                comp.Load.ToString(CultureInfo.InvariantCulture),
+                comp.DesiredPower.ToString(CultureInfo.InvariantCulture),
             });
         }
 

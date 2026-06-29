@@ -1,7 +1,7 @@
 using Content.Server.Construction.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Computer;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction;
@@ -22,7 +22,7 @@ public sealed partial class ConstructionSystem
         // Let's ensure the container manager and container are here.
         _container.EnsureContainer<Container>(uid, "board");
 
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver))
+        if (TryComp<PowerReceiverComponent>(uid, out var powerReceiver))
         {
             _appearance.SetData(uid, ComputerVisuals.Powered, powerReceiver.Powered);
         }

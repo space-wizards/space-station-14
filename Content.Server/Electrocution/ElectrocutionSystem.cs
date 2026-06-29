@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
@@ -17,6 +16,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -241,7 +241,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node?.NodeGroup is not IBasePowerNet)
+        if (node?.NodeGroup is not PowerNet)
             return false;
 
         var (damageScalar, timeScalar) = node.NodeGroupID switch
@@ -280,7 +280,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedMaxSupply: > 0 } })
+                tryNode.NodeGroup is PowerNet { LastCombinedMaxSupply: > 0 })
             {
                 return tryNode;
             }

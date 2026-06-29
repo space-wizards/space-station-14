@@ -7,7 +7,6 @@ using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -195,11 +194,11 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, PowerSupplierComponent>();
+        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, PowerSupplierComponent, PowerNetworkConnectorComponent>();
 
-        while (query.MoveNext(out var uid, out var portGen, out var fuelGen, out var powerSupplier))
+        while (query.MoveNext(out var uid, out var portGen, out var fuelGen, out var powerSupplier, out var connector))
         {
-            UpdateUI(uid, portGen, fuelGen, powerSupplier);
+            UpdateUI(uid, portGen, fuelGen, powerSupplier, connector);
         }
     }
 
@@ -207,7 +206,8 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         EntityUid uid,
         PortableGeneratorComponent comp,
         FuelGeneratorComponent fuelComp,
-        PowerSupplierComponent powerSupplier)
+        PowerSupplierComponent powerSupplier,
+        PowerNetworkConnectorComponent connector)
     {
         if (!_uiSystem.IsUiOpen(uid, GeneratorComponentUiKey.Key))
             return;
@@ -216,8 +216,8 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         var clogged = _generator.GetIsClogged(uid);
 
         (float, float)? networkStats = null;
-        if (powerSupplier.Net is { IsConnectedNetwork: true } net)
-            networkStats = (net.NetworkNode.LastCombinedLoad, net.NetworkNode.LastCombinedSupply);
+        if (connector.Net != null)
+            networkStats = (connector.Net.LastCombinedLoad, connector.Net.LastCombinedSupply);
 
         _uiSystem.SetUiState(
             uid,

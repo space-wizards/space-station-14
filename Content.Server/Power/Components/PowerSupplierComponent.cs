@@ -1,62 +1,47 @@
-using Content.Server.Power.NodeGroups;
-using Content.Server.Power.Pow3r;
+using Content.Shared.Collections;
 using Content.Shared.Guidebook;
+using Content.Shared.Power;
+using Content.Shared.Power.Pow3r.Nodes;
 
-namespace Content.Server.Power.Components
+namespace Content.Server.Power.Components;
+
+[RegisterComponent]
+public sealed partial class PowerSupplierComponent : Component, IPowerSupply
 {
-    [RegisterComponent]
-    public sealed partial class PowerSupplierComponent : BaseNetConnectorComponent<IBasePowerNet>
-    {
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRate")]
-        [GuidebookData]
-        public float MaxSupply { get => NetworkSupply.MaxSupply; set => NetworkSupply.MaxSupply = value; }
+    [DataField("supplyRate")]
+    [GuidebookData]
+    public float MaxSupply { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampTolerance")]
-        public float SupplyRampTolerance
-        {
-            get => NetworkSupply.SupplyRampTolerance;
-            set => NetworkSupply.SupplyRampTolerance = value;
-        }
+    [DataField]
+    public Voltage Voltage;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampRate")]
-        public float SupplyRampRate
-        {
-            get => NetworkSupply.SupplyRampRate;
-            set => NetworkSupply.SupplyRampRate = value;
-        }
+    [ViewVariables]
+    public NodeId Id { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("supplyRampPosition")]
-        public float SupplyRampPosition
-        {
-            get => NetworkSupply.SupplyRampPosition;
-            set => NetworkSupply.SupplyRampPosition = value;
-        }
+    [DataField]
+    public bool Enabled { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled
-        {
-            get => NetworkSupply.Enabled;
-            set => NetworkSupply.Enabled = value;
-        }
+    [DataField]
+    public bool Paused { get; set; }
 
-        [ViewVariables] public float CurrentSupply => NetworkSupply.CurrentSupply;
+    [DataField]
+    public float SupplyRampRate { get; set; }
 
-        [ViewVariables]
-        public PowerState.Supply NetworkSupply { get; } = new();
+    [DataField]
+    public float SupplyRampTolerance { get; set; }
 
-        protected override void AddSelfToNet(IBasePowerNet powerNet)
-        {
-            powerNet.AddSupplier(this);
-        }
+    [ViewVariables]
+    public float CurrentSupply { get; set; }
 
-        protected override void RemoveSelfFromNet(IBasePowerNet powerNet)
-        {
-            powerNet.RemoveSupplier(this);
-        }
-    }
+    [ViewVariables]
+    public float SupplyRampTarget { get; set; }
+
+    [ViewVariables]
+    public float SupplyRampPosition { get; set; }
+
+    [ViewVariables]
+    public NodeId LinkedNetwork { get; set; }
+
+    [ViewVariables]
+    public float AvailableSupply { get; set; }
 }

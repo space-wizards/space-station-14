@@ -8,6 +8,7 @@
     sprite: Structures/Power/Generation/PA/power_box.rsi
   - type: ParticleAcceleratorPowerBox
   - type: PowerConsumer
+  - type: PowerNetworkConnector
     voltage: Medium
   - type: NodeContainer
     examinable: true

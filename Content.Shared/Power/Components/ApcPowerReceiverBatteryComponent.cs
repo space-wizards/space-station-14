@@ -6,11 +6,11 @@ namespace Content.Shared.Power.Components;
 /// <summary>
 /// Attached to APC powered entities that possess a rechargeable internal battery.
 /// If external power is interrupted, the entity will draw power from this battery instead.
-/// Requires <see cref="Content.Server.Power.Components.ApcPowerReceiverComponent"/> and <see cref="BatteryComponent"/> to function.
+/// Requires <see cref="Content.Server.Power.Components.PowerReceiverComponent"/> and <see cref="BatteryComponent"/> to function.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedPowerNetSystem), typeof(SharedPowerReceiverSystem))]
-public sealed partial class ApcPowerReceiverBatteryComponent : Component
+public sealed partial class PowerReceiverBatteryComponent : Component
 {
     /// <summary>
     /// Indicates whether power is currently being drawn from the battery.
@@ -43,7 +43,7 @@ public sealed partial class ApcPowerReceiverBatteryComponent : Component
 }
 
 /// <summary>
-/// Raised whenever an ApcPowerReceiverBattery starts / stops discharging
+/// Raised whenever an PowerReceiverBattery starts / stops discharging
 /// </summary>
 [ByRefEvent]
-public readonly record struct ApcPowerReceiverBatteryChangedEvent(bool Enabled);
+public readonly record struct PowerReceiverBatteryChangedEvent(bool Enabled);

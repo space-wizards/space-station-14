@@ -13,6 +13,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Content.Shared.ParticleAccelerator;
 using Content.Shared.Machines.Events;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -88,7 +89,7 @@ public sealed partial class ParticleAcceleratorSystem
         UpdatePowerDraw(uid, comp);
 
         if (!TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer)
-            || powerConsumer.ReceivedPower >= powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
+            || powerConsumer.ReceivingPower >= powerConsumer.DesiredPower * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
         {
             PowerOn(uid, comp);
         }
@@ -241,7 +242,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (comp.Enabled)
             powerDraw += comp.LevelPowerDraw * (int) comp.SelectedStrength;
 
-        powerConsumer.DrawRate = powerDraw;
+        powerConsumer.DesiredPower = powerDraw;
     }
 
     public void UpdateUI(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
@@ -257,8 +258,8 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer))
         {
-            draw = powerConsumer.DrawRate;
-            receive = powerConsumer.ReceivedPower;
+            draw = powerConsumer.DesiredPower;
+            receive = powerConsumer.ReceivingPower;
         }
 
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
@@ -294,7 +295,7 @@ public sealed partial class ParticleAcceleratorSystem
         _appearanceSystem.SetData(
             uid,
             ParticleAcceleratorVisuals.VisualState,
-            TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered
+            TryComp<PowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered
                 ? ParticleAcceleratorVisualState.Unpowered
                 : (ParticleAcceleratorVisualState) comp.SelectedStrength,
             appearance
@@ -379,7 +380,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (comp.InterfaceDisabled)
             return;
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
+        if (TryComp<PowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
         if (msg.Enabled)
@@ -399,7 +400,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (comp.InterfaceDisabled)
             return;
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
+        if (TryComp<PowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
         SetStrength(uid, msg.State, msg.Actor, comp);
@@ -413,7 +414,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         if (comp.InterfaceDisabled)
             return;
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
+        if (TryComp<PowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))

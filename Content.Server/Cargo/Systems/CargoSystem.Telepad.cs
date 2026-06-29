@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
@@ -152,7 +152,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void SetEnabled(EntityUid uid, CargoTelepadComponent component, ApcPowerReceiverComponent? receiver = null,
+    private void SetEnabled(EntityUid uid, CargoTelepadComponent component, PowerReceiverComponent? receiver = null,
         TransformComponent? xform = null)
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.

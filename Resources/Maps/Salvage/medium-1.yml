@@ -790,7 +790,7 @@ entities:
     - type: Transform
       pos: -0.5,4.5
       parent: 85
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 138
     components:
@@ -798,7 +798,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,-3.5
       parent: 85
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 139
     components:
@@ -806,7 +806,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 85
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: Rack
   entities:

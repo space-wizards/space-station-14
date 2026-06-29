@@ -34,7 +34,7 @@ public sealed partial class ChargerComponent : Component
 
     /// <summary>
     /// Indicates whether the charger is portable and thus subject to EMP effects
-    /// and bypasses checks for transform, anchored, and ApcPowerReceiverComponent.
+    /// and bypasses checks for transform, anchored, and PowerReceiverComponent.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Portable = false;

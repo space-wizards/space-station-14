@@ -47,7 +47,7 @@
         hard: False
   - type: Transform
     anchored: true
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5000
   - type: ArtifactAnalyzer
   - type: ItemPlacer

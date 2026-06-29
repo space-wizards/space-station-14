@@ -6,7 +6,7 @@ public abstract partial class SharedPowerNetSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public abstract bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp);
+    public abstract bool IsPoweredCalculate(PowerReceiverComponent comp);
 
     public override void Initialize()
     {

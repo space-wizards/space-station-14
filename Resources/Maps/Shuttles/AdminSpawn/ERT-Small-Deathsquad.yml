@@ -1367,7 +1367,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 1
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 201
     components:
@@ -1375,7 +1375,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,7.5
       parent: 1
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 203
     components:

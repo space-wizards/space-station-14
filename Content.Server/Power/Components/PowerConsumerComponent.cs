@@ -1,43 +1,41 @@
-using Content.Server.Power.NodeGroups;
-using Content.Server.Power.Pow3r;
+using Content.Shared.Collections;
+using Content.Shared.Power.Pow3r.Nodes;
 
-namespace Content.Server.Power.Components
+namespace Content.Server.Power.Components;
+
+/// <summary>
+///     Draws power directly from an MV or HV wire it is on top of.
+/// </summary>
+[RegisterComponent]
+public sealed partial class PowerConsumerComponent : Component, IPowerLoad
 {
     /// <summary>
-    ///     Draws power directly from an MV or HV wire it is on top of.
+    ///     How much power this needs to be fully powered.
     /// </summary>
-    [RegisterComponent]
-    public sealed partial class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
-    {
-        /// <summary>
-        ///     How much power this needs to be fully powered.
-        /// </summary>
-        [DataField("drawRate")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+    [DataField("drawRate")]
+    public float DesiredPower { get; set; }
 
-        [DataField("showInMonitor")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ShowInMonitor { get; set; } = true;
+    [DataField]
+    public bool ShowInMonitor { get; set; } = true;
 
-        /// <summary>
-        ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.
-        /// </summary>
-        [ViewVariables]
-        public float ReceivedPower => NetworkLoad.ReceivingPower;
+    /// <summary>
+    ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.
+    /// </summary>
+    [ViewVariables]
+    public float ReceivingPower { get; set; }
 
-        public float LastReceived = float.NaN;
+    [ViewVariables]
+    public float LastReceived = float.NaN;
 
-        public PowerState.Load NetworkLoad { get; } = new();
+    [ViewVariables]
+    public NodeId Id { get; set; }
 
-        protected override void AddSelfToNet(IBasePowerNet powerNet)
-        {
-            powerNet.AddConsumer(this);
-        }
+    [DataField]
+    public bool Enabled { get; set; }
 
-        protected override void RemoveSelfFromNet(IBasePowerNet powerNet)
-        {
-            powerNet.RemoveConsumer(this);
-        }
-    }
+    [DataField]
+    public bool Paused { get; set; }
+
+    [ViewVariables]
+    public NodeId LinkedNetwork { get; set; }
 }

@@ -1,6 +1,6 @@
 using System.Numerics;
-using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Server.SurveillanceCamera;
@@ -82,7 +82,7 @@ public sealed partial class SurveillanceCameraMapSystem : EntitySystem
 
         var address = deviceNet.Address;
         var subnet = deviceNet.ReceiveFrequencyId ?? string.Empty;
-        var powered = CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered ?? true;
+        var powered = CompOrNull<PowerReceiverComponent>(uid)?.Powered ?? true;
         var active = comp.Active && powered;
 
         bool exists = mapComp.Cameras.TryGetValue(netEntity, out var existing);

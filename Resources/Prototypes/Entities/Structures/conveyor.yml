@@ -16,7 +16,7 @@
     state: conveyor_stopped
     drawdepth: HighFloorObjects
   - type: SyncSprite
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static

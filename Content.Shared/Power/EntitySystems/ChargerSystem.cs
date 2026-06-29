@@ -218,7 +218,7 @@ public sealed partial class ChargerSystem : EntitySystem
                 break;
             default:
                 // Don't set the load to 0 or the charger will be considered as powered even if the LV connection is unpowered.
-                // TODO: Fix this on an ApcPowerReceiver level.
+                // TODO: Fix this on an PowerReceiver level.
                 _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
                 break;
         }

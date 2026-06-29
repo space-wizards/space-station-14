@@ -78,14 +78,14 @@ namespace Content.Client.Atmos.UI
             _window.SetTemperature(thermo.TargetTemperature);
 
             var receiverSys = EntMan.System<PowerReceiverSystem>();
-            SharedApcPowerReceiverComponent? receiver = null;
+            PowerReceiverComponent? receiver = null;
 
             receiverSys.ResolveApc(Owner, ref receiver);
 
             // Also set in frameupdates.
             if (receiver != null)
             {
-                _window.SetActive(!receiver.PowerDisabled);
+                _window.SetActive(receiver.Enabled);
             }
 
             _window.Title = _isHeater switch

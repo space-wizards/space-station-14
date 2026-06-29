@@ -25,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         //Things to do in a future PR:
-        //Abstract out the connection between the apcExtensionCable and the apcPowerReceiver
+        //Abstract out the connection between the apcExtensionCable and the PowerReceiver
         //Traverse the power cables using path traversal
         //Cache an optimized representation of the traversed path (Probably just cache Devices)
     }

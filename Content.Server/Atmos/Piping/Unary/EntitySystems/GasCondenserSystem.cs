@@ -1,13 +1,13 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
@@ -29,7 +29,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
 
     private void OnCondenserUpdated(Entity<GasCondenserComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        if (!(TryComp<ApcPowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
+        if (!(TryComp<PowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
             || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
             || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
         {
@@ -64,12 +64,12 @@ public sealed partial class GasCondenserSystem : EntitySystem
         _solution.UpdateChemicals(entity.Comp.Solution.Value);
     }
 
-    public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)
+    public float NumberOfMolesToConvert(PowerReceiverComponent comp, GasMixture mix, float dt)
     {
         var hc = _atmosphereSystem.GetHeatCapacity(mix, true);
         var alpha = 0.8f; // tuned to give us 1-ish u/second of reagent conversion
         // ignores the energy needed to cool down the solution to the condensation point, but that probably adds too much difficulty and so let's not simulate that
-        var energy = comp.Load * dt;
+        var energy = comp.DesiredPower * dt;
         return energy / (alpha * hc);
     }
 }

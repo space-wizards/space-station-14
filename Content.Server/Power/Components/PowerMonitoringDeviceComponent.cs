@@ -1,7 +1,6 @@
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Power;
 
 namespace Content.Server.Power.Components;
@@ -83,7 +82,7 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     public string SpriteState = string.Empty;
 
     /// <summary>
-    ///    Determines what power monitoring group this entity should belong to 
+    ///    Determines what power monitoring group this entity should belong to
     /// </summary>
     [DataField("group", required: true), ViewVariables]
     public PowerMonitoringConsoleGroup Group;

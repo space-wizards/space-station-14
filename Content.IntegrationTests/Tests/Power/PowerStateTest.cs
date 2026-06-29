@@ -16,7 +16,7 @@ public sealed class PowerStateTest : GameTest
 - type: entity
   id: PowerStateApcReceiverDummy
   components:
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Transform
     anchored: true
@@ -48,13 +48,13 @@ public sealed class PowerStateTest : GameTest
 
             var ent = entManager.SpawnEntity("PowerStateApcReceiverDummy", grid.Owner.ToCoordinates());
 
-            var receiver = entManager.GetComponent<Server.Power.Components.ApcPowerReceiverComponent>(ent);
+            var receiver = entManager.GetComponent<PowerReceiverComponent>(ent);
             var powerState = entManager.GetComponent<PowerStateComponent>(ent);
 
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
 
             var system = entManager.System<SharedPowerStateSystem>();
@@ -63,7 +63,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.True);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
             });
         });
     }
@@ -90,7 +90,7 @@ public sealed class PowerStateTest : GameTest
 
             var ent = entManager.SpawnEntity("PowerStateApcReceiverDummy", grid.Owner.ToCoordinates());
 
-            var receiver = entManager.GetComponent<Server.Power.Components.ApcPowerReceiverComponent>(ent);
+            var receiver = entManager.GetComponent<PowerReceiverComponent>(ent);
             var powerState = entManager.GetComponent<PowerStateComponent>(ent);
             var system = entManager.System<SharedPowerStateSystem>();
             Entity<PowerStateComponent> newEnt = (ent, powerState);
@@ -98,7 +98,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
 
             system.SetWorkingState(newEnt, true);
@@ -106,7 +106,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.True);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
             });
 
             system.SetWorkingState(newEnt, false);
@@ -114,7 +114,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
         });
     }
@@ -141,7 +141,7 @@ public sealed class PowerStateTest : GameTest
 
             var ent = entManager.SpawnEntity("PowerStateApcReceiverDummy", grid.Owner.ToCoordinates());
 
-            var receiver = entManager.GetComponent<Server.Power.Components.ApcPowerReceiverComponent>(ent);
+            var receiver = entManager.GetComponent<PowerReceiverComponent>(ent);
             var powerState = entManager.GetComponent<PowerStateComponent>(ent);
             var system = entManager.System<SharedPowerStateSystem>();
             Entity<PowerStateComponent> valueTuple = (ent, powerState);
@@ -149,7 +149,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
 
             system.SetWorkingState(valueTuple, false);
@@ -157,7 +157,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.False);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
 
             system.SetWorkingState(valueTuple, true);
@@ -165,7 +165,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.True);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
             });
 
             system.SetWorkingState(valueTuple, true);
@@ -173,7 +173,7 @@ public sealed class PowerStateTest : GameTest
             Assert.Multiple(() =>
             {
                 Assert.That(powerState.IsWorking, Is.True);
-                Assert.That(receiver.Load, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
+                Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.WorkingPowerDraw).Within(0.01f));
             });
         });
     }

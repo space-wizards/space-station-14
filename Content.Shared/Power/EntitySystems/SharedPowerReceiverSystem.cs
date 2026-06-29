@@ -1,10 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Hands.Components;
 using Content.Shared.Power.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -14,10 +17,45 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPowerNetSystem _net = default!;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
+    [Dependency] protected EntityQuery<PowerReceiverComponent> RecQuery = default!;
 
-    public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
+    }
 
-    public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
+    private void AddSwitchPowerVerb(EntityUid uid, PowerSwitchComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if(!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!_handsQuery.HasComp(args.User))
+            return;
+
+        if (!RecQuery.TryGetComponent(uid, out var receiver))
+            return;
+
+        if (!receiver.NeedsPower)
+            return;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () =>
+            {
+                TogglePower(uid, user: args.User);
+            },
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+            Text = Loc.GetString("power-switch-component-toggle-verb"),
+            Priority = -3
+        };
+        args.Verbs.Add(verb);
+    }
+
+    public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref PowerReceiverComponent? component);
+
+    public void SetNeedsPower(EntityUid uid, bool value, PowerReceiverComponent? receiver = null)
     {
         if (!ResolveApc(uid, ref receiver) || receiver.NeedsPower == value)
             return;
@@ -26,12 +64,12 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
         Dirty(uid, receiver);
     }
 
-    public void SetPowerDisabled(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
+    public void SetPowerDisabled(EntityUid uid, bool value, PowerReceiverComponent? receiver = null)
     {
-        if (!ResolveApc(uid, ref receiver) || receiver.PowerDisabled == value)
+        if (!ResolveApc(uid, ref receiver) || !receiver.Enabled == value)
             return;
 
-        receiver.PowerDisabled = value;
+        receiver.Enabled = !value;
         Dirty(uid, receiver);
     }
 
@@ -39,7 +77,7 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
     /// Turn this machine on or off.
     /// Returns true if we turned it on, false if we turned it off.
     /// </summary>
-    public bool TogglePower(EntityUid uid, bool playSwitchSound = true, SharedApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
+    public bool TogglePower(EntityUid uid, bool playSwitchSound = true, PowerReceiverComponent? receiver = null, EntityUid? user = null)
     {
         if (!ResolveApc(uid, ref receiver))
             return true;
@@ -60,10 +98,10 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
             return true;
         }
 
-        SetPowerDisabled(uid, !receiver.PowerDisabled, receiver);
+        SetPowerDisabled(uid, receiver.Enabled, receiver);
 
         if (user != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(receiver.Enabled ? "on" : "off")}");
 
         if (playSwitchSound)
         {
@@ -71,7 +109,7 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
                 AudioParams.Default.WithVolume(-2f));
         }
 
-        if (_netMan.IsClient && receiver.PowerDisabled)
+        if (_netMan.IsClient && !receiver.Enabled)
         {
             var powered = _net.IsPoweredCalculate(receiver);
 
@@ -84,10 +122,10 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
             }
         }
 
-        return !receiver.PowerDisabled; // i.e. PowerEnabled
+        return receiver.Enabled;
     }
 
-    protected virtual void RaisePower(Entity<SharedApcPowerReceiverComponent> entity)
+    protected virtual void RaisePower(Entity<PowerReceiverComponent> entity)
     {
         // NOOP on server because client has 0 idea of load so we can't raise it properly in shared.
     }
@@ -95,18 +133,18 @@ public abstract partial class SharedPowerReceiverSystem : EntitySystem
     /// <summary>
     /// Sets the power load of this power receiver.
     /// </summary>
-    public void SetLoad(Entity<SharedApcPowerReceiverComponent?> entity, float load)
+    public void SetLoad(Entity<PowerReceiverComponent?> entity, float load)
     {
         if (!ResolveApc(entity.Owner, ref entity.Comp))
             return;
 
-        entity.Comp.Load = load;
+        entity.Comp.DesiredPower = load;
     }
 
     /// <summary>
     /// Checks if entity is APC-powered device, and if it have power.
     /// </summary>
-    public bool IsPowered(Entity<SharedApcPowerReceiverComponent?> entity)
+    public bool IsPowered(Entity<PowerReceiverComponent?> entity)
     {
         if (!ResolveApc(entity.Owner, ref entity.Comp))
             return true;

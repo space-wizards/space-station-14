@@ -39,7 +39,7 @@
   - type: ExtensionCableReceiver
   - type: LightningTarget
     priority: 1
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200
   - type: Transform
     noRot: false
@@ -102,7 +102,7 @@
     - type: ExtensionCableReceiver
     - type: LightningTarget
       priority: 1
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 200
     - type: Transform
       noRot: false

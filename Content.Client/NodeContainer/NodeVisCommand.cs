@@ -1,49 +1,27 @@
-﻿using Content.Client.Administration.Managers;
-using Content.Shared.Administration;
-using Robust.Shared.Console;
+﻿using Robust.Shared.Console;
 
-namespace Content.Client.NodeContainer
+namespace Content.Client.NodeContainer;
+
+public sealed partial class NodeVisCommand : LocalizedEntityCommands
 {
-    public sealed partial class NodeVisCommand : LocalizedEntityCommands
+    [Dependency] private NodeGroupVisualsSystem _nodeSystem = default!;
+
+    public override string Command => "nodevisfilter";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private IClientAdminManager _adminManager = default!;
-        [Dependency] private NodeGroupSystem _nodeSystem = default!;
-
-        public override string Command => "nodevis";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length == 0)
         {
-            if (!_adminManager.HasFlag(AdminFlags.Debug))
+            foreach (var filtered in _nodeSystem.Filtered)
             {
-                shell.WriteError(Loc.GetString($"shell-missing-required-permission", ("perm", "+DEBUG")));
-                return;
+                shell.WriteLine(filtered);
             }
-
-            _nodeSystem.SetVisEnabled(!_nodeSystem.VisEnabled);
         }
-    }
-
-    public sealed partial class NodeVisFilterCommand : LocalizedEntityCommands
-    {
-        [Dependency] private NodeGroupSystem _nodeSystem = default!;
-
-        public override string Command => "nodevisfilter";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        else
         {
-            if (args.Length == 0)
-            {
-                foreach (var filtered in _nodeSystem.Filtered)
-                {
-                    shell.WriteLine(filtered);
-                }
-            }
-            else
-            {
-                var filter = args[0];
-                if (!_nodeSystem.Filtered.Add(filter))
-                    _nodeSystem.Filtered.Remove(filter);
-            }
+            var filter = args[0];
+            if (!_nodeSystem.Filtered.Add(filter))
+                _nodeSystem.Filtered.Remove(filter);
         }
     }
 }

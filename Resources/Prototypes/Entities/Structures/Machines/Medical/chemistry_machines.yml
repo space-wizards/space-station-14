@@ -76,7 +76,7 @@
           False: { visible: False }
   - type: Machine
     board: ElectrolysisUnitMachineCircuitboard
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5
@@ -129,7 +129,7 @@
             - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5

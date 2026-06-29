@@ -177,6 +177,6 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: wirelessmachine
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Anchorable

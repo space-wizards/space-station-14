@@ -3,9 +3,9 @@ using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -31,20 +31,20 @@ public sealed partial class PowerChargeSystem : EntitySystem
 
     private void OnAnchorStateChange(EntityUid uid, PowerChargeComponent component, AnchorStateChangedEvent args)
     {
-        if (args.Anchored || !TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiverComponent))
+        if (args.Anchored || !TryComp<PowerReceiverComponent>(uid, out var powerReceiverComponent))
             return;
 
         component.Active = false;
         component.Charge = 0;
-        UpdateState(new Entity<PowerChargeComponent, ApcPowerReceiverComponent>(uid, component, powerReceiverComponent));
+        UpdateState(new Entity<PowerChargeComponent, PowerReceiverComponent>(uid, component, powerReceiverComponent));
     }
 
     private void OnAfterUiOpened(EntityUid uid, PowerChargeComponent component, AfterActivatableUIOpenEvent args)
     {
-        if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver))
+        if (!TryComp<PowerReceiverComponent>(uid, out var PowerReceiver))
             return;
 
-        UpdateUI((uid, component, apcPowerReceiver), component.ChargeRate);
+        UpdateUI((uid, component, PowerReceiver), component.ChargeRate);
     }
 
     private void OnSwitchGenerator(EntityUid uid, PowerChargeComponent component, SwitchChargingMachineMessage args)
@@ -71,7 +71,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
 
     private void OnMapInit(Entity<PowerChargeComponent> ent, ref MapInitEvent args)
     {
-        ApcPowerReceiverComponent? powerReceiver = null;
+        PowerReceiverComponent? powerReceiver = null;
         if (!Resolve(ent, ref powerReceiver, false))
             return;
 
@@ -79,8 +79,11 @@ public sealed partial class PowerChargeSystem : EntitySystem
         UpdateState((ent, ent.Comp, powerReceiver));
     }
 
-    private void SetSwitchedOn(EntityUid uid, PowerChargeComponent component, bool on,
-        ApcPowerReceiverComponent? powerReceiver = null, EntityUid? user = null)
+    private void SetSwitchedOn(EntityUid uid,
+        PowerChargeComponent component,
+        bool on,
+        PowerReceiverComponent? powerReceiver = null,
+        EntityUid? user = null)
     {
         if (!Resolve(uid, ref powerReceiver))
             return;
@@ -93,16 +96,16 @@ public sealed partial class PowerChargeSystem : EntitySystem
         component.NeedUIUpdate = true;
     }
 
-    private static void UpdatePowerState(PowerChargeComponent component, ApcPowerReceiverComponent powerReceiver)
+    private static void UpdatePowerState(PowerChargeComponent component, PowerReceiverComponent powerReceiver)
     {
-        powerReceiver.Load = component.SwitchedOn ? component.ActivePowerUse : component.IdlePowerUse;
+        powerReceiver.DesiredPower = component.SwitchedOn ? component.ActivePowerUse : component.IdlePowerUse;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<PowerChargeComponent, ApcPowerReceiverComponent>();
+        var query = EntityQueryEnumerator<PowerChargeComponent, PowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var chargingMachine, out var powerReceiver))
         {
             var ent = (uid, gravGen: chargingMachine, powerReceiver);
@@ -121,7 +124,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
                 else
                 {
                     // Scale discharge rate such that if we're at 25% active power we discharge at 75% rate.
-                    var receiving = powerReceiver.PowerReceived;
+                    var receiving = powerReceiver.ReceivingPower;
                     var mainSystemPower = Math.Max(0, receiving - chargingMachine.IdlePowerUse);
                     var ratio = 1 - mainSystemPower / (chargingMachine.ActivePowerUse - chargingMachine.IdlePowerUse);
                     chargeRate = -(ratio * chargingMachine.ChargeRate);
@@ -178,7 +181,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
         }
     }
 
-    private void UpdateUI(Entity<PowerChargeComponent, ApcPowerReceiverComponent> ent, float chargeRate)
+    private void UpdateUI(Entity<PowerChargeComponent, PowerReceiverComponent> ent, float chargeRate)
     {
         var (_, component, powerReceiver) = ent;
         if (!_uiSystem.IsUiOpen(ent.Owner, component.UiKey))
@@ -211,8 +214,8 @@ public sealed partial class PowerChargeSystem : EntitySystem
             component.SwitchedOn,
             (byte) (component.Charge * 255),
             status,
-            (short) Math.Round(powerReceiver.PowerReceived),
-            (short) Math.Round(powerReceiver.Load),
+            (short) Math.Round(powerReceiver.ReceivingPower),
+            (short) Math.Round(powerReceiver.DesiredPower),
             chargeEta
         );
 
@@ -224,7 +227,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
         component.NeedUIUpdate = false;
     }
 
-    private void UpdateState(Entity<PowerChargeComponent, ApcPowerReceiverComponent> ent)
+    private void UpdateState(Entity<PowerChargeComponent, PowerReceiverComponent> ent)
     {
         var (uid, machine, powerReceiver) = ent;
         var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
@@ -236,7 +239,7 @@ public sealed partial class PowerChargeSystem : EntitySystem
         {
             MakeBroken((uid, machine), appearance);
         }
-        else if (powerReceiver.PowerReceived < machine.IdlePowerUse)
+        else if (powerReceiver.ReceivingPower < machine.IdlePowerUse)
         {
             MakeUnpowered((uid, machine), appearance);
         }

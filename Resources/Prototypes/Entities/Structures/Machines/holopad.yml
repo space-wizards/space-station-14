@@ -14,7 +14,7 @@
           radius: 0.25
         mask:
         - Impassable
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5

@@ -1,7 +1,7 @@
 namespace Content.Shared.Power;
 
 /// <summary>
-/// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
+/// Raised whenever an PowerReceiver becomes powered / unpowered.
 /// Does nothing on the client.
 /// </summary>
 [ByRefEvent]

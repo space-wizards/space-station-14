@@ -98,7 +98,7 @@
           False: { visible: False }
   - type: WiresVisuals
   - type: ElectrocutionHUDVisuals
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver
   - type: Electrified

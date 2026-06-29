@@ -1563,7 +1563,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-5.5
       parent: 325
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 183
     components:
@@ -1571,14 +1571,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: -3.5,-5.5
       parent: 325
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 184
     components:
     - type: Transform
       pos: -1.5,-7.5
       parent: 325
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: PoweredSmallLight
   entities:
@@ -1588,7 +1588,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,-5.5
       parent: 325
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: Rack
   entities:

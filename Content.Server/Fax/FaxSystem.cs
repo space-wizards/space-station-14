@@ -23,6 +23,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Tools;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
@@ -90,7 +91,7 @@ public sealed partial class FaxSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<FaxMachineComponent, ApcPowerReceiverComponent>();
+        var query = EntityQueryEnumerator<FaxMachineComponent, PowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var fax, out var receiver))
         {
             if (!receiver.Powered)

@@ -53,7 +53,7 @@
     materialWhiteList:
     - Biomass
   - type: WiresPanel
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance
   - type: GenericVisualizer

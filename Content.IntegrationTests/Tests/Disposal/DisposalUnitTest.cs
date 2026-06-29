@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
+using Content.Shared.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 
@@ -115,7 +115,7 @@ namespace Content.IntegrationTests.Tests.Disposal
       - Item
       - Body
   - type: Anchorable
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -220,7 +220,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.That(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent powerComp));
+                Assert.That(entityManager.TryGetComponent(disposalUnit, out PowerReceiverComponent powerComp));
                 power.SetNeedsPower(disposalUnit, false);
                 powerComp.Powered = true;
 

@@ -39,7 +39,7 @@
     channels:
     - Supply
   - type: SalvageMagnet
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
   - type: Machine
     board: SalvageMagnetMachineCircuitboard
@@ -52,5 +52,5 @@
   description: Locates salvage.
   components:
   - type: SalvageMagnet
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 1000
