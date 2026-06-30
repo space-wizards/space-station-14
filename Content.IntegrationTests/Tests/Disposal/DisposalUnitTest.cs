@@ -251,50 +251,44 @@ namespace Content.IntegrationTests.Tests.Disposal
 
             EntityUid unit = default;
             DisposalUnitComponent comp = default!;
-            var unpoweredRemaining = TimeSpan.Zero;
 
             await server.WaitAssertion(() =>
             {
                 unit = entityManager.SpawnEntity("DisposalUnitDummy", testMap.GridCoords);
                 comp = entityManager.GetComponent<DisposalUnitComponent>(unit);
-                Assert.That(power.IsPowered(unit), Is.False);
+                power.SetNeedsPower(unit, false);
+            });
 
-                comp.NextPressurized = timing.CurTime + TimeSpan.FromSeconds(10);
+            await pair.RunTicksSync(1);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.That(power.IsPowered(unit), Is.True);
+
+                comp.NextPressurized = timing.CurTime + TimeSpan.FromSeconds(0.5);
                 Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Pressurizing));
 
-                unpoweredRemaining = comp.NextPressurized - timing.CurTime;
+                power.SetNeedsPower(unit, true);
             });
 
             await pair.RunTicksSync(60);
 
-            var poweredRemaining = TimeSpan.Zero;
-
             await server.WaitAssertion(() =>
             {
-                // Unpowered: the timer is frozen, so the unit never reaches Ready.
-                var remaining = comp.NextPressurized - timing.CurTime;
-                Assert.Multiple(() =>
-                {
-                    Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Pressurizing));
-                    Assert.That((remaining - unpoweredRemaining).TotalSeconds, Is.GreaterThan(-0.1));
-                });
+                // Frozen while unpowered: never reaches Ready despite plenty of time passing.
+                Assert.That(power.IsPowered(unit), Is.False);
+                Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Pressurizing));
 
                 power.SetNeedsPower(unit, false);
-                entityManager.GetComponent<ApcPowerReceiverComponent>(unit).Powered = true;
-                poweredRemaining = comp.NextPressurized - timing.CurTime;
             });
 
             await pair.RunTicksSync(60);
 
             await server.WaitAssertion(() =>
             {
-                // Powered: the timer advances again.
-                var remaining = comp.NextPressurized - timing.CurTime;
-                Assert.Multiple(() =>
-                {
-                    Assert.That(power.IsPowered(unit), Is.True);
-                    Assert.That(remaining, Is.LessThan(poweredRemaining - TimeSpan.FromSeconds(0.1)));
-                });
+                // With power back it finishes pressurizing.
+                Assert.That(power.IsPowered(unit), Is.True);
+                Assert.That(disposalSystem.GetState((unit, comp)), Is.EqualTo(DisposalsPressureState.Ready));
             });
         }
     }

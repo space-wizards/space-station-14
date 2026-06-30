@@ -83,6 +83,12 @@ public sealed partial class DisposalUnitComponent : Component
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
+    /// When the unit lost power, if it's currently unpowered. Freezes pressurization.
+    /// </summary>
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan? PowerOff;
+
+    /// <summary>
     /// The percentage of pressure gained per second by the unit.
     /// </summary>
     [DataField]

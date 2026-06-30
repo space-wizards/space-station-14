@@ -100,6 +100,16 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
     private void OnPowerChange(Entity<DisposalUnitComponent> ent, ref PowerChangedEvent args)
     {
+        if (!args.Powered && ent.Comp.PowerOff == null && ent.Comp.NextPressurized > _timing.CurTime)
+        {
+            ent.Comp.PowerOff = _timing.CurTime;
+        }
+        else if (args.Powered && ent.Comp.PowerOff != null)
+        {
+            ent.Comp.NextPressurized += _timing.CurTime - ent.Comp.PowerOff.Value;
+            ent.Comp.PowerOff = null;
+        }
+
         RecalculateFlushTime(ent, true);
         UpdateVisualState(ent);
     }
@@ -169,7 +179,8 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// <returns>The disposal unit's pressure state.</returns>
     public DisposalsPressureState GetState(Entity<DisposalUnitComponent> ent)
     {
-        var nextPressure = ent.Comp.NextPressurized - _timing.CurTime;
+        // While unpowered the timer is held at the moment power was lost.
+        var nextPressure = ent.Comp.NextPressurized - (ent.Comp.PowerOff ?? _timing.CurTime);
         var pressurizeTime = 1f / ent.Comp.PressurePerSecond;
         var pressurizeDuration = pressurizeTime - ent.Comp.FlushDelay.TotalSeconds;
 
@@ -227,18 +238,15 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         var query = EntityQueryEnumerator<DisposalUnitComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var unit, out var metadata))
         {
-            UpdateDisposalUnit((uid, unit), metadata, frameTime);
+            UpdateDisposalUnit((uid, unit), metadata);
         }
     }
 
-    private void UpdateDisposalUnit(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata, float frameTime)
+    private void UpdateDisposalUnit(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata)
     {
-        // Don't build up pressure while unpowered.
-        if (ent.Comp.NextPressurized > _timing.CurTime && !_power.IsPowered(ent.Owner))
-        {
-            ent.Comp.NextPressurized += TimeSpan.FromSeconds(frameTime);
-            Dirty(ent);
-        }
+        // Pressurization is frozen while unpowered.
+        if (ent.Comp.PowerOff != null)
+            return;
 
         var state = GetState(ent);
 
