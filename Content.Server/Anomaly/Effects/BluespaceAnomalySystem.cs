@@ -30,8 +30,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, BluespaceAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var xform = xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var range = component.MaxShuffleRadius * args.Severity * args.PowerModifier;
         // get a list of all entities in range with the MobStateComponent
         // we filter out those inside a container
@@ -42,7 +41,7 @@ public sealed partial class BluespaceAnomalySystem : EntitySystem
         var coords = new ValueList<Vector2>();
         foreach (var ent in allEnts)
         {
-            if (xformQuery.TryGetComponent(ent, out var allXform))
+            if (TryComp(ent, out TransformComponent? allXform))
                 coords.Add(_xform.GetWorldPosition(allXform));
         }
 

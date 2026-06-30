@@ -112,6 +112,12 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnDeviceParentChanged(Entity<AtmosDeviceComponent> ent, ref EntParentChangedMessage args)
         {
+            // Event is raised when a map is loaded in. Since this event mutates comp.Enabled,
+            // it will overwrite whatever saved value it had
+            // (so devices saved as enabled will just be disabled).
+            if (args.OldParent is null)
+                return;
+
             RejoinAtmosphere(ent);
         }
 
