@@ -65,4 +65,4 @@
           Shock: -10
       whitelist:
         components:
-        - Xenoborg
+        - BorgChassis
