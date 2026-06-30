@@ -16,3 +16,8 @@
   id: TraitStatusEffectPainNumbness
   name: pain numbness
 
+- type: entity
+  parent: [EyelidsStatusEffectBase, TraitStatusEffectBase]
+  id: TraitStatusEffectBlinkDyspraxia
+  components:
+  - type: BlinkDyspraxiaStatusEffect

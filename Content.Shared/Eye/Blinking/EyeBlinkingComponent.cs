@@ -83,9 +83,9 @@ public sealed partial class EyeBlinkingComponent : Component
     public Color? EyelidsColor = null;
 
     [DataField, AutoNetworkedField]
-    public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
+    public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0);
     [DataField, AutoNetworkedField]
-    public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0.05f);
+    public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0);
 
     [DataField, AutoNetworkedField]
     public ResPath? EyelidsSprite { get; set; }

@@ -15,6 +15,7 @@ public sealed partial class EyeBlinkingClientComponent : Component
     [ViewVariables]
     public List<EyelidState> Eyelids = new();
 }
+
 public sealed partial class EyelidState
 {
     public ISpriteLayer Layer;

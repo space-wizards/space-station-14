@@ -1,6 +1,7 @@
 using Content.Shared.Body;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Random;
@@ -17,6 +18,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAppearanceSystem _apperance = default!;
     [Dependency] private IResourceCache _resCache = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
@@ -113,12 +115,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             {
                 var layer = _sprite.AddLayer((ent.Owner, comp), specifier, targetLayer + i + 1);
                 _sprite.LayerMapSet((ent.Owner, comp), layerId, layer);
-                _sprite.LayerSetSprite((ent.Owner, comp), layerId, specifier);
             }
-            else
-            {
-                _sprite.LayerSetSprite((ent.Owner, comp), layerId, specifier);
-            }
+
+            _sprite.LayerSetSprite((ent.Owner, comp), layerId, specifier);
             _sprite.LayerSetColor((ent.Owner, comp), layerId, eyelidColor);
             _sprite.LayerSetVisible((ent.Owner, comp), layerId, false);
             i++;
@@ -201,10 +200,22 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         var eyelidStates = clientComp.Eyelids;
 
+        var maxAsyncBlink = ent.Comp.MaxAsyncBlink;
+        var maxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
+
+        if (_statusEffects.TryEffectsWithComp<BlinkDyspraxiaStatusEffectComponent>(ent.Owner, out var effects))
+        {
+            foreach (var effect in effects)
+            {
+                maxAsyncBlink.Add(effect.Comp1.MaxAsyncBlink);
+                maxAsyncOpenBlink.Add(effect.Comp1.MaxAsyncOpenBlink);
+            }
+        }
+
         foreach (var eyelidState in eyelidStates)
         {
-            var sheduleCloseTime = curTime + _random.NextDouble() * ent.Comp.MaxAsyncBlink + clientComp.PausedOffset;
-            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * ent.Comp.MaxAsyncOpenBlink + clientComp.PausedOffset;
+            var sheduleCloseTime = curTime + _random.NextDouble() * maxAsyncBlink + clientComp.PausedOffset;
+            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * maxAsyncOpenBlink + clientComp.PausedOffset;
 
             eyelidState.ScheduledCloseTime = sheduleCloseTime;
             eyelidState.ScheduledOpenTime = sheduleOpenTime;
