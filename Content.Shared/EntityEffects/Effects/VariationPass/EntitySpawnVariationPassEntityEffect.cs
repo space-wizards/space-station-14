@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using Content.Shared.Physics;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects.VariationPass;
@@ -14,40 +16,75 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
 {
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     protected override void Effect(Entity<MapGridComponent> entity, ref EntityEffectEvent<EntitySpawnVariationPass> args)
     {
-        var totalTiles = _map.GetAllTiles(entity, entity).Count();
+        var tiles = _map.GetAllTiles(entity, entity).ToList();
+        var totalTiles = tiles.Count();
 
         var dirtyMod = _random.NextGaussian(args.Effect.TilesPerEntityAverage, args.Effect.TilesPerEntityStdDev);
         var trashTiles = Math.Max((int) (totalTiles * (1 / dirtyMod)), 0);
 
         for (var i = 0; i < trashTiles; i++)
         {
-            FindRandomTileOnStation(entity, out var coords);
-
-            var ents = EntitySpawnCollection.GetSpawns(args.Effect.Entities, _random);
-            foreach (var spawn in ents)
+            if (TryFindRandomTile(entity, tiles, out var coords))
             {
-                SpawnAtPosition(spawn, coords);
+                var ents = EntitySpawnCollection.GetSpawns(args.Effect.Entities, _random);
+                foreach (var spawn in ents)
+                {
+                    SpawnAtPosition(spawn, coords);
+                }
             }
         }
     }
 
-    private void FindRandomTileOnStation(Entity<MapGridComponent> grid,
+    /// Attempts to find an empty tile 10 times, returns true if successful.
+    private bool TryFindRandomTile(Entity<MapGridComponent> grid,
+        List<TileRef> tiles,
         out EntityCoordinates targetCoords)
     {
         targetCoords = EntityCoordinates.Invalid;
-        var aabb = grid.Comp.LocalAABB;
 
-        // TODO: Check for atmospherics, which isn't available in Shared. Until that is done, this method isn't the same as the old one
+        var found = false;
 
-        var randomX = _random.Next((int) aabb.Left, (int) aabb.Right);
-        var randomY = _random.Next((int) aabb.Bottom, (int) aabb.Top);
+        for (var i = 0; i < 10; i++)
+        {
+            var tile = _random.Pick(tiles);
+            var tileCoords = tile.GridIndices;
 
-        var tile = new Vector2i(randomX, randomY);
+            var intersectingEntities = new HashSet<EntityUid>();
+            _lookup.GetLocalEntitiesIntersecting(grid, tileCoords, intersectingEntities, -0.05f, LookupFlags.Uncontained);
 
-        targetCoords = _map.GridTileToLocal(grid, grid.Comp, tile);
+            var blocker = false;
+            foreach (var ent in intersectingEntities)
+            {
+                if (TryComp<FixturesComponent>(ent, out var fixtures))
+                {
+                    foreach (var fixture in fixtures.Fixtures.Values)
+                    {
+                        // Continue if no collision is possible
+                        if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                            continue;
+
+                        blocker = true;
+                        break;
+                    }
+                }
+
+                if (blocker)
+                    break;
+            }
+
+            if (!blocker)
+            {
+                found = true;
+                targetCoords = _map.GridTileToLocal(grid, grid.Comp, tileCoords);
+                return found;
+            }
+        }
+
+        return found;
     }
 }
 
