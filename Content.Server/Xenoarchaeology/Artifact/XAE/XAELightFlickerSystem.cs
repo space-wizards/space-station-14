@@ -15,19 +15,10 @@ public sealed partial class XAELightFlickerSystem : BaseXAESystem<XAELightFlicke
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private GhostSystem _ghost = default!;
-
-    private EntityQuery<PoweredLightComponent> _lights;
+    [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightsQuery = default!;
 
     /// <summary> Pre-allocated and re-used collection.</summary>
     private readonly HashSet<EntityUid> _entities = new();
-
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _lights = GetEntityQuery<PoweredLightComponent>();
-    }
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAELightFlickerComponent> ent, ref XenoArtifactNodeActivatedEvent args)
@@ -36,7 +27,7 @@ public sealed partial class XAELightFlickerSystem : BaseXAESystem<XAELightFlicke
         _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.Radius, _entities, LookupFlags.StaticSundries);
         foreach (var light in _entities)
         {
-            if (!_lights.HasComponent(light))
+            if (!_poweredLightsQuery.HasComponent(light))
                 continue;
 
             if (!_random.Prob(ent.Comp.FlickerChance))

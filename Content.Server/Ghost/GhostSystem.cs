@@ -68,8 +68,8 @@ namespace Content.Server.Ghost
         [Dependency] private NameModifierSystem _nameMod = default!;
         [Dependency] private GhostSpriteStateSystem _ghostState = default!;
 
-        private EntityQuery<GhostComponent> _ghostQuery;
-        private EntityQuery<PhysicsComponent> _physicsQuery;
+        [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
         private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";
@@ -77,9 +77,6 @@ namespace Content.Server.Ghost
         public override void Initialize()
         {
             base.Initialize();
-
-            _ghostQuery = GetEntityQuery<GhostComponent>();
-            _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
             SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnMapInit);
@@ -277,10 +274,22 @@ namespace Content.Server.Ghost
 
         #region Warp
 
+        public bool CanGhostWarp(ICommonSession session, out EntityUid entity)
+        {
+            if (session.AttachedEntity is not { Valid: true } sessionEntity
+                || !_ghostQuery.HasComp(sessionEntity))
+            {
+                entity = default;
+                return false;
+            }
+
+            entity = sessionEntity;
+            return true;
+        }
+
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} entity
-                || !_ghostQuery.HasComp(entity))
+            if (!CanGhostWarp(args.SenderSession, out var entity))
             {
                 Log.Warning($"User {args.SenderSession.Name} sent a {nameof(GhostWarpsRequestEvent)} without being a ghost.");
                 return;
@@ -290,30 +299,33 @@ namespace Content.Server.Ghost
             RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
+        public void GhostWarpRequest(ICommonSession player, NetEntity target)
+        {
+            if (!CanGhostWarp(player, out var attached))
+            {
+                Log.Warning($"User {player.Name} tried to warp to {target} without being a ghost.");
+                return;
+            }
+
+            var realTarget = GetEntity(target);
+
+            if (!Exists(realTarget))
+            {
+                Log.Warning($"User {player.Name} tried to warp to an invalid entity id: {target}");
+                return;
+            }
+
+            WarpTo(attached, realTarget);
+        }
+
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached
-                || !_ghostQuery.HasComp(attached))
-            {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
-                return;
-            }
-
-            var target = GetEntity(msg.Target);
-
-            if (!Exists(target))
-            {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to an invalid entity id: {msg.Target}");
-                return;
-            }
-
-            WarpTo(attached, target);
+            GhostWarpRequest(args.SenderSession, msg.Target);
         }
 
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {} uid
-                || !_ghostQuery.HasComp(uid))
+            if (CanGhostWarp(args.SenderSession, out var uid))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to ghostnado without being a ghost.");
                 return;

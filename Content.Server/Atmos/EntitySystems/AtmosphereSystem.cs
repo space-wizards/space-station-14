@@ -42,13 +42,14 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] public PuddleSystem Puddle = default!;
     [Dependency] private DamageableSystem _damage = default!;
 
+    [Dependency] private EntityQuery<GridAtmosphereComponent> _gridAtmosQuery = default!;
+    [Dependency] private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery = default!;
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<FirelockComponent> _firelockQuery = default!;
+
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
 
-    private EntityQuery<GridAtmosphereComponent> _atmosQuery;
-    private EntityQuery<MapAtmosphereComponent> _mapAtmosQuery;
-    private EntityQuery<AirtightComponent> _airtightQuery;
-    private EntityQuery<FirelockComponent> _firelockQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -64,11 +65,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         InitializeCVars();
         InitializeGridAtmosphere();
         InitializeMap();
-
-        _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
-        _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
-        _airtightQuery = GetEntityQuery<AirtightComponent>();
-        _firelockQuery = GetEntityQuery<FirelockComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
