@@ -5,7 +5,6 @@ using Content.Shared.Database;
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Kitchen;
-using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 
 namespace Content.Shared.Power.EntitySystems;
@@ -15,9 +14,10 @@ namespace Content.Shared.Power.EntitySystems;
 /// </summary>
 public sealed partial class RiggableSystem : EntitySystem
 {
-    [Dependency] private SharedExplosionSystem _explosionSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private SharedExplosionSystem _explosionSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solution = default!;
 
     public override void Initialize()
     {
@@ -31,21 +31,22 @@ public sealed partial class RiggableSystem : EntitySystem
 
     private void OnRejuvenate(Entity<RiggableComponent> entity, ref RejuvenateEvent args)
     {
-        entity.Comp.IsRigged = false;
-        // TODO: Perhaps purge the solution as well?
+        if (_solution.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution, true))
+        {
+            _solution.RemoveAllSolution(solution.Value);
+            entity.Comp.IsRigged = false;
+            Dirty(entity);
+        }
     }
 
     private void OnMicrowaved(Entity<RiggableComponent> entity, ref BeingMicrowavedEvent args)
     {
-        if (TryComp<BatteryComponent>(entity, out var batteryComponent))
-        {
-            var charge = _battery.GetCharge((entity, batteryComponent));
-            if (charge == 0f)
-                return;
+        if (!entity.Comp.IsRigged)
+            return;
 
-            Explode(entity, charge);
-            args.Handled = true;
-        }
+        var charge = _battery.GetCharge(entity.Owner);
+        Explode(entity, charge, args.User);
+        args.Handled = true;
     }
 
     private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionChangedEvent args)
@@ -64,31 +65,28 @@ public sealed partial class RiggableSystem : EntitySystem
 
             if (TryComp<ItemToggleComponent>(entity, out var toggleComp) && toggleComp.Activated)
             {
-                if (TryComp<BatteryComponent>(entity, out var batteryComponent))
-                {
-                    Explode(entity, _battery.GetCharge((entity, batteryComponent)));
-                }
+                Explode(entity, _battery.GetCharge(entity.Owner));
             }
         }
     }
 
-    public void Explode(Entity<RiggableComponent> ent, float charge, EntityUid? cause = null)
+    public void Explode(Entity<RiggableComponent> entity, float charge, EntityUid? cause = null)
     {
-        if (ent.Comp.Exploded)
+        if (entity.Comp.Exploded || charge == 0f)
             return;
 
         var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
 
         // Explosion system also queues entity deletion
-        _explosionSystem.TriggerExplosive(ent, radius: radius, user: cause);
+        _explosionSystem.TriggerExplosive(entity, radius: radius, user: cause);
 
-        ent.Comp.Exploded = true;
-        Dirty(ent);
+        entity.Comp.Exploded = true;
+        Dirty(entity);
     }
 
-    private void OnChargeChanged(Entity<RiggableComponent> ent, ref ChargeChangedEvent args)
+    private void OnChargeChanged(Entity<RiggableComponent> entity, ref ChargeChangedEvent args)
     {
-        if (!ent.Comp.IsRigged)
+        if (!entity.Comp.IsRigged)
             return;
 
         if (args.CurrentCharge == 0f)
@@ -98,17 +96,14 @@ public sealed partial class RiggableSystem : EntitySystem
         if (args.CurrentChargeRate == 0f && args.Delta == 0f)
             return;
 
-        Explode(ent, args.CurrentCharge);
+        Explode(entity, args.CurrentCharge);
     }
 
     private void OnToggled(Entity<RiggableComponent> entity, ref ItemToggledEvent args)
     {
         if (args.Activated && entity.Comp.IsRigged)
         {
-            if (TryComp<BatteryComponent>(entity, out var battery))
-            {
-                Explode(entity, _battery.GetCharge((entity, battery)), args.User);
-            }
+            Explode(entity, _battery.GetCharge(entity.Owner), args.User);
         }
     }
 }
