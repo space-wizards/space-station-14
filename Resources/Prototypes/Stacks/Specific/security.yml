@@ -1,0 +1,6 @@
+- type: stack
+  parent: BaseMediumStack
+  id: CableDet
+  name: stack-explosive-cord
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilex-30 }
+  spawn: CableDetStack1

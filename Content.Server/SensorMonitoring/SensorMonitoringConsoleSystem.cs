@@ -1,9 +1,8 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -27,11 +26,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     // Deleting connected devices causes exceptions
     // UI sucks. need a way to make basic dashboards like Grafana, and save them.
 
-    private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
-
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -45,8 +43,6 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceNetworkPacketEvent>(DevicePacketReceived);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
-
-        _deviceNetworkQuery = GetEntityQuery<DeviceNetworkComponent>();
     }
 
     public override void Update(float frameTime)

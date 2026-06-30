@@ -533,7 +533,7 @@
   id: Cabbage
   name: food-sequence-content-cabbage
   sprites:
-  - sprite: Objects/Specific/Hydroponics/carrot.rsi
+  - sprite: Objects/Specific/Hydroponics/cabbage.rsi
     state: produce
   tags:
   - Vegetable
@@ -1547,6 +1547,16 @@
   - sprite: Objects/Fun/Plushies/moth.rsi
     state: icon
 
+#Vulp Plushie
+
+- type: foodSequenceElement
+  id: PlushieVulp
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-vulp
+  sprites:
+  - sprite: Objects/Fun/Plushies/vulp.rsi
+    state: icon
+
 #Ian Toy
 
 - type: foodSequenceElement
@@ -1555,6 +1565,21 @@
   sprites:
   - sprite: Objects/Fun/toy_ian.rsi
     state: icon
+
+- type: foodSequenceElement
+  id: SheepPlushie
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-sheep
+  sprites:
+  - sprite: Objects/Fun/Plushies/sheep.rsi
+    state: sheeptoy
+
+- type: foodSequenceElement
+  id: SheepSpacePlushie
+  name: food-sequence-cotton-burger-content-plushie-sheepspace
+  sprites:
+  - sprite: Objects/Fun/Plushies/sheep.rsi
+    state: spacesheeptoy
 
 #Among pequeño - does not work with randomized sprites
 

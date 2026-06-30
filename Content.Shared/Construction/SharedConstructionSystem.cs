@@ -6,12 +6,12 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Construction
 {
-    public abstract class SharedConstructionSystem : EntitySystem
+    public abstract partial class SharedConstructionSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private SharedMapSystem _map = default!;
+        [Dependency] protected IPrototypeManager PrototypeManager = default!;
+        [Dependency] protected SharedTransformSystem TransformSystem = default!;
 
         /// <summary>
         ///     Get predicate for construction obstruction checks.

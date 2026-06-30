@@ -1,4 +1,4 @@
-﻿using Content.Server.Clothing.Systems;
+using Content.Server.Clothing.Systems;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
@@ -16,30 +16,30 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Implants;
 
-public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
+public sealed partial class ChameleonControllerSystem : SharedChameleonControllerSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedStationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
-    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedStationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private ChameleonClothingSystem _chameleonClothingSystem = default!;
+    [Dependency] private IServerPreferencesManager _preferences = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SubdermalImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
+        SubscribeLocalEvent<ChameleonControllerImplantComponent, ChameleonControllerSelectedOutfitMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(ChameleonControllerOutfitItemSelected);
     }
 
-    private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
+    private void OnSelected(Entity<ChameleonControllerImplantComponent> ent, ref ChameleonControllerSelectedOutfitMessage args)
     {
-        if (!_delay.TryResetDelay(ent.Owner, true) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
+        if (!TryComp<SubdermalImplantComponent>(ent, out var implantComp) || implantComp.ImplantedEntity == null || !_delay.TryResetDelay(ent.Owner, true))
             return;
 
-        ChangeChameleonClothingToOutfit(ent.Comp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
+        ChangeChameleonClothingToOutfit(implantComp.ImplantedEntity.Value, args.SelectedChameleonOutfit);
     }
 
     /// <summary>
@@ -49,8 +49,8 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
     {
         var outfitPrototype = _proto.Index(outfit);
 
-        _proto.TryIndex(outfitPrototype.Job, out var jobPrototype);
-        _proto.TryIndex(outfitPrototype.StartingGear, out var startingGearPrototype);
+        _proto.Resolve(outfitPrototype.Job, out var jobPrototype);
+        _proto.Resolve(outfitPrototype.StartingGear, out var startingGearPrototype);
 
         GetJobEquipmentInformation(jobPrototype, user, out var customRoleLoadout, out var defaultRoleLoadout, out var jobStartingGearPrototype);
 
@@ -81,7 +81,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
         if (jobPrototype == null)
             return;
 
-        _proto.TryIndex(jobPrototype.StartingGear, out jobStartingGearPrototype);
+        _proto.Resolve(jobPrototype.StartingGear, out jobStartingGearPrototype);
 
         if (!TryComp<ActorComponent>(user, out var actorComponent))
             return;
@@ -105,7 +105,7 @@ public sealed class ChameleonControllerSystem : SharedChameleonControllerSystem
 
     private void ChameleonControllerOutfitItemSelected(Entity<ChameleonClothingComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
     {
-        if (!_inventory.TryGetContainingSlot(ent.Owner, out var slot))
+        if (!ent.Comp.CanBeSetByController || !_inventory.TryGetContainingSlot(ent.Owner, out var slot))
             return;
 
         _chameleonClothingSystem.SetSelectedPrototype(ent, GetGearForSlot(args, slot.Name), component: ent.Comp);

@@ -2,7 +2,7 @@
   name: spider clan charge
   description: A modified C-4 charge supplied to you by the Spider Clan. Its explosive power has been juiced up, but only works in one specific area.
   # not actually modified C-4! oh the horror!
-  parent: [ BaseItem, BaseMajorContraband ]
+  parent: [ BaseItem, BaseHighlyIllegalContraband ]
   id: SpiderCharge
   components:
   - type: Sprite
@@ -24,11 +24,10 @@
     stickPopupSuccess: comp-sticky-success-stick-bomb
     # can only stick it in target area, no reason to unstick
     canUnstick: false
-    blacklist: # can't stick it to movable things, even if they are in the target area
-      components:
-      - Anchorable
-      - Item
-      - MobState
+    whitelist:
+      tags:
+      - Wall
+      - Window
   - type: Explosive # Powerful explosion in a large radius. Will break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 360

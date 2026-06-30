@@ -1,20 +1,13 @@
 - type: entity
-  parent: BaseWallmountMetallic
-  id: BaseDispenser
   abstract: true
+  parent: [SolutionTank, SolutionGinormous, BaseWallmountMetallic]
+  id: BaseDispenser
   components:
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
-    state: cleanerdispenser
+    sprite: Structures/Wallmounts/walldispenser.rsi
   - type: Appearance
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
@@ -48,18 +41,45 @@
 
 - type: entity
   parent: BaseDispenser
-  id: FuelDispenser
-  name: fuel dispenser
+  id: CleanerDispenser
+  name: space cleaner dispenser
+  description: Wallmount Space Cleaner dispenser.
   components:
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
-    state: fueldispenser
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 1000
+    layers:
+    - state: cleanerdispenser
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 960
+
+- type: entity
+  parent: BaseDispenser
+  id: FuelDispenser
+  name: fuel dispenser
+  description: Wallmount Fuel dispenser.
+  components:
+  - type: Sprite
+    layers:
+    - state: fueldispenser
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 960
   - type: ReagentTank
     tankType: Fuel
   - type: DamageOnToolInteract
@@ -67,16 +87,7 @@
     weldingDamage:
       types:
         Heat: 20
-
-- type: entity
-  parent: BaseDispenser
-  id: CleanerDispenser
-  name: space cleaner dispenser
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 5000
-  - type: ReagentTank
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50

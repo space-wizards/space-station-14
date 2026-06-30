@@ -12,30 +12,29 @@ using Robust.Shared.Physics;
 
 namespace Content.Client.Sprite;
 
-public sealed class SpriteFadeSystem : EntitySystem
+public sealed partial class SpriteFadeSystem : EntitySystem
 {
     /*
      * If the player entity is obstructed under the specified components then it will drop the alpha for that entity
      * so the player is still visible.
      */
 
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IStateManager _stateManager = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery = default!;
+    [Dependency] private EntityQuery<SpriteFadeComponent> _fadeQuery = default!;
+    [Dependency] private EntityQuery<FadingSpriteComponent> _fadingQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
 
     private List<(MapCoordinates Point, bool ExcludeBoundingBox)> _points = new();
 
     private readonly HashSet<FadingSpriteComponent> _comps = new();
-
-    private EntityQuery<SpriteComponent> _spriteQuery;
-    private EntityQuery<SpriteFadeComponent> _fadeQuery;
-    private EntityQuery<FadingSpriteComponent> _fadingQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
 
     private const float TargetAlpha = 0.4f;
     private const float ChangeRate = 1f;
@@ -43,11 +42,6 @@ public sealed class SpriteFadeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        _spriteQuery = GetEntityQuery<SpriteComponent>();
-        _fadeQuery = GetEntityQuery<SpriteFadeComponent>();
-        _fadingQuery = GetEntityQuery<FadingSpriteComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
 
         SubscribeLocalEvent<FadingSpriteComponent, ComponentShutdown>(OnFadingShutdown);
     }

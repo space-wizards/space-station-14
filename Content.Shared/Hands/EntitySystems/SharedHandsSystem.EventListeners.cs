@@ -11,6 +11,7 @@ public abstract partial class SharedHandsSystem
     private void InitializeEventListeners()
     {
         SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnStandupArgs);
+        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockedDownRefresh);
     }
 
     /// <summary>
@@ -27,5 +28,18 @@ public abstract partial class SharedHandsSystem
             return;
 
         time.DoAfterTime *= (float)ent.Comp.Count / (hands + ent.Comp.Count);
+    }
+
+    private void OnKnockedDownRefresh(Entity<HandsComponent> ent, ref KnockedDownRefreshEvent args)
+    {
+        var freeHands = CountFreeHands(ent.AsNullable());
+        var totalHands = GetHandCount(ent.AsNullable());
+
+        // Can't crawl around without any hands.
+        // Entities without the HandsComponent will always have full crawling speed.
+        if (totalHands == 0)
+            args.SpeedModifier = 0f;
+        else
+            args.SpeedModifier *= (float)freeHands / totalHands;
     }
 }

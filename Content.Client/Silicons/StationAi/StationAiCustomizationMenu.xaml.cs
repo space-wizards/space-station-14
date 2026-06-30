@@ -13,8 +13,8 @@ namespace Content.Client.Silicons.StationAi;
 [GenerateTypedNameReferences]
 public sealed partial class StationAiCustomizationMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, StationAiCustomizationGroupContainer> _groupContainers = new();
     private Dictionary<ProtoId<StationAiCustomizationGroupPrototype>, ButtonGroup> _buttonGroups = new();
@@ -44,7 +44,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
             StationAiCustomizationPrototype? selectedPrototype = null;
 
             if (stationAiCustomization?.ProtoIds.TryGetValue(groupPrototype, out var selectedProtoId) == true)
-                _protoManager.TryIndex(selectedProtoId, out selectedPrototype);
+                _protoManager.Resolve(selectedProtoId, out selectedPrototype);
 
             _buttonGroups[groupPrototype] = new ButtonGroup();
             _groupContainers[groupPrototype] = new StationAiCustomizationGroupContainer(groupPrototype, selectedPrototype, _buttonGroups[groupPrototype], this, _protoManager);
@@ -76,7 +76,7 @@ public sealed partial class StationAiCustomizationMenu : FancyWindow
             // Create UI entries for all customization in the group
             foreach (var protoId in groupPrototype.ProtoIds)
             {
-                if (!protoManager.TryIndex(protoId, out var prototype))
+                if (!protoManager.Resolve(protoId, out var prototype))
                     continue;
 
                 var entry = new StationAiCustomizationEntryContainer(groupPrototype, prototype, buttonGroup, menu);

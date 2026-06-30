@@ -13,11 +13,11 @@ namespace Content.Server.Speech.EntitySystems
     /// <summary>
     /// Replaces text in messages, either with full replacements or word replacements.
     /// </summary>
-    public sealed class ReplacementAccentSystem : EntitySystem
+    public sealed partial class ReplacementAccentSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private IPrototypeManager _proto = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private ILocalizationManager _loc = default!;
 
         private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
             _cachedReplacements = new();
@@ -128,7 +128,7 @@ namespace Content.Server.Speech.EntitySystems
                     var firstLoc = _loc.GetString(first);
                     var replaceLoc = _loc.GetString(replace);
 
-                    var regex = new Regex($@"(?<!\w){firstLoc}(?!\w)", RegexOptions.IgnoreCase);
+                    var regex = new Regex($@"(?<![\w']){firstLoc}(?![\w'])", RegexOptions.IgnoreCase);
 
                     return (regex, replaceLoc);
 

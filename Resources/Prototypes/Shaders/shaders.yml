@@ -59,6 +59,11 @@
   path: "/Textures/Shaders/camera_static.swsl"
 
 - type: shader
+  id: CameraStaticAccessible
+  kind: source
+  path: "/Textures/Shaders/camera_static_accessible.swsl"
+
+- type: shader
   id: Drunk
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
@@ -115,3 +120,8 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
+
+- type: shader
+  id: HeatBlur
+  kind: source
+  path: "/Textures/Shaders/heatBlur.swsl"

@@ -8,7 +8,7 @@ namespace Content.Shared.Tools.Components;
 
 /// <summary>
 /// Component responsible for simple tool interactions.
-/// Using a tool with the correct quality on an entity with this component will start a doAfter and raise events.
+/// Using a tool with the correct quality on an entity with this component will start a DoAfter and raise the <see cref="SimpleToolDoAfterEvent"/> other systems can subscribe to.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SimpleToolUsageSystem))]
@@ -40,8 +40,15 @@ public sealed partial class SimpleToolUsageComponent : Component
     public LocId BlockedMessage = "simple-tool-usage-blocked-message";
 }
 
+/// <summary>
+/// Cancelable event that can be used to prevent tool interaction.
+/// </summary>
 [ByRefEvent]
 public record struct AttemptSimpleToolUseEvent(EntityUid User, bool Cancelled = false);
 
+/// <summary>
+/// Raised after the right tool is used on an entity with <see cref="SimpleToolUsageComponent"/>
+/// and the DoAfter has finished.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SimpleToolDoAfterEvent : SimpleDoAfterEvent;

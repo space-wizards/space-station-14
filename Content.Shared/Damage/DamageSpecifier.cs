@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Text.Json.Serialization;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
-using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Damage
 {
@@ -18,26 +18,13 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition, Serializable, NetSerializable]
-    public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
+    public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>, IRobustCloneable<DamageSpecifier>
     {
-        // These exist solely so the wiki works. Please do not touch them or use them.
-        [JsonPropertyName("types")]
-        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
-
-        [JsonPropertyName("groups")]
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
-        [UsedImplicitly]
-        private Dictionary<string, FixedPoint2>? _damageGroupDictionary;
-
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
-        [JsonIgnore]
-        [ViewVariables(VVAccess.ReadWrite)]
-        [IncludeDataField(customTypeSerializer: typeof(DamageSpecifierDictionarySerializer), readOnly: true)]
-        public Dictionary<string, FixedPoint2> DamageDict { get; set; } = new();
+        [DataField("types")]
+        public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> DamageDict { get; set; } = new();
 
         /// <summary>
         ///     Returns a sum of the damage values.
@@ -77,6 +64,11 @@ namespace Content.Shared.Damage
         /// </summary>
         [JsonIgnore]
         public bool Empty => DamageDict.Count == 0;
+
+        public DamageSpecifier Clone()
+        {
+            return new DamageSpecifier(this);
+        }
 
         public override string ToString()
         {
@@ -328,15 +320,15 @@ namespace Content.Shared.Damage
         ///     total of each group. If no members of a group are present in this <see cref="DamageSpecifier"/>, the
         ///     group is not included in the resulting dictionary.
         /// </remarks>
-        public Dictionary<string, FixedPoint2> GetDamagePerGroup(IPrototypeManager protoManager)
+        public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> GetDamagePerGroup(IPrototypeManager protoManager)
         {
-            var dict = new Dictionary<string, FixedPoint2>();
+            var dict = new Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>();
             GetDamagePerGroup(protoManager, dict);
             return dict;
         }
 
         /// <inheritdoc cref="GetDamagePerGroup(Robust.Shared.Prototypes.IPrototypeManager)"/>
-        public void GetDamagePerGroup(IPrototypeManager protoManager, Dictionary<string, FixedPoint2> dict)
+        public void GetDamagePerGroup(IPrototypeManager protoManager, Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> dict)
         {
             dict.Clear();
             foreach (var group in protoManager.EnumeratePrototypes<DamageGroupPrototype>())

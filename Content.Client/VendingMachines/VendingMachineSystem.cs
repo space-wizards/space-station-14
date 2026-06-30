@@ -6,11 +6,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.VendingMachines;
 
-public sealed class VendingMachineSystem : SharedVendingMachineSystem
+public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private AnimationPlayerSystem _animationPlayer = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -33,6 +33,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         component.EjectEnd = state.EjectEnd;
         component.DenyEnd = state.DenyEnd;
         component.DispenseOnHitEnd = state.DispenseOnHitEnd;
+        component.Broken = state.Broken;
 
         // If all we did was update amounts then we can leave BUI buttons in place.
         var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||

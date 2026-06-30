@@ -1,0 +1,243 @@
+# Tables
+
+- type: entityTable
+  id: NukeOpsLootTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: NukeOpsUplinkLootTable
+      weight: 6.25
+    - !type:NestedSelector
+      tableId: NukeOpsWeaponsTable
+      weight: 0.25
+    - !type:NestedSelector
+      tableId: NukeOpsGrenadeTable
+      weight: 0.75
+    - !type:NestedSelector
+      tableId: NukeOpsAmmoTable
+      weight: 0.75
+    - !type:NestedSelector
+      tableId: NukeOpsMedKitGeneral
+      weight: 0.75
+
+- type: entityTable
+  id: NukeOpsUplinkLootTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingBackpackChameleonFill
+    - id: ClothingMaskGasVoiceChameleon
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: NukeDiskFake
+      weight: 0.5
+    - id: ClothingBackpackDuffelSyndicateDecoyKitFilled
+      weight: 0.75
+    - id: BriefcaseSyndieLobbyingBundleFilled
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: ChameleonProjector
+    - id: CameraBug
+    - id: SyndicateJawsOfLife
+    - id: RadioJammer
+    - id: BorgModuleMartyr
+    - id: ScramImplant
+    - id: FakeMindShieldImplanter
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: EmpImplanter
+    - id: MicroBombImplanter
+    - id: SlipocalypseClusterSoap
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: ReinforcementRadioSyndicateAncestor
+    - id: ClothingEyesHudSyndicate
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: CigPackSyndicate
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: PenExplodingBox
+
+- type: entityTable
+  id: NukeOpsWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - id: ThrowingKnivesKit
+    - id: ClothingHandsKnuckleDustersSyndicate
+    - id: EnergyDaggerLoud
+      weight: 0.5
+    - id: WeaponRevolverPython
+    - id: WeaponPistolCobra
+    - id: WeaponShotgunSawn
+    - id: RevolverCapGunFake
+      weight: .01
+
+- type: entityTable
+  id: NukeOpsAmmoTable
+  table: !type:GroupSelector
+    children:
+    - id: MagazinePistolSubMachineGun
+    - id: MagazineRifle
+    - id: MagazineBoxLightRifle
+      weight: 0.5
+    - id: MagazineShotgunSlug
+      weight: 0.5
+    - id: MagazineShotgun
+      weight: 0.5
+    - id: MagazinePistol
+      weight: 0.5
+    - id: MagazineBoxAntiMateriel
+      weight: 0.5
+    - id: MagazinePistolCaselessRifle
+      weight: 0.5
+    - id: SpeedLoaderMagnumAP
+      weight: 0.5
+
+- type: entityTable
+  id: NukeOpsGrenadeTable
+  table: !type:GroupSelector
+    children:
+    - id: SmokeGrenade
+      weight: 1.25
+    - id: GrenadeFlashBang
+      weight: 1.25
+    - id: GrenadeShrapnel
+      weight: 1.25
+    - id: GrenadeIncendiary
+    - id: EmpGrenade
+    - id: ExGrenade
+      weight: 0.5
+    - id: SingularityGrenade
+      weight: 0.25
+    - id: WhiteholeGrenade
+      weight: 0.25
+
+- type: entityTable
+  id: NukeOpsMedkitTableBrute
+  table: !type:GroupSelector
+    children:
+    - id: MedkitFilled
+      weight: 1.5
+    - id: MedkitBruteFilled
+      weight: 1.5
+    - id: MedkitAdvancedFilled
+    - id: MedkitCombatFilled
+      weight: 0.2
+
+- type: entityTable
+  id: NukeOpsMedKitGeneral
+  table: !type:GroupSelector
+    children:
+    - id: MedkitFilled
+    - id: MedkitBruteFilled
+    - id: MedkitToxinFilled
+    - id: MedkitRadiationFilled
+    - id: MedkitOxygenFilled
+    - id: MedkitBurnFilled
+
+# Spawners
+
+- type: entity
+  name: nuke ops loot spawner
+  id: NukeOpsLootSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Devices/jammer.rsi
+      state: jammer
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: NukeOpsLootTable
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: nuke ops weapon spawner
+  id: NukeOpsWeaponSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+      state: icon
+  - type: EntityTableSpawner
+    offset: 0.15
+    table: !type:NestedSelector
+      tableId: NukeOpsWeaponsTable
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: nuke ops brute medkit spawner
+  id: NukeOpsMedkitBruteSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Specific/Medical/firstaidkits.rsi
+      state: brutekit
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: NukeOpsMedkitTableBrute
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: nuke ops general medkit spawner
+  id: NukeOpsMedkitSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Specific/Medical/firstaidkits.rsi
+      state: burnkit
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: NukeOpsMedKitGeneral
+      rolls: !type:RangeNumberSelector
+        range: 2, 4
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: nuke ops grenade spawner
+  id: NukeOpsGrenadeSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Grenades/grenade.rsi
+      state: icon
+  - type: EntityTableSpawner
+    offset: 0.15
+    table: !type:NestedSelector
+      tableId: NukeOpsGrenadeTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: nuke ops ammo spawner
+  id: NukeOpsAmmoSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
+      state: base
+  - type: EntityTableSpawner
+    offset: 0.15
+    table: !type:NestedSelector
+      tableId: NukeOpsAmmoTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+  placement:
+    mode: AlignTileAny
