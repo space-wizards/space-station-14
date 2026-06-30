@@ -11,8 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey)
-    : BoundUserInterface(owner, uiKey)
+public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
 {
     [Dependency] private SharedMicrowaveSystem _microwave = default!;
     [Dependency] private SpriteSystem _sprite = default!;
@@ -22,6 +21,11 @@ public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum ui
 
     [ViewVariables]
     private readonly Dictionary<int, EntityUid> _solids = new();
+
+    public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+        IoCManager.InjectDependencies(this);
+    }
 
     protected override void Open()
     {
