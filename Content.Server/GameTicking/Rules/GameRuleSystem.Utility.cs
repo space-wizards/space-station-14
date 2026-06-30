@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Station.Components;
@@ -126,54 +127,43 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             {
                 var grid = grids[j];
                 // If the index is in this particular grid, find it and remove the tile to prevent selecting it twice.
-                if (startIndex + grid.Count > nextTileIndex)
+                if (nextTileIndex >= startIndex + grid.Count)
                 {
-                    (targetGrid, gridComp) = grid.Entity;
-
-                    // Empty list: hasn't been queried yet - get our tiles.
-                    if (grid.Tiles.Count <= 0)
-                    {
-                        grid.Tiles = _map.GetAllTiles(targetGrid, gridComp).ToList();
-
-                        // Actual list count doesn't match expected count (a bug), adjust total accordingly.
-                        // Total must match actual list count.
-                        if (grid.Tiles.Count != grid.Count)
-                        {
-                            totalTiles += grid.Tiles.Count - grid.Count;
-                            grid.Count = grid.Tiles.Count;
-
-                            // Empty list: remove list and reconsider this same index (good lord)
-                            if (grid.Tiles.Count <= 0)
-                            {
-                                grid.Tiles.RemoveSwap(j);
-                                j--;
-                                continue;
-                            }
-                        }
-                    }
-
-                    // Ensure tile index does not go out of bounds (needed due to list validation)
-                    var ourTileIndex = Math.Min(nextTileIndex - startIndex, grid.Tiles.Count - 1);
-
-                    randomTileRef = grid.Tiles[ourTileIndex];
-                    grid.Tiles.RemoveSwap(ourTileIndex);
-                    grid.Count--;
-                    totalTiles--;
-
-                    // Empty list, remove element
-                    if (grid.Tiles.Count <= 0)
-                        grids.RemoveSwap(j);
-
-                    break;
+                    startIndex += grid.Count;
+                    continue;
                 }
 
-                startIndex += grid.Count;
+                (targetGrid, gridComp) = grid.Entity;
+
+                // Empty list: hasn't been queried yet - get our tiles.
+                if (grid.Tiles.Count <= 0)
+                {
+                    grid.Tiles = _map.GetAllTiles(targetGrid, gridComp).ToList();
+
+                    // Actual list count doesn't match expected count (a bug - return failure).
+                    Debug.Assert(grid.Tiles.Count == grid.Count);
+                    if (grid.Tiles.Count != grid.Count)
+                        return false;
+                }
+
+                var ourTileIndex = nextTileIndex - startIndex;
+                randomTileRef = grid.Tiles[ourTileIndex];
+                grid.Tiles.RemoveSwap(ourTileIndex);
+                grid.Count--;
+                totalTiles--;
+
+                // Empty list, remove element
+                if (grid.Tiles.Count <= 0)
+                    grids.RemoveSwap(j);
+
+                break;
             }
 
-            // Out of valid tiles, or the lookup is buggy.
+            // Out of valid tiles, return early.
             if (randomTileRef is not { } tileRef)
                 return false;
 
+            // Invalid tile, try again.
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tileRef.GridIndices)
                 || _atmosphere.IsTileAirBlockedCached(targetGrid, tile))
             {
