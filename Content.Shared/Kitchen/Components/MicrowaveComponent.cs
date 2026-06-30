@@ -163,10 +163,16 @@ public sealed partial class MicrowaveComponent : Component
     public ProtoId<ItemSizePrototype> MaxItemSize = "Normal";
 
     /// <summary>
-    ///     How frequently the microwave can malfunction.
+    ///     How frequently the microwave can malfunction while active.
     /// </summary>
     [DataField]
     public TimeSpan MalfunctionInterval = TimeSpan.FromSeconds(1.0f);
+
+    /// <summary>
+    ///     How frequently the microwave can update (process cooking cycle) while active.
+    /// </summary>
+    [DataField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1.0f);
 
     /// <summary>
     ///     Chance of an explosion occurring when we microwave a metallic object.

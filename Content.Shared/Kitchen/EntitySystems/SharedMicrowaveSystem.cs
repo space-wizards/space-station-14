@@ -88,7 +88,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             // Otherwise, process the cooking cycle
             if (active.NextCookUpdate < curTime)
             {
-                active.NextCookUpdate += active.CookUpdateInterval;
+                active.NextCookUpdate += microwave.UpdateInterval;
                 active.LastCookUpdated = curTime;
                 DirtyFields(uid, active, null,
                     nameof(ActiveMicrowaveComponent.NextCookUpdate),
