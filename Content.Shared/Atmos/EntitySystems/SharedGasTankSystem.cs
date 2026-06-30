@@ -69,17 +69,18 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         Dirty(uid, component);
     }
 
-    private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<GasTankComponent> entity, ref ExaminedEvent args)
     {
         using var _ = args.PushGroup(nameof(GasTankComponent));
+        SyncPressure(entity);
 
         if (args.IsInDetailsRange)
-            args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", entity.Comp.InternalPressure)));
 
-        if (component.IsConnected)
+        if (entity.Comp.IsConnected)
             args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
 
-        args.PushMarkup(Loc.GetString(component.ReleaseValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
+        args.PushMarkup(Loc.GetString(entity.Comp.ReleaseValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
     }
 
     private void OnActionToggle(Entity<GasTankComponent> gasTank, ref ToggleActionEvent args)
@@ -125,6 +126,20 @@ public abstract partial class SharedGasTankSystem : GasMaxPressureSystem<GasTank
         entity.Comp.ReleaseValveOpen = open;
         Audio.PlayPredicted(entity.Comp.ValveSound, entity, user);
         Dirty(entity);
+    }
+
+    /// <summary>
+    /// Syncs the current tank pressure for client UI.
+    /// </summary>
+    public void SyncPressure(Entity<GasTankComponent> entity)
+    {
+        var pressure = entity.Comp.Air.Pressure;
+
+        if (MathHelper.CloseToPercent(pressure, entity.Comp.InternalPressure))
+            return;
+
+        entity.Comp.InternalPressure = pressure;
+        DirtyField(entity.AsNullable(), nameof(GasTankComponent.InternalPressure));
     }
 
     public bool CanConnectToInternals(Entity<GasTankComponent> ent)

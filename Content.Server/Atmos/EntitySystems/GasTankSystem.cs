@@ -3,6 +3,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Cargo;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -16,9 +18,10 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
-    [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
 
     private const float MinimumSoundValvePressure = 21.3f; // Arbitrary number
@@ -56,6 +59,11 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
 
         Atmos.React(entity.Comp.Air, entity.Comp);
 
+        // Update and network internal pressure for client UI, but only while the tank in hands.
+        if (TryComp<HandsComponent>(Transform(entity.Owner).ParentUid, out var hands)
+            && _hands.IsHolding((Transform(entity.Owner).ParentUid, hands), entity.Owner))
+            SyncPressure(entity);
+
         if ((entity.Comp.IsConnected || entity.Comp.ReleaseValveOpen) && UI.IsUiOpen(entity.Owner, SharedGasTankUiKey.Key))
             UpdateUserInterface(entity);
     }
@@ -63,11 +71,12 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
     public override void UpdateUserInterface(Entity<GasTankComponent> ent)
     {
         var (owner, component) = ent;
+        SyncPressure(ent);
         UI.SetUiState(owner,
             SharedGasTankUiKey.Key,
             new GasTankBoundUserInterfaceState
             {
-                TankPressure = component.Air.Pressure
+                TankPressure = component.InternalPressure
             });
     }
 

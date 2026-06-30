@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, fieldDeltas: true)]
 public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
 {
     private const float DefaultLowPressure = Atmospherics.OneAtmosphere;
@@ -37,6 +37,13 @@ public sealed partial class GasTankComponent : GasMaxPressureHolderComponent
     /// </summary>
     [ViewVariables]
     public bool IsConnected => User != null;
+
+    /// <summary>
+    ///     Networked tank pressure for client-side status displays.
+    ///     The gas mixture itself mutates in-place, so clients need an explicit synced value.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float InternalPressure;
 
     [DataField, AutoNetworkedField]
     public EntityUid? User;

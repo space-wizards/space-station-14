@@ -45,6 +45,7 @@
       volume: 5
       temperature: 293.15
     tankLowPressure: 30.0
+  - type: TankPressureItemStatus
   - type: Explosive
     explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
     maxIntensity: 20

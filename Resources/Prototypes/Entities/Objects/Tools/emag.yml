@@ -6,6 +6,7 @@
   description: The all-in-one hacking solution. Friend of any syndicate. The iconic EMAG.
   components:
   - type: Emag
+  - type: ChargeItemStatus
   - type: Sprite
     sprite: Objects/Tools/emag.rsi
     state: icon
