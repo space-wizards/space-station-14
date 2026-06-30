@@ -44,7 +44,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class IngestionSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private FlavorProfileSystem _flavorProfile = default!;
@@ -449,7 +448,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         args.Handled = true;
 
-        var edible = _proto.Index(entity.Comp.Edible);
+        var edible = ProtoMan.Index(entity.Comp.Edible);
 
         _audio.PlayPredicted(entity.Comp.UseSound ?? edible.UseSound, args.Target, args.User);
 
