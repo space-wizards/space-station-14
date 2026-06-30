@@ -6,7 +6,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -14,7 +13,6 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private ActionsSystem _actions = default!;
@@ -84,7 +82,7 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         // just play regular sound based on emote proto
-        args.Handled = _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), args.Emote);
     }
 
     private void OnEmoteAction(EntityUid uid, VocalComponent component, EmoteActionEvent args)
@@ -107,7 +105,7 @@ public sealed partial class VocalSystem : EntitySystem
         if (component.EmoteSounds is not { } sounds)
             return false;
 
-        return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), component.ScreamId);
     }
 
     /// <summary>
@@ -120,7 +118,7 @@ public sealed partial class VocalSystem : EntitySystem
 
         protoId ??= humanoid.Voice;
 
-        if (!_proto.HasIndex(protoId))
+        if (!ProtoMan.HasIndex(protoId))
             return;
 
         component.EmoteSounds = protoId;
