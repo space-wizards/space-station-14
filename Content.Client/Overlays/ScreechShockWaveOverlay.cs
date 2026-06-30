@@ -141,7 +141,8 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     /// </summary>
     public void Register(Entity<ScreechShockWaveComponent> ent)
     {
-        _cached.Add((ent.Owner, new InnerShaderInstance() {
+        _cached.Add((ent.Owner, new InnerShaderInstance
+        {
             WaveSpeed = ent.Comp.WaveSpeed,
             WaveStrength = ent.Comp.WaveStrength,
             DownScale = ent.Comp.DownScale,
