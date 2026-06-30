@@ -15,16 +15,17 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly SharedChemistryGuideDataSystem _chemistryGuideData = default!;
-    [Dependency] private readonly SharedExplosionSystem _explosion = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private INetManager _netMan = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private SharedChemistryGuideDataSystem _chemistryGuideData = default!;
+    [Dependency] private SharedExplosionSystem _explosion = default!;
 
-    private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<InjurableComponent> _injurableQuery = default!;
 
     public float UniversalAllDamageModifier { get; private set; } = 1f;
     public float UniversalAllHealModifier { get; private set; } = 1f;
@@ -37,6 +38,8 @@ public sealed partial class DamageableSystem : EntitySystem
     public float UniversalThrownDamageModifier { get; private set; } = 1f;
     public float UniversalTopicalsHealModifier { get; private set; } = 1f;
     public float UniversalMobDamageModifier { get; private set; } = 1f;
+
+    private Dictionary<ProtoId<DamageContainerPrototype>, HashSet<ProtoId<DamageTypePrototype>>> _supportedTypesByContainer = new();
 
     /// <summary>
     ///     If the damage in a DamageableComponent was changed this function should be called.
@@ -69,31 +72,6 @@ public sealed partial class DamageableSystem : EntitySystem
         // TODO DAMAGE
         // byref struct event.
         RaiseLocalEvent(ent, new DamageChangedEvent(ent.Comp, damageDelta, interruptsDoAfters, origin));
-    }
-    private void DamageableGetState(Entity<DamageableComponent> ent, ref ComponentGetState args)
-    {
-        if (_netMan.IsServer)
-        {
-            args.State = new DamageableComponentState(
-                ent.Comp.Damage.DamageDict,
-                ent.Comp.DamageContainerID,
-                ent.Comp.DamageModifierSetId,
-                ent.Comp.HealthBarThreshold
-            );
-            // TODO BODY SYSTEM pass damage onto body system
-            // BOBBY WHEN? 😭
-            // BOBBY SOON 🫡
-
-            return;
-        }
-
-        // avoid mispredicting damage on newly spawned entities.
-        args.State = new DamageableComponentState(
-            ent.Comp.Damage.DamageDict.ShallowClone(),
-            ent.Comp.DamageContainerID,
-            ent.Comp.DamageModifierSetId,
-            ent.Comp.HealthBarThreshold
-        );
     }
 
     /// <summary>

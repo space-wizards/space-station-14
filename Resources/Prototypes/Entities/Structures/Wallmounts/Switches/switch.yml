@@ -35,12 +35,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 40
       behaviors:
       - !type:DoActsBehavior
@@ -85,12 +79,6 @@
     anchored: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 40

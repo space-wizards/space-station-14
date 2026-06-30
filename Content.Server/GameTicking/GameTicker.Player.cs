@@ -18,7 +18,7 @@ namespace Content.Server.GameTicking
     [UsedImplicitly]
     public sealed partial class GameTicker
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         private void InitializePlayer()
         {

@@ -15,11 +15,11 @@ namespace Content.Server.Arcade.SpaceVillain;
 
 public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SpeakOnUIClosedSystem _speakOnUIClosed = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private SpeakOnUIClosedSystem _speakOnUIClosed = default!;
 
     public override void Initialize()
     {

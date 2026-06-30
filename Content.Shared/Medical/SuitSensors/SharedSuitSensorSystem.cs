@@ -3,6 +3,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Content.Shared.Emp;
@@ -25,23 +26,25 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Medical.SuitSensors;
 
-public abstract class SharedSuitSensorSystem : EntitySystem
+public abstract partial class SharedSuitSensorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStationSystem _stationSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedStationSystem _stationSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedIdCardSystem _idCardSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
-    private EntityQuery<SuitSensorComponent> _sensorQuery;
+    [Dependency] private EntityQuery<SuitSensorComponent> _sensorQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -57,8 +60,6 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         SubscribeLocalEvent<SuitSensorComponent, EntGotInsertedIntoContainerMessage>(OnInsert);
         SubscribeLocalEvent<SuitSensorComponent, EntGotRemovedFromContainerMessage>(OnRemove);
         SubscribeLocalEvent<SuitSensorComponent, SuitSensorChangeDoAfterEvent>(OnSuitSensorDoAfter);
-
-        _sensorQuery = GetEntityQuery<SuitSensorComponent>();
     }
 
     /// <summary>
@@ -155,31 +156,28 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         ent.Comp.ControlsLocked = ent.Comp.PreviousControlsLocked;
     }
 
+    /// <summary>
+    /// Localize the SuitSensor status and push to the examination tooltip.
+    /// </summary>
+    /// <param name="ent">Entity with a <see cref="SuitSensorComponent"/> under examination.</param>
+    /// <param name="args"><see cref="ExaminedEvent"/> arguments,
+    /// used to determine range and retrieve the active mode.</param>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
     private void OnExamine(Entity<SuitSensorComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        string msg;
-        switch (ent.Comp.Mode)
+        var locId = ent.Comp.Mode switch
         {
-            case SuitSensorMode.SensorOff:
-                msg = "suit-sensor-examine-off";
-                break;
-            case SuitSensorMode.SensorBinary:
-                msg = "suit-sensor-examine-binary";
-                break;
-            case SuitSensorMode.SensorVitals:
-                msg = "suit-sensor-examine-vitals";
-                break;
-            case SuitSensorMode.SensorCords:
-                msg = "suit-sensor-examine-cords";
-                break;
-            default:
-                return;
-        }
+            SuitSensorMode.SensorOff => "suit-sensor-examine-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-examine-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-examine-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-examine-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {ent.Comp.Mode}"),
+        };
 
-        args.PushMarkup(Loc.GetString(msg));
+        args.PushMarkup(Loc.GetString(locId));
     }
 
     private void OnVerb(Entity<SuitSensorComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -226,11 +224,19 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Create a verb for viewing and changing suit sensor behavior.
+    /// </summary>
+    /// <param name="ent">Entity with a <see cref="SuitSensorComponent"/> to be verbed.</param>
+    /// <param name="userUid">Actor requesting the verb, used to identify if a foreign actor is requesting a verb.</param>
+    /// <param name="mode">Current mode of the suit sensor.</param>
+    /// <returns>A created <see cref="Verb"/> that will attempt to change to a specific mode.</returns>
     private Verb CreateVerb(Entity<SuitSensorComponent> ent, EntityUid userUid, SuitSensorMode mode)
     {
         return new Verb()
         {
             Text = GetModeName(mode),
+            Message = GetModeDescription(mode),
             Disabled = ent.Comp.Mode == mode,
             Priority = -(int)mode, // sort them in descending order
             Category = VerbCategory.SetSensor,
@@ -238,28 +244,42 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         };
     }
 
+    /// <summary>
+    /// Gets the localized name of a suit sensor mode.
+    /// </summary>
+    /// <param name="mode">The <see cref="SuitSensorMode"/> requiring a name string.</param>
+    /// <returns>A localized string containing the name of the suit sensor mode.</returns>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
     public string GetModeName(SuitSensorMode mode)
     {
-        string name;
-        switch (mode)
+        var locId = mode switch
         {
-            case SuitSensorMode.SensorOff:
-                name = "suit-sensor-mode-off";
-                break;
-            case SuitSensorMode.SensorBinary:
-                name = "suit-sensor-mode-binary";
-                break;
-            case SuitSensorMode.SensorVitals:
-                name = "suit-sensor-mode-vitals";
-                break;
-            case SuitSensorMode.SensorCords:
-                name = "suit-sensor-mode-cords";
-                break;
-            default:
-                return "";
-        }
+            SuitSensorMode.SensorOff => "suit-sensor-mode-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-mode-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-mode-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-mode-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {mode}"),
+        };
+        return Loc.GetString(locId);
+    }
 
-        return Loc.GetString(name);
+    /// <summary>
+    /// Gets the localized description of a suit sensor mode.
+    /// </summary>
+    /// <param name="mode">The <see cref="SuitSensorMode"/> requiring a description.</param>
+    /// <returns>A localized string containing the description of the suit sensor mode.</returns>
+    /// <exception cref="InvalidOperationException">Invalid mode was provided.</exception>
+    public string GetModeDescription(SuitSensorMode mode)
+    {
+        var locId = mode switch
+        {
+            SuitSensorMode.SensorOff => "suit-sensor-description-off",
+            SuitSensorMode.SensorBinary => "suit-sensor-description-binary",
+            SuitSensorMode.SensorVitals => "suit-sensor-description-vitals",
+            SuitSensorMode.SensorCords => "suit-sensor-description-cords",
+            _ => throw new InvalidOperationException($"Unknown {nameof(SuitSensorMode)}: {mode}"),
+        };
+        return Loc.GetString(locId);
     }
 
     /// <summary>
@@ -375,9 +395,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
         // get mob total damage
-        var totalDamage = 0;
-        if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
-            totalDamage = damageable.TotalDamage.Int();
+        var totalDamage = _damageable.GetTotalDamage(sensor.User.Value).Int();
 
         // Get mob total damage crit threshold
         int? totalDamageThreshold = null;
@@ -401,18 +419,17 @@ public abstract class SharedSuitSensorSystem : EntitySystem
                 status.TotalDamage = totalDamage;
                 status.TotalDamageThreshold = totalDamageThreshold;
                 EntityCoordinates coordinates;
-                var xformQuery = GetEntityQuery<TransformComponent>();
 
                 if (transform.GridUid != null)
                 {
                     coordinates = new EntityCoordinates(transform.GridUid.Value,
-                        Vector2.Transform(_transform.GetWorldPosition(transform, xformQuery),
-                            _transform.GetInvWorldMatrix(xformQuery.GetComponent(transform.GridUid.Value), xformQuery)));
+                        Vector2.Transform(_transform.GetWorldPosition(transform),
+                            _transform.GetInvWorldMatrix(transform.GridUid.Value)));
                 }
                 else if (transform.MapUid != null)
                 {
                     coordinates = new EntityCoordinates(transform.MapUid.Value,
-                        _transform.GetWorldPosition(transform, xformQuery));
+                        _transform.GetWorldPosition(transform));
                 }
                 else
                 {

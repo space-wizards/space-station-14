@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Damage;
 using Content.Shared.Effects;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
@@ -10,11 +9,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
-public sealed class HitscanBasicEffectsSystem : EntitySystem
+public sealed partial class HitscanBasicEffectsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private EntityQuery<HitscanBasicVisualsComponent> _visualsQuery;
 

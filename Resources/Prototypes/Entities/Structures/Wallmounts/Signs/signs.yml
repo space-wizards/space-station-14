@@ -1265,7 +1265,7 @@
 - type: entity
   parent: BaseSign
   id: SignDetective
-  name: Detective sign
+  name: detective sign
   description: A sign depicting the detective's office.
   components:
   - type: Sprite

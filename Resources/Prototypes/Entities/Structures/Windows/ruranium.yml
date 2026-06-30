@@ -9,16 +9,11 @@
   - type: Icon
     sprite: Structures/Windows/reinforced_uranium_window.rsi
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 450
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 225
@@ -83,12 +78,6 @@
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 225
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 113

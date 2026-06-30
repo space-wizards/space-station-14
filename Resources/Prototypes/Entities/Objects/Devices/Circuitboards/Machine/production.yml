@@ -19,7 +19,7 @@
   - type: MachineBoard
     prototype: AutolatheHyperConvection
     stackRequirements:
-      Manipulator: 3
+      Manipulator: 4
       Glass: 1
     tagRequirements:
       Igniter:
@@ -1289,7 +1289,7 @@
   - type: Sprite
     state: supply
   - type: MachineBoard
-    prototype: GravityGeneratorMini
+    prototype: GravityGeneratorMiniUncharged
     stackRequirements:
       Manipulator: 7
       Steel: 5

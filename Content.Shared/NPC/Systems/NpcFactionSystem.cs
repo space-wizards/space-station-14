@@ -11,9 +11,9 @@ namespace Content.Shared.NPC.Systems;
 /// </summary>
 public sealed partial class NpcFactionSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     /// <summary>
     /// To avoid prototype mutability we store an intermediary data class that gets used instead.

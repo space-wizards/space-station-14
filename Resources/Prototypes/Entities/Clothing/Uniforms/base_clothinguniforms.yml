@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [SolutionFood, SolutionToolNormal, Clothing, BaseSlicingRefinable]
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -9,9 +9,8 @@
     slots: [innerclothing]
     equipSound:
       path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
       amount: 3
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
@@ -19,13 +18,11 @@
       Cloth: 150
   - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 30
   - type: Tag
     tags:
     - ClothMade

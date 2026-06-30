@@ -163,6 +163,46 @@
   itemDrop: FloorTileItemSteelDiagonalMini
 
 - type: tile
+  parent: BaseStationTile
+  id: FloorSteelSlatsContinuous
+  name: tiles-steel-floor-slats-continuous
+  sprite: /Textures/Tiles/steel_slats_continuous.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemSteelSlatsContinuous
+  allowRotationMirror: true
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorSteelVerticalSlatsBordered
+  name: tiles-steel-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/steel_vertical_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemSteelVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorSteelHorizontalSlatsBordered
+  name: tiles-steel-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/steel_horizontal_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
+
+- type: tile
   id: FloorBrassFilled
   parent: BaseStationTile
   name: tiles-brass-floor-filled
@@ -239,6 +279,46 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteMini
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorWhiteSlatsContinuous
+  name: tiles-white-floor-slats-continuous
+  sprite: /Textures/Tiles/white_slats_continuous.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemWhiteSlatsContinuous
+  allowRotationMirror: true
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorWhiteVerticalSlatsBordered
+  name: tiles-white-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/white_vertical_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemWhiteVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorWhiteHorizontalSlatsBordered
+  name: tiles-white-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/white_horizontal_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
 
 - type: tile
   id: FloorWhitePavement
@@ -383,6 +463,46 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDarkMini
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorDarkSlatsContinuous
+  name: tiles-dark-floor-slats-continuous
+  sprite: /Textures/Tiles/dark_slats_continuous.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemDarkSlatsContinuous
+  allowRotationMirror: true
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorDarkVerticalSlatsBordered
+  name: tiles-dark-floor-vertical-slats-bordered
+  sprite: /Textures/Tiles/dark_vertical_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemDarkVerticalSlatsBordered
+
+- type: tile
+  parent: BaseStationTile
+  id: FloorDarkHorizontalSlatsBordered
+  name: tiles-dark-floor-horizontal-slats-bordered
+  sprite: /Textures/Tiles/dark_horizontal_slats_bordered.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  itemDrop: FloorTileItemDarkHorizontalSlatsBordered
 
 - type: tile
   id: FloorDarkPavement

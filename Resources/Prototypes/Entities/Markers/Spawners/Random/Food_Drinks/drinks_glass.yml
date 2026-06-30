@@ -1,140 +1,143 @@
 - type: entity
+  parent: MarkerBase
   id: RandomDrinkGlass
   name: random drink spawner
   suffix: Glass
-  parent: MarkerBase
   placement:
     mode: AlignTileAny
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Consumable/Drinks/beerglass.rsi
-        state: icon
-  - type: RandomSpawner
-  #small item
-    prototypes:
-      - DrinkAbsintheGlass
-      - DrinkAleGlass
-      - DrinkAlienBrainHemorrhage
-      - DrinkAloe
-      - DrinkAndalusia
-      - DrinkAntifreeze
-      - DrinkArnoldPalmer
-      - DrinkB52Glass
-      - DrinkBahamaMama
-      - DrinkBananaHonkGlass
-      - DrinkBarefootGlass
-      - DrinkBeerglass
-      - DrinkBerryJuice
-      - DrinkBlackRussianGlass
-      - DrinkBlueCuracaoGlass
-      - DrinkBlueHawaiianGlass
-      - DrinkBloodyMaryGlass
-      - DrinkBooger
-      - DrinkBraveBullGlass
-      - DrinkBronxGlass
-      - BudgetInsulsDrinkGlass
-      - DrinkCarrotJuice
-      - DrinkCoconutRum
-      - DrinkChocolateGlass
-      - DrinkCognacGlass
-      - DrinkCosmopolitan
-      - DrinkCrushDepthGlass
-      - DrinkCubaLibreGlass
-      - DrinkDarkandStormyGlass
-      - DrinkDeadRumGlass
-      - DrinkDevilsKiss
-      - DrinkDriestMartiniGlass
-      - DrinkDrGibbGlass
-      - DrinkElectricSharkGlass
-      - DrinkErikaSurprise
-      - DrinkFourteenLokoGlass
-      - DrinkGargleBlasterGlass
-      - DrinkGinFizzGlass
-      - DrinkGinGlass
-      - DrinkGinTonicglass
-      - DrinkGildlagerGlass
-      - DrinkGrapeJuice
-      - DrinkGreenTeaGlass
-      - DrinkGrogGlass
-      - DrinkHippiesDelightGlass
-      - DrinkIcedCoffeeGlass
-      - DrinkIcedGreenTeaGlass
-      - DrinkIcedBeerGlass
-      - DrinkIceCreamGlass
-      - IrishBoolGlass
-      - DrinkIrishSlammer
-      - DrinkIrishCoffeeGlass
-      - DrinkLemonadeGlass
-      - DrinkJackRoseGlass
-      - DrinkJungleBirdGlass
-      - DrinkKalimotxoGlass
-      - DrinkOrangeLimeSodaGlass
-      - DrinkLongIslandIcedTeaGlass
-      - DrinkManhattanGlass
-      - DrinkManlyDorfGlass
-      - DrinkMargaritaGlass
-      - DrinkMartiniGlass
-      - DrinkMeadGlass
-      - DrinkMilkshake
-      - DrinkMojito
-      - DrinkMonkeyBusinessGlass
-      - DrinkNTCahors
-      - DrinkPainkillerGlass
-      - DrinkPatronGlass
-      - DrinkPinaColadaGlass
-      - DrinkPoscaGlass
-      - DrinkRadlerGlass
-      - DrinkRedMeadGlass
-      - DrinkRewriter
-      - DrinkRoyRogersGlass
-      - DrinkRootBeerFloatGlass
-      - RubberneckGlass
-      - DrinkRumGlass
-      - DrinkSakeGlass
-      - DrinkSbitenGlass
-      - DrinkScrewdriverCocktailGlass
-      - DrinkShirleyTempleGlass
-      - DrinkSuiDreamGlass
-      - DrinkSingulo
-      - DrinkSoyLatte
-      - DrinkSyndicatebomb
-      - DrinkTequilaSunriseGlass
-      - DrinkThreeMileIslandGlass
-      - DrinkTortugaGlass
-      - DrinkToxinsSpecialGlass
-      - DrinkVampiroGlass
-      - DrinkVodkaMartiniGlass
-      - DrinkVodkaRedBool
-      - DrinkVodkaTonicGlass
-      - DrinkWatermelonJuice
-      - DrinkWatermelonWakeup
-      - DrinkWhiskeyColaGlass
-      - DrinkWhiskeySodaGlass
-      - DrinkWhiteRussianGlass
-      - DrinkWineGlass
-      - XenoBasherGlass
-      - DrinkShakeBlue
-      - DrinkShakeWhite
-      - DrinkTheMartinez
-      - DrinkMoonshineGlass
-    chance: 0.8
+    - state: red
+    - sprite: Objects/Consumable/Drinks/beerglass.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - !type:GroupSelector #small item
+        weight: 0.95
+        prob: 0.8
+        children:
+        - id: DrinkAbsintheGlass
+        - id: DrinkAleGlass
+        - id: DrinkAlienBrainHemorrhage
+        - id: DrinkAloe
+        - id: DrinkAndalusia
+        - id: DrinkAntifreeze
+        - id: DrinkArnoldPalmer
+        - id: DrinkB52Glass
+        - id: DrinkBahamaMama
+        - id: DrinkBananaHonkGlass
+        - id: DrinkBarefootGlass
+        - id: DrinkBeerglass
+        - id: DrinkBerryJuice
+        - id: DrinkBlackRussianGlass
+        - id: DrinkBlueCuracaoGlass
+        - id: DrinkBlueHawaiianGlass
+        - id: DrinkBloodyMaryGlass
+        - id: DrinkBooger
+        - id: DrinkBraveBullGlass
+        - id: DrinkBronxGlass
+        - id: BudgetInsulsDrinkGlass
+        - id: DrinkCarrotJuice
+        - id: DrinkCoconutRum
+        - id: DrinkChocolateGlass
+        - id: DrinkCognacGlass
+        - id: DrinkCosmopolitan
+        - id: DrinkCrushDepthGlass
+        - id: DrinkCubaLibreGlass
+        - id: DrinkDarkandStormyGlass
+        - id: DrinkDeadRumGlass
+        - id: DrinkDevilsKiss
+        - id: DrinkDriestMartiniGlass
+        - id: DrinkDrGibbGlass
+        - id: DrinkElectricSharkGlass
+        - id: DrinkErikaSurprise
+        - id: DrinkFourteenLokoGlass
+        - id: DrinkGargleBlasterGlass
+        - id: DrinkGinFizzGlass
+        - id: DrinkGinGlass
+        - id: DrinkGinTonicglass
+        - id: DrinkGildlagerGlass
+        - id: DrinkGrapeJuice
+        - id: DrinkGreenTeaGlass
+        - id: DrinkGrogGlass
+        - id: DrinkHippiesDelightGlass
+        - id: DrinkIcedCoffeeGlass
+        - id: DrinkIcedGreenTeaGlass
+        - id: DrinkIcedBeerGlass
+        - id: DrinkIceCreamGlass
+        - id: IrishBoolGlass
+        - id: DrinkIrishSlammer
+        - id: DrinkIrishCoffeeGlass
+        - id: DrinkLemonadeGlass
+        - id: DrinkJackRoseGlass
+        - id: DrinkJungleBirdGlass
+        - id: DrinkKalimotxoGlass
+        - id: DrinkOrangeLimeSodaGlass
+        - id: DrinkLongIslandIcedTeaGlass
+        - id: DrinkManhattanGlass
+        - id: DrinkManlyDorfGlass
+        - id: DrinkMargaritaGlass
+        - id: DrinkMartiniGlass
+        - id: DrinkMeadGlass
+        - id: DrinkMilkshake
+        - id: DrinkMojito
+        - id: DrinkMonkeyBusinessGlass
+        - id: DrinkNTCahors
+        - id: DrinkPainkillerGlass
+        - id: DrinkPatronGlass
+        - id: DrinkPinaColadaGlass
+        - id: DrinkPoscaGlass
+        - id: DrinkRadlerGlass
+        - id: DrinkRedMeadGlass
+        - id: DrinkRewriter
+        - id: DrinkRoyRogersGlass
+        - id: DrinkRootBeerFloatGlass
+        - id: RubberneckGlass
+        - id: DrinkRumGlass
+        - id: DrinkSakeGlass
+        - id: DrinkSbitenGlass
+        - id: DrinkScrewdriverCocktailGlass
+        - id: DrinkShirleyTempleGlass
+        - id: DrinkSuiDreamGlass
+        - id: DrinkSingulo
+        - id: DrinkSoyLatte
+        - id: DrinkSyndicatebomb
+        - id: DrinkTequilaSunriseGlass
+        - id: DrinkThreeMileIslandGlass
+        - id: DrinkTortugaGlass
+        - id: DrinkToxinsSpecialGlass
+        - id: DrinkVampiroGlass
+        - id: DrinkVodkaMartiniGlass
+        - id: DrinkVodkaRedBool
+        - id: DrinkVodkaTonicGlass
+        - id: DrinkWatermelonJuice
+        - id: DrinkWatermelonWakeup
+        - id: DrinkWhiskeyColaGlass
+        - id: DrinkWhiskeySodaGlass
+        - id: DrinkWhiteRussianGlass
+        - id: DrinkWineGlass
+        - id: XenoBasherGlass
+        - id: DrinkShakeBlue
+        - id: DrinkShakeWhite
+        - id: DrinkTheMartinez
+        - id: DrinkMoonshineGlass
+      - !type:GroupSelector #rare
+        weight: 0.05
+        children:
+        - id: DrinkAcidSpitGlass
+        - id: DrinkAlliesCocktail
+        - id: DrinkAmasecGlass
+        - id: DrinkAtomicBombGlass
+        - id: DrinkDemonsBlood
+        - id: DrinkDoctorsDelightGlass
+        - id: DrinkNeurotoxinGlass
+        - id: DrinkNuclearColaGlass
+        - id: DrinkSilencerGlass
+        - id: DrinkShakeMeat
+        - id: DrinkShakeRobo
+        - id: DrinkHoochGlass
+        - id: DrinkBeepskySmashGlass
+        - id: DrinkBacchusBlessing
     offset: 0.0
-    #rare
-    rarePrototypes:
-      - DrinkAcidSpitGlass
-      - DrinkAlliesCocktail
-      - DrinkAmasecGlass
-      - DrinkAtomicBombGlass
-      - DrinkDemonsBlood
-      - DrinkDoctorsDelightGlass
-      - DrinkNeurotoxinGlass
-      - DrinkNuclearColaGlass
-      - DrinkSilencerGlass
-      - DrinkShakeMeat
-      - DrinkShakeRobo
-      - DrinkHoochGlass
-      - DrinkBeepskySmashGlass
-      - DrinkBacchusBlessing
-    rareChance: 0.05

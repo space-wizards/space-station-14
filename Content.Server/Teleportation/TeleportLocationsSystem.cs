@@ -14,8 +14,8 @@ namespace Content.Server.Teleportation;
 /// </summary>
 public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSystem
 {
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
