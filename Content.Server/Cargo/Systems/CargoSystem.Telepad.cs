@@ -50,9 +50,16 @@ public sealed partial class CargoSystem
         }
     }
 
-    private bool IsLinkedToConsole(EntityUid uid, EntityUid? approvingConsole)
+    private bool IsLinkedToConsole(
+        EntityUid uid,
+        EntityUid? approvingConsole,
+        List<Entity<CargoOrderConsoleComponent>>? consoles = null
+    )
     {
-        if (approvingConsole == null || !TryGetLinkedConsoles(uid, out var consoles))
+        if (approvingConsole == null)
+            return false;
+
+        if (consoles == null && !TryGetLinkedConsoles(uid, out consoles))
             return false;
 
         return consoles.Any(console => console.Owner == approvingConsole);
@@ -104,11 +111,13 @@ public sealed partial class CargoSystem
             if (telepad.CurrentOrders.Count == 0)
                 continue;
 
-            var currentOrder = telepad.CurrentOrders.First();
-            if (
-                IsLinkedToConsole(uid, GetEntity(currentOrder.ApprovingConsole))
-                && FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, telepad.PrinterOutput)
-            )
+            if (!TryGetLinkedConsoles(uid, out var consoles))
+                continue;
+
+            var currentOrder = telepad.CurrentOrders.First(order =>
+                IsLinkedToConsole(uid, GetEntity(order.ApprovingConsole), consoles)
+            );
+            if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, telepad.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
                 _audio.PlayPvs(_audio.ResolveSound(telepad.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
