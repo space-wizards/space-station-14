@@ -107,7 +107,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: BaseChemistryAmpoule
+  parent: [SolutionTiny, BaseChemistryAmpoule]
   id: ChemistryEmptyAmpoule
   name: ampoule
   description: Break to open.
@@ -119,12 +119,11 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     inHandsMaxFillLevels: 4
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
   - type: StaticPrice
     price: 100
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10
   - type: Destructible
     thresholds:
     - trigger:
@@ -215,12 +214,10 @@
   - type: ThrowingAngle
     angle: 90
     angularVelocity: true
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-          - ReagentId: XenoborgOil
-            Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+        - ReagentId: XenoborgOil
+          Quantity: 30
   - type: Tag
     tags: *TagVial
