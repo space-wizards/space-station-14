@@ -30,9 +30,6 @@ public sealed partial class CargoSystem
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            if (telepad.CurrentState != CargoTelepadState.Idle)
-                continue;
-
             if (!this.IsPowered(uid, EntityManager))
                 continue;
 
@@ -90,13 +87,6 @@ public sealed partial class CargoSystem
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(uid, out var appearance);
 
-            if (telepad.CurrentState == CargoTelepadState.Unpowered)
-            {
-                telepad.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
-                continue;
-            }
-
             if (Timing.CurTime < telepad.NextTeleport)
             {
                 telepad.CurrentState = CargoTelepadState.Idle;
@@ -114,9 +104,8 @@ public sealed partial class CargoSystem
             if (!TryGetLinkedConsoles(uid, out var consoles))
                 continue;
 
-            var currentOrder = telepad.CurrentOrders.First(order =>
-                IsLinkedToConsole(uid, GetEntity(order.ApprovingConsole), consoles)
-            );
+            var currentOrder = telepad.CurrentOrders.First();
+
             if (FulfillOrder(currentOrder, currentOrder.Account, xform.Coordinates, telepad.PrinterOutput))
             {
                 currentOrder.NumDispatched++;
