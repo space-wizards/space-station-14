@@ -33,12 +33,12 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     /// This constant governs the maximum amount of instances. This is mirrored in the shader itself.
     /// </summary>
     private static readonly int MaximumInstances = 10;
-    private Vector2[] _positions;
-    private float[] _waveStrengths;
-    private float[] _waveSpeeds;
-    private float[] _downScales;
-    private float[] _fades;
-    private float[] _times;
+    private readonly Vector2[] _positions;
+    private readonly float[] _waveStrengths;
+    private readonly float[] _waveSpeeds;
+    private readonly float[] _downScales;
+    private readonly float[] _fades;
+    private readonly float[] _times;
 
     public ScreechShockWaveOverlay()
     {
