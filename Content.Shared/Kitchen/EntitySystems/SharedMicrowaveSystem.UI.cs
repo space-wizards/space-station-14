@@ -65,6 +65,7 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
+        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>
@@ -84,8 +85,9 @@ public abstract partial class SharedMicrowaveSystem
 
         ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
-        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.CurrentCookTimeButtonIndex));
-        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.CurrentCookTimerTime));
+        DirtyFields(ent.Owner, ent.Comp, null,
+            nameof(MicrowaveComponent.CurrentCookTimeButtonIndex),
+            nameof(MicrowaveComponent.CurrentCookTimerTime));
 
         Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }

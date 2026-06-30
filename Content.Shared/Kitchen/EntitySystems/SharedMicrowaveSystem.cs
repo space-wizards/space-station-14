@@ -90,8 +90,9 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             {
                 active.NextCookUpdate += active.CookUpdateInterval;
                 active.LastCookUpdated = curTime;
-                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextCookUpdate));
-                DirtyField(uid, active, nameof(ActiveMicrowaveComponent.LastCookUpdated));
+                DirtyFields(uid, active, null,
+                    nameof(ActiveMicrowaveComponent.NextCookUpdate),
+                    nameof(ActiveMicrowaveComponent.LastCookUpdated));
 
                 AddTemperature((uid, microwave), (float)timeElapsed.TotalSeconds);
             }

@@ -1,5 +1,5 @@
-using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.EntitySystems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Kitchen.Components;
@@ -8,7 +8,7 @@ namespace Content.Shared.Kitchen.Components;
 /// Attached to a microwave that is currently in the process of cooking
 /// </summary>
 [RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
-[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class ActiveMicrowaveComponent : Component
 {
     /// <summary>
