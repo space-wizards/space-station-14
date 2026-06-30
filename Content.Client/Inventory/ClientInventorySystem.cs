@@ -239,6 +239,11 @@ namespace Content.Client.Inventory
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
+        /// <summary>
+        /// Points at an item in the inventory
+        /// </summary>
+        /// <param name="slot">The slot to point at</param>
+        /// <param name="uid">The inventory entity containing the slot</param>
         public void UIInventoryPointAt(string slot, EntityUid uid)
         {
             if (!TryGetSlotEntity(uid, slot, out var item))
