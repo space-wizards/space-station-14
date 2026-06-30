@@ -66,7 +66,8 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
             _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
-            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond);
+            _disposalUnitWindow.PowerOff = entity.Comp.PowerOff;
+            _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond, disposals.PowerOff);
             _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
         }
