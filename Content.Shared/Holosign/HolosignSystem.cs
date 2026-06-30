@@ -6,10 +6,10 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Holosign;
 
-public sealed class HolosignSystem : EntitySystem
+public sealed partial class HolosignSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -48,7 +48,10 @@ public sealed class HolosignSystem : EntitySystem
 
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
         if (ent.Comp.PredictedSpawn || _net.IsServer)
-            PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
+        {
+            var holosign = PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
+            Transform(holosign).LocalRotation = Angle.Zero;
+        }
 
         args.Handled = true;
     }

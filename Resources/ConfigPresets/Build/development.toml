@@ -37,7 +37,11 @@ emergency = false
 arrivals = false
 preload_grids = false
 
+[afk]
+time = 0
+
 [admin]
+afk_time = 0
 see_own_notes = true
 new_player_threshold = 120
 
@@ -45,3 +49,12 @@ new_player_threshold = 120
 random_characters = true
 random_species_weights = ""
 ssd_sleep_time = 3600
+
+[database]
+# Change to postgres if needed
+engine = "sqlite"
+pg_host = "localhost"
+pg_port = 5432
+pg_database = "ss14"
+pg_username = "postgres"
+pg_password = "postgres"

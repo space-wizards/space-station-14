@@ -71,7 +71,8 @@ public abstract partial class SharedPuddleSystem
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
-                SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
+                if (_net.IsServer) // TODO: Change this once we have entity spawn prediction V2
+                    SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
                 PredictedQueueDel(uid);
             }
 
@@ -83,7 +84,7 @@ public abstract partial class SharedPuddleSystem
     public ProtoId<ReagentPrototype>[] GetEvaporatingReagents(Solution solution)
     {
         List<ProtoId<ReagentPrototype>> evaporatingReagents = [];
-        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var solProto in solution.GetReagentPrototypes(ProtoMan).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
                 evaporatingReagents.Add(solProto.ID);
@@ -94,7 +95,7 @@ public abstract partial class SharedPuddleSystem
     public ProtoId<ReagentPrototype>[] GetAbsorbentReagents(Solution solution)
     {
         var absorbentReagents = new List<ProtoId<ReagentPrototype>>();
-        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(ProtoMan).Keys)
         {
             if (solProto.Absorbent)
                 absorbentReagents.Add(solProto.ID);
@@ -114,7 +115,7 @@ public abstract partial class SharedPuddleSystem
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> GetEvaporationSpeeds(Solution solution)
     {
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> evaporatingSpeeds = [];
-        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var solProto in solution.GetReagentPrototypes(ProtoMan).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
             {

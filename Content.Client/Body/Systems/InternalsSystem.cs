@@ -4,9 +4,9 @@ using Content.Shared.Body.Systems;
 
 namespace Content.Client.Body.Systems;
 
-public sealed class InternalsSystem : SharedInternalsSystem
+public sealed partial class InternalsSystem : SharedInternalsSystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

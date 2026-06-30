@@ -4,11 +4,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Drunk;
 
-public abstract class SharedDrunkSystem : EntitySystem
+public abstract partial class SharedDrunkSystem : EntitySystem
 {
     public static EntProtoId Drunk = "StatusEffectDrunk";
 
-    [Dependency] protected readonly StatusEffectsSystem Status = default!;
+    [Dependency] protected StatusEffectsSystem Status = default!;
 
     public override void Initialize()
     {

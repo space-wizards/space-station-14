@@ -7,7 +7,7 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
+    [Dependency] private SharedStorageSystem _storageSystem = default!;
 
     /// <summary>
     /// Yields all entities in hands or inventory slots with the specific flags.
@@ -81,7 +81,7 @@ public partial class InventorySystem
             return false;
 
         // If the prototype in question doesn't exist, we do nothing.
-        if (!_prototypeManager.HasIndex<EntityPrototype>(prototype))
+        if (!ProtoMan.HasIndex<EntityPrototype>(prototype))
             return false;
 
         // Let's spawn this first...

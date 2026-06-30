@@ -103,6 +103,11 @@
   copyright: "Audio is created by youtube user 'Winry Marini'"
   source: "https://youtu.be/QIhwzsk5bww"
 
+- files: ["lizard_happy.ogg"]
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "Provided by DaturoDewitt. Created using transformed and layered samples bundled with Logic Pro X"
+  source: "https://github.com/space-wizards/space-station-14/pull/42915"
+
 - files: ["bear.ogg"]
   license: "CC-BY-3.0"
   copyright: "Audio is recorded by 'Nagaty Studio'. The original audio was reverbed"
@@ -132,6 +137,17 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from ParadiseSS13"
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
+
+- files:
+  - "sheep1.ogg"
+  - "sheep2.ogg"
+  - "sheep3.ogg"
+  - "spacesheep1.ogg"
+  - "spacesheep2.ogg"
+  - "spacesheep3.ogg"
+  license: "CC0-1.0"
+  copyright: "Audio is created by freesound.org user 'milkotz', then cut and modified by dragomagol. Space sheep variants have a reverb effect added by Baa."
+  source: "https://freesound.org/people/milkotz/sounds/618865/"
 
 - files:
   - fox1.ogg

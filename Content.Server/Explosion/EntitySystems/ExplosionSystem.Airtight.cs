@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
@@ -39,7 +38,7 @@ public sealed partial class ExplosionSystem
         _explosionTypes.Clear();
 
         int index = 0;
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<ExplosionPrototype>())
         {
             _explosionTypes.Add(prototype.ID, index);
             index++;
@@ -214,12 +213,16 @@ public sealed partial class ExplosionSystem
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
         var totalDamageTarget = FixedPoint2.MaxValue;
-        if (_destructibleQuery.TryGetComponent(uid, out var destructible))
+        if (_destructibleQuery.TryComp(uid, out var destructible))
         {
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
-        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryGetComponent(uid, out var damageable))
+        // We are assuming airtight entities don't need to relay since they shouldn't have inventories.
+        var modifiers = _damageableSystem.GetDamageModifierSet(uid);
+        var explosionComp = _explosionResistanceQuery.CompOrNull(uid);
+
+        if (totalDamageTarget == FixedPoint2.MaxValue || !_injurableQuery.TryComp(uid, out var injurable))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
@@ -238,33 +241,92 @@ public sealed partial class ExplosionSystem
         {
             // TODO EXPLOSION SYSTEM
             // cache explosion type damage.
-            if (!_prototypeManager.Resolve(id, out ExplosionPrototype? explosionType))
+            if (!ProtoMan.Resolve(id, out var explosionType))
                 continue;
 
             // evaluate the damage that this damage type would do to this entity
             var damagePerIntensity = FixedPoint2.Zero;
+
+            // Create a dictionary of intensity thresholds which dictates when damagePerIntensity increases!
+            var damageThresholds = new SortedDictionary<FixedPoint2, FixedPoint2>();
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
-                if (!damageable.Damage.DamageDict.ContainsKey(type))
+                if (!_damageableSystem.CanBeDamagedBy((uid, injurable), type))
                     continue;
 
-                // TODO EXPLOSION SYSTEM
-                // add a variant of the event that gets raised once, instead of once per prototype.
-                // Or better yet, just calculate this manually w/o the event.
-                // The event mainly exists for indirect resistances via things like inventory & clothing
-                // But this shouldn't matter for airtight entities.
-                var ev = new GetExplosionResistanceEvent(explosionType.ID);
-                RaiseLocalEvent(uid, ref ev);
+                var modifier = mod;
+                if (explosionComp != null)
+                {
+                    modifier *= explosionComp.DamageCoefficient;
+                    if (explosionComp.Modifiers.TryGetValue(explosionType.ID, out var typeMod))
+                        modifier *= typeMod;
+                }
 
-                damagePerIntensity += value * mod * Math.Max(0, ev.DamageCoefficient);
+                if (modifiers != null)
+                {
+                    if (modifiers.Coefficients.TryGetValue(type, out var armorMod))
+                        modifier *= armorMod;
+
+                    if (modifiers.FlatReduction.TryGetValue(type, out var flat))
+                    {
+                        if (flat > 0)
+                        {
+                            // If the flat modifier is reducing damage, we cache the extra damage per intensity for later!
+                            var intensity = flat / value;
+                            var damage = damageThresholds.GetValueOrDefault(intensity);
+                            damageThresholds[intensity] = value * Math.Max(0, modifier) + damage;
+                            continue;
+                        }
+                    }
+                }
+
+                damagePerIntensity += value * Math.Max(0, modifier);
             }
 
-            var toleranceValue = damagePerIntensity > 0
-                ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
-                : ToleranceValues.Invulnerable;
-
-            explosionTolerance[index] = toleranceValue;
+            explosionTolerance[index] = GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
         }
+    }
+
+    private FixedPoint2 GetExplosionTolerance(EntityUid uid,
+        FixedPoint2 totalDamageTarget,
+        FixedPoint2 damagePerIntensity,
+        SortedDictionary<FixedPoint2, FixedPoint2> damageThresholds)
+    {
+        return GetExplosionTolerance(totalDamageTarget - _damageableSystem.GetTotalDamage(uid),
+            damagePerIntensity,
+            damageThresholds);
+    }
+
+    private FixedPoint2 GetExplosionTolerance(FixedPoint2 damageTarget,
+        FixedPoint2 damagePerIntensity,
+        SortedDictionary<FixedPoint2, FixedPoint2> damageThresholds)
+    {
+        var tolerance = damagePerIntensity > 0 ? damageTarget / damagePerIntensity : ToleranceValues.Invulnerable;
+        var prevIntensity = FixedPoint2.Zero;
+        /*
+         * Calculated through a pretty simple equation which relies on this dictionary being sorted.
+         * We precalculate the intensity at which an explosion's damage type exceeds the flat reduction of an entity's armor
+         * That is done above and stored in our `damageThresholds` SortedDictionary. If you can find a more mem efficient way to do this be my guest,
+         * but these values *have* to be sorted.
+         */
+        foreach (var (intensity, damage) in damageThresholds)
+        {
+            // Check if the object would break before hitting this threshold, if so, return the current tolerance value
+            if (intensity > tolerance)
+                return tolerance;
+
+            /*
+             * If the object breaks after this threshold, reduce the HP left by the amount of HP lost between the last flat reduction and this one
+             * Then adjust our damagePerIntensity and new tolerance values accordingly.
+             * Lastly store this intensity value so we can calculate the delta next loop.
+             */
+            damageTarget -= (intensity - prevIntensity) * damagePerIntensity;
+            damagePerIntensity += damage;
+            tolerance = intensity + damageTarget / damagePerIntensity;
+            prevIntensity = intensity;
+        }
+
+        return tolerance;
     }
 
     private void OnAirtightGridRemoved(EntityUid entity)
