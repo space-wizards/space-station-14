@@ -50,8 +50,8 @@ public sealed partial class BuckleComponent : Component
     /// <summary>
     /// Whether or not this can buckled by pacifists
     /// </summary>
-    [DataField]
-    public bool PacifismAllowedMode = true;
+    [RegisterComponent, NetworkedComponent]
+    public sealed partial class PacifismDisallowedComponent : Component;
 
     /// <summary>
     /// The time that this entity buckled at.

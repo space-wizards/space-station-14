@@ -78,11 +78,14 @@ public sealed partial class PacificationSystem : EntitySystem
     }
     private void OnOtherBuckleAttempt(Entity<PacifiedComponent> user, ref BuckleOtherAttemptEvent args)
     {
-        ShowPopup(user, args.Target,  "pacified-cannot-buckle");
+         if (HasComp<BuckleComponent.PacifismDisallowedComponent>(args.Seat))
+        {
+         ShowPopup(user, args.Target,  "pacified-cannot-buckle");
         args.Cancelled = true;
         if (args.Target == user.Owner)
-        {
+         {
             args.Cancelled = false;
+         }
         }
     }
     private void OnAttackAttempt(EntityUid uid, PacifiedComponent component, AttackAttemptEvent args)
