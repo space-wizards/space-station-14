@@ -92,16 +92,19 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
 public sealed partial class EntitySpawnVariationPass : EntityEffectBase<EntitySpawnVariationPass>
 {
     /// <summary>
-    ///     Number of tiles before we spawn one entity on average.
+    /// Number of tiles before we spawn one entity on average.
     /// </summary>
     [DataField]
     public float TilesPerEntityAverage = 50f;
 
+    /// <summary>
+    /// Standard deviation for the randomness selection.
+    /// </summary>
     [DataField]
     public float TilesPerEntityStdDev = 7f;
 
     /// <summary>
-    ///     Spawn entries for each chosen location.
+    /// Spawn entries for each chosen location.
     /// </summary>
     [DataField(required: true)]
     public List<EntitySpawnEntry> Entities = default!;
