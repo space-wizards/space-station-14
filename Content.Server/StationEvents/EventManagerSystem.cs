@@ -3,12 +3,12 @@ using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Content.Shared.EntityTable.EntitySelectors;
-using Content.Shared.EntityTable;
 
 namespace Content.Server.StationEvents;
 
@@ -73,7 +73,7 @@ public sealed partial class EventManagerSystem : EntitySystem
     /// <summary>
     /// Builds a list of all possible events and their probabilities.
     /// </summary>
-    public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
+    public IEnumerable<(EntProtoId, float)> ListLimitedEvents(
         EntityTableSelector limitedEventsTable,
         TimeSpan? currentTime = null,
         int? playerCount = null)
@@ -95,12 +95,12 @@ public sealed partial class EventManagerSystem : EntitySystem
         return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
     }
 
-    public IEnumerable<(EntProtoId, double)> ListLimitedEvents(
-        IEnumerable<(EntProtoId, double)> selectedEvents,
+    public IEnumerable<(EntProtoId, float)> ListLimitedEvents(
+        IEnumerable<(EntProtoId, float)> selectedEvents,
         TimeSpan? currentTime = null,
         int? playerCount = null)
     {
-        var limitedEvents = new List<(EntProtoId, double)>();
+        var limitedEvents = new List<(EntProtoId, float)>();
 
         playerCount ??= _playerManager.PlayerCount;
 
