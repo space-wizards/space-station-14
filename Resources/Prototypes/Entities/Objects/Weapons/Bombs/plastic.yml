@@ -46,6 +46,17 @@
   components:
   - type: Item
     size: Small
+  - type: Sticky
+    stickDelay: 5
+    unstickDelay: 5
+    stickPopupStart: comp-sticky-start-stick-bomb
+    stickPopupSuccess: comp-sticky-success-stick-bomb
+    unstickPopupStart: comp-sticky-start-unstick-bomb
+    unstickPopupSuccess: comp-sticky-success-unstick-bomb
+    blacklist: # can't stick it to other items
+      components:
+      - Item
+      - Spectral # special case for the rev since it can go incorporeal and ghost bomb you. Also, Idk, its like a ghost or something no touchy.
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic
@@ -116,8 +127,12 @@
     - state: icon
       map: ["base"]
   - type: TimerTrigger
+    keysIn:
+    - trigger
+    - stuck
     delay: 5
     delayOptions: [5, 10, 15, 20]
+    initialBeepDelay: 0
     beepSound:
       path: /Audio/Effects/Cargo/buzz_two.ogg
       params:
