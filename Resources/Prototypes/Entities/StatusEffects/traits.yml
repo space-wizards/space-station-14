@@ -19,5 +19,6 @@
 - type: entity
   parent: [EyelidsStatusEffectBase, TraitStatusEffectBase]
   id: TraitStatusEffectBlinkDyspraxia
+  name: blink dyspraxia
   components:
   - type: BlinkDyspraxiaStatusEffect

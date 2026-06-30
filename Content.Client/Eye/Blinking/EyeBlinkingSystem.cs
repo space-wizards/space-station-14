@@ -202,13 +202,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         var maxAsyncBlink = ent.Comp.MaxAsyncBlink;
         var maxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
-
         if (_statusEffects.TryEffectsWithComp<BlinkDyspraxiaStatusEffectComponent>(ent.Owner, out var effects))
         {
             foreach (var effect in effects)
             {
-                maxAsyncBlink.Add(effect.Comp1.MaxAsyncBlink);
-                maxAsyncOpenBlink.Add(effect.Comp1.MaxAsyncOpenBlink);
+                maxAsyncBlink = maxAsyncBlink.Add(effect.Comp1.MaxAsyncBlink);
+                maxAsyncOpenBlink = maxAsyncOpenBlink.Add(effect.Comp1.MaxAsyncOpenBlink);
             }
         }
 
