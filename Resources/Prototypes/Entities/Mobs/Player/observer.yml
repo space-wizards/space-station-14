@@ -106,6 +106,13 @@
     radius: 6
     castShadows: false
     enabled: false
+  - type: NightVision
+    netsync: false
+    enabled: false
+    lightColor: '#FFFFFF20'
+    overlayColor: '#FFFFFF00'
+    noiseAmount: 0 # In case default values change
+    noiseMultiplier: 0 # In case default values change
 
 # proto for player ghosts specifically
 - type: entity

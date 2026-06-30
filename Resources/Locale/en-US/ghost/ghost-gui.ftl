@@ -3,9 +3,10 @@ ghost-gui-ghost-warp-button = Ghost Warp
 ghost-gui-ghost-roles-button = Ghost Roles ({$count})
 ghost-gui-toggle-ghost-visibility-popup-on = Enabled visibility of ghosts.
 ghost-gui-toggle-ghost-visibility-popup-off = Disabled visibility of ghosts.
-ghost-gui-toggle-lighting-manager-popup-normal = Lighting normal.
-ghost-gui-toggle-lighting-manager-popup-personal-light = Enabled personal light.
-ghost-gui-toggle-lighting-manager-popup-fullbright = Fullbright mode.
+ghost-gui-toggle-lighting-manager-popup-normal = Normal light.
+ghost-gui-toggle-lighting-manager-popup-personal-light = Personal light.
+ghost-gui-toggle-lighting-manager-popup-half-bright = Half-Bright.
+ghost-gui-toggle-lighting-manager-popup-fullbright = Fullbright.
 ghost-gui-toggle-fov-popup = Toggled field-of-view.
 
 ghost-gui-toggle-hearing-popup-on = You can now hear all messages.
