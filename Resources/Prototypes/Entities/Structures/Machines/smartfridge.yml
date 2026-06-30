@@ -124,14 +124,14 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         powered-base:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
         powered-open:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
         powered-closed:
-          True: {visible: true}
-          False: {visible: false}
+          True: { visible: true }
+          False: { visible: false }
   - type: AmbientMusicMarkerMedical
 
 - type: entity
