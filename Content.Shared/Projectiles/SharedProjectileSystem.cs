@@ -201,6 +201,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
     }
+    
     public void DetachAllEmbedded(Entity<EmbeddedContainerComponent> container)
     {
         foreach (var embedded in container.Comp.EmbeddedObjects)
