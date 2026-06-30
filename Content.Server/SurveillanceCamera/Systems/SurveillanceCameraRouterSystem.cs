@@ -5,7 +5,6 @@ using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 
@@ -15,7 +14,6 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _query = default!;
 
@@ -42,7 +40,7 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
             router.TransmitFrequency = ent.Comp.SubnetFrequency;
 
         if (ent.Comp.SubnetFrequencyId == null
-            || !_prototypeManager.TryIndex(ent.Comp.SubnetFrequencyId, out var subnetFrequency))
+            || !ProtoMan.TryIndex(ent.Comp.SubnetFrequencyId, out var subnetFrequency))
             return;
 
         ent.Comp.SubnetFrequency = subnetFrequency.Frequency;
@@ -118,7 +116,7 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
             return;
         }
 
-        if (!_prototypeManager.Resolve(ent.Comp.AvailableNetworks[args.Network], out var frequency))
+        if (!ProtoMan.Resolve(ent.Comp.AvailableNetworks[args.Network], out var frequency))
         {
             return;
         }

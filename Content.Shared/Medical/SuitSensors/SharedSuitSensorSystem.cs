@@ -33,7 +33,6 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -383,7 +382,7 @@ public abstract partial class SharedSuitSensorSystem : EntitySystem
             userJobIcon = card.Comp.JobIcon;
 
             foreach (var department in card.Comp.JobDepartments)
-                userJobDepartments.Add(Loc.GetString(_proto.Index(department).Name));
+                userJobDepartments.Add(Loc.GetString(ProtoMan.Index(department).Name));
         }
 
         // get health mob state

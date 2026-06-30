@@ -22,7 +22,6 @@ namespace Content.Shared.Animals;
 public sealed partial class SharedShearableSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
@@ -136,7 +135,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
             // Failed, if the entity has no solution then show a popup.
             if (shearingSolutionToRemove <= 0)
             {
-                var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+                var shearedProduct = ProtoMan.Index(ent.Comp.ShearedProductId);
                 var feedbackPopupString = Loc.GetString("shearable-system-no-product",
                     ("target", Identity.Entity(ent.Owner, EntityManager)),
                     ("product", shearedProduct.Name));
@@ -181,7 +180,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         }
 
         // Lookup some variables we need.
-        var shearedProduct = _proto.Index(ent.Comp.ShearedProductId);
+        var shearedProduct = ProtoMan.Index(ent.Comp.ShearedProductId);
 
         // Mark as handled so we don't duplicate.
         args.Handled = true;
@@ -276,7 +275,7 @@ public sealed partial class SharedShearableSystem : EntitySystem
         {
             // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation has a blank variable.
             var toolQuality = string.Empty;
-            var toolQualityProto = _proto.Index(ent.Comp.ToolQuality);
+            var toolQualityProto = ProtoMan.Index(ent.Comp.ToolQuality);
             // If a ToolQuality has been specified set its name to toolQuality so it appears in localisation.
             if (toolQualityProto is not null)
             {

@@ -2,7 +2,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Shared.Chat;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -10,7 +9,6 @@ namespace Content.Server.Ghost;
 
 public sealed partial class SpookySpeakerSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ChatSystem _chat = default!;
@@ -33,7 +31,7 @@ public sealed partial class SpookySpeakerSystem : EntitySystem
         if (curTime < entity.Comp.NextSpeakTime)
             return;
 
-        if (!_proto.Resolve(entity.Comp.MessageSet, out var messages))
+        if (!ProtoMan.Resolve(entity.Comp.MessageSet, out var messages))
             return;
 
         // Grab a random localized message from the set
