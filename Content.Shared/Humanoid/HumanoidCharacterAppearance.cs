@@ -95,7 +95,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
         var colorPalette = GetPaletteFromBase(baseColor, random.Next(3));
 
-        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType));
+        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType), random);
 
         var markingData = markingManager.GetMarkingData(species);
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings = [];
@@ -118,7 +118,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                 if (layerLimits is null || layerLimits.Limit <= 0)
                     continue;
 
-                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict));
+                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict, random));
             }
             newMarkings.Add(organ, layerMarkings);
         }

@@ -9,16 +9,16 @@ namespace Content.Shared.Humanoid;
 
 public sealed partial class HumanoidCharacterAppearance
 {
-    private readonly static string SkinColorKey = "skinColor";
-    private readonly static string HairColorKey = "hairColor";
-    private readonly static string EyeColorKey = "eyeColor";
+    private static readonly string SkinColorKey = "skinColor";
+    private static readonly string HairColorKey = "hairColor";
+    private static readonly string EyeColorKey = "eyeColor";
 
     /// <summary>
     ///     Creates a new color palette from BaseColor.
     ///     Uses integer provided to choose what kind of palette is generated.
     /// </summary>
     /// <param name="baseColor">The base color to generate a palette from.</param>
-    /// <param name="strategy">0 for split complimentary, 1 for triadic complimentary, any other value for a single compliment.</param>
+    /// <param name="strategy">0 for split complementary, 1 for triadic complementary, any other value for a single complement.</param>
     /// <returns>A list of colours in the chosen palette.</returns>
     /// <remarks>
     ///     Personally I think this should be weighted, but I can't
@@ -43,18 +43,14 @@ public sealed partial class HumanoidCharacterAppearance
     ///     1 = Hair colour,
     ///     2 = Eye colour.
     /// </returns>
-    /// <remarks>TODO: might be better to make this return a dictionary or enum.</remarks>
-    private static Dictionary<string, Color> ClampPaletteToStrategy(List<Color> colorPalette, SkinColorationPrototype skinType)
+    private static Dictionary<string, Color> ClampPaletteToStrategy(List<Color> colorPalette, SkinColorationPrototype skinType, IRobustRandom random)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
+        if (colorPalette.Count != 3)
+            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {colorPalette.Count} colours");
 
-        // theres gotta be a better way to do this
-        var newSkinColor = colorPalette.FirstOrDefault();
-        colorPalette.Remove(newSkinColor);
-        var newHairColor = colorPalette.FirstOrDefault();
-        colorPalette.Remove(newHairColor);
-        var newEyeColor = colorPalette.FirstOrDefault();
-        colorPalette.Remove(newEyeColor);
+        var newSkinColor = colorPalette[0];
+        var newHairColor = colorPalette[1];
+        var newEyeColor = colorPalette[2];
 
         newSkinColor = skinType.Strategy.ClosestSkinColor(newSkinColor);
 
@@ -63,9 +59,9 @@ public sealed partial class HumanoidCharacterAppearance
             // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
             newHairColor = random.Pick(HairStyles.RealisticHairColors);
             newHairColor = newHairColor
-                .WithRed(RandomizeColor(newHairColor.R))
-                .WithGreen(RandomizeColor(newHairColor.G))
-                .WithBlue(RandomizeColor(newHairColor.B));
+                .WithRed(RandomizeColor(newHairColor.R, random))
+                .WithGreen(RandomizeColor(newHairColor.G, random))
+                .WithBlue(RandomizeColor(newHairColor.B, random));
 
             // and pick a random realistic eye color from the list.
             newEyeColor = random.Pick(_realisticEyeColors);
@@ -91,14 +87,12 @@ public sealed partial class HumanoidCharacterAppearance
     ///     These layers are handled differently to other markings, so we need unique behaviour for them.
     /// </summary>
     /// <returns>A list of markings for the <see cref="HumanoidVisualLayers"/>.</returns>
-    private static List<Marking> PickHairsRandomMarking(HumanoidVisualLayers layer, MarkingsLimits layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Color color)
+    private static List<Marking> PickHairsRandomMarking(HumanoidVisualLayers layer, MarkingsLimits layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Color color, IRobustRandom random)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
-
         if (allMarkings.Count == 0 || !random.Prob(layerLimits.Weight))
             return new();
 
-        var hairId = PickWeightedMarkingId(allMarkings);
+        var hairId = PickWeightedMarkingId(allMarkings, random);
         if (hairId is null || !allMarkings.TryGetValue(hairId, out var hairProto))
             return new();
 
@@ -123,19 +117,23 @@ public sealed partial class HumanoidCharacterAppearance
     /// <param name="allMarkings">A list of all markings for the layer.</param>
     /// <param name="palette">A list of colors to choose from for the markings.</param>
     /// <returns>A list of markings for the desired layer.</returns>
-    private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Dictionary<string, Color> palette)
+    private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Dictionary<string, Color> palette, IRobustRandom random)
     {
 
         if (layerLimits is null)
-            return new();
+            return [];
 
         if (layer == HumanoidVisualLayers.Hair ||
             layer == HumanoidVisualLayers.FacialHair)
         {
-            return PickHairsRandomMarking(layer, layerLimits, allMarkings, palette.GetValueOrDefault(HairColorKey));
+            /* TODO: we should log an error here if using default, but Humanoid is full of static methods so we cant use sawmill until thats fixed
+            if (!palette.ContainsKey(HairColorKey))
+                sawmill.Error($"Palette for {layer} contains no HairColorKey, using default colour");
+            */
+
+            return PickHairsRandomMarking(layer, layerLimits, allMarkings, palette.GetValueOrDefault(HairColorKey), random);
         }
 
-        var random = IoCManager.Resolve<IRobustRandom>();
         var layerWeight = layerLimits.Weight;
         var pool = allMarkings.ToDictionary();
 
@@ -151,39 +149,39 @@ public sealed partial class HumanoidCharacterAppearance
             if (!random.Prob(layerWeight))
                 continue;
 
-            var randomMarking = PickWeightedMarkingId(pool);
+            var randomMarking = PickWeightedMarkingId(pool, random);
 
             if (randomMarking is null || !pool.Remove(randomMarking, out var protoToAdd))
                 continue;
 
             List<Color> colors = new();
-            for (var j = 0; j < protoToAdd.Sprites.Count; j++)
+            foreach (var sprite in protoToAdd.Sprites)
             {
                 // code here is from MarkingColoring.GetMarkingLayerColors
                 // Getting layer name
-                string? name = protoToAdd.Sprites[j] switch
+                var name = sprite switch
                 {
                     SpriteSpecifier.Rsi rsi => rsi.RsiState,
                     SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
                     _ => null
                 };
 
-                // if we dont have a coloring rule set for that layer,
-                // we'll generate a random tone from either hair or eye.
-
                 var coloringType = (name == null ||
                     protoToAdd.Coloring.Layers is not { } layers ||
-                    !layers.TryGetValue(name, out var layerColoring)) ?
-                    protoToAdd.Coloring.Default : layerColoring;
+                    !layers.TryGetValue(name, out var layerColoring))
+                    ? protoToAdd.Coloring.Default
+                    : layerColoring;
 
-                var color = coloringType.Type is not null ?
-                        coloringType.GetColor(
-                        palette.GetValueOrDefault(SkinColorKey),
-                        palette.GetValueOrDefault(EyeColorKey),
-                        outMarkings) :
-                        random.Pick(new List<Color> {
+                var color = coloringType.Type is not null
+                    ? coloringType.GetColor(
+                    palette.GetValueOrDefault(SkinColorKey),
+                    palette.GetValueOrDefault(EyeColorKey),
+                    outMarkings)
+                    : random.Pick(new List<Color>
+                    {
                         palette.GetValueOrDefault(HairColorKey),
-                        palette.GetValueOrDefault(EyeColorKey)});
+                        palette.GetValueOrDefault(EyeColorKey)
+                    });
 
                 colors.Add(color);
             }
@@ -197,42 +195,26 @@ public sealed partial class HumanoidCharacterAppearance
     ///     Uses <see cref="MarkingPrototype"/> weights to pick a random marking from a provided dictionary.
     /// </summary>
     /// <returns>The string ID of the chosen <see cref="MarkingPrototype"/>.</returns>
-    private static string? PickWeightedMarkingId(IReadOnlyDictionary<string, MarkingPrototype> markings)
+    private static string? PickWeightedMarkingId(IReadOnlyDictionary<string, MarkingPrototype> markings, IRobustRandom random)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
-
         if (markings.Count == 0)
             return null;
 
-        var sum = 0f;
-        foreach (var proto in markings.Values)
-            sum += Math.Max(0f, proto.RandomWeight);
+        var weights = markings.ToDictionary(m => m.Key, m => m.Value.RandomWeight);
 
-        if (sum <= 0f)
-            return random.Pick(markings.Keys.ToList());
-
-        var roll = random.NextFloat(sum);
-        foreach (var (id, proto) in markings)
-        {
-            roll -= Math.Max(0f, proto.RandomWeight);
-            if (roll <= 0f)
-                return id;
-        }
-
-        return markings.Last().Key;
+        return random.Pick(weights).Key;
     }
 
     #region Color Helpers
     // TODO: These are probably better off in Robust.Shared.Maths.Color
 
-    private static float RandomizeColor(float channel)
+    private static float RandomizeColor(float channel, IRobustRandom random)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
-        return MathHelper.Clamp01(channel + random.Next(-25, 25) / 100f);
+        return MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
     }
 
     /// <summary>
-    ///    Generates a complimentary colour palette for a provided
+    ///    Generates a complementary colour palette for a provided
     ///    colour by rotating a set amount of degrees around the
     ///    colour wheel, and then varying the value and saturation
     ///    slightly.
@@ -242,7 +224,7 @@ public sealed partial class HumanoidCharacterAppearance
     /// </returns>
     private static List<Color> GetComplementaryColors(Color color, float angle)
     {
-        var random = IoCManager.Resolve<IRobustRandom>();
+        var random = IoCManager.Resolve<IRobustRandom>(); // resolving random here so we don't need to pass it into every previous colour method
         var hsl = Color.ToHsl(color);
 
         // sorry about how messy these are, but to get all random values we need to reroll for positive and negative HSL.
@@ -252,16 +234,16 @@ public sealed partial class HumanoidCharacterAppearance
         hVal -= MathF.Floor(hVal);
         var positiveHSL = new Vector4(
             hVal,
-            MathHelper.Clamp01(hsl.Y + random.Next(-20, 0) / 100f),
-            MathHelper.Clamp01(hsl.Z + random.Next(-15, 16) / 100f),
+            MathHelper.Clamp01(hsl.Y + random.NextFloat(-0.2f, 0f)),
+            MathHelper.Clamp01(hsl.Z + random.NextFloat(-0.15f, 0.16f)),
             hsl.W);
 
         var hVal1 = hsl.X - angle;
         hVal1 += hVal1 <= 0f ? hVal1 + 0.360f : hVal1;
         var negativeHSL = new Vector4(
             hVal1,
-            MathHelper.Clamp01(hsl.Y + random.Next(-20, 0) / 100f),
-            MathHelper.Clamp01(hsl.Z + random.Next(-15, 16) / 100f),
+            MathHelper.Clamp01(hsl.Y + random.NextFloat(-0.2f, 0f)),
+            MathHelper.Clamp01(hsl.Z + random.NextFloat(-0.15f, 0.16f)),
             hsl.W);
 
         var c0 = Color.FromHsl(positiveHSL);
