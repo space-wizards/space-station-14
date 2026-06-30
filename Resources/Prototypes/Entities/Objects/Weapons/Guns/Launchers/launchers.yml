@@ -15,6 +15,7 @@
     size: Ginormous
   - type: StaticPrice
     price: 500
+  - type: SmartEquipPickupStorage
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
