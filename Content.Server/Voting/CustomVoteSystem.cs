@@ -31,7 +31,7 @@ namespace Content.Server.Voting
         /// <param name="title">the title of the vote</param>
         /// <param name="options">the list of options to vote from</param>
         /// <param name="players">list of players to show the vote for (all players if null)</param>
-        public void StartCustomVote(
+        public async void StartCustomVote(
             ICommonSession? initiator,
             bool showResultsInChat,
             float duration,
@@ -79,7 +79,7 @@ namespace Content.Server.Voting
             var voteLogId = await _dbManager.CustomVoteLogAdd(
                 title,
                 GameTicker.GetRoundId(_esm),
-                shell.Player?.UserId,
+                initiator?.UserId,
                 [..voteOptions.Options.Select(x => x.text)]);
 
             var webhookState = _voteWebhooks.CreateWebhookIfConfigured(voteOptions, _cfg.GetCVar(CCVars.DiscordVoteWebhook));
@@ -110,7 +110,7 @@ namespace Content.Server.Voting
                 await _dbManager.CustomVoteLogFinish(voteLogId, [..eventArgs.Votes]);
             };
 
-            vote.OnCancelled += _ =>
+            vote.OnCancelled += async _ =>
             {
                 _voteWebhooks.UpdateCancelledWebhookIfConfigured(webhookState);
                 await _dbManager.CustomVoteLogCancel(voteLogId);
