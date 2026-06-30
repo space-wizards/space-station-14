@@ -12,12 +12,12 @@ namespace Content.Server.Atmos.EntitySystems;
 /// Adds an action ability that will cause all flammable targets in a radius to ignite, also heals the owner
 /// of the component when used.
 /// </summary>
-public sealed class FirestarterSystem : SharedFirestarterSystem
+public sealed partial class FirestarterSystem : SharedFirestarterSystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     private readonly HashSet<Entity<FlammableComponent>> _flammables = new();
 

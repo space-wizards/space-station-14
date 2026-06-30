@@ -15,7 +15,6 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -25,27 +24,32 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Content.Shared.Tools.Systems;
+using Content.Shared.Tools.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen;
 
 /// <summary>
 /// Used to butcher some entities like monkeys.
 /// </summary>
-public sealed class SharedKitchenSpikeSystem : EntitySystem
+public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ISharedAdminLogManager _logger = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
@@ -89,7 +93,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out var butcherable) && butcherable.Type == ButcheringType.Spike)
+        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out _))
             return;
 
         args.Cancel();
@@ -128,8 +132,10 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || !victim.HasValue)
             return;
 
-        _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
-            ("target", Identity.Entity(victim.Value, EntityManager))),
+        var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+        _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+            ("target", Identity.Entity(victim.Value, EntityManager)),
+            ("quality", Loc.GetString(quality.Name))),
             ent,
             args.User,
             PopupType.Medium);
@@ -146,13 +152,15 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         args.Handled = true;
 
-        if (!TryComp<SharpComponent>(args.Used, out var sharp))
+        if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
-            _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
-                    ("target", Identity.Entity(victim.Value, EntityManager))),
-                    ent,
-                    args.User,
-                    PopupType.Medium);
+            var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+                ("target", Identity.Entity(victim.Value, EntityManager)),
+                ("quality", Loc.GetString(quality.Name))),
+                ent,
+                args.User,
+                PopupType.Medium);
 
             return;
         }
@@ -165,7 +173,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             args.User,
             PopupType.MediumCaution);
 
-        var delay = TimeSpan.FromSeconds(sharp.ButcherDelayModifier * butcherable.ButcherDelay);
+        var delay = TimeSpan.FromSeconds(tool.SpeedModifier * butcherable.ButcherDelay);
 
         if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;
@@ -335,13 +343,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         }
 
         _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);
-
-        _popupSystem.PopupClient(Loc.GetString("butcherable-knife-butchered-success",
-            ("target", Identity.Entity(args.Target.Value, EntityManager)),
-            ("knife", args.Used.Value)),
-            ent,
-            args.User,
-            PopupType.Medium);
 
         args.Handled = true;
     }

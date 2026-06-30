@@ -12,7 +12,7 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSystem<ThirstComponent, SatiateThirst>
 {
-    [Dependency] private readonly ThirstSystem _thirst = default!;
+    [Dependency] private ThirstSystem _thirst = default!;
     protected override void Effect(Entity<ThirstComponent> entity, ref EntityEffectEvent<SatiateThirst> args)
     {
         _thirst.ModifyThirst(entity, entity.Comp, args.Effect.Factor * args.Scale);
@@ -25,7 +25,7 @@ public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSyste
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSystem<HungerComponent, SatiateHunger>
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private HungerSystem _hunger = default!;
     protected override void Effect(Entity<HungerComponent> entity, ref EntityEffectEvent<SatiateHunger> args)
     {
         _hunger.ModifyHunger(entity, args.Effect.Factor * args.Scale, entity.Comp);

@@ -18,13 +18,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 /// See https://en.wikipedia.org/wiki/Pressure_regulator
 /// </summary>
 [UsedImplicitly]
-public sealed class GasPressureRegulatorSystem : SharedGasPressureRegulatorSystem
+public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegulatorSystem
 {
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSound = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

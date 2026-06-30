@@ -33,13 +33,13 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public sealed class AfkManager : IAfkManager
+    public sealed partial class AfkManager : IAfkManager
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IConsoleHost _consoleHost = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
 
         private readonly Dictionary<ICommonSession, TimeSpan> _lastActionTimes = new();
 

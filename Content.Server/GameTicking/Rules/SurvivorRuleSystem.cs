@@ -14,15 +14,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
+public sealed partial class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
 {
-    [Dependency] private readonly AntagSelectionSystem _antag = default!;
-    [Dependency] private readonly EmergencyShuttleSystem _eShuttle = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly TargetSystem _target = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
+    [Dependency] private AntagSelectionSystem _antag = default!;
+    [Dependency] private EmergencyShuttleSystem _eShuttle = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private TargetSystem _target = default!;
+    [Dependency] private TransformSystem _xform = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 

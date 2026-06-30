@@ -74,7 +74,7 @@ namespace Content.Client.Atmos.UI
             _window.SetTankPressure(cast.TankPressure);
             _window.SetReleasePressureRange(component.MinReleasePressure, component.MaxReleasePressure);
             _window.SetReleasePressure(component.ReleasePressure);
-            _window.SetReleaseValve(component.ReleaseValve);
+            _window.SetReleaseValve(component.ReleaseValveOpen);
         }
 
         protected override void Dispose(bool disposing)

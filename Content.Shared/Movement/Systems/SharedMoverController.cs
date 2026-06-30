@@ -34,36 +34,36 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public abstract partial class SharedMoverController : VirtualController
 {
-    [Dependency] private   readonly IConfigurationManager _configManager = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly InventorySystem _inventory = default!;
-    [Dependency] private   readonly MobStateSystem _mobState = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _container = default!;
-    [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
-    [Dependency] private   readonly TagSystem _tags = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tags = default!;
 
-    protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
-    protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
-    protected EntityQuery<FTLComponent> FTLQuery;
-    protected EntityQuery<InputMoverComponent> MoverQuery;
-    protected EntityQuery<MapComponent> MapQuery;
-    protected EntityQuery<MapGridComponent> MapGridQuery;
-    protected EntityQuery<MobMoverComponent> MobMoverQuery;
-    protected EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
-    protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
-    protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
-    protected EntityQuery<PhysicsComponent> PhysicsQuery;
-    protected EntityQuery<PilotComponent> PilotQuery;
-    protected EntityQuery<PreventPilotComponent> PreventPilotQuery;
-    protected EntityQuery<RelayInputMoverComponent> RelayQuery;
-    protected EntityQuery<PullableComponent> PullableQuery;
-    protected EntityQuery<TransformComponent> XformQuery;
+    [Dependency] protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery = default!;
+    [Dependency] protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery = default!;
+    [Dependency] protected EntityQuery<FTLComponent> FTLQuery = default!;
+    [Dependency] protected EntityQuery<InputMoverComponent> MoverQuery = default!;
+    [Dependency] protected EntityQuery<MapComponent> MapQuery = default!;
+    [Dependency] protected EntityQuery<MapGridComponent> MapGridQuery = default!;
+    [Dependency] protected EntityQuery<MobMoverComponent> MobMoverQuery = default!;
+    [Dependency] protected EntityQuery<MovementRelayTargetComponent> RelayTargetQuery = default!;
+    [Dependency] protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery = default!;
+    [Dependency] protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery = default!;
+    [Dependency] protected EntityQuery<PhysicsComponent> PhysicsQuery = default!;
+    [Dependency] protected EntityQuery<PilotComponent> PilotQuery = default!;
+    [Dependency] protected EntityQuery<PreventPilotComponent> PreventPilotQuery = default!;
+    [Dependency] protected EntityQuery<RelayInputMoverComponent> RelayQuery = default!;
+    [Dependency] protected EntityQuery<PullableComponent> PullableQuery = default!;
+    [Dependency] protected EntityQuery<TransformComponent> XformQuery = default!;
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
@@ -71,6 +71,8 @@ public abstract partial class SharedMoverController : VirtualController
     private float _minDamping;
     private float _airDamping;
     private float _offGridDamping;
+
+    private const LookupFlags _touchingFlags = LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Static;
 
     /// <summary>
     /// Cache the mob movement calculation to re-use elsewhere.
@@ -83,23 +85,6 @@ public abstract partial class SharedMoverController : VirtualController
     {
         UpdatesBefore.Add(typeof(TileFrictionController));
         base.Initialize();
-
-        MoverQuery = GetEntityQuery<InputMoverComponent>();
-        MobMoverQuery = GetEntityQuery<MobMoverComponent>();
-        ModifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
-        RelayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
-        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
-        RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
-        PullableQuery = GetEntityQuery<PullableComponent>();
-        XformQuery = GetEntityQuery<TransformComponent>();
-        NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
-        CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
-        FootstepModifierQuery = GetEntityQuery<FootstepModifierComponent>();
-        MapGridQuery = GetEntityQuery<MapGridComponent>();
-        MapQuery = GetEntityQuery<MapComponent>();
-        FTLQuery = GetEntityQuery<FTLComponent>();
-        PilotQuery = GetEntityQuery<PilotComponent>();
-        PreventPilotQuery = GetEntityQuery<PreventPilotComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
         SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
@@ -166,12 +151,6 @@ public abstract partial class SharedMoverController : VirtualController
             if (relayTargetMover.TargetRelativeRotation != mover.TargetRelativeRotation)
             {
                 relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
-                dirtied = true;
-            }
-
-            if (relayTargetMover.CanMove != mover.CanMove)
-            {
-                relayTargetMover.CanMove = mover.CanMove;
                 dirtied = true;
             }
 
@@ -270,7 +249,7 @@ public abstract partial class SharedMoverController : VirtualController
 
             // If we're not on a grid, and not able to move in space check if we're close enough to a grid to touch.
             if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                touching |= IsAroundCollider(_lookup, (uid, physicsComponent, mobMover, xform));
+                touching |= IsAroundCollider((uid, physicsComponent, mobMover, xform));
 
             // If we're touching then use the weightless values
             if (touching)
@@ -483,26 +462,26 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Used for weightlessness to determine if we are near a wall.
     /// </summary>
-    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
+    private bool IsAroundCollider(Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
     {
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
 
         _aroundColliderSet.Clear();
-        lookupSystem.GetEntitiesIntersecting(transform.MapID, enlargedAABB, _aroundColliderSet);
+        _lookup.GetEntitiesIntersecting(transform.MapID, enlargedAABB, _aroundColliderSet, _touchingFlags);
         foreach (var otherEntity in _aroundColliderSet)
         {
-            if (otherEntity == uid)
-                continue; // Don't try to push off of yourself!
+            if (otherEntity == uid || _transform.IsParentOf(transform, otherEntity))
+                continue; // Don't try to push off of yourself or your children!
 
             if (!PhysicsQuery.TryComp(otherEntity, out var otherCollider))
                 continue;
 
             // Only allow pushing off of anchored things that have collision.
+            // NOTE: collision is one-way - we want the mover to push off (collide with) walls, not vice versa (consider bullets and lasers)
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
-                (collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
-                (otherCollider.CollisionMask & collider.CollisionLayer) == 0 ||
+                (collider.CollisionMask & otherCollider.CollisionLayer) == 0 ||
                 PullableQuery.TryComp(otherEntity, out var pullable) && pullable.BeingPulled)
             {
                 continue;

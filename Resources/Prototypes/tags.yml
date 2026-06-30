@@ -319,6 +319,9 @@
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
+  id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
+
+- type: Tag
   id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
 
 - type: Tag
@@ -353,9 +356,6 @@
 
 - type: Tag
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
-
-- type: Tag
-  id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
@@ -864,6 +864,9 @@
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
 
 - type: Tag
+  id: LightReplacer # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
+
+- type: Tag
   id: Lime # CargoBounty: BountyLime
 
 ## M ##
@@ -1269,6 +1272,9 @@
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
+  id: Sheep # Reproductive partner key
+
+- type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
@@ -1440,11 +1446,17 @@
   id: ToySidearm # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
+  id: ToyKnife # Storage whitelist: ClothingShoesClownBase
+
+- type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.
             # CargoBounty: BountyTrash. SpecialDigestible: OrganVoxStomach
 
 - type: Tag
   id: TrashBag # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
+
+- type: Tag
+  id: TrashBagBlue # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
   id: Truncheon # Storage whitelist: ClothingBeltSecurity

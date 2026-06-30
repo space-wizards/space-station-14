@@ -31,12 +31,13 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests.Tests.Interaction;
 
 /// <summary>
-/// This is a base class designed to make it easier to test various interactions like construction & DoAfters.
-///
+/// This is a base class designed to make it easier to test various interactions like construction &amp; DoAfters.
+/// </summary>
+/// <remarks>
 /// For construction tests, the interactions are intentionally hard-coded and not pulled automatically from the
 /// construction graph, even though this may be a pain to maintain. This is because otherwise these tests could not
 /// detect errors in the graph pathfinding (e.g., infinite loops, missing steps, etc).
-/// </summary>
+/// </remarks>
 [TestFixture]
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
