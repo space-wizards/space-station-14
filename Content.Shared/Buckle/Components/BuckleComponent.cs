@@ -48,12 +48,6 @@ public sealed partial class BuckleComponent : Component
     public TimeSpan Delay = TimeSpan.FromSeconds(0.25f);
 
     /// <summary>
-    /// Whether or not this can buckled by pacifists
-    /// </summary>
-    [RegisterComponent, NetworkedComponent]
-    public sealed partial class PacifismDisallowedBuckleComponent : Component;
-
-    /// <summary>
     /// The time that this entity buckled at.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
