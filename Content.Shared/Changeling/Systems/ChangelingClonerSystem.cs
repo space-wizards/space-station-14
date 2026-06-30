@@ -25,7 +25,6 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedCloningSystem _cloning = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
     [Dependency] private SharedForensicsSystem _forensics = default!;
@@ -239,7 +238,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(target))
             return; // cloning only works for humanoids at the moment
 
-        if (!_prototype.Resolve(ent.Comp.Settings, out var settings))
+        if (!ProtoMan.Resolve(ent.Comp.Settings, out var settings))
             return;
 
         _audio.PlayPredicted(ent.Comp.InjectSound, target, user);

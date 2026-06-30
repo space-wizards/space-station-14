@@ -79,6 +79,7 @@
   - type: GuideHelp
     guides:
     - MedicalDoctor
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: Bed
