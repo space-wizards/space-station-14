@@ -118,14 +118,14 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
             return;
 
         // set the parameters
-        _shader?.SetParameter("positions", _positions);
-        _shader?.SetParameter("waveSpeeds", _waveSpeeds);
-        _shader?.SetParameter("downScales", _downScales);
-        _shader?.SetParameter("waveStrengths", _waveStrengths);
-        _shader?.SetParameter("fades", _fades);
-        _shader?.SetParameter("times", _times);
-        _shader?.SetParameter("count", _currentCount);
-        _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _shader.SetParameter("positions", _positions);
+        _shader.SetParameter("waveSpeeds", _waveSpeeds);
+        _shader.SetParameter("downScales", _downScales);
+        _shader.SetParameter("waveStrengths", _waveStrengths);
+        _shader.SetParameter("fades", _fades);
+        _shader.SetParameter("times", _times);
+        _shader.SetParameter("count", _currentCount);
+        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
         // finally do the rendering
         var worldHandle = args.WorldHandle;
