@@ -7,7 +7,7 @@ namespace Content.Shared.Screech;
 /// This component by itself has no stunning propriety; it is solely for the display of screeches.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState(true)] // true so that raiseAfterAutoHandleState is true and it can be listened to on the client to manage the overlay
+[AutoGenerateComponentState(true)]
 public sealed partial class ScreechShockWaveComponent : Component
 {
     /// <summary>
