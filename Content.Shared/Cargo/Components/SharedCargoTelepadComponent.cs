@@ -17,12 +17,12 @@ public sealed partial class CargoTelepadComponent : Component
     public List<CargoOrderData> CurrentOrders = new();
 
     /// <summary>
-    /// The actual amount of time it takes to teleport from the telepad
+    /// The delay between each teleport in seconds
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("delay", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan TeleportDelay = TimeSpan.FromSeconds(5);
 
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [ViewVariables]
     public TimeSpan NextTeleport;
 
     [DataField("currentState")]

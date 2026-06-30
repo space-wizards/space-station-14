@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Cargo;
-using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Station.Components;
 using Robust.Shared.Prototypes;
@@ -59,12 +58,10 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
 /// Event broadcast before a cargo order is fulfilled, allowing alternate systems to fulfill the order.
 /// </summary>
 [ByRefEvent]
-public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station, CargoOrderData Order, Entity<CargoOrderConsoleComponent> OrderConsole)
+public record struct FulfillCargoOrderEvent(Entity<StationDataComponent> Station, CargoOrderData Order)
 {
-    public Entity<CargoOrderConsoleComponent> OrderConsole = OrderConsole;
-    public Entity<StationDataComponent> Station = Station;
-    public CargoOrderData Order = Order;
-
+    public readonly Entity<StationDataComponent> Station = Station;
+    public readonly CargoOrderData Order = Order;
     public EntityUid? FulfillmentEntity;
     public bool Handled = false;
 }

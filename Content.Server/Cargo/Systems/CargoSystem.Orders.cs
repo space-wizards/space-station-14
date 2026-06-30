@@ -218,7 +218,7 @@ namespace Content.Server.Cargo.Systems
                 order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
             }
 
-            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
+            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order);
             RaiseLocalEvent(ref ev);
             ev.FulfillmentEntity ??= station.Value;
 
