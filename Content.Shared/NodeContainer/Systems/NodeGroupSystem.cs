@@ -6,6 +6,7 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -17,6 +18,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private INetManager _net = default!;
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
     [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
@@ -169,7 +171,8 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (PauseUpdating)
+        // TODO implement logic to split node groups into predicted/unpredicted ones
+        if (_net.IsClient || PauseUpdating)
             return;
 
         DoGroupUpdates();
@@ -386,7 +389,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         {
             DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-            var reachableNodeHandler = _nodeHandlers[node.GetType()];
+            var reachableNodeHandler = _nodeHandlers[reachable.GetType()];
             if (reachable.NodeGroupID == node.NodeGroupID
                 && reachableNodeHandler.Connectable(reachable))
             {

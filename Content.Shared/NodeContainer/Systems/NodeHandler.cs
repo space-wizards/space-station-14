@@ -47,6 +47,12 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
     [Dependency] protected EntityQuery<NodeContainerComponent> NodeQuery = default!;
     [Dependency] protected EntityQuery<MapGridComponent> MapGridQuery = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        Register();
+    }
+
     public virtual void Register()
     {
         NodeGroupSys.NodeHandlers.Add(NodeType, this);

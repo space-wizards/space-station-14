@@ -51,6 +51,12 @@ public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHand
 {
     [Dependency] protected NodeGroupSystem NodeGroupSys = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        RegisterHandler();
+    }
+
     /// <summary>
     /// Registers this handler in the <see cref="NodeGroupSystem"/> by filling in
     /// <see cref="NodeGroupSystem.NodeGroupTypes"/> and <see cref="NodeGroupSystem.NodeGroupHandlers"/>.
