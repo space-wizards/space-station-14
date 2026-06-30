@@ -7,7 +7,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Kitchen.Components;
 
@@ -35,10 +34,10 @@ public sealed partial class MicrowaveComponent : Component
     public float CookTimeMultiplier = 1;
 
     /// <summary>
-    ///     A multiplier for heat added to the contents of a microwave every frame.
+    ///     A multiplier for heat added to the contents of a microwave every cook cycle.
     /// </summary>
     /// <remarks>
-    ///     The formula is (frame time * BaseHeatMultiplier).
+    ///     The formula is (elapsed time between cycles * BaseHeatMultiplier).
     ///     This is multiplied by <see cref="ObjectHeatMultiplier"/> when applied to entities
     ///     that have a <see cref="TemperatureComponent"/> (as opposed to solutions).
     /// </remarks>
@@ -60,7 +59,8 @@ public sealed partial class MicrowaveComponent : Component
     [DataField("failureResult")]
     public EntProtoId BadRecipeEntityId = "FoodBadRecipe";
 
-    #region  audio
+    #region audio
+
     /// <summary>
     ///     A sound that is played when the microwave is activated.
     /// </summary>
@@ -84,16 +84,17 @@ public sealed partial class MicrowaveComponent : Component
     public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
     /// <summary>
-    ///     An audio stream for the microwave's "cooking" hum.
-    /// </summary>
-    public EntityUid? PlayingStream;
-
-    /// <summary>
     ///     The humming sound played when a microwave is actively cooking.
     /// </summary>
     [DataField]
     public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
-    #endregion
+
+    #endregion audio
+
+    /// <summary>
+    ///     An audio stream for the microwave's "cooking" hum.
+    /// </summary>
+    public EntityUid? PlayingStream;
 
     /// <summary>
     ///     Whether or not this microwave is broken.
@@ -109,10 +110,10 @@ public sealed partial class MicrowaveComponent : Component
     public ProtoId<SinkPortPrototype> OnPort = "On";
 
     /// <summary>
-    ///     This is a fixed offset of 5.
-    ///     The cook times for all recipes should be divisible by 5, with a minimum of 1 second.
+    ///     The currently-selected cook time, in seconds. This must be a multiple of 5 (or 0).
     /// </summary>
     /// <remarks>
+    ///     The cook times for all recipes should be divisible by 5, with a minimum of 1 second.
     ///     For right now, I don't think any recipe cook time should be greater than 60 seconds.
     /// </remarks>
     [DataField, Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
