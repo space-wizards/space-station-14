@@ -39,6 +39,13 @@ namespace Content.Shared.Cargo
         [DataField]
         public string Reason { get; private set; }
         public  bool Approved;
+
+        /// <summary>
+        /// The console which approved the order, used for telepad linking
+        /// </summary>
+        [ViewVariables]
+        public NetEntity? ApprovingConsole { get; set; }
+
         [DataField]
         public string? Approver;
 
