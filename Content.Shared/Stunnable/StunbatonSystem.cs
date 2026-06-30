@@ -31,8 +31,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     /// </summary>
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
-        if (!_itemToggle.IsActivated(entity.Owner) ||
-        !TryComp<BatteryComponent>(entity, out var battery) || !_battery.TryUseCharge((entity, battery), entity.Comp.EnergyPerUse))
+        if (!_itemToggle.IsActivated(entity.Owner) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse))
         {
             args.Cancelled = true;
         }
