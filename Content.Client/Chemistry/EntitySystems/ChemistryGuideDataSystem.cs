@@ -4,7 +4,6 @@ using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Body;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
@@ -53,12 +52,12 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
     {
         // this doesn't check what prototypes are being reloaded because, to be frank, we use a lot of them.
         _reagentSources.Clear();
-        foreach (var reagent in PrototypeManager.EnumeratePrototypes<ReagentPrototype>())
+        foreach (var reagent in ProtoMan.EnumeratePrototypes<ReagentPrototype>())
         {
             _reagentSources.Add(reagent.ID, new());
         }
 
-        foreach (var reaction in PrototypeManager.EnumeratePrototypes<ReactionPrototype>())
+        foreach (var reaction in ProtoMan.EnumeratePrototypes<ReactionPrototype>())
         {
             if (!reaction.Source)
                 continue;
@@ -72,7 +71,7 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             }
         }
 
-        foreach (var gas in PrototypeManager.EnumeratePrototypes<GasPrototype>())
+        foreach (var gas in ProtoMan.EnumeratePrototypes<GasPrototype>())
         {
             if (gas.Reagent == null)
                 continue;
@@ -85,7 +84,7 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
 
         // store the names of the entities used so we don't get repeats in the guide.
         var usedNames = new List<string>();
-        foreach (var entProto in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var entProto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;

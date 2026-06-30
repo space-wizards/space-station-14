@@ -45,16 +45,11 @@ namespace Content.Server.Salvage
         [Dependency] private ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private StationSystem _station = default!;
         [Dependency] private UserInterfaceSystem _ui = default!;
-
-        private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
+        [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _gridQuery = GetEntityQuery<MapGridComponent>();
-            _xformQuery = GetEntityQuery<TransformComponent>();
 
             InitializeExpeditions();
             InitializeMagnet();
