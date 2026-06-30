@@ -51,7 +51,7 @@ public sealed partial class BuckleComponent : Component
     /// Whether or not this can buckled by pacifists
     /// </summary>
     [DataField]
-    public bool PacifismAllowedMode = false;
+    public bool PacifismAllowedMode = true;
 
     /// <summary>
     /// The time that this entity buckled at.
@@ -123,7 +123,7 @@ public record struct UnstrapAttemptEvent(
 /// Event raised on the user to see if they can buckle.
 /// </summary>
 [ByRefEvent]
-public record struct BuckleOtherAttemptEvent(EntityUid Target, bool Cancelled = false);
+public record struct BuckleOtherAttemptEvent(EntityUid Target, EntityUid Seat, bool Cancelled = false);
 
 
 /// <summary>

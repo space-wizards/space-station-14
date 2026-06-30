@@ -76,11 +76,8 @@ public sealed partial class PacificationSystem : EntitySystem
         ShowPopup(ent, args.Used, "pacified-cannot-fire-gun");
         args.Cancel();
     }
-
-
     private void OnOtherBuckleAttempt(Entity<PacifiedComponent> user, ref BuckleOtherAttemptEvent args)
     {
-        // Disallow buckling
         ShowPopup(user, args.Target,  "pacified-cannot-buckle");
         args.Cancelled = true;
         if (args.Target == user.Owner)
