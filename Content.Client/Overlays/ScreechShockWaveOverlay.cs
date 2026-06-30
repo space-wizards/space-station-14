@@ -59,7 +59,12 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     {
         if (args.Viewport.Eye == null || _xformSystem is null && !_entMan.TrySystem(out _xformSystem))
             return false;
+
         _currentCount = 0;
+
+        // check for removal of instances whose times are elapsed
+        _cached.RemoveAll((k) => (float)(_timing.CurTime - k.Item2.InitTime).TotalSeconds > k.Item2.FadeTime);
+
         foreach (var cached in _cached)
         {
             // check if its alive (we don't remove it now, it'll be removed later anyway)
@@ -104,8 +109,6 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
             }
         }
 
-        // check for removal of instances whose times are elapsed
-        _cached.RemoveAll((k) => (float)(_timing.CurTime - k.Item2.InitTime).TotalSeconds > k.Item2.FadeTime);
         return _currentCount != 0;
     }
 
