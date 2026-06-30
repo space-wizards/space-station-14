@@ -66,20 +66,19 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         // check for removal of instances whose times are elapsed
         _cached.RemoveAll((k) => (float)(_timing.CurTime - k.Item2.InitTime).TotalSeconds > k.Item2.FadeTime);
 
-        foreach (var cached in _cached)
+        foreach (var (entityUid, distortion) in _cached)
         {
             // check if its alive (we don't remove it now, it'll be removed later anyway)
-            if (!_entMan.EntityExists(cached.Item1))
+            if (!_entMan.EntityExists(entityUid))
                 continue;
 
             // if it's not on the same map, we don't care
-            var xform = _entMan.GetComponent<TransformComponent>(cached.Item1);
+            var xform = _entMan.GetComponent<TransformComponent>(entityUid);
             if (xform.MapID != args.MapId)
                 continue;
 
             // shorthand
-            var distortion = cached.Item2;
-            var mapPos = _xformSystem.GetWorldPosition(cached.Item1);
+            var mapPos = _xformSystem.GetWorldPosition(entityUid);
             var tempCoords = args.Viewport.WorldToLocal(mapPos);
 
             // normalized coords, 0 - 1 plane. This is pure hell, we subtract 1 because fragment calculates from the bottom and local goes from the top of the viewport
