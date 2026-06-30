@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Kitchen.Components;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
@@ -18,7 +19,21 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     protected virtual void RollMalfunction(Entity<MicrowaveComponent> ent)
-    { }
+    {
+        var comp = ent.Comp;
+
+        if (SharedRandomExtensions.PredictedProb(_timing, comp.ExplosionChance, GetNetEntity(ent)))
+        {
+            Explode(ent);
+            return;
+        }
+    }
+
+    protected virtual void Explode(Entity<MicrowaveComponent> ent)
+    {
+        ent.Comp.Broken = true;
+        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+    }
 
     /// <summary>
     ///     Start up the microwave. This processes each item in the microwave to experience microwave "on-cooking"

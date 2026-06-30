@@ -110,14 +110,12 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     protected override void RollMalfunction(Entity<MicrowaveComponent> ent)
     {
         base.RollMalfunction(ent);
-        var comp = ent.Comp;
 
-        if (_random.Prob(comp.ExplosionChance))
-        {
-            Explode(ent);
+        // this microwave sploded
+        if (ent.Comp.Broken)
             return;
-        }
 
+        var comp = ent.Comp;
         if (_random.Prob(comp.LightningChance))
             _lightning.ShootRandomLightnings(ent, 1.0f, 2, comp.MalfunctionSpark, triggerLightningEvents: false);
     }
@@ -126,12 +124,12 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
-    public void Explode(Entity<MicrowaveComponent> ent)
+    protected override void Explode(Entity<MicrowaveComponent> ent)
     {
-        ent.Comp.Broken = true; // Make broken so we stop processing stuff
-        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
+        base.Explode(ent);
 
         _explosion.TriggerExplosive(ent);
+
         if (TryComp<MachineComponent>(ent, out var machine))
         {
             _container.CleanContainer(machine.BoardContainer);
