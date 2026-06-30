@@ -98,10 +98,7 @@ public sealed partial class CargoSystem
 
             telepad.CurrentOrders.RemoveAll(order => order.NumDispatched >= order.OrderQuantity);
 
-            if (telepad.CurrentOrders.Count == 0)
-                continue;
-
-            if (!TryGetLinkedConsoles(uid, out var consoles))
+            if (telepad.CurrentOrders.Count == 0 || !TryGetLinkedConsoles(uid, out var consoles))
                 continue;
 
             var currentOrder = telepad.CurrentOrders.First();
@@ -142,9 +139,6 @@ public sealed partial class CargoSystem
             !TryComp<StationCargoOrderDatabaseComponent>(station, out var db)
             || !TryComp<StationDataComponent>(station, out var data)
         )
-            return;
-
-        if (!TryGetLinkedConsoles(ent, out var console))
             return;
 
         foreach (var order in ent.Comp.CurrentOrders)
