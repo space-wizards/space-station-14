@@ -15,7 +15,6 @@ public sealed partial class ScreechShockWaveSystem : EntitySystem
 
     public override void Initialize()
     {
-        // AutoHandle fires once the component's fields have been networked
         SubscribeLocalEvent<ScreechShockWaveComponent, AfterAutoHandleStateEvent>(OnScreechShockWaveStateHandled);
         SubscribeLocalEvent<ScreechShockWaveComponent, ComponentRemove>(OnScreechShockWaveRemoved);
     }
