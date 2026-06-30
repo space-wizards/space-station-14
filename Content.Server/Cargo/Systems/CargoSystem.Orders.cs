@@ -76,7 +76,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
                 return;
 
-            if (!_protoMan.TryIndex(slip.Product, out var product))
+            if (!ProtoMan.TryIndex(slip.Product, out var product))
             {
                 Log.Error($"Tried to add invalid cargo product {slip.Product} as order!");
                 return;
@@ -204,13 +204,13 @@ namespace Content.Server.Cargo.Systems
 
             // Find our order again. It might have been dispatched or approved already
             var order = orderDatabase.Orders.Find(order => args.OrderId == order.OrderId && !order.Approved);
-            if (order == null || !_protoMan.Resolve(order.Account, out var account))
+            if (order == null || !ProtoMan.Resolve(order.Account, out var account))
             {
                 return;
             }
 
             // Invalid order
-            if (!_protoMan.Resolve(order.Product, out var product))
+            if (!ProtoMan.Resolve(order.Product, out var product))
             {
                 ConsolePopup(args.Actor, Loc.GetString("cargo-console-invalid-product"));
                 PlayDenySound(uid, component);
@@ -348,7 +348,7 @@ namespace Content.Server.Cargo.Systems
             CargoProductPrototype product
         )
         {
-            if (!_protoMan.Resolve(component.Account, out var account))
+            if (!ProtoMan.Resolve(component.Account, out var account))
                 return;
 
             if (Timing.CurTime < component.NextPrintTime)
@@ -403,7 +403,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp<StationBankAccountComponent>(stationUid, out var bank))
                 return;
 
-            if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
+            if (!ProtoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
             {
                 Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
                 return;
@@ -694,7 +694,7 @@ namespace Content.Server.Cargo.Systems
         /// </summary>
         private bool FulfillOrder(CargoOrderData order, EntityCoordinates spawn, string? paperProto)
         {
-            if (!_protoMan.Resolve(order.Product, out var product))
+            if (!ProtoMan.Resolve(order.Product, out var product))
                 return false;
 
             // Create the item itself
@@ -734,7 +734,7 @@ namespace Content.Server.Cargo.Systems
                 var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderId));
                 _metaSystem.SetEntityName(printed, val);
 
-                var accountProto = _protoMan.Index(order.Account);
+                var accountProto = ProtoMan.Index(order.Account);
                 _paperSystem.SetContent(
                     (printed, paper),
                     Loc.GetString(
@@ -784,7 +784,7 @@ namespace Content.Server.Cargo.Systems
 
             // Note that a market must be both on the station and on the console to be available.
             var markets = ent.Comp.AllowedGroups.Intersect(db.Markets).ToList();
-            foreach (var product in _protoMan.EnumeratePrototypes<CargoProductPrototype>())
+            foreach (var product in ProtoMan.EnumeratePrototypes<CargoProductPrototype>())
             {
                 if (!markets.Contains(product.Group))
                     continue;

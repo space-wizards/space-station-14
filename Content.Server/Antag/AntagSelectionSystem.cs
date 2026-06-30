@@ -148,7 +148,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (ent.Comp.Rule is not { } rule || ent.Comp.Definition is not { } proto)
             return;
 
-        if (!Proto.Resolve(proto, out var def))
+        if (!ProtoMan.Resolve(proto, out var def))
             return;
 
         if (!Exists(rule) || !RuleQuery.TryComp(rule, out var select))
@@ -304,7 +304,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(antag.Proto, out var proto))
+            if (!ProtoMan.Resolve(antag.Proto, out var proto))
                 continue;
 
             // We do it this way in case our resolve fails.
@@ -323,7 +323,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
         foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(antag.Proto, out var definition))
+            if (!ProtoMan.Resolve(antag.Proto, out var definition))
                 continue;
 
             // We do it this way in case our resolve fails.
@@ -723,7 +723,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         foreach (var (proto, set) in gameRule.Comp.PreSelectedSessions)
         {
             // How did we even get here?
-            if (!Proto.Resolve(proto, out var def))
+            if (!ProtoMan.Resolve(proto, out var def))
                 continue;
 
             foreach (var session in set)
