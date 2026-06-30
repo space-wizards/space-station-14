@@ -95,10 +95,10 @@ public sealed partial class EntitySpawnVariationPass : EntityEffectBase<EntitySp
     ///     Number of tiles before we spawn one entity on average.
     /// </summary>
     [DataField]
-    public float TilesPerEntityAverage = 120f;
+    public float TilesPerEntityAverage = 50f;
 
     [DataField]
-    public float TilesPerEntityStdDev = 5f;
+    public float TilesPerEntityStdDev = 7f;
 
     /// <summary>
     ///     Spawn entries for each chosen location.
