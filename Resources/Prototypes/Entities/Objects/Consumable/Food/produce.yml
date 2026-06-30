@@ -2811,8 +2811,8 @@
         - MobLayer
 
 - type: entity
-  name: sunion
-  description: Shouldn't it be spelt with a u...?
+  name: sonion
+  description: SON!!
   parent: [ SolutionCryo, ImpactGrenadeBase, ProduceBase, BaseMajorContraband ]
   id: FoodSunion
   components:
