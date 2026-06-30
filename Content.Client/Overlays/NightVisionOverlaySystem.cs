@@ -23,8 +23,20 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
         if (component.Components.Count <= 0)
             return;
 
-        var comp = component.Components[0];
-        _overlay = new NightVisionOverlay(comp.Color, comp.NoiseAmount, comp.NoiseMultiplier);
+        // Find the component with the lowest noise.
+        NightVisionComponent? best = null;
+        var bestNoise = float.MaxValue;
+        foreach (var comp in component.Components)
+        {
+            var noise = comp.NoiseAmount * comp.NoiseMultiplier;
+            if (noise < bestNoise)
+            {
+                bestNoise = noise;
+                best = comp;
+            }
+        }
+
+        _overlay = new NightVisionOverlay(best!.Color, best.NoiseAmount, best.NoiseMultiplier);
         _overlayMan.AddOverlay(_overlay);
     }
 
