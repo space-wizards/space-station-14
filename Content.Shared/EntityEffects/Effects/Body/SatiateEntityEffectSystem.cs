@@ -44,7 +44,7 @@ public sealed partial class Satiate : EntityEffectBase<Satiate>
             "entity-effect-guidebook-satiate",
             ("chance", Probability),
             ("relative", Factor / AverageSatiation),
-            ("type", Loc.GetString(prototype.Index(SatiationType).Name))
+            ("type", prototype.Index(SatiationType).Name)
         );
     }
 }

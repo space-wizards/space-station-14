@@ -66,7 +66,7 @@ public sealed partial class FatExtractorComponent : Component
     public EntityUid? Stream;
 
     /// <summary>
-    /// A minium hunger threshold for extracting nutrition, as specified by a <see cref="SatiationPrototype.Keys"/>.
+    /// A minium hunger threshold for extracting nutrition, as specified by a <see cref="SatiationPrototype.Thresholds"/>.
     /// Ignored when emagged.
     /// </summary>
     [DataField(required: true)]

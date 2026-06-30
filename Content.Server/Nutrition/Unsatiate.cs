@@ -5,6 +5,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition;
 
@@ -14,6 +15,7 @@ namespace Content.Server.Nutrition;
 [AdminCommand(AdminFlags.Debug)]
 public sealed partial class Unsatiate : LocalizedEntityCommands
 {
+    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private SatiationSystem _satiation = default!;
 
     public override string Command => "unsatiate";
@@ -67,7 +69,7 @@ public sealed partial class Unsatiate : LocalizedEntityCommands
         // Check all of the types given before modifying any of them.
         foreach (var arg in args)
         {
-            if (_satiation.GetTypeOrNull(arg) is { } satiationType && entity.Comp.Has(satiationType))
+            if (_protoMan.TryIndex<SatiationPrototype>(arg, out var satiationType) && entity.Comp.Has(satiationType.ID))
                 continue;
 
             shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",

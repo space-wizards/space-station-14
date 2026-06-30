@@ -15,6 +15,9 @@ public sealed partial class SatiationTypePrototype : IPrototype
     /// <summary>
     /// The localization of the name of this type of satiation.
     /// </summary>
-    [DataField]
-    public LocId Name { get; private set; }
+    [DataField("name")]
+    public LocId NameLoc;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string Name => Loc.GetString(NameLoc);
 }

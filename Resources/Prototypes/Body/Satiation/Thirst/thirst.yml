@@ -2,7 +2,7 @@
   id: NormalSatiationThirst
   baseDecayRate: 0.1
   maximumValue: 600
-  keys:
+  thresholds:
     Overhydrated: 600
     Okay: 450
     Thirsty: 300
@@ -32,7 +32,7 @@
   parent: NormalSatiationThirst
   baseDecayRate: 0.04
   maximumValue: 35
-  keys:
+  thresholds:
     Overhydrated: 35
     Okay: 25
     Thirsty: 15
@@ -49,7 +49,7 @@
   parent: NormalSatiationThirst
   baseDecayRate: 0.04
   maximumValue: 200
-  keys:
+  thresholds:
     Overhydrated: 200
     Okay: 150
     Thirsty: 100

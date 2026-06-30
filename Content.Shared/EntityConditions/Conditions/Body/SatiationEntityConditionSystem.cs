@@ -66,6 +66,6 @@ public sealed partial class SatiationCondition : EntityConditionBase<SatiationCo
         return Loc.GetString("entity-condition-guidebook-total-satiation",
             ("max", float.IsPositiveInfinity(Max) ? int.MaxValue : Max),
             ("min", Min),
-            ("type", Loc.GetString(prototype.Index(SatiationType).Name)));
+            ("type", prototype.Index(SatiationType).Name));
     }
 }

@@ -2,7 +2,7 @@
   id: NormalSatiationHunger
   baseDecayRate: 0.01666666666
   maximumValue: 200
-  keys:
+  thresholds:
     Overfed: 200
     Okay: 150
     Peckish: 100
@@ -30,7 +30,7 @@
 - type: satiation
   id: SimpleMobBaseHunger
   parent: NormalSatiationHunger
-  keys: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
+  thresholds: # only animals and rats are derived from this prototype so let's override it here and in rats' proto
     Overfed: 100
     Okay: 50
     Peckish: 25
@@ -41,7 +41,7 @@
 - type: satiation
   id: SnailHunger
   parent: SimpleMobBaseHunger
-  keys:
+  thresholds:
     Overfed: 35
     Okay: 25
     Peckish: 15
@@ -57,7 +57,7 @@
 - type: satiation
   id: MouseHunger
   parent: SimpleMobBaseHunger
-  keys:
+  thresholds:
     Overfed: 35
     Okay: 25
     Peckish: 15
@@ -79,7 +79,7 @@
 - type: satiation
   id: RegalRatHunger
   parent: SimpleMobBaseHunger
-  keys:
+  thresholds:
     Overfed: 200
     Okay: 150
     Peckish: 100

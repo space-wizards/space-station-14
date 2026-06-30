@@ -249,7 +249,7 @@ public sealed class SatiationTest
   id: {TestSatiationId}
   baseDecayRate: 1
   maximumValue: {MaxValue}
-  keys: # Intentionally out of ordinal order.
+  threshold: # Intentionally out of ordinal order.
     {DeadKey}: 0
     {MaxxedKey}: 100
     {MiddleKey}: {MiddleValue}

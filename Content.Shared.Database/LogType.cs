@@ -215,9 +215,8 @@ public enum LogType
     /// </summary>
     Temperature = 49,
 
-    // This log type was consolidated from separate `Hunger` and `Thirst` log types. Neither were used before, so don't
-    // ask me why this one isn't used now.
-    Satiation = 50,
+    Hunger = 50,
+    Thirst = 51,
 
     /// <summary>
     /// Entity received electrocution damage.

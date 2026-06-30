@@ -28,7 +28,7 @@ public sealed class SatiationCachingTest
   id: {NewSatiationId}
   baseDecayRate: 1
   maximumValue: {MaximumValue}
-  keys:
+  thresholds:
     {FirstThreshold}: {FirstThresholdValue}
     {SecondThreshold}: {SecondThresholdValue}
   startingValueMinimum: 0

@@ -54,7 +54,7 @@ public sealed partial class SetSatiation : LocalizedEntityCommands
         ProtoId<SatiationTypePrototype> type = args[0];
         if (comp.GetOrNull(type) is not { } satiation)
         {
-            var typeName = _satiation.GetTypeOrNull(type)?.Name is { } locId ? Loc.GetString(locId) : $"\"{type}\"";
+            var typeName = _proto.TryIndex(type, out var t) ? t.Name : $"\"{type}\"";
             shell.WriteLine(Loc.GetString(
                 "shell-target-entity-does-not-have-message",
                 ("missing", Loc.GetString("cmd-nutrition-setsatiation-need", ("satiation", typeName)))
@@ -77,7 +77,7 @@ public sealed partial class SetSatiation : LocalizedEntityCommands
             return;
         }
 
-        if (!proto.Keys.TryGetValue(args[1], out var valueFromKey))
+        if (!proto.Thresholds.TryGetValue(args[1], out var valueFromKey))
         {
             shell.WriteLine(Loc.GetString(
                 "cmd-nutrition-setsatiation-no-matching-key-error",
@@ -106,11 +106,11 @@ public sealed partial class SetSatiation : LocalizedEntityCommands
                     nameof(SatiationTypePrototype)
                 );
             case 2:
-                if (_satiation.GetTypeOrNull(args[0]) is not { } satiationProto ||
-                    _satiation.GetMaximumValue(entity, satiationProto) is not { } maxValue)
+                if (!_proto.TryIndex<SatiationPrototype>(args[0], out var satiationProto) ||
+                    _satiation.GetMaximumValue(entity, satiationProto.ID) is not { } maxValue)
                     return CompletionResult.Empty;
 
-                var keys = _satiation.GetKeysForType(entity, satiationProto)
+                var keys = _satiation.GetKeysForType(entity, satiationProto.ID)
                     .Select(key =>
                         new CompletionOption(key, Loc.GetString("cmd-nutrition-setsatiation-hint-key")));
 

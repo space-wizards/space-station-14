@@ -80,7 +80,7 @@ public sealed partial class SatiationSystem
     /// the values described by <paramref name="above"/> and <paramref name="below"/>. If <paramref name="entity"/>
     /// does not have a <see cref="Satiation"/> of the specified <paramref name="type"/>, returns false. If either
     /// above- or below-key is null, any value is considered in-range compared to that key.
-    /// If either key is specified but not present in <paramref name="type"/>'s <see cref="SatiationPrototype.Keys"/>,
+    /// If either key is specified but not present in <paramref name="type"/>'s <see cref="SatiationPrototype.Thresholds"/>,
     /// all values are considered out-of-range.
     /// </summary>
     public bool IsValueInRange(
@@ -129,7 +129,7 @@ public sealed partial class SatiationSystem
     /// <summary>
     /// Like <see cref="TryGetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">
     /// the other overload</see>, except that <paramref name="valuesByThreshold"/>'s keys are
-    /// <see cref="SatiationPrototype.Keys">key strings</see>, and will be resolved to threshold values.
+    /// <see cref="SatiationPrototype.Thresholds">key strings</see>, and will be resolved to threshold values.
     /// In the case that any key string in <paramref name="valuesByThreshold"/> cannot be resolved to a value, its entry
     /// is simply ignored, possibly leading to the dictionary being treated as empty.
     /// </summary>
@@ -147,7 +147,7 @@ public sealed partial class SatiationSystem
         var newValues = new Dictionary<int, T>();
         foreach (var (key, value) in valuesByThreshold)
         {
-            if (!proto.Keys.TryGetValue(key, out var threshold))
+            if (!proto.Thresholds.TryGetValue(key, out var threshold))
                 continue;
             newValues[threshold] = value;
         }
@@ -196,5 +196,58 @@ public sealed partial class SatiationSystem
 
         var iconProtoId = GetCurrentAndNextLowestThresholds(satiation).Current.Icon;
         return ProtoMan.Resolve(iconProtoId, out var icon) ? icon : null;
+    }
+
+    #region Commands
+
+    /// <summary>
+    /// Returns the all of the <see cref="SatiationPrototype.Thresholds">key strings</see> of the given
+    /// <paramref name="type"/> for <paramref name="entity"/>, or empty if no such type exists.
+    /// </summary>
+    /// <remarks>
+    /// It is expected that <paramref name="type"/> is validated with before calling this. If it fails to resolve, an
+    /// error will be logged.
+    /// </remarks>
+    public IEnumerable<string> GetKeysForType(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    )
+    {
+        return GetAndResolveSatiationOfType(entity, type)?.Proto.AllThresholdKeys ?? [];
+    }
+
+    /// <summary>
+    /// Returns the <see cref="SatiationPrototype.MaximumValue"/> of the given <paramref name="type"/> for
+    /// <paramref name="entity"/>, or null if no such type exists.
+    /// </summary>
+    /// <remarks>
+    /// It is expected that <paramref name="type"/> is validated with before calling this. If it fails to resolve, an
+    /// error will be logged.
+    /// </remarks>
+    public int? GetMaximumValue(
+        Entity<SatiationComponent> entity,
+        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
+    ) => GetAndResolveSatiationOfType(entity, type)?.Proto.MaximumValue;
+
+    #endregion
+}
+
+/// <summary>
+/// Defines
+/// </summary>
+public static class SatiationComponentExt
+{
+    extension(SatiationComponent comp)
+    {
+        /// <summary>
+        /// Checks if this has a <see cref="Satiation"/> of the specified <paramref name="type"/>.
+        /// </summary>
+        public bool Has(ProtoId<SatiationTypePrototype> type) => comp.GetOrNull(type) != null;
+
+        /// <summary>
+        /// Gets the <see cref="Satiation"/> of the given <paramref name="type"/> on <paramref name="comp"/>, or
+        /// <c>null</c> if no such satiation exists.
+        /// </summary>
+        public Satiation? GetOrNull(ProtoId<SatiationTypePrototype> type) => comp.Satiations.GetValueOrDefault(type);
     }
 }

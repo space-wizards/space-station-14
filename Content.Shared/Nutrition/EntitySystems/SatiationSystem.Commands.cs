@@ -20,33 +20,4 @@ public sealed partial class SatiationSystem
         ProtoMan.TryIndex<SatiationTypePrototype>(protoId, out var proto);
         return proto;
     }
-
-    /// <summary>
-    /// Returns the all of the <see cref="SatiationPrototype.Keys">key strings</see> of the given
-    /// <paramref name="type"/> for <paramref name="entity"/>, or empty if no such type exists.
-    /// </summary>
-    /// <remarks>
-    /// It is expected that <paramref name="type"/> is validated with <see cref="GetTypeOrNull"/> before calling this.
-    /// If it fails to resolve, an error will be logged.
-    /// </remarks>
-    public IEnumerable<string> GetKeysForType(
-        Entity<SatiationComponent> entity,
-        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
-    )
-    {
-        return GetAndResolveSatiationOfType(entity, type)?.Proto.AllThresholdKeys ?? [];
-    }
-
-    /// <summary>
-    /// Returns the <see cref="SatiationPrototype.MaximumValue"/> of the given <paramref name="type"/> for
-    /// <paramref name="entity"/>, or null if no such type exists.
-    /// </summary>
-    /// <remarks>
-    /// It is expected that <paramref name="type"/> is validated with <see cref="GetTypeOrNull"/> before calling this.
-    /// If it fails to resolve, an error will be logged.
-    /// </remarks>
-    public int? GetMaximumValue(
-        Entity<SatiationComponent> entity,
-        [ForbidLiteral] ProtoId<SatiationTypePrototype> type
-    ) => GetAndResolveSatiationOfType(entity, type)?.Proto.MaximumValue;
 }

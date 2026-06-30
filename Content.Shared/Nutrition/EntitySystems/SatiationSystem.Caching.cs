@@ -184,7 +184,7 @@ public sealed partial class SatiationSystem
             // Finalize the data by replacing absent (see `ThresholdValue`) values with "inherited" values
             // from higher thresholds.
             var ret = ToImmutableArrayWithInheritedValues(thresholds.Values);
-            DebugTools.Assert(!ret.IsEmpty, $"Calculated {proto}'s thresholds to be empty!");
+            DebugTools.Assert(!ret.IsEmpty, $"Calculated {proto.ID}'s thresholds to be empty!");
             return ret;
 
             // This helper does X things:
