@@ -117,7 +117,6 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         if (ScreenTexture == null || args.Viewport.Eye == null)
             return;
 
-
         // set the parameters
         _shader?.SetParameter("positions", _positions);
         _shader?.SetParameter("waveSpeeds", _waveSpeeds);
