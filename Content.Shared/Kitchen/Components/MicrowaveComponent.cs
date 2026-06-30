@@ -197,14 +197,20 @@ public sealed partial class MicrowaveComponent : Component
     ///     on activation. By default, this is metal objects.
     /// </summary>
     [DataField]
-    public EntityWhitelist? MalfunctionWhenCookedWhitelist = new() { Tags = ["Metal"] };
+    public EntityWhitelist? MalfunctionWhenCookedWhitelist = new()
+    {
+        Tags = new() { "Metal" }
+    };
 
     /// <summary>
     ///     Entities that fulfill this whitelist will create a burned mess when microwaved.
     ///     By default, this is plastic objects.
     /// </summary>
     [DataField]
-    public EntityWhitelist? BurnWhenCookedWhitelist = new() { Tags = ["Plastic"] };
+    public EntityWhitelist? BurnWhenCookedWhitelist = new()
+    {
+        Tags = new() { "Plastic" }
+    };
 
     /// <summary>
     ///     A "spark" entity spawned when this microwave malfunctions.
