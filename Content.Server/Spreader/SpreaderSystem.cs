@@ -19,7 +19,6 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed partial class SpreaderSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private TagSystem _tag = default!;
@@ -64,7 +63,7 @@ public sealed partial class SpreaderSystem : EntitySystem
     private void SetupPrototypes()
     {
         _prototypeUpdates = [];
-        foreach (var proto in _prototype.EnumeratePrototypes<EdgeSpreaderPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<EdgeSpreaderPrototype>())
         {
             _prototypeUpdates.Add(proto.ID, proto.UpdatesPerSecond);
         }
@@ -178,7 +177,7 @@ public sealed partial class SpreaderSystem : EntitySystem
         occupiedTiles = [];
         neighbors = [];
         // TODO remove occupiedTiles -- its currently unused and just slows this method down.
-        if (!_prototype.Resolve(prototype, out var spreaderPrototype))
+        if (!ProtoMan.Resolve(prototype, out var spreaderPrototype))
             return;
 
         if (!TryComp<MapGridComponent>(comp.GridUid, out var grid))
@@ -348,9 +347,9 @@ public sealed partial class SpreaderSystem : EntitySystem
 
     public bool RequiresFloorToSpread(EntProtoId<EdgeSpreaderComponent> spreader)
     {
-        if (!_prototype.Index(spreader).TryGetComponent<EdgeSpreaderComponent>(out var spreaderComp, EntityManager.ComponentFactory))
+        if (!ProtoMan.Index(spreader).TryComp<EdgeSpreaderComponent>(out var spreaderComp, EntityManager.ComponentFactory))
             return false;
 
-        return _prototype.Index(spreaderComp.Id).PreventSpreadOnSpaced;
+        return ProtoMan.Index(spreaderComp.Id).PreventSpreadOnSpaced;
     }
 }
