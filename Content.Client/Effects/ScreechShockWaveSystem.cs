@@ -11,7 +11,7 @@ public sealed partial class ScreechShockWaveSystem : EntitySystem
 {
     [Dependency] private IOverlayManager _overlayMan = default!;
 
-    private readonly HashSet<EntityUid> _registered = new();
+    private readonly HashSet<EntityUid> _registered = [];
 
     public override void Initialize()
     {
