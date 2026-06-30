@@ -73,7 +73,7 @@ public sealed class RiggableTest : InteractionTest
             Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null,
                 "Battery did not get inserted into the flashlight.");
             Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
-                "Player recieved damage before flashlight activation.");
+                "Player received damage before flashlight activation.");
         }
 
         // Turn the flashlight on and observe the result
