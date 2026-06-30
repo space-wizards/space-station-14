@@ -156,7 +156,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     /// </summary>
     private struct InnerShaderInstance
     {
-        // these fields are a copy of ScreechShockWaveComponent's
+        // these fields are a copy of <see cref="ScreechShockWaveComponent"/>'s
         public float WaveSpeed;
         public float WaveStrength;
         public float DownScale;
