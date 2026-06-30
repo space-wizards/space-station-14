@@ -19,12 +19,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
@@ -53,7 +47,7 @@
     price: 100
 
 - type: entity
-  parent: ShuttleWindow
+  parent: MiningWindow
   id: MiningWindowDiagonal
   suffix: diagonal
   placement:

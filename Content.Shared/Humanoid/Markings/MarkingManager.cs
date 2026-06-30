@@ -251,7 +251,7 @@ public sealed partial class MarkingManager
         var speciesPrototype = _prototype.Index(species);
         var appearancePrototype = _prototype.Index(speciesPrototype.DollPrototype);
 
-        if (!appearancePrototype.TryGetComponent<InitialBodyComponent>(out var initialBody, _component))
+        if (!appearancePrototype.TryComp<InitialBodyComponent>(out var initialBody, _component))
             return new();
 
         return initialBody.Organs;
@@ -319,7 +319,7 @@ public sealed partial class MarkingManager
         if (!_prototype.TryIndex(organ, out var organProto))
             return false;
 
-        if (!organProto.TryGetComponent<VisualOrganMarkingsComponent>(out var comp, _component))
+        if (!organProto.TryComp<VisualOrganMarkingsComponent>(out var comp, _component))
             return false;
 
         organData = comp.MarkingData;
