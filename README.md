@@ -4,7 +4,7 @@
 
 Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
 
-This is the primary repo for Space Station 14. To prevent people from forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
+This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
 
 If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
 
@@ -12,7 +12,7 @@ If you want to host or create content for SS14, this is the repo you need. It co
 
 <div class="header" align="center">  
 
-[Website](https://playss14.com/) | [Discord](https://discord.gg/ss14) | [Forum](https://forum.playss14.com/) | [Standalone Download](https://playss14.com/download/)  
+[Website](https://spacestation14.com/) | [Discord](https://discord.ss14.io/) | [Forum](https://forum.spacestation14.com/) | [Mastodon](https://mastodon.gamedev.place/@spacestation14) | [Patreon](https://www.patreon.com/spacestation14) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Standalone Download](https://spacestation14.com/about/nightlies/)  
 
 </div>
 
@@ -45,7 +45,7 @@ Exceptions to this are simple tools like Rider's single-line completion feature.
 
 1. Clone this repo:
 ```shell
-git clone https://github.com/Space-Wizards-Federation/space-station-14.git
+git clone https://github.com/space-wizards/space-station-14.git
 ```
 2. Go to the project folder and run `RUN_THIS.py` to initialize the submodules and load the engine:
 ```shell
