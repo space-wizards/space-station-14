@@ -25,7 +25,37 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void OnApplyOrganMarkingEvent(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
     {
-        RaiseNetworkEvent(new UpdateEyelidsAfterApplyOrganMarkingsEvent(GetNetEntity(ent.Owner)));
+        SetEyelidsColor(ent);
+    }
+
+    private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
+    {
+        var eyelidColor = Color.Red;
+        if (!TryComp<BodyComponent>(ent.Owner, out var body)) return;
+
+        VisualOrganComponent? visualHead = null;
+        foreach (var organ in body.Organs?.ContainedEntities ?? Array.Empty<EntityUid>())
+        {
+            if (!TryComp<OrganComponent>(organ, out var organComp))
+                continue;
+            if (organComp.Category != "Head")
+            {
+                continue;
+            }
+            visualHead = CompOrNull<VisualOrganComponent>(organ);
+            if (visualHead != null)
+                break;
+        }
+
+        var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
+        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+        eyelidColor = new Color(
+            skinColor.R * blinkFade,
+            skinColor.G * blinkFade,
+            skinColor.B * blinkFade);
+
+        ent.Comp.EyelidsColor = eyelidColor;
+        Dirty(ent);
     }
 
     private void AfterChangelingTransformEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterChangelingTransformEvent args)

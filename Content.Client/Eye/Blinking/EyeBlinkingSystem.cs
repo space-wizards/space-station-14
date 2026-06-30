@@ -24,21 +24,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeNetworkEvent<UpdateEyelidsAfterApplyOrganMarkingsEvent>(OnComponentInit);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
     }
 
     private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        Logger.Info($"AfterAutoHandleStateEventHandler called for entity {ent.Owner}");
         InitEyeBlinking(ent);
-    }
-
-    private void OnComponentInit(UpdateEyelidsAfterApplyOrganMarkingsEvent args)
-    {
-        var ent = GetEntity(args.Entity);
-        if(TryComp<EyeBlinkingComponent>(ent, out var comp))
-            InitEyeBlinking((ent, comp));
     }
 
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent)
@@ -106,34 +97,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         var eyelidColor = Color.Red;
 
-        if (ent.Comp.EyelidsColor == null && TryComp<BodyComponent>(ent.Owner, out var body))
-        {
-            VisualOrganComponent? visualHead = null;
-            foreach (var organ in body.Organs?.ContainedEntities ?? Array.Empty<EntityUid>())
-            {
-                if (!TryComp<OrganComponent>(organ, out var organComp))
-                    continue;
-                if (organComp.Category != "Head")
-                {
-
-                    Logger.Info($"Category {organComp.Category} is not Head");
-                    continue;
-                }
-                visualHead = CompOrNull<VisualOrganComponent>(organ);
-                if (visualHead != null)
-                    break;
-            }
-
-            Logger.Info($"visualHead is null? : {visualHead == null}; profile skin color: {visualHead?.Profile.SkinColor}");
-
-            var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
-            var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-            eyelidColor = new Color(
-                skinColor.R * blinkFade,
-                skinColor.G * blinkFade,
-                skinColor.B * blinkFade);
-        }
-        else if (ent.Comp.EyelidsColor != null)
+        if (ent.Comp.EyelidsColor != null)
         {
             eyelidColor = ent.Comp.EyelidsColor.Value;
         }
