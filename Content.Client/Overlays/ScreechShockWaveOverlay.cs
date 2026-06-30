@@ -55,6 +55,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
         _times = new float[MaximumInstances];
         _cached = new List<(EntityUid, InnerShaderInstance)>();
     }
+
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
         if (args.Viewport.Eye == null || _xformSystem is null && !_entMan.TrySystem(out _xformSystem))
