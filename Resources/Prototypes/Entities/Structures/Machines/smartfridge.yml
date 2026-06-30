@@ -27,6 +27,8 @@
     - state: smartfridge_door # This state should be toggled off while somebody is accessing the UI. Until that's implemented, we'll just always draw it on top of the "open" sprite.
       visible: false
       map: ["powered-closed"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
     radius: 1.2
     energy: 3.0
