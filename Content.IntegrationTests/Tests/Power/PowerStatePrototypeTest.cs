@@ -32,12 +32,12 @@ public sealed class PowerStatePrototypeTest : GameTest
                              .Where(p => !p.Abstract)
                              .Where(p => !pair.IsTestPrototype(p)))
                 {
-                    if (!prototype.TryGetComponent<PowerStateComponent>(out var powerStateComp, entMan.ComponentFactory))
+                    if (!prototype.TryComp<PowerStateComponent>(out var powerStateComp, entMan.ComponentFactory))
                         continue;
 
                     // LESSON LEARNED:
                     // ENSURE THAT THE COMPONENT YOU ARE TRYING TO GET IS THE SERVER-SIDE VARIANT
-                    if (!prototype.TryGetComponent<PowerReceiverComponent>(out var powerReceiverComp, entMan.ComponentFactory))
+                    if (!prototype.TryComp<PowerReceiverComponent>(out var powerReceiverComp, entMan.ComponentFactory))
                     {
                         Assert.Fail(
                             $"Entity prototype '{prototype.ID}' has a PowerStateComponent but is missing the required PowerReceiverComponent.");

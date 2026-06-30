@@ -37,7 +37,6 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _cfgMan = default!;
     [Dependency] private InteractionOutlineSystem _outline = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
@@ -112,8 +111,8 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
 
         Subs.CVar(_cfgMan, CCVars.DragDropDeadZone, SetDeadZone, true);
 
-        _dropTargetInRangeShader = _prototypeManager.Index(ShaderDropTargetInRange).Instance();
-        _dropTargetOutOfRangeShader = _prototypeManager.Index(ShaderDropTargetOutOfRange).Instance();
+        _dropTargetInRangeShader = ProtoMan.Index(ShaderDropTargetInRange).Instance();
+        _dropTargetOutOfRangeShader = ProtoMan.Index(ShaderDropTargetOutOfRange).Instance();
         // needs to fire on mouseup and mousedown so we can detect a drag / drop
         CommandBinds.Builder
             .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), new[] { typeof(SharedInteractionSystem) })

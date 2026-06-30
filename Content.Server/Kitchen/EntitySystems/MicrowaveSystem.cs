@@ -62,7 +62,6 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private HandsSystem _handsSystem = default!;
         [Dependency] private SharedItemSystem _item = default!;
         [Dependency] private SharedStackSystem _stack = default!;
-        [Dependency] private IPrototypeManager _prototype = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private SharedSuicideSystem _suicide = default!;
         [Dependency] private SharedPowerStateSystem _powerState = default!;
@@ -238,7 +237,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         // If an entity has a stack component, use the stacktype instead of prototype id
                         if (TryComp<StackComponent>(item, out var stackComp))
                         {
-                            itemID = _prototype.Index(stackComp.StackTypeId).Spawn;
+                            itemID = ProtoMan.Index(stackComp.StackTypeId).Spawn;
                         }
                         else
                         {
@@ -558,7 +557,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 // If a microwave recipe uses a stacked item, use the default stack prototype id instead of prototype id
                 if (TryComp<StackComponent>(item, out var stackComp))
                 {
-                    solidID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                    solidID = ProtoMan.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
                     amountToAdd = stackComp.Count;
                 }
                 else
@@ -705,7 +704,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             foreach (ProtoId<FoodRecipePrototype> recipeId in ent.Comp.ProvidedRecipes)
             {
-                if (_prototype.Resolve(recipeId, out var recipeProto))
+                if (ProtoMan.Resolve(recipeId, out var recipeProto))
                 {
                     args.Recipes.Add(recipeProto);
                 }

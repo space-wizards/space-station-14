@@ -14,7 +14,6 @@ namespace Content.Server.Chat.Systems;
 /// </summary>
 public sealed partial class ChatNotificationSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IChatManager _chats = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
@@ -49,7 +48,7 @@ public sealed partial class ChatNotificationSystem : EntitySystem
     /// <param name="args">The chat notification event</param>
     public void OnChatNotification(Entity<ActorComponent> ent, ref ChatNotificationEvent args)
     {
-        if (!_proto.TryIndex(args.ChatNotification, out var chatNotification))
+        if (!ProtoMan.TryIndex(args.ChatNotification, out var chatNotification))
         {
             _sawmill.Warning("Attempted to index ChatNotificationPrototype " + args.ChatNotification + " but the prototype does not exist.");
             return;
