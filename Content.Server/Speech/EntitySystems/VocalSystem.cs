@@ -7,6 +7,7 @@ using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
