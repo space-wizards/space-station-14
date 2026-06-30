@@ -51,7 +51,7 @@ public sealed partial class BuckleComponent : Component
     /// Whether or not this can buckled by pacifists
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class PacifismDisallowedComponent : Component;
+    public sealed partial class PacifismDisallowedBuckleComponent : Component;
 
     /// <summary>
     /// The time that this entity buckled at.
@@ -120,7 +120,7 @@ public record struct UnstrapAttemptEvent(
 }
 
 /// <summary>
-/// Event raised on the user to see if they can buckle.
+/// Event raised on the user to see if they can buckle someone else.
 /// </summary>
 [ByRefEvent]
 public record struct BuckleOtherAttemptEvent(EntityUid Target, EntityUid Seat, bool Cancelled = false);

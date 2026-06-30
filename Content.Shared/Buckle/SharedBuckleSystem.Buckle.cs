@@ -322,7 +322,8 @@ public abstract partial class SharedBuckleSystem
             return false;
 
 
-        if (user is not null)
+        if (user is not null && user != buckleUid)
+
         {
             var buckleOtherAttempt = new BuckleOtherAttemptEvent(buckleUid, strapUid);
             RaiseLocalEvent(user.Value, ref buckleOtherAttempt);
