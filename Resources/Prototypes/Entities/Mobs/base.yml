@@ -272,3 +272,12 @@
     bloodlossHealDamage:
       types:
         Bloodloss: -1
+
+# Used for mobs that should slightly see in the dark
+- type: entity
+  save: false
+  id: MobNightVision
+  abstract: true
+  components:
+  - type: NightVision
+    lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.

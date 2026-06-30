@@ -9,26 +9,28 @@ namespace Content.Client.Overlays;
 /// </summary>
 public sealed partial class NightVisionOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "NightVision";
-
-    private readonly Color _color;
-    private readonly float _noiseAmount;
-    private readonly float _noiseMultiplier;
-
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
-    public override bool RequestScreenTexture => true;
+    private static readonly ProtoId<ShaderPrototype> Shader = "NightVision";
     private readonly ShaderInstance _nightVisionShader;
 
-    public NightVisionOverlay(Color color, float noiseAmount, float noiseMultiplier)
+    public Color ColorShader;
+    public Color ColorLighting;
+    public float NoiseAmount;
+    public float NoiseMultiplier;
+
+    public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => true;
+
+    public NightVisionOverlay(Color colorShader, Color colorLighting, float noiseAmount, float noiseMultiplier)
     {
         IoCManager.InjectDependencies(this);
         _nightVisionShader = _prototypeManager.Index(Shader).InstanceUnique();
 
-        _color = color;
-        _noiseAmount = noiseAmount;
-        _noiseMultiplier = noiseMultiplier;
+        ColorShader = colorShader;
+        ColorLighting = colorLighting;
+        NoiseAmount = noiseAmount;
+        NoiseMultiplier = noiseMultiplier;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -37,11 +39,21 @@ public sealed partial class NightVisionOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _nightVisionShader.SetParameter("noise_amount", _noiseAmount);
-        _nightVisionShader.SetParameter("noise_multiplier", _noiseMultiplier);
-        handle.UseShader(_nightVisionShader);
-        handle.DrawRect(args.WorldBounds, _color);
-        handle.UseShader(null);
+        var drawingSpace = args.Space == OverlaySpace.WorldSpace;
+
+        var drawingColor = drawingSpace ? ColorShader : ColorLighting;
+
+        if (drawingSpace)
+        {
+            _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _nightVisionShader.SetParameter("noise_amount", NoiseAmount);
+            _nightVisionShader.SetParameter("noise_multiplier", NoiseMultiplier);
+            handle.UseShader(_nightVisionShader);
+        }
+
+        handle.DrawRect(args.WorldBounds, drawingColor);
+
+        if (drawingSpace)
+            handle.UseShader(null);
     }
 }

@@ -11,43 +11,65 @@ namespace Content.Client.Overlays;
 public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightVisionComponent>
 {
     [Dependency] private IOverlayManager _overlayMan = default!;
-    [Dependency] private ILightManager _lightManager = default!;
 
-    private NightVisionOverlay? _overlay;
+    private NightVisionOverlay _overlay = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _overlay = new(new Color(1f, 1f, 1f), new Color(1f, 1f, 1f), 0, 0);
+
+        SubscribeLocalEvent<NightVisionComponent, AfterAutoHandleStateEvent>(OnHandleState);
+    }
 
     protected override void UpdateInternal(RefreshEquipmentHudEvent<NightVisionComponent> component)
     {
         base.UpdateInternal(component);
 
-        _lightManager.DrawLighting = false;
-        if (component.Components.Count <= 0)
-            return;
-
         // Find the component with the lowest noise.
-        NightVisionComponent? best = null;
+        NightVisionComponent? nvision = null;
         var bestNoise = float.MaxValue;
         foreach (var comp in component.Components)
         {
+            if (!comp.Enabled)
+                continue;
+
             var noise = comp.NoiseAmount * comp.NoiseMultiplier;
             if (noise < bestNoise)
             {
+                nvision = comp;
                 bestNoise = noise;
-                best = comp;
             }
         }
 
-        _overlay = new NightVisionOverlay(best!.Color, best.NoiseAmount, best.NoiseMultiplier);
-        _overlayMan.AddOverlay(_overlay);
+        // There is no active night vision components, so we disable the overlay.
+        if (nvision == null)
+        {
+            DeactivateInternal();
+            return;
+        }
+
+        _overlay.ColorShader = nvision.OverlayColor;
+        _overlay.ColorLighting = nvision.LightingColor;
+        _overlay.NoiseAmount = nvision.NoiseAmount;
+        _overlay.NoiseMultiplier = nvision.NoiseMultiplier;
+
+        if (!_overlayMan.HasOverlay<NightVisionOverlay>())
+        {
+            _overlayMan.AddOverlay(_overlay);
+        }
     }
 
     protected override void DeactivateInternal()
     {
         base.DeactivateInternal();
 
-        _lightManager.DrawLighting = true;
-        if (_overlay != null)
-            _overlayMan.RemoveOverlay(_overlay);
+        _overlayMan.RemoveOverlay(_overlay);
+    }
 
-        _overlay = null;
+    private void OnHandleState(Entity<NightVisionComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RefreshOverlay();
     }
 }

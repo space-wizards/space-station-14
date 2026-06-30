@@ -1,6 +1,6 @@
 - type: entity
   name: bat
-  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, MobNightVision ]
   id: MobBat
   description: Some cultures find them terrifying, others crunchy on the teeth.
   components:
@@ -349,7 +349,7 @@
 
 - type: entity
   name: cockroach
-  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinable]
+  parent: [SolutionFood, SolutionTiny, SimpleMobBase, BaseSlicingRefinable, MobNightVision]
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
@@ -1923,7 +1923,7 @@
 
 - type: entity
   name: mouse
-  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseMobAnimal, SolutionVermin, BaseSlicingRefinable, MobNightVision]
   id: MobMouse
   description: Squeak!
   components:
@@ -2682,7 +2682,7 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
-  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleMobBase, BaseMobHemocyanin, MobCombat, BaseSlicingRefinable, MobNightVision ]
   id: MobSpiderBase
   abstract: true
   components:
@@ -2747,7 +2747,6 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
-  - type: NightVision
   - type: Prying # Open door from xeno.yml.
     pryPowered: true
     force: true
@@ -3627,7 +3626,7 @@
 
 - type: entity
   name: hamster
-  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinable]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase, BaseSlicingRefinable, MobNightVision]
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
