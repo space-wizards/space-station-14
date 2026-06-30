@@ -37,7 +37,7 @@ public sealed partial class SatiationSystem
 
     private void RepopulateThresholdCache()
     {
-        _thresholdCache.Repopulate(_prototype.EnumeratePrototypes<SatiationPrototype>());
+        _thresholdCache.Repopulate(ProtoMan.EnumeratePrototypes<SatiationPrototype>());
     }
 
     /// <summary>

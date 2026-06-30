@@ -12,7 +12,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <seealso cref="ExaminableSatiationComponent"/>
 public sealed partial class ExaminableSatiationSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SatiationSystem _satiation = default!;
 
     [Dependency] private EntityQuery<SatiationComponent> _satiationQuery = default!;
@@ -29,7 +28,7 @@ public sealed partial class ExaminableSatiationSystem : EntitySystem
 
         foreach (var (satType, exSatProto) in entity.Comp.Satiations)
         {
-            if (!_prototype.TryIndex(exSatProto, out var exSatiation))
+            if (!ProtoMan.TryIndex(exSatProto, out var exSatiation))
                 continue;
 
             if (satiationComp is null ||

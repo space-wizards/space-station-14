@@ -23,7 +23,6 @@ namespace Content.Shared.Medical;
 public sealed partial class VomitSystem : EntitySystem
 {
     [Dependency] private INetManager _netManager = default!;
-    [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private MovementModStatusSystem _movementMod = default!;
     [Dependency] private SharedAudioSystem _audio = default!;

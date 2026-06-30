@@ -17,7 +17,7 @@ public sealed partial class SatiationSystem
     /// </remarks>
     public SatiationTypePrototype? GetTypeOrNull(string protoId)
     {
-        _prototype.TryIndex<SatiationTypePrototype>(protoId, out var proto);
+        ProtoMan.TryIndex<SatiationTypePrototype>(protoId, out var proto);
         return proto;
     }
 

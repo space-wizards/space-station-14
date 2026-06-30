@@ -195,6 +195,6 @@ public sealed partial class SatiationSystem
             return null;
 
         var iconProtoId = GetCurrentAndNextLowestThresholds(satiation).Current.Icon;
-        return _prototype.Resolve(iconProtoId, out var icon) ? icon : null;
+        return ProtoMan.Resolve(iconProtoId, out var icon) ? icon : null;
     }
 }

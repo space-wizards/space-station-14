@@ -24,7 +24,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 public sealed partial class SatiationSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private MobStateSystem _mobState = default!;
@@ -231,7 +230,7 @@ public sealed partial class SatiationSystem : EntitySystem
         Satiation satiation
     )
     {
-        if (!_prototype.Resolve(satiation.Prototype, out var proto))
+        if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
             return default;
         var thresholds = GetThresholds(satiation.Prototype);
 
@@ -262,7 +261,7 @@ public sealed partial class SatiationSystem : EntitySystem
     )
     {
         if (satiations.GetOrNull(type) is not { } satiation ||
-            !_prototype.Resolve(satiation.Prototype, out var proto))
+            !ProtoMan.Resolve(satiation.Prototype, out var proto))
             return null;
 
         return (satiation, proto);
@@ -276,7 +275,7 @@ public sealed partial class SatiationSystem : EntitySystem
     {
         foreach (var satiation in satiations.Satiations.Values)
         {
-            if (!_prototype.Resolve(satiation.Prototype, out var proto))
+            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
                 continue;
 
             yield return (satiation, proto);
