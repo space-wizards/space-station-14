@@ -49,10 +49,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
-        enum.PowerDeviceVisuals.BatteryPowered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { state: onbattery }
-            False: { state: unshaded }
+      enum.PowerDeviceVisuals.BatteryPowered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: onbattery }
+          False: { state: unshaded }
   - type: ContainerFill
     containers:
       board: [ StationMapCircuitboard ]
