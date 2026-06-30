@@ -71,8 +71,7 @@
 - type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
-  name: conveyor belt
-  suffix: assembly
+  name: conveyor belt assembly
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
   - type: Sprite
