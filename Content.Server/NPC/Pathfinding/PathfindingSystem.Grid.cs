@@ -399,7 +399,258 @@ public sealed partial class PathfindingSystem
         return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
     }
 
-    private void BuildBreadcrumbs(GridPathfindingChunk chunk, Entity<MapGridComponent> grid)
+
+    public void BuildBreadcrumbs(GridPathfindingChunk chunk, Entity<MapGridComponent> grid)
+    {
+        //var sw = new Stopwatch();
+        //sw.Start();
+        var points = chunk.Points;
+        var gridOrigin = chunk.Origin * ChunkSize;
+        var tileEntities = new ValueList<Entity<FixturesComponent>>();
+        var fixtureList = new ValueList<(EntityUid, TransformComponent, ValueList<Fixture>)>();
+
+        var chunkPolys = chunk.BufferPolygons;
+
+        for (var i = 0; i < chunkPolys.Length; i++)
+        {
+            chunkPolys[i].Clear();
+        }
+
+        var tilePolys = new ValueList<Box2i>(SubStep);
+
+        // Need to get the relevant polygons in each tile.
+        // If we wanted to create a larger navmesh we could triangulate these points but in our case we're just going
+        // to treat them as tile-based.
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                // Tile
+                var tilePos = new Vector2i(x, y) + gridOrigin;
+                tilePolys.Clear();
+
+                var tile = _maps.GetTileRef(grid.Owner, grid.Comp, tilePos);
+                var flags = tile.Tile.IsEmpty ? PathfindingBreadcrumbFlag.Space : PathfindingBreadcrumbFlag.None;
+                // var isBorder = x < 0 || y < 0 || x == ChunkSize - 1 || y == ChunkSize - 1;
+
+                tileEntities.Clear();
+                var available = _lookup.GetLocalEntitiesIntersecting(tile, flags: LookupFlags.Dynamic | LookupFlags.Static);
+
+                foreach (var ent in available)
+                {
+                    // Irrelevant for pathfinding
+                    if (!_fixturesQuery.TryGetComponent(ent, out var fixtures) ||
+                        !IsBodyRelevant(fixtures))
+                    {
+                        continue;
+                    }
+
+                    var xform = Transform(ent);
+
+                    if (xform.ParentUid != grid.Owner ||
+                        _maps.LocalToTile(grid.Owner, grid.Comp, xform.Coordinates) != tilePos)
+                    {
+                        continue;
+                    }
+
+                    tileEntities.Add((ent, fixtures));
+                }
+
+                // Cache fixtures list so we resolve everything once.
+                fixtureList.Clear();
+                foreach (var ent in tileEntities.Span)
+                {
+                    if(!TryComp(ent, out TransformComponent? xform))
+                        continue;
+
+                    var entFixtures = new ValueList<Fixture>();
+                    foreach (var fixture in ent.Comp.Fixtures.Values)
+                    {
+                        if (fixture.Hard)
+                            entFixtures.Add(fixture);
+                    }
+
+                    fixtureList.Add((ent.Owner, xform, entFixtures));
+                }
+
+                for (var subX = 0; subX < SubStep; subX++)
+                {
+                    for (var subY = 0; subY < SubStep; subY++)
+                    {
+                        var xOffset = x * SubStep + subX;
+                        var yOffset = y * SubStep + subY;
+
+                        // Subtile
+                        var localPos = new Vector2(StepOffset + gridOrigin.X + x + (float) subX / SubStep, StepOffset + gridOrigin.Y + y + (float) subY / SubStep);
+                        var collisionMask = 0x0;
+                        var collisionLayer = 0x0;
+                        var damage = 0f;
+
+                        foreach (var (ent, xform, fixtures) in fixtureList.Span)
+                        {
+                            var colliding = false;
+                            foreach (var fixture in fixtures.Span)
+                            {
+                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                    (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
+                                {
+                                    continue;
+                                }
+
+                                // Do an AABB check first as it's probably faster, then do an actual point check.
+                                var intersects = false;
+
+                                foreach (var proxy in fixture.Proxies)
+                                {
+                                    if (!proxy.AABB.Contains(localPos))
+                                        continue;
+
+                                    intersects = true;
+                                    break;
+                                }
+
+                                if (!intersects)
+                                {
+                                    continue;
+                                }
+
+                                if (!_fixtures.TestPoint(fixture.Shape, new Transform(xform.LocalPosition, xform.LocalRotation), localPos))
+                                {
+                                    continue;
+                                }
+
+                                collisionLayer |= fixture.CollisionLayer;
+                                collisionMask |= fixture.CollisionMask;
+                                colliding = true;
+                            }
+
+                            // If entity doesn't intersect this node (e.g. thindows) then ignore it.
+                            if (!colliding)
+                            {
+                                continue;
+                            }
+
+                            if (_accessReaderQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Access;
+                            }
+
+                            if (_doorQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Door;
+                            }
+
+                            if (_climbableQuery.HasComponent(ent))
+                            {
+                                flags |= PathfindingBreadcrumbFlag.Climb;
+                            }
+
+                            if (_destructibleQuery.TryGetComponent(ent, out var damageable))
+                            {
+                                damage += _destructible.DestroyedAt(ent, damageable).Float();
+                            }
+                        }
+
+                        /*This is causing too many issues and I'd rather just ignore it until pathfinder refactor
+                          to just get tiles at runtime.
+                        if ((flags & PathfindingBreadcrumbFlag.Space) != 0x0)
+                        {
+                            // DebugTools.Assert(tileEntities.Count == 0);
+                        }
+                        */
+
+                        var crumb = new PathfindingBreadcrumb()
+                        {
+                            Coordinates = new Vector2i(xOffset, yOffset),
+                            Data = new PathfindingData(flags, collisionLayer, collisionMask, damage),
+                        };
+
+                        points[xOffset, yOffset] = crumb;
+                    }
+                }
+
+                // Now we got tile data and we can get the polys
+                var data = points[x * SubStep, y * SubStep].Data;
+                var start = Vector2i.Zero;
+
+                for (var i = 0; i < SubStep * SubStep; i++)
+                {
+                    var ix = i / SubStep;
+                    var iy = i % SubStep;
+
+                    var nextX = (i + 1) / SubStep;
+                    var nextY = (i + 1) % SubStep;
+
+                    // End point
+                    if (iy == SubStep - 1 ||
+                        !points[x * SubStep + nextX, y * SubStep + nextY].Data.Equals(data))
+                    {
+                        tilePolys.Add(new Box2i(start, new Vector2i(ix, iy)));
+
+                        if (i < (SubStep * SubStep) - 1)
+                        {
+                            start = new Vector2i(nextX, nextY);
+                            data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
+                        }
+                    }
+                }
+
+                // Now combine the lines
+                var anyCombined = true;
+
+                while (anyCombined)
+                {
+                    anyCombined = false;
+
+                    for (var i = 0; i < tilePolys.Count; i++)
+                    {
+                        var poly = tilePolys[i];
+                        data = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
+
+                        for (var j = i + 1; j < tilePolys.Count; j++)
+                        {
+                            var nextPoly = tilePolys[j];
+                            var nextData = points[x * SubStep + nextPoly.Left, y * SubStep + nextPoly.Bottom].Data;
+
+                            // Oh no, Combine
+                            if (poly.Bottom == nextPoly.Bottom &&
+                                poly.Top == nextPoly.Top &&
+                                poly.Right + 1 == nextPoly.Left &&
+                                data.Equals(nextData))
+                            {
+                                tilePolys.RemoveAt(j);
+                                j--;
+                                poly = new Box2i(poly.Left, poly.Bottom, poly.Right + 1, poly.Top);
+                                anyCombined = true;
+                            }
+                        }
+
+                        tilePolys[i] = poly;
+                    }
+                }
+
+                // TODO: Can store a hash for each tile and check if the breadcrumbs match and avoid allocating these at all.
+                var tilePoly = chunkPolys[x * ChunkSize + y];
+                var polyOffset = gridOrigin + new Vector2(x, y);
+
+                foreach (var poly in tilePolys.Span)
+                {
+                    var box = new Box2((Vector2) poly.BottomLeft / SubStep + polyOffset,
+                        (Vector2) (poly.TopRight + Vector2i.One) / SubStep + polyOffset);
+                    var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
+
+                    var neighbors = new HashSet<PathPoly>();
+                    tilePoly.Add(new PathPoly(grid, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                }
+            }
+        }
+
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        SendBreadcrumbs(chunk, grid);
+    }
+
+    // REMOVE THIS. Temporarily here while WIP
+    public void BuildBreadcrumbsOld(GridPathfindingChunk chunk, Entity<MapGridComponent> grid)
     {
         //var sw = new Stopwatch();
         //sw.Start();
