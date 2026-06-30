@@ -4,7 +4,7 @@ using Content.Shared.Kitchen.EntitySystems;
 namespace Content.Client.Kitchen.EntitySystems;
 
 /// <inheritdoc />
-public abstract partial class MicrowaveSystem : SharedMicrowaveSystem
+public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
