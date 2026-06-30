@@ -18,7 +18,7 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
     {
         base.Initialize();
 
-        _overlay = new(new Color(1f, 1f, 1f), new Color(1f, 1f, 1f), 0, 0);
+        _overlay = new NightVisionOverlay();
 
         SubscribeLocalEvent<NightVisionComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
@@ -50,15 +50,10 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
             return;
         }
 
-        _overlay.ColorShader = nvision.OverlayColor;
-        _overlay.ColorLighting = nvision.LightingColor;
-        _overlay.NoiseAmount = nvision.NoiseAmount;
-        _overlay.NoiseMultiplier = nvision.NoiseMultiplier;
+        _overlay.SetParameters(nvision.OverlayColor, nvision.LightingColor, nvision.NoiseAmount, nvision.NoiseMultiplier);
 
         if (!_overlayMan.HasOverlay<NightVisionOverlay>())
-        {
             _overlayMan.AddOverlay(_overlay);
-        }
     }
 
     protected override void DeactivateInternal()

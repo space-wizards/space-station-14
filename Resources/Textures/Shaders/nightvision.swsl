@@ -2,6 +2,7 @@
 light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec4 overlay_color;
 uniform highp float noise_amount; // How much animated noise/static to add (0..1).
 uniform highp float noise_multiplier; // Scales the intensity of the added noise.
 
@@ -14,6 +15,8 @@ void fragment()
 
     // Blend the generated noise into the image.
     color.rgb += mix(color.rgb, color.rgb * noise, noise) * noise_multiplier;
+
+    color.rgb *= overlay_color.rgb;
 
     COLOR = color;
 }
