@@ -740,6 +740,7 @@ DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
 
 # 2025-12-02
 GhostWarpPoint: null
+DefaultStationBeaconGhost: null
 
 # 2025-11-08
 DebugSMES: SMESBasicEmpty

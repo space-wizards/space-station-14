@@ -1401,10 +1401,10 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
-  id: TeleportScrollWarp
+  id: TeleportScrollWarp # whitelists a warp point for the wizard's teleport scroll
 
 - type: Tag
-  id: TeleportScrollWarpBlacklist
+  id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
   
 - type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater

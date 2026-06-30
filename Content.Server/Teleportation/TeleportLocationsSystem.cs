@@ -66,8 +66,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
             if (string.IsNullOrWhiteSpace(warpPointComp.Location))
                 continue;
 
-            if (_whitelist.IsWhitelistFail(ent.Comp.Whitelist, warpEnt) ||
-                _whitelist.IsWhitelistPass(ent.Comp.Blacklist, warpEnt))
+            if (!_whitelist.CheckBoth(warpEnt, ent.Comp.Blacklist, ent.Comp.Whitelist))
 
                 continue;
 
