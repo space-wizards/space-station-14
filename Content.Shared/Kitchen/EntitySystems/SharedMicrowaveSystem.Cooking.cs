@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Kitchen.Components;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -105,8 +106,7 @@ public abstract partial class SharedMicrowaveSystem
         ref bool malfunctioning,
         out List<EntityUid> ingredientContents)
     {
-        ingredientContents = [.. contents];
-
+        ingredientContents = contents.ToList();
         foreach (var item in contents)
         {
             MicrowaveItem(microwave,

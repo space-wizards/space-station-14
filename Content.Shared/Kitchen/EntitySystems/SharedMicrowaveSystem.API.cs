@@ -28,7 +28,7 @@ public abstract partial class SharedMicrowaveSystem
     public IReadOnlyList<EntityUid> GetMicrowaveContents(Entity<MicrowaveComponent?> microwave)
     {
         if (!Resolve(microwave.Owner, ref microwave.Comp))
-            return [];
+            return new List<EntityUid>();
 
         return microwave.Comp.Storage.ContainedEntities;
     }
