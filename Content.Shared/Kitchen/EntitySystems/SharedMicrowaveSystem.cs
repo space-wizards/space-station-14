@@ -36,7 +36,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] protected SharedSolutionContainerSystem Solution = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
@@ -70,7 +69,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             var timeElapsed = curTime - active.LastCookUpdated;
 
             // Roll malfunctions
-            if (active.NextMalfunction < curTime)
+            if (active.Malfunctioning && active.NextMalfunction < curTime)
             {
                 active.NextMalfunction += microwave.MalfunctionInterval;
                 DirtyField(uid, active, nameof(ActiveMicrowaveComponent.NextMalfunction));

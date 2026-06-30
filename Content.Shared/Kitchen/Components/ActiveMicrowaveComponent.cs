@@ -61,4 +61,10 @@ public sealed partial class ActiveMicrowaveComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextMalfunction = TimeSpan.Zero;
+
+    /// <summary>
+    ///     Whether or not this microwave cooking process is malfunctioning.
+    /// </summary>
+    [DataField]
+    public bool Malfunctioning = false;
 }

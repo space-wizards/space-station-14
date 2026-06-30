@@ -16,7 +16,7 @@ namespace Content.Shared.Kitchen.Components;
 ///     and produce microwave recipes.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedMicrowaveSystem))]
-[NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true, raiseAfterAutoHandleState: true)]
 public sealed partial class MicrowaveComponent : Component
 {
     /// <summary>
@@ -120,6 +120,13 @@ public sealed partial class MicrowaveComponent : Component
     public uint CurrentCookTimerTime = 0;
 
     /// <summary>
+    ///     The index of the currently-selected "cook time" button.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public int CurrentCookTimeButtonIndex;
+
+    /// <summary>
     ///     The maximum number of seconds a microwave can be set to.
     ///     This is currently only used for validation and the client does not check this.
     /// </summary>
@@ -131,13 +138,6 @@ public sealed partial class MicrowaveComponent : Component
     /// </summary>
     [DataField]
     public float TemperatureUpperThreshold = 373.15f;
-
-    /// <summary>
-    ///     The index of the currently-selected "cook time" button.
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public int CurrentCookTimeButtonIndex;
 
     /// <summary>
     ///     The microwave's contents container.

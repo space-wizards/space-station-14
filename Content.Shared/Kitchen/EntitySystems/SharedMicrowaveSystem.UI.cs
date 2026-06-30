@@ -1,5 +1,6 @@
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -15,6 +16,30 @@ public abstract partial class SharedMicrowaveSystem
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectAll);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectSolidIndexed);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectCookTime);
+
+        SubscribeLocalEvent<MicrowaveComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+        SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentsUpdated);
+        SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentsUpdated);
+    }
+
+    private void OnAfterAutoHandleState(Entity<MicrowaveComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUserInterfaceState(ent.AsNullable());
+    }
+
+    /// <summary>
+    ///     Updates the microwave UI when entities are added/removed from the microwave.
+    /// </summary>
+    /// <param name="uid">The microwave entity ID.</param>
+    /// <param name="component">The microwave entity's component.</param>
+    // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
+    // TODO: replace with Entity<T> syntax once that's possible
+    private void OnContentsUpdated(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args)
+    {
+        if (component.Storage != args.Container)
+            return;
+
+        UpdateUserInterfaceState((uid, component));
     }
 
     /// <summary>
@@ -28,7 +53,6 @@ public abstract partial class SharedMicrowaveSystem
 
         _container.EmptyContainer(ent.Comp.Storage);
         Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>
@@ -41,7 +65,6 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
-        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>
@@ -61,8 +84,10 @@ public abstract partial class SharedMicrowaveSystem
 
         ent.Comp.CurrentCookTimeButtonIndex = args.ButtonIndex;
         ent.Comp.CurrentCookTimerTime = args.NewCookTime;
+        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.CurrentCookTimeButtonIndex));
+        DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.CurrentCookTimerTime));
+
         Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
-        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>
@@ -70,14 +95,8 @@ public abstract partial class SharedMicrowaveSystem
     ///     and whether or not it is actively cooking.
     /// </summary>
     /// <param name="microwave">The microwave to update.</param>
-    public void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
-    {
-        if (!Resolve(microwave.Owner, ref microwave.Comp))
-            return;
-
-        if (_userInterface.TryGetOpenUi(microwave.Owner, MicrowaveUiKey.Key, out var bui))
-            bui.Update();
-    }
+    public virtual void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
+    { }
 }
 
 /// <summary>

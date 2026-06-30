@@ -47,7 +47,6 @@ public abstract partial class SharedMicrowaveSystem
         var recipe = GetRecipe(microwave, ingredients, cookTime);
 
         ActivateMicrowave(microwave, recipe, malfunctioning);
-        UpdateUserInterfaceState(microwave.AsNullable());
     }
 
     /// <summary>
@@ -62,16 +61,24 @@ public abstract partial class SharedMicrowaveSystem
     {
         var uid = microwave.Owner;
         var component = microwave.Comp;
+        var curTime = _timing.CurTime;
 
         Audio.PlayPvs(component.StartCookingSound, uid);
 
         var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
-        var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
-        activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
-        activeComp.PortionedRecipe = recipe;
+        var activeComp = new ActiveMicrowaveComponent()
+        {
+            TotalTime = component.CurrentCookTimerTime,
+            CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime),
+            PortionedRecipe = recipe,
+            Malfunctioning = malfunctioning,
+        };
 
         if (malfunctioning)
-            activeComp.NextMalfunction = _timing.CurTime + component.MalfunctionInterval;
+            activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
+
+        AddComp(uid, activeComp);
+        Dirty(uid, activeComp);
     }
 
     /// <summary>
@@ -150,6 +157,7 @@ public abstract partial class SharedMicrowaveSystem
         // may cancel out any actual cooking, so this may early exit.
         var beingMicrowaved = new BeingMicrowavedEvent(microwave.Owner, user);
         RaiseLocalEvent(item, beingMicrowaved);
+
         if (beingMicrowaved.Handled)
         {
             UpdateUserInterfaceState(microwave.AsNullable());
@@ -221,7 +229,6 @@ public abstract partial class SharedMicrowaveSystem
             SpawnFinishedRecipe(microwaveEnt, recipe.Recipe, recipe.Count);
 
         Audio.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
-        UpdateUserInterfaceState(microwaveEnt);
 
         // Clean up the microwave.
         _container.EmptyContainer(microwave.Storage);
