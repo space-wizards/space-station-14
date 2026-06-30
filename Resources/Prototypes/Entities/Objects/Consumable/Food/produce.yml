@@ -2811,7 +2811,7 @@
         - MobLayer
 
 - type: entity
-  name: sonion
+  name: Suniom
   description: SON!!
   parent: [ SolutionCryo, ImpactGrenadeBase, ProduceBase, BaseMajorContraband ]
   id: FoodSunion
