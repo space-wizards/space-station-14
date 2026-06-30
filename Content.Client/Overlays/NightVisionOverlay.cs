@@ -47,7 +47,6 @@ public sealed partial class NightVisionOverlay : Overlay
         if (isSpace)
         {
             _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _nightVisionShader.SetParameter("overlay_color", OverlayColor);
             _nightVisionShader.SetParameter("noise_amount", NoiseAmount);
             _nightVisionShader.SetParameter("noise_multiplier", NoiseMultiplier);
             handle.UseShader(_nightVisionShader);

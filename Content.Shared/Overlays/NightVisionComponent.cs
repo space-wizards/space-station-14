@@ -19,7 +19,7 @@ public sealed partial class NightVisionComponent : Component
     /// Does not control lighting coloring, just serves as an effect on the screen.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Color OverlayColor = Color.White;
+    public Color OverlayColor = Color.Transparent; // Transparent by default, no overlay.
 
     /// <summary>
     /// Color modification added on top of lighting during rendering.
