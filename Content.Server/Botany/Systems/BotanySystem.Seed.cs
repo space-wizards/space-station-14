@@ -22,7 +22,6 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
@@ -52,7 +51,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && ProtoMan.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
             seed = protoSeed;
             return true;
@@ -71,7 +70,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && ProtoMan.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
             seed = protoSeed;
             return true;

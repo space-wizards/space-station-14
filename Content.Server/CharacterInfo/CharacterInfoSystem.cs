@@ -6,7 +6,6 @@ using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.CharacterInfo;
 
@@ -16,7 +15,6 @@ public sealed partial class CharacterInfoSystem : EntitySystem
     [Dependency] private MindSystem _minds = default!;
     [Dependency] private RoleSystem _roles = default!;
     [Dependency] private SharedObjectivesSystem _objectives = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
     {
@@ -45,7 +43,7 @@ public sealed partial class CharacterInfoSystem : EntitySystem
                 if (info == null)
                     continue;
 
-                if (!_protoMan.TryIndex(Comp<ObjectiveComponent>(objective).Issuer, out var issuerProto))
+                if (!ProtoMan.TryIndex(Comp<ObjectiveComponent>(objective).Issuer, out var issuerProto))
                 {
                     Log.Error($"Found incorrect objective issuer {issuerProto} when generating character info for objective {MetaData(objective).EntityPrototype}.");
                     continue;

@@ -1,7 +1,7 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinable]
   description: From the Viking age.
   components:
     - type: NpcFactionMember
@@ -37,8 +37,8 @@
       thresholds:
         0: Alive
         100: Dead
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatChicken
         amount: 2
     - type: MovementSpeedModifier
