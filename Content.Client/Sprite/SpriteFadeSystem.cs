@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Sprite;
 using Robust.Client.GameObjects;
@@ -78,11 +79,17 @@ public sealed partial class SpriteFadeSystem : EntitySystem
         {
             foreach (var (mapPos, excludeBB) in _points)
             {
+
+                var clickable = state.GetClickableEntities(mapPos, excludeFaded: false).ToList();
+
                 // Also want to handle large entities even if they may not be clickable.
-                foreach (var ent in state.GetClickableEntities(mapPos, excludeFaded: false))
+                // We need to know if we're at the end of the list or not.
+                for (var i = 0; i < clickable.Count; i++)
                 {
+                    var ent = clickable[i];
+
                     if (ent == player ||
-                        !_fadeQuery.HasComponent(ent) ||
+                        !_fadeQuery.TryGetComponent(ent, out var fadeComp) ||
                         !_spriteQuery.TryGetComponent(ent, out var sprite) ||
                         sprite.DrawDepth < playerSprite.DrawDepth)
                     {
@@ -112,6 +119,10 @@ public sealed partial class SpriteFadeSystem : EntitySystem
                         {
                             continue;
                         }
+
+                        // If this sprite doesn't always fade, and it's at the bottom of the stack, then don't fade!
+                        if (!fadeComp.AlwaysFade && i + 1 == clickable.Count)
+                            break;
                     }
 
                     if (!_fadingQuery.TryComp(ent, out var fading))
