@@ -72,8 +72,6 @@ public sealed partial class ScreechSystem : EntitySystem
     /// <param name="source"></param>
     public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, float knockDownChances = 0.5f, float speedMultiplier = 1f, TimeSpan? slowdownTime = null)
     {
-        // yes, this is mostly code taken & modified from FlashArea
-
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
         {
