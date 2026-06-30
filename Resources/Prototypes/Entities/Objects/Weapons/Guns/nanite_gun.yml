@@ -34,7 +34,7 @@
     price: 5000
   - type: MagazineVisuals
     magState: mag-unshaded
-    steps: 6
+    steps: 5
     zeroVisible: true
   - type: Appearance
   - type: ContainerContainer
