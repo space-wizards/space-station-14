@@ -1,8 +1,8 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   name: burrower
-  id: [ MobXeno, MobNightVision ]
-  parent: SimpleSpaceMobBase
+  id: MobXeno
+  parent: [ SimpleSpaceMobBase, MobNightVision ]
   description: They mostly come at night. Mostly.
   components:
   - type: Insulated
