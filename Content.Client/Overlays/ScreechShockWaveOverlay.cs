@@ -82,7 +82,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
             var tempCoords = args.Viewport.WorldToLocal(mapPos);
 
             // normalized coords, 0 - 1 plane. This is pure hell, we subtract 1 because fragment calculates from the bottom and local goes from the top of the viewport
-            tempCoords.Y = 1 - (tempCoords.Y / args.Viewport.Size.Y);
+            tempCoords.Y = 1 - tempCoords.Y / args.Viewport.Size.Y;
             tempCoords.X /= args.Viewport.Size.X;
 
             var position = tempCoords;
