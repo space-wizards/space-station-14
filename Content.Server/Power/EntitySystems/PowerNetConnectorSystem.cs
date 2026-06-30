@@ -15,16 +15,16 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentRemove>(OnRemove);
+        SubscribeLocalEvent<PowerNetworkConnectorComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentShutdown>(OnRemove);
     }
 
-    private void OnRemove(Entity<PowerNetworkConnectorComponent> ent, ref ComponentRemove args)
+    private void OnRemove(Entity<PowerNetworkConnectorComponent> ent, ref ComponentShutdown args)
     {
         ClearNet(ent);
     }
 
-    private void OnInit(Entity<PowerNetworkConnectorComponent> ent, ref ComponentInit args)
+    private void OnInit(Entity<PowerNetworkConnectorComponent> ent, ref MapInitEvent args)
     {
         TryFindAndSetNet(ent);
     }
