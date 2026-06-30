@@ -18,15 +18,14 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed partial class AreaPickupSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedProjectileSystem _projectile = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedProjectileSystem _projectile = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -77,7 +76,7 @@ public sealed partial class AreaPickupSystem : EntitySystem
         {
             if (entityInRange == args.User ||
                 !_itemQuery.TryGetComponent(entityInRange, out var itemComp) ||
-                !_prototype.HasIndex(itemComp.Size) ||
+                !ProtoMan.HasIndex(itemComp.Size) ||
                 !_interaction.InRangeUnobstructed(args.User, entityInRange))
                 continue;
             pickupCandidates.Add((entityInRange, itemComp));

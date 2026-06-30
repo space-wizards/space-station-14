@@ -12,10 +12,10 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed partial class QuickPickupSystem : EntitySystem
 {
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedProjectileSystem _projectile = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedProjectileSystem _projectile = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
 

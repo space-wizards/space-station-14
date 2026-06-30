@@ -16,10 +16,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Lock;
 using Content.Shared.Materials;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
@@ -39,7 +37,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
 using Robust.Shared.Collections;
@@ -50,7 +47,6 @@ namespace Content.Shared.Storage.EntitySystems;
 public abstract partial class SharedStorageSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
 
@@ -83,6 +79,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     public bool NestedStorage = true;
 
     public static readonly ProtoId<ItemSizePrototype> DefaultStorageMaxItemSize = "Normal";
+    public static readonly ProtoId<TagPrototype> BypassOpenStorageLimitTag = "BypassOpenStorageLimit";
 
     public const float AreaInsertDelayPerItem = 0.075f;
     private static AudioParams _audioParams = AudioParams.Default
@@ -119,7 +116,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         base.Initialize();
 
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
 
         Subs.CVar(_cfg, CCVars.StorageLimit, OnStorageLimitChanged, true);
 
@@ -234,7 +231,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     public override void Shutdown()
     {
-        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
@@ -249,9 +246,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void UpdatePrototypeCache()
     {
-        _defaultStorageMaxItemSize = _prototype.Index(DefaultStorageMaxItemSize);
+        _defaultStorageMaxItemSize = ProtoMan.Index(DefaultStorageMaxItemSize);
         _sortedSizes.Clear();
-        _sortedSizes.AddRange(_prototype.EnumeratePrototypes<ItemSizePrototype>());
+        _sortedSizes.AddRange(ProtoMan.EnumeratePrototypes<ItemSizePrototype>());
         _sortedSizes.Sort();
 
         var nextSmallest = new KeyValuePair<string, ItemSizePrototype>[_sortedSizes.Count];
@@ -413,7 +410,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         {
             // If you need something more sophisticated for multi-UI you'll need to code some smarter
             // interactions.
-            if (_openStorageLimit == 1)
+            if (_openStorageLimit == 1 && !_tag.HasTag(actor, BypassOpenStorageLimitTag))
                 UI.CloseUserUis<StorageComponent.StorageUiKey>(actor);
 
             OpenStorageUIInternal(uid, actor, storageComp, silent: silent);
@@ -537,6 +534,159 @@ public abstract partial class SharedStorageSystem : EntitySystem
             UI.CloseUi(uid, StorageComponent.StorageUiKey.Key, args.Performer);
         else
             OpenStorageUI(uid, args.Performer, storageComp, false);
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Allows a user to pick up entities by clicking them, or pick up all entities in a certain radius
+    /// around a click.
+    /// </summary>
+    /// <returns></returns>
+    private void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || !UseDelay.TryResetDelay(uid, checkDelayed: true, id: QuickInsertUseDelayID))
+            return;
+
+        // Pick up all entities in a radius around the clicked location.
+        // The last half of the if is because carpets exist and this is terrible
+        if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
+        {
+            _entList.Clear();
+            _entSet.Clear();
+            _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, _entSet, LookupFlags.Dynamic | LookupFlags.Sundries);
+            var delay = 0f;
+
+            foreach (var entity in _entSet)
+            {
+                if (entity == args.User
+                    || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
+                    || !ProtoMan.Resolve(itemComp.Size, out var itemSize)
+                    || !CanInsert(uid, entity, out _, storageComp, item: itemComp)
+                    || !_interactionSystem.InRangeUnobstructed(args.User, entity))
+                {
+                    continue;
+                }
+
+                _entList.Add(entity);
+                delay += itemSize.Weight;
+
+                if (_entList.Count >= StorageComponent.AreaPickupLimit)
+                    break;
+            }
+
+            //If there's only one then let's be generous
+            if (_entList.Count >= 1)
+            {
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay * AreaInsertDelayPerItem, new AreaPickupDoAfterEvent(GetNetEntityList(_entList)), uid, target: uid)
+                {
+                    BreakOnDamage = true,
+                    BreakOnMove = true,
+                    NeedHand = true,
+                };
+
+                _doAfterSystem.TryStartDoAfter(doAfterArgs);
+                args.Handled = true;
+            }
+
+            return;
+        }
+
+        // Pick up the clicked entity
+        if (storageComp.QuickInsert)
+        {
+            if (args.Target is not { Valid: true } target)
+                return;
+
+            if (ContainerSystem.IsEntityInContainer(target)
+                || target == args.User
+                || !_itemQuery.HasComponent(target))
+            {
+                return;
+            }
+
+            if (TryComp(uid, out TransformComponent? transformOwner) && TryComp(target, out TransformComponent? transformEnt))
+            {
+                var parent = transformOwner.ParentUid;
+
+                var position = TransformSystem.ToCoordinates(
+                    parent.IsValid() ? parent : uid,
+                    TransformSystem.GetMapCoordinates(transformEnt)
+                );
+
+                args.Handled = true;
+                if (PlayerInsertEntityInWorld((uid, storageComp), args.User, target))
+                {
+                    EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
+                        new List<NetEntity> { GetNetEntity(target) },
+                        new List<NetCoordinates> { GetNetCoordinates(position) },
+                        new List<Angle> { transformOwner.LocalRotation }), args.User);
+                }
+            }
+        }
+    }
+
+    private void OnDoAfter(EntityUid uid, StorageComponent component, AreaPickupDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        args.Handled = true;
+        var successfullyInserted = new List<EntityUid>();
+        var successfullyInsertedPositions = new List<EntityCoordinates>();
+        var successfullyInsertedAngles = new List<Angle>();
+
+        if (!_xformQuery.TryGetComponent(uid, out var xform))
+        {
+            return;
+        }
+
+        var entCount = Math.Min(StorageComponent.AreaPickupLimit, args.Entities.Count);
+
+        for (var i = 0; i < entCount; i++)
+        {
+            var entity = GetEntity(args.Entities[i]);
+
+            // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
+            if (ContainerSystem.IsEntityInContainer(entity)
+                || entity == args.Args.User
+                || !_itemQuery.HasComponent(entity))
+            {
+                continue;
+            }
+
+            if (!_xformQuery.TryGetComponent(entity, out var targetXform) ||
+                targetXform.MapID != xform.MapID)
+            {
+                continue;
+            }
+
+            var position = TransformSystem.ToCoordinates(
+                xform.ParentUid.IsValid() ? xform.ParentUid : uid,
+                new MapCoordinates(TransformSystem.GetWorldPosition(targetXform), targetXform.MapID)
+            );
+
+            var angle = targetXform.LocalRotation;
+
+            if (PlayerInsertEntityInWorld((uid, component), args.Args.User, entity, playSound: false))
+            {
+                successfullyInserted.Add(entity);
+                successfullyInsertedPositions.Add(position);
+                successfullyInsertedAngles.Add(angle);
+            }
+        }
+
+        // If we picked up at least one thing, play a sound and do a cool animation!
+        if (successfullyInserted.Count > 0)
+        {
+            if (!_tag.HasTag(args.User, component.SilentStorageUserTag))
+                Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, _audioParams);
+            EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(
+                GetNetEntity(uid),
+                GetNetEntityList(successfullyInserted),
+                GetNetCoordinatesList(successfullyInsertedPositions),
+                successfullyInsertedAngles), args.User);
+        }
 
         args.Handled = true;
     }
@@ -750,6 +900,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         if (args.UiKey is not StorageComponent.StorageUiKey.Key ||
             _openStorageLimit == -1 ||
+            _tag.HasTag(args.Actor, BypassOpenStorageLimitTag) ||
             _nestedCheck ||
             args.Message is not OpenBoundInterfaceMessage)
             return;
@@ -1706,7 +1857,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
         {
-            if (_prototype.Resolve(uid.Comp.MaxItemSize.Value, out var proto))
+            if (ProtoMan.Resolve(uid.Comp.MaxItemSize.Value, out var proto))
                 return proto;
 
             Log.Error($"{ToPrettyString(uid.Owner)} tried to get invalid item size prototype: {uid.Comp.MaxItemSize.Value}. Stack trace:\\n{Environment.StackTrace}");

@@ -6,7 +6,7 @@
   - type: Objective
     # difficulty isn't used since all objectives are picked
     difficulty: 1.5
-    issuer: objective-issuer-spiderclan
+    issuer: SpiderClan
   - type: RoleRequirement
     roles:
     - NinjaRole
