@@ -29,7 +29,8 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     /// <summary>
     /// Keeps track of the current amount of registered shockwaves
     /// </summary>
-    private int _currentCount = 0;
+    private int _currentCount;
+
     /// <summary>
     /// This constant governs the maximum amount of instances. This is mirrored in the shader itself.
     /// </summary>
