@@ -10,7 +10,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class VoltageTogglerSystem : SharedVoltageTogglerSystem
+public sealed partial class VoltageTogglerSystem : SharedVoltageTogglerSystem
 {
     [Dependency] private UseDelaySystem _useDelay = null!;
     [Dependency] private PopupSystem _popup = null!;
