@@ -16,7 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.BugReports;
 
 /// <inheritdoc cref="IBugReportManager"/>
-public sealed class BugReportManager : IBugReportManager, IPostInjectInit
+public sealed partial class BugReportManager : IBugReportManager, IPostInjectInit
 {
     [Dependency] private readonly IServerNetManager _net = default!;
     [Dependency] private readonly IEntityManager _entity = default!;

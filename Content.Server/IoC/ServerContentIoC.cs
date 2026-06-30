@@ -82,8 +82,9 @@ internal static class ServerContentIoC
         deps.Register<DiscordChatLink>();
         deps.Register<ServerFeedbackManager>();
         deps.Register<ISharedFeedbackManager, ServerFeedbackManager>();
-        IoCManager.Register<GithubApiManager>();
-        IoCManager.Register<GithubBackgroundWorker>();
-        IoCManager.Register<GithubClient>();
+        deps.Register<IBugReportManager, BugReportManager>();
+        deps.Register<GithubApiManager>();
+        deps.Register<GithubBackgroundWorker>();
+        deps.Register<GithubClient>();
     }
 }

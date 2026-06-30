@@ -100,7 +100,7 @@
         ToolTip="{Loc 'game-hud-open-bug-report-window-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleClass.ButtonSquare}"
     />
     <ui:MenuButton
         Name="AHelpButton"
