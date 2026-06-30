@@ -19,10 +19,10 @@ public sealed partial class CargoTelepadComponent : Component
     /// <summary>
     /// The delay between each teleport in seconds
     /// </summary>
-    [DataField("delay", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TeleportDelay = TimeSpan.FromSeconds(5);
 
-    [ViewVariables]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextTeleport;
 
     [DataField("currentState")]
