@@ -215,9 +215,9 @@
   components:
     - type: Item
       size: Normal
-    - type: TetherGun
+    - type: BaseForceGun
       frequency: 5
-      dampingRatio: 4
+      dampingRatio: 2
     - type: ItemToggle
       onUse: false
     - type: PowerCellDraw
@@ -257,11 +257,13 @@
   components:
     - type: Item
       size: Normal
-    - type: ForceGun
-      frequency: 15
-      dampingRatio: 4
+    - type: BaseForceGun
+      frequency: 5
+      dampingRatio: 2
       massLimit: 50
+      maxDistance: 1
       lineColor: "#18a2d5"
+    - type: ForceGun
       soundLaunch:
         path: /Audio/Weapons/soup.ogg
         params:
@@ -343,13 +345,15 @@
   components:
     - type: Item
       size: Normal
-    - type: TetherGun
+    - type: BaseForceGun
       canTetherAlive: true
       canUnanchor: true
-      maxForce: 10000
+      maxForce: 50000
       massLimit: 10000
-      dampingRatio: 4
-      frequency: 20
+      dampingRatio: 1
+      frequency: 25
+      reverseForce: false
+      maxBeamLength: 100
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
       layers:
@@ -384,16 +388,23 @@
   components:
     - type: Item
       size: Normal
-    - type: ForceGun
+    - type: BaseForceGun
       canTetherAlive: true
       canUnanchor: true
-      maxForce: 10000
+      maxForce: 50000
       massLimit: 10000
-      frequency: 15
-      dampingRatio: 4
-      throwForce: 50
-      throwDistance: 100
+      frequency: 50
+      maxDistance: 1.5
+      dampingRatio: 1
       lineColor: "#18a2d5"
+      reverseForce: false
+      maxBeamLength: 100
+    - type: ForceGun
+      throwSpeed: 100
+      soundLaunch:
+        path: /Audio/Weapons/soup.ogg
+        params:
+          volume: 2
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
       layers:

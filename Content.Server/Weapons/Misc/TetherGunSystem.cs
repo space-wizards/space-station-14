@@ -13,8 +13,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TetherGunComponent, PowerCellSlotEmptyEvent>(OnGunEmpty);
-        SubscribeLocalEvent<ForceGunComponent, PowerCellSlotEmptyEvent>(OnGunEmpty);
+        SubscribeLocalEvent<BaseForceGunComponent, PowerCellSlotEmptyEvent>(OnGunEmpty);
     }
 
     private void OnGunEmpty(EntityUid uid, BaseForceGunComponent component, ref PowerCellSlotEmptyEvent args)

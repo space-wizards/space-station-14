@@ -19,8 +19,7 @@ public sealed class TetherGunOverlay : Overlay
     {
         var query = _entManager.EntityQueryEnumerator<TetheredComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
-        var tetherQuery = _entManager.GetEntityQuery<TetherGunComponent>();
-        var forceQuery = _entManager.GetEntityQuery<ForceGunComponent>();
+        var forceQuery = _entManager.GetEntityQuery<BaseForceGunComponent>();
         var worldHandle = args.WorldHandle;
         var xformSystem = _entManager.System<SharedTransformSystem>();
 
@@ -53,10 +52,6 @@ public sealed class TetherGunOverlay : Overlay
             if (forceQuery.TryGetComponent(tethered.Tetherer, out var force))
             {
                 color = force.LineColor;
-            }
-            else if (tetherQuery.TryGetComponent(tethered.Tetherer, out var tether))
-            {
-                color = tether.LineColor;
             }
 
             worldHandle.DrawRect(rotated, color.WithAlpha(0.3f));
