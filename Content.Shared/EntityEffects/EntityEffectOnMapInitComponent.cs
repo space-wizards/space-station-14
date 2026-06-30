@@ -5,7 +5,7 @@
 /// <remarks>Useful for e.g. station spawning.</remarks>
 /// </summary>
 [RegisterComponent]
-public sealed partial class EntityEffectOnInitComponent : Component
+public sealed partial class EntityEffectOnMapInitComponent : Component
 {
     /// <summary>
     /// Effects that should be applied upon the map being initiated.
