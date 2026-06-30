@@ -16,11 +16,9 @@ using Content.Server.Speech.Components;
 using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Server.Tabletop.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
-using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -1081,7 +1079,9 @@ public sealed partial class AdminVerbSystem
         // I would do it now but theres a massive rod rewrite, and I don't wanna poke it for this.
         // find reasonable spawn location (use gamerule and find rod?) but respect map not on grid etc etc
 
-        var offset = new Random(target.Id).NextAngle().RotateVec(new Vector2(distance, 0));
+        var random = new RobustRandom() as IRobustRandom;
+        random.SetSeed(target.Id);
+        var offset = random.NextAngle().RotateVec(new Vector2(distance, 0));
         var spawnCoords = _transformSystem.GetMapCoordinates(target).Offset(offset);
         var rod = Spawn(proto, spawnCoords);
         // Here we abuse the ChasingWalkComp by making it skip targetting logic and dialling its frequency up

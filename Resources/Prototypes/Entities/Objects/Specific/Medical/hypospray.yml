@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: [SolutionHypospraySmall, BaseItem]
-  id: BaseHypospray
+  id: BaseHypoInjector
   components:
   - type: Injector
     solutionName: hypospray
@@ -10,12 +10,21 @@
     allowedModes:
     - HyposprayDynamicMode
     - HyposprayInjectMode
-  - type: Spillable
-    solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
     exactVolume: true
+  - type: UseDelay
+    delay: 0.5
   - type: Appearance
+
+- type: entity
+  abstract: true
+  parent: BaseHypoInjector
+  id: BaseHypospray
+  components:
+  - type: Spillable
+    solution: hypospray
+    spillWhenThrown: false
 
 - type: entity
   abstract: true
@@ -53,8 +62,6 @@
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: RefillableSolution
     solution: hypospray
-  - type: UseDelay
-    delay: 0.5
   - type: StaticPrice
     price: 750
   - type: Tag
@@ -110,8 +117,6 @@
     maxFillLevels: 2
     fillBaseName: borghypo_fill
     solutionName: hypospray
-  - type: UseDelay
-    delay: 0.5
 
 - type: entity
   parent: BaseHypospray
@@ -184,7 +189,7 @@
     delay: 0.0
 
 - type: entity
-  parent: BaseHypospray # I plan to resize medipens to 1x2 eventually:tm:
+  parent: BaseHypoInjector # I plan to resize medipens to 1x2 eventually:tm:
   id: ChemicalMedipen
   name: chemical medipen
   description: A single-dose, non-refillable medipen.

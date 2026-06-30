@@ -6,6 +6,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -18,7 +19,6 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
@@ -27,7 +27,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -39,7 +38,6 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -59,15 +57,15 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private DestructibleSystem _destructibleSystem = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
 
-    private EntityQuery<FlammableComponent> _flammableQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<ProjectileComponent> _projectileQuery;
-    private EntityQuery<ActorComponent> _actorQuery;
-    private EntityQuery<DestructibleComponent> _destructibleQuery;
-    private EntityQuery<DamageableComponent> _damageableQuery;
+    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<ActorComponent> _actorQuery = default!;
+    [Dependency] private EntityQuery<DestructibleComponent> _destructibleQuery = default!;
+    [Dependency] private EntityQuery<DamageableComponent> _damageableQuery = default!;
+    [Dependency] private EntityQuery<ExplosionResistanceComponent> _explosionResistanceQuery = default!;
     [Dependency] private EntityQuery<InjurableComponent> _injurableQuery = default!;
-    private EntityQuery<AirtightComponent> _airtightQuery;
-    private EntityQuery<TileHistoryComponent> _tileHistoryQuery;
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<TileHistoryComponent> _tileHistoryQuery = default!;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -80,7 +78,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     {
         base.Initialize();
 
-        DebugTools.Assert(_prototypeManager.HasIndex(DefaultExplosionPrototypeId));
+        DebugTools.Assert(ProtoMan.HasIndex(DefaultExplosionPrototypeId));
 
         // handled in ExplosionSystem.GridMap.cs
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
@@ -103,16 +101,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         InitAirtightMap();
         InitVisuals();
 
-        _flammableQuery = GetEntityQuery<FlammableComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _projectileQuery = GetEntityQuery<ProjectileComponent>();
-        _actorQuery = GetEntityQuery<ActorComponent>();
-        _destructibleQuery = GetEntityQuery<DestructibleComponent>();
-        _damageableQuery = GetEntityQuery<DamageableComponent>();
-        _airtightQuery = GetEntityQuery<AirtightComponent>();
-        _tileHistoryQuery = GetEntityQuery<TileHistoryComponent>();
-
-        _prototypeManager.PrototypesReloaded += ReloadExplosionPrototypes;
+        ProtoMan.PrototypesReloaded += ReloadExplosionPrototypes;
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
@@ -131,7 +120,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         base.Shutdown();
         _nodeGroupSystem.PauseUpdating = false;
         _pathfindingSystem.PauseUpdating = false;
-        _prototypeManager.PrototypesReloaded -= ReloadExplosionPrototypes;
+        ProtoMan.PrototypesReloaded -= ReloadExplosionPrototypes;
     }
 
     private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
@@ -292,7 +281,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         if (totalIntensity <= 0 || slope <= 0)
             return;
 
-        if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
+        if (!ProtoMan.TryIndex<ExplosionPrototype>(typeId, out var type))
         {
             Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
             return;
