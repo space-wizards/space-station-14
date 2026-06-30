@@ -19,10 +19,11 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _shader;
     private static readonly ProtoId<ShaderPrototype> ScreechPrototype = "ScreechShockWave";
+
     /// <summary>
     /// Contains a cached list of all screech shock wave entities in PVS
     /// </summary>
-    private List<(EntityUid, InnerShaderInstance)> _cached;
+    private readonly List<(EntityUid, InnerShaderInstance)> _cached;
 
     // The hell of shader variables
     /// <summary>
