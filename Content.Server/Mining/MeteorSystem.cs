@@ -10,12 +10,12 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Mining;
 
-public sealed class MeteorSystem : EntitySystem
+public sealed partial class MeteorSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private MobThresholdSystem _mobThreshold = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,12 +46,13 @@ public sealed class MeteorSystem : EntitySystem
         {
             threshold = FixedPoint2.MaxValue;
         }
-        var otherEntDamage = CompOrNull<DamageableComponent>(args.OtherEntity)?.TotalDamage ?? FixedPoint2.Zero;
+
+        var otherEntDamage = _damageable.GetTotalDamage(args.OtherEntity);
         // account for the damage that the other entity has already taken: don't overkill
         threshold -= otherEntDamage;
 
         // The max amount of damage our meteor can take before breaking.
-        var maxMeteorDamage = _destructible.DestroyedAt(uid) - CompOrNull<DamageableComponent>(uid)?.TotalDamage ?? FixedPoint2.Zero;
+        var maxMeteorDamage = _destructible.DestroyedAt(uid) - _damageable.GetTotalDamage(uid);
 
         // Cap damage so we don't overkill the meteor
         var trueDamage = FixedPoint2.Min(maxMeteorDamage, threshold);

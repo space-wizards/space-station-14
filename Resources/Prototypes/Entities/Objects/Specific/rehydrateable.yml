@@ -5,10 +5,9 @@
   components:
   - type: Item
     size: Tiny
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      cube:
-        maxVol: 1 # needs room for water
+    - SolutionCube
   - type: RefillableSolution
     solution: cube
   - type: Reactive
@@ -40,25 +39,36 @@
         - LowImpassable
 
 - type: entity
-  parent: RehydratableItem
+  parent: Solution
+  id: SolutionCube # This will be deleted at a later date. Using solutions for this is really dumb.
+  name: cube
+  description: if you're reading this, nuh uh! file a bug report.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: cube
+    solution:
+      maxVol: 1
+
+- type: entity
+  abstract: true
+  parent: [SolutionTiny, SolutionFood, RehydratableItem]
   id: RehydratableAnimalCube
   description: Just add water!
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: cube
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 19 # needs 1u room for water
-        reagents: # equals one piece of raw meat, ideally should vary depending on the animal type, but idk how to link this to biomass costs
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
+  - type: Solution
+    solution:
+      reagents: # Same as raw meat.
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+      - ReagentId: Fat
+        Quantity: 5
   - type: Edible
-    solution: cube
   - type: FlavorProfile
     flavors:
     - chewy
@@ -151,17 +161,15 @@
   name: carp cube
   description: Just add water! At your own risk.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 24 # needs 1u room for water
-        reagents: # equals one piece of raw meat - plus a deadly toxin!
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 9
-        - ReagentId: Fat
-          Quantity: 9
-        - ReagentId: CarpoToxin
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+      - ReagentId: Fat
+        Quantity: 5
   - type: Rehydratable
     possibleSpawns:
     - MobCarp
@@ -203,12 +211,6 @@
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 1 # needs room for water
-  - type: Edible
-    solution: cube
   - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
     fixtures:
       fix1:

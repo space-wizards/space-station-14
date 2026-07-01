@@ -6,9 +6,9 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Morgue;
 
-public abstract class SharedMorgueSystem : EntitySystem
+public abstract partial class SharedMorgueSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

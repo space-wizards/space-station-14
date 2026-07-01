@@ -8672,13 +8672,11 @@ entities:
   - uid: 1465
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 10.5,43.5
       parent: 588
   - uid: 1466
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 12.5,43.5
       parent: 588
 - proto: GrilleBroken

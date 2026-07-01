@@ -73,6 +73,7 @@
           layer:
             - Opaque
     - type: Damageable
+    - type: Injurable
       damageContainer: Biological
     - type: MobState
       allowedStates:

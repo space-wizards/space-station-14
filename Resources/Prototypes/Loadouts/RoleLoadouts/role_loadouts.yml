@@ -9,7 +9,7 @@
   - CaptainOuterClothing
   - Survival
   - Trinkets
-  - CaptainJobTrinkets
+  #- CaptainJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -24,7 +24,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - HoPJobTrinkets
+  #- HoPJobTrinkets
   - GroupSpeciesBreathTool
 
 # Silicons
@@ -53,7 +53,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - PassengerJobTrinkets
+  #- PassengerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -79,7 +79,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ServiceWorkerJobTrinkets
+  #- ServiceWorkerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -94,7 +94,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ChefJobTrinkets
+  #- ChefJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -106,7 +106,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - LibrarianJobTrinkets
+  #- LibrarianJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -119,11 +119,12 @@
   - Glasses
   - Survival
   - Trinkets
-  - LawyerJobTrinkets
+  #- LawyerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
   id: JobChaplain
+  canCustomizeName: true
   groups:
   - GroupTankHarness
   - ChaplainHead
@@ -136,7 +137,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ChaplainJobTrinkets
+  #- ChaplainJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -165,7 +166,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - BotanistJobTrinkets
+  #- BotanistJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -197,7 +198,7 @@
   - Glasses
   - SurvivalMime
   - Trinkets
-  - MimeJobTrinkets
+  #- MimeJobTrinkets
 
 - type: roleLoadout
   id: JobMusician
@@ -210,7 +211,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - MusicianJobTrinkets
+  #- MusicianJobTrinkets
   - Instruments
   - GroupSpeciesBreathTool
 
@@ -228,7 +229,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - QuartermasterJobTrinkets
+  #- QuartermasterJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -244,7 +245,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - CargoTechnicianJobTrinkets
+  #- CargoTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -257,7 +258,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - SalvageSpecialistJobTrinkets
+  #- SalvageSpecialistJobTrinkets
   - GroupSpeciesBreathTool
 
 # Engineering
@@ -273,7 +274,7 @@
   - ChiefEngineerShoes
   - SurvivalExtended
   - Trinkets
-  - ChiefEngineerJobTrinkets
+  #- ChiefEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -284,7 +285,7 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
-  - TechnicalAssistantJobTrinkets
+  #- TechnicalAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -299,7 +300,7 @@
   - StationEngineerID
   - SurvivalExtended
   - Trinkets
-  - StationEngineerJobTrinkets
+  #- StationEngineerJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -312,7 +313,7 @@
   - AtmosphericTechnicianShoes
   - SurvivalExtended
   - Trinkets
-  - AtmosphericTechnicianJobTrinkets
+  #- AtmosphericTechnicianJobTrinkets
   - GroupSpeciesBreathTool
 
 # Science
@@ -330,7 +331,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ResearchDirectorJobTrinkets
+  #- ResearchDirectorJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -348,7 +349,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ScientistJobTrinkets
+  #- ScientistJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -360,7 +361,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - ResearchAssistantJobTrinkets
+  #- ResearchAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 # Security
@@ -429,7 +430,7 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
-  - SecurityCadetJobTrinkets
+  #- SecurityCadetJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
 # Wildcards
@@ -438,11 +439,13 @@
   groups:
   - GroupTankHarness
   - ReporterJumpsuit
+  - ReporterHead
+  - ReporterOuterClothing
   - CommonBackpack
   - Glasses
   - Survival
   - Trinkets
-  - ReporterJobTrinkets
+  #- ReporterJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -454,7 +457,7 @@
   - Glasses
   - Survival
   - Trinkets
-  - PsychologistJobTrinkets
+  #- PsychologistJobTrinkets
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs

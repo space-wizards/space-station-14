@@ -192,11 +192,6 @@
       storagebase:
         id: Eggshells
         amount: 12
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
 
 # Pizza
 
@@ -583,7 +578,7 @@
           children:
           - id: FoodSaladValid
             weight: 0.05
-            amount: 4
+            amount: 2
           - id: FoodSnackSyndi
             amount: 4
 

@@ -12,7 +12,7 @@ namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<StatusEffectsComponent, Jitter>
 {
-    [Dependency] private readonly SharedJitteringSystem _jittering = default!;
+    [Dependency] private SharedJitteringSystem _jittering = default!;
 
     protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<Jitter> args)
     {
@@ -25,18 +25,27 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class Jitter : EntityEffectBase<Jitter>
 {
+    /// <summary>
+    /// How intense the jitter is.
+    /// </summary>
     [DataField]
     public float Amplitude = 10.0f;
 
+    /// <summary>
+    /// The speed of the jitter.
+    /// </summary>
     [DataField]
     public float Frequency = 4.0f;
 
+    /// <summary>
+    /// The duration of the effect.
+    /// </summary>
     [DataField]
     public float Time = 2.0f;
 
-    /// <remarks>
-    ///     true - refresh jitter time,  false - accumulate jitter time
-    /// </remarks>
+    /// <summary>
+    /// True - refresh jitter time,  false - accumulate jitter time.
+    /// </summary>
     [DataField]
     public bool Refresh = true;
 

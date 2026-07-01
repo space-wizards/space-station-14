@@ -13,11 +13,10 @@ namespace Content.Server.Wagging;
 /// <summary>
 /// Adds an action to toggle wagging animation for tails markings that supporting this
 /// </summary>
-public sealed class WaggingSystem : EntitySystem
+public sealed partial class WaggingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     public override void Initialize()
     {
@@ -35,7 +34,13 @@ public sealed class WaggingSystem : EntitySystem
         if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
-        EnsureComp<WaggingComponent>(args.CloneUid);
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<WaggingComponent>();
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.Layer = ent.Comp.Layer;
+        cloneComp.Organ = ent.Comp.Organ;
+        cloneComp.Suffix = ent.Comp.Suffix;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnWaggingMapInit(Entity<WaggingComponent> ent, ref MapInitEvent args)
@@ -98,9 +103,9 @@ public sealed class WaggingSystem : EntitySystem
                 }
                 else
                 {
-                    if (currentMarkingId.EndsWith(ent.Comp.Suffix))
+                    if (currentMarkingId.Id.EndsWith(ent.Comp.Suffix))
                     {
-                        newMarkingId = currentMarkingId[..^ent.Comp.Suffix.Length];
+                        newMarkingId = currentMarkingId.Id[..^ent.Comp.Suffix.Length];
                     }
                     else
                     {
@@ -109,7 +114,7 @@ public sealed class WaggingSystem : EntitySystem
                     }
                 }
 
-                if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
+                if (!ProtoMan.HasIndex<MarkingPrototype>(newMarkingId))
                 {
                     Log.Warning($"{ToPrettyString(ent):ent} tried toggling wagging but {newMarkingId} marking doesn't exist");
                     continue;

@@ -9,7 +9,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 
 public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdown
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
     private ContainerSystem _container = default!;
     private EntityStorageSystem _entityStorage = default!;
 
