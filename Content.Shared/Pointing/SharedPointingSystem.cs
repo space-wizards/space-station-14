@@ -16,6 +16,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -54,8 +55,17 @@ public abstract partial class SharedPointingSystem : EntitySystem
             .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(HandlePointInput))
             .Register<SharedPointingSystem>();
 
+        SubscribeAllEvent<NetworkPointAttemptEvent>(OnPointNetworkEvent);
         SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
         Subs.CVar(_config, CCVars.PointingCooldownSeconds, v => _pointDelay = TimeSpan.FromSeconds(v), true);
+    }
+
+    private void OnPointNetworkEvent(NetworkPointAttemptEvent msg, EntitySessionEventArgs args)
+    {
+        if (!TryGetEntity(msg.Target, out var pointee))
+            return;
+
+        TryPoint(args.SenderSession, Transform(pointee.Value).Coordinates, pointee.Value);
     }
 
     public override void Update(float frameTime)
@@ -327,6 +337,12 @@ public abstract partial class SharedPointingSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class NetworkPointAttemptEvent : EntityEventArgs
+{
+    public NetEntity Target;
 }
 
 [ByRefEvent]

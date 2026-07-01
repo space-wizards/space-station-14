@@ -1,9 +1,6 @@
-using Content.Shared.Input;
 using Content.Shared.Pointing;
 using Content.Shared.Pointing.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.Input.Binding;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
@@ -18,6 +15,14 @@ public sealed partial class PointingSystem
         SubscribeLocalEvent<PointingArrowComponent, ComponentStartup>(OnArrowStartup);
         SubscribeLocalEvent<RoguePointingArrowComponent, ComponentStartup>(OnRogueArrowStartup);
         InitializeVisualizer();
+    }
+
+    public void TryPointAtEntity(EntityUid uid)
+    {
+        RaisePredictiveEvent(new NetworkPointAttemptEvent()
+        {
+            Target = GetNetEntity(uid),
+        });
     }
 
     private void OnArrowStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)
@@ -42,9 +47,7 @@ public sealed partial class PointingSystem
     {
         if (TryComp<SpriteComponent>(uid, out var sprite))
         {
-            _sprite.SetDrawDepth((uid, sprite), (int)DrawDepth.Overlays);
             sprite.NoRotation = false;
         }
     }
-
 }
