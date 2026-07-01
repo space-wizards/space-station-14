@@ -50,7 +50,7 @@ public abstract partial class SharedMicrowaveSystem
             || !_power.IsPowered(microwave.Owner))
             return;
 
-        var contents = microwave.Comp.Storage.ContainedEntities;
+        var contents = GetMicrowaveContents(microwave.AsNullable());
         var malfunctioning = false;
         var shouldContinue = TryStartMicrowavingContents(microwave,
             contents,
@@ -264,7 +264,7 @@ public abstract partial class SharedMicrowaveSystem
     {
         RemCompDeferred<ActiveMicrowaveComponent>(ent);
 
-        foreach (var solid in ent.Comp.Storage.ContainedEntities)
+        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
             RemCompDeferred<ActivelyMicrowavedComponent>(solid);
     }
 }

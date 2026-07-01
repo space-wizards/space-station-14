@@ -254,16 +254,17 @@ public abstract partial class SharedMicrowaveSystem
     ///     This function does not check whether or not the contents have *enough* ingredients to
     ///     subtract - it simply performs the subtraction.
     /// </remarks>
-    /// <param name="component">The microwave component.</param>
+    /// <param name="microwave">The microwave entity.</param>
     /// <param name="recipe">The recipe used to spend ingredients.</param>
     /// <param name="count">How many times this recipe is spent in ingredient volumes.</param>
-    private void SubtractContents(MicrowaveComponent component, FoodRecipePrototype recipe, uint count = 1)
+    private void SubtractContents(Entity<MicrowaveComponent> microwave, FoodRecipePrototype recipe, uint count = 1)
     {
+        var component = microwave.Comp;
+        var microwaveItems = GetMicrowaveContents(microwave.AsNullable()).ToArray();
         var ingredientsToSpend = recipe.Ingredients * count;
         var solidsToSpend = ingredientsToSpend.Solids;
         var materialsToSpend = ingredientsToSpend.Materials;
         var reagentsToSpend = ingredientsToSpend.Reagents;
-        var microwaveItems = component.Storage.ContainedEntities.ToArray();
 
         foreach (var item in microwaveItems)
         {

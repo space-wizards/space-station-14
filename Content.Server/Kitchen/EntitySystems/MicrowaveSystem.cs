@@ -87,7 +87,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         var heatToAdd = time * component.BaseHeatMultiplier;
         var objHeatToAdd = heatToAdd * component.ObjectHeatMultiplier;
 
-        foreach (var entity in component.Storage.ContainedEntities)
+        foreach (var entity in GetMicrowaveContents(ent.AsNullable()))
         {
             _temperature.ChangeHeat(entity, objHeatToAdd, ignoreHeatResistance: false);
 
