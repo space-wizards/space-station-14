@@ -853,7 +853,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     if (attempt >= maxRetryAttempts)
                     {
                         _opsLog.Error($"Max retry attempts reached. Failed to save {logs.Count} admin logs.");
-                        return;
+                        throw;
                     }
 
                     _opsLog.Warning($"Retrying in {retryDelay.TotalSeconds} seconds...");
@@ -1233,24 +1233,37 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         public async Task<List<IAdminRemarksRecord>> GetAllAdminRemarks(Guid player)
         {
-            await using var db = await GetDb();
-            List<IAdminRemarksRecord> notes = new();
-            notes.AddRange(
-                (await (from note in db.DbContext.AdminNotes
-                        where note.PlayerUserId == player &&
-                              !note.Deleted &&
-                              (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
-                        select note)
-                    .Include(note => note.Round)
-                    .ThenInclude(r => r!.Server)
-                    .Include(note => note.CreatedBy)
-                    .Include(note => note.LastEditedBy)
-                    .Include(note => note.Player)
-                    .ToListAsync()).Select(MakeAdminNoteRecord));
-            notes.AddRange(await GetActiveWatchlistsImpl(db, player));
-            notes.AddRange(await GetMessagesImpl(db, player));
-            notes.AddRange(await GetBansAsNotesForUser(db, player));
-            return notes;
+            return await ParallelCollect<IAdminRemarksRecord>(
+                async () =>
+                {
+                    await using var db = await GetDb();
+                    return (await (from note in db.DbContext.AdminNotes
+                            where note.PlayerUserId == player &&
+                                  !note.Deleted &&
+                                  (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
+                            select note)
+                        .Include(note => note.Round)
+                        .ThenInclude(r => r!.Server)
+                        .Include(note => note.CreatedBy)
+                        .Include(note => note.LastEditedBy)
+                        .Include(note => note.Player)
+                        .ToListAsync()).Select(MakeAdminNoteRecord);
+                },
+                async () =>
+                {
+                    await using var db = await GetDb();
+                    return await GetActiveWatchlistsImpl(db, player);
+                },
+                async () =>
+                {
+                    await using var db = await GetDb();
+                    return await GetMessagesImpl(db, player);
+                },
+                async () =>
+                {
+                    await using var db = await GetDb();
+                    return await GetBansAsNotesForUser(db, player);
+                });
         }
         public async Task EditAdminNote(int id, string message, NoteSeverity severity, bool secret, Guid editedBy, DateTimeOffset editedAt, DateTimeOffset? expiryTime)
         {
@@ -1619,6 +1632,68 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Custom vote logging
+
+        public async Task<int> CustomVoteLogAdd(
+            string title,
+            int roundId,
+            Guid? initiator,
+            ImmutableArray<string> options)
+        {
+            await using var db = await GetDb();
+
+            var log = new CustomVoteLog
+            {
+                Title = title,
+                RoundId = roundId,
+                InitiatorId = initiator,
+                State = CustomVoteState.Active,
+                TimeCreated = DateTime.UtcNow,
+                Options = options.Select((o, i) => new CustomVoteLogOption
+                    {
+                        Text = o,
+                        OptionIdx = (short)i,
+                        VoteCount = 0,
+                    })
+                    .ToList(),
+            };
+
+            db.DbContext.CustomVoteLog.Add(log);
+            await db.DbContext.SaveChangesAsync();
+
+            return log.Id;
+        }
+
+        public async Task CustomVoteLogFinish(int voteId, ImmutableArray<int> voteCounts)
+        {
+            await using var db = await GetDb();
+
+            var log = await db.DbContext.CustomVoteLog
+                .Include(cvl => cvl.Options)
+                .SingleAsync(v => v.Id == voteId);
+
+            log.State = CustomVoteState.Finished;
+
+            for (var i = 0; i < log.Options!.Count; i++)
+            {
+                log.Options[i].VoteCount = voteCounts[i];
+            }
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task CustomVoteLogCancel(int voteId)
+        {
+            await using var db = await GetDb();
+
+            var log = await db.DbContext.CustomVoteLog.SingleAsync(v => v.Id == voteId);
+            log.State = CustomVoteState.Cancelled;
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        #endregion
+
         public abstract Task SendNotification(DatabaseNotification notification);
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
@@ -1675,6 +1750,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
 
             return [..results];
+        }
+
+        private static async Task<List<T>> ParallelCollect<T>(params IEnumerable<Func<Task<IEnumerable<T>>>> tasks)
+        {
+            var taskInstances = tasks.Select(a => a());
+            var results = await Task.WhenAll(taskInstances);
+            return results.SelectMany(x => x).ToList();
         }
     }
 }

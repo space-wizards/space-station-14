@@ -3811,13 +3811,11 @@ entities:
   - uid: 1948
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -10.5,32.5
       parent: 2
   - uid: 1949
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: -11.5,33.5
       parent: 2
   - uid: 2033

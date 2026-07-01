@@ -6,7 +6,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -14,7 +13,6 @@ namespace Content.Server.Speech.EntitySystems;
 public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private ActionsSystem _actions = default!;
@@ -27,13 +25,13 @@ public sealed partial class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
-        SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
+        SubscribeLocalEvent<VocalComponent, EmoteActionEvent>(OnEmoteAction);
     }
 
     /// <summary>
     /// Copy this component's datafields from one entity to another.
     /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// <summary>
+    /// </summary>
     public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))
@@ -52,16 +50,16 @@ public sealed partial class VocalSystem : EntitySystem
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
-        _actions.AddAction(uid, ref component.ScreamActionEntity, component.ScreamAction);
+        _actions.AddAction(uid, ref component.EmoteActionEntity, component.EmoteAction);
         LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
         // remove scream action when component removed
-        if (component.ScreamActionEntity != null)
+        if (component.EmoteActionEntity != null)
         {
-            _actions.RemoveAction(uid, component.ScreamActionEntity);
+            _actions.RemoveAction(uid, component.EmoteActionEntity);
         }
     }
 
@@ -76,7 +74,7 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         // snowflake case for wilhelm scream easter egg
-        if (args.Emote.ID == component.ScreamId)
+        if (args.Emote == component.ScreamId)
         {
             args.Handled = TryPlayScreamSound(uid, component);
             return;
@@ -86,15 +84,15 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         // just play regular sound based on emote proto
-        args.Handled = _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), args.Emote);
     }
 
-    private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
+    private void OnEmoteAction(EntityUid uid, VocalComponent component, EmoteActionEvent args)
     {
         if (args.Handled)
             return;
 
-        _chat.TryEmoteWithChat(uid, component.ScreamId);
+        _chat.TryEmoteWithChat(uid, args.Emote);
         args.Handled = true;
     }
 
@@ -109,7 +107,7 @@ public sealed partial class VocalSystem : EntitySystem
         if (component.EmoteSounds is not { } sounds)
             return false;
 
-        return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), component.ScreamId);
     }
 
     private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
@@ -122,7 +120,7 @@ public sealed partial class VocalSystem : EntitySystem
         if (!component.Sounds.TryGetValue(sex.Value, out var protoId))
             return;
 
-        if (!_proto.HasIndex(protoId))
+        if (!ProtoMan.HasIndex(protoId))
             return;
 
         component.EmoteSounds = protoId;
