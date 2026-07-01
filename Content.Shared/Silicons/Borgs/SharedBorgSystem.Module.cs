@@ -100,20 +100,18 @@ public abstract partial class SharedBorgSystem
         if (TryComp<ItemBorgModuleComponent>(module, out var itemModuleComp) &&
             _container.TryGetContainer(module, itemModuleComp.HoldingContainer, out var container))
         {
-            foreach (var hand in itemModuleComp.Hands)
+            _transform.TryGetMapOrGridCoordinates(chassis, out var coordinates);
+            for (var i = 0; i < itemModuleComp.Hands.Count; i++)
             {
+                var hand = itemModuleComp.Hands[i];
+                var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
+
                 // Only remove items from hands that have a whitelist or blacklist set, this is how we check if those items are dropable
                 if (hand.Hand.Whitelist == null && hand.Hand.Blacklist == null)
                     continue;
 
-                var handId = $"{GetNetEntity(module.Owner)}-hand-{itemModuleComp.Hands.IndexOf(hand)}";
                 if (itemModuleComp.StoredItems.TryGetValue(handId, out var item))
-                {
-                    _container.Remove(item, container);
-                    _transform.TryGetMapOrGridCoordinates(chassis, out var coordinates);
-                    if (coordinates != null)
-                        _transform.SetCoordinates(item, coordinates.Value);
-                }
+                    _container.Remove(item, container, destination: coordinates);
             }
             itemModuleComp.StoredItems.Clear();
         }
