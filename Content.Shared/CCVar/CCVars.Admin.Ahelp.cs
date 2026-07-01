@@ -32,4 +32,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> AhelpMaxQuickInfoCandidates =
         CVarDef.Create("ahelp.max_quick_info_candidates", 30, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Minimum size of a word to start testing for name matches.
+    /// </summary>
+    public static readonly CVarDef<int> AhelpQuickInfoStartWordSize =
+        CVarDef.Create("ahelp.quick_info_start_word_size", 4, CVar.SERVERONLY);
 }

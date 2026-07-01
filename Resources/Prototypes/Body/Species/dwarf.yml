@@ -55,10 +55,7 @@
         layer:
         - MobLayer
   - type: Vocal
-    sounds:
-      Male: UnisexDwarf
-      Female: FemaleDwarf
-      Unsexed: UnisexDwarf
+    emoteSounds: UnisexDwarf
   - type: ReplacementAccent
     accent: scottish
   - type: Speech
