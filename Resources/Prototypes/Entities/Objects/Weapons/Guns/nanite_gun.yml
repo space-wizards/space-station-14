@@ -9,7 +9,7 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
+    - state: mag-unshaded-5w
       map: ["enum.GunVisualLayers.Mag"]
   - type: AmmoCounter
   - type: Gun
@@ -34,7 +34,7 @@
     price: 5000
   - type: MagazineVisuals
     magState: mag-unshaded
-    steps: 5
+    steps: 6
     zeroVisible: true
   - type: Appearance
   - type: ContainerContainer
