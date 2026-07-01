@@ -18,12 +18,17 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        mask:
+        mask: &portalMask
         - FullTileMask
-        layer:
+        - GhostImpassable
+        layer: &portalLayer
         - WallLayer
         hard: false
   - type: Portal
+  - type: PointLight
+    radius: 3
+    energy: 1
+    netsync: false
 
 - type: entity
   id: PortalRed
@@ -35,9 +40,6 @@
     - state: portal-red
   - type: PointLight
     color: OrangeRed
-    radius: 3
-    energy: 1
-    netsync: false
 
 - type: entity
   id: PortalBlue
@@ -48,10 +50,7 @@
     - state: portal-blue
   - type: PointLight
     color: SkyBlue
-    radius: 3
-    energy: 1
-    netsync: false
-    
+
 - type: entity
   id: PortalArtifact
   parent: BasePortal
@@ -61,45 +60,50 @@
     - state: portal-artifact
   - type: PointLight
     color: "#ed85c2"
-    radius: 3
-    energy: 1
-    netsync: false
   - type: TimedDespawn
     lifetime: 1
   - type: Portal
     canTeleportToOtherMaps: true
 
 - type: entity
-  id: PortalGatewayBlue
   parent: BasePortal
+  id: BasePortalGateway
+  abstract: true
   components:
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/gateway.rsi
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.6
+          position: 0, 0.26
+        mask: *portalMask
+        layer: *portalLayer
+
+- type: entity
+  parent: BasePortalGateway
+  id: PortalGatewayBlue
+  components:
+  - type: Sprite
     color: SkyBlue
     layers:
     - state: portal
   - type: PointLight
     color: SkyBlue
-    radius: 3
-    energy: 1
-    netsync: false
 
 - type: entity
   id: PortalGatewayOrange
-  parent: BasePortal
+  parent: BasePortalGateway
   components:
   - type: Sprite
-    noRot: true
-    sprite: Structures/Machines/gateway.rsi
     color: OrangeRed
     layers:
     - state: portal
   - type: PointLight
     color: OrangeRed
-    radius: 3
-    energy: 1
-    netsync: false
 
 - type: entity
   id: ShadowPortal
@@ -115,9 +119,6 @@
     color: "#793a80dd"
   - type: PointLight
     color: "#793a80dd"
-    radius: 3
-    energy: 1
-    netsync: false
   - type: AmbientSound
     range: 6
     volume: -3
