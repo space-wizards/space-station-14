@@ -1,12 +1,12 @@
 using Content.Shared.Light.Components;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Shared.Light.EntitySystems;
 
 public sealed partial class SlimPoweredLightSystem : EntitySystem
 {
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private SharedPointLightSystem _lights = default!;
 
     private bool _setting;

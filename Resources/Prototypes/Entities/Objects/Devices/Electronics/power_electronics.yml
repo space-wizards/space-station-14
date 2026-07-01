@@ -5,7 +5,6 @@
   name: APC electronics
   description: Circuit used in APC construction.
   components:
-    - type: ApcElectronics
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: charger_APC
@@ -16,6 +15,9 @@
         Silicon: 20
     - type: StaticPrice
       price: 34
+    - type: Tag
+      tags:
+      - ApcElectronics
 
 # Wallmount Substation
 - type: entity

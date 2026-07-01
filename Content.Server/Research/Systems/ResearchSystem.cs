@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power.Systems;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
@@ -22,6 +23,7 @@ namespace Content.Server.Research.Systems
         [Dependency] private UserInterfaceSystem _uiSystem = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private RadioSystem _radio = default!;
+        [Dependency] private PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {

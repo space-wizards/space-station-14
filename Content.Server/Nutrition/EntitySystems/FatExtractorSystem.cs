@@ -1,14 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Nutrition.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Server.Storage.Components;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -25,6 +22,7 @@ public sealed partial class FatExtractorSystem : EntitySystem
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -70,7 +68,7 @@ public sealed partial class FatExtractorSystem : EntitySystem
         if (component.Processing)
             return;
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         if (!TryGetValidOccupant(uid, out _, component, storage))

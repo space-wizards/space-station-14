@@ -2,7 +2,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -13,8 +12,9 @@ using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.NodeContainer.Systems;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Tag;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -30,6 +30,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     [Dependency] private AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainerSystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -200,7 +201,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
 
     private void OnFireEvent(EntityUid uid, AtmosMonitorComponent component, ref TileFireEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         // if we're monitoring for atmos fire, then we make it similar to a smoke detector
@@ -228,7 +229,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosUpdate(EntityUid uid, AtmosMonitorComponent component, ref AtmosDeviceUpdateEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         if (args.Grid == null)

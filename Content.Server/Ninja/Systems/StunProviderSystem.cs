@@ -4,7 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Whitelist;

@@ -1,4 +1,4 @@
-using Content.Server.Ame.Components;
+using Content.Shared.Ame.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Content.Shared.Examine;

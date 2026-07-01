@@ -1,6 +1,5 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Audio;
-using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
@@ -233,7 +232,6 @@ public sealed partial class PowerChargeSystem : EntitySystem
         var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
         _appearance.SetData(uid, PowerChargeVisuals.Charge, machine.Charge, appearance);
         _appearance.SetData(uid, PowerChargeVisuals.Active, machine.Active);
-
 
         if (!machine.Intact)
         {

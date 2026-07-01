@@ -12,7 +12,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Database;
 using Content.Shared.NodeContainer.Systems;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
 
 namespace Content.Server.Atmos.Portable
 {

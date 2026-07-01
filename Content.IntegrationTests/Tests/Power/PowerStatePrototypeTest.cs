@@ -1,13 +1,13 @@
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-[TestFixture, TestOf(typeof(SharedPowerStateSystem))]
+[TestFixture, TestOf(typeof(PowerStateSystem))]
 public sealed class PowerStatePrototypeTest : GameTest
 {
     /// <summary>

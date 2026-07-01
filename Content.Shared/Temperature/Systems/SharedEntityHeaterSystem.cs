@@ -1,7 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -15,7 +15,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
 
     private readonly int _settingCount = Enum.GetValues<EntityHeaterSetting>().Length;

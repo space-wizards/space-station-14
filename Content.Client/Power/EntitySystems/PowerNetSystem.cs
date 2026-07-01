@@ -1,5 +1,5 @@
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Client.Power.EntitySystems;
 

@@ -1,8 +1,7 @@
-﻿using Content.Server.Power.Components;
-using Content.Shared.EntityTable;
+﻿using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.EntitySystems;

@@ -1,12 +1,12 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Power.Nodes;
 using Content.Shared.Coordinates;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

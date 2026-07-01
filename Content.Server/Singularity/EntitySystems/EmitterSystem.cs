@@ -1,7 +1,6 @@
 using System.Numerics;
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
 using Content.Server.Pinpointer;
@@ -14,8 +13,8 @@ using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;

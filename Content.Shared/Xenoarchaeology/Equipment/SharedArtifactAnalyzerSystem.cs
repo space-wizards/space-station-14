@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Placeable;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 
@@ -14,7 +14,7 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// </summary>
 public abstract partial class SharedArtifactAnalyzerSystem : EntitySystem
 {
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     /// <inheritdoc/>

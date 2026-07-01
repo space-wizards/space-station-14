@@ -1,5 +1,5 @@
-using Content.Server.Power.Components;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.SMES;
 
@@ -7,7 +7,7 @@ namespace Content.Server.Power.SMES;
 ///     Handles the "user-facing" side of the actual SMES object.
 ///     This is operations that are specific to the SMES, like UI and visuals.
 ///     Logic is handled in <see cref="SmesSystem"/>
-///     Code interfacing with the powernet is handled in <see cref="BatteryStorageComponent"/> and <see cref="BatteryDischargerComponent"/>.
+///     Code interfacing with the powernet is handled in <see cref="BatteryChargerComponent"/> and <see cref="BatteryDischargerComponent"/>.
 /// </summary>
 [RegisterComponent, Access(typeof(SmesSystem))]
 public sealed partial class SmesComponent : Component

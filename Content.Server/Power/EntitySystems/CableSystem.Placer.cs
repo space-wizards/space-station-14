@@ -1,8 +1,8 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Power.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;

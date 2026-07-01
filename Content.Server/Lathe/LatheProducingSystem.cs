@@ -1,5 +1,5 @@
 using Content.Server.Lathe.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Lathe;
 
@@ -10,7 +10,7 @@ namespace Content.Server.Lathe;
 /// </summary>
 public sealed partial class LatheProducingSystem : EntitySystem
 {
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {

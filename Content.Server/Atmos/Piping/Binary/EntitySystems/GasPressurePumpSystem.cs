@@ -1,11 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Audio;
 using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
@@ -28,7 +28,7 @@ public sealed partial class GasPressurePumpSystem : SharedGasPressurePumpSystem
     private void OnPumpUpdated(Entity<GasPressurePumpComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         if (!ent.Comp.Enabled
-            || !_power.IsPowered(ent)
+            || !_power.IsPowered(ent.Owner)
             || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
         {
             _ambientSoundSystem.SetAmbience(ent, false);

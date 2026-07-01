@@ -1,4 +1,4 @@
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.StationAi;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -18,7 +18,7 @@ public sealed partial class StationAiVisionSystem : EntitySystem
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedMapSystem _maps = default!;
     [Dependency] private SharedTransformSystem _xforms = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     [Dependency] private EntityQuery<OccluderComponent> _occluderQuery = default!;
 

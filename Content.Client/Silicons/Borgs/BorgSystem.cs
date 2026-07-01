@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Mobs;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs;

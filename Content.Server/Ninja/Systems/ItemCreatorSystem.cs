@@ -3,7 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Ninja.Systems;
 

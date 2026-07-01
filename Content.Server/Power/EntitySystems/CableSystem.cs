@@ -1,10 +1,10 @@
-using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
-using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Robust.Shared.Map;
 using CableCuttingFinishedEvent = Content.Shared.Tools.Systems.CableCuttingFinishedEvent;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
@@ -47,7 +47,7 @@ public sealed partial class CableSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var ev = new CableAnchorStateChangedEvent(xform);
+        var ev = new CableAnchorStateChangedEvent((uid, xform));
         RaiseLocalEvent(uid, ref ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
@@ -61,7 +61,7 @@ public sealed partial class CableSystem : EntitySystem
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
-        var ev = new CableAnchorStateChangedEvent(args.Transform, args.Detaching);
+        var ev = new CableAnchorStateChangedEvent((uid, args.Transform), args.Detaching);
         RaiseLocalEvent(uid, ref ev);
 
         if (args.Anchored)

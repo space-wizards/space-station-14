@@ -1,13 +1,9 @@
-using Content.Server.Power.Components;
 using Content.Shared.Power.Nodes;
-using Content.Server.Power.NodeGroups;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station.Components;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -15,6 +11,10 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Monitoring;
+using Content.Shared.Power.NodeGroups;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -157,7 +157,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = args.Transform;
+        var xform = args.Xform.Comp;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;

@@ -1,7 +1,7 @@
 using Content.IntegrationTests.Fixtures;
 using Content.Shared.Coordinates;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -57,7 +57,7 @@ public sealed class PowerStateTest : GameTest
                 Assert.That(receiver.DesiredPower, Is.EqualTo(powerState.IdlePowerDraw).Within(0.01f));
             });
 
-            var system = entManager.System<SharedPowerStateSystem>();
+            var system = entManager.System<PowerStateSystem>();
             system.SetWorkingState((ent, powerState), true);
 
             Assert.Multiple(() =>
@@ -92,7 +92,7 @@ public sealed class PowerStateTest : GameTest
 
             var receiver = entManager.GetComponent<PowerReceiverComponent>(ent);
             var powerState = entManager.GetComponent<PowerStateComponent>(ent);
-            var system = entManager.System<SharedPowerStateSystem>();
+            var system = entManager.System<PowerStateSystem>();
             Entity<PowerStateComponent> newEnt = (ent, powerState);
 
             Assert.Multiple(() =>
@@ -143,7 +143,7 @@ public sealed class PowerStateTest : GameTest
 
             var receiver = entManager.GetComponent<PowerReceiverComponent>(ent);
             var powerState = entManager.GetComponent<PowerStateComponent>(ent);
-            var system = entManager.System<SharedPowerStateSystem>();
+            var system = entManager.System<PowerStateSystem>();
             Entity<PowerStateComponent> valueTuple = (ent, powerState);
 
             Assert.Multiple(() =>

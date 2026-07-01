@@ -24,6 +24,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
         SubscribeLocalEvent<NodeContainerComponent, ExaminedEvent>(OnExamine);
     }
 
+    [Obsolete("Use an overload that takes in Entity<NodeContainerComponent?> instead")]
     public bool TryGetNode<T>(NodeContainerComponent component, string? identifier, [NotNullWhen(true)] out T? node) where T : Node
     {
         if (identifier == null)
@@ -110,6 +111,56 @@ public sealed partial class NodeContainerSystem : EntitySystem
         node1 = null;
         node2 = null;
         node3 = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the first node of type <see cref="T"/> on the entity.
+    /// </summary>
+    /// <param name="ent">The entity to get the node grom.</param>
+    /// <param name="node">The first node of a target type.</param>
+    /// <typeparam name="T">The type of node to look for.</typeparam>
+    /// <returns></returns>
+    public bool TryGetFirstNode<T>(Entity<NodeContainerComponent?> ent, [NotNullWhen(true)] out T? node) where T : Node
+    {
+        node = null;
+        if (!_nodeContainerQuery.Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        foreach (var n in ent.Comp.Nodes.Values)
+        {
+            if (n is not T tn)
+                continue;
+
+            node = tn;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the first node group of type <see cref="T"/> from the entity's nodes.
+    /// </summary>
+    /// <param name="ent">The entity to get the node grom.</param>
+    /// <param name="node">The first node of a target type.</param>
+    /// <typeparam name="T">The type of node to look for.</typeparam>
+    /// <returns></returns>
+    public bool TryGetFirstNodeGroup<T>(Entity<NodeContainerComponent?> ent, [NotNullWhen(true)] out T? node) where T : BaseNodeGroup
+    {
+        node = null;
+        if (!_nodeContainerQuery.Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        foreach (var n in ent.Comp.Nodes.Values)
+        {
+            if (n.NodeGroup is not T tn)
+                continue;
+
+            node = tn;
+            return true;
+        }
+
         return false;
     }
 

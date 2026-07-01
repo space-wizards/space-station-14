@@ -9,11 +9,11 @@ using Robust.Shared.Containers;
 using Content.Server.Cloning.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Body;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Power.Systems;
 using Robust.Server.Containers;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
 
@@ -28,6 +28,7 @@ namespace Content.Server.Medical
         [Dependency] private MobStateSystem _mobStateSystem = default!;
         [Dependency] private ContainerSystem _containerSystem = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private PowerReceiverSystem _power = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -159,7 +160,7 @@ namespace Content.Server.Medical
         }
         private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
-            if (this.IsPowered(uid, EntityManager))
+            if (_power.IsPowered(uid))
             {
                 var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)

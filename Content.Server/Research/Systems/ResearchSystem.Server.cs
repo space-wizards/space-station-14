@@ -39,7 +39,7 @@ public sealed partial class ResearchSystem
 
     private bool CanRun(EntityUid uid)
     {
-        return this.IsPowered(uid, EntityManager);
+        return _power.IsPowered(uid);
     }
 
     private void UpdateServer(EntityUid uid, int time, ResearchServerComponent? component = null)

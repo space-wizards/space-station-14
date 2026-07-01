@@ -3,6 +3,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Collections;
+using Content.Shared.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.Threading;
 

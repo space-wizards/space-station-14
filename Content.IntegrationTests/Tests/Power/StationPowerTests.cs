@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.NodeGroups;
 using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
+using Content.Shared.Power.NodeGroups;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
 

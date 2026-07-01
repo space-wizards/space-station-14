@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Nodes;
@@ -8,6 +7,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
@@ -29,7 +29,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
 
     private void OnCondenserUpdated(Entity<GasCondenserComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        if (!(TryComp<PowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
+        if (!(TryComp<PowerReceiverComponent>(entity, out var receiver) && _power.IsPowered((entity, receiver)))
             || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
             || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
         {

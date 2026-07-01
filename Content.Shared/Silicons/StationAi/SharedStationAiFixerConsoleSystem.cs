@@ -6,10 +6,10 @@ using Content.Shared.Lock;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Power;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Power.Events;
 
 namespace Content.Shared.Silicons.StationAi;
 

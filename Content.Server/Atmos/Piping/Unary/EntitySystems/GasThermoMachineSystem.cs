@@ -4,7 +4,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Atmos.Piping.Unary.Systems;
@@ -13,6 +12,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

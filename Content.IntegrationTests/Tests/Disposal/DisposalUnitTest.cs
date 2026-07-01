@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Numerics;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
 

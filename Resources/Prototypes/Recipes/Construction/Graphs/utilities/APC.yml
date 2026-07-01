@@ -15,7 +15,7 @@
       edges:
         - to: apc
           steps:
-            - component: ApcElectronics
+            - tag: ApcElectronics
               name: construction-graph-component-apc-electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"

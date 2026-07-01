@@ -14,7 +14,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
 using Content.Shared.Repairable;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;

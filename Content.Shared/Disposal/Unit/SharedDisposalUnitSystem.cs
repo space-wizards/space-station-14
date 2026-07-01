@@ -15,8 +15,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Storage.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -29,6 +27,8 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Shared.Disposal.Unit;
 
@@ -46,7 +46,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private ClimbSystem _climb = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedJointSystem _joints = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedDisposalHolderSystem _disposalHolder = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;

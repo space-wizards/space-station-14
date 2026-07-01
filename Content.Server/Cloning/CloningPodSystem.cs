@@ -6,7 +6,6 @@ using Content.Server.EUI;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
@@ -31,6 +30,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Cloning;
 
@@ -262,7 +262,7 @@ public sealed partial class CloningPodSystem : EntitySystem
         if (_emag.CheckFlag(ent.Owner, EmagType.Interaction))
             return;
 
-        if (!this.IsPowered(ent.Owner, EntityManager))
+        if (!_powerReceiverSystem.IsPowered(ent.Owner))
             return;
 
         _popupSystem.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), ent.Owner);

@@ -2,7 +2,6 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
@@ -15,13 +14,14 @@ using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Shared.Atmos.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -44,6 +44,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
@@ -263,7 +264,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             return;
         }
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         _ui.OpenUi(uid, SharedAirAlarmInterfaceKey.Key, args.User);

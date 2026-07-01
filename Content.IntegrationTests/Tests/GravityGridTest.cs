@@ -1,5 +1,4 @@
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Power.Components;
 using Robust.Shared.GameObjects;

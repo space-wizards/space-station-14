@@ -2,7 +2,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Projectiles;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
 using Content.Shared.PowerCell;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;

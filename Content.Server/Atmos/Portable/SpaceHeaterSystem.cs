@@ -1,12 +1,12 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Portable.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 

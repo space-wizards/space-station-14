@@ -1,4 +1,5 @@
-using Content.Server.Collections;
+using Content.Shared.Collections;
+using Content.Shared.Power.Pow3r;
 using Content.Shared.Power.Pow3r.Nodes;
 
 namespace Content.Server.Power.Pow3r;

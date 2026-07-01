@@ -1,14 +1,13 @@
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Color = Robust.Shared.Maths.Color;

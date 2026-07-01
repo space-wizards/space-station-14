@@ -1,9 +1,9 @@
 using Content.Server.Audio;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Construction;
@@ -14,6 +14,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AmbientSoundSystem _ambientSound = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,7 +28,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
     private void OnStartPack(Entity<FlatpackCreatorComponent> ent, ref FlatpackCreatorStartPackBuiMessage args)
     {
         var (uid, comp) = ent;
-        if (!this.IsPowered(ent, EntityManager) || comp.Packing)
+        if (!_power.IsPowered(ent.Owner) || comp.Packing)
             return;
 
         if (!_itemSlots.TryGetSlot(uid, comp.SlotId, out var itemSlot) || itemSlot.Item is not { } board)

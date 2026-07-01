@@ -4,6 +4,7 @@ using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
+using Content.Shared.Power.Systems;
 
 namespace Content.Client.Disposal.Mailing;
 

@@ -9,6 +9,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
+using Content.Shared.Power.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
@@ -38,7 +39,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private RadiationSystem _radiation = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;
 

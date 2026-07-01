@@ -1,7 +1,5 @@
-using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
-using Content.Shared.Rejuvenate;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems;
@@ -12,7 +10,6 @@ public sealed class BatterySystem : SharedBatterySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
         SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
         SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
     }
@@ -37,13 +34,7 @@ public sealed class BatterySystem : SharedBatterySystem
         DebugTools.Assert(!HasComp<PowerConsumerComponent>(ent), $"{ToPrettyString(ent.Owner)} has a predicted battery connected to the power net. Disable net sync!");
     }
 
-
-    private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
-    {
-        ent.Comp.CurrentStorage = ent.Comp.Capacity;
-    }
-
-    private void PreSync(NetworkBatteryPreSync ev)
+    private void PreSync(ref NetworkBatteryPreSync ev)
     {
         // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
         var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
@@ -56,7 +47,7 @@ public sealed class BatterySystem : SharedBatterySystem
         }
     }
 
-    private void PostSync(NetworkBatteryPostSync ev)
+    private void PostSync(ref NetworkBatteryPostSync ev)
     {
         // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
         var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();

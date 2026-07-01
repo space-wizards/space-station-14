@@ -1,9 +1,9 @@
 ﻿using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Shared.Power.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;

@@ -1,15 +1,13 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Stunnable;
 
 namespace Content.Server.Stunnable.Systems

@@ -1,14 +1,15 @@
 using System.Linq;
-using Content.Server.Power.Components;
-using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Server.Power.Pow3r.Solvers;
 using Content.Shared.CCVar;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.NodeGroups;
+using Content.Shared.Power.Pow3r;
 using Content.Shared.Power.Pow3r.Nodes;
+using Content.Shared.Power.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Threading;
@@ -21,7 +22,6 @@ namespace Content.Server.Power.EntitySystems;
 public sealed partial class PowerNetSystem : SharedPowerNetSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private PowerNetConnectorSystem _powerNetConnector = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IParallelManager _parMan = default!;
     [Dependency] private BatterySystem _battery = default!;
@@ -176,19 +176,19 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         component.Paused = false;
     }
 
-    public void InitPowerNet(PowerNet powerNet)
+    public override void InitPowerNet(PowerNet powerNet)
     {
         AllocNetwork(powerNet);
         _powerState.GroupedNets = null;
     }
 
-    public void DestroyPowerNet(PowerNet powerNet)
+    public override void DestroyPowerNet(PowerNet powerNet)
     {
         _powerState.Networks.Free(powerNet.Id);
         _powerState.GroupedNets = null;
     }
 
-    public void QueueReconnectPowerNet(PowerNet powerNet)
+    public override void QueueReconnectPowerNet(PowerNet powerNet)
     {
         _powerNetReconnectQueue.Add(powerNet);
         _powerState.GroupedNets = null;
@@ -266,13 +266,15 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         ReconnectNetworks();
 
         // Synchronize batteries
-        RaiseLocalEvent(new NetworkBatteryPreSync());
+        var preSync = new NetworkBatteryPreSync();
+        RaiseLocalEvent(ref preSync);
 
         // Run power solver.
         _solver.Tick(frameTime, _powerState, _parMan);
 
         // Synchronize batteries, the other way around.
-        RaiseLocalEvent(new NetworkBatteryPostSync());
+        var postSync = new NetworkBatteryPostSync();
+        RaiseLocalEvent(ref postSync);
 
         // Send events where necessary.
         // TODO: Instead of querying ALL power components every tick, and then checking if an event needs to be
@@ -495,36 +497,27 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
 ///     Raised before power network simulation happens, to synchronize battery state from
 ///     components like <see cref="BatteryComponent"/> into <see cref="PowerNetworkBatteryComponent"/>.
 /// </summary>
-public readonly struct NetworkBatteryPreSync
-{
-}
+[ByRefEvent]
+public readonly struct NetworkBatteryPreSync;
 
 /// <summary>
 ///     Raised after power network simulation happens, to synchronize battery charge changes from
 ///     <see cref="PowerNetworkBatteryComponent"/> to components like <see cref="BatteryComponent"/>.
 /// </summary>
-public readonly struct NetworkBatteryPostSync
-{
-}
+[ByRefEvent]
+public readonly struct NetworkBatteryPostSync;
 
 /// <summary>
 ///     Raised when the amount of receiving power on a <see cref="PowerConsumerComponent"/> changes.
 /// </summary>
 [ByRefEvent]
-public readonly record struct PowerConsumerReceivedChanged(float ReceivedPower, float DesiredPower)
-{
-    public readonly float ReceivedPower = ReceivedPower;
-    public readonly float DesiredPower = DesiredPower;
-}
+public readonly record struct PowerConsumerReceivedChanged(float ReceivedPower, float DesiredPower);
 
 /// <summary>
 /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
 /// </summary>
 [ByRefEvent]
-public readonly record struct PowerNetBatterySupplyEvent(bool Supply)
-{
-    public readonly bool Supply = Supply;
-}
+public readonly record struct PowerNetBatterySupplyEvent(bool Supply);
 
 public struct PowerStatistics
 {

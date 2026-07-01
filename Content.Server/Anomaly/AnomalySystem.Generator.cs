@@ -1,5 +1,4 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
 using Content.Shared.Materials;
@@ -9,7 +8,8 @@ using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Anomaly;
 
@@ -20,6 +20,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -66,7 +67,7 @@ public sealed partial class AnomalySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         if (Timing.CurTime < component.CooldownEndTime)

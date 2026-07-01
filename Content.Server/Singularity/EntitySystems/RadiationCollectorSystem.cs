@@ -1,15 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Components;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Power.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Timing;
@@ -122,7 +121,7 @@ public sealed partial class RadiationCollectorSystem : EntitySystem
         UpdatePressureIndicatorAppearance(uid, component, gasTankComponent);
     }
 
-    private void PostSync(NetworkBatteryPostSync ev)
+    private void PostSync(ref NetworkBatteryPostSync ev)
     {
         // This is run every power tick. Used to decrement the PowerTicksLeft counter.
         var query = EntityQueryEnumerator<RadiationCollectorComponent>();

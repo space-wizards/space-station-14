@@ -1,5 +1,4 @@
 using Content.Server.Atmos.Monitor.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.CCVar;
@@ -7,6 +6,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -19,6 +19,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
@@ -52,7 +53,7 @@ public sealed partial class FireAlarmSystem : EntitySystem
         if (!_configManager.GetCVar(CCVars.FireAlarmAllAccess) && !_access.IsAllowed(args.User, args.Target))
             return;
 
-        if (this.IsPowered(uid, EntityManager))
+        if (_power.IsPowered(uid))
         {
             if (!_atmosAlarmable.TryGetHighestAlert(uid, out var alarm))
             {

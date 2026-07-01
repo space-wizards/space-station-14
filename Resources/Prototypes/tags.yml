@@ -31,6 +31,9 @@
   id: AnomalyHost # Targeting whitelist: BaseAnomalyInjector
 
 - type: Tag
+  id: ApcElectronics # ConstructionGraph: APC
+
+- type: Tag
   id: AppraisalTool # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag

@@ -5,7 +5,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;

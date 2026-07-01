@@ -1,7 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.NodeGroups;
 using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -18,6 +16,9 @@ using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.NodeGroups;
+using Content.Shared.Power.Systems;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -53,6 +54,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
@@ -142,7 +144,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
         if (electrified.UsesApcPower)
         {
-            if (!this.IsPowered(uid, EntityManager))
+            if (!_power.IsPowered(uid))
                 return false;
         }
         else if (electrified.RequirePower && PoweredNode(uid, electrified) == null)

@@ -1,10 +1,10 @@
 using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
-using Content.Server.Power.Events;
 using Content.Shared.Power.Nodes;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Events;
 
 namespace Content.Server.DeviceNetwork.Systems
 {

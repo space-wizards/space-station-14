@@ -1,4 +1,4 @@
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -7,7 +7,7 @@ namespace Content.Shared.Materials.OreSilo;
 public abstract partial class SharedOreSiloSystem : EntitySystem
 {
     [Dependency] private SharedMaterialStorageSystem _materialStorage = default!;
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [Dependency] private EntityQuery<OreSiloClientComponent> _clientQuery = default!;

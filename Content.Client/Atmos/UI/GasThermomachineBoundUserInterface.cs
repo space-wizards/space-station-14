@@ -1,10 +1,8 @@
-﻿using Content.Client.Power.EntitySystems;
-using Content.Shared.Atmos;
+﻿using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.Power.Components;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
@@ -77,13 +75,8 @@ namespace Content.Client.Atmos.UI
 
             _window.SetTemperature(thermo.TargetTemperature);
 
-            var receiverSys = EntMan.System<PowerReceiverSystem>();
-            PowerReceiverComponent? receiver = null;
-
-            receiverSys.ResolveApc(Owner, ref receiver);
-
             // Also set in frameupdates.
-            if (receiver != null)
+            if (EntMan.TryGetComponent(Owner, out PowerReceiverComponent? receiver))
             {
                 _window.SetActive(receiver.Enabled);
             }

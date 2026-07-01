@@ -2,11 +2,11 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
@@ -26,6 +26,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private InteractionSystem _interaction = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid, RadioChannelPrototype)> _recentlySent = new();
@@ -112,7 +113,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
+        if (component.PowerRequired && !_power.IsPowered(uid))
             return;
 
         component.Enabled = enabled;
@@ -160,7 +161,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
     {
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager)
+        if (component.PowerRequired && !_power.IsPowered(uid)
             || component.UnobstructedRequired && !_interaction.InRangeUnobstructed(args.Source, uid, 0))
         {
             args.Cancel();
@@ -196,7 +197,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
     private void OnToggleIntercomMic(Entity<IntercomComponent> ent, ref ToggleIntercomMicMessage args)
     {
-        if (ent.Comp.RequiresPower && !this.IsPowered(ent, EntityManager))
+        if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
             return;
 
         SetMicrophoneEnabled(ent, args.Actor, args.Enabled, true);
@@ -206,7 +207,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
     private void OnToggleIntercomSpeaker(Entity<IntercomComponent> ent, ref ToggleIntercomSpeakerMessage args)
     {
-        if (ent.Comp.RequiresPower && !this.IsPowered(ent, EntityManager))
+        if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
             return;
 
         SetSpeakerEnabled(ent, args.Actor, args.Enabled, true);
@@ -216,7 +217,7 @@ public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 
     private void OnSelectIntercomChannel(Entity<IntercomComponent> ent, ref SelectIntercomChannelMessage args)
     {
-        if (ent.Comp.RequiresPower && !this.IsPowered(ent, EntityManager))
+        if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
             return;
 
         if (!ProtoMan.HasIndex<RadioChannelPrototype>(args.Channel) || !ent.Comp.SupportedChannels.Contains(args.Channel))

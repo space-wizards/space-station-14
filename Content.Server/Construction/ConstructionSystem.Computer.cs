@@ -1,7 +1,7 @@
 using Content.Server.Construction.Components;
 using Content.Shared.Computer;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction;

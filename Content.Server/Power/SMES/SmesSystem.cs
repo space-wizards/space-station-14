@@ -1,8 +1,8 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Rounding;
 using Content.Shared.SMES;
 using JetBrains.Annotations;

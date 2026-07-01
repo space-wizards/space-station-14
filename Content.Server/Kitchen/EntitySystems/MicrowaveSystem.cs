@@ -37,7 +37,8 @@ using Content.Server.Construction.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
@@ -64,7 +65,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private SharedStackSystem _stack = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private SharedSuicideSystem _suicide = default!;
-        [Dependency] private SharedPowerStateSystem _powerState = default!;
+        [Dependency] private PowerStateSystem _powerState = default!;
 
         private static readonly EntProtoId MalfunctionSpark = "Spark";
 
@@ -431,7 +432,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Port != ent.Comp.OnPort)
                 return;
 
-            if (ent.Comp.Broken || !_power.IsPowered(ent))
+            if (ent.Comp.Broken || !_power.IsPowered(ent.Owner))
                 return;
 
             Wzhzhzh(ent.Owner, ent.Comp, null);

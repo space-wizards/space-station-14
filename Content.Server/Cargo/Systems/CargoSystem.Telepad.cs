@@ -1,12 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Station.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
@@ -34,7 +33,7 @@ public sealed partial class CargoSystem
             if (tele.CurrentState != CargoTelepadState.Idle)
                 continue;
 
-            if (!this.IsPowered(uid, EntityManager))
+            if (!_power.IsPowered(uid))
                 continue;
 
             if (_station.GetOwningStation(uid, xform) != args.Station)
