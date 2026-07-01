@@ -225,7 +225,7 @@
             max: 2
       - !type:ExplodeBehavior
       
-      # Cow Meteor
+# Cow Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorCow
@@ -264,7 +264,7 @@
             max: 2
       - !type:ExplodeBehavior
       
-      # Clown Meteor
+# Clown Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorClown
@@ -306,7 +306,7 @@
             max: 1
       - !type:ExplodeBehavior
       
-      # Potato Meteor
+# Potato Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorPotato
