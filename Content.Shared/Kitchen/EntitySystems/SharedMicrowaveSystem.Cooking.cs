@@ -143,7 +143,7 @@ public abstract partial class SharedMicrowaveSystem
 
         foreach (var item in ingredientContents)
         {
-            var activelyMicrowaved = AddComp<ActivelyMicrowavedComponent>(item);
+            var activelyMicrowaved = EnsureComp<ActivelyMicrowavedComponent>(item);
             activelyMicrowaved.Microwave = microwave.Owner;
         }
 
