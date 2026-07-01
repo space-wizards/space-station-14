@@ -31,8 +31,8 @@
     netsync: false
 
 - type: entity
-  id: PortalRed
   parent: BasePortal
+  id: PortalRed
   description: This one looks more like a redspace portal.
   components:
   - type: Sprite
@@ -42,8 +42,8 @@
     color: OrangeRed
 
 - type: entity
-  id: PortalBlue
   parent: BasePortal
+  id: PortalBlue
   components:
   - type: Sprite
     layers:
@@ -52,8 +52,8 @@
     color: SkyBlue
 
 - type: entity
-  id: PortalArtifact
   parent: BasePortal
+  id: PortalArtifact
   components:
   - type: Sprite
     layers:
@@ -95,8 +95,8 @@
     color: SkyBlue
 
 - type: entity
-  id: PortalGatewayOrange
   parent: BasePortalGateway
+  id: PortalGatewayOrange
   components:
   - type: Sprite
     color: OrangeRed
@@ -106,10 +106,10 @@
     color: OrangeRed
 
 - type: entity
+  parent: [ BasePortal, BaseShadow ]
   id: ShadowPortal
   name: shadow rift
   description: Looks unstable.
-  parent: [ BasePortal, BaseShadow ]
   components:
   - type: Portal
     arrivalSound: /Audio/Items/hiss.ogg
