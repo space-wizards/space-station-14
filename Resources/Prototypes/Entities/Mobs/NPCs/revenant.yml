@@ -18,9 +18,6 @@
     sprite: Mobs/Ghosts/revenant.rsi
     layers:
     - state: active
-  - type: StatusEffects
-    allowed:
-    - Corporeal
   - type: Damageable
     damageModifierSet: ManifestedSpirit
   - type: Injurable

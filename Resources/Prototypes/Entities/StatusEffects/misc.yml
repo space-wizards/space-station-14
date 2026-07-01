@@ -105,3 +105,24 @@
       - MobState
       - Blindable
   - type: BlindnessStatusEffect
+
+# Makes a revenant corporeal and vulnerable
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectCorporealRevenant
+  name: corporeal
+  components:
+  - type: StatusEffectAlert
+    alert: Corporeal
+  - type: MovementModStatusEffect
+    walkSpeedModifier: 0.66
+    sprintSpeedModifier: 0.66
+  - type: CorporealStatusEffect
+    sprite:
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: active
+  - type: VisibilityModifierStatus
+    addVisibility:
+    - Normal
+    removeVisibility:
+    - Ghost

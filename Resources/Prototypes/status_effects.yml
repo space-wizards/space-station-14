@@ -35,10 +35,6 @@
   alert: Muted
 
 - type: statusEffect
-  id: Corporeal
-  alert: Corporeal
-
-- type: statusEffect
   id: Pacified #cannot attack
 
 - type: statusEffect

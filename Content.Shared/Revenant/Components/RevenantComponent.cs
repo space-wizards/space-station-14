@@ -207,8 +207,6 @@ public sealed partial class RevenantComponent : Component
     #region Visualizer
     [DataField("state")]
     public string State = "idle";
-    [DataField("corporealState")]
-    public string CorporealState = "active";
     [DataField("stunnedState")]
     public string StunnedState = "stunned";
     [DataField("harvestingState")]

@@ -12,6 +12,7 @@ using Content.Shared.Speech;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -35,6 +36,7 @@ public sealed partial class StatusEffectsSystem
         SubscribeLocalEvent<StatusEffectContainerComponent, StandUpAttemptEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, StunEndAttemptEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshStaminaCritThresholdEvent>(RefRelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, RefreshVisibilityModifiersEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, CanSeeAttemptEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, FlashAttemptEvent>(RefRelayStatusEffectEvent);
 

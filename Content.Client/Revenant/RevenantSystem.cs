@@ -33,12 +33,9 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.StunnedState);
         }
-        else if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Corporeal, out var corporeal, args.Component))
+        else
         {
-            if (corporeal)
-                _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.CorporealState);
-            else
-                _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.State);
+            _sprite.LayerSetRsiState((uid, args.Sprite), 0, component.State);
         }
     }
 
