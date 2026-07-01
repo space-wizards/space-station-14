@@ -304,7 +304,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackHolding
-  name: bag of holding
+  name: backpack of holding
   description: A backpack that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
@@ -319,9 +319,12 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Huge
+    maxItemSize: Ginormous
     grid:
-    - 0,0,19,9
+    - 0,0,15,7 # Same with all bags of holding
+    blacklist:
+      tags:
+      - Backpack
 
 - type: entity
   parent: ClothingBackpackClown

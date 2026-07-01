@@ -138,6 +138,8 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,4,5
   - type: Armor
     modifiers:
       coefficients:

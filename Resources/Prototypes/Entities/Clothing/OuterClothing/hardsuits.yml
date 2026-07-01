@@ -539,6 +539,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -624,6 +626,8 @@
         Caustic: 0.5
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -789,6 +793,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/pirateeva.rsi
   - type: ExplosionResistance
@@ -821,6 +827,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,3
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/piratecaptain.rsi
   - type: PressureProtection
@@ -857,6 +865,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
 
@@ -871,6 +883,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi #if you change this, please update the humanoid.yml with a better markers sprite.
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertchaplain.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTChaplain
 
@@ -885,6 +901,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
   - type: FireProtection
@@ -901,6 +921,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
 
@@ -915,6 +939,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
   - type: Tag
@@ -933,6 +961,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,3,3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
 
@@ -947,6 +979,9 @@
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/deathsquad.rsi
+  - type: Item
+    shape:
+    - 0,0,7,7
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000

@@ -196,9 +196,12 @@
   - type: Item
     size: Ginormous
   - type: Storage
-    maxItemSize: Huge
+    maxItemSize: Ginormous
     grid:
-    - 0,0,19,9
+    - 0,0,15,7 # Same with all bags of holding
+    blacklist:
+      tags:
+      - Backpack
 
 - type: entity
   parent: ClothingBackpackSatchelHolding
@@ -209,3 +212,8 @@
   components:
   - type: ExplosionResistance
     damageCoefficient: 0
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,19,9
+    blacklist: #Nullifies blacklist; Can store anything
