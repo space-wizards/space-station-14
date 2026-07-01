@@ -2,7 +2,6 @@ using Content.Client.Wires.Visualizers;
 using Content.Shared.Computer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Computer.Visualizers;
 
@@ -12,22 +11,18 @@ namespace Content.Client.Computer.Visualizers;
 /// </summary>
 public sealed partial class ComputerVisualizerSystem : VisualizerSystem<ComputerVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
-
     private ShaderInstance _unshadedShader = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _unshadedShader = _protoMan.Index(SpriteSystem.UnshadedId).Instance();
-
-        SubscribeLocalEvent<ComputerVisualsComponent, ComponentInit>(OnComponentInit);
+        _unshadedShader = ProtoMan.Index(SpriteSystem.UnshadedId).Instance();
     }
 
     /// <summary>
     /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, ComputerVisualsComponent comp, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
