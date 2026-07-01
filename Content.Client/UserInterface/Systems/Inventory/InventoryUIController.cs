@@ -287,25 +287,30 @@ public sealed partial class InventoryUIController : UIController, IOnStateEntere
             return;
         }
 
-        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        switch (args.Function)
         {
-            _inventorySystem.UIInventoryExamine(slot, _playerUid.Value);
-        }
-        else if (args.Function == EngineKeyFunctions.UseSecondary)
-        {
-            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerUid.Value);
-        }
-        else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
-        {
-            _inventorySystem.UIInventoryActivateItem(slot, _playerUid.Value);
-        }
-        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
-        {
-            _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
-        }
-        else
-        {
-            return;
+            case var _ when args.Function == ContentKeyFunctions.ExamineEntity:
+                _inventorySystem.UIInventoryExamine(slot, _playerUid.Value);
+                break;
+
+            case var _ when args.Function == EngineKeyFunctions.UseSecondary:
+                _inventorySystem.UIInventoryOpenContextMenu(slot, _playerUid.Value);
+                break;
+
+            case var _ when args.Function == ContentKeyFunctions.ActivateItemInWorld:
+                _inventorySystem.UIInventoryActivateItem(slot, _playerUid.Value);
+                break;
+
+            case var _ when args.Function == ContentKeyFunctions.AltActivateItemInWorld:
+                _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
+                break;
+
+            case var _ when args.Function == ContentKeyFunctions.Point:
+                _inventorySystem.UIInventoryPointAt(slot, _playerUid.Value);
+                break;
+
+            default:
+                return;
         }
 
         args.Handle();
