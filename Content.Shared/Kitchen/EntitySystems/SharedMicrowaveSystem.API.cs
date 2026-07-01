@@ -104,4 +104,21 @@ public abstract partial class SharedMicrowaveSystem
         return recipePortions.FirstOrNull(r => r.portions > 0)
             ?? (null, 0);
     }
+
+    /// <summary>
+    ///     Gets a complete list of recipe-usable ingredients from a list of items, including solids,
+    ///     materials, and reagents.
+    /// </summary>
+    /// <param name="items">The list of items to use as ingredients.</param>
+    /// <returns>Cooking ingredient quantities representing the total usable ingredient list.</returns>
+    [PublicAPI]
+    public CookingIngredients GetTotalIngredients(List<EntityUid> items)
+    {
+        var ingredients = new CookingIngredients();
+
+        foreach (var item in items)
+            AddItemIngredients(item, ref ingredients);
+
+        return ingredients;
+    }
 }
