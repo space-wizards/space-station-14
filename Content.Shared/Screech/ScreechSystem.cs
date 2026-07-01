@@ -50,7 +50,6 @@ public sealed partial class ScreechSystem : EntitySystem
 
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
-        // If it isn't handled it will not have a cooldown due to how actions work
         args.Handled = true;
         Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
     }
@@ -63,13 +62,12 @@ public sealed partial class ScreechSystem : EntitySystem
     private void OnMapInit(Entity<ScreechShockWaveComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.InitTime = _timing.CurTime;
-        Dirty(ent); // life is hell because networking is real
+        Dirty(ent);
     }
 
     /// <summary>
     /// Makes the entity "source" screech.
     /// </summary>
-    /// <param name="source"></param>
     public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, float knockDownChances = 0.5f, float speedMultiplier = 1f, TimeSpan? slowdownTime = null)
     {
         // first, we spawn the vfx attached to the source
