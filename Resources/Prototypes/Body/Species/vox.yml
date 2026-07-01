@@ -238,7 +238,7 @@
   - type: Wagging
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganVox
   abstract: true
   suffix: Vox

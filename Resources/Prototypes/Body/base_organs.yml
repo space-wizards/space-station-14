@@ -23,7 +23,27 @@
   - type: Organ
 
 - type: entity
-  parent: OrganBase
+  id: OrganBaseOrganic
+  name: organ
+  abstract: true
+  parent: [ OrganBase, SolutionFood, SolutionTiny ]
+  components:
+  - type: FlavorProfile
+    flavors:
+    - chicken # INTRODUCING OUR NEW EVERY-MEAT BURRITO, IT'S GOT EVERY MEAT!
+  - type: Edible
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 20
+  - type: Tag # I am nearing my limit of tolerance for TagComponent.
+    tags:
+    - Raw
+    - Meat
+
+- type: entity
+  parent: OrganBaseOrganic
   id: OrganBaseTorso
   name: torso
   abstract: true
@@ -179,6 +199,13 @@
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: UncookedAnimalProteins
+        Quantity: 15
+      - ReagentId: GreyMatter
+        Quantity: 10
   - type: FoodSequenceElement
     entries:
       Burger: Brain
