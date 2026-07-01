@@ -1,6 +1,9 @@
 using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Kitchen.Components;
 
@@ -14,25 +17,25 @@ public sealed partial class ActiveMicrowaveComponent : Component
     /// <summary>
     ///     Whether or not this microwave cooking process is malfunctioning.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Malfunctioning = false;
 
     /// <summary>
     ///     The recipe we are currently cooking.
     /// </summary>
-    [DataField]
-    public (FoodRecipePrototype? Recipe, uint Count) PortionedRecipe;
+    [DataField, AutoNetworkedField]
+    public PortionedRecipe? PortionedRecipe;
 
     /// <summary>
     ///     The total cooking time of this operation.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float TotalTime;
 
     /// <summary>
     ///     The time that this microwave will finish cooking.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan CookTimeEnd = TimeSpan.Zero;
 
     /// <summary>
@@ -61,4 +64,23 @@ public sealed partial class ActiveMicrowaveComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextMalfunction = TimeSpan.Zero;
+}
+
+/// <summary>
+///     Represents a specific quantity of a recipe to cook.
+/// </summary>
+[Serializable, NetSerializable]
+public struct PortionedRecipe(ProtoId<FoodRecipePrototype> recipe, uint count)
+{
+    /// <summary>
+    ///     The recipe to make.
+    /// </summary>
+    [DataField]
+    public ProtoId<FoodRecipePrototype> Recipe = recipe;
+
+    /// <summary>
+    ///     The number of portions to make of this recipe.
+    /// </summary>
+    [DataField]
+    public uint Count = count;
 }

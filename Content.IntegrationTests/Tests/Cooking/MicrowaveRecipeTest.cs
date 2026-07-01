@@ -68,23 +68,26 @@ public sealed class MicrowaveRecipeTest
     {
         var ingredients = prototype.Ingredients * portions;
         var cookTIme = prototype.CookTime * portions;
-        var recipe = microwaveSystem.GetRecipe(microwave, ingredients, cookTIme);
+        var portionedRecipe = microwaveSystem.GetRecipe(microwave, ingredients, cookTIme);
         var microwaveString = entMan.ToPrettyString(microwave);
         var recipeDebugString = $"Ingredients for {nameof(FoodRecipePrototype)} {prototype.ID}";
 
         using (Assert.EnterMultipleScope())
         {
             // Tried to get a recipe for these ingredients, but no valid recipe was found.
-            Assert.That(recipe.recipe, Is.Not.Null,
+            Assert.That(portionedRecipe, Is.Not.Null,
                 $"{recipeDebugString} did not resolve to a recipe in {microwaveString} in {portions} portions!");
 
+            var recipe = portionedRecipe.Value.Recipe;
+            var count = portionedRecipe.Value.Count;
+
             // Resulted in a different recipe instead.
-            Assert.That(recipe.recipe.ID, Is.EqualTo(prototype.ID),
+            Assert.That(recipe, Is.EqualTo(prototype.ID),
                 $"{recipeDebugString} resulted in an incorrect recipe for {microwaveString} in {portions} portions!");
 
             // Recipe portion count does not match the amount we're trying to make.
-            Assert.That(recipe.count, Is.EqualTo(portions),
-                $"{recipeDebugString} resulted in {recipe.count} recipe portions for {microwaveString}! Expected: {portions}");
+            Assert.That(count, Is.EqualTo(portions),
+                $"{recipeDebugString} resulted in {count} recipe portions for {microwaveString}! Expected: {portions}");
         }
     }
 }

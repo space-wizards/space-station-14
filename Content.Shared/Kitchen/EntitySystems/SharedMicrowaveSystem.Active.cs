@@ -110,10 +110,12 @@ public abstract partial class SharedMicrowaveSystem
         if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))
             return;
 
-        if (activeMicrowaveComp.PortionedRecipe.Recipe == null) // no recipe selected
+        var portionedRecipe = activeMicrowaveComp.PortionedRecipe;
+        if (portionedRecipe == null // no recipe selected
+            || !ProtoMan.TryIndex(portionedRecipe.Value.Recipe, out var recipe))
             return;
 
-        var recipeReagents = activeMicrowaveComp.PortionedRecipe.Recipe.Ingredients.Reagents.Keys;
+        var recipeReagents = recipe.Ingredients.Reagents.Keys;
 
         foreach (var reagent in recipeReagents)
         {

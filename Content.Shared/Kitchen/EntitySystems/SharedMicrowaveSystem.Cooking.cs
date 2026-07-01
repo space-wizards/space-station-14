@@ -75,7 +75,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="recipe">The recipe and portion count associated with this operaton.</param>
     /// <param name="malfunctioning">Whether or not this microwave is malfunctioning.</param>
     private void ActivateMicrowave(Entity<MicrowaveComponent> microwave,
-        (FoodRecipePrototype? recipe, uint count) recipe,
+        PortionedRecipe? recipe,
         bool malfunctioning,
         EntityUid? user)
     {
@@ -88,7 +88,6 @@ public abstract partial class SharedMicrowaveSystem
         var activeComp = AddComp<ActiveMicrowaveComponent>(uid);
         activeComp.PortionedRecipe = recipe;
         activeComp.Malfunctioning = malfunctioning;
-        InitializeTimer((uid, activeComp));
 
         if (malfunctioning)
             activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
@@ -218,17 +217,19 @@ public abstract partial class SharedMicrowaveSystem
     ///     from the microwave and producing finished dish entities in their place.
     /// </summary>
     /// <param name="microwave">The microwave entity.</param>
-    /// <param name="recipe">The recipe we are using.</param>
-    /// <param name="count">The number of recipe portions to produce.</param>
-    private void SpawnFinishedRecipe(Entity<MicrowaveComponent> microwave,
-        FoodRecipePrototype recipe,
-        uint count = 1)
+    /// <param name="portionedRecipe">The recipe we are using.</param>
+    private void SpawnFinishedRecipe(Entity<MicrowaveComponent> microwave, PortionedRecipe portionedRecipe)
     {
-        SubtractContents(microwave, recipe, count);
+        SubtractContents(microwave, portionedRecipe);
 
         var coords = Transform(microwave).Coordinates;
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < portionedRecipe.Count; i++)
+        {
+            if (!ProtoMan.TryIndex(portionedRecipe.Recipe, out var recipe))
+                continue;
+
             PredictedSpawnAtPosition(recipe.Result, coords);
+        }
     }
 
     /// <summary>
@@ -241,11 +242,10 @@ public abstract partial class SharedMicrowaveSystem
         var active = ent.Comp1;
         var microwave = ent.Comp2;
         var microwaveEnt = (ent.Owner, microwave);
-        var recipe = active.PortionedRecipe;
 
         // Spawn a finished recipe, if there is one.
-        if (recipe.Recipe != null)
-            SpawnFinishedRecipe(microwaveEnt, recipe.Recipe, recipe.Count);
+        if (active.PortionedRecipe != null)
+            SpawnFinishedRecipe(microwaveEnt, active.PortionedRecipe.Value);
 
         AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
 
@@ -263,9 +263,11 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void StopCooking(Entity<MicrowaveComponent> ent)
     {
-        RemCompDeferred<ActiveMicrowaveComponent>(ent);
+        // TODO: There's a RemCompDeferred mispredict
+        // https://github.com/space-wizards/RobustToolbox/issues/6404
+        RemComp<ActiveMicrowaveComponent>(ent);
 
         foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
-            RemCompDeferred<ActivelyMicrowavedComponent>(solid);
+            RemComp<ActivelyMicrowavedComponent>(solid);
     }
 }

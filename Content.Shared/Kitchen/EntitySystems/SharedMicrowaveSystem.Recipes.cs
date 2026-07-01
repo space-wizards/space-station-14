@@ -230,17 +230,19 @@ public abstract partial class SharedMicrowaveSystem
     ///     This function does not check whether or not the contents have *enough* ingredients to
     ///     subtract - it simply performs the subtraction.
     /// </remarks>
-    /// <param name="microwave">The microwave entity.</param>
-    /// <param name="recipe">The recipe used to spend ingredients.</param>
-    /// <param name="count">How many times this recipe is spent in ingredient volumes.</param>
-    private void SubtractContents(Entity<MicrowaveComponent> microwave, FoodRecipePrototype recipe, uint count = 1)
+    /// <param name="ent">The microwave entity.</param>
+    /// <param name="portionedRecipe">The recipe used to spend ingredients.</param>
+    private void SubtractContents(Entity<MicrowaveComponent> ent, PortionedRecipe portionedRecipe)
     {
-        var component = microwave.Comp;
-        var microwaveItems = GetMicrowaveContents(microwave.AsNullable()).ToArray();
-        var ingredientsToSpend = recipe.Ingredients * count;
+        if (!ProtoMan.TryIndex(portionedRecipe.Recipe, out var recipe))
+            return;
+
+        var ingredientsToSpend = recipe.Ingredients * portionedRecipe.Count;
         var solidsToSpend = ingredientsToSpend.Solids;
         var materialsToSpend = ingredientsToSpend.Materials;
         var reagentsToSpend = ingredientsToSpend.Reagents;
+        var microwave = ent.Comp;
+        var microwaveItems = GetMicrowaveContents(ent.AsNullable()).ToArray();
 
         foreach (var item in microwaveItems)
         {
@@ -248,7 +250,7 @@ public abstract partial class SharedMicrowaveSystem
                 && TryGetSolidId(item, out var solidId)
                 && solidsToSpend.ContainsKey(solidId.Value))
             {
-                SubtractSolidContents(item, solidId.Value, component.Storage, ingredientsToSpend);
+                SubtractSolidContents(item, solidId.Value, microwave.Storage, ingredientsToSpend);
                 continue;
                 // We're exiting early here; if the solid ingredient is removed from the container,
                 // then we shouldn't be attempting to use its material stack or reagents.

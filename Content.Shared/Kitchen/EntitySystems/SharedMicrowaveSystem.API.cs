@@ -115,7 +115,7 @@ public abstract partial class SharedMicrowaveSystem
     ///     The first valid recipe we can use. If there is none, this is (null, 0).
     /// </returns>
     [PublicAPI]
-    public (FoodRecipePrototype? recipe, uint count) GetRecipe(EntityUid uid,
+    public PortionedRecipe? GetRecipe(EntityUid uid,
         CookingIngredients ingredients,
         uint cookTime)
     {
@@ -123,11 +123,11 @@ public abstract partial class SharedMicrowaveSystem
         var recipePortions = recipes.Select(recipe =>
             {
                 var portions = GetRecipePortions(recipe, ingredients, cookTime);
-                return (recipe, portions);
+                return new PortionedRecipe(recipe.ID, portions);
             });
 
-        return recipePortions.FirstOrNull(r => r.portions > 0)
-            ?? (null, 0);
+        return recipePortions.FirstOrNull(r => r.Count > 0)
+            ?? null;
     }
 
     /// <summary>
