@@ -2,15 +2,15 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.Destructible;
 
-public abstract class SharedDestructibleSystem : EntitySystem
+public abstract partial class SharedDestructibleSystem : EntitySystem
 {
     // TODO: I don't really like this but this is out of scope to re-do destructible triggers while refactoring damageable
-    [Dependency] public readonly DamageableSystem Damageable = default!;
+    [Dependency] public DamageableSystem Damageable = default!;
 
     /// <summary>
     /// Force entity to be destroyed and deleted.
     /// </summary>
-    public bool DestroyEntity(Entity<MetaDataComponent?> owner)
+    public bool DestroyEntity(EntityUid owner)
     {
         var ev = new DestructionAttemptEvent();
         RaiseLocalEvent(owner, ev);

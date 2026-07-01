@@ -86,4 +86,19 @@ public abstract partial class SharedAtmosphereSystem
 
         return ev.Handled;
     }
+
+    /// <summary>
+    /// Gets the potential energy from overpressure between two gas mixtures.
+    /// </summary>
+    /// <returns>
+    /// Returns the potential energy of the overpressure in Joules.
+    /// Value will be positive if the potential energy is outward (mix1 -> mix2)
+    /// Value will be negative if potential energy is inward (mix2 -> mix1)
+    /// </returns>
+    [PublicAPI]
+    public float GetOverPressure(GasMixture mix1, GasMixture? mix2 = null)
+    {
+        return (mix1.Pressure - (mix2?.Pressure ?? 0)) * mix1.Volume;
+    }
+
 }

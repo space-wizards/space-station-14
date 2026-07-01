@@ -95,7 +95,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             if (!TryComp<MapGridComponent>(possibleTarget, out var comp))
                 continue;
 
-            weights.Add((possibleTarget, comp), _map.GetAllTiles(possibleTarget, comp).Count());
+            weights.Add((possibleTarget, comp), _map.GetFilledTileCount((possibleTarget, comp)));
         }
 
         if (weights.Count == 0)

@@ -20,16 +20,16 @@ namespace Content.Client.Audio;
 /// <summary>
 /// Samples nearby <see cref="AmbientSoundComponent"/> and plays audio.
 /// </summary>
-public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
+public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
 {
-    [Dependency] private readonly AmbientSoundTreeSystem _treeSys = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private AmbientSoundTreeSystem _treeSys = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
@@ -235,8 +235,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     /// </summary>
     private void ProcessNearbyAmbience(TransformComponent playerXform)
     {
-        var query = GetEntityQuery<TransformComponent>();
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
         var mapPos = _xformSystem.GetMapCoordinates(playerXform);
 
         // Remove out-of-range ambiences
@@ -249,9 +247,9 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             if (comp.Enabled &&
                 // Don't keep playing sounds that have changed since.
                 sound.Sound == comp.Sound &&
-                query.TryGetComponent(owner, out var xform) &&
+                TryComp(owner, out TransformComponent? xform) &&
                 xform.MapID == playerXform.MapID &&
-                !metaQuery.GetComponent(owner).EntityPaused)
+                !Paused(owner))
             {
                 // TODO: This is just trydistance for coordinates.
                 var distance = (xform.ParentUid == playerXform.ParentUid)
@@ -294,7 +292,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                 var comp = sourceEntity.Comp;
 
                 if (_playingSounds.ContainsKey(sourceEntity) ||
-                    metaQuery.GetComponent(uid).EntityPaused)
+                    Paused(uid))
                     continue;
 
                 var audioParams = _params

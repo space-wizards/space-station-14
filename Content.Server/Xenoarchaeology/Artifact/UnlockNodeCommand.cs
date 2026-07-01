@@ -7,9 +7,9 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 /// <summary> Command for unlocking a specific node of a xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class UnlockNodeCommand : LocalizedEntityCommands
+public sealed partial class UnlockNodeCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly XenoArtifactSystem _artiSystem = default!;
+    [Dependency] private XenoArtifactSystem _artiSystem = default!;
 
     public override string Command => "unlocknode";
 

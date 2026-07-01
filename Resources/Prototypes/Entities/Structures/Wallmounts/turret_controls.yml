@@ -11,8 +11,9 @@
     layers:
     - state: base
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -159,10 +160,6 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ContainerFill
-    containers:
-      board:
-      - WeaponEnergyTurretStationControlPanelElectronics
   - type: Construction
     graph: WeaponEnergyTurretControlPanel
     node: finish

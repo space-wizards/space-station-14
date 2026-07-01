@@ -7,10 +7,10 @@ namespace Content.Shared.PowerCell;
 /// <summary>
 /// Handles events to integrate PowerCellDraw with ItemToggle
 /// </summary>
-public sealed class ToggleCellDrawSystem : EntitySystem
+public sealed partial class ToggleCellDrawSystem : EntitySystem
 {
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
 
     public override void Initialize()
     {

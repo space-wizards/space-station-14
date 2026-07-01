@@ -1,15 +1,16 @@
+using Content.IntegrationTests.Fixtures;
 using Robust.Client.Console;
 using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    public sealed class ReconnectTest
+    public sealed class ReconnectTest : GameTest
     {
         [Test]
         public async Task Test()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var pair = Pair;
             var server = pair.Server;
             var client = pair.Client;
 
@@ -32,7 +33,6 @@ namespace Content.IntegrationTests.Tests.Networking
             await pair.RunTicksSync(10);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-            await pair.CleanReturnAsync();
         }
     }
 }

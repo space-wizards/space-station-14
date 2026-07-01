@@ -15,6 +15,7 @@
   - type: EmitSoundOnLand
     sound: *SoundBalloonHit
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: TileFrictionModifier
     modifier: 0.3

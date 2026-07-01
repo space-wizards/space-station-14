@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public sealed class MessyDrinkerSystem : EntitySystem
+public sealed partial class MessyDrinkerSystem : EntitySystem
 {
-    [Dependency] private readonly IngestionSystem _ingestion = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {

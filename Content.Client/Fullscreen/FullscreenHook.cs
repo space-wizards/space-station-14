@@ -7,11 +7,11 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 
 namespace Content.Client.Fullscreen;
-public sealed class FullscreenHook
+public sealed partial class FullscreenHook
 {
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _logManager = default!;
     private ISawmill _sawmill = default!;
 
     public void Initialize()

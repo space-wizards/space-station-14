@@ -17,20 +17,19 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public abstract class SharedChameleonClothingSystem : EntitySystem
+public abstract partial class SharedChameleonClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ClothingSystem _clothingSystem = default!;
-    [Dependency] private readonly ContrabandSystem _contraband = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly SharedItemSystem _itemSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private ClothingSystem _clothingSystem = default!;
+    [Dependency] private ContrabandSystem _contraband = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SharedItemSystem _itemSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private INetManager _net = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -66,12 +65,20 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     private void OnGotEquipped(EntityUid uid, ChameleonClothingComponent component, GotEquippedEvent args)
     {
-        component.User = args.Equipee;
+        if (Timing.ApplyingState)
+            return; // Already networked as part of the same gamestate
+
+        component.User = args.EquipTarget;
+        Dirty(uid, component);
     }
 
     private void OnGotUnequipped(EntityUid uid, ChameleonClothingComponent component, GotUnequippedEvent args)
     {
+        if (Timing.ApplyingState)
+            return; // Already networked as part of the same gamestate
+
         component.User = null;
+        Dirty(uid, component);
     }
 
     // Updates chameleon visuals and meta information.
@@ -81,7 +88,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void UpdateVisuals(EntityUid uid, ChameleonClothingComponent component)
     {
         if (string.IsNullOrEmpty(component.Default) ||
-            !_proto.Resolve(component.Default, out EntityPrototype? proto))
+            !ProtoMan.Resolve(component.Default, out EntityPrototype? proto))
             return;
 
         // world sprite icon
@@ -97,28 +104,28 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         // item sprite logic
         if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, Factory))
+            proto.TryComp(out ItemComponent? otherItem, Factory))
         {
             _itemSystem.CopyVisuals(uid, otherItem, item);
         }
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent(out ClothingComponent? otherClothing, Factory))
+            proto.TryComp(out ClothingComponent? otherClothing, Factory))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
         // appearance data logic
         if (TryComp(uid, out AppearanceComponent? appearance) &&
-            proto.TryGetComponent(out AppearanceComponent? appearanceOther, Factory))
+            proto.TryComp(out AppearanceComponent? appearanceOther, Factory))
         {
             _appearance.AppendData(appearanceOther, uid);
             Dirty(uid, appearance);
         }
 
         // properly mark contraband
-        if (proto.TryGetComponent(out ContrabandComponent? contra, Factory))
+        if (proto.TryComp(out ContrabandComponent? contra, Factory))
         {
             EnsureComp<ContrabandComponent>(uid, out var current);
             _contraband.CopyDetails(uid, contra, current);
@@ -132,6 +139,9 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || _lock.IsLocked(ent.Owner))
+            return;
+
+        if (!ent.Comp.ShowVerb)
             return;
 
         // Can't pass args from a ref event inside of lambdas
@@ -175,15 +185,16 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it is marked as valid chameleon target
-        if (!proto.TryGetComponent(out TagComponent? tag, Factory) || !_tag.HasTag(tag, WhitelistChameleonTag))
+        if (!proto.TryComp(out TagComponent? tag, Factory) || !_tag.HasTag(tag, WhitelistChameleonTag))
             return false;
 
         if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent(out ClothingComponent? clothing, Factory))
+        if (!proto.TryComp(out ClothingComponent? clothing, Factory))
             return false;
+
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;
 
@@ -200,7 +211,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         {
             foreach (var proto in _data[slot])
             {
-                if (IsValidTarget(_proto.Index(proto), slot, tag))
+                if (IsValidTarget(ProtoMan.Index(proto), slot, tag))
                     validTargets.Add(proto);
             }
         }
@@ -223,14 +234,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void PrepareAllVariants()
     {
         _data.Clear();
-        var prototypes = _proto.EnumeratePrototypes<EntityPrototype>();
+        var prototypes = ProtoMan.EnumeratePrototypes<EntityPrototype>();
 
         foreach (var proto in prototypes)
         {
             // check if this is valid clothing
             if (!IsValidTarget(proto))
                 continue;
-            if (!proto.TryGetComponent(out ClothingComponent? item, Factory))
+            if (!proto.TryComp(out ClothingComponent? item, Factory))
                 continue;
 
             // sort item by their slot flags
@@ -250,7 +261,15 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     }
 
     // TODO: Predict and use component states for the UI
-    public virtual void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    /// <summary>
+    /// Change chameleon items name, description and sprite to mimic other entity prototype.
+    /// </summary>
+    /// <param name="uid">The entity who's appearance to swap.</param>
+    /// <param name="protoId">The target protoId of the target appearance.</param>
+    /// <param name="forceUpdate">Whether to force update appearance, even if the same one was selected.</param>
+    /// <param name="validate">Whether to validate if the target prototype is a valid chameleon target.</param>
+    /// <param name="component">The <see cref="ChameleonClothingComponent"/> of the entity we are updating.</param>
+    public virtual void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false, bool validate = true,
         ChameleonClothingComponent? component = null)
     { }
 }

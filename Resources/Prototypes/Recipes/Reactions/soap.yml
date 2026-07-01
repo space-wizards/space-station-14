@@ -6,11 +6,11 @@
   priority: -1 # Ensures that the more complicated soaps get made instead
   reactants:
     Oil:
-      amount: 10
+      amount: 20
     Lye:
-      amount: 15
+      amount: 30
     TableSalt:
-      amount: 5
+      amount: 10
   effects:
     - !type:SpawnEntity
       entity: Soap
@@ -22,11 +22,11 @@
   minTemp: 373
   reactants:
     Oil:
-      amount: 15
-    Lye:
       amount: 20
+    Lye:
+      amount: 25
     TableSalt:
-      amount: 5
+      amount: 10
     Plasma:
       amount: 5
   effects:
@@ -40,11 +40,11 @@
   minTemp: 373
   reactants:
     Oil:
-      amount: 15
-    Lye:
       amount: 20
+    Lye:
+      amount: 25
     TableSalt:
-      amount: 5
+      amount: 10
     JuiceBerry:
       amount: 5
   effects:
@@ -58,11 +58,11 @@
   minTemp: 373
   reactants:
     Fat:
-      amount: 10
+      amount: 15
     Lye:
-      amount: 20
+      amount: 25
     TableSalt:
-      amount: 5
+      amount: 10
     Blood:
       amount: 10
   effects:
@@ -76,11 +76,11 @@
   minTemp: 373
   reactants:
     Oil:
-      amount: 15
-    Lye:
       amount: 20
+    Lye:
+      amount: 25
     TableSalt:
-      amount: 5
+      amount: 10
     Stimulants:
       amount: 5
   effects:

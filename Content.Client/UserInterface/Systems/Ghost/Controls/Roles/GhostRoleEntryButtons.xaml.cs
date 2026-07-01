@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles;
 [GenerateTypedNameReferences]
 public sealed partial class GhostRoleEntryButtons : BoxContainer
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly GhostRoleKind _ghostRoleKind;
     private readonly uint _playerCount;
     private readonly TimeSpan _raffleEndTime = TimeSpan.MinValue;
