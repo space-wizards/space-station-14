@@ -11,7 +11,7 @@ public sealed partial class OpenAHelpCommand : LocalizedCommands
 {
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
 
-    public override string Command => "openahelp";
+    public override string Command => AdminCommandSyntax.NameOpenAdminHelp;
 
     public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
 

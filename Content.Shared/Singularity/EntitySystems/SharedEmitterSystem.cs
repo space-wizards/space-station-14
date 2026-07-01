@@ -10,7 +10,6 @@ namespace Content.Shared.Singularity.EntitySystems;
 
 public abstract partial class SharedEmitterSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -34,7 +33,7 @@ public abstract partial class SharedEmitterSystem : EntitySystem
 
         foreach (var type in ent.Comp.SelectableTypes)
         {
-            var proto = _prototype.Index(type);
+            var proto = ProtoMan.Index(type);
 
             var v = new Verb
             {
@@ -60,7 +59,7 @@ public abstract partial class SharedEmitterSystem : EntitySystem
         if (ent.Comp.SelectableTypes.Count < 2)
             return;
 
-        var proto = _prototype.Index(ent.Comp.BoltType);
+        var proto = ProtoMan.Index(ent.Comp.BoltType);
         args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
     }
 }
