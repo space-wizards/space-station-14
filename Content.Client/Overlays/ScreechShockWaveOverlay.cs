@@ -104,9 +104,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
 
             _currentCount += 1;
             if (_currentCount == MaximumInstances)
-            {
                 break;
-            }
         }
 
         return _currentCount != 0;
