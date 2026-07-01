@@ -84,7 +84,7 @@ public abstract partial class SharedMicrowaveSystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? solutionEntity,
         [NotNullWhen(true)] out Solution? solution)
     {
-        return Solution.TryGetDrainableSolution(uid, out solutionEntity, out solution);
+        return SolutionSys.TryGetDrainableSolution(uid, out solutionEntity, out solution);
     }
 
     /// <summary>
@@ -148,7 +148,7 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         ingredientsToSpend.AddSolid(itemProto, -1);
-        _container.Remove(item, container);
+        ContainerSys.Remove(item, container);
         PredictedQueueDel(item);
     }
 
@@ -201,7 +201,7 @@ public abstract partial class SharedMicrowaveSystem
                 continue;
 
             var quantityToRemove = SpendReagentQuantity(availableQuantity, reagent, ingredientsToSpend);
-            Solution.RemoveReagent(solutionEntity, reagent, quantityToRemove);
+            SolutionSys.RemoveReagent(solutionEntity, reagent, quantityToRemove);
         }
     }
 

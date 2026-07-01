@@ -1,6 +1,5 @@
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -33,8 +32,8 @@ public abstract partial class SharedMicrowaveSystem
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
-        _container.EmptyContainer(ent.Comp.Storage);
-        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+        ContainerSys.EmptyContainer(ent.Comp.Storage);
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>
@@ -46,8 +45,8 @@ public abstract partial class SharedMicrowaveSystem
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
-        _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
-        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+        ContainerSys.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>
@@ -71,7 +70,7 @@ public abstract partial class SharedMicrowaveSystem
             nameof(MicrowaveComponent.CurrentCookTimeButtonIndex),
             nameof(MicrowaveComponent.CurrentCookTimerTime));
 
-        Audio.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+        AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>

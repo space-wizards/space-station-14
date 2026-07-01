@@ -8,8 +8,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Content.Server.Lightning;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Popups;
-using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
@@ -22,10 +20,8 @@ namespace Content.Server.Kitchen.EntitySystems;
 public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ExplosionSystem _explosion = default!;
     [Dependency] private LightningSystem _lightning = default!;
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private TemperatureSystem _temperature = default!;
@@ -62,10 +58,10 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         var othersMessage = Loc.GetString("microwave-component-suicide-others-message", ("victim", victim));
         var selfMessage = Loc.GetString("microwave-component-suicide-message");
 
-        _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
-        _popupSystem.PopupEntity(selfMessage, victim, victim);
+        PopupSys.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
+        PopupSys.PopupEntity(selfMessage, victim, victim);
 
-        Audio.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
+        AudioSys.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
         StartCooking(ent, args.Victim);
         UpdateUserInterfaceState(ent.AsNullable());
@@ -95,13 +91,13 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
         {
             _temperature.ChangeHeat(entity, objHeatToAdd, ignoreHeatResistance: false);
 
-            foreach (var (_, soln) in Solution.EnumerateSolutions(entity))
+            foreach (var (_, soln) in SolutionSys.EnumerateSolutions(entity))
             {
                 var solution = soln.Comp.Solution;
                 if (solution.Temperature > component.TemperatureUpperThreshold)
                     continue;
 
-                Solution.AddThermalEnergy(soln, heatToAdd);
+                SolutionSys.AddThermalEnergy(soln, heatToAdd);
             }
         }
     }
@@ -132,8 +128,8 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         if (TryComp<MachineComponent>(ent, out var machine))
         {
-            _container.CleanContainer(machine.BoardContainer);
-            _container.EmptyContainer(machine.PartContainer);
+            ContainerSys.CleanContainer(machine.BoardContainer);
+            ContainerSys.EmptyContainer(machine.PartContainer);
         }
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,

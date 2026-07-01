@@ -23,17 +23,17 @@ namespace Content.Shared.Kitchen.EntitySystems;
 /// </summary>
 public abstract partial class SharedMicrowaveSystem : EntitySystem
 {
-    [Dependency] protected SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected SharedAudioSystem Audio = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] protected SharedAppearanceSystem AppearanceSys = default!;
+    [Dependency] protected SharedAudioSystem AudioSys = default!;
+    [Dependency] protected SharedContainerSystem ContainerSys = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedItemSystem _item = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] protected SharedPopupSystem PopupSys = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
-    [Dependency] protected SharedSolutionContainerSystem Solution = default!;
+    [Dependency] protected SharedSolutionContainerSystem SolutionSys = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -119,7 +119,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
         SetAppearance(ent.AsNullable(), MicrowaveVisualState.Broken);
 
         StopCooking(ent);
-        _container.EmptyContainer(ent.Comp.Storage);
+        ContainerSys.EmptyContainer(ent.Comp.Storage);
         UpdateUserInterfaceState(ent.AsNullable());
     }
 
@@ -145,7 +145,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     private void OnAnchorChanged(Entity<MicrowaveComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            _container.EmptyContainer(ent.Comp.Storage);
+            ContainerSys.EmptyContainer(ent.Comp.Storage);
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
             return;
 
         var display = ent.Comp.Broken ? MicrowaveVisualState.Broken : state;
-        Appearance.SetData(ent.Owner,
+        AppearanceSys.SetData(ent.Owner,
             PowerDeviceVisuals.VisualState,
             display,
             appearanceComponent);

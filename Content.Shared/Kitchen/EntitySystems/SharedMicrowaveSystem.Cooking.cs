@@ -79,7 +79,7 @@ public abstract partial class SharedMicrowaveSystem
         var component = microwave.Comp;
         var curTime = _timing.CurTime;
 
-        Audio.PlayPvs(component.StartCookingSound, uid);
+        AudioSys.PlayPvs(component.StartCookingSound, uid);
 
         var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
         var activeComp = new ActiveMicrowaveComponent()
@@ -204,7 +204,7 @@ public abstract partial class SharedMicrowaveSystem
         var entProto = microwave.Comp.BadRecipeEntityId;
         var coords = Transform(microwave).Coordinates;
         var junk = PredictedSpawnAtPosition(entProto, coords);
-        _container.Insert(junk, microwave.Comp.Storage);
+        ContainerSys.Insert(junk, microwave.Comp.Storage);
 
         PredictedDel(item);
     }
@@ -243,10 +243,10 @@ public abstract partial class SharedMicrowaveSystem
         if (recipe.Recipe != null)
             SpawnFinishedRecipe(microwaveEnt, recipe.Recipe, recipe.Count);
 
-        Audio.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
+        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
 
         // Clean up the microwave.
-        _container.EmptyContainer(microwave.Storage);
+        ContainerSys.EmptyContainer(microwave.Storage);
         StopCooking(microwaveEnt);
     }
 
