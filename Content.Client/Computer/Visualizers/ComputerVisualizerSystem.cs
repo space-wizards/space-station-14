@@ -18,13 +18,12 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         base.Initialize();
 
         _unshadedShader = ProtoMan.Index(SpriteSystem.UnshadedId).Instance();
-
-        SubscribeLocalEvent<ComputerVisualsComponent, ComponentInit>(OnComponentInit);
     }
 
     /// <summary>
     /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
