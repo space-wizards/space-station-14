@@ -487,11 +487,20 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
     }
 }
 
+/// <summary>
+///     DoAfter event for putting an entity on a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeHookDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+///     DoAfter event for removing an entity from a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeUnhookDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+///     DoAfter event for slicing an entity on a meat spike.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpikeButcherDoAfterEvent : SimpleDoAfterEvent;
