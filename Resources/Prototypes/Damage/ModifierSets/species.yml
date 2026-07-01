@@ -1,6 +1,6 @@
 # These are modifier sets used for humanoids
 
-## Standard round-start
+#region Standard round-start
 
 - type: damageModifierSet
   id: Slime
@@ -42,7 +42,8 @@
     Heat: 1.15
     Cold: 0.85
 
-## Special
+#endregion
+#region Special
 
 # immune to everything except physical and heat damage; vulnerable to holy damage because they're undead, but not as vulnerable as a ghost or demon would be
 - type: damageModifierSet
@@ -71,3 +72,5 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+
+#endregion

@@ -14,7 +14,7 @@
     Cold: 6
     Shock: 6
     Caustic: 6
-    Structural: 12
+    Structural: 8
 
 # Strong metal used by crew to protect important areas and items.
 - type: damageModifierSet
@@ -57,7 +57,7 @@
 #endregion
 #region Glass
 
-# Resists burns, but is weak to common blunt damage.
+# Inverse of metal. Weak to brute but resists burns.
 - type: damageModifierSet
   id: GlassMod
   coefficients:

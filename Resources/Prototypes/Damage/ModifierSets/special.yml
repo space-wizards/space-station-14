@@ -1,7 +1,6 @@
 # These modifiers don't appear as a natural set used by any entity, but for some other novel purpose.
 
-# Represents which damage types should be modified
-# in relation to how they cause bleed rate.
+# Represents which damage types should be modified in relation to how they cause bleed rate.
 # Make sure to add any new damage type here.
 - type: damageModifierSet
   id: BloodlossHuman
