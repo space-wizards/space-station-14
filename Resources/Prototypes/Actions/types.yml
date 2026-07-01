@@ -62,7 +62,8 @@
     icon: Interface/Actions/scream.png
     checkCanInteract: false
   - type: InstantAction
-    event: !type:ScreamActionEvent
+    event: !type:EmoteActionEvent
+      emote: Scream
 
 - type: entity
   parent: BaseMentalAction

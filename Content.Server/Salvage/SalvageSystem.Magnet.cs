@@ -296,7 +296,7 @@ public sealed partial class SalvageSystem
                 await _dungeon.GenerateDungeonAsync(asteroid.DungeonConfig, grid.Owner, grid.Comp, Vector2i.Zero, seed);
                 break;
             case DebrisOffering debris:
-                var debrisProto = _prototypeManager.Index<DungeonConfigPrototype>(debris.Id);
+                var debrisProto = ProtoMan.Index<DungeonConfigPrototype>(debris.Id);
                 var debrisGrid = _mapManager.CreateGridEntity(salvMap);
                 await _dungeon.GenerateDungeonAsync(debrisProto, debrisGrid.Owner, debrisGrid.Comp, Vector2i.Zero, seed);
                 break;
