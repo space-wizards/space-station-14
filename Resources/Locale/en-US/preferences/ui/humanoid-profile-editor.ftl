@@ -8,6 +8,7 @@ humanoid-profile-editor-sex-label = Sex:
 humanoid-profile-editor-sex-male-text = Male
 humanoid-profile-editor-sex-female-text = Female
 humanoid-profile-editor-sex-unsexed-text = None
+humanoid-profile-editor-voice-label = Voice:
 humanoid-profile-editor-age-label = Age:
 humanoid-profile-editor-skin-color-label = Skin color:
 humanoid-profile-editor-species-label = Species:
@@ -62,3 +63,9 @@ humanoid-profile-editor-trait-count-hint = Points available: [{$current}/{$max}]
 trait-category-disabilities = Disabilities
 trait-category-speech = Speech traits
 trait-category-quirks = Quirks
+
+# Voices
+humanoid-profile-editor-voice-masculine = Masculine
+humanoid-profile-editor-voice-feminine = Feminine
+humanoid-profile-editor-voice-neutral = Neutral
+humanoid-profile-editor-voice-none = Unnamed Voice
