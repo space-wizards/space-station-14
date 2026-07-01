@@ -33,9 +33,6 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> ChatFlaggedWordAhelpEnabled =
         CVarDef.Create("chat.flagged_word_ahelp_enabled", false, CVar.SERVERONLY);
 
-    public static readonly CVarDef<string> ChatFlaggedWordAhelpWords =
-        CVarDef.Create("chat.flagged_word_ahelp_words", "", CVar.SERVERONLY);
-
     public static readonly CVarDef<float> ChatFlaggedWordAhelpCooldown =
         CVarDef.Create("chat.flagged_word_ahelp_cooldown", 30f, CVar.SERVERONLY);
 

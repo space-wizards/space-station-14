@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
+using Content.Server.Database;
 
 namespace Content.Server.Chat.Systems;
 
@@ -47,7 +48,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private ReplacementAccentSystem _wordreplacement = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private EntityQuery<GhostHearingComponent> _ghostHearingQuery = default!;
-
+    [Dependency] private IServerDbManager _db = default!;
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
@@ -60,9 +61,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
-        Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpEnabled, value => _FlaggedWordAhelpEnabled = value, true);
-        Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpWords, OnFlaggedWordListChanged, true);
-        Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpCooldown, value => _FlaggedWordAhelpCooldown = value, true);
+        Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpEnabled, value => _flaggedWordAhelpEnabled = value, true);
+        Subs.CVar(_configurationManager, CCVars.ChatFlaggedWordAhelpCooldown, value => _flaggedWordAhelpCooldown = value, true);
+        LoadFlaggedWordsFromDatabase();
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
 
@@ -200,7 +201,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             return;
 
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
-        CheckFlaggedWords(player, message);
+        CheckFlaggedWords(source, player, message);
         if (checkRadioPrefix)
         {
             if (TryProcessRadioMessage(source, message, out var modMessage, out var channel))
@@ -268,7 +269,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (ev.Cancelled)
             return;
 
-        CheckFlaggedWords(player, message);
+        CheckFlaggedWords(source, player, message);
 
         switch (sendType)
         {

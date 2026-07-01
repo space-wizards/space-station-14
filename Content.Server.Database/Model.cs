@@ -52,6 +52,8 @@ namespace Content.Server.Database
         public DbSet<CustomVoteLog> CustomVoteLog { get; set; } = null!;
         public DbSet<CustomVoteLogOption> CustomVoteLogOption { get; set; } = null!;
 
+        public DbSet<FlaggedWord> FlaggedWords { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -1058,5 +1060,25 @@ namespace Content.Server.Database
         /// The score IPIntel returned
         /// </summary>
         public float Score { get; set; }
+    }
+
+    public enum FlaggedWordSeverity : byte
+    {
+        Low = 0,
+        Medium = 1,
+        High = 2,
+    }
+
+    [Table("flagged_word")]
+    [Index(nameof(Word), IsUnique = true)]
+    public sealed class FlaggedWord
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        [Required, MaxLength(256)]
+        public string Word { get; set; } = string.Empty;
+        public bool FlagPartialMatches { get; set; } = false;
+        public FlaggedWordSeverity Severity { get; set; } = FlaggedWordSeverity.High;
+        public bool Enabled { get; set; } = true;
     }
 }

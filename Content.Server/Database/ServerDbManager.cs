@@ -289,6 +289,13 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Flagged Words
+        Task<List<FlaggedWord>> GetFlaggedWordsAsync(FlaggedWordSeverity minSeverity = FlaggedWordSeverity.Low, CancellationToken cancel = default);
+        Task AddFlaggedWordAsync(string word, FlaggedWordSeverity severity = FlaggedWordSeverity.Low, bool matchPartials = false, CancellationToken cancel = default);
+        Task RemoveFlaggedWordAsync(string word, CancellationToken cancel = default);
+
+        #endregion
+
         #region Job Whitelists
 
         Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job);
@@ -976,6 +983,23 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.MarkMessageAsSeen(id, dismissedToo));
         }
+
+        public Task<List<FlaggedWord>> GetFlaggedWordsAsync(FlaggedWordSeverity minSeverity = FlaggedWordSeverity.Low, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetFlaggedWordsAsync(minSeverity, cancel));
+        }
+        public Task AddFlaggedWordAsync(string word, FlaggedWordSeverity severity = FlaggedWordSeverity.Low, bool matchPartials = false, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddFlaggedWordAsync(word, severity, matchPartials, cancel));
+        }
+        public Task RemoveFlaggedWordAsync(string word, CancellationToken cancel = default)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveFlaggedWordAsync(word, cancel));
+        }
+
 
         public Task AddJobWhitelist(Guid player, ProtoId<JobPrototype> job)
         {
