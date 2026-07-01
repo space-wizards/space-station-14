@@ -4,18 +4,17 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Emoting;
+using Content.Shared.EntityConditions;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mind.Filters;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
-using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -33,17 +32,22 @@ namespace Content.Shared.Mind;
 
 public abstract partial class SharedMindSystem : EntitySystem
 {
+    [Dependency] private IDependencyCollection _dependency = default!;
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private SharedObjectivesSystem _objectives = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
+    [Dependency] private SharedObjectivesSystem _objectives = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPlayerSystem _player = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
+
+    private HashSet<Entity<MindComponent>> _pickingMinds = new();
 
     private readonly EntProtoId _mindProto = "MindBase";
 
@@ -626,26 +630,63 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
+    /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
+    /// A new hashset is allocated for every call, consider using <see cref="AddAliveHumans"/> instead.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
+    public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
     {
-        minds.RemoveWhere(mind => filter.Filter(mind, exclude, EntityManager));
+        var allHumans = new HashSet<Entity<MindComponent>>();
+        AddAliveHumans(allHumans, exclude);
+        return allHumans;
     }
 
     /// <summary>
-    /// Filters minds from a hashset using a list of <see cref="MindFilter"/>s to apply sequentially.
+    /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
     /// </summary>
-    public void FilterMinds(HashSet<Entity<MindComponent>> minds, List<MindFilter> filters, EntityUid? exclude = null)
+    public void AddAliveHumans(HashSet<Entity<MindComponent>> allHumans, EntityUid? exclude = null)
     {
-        foreach (var filter in filters)
+        // HumanoidProfileComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<HumanoidProfileComponent, MobStateComponent>();
+        while (query.MoveNext(out var uid, out _, out var mobState))
         {
-            // no point calling it if there are none left
-            if (minds.Count == 0)
-                break;
+            // the player needs to have a mind and not be the excluded one +
+            // the player has to be alive
+            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
+                continue;
 
-            FilterMinds(minds, filter, exclude);
+            allHumans.Add((mind, mindComp));
         }
+    }
+
+    /// <summary>
+    /// Picks a random mind from a pool after applying a list of filters.
+    /// Returns null if no valid mind could be found.
+    /// </summary>
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, EntityUid? exclude = null, params EntityCondition[] conditions)
+    {
+        _pickingMinds.Clear();
+        pool.FindMinds(_pickingMinds, _dependency, exclude, conditions);
+
+        if (_pickingMinds.Count == 0)
+            return null;
+
+        return _random.Pick(_pickingMinds);
+    }
+
+    /// <summary>
+    /// Filters minds from a hashset using a single <see cref="EntityCondition"/>.
+    /// </summary>
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition condition)
+    {
+        minds.RemoveWhere(mind => !_conditions.TryCondition(mind, condition));
+    }
+
+    /// <summary>
+    /// Filters minds from a hashset using a list of <see cref="EntityCondition"/>s to apply sequentially.
+    /// </summary>
+    public void FilterMinds(HashSet<Entity<MindComponent>> minds, EntityCondition[] conditions)
+    {
+        minds.RemoveWhere(mind => !_conditions.TryConditions(mind, conditions));
     }
 
     /// <summary>
