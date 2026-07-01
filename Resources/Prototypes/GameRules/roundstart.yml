@@ -80,24 +80,19 @@
   parent: BaseGameRule
   components:
   - type: DeathMatchRule
-    rewardSpawns:
-    - id: HealingToolbox
-    - id: ClothingOuterArmorBasicSlim
-      orGroup: loot
-    - id: ClothingHeadHelmetBasic
-      orGroup: loot
-    - id: SoapNT
-      orGroup: loot
-    - id: Bola
-      orGroup: loot
-    - id: Spear
-      orGroup: loot
-    - id: ClothingShoesGaloshes
-      orGroup: loot
-    - id: FoodPieBananaCream
-      orGroup: loot
-    - id: Stimpack
-      orGroup: loot
+    rewardSpawns: !type:AllSelector
+      children:
+      - id: HealingToolbox
+      - !type:GroupSelector
+        children:
+        - id: ClothingOuterArmorBasicSlim
+        - id: ClothingHeadHelmetBasic
+        - id: SoapNT
+        - id: Bola
+        - id: Spear
+        - id: ClothingShoesGaloshes
+        - id: FoodPieBananaCream
+        - id: Stimpack
   - type: KillCalloutRule
   - type: PointManager
   - type: RespawnDeadRule
