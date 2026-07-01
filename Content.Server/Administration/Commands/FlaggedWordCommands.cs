@@ -76,10 +76,10 @@ public sealed partial class FlaggedWordAddCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Host)]
-public sealed class FlaggedWordRemoveCommand : IConsoleCommand
+public sealed partial class FlaggedWordRemoveCommand : IConsoleCommand
 {
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
 
     public string Command => "flagword:remove";
     public string Description => "Removes a flagged word.";
@@ -123,9 +123,9 @@ public sealed class FlaggedWordRemoveCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class FlaggedWordViewCommand : IConsoleCommand
+public sealed partial class FlaggedWordViewCommand : IConsoleCommand
 {
-    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private IServerDbManager _db = default!;
 
     public string Command => "flagword:view";
     public string Description => "Views flagged words.";
@@ -173,10 +173,10 @@ public sealed class FlaggedWordViewCommand : IConsoleCommand
 }
 
 [AdminCommand(AdminFlags.Host)]
-public sealed class FlaggedWordUpdateCommand : IConsoleCommand
+public sealed partial class FlaggedWordUpdateCommand : IConsoleCommand
 {
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
 
     public string Command => "flagword:update";
     public string Description => "Updates a flagged word by deleting the old word and adding a new one.";
