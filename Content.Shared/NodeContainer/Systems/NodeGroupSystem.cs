@@ -20,7 +20,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private ILogManager _logManager = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
-    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     public Dictionary<NodeGroupID, Type> NodeGroupTypes = new();
     private FrozenDictionary<NodeGroupID, Type> _nodeGroupTypes = default!;

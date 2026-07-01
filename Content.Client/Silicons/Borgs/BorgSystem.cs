@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Mobs;
-using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs;
@@ -19,7 +18,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private PowerCellSystem _powerCell = default!;
-    [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private AlertsSystem _alerts = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPlayerManager _player = default!;

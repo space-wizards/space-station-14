@@ -5,7 +5,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
@@ -26,7 +25,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private TriggerSystem _trigger = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;

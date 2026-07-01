@@ -11,7 +11,7 @@ public sealed partial class CablePlacerComponent : Component
     /// The structure prototype for the cable coil to place.
     /// </summary>
     [DataField]
-    public EntProtoId? CablePrototypeId = "CableHV";
+    public EntProtoId? CablePrototypeID = "CableHV";
 
     /// <summary>
     /// What kind of wire prevents placing this wire over it as CableType.

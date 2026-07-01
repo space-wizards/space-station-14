@@ -244,26 +244,18 @@ public sealed partial class NodeContainerSystem : EntitySystem
 
     private void OnExamine(Entity<NodeContainerComponent> ent, ref ExaminedEvent args)
     {
-        if (!ent.Comp.Examinable || !args.IsInDetailsRange)
+        if (!args.IsInDetailsRange)
             return;
 
         foreach (var node in ent.Comp.Nodes.Values)
         {
-            switch (node.NodeGroupID)
-            {
-                case NodeGroupID.HVPower:
-                    args.PushMarkup(
-                        Loc.GetString("node-container-component-on-examine-details-hvpower"));
-                    break;
-                case NodeGroupID.MVPower:
-                    args.PushMarkup(
-                        Loc.GetString("node-container-component-on-examine-details-mvpower"));
-                    break;
-                case NodeGroupID.Apc:
-                    args.PushMarkup(
-                        Loc.GetString("node-container-component-on-examine-details-apc"));
-                    break;
-            }
+            if (!node.Examinable)
+                return;
+
+            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            var text = handler.GetExamineText(node);
+            if (!string.IsNullOrEmpty(text))
+                args.PushMarkup(text);
         }
     }
 }

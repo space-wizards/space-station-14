@@ -34,6 +34,9 @@ public abstract partial class Node : INode
     [DataField]
     public bool NeedAnchored { get; set; } = true;
 
+    [DataField]
+    public bool Examinable { get; set; }
+
     /// <summary>
     ///    Prevents a node from being used by other nodes while midway through removal.
     /// </summary>

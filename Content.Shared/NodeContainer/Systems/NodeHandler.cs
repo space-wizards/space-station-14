@@ -36,6 +36,11 @@ public interface INodeHandler
     ///     If this node should be considered for connection by other nodes.
     /// </summary>
     bool Connectable(INode node);
+
+    /// <summary>
+    /// Text that the players see when examining this <see cref="INode"/>.
+    /// </summary>
+    string? GetExamineText(INode node);
 }
 
 public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where T : INode
@@ -166,6 +171,11 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
         return Transform(node.Owner).Anchored;
     }
 
+    protected virtual string? GetExamineText(T node)
+    {
+        return null;
+    }
+
     public IEnumerable<INode> GetReachableNodes(INode node)
     {
         var xform = Transform(node.Owner);
@@ -183,4 +193,6 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
     public void InitializeNode(INode node, EntityUid owner) => Initialize((T) node, owner);
 
     public bool Connectable(INode node) => Connectable((T) node);
+
+    public string? GetExamineText(INode node) => GetExamineText((T) node);
 }

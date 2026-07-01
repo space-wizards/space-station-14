@@ -35,7 +35,7 @@ public sealed partial class BorgSystem
 
             var chargeFraction = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
+                chargeFraction = Battery.GetChargeLevel(battery.Value.AsNullable());
 
             var hpPercent = CalcHP(uid);
 

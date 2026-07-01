@@ -23,6 +23,8 @@ public interface INode
 
     bool NeedAnchored { get; set; }
 
+    bool Examinable { get; set; }
+
     /// <summary>
     ///    Prevents a node from being used by other nodes while midway through removal.
     /// </summary>

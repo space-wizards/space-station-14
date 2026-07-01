@@ -11,7 +11,4 @@ public sealed partial class NodeContainerComponent : Component
 {
     [DataField]
     public Dictionary<string, Node> Nodes = new();
-
-    [DataField]
-    public bool Examinable;
 }
