@@ -28,7 +28,6 @@ namespace Content.Client.Damage;
 /// </summary>
 public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
@@ -153,7 +152,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         // If the damage container on our entity's DamageableComponent
         // is not null, we can try to check through its groups.
         if (injurableComponent.DamageContainer != null
-            && _prototypeManager.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
+            && ProtoMan.Resolve<DamageContainerPrototype>(injurableComponent.DamageContainer, out var damageContainer))
         {
             // Are we using damage overlay sprites by group?
             // Check if the container matches the supported groups,
@@ -189,7 +188,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         // Ditto above, but instead we go through every group.
         else // oh boy! time to enumerate through every single group!
         {
-            var damagePrototypeIdList = _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>()
+            var damagePrototypeIdList = ProtoMan.EnumeratePrototypes<DamageGroupPrototype>()
                 .Select((p, _) => p.ID)
                 .ToList();
             if (damageVisComp.DamageOverlayGroups != null)
@@ -367,7 +366,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         if (damageVisComp.TargetLayers != null && damageVisComp.DamageOverlayGroups != null)
             UpdateDisabledLayers(uid, spriteComponent, component, damageVisComp);
 
-        if (damageVisComp.Overlay && damageVisComp.DamageOverlayGroups != null && damageVisComp.TargetLayers == null)
+        if (damageVisComp.Overlay && damageVisComp.TargetLayers == null)
             CheckOverlayOrdering((uid, spriteComponent), damageVisComp);
 
         if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.ForceUpdate, out var update, component)
@@ -474,8 +473,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             new SpriteSpecifier.Rsi(
                 new(sprite.Sprite),
                 $"{statePrefix}_{threshold}"
-            ),
-            spriteLayer);
+            ));
         SpriteSystem.LayerMapSet(spriteEnt.AsNullable(), key, spriteLayer);
         SpriteSystem.LayerSetVisible(spriteEnt.AsNullable(), spriteLayer, visibility);
         // this is somewhat iffy since it constantly reallocates
@@ -525,7 +523,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             if (!damageVisComp.Overlay && damageGroup != damageVisComp.DamageGroup)
                 continue;
 
-            if (!_prototypeManager.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
+            if (!ProtoMan.TryIndex<DamageGroupPrototype>(damageGroup, out var damageGroupPrototype)
                 || !damage.TryGetDamageInGroup(damageGroupPrototype, out var damageTotal))
                 continue;
 
