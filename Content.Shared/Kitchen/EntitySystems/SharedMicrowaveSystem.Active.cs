@@ -22,11 +22,30 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
+    ///     Set the end time of this microwave's cooking operation.
+    /// </summary>
+    private void InitializeTimer(Entity<ActiveMicrowaveComponent> ent)
+    {
+        if (!TryComp<MicrowaveComponent>(ent.Owner, out var microwave))
+            return;
+
+        var curTime = _timing.CurTime;
+        var cookTime = microwave.CurrentCookTimerTime * microwave.CookTimeMultiplier;
+        ent.Comp.TotalTime = microwave.CurrentCookTimerTime;
+        ent.Comp.CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime);
+        DirtyFields(ent.Owner, ent.Comp, null,
+            nameof(ActiveMicrowaveComponent.TotalTime),
+            nameof(ActiveMicrowaveComponent.CookTimeEnd));
+    }
+
+    /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
+        InitializeTimer(ent);
+
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
             return;
 
@@ -59,6 +78,9 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         var microwavedComp = AddComp<ActivelyMicrowavedComponent>(args.Entity);
         microwavedComp.Microwave = ent.Owner;
     }
@@ -69,6 +91,9 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         RemCompDeferred<ActivelyMicrowavedComponent>(args.Entity);
     }
 

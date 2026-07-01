@@ -71,6 +71,7 @@ public abstract partial class SharedMicrowaveSystem
             nameof(MicrowaveComponent.CurrentCookTimerTime));
 
         AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
+        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>

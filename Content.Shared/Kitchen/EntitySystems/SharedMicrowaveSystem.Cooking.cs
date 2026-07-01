@@ -65,7 +65,7 @@ public abstract partial class SharedMicrowaveSystem
         var cookTime = microwave.Comp.CurrentCookTimerTime;
         var recipe = GetRecipe(microwave, ingredients, cookTime);
 
-        ActivateMicrowave(microwave, recipe, malfunctioning);
+        ActivateMicrowave(microwave, recipe, malfunctioning, user);
     }
 
     /// <summary>
@@ -76,28 +76,29 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="malfunctioning">Whether or not this microwave is malfunctioning.</param>
     private void ActivateMicrowave(Entity<MicrowaveComponent> microwave,
         (FoodRecipePrototype? recipe, uint count) recipe,
-        bool malfunctioning)
+        bool malfunctioning,
+        EntityUid? user)
     {
         var uid = microwave.Owner;
         var component = microwave.Comp;
         var curTime = _timing.CurTime;
 
-        AudioSys.PlayPvs(component.StartCookingSound, uid);
+        AudioSys.PlayPredicted(component.StartCookingSound, uid, user);
 
-        var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
-        var activeComp = new ActiveMicrowaveComponent()
-        {
-            TotalTime = component.CurrentCookTimerTime,
-            CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime),
-            PortionedRecipe = recipe,
-            Malfunctioning = malfunctioning,
-        };
+        var activeComp = AddComp<ActiveMicrowaveComponent>(uid);
+        activeComp.PortionedRecipe = recipe;
+        activeComp.Malfunctioning = malfunctioning;
+        InitializeTimer((uid, activeComp));
 
         if (malfunctioning)
             activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
 
-        AddComp(uid, activeComp);
-        Dirty(uid, activeComp);
+        DirtyFields(uid, activeComp, null,
+            nameof(ActiveMicrowaveComponent.PortionedRecipe),
+            nameof(ActiveMicrowaveComponent.Malfunctioning),
+            nameof(ActiveMicrowaveComponent.NextMalfunction));
+
+        UpdateUserInterfaceState(microwave.AsNullable());
     }
 
     /// <summary>
