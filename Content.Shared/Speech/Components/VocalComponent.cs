@@ -13,14 +13,6 @@ namespace Content.Shared.Speech.Components;
 [AutoGenerateComponentState]
 public sealed partial class VocalComponent : Component
 {
-    /// <summary>
-    ///     Emote sounds prototype id for each sex (not gender).
-    ///     Entities without <see cref="HumanoidComponent"/> considered to be <see cref="Sex.Unsexed"/>.
-    /// </summary>
-    [DataField]
-    [AutoNetworkedField]
-    public Dictionary<Sex, ProtoId<EmoteSoundsPrototype>>? Sounds;
-
     //TODO: Wilhelm scream logic needs to be more generic
     /// <summary>
     /// Emote ID for screaming (for whilhelm scream)
@@ -55,10 +47,11 @@ public sealed partial class VocalComponent : Component
     public EntityUid? EmoteActionEntity;
 
     /// <summary>
-    ///     Currently loaded emote sounds prototype, based on entity sex.
+    ///     Currently loaded emote sounds prototype, based on entity sex on humanoids.
     ///     Null if no valid prototype for entity sex was found.
+    ///     Generally everything should have this set. This provides the sounds for Urists as well.
     /// </summary>
-    [ViewVariables]
+    [DataField]
     [AutoNetworkedField]
     public ProtoId<EmoteSoundsPrototype>? EmoteSounds = null;
 }

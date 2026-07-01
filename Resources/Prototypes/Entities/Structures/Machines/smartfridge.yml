@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructureDynamic, ConstructibleMachine]
+  parent: [BaseStructureDynamic, ConstructibleMachine, BaseMachinePowered]
   id: SmartFridge
   name: SmartFridge
   description: A refrigerated storage unit for keeping items cold and fresh.
@@ -16,11 +16,17 @@
     sprite: Structures/Machines/smartfridge.rsi
     snapCardinals: true
     layers:
+    - state: "off"
     - state: smartfridge
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: smartfridge_door
-      map: ["enum.StorageVisualLayers.Door"]
+      visible: false
+      map: ["powered-base"]
+    - state: smartfridge_open
+      visible: false
+      map: ["powered-open"]
       shader: unshaded
+    - state: smartfridge_door # This state should be toggled off while somebody is accessing the UI. Until that's implemented, we'll just always draw it on top of the "open" sprite.
+      visible: false
+      map: ["powered-closed"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: PointLight
@@ -44,7 +50,6 @@
   - type: LitOnPowered
   - type: PowerReceiver
     powerLoad: 200
-  - type: ExtensionCableReceiver
   - type: SmartFridge
     whitelist:
       components:
@@ -117,6 +122,18 @@
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: Airtight
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        powered-base:
+          True: { visible: true }
+          False: { visible: false }
+        powered-open:
+          True: { visible: true }
+          False: { visible: false }
+        powered-closed:
+          True: { visible: true }
+          False: { visible: false }
   - type: AmbientMusicMarkerMedical
 
 - type: entity
