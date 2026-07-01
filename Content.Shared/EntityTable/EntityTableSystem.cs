@@ -8,9 +8,11 @@ namespace Content.Shared.EntityTable;
 
 public sealed partial class EntityTableSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
 
+    /// <summary>
+    /// Compiles a random list of entity prototypes using constraints.
+    /// </summary>
     public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
@@ -18,7 +20,7 @@ public sealed partial class EntityTableSystem : EntitySystem
 
         rand ??= _random;
         ctx ??= new EntityTableContext();
-        return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
+        return table.GetSpawns(rand, EntityManager, ProtoMan, ctx);
     }
 
     /// <summary>
@@ -32,7 +34,7 @@ public sealed partial class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.ListSpawns(EntityManager, _prototypeManager, ctx);
+        return table.ListSpawns(EntityManager, ProtoMan, ctx);
     }
 
     /// <summary>
@@ -47,7 +49,7 @@ public sealed partial class EntityTableSystem : EntitySystem
             return new List<(EntProtoId spawn, double)>();
 
         ctx ??= new EntityTableContext();
-        return table.AverageSpawns(EntityManager, _prototypeManager, ctx);
+        return table.AverageSpawns(EntityManager, ProtoMan, ctx);
     }
 }
 

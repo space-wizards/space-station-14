@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Content.Client.PDA;
+﻿using Content.Client.PDA;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -35,14 +33,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         base.UpdateSprite(uid, proto);
         if (TryComp(uid, out SpriteComponent? sprite)
-            && proto.TryGetComponent(out SpriteComponent? otherSprite, Factory))
+            && proto.TryComp(out SpriteComponent? otherSprite, Factory))
         {
             sprite.CopyFrom(otherSprite);
         }
 
         // Edgecase for PDAs to include visuals when UI is open
         if (TryComp(uid, out PdaBorderColorComponent? borderColor)
-            && proto.TryGetComponent(out PdaBorderColorComponent? otherBorderColor, Factory))
+            && proto.TryComp(out PdaBorderColorComponent? otherBorderColor, Factory))
         {
             borderColor.BorderColor = otherBorderColor.BorderColor;
             borderColor.AccentHColor = otherBorderColor.AccentHColor;
