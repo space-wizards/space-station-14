@@ -292,13 +292,13 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
         // if there is more than one item per row, then we need to recalculate the separation between them.
         if (Capacity / Rows > 1)
         {
-            // the item separation is the distance from the start of a icon to the start of the next icon,
-            // so the total horizontal size will be the item separation times the number of icons - 1 + item width.
+            // the item separation is the distance from the start of a item to the start of the next item,
+            // so the total horizontal size will be the item separation times the number of items - 1 + item width.
             // the reason for the -1 and the + + item width. is that the last item doesn't have a item after it,
             // so instead of adding the last item separation we add the item width.
 
             // converting into a equation:
-            // total horizontal size = item separation * (number of icons - 1) + width of the icon
+            // total horizontal size = item separation * (number of items - 1) + width of the item
 
             // converting to the variables:
             // Size.X = itemSeparation * (Capacity / Rows - 1) + _loadedSprite.Width
