@@ -33,6 +33,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
     [Dependency] protected SharedVisibilitySystem Visibility = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] protected ISharedPlayerManager PlayerManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private SharedMapSystem _map = default!;
 
@@ -49,13 +50,12 @@ public abstract partial class SharedPointingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
-
         CommandBinds.Builder
-            .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(HandlePointInput, outsidePrediction: true))
+            .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(HandlePointInput))
             .Register<SharedPointingSystem>();
 
-        Subs.CVar(_config, CCVar.CCVars.PointingCooldownSeconds, v => _pointDelay = TimeSpan.FromSeconds(v), true);
+        SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddPointingVerb);
+        Subs.CVar(_config, CCVars.PointingCooldownSeconds, v => _pointDelay = TimeSpan.FromSeconds(v), true);
     }
 
     public override void Update(float frameTime)
@@ -113,7 +113,8 @@ public abstract partial class SharedPointingSystem : EntitySystem
 
     private bool HandlePointInput(ICommonSession? session, EntityCoordinates coordsPointed, EntityUid pointed)
     {
-        return TryPoint(session, coordsPointed, pointed);
+        // Yes we want the opposite, false means server will get it, true means they won't.
+        return !TryPoint(session, coordsPointed, pointed);
     }
 
     public bool CanPoint(EntityUid pointer, EntityCoordinates coordinates, EntityUid pointed)
@@ -146,6 +147,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
         pointing.EndTime = GameTiming.CurTime + PointDuration;
         pointing.Rogue = ShouldPointingArrowGoRogue();
         Dirty(arrow, pointing);
+        pointing.Owner = pointer;
 
         ConfigureArrow(pointer, arrow, pointing);
         EntityManager.InitializeAndStartEntity(arrow);
