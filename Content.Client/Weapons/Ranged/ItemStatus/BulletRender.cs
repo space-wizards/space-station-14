@@ -286,12 +286,30 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        // get the standard item separation (just the width of the icon + 2 pixels)
         var itemSeparation = _loadedSprite.Width + Separation;
 
+        // if the number of icons per row is greater than 1
         if (Capacity / Rows > 1)
         {
+            // the item separation is the distance from the start of a icon to the start of the next icon
+            // so the total horizontal size will be the item separation times the number of icons - 1
+            // the -1 is cause the last icon doesn't have a icon after it. so you don't include the item separation
+            // instead you just add the width of the last icon.
+
+            // converting into a equation:
+            // total horizontal size = item separation * (number of icons - 1) + width of the icon
+
+            // converting to the variables:
+            // Size.X = itemSeparation * (Capacity / Rows - 1)
+            // Size.X - _loadedSprite.Width = itemSeparation * (Capacity / Rows - 1)
+            // (Size.X - _loadedSprite.Width) / (Capacity / Rows - 1) = itemSeparation
             itemSeparation = (int)(Size.X - _loadedSprite.Width) / (Capacity / Rows - 1);
+
+            // make sure the itemSeparation is less or equal to the standard item separation
             itemSeparation = int.Min(_loadedSprite.Width + Separation, itemSeparation);
+
+            // make sure the itemSeparation is greater or equal to 1
             itemSeparation = int.Max(1, itemSeparation);
         }
 
