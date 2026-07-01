@@ -4,7 +4,7 @@ namespace Content.Shared.EntityEffects;
 
 /// <summary>
 /// Entity effects API counterparts using <see cref="EntityEffectPrototype"/> instead of <see cref="EntityEffect"/>.
-// </summary>
+/// </summary>
 public sealed partial class SharedEntityEffectsSystem
 {
     /// <summary>

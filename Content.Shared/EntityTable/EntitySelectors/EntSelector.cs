@@ -11,9 +11,15 @@ public sealed partial class EntSelector : EntityTableSelector
 {
     public const string IdDataFieldTag = "id";
 
+    /// <summary>
+    /// The prototype this entry yields.
+    /// </summary>
     [DataField(IdDataFieldTag, required: true)]
     public EntProtoId Id;
 
+    /// <summary>
+    /// The amount of entities this entry might yield.
+    /// </summary>
     [DataField]
     public NumberSelector Amount = new ConstantNumberSelector(1);
 
