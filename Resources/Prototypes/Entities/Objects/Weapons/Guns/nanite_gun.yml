@@ -9,7 +9,7 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-5w
+    - state: mag-unshaded-5
       map: ["enum.GunVisualLayers.Mag"]
   - type: AmmoCounter
   - type: Gun
