@@ -25,6 +25,7 @@ public sealed partial class ScreechShockWaveSystem : EntitySystem
         // we must only pass here once
         if (!_registered.Add(ent.Owner))
             return;
+
         overlay.Register(ent);
     }
 
