@@ -9,7 +9,6 @@ namespace Content.Server.Engineering.Components
     [RegisterComponent]
     public sealed partial class SpawnAfterInteractComponent : Component
     {
-
         /// <summary>
         /// The prototype id of the entity to be spawned in.
         /// </summary>

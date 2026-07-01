@@ -54,7 +54,6 @@ public sealed partial class ExplosionSystem
         ReloadMap();
     }
 
-
     /// <summary>
     /// Update the map of explosion blockers.
     /// </summary>
@@ -68,11 +67,11 @@ public sealed partial class ExplosionSystem
             UpdateAirtightMap(gridId, grid, tile);
     }
 
-/// <summary>
-/// Gets a copy of local tolerance data given its index.
-/// </summary>
-/// <param name="idx">A TileData.ToleranceCacheIndex value.</param>
-/// <seealso cref="TileData.ToleranceCacheIndex"/>
+    /// <summary>
+    /// Gets a copy of local tolerance data given its index.
+    /// </summary>
+    /// <param name="idx">A TileData.ToleranceCacheIndex value.</param>
+    /// <seealso cref="TileData.ToleranceCacheIndex"/>
     [Access(typeof(ExplosionGridTileFlood))]
     public ToleranceValues GetToleranceValues(int idx)
     {
