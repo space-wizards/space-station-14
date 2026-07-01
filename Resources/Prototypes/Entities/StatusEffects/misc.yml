@@ -105,3 +105,11 @@
       - MobState
       - Blindable
   - type: BlindnessStatusEffect
+
+# Caused by electric shocks
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectElectrocuted
+  name: electrocuted
+  components:
+  - type: ElectrocutedStatusEffect

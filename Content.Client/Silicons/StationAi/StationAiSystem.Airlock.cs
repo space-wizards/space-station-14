@@ -1,5 +1,5 @@
 using Content.Shared.Doors.Components;
-using Content.Shared.Electrocution;
+using Content.Shared.Electrocution.Components;
 using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Utility;
 

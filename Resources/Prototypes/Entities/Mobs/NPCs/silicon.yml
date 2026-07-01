@@ -14,9 +14,6 @@
   - type: MovedByPressure
   - type: Physics
     bodyType: KinematicController # Same for all inheritors
-  - type: StatusEffects
-    allowed:
-    - Electrocution
   - type: Repairable
     damageValue: -15 # 8 seconds to repair from dead
     doAfterDelay: 1

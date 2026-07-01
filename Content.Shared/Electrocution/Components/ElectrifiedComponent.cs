@@ -1,7 +1,7 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Electrocution;
+namespace Content.Shared.Electrocution.Components;
 
 /// <summary>
 ///     Component for things that shock users on touch.

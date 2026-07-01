@@ -1,9 +1,8 @@
-namespace Content.Server.Electrocution
+namespace Content.Server.Electrocution;
+
+[RegisterComponent]
+public sealed partial class RandomInsulationComponent : Component
 {
-    [RegisterComponent]
-    public sealed partial class RandomInsulationComponent : Component
-    {
-        [DataField("list")]
-        public float[] List = { 0f };
-    }
+    [DataField]
+    public float[] List = { 0f };
 }
