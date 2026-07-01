@@ -1,11 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Localizations;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Content.Shared.Silicons.Borgs;
 
@@ -122,9 +122,7 @@ public abstract partial class SharedBorgSystem
 
         // Default modules should not be dropped so let's remove them.
         if (TryComp<BorgModuleComponent>(module, out var moduleComp) && moduleComp.DefaultModule)
-        {
-            QueueDel(module);
-        }
+            PredictedQueueDel(module);
     }
 
     #endregion
