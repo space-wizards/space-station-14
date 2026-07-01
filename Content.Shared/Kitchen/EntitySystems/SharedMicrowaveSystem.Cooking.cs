@@ -24,13 +24,16 @@ public abstract partial class SharedMicrowaveSystem
 
         if (SharedRandomExtensions.PredictedProb(_timing, comp.ExplosionChance, GetNetEntity(ent)))
         {
-            Explode(ent);
+            Explode(ent.AsNullable());
             return;
         }
     }
 
-    public virtual void Explode(Entity<MicrowaveComponent> ent)
+    public virtual void Explode(Entity<MicrowaveComponent?> ent)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
         ent.Comp.Broken = true;
         DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
     }

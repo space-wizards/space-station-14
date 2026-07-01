@@ -120,9 +120,12 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// Explodes the microwave internally, turning it into a broken state, destroying its board, and spitting out its machine parts
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
-    public override void Explode(Entity<MicrowaveComponent> ent)
+    public override void Explode(Entity<MicrowaveComponent?> ent)
     {
         base.Explode(ent);
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
 
         _explosion.TriggerExplosive(ent);
 
