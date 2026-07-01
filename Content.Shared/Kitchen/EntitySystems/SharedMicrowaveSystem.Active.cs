@@ -17,6 +17,8 @@ public abstract partial class SharedMicrowaveSystem
         SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+
+        SubscribeLocalEvent<ActivelyMicrowavedComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
     }
 
     /// <summary>
