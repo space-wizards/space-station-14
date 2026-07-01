@@ -7,7 +7,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
-public sealed partial class PointingSystem : SharedPointingSystem
+public sealed partial class PointingSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
 
