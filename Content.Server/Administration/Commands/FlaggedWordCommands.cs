@@ -9,10 +9,10 @@ using Robust.Shared.IoC;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Host)]
-public sealed class FlaggedWordAddCommand : IConsoleCommand
+public sealed partial class FlaggedWordAddCommand : IConsoleCommand
 {
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IEntitySystemManager _systems = default!;
 
     public string Command => "flagword:add";
     public string Description => "Adds a flagged word.";
