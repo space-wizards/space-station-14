@@ -15,6 +15,8 @@ public abstract partial class SharedMicrowaveSystem
     {
         SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentsUpdated);
+        SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentsUpdated);
         SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing,
             after: [typeof(AnchorableSystem)]);
     }
@@ -122,5 +124,20 @@ public abstract partial class SharedMicrowaveSystem
 
         _hands.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///     Updates the microwave UI when entities are added/removed from the microwave.
+    /// </summary>
+    /// <param name="uid">The microwave entity ID.</param>
+    /// <param name="component">The microwave entity's component.</param>
+    // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
+    // TODO: replace with Entity<T> syntax once that's possible
+    private void OnContentsUpdated(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args)
+    {
+        if (component.Storage != args.Container)
+            return;
+
+        UpdateUserInterfaceState((uid, component));
     }
 }

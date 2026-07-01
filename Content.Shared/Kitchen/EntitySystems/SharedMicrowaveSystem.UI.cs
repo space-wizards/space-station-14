@@ -16,30 +16,12 @@ public abstract partial class SharedMicrowaveSystem
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectAll);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectSolidIndexed);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectCookTime);
-
         SubscribeLocalEvent<MicrowaveComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
-        SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentsUpdated);
-        SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentsUpdated);
     }
 
     private void OnAfterAutoHandleState(Entity<MicrowaveComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUserInterfaceState(ent.AsNullable());
-    }
-
-    /// <summary>
-    ///     Updates the microwave UI when entities are added/removed from the microwave.
-    /// </summary>
-    /// <param name="uid">The microwave entity ID.</param>
-    /// <param name="component">The microwave entity's component.</param>
-    // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
-    // TODO: replace with Entity<T> syntax once that's possible
-    private void OnContentsUpdated(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args)
-    {
-        if (component.Storage != args.Container)
-            return;
-
-        UpdateUserInterfaceState((uid, component));
     }
 
     /// <summary>
