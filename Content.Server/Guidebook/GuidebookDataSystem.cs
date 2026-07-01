@@ -11,8 +11,6 @@ namespace Content.Server.Guidebook;
 /// </summary>
 public sealed partial class GuidebookDataSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
-
     private readonly Dictionary<string, List<MemberInfo>> _tagged = [];
     private GuidebookData _cachedData = new();
 
@@ -72,7 +70,7 @@ public sealed partial class GuidebookDataSystem : EntitySystem
         }
 
         // Scan entity prototypes for the component-member pairs we noted
-        var entityPrototypes = _protoMan.EnumeratePrototypes<EntityPrototype>();
+        var entityPrototypes = ProtoMan.EnumeratePrototypes<EntityPrototype>();
         foreach (var prototype in entityPrototypes)
         {
             foreach (var (component, entry) in prototype.Components)
