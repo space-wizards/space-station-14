@@ -10,7 +10,7 @@ namespace Content.Shared.Screech;
 public sealed partial class NoiseProtectionComponent : Component
 {
     /// <summary>
-    /// A quip that will be added to the description detailing its "protection from loud noises" or whatever you choose to write here
+    /// A quip that will be added to the description detailing its "protection from loud noises" or whatever you choose to write here.
     /// </summary>
     [DataField]
     public LocId? ExamineQuip = "screech-protection-examine-text";

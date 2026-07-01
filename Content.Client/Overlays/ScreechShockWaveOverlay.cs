@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Shared.Screech;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -21,13 +20,12 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> ScreechPrototype = "ScreechShockWave";
 
     /// <summary>
-    /// Contains a cached list of all screech shock wave entities in PVS
+    /// Contains a cached list of all screech shock wave entities in PVS.
     /// </summary>
-    private readonly List<(EntityUid, InnerShaderInstance)> _cached;
+    private readonly List<(EntityUid Entity, InnerShaderInstance Instance)> _cached;
 
-    // The hell of shader variables
     /// <summary>
-    /// Keeps track of the current amount of registered shockwaves
+    /// Keeps track of the current amount of registered shockwaves.
     /// </summary>
     private int _currentCount;
 
@@ -46,7 +44,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     public ScreechShockWaveOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototypeManager.Index(ScreechPrototype).Instance().Duplicate();
+        _shader = _prototypeManager.Index(ScreechPrototype).InstanceUnique();
         _positions = new Vector2[MaximumInstances];
         _waveStrengths = new float[MaximumInstances];
         _waveSpeeds = new float[MaximumInstances];
@@ -58,13 +56,16 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.Viewport.Eye == null || _xformSystem is null && !_entMan.TrySystem(out _xformSystem))
+        if (args.Viewport.Eye == null)
+            return false;
+
+        if (_xformSystem is null && !_entMan.TrySystem(out _xformSystem))
             return false;
 
         _currentCount = 0;
 
         // check for removal of instances whose times are elapsed
-        _cached.RemoveAll((k) => (float)(_timing.CurTime - k.Item2.InitTime).TotalSeconds > k.Item2.FadeTime);
+        _cached.RemoveAll(entry => (float)(_timing.CurTime - entry.Instance.InitTime).TotalSeconds > entry.Instance.FadeTime);
 
         foreach (var (entityUid, distortion) in _cached)
         {
@@ -78,27 +79,21 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
                 continue;
 
             // shorthand
-            var mapPos = _xformSystem.GetWorldPosition(entityUid);
+            var mapPos = _xformSystem.GetWorldPosition(xform);
             var tempCoords = args.Viewport.WorldToLocal(mapPos);
 
             // normalized coords, 0 - 1 plane. This is pure hell, we subtract 1 because fragment calculates from the bottom and local goes from the top of the viewport
             tempCoords.Y = 1 - tempCoords.Y / args.Viewport.Size.Y;
             tempCoords.X /= args.Viewport.Size.X;
 
-            var position = tempCoords;
-            var waveStrength = distortion.WaveStrength;
-            var waveSpeed = distortion.WaveSpeed;
-            var downScale = distortion.DownScale;
-
             var time = (float)(_timing.CurTime - distortion.InitTime).TotalSeconds;
             var fade = 1f - time / distortion.FadeTime;
 
-            // shorthand
             var i = _currentCount;
-            _positions[i] = position;
-            _waveStrengths[i] = waveStrength;
-            _waveSpeeds[i] = waveSpeed;
-            _downScales[i] = downScale;
+            _positions[i] = tempCoords;
+            _waveStrengths[i] = distortion.WaveStrength;
+            _waveSpeeds[i] = distortion.WaveSpeed;
+            _downScales[i] = distortion.DownScale;
             _fades[i] = fade;
             _times[i] = time;
 
@@ -135,7 +130,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     }
 
     /// <summary>
-    /// Adds this entity to the cache
+    /// Adds this entity to the cache.
     /// </summary>
     public void Register(Entity<ScreechShockWaveComponent> ent)
     {
@@ -150,7 +145,7 @@ public sealed partial class ScreechShockWaveOverlay : Overlay
     }
 
     /// <summary>
-    /// This struct represents one distorting screech instance
+    /// This struct represents one distorting screech instance.
     /// </summary>
     private struct InnerShaderInstance
     {

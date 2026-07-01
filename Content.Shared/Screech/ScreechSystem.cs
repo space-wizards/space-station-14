@@ -1,9 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.CombatMode;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -18,16 +18,15 @@ namespace Content.Shared.Screech;
 public sealed partial class ScreechSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
-    [Dependency] private MovementModStatusSystem _movementMod = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
 
-    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
+    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery;
 
-    private HashSet<EntityUid> _entSet = new();
+    private readonly HashSet<EntityUid> _entSet = [];
 
     public override void Initialize()
     {
@@ -51,7 +50,7 @@ public sealed partial class ScreechSystem : EntitySystem
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
         args.Handled = true;
-        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances);
+        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances, args.Effects);
     }
 
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
@@ -68,15 +67,14 @@ public sealed partial class ScreechSystem : EntitySystem
     /// <summary>
     /// Makes the entity "source" screech.
     /// </summary>
-    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, float knockDownChances = 0.5f, float speedMultiplier = 1f, TimeSpan? slowdownTime = null)
+    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, float knockdownChances = 0.5f, List<EntityEffect>? effects = null)
     {
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
         {
-            EntProtoId vfxProto = vfx.Value;
-            var k = Spawn(vfxProto);
+            var vfxEntity = Spawn(vfx.Value);
             var container = _containers.EnsureContainer<ContainerSlot>(source, "screechHolder");
-            _containers.Insert(k, container);
+            _containers.Insert(vfxEntity, container);
         }
 
         // then, we do the screech per-se
@@ -91,16 +89,16 @@ public sealed partial class ScreechSystem : EntitySystem
             if (!_statusEffectsQuery.HasComponent(entity) || entity == source)
                 continue;
 
-            EntityHeardIt(entity, source, knockDownChances, speedMultiplier, slowdownTime.GetValueOrDefault());
+            EntityHeardIt(entity, source, knockdownChances, effects);
         }
 
         _audio.PlayPredicted(screechSound, source, null, AudioParams.Default.WithVolume(1f).WithMaxDistance(soundRange));
     }
 
     /// <summary>
-    /// Tests if that singular entity heard it (it may have screech protection) and if it did it will disarm it
+    /// Tests if that singular entity heard it (it may have screech protection) and if it did it will disarm it.
     /// </summary>
-    private void EntityHeardIt(EntityUid ent, EntityUid source, float knockdownChances, float speedModifier, TimeSpan slowdownDuration)
+    private void EntityHeardIt(EntityUid ent, EntityUid source, float knockdownChances, List<EntityEffect>? effects)
     {
         var ev = new ScreechEffectAttemptEvent()
         {
@@ -116,9 +114,14 @@ public sealed partial class ScreechSystem : EntitySystem
         var dis = new DisarmedEvent(ent, source, knockdownChances);
         RaiseLocalEvent(ent, ref dis);
 
-        // slow it down
-        if (speedModifier != 1f && slowdownDuration > TimeSpan.Zero)
-            _movementMod.TryUpdateMovementSpeedModDuration(ent, MovementModStatusSystem.FlashSlowdown, slowdownDuration, speedModifier);
+        // apply entity effects to the target
+        if (effects != null)
+        {
+            foreach (var effect in effects)
+            {
+                _effects.TryApplyEffect(ent, effect, user: source);
+            }
+        }
 
         // maybe knock it down
         if (!SharedRandomExtensions.PredictedProb(_timing, knockdownChances, GetNetEntity(ent)))
@@ -127,18 +130,18 @@ public sealed partial class ScreechSystem : EntitySystem
 }
 
 /// <summary>
-/// Event that is used to check if an entity hears the screech & feels its full effects
+/// Event that is used to check if an entity hears the screech & feels its full effects.
 /// </summary>
 [ByRefEvent]
 public struct ScreechEffectAttemptEvent : IInventoryRelayEvent
 {
     /// <summary>
-    /// The entity that caused the screech
+    /// The entity that caused the screech.
     /// </summary>
     public EntityUid Source;
 
     /// <summary>
-    /// Wether it was heard
+    /// Wether it was heard.
     /// </summary>
     public bool Heard;
 
@@ -146,49 +149,43 @@ public struct ScreechEffectAttemptEvent : IInventoryRelayEvent
 }
 
 /// <summary>
-/// Event that is fire when an entity uses a screech action
+/// Event that is fire when an entity uses a screech action.
 /// </summary>
 public sealed partial class ScreechActionEvent : InstantActionEvent
 {
     /// <summary>
-    /// The range of the screech's effects
+    /// The range of the screech's effects.
     /// </summary>
     [DataField]
     public float Range = 6f;
 
     /// <summary>
-    /// Entity that will be spawned in a container on the screecher to display effects
+    /// Entity that will be spawned in a container on the screecher to display effects.
     /// </summary>
     [DataField]
     public EntProtoId? Vfx = "EffectScreech";
 
     /// <summary>
-    /// Sound that will be played by the screech
+    /// Sound that will be played by the screech.
     /// </summary>
     [DataField]
-    public SoundSpecifier? ScreechSound = null;
+    public SoundSpecifier? ScreechSound;
 
     /// <summary>
-    /// Range at which the sound will be heard
+    /// Range at which the sound will be heard.
     /// </summary>
     [DataField]
     public float SoundRange = 20f;
 
     /// <summary>
-    /// Chances of the screech knocking down the victim
+    /// Chances of the screech knocking down the victim.
     /// </summary>
     [DataField]
     public float KnockdownChances = 0.5f;
 
     /// <summary>
-    /// Speed modifier of the entities who heard the screech (withing range)
+    /// Entity effects applied to entities that heard the screech.
     /// </summary>
     [DataField]
-    public float SpeedMultiplier = 1f;
-
-    /// <summary>
-    /// How long the screech's slow down lasts
-    /// </summary>
-    [DataField]
-    public float SlowdownTime = 0f;
+    public List<EntityEffect> Effects = [];
 }

@@ -17,7 +17,7 @@ public sealed partial class ScreechShockWaveComponent : Component
     public float WaveSpeed = 15.3f;
 
     /// <summary>
-    ///     The size of each wave in its width and distortion effect
+    ///     The size of each wave in its width and distortion effect.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float WaveStrength = 1.0f;
@@ -29,7 +29,7 @@ public sealed partial class ScreechShockWaveComponent : Component
     public float DownScale = 1.5f;
 
     /// <summary>
-    ///     The time it takes for the effect to completely fade out
+    ///     The time it takes for the effect to completely fade out.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float FadeTime = 3.0f;
