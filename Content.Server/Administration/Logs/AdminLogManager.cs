@@ -251,18 +251,42 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
 
-        if (_metricsEnabled)
+        try
         {
-            LogsSent.Inc(copy.Count);
+            if (_metricsEnabled)
+            {
+                LogsSent.Inc(copy.Count);
 
-            using (DatabaseUpdateTime.NewTimer())
+                using (DatabaseUpdateTime.NewTimer())
+                {
+                    await task;
+                }
+            }
+            else
             {
                 await task;
-                return;
             }
         }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to save logs: {ex.Message}");
+            _sawmill.Warning("Re-enqueueing logs and retrying at the next update.");
 
-        await task;
+            foreach (var log in copy)
+            {
+                if (log.RoundId == _currentRoundId)
+                {
+                    _logQueue.Enqueue(log);
+                }
+                else
+                {
+                    _preRoundLogQueue.Enqueue(log);
+                }
+            }
+
+            Queue.Set(_logQueue.Count);
+            PreRoundQueue.Set(_preRoundLogQueue.Count);
+        }
     }
 
     public void RoundStarting(int id)
@@ -504,7 +528,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         for (var i = 0; i < players.Count; i++)
         {
             var player = players[i];
-            outString += $"[cmdlink=\"{EscapeText(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+            outString += $"[cmdlink=\"{FormattedMessage.EscapeStringParameter(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
 
             if (i < players.Count - 1)
                 outString += ", ";
@@ -535,14 +559,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Escape the given text to not allow breakouts of the cmdlink tags.
-    /// </summary>
-    private string EscapeText(string text)
-    {
-        return FormattedMessage.EscapeText(text).Replace("\"", "\\\"").Replace("'", "\\'");
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)
