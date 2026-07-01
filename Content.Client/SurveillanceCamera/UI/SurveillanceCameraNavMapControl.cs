@@ -7,10 +7,10 @@ using Content.Shared.SurveillanceCamera.Components;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraNavMapControl : NavMapControl
+public sealed partial class SurveillanceCameraNavMapControl : NavMapControl
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     private static readonly Color CameraActiveColor = Color.FromHex("#FF00FF");
     private static readonly Color CameraInactiveColor = Color.FromHex("#a09f9fff");
@@ -23,7 +23,7 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
     private readonly Texture _invalidTexture;
 
     private string _activeCameraAddress = string.Empty;
-    private HashSet<string> _availableSubnets = new();
+    private HashSet<string> _availableSubnets = [];
     private (Dictionary<NetEntity, CameraMarker> Cameras, string ActiveAddress, HashSet<string> AvailableSubnets) _lastState;
 
     public bool EnableCameraSelection { get; set; }

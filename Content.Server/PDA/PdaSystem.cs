@@ -28,18 +28,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.PDA
 {
-    public sealed class PdaSystem : SharedPdaSystem
+    public sealed partial class PdaSystem : SharedPdaSystem
     {
-        [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-        [Dependency] private readonly InstrumentSystem _instrument = default!;
-        [Dependency] private readonly RingerSystem _ringer = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly StoreSystem _store = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
-        [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly IdCardSystem _idCard = default!;
+        [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
+        [Dependency] private InstrumentSystem _instrument = default!;
+        [Dependency] private RingerSystem _ringer = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private StoreSystem _store = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private UserInterfaceSystem _ui = default!;
+        [Dependency] private UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private ContainerSystem _containerSystem = default!;
+        [Dependency] private IdCardSystem _idCard = default!;
 
         public override void Initialize()
         {
@@ -311,11 +311,11 @@ namespace Content.Server.PDA
         private bool TryGetUnlockedStore(EntityUid uid, [NotNullWhen(true)] out EntityUid? store)
         {
             store = null;
-            if (!TryComp<RingerUplinkComponent>(uid, out var uplink) || !uplink.Unlocked || uplink.TargetStore == null)
+            if (!TryComp<RingerUplinkComponent>(uid, out var uplink) || !uplink.Unlocked)
                 return false;
 
-            store = uplink.TargetStore;
-            return true;
+            store = _store.GetStore(uid);
+            return store != null;
         }
 
         private void UpdateStationName(EntityUid uid, PdaComponent pda)

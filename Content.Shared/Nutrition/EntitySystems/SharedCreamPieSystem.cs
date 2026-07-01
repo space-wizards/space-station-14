@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;
 using Robust.Shared.Audio.Systems;
@@ -15,18 +16,18 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public abstract class SharedCreamPieSystem : EntitySystem
+public abstract partial class SharedCreamPieSystem : EntitySystem
 {
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IngestionSystem _ingestion = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutions = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -35,7 +36,7 @@ public abstract class SharedCreamPieSystem : EntitySystem
         SubscribeLocalEvent<CreamPieComponent, ThrowDoHitEvent>(OnCreamPieHit);
         SubscribeLocalEvent<CreamPieComponent, LandEvent>(OnCreamPieLand);
         SubscribeLocalEvent<CreamPiedComponent, ThrowHitByEvent>(OnCreamPiedHitBy);
-        SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
+        SubscribeLocalEvent<CreamPieComponent, BeforeToolRefinedEvent>(OnToolRefine);
         SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
     }
 
@@ -117,12 +118,17 @@ public abstract class SharedCreamPieSystem : EntitySystem
 
     private void OnCreamPiedHitBy(Entity<CreamPiedComponent> creamPied, ref ThrowHitByEvent args)
     {
-        if (creamPied.Comp.CreamPied || !Exists(args.Thrown) || !TryComp<CreamPieComponent>(args.Thrown, out var creamPie))
+        if (!Exists(args.Thrown) || !TryComp<CreamPieComponent>(args.Thrown, out var creamPie))
+            return;
+
+        _stunSystem.TryUpdateParalyzeDuration(creamPied.Owner, creamPie.ParalyzeTime);
+
+        // Already creamed, no need to spam popups.
+        if (creamPied.Comp.CreamPied)
             return;
 
         // TODO: Check if they even have a head that can be hit.
         SetCreamPied(creamPied.AsNullable(), true);
-        _stunSystem.TryUpdateParalyzeDuration(creamPied.Owner, creamPie.ParalyzeTime);
 
         // Throwing is not predicted, so the thrower is not equal to the client predicting the collision, so we cannot pass in a user.
         // TODO: Make the popup API sane.
@@ -157,7 +163,7 @@ public abstract class SharedCreamPieSystem : EntitySystem
     // However, the refactor to IngestionSystem caused the event to not be reached,
     // because eating is blocked if an item is inside the food.
 
-    private void OnSlice(Entity<CreamPieComponent> ent, ref SliceFoodEvent args)
+    private void OnToolRefine(Entity<CreamPieComponent> ent, ref BeforeToolRefinedEvent args)
     {
         ActivatePayload(ent);
     }

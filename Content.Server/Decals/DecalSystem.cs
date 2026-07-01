@@ -1,6 +1,4 @@
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
@@ -9,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -25,18 +22,18 @@ using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumera
 
 namespace Content.Server.Decals
 {
-    public sealed class DecalSystem : SharedDecalSystem
+    public sealed partial class DecalSystem : SharedDecalSystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IParallelManager _parMan = default!;
-        [Dependency] private readonly ChunkingSystem _chunking = default!;
-        [Dependency] private readonly IConfigurationManager _conf = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly TurfSystem _turf = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IParallelManager _parMan = default!;
+        [Dependency] private ChunkingSystem _chunking = default!;
+        [Dependency] private IConfigurationManager _conf = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedMapSystem _mapSystem = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private TurfSystem _turf = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -301,7 +298,7 @@ namespace Content.Server.Decals
         {
             decalId = 0;
 
-            if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
+            if (!ProtoMan.HasIndex<DecalPrototype>(decal.Id))
                 return false;
 
             var gridId = _transform.GetGrid(coordinates);
@@ -422,7 +419,7 @@ namespace Content.Server.Decals
 
         public bool SetDecalId(EntityUid gridId, uint decalId, string id, DecalGridComponent? comp = null)
         {
-            if (!PrototypeManager.HasIndex<DecalPrototype>(id))
+            if (!ProtoMan.HasIndex<DecalPrototype>(id))
                 throw new ArgumentOutOfRangeException($"Tried to set decal id to invalid prototypeid: {id}");
 
             return ModifyDecal(gridId, decalId, x => x.WithId(id), comp);

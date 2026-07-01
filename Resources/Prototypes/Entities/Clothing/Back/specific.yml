@@ -20,7 +20,7 @@
           type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: [Clothing, ClothingSlotBase]
+  parent: [SolutionTank, SolutionGinormous, Clothing, ClothingSlotBase]
   id: ClothingBackpackWaterTank
   name: backpack water tank
   description: Holds a large amount of fluids. Supplies to spray nozzles in your hands, and has a slot on the side for said spray nozzles.
@@ -54,10 +54,6 @@
   - type: SolutionAmmoProvider
     solutionId: tank
     proto: BulletWaterShot
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        maxVol: 1000 #much water
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100

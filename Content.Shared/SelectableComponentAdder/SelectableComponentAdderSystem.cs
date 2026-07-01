@@ -6,7 +6,7 @@ namespace Content.Shared.SelectableComponentAdder;
 
 public sealed partial class SelectableComponentAdderSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

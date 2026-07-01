@@ -9,9 +9,9 @@ namespace Content.Server.Temperature.Systems;
 /// <summary>
 /// Handles the server-only parts of <see cref="SharedEntityHeaterSystem"/>
 /// </summary>
-public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
+public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
 {
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
 
     public override void Initialize()
     {

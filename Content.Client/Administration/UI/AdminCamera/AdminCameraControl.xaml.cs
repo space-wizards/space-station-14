@@ -13,8 +13,8 @@ namespace Content.Client.Administration.UI.AdminCamera;
 [GenerateTypedNameReferences]
 public sealed partial class AdminCameraControl : Control
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IClientGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IClientGameTiming _timing = default!;
 
     public event Action? OnFollow;
     public event Action? OnPopoutControl;

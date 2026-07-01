@@ -8,9 +8,9 @@ namespace Content.Client.Electrocution;
 /// <summary>
 /// Shows the Electrocution HUD to entities with the ShowElectrocutionHUDComponent.
 /// </summary>
-public sealed class ElectrocutionHUDVisualizerSystem : VisualizerSystem<ElectrocutionHUDVisualsComponent>
+public sealed partial class ElectrocutionHUDVisualizerSystem : VisualizerSystem<ElectrocutionHUDVisualsComponent>
 {
-    [Dependency] private readonly IPlayerManager _playerMan = default!;
+    [Dependency] private IPlayerManager _playerMan = default!;
 
     public override void Initialize()
     {

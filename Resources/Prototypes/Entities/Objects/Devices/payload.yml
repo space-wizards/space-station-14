@@ -9,6 +9,7 @@
     tags:
     - Payload
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
