@@ -196,11 +196,9 @@ public sealed partial class CCVars
     ///     A higher value means grids have a lower effective mass and therefore will get pushed stronger.
     ///     A value of 0 will disable pushback.
     ///     The default has been chosen such that a one tile grid roughly equals 2/3 Urist masses.
-    ///     TODO: Make grid mass a sane number so we can get rid of this.
-    ///         At the moment they have a very low mass of roughly 0.48 kg per tile independent of any walls or anchored objects on them.
     /// </summary>
     public static readonly CVarDef<float> GridImpulseMultiplier =
-        CVarDef.Create("shuttle.grid_impulse_multiplier", 0.01f, CVar.SERVERONLY);
+        CVarDef.Create("shuttle.grid_impulse_multiplier", 16f, CVar.SERVERONLY);
 
     #region impacts
 
@@ -216,7 +214,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MinimumImpactInertia =
-        CVarDef.Create("shuttle.impact.minimum_inertia", 5f * 50f, CVar.SERVERONLY); // 100tile grid (cargo shuttle) going at 5 m/s
+        CVarDef.Create("shuttle.impact.minimum_inertia", 5f * 80000f, CVar.SERVERONLY); // 100tile grid (cargo shuttle) at 800 kg/tile going at 5 m/s
 
     /// <summary>
     /// Minimum velocity difference between 2 bodies for a shuttle impact to be guaranteed to trigger any special behaviors like damage.
