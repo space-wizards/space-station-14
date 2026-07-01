@@ -8,13 +8,11 @@ using Content.Shared.Hands;
 using Content.Shared.Item;
 using Content.Shared.Rounding;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.Visualizers;
 
 public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<SolutionContainerVisualsComponent>
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private ItemSystem _itemSystem = default!;
 
     public override void Initialize()
@@ -131,7 +129,7 @@ public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<So
                 args.Component))
             return null;
 
-        var reagentProto = _prototype.Index<ReagentPrototype>(baseOverride);
+        var reagentProto = ProtoMan.Index<ReagentPrototype>(baseOverride);
 
         if (SpriteSystem.LayerMapTryGet(ent, component.OverlayLayer, out var overlayLayer, false))
             SpriteSystem.LayerSetVisible(ent, overlayLayer, reagentProto.MetamorphicSprite is not null);

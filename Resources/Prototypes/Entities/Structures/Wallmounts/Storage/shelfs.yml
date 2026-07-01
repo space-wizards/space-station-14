@@ -412,6 +412,7 @@
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
+  - type: AmbientMusicMarkerMedical
 
 # Access presets
 # Try to keep alphabetical sorting if adding more
