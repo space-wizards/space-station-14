@@ -7,6 +7,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.EUI
 {
+    /// <summary>
+    /// Manager for server-side EUI handling.
+    /// </summary>
+    /// <remarks>
+    /// An EUI is a system for making a relatively-easy connection between client and server
+    /// for the purposes of UIs.
+    /// </remarks>
     public sealed partial class EuiManager : IPostInjectInit
     {
         [Dependency] private ILogManager _log = default!;
