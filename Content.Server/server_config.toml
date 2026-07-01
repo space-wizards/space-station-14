@@ -1,0 +1,158 @@
+# Welcome to the example configuration file for Space Station 14!
+# If you are in a watchdog enviroment, please create config.toml in your instence's root directory instead of editing this.
+# If you are in a development environment, ensure you are editing /bin/Content.Server/server_config.toml. Be aware that this file may be overwritten on build.
+
+# This configuration file contains **some popular** options most often changed by sandboxers and server hosts.
+# Along with a description of what they do. Look at the end of the file for a list of all options available if it's not listed here.
+
+[net]
+# The ticks per second the server runs at.
+# Lower values mean less load on the server, but also less responsiveness.
+# Higher values mean more load, but also more responsiveness. 
+# 30 is what most servers on the hub use and going higher has minimal effect.
+tickrate = 30
+# The port the server will bind to. 1212 is the default port for Space Station 14.
+port = 1212
+# Attempt to automatically forward the port using UPnP. Change to true to enable.
+# If it doesn't work, please follow the instructions here: https://docs.spacestation14.com/en/server-hosting/port-forwarding.html
+upnp = false
+# The maximum number of players that can connect to the server. (Including admins)
+# Look at the game section for the soft max players setting. Which is what is displayed in the server list.
+max_connections = 256
+
+[game]
+# Name of the server. This is what will be displayed in the server list and lobby.
+hostname = "MyServer"
+# Decscription of the server. This is what will be displayed in the server list.
+desc = "Just another server, don't mind me!"
+# The maximum number of players that can connect to the server. (Exluding admins)
+soft_max_players = 30
+# Controls the lobby timer in seconds.
+lobbyduration = 150
+# Should roles be restricted based on time?
+role_timers = true
+# Check connecting player ip against the IPIntel API (aka stop VPN/Proxy connections). Useful for hosts.
+# Read more here https://getipintel.net/
+ipintel_enabled = false
+# Required contact email to use IPIntel.
+ipintel_contact_email = ""
+# IPIntel score to reject connections.
+ipintel_bad_rating = 0.95
+
+[ic]
+# Allows visibility and editing of flavor text (character descriptions)
+flavor_text = false
+
+[admin]
+# Should players be able to see their own notes?
+see_own_notes = false
+
+[server]
+# Change this to have the changelog and rules "last seen" date stored separately from other servers.
+id = "unknown_server_id"
+
+[events]
+# Controls if the game should run station events. (Meteors, Sleeper Syndicates ETC)
+enabled = true
+# Should admins count towards the max players count?
+# Explanation: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
+# So someone who is not an admin can join, since technically the server is at 9/10 players.
+admins_count_for_max_players = false
+# Should admins be displayed on the player count? Just subtracts active admins from the player count. This is hub rule safe.
+admins_count_in_playercount = false
+
+[shuttle]
+# Should the emergency shuttle be allowed to launch early by command staff?
+emergency_early_launch_allowed = false
+# Time in minutes after round start to auto-call the emergency shuttle. Set to zero to disable.
+auto_call_time = 90
+
+[console]
+# If this is true, people connecting from this computer will automatically be elevated to full admin privileges.
+# Make sure to disable this if you are running a public server, especially if you are using a tunneling service.
+loginlocal = true
+# A player username that will be automatically elevated to full admin privileges on join.
+# Please only use this to give yourself admin privileges temporarily.
+# For a more permanent solution, use the permissions pannel in the game. (f7 -> Permissions Pannel, or `permissions` in the client console)
+login_host_user = ""
+
+[whitelist]
+# If this is true, only players on the whitelist will be able to connect to the server.
+# Use the whitelistadd and whitelistremove commands to manage the whitelist.
+enabled = false
+
+[chat]
+# Message of the day. This is displayed to players when they connect to the server.
+# Type your message between the quotes.
+motd = ""
+
+[hub]
+# Set to true to show this server on the public server list
+# Before enabling this, read: https://docs.spacestation14.com/en/community/space-wizards-hub-rules.html
+# By advertising your server, you agree to follow the rules of the hub.
+advertise = false
+# Comma-separated list of tags, useful for categorizing your server. For a list of standard tags, see the link below.
+# https://docs.spacestation14.com/en/robust-toolbox/server-http-api.html?highlight=http#standard-tags
+tags = ""
+# Comma-separated list of URLs of hub servers to advertise to.
+hub_urls = "https://hub.spacestation14.com/"
+# URL of your server. Fill this in if you have a domain name,
+# want to use HTTPS (with a reverse proxy), or other advanced scenarios.
+# Must be in the form of an ss14:// or ss14s:// URI pointing to the status API.
+# Example: ss14://mydomain.com
+server_url = ""
+
+[status]
+# This is the address of the SS14 server as the launcher uses it.
+# This is only needed if you're proxying the status HTTP server
+# by default the launcher will assume the address and port match that of the status server.
+# Example: udp://mydomain.com:1212
+connectaddress = ""
+
+[infolinks]
+# Links to be displayed in the launcher.
+forum = ""
+github = ""
+website = ""
+wiki = ""
+patreon = ""
+bug_report = ""
+appeal = ""
+telegram = ""
+
+[discord]
+# Discord webhook to send ahelp messages to.
+ahelp_webhook = ""
+# Discord webhook to send round restart messages to.
+round_update_webhook = ""
+# Role ID to ping when the round ends.
+round_end_role = ""
+
+[adminlogs]
+# Name of the server within the admin logs.
+# Recommended to be set to something unique between your servers if you have multiple to help with identifying them.
+# Also used in some places to get the server name in a server family.
+server_name = "unknown"
+
+[database]
+# The database engine to use. Either "sqlite" or "postgres".
+engine = "sqlite"
+# PostgreSQL database information. Ignored if engine is not "postgres".
+pg_host = "localhost"
+pg_port = 5432
+pg_user = "postgres"
+pg_password = ""
+pg_database = "ss14"
+
+[log]
+# Level of logging to display. 0 = verbose, 1 = debug, 2 = info, 3 = warnings, 4 = errors, 5 = fatal
+level = 2
+# Write logs to disk? True to enable, false to disable.
+enabled = false
+
+# For a full list of options, you can view the code where all CVars are defined:
+# Robust Toolbox CVars: https://github.com/space-wizards/RobustToolbox/blob/master/Robust.Shared/CVars.cs
+# Space Station 14 specific CVars: https://github.com/space-wizards/space-station-14/tree/master/Content.Shared/CCVar
+
+# More information on working with the config file can be found here:
+# https://docs.spacestation14.com/en/general-development/tips/config-file-reference.html

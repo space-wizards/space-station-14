@@ -1,7 +1,7 @@
 - type: entity
   name: basic
   id: MobSpaceBasic
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, MobNightVision ]
   abstract: true
   description: It looks friendly. Why don't you give it a hug?
   components:
@@ -493,7 +493,7 @@
       Unsexed: SheepSpace
 
 - type: entity
-  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin]
+  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
