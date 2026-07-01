@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Content.Server.Administration;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Administration;
@@ -401,7 +402,7 @@ public sealed partial class GameTicker
     /// </summary>
     public IEnumerable<EntityPrototype> GetAllGameRulePrototypes()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract)
                 continue;
@@ -464,7 +465,7 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
-            if (!_prototypeManager.HasIndex(rule))
+            if (!ProtoMan.HasIndex(rule))
             {
                 shell.WriteError($"Invalid game rule {rule} was skipped.");
 
@@ -542,22 +543,24 @@ public sealed partial class GameTicker
         if (_allPreviousGameRules.Count > 0)
         {
             var sortedRules = _allPreviousGameRules.OrderBy(rule => rule.Item1).ToList();
-            var message = "\n";
+            var message = new StringBuilder();
+            message.AppendLine();
 
             if (!forChatWindow)
             {
                 var header = Loc.GetString("list-gamerule-admin-header");
-                message += $"\n{header}\n";
-                message += "|------------|------------------\n";
+                message.AppendLine();
+                message.AppendLine(header);
+                message.AppendLine("|------------|------------------");
             }
 
             foreach (var (time, rule) in sortedRules)
             {
                 var formattedTime = time.ToString(@"hh\:mm\:ss");
-                message += $"| {formattedTime,-10} | {rule,-16} \n";
+                message.AppendLine($"| {formattedTime,-10} | {rule,-16} ");
             }
 
-            return message;
+            return message.ToString().TrimEnd('\n');
         }
         else
         {

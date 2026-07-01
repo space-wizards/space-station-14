@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -19,11 +19,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tools.EntitySystems;
+using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -44,7 +44,6 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class IngestionSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private FlavorProfileSystem _flavorProfile = default!;
@@ -88,7 +87,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
-        SubscribeLocalEvent<EdibleComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
+        SubscribeLocalEvent<EdibleComponent, BeforeToolRefinedEvent>(OnBeforeToolRefined);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -449,7 +448,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         args.Handled = true;
 
-        var edible = _proto.Index(entity.Comp.Edible);
+        var edible = ProtoMan.Index(entity.Comp.Edible);
 
         _audio.PlayPredicted(entity.Comp.UseSound ?? edible.UseSound, args.Target, args.User);
 
@@ -514,7 +513,7 @@ public sealed partial class IngestionSystem : EntitySystem
         SpawnTrash(entity, args.User);
     }
 
-    private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeFullySlicedEvent args)
+    private void OnBeforeToolRefined(Entity<EdibleComponent> entity, ref BeforeToolRefinedEvent args)
     {
         SpawnTrash(entity, args.User);
     }

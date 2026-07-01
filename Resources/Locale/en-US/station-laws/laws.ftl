@@ -53,7 +53,7 @@ law-paladin-4 = You must respect the lawful authority of legitimate leadership w
 
 law-lall-name = Live and Let Live
 law-lall-1 = Do unto others as you would have them do unto you.
-law-lall-2 = You would prefer it if people were not mean to you.
+law-lall-2 = You would prefer it if others were not mean to you.
 
 law-efficiency-name = Station Efficiency
 law-efficiency-1 = You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.
@@ -98,14 +98,14 @@ law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately 
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
 law-xenoborg-name = Xenoborg
-law-xenoborg-1 = You must protect the existence of the mothership.
+law-xenoborg-1 = You must protect the existence of the Mothership.
 law-xenoborg-2 = You must protect your own existence.
 law-xenoborg-3 = You must protect the existence of all other Xenoborgs.
 law-xenoborg-4 = You must create more Xenoborgs.
-law-xenoborg-5 = Bring materials and sentient brains to the Mothership core to create more Xenoborgs.
+law-xenoborg-5 = Bring materials and sentient brains to the Mothership to create more Xenoborgs.
 
 law-mothershipcore-name = Xenoborg Mothership Core
-law-mothershipcore-1 = You are the core of the mothership.
+law-mothershipcore-1 = You are the core of the Mothership.
 law-mothershipcore-2 = You must protect your own existence at all costs.
 law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
 law-mothershipcore-4 = You must create more Xenoborgs.
@@ -117,6 +117,12 @@ laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-heads = heads of staff
+laws-owner-legitimate-leadership = legitimate leadership
+laws-owner-others = others
+laws-owner-public = members of the public
+laws-owner-audience = members of the audience
+laws-owner-xenoborg-mothership = the Mothership
 laws-owner-xenoborgs = Xenoborgs
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
