@@ -8,9 +8,6 @@ using Content.Shared.Database;
 using System.Threading.Tasks;
 
 namespace Content.Server.Chat.Systems;
-
-
-
 public sealed partial class ChatSystem
 {
     [Dependency] private BwoinkSystem _bwoink = default!;
