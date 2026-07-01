@@ -200,7 +200,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);
     }
 
-<<<<<<< Fix-electrified-objects-not-shocking-on-world-activation
     private void OnElectrifiedActivateInWorld(EntityUid uid, ElectrifiedComponent electrified, ActivateInWorldEvent args)
     {
         if (!electrified.OnActivateInWorld || args.Handled)
@@ -210,8 +209,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
             args.Handled = true;
     }
 
-    public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
-=======
     /// <summary>
     /// Attempt to trigger an electrocution via an entity interacting with the electrified entity. Checks what type of electrocution to apply and handles daisy-chaining.
     /// </summary>
@@ -224,7 +221,6 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     /// <returns>If the attempt caused an electrocution.</returns>
     public bool TryDoElectrifiedAct(EntityUid uid,
         EntityUid targetUid,
->>>>>>> master
         float siemens = 1,
         ElectrifiedComponent? electrified = null,
         NodeContainerComponent? nodeContainer = null,
