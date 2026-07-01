@@ -33,7 +33,7 @@ public sealed partial class AntagSelectionSystem
         bool checkPref = true)
     {
         // Can't be this antag if it doesn't exist :)
-        if (!Proto.Resolve(proto, out var antag))
+        if (!ProtoMan.Resolve(proto, out var antag))
             return false;
 
         return CanBeAntag(player, gameRule, antag, checkPref);
@@ -71,7 +71,7 @@ public sealed partial class AntagSelectionSystem
         Entity<AntagSelectionComponent> gameRule,
         ProtoId<AntagSpecifierPrototype> def)
     {
-        if (!Proto.Resolve(def, out var antag))
+        if (!ProtoMan.Resolve(def, out var antag))
             return false;
 
         return IsSessionValid(player, gameRule, antag);
@@ -159,7 +159,7 @@ public sealed partial class AntagSelectionSystem
     /// <inhereitdoc cref="IsEntityValid(EntityUid?,AntagSpecifierPrototype)"/>
     public bool IsEntityValid([NotNullWhen(true)] EntityUid? uid, ProtoId<AntagSpecifierPrototype> def)
     {
-        if (!Proto.Resolve(def, out var antag))
+        if (!ProtoMan.Resolve(def, out var antag))
             return false;
 
         return IsEntityValid(uid, antag);
@@ -221,7 +221,7 @@ public sealed partial class AntagSelectionSystem
         ICommonSession session,
         bool checkPref = true)
     {
-        if (!Proto.Resolve(proto, out var def))
+        if (!ProtoMan.Resolve(proto, out var def))
             return false;
 
         return TryMakeAntag(gameRule, def, session, checkPref);
@@ -265,7 +265,7 @@ public sealed partial class AntagSelectionSystem
     {
         foreach (var selector in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(selector.Proto, out var antag))
+            if (!ProtoMan.Resolve(selector.Proto, out var antag))
                 continue;
 
             // Because this value can theoretically fluctuate as players leave and join, we don't want to cache it.
@@ -361,7 +361,7 @@ public sealed partial class AntagSelectionSystem
         int count,
         bool assert = false)
     {
-        if (!Proto.Resolve(protoId, out var antag))
+        if (!ProtoMan.Resolve(protoId, out var antag))
             return;
 
         SpawnGhostRoles(gameRule, antag, count, assert);
@@ -432,7 +432,7 @@ public sealed partial class AntagSelectionSystem
         if (TryAssignNextAvailableAntag(rule, player))
             return;
 
-        if (rule.Comp.Antags.LastOrDefault() is not { } antag || !Proto.Resolve(antag.Proto, out var proto))
+        if (rule.Comp.Antags.LastOrDefault() is not { } antag || !ProtoMan.Resolve(antag.Proto, out var proto))
             return;
 
         PreSelectSession(rule, proto, player);
@@ -442,7 +442,7 @@ public sealed partial class AntagSelectionSystem
     /// <inhereitdoc cref="ForceMakeAntag{T}(ICommonSession,EntProtoId,AntagSpecifierPrototype)"/>
     public void ForceMakeAntag<T>(ICommonSession player, EntProtoId ruleProto, ProtoId<AntagSpecifierPrototype> antagProto) where T : Component
     {
-        if (!Proto.Resolve(antagProto, out var antag))
+        if (!ProtoMan.Resolve(antagProto, out var antag))
             return;
 
         ForceMakeAntag<T>(player, ruleProto, antag);

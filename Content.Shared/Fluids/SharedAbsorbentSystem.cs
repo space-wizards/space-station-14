@@ -20,7 +20,6 @@ namespace Content.Shared.Fluids;
 /// </summary>
 public abstract partial class SharedAbsorbentSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popups = default!;
     [Dependency] protected SharedPuddleSystem Puddle = default!;
@@ -73,9 +72,9 @@ public abstract partial class SharedAbsorbentSystem : EntitySystem
         var absorbentReagents = Puddle.GetAbsorbentReagents(solution);
         var mopReagent = solution.GetTotalPrototypeQuantity(absorbentReagents);
         if (mopReagent > FixedPoint2.Zero)
-            ent.Comp.Progress[solution.GetColorWithOnly(_proto, absorbentReagents)] = mopReagent.Float();
+            ent.Comp.Progress[solution.GetColorWithOnly(ProtoMan, absorbentReagents)] = mopReagent.Float();
 
-        var otherColor = solution.GetColorWithout(_proto, absorbentReagents);
+        var otherColor = solution.GetColorWithout(ProtoMan, absorbentReagents);
         var other = solution.Volume - mopReagent;
         if (other > FixedPoint2.Zero)
             ent.Comp.Progress[otherColor] = other.Float();

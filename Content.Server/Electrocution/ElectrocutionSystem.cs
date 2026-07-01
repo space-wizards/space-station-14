@@ -38,7 +38,6 @@ namespace Content.Server.Electrocution;
 public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -200,7 +199,18 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, siemens, electrified);
     }
 
-    public bool TryDoElectrifiedAct(EntityUid uid, EntityUid targetUid,
+    /// <summary>
+    /// Attempt to trigger an electrocution via an entity interacting with the electrified entity. Checks what type of electrocution to apply and handles daisy-chaining.
+    /// </summary>
+    /// <param name="uid">The entity emitting electricity.</param>
+    /// <param name="targetUid">The entity interacting.</param>
+    /// <param name="siemens">The electric conductance. 0 means no electricity can pass through, 1 means full force.</param>
+    /// <param name="electrified">The electrified component of uid entity.</param>
+    /// <param name="nodeContainer">The node container of uid entity.</param>
+    /// <param name="transform">The transform of the uid entity.</param>
+    /// <returns>If the attempt caused an electrocution.</returns>
+    public bool TryDoElectrifiedAct(EntityUid uid,
+        EntityUid targetUid,
         float siemens = 1,
         ElectrifiedComponent? electrified = null,
         NodeContainerComponent? nodeContainer = null,
@@ -413,7 +423,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         if (shockDamage is { } dmg)
         {
-            if (_damageable.TryChangeDamage(uid, new DamageSpecifier(_prototypeManager.Index(DamageType), dmg), out var damage, origin: sourceUid))
+            if (_damageable.TryChangeDamage(uid, new DamageSpecifier(ProtoMan.Index(DamageType), dmg), out var damage, origin: sourceUid))
             {
                 _adminLogger.Add(LogType.Electrocution,
                     $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
