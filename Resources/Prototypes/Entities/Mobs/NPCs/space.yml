@@ -457,10 +457,9 @@
     toolQuality: Shearing
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
-    # Caused problems (SAD), to be re-implemented when we get a real particle system.
-  # - type: ActiveJetpack # Pretty particles
-  #   effectCooldown: 4
-  #   maxDistance: 0.3
+  - type: ActiveJetpack # Pretty particles
+    effectCooldown: 4
+    maxDistance: 0.3
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
     baseSprintSpeed: 2.0
@@ -491,6 +490,16 @@
       Female: SheepSpace
       Male: SheepSpace
       Unsexed: SheepSpace
+  - type: ChaoticJump
+    jumpMinInterval: 300
+    jumpMaxInterval: 600
+  - type: ChasingWalk
+    minSpeed: 1
+    maxSpeed: 2
+    rotateWithImpulse: true
+    impulseInterval: 10
+    chasingComponent:
+    - type: LightningTarget
 
 - type: entity
   parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
