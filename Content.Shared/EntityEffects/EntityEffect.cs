@@ -10,6 +10,9 @@ namespace Content.Shared.EntityEffects;
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityEffect
 {
+    /// <summary>
+    /// Conditions for this effect to happen.
+    /// </summary>
     [DataField]
     public EntityCondition[]? Conditions;
 
@@ -32,6 +35,12 @@ public abstract partial class EntityEffect
     [DataField]
     public float Probability = 1.0f;
 
+/// <summary>
+/// Generates the guidebook text for this effect.
+/// </summary>
+/// <param name="prototype">Prototype manager, to resolve prototype calls.</param>
+/// <param name="entSys">EntitySystem manager, to resolve system calls.</param>
+/// <returns>The guidebook text string, if generated. Null otherwise.</returns>
     public virtual string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     /// <summary>
@@ -40,6 +49,9 @@ public abstract partial class EntityEffect
     [ViewVariables]
     public virtual LogImpact? Impact => null;
 
+    /// <summary>
+    /// The type of log this effect should cause.
+    /// </summary>
     [ViewVariables]
     public virtual LogType LogType => LogType.EntityEffect;
 }

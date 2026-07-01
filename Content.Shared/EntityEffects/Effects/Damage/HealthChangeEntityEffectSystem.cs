@@ -40,6 +40,9 @@ public sealed partial class HealthChange : EntityEffect
     [DataField(required: true)]
     public DamageSpecifier Damage = default!;
 
+    /// <summary>
+    /// Should this effect ignore damage resistances?
+    /// </summary>
     [DataField]
     public bool IgnoreResistances = true;
 

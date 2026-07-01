@@ -23,6 +23,9 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class TagCondition : EntityCondition
 {
+    /// <summary>
+    /// Tag required to fulfill this condition.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;
 

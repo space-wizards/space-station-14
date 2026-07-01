@@ -28,6 +28,9 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class ModifyLungGas : EntityEffect
 {
+    /// <summary>
+    /// The new gas composition to set in the lung.
+    /// </summary>
     [DataField(required: true)]
     public Dictionary<Gas, float> Ratios = default!;
 }

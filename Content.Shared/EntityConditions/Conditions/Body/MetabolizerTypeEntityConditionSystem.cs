@@ -8,6 +8,9 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class MetabolizerTypeCondition : EntityCondition
 {
+    /// <summary>
+    /// Which metabolizer types would fulfill this condition. Need only one match.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<MetabolizerTypePrototype>[] Type = default!;
 
