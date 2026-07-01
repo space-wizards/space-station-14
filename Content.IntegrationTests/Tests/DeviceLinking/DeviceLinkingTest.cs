@@ -43,7 +43,7 @@ public sealed class DeviceLinkingTest : GameTest
             using (Assert.EnterMultipleScope())
             {
                 var proto = protoMan.Index(protoKey);
-                Assert.That(proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
+                Assert.That(proto.TryComp<DeviceLinkSinkComponent>(out var protoSinkComp, compFact));
 
                 foreach (var port in protoSinkComp!.Ports)
                 {
