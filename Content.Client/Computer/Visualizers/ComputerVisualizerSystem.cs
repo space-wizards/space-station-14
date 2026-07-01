@@ -7,7 +7,7 @@ namespace Content.Client.Computer.Visualizers;
 
 /// <summary>
 /// A visualizer used to draw the different states of computers.
-/// Helps reduce YAML redundancy.
+/// Helps reduce YAML redundancy in computer sprite definitions.
 /// </summary>
 public sealed partial class ComputerVisualizerSystem : VisualizerSystem<ComputerVisualsComponent>
 {
@@ -16,6 +16,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     public override void Initialize()
     {
         base.Initialize();
+
         _unshadedShader = ProtoMan.Index(SpriteSystem.UnshadedId).Instance();
     }
 
@@ -23,16 +24,18 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnComponentInit(EntityUid uid, ComputerVisualsComponent comp, ComponentInit args)
+    private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Frame, comp.StateFrame);
-        SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Keyboard, comp.StateKeyboard);
-        SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Keys, comp.StateKeys);
-        SpriteSystem.LayerSetRsiState((uid, sprite), ComputerVisualLayers.Screen, comp.StateScreen);
-        SpriteSystem.LayerSetRsiState((uid, sprite), WiresVisualLayers.MaintenancePanel, comp.StatePanel);
+        Entity<SpriteComponent?> spriteEnt = (ent, sprite);
+
+        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Frame, ent.Comp.StateFrame);
+        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Keyboard, ent.Comp.StateKeyboard);
+        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Keys, ent.Comp.StateKeys);
+        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Screen, ent.Comp.StateScreen);
+        SpriteSystem.LayerSetRsiState(spriteEnt, WiresVisualLayers.MaintenancePanel, ent.Comp.StatePanel);
     }
 
     protected override void OnAppearanceChange(EntityUid uid,
