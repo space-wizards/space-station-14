@@ -32,7 +32,7 @@ public sealed partial class DeathMatchRuleComponent : Component
     public NetUserId? Victor;
 
     /// <summary>
-    /// An entity spawned after a player is killed.
+    /// The EntityTable spawned after a player is killed.
     /// </summary>
     [DataField]
     public EntityTableSelector RewardSpawns = default!;
