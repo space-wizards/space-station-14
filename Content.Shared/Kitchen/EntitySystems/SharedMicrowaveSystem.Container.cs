@@ -13,9 +13,20 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     private void InitializeContainer()
     {
+        SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing,
             after: [typeof(AnchorableSystem)]);
+    }
+
+    /// <summary>
+    ///     Initializes the microwave's storage container.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
+    {
+        // this really does have to be in ComponentInit
+        ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
     }
 
     /// <summary>

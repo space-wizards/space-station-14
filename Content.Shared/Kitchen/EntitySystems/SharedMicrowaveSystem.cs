@@ -12,7 +12,6 @@ using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -33,7 +32,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private RecipeManager _recipeManager = default!;
     [Dependency] protected SharedSolutionContainerSystem Solution = default!;
     [Dependency] private SharedStackSystem _stack = default!;
@@ -44,7 +42,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MicrowaveComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
         SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
@@ -99,16 +96,6 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
                 AddTemperature((uid, microwave), (float)timeElapsed.TotalSeconds);
             }
         }
-    }
-
-    /// <summary>
-    ///     Initializes the microwave's storage container.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
-    {
-        // this really does have to be in ComponentInit
-        ent.Comp.Storage = _container.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
     }
 
     /// <summary>

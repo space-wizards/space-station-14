@@ -9,7 +9,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Adds temperature to every item in the microwave based on the time it took to microwave.
     /// </summary>
-    /// <param name="component">The microwave that is heating up.</param>
+    /// <param name="ent">The microwave entity.</param>
     /// <param name="time">The heating time that has elapsed, in seconds.</param>
     protected virtual void AddTemperature(Entity<MicrowaveComponent> ent, float time)
     { }
