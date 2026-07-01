@@ -41,6 +41,7 @@
   - type: AnimationPlayer
   - type: TimerTriggerVisuals
     unprimedSprite: base
+    inHandPrimedName: -primed
   - type: Damageable
   - type: Injurable
     damageContainer: Inorganic

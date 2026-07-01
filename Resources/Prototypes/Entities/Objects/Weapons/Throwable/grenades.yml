@@ -1,7 +1,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, TimerGrenadePrimedVisualsBase, BaseSyndicateContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -24,7 +24,7 @@
 - type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee.
-  parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSecurityContraband ]
+  parent: [ FragileGrenadeBase, TimerGrenadePrimedVisualsBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
-  parent: [VolatileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, TimerGrenadePrimedVisualsBase, BaseSyndicateContraband]
   id: SyndieMiniBomb
   components:
   - type: Sprite
@@ -152,7 +152,7 @@
 
 
 - type: entity
-  parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
+  parent: [ FragileGrenadeBase, TimerGrenadePrimedVisualsBase, BaseSyndicateContraband ]
   id: SingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
@@ -286,7 +286,7 @@
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
-  parent: TimerGrenadeBase
+  parent: TimerGrenadePrimedVisualsBase
   id: NuclearGrenade
   components:
   - type: Sprite
@@ -364,6 +364,8 @@
           # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
     price: 75
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
 
 - type: entity
   name: EMP grenade
@@ -387,7 +389,7 @@
 - type: entity
   name: holy hand grenade
   description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
-  parent: [TimerGrenadeBase, BaseSyndicateContraband]
+  parent: [TimerGrenadePrimedVisualsBase, BaseSyndicateContraband]
   id: HolyHandGrenade
   components:
   - type: Sprite

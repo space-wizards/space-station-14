@@ -95,6 +95,8 @@
       festive: Objects/Weapons/Bombs/c4gift.rsi
   - type: StaticPrice
     price: 625 # 5000 for a bundle of 8
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
 
 - type: entity
   name: seismic charge
@@ -141,3 +143,5 @@
   - type: ExplodeOnTrigger
     keysIn:
     - timer
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed

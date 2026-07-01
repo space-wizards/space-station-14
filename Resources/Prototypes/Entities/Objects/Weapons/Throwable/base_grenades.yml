@@ -55,6 +55,14 @@
           Primed: { state: primed }
           Unprimed: { state: icon }
 
+- type: entity
+  parent: TimerGrenadeBase
+  abstract: true
+  id: TimerGrenadePrimedVisualsBase
+  components:
+  - type: TimerTriggerVisuals
+    inHandPrimedName: -primed
+
 - type: entity # Starts fuse after taking 10 damage.
   parent: GrenadeBase
   abstract: true

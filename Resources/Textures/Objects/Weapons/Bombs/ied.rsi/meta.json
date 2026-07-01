@@ -35,6 +35,50 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "inhand-left-primed",
+      "directions": 4,
+	  "delays": [
+        [
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ]
+	  ]
+    },
+    {
+      "name": "inhand-right-primed",
+      "directions": 4,
+	  "delays": [
+        [
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ],
+		[
+          0.5,
+          0.5
+        ]
+	  ]
     }
   ]
 }

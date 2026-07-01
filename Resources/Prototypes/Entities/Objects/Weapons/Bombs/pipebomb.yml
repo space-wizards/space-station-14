@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ TimerGrenadeBase, BaseMinorContraband ]
+  parent: [ TimerGrenadePrimedVisualsBase, BaseMinorContraband ]
   id: PipeBomb
   name: pipe bomb
   description: An improvised explosive made from pipes and wire.
@@ -29,7 +29,6 @@
     maxIntensity: 6
     canCreateVacuum: false
   - type: Appearance
-  - type: TimerTriggerVisuals
   - type: Construction
     graph: PipeBomb
     node: pipebomb
