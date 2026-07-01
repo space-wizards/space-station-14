@@ -1,6 +1,6 @@
 ﻿- type: entity
-  id: BasePortal
   abstract: true
+  id: BasePortal
   name: bluespace portal
   description: Transports you to a linked destination!
   components:
@@ -66,9 +66,9 @@
     canTeleportToOtherMaps: true
 
 - type: entity
+  abstract: true
   parent: BasePortal
   id: BasePortalGateway
-  abstract: true
   components:
   - type: Sprite
     noRot: true
