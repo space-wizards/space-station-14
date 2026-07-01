@@ -21,7 +21,7 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
     }
 
     /// <summary>
-    /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.
+    /// Sets the base sprite to this layer. Exists to reduce computer sprite boilerplate.
     /// </summary>
     [SubscribeLocalEvent]
     private void OnComponentInit(Entity<ComputerVisualsComponent> ent, ref ComponentInit args)
