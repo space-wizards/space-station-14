@@ -80,10 +80,10 @@
     noRot: true
   - type: Item
   - type: Physics
-    angularDamping: 0.02
-    linearDamping: 0.02
     fixedRotation: true
     bodyType: Dynamic
+  - type: MovementIgnoreGravity
+    weightless: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -255,7 +255,6 @@
   - type: Sprite
     sprite: Objects/Fun/Plushies/rouny.rsi
     state: icon
-  - type: Rotatable
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/rouny.rsi

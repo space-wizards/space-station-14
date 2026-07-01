@@ -9,6 +9,7 @@
       - Ruminant
       - Wheat
       - BananaPeel
+    isSpecialDigestibleExclusive: false
   - type: SolutionManager
     solutions:
     - SolutionStomachRuminant

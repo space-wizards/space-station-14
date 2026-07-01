@@ -120,7 +120,7 @@
                             HorizontalAlignment="Right"
                             ToolTip="{Loc 'lathe-menu-delete-fabricating-tooltip'}">
                             <Button.StyleClasses>
-                                <system:String>Caution</system:String>
+                                <system:String>negative</system:String>
                                 <system:String>OpenLeft</system:String>
                             </Button.StyleClasses>
                         </Button>

@@ -12,6 +12,7 @@
     - CanPilot
     - BypassInteractionRangeChecks
     - BypassDropChecks
+    - BypassOpenStorageLimit
     - NoConsoleSound
     - SilentStorageUser
     - PreventAccessLogging
