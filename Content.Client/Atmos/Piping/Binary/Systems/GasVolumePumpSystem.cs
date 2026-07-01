@@ -11,7 +11,6 @@ public sealed partial class GasVolumePumpSystem : SharedGasVolumePumpSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasVolumePumpComponent, AfterAutoHandleStateEvent>(OnPumpState);
     }
 
     protected override void UpdateUi(Entity<GasVolumePumpComponent> entity)
@@ -22,6 +21,7 @@ public sealed partial class GasVolumePumpSystem : SharedGasVolumePumpSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPumpState(Entity<GasVolumePumpComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(ent);

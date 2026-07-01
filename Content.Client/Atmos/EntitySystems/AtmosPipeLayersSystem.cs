@@ -22,10 +22,9 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<AtmosPipeLayersComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<AtmosPipeLayersComponent> ent, ref AppearanceChangeEvent ev)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))

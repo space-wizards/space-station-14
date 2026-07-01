@@ -17,10 +17,9 @@ public sealed partial class MaxPressureVisualsSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<MaxPressureVisualsComponent, ComponentInit>(OnMaxPressureInit);
-        SubscribeLocalEvent<MaxPressureVisualsComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
+    [SubscribeLocalEvent]
     private void OnMaxPressureInit(Entity<MaxPressureVisualsComponent> entity, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(entity, out var sprite))
@@ -41,6 +40,7 @@ public sealed partial class MaxPressureVisualsSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAppearanceChange(Entity<MaxPressureVisualsComponent> entity, ref AppearanceChangeEvent args)
     {
         if (args.Sprite is not { } sprite)

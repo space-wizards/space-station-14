@@ -16,11 +16,9 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<FireVisualsComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<FireVisualsComponent, ComponentShutdown>(OnShutdown);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(EntityUid uid, FireVisualsComponent component, ComponentShutdown args)
     {
         if (component.LightEntity != null)
@@ -38,6 +36,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, FireVisualsComponent component, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp(uid, out AppearanceComponent? appearance))

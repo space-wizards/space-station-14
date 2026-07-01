@@ -10,9 +10,9 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MapAtmosphereComponent, ComponentHandleState>(OnMapHandleState);
     }
 
+    [SubscribeLocalEvent]
     private void OnMapHandleState(EntityUid uid, MapAtmosphereComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MapAtmosphereComponentState state)

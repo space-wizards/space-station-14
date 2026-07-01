@@ -32,14 +32,9 @@ namespace Content.Client.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<AtmosDebugOverlayMessage>(HandleAtmosDebugOverlayMessage);
-            SubscribeNetworkEvent<AtmosDebugOverlayDisableMessage>(HandleAtmosDebugOverlayDisableMessage);
-
-            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
         }
 
+        [SubscribeLocalEvent]
         private void OnGridRemoved(GridRemovalEvent ev)
         {
             if (TileData.ContainsKey(ev.EntityUid))
@@ -48,6 +43,7 @@ namespace Content.Client.Atmos.EntitySystems
             }
         }
 
+        [SubscribeNetworkEvent]
         private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
         {
             TileData[GetEntity(message.GridId)] = message;
@@ -59,6 +55,7 @@ namespace Content.Client.Atmos.EntitySystems
             _overlayManager.AddOverlay(_overlay);
         }
 
+        [SubscribeNetworkEvent]
         private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
         {
             TileData.Clear();
@@ -72,6 +69,7 @@ namespace Content.Client.Atmos.EntitySystems
             RemoveOverlay();
         }
 
+        [SubscribeNetworkEvent]
         public void Reset(RoundRestartCleanupEvent ev)
         {
             TileData.Clear();

@@ -12,10 +12,9 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<GasPressureRegulatorComponent, AfterAutoHandleStateEvent>(OnValveUpdate);
     }
 
+    [SubscribeLocalEvent]
     private void OnValveUpdate(Entity<GasPressureRegulatorComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(ent);

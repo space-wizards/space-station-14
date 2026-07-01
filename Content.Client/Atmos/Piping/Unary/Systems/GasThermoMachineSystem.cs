@@ -11,9 +11,9 @@ public sealed partial class GasThermoMachineSystem : SharedGasThermoMachineSyste
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasThermoMachineComponent, AfterAutoHandleStateEvent>(OnGasAfterState);
     }
 
+    [SubscribeLocalEvent]
     private void OnGasAfterState(Entity<GasThermoMachineComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         DirtyUI(ent.Owner, ent.Comp);

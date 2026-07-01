@@ -8,7 +8,6 @@ public sealed class GasTankSystem : SharedGasTankSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasTankComponent, AfterAutoHandleStateEvent>(OnGasTankState);
     }
 
     protected override void DeviceUpdated(Entity<GasTankComponent> entity, ref AtmosDeviceUpdateEvent args)
@@ -17,6 +16,7 @@ public sealed class GasTankSystem : SharedGasTankSystem
         throw new NotImplementedException();
     }
 
+    [SubscribeLocalEvent]
     private void OnGasTankState(Entity<GasTankComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (UI.TryGetOpenUi(ent.Owner, SharedGasTankUiKey.Key, out var bui))
