@@ -17,16 +17,7 @@ public sealed partial class GunSystem
         if (args.Control is not CustomIconStatusControl customIcon)
             return;
 
-        if (TryComp<BallisticAmmoProviderComponent>(ent, out var ballisticAmmoProviderComp))
-        {
-            customIcon.Update(ballisticAmmoProviderComp.Count, ballisticAmmoProviderComp.Capacity);
-        }
-        else if (TryComp<BatteryAmmoProviderComponent>(ent, out var batteryAmmoProviderComp))
-        {
-            customIcon.Update(batteryAmmoProviderComp.Shots, batteryAmmoProviderComp.Capacity);
-        }
-        else
-            customIcon.Update(0, 0);
+        customIcon.Update(GetAmmoCount(ent), GetAmmoCapacity(ent));
     }
 
     private void OnControl(Entity<CustomSpriteAmmoCounterComponent> ent, ref AmmoCounterControlEvent args)
