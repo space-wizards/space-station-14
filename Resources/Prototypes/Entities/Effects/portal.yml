@@ -82,6 +82,7 @@
           position: 0, 0.26
         mask: *portalMask
         layer: *portalLayer
+        hard: false
 
 - type: entity
   parent: BasePortalGateway
