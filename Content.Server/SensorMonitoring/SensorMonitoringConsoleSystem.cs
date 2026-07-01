@@ -26,11 +26,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     // Deleting connected devices causes exceptions
     // UI sucks. need a way to make basic dashboards like Grafana, and save them.
 
-    private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
-
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     public override void Initialize()
     {
@@ -44,8 +43,6 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceNetworkPacketEvent>(DevicePacketReceived);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
-
-        _deviceNetworkQuery = GetEntityQuery<DeviceNetworkComponent>();
     }
 
     public override void Update(float frameTime)

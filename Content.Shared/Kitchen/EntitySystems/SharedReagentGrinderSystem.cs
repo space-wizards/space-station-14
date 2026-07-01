@@ -20,6 +20,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Kitchen.EntitySystems;
 
+/// <summary>
+///     Entity system for the reagent grinder, a device that can grind solid objects into
+///     reagents in an inserted container.
+/// </summary>
 [UsedImplicitly]
 public abstract partial class SharedReagentGrinderSystem : EntitySystem
 {

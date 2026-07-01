@@ -13,7 +13,6 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -27,7 +26,6 @@ public sealed partial class StoreSystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private StackSystem _stack = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
 
     private void InitializeUi()
     {
@@ -126,7 +124,7 @@ public sealed partial class StoreSystem
         //apply components
         if (listing.ProductComponents != null)
         {
-            if (_proto.Resolve(listing.ProductComponents, out var productComponentsEntity))
+            if (ProtoMan.Resolve(listing.ProductComponents, out var productComponentsEntity))
                 EntityManager.AddComponents(buyer, productComponentsEntity.Components);
         }
 
@@ -232,7 +230,7 @@ public sealed partial class StoreSystem
 
         _admin.Add(LogType.StorePurchase,
             logImpact,
-            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, Proto)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
+            $"{ToPrettyString(buyer):player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {ToPrettyString(uid)}{logExtraInfo}.");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)
@@ -265,7 +263,7 @@ public sealed partial class StoreSystem
             return;
 
         //make sure a malicious client didn't send us random shit
-        if (!Proto.TryIndex<CurrencyPrototype>(msg.Currency, out var proto))
+        if (!ProtoMan.TryIndex<CurrencyPrototype>(msg.Currency, out var proto))
             return;
 
         //we need an actually valid entity to spawn. This check has been done earlier, but just in case.
