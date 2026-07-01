@@ -29,7 +29,7 @@ public abstract partial class SharedMicrowaveSystem
         }
     }
 
-    protected virtual void Explode(Entity<MicrowaveComponent> ent)
+    public virtual void Explode(Entity<MicrowaveComponent> ent)
     {
         ent.Comp.Broken = true;
         DirtyField(ent.Owner, ent.Comp, nameof(MicrowaveComponent.Broken));
