@@ -157,7 +157,7 @@ public abstract partial class SharedPointingSystem : EntitySystem
         pointing.EndTime = GameTiming.CurTime + PointDuration;
         pointing.Rogue = ShouldPointingArrowGoRogue();
         Dirty(arrow, pointing);
-        pointing.Owner = pointer;
+        pointing.User = pointer;
 
         ConfigureArrow(pointer, arrow, pointing);
         EntityManager.InitializeAndStartEntity(arrow);

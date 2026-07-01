@@ -12,7 +12,7 @@ public sealed partial class PointingArrowComponent : Component
     /// TODO: If engine ever networks animations cleanly then we can drop this.
     /// </summary>
     [AutoNetworkedField]
-    public EntityUid Owner;
+    public EntityUid User;
 
     /// <summary>
     /// The position of the sender when the point began.

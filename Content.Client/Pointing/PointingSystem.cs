@@ -34,7 +34,7 @@ public sealed partial class PointingSystem
 
         // Hide the pointer if it's serverside and ours.
         // TODO: Maybe a dedicated system for this due to gun prediction maybe?
-        if (!GameTiming.IsFirstTimePredicted && component.Owner == PlayerManager.LocalEntity)
+        if (!GameTiming.IsFirstTimePredicted && component.User == PlayerManager.LocalEntity)
         {
             _sprite.SetVisible((uid, sprite), false);
             return;
