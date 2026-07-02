@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "signaller state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/2c980a1f423f26e990a578bae057d1eca19675ec. inhands & advanced made by Flaregy for Space Station 14. advanced is modified from signaller",
+  "copyright": "Signaller state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/2c980a1f423f26e990a578bae057d1eca19675ec. Inhands & advanced made by Flaregy for Space Station 14. Deadman made by tkirkby for Space Station 14. Advanced and deadman are modified from signaller.",
   "size": {
     "x": 32,
     "y": 32
@@ -27,6 +27,28 @@
     },
     {
       "name": "advanced-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "deadman"
+    },
+    {
+      "name": "deadman-armed",
+      "delays": [
+        [
+          0.4,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "deadman-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "deadman-inhand-right",
       "directions": 4
     }
   ]

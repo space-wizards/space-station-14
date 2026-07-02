@@ -89,6 +89,12 @@ public sealed partial class TriggerSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
+        
+        if (ent.Comp.Disabled)
+        {
+            ent.Comp.Disabled = false;
+            return false;
+        }
 
         if (Terminating(ent))
             return false; // Stop trying to resurrect a dead horse.
