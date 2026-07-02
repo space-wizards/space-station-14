@@ -1,0 +1,384 @@
+- type: entity
+  parent: BaseItem
+  id: RngEmptyCircuit
+  name: empty RNG Device
+  description: Add a die to create an RNG device.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Misc/books.rsi
+          state: icon_question
+    - type: Anchorable
+    - type: Rotatable
+    - type: Construction
+      graph: RngDevice
+      node: empty
+
+- type: entity
+  abstract: true
+  parent: RngEmptyCircuit
+  id: BaseRngItem
+  components:
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: RngDeviceServer
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD2
+  name: RNG Device (Percentile)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: percentile_50
+    - type: RngDevice
+      outputs: 2
+      statePrefix: percentile
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+    - type: Construction
+      node: rng_device_d2
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD4
+  name: RNG Device (D4)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d4_4
+    - type: RngDevice
+      outputs: 4
+      statePrefix: d4
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+    - type: Construction
+      node: rng_device_d4
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD6
+  name: RNG Device (D6)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d6_6
+    - type: RngDevice
+      outputs: 6
+      statePrefix: d6
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+        - RngOutput5
+        - RngOutput6
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+        RngOutput5: false
+        RngOutput6: false
+    - type: Construction
+      node: rng_device_d6
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD8
+  name: RNG Device (D8)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d8_8
+    - type: RngDevice
+      outputs: 8
+      statePrefix: d8
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+        - RngOutput5
+        - RngOutput6
+        - RngOutput7
+        - RngOutput8
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+        RngOutput5: false
+        RngOutput6: false
+        RngOutput7: false
+        RngOutput8: false
+    - type: Construction
+      node: rng_device_d8
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD10
+  name: RNG Device (D10)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d10_0
+    - type: RngDevice
+      outputs: 10
+      statePrefix: d10
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+        - RngOutput5
+        - RngOutput6
+        - RngOutput7
+        - RngOutput8
+        - RngOutput9
+        - RngOutput10
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+        RngOutput5: false
+        RngOutput6: false
+        RngOutput7: false
+        RngOutput8: false
+        RngOutput9: false
+        RngOutput10: false
+    - type: Construction
+      node: rng_device_d10
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD12
+  name: RNG Device (D12)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d12_12
+    - type: RngDevice
+      outputs: 12
+      statePrefix: d12
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+        - RngOutput5
+        - RngOutput6
+        - RngOutput7
+        - RngOutput8
+        - RngOutput9
+        - RngOutput10
+        - RngOutput11
+        - RngOutput12
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+        RngOutput5: false
+        RngOutput6: false
+        RngOutput7: false
+        RngOutput8: false
+        RngOutput9: false
+        RngOutput10: false
+        RngOutput11: false
+        RngOutput12: false
+    - type: Construction
+      node: rng_device_d12
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
+
+- type: entity
+  parent: BaseRngItem
+  id: RngDeviceD20
+  name: RNG Device (D20)
+  description: Sends a signal to a random output port.
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Devices/gates.rsi
+          state: base
+        - sprite: Objects/Fun/dice.rsi
+          map: [dice]
+          state: d20_20
+    - type: RngDevice
+      outputs: 20
+      statePrefix: d20
+    - type: DeviceLinkSink
+      ports:
+        - Trigger
+    - type: DeviceLinkSource
+      ports:
+        - RngOutput1
+        - RngOutput2
+        - RngOutput3
+        - RngOutput4
+        - RngOutput5
+        - RngOutput6
+        - RngOutput7
+        - RngOutput8
+        - RngOutput9
+        - RngOutput10
+        - RngOutput11
+        - RngOutput12
+        - RngOutput13
+        - RngOutput14
+        - RngOutput15
+        - RngOutput16
+        - RngOutput17
+        - RngOutput18
+        - RngOutput19
+        - RngOutput20
+      lastSignals:
+        RngOutput1: false
+        RngOutput2: false
+        RngOutput3: false
+        RngOutput4: false
+        RngOutput5: false
+        RngOutput6: false
+        RngOutput7: false
+        RngOutput8: false
+        RngOutput9: false
+        RngOutput10: false
+        RngOutput11: false
+        RngOutput12: false
+        RngOutput13: false
+        RngOutput14: false
+        RngOutput15: false
+        RngOutput16: false
+        RngOutput17: false
+        RngOutput18: false
+        RngOutput19: false
+        RngOutput20: false
+    - type: Construction
+      node: rng_device_d20
+    - type: Appearance
+    - type: RngDeviceVisuals
+    - type: UserInterface
+      interfaces:
+        enum.RngDeviceUiKey.Key:
+          type: RngDeviceBoundUserInterface
+    - type: ActivatableUI
+      key: enum.RngDeviceUiKey.Key
