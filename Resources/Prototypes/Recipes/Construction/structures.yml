@@ -1354,3 +1354,58 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+- type: construction
+  id: ButtonFrameGrey
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameGreyNode
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+
+- type: construction
+  id: CautionButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionNode
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+
+- type: construction
+  id: CautionSecurityButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionSecurityNode
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+
+- type: construction
+  id: ExitButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameExitNode
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+
+- type: construction
+  id: JanitorButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameJanitorNode
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
