@@ -169,17 +169,15 @@ public static partial class GameDataScrounger
             // Take a directory off the stack.
             var dir = explorationStack.Pop();
 
-            if (ignoreList.Contains(dir))
-                continue; // It's all abstract anyway.
+            var ignoredDir = ignoreList.Contains(dir);
 
             explorationStack.AddRange(Directory.EnumerateDirectories(dir));
 
             foreach (var file in Directory.EnumerateFiles(dir, "*.yml"))
             {
-                if (ignoreList.Contains(file))
-                    continue; // It's all abstract anyway.
+                var ignored = ignoreList.Contains(file) || ignoredDir;
 
-                foreach (var (kind, id) in IndexPrototypesIn(file))
+                foreach (var (kind, id) in IndexPrototypesIn(file, ignored))
                 {
                     // alternate universe where .net has rust's Entry api.
                     if (!_prototypeIndex.TryGetValue(kind, out var list))
@@ -204,8 +202,9 @@ public static partial class GameDataScrounger
     ///     yielding all (type, id) pairs.
     /// </summary>
     /// <param name="file">The file to index.</param>
+    /// <param name="ignored">Whether or not the file is ignored. This treats the entire file as abstract.</param>
     /// <returns>An enumerator of all prototypes in the file, regardless of kind.</returns>
-    private static IEnumerable<(string type, string id)> IndexPrototypesIn(string file)
+    private static IEnumerable<(string type, string id)> IndexPrototypesIn(string file, bool ignored = false)
     {
         var stream = new YamlStream();
 
@@ -223,7 +222,7 @@ public static partial class GameDataScrounger
 
                 var id = entryMapping[IdNode];
                 var type = entryMapping[TypeNode];
-                var @abstract = false;
+                var @abstract = ignored;
                 if (entryMapping.TryGetNode("abstract", out YamlScalarNode? abstractNode))
                 {
                     // TODO: This technically will exclude prototypes that use the abstract field for their own stuff,
