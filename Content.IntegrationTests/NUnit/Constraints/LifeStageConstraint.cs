@@ -56,36 +56,43 @@ public static class LifeStageConstraintExtensions
 {
     extension(Is)
     {
+        /// <inheritdoc cref="extension(ConstraintExpression).LifeStage"/>
         public static LifeStageConstraint LifeStage(EntityLifeStage stage, IIntegrationInstance instance)
         {
             return new LifeStageConstraint(stage, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).PreInit"/>
         public static LifeStageConstraint PreInit(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.PreInit, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).Initializing"/>
         public static LifeStageConstraint Initializing(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.Initializing, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).Initialized"/>
         public static LifeStageConstraint Initialized(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.Initialized, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).MapInitialized"/>
         public static LifeStageConstraint MapInitialized(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.MapInitialized, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).Terminating"/>
         public static LifeStageConstraint Terminating(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.Terminating, instance);
         }
 
+        /// <inheritdoc cref="extension(ConstraintExpression).Deleted"/>
         public static LifeStageConstraint Deleted(IIntegrationInstance instance)
         {
             return Is.LifeStage(EntityLifeStage.Deleted, instance);
@@ -94,6 +101,17 @@ public static class LifeStageConstraintExtensions
 
     extension(ConstraintExpression expr)
     {
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the given lifestage.
+        /// </summary>
+        /// <param name="stage">The <see cref="EntityLifeStage"/> to check for.</param>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is MapInitialized.
+        ///     Assert.That(myEntity, Is.LifeStage(EntityLifeStage.MapInitialized, Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint LifeStage(EntityLifeStage stage, IIntegrationInstance instance)
         {
             var c = new LifeStageConstraint(stage, instance);
@@ -103,31 +121,91 @@ public static class LifeStageConstraintExtensions
             return c;
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the PreInit lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity has not yet been initialized.
+        ///     Assert.That(myEntity, Is.PreInit(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint PreInit(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.PreInit, instance);
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the Intializing lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is Initializing.
+        ///     Assert.That(myEntity, Is.Initializing(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint Initializing(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.Initializing, instance);
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the Initialized lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is Initialized.
+        ///     Assert.That(myEntity, Is.Initialized(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint Initialized(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.Initialized, instance);
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the MapInitialized lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is MapInitialized.
+        ///     Assert.That(myEntity, Is.MapInitialized(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint MapInitialized(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.MapInitialized, instance);
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the Terminating lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is Terminating.
+        ///     Assert.That(myEntity, Is.Terminating(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint Terminating(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.Terminating, instance);
         }
 
+        /// <summary>
+        /// Returns a new constraint that checks if the entity is in the Deleted lifestage.
+        /// </summary>
+        /// <param name="instance">The <see cref="IIntegrationInstance"/> (i.e. Server or Client) on which to perform the test.</param>
+        /// <example>
+        /// <code>
+        ///     // Assert that the server-sided entity myEntity is Deleted.
+        ///     Assert.That(myEntity, Is.Deleted(Server));
+        /// </code>
+        /// </example>
         public LifeStageConstraint Deleted(IIntegrationInstance instance)
         {
             return expr.LifeStage(EntityLifeStage.Deleted, instance);

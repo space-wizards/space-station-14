@@ -13,6 +13,7 @@
   - type: Action
     useDelay: 15
     icon: Interface/Actions/defile.png
+    itemIconStyle: BigAction
   - type: InstantAction
     event: !type:RevenantDefileActionEvent
 
@@ -25,6 +26,7 @@
   - type: Action
     icon: Interface/Actions/overloadlight.png
     useDelay: 20
+    itemIconStyle: BigAction
   - type: InstantAction
     event: !type:RevenantOverloadLightsActionEvent
 
@@ -49,5 +51,6 @@
   - type: Action
     icon: Interface/Actions/malfunction.png
     useDelay: 20
+    itemIconStyle: BigAction
   - type: InstantAction
     event: !type:RevenantMalfunctionActionEvent
