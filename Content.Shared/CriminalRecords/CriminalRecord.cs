@@ -1,4 +1,6 @@
 using Content.Shared.Security;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CriminalRecords;
@@ -14,10 +16,10 @@ public sealed partial record CriminalRecord
     /// Status of the person (None, Wanted, Detained).
     /// </summary>
     [DataField]
-    public SecurityStatus Status = SecurityStatus.None;
+    public ProtoId<SecurityStatusPrototype>? Status = null;
 
     /// <summary>
-    /// When Status is Wanted, the reason for it.
+    /// When Status is Wanted or Charged, the reason for it.
     /// Should never be set otherwise.
     /// </summary>
     [DataField]
