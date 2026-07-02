@@ -101,6 +101,7 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+  - type: CargoSellBlacklist
 
 - type: entity
   id: MobLuminousPerson

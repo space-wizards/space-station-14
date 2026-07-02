@@ -41,7 +41,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private IdentitySystem _identity = default!;
 
     [Dependency] private EntityQuery<CargoSellBlacklistComponent> _cargoSellBlacklistQuery = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
     [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
 
     private HashSet<EntityUid> _setEnts = new();

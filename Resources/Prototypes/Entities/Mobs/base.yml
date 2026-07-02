@@ -147,6 +147,7 @@
   - type: LightningTarget
     priority: 2
     lightningExplode: false
+  - type: CargoSellBlacklist
   - type: GhostOnMove
     mustBeDead: true
 
