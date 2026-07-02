@@ -13,9 +13,9 @@ namespace Content.IntegrationTests.Tests.Midi;
 public sealed partial class MidiLibraryTests : GameTest
 {
     private static readonly byte[] TestBytes = [1, 2, 3, 4, 5, 6];
-    private const string TestFileName = "unit_test.midi";
+    private static readonly ResPath TestFileName = new ResPath("unit_test.midi");
     private static ResPath TestUserDataDir => new ResPath("/UserMidis/");
-    private static ResPath TestFullPath => new ResPath(TestUserDataDir + TestFileName);
+    private static ResPath TestFullPath => TestUserDataDir / TestFileName;
 
     private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
     private MidiLibraryManager MidiLibManager => Pair.Client.ResolveDependency<MidiLibraryManager>();
@@ -33,7 +33,7 @@ public sealed partial class MidiLibraryTests : GameTest
     [Test]
     public async Task TestAddMidiFile()
     {
-        var addedFileName = "";
+        var addedFileName = new ResPath("");
         Stream stream = new MemoryStream(TestBytes);
         MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
 
@@ -61,7 +61,7 @@ public sealed partial class MidiLibraryTests : GameTest
     [Test]
     public void TestRemoveMidiFile()
     {
-        var removedFileName = "";
+        var removedFileName = new ResPath("");
         MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
 
         ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
@@ -83,9 +83,9 @@ public sealed partial class MidiLibraryTests : GameTest
         var resetFired = false;
 
         MidiLibManager.MidiFilesReset += () => { resetFired = true; };
-        await MidiLibManager.AddMidiFile("1_" + TestFileName, TestBytes);
-        await MidiLibManager.AddMidiFile("2_" + TestFileName, TestBytes);
-        await MidiLibManager.AddMidiFile("3_" + TestFileName, TestBytes);
+        await MidiLibManager.AddMidiFile(new ResPath("1_unit_test.midi"), TestBytes);
+        await MidiLibManager.AddMidiFile(new ResPath("2_unit_test.midi"), TestBytes);
+        await MidiLibManager.AddMidiFile(new ResPath("3_unit_test.midi"), TestBytes);
 
         Assert.That(MidiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
 
@@ -101,9 +101,9 @@ public sealed partial class MidiLibraryTests : GameTest
     [Test]
     public void TestRenameMidiFile()
     {
-        const string renamedFileName = "unit_test_renamed.midi";
-        var removedFileName = "";
-        var addedFileName = "";
+        var renamedFileName = new ResPath("unit_test_renamed.midi");
+        var removedFileName = new ResPath("");
+        var addedFileName = new ResPath("");
 
         MidiLibManager.MidiFileRemoved += s => { removedFileName = s; };
         MidiLibManager.MidiFileAdded += s => { addedFileName = s; };
@@ -114,7 +114,7 @@ public sealed partial class MidiLibraryTests : GameTest
         MidiLibManager.RenameMidiFile(TestFileName, renamedFileName);
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(ResManager.UserData.Exists(new ResPath(TestUserDataDir + renamedFileName)), Is.True);
+            Assert.That(ResManager.UserData.Exists(TestUserDataDir / renamedFileName), Is.True);
             Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
             Assert.That(addedFileName, Is.EqualTo(renamedFileName));

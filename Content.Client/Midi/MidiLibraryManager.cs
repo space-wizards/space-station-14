@@ -24,17 +24,17 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
 
     private ISawmill _sawmill = default!;
 
-    private readonly List<string> _fileList = [];
+    private readonly List<ResPath> _filePaths = [];
 
     /// <summary>
     /// Raised after a MIDI file has been added to the library. Contains added file name as argument.
     /// </summary>
-    public event Action<string>? MidiFileAdded;
+    public event Action<ResPath>? MidiFileAdded;
 
     /// <summary>
     /// Raised after a MIDI file has been removed from the library. Contains removed file name as argument.
     /// </summary>
-    public event Action<string>? MidiFileRemoved;
+    public event Action<ResPath>? MidiFileRemoved;
 
     /// <summary>
     /// Raised after more than one or two library changes occured at once. (i.e. initial load or when all items deleted)
@@ -52,18 +52,18 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <summary>
     /// Returns the binary content of the given MIDI file.
     /// </summary>
-    /// <param name="fileName">MIDI file name to get.</param>
+    /// <param name="filePath">MIDI file name to get.</param>
     /// <returns>MIDI binary as a byte array or an empty byte array if the file doesn't exist.</returns>
-    public byte[] GetMidiData(string fileName)
+    public byte[] GetMidiData(ResPath filePath)
     {
         try
         {
-            var filePath = new ResPath(UserMidiDirectory + fileName);
-            return _resManager.UserData.ReadAllBytes(filePath);
+            var fullPath = UserMidiDirectory / filePath;
+            return _resManager.UserData.ReadAllBytes(fullPath);
         }
         catch (Exception e)
         {
-            _sawmill.Error($"Failed to read MIDI data from '{fileName}': {e.Message}");
+            _sawmill.Error($"Failed to read MIDI data from '{filePath}': {e.Message}");
             return [];
         }
     }
@@ -71,31 +71,31 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <summary>
     /// Returns an enumeration of all available MIDI files.
     /// </summary>
-    /// <returns>IEnumerable of MIDI file name strings.</returns>
-    public IEnumerable<string> GetMidiFiles()
+    /// <returns>An enumeration of MIDI file paths.</returns>
+    public IEnumerable<ResPath> GetMidiFiles()
     {
-        return _fileList;
+        return _filePaths;
     }
 
     /// <summary>
     /// Stores the given byte stream with the given file name inside the <see cref="UserMidiDirectory"/> directory.
     /// </summary>
-    /// <param name="fileName">File name to write.</param>
+    /// <param name="filePath">File name to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
-    public async Task<bool> AddMidiFile(string fileName, Stream data)
+    public async Task<bool> AddMidiFile(ResPath filePath, Stream data)
     {
         try
         {
-            await using var file = _resManager.UserData.OpenWrite(new ResPath(UserMidiDirectory + fileName));
+            await using var file = _resManager.UserData.OpenWrite(UserMidiDirectory / filePath);
             await data.CopyToAsync(file);
-            _fileList.Add(fileName);
-            MidiFileAdded?.Invoke(fileName);
+            _filePaths.Add(filePath);
+            MidiFileAdded?.Invoke(filePath);
             return true;
         }
         catch (Exception e)
         {
-            _sawmill.Error($"Failed to store MIDI file '{fileName}' in library: {e.Message}");
+            _sawmill.Error($"Failed to store MIDI file '{filePath}' in library: {e.Message}");
             return false;
         }
     }
@@ -103,38 +103,38 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <summary>
     /// Stores the given byte array with the given file name inside the <see cref="UserMidiDirectory"/> directory.
     /// </summary>
-    /// <param name="fileName">File name to write.</param>
+    /// <param name="filePath">File name to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
-    public async Task<bool> AddMidiFile(string fileName, byte[] data)
+    public async Task<bool> AddMidiFile(ResPath filePath, byte[] data)
     {
-        return await AddMidiFile(fileName, new MemoryStream(data));
+        return await AddMidiFile(filePath, new MemoryStream(data));
     }
 
     /// <summary>
     /// Renames a MIDI file inside the library.
     /// </summary>
-    /// <param name="oldName">Current file name</param>
-    /// <param name="newName">New file name</param>
+    /// <param name="oldPath">Current file name</param>
+    /// <param name="newPath">New file name</param>
     /// <remarks>Raises <see cref="MidiFileRemoved"/> and <see cref="MidiFileAdded"/> on success.</remarks>
-    public bool RenameMidiFile(string oldName, string newName)
+    public bool RenameMidiFile(ResPath oldPath, ResPath newPath)
     {
         try
         {
-            var oldPath = new ResPath(UserMidiDirectory + oldName);
-            var newPath = new ResPath(UserMidiDirectory + newName);
-            oldPath = oldPath.Clean();
-            newPath = newPath.Clean();
-            _resManager.UserData.Rename(oldPath, newPath);
-            _fileList.Remove(oldName);
-            MidiFileRemoved?.Invoke(oldName);
-            _fileList.Add(newName);
-            MidiFileAdded?.Invoke(newName);
+            var fullOldPath = UserMidiDirectory / oldPath;
+            var fullNewPath = UserMidiDirectory / newPath;
+            fullOldPath = fullOldPath.Clean();
+            fullNewPath = fullNewPath.Clean();
+            _resManager.UserData.Rename(fullOldPath, fullNewPath);
+            _filePaths.Remove(oldPath);
+            MidiFileRemoved?.Invoke(oldPath);
+            _filePaths.Add(newPath);
+            MidiFileAdded?.Invoke(newPath);
             return true;
         }
         catch (Exception e)
         {
-            _sawmill.Error($"Failed to rename MIDI file '{oldName}' with '{newName}': {e.Message}");
+            _sawmill.Error($"Failed to rename MIDI file '{oldPath}' with '{newPath}': {e.Message}");
             return false;
         }
     }
@@ -142,13 +142,13 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <summary>
     /// Permanently removes the given MIDI file if it exists inside <see cref="UserMidiDirectory"/>.
     /// </summary>
-    /// <param name="fileName">File name to remove.</param>
+    /// <param name="filePath">File name to remove.</param>
     /// <remarks>Raises <see cref="MidiFileRemoved"/></remarks>
-    public void RemoveMidiFile(string fileName)
+    public void RemoveMidiFile(ResPath filePath)
     {
-        DeleteMidiFile(fileName);
-        _fileList.Remove(fileName);
-        MidiFileRemoved?.Invoke(fileName);
+        DeleteMidiFile(filePath);
+        _filePaths.Remove(filePath);
+        MidiFileRemoved?.Invoke(filePath);
     }
 
     /// <summary>
@@ -157,12 +157,12 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <remarks>Raises <see cref="MidiFilesReset"/></remarks>
     public void RemoveAllMidiFiles()
     {
-        foreach (var fileName in _fileList)
+        foreach (var path in _filePaths)
         {
-            DeleteMidiFile(fileName);
+            DeleteMidiFile(path);
         }
 
-        _fileList.Clear();
+        _filePaths.Clear();
         MidiFilesReset?.Invoke();
     }
 
@@ -171,7 +171,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// </summary>
     public void ReloadLibrary()
     {
-        _fileList.Clear();
+        _filePaths.Clear();
         if (!_resManager.UserData.IsDir(UserMidiDirectory))
             return;
 
@@ -181,15 +181,15 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
             if (!filePath.Extension.Equals("midi") && !filePath.Extension.Equals("mid"))
                 continue;
 
-            _fileList.Add(filePath.Filename);
+            _filePaths.Add(new ResPath(path));
         }
 
         MidiFilesReset?.Invoke();
     }
 
-    private void DeleteMidiFile(string fileName)
+    private void DeleteMidiFile(ResPath filePath)
     {
-        var path = new ResPath(UserMidiDirectory + fileName).Clean();
+        var path = (UserMidiDirectory / filePath).Clean();
         _resManager.UserData.Delete(path);
     }
 
