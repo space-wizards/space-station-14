@@ -12,7 +12,7 @@ public sealed partial class IonLawLocalizationSystem : EntitySystem
 
         if (culture == null)
         {
-            _ionLaw.Sawmill.Error("Culture was null when trying to generate Ion Law");
+            Log.Error("Culture was null when trying to generate Ion Law");
             return;
         }
 
