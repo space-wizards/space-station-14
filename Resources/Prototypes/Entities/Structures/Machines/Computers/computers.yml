@@ -686,6 +686,7 @@
     color: "#3c5eb5"
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: ShuttleCaller
   - type: Injurable
     damageContainer: StructuralInorganic
 

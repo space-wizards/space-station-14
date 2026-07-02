@@ -191,6 +191,12 @@ public sealed partial class CCVars
         CVarDef.Create("shuttle.auto_call_extension_time", 45, CVar.SERVERONLY);
 
     /// <summary>
+    ///     Enables the shuttle-calling functionality of <see cref="ShuttleCallerFailsafeSystem"/>
+    /// </summary>
+    public static readonly CVarDef<bool> EmergencyShuttleCallerFailsafeEnabled =
+        CVarDef.Create("shuttle.caller_failsafe", true, CVar.SERVERONLY);
+
+    /// <summary>
     ///     Impulse multiplier for player interactions that move grids (other than shuttle thrusters, gyroscopes and grid collisons).
     ///     At the moment this only affects the pushback in SpraySystem.
     ///     A higher value means grids have a lower effective mass and therefore will get pushed stronger.
