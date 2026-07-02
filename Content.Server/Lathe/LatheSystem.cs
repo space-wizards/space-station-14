@@ -74,7 +74,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheMoveRequestMessage>(OnLatheMoveRequestMessage);
             SubscribeLocalEvent<LatheComponent, LatheAbortFabricationMessage>(OnLatheAbortFabricationMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, LatheUpdateState.UpdateWhat.All, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
@@ -214,7 +214,7 @@ namespace Content.Server.Lathe
 
             _audio.PlayPvs(component.ProducingSound, uid);
             UpdateRunningAppearance(uid, true);
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
 
             if (time == TimeSpan.Zero)
             {
@@ -264,21 +264,27 @@ namespace Content.Server.Lathe
             if (!TryStartProducing(uid, comp))
             {
                 RemCompDeferred(uid, prodComp);
-                UpdateUserInterfaceState(uid, comp);
+                UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, comp);
                 UpdateRunningAppearance(uid, false);
             }
         }
 
-        public void UpdateUserInterfaceState(EntityUid uid, LatheComponent? component = null)
+        public void UpdateUserInterfaceState(EntityUid uid, LatheUpdateState.UpdateWhat updateWhat, LatheComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
-            var producing = component.CurrentRecipe;
-            if (producing == null && component.Queue.First is { } node)
-                producing = node.Value.Recipe;
+            ProtoId<LatheRecipePrototype>? producing = null;
+            if ((updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0)
+            {
+                producing = component.CurrentRecipe;
+                if (producing == null && component.Queue.First is { } node)
+                    producing = node.Value.Recipe;
+            }
 
-            var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue.ToArray(), producing);
+            var recipies = ((updateWhat & LatheUpdateState.UpdateWhat.Recipes) != 0) ? GetAvailableRecipes(uid, component) : null;
+            var queue = ((updateWhat & LatheUpdateState.UpdateWhat.ProductionQueue) != 0) ? component.Queue.ToArray() : null;
+            var state = new LatheUpdateState(updateWhat, recipies, queue, producing);
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
         }
 
@@ -325,7 +331,7 @@ namespace Content.Server.Lathe
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
         {
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Materials, component);
         }
 
         /// <summary>
@@ -363,7 +369,7 @@ namespace Content.Server.Lathe
 
         private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
         {
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Recipes, component);
         }
 
         private void OnTechnologyDatabaseModified(Entity<LatheAnnouncingComponent> ent, ref TechnologyDatabaseModifiedEvent args)
@@ -410,7 +416,7 @@ namespace Content.Server.Lathe
 
         private void OnResearchRegistrationChanged(EntityUid uid, LatheComponent component, ref ResearchRegistrationChangedEvent args)
         {
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.Recipes, component);
         }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
@@ -486,7 +492,7 @@ namespace Content.Server.Lathe
                 component.CurrentRecipe = null;
             }
             RemCompDeferred<LatheProducingComponent>(uid);
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
             UpdateRunningAppearance(uid, false);
         }
 
@@ -504,12 +510,13 @@ namespace Content.Server.Lathe
                 }
             }
             TryStartProducing(uid, component);
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
         }
 
         private void OnLatheSyncRequestMessage(EntityUid uid, LatheComponent component, LatheSyncRequestMessage args)
         {
-            UpdateUserInterfaceState(uid, component);
+            // This message seems to be unused?
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.All, component);
         }
 
         /// <summary>
@@ -538,7 +545,7 @@ namespace Content.Server.Lathe
 
             RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
         }
 
         public void OnLatheMoveRequestMessage(EntityUid uid, LatheComponent component, ref LatheMoveRequestMessage args)
@@ -583,7 +590,7 @@ namespace Content.Server.Lathe
                 component.Queue.AddBefore(newRelativeNode, node);
             }
 
-            UpdateUserInterfaceState(uid, component);
+            UpdateUserInterfaceState(uid, LatheUpdateState.UpdateWhat.ProductionQueue, component);
         }
 
         public void OnLatheAbortFabricationMessage(EntityUid uid, LatheComponent component, ref LatheAbortFabricationMessage args)

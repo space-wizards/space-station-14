@@ -43,12 +43,27 @@ namespace Content.Client.Lathe.UI
             switch (state)
             {
                 case LatheUpdateState msg:
-                    if (_menu != null)
-                        _menu.Recipes = msg.Recipes;
-                    _menu?.PopulateRecipes();
-                    _menu?.UpdateCategories();
-                    _menu?.PopulateQueueList(msg.Queue);
-                    _menu?.SetQueueInfo(msg.CurrentlyProducing);
+                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.Recipes) != 0)
+                    {
+                        if (_menu != null && msg.Recipes != null)
+                            _menu.Recipes = msg.Recipes;
+                        _menu?.PopulateRecipes();
+                        _menu?.UpdateCategories();
+                    }
+
+                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.ProductionQueue) != 0)
+                    {
+                        if (msg.Queue != null)
+                        {
+                            _menu?.PopulateQueueList(msg.Queue);
+                        }
+                        _menu?.SetQueueInfo(msg.CurrentlyProducing);
+                    }
+
+                    if ((msg.UpdateFlags & LatheUpdateState.UpdateWhat.Materials) != 0)
+                    {
+                        _menu?.UpdateCanProduce();
+                    }
                     break;
             }
         }

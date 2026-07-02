@@ -7,14 +7,31 @@ namespace Content.Shared.Lathe;
 [Serializable, NetSerializable]
 public sealed class LatheUpdateState : BoundUserInterfaceState
 {
-    public List<ProtoId<LatheRecipePrototype>> Recipes;
+    [Flags]
+    public enum UpdateWhat
+    {
+        Recipes = 1 << 0,
+        ProductionQueue = 1 << 2,
+        Materials = 1 << 3,
+        All = Recipes | ProductionQueue | Materials
+    }
 
-    public LatheRecipeBatch[] Queue;
+    // Flags indicating what needs to be updated in the UI
+    // to minimize update messages
+    public UpdateWhat UpdateFlags;
+
+    public List<ProtoId<LatheRecipePrototype>>? Recipes;
+
+    public LatheRecipeBatch[]? Queue;
 
     public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
 
-    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, LatheRecipeBatch[] queue, ProtoId<LatheRecipePrototype>? currentlyProducing = null)
+    public LatheUpdateState(UpdateWhat updateWhat,
+            List<ProtoId<LatheRecipePrototype>>? recipes,
+            LatheRecipeBatch[]? queue,
+            ProtoId<LatheRecipePrototype>? currentlyProducing = null)
     {
+        UpdateFlags = updateWhat;
         Recipes = recipes;
         Queue = queue;
         CurrentlyProducing = currentlyProducing;
