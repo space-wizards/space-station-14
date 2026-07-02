@@ -3,6 +3,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.Components;
 
@@ -27,22 +28,28 @@ public sealed partial class BinComponent : Component
     public string ContainerId = "bin-container";
 
     /// <summary>
-    /// A list representing the order in which
-    /// all the entities are stored in the bin.
-    /// </summary>
-    /// <remarks>
-    /// The only reason this isn't a stack is so that
-    /// i can handle entities being deleted and removed
-    /// out of order by other systems
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public List<EntityUid> Items = new();
-
-    /// <summary>
-    /// The items that start in the bin. Sorted in order.
+    /// Examine string that displays when there are items in the bin.
     /// </summary>
     [DataField]
-    public List<EntProtoId> InitialContents = new();
+    public string ExamineText = "bin-component-on-examine-text";
+
+    /// <summary>
+    /// Examine text that displays when the bin is empty.
+    /// </summary>
+    [DataField]
+    public string EmptyText = "bin-component-on-examine-empty-text";
+
+    /// <summary>
+    /// Icon for insertion
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? InsertIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/in.svg.192dpi.png"));
+
+    /// <summary>
+    /// Icon for removal.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? RemoveIcon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png"));
 
     /// <summary>
     /// A whitelist governing what items can be inserted into the bin.
