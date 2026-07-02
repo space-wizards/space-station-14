@@ -690,3 +690,26 @@
   - type: Tag
     tags:
     - Kangaroo
+
+- type: entity
+  parent: [ ClothingHandsGlovesBoxingBase, BaseMagicalContraband ]
+  id: ClothingHandsGlovesBungo
+  name: bungo gloves
+  description: Knock their socks off!
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/bungo.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/bungo.rsi
+  - type: MeleeWeapon
+    attackRate: 1.25
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-yellow
+  - type: FingerprintMask
+  - type: MeleeSpeech
+    Battlecry: PUNCHIO KNOCEL!!
+  - type: StaticPrice
+    price: 2500
+  - type: ThrowEquippedOnHit
+    throwChance: 0.3

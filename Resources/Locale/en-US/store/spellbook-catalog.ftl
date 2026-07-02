@@ -67,6 +67,9 @@ spellbook-hammer-mjollnir-description = Wield the power of THUNDER in your hands
 spellbook-hammer-singularity-name = Singularity Hammer
 spellbook-hammer-singularity-description = Ever wonder what it'd be like to be the singularity? Swing this hammer to draw in your surroundings, even works if you miss!
 
+spellbook-glove-bungo-name = Bungo Gloves
+spellbook-glove-bungo-description = K.O!! Knock their equipment clean off with the Bungo Gloves!
+
 spellbook-staff-animation-name = Staff of Animation
 spellbook-staff-animation-description = Bring inanimate objects to life!
 
