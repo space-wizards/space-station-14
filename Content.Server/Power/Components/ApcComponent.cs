@@ -16,6 +16,8 @@ public sealed partial class ApcComponent : BaseApcNetComponent
 
     public ApcExternalPowerState LastExternalState;
 
+    public ApcChannelState LastChannelState;
+
     /// <summary>
     /// Time the ui was last updated automatically.
     /// Done after every <see cref="VisualsChangeDelay"/> to show the latest load.

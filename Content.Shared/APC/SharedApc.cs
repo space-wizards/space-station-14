@@ -75,68 +75,30 @@ namespace Content.Shared.APC
 
     /// <summary>
     /// APC power channel states.
-    /// None of this is implemented.
     /// </summary>
+    [Serializable, NetSerializable]
     public enum ApcChannelState : sbyte
     {
         /// <summary>
-        /// Empty bitmask.
+        /// The APC is operating normally, and is currently not delivering power.
         /// </summary>
-        None = 0,
-
+        Off = 0,
         /// <summary>
-        /// Bitfield indicating whether the APC is automatically regulating the given channel.
+        /// The APC is operating normally, and is delivering power to the network.
         /// </summary>
-        Control = (1<<0),
+        On = 1,
         /// <summary>
-        /// Bit state indicating that the APC has been set to automatically toggle the given channel depending on available power.
+        /// The APC's breaker has been opened manually, and cannot deliver power.
         /// </summary>
-        Auto = None,
+        BreakerOpen = 2,
         /// <summary>
-        /// Bit state indicating that the APC has been set to always provide/not provide power on the given channel if possible.
+        /// The APC's breaker has been tripped, and cannot deliver power.
         /// </summary>
-        Manual = Control,
-
+        BreakerTripped = 3,
         /// <summary>
-        /// Bitfield indicating whether the APC is currently providing power on the given channel.
+        /// The total number of states to show.
         /// </summary>
-        Power = (1<<1),
-        /// <summary>
-        /// Bit state indicating that the APC is currently not providing power on the given channel.
-        /// </summary>
-        Off = None,
-        /// <summary>
-        /// Bit state indicating that the APC is currently providing power on the given channel.
-        /// </summary>
-        On = Power,
-
-        /// <summary>
-        /// Bitmask for the full state for a given APC power channel.
-        /// </summary>
-        All = Power | Control,
-
-        /// <summary>
-        /// State that indicates the given channel has been automatically disabled.
-        /// </summary>
-        AutoOff = (Off | Auto),
-        /// <summary>
-        /// State that indicates the given channel has been automatically enabled.
-        /// </summary>
-        AutoOn = (On | Auto),
-        /// <summary>
-        /// State that indicates the given channel has been manually disabled.
-        /// </summary>
-        ManualOff = (Off | Manual),
-        /// <summary>
-        /// State that indicates the given channel has been manually enabled.
-        /// </summary>
-        ManualOn = (On | Manual),
-
-        /// <summary>
-        /// The log 2 width in bits of the bitfields indicating the status of an APC power channel.
-        /// Used for bit shifting operations (Mask for the state for channel i is (All << (i << LogWidth))).
-        /// </summary>
-        LogWidth = 1,
+        NumStates = 4,
     }
 
     [Serializable, NetSerializable]
@@ -164,9 +126,14 @@ namespace Content.Shared.APC
         Remote = 3,
 
         /// <summary>
+        /// The APC's breaker has been tripped.
+        /// </summary>
+        Tripped = 4,
+
+        /// <summary>
         /// The number of valid states charge states the APC can be in.
         /// </summary>
-        NumStates = 4,
+        NumStates = 5,
 
         /// <summary>
         /// APC is emagged (and not displaying other useful power colors at a glance)

@@ -55,12 +55,8 @@ public sealed partial class ApcSystem : EntitySystem
                 UpdateUIState(uid, apc, battery);
             }
 
-            if (apc.NeedStateUpdate)
-            {
-                UpdateApcState(uid, apc, battery);
-            }
-
             // Overload
+            var tripped = false;
             if (apc.MainBreakerEnabled && battery.CurrentSupply > apc.MaxLoad)
             {
                 // Not already overloaded, start timer
@@ -74,12 +70,26 @@ public sealed partial class ApcSystem : EntitySystem
                     {
                         apc.TripFlag = true;
                         ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
+                        apc.NeedStateUpdate = true; // Force an update.
+                        tripped = true;
                     }
                 }
             }
             else
             {
                 apc.TripStartTime = null;
+            }
+
+            // Check battery update (more frequent changes)
+            if (!apc.NeedStateUpdate &&
+                CalcChannelState((uid, apc), battery.NetworkBattery) != apc.LastChannelState)
+            {
+                apc.NeedStateUpdate = true;
+            }
+
+            if (apc.NeedStateUpdate)
+            {
+                UpdateApcState(uid, apc, battery, forceChargeCheck: tripped);
             }
         }
     }
@@ -141,6 +151,7 @@ public sealed partial class ApcSystem : EntitySystem
         if (apc.MainBreakerEnabled)
             apc.TripFlag = false;
 
+        UpdateApcState(uid, apc, battery);
         UpdateUIState(uid, apc);
         _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
 
@@ -163,16 +174,20 @@ public sealed partial class ApcSystem : EntitySystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Updates the UI and appearance of the given APC based on its status in the power network.
+    /// </summary>
     public void UpdateApcState(EntityUid uid,
-        ApcComponent? apc=null,
-        PowerNetworkBatteryComponent? battery = null)
+        ApcComponent? apc = null,
+        PowerNetworkBatteryComponent? battery = null,
+        bool forceChargeCheck = false)
     {
         if (!Resolve(uid, ref apc, ref battery, false))
             return;
 
-        if (apc.LastChargeStateTime == null || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (apc.LastChargeStateTime == null || forceChargeCheck || apc.LastChargeStateTime + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
         {
-            var newState = CalcChargeState(uid, battery.NetworkBattery);
+            var newState = CalcChargeState((uid, apc), battery.NetworkBattery);
             if (newState != apc.LastChargeState)
             {
                 apc.LastChargeState = newState;
@@ -182,6 +197,16 @@ public sealed partial class ApcSystem : EntitySystem
                 {
                     _appearance.SetData(uid, ApcVisuals.ChargeState, newState, appearance);
                 }
+            }
+        }
+
+        var channelState = CalcChannelState((uid, apc), battery.NetworkBattery);
+        if (channelState != apc.LastChannelState)
+        {
+            apc.LastChannelState = channelState;
+            if (TryComp(uid, out AppearanceComponent? appearance))
+            {
+                _appearance.SetData(uid, ApcVisuals.ChannelState, channelState, appearance);
             }
         }
 
@@ -218,15 +243,16 @@ public sealed partial class ApcSystem : EntitySystem
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
-    private ApcChargeState CalcChargeState(EntityUid uid, PowerState.Battery battery)
+    private ApcChargeState CalcChargeState(Entity<ApcComponent> ent, PowerState.Battery battery)
     {
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
             return ApcChargeState.Emag;
 
+        if (ent.Comp.TripFlag)
+            return ApcChargeState.Tripped;
+
         if (battery.CurrentStorage / battery.Capacity > ApcComponent.HighPowerThreshold)
-        {
             return ApcChargeState.Full;
-        }
 
         var delta = battery.CurrentSupply - battery.CurrentReceiving;
         return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
@@ -246,6 +272,19 @@ public sealed partial class ApcSystem : EntitySystem
         }
 
         return ApcExternalPowerState.Good;
+    }
+
+    /// <summary>
+    /// Generates the channel state for a given APC - whether the APC is providing (or can provide) power to the network.
+    /// </summary>
+    private ApcChannelState CalcChannelState(Entity<ApcComponent> ent, PowerState.Battery battery)
+    {
+        if (ent.Comp.TripFlag)
+            return ApcChannelState.BreakerTripped;
+        else if (!ent.Comp.MainBreakerEnabled)
+            return ApcChannelState.BreakerOpen;
+
+        return battery.CurrentSupply > 0 ? ApcChannelState.On : ApcChannelState.Off;
     }
 
     // TODO: This subscription should be in shared.
