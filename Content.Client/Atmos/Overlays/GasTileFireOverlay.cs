@@ -23,7 +23,6 @@ public sealed partial class GasTileFireOverlay : Overlay
     [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private IEntityManager _entManager = default!;
-    [Dependency] private IMapManager _mapManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.WorldSpaceBelowWorld;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
@@ -113,7 +112,7 @@ public sealed partial class GasTileFireOverlay : Overlay
             return;
 
         // TODO: WorldBounds callback.
-        _mapManager.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
+        _mapSystem.FindGridsIntersecting(args.MapId, args.WorldAABB, ref gridState,
             static (EntityUid uid, MapGridComponent grid,
                 ref (Box2Rotated WorldBounds,
                     DrawingHandleWorld drawHandle,

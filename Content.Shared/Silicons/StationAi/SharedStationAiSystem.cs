@@ -62,7 +62,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private SharedTransformSystem _xforms = default!;
     [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private StationAiVisionSystem _vision = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private MobStateSystem _mobState = default!;
 
     // StationAiHeld is added to anything inside of an AI core.
