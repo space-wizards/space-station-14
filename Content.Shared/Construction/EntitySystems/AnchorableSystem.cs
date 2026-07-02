@@ -304,11 +304,20 @@ public sealed partial class AnchorableSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
+    /// <inheritdoc cref="CanAnchorAt(Entity{PhysicsComponent?},EntityCoordinates,EntityUid?)"/>
     public bool CanAnchorAt(Entity<PhysicsComponent?> entity, EntityUid? user = null)
     {
         return CanAnchorAt(entity, Transform(entity).Coordinates, user);
     }
 
+    /// <summary>
+    /// Checks if an entity can be anchored at a specific set of coordinates.
+    /// See <see cref="TileFree(EntityCoordinates,PhysicsComponent)"/> for more details
+    /// </summary>
+    /// <param name="entity">Entity we're trying to anchor</param>
+    /// <param name="coordinates">Coordinates we're attempting to anchor it at</param>
+    /// <param name="user">Optional user who is anchoring it, used for popups</param>
+    /// <returns>True if the entity can be anchored without problems, false if it cannot.</returns>
     public bool CanAnchorAt(Entity<PhysicsComponent?> entity, EntityCoordinates coordinates, EntityUid? user = null)
     {
         if (!Resolve(entity, ref entity.Comp))

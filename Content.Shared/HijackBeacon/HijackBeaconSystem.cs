@@ -43,22 +43,19 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveHijackBeaconComponent, HijackBeaconComponent>();
         while (query.MoveNext(out var uid, out var active, out var comp))
         {
+            if (_gameTiming.CurTime < active.CompletionTime)
+                return;
+
             switch (comp.Status)
             {
                 case HijackBeaconStatus.Armed:
-                    if (_gameTiming.CurTime < active.CompletionTime)
-                        return;
-
                     HijackFinish((uid, comp));
                     Dirty(uid, comp);
                     break;
                 case HijackBeaconStatus.Cooldown:
-                    if (comp.CooldownTime < _gameTiming.CurTime)
-                    {
-                        comp.Status = HijackBeaconStatus.AwaitActivate;
-                        RemCompDeferred<ActiveHijackBeaconComponent>(uid);
-                        Dirty(uid, comp);
-                    }
+                    comp.Status = HijackBeaconStatus.AwaitActivate;
+                    RemCompDeferred<ActiveHijackBeaconComponent>(uid);
+                    Dirty(uid, comp);
                     break;
             }
         }
@@ -90,37 +87,37 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands is null)
             return;
 
-        if (ent.Comp.Status == HijackBeaconStatus.AwaitActivate)
-        {
-            args.Verbs.Add(new()
-            {
-                Act = () =>
-                {
-                    ActivateBeacon(ent);
-                },
-                Text = Loc.GetString("hijack-beacon-verb-activate-text"),
-                Message = Loc.GetString("hijack-beacon-verb-activate-message"),
-                Disabled = ent.Comp.Status != HijackBeaconStatus.AwaitActivate || !CanActivate(ent),
-                TextStyleClass = "InteractionVerb",
-                Impact = LogImpact.High,
-            });
-        }
+        var user = args.User;
 
-        if (ent.Comp.Status == HijackBeaconStatus.Armed)
+        switch (ent.Comp.Status)
         {
-            var user = args.User;
-
-            args.Verbs.Add(new()
-            {
-                Act = () =>
+            case HijackBeaconStatus.AwaitActivate:
+                args.Verbs.Add(new()
                 {
-                    DeactivateBeaconDoAfter(ent, user);
-                },
-                Text = Loc.GetString("hijack-beacon-verb-deactivate-text"),
-                Message = Loc.GetString("hijack-beacon-verb-deactivate-message"),
-                TextStyleClass = "InteractionVerb",
-                Impact = LogImpact.High,
-            });
+                    Act = () =>
+                    {
+                        ActivateBeacon(ent, user);
+                    },
+                    Text = Loc.GetString("hijack-beacon-verb-activate-text"),
+                    Message = Loc.GetString("hijack-beacon-verb-activate-message"),
+                    Disabled = ent.Comp.Status != HijackBeaconStatus.AwaitActivate || !CanActivate(ent.Owner),
+                    TextStyleClass = "InteractionVerb",
+                    Impact = LogImpact.High,
+                });
+                break;
+            case HijackBeaconStatus.Armed:
+                args.Verbs.Add(new()
+                {
+                    Act = () =>
+                    {
+                        DeactivateBeaconDoAfter(ent, user);
+                    },
+                    Text = Loc.GetString("hijack-beacon-verb-deactivate-text"),
+                    Message = Loc.GetString("hijack-beacon-verb-deactivate-message"),
+                    TextStyleClass = "InteractionVerb",
+                    Impact = LogImpact.High,
+                });
+                break;
         }
     }
 
@@ -138,9 +135,12 @@ public sealed partial class HijackBeaconSystem : EntitySystem
                args.PushMarkup(Loc.GetString("hijack-beacon-examine-await-activate"));
                break;
            case HijackBeaconStatus.Armed:
+               if (GetRemainingTime(ent.Owner) is not { } time)
+                   return;
+
                args.PushMarkup(Loc.GetString("defusable-examine-live",
                    ("name", ent),
-                   ("time", GetRemainingTime(ent.Owner))));
+                   ("time", time)));
                break;
            case HijackBeaconStatus.Cooldown:
                args.PushMarkup(Loc.GetString("hijack-beacon-examine-await-cooldown"));
@@ -159,7 +159,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        DeactivateBeacon(ent);
+        DeactivateBeacon(ent, args.User);
 
         args.Handled = true;
     }
@@ -169,24 +169,29 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     /// <summary>
     ///     Arming the beacon. Should only occur if on the ATS.
     /// </summary>
-    private void ActivateBeacon(Entity<HijackBeaconComponent> ent)
+    private void ActivateBeacon(Entity<HijackBeaconComponent> ent, EntityUid? user)
     {
-        if (ent.Comp.Status != HijackBeaconStatus.AwaitActivate || !CanActivate(ent))
+        if (ent.Comp.Status != HijackBeaconStatus.AwaitActivate)
+            return;
+
+        var xform = Transform(ent);
+
+        if (!CanActivate((ent, xform)))
             return;
 
         // Activate and start countdown.
         // Remaining time is adjusted by current time to simplify the update loop.
         EnsureComp<ActiveHijackBeaconComponent>(ent, out var activeComp);
-        activeComp.CompletionTime = _gameTiming.CurTime + ent.Comp.RemainingTime;
+        activeComp.CompletionTime = _gameTiming.CurTime + ent.Comp.HackTime;
         ent.Comp.Status = HijackBeaconStatus.Armed;
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
-        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", GetRemainingTime((ent.Owner, activeComp))));
+        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", GetRemainingTime((ent.Owner, activeComp)) ?? 0));
         _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Yellow);
 
         //Anchor. Anchoring is tied to activation.
-        Anchor(ent);
+        Anchor((ent, xform), user);
 
         Dirty(ent);
     }
@@ -194,13 +199,15 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     /// <summary>
     ///     Deactivates the beacon.
     /// </summary>
-    private void DeactivateBeacon(Entity<HijackBeaconComponent> ent)
+    private void DeactivateBeacon(Entity<HijackBeaconComponent> ent, EntityUid? user = null)
     {
         if (ent.Comp.Status != HijackBeaconStatus.Armed)
             return;
 
+        var activeComp = EnsureComp<ActiveHijackBeaconComponent>(ent.Owner);
+
         // Put beacon on cooldown
-        ent.Comp.CooldownTime = ent.Comp.Cooldown + _gameTiming.CurTime;
+        activeComp.CompletionTime = ent.Comp.Cooldown + _gameTiming.CurTime;
         ent.Comp.Status = HijackBeaconStatus.Cooldown;
 
         //global announcement
@@ -209,9 +216,10 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         _chat.DispatchGlobalAnnouncement(message, sender, true, DeactivateSound, Color.Green);
 
         // Unanchor. we want anchoring to be tied to activation here so we just call this.
-        Unanchor(ent);
+        Unanchor(ent.Owner, user);
 
         Dirty(ent);
+        Dirty(ent.Owner, activeComp);
     }
 
     /// <summary>
@@ -256,7 +264,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         _chat.DispatchGlobalAnnouncement(message, sender, true, AnnounceSound, Color.Red);
 
         // Unanchoring must occur after updating the status, or it will disarm the beacon
-        Unanchor(ent, beaconXForm);
+        Unanchor((ent, beaconXForm));
 
         Dirty(ent);
     }
@@ -282,46 +290,47 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     /// <summary>
     ///     Check if the beacon is on the Trade Station and if the Trade Station has not been hijacked already.
     /// </summary>
-    private bool CanActivate(Entity<HijackBeaconComponent> ent)
+    private bool CanActivate(Entity<TransformComponent?> ent)
     {
-        return TryComp(Transform(ent).GridUid, out TradeStationComponent? tradeStation) && !tradeStation.Hacked && _anchor.CanAnchorAt(ent.Owner);
+        ent.Comp ??= Transform(ent);
+        return TryComp<TradeStationComponent>(ent.Comp.GridUid, out var tradeStation) && !tradeStation.Hacked && _anchor.CanAnchorAt(ent.Owner);
     }
 
     /// <summary>
     ///     Anchoring helper
     /// </summary>
-    private void Anchor(Entity<HijackBeaconComponent> ent, TransformComponent? beaconXForm = null)
+    private void Anchor(Entity<TransformComponent?> ent, EntityUid? user = null)
     {
-        beaconXForm ??= Transform(ent);
+        ent.Comp ??= Transform(ent);
 
-        if (beaconXForm.Anchored || beaconXForm.GridUid == null)
+        if (ent.Comp.Anchored || ent.Comp.GridUid == null)
             return;
 
-        _transform.AnchorEntity(ent, beaconXForm);
-        _popup.PopupPredicted(Loc.GetString("hijack-beacon-popup-anchor"), ent, null);
+        _transform.AnchorEntity(ent, ent.Comp);
+        _popup.PopupPredicted(Loc.GetString("hijack-beacon-popup-anchor"), ent, user);
     }
 
     /// <summary>
     ///     Unanchoring helper
     /// </summary>
-    private void Unanchor(Entity<HijackBeaconComponent> ent, TransformComponent? beaconXForm = null)
+    private void Unanchor(Entity<TransformComponent?> ent, EntityUid? user = null)
     {
-        beaconXForm ??= Transform(ent);
+        ent.Comp ??= Transform(ent);
 
-        if (!beaconXForm.Anchored)
+        if (!ent.Comp.Anchored)
             return;
 
-        _transform.Unanchor(ent, beaconXForm);
-        _popup.PopupPredicted(Loc.GetString("hijack-beacon-popup-unanchor"), ent, null);
+        _transform.Unanchor(ent, ent.Comp);
+        _popup.PopupPredicted(Loc.GetString("hijack-beacon-popup-unanchor"), ent, user);
     }
 
     /// <summary>
-    ///     Turns time values into usable values for announcements/examine messages
+    ///     Returns remaining time as an integer so it can be parsed for localization.
     /// </summary>
-    private int GetRemainingTime(Entity<ActiveHijackBeaconComponent?> ent)
+    private int? GetRemainingTime(Entity<ActiveHijackBeaconComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
-            return 69420; // Mature error code
+            return null; // Mature error code
 
         return (int) (ent.Comp.CompletionTime - _gameTiming.CurTime).TotalSeconds;
     }
@@ -329,6 +338,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     #endregion
 }
 
+[Serializable, NetSerializable]
 public enum HijackBeaconStatus : byte
 {
     AwaitActivate,
