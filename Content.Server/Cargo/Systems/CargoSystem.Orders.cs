@@ -218,7 +218,10 @@ namespace Content.Server.Cargo.Systems
                 order.SetApproverData(_identity.GetIdentityShortInfo(player, uid));
             }
 
-            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order, (uid, component));
+            order.ApprovingConsole = GetNetEntity(uid);
+            order.Approved = true;
+
+            var ev = new FulfillCargoOrderEvent((station.Value, stationData), order);
             RaiseLocalEvent(ref ev);
             ev.FulfillmentEntity ??= station.Value;
 
@@ -235,7 +238,6 @@ namespace Content.Server.Cargo.Systems
                 }
             }
 
-            order.Approved = true;
             _audio.PlayPvs(ApproveSound, uid);
 
             if (!emagged)
