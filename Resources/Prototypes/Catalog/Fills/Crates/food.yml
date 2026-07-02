@@ -222,3 +222,15 @@
       entity_storage:
         id: FoodMealHappyHonkBigBite
         amount: 2
+
+- type: entity
+  parent: CratePlastic
+  id: CrateFoodHappyHonkCotton
+  name: Happy Honk cotton meal delivery
+  description: Two fully loaded Happy Honk cotton meals packed full with fiber-rich delicacies, a bottle of Space Cola and a toy! Perfect for your station's mothkin and mothroaches!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: FoodMealHappyHonkCotton
+        amount: 2
