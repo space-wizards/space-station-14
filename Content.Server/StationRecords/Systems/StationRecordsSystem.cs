@@ -9,7 +9,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationRecords.Systems;
@@ -37,7 +36,6 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
 {
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private StationRecordKeyStorageSystem _keyStorage = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IdCardSystem _idCard = default!;
     [Dependency] private IRobustRandom _random = default!;
 
@@ -87,7 +85,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
     {
         // TODO make PlayerSpawnCompleteEvent.JobId a ProtoId
         if (string.IsNullOrEmpty(jobId)
-            || !_prototypeManager.HasIndex<JobPrototype>(jobId))
+            || !ProtoMan.HasIndex<JobPrototype>(jobId))
             return;
 
         if (!_inventory.TryGetSlotEntity(player, "id", out var idUid))
@@ -140,7 +138,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
         HumanoidCharacterProfile profile,
         StationRecordsComponent records)
     {
-        if (!_prototypeManager.TryIndex<JobPrototype>(jobId, out var jobPrototype))
+        if (!ProtoMan.TryIndex<JobPrototype>(jobId, out var jobPrototype))
             throw new ArgumentException($"Invalid job prototype ID: {jobId}");
 
         // when adding a record that already exists use the old one
