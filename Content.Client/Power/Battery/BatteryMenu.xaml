@@ -21,7 +21,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="InBreaker" />
+                                <controls:SwitchButton Name="InBreaker" Margin="5" />
                             </BoxContainer>
                             <Label Name="InValue" />
                         </BoxContainer>
@@ -51,7 +51,7 @@
                             <BoxContainer Orientation="Horizontal">
                                 <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
                                        StyleClasses="LabelKeyText" />
-                                <controls:OnOffButton Name="OutBreaker" />
+                                <controls:SwitchButton Name="OutBreaker" Margin="5" />
                             </BoxContainer>
                             <Label Name="OutValue" />
                         </BoxContainer>
