@@ -331,11 +331,10 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
             : WinCondition.AllNukiesDead);
 
         var diskAtCentCom = false;
-        var diskQuery = AllEntityQuery<NukeDiskComponent, TransformComponent>();
-        while (diskQuery.MoveNext(out var diskUid, out _, out var transform))
+        var diskQuery = AllEntityQuery<NukeDiskComponent>();
+        while (diskQuery.MoveNext(out var diskUid, out var _))
         {
-            diskAtCentCom = transform.MapUid != null && centcomms.Contains(transform.MapUid.Value);
-            diskAtCentCom |= _emergency.IsTargetEscaping(diskUid);
+            diskAtCentCom = _emergency.IsTargetEscaping(diskUid);
 
             // TODO: The target station should be stored, and the nuke disk should store its original station.
             // This is fine for now, because we can assume a single station in base SS14.
