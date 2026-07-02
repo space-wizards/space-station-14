@@ -1,0 +1,102 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'spacevillain-menu-title'}"
+    MinWidth="540"
+    MinHeight="225">
+    <BoxContainer
+        Orientation="Vertical">
+        <!-- Info grid -->
+        <BoxContainer>
+            <!-- Player -->
+            <BoxContainer
+                Orientation="Vertical"
+                HorizontalExpand="True">
+                <!-- Name -->
+                <Label
+                    Text="{Loc 'spacevillain-menu-label-player'}"
+                    Align="Center"
+                    HorizontalExpand="True"/>
+                <!-- Stats -->
+                <BoxContainer>
+                    <!-- HP -->
+                    <Label
+                        Name="PlayerHpLabel"
+                        Text=" "
+                        Align="Center"
+                        HorizontalExpand="True"
+                        Modulate="#37e928"/>
+                    <!-- MP -->
+                    <Label
+                        Name="PlayerMpLabel"
+                        Text=" "
+                        Align="Center"
+                        HorizontalExpand="True"
+                        Modulate="#3483ff"/>
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Divider -->
+            <PanelContainer
+                StyleClasses="LowDivider"/>
+            <!-- Villain -->
+            <BoxContainer
+                Orientation="Vertical"
+                HorizontalExpand="True">
+                <!-- Name -->
+                <Label
+                    Name="EnemyNameLabel"
+                    Text="{Loc 'spacevillain-menu-label-enemy'}"
+                    Align="Center"
+                    HorizontalExpand="True"/>
+                <!-- Stats -->
+                <BoxContainer>
+                    <!-- HP -->
+                    <Label
+                        Name="EnemyHpLabel"
+                        Text=" "
+                        Align="Center"
+                        HorizontalExpand="True"
+                        Modulate="#e94740"/>
+                    <!-- MP -->
+                    <Label
+                        Name="EnemyMpLabel"
+                        Text=" "
+                        Align="Center"
+                        HorizontalExpand="True"
+                        Modulate="#3483ff"/>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Spacer -->
+        <Control VerticalExpand="True"/>
+        <!-- Player and enemy action messages -->
+        <Label Name="PlayerActionLabel"
+                Align="Left"/>
+        <Label Name="EnemyActionLabel"
+                Align="Right"/>
+        <!-- Spacer -->
+        <Control VerticalExpand="True"/>
+        <!-- Action button grid -->
+        <BoxContainer
+            Orientation="Horizontal">
+            <Button
+                Name="AttackButton"
+                Text="{Loc spacevillain-menu-button-attack}"
+                StyleClasses="OpenRight"
+                HorizontalExpand="True"/>
+            <Button
+                Name="HealButton"
+                Text="{Loc spacevillain-menu-button-heal}"
+                StyleClasses="ButtonSquare"
+                HorizontalExpand="True"/>
+            <Button
+                Name="RechargeButton"
+                Text="{Loc spacevillain-menu-button-recharge}"
+                StyleClasses="OpenLeft"
+                HorizontalExpand="True"/>
+        </BoxContainer>
+        <!-- New game button -->
+        <Button
+            Name="NewGameButton"
+            Text="{Loc spacevillain-menu-button-new-game}"/>
+    </BoxContainer>
+</DefaultWindow>
