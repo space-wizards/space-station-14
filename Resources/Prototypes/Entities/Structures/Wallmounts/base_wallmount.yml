@@ -23,6 +23,7 @@
     - Structure
   - type: Sprite
     drawdepth: WallMountedItems
+  - type: PlacementDirectionIndicator
 
 - type: entity
   parent: BaseWallmount
