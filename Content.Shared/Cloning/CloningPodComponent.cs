@@ -2,30 +2,47 @@ using Content.Shared.DeviceLinking;
 using Content.Shared.Materials;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cloning;
 
-[RegisterComponent]
+/// <summary>
+/// Component for cloning pods; manages cloning process, state, and cloning pod interactions.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CloningPodComponent : Component
 {
+    /// <summary>
+    /// DeviceLink sink port identifier for this pod.
+    /// </summary>
     [DataField]
     public ProtoId<SinkPortPrototype> PodPort = "CloningPodReceiver";
 
+    /// <summary>
+    /// Container slot for a body being cloned.
+    /// </summary>
     [ViewVariables]
     public ContainerSlot BodyContainer = default!;
 
     /// <summary>
     /// How long the cloning has been going on for.
     /// </summary>
-    [ViewVariables]
-    public float CloningProgress = 0;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
-    [ViewVariables]
+    /// <summary>
+    /// Amount of biomass used in cloning.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
     public int UsedBiomass = 70;
 
-    [ViewVariables]
+    /// <summary>
+    /// Was the clone process failed.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
     public bool FailedClone = false;
 
     /// <summary>
@@ -35,10 +52,10 @@ public sealed partial class CloningPodComponent : Component
     public ProtoId<MaterialPrototype> RequiredMaterial = "Biomass";
 
     /// <summary>
-    /// The current amount of time it takes to clone a body.
+    /// How long it takes to clone a body.
     /// </summary>
     [DataField]
-    public float CloningTime = 30f;
+    public TimeSpan CloningTime = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// The mob to spawn on emag.
@@ -55,19 +72,31 @@ public sealed partial class CloningPodComponent : Component
         Params = AudioParams.Default.WithVolume(4),
     };
 
+    /// <summary>
+    /// Status of the cloning pod.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public CloningPodStatus Status;
 
-    [ViewVariables]
+    /// <summary>
+    /// Reference to the connected console entity (if any).
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? ConnectedConsole;
 }
 
+/// <summary>
+/// Visual states for the cloning pod (e.g. appearance updates).
+/// </summary>
 [Serializable, NetSerializable]
 public enum CloningPodVisuals : byte
 {
     Status
 }
 
+/// <summary>
+/// Status states of the cloning pod and its process.
+/// </summary>
 [Serializable, NetSerializable]
 public enum CloningPodStatus : byte
 {

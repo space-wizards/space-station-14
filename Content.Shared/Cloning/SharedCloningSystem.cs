@@ -9,13 +9,17 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Cloning;
 
+/// <summary>
+/// System responsible for making a copy of a humanoid's body.
+/// For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
+/// </summary>
 public abstract partial class SharedCloningSystem : EntitySystem
 {
     [Dependency] private Shared.StatusEffectNew.StatusEffectsSystem _statusEffects = default!; //TODO: This system has to support both the old and new status effect systems, until the old is able to be fully removed.
     [Dependency] private EntityQuery<CloneableStatusEffectComponent> _cloneableEffectQuery = default!;
 
     /// <summary>
-    /// Spawns a clone of the given humanoid mob at the specified location or in nullspace.
+    /// Copy components from one entity to another based on a CloningSettingsPrototype.
     /// </summary>
     public virtual bool TryCloning(
         EntityUid original,
