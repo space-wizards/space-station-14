@@ -25,7 +25,7 @@
       types:
         Blunt: 12
     soundHit:
-      path: "/Audio/Weapons/smash.ogg"
+      path: /Audio/Weapons/smash.ogg
   - type: Tag
     tags:
     - Toolbox

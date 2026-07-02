@@ -1,4 +1,18 @@
 # Offensive
+
+- type: listing
+  id: SpellbookMagicalToolbox
+  name: spellbook-magical-toolbox-name
+  description: spellbook-magical-toolbox-desc
+  productAction: ActionMagicToolbox
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookOffensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 - type: listing
   id: SpellbookFireball
   name: spellbook-fireball-name

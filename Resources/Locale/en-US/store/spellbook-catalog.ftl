@@ -1,4 +1,7 @@
 # Spells
+spellbook-magical-toolbox-name = Magical Toolbox
+spellbook-magical-toolbox-desc = Toss a magical toolbox that breifly stuns opponents on direct impact.
+
 spellbook-fireball-name = Fireball
 spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them! Upgradeable.
 

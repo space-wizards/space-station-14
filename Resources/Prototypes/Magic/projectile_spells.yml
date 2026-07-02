@@ -44,3 +44,28 @@
   components:
   - type: Action
     useDelay: 8
+
+- type: entity
+  parent: BaseAction
+  id: ActionMagicToolbox
+  name: Magic Toolbox
+  description: Toss a magical toolbox at high velocity to stun your foes!
+  components:
+  - type: Magic
+  - type: Action
+    useDelay: 8
+    itemIconStyle: BigAction
+    raiseOnUser: true
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/smash.ogg
+    icon:
+      sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+      state: icon
+  - type: TargetAction
+    range: 20
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileMagicalToolbox
+  - type: SpeakOnAction
+    sentence: action-speech-spell-toolbox

@@ -315,3 +315,30 @@
     userWhitelist:
       components:
       - MobState
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: ProjectileMagicalToolbox
+  categories: [ HideSpawnMenu ]
+  name: Magical Toolbox
+  description: Express robust delivery!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    layers:
+    - state: bullet
+  - type: StunOnCollide
+    stunAmount: 2
+    drop: true
+    knockdownAmount: 2
+    slowdownAmount: 2
+    walkSpeedModifier: 0.75
+    sprintSpeedModifier: 0.75
+  - type: Projectile
+    impactEffect: null
+    damage:
+      types:
+        Blunt: 10
+    soundHit: /Audio/Weapons/smash.ogg
+  - type: EmitSoundOnTrigger
+    sound: /Audio/Weapons/smash.ogg
