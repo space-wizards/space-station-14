@@ -1,0 +1,13 @@
+# Cosmetic d20 spawned by AdventurerSystem when an attack roll happens.
+# The roll outcome is decided instantly in code; this die only displays the result
+# and cleans itself up to avoid clutter.
+- type: entity
+  parent: d20Dice
+  id: AdventurerFateDie
+  name: fate die
+  suffix: Adventurer, Cosmetic
+  description: The dice giveth, and the dice taketh away.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.5

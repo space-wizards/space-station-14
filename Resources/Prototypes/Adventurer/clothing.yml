@@ -1,0 +1,80 @@
+# Bespoke adventuring party clothing.
+# All outer armor parents AllowSuitStorageClothingGasTanks so every adventurer can
+# slot an air tank into suit storage for internals.
+# Sprites are placeholders borrowed from existing assets.
+
+# ------------------------------- Shared --------------------------------
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorBrown
+  id: ClothingUniformJumpsuitAdventurer
+  name: adventurer's garb
+  description: Sturdy travelling clothes that have seen many campaigns.
+
+- type: entity
+  parent: ClothingMaskBreath
+  id: ClothingMaskAdventurer
+  name: adventurer's breath mask
+  description: Even heroes need to breathe in the void between dungeons.
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackAdventurer
+  name: adventurer's pack
+  description: A traveller's pack containing everything a hero needs. Mostly rations and rope, usually.
+
+- type: entity
+  parent: ClothingShoesLeather
+  id: ClothingShoesAdventurer
+  name: adventurer's boots
+  description: Broken in over a hundred leagues of wandering.
+
+# ------------------------------- Warrior -------------------------------
+
+- type: entity
+  parent: [ ClothingOuterArmorScrap, AllowSuitStorageClothingGasTanks ]
+  id: ClothingOuterArmorAdventurerWarrior
+  name: warrior's scrap plate
+  description: A hulking suit of scavenged plate. Ugly, heavy, and utterly dependable.
+
+- type: entity
+  parent: ClothingHeadHelmetTemplar
+  id: ClothingHeadHelmetAdventurerWarrior
+  name: warrior's helm
+  description: A battered greathelm. The dents are load-bearing.
+
+# ------------------------------- Ranger --------------------------------
+
+- type: entity
+  parent: [ ClothingOuterArmorBasicSlim, AllowSuitStorageClothingGasTanks ]
+  id: ClothingOuterArmorAdventurerRanger
+  name: ranger's leathers
+  description: Supple leather armor built for moving quietly through hostile territory.
+
+# ------------------------------- Cleric --------------------------------
+
+- type: entity
+  parent: [ ClothingOuterHoodieChaplain, AllowSuitStorageClothingGasTanks ]
+  id: ClothingOuterArmorAdventurerCleric
+  name: cleric's vestments
+  description: Consecrated robes woven with prayers of protection.
+
+- type: entity
+  parent: ClothingHeadHelmetTemplar
+  id: ClothingHeadHelmetAdventurerCleric
+  name: cleric's helm
+  description: A polished helm bearing the sigils of a wandering faith.
+
+# ------------------------------- Wizard --------------------------------
+
+- type: entity
+  parent: [ ClothingOuterWizard, AllowSuitStorageClothingGasTanks ]
+  id: ClothingOuterRobesAdventurerWizard
+  name: apprentice wizard robes
+  description: Robes of an apprentice of the arcane. The stars stitched into the hem are slightly crooked.
+
+- type: entity
+  parent: ClothingHeadHatWizard
+  id: ClothingHeadHatAdventurerWizard
+  name: apprentice wizard hat
+  description: Pointy, as regulations demand. The brim droops with inexperience.

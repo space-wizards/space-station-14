@@ -152,6 +152,20 @@
   - Xenoborg
 
 - type: npcFaction
+  id: Adventurer
+  hostile:
+  - NanoTrasen
+  - Dragon
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - AllHostile
+  - Xenoborg
+  - Wizard
+
+- type: npcFaction
   id: Xenoborg
   hostile:
   # they have brains

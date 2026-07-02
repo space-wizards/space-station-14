@@ -7,6 +7,9 @@
   id: AccessBreakerImmune # Default value in EmagProviderComponent. Marks tagged entity as immune to AccessBreakerUnlimited.
 
 - type: Tag
+  id: AdventurerWeapon # Guns that adventurers (AdventurerComponent.GunWhitelist) are allowed to fire, e.g. the ranger's bow and the cleric's staff of mending.
+
+- type: Tag
   id: AirAlarm # Used by AtmosAlarmableComponent for syncing devices.
 
 - type: Tag

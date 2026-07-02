@@ -29,3 +29,7 @@
 - type: objectiveIssuer
   id: Thief
   name: objective-issuer-thief
+
+- type: objectiveIssuer
+  id: AdventurersGuild
+  name: objective-issuer-adventurers-guild

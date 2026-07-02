@@ -1,3 +1,9 @@
+# Spell tagging:
+# A listing's `categories` control which grimoires can learn it.
+# - Spellbook* categories        -> the full wizard's grimoire (WizardsGrimoire)
+# - AdventurerGrimoire category  -> the adventuring wizard's grimoire (AdventurersGrimoire)
+# A listing may carry both to be available to both wizards.
+
 # Offensive
 - type: listing
   id: SpellbookFireball
@@ -61,6 +67,7 @@
     WizCoin: 2
   categories:
   - SpellbookOffensive
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -75,6 +82,7 @@
     WizCoin: 3
   categories:
   - SpellbookDefensive
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -88,6 +96,7 @@
     WizCoin: 2
   categories:
   - SpellbookDefensive
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -101,6 +110,7 @@
     WizCoin: 1
   categories:
   - SpellbookDefensive
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -128,6 +138,7 @@
     WizCoin: 1
   categories:
   - SpellbookUtility
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -155,6 +166,7 @@
     WizCoin: 1
   categories:
   - SpellbookUtility
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -168,6 +180,7 @@
     WizCoin: 1
   categories:
   - SpellbookUtility
+  - AdventurerGrimoire
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1

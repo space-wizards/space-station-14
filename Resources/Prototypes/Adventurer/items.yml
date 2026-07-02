@@ -1,0 +1,75 @@
+# Bespoke adventuring party items and the adventurer's grimoire.
+# Sprites are placeholders borrowed from existing assets.
+
+# ------------------------------ Supplies -------------------------------
+
+- type: entity
+  parent: DoubleEmergencyOxygenTankFilled
+  id: AdventurerAirTankDouble
+  name: adventurer's air bladder
+  description: A double-capacity tank of bottled wind, for questing where there is no air at all.
+
+- type: entity
+  parent: EmergencyMedipen
+  id: AdventurerHealingPotion
+  name: healing potion
+  description: A single dose of distilled vigor. Jab and feel better.
+
+- type: entity
+  parent: Brutepack
+  id: AdventurerBandages
+  name: enchanted bandages
+  description: Linen wrappings blessed against bruise and blade.
+
+- type: entity
+  parent: Ointment
+  id: AdventurerSalve
+  name: blessed salve
+  description: A soothing balm for burns earned in dragonfire. Or laser fire.
+
+# --------------------------- Wizard grimoire ---------------------------
+# The adventuring wizard's grimoire is a WizCoin store, just like the full wizard's
+# grimoire. Which spells it can learn is controlled by tagging listings in
+# Catalog/spellbook_catalog.yml with the AdventurerGrimoire store category:
+#   - listings with only Spellbook* categories  -> full wizard only
+#   - listings with only AdventurerGrimoire     -> adventuring wizard only
+#   - listings with both                        -> available to both
+# The WizCoin balance below is deliberately small to keep this wizard weaker.
+
+- type: storeCategory
+  id: AdventurerGrimoire
+  name: store-category-adventurer-grimoire
+  priority: 0
+
+- type: entity
+  parent: [ BaseItem, BaseMagicalContraband ]
+  id: AdventurersGrimoire
+  name: apprentice's grimoire
+  description: A slim, dog-eared spellbook holding the modest repertoire of a travelling apprentice.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#3a5a40"
+    - state: decor_wingette_flat
+      color: "#1e3320"
+    - state: icon_pentagramm
+      color: "#c9b458"
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    name: store-preset-name-adventurer-grimoire
+    refundAllowed: true
+    ownerOnly: true
+    categories:
+    - AdventurerGrimoire
+    currencyWhitelist:
+    - WizCoin
+    balance:
+      WizCoin: 4

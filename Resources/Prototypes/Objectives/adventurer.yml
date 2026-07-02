@@ -1,0 +1,53 @@
+# Adventuring party objectives. Every party member always gets all three
+# (assigned via AntagObjectives on the Adventurers game rule).
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseAdventurerObjective
+  components:
+  - type: Objective
+    # required but not used, adventurers always get a fixed set
+    difficulty: 1
+    issuer: AdventurersGuild
+  - type: RoleRequirement
+    roles:
+    - AdventurerRole
+
+# Kill every head of staff. The station is the dungeon; command are the bosses.
+- type: entity
+  parent: BaseAdventurerObjective
+  id: AdventurerClearDungeonObjective
+  name: Clear the dungeon bosses
+  description: The heads of this "dungeon" hoard experience and loot. Slay them all.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/claymore.rsi
+      state: icon
+  - type: KillAllHeadsCondition
+
+# Free greentext: the party always finds *something* worth taking.
+- type: entity
+  parent: BaseAdventurerObjective
+  id: AdventurerLootObjective
+  name: Get loot
+  description: What is a quest without treasure? Everything not nailed down is yours by right of adventure.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Fun/dice.rsi
+      state: d20_20
+  - type: FreeObjective
+
+- type: entity
+  parent: BaseAdventurerObjective
+  id: AdventurerSurviveObjective
+  name: Survive
+  description: A dead adventurer earns no experience. Live to tell this tale at the tavern.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Fun/dice.rsi
+      state: d20_20
+  - type: SurviveCondition

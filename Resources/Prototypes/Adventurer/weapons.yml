@@ -1,0 +1,147 @@
+# Bespoke adventuring party weapons.
+# Guns an adventurer is allowed to fire must carry the AdventurerWeapon tag —
+# AdventurerComponent.GunWhitelist blocks everything else.
+# Sprites are placeholders borrowed from existing assets.
+
+# ------------------------------- Warrior -------------------------------
+
+- type: entity
+  parent: Claymore
+  id: WeaponGreatswordAdventurer
+  name: adventurer's greatsword
+  description: A well-worn greatsword that has cleared many a dungeon. The nicks in the blade each have a story.
+  components:
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 25
+
+- type: entity
+  parent: Machete
+  id: WeaponHandaxeAdventurer
+  name: adventurer's war axe
+  description: A trusty backup blade for when the greatsword is just too much ceremony.
+
+- type: entity
+  parent: SurvivalKnife
+  id: WeaponDaggerAdventurer
+  name: adventurer's dagger
+  description: Every adventurer carries a dagger. It's tradition.
+
+# ------------------------------- Cleric --------------------------------
+
+- type: entity
+  parent: Truncheon
+  id: WeaponMaceAdventurer
+  name: cleric's mace
+  description: For administering blunt-force blessings to the unrepentant.
+
+# The staff of mending: a weaker, auto-recharging version of the staff of healing.
+- type: entity
+  parent: WeaponStaffHealing
+  id: WeaponStaffHealingAdventurer
+  name: staff of mending
+  description: A holy staff that mends wounds with each bolt of light. It slowly regathers power on its own.
+  components:
+  - type: Tag
+    tags:
+    - AdventurerWeapon
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileHealingBoltAdventurer
+    capacity: 3
+    count: 3
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 10
+
+# Medium-strength healing bolt for the staff of mending.
+# Deliberately not parented to ProjectileHealingBolt so its -200 values can't leak in via inheritance.
+- type: entity
+  parent: BaseBullet
+  id: ProjectileHealingBoltAdventurer
+  name: mending bolt
+  description: GET UP, WE'RE NOT DONE YET.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: spell
+      color: gold
+  - type: Projectile
+    damage:
+      types:
+        Blunt: -20
+        Slash: -20
+        Piercing: -20
+        Heat: -20
+        Cold: -20
+        Shock: -20
+        Caustic: -10
+        Poison: -10
+        Asphyxiation: -20
+        Bloodloss: -20
+    ignoreResistances: true
+
+# ------------------------------- Ranger --------------------------------
+
+# A bow with infinite conjured arrows. Not parented to BaseBow because that uses a
+# container-based ammo provider; this one conjures arrows from thin air instead.
+- type: entity
+  parent: [ BaseItem, BaseMinorContraband ]
+  id: WeaponBowAdventurer
+  name: ranger's longbow
+  description: An elegantly carved longbow. Arrows of pale light form on the string as it is drawn.
+  components:
+  - type: Tag
+    tags:
+    - AdventurerWeapon
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    layers:
+    - state: unwielded
+      map: [ base ]
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: BasicEntityAmmoProvider
+    proto: ArrowAdventurer
+    # capacity/count left null = infinite arrows
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+
+# Conjured arrow. Fades away after a while so infinite ammo doesn't litter the station.
+- type: entity
+  parent: ArrowRegular
+  id: ArrowAdventurer
+  name: conjured arrow
+  description: An arrow of pale light. It won't last long outside its quiver, because it doesn't have one.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 30

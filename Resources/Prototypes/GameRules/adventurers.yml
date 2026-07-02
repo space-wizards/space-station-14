@@ -1,0 +1,31 @@
+# The Adventuring Party game rule: four heroes set out to clear the "dungeon"
+# (the station) of its "bosses" (command staff).
+- type: entity
+  parent: BaseRoundstartAntagRule
+  id: Adventurers
+  components:
+  - type: GameRule
+    minPlayers: 10
+  # PLACEHOLDER: reuses the nukie planet so the party has an outpost, spawn points
+  # and a shuttle. Replace with a bespoke tavern/camp map when one exists.
+  - type: LoadMapRule
+    mapPath: /Maps/Nonstations/nukieplanet.yml
+  - type: RuleGrids
+  - type: AntagObjectives
+    objectives:
+    - AdventurerClearDungeonObjective
+    - AdventurerLootObjective
+    - AdventurerSurviveObjective
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+  - type: AntagSelection
+    agentName: adventurer-round-end-agent-name
+    antags:
+    - !type:FixedAntagCount
+      proto: AdventurerWarrior
+    - !type:FixedAntagCount
+      proto: AdventurerRanger
+    - !type:FixedAntagCount
+      proto: AdventurerCleric
+    - !type:FixedAntagCount
+      proto: AdventurerWizard

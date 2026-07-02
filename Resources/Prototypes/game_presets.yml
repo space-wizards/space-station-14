@@ -181,6 +181,22 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Adventurers
+  alias:
+    - adventurers
+    - dungeoncrawl
+  name: adventurers-title
+  description: adventurers-description
+  showInVote: false
+  rules:
+  - Adventurers
+  - DummyNonAntagChance
+  - SubGamemodesRuleNoWizard
+  - BasicStationEventScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
   id: Revolutionary
   alias:
     - rev

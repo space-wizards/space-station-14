@@ -355,3 +355,46 @@
   - type: ChangelingRole
   - type: RoleBriefing
     briefing: changeling-briefing
+
+# Adventurers
+- type: entity
+  abstract: true
+  parent: BaseMindRoleAntag
+  id: BaseMindRoleAdventurer
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+    exclusiveAntag: true
+  - type: AdventurerRole
+
+- type: entity
+  parent: BaseMindRoleAdventurer
+  id: MindRoleAdventurerWarrior
+  name: Adventurer Warrior Role
+  components:
+  - type: MindRole
+    antagPrototype: AdventurerWarrior
+
+- type: entity
+  parent: BaseMindRoleAdventurer
+  id: MindRoleAdventurerRanger
+  name: Adventurer Ranger Role
+  components:
+  - type: MindRole
+    antagPrototype: AdventurerRanger
+
+- type: entity
+  parent: BaseMindRoleAdventurer
+  id: MindRoleAdventurerCleric
+  name: Adventurer Cleric Role
+  components:
+  - type: MindRole
+    antagPrototype: AdventurerCleric
+
+- type: entity
+  parent: BaseMindRoleAdventurer
+  id: MindRoleAdventurerWizard
+  name: Adventurer Wizard Role
+  components:
+  - type: MindRole
+    antagPrototype: AdventurerWizard
