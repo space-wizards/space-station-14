@@ -110,6 +110,10 @@
       <BuildType Solution="DebugOpt|*" Project="Debug" />
       <BuildType Solution="Tools|*" Project="Release" />
     </Project>
+    <Project Path="RobustToolbox/Robust.Shared.EntitySystemSubscriptionsGenerator/Robust.Shared.EntitySystemSubscriptionsGenerator.csproj">
+      <BuildType Solution="DebugOpt|*" Project="Debug" />
+      <BuildType Solution="Tools|*" Project="Release" />
+    </Project>
   </Folder>
   <Folder Name="/RobustToolbox/Tools/">
     <Project Path="RobustToolbox/Tools/Robust.SolutionGen/Robust.SolutionGen.csproj">
