@@ -1,4 +1,5 @@
 using Content.Client.Disposal.Unit;
+using Content.Client.Power.Components;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
@@ -88,7 +89,7 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         _mailingUnitWindow.PressurePerSecond = pressurePerSecond;
         _mailingUnitWindow.PowerOff = disposals.PowerOff;
         _mailingUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond, disposals.PowerOff);
-        _mailingUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+        _mailingUnitWindow.Power.Pressed = !EntMan.TryGetComponent(entity.Owner, out ApcPowerReceiverComponent? apc) || !apc.PowerDisabled;
         _mailingUnitWindow.Engage.Pressed = disposals.Engaged;
     }
 }

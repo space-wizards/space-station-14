@@ -1,3 +1,4 @@
+using Content.Client.Power.Components;
 using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
@@ -65,10 +66,10 @@ namespace Content.Client.Disposal.Unit
 
             _disposalUnitWindow.UnitState.Text = Loc.GetString($"disposal-unit-state-{disposalState}");
             _disposalUnitWindow.FullPressure = disposalUnit.EstimatedFullPressure(entity);
-            _disposalUnitWindow.PressurePerSecond = entity.Comp.PressurePerSecond;
+            _disposalUnitWindow.PressurePerSecond = pressurePerSecond;
             _disposalUnitWindow.PowerOff = entity.Comp.PowerOff;
             _disposalUnitWindow.PressureBar.UpdatePressure(fullPressure, pressurePerSecond, disposals.PowerOff);
-            _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
+            _disposalUnitWindow.Power.Pressed = !EntMan.TryGetComponent(entity.Owner, out ApcPowerReceiverComponent? apc) || !apc.PowerDisabled;
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
         }
     }

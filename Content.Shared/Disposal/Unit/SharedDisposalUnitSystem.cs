@@ -100,9 +100,9 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
     private void OnPowerChange(Entity<DisposalUnitComponent> ent, ref PowerChangedEvent args)
     {
-        if (!args.Powered && ent.Comp.PowerOff == null && ent.Comp.NextPressurized > _timing.CurTime)
+        if (!args.Powered && ent.Comp.NextPressurized > _timing.CurTime)
         {
-            ent.Comp.PowerOff = _timing.CurTime;
+            ent.Comp.PowerOff ??= _timing.CurTime;
         }
         else if (args.Powered && ent.Comp.PowerOff != null)
         {
@@ -179,15 +179,10 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
     /// <returns>The disposal unit's pressure state.</returns>
     public DisposalsPressureState GetState(Entity<DisposalUnitComponent> ent)
     {
-        // While unpowered the timer is held at the moment power was lost.
-        var nextPressure = ent.Comp.NextPressurized - (ent.Comp.PowerOff ?? _timing.CurTime);
-        var pressurizeTime = 1f / ent.Comp.PressurePerSecond;
-        var pressurizeDuration = pressurizeTime - ent.Comp.FlushDelay.TotalSeconds;
-
-        if (nextPressure.TotalSeconds > pressurizeDuration)
+        if (ent.Comp.LastFlushTime != null && _timing.CurTime <= ent.Comp.LastFlushTime.Value + ent.Comp.FlushDelay)
             return DisposalsPressureState.Flushed;
 
-        if (nextPressure > TimeSpan.Zero)
+        if (ent.Comp.PowerOff != null || _timing.CurTime < ent.Comp.NextPressurized)
             return DisposalsPressureState.Pressurizing;
 
         return DisposalsPressureState.Ready;
@@ -244,27 +239,16 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
     private void UpdateDisposalUnit(Entity<DisposalUnitComponent> ent, MetaDataComponent metadata)
     {
-        // Pressurization is frozen while unpowered.
-        if (ent.Comp.PowerOff != null)
-            return;
-
-        var state = GetState(ent);
-
-        // Check if we need a state update
-        if (ent.Comp.NextPressurized > _timing.CurTime)
-        {
-            UpdateState(ent, state);
-            return;
-        }
-
-        // Check if we need to flush
-        if (ent.Comp.NextFlush != null &&
-            ent.Comp.NextFlush.Value < _timing.CurTime)
+        // Check if we need to flush (not recharging)
+        if (ent.Comp.PowerOff == null
+            && ent.Comp.NextPressurized <= _timing.CurTime
+            && ent.Comp.NextFlush != null
+            && ent.Comp.NextFlush.Value <= _timing.CurTime)
         {
             TryFlush(ent);
         }
 
-        UpdateState(ent, state);
+        UpdateState(ent, GetState(ent));
     }
 
     private void UpdateState(Entity<DisposalUnitComponent> ent, DisposalsPressureState state)
@@ -329,6 +313,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         // Try to transfer entities from the unit into disposals.
         TryTransfer(ent, tube.Value, beforeFlushArgs.Tags);
 
+        ent.Comp.LastFlushTime = _timing.CurTime;
         ent.Comp.NextPressurized = _timing.CurTime;
 
         if (!ent.Comp.DisablePressure)
@@ -443,7 +428,15 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
             if (GetState(ent) != DisposalsPressureState.Ready)
             {
-                newFlush += ent.Comp.NextPressurized;
+                // Power currently off while recharging? nextPressurized is unreliable.
+                if (ent.Comp.PowerOff != null)
+                {
+                    newFlush = TimeSpan.MaxValue;
+                }
+                else
+                {
+                    newFlush += ent.Comp.NextPressurized;
+                }
             }
 
             nextFlush = (ent.Comp.NextFlush ?? TimeSpan.MaxValue);
