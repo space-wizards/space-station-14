@@ -67,4 +67,14 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
     {
         RefreshOverlay();
     }
+
+    public void SetEnabled(Entity<NightVisionComponent?> ent, bool enabled)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Enabled = enabled;
+
+        RefreshOverlay();
+    }
 }
