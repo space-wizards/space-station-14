@@ -1,0 +1,78 @@
+name: Hunt for Heisentests
+
+on:
+  workflow_dispatch:
+  # every 15 minutes
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get_fails.outputs.matrix }}
+      count: ${{ steps.get_fails.outputs.count }}
+
+    steps:
+    - name: Checkout Master
+      uses: actions/checkout@v6
+      with:
+          submodules: recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4.1.0
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build Project
+      run: dotnet build --configuration DebugOpt --no-restore /m
+
+    - name: Run Content.Tests
+      id: tests
+      shell: pwsh
+      run: dotnet test --no-build --configuration DebugOpt Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0 NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
+
+    - name: Run Content.IntegrationTests
+      id: integration_tests
+      shell: pwsh
+      run: |
+        $env:DOTNET_gcServer=1
+        dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
+
+    - name: Extract Failures
+      if: failure()
+      id: get_fails
+      run: |
+        python -m pip install --upgrade pip
+        pip install xmltodict
+        python Tools/actions_extract_failures.py
+
+  report:
+    needs: [ hunt ]
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    strategy:
+      matrix:
+        value: ${{ fromJSON(needs.hunt.outputs.matrix) }}
+    if: ${{ always() && failure() && (needs.hunt.outputs.count < 5) }}
+    name: Error for ${{ matrix.value.name }}
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@v6
+
+      - name: Create Issue
+        uses: dblock/create-a-github-issue@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NAME: ${{ matrix.value.name }}
+          FULLNAME: ${{ matrix.value.fullname }}
+          OUTPUT: ${{ matrix.value.output }}
+          FAILURE: ${{ matrix.value.failure }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/heisentest_template.md
+          update_existing: true
+          search_existing: all
