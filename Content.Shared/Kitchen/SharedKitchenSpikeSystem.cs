@@ -146,8 +146,14 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
     {
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0)
+        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable))
             return;
+
+        if (butcherable.SpawnedEntities.Count == 0)
+        {
+            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-butcher-empty", ("victim", Identity.Entity(victim.Value, EntityManager))), ent, args.User, PopupType.MediumCaution);
+            return;
+        }
 
         args.Handled = true;
 
@@ -321,7 +327,8 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         // Gib the victim if there is nothing else to butcher.
         if (butcherable.SpawnedEntities.Count == 0)
         {
-            _gibbing.Gib(args.Target.Value);
+            if (!_gibbing.TryGib(args.Target.Value))
+                return;
 
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;
 

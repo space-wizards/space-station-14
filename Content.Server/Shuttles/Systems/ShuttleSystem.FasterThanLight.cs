@@ -995,8 +995,9 @@ public sealed partial class ShuttleSystem
                 {
                     _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(ent):player} got gibbed by the shuttle" +
                                                                 $" {ToPrettyString(uid)} arriving from FTL at {xform.Coordinates:coordinates}");
-                    var gibs = _gibbing.Gib(ent);
-                    _immuneEnts.UnionWith(gibs);
+                    if (_gibbing.TryGib(ent, out var gibs))
+                        _immuneEnts.UnionWith(gibs);
+
                     continue;
                 }
 

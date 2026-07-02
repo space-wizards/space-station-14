@@ -1,0 +1,29 @@
+- type: entity
+  abstract: true
+  id: OrganChangelingMetabolizer
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Human, Moth, Slime, Changeling ] # Eat and breathe basically everything
+
+- type: entity
+  parent: [ OrganBaseLungs, OrganHumanInternal, OrganChangelingMetabolizer ]
+  id: OrganChangelingLungs
+  components:
+  - type: Lung
+    alert: LowAir
+
+- type: entity
+  parent: [ OrganBaseStomach, OrganHumanInternal, OrganChangelingMetabolizer ]
+  id: OrganChangelingStomach
+  components:
+  - type: Stomach
+    isSpecialDigestibleExclusive: false
+    specialDigestible:
+      tags:
+      - ClothMade
+      - Fruit
+      - ReptilianFood
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
