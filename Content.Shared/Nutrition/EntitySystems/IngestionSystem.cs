@@ -9,7 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -47,6 +47,7 @@ public sealed partial class IngestionSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private FlavorProfileSystem _flavorProfile = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -493,13 +494,7 @@ public sealed partial class IngestionSystem : EntitySystem
         if (!IsEmpty(entity))
         {
             // Leave some of the consumer's DNA on the consumed item...
-            var ev = new TransferDnaEvent
-            {
-                Donor = args.Target,
-                Recipient = entity,
-                CanDnaBeCleaned = false,
-            };
-            RaiseLocalEvent(args.Target, ref ev);
+            _forensics.TransferDna(entity, args.Target, false);
 
             args.Repeat = !args.ForceFed;
             return;

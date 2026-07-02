@@ -1,9 +1,10 @@
-using Content.Server.Forensics;
+using Content.Server.Forensics.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;

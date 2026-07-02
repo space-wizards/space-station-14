@@ -1,4 +1,4 @@
-namespace Content.Server.Forensics;
+namespace Content.Shared.Forensics.Components;
 
 /// <summary>
 /// This controls residues left on items

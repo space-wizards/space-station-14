@@ -4,7 +4,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
@@ -12,7 +12,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -26,6 +25,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private SharedForensicsSystem _forensics = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -286,8 +286,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         else
             ImplantMode(ent);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = ent.Owner };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(ent, target);
 
         Dirty(ent);
     }
@@ -435,8 +434,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         _container.Remove(implant, implantContainer);
         _container.Insert(implant, implanterContainer);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = implanter };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(implanter, target);
     }
 
     /// <summary>

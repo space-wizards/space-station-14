@@ -1,8 +1,8 @@
-using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
+using Content.Shared.Forensics.Events;
 using Content.Shared.Inventory;
 
-namespace Content.Server.Forensics;
+namespace Content.Shared.Forensics.Systems;
 
 public sealed class FingerprintMaskSystem : EntitySystem
 {
@@ -13,12 +13,11 @@ public sealed class FingerprintMaskSystem : EntitySystem
         SubscribeLocalEvent<FingerprintMaskComponent, InventoryRelayedEvent<TryAccessFingerprintEvent>>(OnTryAccessFingerprint);
     }
 
-    private void OnTryAccessFingerprint(EntityUid uid, FingerprintMaskComponent comp, ref InventoryRelayedEvent<TryAccessFingerprintEvent> args)
+    private void OnTryAccessFingerprint(Entity<FingerprintMaskComponent> gloves, ref InventoryRelayedEvent<TryAccessFingerprintEvent> args)
     {
-        if (args.Args.Cancelled)
+        if (args.Args.Blocker.HasValue)
             return;
 
-        args.Args.Blocker = uid;
-        args.Args.Cancel();
+        args.Args.Blocker = gloves.Owner;
     }
 }

@@ -1,7 +1,7 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Events;
 
 namespace Content.Server.Body.Systems;
 
@@ -14,7 +14,7 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
     }
 
-    // forensics is not predicted yet
+    // forensics is partially predicted, but this remains serverside.
     private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
     {
         if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))

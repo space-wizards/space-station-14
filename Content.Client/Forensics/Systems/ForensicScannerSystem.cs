@@ -2,4 +2,4 @@
 
 namespace Content.Client.Forensics.Systems;
 
-public sealed partial class ForensicsSystem : SharedForensicsSystem;
+public sealed partial class ForensicScannerSystem : SharedForensicScannerSystem;
