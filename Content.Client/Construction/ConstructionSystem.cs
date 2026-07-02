@@ -300,7 +300,7 @@ namespace Content.Client.Construction
 
             var sprite = Comp<SpriteComponent>(ghost.Value);
 
-            if (targetProto.TryGetComponent(out IconComponent? icon, EntityManager.ComponentFactory))
+            if (targetProto.TryComp(out IconComponent? icon, EntityManager.ComponentFactory))
             {
                 _sprite.AddBlankLayer((ghost.Value, sprite), 0);
                 _sprite.LayerSetSprite((ghost.Value, sprite), 0, icon.Icon);

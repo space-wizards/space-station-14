@@ -40,7 +40,7 @@ public sealed partial class DungeonSystem
 
         _availableRooms.Clear();
 
-        foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<DungeonRoomPrototype>())
         {
             if (minSize is not null && (proto.Size.X < minSize.Value.X || proto.Size.Y < minSize.Value.Y))
                 continue;

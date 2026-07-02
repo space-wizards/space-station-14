@@ -18,7 +18,6 @@ namespace Content.Server.Atmos.EntitySystems
     public sealed partial class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IConfigurationManager _configManager = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private MapSystem _mapSystem = default!;
@@ -140,7 +139,7 @@ namespace Content.Server.Atmos.EntitySystems
                     new Vector2(LocalViewRange, LocalViewRange));
 
                 _grids.Clear();
-                _mapManager.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
+                _mapSystem.FindGridsIntersecting(transform.MapID, worldBounds, ref _grids);
 
                 foreach (var grid in _grids)
                 {
