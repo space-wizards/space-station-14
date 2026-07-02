@@ -223,38 +223,88 @@ namespace Content.Shared.Preferences
             };
         }
 
-        // TODO: This should eventually not be a visual change only.
-        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
+        /// <summary>
+        /// An enum defining randomizable values in character editor.
+        /// </summary>
+        [Flags]
+        public enum RandomizeCfg
         {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var random = IoCManager.Resolve<IRobustRandom>();
-
-            var species = random.Pick(prototypeManager
-                .EnumeratePrototypes<SpeciesPrototype>()
-                .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
-                .ToArray()
-            ).ID;
-
-            return RandomWithSpecies(species);
+            // profile
+            None = 0,
+            Name = 1 << 0,
+            Species = 1 << 1,
+            Age = 1 << 2,
+            Sex = 1 << 3,
+            Gender = 1 << 4,
+            // appearance
+            Eyes = 1 << 5,
+            Skin = 1 << 6,
         }
 
-        public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
-        {
-            species ??= HumanoidCharacterProfile.DefaultSpecies;
+        /// <summary>
+        /// A randomize config that covers all possible values (including appearance).
+        /// </summary>
+        public const RandomizeCfg RandomizeConfigAll =
+            RandomizeCfg.Name
+            | RandomizeCfg.Species
+            | RandomizeCfg.Age
+            | RandomizeCfg.Sex
+            | RandomizeCfg.Gender
+            | RandomizeCfg.Eyes
+            | RandomizeCfg.Skin;
 
+        /// <summary>
+        /// Picks a random species from roundstart species.
+        /// <param name="ignoredSpecies">Species to exclude from randomizer.</param>
+        /// </summary>
+        public static SpeciesPrototype RandomSpecies(HashSet<string>? ignoredSpecies = null)
+        {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var sex = Sex.Unsexed;
-            var age = 18;
-            var voice = DefaultVoice; // Banishing someone to no voice would be unfortunate
-            if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
-            {
-                sex = random.Pick(speciesPrototype.Sexes);
-                age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
-                voice = speciesPrototype.DefaultSoundsBySex[(int)sex];
-            }
+            var pool = prototypeManager.EnumeratePrototypes<SpeciesPrototype>()
+                .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
+                .ToArray();
+            var species = random.Pick(pool);
+            return species;
+        }
 
+        /// <summary>
+        /// Picks a random name using species and gender.
+        /// </summary>
+        public static string RandomName(SpeciesPrototype species, Gender gender)
+        {
+            var name = GetName(species.ID, gender);
+            return name;
+        }
+
+        /// <summary>
+        /// Picks a random age using species.
+        /// </summary>
+        public static int RandomAge(SpeciesPrototype species)
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            var age = random.Next(species.MinAge, species.OldAge);
+            return age;
+        }
+
+        /// <summary>
+        /// Picks a random sex using species.
+        /// </summary>
+        public static Sex RandomSex(SpeciesPrototype species)
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            var sex = random.Pick(species.Sexes);
+            return sex;
+        }
+
+        /// <summary>
+        /// Picks a random gender using species sex;
+        /// </summary>
+        public static Gender RandomGender(Sex sex)
+        {
             var gender = Gender.Epicene;
 
             switch (sex)
@@ -266,19 +316,74 @@ namespace Content.Shared.Preferences
                     gender = Gender.Female;
                     break;
             }
+            return gender;
+        }
 
-            var name = GetName(species, gender);
-
-            return new HumanoidCharacterProfile()
+        /// <summary>
+        /// Generates a randomized character profile.
+        /// </summary>
+        /// <returns>A new character profile with values randomized</returns>
+        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null)
+        {
+            var config = RandomizeConfigAll;
+            var baseProfile = new HumanoidCharacterProfile();
+            if (ignoredSpecies != null)
             {
-                Name = name,
-                Sex = sex,
-                Voice = voice,
-                Age = age,
-                Gender = gender,
-                Species = species,
-                Appearance = HumanoidCharacterAppearance.Random(species, sex),
-            };
+                baseProfile.Species = RandomSpecies(ignoredSpecies);
+            }
+            var profile = Random(config, baseProfile);
+            return profile;
+        }
+
+        /// <summary>
+        /// Generates a randomized character profile with selective randomizing.
+        /// </summary>
+        /// <param name="randomizeCfg">Which values to randomize.</param>
+        /// <param name="baseProfile">Profile to base the new profile on. Values that are not randomized will be taken from this profile.</param>
+        /// <returns>A new character profile with selected values randomized</returns>
+        public static HumanoidCharacterProfile Random(RandomizeCfg randomizeCfg, HumanoidCharacterProfile baseProfile)
+        {
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            var profile = new HumanoidCharacterProfile();
+            if ((randomizeCfg & RandomizeCfg.Species) != 0)
+            {
+                profile.Species = RandomSpecies();
+            }
+            else
+            {
+                profile.Species = DefaultSpecies;
+                if (prototypeManager.HasIndex(baseProfile.Species))
+                {
+                    profile.Species = baseProfile.Species;
+                }
+            }
+            var speciesProto = prototypeManager.Index(profile.Species);
+
+            profile.Sex = (randomizeCfg & RandomizeCfg.Sex) != 0 ? RandomSex(speciesProto) : baseProfile.Sex;
+            profile.Voice = speciesProto.DefaultSoundsBySex[(int)profile.Sex];
+            profile.Gender = (randomizeCfg & RandomizeCfg.Gender) != 0 ? RandomGender(profile.Sex) : baseProfile.Gender;
+            profile.Name = (randomizeCfg & RandomizeCfg.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
+            profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
+
+            profile.Appearance = HumanoidCharacterAppearance.Random(randomizeCfg, baseProfile.Appearance, speciesProto, profile.Sex);
+
+            return profile;
+        }
+
+        /// <summary>
+        /// Generates a randomized character profile.
+        /// </summary>
+        /// <param name="species">Species to constrain randomizer to.</param>
+        /// <returns>A new character profile</returns>
+        public static HumanoidCharacterProfile RandomWithSpecies(string? species = null)
+        {
+            species ??= DefaultSpecies;
+
+            return Random(
+                RandomizeConfigAll ^ RandomizeCfg.Species,
+                new HumanoidCharacterProfile().WithSpecies(species)
+            );
         }
 
         public HumanoidCharacterProfile WithName(string name)
