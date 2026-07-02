@@ -626,6 +626,65 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
+    /// A new hashset is allocated for every call, consider using <see cref="AddAliveHumans"/> instead.
+    /// </summary>
+    public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
+    {
+        var allHumans = new HashSet<Entity<MindComponent>>();
+        AddAliveHumans(allHumans, exclude);
+        return allHumans;
+    }
+
+    /// <summary>
+    /// Get all minds on the same Map as the Refrence
+    /// </summary>>
+    public IEnumerable<Entity<MindComponent>> GetAliveHumansOnMap(EntityUid? map)
+    {
+        foreach (var candidateMind in GetAliveHumans())
+        {
+            if (candidateMind.Comp.CurrentEntity is not { } candidateEntity ||
+               _transform.GetMap(candidateEntity) != map)
+            {
+                yield return candidateMind;
+            }
+        }
+    }
+    /// <summary>
+    /// Adds to a hashset every living humanoid player's minds, except for a single one which is exluded.
+    /// </summary>
+    public void AddAliveHumans(HashSet<Entity<MindComponent>> allHumans, EntityUid? exclude = null)
+    {
+        // HumanoidProfileComponent is used to prevent mice, pAIs, etc from being chosen
+        var query = EntityQueryEnumerator<HumanoidProfileComponent, MobStateComponent>();
+        while (query.MoveNext(out var uid, out _, out var mobState))
+        {
+            // the player needs to have a mind and not be the excluded one +
+            // the player has to be alive
+            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
+                continue;
+
+            allHumans.Add((mind, mindComp));
+        }
+    }
+
+    /// <summary>
+    /// Picks a random mind from a pool after applying a list of filters.
+    /// Returns null if no valid mind could be found.
+    /// </summary>
+    public Entity<MindComponent>? PickFromPool(IMindPool pool, List<MindFilter> filters, EntityUid? exclude = null)
+    {
+        _pickingMinds.Clear();
+        pool.FindMinds(_pickingMinds, exclude, EntityManager, this);
+        FilterMinds(_pickingMinds, filters, exclude);
+
+        if (_pickingMinds.Count == 0)
+            return null;
+
+        return _random.Pick(_pickingMinds);
+    }
+
+    /// <summary>
     /// Filters minds from a hashset using a single <see cref="MindFilter"/>.
     /// </summary>
     public void FilterMinds(HashSet<Entity<MindComponent>> minds, MindFilter filter, EntityUid? exclude = null)
