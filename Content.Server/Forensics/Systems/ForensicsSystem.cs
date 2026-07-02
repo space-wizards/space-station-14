@@ -23,6 +23,7 @@ using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 using Content.Shared.Hands.Components;
+using JetBrains.Annotations;
 
 namespace Content.Server.Forensics
 {
@@ -33,6 +34,8 @@ namespace Content.Server.Forensics
         [Dependency] private DoAfterSystem _doAfterSystem = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+        [Dependency] private EntityQuery<ForensicsComponent> _forensicsQuery;
 
         public override void Initialize()
         {
@@ -147,6 +150,16 @@ namespace Content.Server.Forensics
             {
                 dest.Residues.Add(residue);
             }
+        }
+
+        /// <inheritdoc cref="CopyForensicsFrom(ForensicsComponent, EntityUid)"/>
+        [PublicAPI]
+        public void CopyForensicsFrom(Entity<ForensicsComponent?> source, EntityUid target)
+        {
+            if (!_forensicsQuery.Resolve(source, ref source.Comp, false))
+                return;
+
+            CopyForensicsFrom(source.Comp, target);
         }
 
         public List<string> GetSolutionsDNA(EntityUid uid)
