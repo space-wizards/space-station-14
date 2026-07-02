@@ -120,13 +120,18 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
-  
+
 - type: shader
   id: HeatBlur
   kind: source
   path: "/Textures/Shaders/heatBlur.swsl"
-  
+
 - type: shader
   id: NightVision
   kind: source
   path: "/Textures/Shaders/nightvision.swsl"
+
+- type: shader
+  id: Sharpness
+  kind: source
+  path: "/Textures/Shaders/sharpness.swsl"
