@@ -18,7 +18,6 @@ namespace Content.Server.Trigger.Systems;
 public sealed partial class SmokeOnTriggerSystem : EntitySystem
 {
 
-    [Dependency] private IMapManager _mapMan = default!;
     [Dependency] private MapSystem _map = default!;
     [Dependency] private SmokeSystem _smoke = default!;
     [Dependency] private TransformSystem _transform = default!;

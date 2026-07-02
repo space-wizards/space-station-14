@@ -26,6 +26,7 @@ using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 using Content.Shared.Coordinates.Helpers;
 using Robust.Shared.Map;
 using Content.Shared.Maps;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -52,7 +53,6 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private SpreaderSystem _spreader = default!;
-    [Dependency] private IMapManager _mapMan = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -228,7 +228,7 @@ public sealed partial class SmokeSystem : EntitySystem
             return false;
         var xform = Transform(target.Value);
         var mapCoords = _transform.GetMapCoordinates(target.Value, xform);
-        if (!_mapMan.TryFindGridAt(mapCoords, out var gridUid, out var gridComp) ||
+        if (!_map.TryFindGridAt(mapCoords, out var gridUid, out var gridComp) ||
             !_map.TryGetTileRef(gridUid, gridComp, xform.Coordinates, out var tileRef) ||
             tileRef.Tile.IsEmpty)
         {
