@@ -33,5 +33,5 @@
   id: Signs
   groups:
   - SignStandard
-  - SignWarning
+  - SignWarningMedium
   - SignDirectional

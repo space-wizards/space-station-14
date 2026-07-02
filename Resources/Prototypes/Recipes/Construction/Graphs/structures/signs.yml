@@ -28,7 +28,7 @@
         doAfter: 2
 
   - node: sign_warning
-    entity: SignWarningBlank
+    entity: SignBlankMed
 
 - type: constructionGraph
   id: SignDirectionalGraph

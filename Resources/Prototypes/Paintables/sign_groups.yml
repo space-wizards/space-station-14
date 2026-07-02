@@ -17,9 +17,7 @@
     bath: SignBath
     kitchen: SignKitchen
     barbershop: SignBarbershop
-    bio: SignBio
     bridge: SignBridge
-    canisters: SignCanisters
     cargo: SignCargo
     cargo-dock: SignCargoDock
     chapel: SignChapel
@@ -35,9 +33,7 @@
     engineering: SignEngineering
     escape-pods: SignEscapePods
     eva: SignEVA
-    electrical: SignElectrical
     examroom: SignExamroom
-    fire: SignFire
     gravity: SignGravity
     head: SignHead
     hydro: SignHydro1
@@ -48,11 +44,7 @@
     library: SignLibrary
     mail: SignMail
     medical: SignMedical
-    morgue: SignMorgue
     news: SignNews
-    nosmoking: SignNosmoking
-    nosmoking2: SignSmoking
-    genpop: SignGenpop
     prison: SignPrison
     psychology: SignPsychology
     reception: SignReception
@@ -71,27 +63,10 @@
     vault: SignVault
     virology: SignVirology
     xenobio: SignXenobio
-    zomblab: SignZomlab
-    secure: SignSecure
-    securearea: SignSecurearea
+    zomlab: SignZomlab
     security: SignSecurity
     detective: SignDetective
-    plaque: SignPlaque
-    kiddie-plaque: SignKiddiePlaque
     vox: SignVox
-    atmos-air: WarningAir
-    atmos-co2: WarningCO2
-    atmos-n2: WarningN2
-    atmos-n2o: WarningN2O
-    atmos-o2: WarningO2
-    atmos-plasma: WarningPlasma
-    atmos-tritium: WarningTritium
-    atmos-waste: WarningWaste
-    something-old: SignSomethingOld
-    something-old2: SignSomethingOld2
-    survival: SignSurvival
-    mine: SignNTMine
-    monkey-painting: PaintingMonkey
 
 - type: paintableGroup
   id: SignDirectional
@@ -125,36 +100,18 @@
     escape-pods: SignDirectionalEscapePod
 
 - type: paintableGroup
-  id: SignWarning
+  id: SignWarningMedium
   defaultStyle: blank
   styles:
-    blank: SignWarningBlank
-    biohazard: SignBiohazard
-    corrosives: SignCorrosives
-    cryogenics: SignCryogenics
-    danger: SignDanger
-    electrical: SignElectrical
-    explosives: SignExplosives
-    fire: SignFire
-    flammable: SignFlammable
-    laser: SignLaser
-    magnetics: SignMagnetics
-    memetic: SignMemetic
-    optical: SignOptical
-    oxidants: SignOxidants
-    radiation: SignRadiation
-    shock: SignShock
-    secure-med-red: SignSecureMedRed
-    secure-small: SignSecureSmall
-    secure-small-red: SignSecureSmallRed
-    blank-med: SignBlankMed
-    magnetics-med: SignMagneticsMed
-    danger-med: SignDangerMed
-    explosives-med: ExplosivesSignMed
-    cryogenics-med: SignCryogenicsMed
-    electrical-med: SignElectricalMed
-    biohazard-med: SignBiohazardMed
-    radiation-med: SignRadiationMed
-    flammable-med: SignFlammableMed
-    laser-med: SignLaserMed
-    secure-med: SignSecureMed
+    blank: SignBlankMed
+    magnetics: SignMagneticsMed
+    danger: SignDangerMed
+    explosives: ExplosivesSignMed
+    cryogenics: SignCryogenicsMed
+    electrical: SignElectricalMed
+    biohazard: SignBiohazardMed
+    radiation: SignRadiationMed
+    flammable: SignFlammableMed
+    laser: SignLaserMed
+    secure: SignSecureMed
+    secure-red: SignSecureMedRed
