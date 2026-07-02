@@ -25,7 +25,6 @@ public sealed partial class GatewayGeneratorSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private BiomeSystem _biome = default!;
@@ -99,10 +98,11 @@ public sealed partial class GatewayGeneratorSystem : EntitySystem
         const int MaxOffset = 256;
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var seed = _random.Next();
-        var random = new Random(seed);
+        var random = new RobustRandom();
+        random.SetSeed(seed);
         var mapUid = _maps.CreateMap();
 
-        var gatewayName = _salvage.GetFTLName(_protoManager.Index(PlanetNames), seed);
+        var gatewayName = _salvage.GetFTLName(ProtoMan.Index(PlanetNames), seed);
         _metadata.SetEntityName(mapUid, gatewayName);
 
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
@@ -112,7 +112,7 @@ public sealed partial class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index(BiomeTemplate), seed);
+        _biome.EnsurePlanet(mapUid, ProtoMan.Index(BiomeTemplate), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
@@ -184,7 +184,7 @@ public sealed partial class GatewayGeneratorSystem : EntitySystem
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = (origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
 
-        _dungeon.GenerateDungeon(_protoManager.Index(DungeonConfig), args.MapUid, grid, dungeonPosition, seed);
+        _dungeon.GenerateDungeon(ProtoMan.Index(DungeonConfig), args.MapUid, grid, dungeonPosition, seed);
 
         // TODO: Dungeon mobs + loot.
 

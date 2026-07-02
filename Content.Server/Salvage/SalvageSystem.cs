@@ -4,7 +4,6 @@ using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Server.Chat.Managers;
 using Content.Server.Gravity;
@@ -28,7 +27,6 @@ namespace Content.Server.Salvage
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private ILogManager _logManager = default!;
         [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private AnchorableSystem _anchorable = default!;
         [Dependency] private BiomeSystem _biome = default!;
@@ -45,16 +43,11 @@ namespace Content.Server.Salvage
         [Dependency] private ShuttleConsoleSystem _shuttleConsoles = default!;
         [Dependency] private StationSystem _station = default!;
         [Dependency] private UserInterfaceSystem _ui = default!;
-
-        private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<TransformComponent> _xformQuery;
+        [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _gridQuery = GetEntityQuery<MapGridComponent>();
-            _xformQuery = GetEntityQuery<TransformComponent>();
 
             InitializeExpeditions();
             InitializeMagnet();
@@ -64,7 +57,7 @@ namespace Content.Server.Salvage
         private void Report(EntityUid source, string channelName, string messageKey, params (string, object)[] args)
         {
             var message = args.Length == 0 ? Loc.GetString(messageKey) : Loc.GetString(messageKey, args);
-            var channel = _prototypeManager.Index<RadioChannelPrototype>(channelName);
+            var channel = ProtoMan.Index<RadioChannelPrototype>(channelName);
             _radioSystem.SendRadioMessage(source, message, channel, source);
         }
 

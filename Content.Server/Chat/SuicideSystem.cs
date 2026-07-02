@@ -28,6 +28,7 @@ public sealed partial class SuicideSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private GhostSystem _ghostSystem = default!;
     [Dependency] private SharedSuicideSystem _suicide = default!;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
 
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
 
@@ -132,11 +133,10 @@ public sealed partial class SuicideSystem : EntitySystem
 
         // Try to suicide by nearby entities, like Microwaves or Crematoriums, by raising an event on it
         // Returns upon being handled by any entity
-        var itemQuery = GetEntityQuery<ItemComponent>();
         foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Static))
         {
             // Skip any nearby items that can be picked up, we already checked the active held item above
-            if (itemQuery.HasComponent(entity))
+            if (_itemQuery.HasComponent(entity))
                 continue;
 
             RaiseLocalEvent(entity, suicideByEnvironmentEvent);
