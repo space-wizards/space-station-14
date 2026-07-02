@@ -2,6 +2,8 @@
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Weapons.Misc;
+using Content.Shared.Mind;
+using Content.Shared.Chat;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
@@ -18,6 +20,8 @@ public sealed partial class ChasmSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedGrapplingGunSystem _grapple = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
 
     public override void Initialize()
     {
@@ -63,7 +67,13 @@ public sealed partial class ChasmSystem : EntitySystem
         _blocker.UpdateCanMove(tripper);
 
         if (playSound)
-            _audio.PlayPredicted(component.FallingSound, chasm, tripper);
+            {
+
+                if (_mind.TryGetMind(tripper, out var mindId, out var mind))
+                    _chat.TryEmoteWithChat(tripper, "Scream");
+
+                _audio.PlayPredicted(component.FallingSound, chasm, tripper);
+            }
     }
 
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
