@@ -1,0 +1,43 @@
+- type: entity
+  parent: BaseBullet
+  id: EmitterBolt
+  categories: [ HideSpawnMenu ]
+  name: emitter bolt
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    layers:
+    - state: projectile
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    #soundHit: Waiting on serv3
+    damage:
+      types:
+        Heat: 14
+  # mining laser real
+  - type: GatheringProjectile
+  - type: Tag
+    tags:
+    - EmitterBolt
+  - type: TimedDespawn
+    lifetime: 3

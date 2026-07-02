@@ -1,0 +1,114 @@
+- type: entity
+  parent: BaseBullet
+  id: BulletEnergyTurretBase
+  categories: [ HideSpawnMenu ]
+  name: energy bolt
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: heavylaser
+      shader: unshaded
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: Ammo
+
+- type: entity
+  parent: BulletEnergyTurretBase
+  id: BulletEnergyTurretLaser
+  categories: [ HideSpawnMenu ]
+  name: laser bolt
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectHeavyLaser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: heavylaser
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 28
+
+- type: entity
+  parent: BulletEnergyTurretBase
+  id: BulletEnergyTurretDisabler
+  categories: [ HideSpawnMenu ]
+  name: disabler bolt
+  components:
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectOmnilaser
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 30
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 0
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  parent: BaseBullet
+  id: TeslaGunBullet
+  categories: [ HideSpawnMenu ]
+  name: tesla gun lightning
+  components:
+  - type: TimedDespawn
+    lifetime: 5
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/energy_miniball.rsi
+    layers:
+    - state: tesla_projectile
+      shader: unshaded
+  - type: StaminaDamageOnCollide
+    damage: 15
+  - type: EmbeddableProjectile
+  - type: Projectile
+    deleteOnCollide: false
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+  - type: LightningArcShooter
+    arcDepth: 1
+    maxLightningArc: 3
+    shootMinInterval: 2.5
+    shootMaxInterval: 4.5
+    shootRange: 5
+    lightningPrototype: Lightning
+  - type: Electrified
+    requirePower: false
+  - type: Tag
+    tags:
+    - HideContextMenu

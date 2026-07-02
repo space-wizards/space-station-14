@@ -1,0 +1,194 @@
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletRocket
+  categories: [ HideSpawnMenu ]
+  name: rocket
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 40
+    intensitySlope: 6
+    totalIntensity: 200
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletWeakRocket
+  categories: [ HideSpawnMenu ]
+  name: weak rocket
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: frag
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2 # max 30 per tile
+    intensitySlope: 1
+    totalIntensity: 4 # 60 total damage to distribute over tiles
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  parent: BaseBullet
+  id: BulletGrenadeBaton
+  categories: [ HideSpawnMenu ]
+  name: baton grenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: StaminaDamageOnCollide
+    damage: 80
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeBlast
+  categories: [ HideSpawnMenu ]
+  name: blast grenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 150 # a ~2 tile radius
+    intensitySlope: 5
+    maxIntensity: 10
+    canCreateVacuum: false
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeFlash
+  categories: [ HideSpawnMenu ]
+  name: flash grenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: FlashOnTrigger
+    range: 7
+  - type: SpawnOnTrigger
+    proto: GrenadeFlashEffect
+  - type: DeleteOnTrigger
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeFrag
+  categories: [ HideSpawnMenu ]
+  name: frag grenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: grenade
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50
+    intensitySlope: 1
+    maxIntensity: 5
+    canCreateVacuum: false
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: ProjectileGrenade
+    triggerKey: trigger
+    fillPrototype: PelletClusterLessLethal
+    capacity: 30
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeCleanade
+  categories: [ HideSpawnMenu ]
+  name: cleanade grenade round
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: cleanade
+  - type: SmokeOnTrigger
+    duration: 3.5
+    spreadAmount: 30
+    smokePrototype: Foam
+    solution:
+      reagents:
+      - ReagentId: SpaceCleaner
+        Quantity: 30
+  - type: EmitSoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+    positional: true
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 0.01 # a little pop
+    intensitySlope: 1
+    maxIntensity: 0.01
+    tileBreakScale: 0.01
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletGrenadeEMP
+  categories: [ HideSpawnMenu ]
+  name: EMP rocket
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: frag
+  - type: EmpOnTrigger
+    range: 5
+    energyConsumption: 50000
+    disableDuration: 10
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5
+
+- type: entity
+  parent: BaseBulletTrigger
+  id: BulletCannonBall
+  categories: [ HideSpawnMenu ]
+  name: cannonball
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: ball
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: DemolitionCharge
+    maxIntensity: 9
+    intensitySlope: 6
+    totalIntensity: 60
+    maxTileBreak: 0
+  - type: PointLight
+    radius: 1
+    color: orange
+    energy: 0.5

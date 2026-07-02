@@ -126,7 +126,7 @@
     spread: 45
 
 - type: entity
-  parent: [SolutionAmmo, SolutionToolVeryTiny, BaseBulletPractice]
+  parent: [ SolutionAmmo, SolutionToolVeryTiny, BaseBulletPractice ]
   id: PelletShotgunTranquilizer
   categories: [ HideSpawnMenu ]
   name: pellet (.50 tranquilizer)
@@ -152,11 +152,10 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-          - BulletImpassable
+        - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare

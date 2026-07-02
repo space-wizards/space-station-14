@@ -1,12 +1,12 @@
 - type: entity
-  parent: [BaseItem, SolutionDart]
-  id: BaseArrow
   abstract: true
+  parent: [ BaseItem, SolutionDart ]
+  id: BaseArrow
   components:
-  - type: Item
-    size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+  - type: Item
+    size: Small
   - type: Fixtures
     fixtures:
       fix1:
@@ -18,8 +18,7 @@
         restitution: 0.3
         friction: 0.2
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.1,-0.3,0.1,-0.1"
         hard: false
         mask:
@@ -55,7 +54,6 @@
     maxFillLevels: 1
     fillBaseName: solution
 
-
 - type: entity
   parent: BaseArrow
   id: ArrowRegular
@@ -70,7 +68,7 @@
       color: brown
     - state: tip
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -93,7 +91,7 @@
     - state: tip
       color: lightblue
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -119,7 +117,7 @@
     - state: tip
       color: purple
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -145,7 +143,7 @@
     - state: tip
       color: green
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -172,7 +170,7 @@
     - state: tip
       color: white
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:
@@ -198,7 +196,7 @@
     - state: tip
       color: brown
     - state: solution1
-      map: ["enum.SolutionContainerLayers.Fill"]
+      map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Projectile
     damage:

@@ -1,0 +1,115 @@
+- type: entity
+  parent: BaseBullet
+  id: BulletLaser
+  categories: [ HideSpawnMenu ]
+  name: laser bolt
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: heavylaser
+      shader: unshaded
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Opaque
+        - Impassable
+        - BulletImpassable
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 13
+
+- type: entity
+  parent: BulletLaser
+  id: BulletLaserSpread
+  categories: [ HideSpawnMenu ]
+  name: wide laser barrage
+  components:
+  - type: ProjectileSpread
+    proto: BulletLaser
+    count: 5 #65 heat damage if you hit all your shots, but wide spread
+    spread: 30
+
+- type: entity
+  parent: BulletLaser
+  id: BulletLaserSpreadNarrow
+  categories: [ HideSpawnMenu ]
+  name: lethal laser barrage
+  components:
+  - type: ProjectileSpread
+    proto: BulletLaser
+    count: 4 #52 heat damage if you hit all your shots, but narrower spread
+    spread: 10
+
+- type: entity
+  parent: BulletLaser
+  id: BulletLaserMagnum
+  categories: [ HideSpawnMenu ]
+  name: magnum laser bolt
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+    layers:
+    - state: magnum
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 30
+
+- type: entity
+  parent: BulletLaser
+  id: BulletLaserWindowPiercingMagnum
+  categories: [ HideSpawnMenu ]
+  name: magnum window-piercing bolt
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+    layers:
+    - state: magnum_piercing
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#ff4300"
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 20
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Opaque

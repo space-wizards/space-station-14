@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
   id: BaseMeteor
   name: meteor
   description: You prefer them when they're burning up in the atmosphere.
-  abstract: true
   components:
   - type: Sprite
     noRot: false
@@ -23,8 +23,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.4
         density: 100
         hard: false
@@ -57,8 +56,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.45
         density: 100
         hard: false
@@ -71,8 +69,7 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -92,8 +89,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.25
         density: 100
         hard: false
@@ -106,8 +102,7 @@
     totalIntensity: 50
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
@@ -132,8 +127,7 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape:
-          !type:PhysShapeCircle
+        shape: !type:PhysShapeCircle
           radius: 0.3
         density: 100
         hard: false
@@ -146,8 +140,7 @@
     totalIntensity: 100
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:DoActsBehavior
@@ -174,8 +167,7 @@
     totalIntensity: 150
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 1200
       behaviors:
       - !type:DoActsBehavior
@@ -193,15 +185,15 @@
 
 - type: entity
   abstract: true
-  parent: [SolutionHuge, BaseMeteor]
+  parent: [ SolutionHuge, BaseMeteor ]
   id: BaseSolutionMeteor
 
 - type: entity
   parent: BaseMeteor
   id: MeteorUrist
   name: Urist McMeteor
-  description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
   suffix: Meteor
+  description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
   components:
   - type: Sprite
     state: human_pixel
@@ -214,8 +206,7 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -233,14 +224,14 @@
             min: 1
             max: 2
       - !type:ExplodeBehavior
-
+      
 # Cow Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorCow
   name: Cosmic cow
-  description: Moo-ving at relativistic speeds!
   suffix: Meteor
+  description: Moo-ving at relativistic speeds!
   components:
   - type: Sprite
     state: cow_pixel
@@ -253,8 +244,7 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -273,14 +263,14 @@
             min: 1
             max: 2
       - !type:ExplodeBehavior
-
+      
 # Clown Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorClown
   name: Honksteroid
-  description: The final honkening!
   suffix: Meteor
+  description: The final honkening!
   components:
   - type: Sprite
     state: clown_pixel
@@ -293,8 +283,7 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -316,12 +305,13 @@
             min: 0
             max: 1
       - !type:ExplodeBehavior
-
+      
 # Potato Meteor
 - type: entity
   parent: BaseSolutionMeteor
   id: MeteorPotato
   name: Space potato
+  suffix: Meteor
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
   components:
   - type: Sprite
@@ -335,8 +325,7 @@
         Quantity: 120
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior

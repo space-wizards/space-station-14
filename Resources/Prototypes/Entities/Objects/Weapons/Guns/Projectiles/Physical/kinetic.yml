@@ -1,0 +1,102 @@
+- type: entity
+  parent: BaseBullet
+  id: BulletKinetic
+  categories: [ HideSpawnMenu ]
+  name: kinetic bolt
+  description: Not too bad, but you still don't want to get hit by it.
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Reflective
+    reflective:
+    - NonEnergy
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 15
+        Structural: 30
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.22 # roughly 5.5 tiles
+  - type: GatheringProjectile
+
+- type: entity
+  parent: BaseBullet
+  id: BulletKineticShuttle
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 30
+        Structural: 35
+  - type: Ammo
+    muzzleFlash: HitscanEffect
+  - type: TimedDespawn
+    lifetime: 1.5
+  - type: PointLight
+    radius: 2.5
+    color: white
+    energy: 0.5
+  - type: GatheringProjectile
+
+- type: entity
+  parent: BaseBullet
+  id: BulletCharge
+  categories: [ HideSpawnMenu ]
+  name: charge bolt
+  description: Marks a target for additional damage.
+  components:
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: chronobolt
+      shader: unshaded
+  - type: Reflective
+    reflective:
+    - NonEnergy
+  - type: GatheringProjectile
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+      - MobState
+    damage:
+      types:
+        Blunt: 18
+        Slash: 4
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Blunt: 0
+  # Short lifespan
+  - type: TimedDespawn
+    lifetime: 0.4
+
+  # Deals less damage, glaive has better HP recovery
+- type: entity
+  parent: BulletCharge
+  id: BulletChargeGlaive
+  name: leech bolt
+  components:
+  - type: DamageMarkerOnCollide
+    whitelist:
+      components:
+      - MobState
+    damage:
+      types:
+        Blunt: 1
+        Slash: 5

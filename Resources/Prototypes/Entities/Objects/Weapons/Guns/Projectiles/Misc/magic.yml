@@ -1,9 +1,9 @@
 - type: entity
+  parent: BulletRocket
   id: ProjectileFireball
+  categories: [ HideSpawnMenu ]
   name: fireball
   description: You better GITTAH WEIGH.
-  parent: BulletRocket
-  categories: [ HideSpawnMenu ]
   components:
   - type: PointLight
     color: "#E25822"
@@ -31,9 +31,9 @@
     fireStacks: 0.35
 
 - type: entity
-  categories: [ HideSpawnMenu ]
   parent: BaseBulletTrigger
   id: ProjectileDragonsBreath
+  categories: [ HideSpawnMenu ]
   name: dragon's breath
   description: Try not to get toasted.
   components:
@@ -64,11 +64,11 @@
     lifetime: 5
 
 - type: entity
+  parent: ProjectileFireball
   id: ProjectileAnomalyFireball
+  categories: [ HideSpawnMenu ]
   name: fireball
   description: Hovering blob of flame.
-  parent: ProjectileFireball
-  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 30
@@ -80,11 +80,11 @@
     maxTileBreak: 0
 
 - type: entity
+  parent: ClosetSteelBase
   id: ProjectileLocker
+  categories: [ HideSpawnMenu ]
   name: cursed locker
   description: A cursed magical locker! Can you resist?
-  parent: ClosetSteelBase
-  categories: [ HideSpawnMenu ]
   components:
   - type: ResistLocker
     resistTime: 30
@@ -93,14 +93,14 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - MobState
+      - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
   - type: Lock
     breakOnAccessBreaker: false
   - type: AccessReader
-    access: [["Wizard"]]
+    access: [[ "Wizard" ]]
     breakOnAccessBreaker: false
   - type: Projectile
     deleteOnCollide: false
@@ -132,8 +132,7 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 75
         mask:
@@ -141,8 +140,7 @@
         layer:
         - MachineLayer
       projectile:
-        shape:
-          !type:PhysShapeAabb
+        shape: !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
@@ -159,9 +157,9 @@
         hard: false
 
 - type: entity
-  id: ProjectilePolyboltBase
   abstract: true
   parent: BaseBullet
+  id: ProjectilePolyboltBase
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -182,11 +180,11 @@
     targetUser: true
 
 - type: entity
-  id: ProjectilePolyboltCarp
   parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltCarp
+  categories: [ HideSpawnMenu ]
   name: carp polybolt
   description: Nooo, I don't wanna be fish!
-  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCarp
@@ -196,11 +194,11 @@
       - MobState
 
 - type: entity
-  id: ProjectilePolyboltMonkey
   parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltMonkey
+  categories: [ HideSpawnMenu ]
   name: monkey polybolt
   description: Nooo, I don't wanna be monkey!
-  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedMonkey
@@ -210,11 +208,11 @@
       - MobState
 
 - type: entity
-  id: ProjectilePolyboltDoor
   parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltDoor
+  categories: [ HideSpawnMenu ]
   name: door polybolt
   description: Nooo, I don't wanna be door!
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -232,11 +230,11 @@
       - Wall
 
 - type: entity
+  parent: BaseBullet
   id: ProjectileHealingBolt
+  categories: [ HideSpawnMenu ]
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
-  parent: BaseBullet
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -260,10 +258,10 @@
     ignoreResistances: true
 
 - type: entity
-  id: BulletInstakillMagic
-  name: magical lead cylinder
   parent: BaseBullet
+  id: BulletInstakillMagic
   categories: [ HideSpawnMenu ]
+  name: magical lead cylinder
   description: This looks familiar.
   components:
   - type: Projectile
@@ -273,11 +271,11 @@
     ignoreResistances: true
 
 - type: entity
-  id: ProjectilePolyboltCluwne
   parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltCluwne
+  categories: [ HideSpawnMenu ]
   name: cluwne polybolt
   description: KnoH KnoH!
-  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCluwne
@@ -287,11 +285,11 @@
       - MobState
 
 - type: entity
-  id: ProjectileIcicle
   parent: BaseBullet
+  id: ProjectileIcicle
+  categories: [ HideSpawnMenu ]
   name: icicle
   description: Brrrrr.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
@@ -305,9 +303,9 @@
 - type: entity
   parent: ProjectilePolyboltBase
   id: ProjectilePolyboltBread
+  categories: [ HideSpawnMenu ]
   name: bread polybolt
   description: Nooo, I don't wanna be bread!
-  categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnTrigger
     polymorph: BreadMorph

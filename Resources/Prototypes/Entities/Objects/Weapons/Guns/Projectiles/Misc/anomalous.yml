@@ -1,0 +1,175 @@
+- type: entity
+  parent: BaseBullet
+  id: AnomalousParticleDelta
+  name: delta particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#c2385d"
+    radius: 2.0
+    energy: 7.0
+  - type: AnomalousParticle
+    particleType: Delta
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_red
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        mask:
+        - Opaque
+      fly-by: &flybyfixture
+        shape: !type:PhysShapeCircle
+          radius: 1.5
+        layer:
+        - Impassable
+        - MidImpassable
+        - HighImpassable
+        - LowImpassable
+        hard: False
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
+  - type: TimedDespawn
+    lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleDeltaStrong
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AnomalousParticle
+    particleType: Delta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleEpsilon
+  name: epsilon particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#38c296"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    layers:
+    - state: magicm_cyan
+      shader: unshaded
+  - type: AnomalousParticle
+    particleType: Epsilon
+
+- type: entity
+  parent: AnomalousParticleEpsilon
+  id: AnomalousParticleEpsilonStrong
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AnomalousParticle
+    particleType: Epsilon
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleZeta
+  name: zeta particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#b9c238"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    layers:
+    - state: magicm_yellow
+      shader: unshaded
+  - type: AnomalousParticle
+    particleType: Zeta
+
+- type: entity
+  parent: AnomalousParticleZeta
+  id: AnomalousParticleZetaStrong
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AnomalousParticle
+    particleType: Zeta
+    severityPerSeverityHit: 0.05
+    stabilityPerDestabilizingHit: 0.08
+    healthPerWeakeningeHit: -0.1
+    stabilityPerWeakeningeHit: -0.2
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleOmegaStrong
+  name: omega particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#38c24f"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+    - state: magicm_green
+      shader: unshaded
+  - type: AnomalousParticle
+    particleType: Default
+    severityOverride: true
+    severityPerSeverityHit: 0.1
+    stabilityPerDestabilizingHit: 0.05
+    healthPerWeakeningeHit: 1
+    stabilityPerWeakeningeHit: -0.05
+  - type: Projectile
+    impactEffect: BulletImpactEffectKinetic
+    damage:
+      types:
+        Heat: 20
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleSigma
+  name: sigma particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    color: "#8d38c2"
+    radius: 2.0
+    energy: 7.0
+  - type: Sprite
+    layers:
+    - state: magicm
+      shader: unshaded
+  - type: AnomalousParticle
+    particleType: Sigma
+
+- type: entity
+  parent: AnomalousParticleSigma
+  id: AnomalousParticleSigmaStrong
+  name: sigma particles
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: AnomalousParticle
+    particleType: Sigma
