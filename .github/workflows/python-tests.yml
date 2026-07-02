@@ -1,0 +1,21 @@
+name: Python Tests
+
+on:
+  push:
+    branches: [ master, staging, stable ]
+    paths:
+      - '**.py'
+  pull_request:
+    paths:
+      - '**.py'
+
+jobs:
+  test:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - name: Install Python dependencies
+      run: python3 -m pip install requests pyyaml
+    - name: Run Python tests
+      run: python3 -m unittest discover -s Tools/tests
