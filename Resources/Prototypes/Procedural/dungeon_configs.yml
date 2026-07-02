@@ -19,22 +19,27 @@
   - !type:DungeonEntranceDunGen
     count: 2
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:RoomEntranceDunGen
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:EntranceFlankDunGen
     tile: FloorSteel
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:ExternalWindowDunGen
     tile: FloorSteel
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:WallMountDunGen
-    contents: ScienceLabsWalls
+    contents: !type:NestedSelector
+      tableId: ScienceLabsWalls
     tile: FloorSteel
 
   - !type:BoundaryWallDunGen
@@ -45,18 +50,21 @@
   - !type:JunctionDunGen
     width: 1
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:JunctionDunGen
     width: 3
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:AutoCablingDunGen
     entity: CableApcExtension
 
   - !type:CornerClutterDunGen
-    contents: BaseClutter
+    contents: !type:NestedSelector
+      tableId: BaseClutter
 
   - !type:CorridorDecalSkirtingDunGen
     cardinalDecals:
@@ -93,7 +101,8 @@
     tile: FloorCaveDrought
 
   - !type:CorridorClutterDunGen
-    contents: HauntedClutter
+    contents: !type:NestedSelector
+      tableId: HauntedClutter
 
   - !type:BoundaryWallDunGen
     tile: FloorCaveDrought
@@ -125,22 +134,27 @@
   - !type:DungeonEntranceDunGen
     count: 2
     tile: FloorDark
-    contents: LavaBrigEntrance
+    contents: !type:NestedSelector
+      tableId: LavaBrigEntrance
 
   - !type:RoomEntranceDunGen
     tile: FloorDark
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:EntranceFlankDunGen
     tile: FloorDark
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:ExternalWindowDunGen
     tile: FloorDark
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:WallMountDunGen
-    contents: ScienceLabsWalls
+    contents: !type:NestedSelector
+      tableId: ScienceLabsWalls
     tile: FloorDark
 
   - !type:BoundaryWallDunGen
@@ -151,18 +165,21 @@
   - !type:JunctionDunGen
     width: 1
     tile: FloorDark
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:JunctionDunGen
     width: 3
     tile: FloorDark
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:AutoCablingDunGen
     entity: CableApcExtension
 
   - !type:CornerClutterDunGen
-    contents: BaseClutter
+    contents: !type:NestedSelector
+      tableId: BaseClutter
 
   - !type:CorridorDecalSkirtingDunGen
     cardinalDecals:
@@ -201,19 +218,23 @@
   - !type:DungeonEntranceDunGen
     count: 2
     tile: FloorCaveDrought
-    contents: BaseWoodWall
+    contents: !type:NestedSelector
+      tableId: BaseWoodWall
 
   - !type:RoomEntranceDunGen
     tile: FloorCaveDrought
-    contents: BaseWoodWall
+    contents: !type:NestedSelector
+      tableId: BaseWoodWall
 
   - !type:EntranceFlankDunGen
     tile: FloorCaveDrought
-    contents: BaseWoodWall
+    contents: !type:NestedSelector
+      tableId: BaseWoodWall
 
   - !type:ExternalWindowDunGen
     tile: FloorCaveDrought
-    contents: BaseWoodWall
+    contents: !type:NestedSelector
+      tableId: BaseWoodWall
 
   # No wallmounts
 
@@ -222,18 +243,21 @@
   - !type:JunctionDunGen
     width: 1
     tile: FloorCaveDrought
-    contents: BaseWoodSupport
+    contents: !type:NestedSelector
+      tableId: BaseWoodSupport
 
   - !type:JunctionDunGen
     width: 3
     tile: FloorCaveDrought
-    contents: BaseWoodSupport
+    contents: !type:NestedSelector
+      tableId: BaseWoodSupport
 
   - !type:AutoCablingDunGen
     entity: Catwalk
 
   - !type:CornerClutterDunGen
-    contents: MineshaftClutter
+    contents: !type:NestedSelector
+      tableId: MineshaftClutter
 
 # TODO: Check decal skirting fix contents in code.
 
@@ -257,22 +281,27 @@
   - !type:DungeonEntranceDunGen
     count: 2
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:RoomEntranceDunGen
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:EntranceFlankDunGen
     tile: FloorSteel
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:ExternalWindowDunGen
     tile: FloorSteel
-    contents: BaseWindow
+    contents: !type:NestedSelector
+      tableId: BaseWindow
 
   - !type:WallMountDunGen
-    contents: SnowyLabsWalls
+    contents: !type:NestedSelector
+      tableId: SnowyLabsWalls
     tile: FloorSteel
 
   - !type:BoundaryWallDunGen
@@ -282,12 +311,14 @@
   - !type:JunctionDunGen
     width: 1
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:JunctionDunGen
     width: 3
     tile: FloorSteel
-    contents: BaseAirlock
+    contents: !type:NestedSelector
+      tableId: BaseAirlock
 
   - !type:AutoCablingDunGen
     entity: CableApcExtension

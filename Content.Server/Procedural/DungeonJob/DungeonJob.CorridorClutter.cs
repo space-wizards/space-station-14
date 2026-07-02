@@ -15,7 +15,6 @@ public sealed partial class DungeonJob
     {
         var physicsQuery = _entManager.GetEntityQuery<PhysicsComponent>();
         var count = (int) Math.Ceiling(dungeon.CorridorTiles.Count * gen.Chance);
-        var contents = _prototype.Index(gen.Contents);
 
         while (count > 0)
         {
@@ -45,7 +44,7 @@ public sealed partial class DungeonJob
             if (reservedTiles.Contains(tile))
                 continue;
 
-            var protos = _entTable.GetSpawns(contents, random);
+            var protos = _entTable.GetSpawns(gen.Contents, random);
             var coords = _maps.ToCenterCoordinates(_gridUid, tile, _grid);
             _entManager.SpawnEntitiesAttachedTo(coords, protos);
             await SuspendIfOutOfTime();

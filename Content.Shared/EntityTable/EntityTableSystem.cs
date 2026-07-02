@@ -13,15 +13,6 @@ public sealed partial class EntityTableSystem : EntitySystem
     /// <summary>
     /// Compiles a random list of entity prototypes using constraints.
     /// </summary>
-    public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, IRobustRandom? rand = null, EntityTableContext? ctx = null)
-    {
-        // convenient
-        return GetSpawns(entTableProto.Table, rand, ctx);
-    }
-
-    /// <summary>
-    /// Compiles a random list of entity prototypes using constraints.
-    /// </summary>
     public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, IRobustRandom? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
@@ -30,14 +21,6 @@ public sealed partial class EntityTableSystem : EntitySystem
         rand ??= _random;
         ctx ??= new EntityTableContext();
         return table.GetSpawns(rand, EntityManager, ProtoMan, ctx);
-    }
-
-    /// <summary>
-    /// Builds a list of all the spawns in an EntityTable as keys, and their modified weights as values.
-    /// </summary>
-    public IEnumerable<(EntProtoId spawn, double)> ListSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
-    {
-        return ListSpawns(entTableProto.Table, ctx);
     }
 
     /// <summary>
@@ -52,12 +35,6 @@ public sealed partial class EntityTableSystem : EntitySystem
 
         ctx ??= new EntityTableContext();
         return table.ListSpawns(EntityManager, ProtoMan, ctx);
-    }
-
-    /// <inheritdoc cref="AverageSpawns(EntityTableSelector?,EntityTableContext?)"/>
-    public IEnumerable<(EntProtoId spawn, double)> AverageSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
-    {
-        return AverageSpawns(entTableProto.Table, ctx);
     }
 
     /// <summary>
