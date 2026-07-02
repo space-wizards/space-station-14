@@ -4,7 +4,7 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BleatingAccentSystem : RelayAccentSystem<BleatingAccentComponent>
+public sealed partial class BleatingAccentSystem : RelayAccentSystem<BleatingAccentComponent>
 {
     private static readonly Regex BleatRegex = new("([mbdlpwhrkcnytfo])([aiu])", RegexOptions.IgnoreCase);
 

@@ -14,7 +14,7 @@ namespace Content.Server.Speech.EntitySystems;
 /// <summary>
 /// Replaces text in messages, either with full replacements or word replacements.
 /// </summary>
-public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccentComponent>
+public sealed partial class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccentComponent>
 {
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ILocalizationManager _loc = default!;

@@ -3,7 +3,7 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class BackwardsAccentSystem : RelayAccentSystem<BackwardsAccentComponent>
+public sealed partial class BackwardsAccentSystem : RelayAccentSystem<BackwardsAccentComponent>
 {
     public override string Accentuate(string message)
     {
@@ -12,4 +12,3 @@ public sealed class BackwardsAccentSystem : RelayAccentSystem<BackwardsAccentCom
         return new string(arr);
     }
 }
-
