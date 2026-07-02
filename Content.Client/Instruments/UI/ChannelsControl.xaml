@@ -1,0 +1,12 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <BoxContainer Orientation="Vertical">
+        <ItemList Name="ChannelList" SelectMode="Multiple" Margin="1 0 0 0" MinHeight="150"/>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="AllButton" Text="{Loc 'instruments-component-channels-all-button'}" HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenRight" />
+            <Button Name="ClearButton" Text="{Loc 'instruments-component-channels-clear-button'}" HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenLeft"/>
+        </BoxContainer>
+        <controls:SwitchButton Name="DisplayTrackNamesButton"
+                               Text="{Loc 'instruments-component-channels-track-names-toggle'}" />
+    </BoxContainer>
+</Control>

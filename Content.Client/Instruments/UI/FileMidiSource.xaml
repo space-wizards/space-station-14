@@ -1,0 +1,34 @@
+<ui:FileMidiSource xmlns="https://spacestation14.io"
+                                xmlns:ui="clr-namespace:Content.Client.Instruments.UI"
+                                HorizontalExpand="True"
+                                Orientation="Vertical">
+
+    <!-- Track list -->
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 20">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="{Loc 'instruments-component-menu-files-list-label'}" HorizontalAlignment="Left"/>
+            <LineEdit Name="FilterBar" PlaceHolder="{Loc 'instruments-component-menu-files-filter'}" HorizontalExpand="True" Margin="20 0 0 0"/>
+        </BoxContainer>
+        <ItemList Name="TrackList" SelectMode="Single" VerticalExpand="True" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="AddButton" Text="{Loc 'instruments-component-menu-files-add-button'}" HorizontalExpand="True" StyleClasses="OpenRight" />
+            <Button Name="RenameButton" Text="{Loc 'instruments-component-menu-files-rename-button'}" HorizontalExpand="True" StyleClasses="OpenBoth" />
+            <Button Name="RemoveButton" Text="{Loc 'instruments-component-menu-files-remove-button'}" HorizontalExpand="True" StyleClasses="OpenLeft" />
+        </BoxContainer>
+    </BoxContainer>
+
+    <!-- Current track label -->
+    <Label Name="CurrentTrackLabel"></Label>
+
+    <!-- Track position -->
+    <Slider Name="PlaybackSlider" HorizontalExpand="True" />
+
+    <!-- Track controls -->
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <Button Name="PlayButton" Text="{Loc 'instruments-component-menu-play-stop-button'}" ToggleMode="True" StyleClasses="OpenRight" />
+        <Button Name="LoopButton" Text="{Loc 'instruments-component-menu-loop-button'}" ToggleMode="True" StyleClasses="OpenBoth" />
+        <Button Name="ShuffleButton" Text="{Loc 'instruments-component-menu-shuffle-button'}" ToggleMode="True" StyleClasses="OpenLeft" />
+        <BoxContainer HorizontalExpand="True" />
+        <Label Name="TimeLabel" Text="--:--/--:--" Align="Right"/>
+    </BoxContainer>
+</ui:FileMidiSource>
