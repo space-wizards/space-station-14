@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Lock;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.Robotics;
 using Content.Shared.Robotics.Components;
 using Content.Shared.Robotics.Systems;
@@ -33,7 +32,6 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RoboticsConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         Subs.BuiEvents<RoboticsConsoleComponent>(RoboticsConsoleUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpened);
@@ -41,6 +39,12 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
             subs.Event<RoboticsConsoleDestroyMessage>(OnDestroy);
             // TODO: camera stuff
         });
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<RoboticsCyborgDataPayload>(OnPacketReceived);
     }
 
     public override void Update(float frameTime)
@@ -70,20 +74,11 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         }
     }
 
-    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref RoboticsCyborgDataPayload payload, ref DeviceNetworkPacketData args)
     {
-        var payload = args.Data;
-        if (!payload.TryGetValue(DeviceNetworkConstants.Command, out string? command))
-            return;
-        if (command != DeviceNetworkConstants.CmdUpdatedState)
-            return;
-
-        if (!payload.TryGetValue(RoboticsConsoleConstants.NET_CYBORG_DATA, out CyborgControlData? data))
-            return;
-
-        var real = data.Value;
-        real.Timeout = _timing.CurTime + ent.Comp.Timeout;
-        ent.Comp.Cyborgs[args.SenderAddress] = real;
+        var data = payload.Data;
+        data.Timeout = _timing.CurTime + ent.Comp.Timeout;
+        ent.Comp.Cyborgs[args.SenderAddress] = data;
 
         UpdateUserInterface(ent);
     }
@@ -104,12 +99,9 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.TryGetValue(args.Address, out var data))
             return;
 
-        var payload = new NetworkPayload()
-        {
-            [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DISABLE_COMMAND
-        };
+        var payload = new RoboticsCyborgDisablePayload();
+        _deviceNetwork.QueuePacket(ent.Owner, args.Address, payload);
 
-        _deviceNetwork.QueuePacket(ent, args.Address, payload);
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Actor):user} disabled borg {data.Name} with address {args.Address}");
     }
 
@@ -128,12 +120,8 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.Remove(args.Address, out var data))
             return;
 
-        var payload = new NetworkPayload()
-        {
-            [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DESTROY_COMMAND
-        };
-
-        _deviceNetwork.QueuePacket(ent, args.Address, payload);
+        var payload = new RoboticsCyborgDestroyPayload();
+        _deviceNetwork.QueuePacket(ent.Owner, args.Address, payload);
 
         var message = Loc.GetString(ent.Comp.DestroyMessage, ("name", data.Name));
         _radio.SendRadioMessage(ent, message, ent.Comp.RadioChannel, ent);

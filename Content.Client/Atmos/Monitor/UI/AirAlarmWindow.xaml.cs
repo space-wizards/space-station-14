@@ -16,8 +16,8 @@ namespace Content.Client.Atmos.Monitor.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AirAlarmWindow : FancyWindow
 {
-    public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
-    public event Action<IAtmosDeviceData>? AtmosDeviceDataCopied;
+    public event Action<string, AtmosDeviceDataPayload>? AtmosDeviceDataChanged;
+	public event Action<AtmosDeviceDataPayload>? AtmosDeviceDataCopied;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
@@ -124,11 +124,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
         _autoMode.Pressed = enabled;
     }
 
-    public void UpdateDeviceData(string addr, IAtmosDeviceData device)
+    public void UpdateDeviceData(string addr, AtmosDeviceDataPayload device)
     {
         switch (device)
         {
-            case GasVentPumpData pump:
+            case GasVentPumpDataPayload pump:
                 if (!_pumps.TryGetValue(addr, out var pumpControl))
                 {
                     var control = new PumpControl(pump, addr);
@@ -143,7 +143,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 }
 
                 break;
-            case GasVentScrubberData scrubber:
+            case GasVentScrubberDataPayload scrubber:
                 if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
                 {
                     var control = new ScrubberControl(scrubber, addr);
@@ -158,7 +158,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 }
 
                 break;
-            case AtmosSensorData sensor:
+            case AtmosMonitorDataPayload sensor:
                 if (!_sensors.TryGetValue(addr, out var sensorControl))
                 {
                     var control = new SensorInfo(sensor, addr);

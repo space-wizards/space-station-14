@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
@@ -9,6 +8,7 @@ using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -16,37 +16,12 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 {
     [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private DeviceNetworkRouterSystem _deviceNetworkRouter = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-
-    // Pings a surveillance camera subnet. All cameras will always respond
-    // with a data message if they are on the same subnet.
-    public const string CameraPingSubnetMessage = "surveillance_camera_ping_subnet";
-
-    // Pings a surveillance camera. Useful to ensure that the camera is still on
-    // before connecting fully.
-    public const string CameraPingMessage = "surveillance_camera_ping";
-
-    // Camera heartbeat. Monitors ping this to ensure that a camera is still able to
-    // be contacted. If this doesn't get sent after some time, the monitor will
-    // automatically disconnect.
-    public const string CameraHeartbeatMessage = "surveillance_camera_heartbeat";
-
-    // Surveillance camera data. This generally should contain nothing
-    // except for the subnet that this camera is on -
-    // this is because of the fact that the PacketEvent already
-    // contains the sender UID, and that this will always be targeted
-    // towards the sender that pinged the camera.
-    public const string CameraDataMessage = "surveillance_camera_data";
-    public const string CameraConnectMessage = "surveillance_camera_connect";
-    public const string CameraSubnetConnectMessage = "surveillance_camera_subnet_connect";
-    public const string CameraSubnetDisconnectMessage = "surveillance_camera_subnet_disconnect";
-
-    public const string CameraAddressData = "surveillance_camera_data_origin";
-    public const string CameraNameData = "surveillance_camera_data_name";
-    public const string CameraSubnetData = "surveillance_camera_data_subnet";
+    [Dependency] private EntityQuery<SurveillanceCameraRouterComponent> _routerQuery = default!;
 
     public const int CameraNameLimit = 32;
 
@@ -56,74 +31,64 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         SubscribeLocalEvent<SurveillanceCameraComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<SurveillanceCameraComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<SurveillanceCameraComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetName>(OnSetName);
         SubscribeLocalEvent<SurveillanceCameraComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
 
         InitializeCollide();
     }
 
-    private void OnPacketReceived(EntityUid uid, SurveillanceCameraComponent component, DeviceNetworkPacketEvent args)
+    protected override void InitializeDevice()
     {
-        if (!component.Active)
-        {
+        base.InitializeDevice();
+        SubscribePayload<SurveillanceCameraConnectRequestPayload>(OnConnectRequest);
+        SubscribePayload<SurveillanceCameraHeartbeatRequestPayload>(OnHeartbeatRequest);
+        SubscribePayload<SurveillanceCameraPingPayload>(OnPing);
+    }
+
+    private void OnConnectRequest(
+        Entity<SurveillanceCameraComponent> ent,
+        ref SurveillanceCameraConnectRequestPayload payload,
+        ref DeviceNetworkPacketData args)
+    {
+        if (!ent.Comp.Active)
             return;
-        }
 
-        if (!TryComp(uid, out DeviceNetworkComponent? deviceNet))
-        {
+        var responsePayload = new SurveillanceCameraConnectPayload();
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, args.SenderAddress, responsePayload, payload.SenderAddress);
+    }
+
+    private void OnHeartbeatRequest(
+        Entity<SurveillanceCameraComponent> ent,
+        ref SurveillanceCameraHeartbeatRequestPayload payload,
+        ref DeviceNetworkPacketData args)
+    {
+        if (!ent.Comp.Active)
             return;
-        }
 
-        if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
+        var responsePayload = new SurveillanceCameraHeartbeatPayload();
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, args.SenderAddress, responsePayload, payload.SenderAddress);
+    }
+
+    private void OnPing(
+        Entity<SurveillanceCameraComponent> ent,
+        ref SurveillanceCameraPingPayload payload,
+        ref DeviceNetworkPacketData args)
+    {
+        if (!ent.Comp.Active)
+            return;
+
+        if (!_routerQuery.TryComp(args.Sender, out var routerComp))
+            return;
+
+        if (routerComp.SubnetName != payload.Subnet)
+            return;
+
+        var name = ent.Comp.UseEntityNameAsCameraId ? MetaData(ent).EntityName : ent.Comp.CameraId;
+        var responsePayload = new SurveillanceCameraDataPayload
         {
-            var payload = new NetworkPayload()
-            {
-                { DeviceNetworkConstants.Command, string.Empty },
-                { CameraAddressData, deviceNet.Address },
-                { CameraNameData, component.UseEntityNameAsCameraId ? MetaData(uid).EntityName : component.CameraId },
-                { CameraSubnetData, string.Empty }
-            };
-
-            var dest = string.Empty;
-
-            switch (command)
-            {
-                case CameraConnectMessage:
-                    if (!args.Data.TryGetValue(CameraAddressData, out dest)
-                        || string.IsNullOrEmpty(args.Address))
-                    {
-                        return;
-                    }
-
-                    payload[DeviceNetworkConstants.Command] = CameraConnectMessage;
-                    break;
-                case CameraHeartbeatMessage:
-                    if (!args.Data.TryGetValue(CameraAddressData, out dest)
-                        || string.IsNullOrEmpty(args.Address))
-                    {
-                        return;
-                    }
-
-                    payload[DeviceNetworkConstants.Command] = CameraHeartbeatMessage;
-                    break;
-                case CameraPingMessage:
-                    if (!args.Data.TryGetValue(CameraSubnetData, out string? subnet))
-                    {
-                        return;
-                    }
-
-                    dest = args.SenderAddress;
-                    payload[CameraSubnetData] = subnet;
-                    payload[DeviceNetworkConstants.Command] = CameraDataMessage;
-                    break;
-            }
-
-            _deviceNetworkSystem.QueuePacket(
-                uid,
-                dest,
-                payload);
-        }
+            Name = name,
+        };
+        _deviceNetworkRouter.QueuePacketRouted(ent.Owner, args.SenderAddress, responsePayload, payload.SenderAddress);
     }
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)
@@ -153,9 +118,9 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Actor)} set the name of {ToPrettyString(uid)} to \"{args.Name}.\"");
     }
 
-    private void OnSetNetwork(EntityUid uid, SurveillanceCameraComponent component,
-        SurveillanceCameraSetupSetNetwork args)
+    private void OnSetNetwork(Entity<SurveillanceCameraComponent> ent, ref SurveillanceCameraSetupSetNetwork args)
     {
+        var (uid, component) = ent;
         if (args.UiKey is not SurveillanceCameraSetupUiKey key
             || key != SurveillanceCameraSetupUiKey.Camera)
         {
@@ -166,8 +131,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             return;
         }
 
-        if (!ProtoMan.Resolve<DeviceFrequencyPrototype>(component.AvailableNetworks[args.Network],
-                out var frequency))
+        if (!ProtoMan.Resolve(component.AvailableNetworks[args.Network], out var frequency))
         {
             return;
         }
@@ -206,7 +170,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         {
             if (deviceNet.ReceiveFrequencyId != null)
             {
-                camera.AvailableNetworks.Add(deviceNet.ReceiveFrequencyId);
+                camera.AvailableNetworks.Add(deviceNet.ReceiveFrequencyId.Value);
             }
             else if (!camera.NetworkSet)
             {
@@ -216,8 +180,11 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         }
 
         var name = camera.UseEntityNameAsCameraId ? MetaData(uid).EntityName : camera.CameraId;
-        var state = new SurveillanceCameraSetupBoundUiState(name, deviceNet.ReceiveFrequency ?? 0,
-            camera.AvailableNetworks, camera.NameSet, camera.NetworkSet);
+        var state = new SurveillanceCameraSetupBoundUiState(name,
+            deviceNet.ReceiveFrequency ?? 0,
+            camera.AvailableNetworks,
+            camera.NameSet,
+            camera.NetworkSet);
         _userInterface.SetUiState(uid, SurveillanceCameraSetupUiKey.Camera, state);
     }
 

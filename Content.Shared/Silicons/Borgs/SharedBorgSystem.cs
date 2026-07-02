@@ -3,6 +3,7 @@ using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Gibbing;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -38,7 +39,7 @@ namespace Content.Shared.Silicons.Borgs;
 /// <summary>
 /// This handles logic, interactions, and UI related to <see cref="BorgChassisComponent"/> and other related components.
 /// </summary>
-public abstract partial class SharedBorgSystem : EntitySystem
+public abstract partial class SharedBorgSystem : DevicePayloadSystem<BorgTransponderComponent>
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;

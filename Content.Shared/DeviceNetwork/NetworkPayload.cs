@@ -1,24 +1,22 @@
-using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Utility;
+using Content.Shared.DeviceNetwork.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
 
-public sealed class NetworkPayload : Dictionary<string, object?>
-{
-    /// <summary>
-    /// Tries to get a value from the payload and checks if that value is of type  T.
-    /// </summary>
-    /// <typeparam name="T">The type that should be casted to</typeparam>
-    /// <returns>Whether the value was present in the payload and of the required type</returns>
-    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value)
-    {
-        if (this.TryCastValue(key, out T? result))
-        {
-            value = result;
-            return true;
-        }
+[ImplicitDataDefinitionForInheritors]
+public partial interface INetworkPayload;
 
-        value = default;
-        return false;
-    }
-}
+/// <summary>
+/// A data class for information passing through a Device Network.
+/// </summary>
+[ImplicitDataDefinitionForInheritors]
+[Serializable, NetSerializable]
+public abstract partial class NetworkPayload : INetworkPayload;
+
+/// <summary>
+/// A <see cref="NetworkPayload"/> that can be handled by systems that inherit <see cref="DeviceNetworkHandler"/>,
+/// which have better functionality and performance.
+/// </summary>
+[ImplicitDataDefinitionForInheritors]
+[Serializable, NetSerializable]
+public abstract partial class HandledNetworkPayload : INetworkPayload;

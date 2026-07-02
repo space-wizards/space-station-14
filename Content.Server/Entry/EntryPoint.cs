@@ -24,6 +24,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Localizations;
 using Robust.Server;
 using Robust.Server.ServerStatus;
@@ -163,6 +164,7 @@ namespace Content.Server.Entry
             _euiManager.Initialize();
             _gameMap.Initialize();
             _entSys.GetEntitySystem<GameTicker>().PostInitialize();
+            _entSys.GetEntitySystem<SharedDeviceNetworkSystem>().PostInit();
             _ban.Initialize();
             _connection.PostInit();
             _multiServerKick.Initialize();

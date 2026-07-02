@@ -1,5 +1,6 @@
 using Content.Shared.Access;
 using Content.Shared.Access.Systems;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Turrets;
 using Robust.Shared.Audio.Systems;
@@ -11,7 +12,7 @@ namespace Content.Shared.TurretController;
 /// Oversees entities that can change the component values of linked deployable turrets,
 /// specifically their armament and access level exemptions, via an associated UI
 /// </summary>
-public abstract partial class SharedDeployableTurretControllerSystem : EntitySystem
+public abstract partial class SharedDeployableTurretControllerSystem : DevicePayloadSystem<DeployableTurretControllerComponent>
 {
     [Dependency] private AccessReaderSystem _accessreader = default!;
     [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;

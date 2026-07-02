@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
@@ -10,43 +11,31 @@ using Content.Shared.Tag;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed partial class AtmosAlarmableSystem : EntitySystem
+public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlarmableComponent>
 {
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private AudioSystem _audioSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNet = default!;
     [Dependency] private AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
 
-    /// <summary>
-    ///     An alarm. Has three valid states: Normal, Warning, Danger.
-    ///     Will attempt to fetch the tags from the alarming entity
-    ///     to send over.
-    /// </summary>
-    public const string AlertCmd = "atmos_alarm";
-
-    public const string AlertSource = "atmos_alarm_source";
-
-    public const string AlertTypes = "atmos_alarm_types";
-
-    /// <summary>
-    ///     Syncs alerts from this alarm receiver to other alarm receivers.
-    ///     Creates a network effect as a result. Note: if the alert receiver
-    ///     is not aware of the device beforehand, it will not sync.
-    /// </summary>
-    public const string SyncAlerts = "atmos_alarmable_sync_alerts";
-
-    public const string ResetAll = "atmos_alarmable_reset_all";
-
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<AtmosAlarmableComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<AtmosAlarmableComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         SubscribeLocalEvent<AtmosAlarmableComponent, PowerChangedEvent>(OnPowerChange);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<AtmosAlarmPayload>(OnAlarmPayload);
+        SubscribePayload<AtmosAlarmableResetAllPayload>(OnResetAllPayload);
+        SubscribePayload<AtmosAlarmableSyncAlertsPayload>(OnSyncAlertsPayload);
     }
 
     private void OnMapInit(EntityUid uid, AtmosAlarmableComponent component, MapInitEvent args)
@@ -78,92 +67,72 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         }
     }
 
-    private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, DeviceNetworkPacketEvent args)
+    private void OnAlarmPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (component.IgnoreAlarms) return;
-
-        if (!TryComp(uid, out DeviceNetworkComponent? netConn))
+        if (!CheckTags(ent, ref payload))
             return;
 
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd)
-            || !args.Data.TryGetValue(AlertSource, out HashSet<ProtoId<TagPrototype>>? sourceTags))
+        var (uid, component) = ent;
+        var isValid = (payload.TrippedThresholds & component.MonitorAlertTypes) != 0;
+
+        if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
         {
+            if (!isValid)
+                return;
+
+            component.NetworkAlarmStates.Add(args.SenderAddress, payload.Type);
+        }
+        else
+        {
+            // This is because if the alert is no longer valid,
+            // it may mean that the threshold we need to look at has
+            // been removed from the threshold types passed:
+            // basically, we need to reset this state to normal here.
+            component.NetworkAlarmStates[args.SenderAddress] = isValid ? payload.Type : AtmosAlarmType.Normal;
+        }
+
+        if (!TryGetHighestAlert(uid, out var netMax, component))
+        {
+            netMax = AtmosAlarmType.Normal;
+        }
+
+        TryUpdateAlert(uid, netMax.Value, component);
+    }
+
+    private void OnResetAllPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmableResetAllPayload payload, ref DeviceNetworkPacketData args)
+    {
+        if (!CheckTags(ent, ref payload))
             return;
-        }
 
-        var isValid = sourceTags.Any(source => component.SyncWithTags.Contains(source));
+        Reset(ent.Owner, ent.Comp);
+    }
 
-        if (!isValid)
-        {
+    private void OnSyncAlertsPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmableSyncAlertsPayload payload, ref DeviceNetworkPacketData args)
+    {
+        if (!CheckTags(ent, ref payload))
             return;
-        }
 
-        switch (cmd)
+        foreach (var (key, alarm) in payload.AlarmStates)
         {
-            case AlertCmd:
-                // Set the alert state, and then cache it so we can calculate
-                // the maximum alarm state at all times.
-                if (!args.Data.TryGetValue(DeviceNetworkConstants.CmdSetState, out AtmosAlarmType state))
-                {
-                    break;
-                }
-
-                if (args.Data.TryGetValue(AlertTypes, out AtmosMonitorThresholdTypeFlags types) && component.MonitorAlertTypes != AtmosMonitorThresholdTypeFlags.None)
-                {
-                    isValid = (types & component.MonitorAlertTypes) != 0;
-                }
-
-                if (!component.NetworkAlarmStates.ContainsKey(args.SenderAddress))
-                {
-                    if (!isValid)
-                    {
-                        break;
-                    }
-
-                    component.NetworkAlarmStates.Add(args.SenderAddress, state);
-                }
-                else
-                {
-                    // This is because if the alert is no longer valid,
-                    // it may mean that the threshold we need to look at has
-                    // been removed from the threshold types passed:
-                    // basically, we need to reset this state to normal here.
-                    component.NetworkAlarmStates[args.SenderAddress] = isValid ? state : AtmosAlarmType.Normal;
-                }
-
-                if (!TryGetHighestAlert(uid, out var netMax, component))
-                {
-                    netMax = AtmosAlarmType.Normal;
-                }
-
-                TryUpdateAlert(uid, netMax.Value, component);
-
-                break;
-            case ResetAll:
-                Reset(uid, component);
-                break;
-            case SyncAlerts:
-                if (!args.Data.TryGetValue(SyncAlerts,
-                        out IReadOnlyDictionary<string, AtmosAlarmType>? alarms))
-                {
-                    break;
-                }
-
-                foreach (var (key, alarm) in alarms)
-                {
-                    if (!component.NetworkAlarmStates.TryAdd(key, alarm))
-                    {
-                        component.NetworkAlarmStates[key] = alarm;
-                    }
-                }
-
-                if (TryGetHighestAlert(uid, out var maxAlert, component))
-                {
-                    TryUpdateAlert(uid, maxAlert.Value, component);
-                }
-
-                break;
+            ent.Comp.NetworkAlarmStates.TryAdd(key, alarm);
+            ent.Comp.NetworkAlarmStates[key] = alarm;
         }
+
+        if (TryGetHighestAlert(ent, out var maxAlert, ent.Comp))
+        {
+            TryUpdateAlert(ent, maxAlert.Value, ent.Comp);
+        }
+    }
+
+    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, ref T payload) where T : HandledNetworkPayload
+    {
+        if (ent.Comp.IgnoreAlarms)
+            return false;
+
+        if (payload is not AtmosAlarmableSourcePayload sourcePayload)
+            return false;
+
+        return sourcePayload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
     }
 
     private void TryUpdateAlert(EntityUid uid, AtmosAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)
@@ -191,11 +160,10 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload
+        var payload = new AtmosAlarmableSyncAlertsPayload
         {
-            [DeviceNetworkConstants.Command] = SyncAlerts,
-            [SyncAlerts] = alarmable.NetworkAlarmStates,
-            [AlertSource] = tags.Tags
+            AlarmStates = alarmable.NetworkAlarmStates,
+            Source = tags.Tags,
         };
 
         _deviceNet.QueuePacket(uid, address, payload);
@@ -228,11 +196,10 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
             alarmable.NetworkAlarmStates[devNet.Address] = alarmType;
         }
 
-        var payload = new NetworkPayload
+        var payload = new AtmosAlarmPayload
         {
-            [DeviceNetworkConstants.Command] = AlertCmd,
-            [DeviceNetworkConstants.CmdSetState] = alarmType,
-            [AlertSource] = tags.Tags
+            Type = alarmType,
+            Source = tags.Tags,
         };
 
         _deviceNet.QueuePacket(uid, null, payload);
@@ -255,12 +222,7 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
 
         if (!alarmable.ReceiveOnly)
         {
-            var payload = new NetworkPayload
-            {
-                [DeviceNetworkConstants.Command] = ResetAll,
-                [AlertSource] = tags.Tags
-            };
-
+            var payload = new AtmosMonitorResetPayload();
             _deviceNet.QueuePacket(uid, null, payload);
         }
     }

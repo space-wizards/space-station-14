@@ -1,19 +1,17 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.SensorMonitoring;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Audio;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -32,8 +30,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceUpdateEvent>(OnVolumePumpUpdated);
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceDisabledEvent>(OnVolumePumpLeaveAtmosphere);
+        }
 
-            SubscribeLocalEvent<GasVolumePumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+        protected override void InitializeDevice()
+        {
+            base.InitializeDevice();
+            SubscribePayload<GasVolumePumpSyncDataPayload>(OnSyncPayload);
         }
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
@@ -107,25 +109,18 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
 
-        private void OnPacketRecv(EntityUid uid, GasVolumePumpComponent component, DeviceNetworkPacketEvent args)
+        private void OnSyncPayload(Entity<GasVolumePumpComponent> ent, ref GasVolumePumpSyncDataPayload payload, ref DeviceNetworkPacketData args)
         {
-            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
-                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+            var data = new GasVolumePumpDataPayload
             {
-                return;
-            }
-
-            var payload = new NetworkPayload();
-
-            switch (cmd)
+                LastMolesTransferred = ent.Comp.LastMolesTransferred,
+            };
+            var sensor = new SensorMonitoringAtmosDataPayload
             {
-                case AtmosDeviceNetworkSystem.SyncData:
-                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasVolumePumpData(component.LastMolesTransferred));
+                Payload = data,
+            };
 
-                    _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
-                    return;
-            }
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, sensor);
         }
     }
 }

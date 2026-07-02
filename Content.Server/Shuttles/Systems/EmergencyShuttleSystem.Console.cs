@@ -1,13 +1,12 @@
 using System.Threading;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Access;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Popups;
+using Content.Shared.RoundEnd;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
@@ -375,15 +374,15 @@ public sealed partial class EmergencyShuttleSystem
         var shuttle = GetShuttle();
         if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
-            var payload = new NetworkPayload
+            var payload = new ScreenShuttlePayload
             {
-                [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                [ShuttleTimerMasks.SourceMap] = _roundEnd.GetStation(),
-                [ShuttleTimerMasks.DestMap] = _roundEnd.GetCentcomm(),
-                [ShuttleTimerMasks.ShuttleTime] = time,
-                [ShuttleTimerMasks.SourceTime] = time,
-                [ShuttleTimerMasks.DestTime] = time + TimeSpan.FromSeconds(TransitTime),
-                [ShuttleTimerMasks.Docked] = true
+                Shuttle = GetNetEntity(shuttle),
+                SourceMap = GetNetEntity(_roundEnd.GetStation()),
+                DestinationMap = GetNetEntity(_roundEnd.GetCentcomm()),
+                ShuttleTime = time,
+                SourceTime = time,
+                DestinationTime = time + TimeSpan.FromSeconds(TransitTime),
+                Docked = true,
             };
             _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
         }

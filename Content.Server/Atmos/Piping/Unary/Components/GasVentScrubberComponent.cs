@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [DataField]
-        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
+        public HashSet<Gas> FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases);
 
         [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -53,9 +53,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool WideNet { get; set; } = false;
 
-        public GasVentScrubberData ToAirAlarmData()
+        public GasVentScrubberDataPayload ToAirAlarmData()
         {
-            return new GasVentScrubberData
+            return new GasVentScrubberDataPayload
             {
                 Enabled = Enabled,
                 Dirty = IsDirty,
@@ -66,18 +66,18 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentScrubberData data)
+        public void FromAirAlarmData(GasVentScrubberDataPayload dataPayload)
         {
-            Enabled = data.Enabled;
-            IsDirty = data.Dirty;
-            PumpDirection = data.PumpDirection;
-            TransferRate = data.VolumeRate;
-            WideNet = data.WideNet;
+            Enabled = dataPayload.Enabled;
+            IsDirty = dataPayload.Dirty;
+            PumpDirection = dataPayload.PumpDirection;
+            TransferRate = dataPayload.VolumeRate;
+            WideNet = dataPayload.WideNet;
 
-            if (!data.FilterGases.SequenceEqual(FilterGases))
+            if (!dataPayload.FilterGases.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
-                foreach (var gas in data.FilterGases)
+                foreach (var gas in dataPayload.FilterGases)
                     FilterGases.Add(gas);
             }
         }

@@ -17,17 +17,17 @@ public sealed class DeviceNet
     ///     This dictionary contains all devices connected to this network, though they may not be listening to any
     ///     specific frequency.
     /// </summary>
-    public readonly Dictionary<string, DeviceNetworkComponent> Devices = new();
+    public readonly Dictionary<string, Device> Devices = new();
 
     /// <summary>
     ///     Devices listening on a given frequency.
     /// </summary>
-    public readonly Dictionary<uint, HashSet<DeviceNetworkComponent>> ListeningDevices = new();
+    public readonly Dictionary<uint, HashSet<Device>> ListeningDevices = new();
 
     /// <summary>
     ///     Devices listening to all packets on a given frequency, regardless of the intended recipient.
     /// </summary>
-    public readonly Dictionary<uint, HashSet<DeviceNetworkComponent>> ReceiveAllDevices = new();
+    public readonly Dictionary<uint, HashSet<Device>> ReceiveAllDevices = new();
 
     private readonly IRobustRandom _random;
     public readonly int NetId;
@@ -41,24 +41,26 @@ public sealed class DeviceNet
     /// <summary>
     ///     Add a device to the network.
     /// </summary>
-    public bool Add(DeviceNetworkComponent device)
+    public bool Add(Entity<DeviceNetworkComponent> ent)
     {
-        if (device.CustomAddress)
+        var deviceComp = ent.Comp;
+        var device = new Device(ent);
+        if (deviceComp.CustomAddress)
         {
             // Only add if the device's existing address is available.
-            if (!Devices.TryAdd(device.Address, device))
+            if (!Devices.TryAdd(deviceComp.Address, device))
                 return false;
         }
         else
         {
             // Randomly generate a new address if the existing random one is invalid. Otherwise, keep the existing address
-            if (string.IsNullOrWhiteSpace(device.Address) || Devices.ContainsKey(device.Address))
-                device.Address = GenerateValidAddress(device.Prefix);
+            if (string.IsNullOrWhiteSpace(deviceComp.Address) || Devices.ContainsKey(deviceComp.Address))
+                deviceComp.Address = GenerateValidAddress(deviceComp.Prefix);
 
-            Devices[device.Address] = device;
+            Devices[deviceComp.Address] = device;
         }
 
-        if (device.ReceiveFrequency is not uint freq)
+        if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
 
         if (!ListeningDevices.TryGetValue(freq, out var devices))
@@ -66,7 +68,7 @@ public sealed class DeviceNet
 
         devices.Add(device);
 
-        if (!device.ReceiveAll)
+        if (!deviceComp.ReceiveAll)
             return true;
 
         if (!ReceiveAllDevices.TryGetValue(freq, out var receiveAlldevices))
@@ -79,12 +81,14 @@ public sealed class DeviceNet
     /// <summary>
     ///     Remove a device from the network.
     /// </summary>
-    public bool Remove(DeviceNetworkComponent device)
+    public bool Remove(Entity<DeviceNetworkComponent> ent)
     {
-        if (device.Address == null || !Devices.Remove(device.Address))
+        var deviceComp = ent.Comp;
+        var device = new Device(ent);
+        if (deviceComp.Address == null || !Devices.Remove(deviceComp.Address))
             return false;
 
-        if (device.ReceiveFrequency is not uint freq)
+        if (deviceComp.ReceiveFrequency is not { } freq)
             return true;
 
         if (ListeningDevices.TryGetValue(freq, out var listening))
@@ -94,7 +98,7 @@ public sealed class DeviceNet
                 ListeningDevices.Remove(freq);
         }
 
-        if (device.ReceiveAll && ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
+        if (deviceComp.ReceiveAll && ReceiveAllDevices.TryGetValue(freq, out var receiveAll))
         {
             receiveAll.Remove(device);
             if (receiveAll.Count == 0)
@@ -147,7 +151,7 @@ public sealed class DeviceNet
         if (device.ReceiveFrequency == newFrequency)
             return true;
 
-        if (device.ReceiveFrequency is uint freq)
+        if (device.ReceiveFrequency is { } freq)
         {
             if (ListeningDevices.TryGetValue(freq, out var listening))
             {
@@ -197,12 +201,12 @@ public sealed class DeviceNet
 
         device.ReceiveAll = receiveAll;
 
-        if (device.ReceiveFrequency is not uint freq)
+        if (device.ReceiveFrequency is not { } freq)
             return true;
 
         // remove or add to set of listening devices
 
-        HashSet<DeviceNetworkComponent>? devices;
+        HashSet<Device>? devices;
         if (receiveAll)
         {
             if (!ReceiveAllDevices.TryGetValue(freq, out devices))
@@ -230,8 +234,7 @@ public sealed class DeviceNet
         {
             var num = _random.Next();
             address = $"{prefix}{num >> 16:X4}-{num & 0xFFFF:X4}";
-        }
-        while (Devices.ContainsKey(address));
+        } while (Devices.ContainsKey(address));
 
         return address;
     }

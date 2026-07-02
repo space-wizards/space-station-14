@@ -1,6 +1,3 @@
-using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
@@ -17,13 +14,17 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<DeviceLinkSinkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<DeviceLinkSourceComponent, NewLinkEvent>(OnNewLink);
     }
 
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<SignalPayload>(OnSignalReceived);
+    }
+
     #region Sending & Receiving
-    public override void InvokePort(EntityUid uid, string port, NetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
+    public override void InvokePort(EntityUid uid, string port, INetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(uid, ref sourceComponent) || !sourceComponent.Outputs.TryGetValue(port, out var sinks))
             return;
@@ -47,7 +48,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     /// <summary>
     /// Raises an event on or sends a network packet directly to a sink from a source.
     /// </summary>
-    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, NetworkPayload? data)
+    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, INetworkPayload? data)
     {
         if (!Resolve(sink, ref sink.Comp))
             return;
@@ -72,24 +73,15 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
             return;
         }
 
-        var payload = new NetworkPayload()
+        var payload = new SignalPayload
         {
-            [InvokedPort] = sinkPort
+            InvokedPort = sinkPort,
+            Payload = data,
         };
 
-        if (data != null)
-        {
-            //Prevent overriding the invoked port
-            data.Remove(InvokedPort);
-            foreach (var (key, value) in data)
-            {
-                payload.Add(key, value);
-            }
-        }
-
         // force using wireless network so things like atmos devices are able to send signals
-        var network = (int) DeviceNetworkComponent.DeviceNetIdDefaults.Wireless;
-        _deviceNetworkSystem.QueuePacket(source, sinkNetwork.Address, payload, sinkNetwork.ReceiveFrequency, network);
+        var network = (int) DeviceNetIdDefaults.Wireless;
+        _deviceNetworkSystem.QueuePacket(source.Owner, sinkNetwork.Address, payload, sinkNetwork.ReceiveFrequency, network);
     }
 
     /// <summary>
@@ -100,9 +92,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        var data = new NetworkPayload
+        var data = new LogicStatePayload
         {
-            [DeviceNetworkConstants.LogicState] = signal ? SignalState.High : SignalState.Low
+            State = signal ? SignalState.High : SignalState.Low
         };
         InvokePort(uid, port, data, comp);
 
@@ -126,12 +118,13 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     /// Checks if the payload has a port defined and if the port is present on the sink.
     /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
     /// </summary>
-    private void OnPacketReceived(EntityUid uid, DeviceLinkSinkComponent component, DeviceNetworkPacketEvent args)
+    private void OnSignalReceived(Entity<DeviceLinkSinkComponent> ent, ref SignalPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (!args.Data.TryGetValue(InvokedPort, out string? port) || !(component.Ports?.Contains(port) ?? false))
+        var (uid, component) = ent;
+        if (!component.Ports.Contains(payload.InvokedPort))
             return;
 
-        var eventArgs = new SignalReceivedEvent(port, args.Sender, args.Data);
+        var eventArgs = new SignalReceivedEvent(payload.InvokedPort, args.Sender, payload.Payload);
         RaiseLocalEvent(uid,  ref eventArgs);
     }
 
@@ -147,9 +140,9 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         if (!ent.Comp.LastSignals.TryGetValue(args.SourcePort, out var signal))
             return;
 
-        var payload = new NetworkPayload()
+        var payload = new LogicStatePayload
         {
-            [DeviceNetworkConstants.LogicState] = signal ? SignalState.High : SignalState.Low
+            State = signal ? SignalState.High : SignalState.Low
         };
         InvokeDirect(ent, args.Sink, args.SourcePort, args.SinkPort, payload);
     }

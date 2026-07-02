@@ -1,12 +1,12 @@
-using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
 [Serializable, NetSerializable]
-public sealed class AtmosSensorData : IAtmosDeviceData
+public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload
 {
-    public AtmosSensorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    public AtmosMonitorDataPayload(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;
@@ -17,10 +17,6 @@ public sealed class AtmosSensorData : IAtmosDeviceData
         TemperatureThreshold = temperatureThreshold;
         GasThresholds = gasThresholds;
     }
-
-    public bool Enabled { get; set; }
-    public bool Dirty { get; set; }
-    public bool IgnoreAlarms { get; set; }
 
     /// Most fields are readonly, because it's data that's meant to be transmitted.
 
@@ -49,3 +45,6 @@ public sealed class AtmosSensorData : IAtmosDeviceData
     public AtmosAlarmThreshold TemperatureThreshold { get; }
     public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; }
 }
+
+[Serializable, NetSerializable]
+public sealed partial class AtmosMonitorSyncDataPayload : HandledNetworkPayload;

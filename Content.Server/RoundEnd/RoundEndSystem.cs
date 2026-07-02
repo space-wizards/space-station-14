@@ -18,6 +18,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.RoundEnd;
 using Content.Shared.Station.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -223,14 +224,14 @@ namespace Content.Server.RoundEnd
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new NetworkPayload
+                var payload = new ScreenShuttlePayload
                 {
-                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
-                    [ShuttleTimerMasks.DestMap] = GetStation(),
-                    [ShuttleTimerMasks.ShuttleTime] = countdownTime,
-                    [ShuttleTimerMasks.SourceTime] = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
-                    [ShuttleTimerMasks.DestTime] = countdownTime,
+                    Shuttle = GetNetEntity(shuttle),
+                    SourceMap = GetNetEntity(GetCentcomm()),
+                    DestinationMap = GetNetEntity(GetStation()),
+                    ShuttleTime = countdownTime,
+                    SourceTime = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
+                    DestinationTime = countdownTime,
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }
@@ -271,14 +272,14 @@ namespace Content.Server.RoundEnd
             var shuttle = _shuttle.GetShuttle();
             if (shuttle != null && TryComp<DeviceNetworkComponent>(shuttle, out var net))
             {
-                var payload = new NetworkPayload
+                var payload = new ScreenShuttlePayload
                 {
-                    [ShuttleTimerMasks.ShuttleMap] = shuttle,
-                    [ShuttleTimerMasks.SourceMap] = GetCentcomm(),
-                    [ShuttleTimerMasks.DestMap] = GetStation(),
-                    [ShuttleTimerMasks.ShuttleTime] = zero,
-                    [ShuttleTimerMasks.SourceTime] = zero,
-                    [ShuttleTimerMasks.DestTime] = zero,
+                    Shuttle = GetNetEntity(shuttle),
+                    SourceMap = GetNetEntity(GetCentcomm()),
+                    DestinationMap = GetNetEntity(GetStation()),
+                    ShuttleTime = zero,
+                    SourceTime = zero,
+                    DestinationTime = zero,
                 };
                 _deviceNetworkSystem.QueuePacket(shuttle.Value, null, payload, net.TransmitFrequency);
             }

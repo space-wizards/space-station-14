@@ -1,11 +1,12 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public sealed class WiredNetworkSystem : EntitySystem
+    public sealed class WiredNetworkSystem : BeforeDevicePayloadSystem<WiredNetworkComponent>
     {
         public override void Initialize()
         {
@@ -16,11 +17,11 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Checks if both devices are on the same grid
         /// </summary>
-        private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
+        private void OnBeforePacketSent(Entity<WiredNetworkComponent> ent, ref BeforePacketSentEvent args)
         {
-            if (Transform(uid).GridUid != args.SenderTransform.GridUid)
+            if (Transform(ent).GridUid != args.SenderTransform.GridUid)
             {
-                args.Cancel();
+                args.Cancelled = true;
             }
         }
 
@@ -28,5 +29,10 @@ namespace Content.Server.DeviceNetwork.Systems
         //Abstract out the connection between the apcExtensionCable and the apcPowerReceiver
         //Traverse the power cables using path traversal
         //Cache an optimized representation of the traversed path (Probably just cache Devices)
+
+        protected override void OnBeforePayload(Entity<WiredNetworkComponent> ent, ref BeforePacketSentEvent args)
+        {
+            OnBeforePacketSent(ent, ref args);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
@@ -82,21 +83,22 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     /// Filters the broadcasts recipient list against the device list as either an allow or deny list depending on the components IsAllowList field
     /// </summary>
-    private void OnBeforeBroadcast(EntityUid uid, DeviceListComponent component, BeforeBroadcastAttemptEvent args)
+    private void OnBeforeBroadcast(Entity<DeviceListComponent> ent, ref BeforeBroadcastAttemptEvent args)
     {
+        var component = ent.Comp;
         //Don't filter anything if the device list is empty
         if (component.Devices.Count == 0)
         {
             if (component.IsAllowList)
-                args.Cancel();
+                args.Cancelled = true;
             return;
         }
 
-        HashSet<DeviceNetworkComponent> filteredRecipients = new(args.Recipients.Count);
+        HashSet<Device> filteredRecipients = new(args.Recipients.Count);
 
         foreach (var recipient in args.Recipients)
         {
-            if (component.Devices.Contains(recipient.Owner) == component.IsAllowList)
+            if (component.Devices.Contains(recipient.DeviceOwner) == component.IsAllowList)
                 filteredRecipients.Add(recipient);
         }
 
@@ -106,10 +108,10 @@ public sealed partial class DeviceListSystem : SharedDeviceListSystem
     /// <summary>
     /// Filters incoming packets if that is enabled <see cref="OnBeforeBroadcast"/>
     /// </summary>
-    private void OnBeforePacketSent(EntityUid uid, DeviceListComponent component, BeforePacketSentEvent args)
+    private void OnBeforePacketSent(Entity<DeviceListComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (component.HandleIncomingPackets && component.Devices.Contains(args.Sender) != component.IsAllowList)
-            args.Cancel();
+        if (ent.Comp.HandleIncomingPackets && ent.Comp.Devices.Contains(args.Sender) != ent.Comp.IsAllowList)
+            args.Cancelled = true;
     }
 
     public void OnDeviceShutdown(Entity<DeviceListComponent?> list, Entity<DeviceNetworkComponent> device)

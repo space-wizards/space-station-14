@@ -33,6 +33,7 @@
     deviceNetId: Wireless
     transmitFrequencyId: CrewMonitor
     receiveFrequencyId: SuitSensor
+    prefix: device-address-prefix-crew-monitoring-server
     autoConnect: false
   - type: WirelessNetworkConnection
     range: 500

@@ -390,8 +390,9 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         RelayEvent(component, new CartridgeAfterInteractEvent(uid, args));
     }
 
-    private void OnPacketReceived(EntityUid uid, CartridgeLoaderComponent component, DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(Entity<CartridgeLoaderComponent> ent, ref DeviceNetworkPacketEvent args)
     {
+        var (uid, component) = ent;
         RelayEvent(component, new CartridgeDeviceNetPacketEvent(uid, args));
     }
 

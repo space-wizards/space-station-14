@@ -1,3 +1,4 @@
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Emp;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Verbs;
@@ -5,10 +6,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
-public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
+public abstract partial class SharedSurveillanceCameraSystem : DevicePayloadSystem<SurveillanceCameraComponent>
 {
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemovedEvent>(OnEmpDisabledRemoved);

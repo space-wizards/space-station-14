@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -10,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
 
-public abstract partial class SharedDeviceLinkSystem : EntitySystem
+public abstract partial class SharedDeviceLinkSystem : DevicePayloadSystem<DeviceLinkSinkComponent>
 {
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -19,11 +20,10 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
 
     [Dependency] private EntityQuery<DeviceLinkSinkComponent> _deviceLinkSinkQuery = default!;
 
-    public const string InvokedPort = "link_port";
-
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
@@ -543,7 +543,7 @@ public abstract partial class SharedDeviceLinkSystem : EntitySystem
     /// <param name="port">The port to invoke</param>
     /// <param name="data">Optional data to send along</param>
     /// <param name="sourceComponent"></param>
-    public virtual void InvokePort(EntityUid uid, string port, NetworkPayload? data = null,
+    public virtual void InvokePort(EntityUid uid, string port, INetworkPayload? data = null,
         DeviceLinkSourceComponent? sourceComponent = null)
     {
         // NOOP on client for the moment.

@@ -3,9 +3,25 @@
   id: SurveillanceCameraBase
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/camera.rsi
+    layers:
+    - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
+      state: camera
+      cycle: true
+  - type: Appearance
   - type: Physics
     bodyType: Static
+  - type: Clickable
+  - type: InteractionOutline
   - type: Fixtures
     fixtures:
       light:
@@ -24,59 +40,14 @@
         - None
         layer:
         - TabletopMachineLayer
-  - type: CameraActiveOnCollide
-    requiresPower: false # TODO: Change this when AI can no longer see via unpowered cameras
+  - type: Eye
   - type: PointLight
     enabled: false
     radius: 5
-  - type: SlimPoweredLight
-    enabled: false
-  - type: StationAiVision
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Construction
-    graph: SurveillanceCamera
-    node: camera
-  - type: Electrified
-    enabled: false
-    usesApcPower: true
-  - type: WallMount
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: Eye
-  - type: WiredNetworkConnection
-  - type: DeviceNetworkRequiresPower
-  - type: Transform
-    anchored: true
-  - type: WiresPanel
-  - type: Wires
-    alwaysRandomize: true
-    layoutId: SurveillanceCamera
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
     damageContainer: StructuralInorganic
-  - type: Sprite
-    drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/camera.rsi
-    layers:
-      - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]
-        state: camera
-        cycle: true
-  - type: Appearance
-  - type: SurveillanceCameraVisuals
-    sprites:
-      Active: camera
-      Disabled: camera_off
-      InUse: camera_in_use
-  - type: UserInterface
-    interfaces:
-      enum.SurveillanceCameraSetupUiKey.Camera:
-        type: SurveillanceCameraSetupBoundUi
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: StaticPrice
-    price: 200
   - type: Destructible
     thresholds:
     - trigger:
@@ -90,10 +61,43 @@
           collection: MetalBreak
           params:
             volume: -8
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount
+  - type: SlimPoweredLight
+    enabled: false
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: WallMount
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: WiresPanel
+  - type: Wires
+    alwaysRandomize: true
+    layoutId: SurveillanceCamera
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera
+  - type: DeviceNetworkRequiresPower
+  - type: WiredNetworkConnection
+  - type: StationAiVision
+  - type: CameraActiveOnCollide
+    requiresPower: false # TODO: Change this when AI can no longer see via unpowered cameras
+  - type: Construction
+    graph: SurveillanceCamera
+    node: camera
+  - type: StaticPrice
+    price: 200
+  - type: SurveillanceCameraVisuals
+    sprites:
+      Active: camera
+      Disabled: camera_off
+      InUse: camera_in_use
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Camera:
+        type: SurveillanceCameraSetupBoundUi
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -101,19 +105,16 @@
   name: camera
   suffix: Constructed
   components:
-    - type: DeviceNetwork
-      deviceNetId: Wired
-      transmitFrequencyId: SurveillanceCamera
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-        - SurveillanceCameraEngineering
-        - SurveillanceCameraSecurity
-        - SurveillanceCameraService
-        - SurveillanceCameraSupply
-        - SurveillanceCameraScience
-        - SurveillanceCameraGeneral
-        - SurveillanceCameraMedical
-        - SurveillanceCameraCommand
+  - type: SurveillanceCamera
+    setupAvailableNetworks:
+    - SurveillanceCameraEngineering
+    - SurveillanceCameraSecurity
+    - SurveillanceCameraService
+    - SurveillanceCameraSupply
+    - SurveillanceCameraScience
+    - SurveillanceCameraGeneral
+    - SurveillanceCameraMedical
+    - SurveillanceCameraCommand
 
 - type: entity
   parent: SurveillanceCameraBase
@@ -122,9 +123,8 @@
   suffix: Engineering
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraEngineering
-    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -135,9 +135,7 @@
   suffix: Security
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSecurity
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -148,9 +146,7 @@
   suffix: Science
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraScience
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -161,9 +157,7 @@
   suffix: Supply
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraSupply
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -174,9 +168,7 @@
   suffix: Command
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraCommand
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -187,9 +179,7 @@
   suffix: Service
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraService
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -200,9 +190,7 @@
   suffix: Medical
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraMedical
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -213,9 +201,7 @@
   suffix: General
   components:
   - type: DeviceNetwork
-    deviceNetId: Wired
     receiveFrequencyId: SurveillanceCameraGeneral
-    transmitFrequencyId: SurveillanceCamera
   - type: SurveillanceCamera
     networkSet: true
 
@@ -223,25 +209,25 @@
   id: SurveillanceCameraAssembly
   name: camera
   description: A surveillance camera. Doesn't seem to be watching anybody any time soon. Probably.
-  components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Construction
-      graph: SurveillanceCamera
-      node: assembly
-    - type: WallMount
-    - type: Transform
-      anchored: true
-    - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
-      damageContainer: StructuralInorganic
-    - type: Sprite
-      drawdepth: WallMountedItems
-      sprite: Structures/Wallmounts/camera.rsi
-      layers:
-        - state: camera_off
   placement:
     mode: SnapgridCenter
     snap:
-      - Wallmount
+    - Wallmount
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/camera.rsi
+    layers:
+    - state: camera_off
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Construction
+    graph: SurveillanceCamera
+    node: assembly
+  - type: WallMount

@@ -1,19 +1,21 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.SensorMonitoring;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.Tag;
 
@@ -23,7 +25,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // to it via local APC net, and starts sending updates of the
 // current atmosphere. Monitors fire (which always triggers as
 // a danger), and atmos (which triggers based on set thresholds).
-public sealed partial class AtmosMonitorSystem : EntitySystem
+public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<AtmosMonitorComponent>
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
@@ -31,29 +33,29 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainerSystem = default!;
 
-    // Commands
-    public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
-    public const string AtmosMonitorSetAllThresholdsCmd = "atmos_monitor_set_all_thresholds";
-
-    // Packet data
-    public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
-    public const string AtmosMonitorAllThresholdData = "atmos_monitor_all_threshold_data";
-    public const string AtmosMonitorThresholdDataType = "atmos_monitor_threshold_type";
-
-    public const string AtmosMonitorThresholdGasType = "atmos_monitor_threshold_gas";
-
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
         SubscribeLocalEvent<AtmosMonitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
         SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
         SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
-        SubscribeLocalEvent<AtmosMonitorComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceDisabledEvent>(OnAtmosDeviceLeaveAtmosphere);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceEnabledEvent>(OnAtmosDeviceEnterAtmosphere);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceTileChangedEvent>(OnAtmosDeviceTileChangedEvent);
+    }
+
+    protected override void InitializeDevice()
+    {
+        base.InitializeDevice();
+        SubscribePayload<AtmosMonitorRegisterDevicePayload>(OnRegisterDevice);
+        SubscribePayload<AtmosMonitorDeregisterDevicePayload>(OnDeregisterDevice);
+        SubscribePayload<AtmosMonitorResetPayload>(OnReset);
+        SubscribePayload<AtmosMonitorSetThresholdPayload>(OnSetThreshold);
+        SubscribePayload<AtmosMonitorSetAllThresholdsPayload>(OnSetAllThresholds);
+        SubscribePayload<AtmosMonitorSyncDataPayload>(OnSyncPayload);
     }
 
     private void OnAtmosDeviceTileChangedEvent(Entity<AtmosMonitorComponent> ent, ref AtmosDeviceTileChangedEvent args)
@@ -112,74 +114,72 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
+    private void BeforePacketRecv(Entity<AtmosMonitorComponent> ent, ref BeforePacketSentEvent args)
     {
-        if (!component.NetEnabled) args.Cancel();
+        if (!ent.Comp.NetEnabled)
+            args.Cancelled = true;
     }
 
-    private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, DeviceNetworkPacketEvent args)
+    private void OnRegisterDevice(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorRegisterDevicePayload payload, ref DeviceNetworkPacketData args)
     {
-        // sync the internal 'last alarm state' from
-        // the other alarms, so that we can calculate
-        // the highest network alarm state at any time
-        if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
+        ent.Comp.RegisteredDevices.Add(args.SenderAddress);
+    }
+
+    private void OnDeregisterDevice(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorDeregisterDevicePayload payload, ref DeviceNetworkPacketData args)
+    {
+        ent.Comp.RegisteredDevices.Remove(args.SenderAddress);
+    }
+
+    private void OnReset(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorResetPayload payload, ref DeviceNetworkPacketData args)
+    {
+        Reset(ent);
+    }
+
+    private void OnSetThreshold(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSetThresholdPayload payload, ref DeviceNetworkPacketData args)
+    {
+        SetThreshold(ent, payload.Type, payload.Threshold, payload.Gas);
+    }
+
+    private void OnSetAllThresholds(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSetAllThresholdsPayload payload, ref DeviceNetworkPacketData args)
+    {
+        SetAllThresholds(ent, payload.Data);
+    }
+
+    private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSyncDataPayload payload, ref DeviceNetworkPacketData args)
+    {
+        var dataPayload = new AtmosMonitorDataPayload();
+        if (ent.Comp.TileGas != null)
         {
-            return;
+            var gases = new Dictionary<Gas, float>();
+            foreach (var gas in Enum.GetValues<Gas>())
+            {
+                gases.Add(gas, ent.Comp.TileGas.GetMoles(gas));
+            }
+
+            dataPayload = new AtmosMonitorDataPayload(
+                ent.Comp.TileGas.Pressure,
+                ent.Comp.TileGas.Temperature,
+                ent.Comp.TileGas.TotalMoles,
+                ent.Comp.LastAlarmState,
+                gases,
+                ent.Comp.PressureThreshold ?? new(),
+                ent.Comp.TemperatureThreshold ?? new(),
+                ent.Comp.GasThresholds ?? new());
         }
 
-        switch (cmd)
+        // TODO consider reworking sensor monitor so it relays the info from Air Alarms
+        var airAlarm = new AirAlarmSetDataPayload
         {
-            case AtmosDeviceNetworkSystem.RegisterDevice:
-                component.RegisteredDevices.Add(args.SenderAddress);
-                break;
-            case AtmosDeviceNetworkSystem.DeregisterDevice:
-                component.RegisteredDevices.Remove(args.SenderAddress);
-                break;
-            case AtmosAlarmableSystem.ResetAll:
-                Reset(uid);
-                // Don't clear alarm states here.
-                break;
-            case AtmosMonitorSetThresholdCmd:
-                if (args.Data.TryGetValue(AtmosMonitorThresholdData, out AtmosAlarmThreshold? thresholdData)
-                    && args.Data.TryGetValue(AtmosMonitorThresholdDataType, out AtmosMonitorThresholdType? thresholdType))
-                {
-                    args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
-                    SetThreshold(uid, thresholdType.Value, thresholdData, gas);
-                }
-                break;
-            case AtmosMonitorSetAllThresholdsCmd:
-                if (args.Data.TryGetValue(AtmosMonitorAllThresholdData, out AtmosSensorData? allThresholdData))
-                {
-                    SetAllThresholds(uid, allThresholdData);
-                }
-                break;
-            case AtmosDeviceNetworkSystem.SyncData:
-                var payload = new NetworkPayload();
-                payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
-                if (component.TileGas != null)
-                {
-                    var gases = new Dictionary<Gas, float>();
-                    foreach (var gas in Enum.GetValues<Gas>())
-                    {
-                        gases.Add(gas, component.TileGas.GetMoles(gas));
-                    }
+            Payload = dataPayload,
+        };
+        var sensor = new SensorMonitoringAtmosDataPayload
+        {
+            Payload = dataPayload,
+        };
 
-                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new AtmosSensorData(
-                        component.TileGas.Pressure,
-                        component.TileGas.Temperature,
-                        component.TileGas.TotalMoles,
-                        component.LastAlarmState,
-                        gases,
-                        component.PressureThreshold ?? new(),
-                        component.TemperatureThreshold ?? new(),
-                        component.GasThresholds ?? new()
-                    ));
-                }
-
-                _deviceNetSystem.QueuePacket(uid, args.SenderAddress, payload);
-                Alert(uid, component.LastAlarmState);
-                break;
-        }
+        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
+        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, sensor);
+        Alert(ent, ent.Comp.LastAlarmState);
     }
 
     private void OnPowerChangedEvent(Entity<AtmosMonitorComponent> ent, ref PowerChangedEvent args)
@@ -375,12 +375,11 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
             return;
         }
 
-        var payload = new NetworkPayload
+        var payload = new AtmosAlarmPayload
         {
-            [DeviceNetworkConstants.Command] = AtmosAlarmableSystem.AlertCmd,
-            [DeviceNetworkConstants.CmdSetState] = monitor.LastAlarmState,
-            [AtmosAlarmableSystem.AlertSource] = tags.Tags,
-            [AtmosAlarmableSystem.AlertTypes] = monitor.TrippedThresholds
+            Type = monitor.LastAlarmState,
+            Source = tags.Tags,
+            TrippedThresholds = monitor.TrippedThresholds,
         };
 
         foreach (var addr in monitor.RegisteredDevices)
@@ -475,14 +474,19 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     ///     AtmosSensorData object's thresholds.
     /// </summary>
     /// <param name="uid">The entity's uid</param>
-    /// <param name="allThresholdData">An AtmosSensorData object from which the thresholds will be loaded.</param>
-    public void SetAllThresholds(EntityUid uid, AtmosSensorData allThresholdData)
+    /// <param name="allThresholdDataPayload">An AtmosSensorData object from which the thresholds will be loaded.</param>
+    public void SetAllThresholds(EntityUid uid, AtmosMonitorDataPayload allThresholdDataPayload)
     {
-        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdData.TemperatureThreshold);
-        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdData.PressureThreshold);
+        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdDataPayload.TemperatureThreshold);
+        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdDataPayload.PressureThreshold);
         foreach (var gas in Enum.GetValues<Gas>())
         {
-            SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdData.GasThresholds[gas], gas);
+            SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdDataPayload.GasThresholds[gas], gas);
         }
+    }
+
+    protected override void OnBeforePayload(Entity<AtmosMonitorComponent> ent, ref BeforePacketSentEvent args)
+    {
+        BeforePacketRecv(ent, ref args);
     }
 }

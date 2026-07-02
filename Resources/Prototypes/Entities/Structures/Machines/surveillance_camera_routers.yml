@@ -5,60 +5,63 @@
   name: camera router
   description: A surveillance camera router. It routes. Perhaps.
   components:
-    - type: DeviceNetwork
-      deviceNetId: Wired
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WiredNetworkConnection
-    - type: DeviceNetworkRequiresPower
-    - type: UserInterface
-      interfaces:
-        enum.SurveillanceCameraSetupUiKey.Router:
-          type: SurveillanceCameraSetupBoundUi
-    - type: Machine
-      board: SurveillanceCameraRouterCircuitboard
-    - type: Sprite
-      sprite: Structures/Machines/server.rsi
-      snapCardinals: true
-      layers:
-        - state: server-off
-        - state: server-on
-          visible: false
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: server_o
-          map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: GenericVisualizer
-      visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { visible: true }
-            False: { visible: false }
-    - type: Appearance
-    - type: AmbientOnPowered
-    - type: AmbientSound
-      volume: -9
-      range: 5
-      enabled: false
-      sound:
-        collection: ServerFans
-    - type: WiresVisuals
-    - type: WiresPanel
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: server_o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      collection: ServerFans
+  - type: WiresVisuals
+  - type: WiresPanel
+  - type: Machine
+    board: SurveillanceCameraRouterCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-router
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: DeviceNetworkRouter
+  - type: SurveillanceCameraRouter
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Router:
+        type: SurveillanceCameraSetupBoundUi
 
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterConstructed
   suffix: Constructed
   components:
-    - type: SurveillanceCameraRouter
-      setupAvailableNetworks:
-        - SurveillanceCameraEngineering
-        - SurveillanceCameraSecurity
-        - SurveillanceCameraService
-        - SurveillanceCameraSupply
-        - SurveillanceCameraScience
-        - SurveillanceCameraGeneral
-        - SurveillanceCameraMedical
-        - SurveillanceCameraCommand
+  - type: SurveillanceCameraRouter
+    setupAvailableNetworks:
+    - SurveillanceCameraEngineering
+    - SurveillanceCameraSecurity
+    - SurveillanceCameraService
+    - SurveillanceCameraSupply
+    - SurveillanceCameraScience
+    - SurveillanceCameraGeneral
+    - SurveillanceCameraMedical
+    - SurveillanceCameraCommand
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -66,8 +69,8 @@
   name: engineering camera router
   suffix: Engineering
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraEngineering
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraEngineering
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -75,8 +78,8 @@
   name: security camera router
   suffix: Security
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraSecurity
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraSecurity
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -84,8 +87,8 @@
   name: science camera router
   suffix: Science
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraScience
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraScience
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -93,8 +96,8 @@
   name: supply camera router
   suffix: Supply
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraSupply
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraSupply
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -102,8 +105,8 @@
   name: command camera router
   suffix: Command
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraCommand
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraCommand
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -111,8 +114,8 @@
   name: service camera router
   suffix: Service
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraService
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraService
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -120,8 +123,8 @@
   name: medical camera router
   suffix: Medical
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraMedical
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraMedical
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -129,8 +132,8 @@
   name: general camera router
   suffix: General
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraGeneral
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraGeneral
 
 - type: entity
   abstract: true
@@ -139,53 +142,54 @@
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
   components:
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceNetworkRequiresPower
-    - type: UserInterface
-      interfaces:
-        enum.SurveillanceCameraSetupUiKey.Router:
-          type: SurveillanceCameraSetupBoundUi
-    - type: Machine
-      board: SurveillanceCameraWirelessRouterCircuitboard
-    - type: Sprite
-      sprite: Structures/Machines/server.rsi
-      layers:
-        - state: server-off
-        - state: server-on
-          visible: false
-          map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: server_o
-          map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: GenericVisualizer
-      visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { visible: true }
-            False: { visible: false }
-    - type: Appearance
-    - type: AmbientOnPowered
-    - type: AmbientSound
-      volume: -9
-      range: 5
-      enabled: false
-      sound:
-        collection: ServerFans
-    - type: WiresVisuals
-    - type: WiresPanel
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: server_o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      collection: ServerFans
+  - type: WiresVisuals
+  - type: WiresPanel
+  - type: Machine
+    board: SurveillanceCameraWirelessRouterCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-router-wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetworkRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Router:
+        type: SurveillanceCameraSetupBoundUi
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
   id: SurveillanceCameraWirelessRouterConstructed
   suffix: Constructed
   components:
-    - type: SurveillanceCameraRouter
-      setupAvailableNetworks:
-        - SurveillanceCameraEntertainment
+  - type: SurveillanceCameraRouter
+    setupAvailableNetworks:
+    - SurveillanceCameraEntertainment
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
@@ -193,8 +197,8 @@
   name: entertainment camera router
   suffix: Entertainment
   components:
-    - type: SurveillanceCameraRouter
-      subnetFrequency: SurveillanceCameraEntertainment
+  - type: SurveillanceCameraRouter
+    subnetFrequency: SurveillanceCameraEntertainment
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase

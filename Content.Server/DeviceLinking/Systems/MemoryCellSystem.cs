@@ -1,7 +1,6 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.DeviceLinking.Systems;
 
@@ -46,7 +45,8 @@ public sealed partial class MemoryCellSystem : EntitySystem
     private void OnSignalReceived(Entity<MemoryCellComponent> ent, ref SignalReceivedEvent args)
     {
         var state = SignalState.Momentary;
-        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+        if (args.Data is LogicStatePayload payload)
+            state = payload.State;
 
         if (args.Port == ent.Comp.InputPort)
             ent.Comp.InputState = state;

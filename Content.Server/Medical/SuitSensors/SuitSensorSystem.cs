@@ -46,9 +46,6 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
                 sensor.ConnectedServer = address;
             }
 
-            // Send it to the connected server
-            var payload = SuitSensorToPacket(status);
-
             // Clear the connected server if its address isn't on the network
             if (!_deviceNetworkSystem.IsAddressPresent(device.DeviceNetId, sensor.ConnectedServer))
             {
@@ -56,7 +53,7 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
                 continue;
             }
 
-            _deviceNetworkSystem.QueuePacket(uid, sensor.ConnectedServer, payload, device: device);
+            _deviceNetworkSystem.QueuePacket((uid, device), sensor.ConnectedServer, status);
         }
     }
 }

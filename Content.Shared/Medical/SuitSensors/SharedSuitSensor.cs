@@ -1,11 +1,12 @@
+using Content.Shared.DeviceNetwork;
 using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Medical.SuitSensor;
+namespace Content.Shared.Medical.SuitSensors;
 
 [Serializable, NetSerializable]
-public sealed class SuitSensorStatus
+public sealed partial class SuitSensorStatus : HandledNetworkPayload
 {
     public SuitSensorStatus(NetEntity ownerUid, NetEntity suitSensorUid, string name, string job, string jobIcon, List<string> jobDepartments)
     {
@@ -53,23 +54,6 @@ public enum SuitSensorMode : byte
     /// Sensor sends vitals status and GPS position
     /// </summary>
     SensorCords = 3
-}
-
-public static class SuitSensorConstants
-{
-    public const string NET_OWNER_UID = "ownerUid";
-    public const string NET_NAME = "name";
-    public const string NET_JOB = "job";
-    public const string NET_JOB_ICON = "jobIcon";
-    public const string NET_JOB_DEPARTMENTS = "jobDepartments";
-    public const string NET_IS_ALIVE = "alive";
-    public const string NET_TOTAL_DAMAGE = "vitals";
-    public const string NET_TOTAL_DAMAGE_THRESHOLD = "vitalsThreshold";
-    public const string NET_COORDINATES = "coords";
-    public const string NET_SUIT_SENSOR_UID = "uid";
-
-    ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
-    public const string NET_STATUS_COLLECTION = "suit-status-collection";
 }
 
 [Serializable, NetSerializable]
