@@ -182,6 +182,33 @@
     - !type:TileNotBlocked
 
 - type: construction
+  id: WallMining
+  graph: Girder
+  startNode: start
+  targetNode: wallMining
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: WallMiningDiagonal
+  name: construction-recipe-wall-mining-diagonal
+  graph: Girder
+  startNode: start
+  targetNode: wallMiningDiagonal
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: ClownWall
   graph: Girder
   startNode: start
@@ -532,6 +559,20 @@
   canRotate: false
 
 - type: construction
+  id: MiningWindow
+  graph: Window
+  startNode: start
+  targetNode: miningWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   id: UraniumWindowDiagonal
   name: construction-recipe-uranium-window-diagonal
   graph: WindowDiagonal
@@ -551,6 +592,34 @@
   graph: WindowDiagonal
   startNode: start
   targetNode: reinforcedUraniumWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: shuttleWindowDiagonal
+  category: construction-category-structures
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  id: MiningWindowDiagonal
+  name: construction-recipe-mining-window-diagonal
+  graph: WindowDiagonal
+  startNode: start
+  targetNode: miningWindowDiagonal
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -981,6 +1050,32 @@
   id: PinionAirlockGlass
   name: construction-recipe-pinion-airlock-glass
   graph: PinionAirlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AirlockMining
+  name: construction-recipe-mining-airlock
+  graph: MiningAirlock
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: AirlockGlassMining
+  name: construction-recipe-mining-airlock-glass
+  graph: MiningAirlock
   startNode: start
   targetNode: glassAirlock
   category: construction-category-structures

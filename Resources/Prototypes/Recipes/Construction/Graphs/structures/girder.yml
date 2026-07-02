@@ -134,6 +134,38 @@
               amount: 2
               doAfter: 2
 
+        - to: wallMining
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: MetalRod
+              amount: 4
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 2
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+        - to: wallMiningDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 2
+            - material: Steel
+              amount: 1
+              doAfter: 1
+
     - node: wall
       entity: WallSolid
       edges:
@@ -252,6 +284,36 @@
             - tool: Prying
               doAfter: 5
 
+    - node: wallMining
+      entity: WallMining
+      edges:
+        - to: girder
+          completed:
+            - !type:GivePrototype
+              prototype: PartRodMetal1
+              amount: 4
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: wallMiningDiagonal
+      entity: WallMiningDiagonal
+      edges:
+        - to: girder
+          completed:
+            - !type:GivePrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Welding
+              doAfter: 10
+
     - node: reinforcedGirder
       entity: ReinforcedGirder
       edges:
@@ -289,7 +351,7 @@
             - material: Steel
               amount: 1
               doAfter: 1
-            - tool: Welding
+            - tool: Screwing
               doAfter: 4
             - material: Plasteel
               amount: 1

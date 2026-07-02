@@ -141,6 +141,9 @@
     layoutId: AirlockCargo
   - type: Paintable
     group: null
+  - type: Construction
+    graph: MiningAirlock
+    node: airlock
 
 - type: entity
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
@@ -321,6 +324,9 @@
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
   - type: Paintable
     group: null
+  - type: Construction
+    graph: MiningAirlock
+    node: glassAirlock
 
 - type: entity
   parent: AirlockCommandGlass # see standard

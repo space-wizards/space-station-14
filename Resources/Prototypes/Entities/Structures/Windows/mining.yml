@@ -36,6 +36,9 @@
         acts: [ "Destruction" ]
   - type: IconSmooth
     base: mwindow
+  - type: Construction
+    graph: Window
+    node: miningWindow
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]
@@ -67,6 +70,9 @@
     mode: Diagonal
     key: windows
     base: state
+  - type: Construction
+    graph: WindowDiagonal
+    node: miningWindowDiagonal
   - type: Icon
     sprite: Structures/Windows/mining_diagonal.rsi
     state: state0
