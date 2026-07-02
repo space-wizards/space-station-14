@@ -47,6 +47,3 @@
 - type: statusEffect
   id: Flashed
 
-- type: statusEffect
-  id: Adrenaline
-  alert: Adrenaline

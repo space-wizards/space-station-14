@@ -12,4 +12,3 @@ entity-effect-status-effect-RatvarianLanguage = ratvarian language patterns
 entity-effect-status-effect-StaminaModifier = modified stamina
 entity-effect-status-effect-RadiationProtection = radiation protection
 entity-effect-status-effect-Drowsiness = drowsiness
-entity-effect-status-effect-Adrenaline = adrenaline
