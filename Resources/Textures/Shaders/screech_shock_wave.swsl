@@ -1,0 +1,46 @@
+// per-distortion variables
+uniform highp float[10] waveStrengths;
+uniform highp vec2[10] positions;
+uniform highp float[10] waveSpeeds;
+uniform highp float[10] downScales;
+uniform highp float[10] fades;
+uniform highp float[10] times;
+// variables that are the same for everyone
+uniform lowp int count;
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment()
+{
+    // distortion and brightness will be accumulated for each instances
+    highp vec2 st = UV;
+    highp float brightness = 0.0;
+    // we do maths for each different wave, up to a max of count
+    for (int i = 0; i < count; ++i) {
+        // baseSt will be blended with st via fades
+        highp vec2 baseSt = st;
+        highp vec2 WaveCentre = positions[i];
+        // useful so that a non-square rect wont result in ellipses instead of circles
+        highp float ratio = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x * 0.5;
+        WaveCentre.y *= ratio;
+        // calculate the distortion itself
+        highp float dist = distance(vec2(st.x, st.y * ratio), WaveCentre) * downScales[i];
+        highp float val = dist;
+        highp float a = 3.0;
+        highp float cosFuns = cos(val * 20.0 - times[i] * waveSpeeds[i]);
+        highp float powFuns = pow(val * 2.5, a);
+        highp float limtedPowFuns = 0.5 * pow(a / (a + powFuns), 2.0);
+        highp float finalRes = smoothstep(0.0, 1.0, limtedPowFuns * cosFuns) * waveStrengths[i];
+        highp vec3 col = finalRes * vec3(1.0);
+        baseSt = st * 2.0 - 1.0;
+        baseSt *= 1.0 + finalRes * 0.1;
+        baseSt = baseSt * 0.5 + 0.5;
+
+        // do blending
+        st = st * (1.0 - fades[i]) + baseSt * fades[i];
+        // we accumulate brightness and it is calculated via the displacement from finalRes
+        brightness += pow(finalRes, 1.5) * fades[i] * 1.5;
+    }
+    // in the end, we sample the screen texture using the sum screen texture
+    highp vec4 texCol = zTextureSpec(SCREEN_TEXTURE, st);
+    COLOR = texCol * (1.0 + max(brightness, 0.0));
+}

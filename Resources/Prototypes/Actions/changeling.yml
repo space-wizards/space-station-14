@@ -202,3 +202,25 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingScreech
+  name: Screech
+  description: We produce a deafening screech that weakens those around us.
+  components:
+  - type: Action
+    useDelay: 20 # unbalanced :godo:
+    raiseOnAction: false
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: screech
+  - type: InstantAction
+    event: !type:ScreechActionEvent # very much a placeholder until someone gives us nice audio for changelings
+      screechSound:
+        path: /Audio/Effects/Screech/changeling_screech_strong.ogg
+      effects:
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 0.5
+        sprintSpeedModifier: 0.5
+        time: 5
