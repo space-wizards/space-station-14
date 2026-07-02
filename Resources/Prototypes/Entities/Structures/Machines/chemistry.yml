@@ -1,0 +1,97 @@
+- type: entity
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  id: MachineThermobath
+  name: thermobath
+  description: A precision-controlled oil bath capable of both heating and cooling beakers.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/thermobath.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: base
+    - state: on
+      map: ["enum.ThermobathVisuals.IsOn"]
+      shader: unshaded
+    - state: off
+      map: ["enum.ThermobathVisuals.IsOff"]
+      shader: unshaded
+    - state: heating
+      map: [ "enum.ThermobathVisuals.IsHeating" ]
+      shader: unshaded
+    - state: cooling
+      map: [ "enum.ThermobathVisuals.IsCooling" ]
+      shader: unshaded
+    - state: open
+      map: [ "enum.ThermobathVisuals.DoesNotHaveBeaker" ]
+    - state: beaker
+      map: [ "enum.ThermobathVisuals.HasBeaker" ]
+    - state: lid_none
+      map: [ "enum.ThermobathVisuals.HasBeakerAndIdle" ]
+    - state: lid_cold
+      map: [ "enum.ThermobathVisuals.HasBeakerAndCooling" ]
+    - state: lid_hot
+      map: [ "enum.ThermobathVisuals.HasBeakerAndHeating" ]
+  - type: Thermobath
+  - type: Thermoregulator
+    heatingPower: 1200
+    coolingPower: 400
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ActivatableUI
+    key: enum.ThermobathUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThermobathUiKey.Key:
+        type: ThermobathBoundUserInterface
+  - type: Machine
+    board: ThermobathMachineCircuitboard
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ThermobathVisuals.IsOn:
+        enum.ThermobathVisuals.IsOn:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsOff:
+        enum.ThermobathVisuals.IsOff:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsHeating:
+        enum.ThermobathVisuals.IsHeating:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.IsCooling:
+        enum.ThermobathVisuals.IsCooling:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.DoesNotHaveBeaker:
+        enum.ThermobathVisuals.DoesNotHaveBeaker:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeaker:
+        enum.ThermobathVisuals.HasBeaker:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeakerAndIdle:
+        enum.ThermobathVisuals.HasBeakerAndIdle:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeakerAndCooling:
+        enum.ThermobathVisuals.HasBeakerAndCooling:
+          True: { visible: true }
+          False: { visible: false }
+      enum.ThermobathVisuals.HasBeakerAndHeating:
+        enum.ThermobathVisuals.HasBeakerAndHeating:
+          True: { visible: true }
+          False: { visible: false }
+
