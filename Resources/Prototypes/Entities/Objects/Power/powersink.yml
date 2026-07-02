@@ -55,6 +55,6 @@
       sprite: Objects/Power/powersink.rsi
       state: powersink
     - type: WarpPoint
-      location: powersink
+      location: location-powersink
     - type: StaticPrice
       price: 3000
