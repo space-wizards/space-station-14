@@ -1,11 +1,16 @@
 # Generic
 lathe-category-circuitry = Circuitry
 lathe-category-clothing = Clothing
+lathe-category-containers = Containers
 lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
+
+# Medical
+lathe-category-medicinal = Medicinal
+lathe-category-surgical = Surgical
 
 # Biogen
 lathe-category-food = Food

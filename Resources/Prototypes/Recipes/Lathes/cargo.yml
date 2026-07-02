@@ -9,6 +9,8 @@
 - type: latheRecipe
   id: AppraisalTool
   result: AppraisalTool
+  categories:
+  - Tools
   completetime: 4
   materials:
     Steel: 500
@@ -16,6 +18,8 @@
 - type: latheRecipe
   id: UtilityKnife
   result: UtilityKnife
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 100
