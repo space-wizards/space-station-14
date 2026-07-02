@@ -2,12 +2,20 @@
 # Sprites are placeholders borrowed from existing assets.
 
 # ------------------------------ Supplies -------------------------------
+# Common consumables (air tanks, backpack, shoes, mask, torches, rations...)
+# deliberately use regular station prototypes; only signature gear is bespoke.
 
+# Pries powered doors like the jaws of life: the party has no PDA or access,
+# so the prybar is how they get through the "dungeon's" locked doors.
 - type: entity
-  parent: DoubleEmergencyOxygenTankFilled
-  id: AdventurerAirTankDouble
-  name: adventurer's air bladder
-  description: A double-capacity tank of bottled wind, for questing where there is no air at all.
+  parent: Crowbar
+  id: AdventurerCrowbar
+  name: adventurer's prybar
+  description: A hero's answer to the age-old riddle of the locked door.
+  components:
+  - type: Prying
+    speedModifier: 1.2
+    pryPowered: true
 
 - type: entity
   parent: EmergencyMedipen

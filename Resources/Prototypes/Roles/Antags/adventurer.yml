@@ -124,14 +124,16 @@
 
 # ----------------------------- Starting gear ------------------------------
 
+# Common items (shoes, mask, backpack, air tanks, rations...) are regular
+# prototypes on purpose; only signature gear is bespoke.
 - type: startingGear
   id: AdventurerBaseGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitAdventurer
-    shoes: ClothingShoesAdventurer
-    mask: ClothingMaskAdventurer
-    back: ClothingBackpackAdventurer
-    suitstorage: AdventurerAirTankDouble
+    shoes: ClothingShoesLeather
+    mask: ClothingMaskBreath
+    back: ClothingBackpack
+    suitstorage: DoubleEmergencyOxygenTankFilled
 
 - type: startingGear
   id: AdventurerWarriorGear
@@ -143,9 +145,13 @@
   - WeaponGreatswordAdventurer
   storage:
     back:
-    - AdventurerAirTankDouble
+    - DoubleEmergencyOxygenTankFilled
+    - AdventurerCrowbar
     - WeaponHandaxeAdventurer
     - WeaponDaggerAdventurer
+    - Torch
+    - FoodTinMRE
+    - DrinkWaterBottleFull
 
 - type: startingGear
   id: AdventurerRangerGear
@@ -156,8 +162,14 @@
   - WeaponBowAdventurer
   storage:
     back:
-    - AdventurerAirTankDouble
+    - DoubleEmergencyOxygenTankFilled
+    - AdventurerCrowbar
     - WeaponDaggerAdventurer
+    - Torch
+    - Torch
+    - GlowstickRed
+    - FoodTinMRE
+    - DrinkWaterBottleFull
 
 - type: startingGear
   id: AdventurerClericGear
@@ -169,12 +181,15 @@
   - WeaponStaffHealingAdventurer
   storage:
     back:
-    - AdventurerAirTankDouble
+    - DoubleEmergencyOxygenTankFilled
+    - AdventurerCrowbar
     - WeaponMaceAdventurer
     - AdventurerHealingPotion
     - AdventurerHealingPotion
     - AdventurerBandages
     - AdventurerSalve
+    - Candle
+    - FoodTinMRE
 
 - type: startingGear
   id: AdventurerWizardGear
@@ -185,4 +200,10 @@
     pocket1: AdventurersGrimoire
   storage:
     back:
-    - AdventurerAirTankDouble
+    - DoubleEmergencyOxygenTankFilled
+    - AdventurerCrowbar
+    - WeaponDaggerAdventurer
+    - Candle
+    - Candle
+    - FoodTinMRE
+    - DrinkWaterBottleFull

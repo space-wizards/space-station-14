@@ -44,7 +44,7 @@ public sealed class AdventurerSystem : EntitySystem
         SubscribeLocalEvent<AdventurerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AdventurerComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
         SubscribeLocalEvent<AdventurerComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
-        SubscribeLocalEvent<AdventurerComponent, SelfBeforeGunShotEvent>(OnBeforeGunShot);
+        SubscribeLocalEvent<AdventurerComponent, ShotAttemptedEvent>(OnShotAttempted);
     }
 
     private void OnStartup(Entity<AdventurerComponent> ent, ref ComponentStartup args)
@@ -151,16 +151,25 @@ public sealed class AdventurerSystem : EntitySystem
 
     /// <summary>
     /// Adventurers refuse to operate guns unless they're adventuring equipment.
+    /// This runs before any ammo is taken, so they can't waste the ammo of
+    /// weapons they find either.
     /// </summary>
-    private void OnBeforeGunShot(Entity<AdventurerComponent> ent, ref SelfBeforeGunShotEvent args)
+    private void OnShotAttempted(Entity<AdventurerComponent> ent, ref ShotAttemptedEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (_whitelist.IsWhitelistPassOrNull(ent.Comp.GunWhitelist, args.Gun.Owner))
+        if (_whitelist.IsWhitelistPassOrNull(ent.Comp.GunWhitelist, args.Used.Owner))
             return;
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.GunFailedMessage, ("gun", args.Gun.Owner)), ent, ent);
         args.Cancel();
+
+        // This event fires every tick while the trigger is held; don't spam the popup.
+        var now = _timing.CurTime;
+        if (now < ent.Comp.NextGunPopupTime)
+            return;
+
+        ent.Comp.NextGunPopupTime = now + ent.Comp.GunPopupCooldown;
+        _popup.PopupClient(Loc.GetString(ent.Comp.GunFailedMessage, ("gun", args.Used.Owner)), ent, ent);
     }
 }

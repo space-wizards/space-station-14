@@ -38,7 +38,8 @@ public sealed partial class AdventurerComponent : Component
 
     /// <summary>
     /// Guns matching this whitelist can still be fired by the adventurer.
-    /// Anything else is too much strange technology for them.
+    /// Anything else is too much strange technology for them: the shot is blocked
+    /// before any ammo is consumed, so found weapons can't be drained either.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? GunWhitelist = new()
@@ -51,6 +52,19 @@ public sealed partial class AdventurerComponent : Component
     /// </summary>
     [DataField]
     public LocId GunFailedMessage = "adventurer-gun-fail-message";
+
+    /// <summary>
+    /// Minimum time between gun-refusal popups. The shot attempt event fires every
+    /// tick while the trigger is held, so the popup needs its own rate limit.
+    /// </summary>
+    [DataField]
+    public TimeSpan GunPopupCooldown = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Next time the gun-refusal popup may be shown. Bookkeeping only.
+    /// </summary>
+    [ViewVariables, AutoPausedField]
+    public TimeSpan NextGunPopupTime;
 
     /// <summary>
     /// Popup shown when an attack roll fails to beat the armor class.

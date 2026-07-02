@@ -1,0 +1,152 @@
+# Admin-spawnable adventurer ghost roles, following the ERT pattern:
+# spawn the RandomHumanoidSpawnerAdventurer* marker from the entity spawn menu
+# and it offers itself to ghosts as that party member, fully geared.
+# Note: ghost-role adventurers get no objectives (those come from the Adventurers
+# game rule); they're reinforcements for the party or an admeme.
+#
+# Parented to EventHumanoid (NOT EventHumanoidMindShielded) since adventurers
+# are antagonists and must not receive AntagImmune or a mindshield.
+
+# ------------------------------- Warrior --------------------------------
+
+- type: entity
+  id: RandomHumanoidSpawnerAdventurerWarrior
+  name: Adventurer - Warrior
+  suffix: AdventurerRole
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    state: icon
+  - type: RandomHumanoidSpawner
+    settings: AdventurerWarrior
+
+- type: randomHumanoidSettings
+  id: AdventurerWarrior
+  parent: EventHumanoid
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-warrior-name
+    description: ghost-role-information-adventurer-warrior-description
+    rules: ghost-role-information-rules-team-antagonist
+    raffle:
+      settings: short
+    mindRoles:
+    - MindRoleAdventurerWarrior
+  - type: Adventurer
+    armorClass: 16
+    critThreshold: 250
+    deadThreshold: 350
+  - type: NoSlip
+  - type: NpcFactionMember
+    factions:
+    - Adventurer
+  - type: Loadout
+    prototypes: [ AdventurerWarriorGear ]
+
+# -------------------------------- Ranger --------------------------------
+
+- type: entity
+  id: RandomHumanoidSpawnerAdventurerRanger
+  name: Adventurer - Ranger
+  suffix: AdventurerRole
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+    state: unwielded
+  - type: RandomHumanoidSpawner
+    settings: AdventurerRanger
+
+- type: randomHumanoidSettings
+  id: AdventurerRanger
+  parent: EventHumanoid
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-ranger-name
+    description: ghost-role-information-adventurer-ranger-description
+    rules: ghost-role-information-rules-team-antagonist
+    raffle:
+      settings: short
+    mindRoles:
+    - MindRoleAdventurerRanger
+  - type: Adventurer
+    armorClass: 12
+    critThreshold: 120
+    deadThreshold: 220
+  - type: NoSlip
+  - type: NpcFactionMember
+    factions:
+    - Adventurer
+  - type: Loadout
+    prototypes: [ AdventurerRangerGear ]
+
+# -------------------------------- Cleric --------------------------------
+
+- type: entity
+  id: RandomHumanoidSpawnerAdventurerCleric
+  name: Adventurer - Cleric
+  suffix: AdventurerRole
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+    state: healing
+  - type: RandomHumanoidSpawner
+    settings: AdventurerCleric
+
+- type: randomHumanoidSettings
+  id: AdventurerCleric
+  parent: EventHumanoid
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-cleric-name
+    description: ghost-role-information-adventurer-cleric-description
+    rules: ghost-role-information-rules-team-antagonist
+    raffle:
+      settings: short
+    mindRoles:
+    - MindRoleAdventurerCleric
+  - type: Adventurer
+    armorClass: 14
+    critThreshold: 150
+    deadThreshold: 250
+  - type: NoSlip
+  - type: NpcFactionMember
+    factions:
+    - Adventurer
+  - type: Loadout
+    prototypes: [ AdventurerClericGear ]
+
+# -------------------------------- Wizard --------------------------------
+
+- type: entity
+  id: RandomHumanoidSpawnerAdventurerWizard
+  name: Adventurer - Wizard
+  suffix: AdventurerRole
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wizardhat.rsi
+    state: icon
+  - type: RandomHumanoidSpawner
+    settings: AdventurerWizard
+
+- type: randomHumanoidSettings
+  id: AdventurerWizard
+  parent: EventHumanoid
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-wizard-name
+    description: ghost-role-information-adventurer-wizard-description
+    rules: ghost-role-information-rules-team-antagonist
+    raffle:
+      settings: short
+    mindRoles:
+    - MindRoleAdventurerWizard
+  - type: Adventurer
+    armorClass: 10
+    critThreshold: 100
+    deadThreshold: 200
+  - type: NoSlip
+  - type: NpcFactionMember
+    factions:
+    - Adventurer
+  - type: Loadout
+    prototypes: [ AdventurerWizardGear ]

@@ -25,6 +25,12 @@ adventurers-description = A party of four heroes from a bygone age descends upon
 # Objectives
 objective-issuer-adventurers-guild = [color=gold]The Adventurers' Guild[/color]
 
+# Ghost roles (admin-spawned reinforcements)
+ghost-role-information-adventurer-warrior-description = The party's wall of iron. Guard your companions, cleave the dungeon's bosses in twain, and claim your share of the loot.
+ghost-role-information-adventurer-ranger-description = The party's keen eye. Scout ahead, rain conjured arrows on the dungeon's bosses, and claim your share of the loot.
+ghost-role-information-adventurer-cleric-description = The party's shield of faith. Keep your companions standing, smite the dungeon's bosses, and claim your share of the loot.
+ghost-role-information-adventurer-wizard-description = The party's arcane spark. Bend reality with your grimoire, humble the dungeon's bosses, and claim your share of the loot.
+
 # Popups
 adventurer-ac-blocked-message = {$roll} vs AC {$ac} - Miss!
 adventurer-gun-fail-message = You fumble with {THE($gun)}. This strange machinery is no weapon for an adventurer!

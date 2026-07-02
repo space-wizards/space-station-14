@@ -4,30 +4,14 @@
 # Sprites are placeholders borrowed from existing assets.
 
 # ------------------------------- Shared --------------------------------
+# Backpack, shoes, mask and air tanks are regular station prototypes on purpose;
+# only signature clothing is bespoke.
 
 - type: entity
   parent: ClothingUniformJumpsuitColorBrown
   id: ClothingUniformJumpsuitAdventurer
   name: adventurer's garb
   description: Sturdy travelling clothes that have seen many campaigns.
-
-- type: entity
-  parent: ClothingMaskBreath
-  id: ClothingMaskAdventurer
-  name: adventurer's breath mask
-  description: Even heroes need to breathe in the void between dungeons.
-
-- type: entity
-  parent: ClothingBackpack
-  id: ClothingBackpackAdventurer
-  name: adventurer's pack
-  description: A traveller's pack containing everything a hero needs. Mostly rations and rope, usually.
-
-- type: entity
-  parent: ClothingShoesLeather
-  id: ClothingShoesAdventurer
-  name: adventurer's boots
-  description: Broken in over a hundred leagues of wandering.
 
 # ------------------------------- Warrior -------------------------------
 
