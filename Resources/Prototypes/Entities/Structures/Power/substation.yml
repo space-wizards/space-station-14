@@ -80,15 +80,32 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Sprite # TODO: add sprite for maintenance panel open
+  - type: Sprite
     sprite: Structures/Power/substation.rsi
     snapCardinals: true
     layers:
     - state: substation
     - state: screen
       shader: unshaded
-    - state: full
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
+      state: charge0
       shader: unshaded
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
+      state: input
+      shader: unshaded
+      visible: false
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
+      state: output
+      shader: unshaded
+      visible: false
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
+      state: still
+      shader: unshaded
+    - map: [ enum.WiresVisualLayers.MaintenancePanel ]
+      state: open
+  - type: Appearance
+  - type: PowerNetworkBatteryVisuals
+    numChargeLevels: 5
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
@@ -99,7 +116,7 @@
     castShadows: false
   - type: PowerMonitoringDevice
     sprite: Structures/Power/substation.rsi
-    state: substation_static
+    state: static
   - type: Destructible
     thresholds:
     - trigger:
@@ -129,6 +146,7 @@
     intensitySlope: 2
     totalIntensity: 200
   - type: WiresPanel
+  - type: WiresVisuals
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: AmbientSound
@@ -176,17 +194,36 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/wall_substation.rsi
     layers:
-    - state: substation_wall
-    - state: screen_wall
+    - state: frame
+    - state: screen
       shader: unshaded
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeLevel ]
+      state: charge0
+      shader: unshaded
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanCharge ]
+      state: input
+      shader: unshaded
+      visible: false
+    - map: [ enum.PowerNetworkBatteryVisualLayers.CanDischarge ]
+      state: output
+      shader: unshaded
+      visible: false
+    - map: [ enum.PowerNetworkBatteryVisualLayers.ChargeState ]
+      state: still
+      shader: unshaded
+    - map: [ enum.WiresVisualLayers.MaintenancePanel ]
+      state: open
+  - type: Appearance
+  - type: PowerNetworkBatteryVisuals
+    numChargeLevels: 5
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
   - type: PowerMonitoringDevice
-    sprite: Structures/Power/substation.rsi
-    state: substation_wall_static
+    sprite: Structures/Power/wall_substation.rsi
+    state: static
   - type: Destructible
     thresholds:
     - trigger:
@@ -208,6 +245,8 @@
     intensitySlope: 2
     totalIntensity: 100
   - type: WallMount
+  - type: WiresPanel
+  - type: WiresVisuals
 
 # Substations in use
 
@@ -266,9 +305,9 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/substation.rsi
+    sprite: Structures/Power/wall_substation.rsi
     layers:
-    - state: substation_wall
+    - state: frame
   - type: Construction
     graph: WallmountSubstation
     node: frame
