@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.IntegrationTests.Tests.Audio.Midi;
 
 [TestFixture]
-public sealed partial class MidiFileCollectionTests : GameTest
+public sealed partial class MidiFileCollectionManagerTests : GameTest
 {
     private static readonly byte[] TestBytes = [1, 2, 3, 4, 5, 6];
     private static readonly ResPath TestFileName = new ResPath("unit_test.midi");
@@ -18,7 +18,7 @@ public sealed partial class MidiFileCollectionTests : GameTest
     private static ResPath TestFullPath => TestUserDataDir / TestFileName;
 
     private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
-    private MidiFileCollection MidiLibManager => Pair.Client.ResolveDependency<MidiFileCollection>();
+    private MidiFileCollectionManager MidiLibManager => Pair.Client.ResolveDependency<MidiFileCollectionManager>();
 
     [TearDown]
     public void CleanUserData()
@@ -27,6 +27,7 @@ public sealed partial class MidiFileCollectionTests : GameTest
         {
             ResManager.UserData.Delete(new ResPath(TestUserDataDir + file));
         }
+
         MidiLibManager.ReloadLibrary();
     }
 
@@ -51,7 +52,6 @@ public sealed partial class MidiFileCollectionTests : GameTest
     [Test]
     public void TestGetMidiData()
     {
-
         ResManager.UserData.WriteAllBytes(TestFullPath, TestBytes);
         var midiBytes = MidiLibManager.GetMidiData(TestFileName);
 
@@ -68,7 +68,6 @@ public sealed partial class MidiFileCollectionTests : GameTest
         Assert.That(ResManager.UserData.Exists(TestFullPath), Is.True);
 
         MidiLibManager.RemoveMidiFile(TestFileName);
-
         using (Assert.EnterMultipleScope())
         {
             Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
@@ -90,7 +89,6 @@ public sealed partial class MidiFileCollectionTests : GameTest
         Assert.That(MidiLibManager.GetMidiFiles().Count(), Is.EqualTo(3));
 
         MidiLibManager.RemoveAllMidiFiles();
-
         using (Assert.EnterMultipleScope())
         {
             Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);

@@ -10,7 +10,7 @@ namespace Content.Client.Audio.Midi;
 /// Handles storage/management of MIDI files stored inside the user data directory.
 /// </summary>
 [PublicAPI]
-public sealed partial class MidiFileCollection : IPostInjectInit
+public sealed partial class MidiFileCollectionManager : IPostInjectInit
 {
     /// <summary>
     /// Directory path to use inside UserData for storing MIDIs.
