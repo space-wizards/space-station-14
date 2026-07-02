@@ -81,7 +81,7 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
 
     private void OnItemInserted(Entity<SmartFridgeComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != ent.Comp.Container || _timing.ApplyingState)
+        if (args.Container.ID != ent.Comp.Container)
             return;
 
         var key = new SmartFridgeEntry(Identity.Name(args.Entity, EntityManager));
