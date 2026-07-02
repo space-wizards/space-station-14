@@ -207,6 +207,16 @@ public sealed partial class ExplosionSystem
         var size = grid.Comp.TileSize;
         var gridBox = new Box2(tile * size, (tile + 1) * size);
 
+        /* We do this so that we don't do an extra TryComp on anchored entities, and so we don't process them twice.
+        This saves us a small amount of processing time, but in the future if we can:
+        1. Limit the lookups to only process entities that are *on* the tile that's exploding
+        2. Make it so ProcessEntity doesn't have throwing behavior
+        Then this would be a pretty massive processing time saver.
+        If you are reading this, piece by piece we can make this system optimzied.
+        */
+        _map.GetAnchoredEntities(grid, tile, _anchored);
+        processed.UnionWith(_anchored);
+
         // get the entities on a tile. Note that we cannot process them directly, or we get
         // enumerator-changed-while-enumerating errors.
         List<(EntityUid, TransformComponent)> list = new();
@@ -230,20 +240,21 @@ public sealed partial class ExplosionSystem
             _atmosphere.HotspotExpose(grid.Owner, tile, temperature.Value, currentIntensity, cause, true);
         }
 
-        // We process anchored entities last, these should've been caught by the lookups earlier.
+        // We process anchored entities after the AABB lookup for performance reasons.
+        // The AABB lookup cannot performantly check if each anchored entity is on this tile without a bunch of wasted CPU time
+        // To get around this, we just skip them during the first loop.
+        // This prevents us from hitting walls with a greater intensity than intended.
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
         // the purposes of destroying floors. Again, ideally the process of damaging an entity should somehow return
         // information about the entities that were spawned as a result, but without that information we just have to
         var tileBlocked = false;
-        _map.GetAnchoredEntities(grid, tile, _anchored);
-        if (_anchored.Count > 0)
+        foreach (var entity in _anchored)
         {
-            foreach (var entity in _anchored)
-            {
-                tileBlocked |= IsBlockingTurf(entity);
-            }
-            _anchored.Clear();
+            processed.Add(entity);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
+            tileBlocked |= IsBlockingTurf(entity);
         }
+        _anchored.Clear();
 
         // Next, we get the intersecting entities AGAIN, but purely for throwing. This way, glass shards spawned from
         // windows will be flung outwards, and not stay where they spawned. This is however somewhat unnecessary, and a
@@ -274,7 +285,7 @@ public sealed partial class ExplosionSystem
         ref (List<(EntityUid, TransformComponent)> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
         in EntityUid uid)
     {
-        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform))
+        if (state.Processed.Add(uid) && state.XformQuery.TryGetComponent(uid, out var xform) && !xform.Anchored)
             state.List.Add((uid, xform));
 
         return true;
@@ -428,7 +439,7 @@ public sealed partial class ExplosionSystem
         DamageSpecifier? originalDamage,
         float throwForce,
         string id,
-        TransformComponent xform,
+        TransformComponent? xform,
         float? fireStacksOnIgnite,
         EntityUid? cause)
     {
@@ -465,23 +476,24 @@ public sealed partial class ExplosionSystem
         }
 
         // throw
-        if (!xform.Anchored
-            && throwForce > 0
-            && !EntityManager.IsQueuedForDeletion(uid)
-            && _physicsQuery.TryGetComponent(uid, out var physics)
-            && physics.BodyType == BodyType.Dynamic)
-        {
-            var pos = _transformSystem.GetWorldPosition(xform);
-            var dir = pos - epicenter.Position;
-            if (dir.IsLengthZero())
-                dir = _robustRandom.NextVector2().Normalized();
-            _throwingSystem.TryThrow(
-                uid,
-                dir,
-                physics,
-                xform,
-                throwForce);
-        }
+        if (xform == null
+            || xform.Anchored
+            || throwForce <= 0
+            || EntityManager.IsQueuedForDeletion(uid)
+            || !_physicsQuery.TryGetComponent(uid, out var physics)
+            || physics.BodyType != BodyType.Dynamic)
+            return;
+
+        var pos = _transformSystem.GetWorldPosition(xform);
+        var dir = pos - epicenter.Position;
+        if (dir.IsLengthZero())
+            dir = _robustRandom.NextVector2().Normalized();
+        _throwingSystem.TryThrow(
+            uid,
+            dir,
+            physics,
+            xform,
+            throwForce);
     }
 
     /// <summary>
