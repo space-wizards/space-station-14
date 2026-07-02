@@ -127,36 +127,7 @@ public sealed partial class SatiationSystem
     }
 
     /// <summary>
-    /// Like <see cref="TryGetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">
-    /// the other overload</see>, except that <paramref name="valuesByThreshold"/>'s keys are
-    /// <see cref="SatiationPrototype.Thresholds">key strings</see>, and will be resolved to threshold values.
-    /// In the case that any key string in <paramref name="valuesByThreshold"/> cannot be resolved to a value, its entry
-    /// is simply ignored, possibly leading to the dictionary being treated as empty.
-    /// </summary>
-    public bool TryGetValueByThreshold<T>(
-        Entity<SatiationComponent> entity,
-        [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        Dictionary<string, T> valuesByThreshold,
-        out T? result
-    )
-    {
-        result = default;
-        if (GetAndResolveSatiationOfType(entity, type) is not var (_, proto))
-            return false;
-
-        var newValues = new Dictionary<int, T>();
-        foreach (var (key, value) in valuesByThreshold)
-        {
-            if (!proto.Thresholds.TryGetValue(key, out var threshold))
-                continue;
-            newValues[threshold] = value;
-        }
-
-        return TryGetValueByThreshold(entity, type, newValues, out result);
-    }
-
-    /// <summary>
-    /// This function returns a value from <see cref="valuesByThreshold"/> in a manner similar to how the fields on a
+    /// This function returns a value from <see cref="valuesByThreshold"/> in the same manner by which the fields on a
     /// <see cref="SatiationPrototype"/> are retrieved. The current value of <paramref name="entity"/>'s satiation of the
     /// given <paramref name="type"/> is retrieved, and then the value in <paramref name="valuesByThreshold"/> with the
     /// lowest key greater than the current satiation value is returned.
@@ -167,15 +138,27 @@ public sealed partial class SatiationSystem
     public bool TryGetValueByThreshold<T>(
         Entity<SatiationComponent> entity,
         [ForbidLiteral] ProtoId<SatiationTypePrototype> type,
-        Dictionary<int, T> valuesByThreshold,
+        Dictionary<SatiationValue, T> valuesByThreshold,
         out T? result
     )
     {
         result = default;
+        if (GetAndResolveSatiationOfType(entity, type) is not var (_, proto))
+            return false;
+
+        var newValues = new Dictionary<int, T>();
+        foreach (var (key, value) in valuesByThreshold)
+        {
+            if (proto.GetValueOrNull(key) is not { } threshold)
+                continue;
+            newValues[threshold] = value;
+        }
+
+        result = default;
         if (GetValueOrNull(entity, type) is not { } currentValue)
             return false;
 
-        var ret = TryGetValueByThreshold(currentValue, valuesByThreshold, it => it.Key, out var resultPair, out _);
+        var ret = TryGetValueByThreshold(currentValue, newValues, it => it.Key, out var resultPair, out _);
         result = resultPair.Value;
         return ret;
     }

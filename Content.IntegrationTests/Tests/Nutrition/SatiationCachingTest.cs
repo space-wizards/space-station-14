@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Nutrition;
@@ -8,24 +10,26 @@ namespace Content.IntegrationTests.Tests.Nutrition;
 [TestFixture]
 [TestOf(typeof(SatiationSystem))]
 [TestOf(typeof(SatiationPrototype))]
-public sealed class SatiationCachingTest
+public sealed class SatiationCachingTest : GameTest
 {
-    private const string NewSatiationId = "NewSatiationId";
     private const int MaximumValue = 100;
     private const string FirstThreshold = "first";
-    private const int FirstThresholdValue = MaximumValue - 20;
+    private const int FirstThresholdValue = MaximumValue - 10;
     private const string SecondThreshold = "second";
     private const int SecondThresholdValue = FirstThresholdValue - 20;
 
-    private const float FirstDecayModifier = 1.0f;
-    private const float SecondDecayModifier = 2.0f;
+    private const float FirstDecayModifier = 2.0f;
+    private const float SecondDecayModifier = 3.0f;
 
-    private const float FirstSpeedModifier = 3.0f;
+    private const string DefinesAllSatiationId = "DefinesAllSatiationId";
+    private const string DefinesFirstOnlySatiationId = "DefinesFirstOnlySatiationId";
+    private const string DefinesSecondOnlySatiationId = "DefinesSecondOnlySatiationId";
 
     [TestPrototypes]
     private static readonly string NewSatiationProto = $@"
+# Defines a value on both thresholds, so they should both get independent values
 - type: satiation
-  id: {NewSatiationId}
+  id: {DefinesAllSatiationId}
   baseDecayRate: 1
   maximumValue: {MaximumValue}
   thresholds:
@@ -34,102 +38,125 @@ public sealed class SatiationCachingTest
   startingValueMinimum: 0
   startingValueMaximum: 100
   alertCategory: Hunger
-  decayModifiers: # Both define this, so they should each get their own values.
+  decayModifiers:
     {FirstThreshold}: {FirstDecayModifier}
     {SecondThreshold}: {SecondDecayModifier}
-  speedModifiers: # First defines this, so both should use it.
-    {FirstThreshold}: {FirstSpeedModifier}
-  damages: # First defines this, but then second 'undefines' it, so only first should use it.
-    {FirstThreshold}:
-      types:
-        Caustic: 4
-    {SecondThreshold}: null
-  # Alerts aren't used.
-  icons: {{}} # Icons 'inherit' the lack of value from the top default threshold.
+
+# Defines a value on the first threshold only, so the second should ""inherit"" it
+- type: satiation
+  id: {DefinesFirstOnlySatiationId}
+  baseDecayRate: 1
+  maximumValue: {MaximumValue}
+  thresholds:
+    {FirstThreshold}: {FirstThresholdValue}
+    {SecondThreshold}: {SecondThresholdValue}
+  startingValueMinimum: 0
+  startingValueMaximum: 100
+  alertCategory: Hunger
+  decayModifiers:
+    {FirstThreshold}: {FirstDecayModifier}
+    # No second threshold
+
+# Defines a value on the second threshold only
+- type: satiation
+  id: {DefinesSecondOnlySatiationId}
+  baseDecayRate: 1
+  maximumValue: {MaximumValue}
+  thresholds:
+    {FirstThreshold}: {FirstThresholdValue}
+    {SecondThreshold}: {SecondThresholdValue}
+  startingValueMinimum: 0
+  startingValueMaximum: 100
+  alertCategory: Hunger
+  decayModifiers:
+    {SecondThreshold}: {SecondDecayModifier}
+
+
 ";
 
     [Test]
-    public async Task ThresholdDataCachingTest()
+    [RunOnSide(Side.Server)]
+    public void AllThresholdsDefined() => AssertDecayModifiers(DefinesAllSatiationId,
+    [
+        // Above the first value, there is no threshold and we use the default value
+        (MaximumValue, int.MaxValue, 1f),
+        (FirstThresholdValue, FirstThresholdValue, FirstDecayModifier),
+        (FirstThresholdValue - 1, FirstThresholdValue, FirstDecayModifier),
+        (SecondThresholdValue, SecondThresholdValue, SecondDecayModifier),
+        // No thresholds below second, so that keeps applying
+        (SecondThresholdValue - 1, SecondThresholdValue, SecondDecayModifier),
+        (0, SecondThresholdValue, SecondDecayModifier),
+    ]);
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void FirstOnlyDefined() => AssertDecayModifiers(DefinesFirstOnlySatiationId,
+    [
+        // Above the first value, there is no threshold and we use the default value
+        (MaximumValue, int.MaxValue, 1f),
+        (FirstThresholdValue, FirstThresholdValue, FirstDecayModifier),
+        (FirstThresholdValue - 1, FirstThresholdValue, FirstDecayModifier),
+        (SecondThresholdValue, FirstThresholdValue, FirstDecayModifier),
+        (SecondThresholdValue - 1, FirstThresholdValue, FirstDecayModifier),
+        (0, FirstThresholdValue, FirstDecayModifier),
+    ]);
+
+    [Test]
+    [RunOnSide(Side.Server)]
+    public void SecondOnlyDefined() => AssertDecayModifiers(DefinesSecondOnlySatiationId,
+    [
+        // Above the first value, there is no threshold and we use the default value
+        (MaximumValue, int.MaxValue, 1f),
+        // There is no first threshold value defined, so we continue to "inherit" the default
+        (FirstThresholdValue, int.MaxValue, 1f),
+        (FirstThresholdValue - 1, int.MaxValue, 1f),
+        (SecondThresholdValue, SecondThresholdValue, SecondDecayModifier),
+        // No thresholds below second, so that keeps applying
+        (SecondThresholdValue - 1, SecondThresholdValue, SecondDecayModifier),
+        (0, SecondThresholdValue, SecondDecayModifier),
+    ]);
+
+    [SidedDependency(Side.Server)] private readonly SatiationSystem _satiation = default!;
+    [SidedDependency(Side.Server)] private readonly IPrototypeManager _protoMan = default!;
+
+    /// <summary>
+    /// Verifies that the <c>expectedThreshold</c>s and <c>expectedDecayMod</c>s match the actual values retrieved from
+    /// <paramref name="satiationProto"/> at the given <c>input</c> satiation value.
+    /// The order of triples in <paramref name="assertions"/> does not matter.
+    /// </summary>
+    private void AssertDecayModifiers(
+        ProtoId<SatiationPrototype> satiationProto,
+        IEnumerable<(int input, int expectedThreshold, float expectedDecayMod)> assertions
+    )
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entMan = server.ResolveDependency<IEntityManager>();
-        var protoMan = server.ResolveDependency<IPrototypeManager>();
-
-        await server.WaitAssertion(() =>
+        var proto = _protoMan.Index(satiationProto);
+        using (Assert.EnterMultipleScope())
         {
-            var sys = entMan.System<SatiationSystem>();
-            var proto = protoMan.Index<SatiationPrototype>(NewSatiationId);
-
-            // Verify the values of the implicit top threshold which uses defaults for everything.
-            GetAndAssertValues(
-                sys,
-                proto,
-                MaximumValue,
-                expectedThreshold: int.MaxValue,
-                expectedDecayMod: 1f,
-                expectedSpeedMod: 1f,
-                expectDamageSpec: false
-            );
-
-            // First threshold
-            GetAndAssertValues(
-                sys,
-                proto,
-                FirstThresholdValue - 1,
-                expectedThreshold: FirstThresholdValue,
-                expectedDecayMod: FirstDecayModifier,
-                expectedSpeedMod: FirstSpeedModifier,
-                expectDamageSpec: true
-            );
-
-            // Second threshold
-            GetAndAssertValues(
-                sys,
-                proto,
-                SecondThresholdValue - 1,
-                expectedThreshold: SecondThresholdValue,
-                expectedDecayMod: SecondDecayModifier,
-                expectedSpeedMod: FirstSpeedModifier, // The second threshold "inherits" this value from the first.
-                expectDamageSpec: false
-            );
-        });
-
-        await pair.CleanReturnAsync();
-        return;
-
-        void GetAndAssertValues(
-            SatiationSystem sys,
-            SatiationPrototype proto,
-            int satiationValue,
-            int expectedThreshold,
-            float expectedDecayMod,
-            float expectedSpeedMod,
-            bool expectDamageSpec
-        )
-        {
-            // I am the test, this is for me.
-#pragma warning disable CS0618 // Type or member is obsolete
-            sys.GetThresholdDataForTesting(
-                proto,
-                satiationValue,
-                out var threshold,
-                out var decayModifier,
-                out var speedModifier,
-                out var damage,
-                out _, // Alert isn't used
-                out var icon
-            );
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            Assert.Multiple(() =>
+            foreach (var (input, expectedThreshold, expectedDecayMod) in assertions)
             {
-                Assert.That(threshold, Is.EqualTo(expectedThreshold));
-                Assert.That(decayModifier, Is.EqualTo(expectedDecayMod));
-                Assert.That(speedModifier, Is.EqualTo(expectedSpeedMod));
-                Assert.That(damage, expectDamageSpec ? Is.Not.Null : Is.Null);
-                Assert.That(icon, Is.Null); // Icon is expected to be implicitly null always.
-            });
+                _satiation.GetThresholdDataForTesting(
+                    proto,
+                    input,
+                    out var threshold,
+                    out var decayModifier,
+                    out _, // Alert isn't used
+                    out _ // Icon isn't used
+                );
+
+                using (Assert.EnterMultipleScope())
+                {
+                    Assert.That(
+                        threshold,
+                        Is.EqualTo(expectedThreshold),
+                        $"incorrect {nameof(threshold)} at value={input}"
+                    );
+                    Assert.That(
+                        decayModifier,
+                        Is.EqualTo(expectedDecayMod),
+                        $"incorrect {nameof(decayModifier)} at value={input}"
+                    );
+                }
+            }
         }
     }
 }

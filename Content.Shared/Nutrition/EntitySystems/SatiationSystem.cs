@@ -1,15 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Alert;
-using Content.Shared.Damage.Systems;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -20,16 +15,19 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// satiations in <see cref="Update"/>, and external changes to satiations through accessors like
 /// <see cref="ModifyValue"/>.
 /// </summary>
-[SuppressMessage("ReSharper", "UseCollectionExpression")] // Collection expressions use non-whitelisted functions.
 public sealed partial class SatiationSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AlertsSystem _alerts = default!;
-    [Dependency] private DamageableSystem _damageable = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
+    /// <summary>
+    /// The ID of the <c>Hunger</c> satiation type. Provided because it is so commonly used in Content.
+    /// </summary>
     public static readonly ProtoId<SatiationTypePrototype> Hunger = "Hunger";
+
+    /// <summary>
+    /// The ID of the <c>Thirst</c> satiation type. Provided because it is so commonly used in Content.
+    /// </summary>
     public static readonly ProtoId<SatiationTypePrototype> Thirst = "Thirst";
 
     /// <inheritdoc/>
@@ -41,9 +39,34 @@ public sealed partial class SatiationSystem : EntitySystem
 
         SubscribeLocalEvent<SatiationComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SatiationComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<SatiationComponent, EntityUnpausedEvent>(OnEntityUnpaused);
-        SubscribeLocalEvent<SatiationComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
+    }
+
+    /// <inheritdoc/>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SatiationComponent>();
+        while (query.MoveNext(out var uid, out var component))
+        {
+            Entity<SatiationComponent> entity = (uid, component);
+            foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
+            {
+                if (_timing.CurTime < satiation.ProjectedThresholdChangeTime)
+                    continue;
+
+                // If it's time to change the threshold, just update the authoritative value to what we expect the
+                // current value to be. `SetAuthoritativeValue` will handle updating the threshold, applying threshold
+                // effects, etc.
+                SetAuthoritativeValue(
+                    entity,
+                    satiation,
+                    proto,
+                    CalculateCurrentValue(satiation, proto)
+                );
+            }
+        }
     }
 
     /// <summary>
@@ -51,8 +74,13 @@ public sealed partial class SatiationSystem : EntitySystem
     /// </summary>
     private void OnMapInit(Entity<SatiationComponent> entity, ref MapInitEvent args)
     {
-        foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
+        foreach (var (type, satiation) in entity.Comp.Satiations)
         {
+            if (!ProtoMan.Resolve(satiation.Prototype, out var proto))
+                continue;
+
+            satiation.SatiationType = type;
+
             // TODO: Replace with RandomPredicted once the engine PR is merged
             var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
             var value = rand.NextFloat(proto.StartingValueMinimum, proto.StartingValueMaximum);
@@ -75,39 +103,6 @@ public sealed partial class SatiationSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles pausing the <see cref="TimeSpan"/> fields in all of the values of <see cref="SatiationComponent.Satiations"/>.
-    /// </summary>
-    private static void OnEntityUnpaused(Entity<SatiationComponent> entity, ref EntityUnpausedEvent args)
-    {
-        foreach (var satiation in entity.Comp.Satiations.Values)
-        {
-            if (satiation.ProjectedThresholdChangeTime.HasValue)
-            {
-                satiation.ProjectedThresholdChangeTime =
-                    satiation.ProjectedThresholdChangeTime.Value + args.PausedTime;
-            }
-
-            satiation.NextContinuousEffectTime += args.PausedTime;
-        }
-    }
-
-    /// <summary>
-    /// Applies a speed modifier based on the current satiation level.
-    /// </summary>
-    private void OnRefreshMovementSpeed(
-        Entity<SatiationComponent> entity,
-        ref RefreshMovementSpeedModifiersEvent args
-    )
-    {
-        foreach (var satiation in entity.Comp.Satiations.Values)
-        {
-            var speedModifier = GetCurrentAndNextLowestThresholds(satiation).Current.SpeedModifier;
-            if (speedModifier is not 1)
-                args.ModifySpeed(speedModifier);
-        }
-    }
-
-    /// <summary>
     /// Sets all satiations to their maximums.
     /// </summary>
     private void OnRejuvenate(Entity<SatiationComponent> entity, ref RejuvenateEvent args)
@@ -118,59 +113,19 @@ public sealed partial class SatiationSystem : EntitySystem
         }
     }
 
-    /// <inheritdoc/>
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<SatiationComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            Entity<SatiationComponent> entity = (uid, component);
-            foreach (var (satiation, proto) in GetSatiationsAndTypes(entity))
-            {
-                // If it's time to change the threshold, just update the authoritative value to what we expect the
-                // current value to be. `SetAuthoritativeValue` will handle updating the threshold, applying threshold
-                // effects, etc.
-                if (_timing.CurTime >= satiation.ProjectedThresholdChangeTime)
-                {
-                    SetAuthoritativeValue(
-                        entity,
-                        satiation,
-                        proto,
-                        CalculateCurrentValue(satiation, proto)
-                    );
-                }
-
-                // If it's time to do continuous effects, do continuous effects.
-                if (_timing.CurTime >= satiation.NextContinuousEffectTime)
-                {
-                    satiation.NextContinuousEffectTime += satiation.ContinuousEffectFrequency;
-
-                    if (!_mobState.IsDead(entity) &&
-                        satiation.CurrentThresholdDamage is { } damage)
-                    {
-                        _damageable.TryChangeDamage(entity.Owner, damage, true, false);
-                    }
-                }
-            }
-        }
-    }
-
 
     /// <summary>
-    /// Shared implementation for <see cref="GetCurrentAndNextLowestThresholds"/> and
-    /// <see cref="TryGetValueByThreshold{T}(Robust.Shared.GameObjects.Entity{Content.Shared.Nutrition.Components.SatiationComponent},Robust.Shared.Prototypes.ProtoId{Content.Shared.Nutrition.Prototypes.SatiationTypePrototype},System.Collections.Generic.Dictionary{int,T},out T?)">GetValueByThreshold</see>
-    /// which selects a value from <paramref name="values"/> based on <paramref name="currentSatiation"/>. Each value is
-    /// assigned a threshold value by <paramref name="thresholdGetter"/>, and then the value with the lowest threshold
-    /// greater than <paramref name="currentSatiation"/> is returned as <paramref name="currentValue"/>.
+    /// The backing implementation for <see cref="GetCurrentAndNextLowestThresholds"/> which selects a value from
+    /// <paramref name="values"/> based on <paramref name="currentSatiation"/>. Each value is assigned a threshold value
+    /// by <paramref name="thresholdGetter"/>, and then the value with the lowest threshold greater than
+    /// <paramref name="currentSatiation"/> is returned as <paramref name="currentValue"/>.
     /// <paramref name="nextLowerValue"/> is a similar value, except it is the one associated with the highest threshold
     /// less than <paramref name="currentSatiation"/> (or null if no such value exists).
     /// <br/>
     /// If <paramref name="values"/> is empty, returns false.
     /// If <paramref name="currentSatiation"/> is greater than all threshold values assigned, returns false.
     /// </summary>
-    private bool TryGetValueByThreshold<T>(
+    private static bool TryGetValueByThreshold<T>(
         float currentSatiation,
         IEnumerable<T> values,
         Func<T, int> thresholdGetter,
@@ -317,11 +272,9 @@ public sealed partial class SatiationSystem : EntitySystem
         {
             // Set the new threshold, and any other cached values related to the threshold.
             satiation.CurrentThresholdTop = newThreshold.Threshold;
-            satiation.CurrentThresholdDamage = newThreshold.Damage;
             satiation.ActualDecayRate = proto.BaseDecayRate * newThreshold.DecayModifier;
 
             // Apply threshold effects.
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
             if (newThreshold.Alert is { } alert)
             {
                 _alerts.ShowAlert(entity.Owner, alert);
@@ -330,6 +283,9 @@ public sealed partial class SatiationSystem : EntitySystem
             {
                 _alerts.ClearAlertCategory(entity.Owner, proto.AlertCategory);
             }
+
+            var ev = new SatiationThresholdChangedEvent(satiation.SatiationType);
+            RaiseLocalEvent(entity, ref ev);
         }
 
         // Update when the threshold will decay to the next lower threshold.
@@ -350,3 +306,11 @@ public sealed partial class SatiationSystem : EntitySystem
         Dirty(entity);
     }
 }
+
+/// <summary>
+/// This event is raised on an entity with <see cref="SatiationComponent"/> when one of its satiations changes the
+/// threshold it is currently in.
+/// </summary>
+/// <param name="Satiation">The satiation whose threshold changed.</param>
+[ByRefEvent]
+public readonly record struct SatiationThresholdChangedEvent(ProtoId<SatiationTypePrototype> Satiation);

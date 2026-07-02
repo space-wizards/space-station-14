@@ -15,8 +15,6 @@
     Okay: 1.0
     Peckish: 0.8
     Starving: 0.6
-  speedModifiers:
-    Peckish: 0.75
   alertCategory: Hunger
   alerts:
     Peckish: Peckish
@@ -69,7 +67,6 @@
   id: MouseAdmemeHunger
   parent: MouseHunger
   baseDecayRate: 10 # always hungry
-  speedModifiers: {}
 
 - type: satiation
   id: HamsterHunger
@@ -96,3 +93,12 @@
   id: DionaHunger
   parent: NormalSatiationHunger
   baseDecayRate: 0.0083
+
+- type: entity
+  abstract: true
+  id: BaseHungerSlowdown
+  component:
+  - type: SatiationSpeedModifier
+    satiations:
+      Hunger:
+        Peckish: 0.75

@@ -64,14 +64,11 @@ public sealed partial class SatiationSystem
     /// This should only be used for testing as it's a back door into the cache which is not meant to be accessed
     /// directly.
     /// </summary>
-    [Obsolete("This function should be used exclusively for testing.")]
     public void GetThresholdDataForTesting(
         ProtoId<SatiationPrototype> proto,
         int value,
         out int threshold,
         out float decayModifier,
-        out float speedModifier,
-        out DamageSpecifier? damage,
         out ProtoId<AlertPrototype>? alert,
         out ProtoId<SatiationIconPrototype>? icon
     )
@@ -89,10 +86,8 @@ public sealed partial class SatiationSystem
 
         threshold = data.Threshold;
         alert = data.Alert;
-        damage = data.Damage;
         decayModifier = data.DecayModifier;
         icon = data.Icon;
-        speedModifier = data.SpeedModifier;
     }
 
     /// <summary>
@@ -101,8 +96,6 @@ public sealed partial class SatiationSystem
     private record struct SatiationThresholdData(
         int Threshold,
         float DecayModifier,
-        float SpeedModifier,
-        DamageSpecifier? Damage,
         ProtoId<AlertPrototype>? Alert,
         ProtoId<SatiationIconPrototype>? Icon
     )
@@ -110,8 +103,6 @@ public sealed partial class SatiationSystem
         public static readonly SatiationThresholdData Default = new(
             int.MaxValue, // Default threshold data should be the MOST top threshold always.
             1f,
-            1f,
-            null,
             null,
             null
         );
@@ -157,16 +148,6 @@ public sealed partial class SatiationSystem
             foreach (var (satiationValue, decayModifier) in proto.DecayModifiers)
             {
                 AddThresholdData(satiationValue, new CachingData { DecayModifier = decayModifier });
-            }
-
-            foreach (var (satiationValue, speedModifier) in proto.SpeedModifiers)
-            {
-                AddThresholdData(satiationValue, new CachingData { SpeedModifier = speedModifier });
-            }
-
-            foreach (var (satiationValue, damage) in proto.Damages)
-            {
-                AddThresholdData(satiationValue, new CachingData { Damage = damage });
             }
 
             foreach (var (satiationValue, alert) in proto.Alerts)
@@ -270,8 +251,6 @@ public sealed partial class SatiationSystem
             public int Threshold = int.MaxValue;
 
             public ThresholdValue<float> DecayModifier = ThresholdValue<float>.Undefined;
-            public ThresholdValue<float> SpeedModifier = ThresholdValue<float>.Undefined;
-            public ThresholdValue<DamageSpecifier?> Damage = ThresholdValue<DamageSpecifier?>.Undefined;
             public ThresholdValue<ProtoId<AlertPrototype>?> Alert = ThresholdValue<ProtoId<AlertPrototype>?>.Undefined;
 
             public ThresholdValue<ProtoId<SatiationIconPrototype>?> Icon =
@@ -287,8 +266,6 @@ public sealed partial class SatiationSystem
                 return new SatiationThresholdData(
                     Threshold,
                     DecayModifier.GetValueOrDefault(defaults.DecayModifier),
-                    SpeedModifier.GetValueOrDefault(defaults.SpeedModifier),
-                    Damage.GetValueOrDefault(defaults.Damage),
                     Alert.GetValueOrDefault(defaults.Alert),
                     Icon.GetValueOrDefault(defaults.Icon)
                 );
@@ -313,20 +290,6 @@ public sealed partial class SatiationSystem
                     DebugTools.Assert(!DecayModifier.IsDefined,
                         $"Error in {proto}: {nameof(SatiationThresholdData.DecayModifier)} defines conflicting values for threshold={threshold} ({newData.DecayModifier.Value} and {DecayModifier.Value})");
                     DecayModifier = newData.DecayModifier;
-                }
-
-                if (newData.SpeedModifier.IsDefined)
-                {
-                    DebugTools.Assert(!SpeedModifier.IsDefined,
-                        $"Error in {proto}: {nameof(SatiationThresholdData.SpeedModifier)} defines conflicting values for threshold={threshold} ({newData.SpeedModifier.Value} and {SpeedModifier.Value})");
-                    SpeedModifier = newData.SpeedModifier;
-                }
-
-                if (newData.Damage.IsDefined)
-                {
-                    DebugTools.Assert(!Damage.IsDefined,
-                        $"Error in {proto}: {nameof(SatiationThresholdData.Damage)} defines conflicting values for threshold={threshold} ({newData.Damage.Value} and {Damage.Value})");
-                    Damage = newData.Damage;
                 }
 
                 if (newData.Alert.IsDefined)

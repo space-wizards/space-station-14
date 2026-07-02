@@ -39,6 +39,8 @@
   - MobBloodstream
   - MobFlammable
   - BaseMobAnimal
+  - BaseHungerSlowdown
+  - BaseThirstSlowdown
   id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
   suffix: AI
   components:
@@ -67,6 +69,8 @@
   - MobRespirator
   - MobAtmosStandard
   - SimpleSpaceMobBase
+  - BaseHungerSlowdown
+  - BaseThirstSlowdown
   id: SimpleMobBase # for air breathers
   suffix: AI
   abstract: true

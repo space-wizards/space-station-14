@@ -8,6 +8,11 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Shared.Nutrition.Prototypes;
 
+/// <summary>
+/// This serializer for <see cref="SatiationValue"/> allows YAMLers to use either an int or a string directly where a
+/// <see cref="SatiationValue"/> is expected.
+/// </summary>
+// TODO Replace with an actual union type once that's available in C#15: https://devblogs.microsoft.com/dotnet/csharp-15-union-types/
 [UsedImplicitly, TypeSerializer]
 public sealed class SatiationValueSerializer : ITypeSerializer<SatiationValue, ValueDataNode>
 {

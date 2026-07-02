@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -12,6 +11,12 @@ namespace Content.Shared.Nutrition.EntitySystems;
 [DataDefinition, Serializable, NetSerializable, Access(typeof(SatiationSystem))]
 public sealed partial class Satiation
 {
+    /// <summary>
+    /// This satiation's type.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public ProtoId<SatiationTypePrototype> SatiationType;
+
     [DataField(required: true), ViewVariables(VVAccess.ReadOnly)]
     public ProtoId<SatiationPrototype> Prototype;
 
@@ -47,28 +52,9 @@ public sealed partial class Satiation
 
 
     /// <summary>
-    /// The current threshold's <see cref="SatiationPrototype.Damages"/>. This is stored here to avoid
-    /// recalculation every time it's needed.
-    /// </summary>
-    public DamageSpecifier? CurrentThresholdDamage;
-
-
-    /// <summary>
     /// When this satiation is expected to decay from its current threshold to the next lower threshold. This
     /// is null when there is no lower threshold to decay to.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? ProjectedThresholdChangeTime;
-
-    /// <summary>
-    /// When continuous effects should be applied next.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextContinuousEffectTime;
-
-    /// <summary>
-    /// How often continuous effects are applied.
-    /// </summary>
-    [DataField]
-    public TimeSpan ContinuousEffectFrequency = TimeSpan.FromSeconds(1);
 }

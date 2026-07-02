@@ -1,6 +1,5 @@
 using System.Runtime.CompilerServices;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -78,20 +77,6 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, float>))]
     public Dictionary<SatiationValue, float> DecayModifiers = [];
 
-    /// <summary>
-    /// Modifiers to movement speed based on the current threshold.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, float>))]
-    public Dictionary<SatiationValue, float> SpeedModifiers = [];
-
-    /// <summary>
-    /// Damage to be applied continuously based on current threshold.
-    /// </summary>
-    /// <seealso cref="Satiation.ContinuousEffectFrequency"/>
-    /// <seealso cref="SatiationSystem.Update"/>
-    [DataField(customTypeSerializer: typeof(DictionarySerializer<SatiationValue, DamageSpecifier>))]
-    public Dictionary<SatiationValue, DamageSpecifier?> Damages = [];
-
     #region Alerts
 
     /// <summary>
@@ -123,8 +108,8 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
     /// <summary>
     /// Attempts to get an integer value from the given <paramref name="satiationValue"/>. If
     /// <paramref name="satiationValue"/> is an immediate value, use its contained integer value. If it is a key,
-    /// attempts to look up the integer value of that key in <see cref="Thresholds"/>; in the case that a key not present in
-    /// this proto type is requested, returns null.
+    /// attempts to look up the integer value of that key in <see cref="Thresholds"/>; in the case that a key not
+    /// present in this proto type is requested, returns null.
     /// </summary>
     public int? GetValueOrNull(SatiationValue satiationValue)
     {
@@ -145,6 +130,7 @@ public sealed partial class SatiationPrototype : IPrototype, IInheritingPrototyp
 /// the fields in this type should not have their values modified.
 /// </remarks>
 /// <seealso cref="SatiationPrototype.GetValueOrNull"/>
+// TODO Replace with an actual union type once that's available in C#15: https://devblogs.microsoft.com/dotnet/csharp-15-union-types/
 [DataRecord, Serializable, NetSerializable]
 public partial record struct SatiationValue()
 {

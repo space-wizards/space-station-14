@@ -1,7 +1,6 @@
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -10,35 +9,31 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <see cref="ExaminedEvent"/>s.
 /// </summary>
 /// <seealso cref="ExaminableSatiationComponent"/>
-public sealed partial class ExaminableSatiationSystem : EntitySystem
+public sealed partial class ExaminableSatiationSystem : BaseSatiationEffectSystem<ExaminableSatiationComponent>
 {
-    [Dependency] private SatiationSystem _satiation = default!;
-
-    [Dependency] private EntityQuery<SatiationComponent> _satiationQuery = default!;
-
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ExaminableSatiationComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnExamine(Entity<ExaminableSatiationComponent> entity, ref ExaminedEvent args)
     {
+        if (!SatiationQuery.TryComp(entity, out var satiationComp))
+            return;
+        var satiation = new Entity<SatiationComponent>(entity, satiationComp);
         var identity = Identity.Entity(entity, EntityManager);
-        _satiationQuery.TryComp(entity, out var satiationComp);
 
-        foreach (var (satType, exSatProto) in entity.Comp.Satiations)
+        foreach (var (satType, thresholds) in entity.Comp.Satiations)
         {
-            if (!ProtoMan.TryIndex(exSatProto, out var exSatiation))
-                continue;
-
-            if (satiationComp is null ||
-                !_satiation.TryGetValueByThreshold((entity.Owner, satiationComp),
+            if (!SatiationSystem.TryGetValueByThreshold(
+                    satiation,
                     satType,
-                    exSatiation.Descriptions,
-                    out var descriptionLocId))
-            {
-                descriptionLocId = exSatiation.NotApplicable;
-            }
+                    thresholds,
+                    out var descriptionLocId
+                ) || descriptionLocId == null)
+                continue;
 
             args.PushMarkup(Loc.GetString(descriptionLocId, ("entity", identity)));
         }

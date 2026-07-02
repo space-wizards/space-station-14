@@ -199,7 +199,7 @@
 
 - type: entity
   name: chicken
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
@@ -275,9 +275,6 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableSatiation
-    satiations:
-      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -659,7 +656,7 @@
 
 - type: entity
   name: mallard duck #Quack
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
@@ -725,9 +722,6 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableSatiation
-    satiations:
-      Hunger: HungerExamination
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -865,7 +859,7 @@
 
 - type: entity
   name: cow
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger ]
   id: MobCow
   description: Moo.
   components:
@@ -915,9 +909,6 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-  - type: ExaminableSatiation
-    satiations:
-      Hunger: HungerExamination
   - type: ToolRefinable
     refineResult:
     - id: FoodMeat
@@ -1028,7 +1019,7 @@
 
 - type: entity
   name: goat
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger ]
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
@@ -1081,9 +1072,6 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExaminableSatiation
-    satiations:
-      Hunger: HungerExamination
   - type: Wooly
     minHungerThreshold: Peckish
   - type: Edible
@@ -1148,7 +1136,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseMobRuminant, BaseSlicingRefinable]
+  parent: [BaseMobRuminant, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobSheepBase
   name: sheepBase
   description: A sheep.
@@ -1218,9 +1206,6 @@
     quantityPerUpdate: 25
     growthDelay: 20
     minHungerThreshold: Peckish
-  - type: ExaminableSatiation
-    satiations:
-      Hunger: HungerExamination
   - type: Wooly
     minHungerThreshold: Peckish
   - type: Shearable

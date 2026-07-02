@@ -15,8 +15,6 @@
     Okay: 1.0
     Thirsty: 0.8
     Parched: 0.6
-  speedModifiers:
-    Parched: 0.75
   alertCategory: Thirst
   alerts:
     Thirsty: Thirsty
@@ -60,3 +58,12 @@
   id: DionaThirst
   parent: NormalSatiationThirst
   baseDecayRate: 0.0083
+
+- type: entity
+  abstract: true
+  id: BaseThirstSlowdown
+  component:
+  - type: SatiationSpeedModifier
+    satiations:
+      Thirst:
+        Parched: 0.75

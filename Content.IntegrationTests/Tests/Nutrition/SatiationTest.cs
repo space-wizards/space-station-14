@@ -27,13 +27,13 @@ public sealed class SatiationTest
             var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
             var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sys.GetValueOrNull(entity, SatType),
                     Is.LessThanOrEqualTo(StartingMax).And.GreaterThanOrEqualTo(StartingMin));
                 Assert.That(sys.IsValueInRange(entity, SatType, above: StartingMin, below: StartingMax),
                     Is.True);
-            });
+            }
 
             sys.SetValue(entity, SatType, MiddleKey);
             Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MiddleValue));
@@ -42,17 +42,15 @@ public sealed class SatiationTest
             Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MiddleValue - 20));
 
             sys.ModifyValue(entity, SatType, -int.MaxValue);
-            Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(0));
+            Assert.That(sys.GetValueOrNull(entity, SatType), Is.Zero);
 
             sys.ModifyValue(entity, SatType, int.MaxValue);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sys.GetValueOrNull(entity, SatType), Is.EqualTo(MaxValue));
                 Assert.That(sys.GetValueOrNull(entity, SatType + NotRealKey), Is.Null);
-            });
+            }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
@@ -67,7 +65,7 @@ public sealed class SatiationTest
             var sys = entMan.System<SatiationSystem>();
             var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
             var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-            var dict = new Dictionary<int, int>
+            var dict = new Dictionary<SatiationValue, int>
             {
                 // Arbitrary order to test that the implementation doesn't care about order.
                 [20] = 20,
@@ -79,31 +77,29 @@ public sealed class SatiationTest
             };
 
             sys.SetValue(entity, SatType, value: 100);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(100));
-            });
+            }
 
             sys.SetValue(entity, SatType, value: 55);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(60));
-            });
+            }
 
             sys.SetValue(entity, SatType, value: 0);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
-            });
+            }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
@@ -118,7 +114,7 @@ public sealed class SatiationTest
             var sys = entMan.System<SatiationSystem>();
             var ent = entMan.Spawn(TestProto, MapCoordinates.Nullspace);
             var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
-            var dict = new Dictionary<string, int>
+            var dict = new Dictionary<SatiationValue, int>
             {
                 // Arbitrary order to test that the implementation doesn't care about order.
                 [DeadKey] = 20,
@@ -127,39 +123,37 @@ public sealed class SatiationTest
             };
 
             sys.SetValue(entity, SatType, MaxxedKey);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
-            });
+            }
 
             sys.ModifyValue(entity, SatType, -10);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(0));
-            });
+            }
 
             sys.SetValue(entity, SatType, MiddleKey);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(40));
-            });
+            }
 
             sys.SetValue(entity, SatType, DeadKey);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 var res = sys.TryGetValueByThreshold(entity, SatType, dict, out var result);
                 Assert.That(res, Is.True);
                 Assert.That(result, Is.EqualTo(20));
-            });
+            }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test]
@@ -176,15 +170,15 @@ public sealed class SatiationTest
             var entity = new Entity<SatiationComponent>(ent, server.EntMan.GetComponent<SatiationComponent>(ent));
 
             sys.SetValue(entity, SatType, value: 100);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: DeadKey), Is.True);
                 Assert.That(sys.IsValueInRange(entity, SatType, above: MaxxedKey), Is.False);
                 Assert.That(sys.IsValueInRange(entity, SatType, below: MaxxedKey, hypotheticalValueDelta: -1), Is.True);
-            });
+            }
 
             sys.SetValue(entity, SatType, value: MiddleValue + 5);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: MiddleKey), Is.True);
                 Assert.That(sys.IsValueInRange(entity, SatType, above: MiddleKey, below: MaxxedKey),
@@ -192,9 +186,9 @@ public sealed class SatiationTest
                 Assert.That(
                     sys.IsValueInRange(entity, SatType, above: MaxxedKey, hypotheticalValueDelta: -10),
                     Is.False);
-            });
+            }
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 // I cannot be bothered to make these into constants.
 #pragma warning disable RA0033
@@ -211,10 +205,10 @@ public sealed class SatiationTest
                 Assert.That(sys.IsValueInRange(entity, SatType, below: 50, hypotheticalValueDelta: -10),
                     Is.True);
 #pragma warning restore RA0033
-            });
+            }
 
             sys.SetValue(entity, SatType, value: 0);
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sys.IsValueInRange(entity, SatType, above: NotRealKey), Is.False);
                 Assert.That(() => sys.IsValueInRange(entity, SatType),
@@ -224,10 +218,8 @@ public sealed class SatiationTest
                         Is.True
 #endif
                 );
-            });
+            }
         });
-
-        await pair.CleanReturnAsync();
     }
 
     private const string TestSatiationId = "TestSatiation";
@@ -249,7 +241,7 @@ public sealed class SatiationTest
   id: {TestSatiationId}
   baseDecayRate: 1
   maximumValue: {MaxValue}
-  threshold: # Intentionally out of ordinal order.
+  thresholds: # Intentionally out of ordinal order.
     {DeadKey}: 0
     {MaxxedKey}: 100
     {MiddleKey}: {MiddleValue}
@@ -257,10 +249,6 @@ public sealed class SatiationTest
   startingValueMaximum: {StartingMax}
   decayModifiers:
     25: 0.5
-  speedModifiers:
-    50: 0.8
-  damages:
-    10: null
   alertCategory: Hunger
 
 - type: entity

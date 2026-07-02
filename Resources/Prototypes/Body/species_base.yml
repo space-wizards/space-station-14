@@ -166,6 +166,8 @@
   - MobAtmosStandard
   - MobFlammable
   - BaseSpeciesMob
+  - BaseHungerSlowdown
+  - BaseThirstSlowdown
   id: BaseSpeciesMobOrganic
   save: false
   components:
