@@ -75,6 +75,14 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(relayEntity);
         component.RelayEntity = relayEntity;
         targetComp.Source = uid;
+
+        if (MoverQuery.TryComp(uid, out var sourceMover) && MoverQuery.TryComp(relayEntity, out var inputMover))
+        {
+            var held = sourceMover.HeldMoveButtons;
+            SetMoveInput((uid, sourceMover), MoveButtons.None);
+            SetMoveInput((relayEntity, inputMover), held);
+        }
+
         Dirty(uid, component);
         Dirty(relayEntity, targetComp);
         _blocker.UpdateCanMove(uid);
@@ -105,7 +113,13 @@ public abstract partial class SharedMoverController
         PhysicsSystem.UpdateIsPredicted(entity.Comp.RelayEntity);
 
         if (MoverQuery.TryComp(entity.Comp.RelayEntity, out var inputMover))
+        {
+            var held = inputMover.HeldMoveButtons;
+            if (MoverQuery.TryComp(entity.Owner, out var sourceMover))
+                SetMoveInput((entity.Owner, sourceMover), held);
+
             SetMoveInput((entity.Comp.RelayEntity, inputMover), MoveButtons.None);
+        }
 
         if (Timing.ApplyingState)
             return;
