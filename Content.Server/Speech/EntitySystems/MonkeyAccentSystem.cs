@@ -9,7 +9,7 @@ public sealed partial class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentC
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    public override string Accentuate(string message, Entity<MonkeyAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         var words = message.Split();
         var accentedMessage = new StringBuilder(message.Length + 2);

@@ -6,7 +6,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SpanishAccentSystem : RelayAccentSystem<SpanishAccentComponent>
 {
-    public override string Accentuate(string message, Entity<SpanishAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         // Insert E before every S
         message = InsertS(message);

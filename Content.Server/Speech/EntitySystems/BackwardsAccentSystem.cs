@@ -5,7 +5,7 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class BackwardsAccentSystem : RelayAccentSystem<BackwardsAccentComponent>
 {
-    public override string Accentuate(string message, Entity<BackwardsAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         var arr = message.ToCharArray();
         Array.Reverse(arr);

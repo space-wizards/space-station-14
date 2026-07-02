@@ -15,7 +15,7 @@ public sealed partial class FrenchAccentSystem : RelayAccentSystem<FrenchAccentC
     private static readonly Regex RegexStartH = new(@"(?<!\w)h", RegexOptions.IgnoreCase);
     private static readonly Regex RegexSpacePunctuation = new(@"(?<=\w\w)[!?;:](?!\w)", RegexOptions.IgnoreCase);
 
-    public override string Accentuate(string message, Entity<FrenchAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         var msg = message;
 

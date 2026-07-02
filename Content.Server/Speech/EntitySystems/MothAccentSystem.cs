@@ -9,7 +9,7 @@ public sealed class MothAccentSystem : RelayAccentSystem<MothAccentComponent>
     private static readonly Regex RegexLowerBuzz = new Regex("z{1,3}");
     private static readonly Regex RegexUpperBuzz = new Regex("Z{1,3}");
 
-    public override string Accentuate(string message, Entity<MothAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         // buzzz
         message = RegexLowerBuzz.Replace(message, "zzz");

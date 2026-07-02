@@ -15,7 +15,7 @@ public sealed partial class GermanAccentSystem : RelayAccentSystem<GermanAccentC
     private static readonly Regex RegexTh = new(@"(?<=\s|^)th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexThe = new(@"(?<=\s|^)the(?=\s|$)", RegexOptions.IgnoreCase);
 
-    public override string Accentuate(string message, Entity<GermanAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         var msg = message;
 

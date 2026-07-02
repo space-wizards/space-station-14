@@ -56,11 +56,16 @@ public abstract class RelayAccentSystem<T> : EntitySystem where T : BaseAccentCo
         args.Message = Accentuate(args.Message, ent);
     }
 
+    public virtual string Accentuate(string message)
+    {
+        return message;
+    }
+
     /// <summary>
     /// Applies the accent transformation to the provided message.
     /// </summary>
     public virtual string Accentuate(string message, Entity<T>? ent)
     {
-        return message;
+        return Accentuate(message);
     }
 }

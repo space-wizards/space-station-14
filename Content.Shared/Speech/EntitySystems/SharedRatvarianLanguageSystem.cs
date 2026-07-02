@@ -6,14 +6,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Speech.EntitySystems;
 
-public abstract class SharedRatvarianLanguageSystem : RelayAccentSystem<RatvarianLanguageComponent>
+public abstract partial class SharedRatvarianLanguageSystem : RelayAccentSystem<RatvarianLanguageComponent>
 {
     public static readonly EntProtoId Ratvarian = "StatusEffectRatvarianLanguage";
 
-    [Dependency] protected readonly StatusEffectsSystem Status = default!;
+    [Dependency] protected StatusEffectsSystem Status = default!;
 
-    protected override Type[]? AccentBefore => [typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)];
-    protected override Type[]? RelayAccentBefore => [typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)];
+    protected override Type[] AccentBefore => [typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)];
+    protected override Type[] RelayAccentBefore => [typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)];
 
     // This is the word of Ratvar and those who speak it shall abide by His rules:
     /*
@@ -27,17 +27,17 @@ public abstract class SharedRatvarianLanguageSystem : RelayAccentSystem<Ratvaria
      * Where the word "my" appears, it's linked to the following word by a hyphen: "my-light"
      * Any Ratvarian proper noun is not translated: Ratvar, Nezbere, Sevtug, Nzcrentr and Inath-neq
         * This only applies if they're being used as a proper noun: armorer/Nezbere
-     */
+    */
 
-    private static readonly Regex THPattern = new(@"th\w\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex ETPattern = new(@"\Bet", RegexOptions.Compiled);
-    private static readonly Regex TEPattern = new(@"te\B", RegexOptions.Compiled);
-    private static readonly Regex OFPattern = new(@"(\s)(of)");
-    private static readonly Regex TIPattern = new(@"ti\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex GUAPattern = new(@"(gu)(a)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex ANDPattern = new(@"\b(\s)(and)(\s)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex TOMYPattern = new(@"(to|my)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex ProperNouns = new(@"(ratvar)|(nezbere)|(sevtuq)|(nzcrentr)|(inath-neq)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex ThPattern = new(@"th\w\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex EtPattern = new(@"\Bet", RegexOptions.Compiled);
+    private static readonly Regex TePattern = new(@"te\B", RegexOptions.Compiled);
+    private static readonly Regex OfPattern = new(@"(\s)(of)");
+    private static readonly Regex TiPattern = new(@"ti\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex GuaPattern = new("(gu)(a)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex AndPattern = new(@"\b(\s)(and)(\s)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex TomyPattern = new(@"(to|my)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex ProperNouns = new("(ratvar)|(nezbere)|(sevtuq)|(nzcrentr)|(inath-neq)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     /// <summary>
     /// Applies or refreshes the Ratvarian speech status effect on an entity.
@@ -52,14 +52,14 @@ public abstract class SharedRatvarianLanguageSystem : RelayAccentSystem<Ratvaria
         var finalMessage = new StringBuilder();
         var newWord = new StringBuilder();
 
-        ruleTranslation = THPattern.Replace(ruleTranslation, "$&`");
-        ruleTranslation = TEPattern.Replace(ruleTranslation, "$&-");
-        ruleTranslation = ETPattern.Replace(ruleTranslation, "-$&");
-        ruleTranslation = OFPattern.Replace(ruleTranslation, "-$2");
-        ruleTranslation = TIPattern.Replace(ruleTranslation, "$&`");
-        ruleTranslation = GUAPattern.Replace(ruleTranslation, "$1-$2");
-        ruleTranslation = ANDPattern.Replace(ruleTranslation, "-$2-");
-        ruleTranslation = TOMYPattern.Replace(ruleTranslation, "$1-");
+        ruleTranslation = ThPattern.Replace(ruleTranslation, "$&`");
+        ruleTranslation = EtPattern.Replace(ruleTranslation, "-$&");
+        ruleTranslation = TePattern.Replace(ruleTranslation, "$&-");
+        ruleTranslation = OfPattern.Replace(ruleTranslation, "-$2");
+        ruleTranslation = TiPattern.Replace(ruleTranslation, "$&`");
+        ruleTranslation = GuaPattern.Replace(ruleTranslation, "$1-$2");
+        ruleTranslation = AndPattern.Replace(ruleTranslation, "-$2-");
+        ruleTranslation = TomyPattern.Replace(ruleTranslation, "$1-");
 
         foreach (var word in ruleTranslation.Split(' '))
         {
@@ -71,10 +71,8 @@ public abstract class SharedRatvarianLanguageSystem : RelayAccentSystem<Ratvaria
             }
             else
             {
-                for (var i = 0; i < word.Length; i++)
+                foreach (var letter in word)
                 {
-                    var letter = word[i];
-
                     if (letter >= 'a' && letter <= 'z')
                     {
                         var letterRot = letter + 13;

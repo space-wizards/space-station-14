@@ -8,7 +8,7 @@ public sealed class BleatingAccentSystem : RelayAccentSystem<BleatingAccentCompo
 {
     private static readonly Regex BleatRegex = new("([mbdlpwhrkcnytfo])([aiu])", RegexOptions.IgnoreCase);
 
-    public override string Accentuate(string message, Entity<BleatingAccentComponent>? _)
+    public override string Accentuate(string message)
     {
         // Repeats the vowel in certain consonant-vowel pairs
         // So you taaaalk liiiike thiiiis
