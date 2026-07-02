@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Eye;
 /// <summary>
 /// Tests for things that directly cause blindness unrelated to eye damage
 /// </summary>
-public sealed class BlindnessTests: InteractionTest
+public sealed class BlindnessTests : InteractionTest
 {
     // We need eye slots (and eyeballs) to blind/damage
     protected override string PlayerPrototype => "MobHuman";
