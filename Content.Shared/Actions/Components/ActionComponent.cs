@@ -194,6 +194,12 @@ public sealed partial class ActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// Whether list of events continues even if an event fails.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Bypass = false;
 }
 
 [DataRecord, Serializable, NetSerializable]
