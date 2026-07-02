@@ -1,4 +1,5 @@
 ﻿using Content.Server.VentHorde.Systems;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -42,6 +43,12 @@ public sealed partial class VentHordeSpawnerComponent : Component
     /// </summary>
     [DataField]
     public float MinThrowDistance = 2f;
+
+    /// <summary>
+    /// A status effect added during the component's life.
+    /// </summary>
+    [DataField]
+    public EntProtoId<StatusEffectComponent> Status = "StatusEffectVentHordeJitter";
 
     /// <summary>
     /// The time at which the entities will spawn.

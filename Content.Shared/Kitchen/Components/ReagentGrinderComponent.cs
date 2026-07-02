@@ -1,7 +1,9 @@
 using Content.Shared.Kitchen.EntitySystems;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Kitchen.Components;
@@ -50,6 +52,12 @@ public sealed partial class ReagentGrinderComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float WorkTimeMultiplier = 1.0f;
+
+    /// <summary>
+    /// Status effect applied to the entity while the grinder is active.
+    /// </summary>
+    [DataField]
+    public EntProtoId<StatusEffectComponent> ActiveStatus = "StatusEffectActiveReagentGrinder";
 
     /// <summary>
     /// Sound played when pressing a button on the UI.

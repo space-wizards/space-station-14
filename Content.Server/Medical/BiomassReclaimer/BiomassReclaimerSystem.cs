@@ -17,7 +17,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Jittering;
 using Content.Shared.Materials;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
@@ -26,6 +25,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Robust.Server.Player;
@@ -42,7 +42,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private IConfigurationManager _configManager = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
         [Dependency] private MobStateSystem _mobState = default!;
-        [Dependency] private SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private SharedAudioSystem _sharedAudioSystem = default!;
         [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
@@ -56,6 +55,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private MaterialStorageSystem _material = default!;
         [Dependency] private SharedMindSystem _minds = default!;
         [Dependency] private InventorySystem _inventory = default!;
+        [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
         public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
@@ -129,14 +129,14 @@ namespace Content.Server.Medical.BiomassReclaimer
 
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
-            _jitteringSystem.AddJitter(uid, -10, 100);
+            _statusEffects.TrySetStatusEffectDuration(uid, component.ActiveStatus);
             _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
         private void OnShutdown(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentShutdown args)
         {
-            RemComp<JitteringComponent>(uid);
+            _statusEffects.TryRemoveStatusEffect(uid, component.ActiveStatus);
             _ambientSoundSystem.SetAmbience(uid, false);
         }
 

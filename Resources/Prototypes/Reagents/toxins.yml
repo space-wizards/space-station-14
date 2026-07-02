@@ -650,7 +650,9 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Vestine

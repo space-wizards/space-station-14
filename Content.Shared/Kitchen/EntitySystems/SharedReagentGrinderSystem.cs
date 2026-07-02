@@ -5,12 +5,12 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Jittering;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
+using Content.Shared.StatusEffectNew;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -37,9 +37,9 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
-    [Dependency] private SharedJitteringSystem _jitter = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     public override void Initialize()
     {
@@ -256,8 +256,9 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
                 return;
         }
 
+        _statusEffects.TrySetStatusEffectDuration(ent, ent.Comp.ActiveStatus);
+
         EnsureComp<ActiveReagentGrinderComponent>(ent);
-        _jitter.AddJitter(ent, -10, 100);
         _powerState.TrySetWorkingState(ent.Owner, true); // Not all grinders need power.
         ent.Comp.Program = program;
         ent.Comp.EndTime = _timing.CurTime + ent.Comp.WorkTime * ent.Comp.WorkTimeMultiplier;
@@ -285,7 +286,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         Dirty(ent);
         // Remove deferred to avoid modifying the component we are currently enumerating over in the update loop.
         RemCompDeferred<ActiveReagentGrinderComponent>(ent);
-        RemCompDeferred<JitteringComponent>(ent);
+        _statusEffects.TryRemoveStatusEffect(ent, ent.Comp.ActiveStatus);
         _powerState.TrySetWorkingState(ent.Owner, false);
 
         var beaker = _itemSlotsSystem.GetItemOrNull(ent.Owner, ReagentGrinderComponent.BeakerSlotId);

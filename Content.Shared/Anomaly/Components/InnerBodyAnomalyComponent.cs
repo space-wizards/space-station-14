@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Anomaly.Effects;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -27,6 +28,13 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// </summary>
     [DataField]
     public float StunDuration = 4f;
+
+    /// <summary>
+    /// A temporary status effect added to the host when they get stunned by their anomaly.
+    /// </summary>
+    /// <remarks>Stunned status effect is applied separately from this status.</remarks>
+    [DataField]
+    public EntProtoId<StatusEffectComponent> StunnedStatus = "StatusEffectInnerAnomalyJitter";
 
     /// <summary>
     /// A message sent in chat to a player who has become infected by an anomaly

@@ -1,6 +1,6 @@
 - type: entity
-  id: StatusEffectBase
   abstract: true
+  id: StatusEffectBase
   components:
   - type: StatusEffect
   - type: Sprite
@@ -22,16 +22,21 @@
 # Things that should be removed by rejuvenation should parent to this
 # Also blocks the status effect being added to godmode-ed entities.
 - type: entity
-  parent: MobStatusEffectBase
-  id: MobStatusEffectDebuff
   abstract: true
+  parent: StatusEffectBase
+  id: StatusEffectDebuff
   components:
   - type: RejuvenateRemovedStatusEffect
 
 - type: entity
+  abstract: true
+  parent: [ MobStatusEffectBase, StatusEffectDebuff ]
+  id: MobStatusEffectDebuff
+
+- type: entity
+  abstract: true
   parent: MobStatusEffectDebuff
   id: MobStandStatusEffectBase
-  abstract: true
   components:
   - type: StatusEffect
     whitelist:
@@ -89,7 +94,7 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred, StatusEffectSway ]
   id: StatusEffectDrunk
   name: drunk
 

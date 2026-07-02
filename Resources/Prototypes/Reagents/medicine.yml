@@ -41,7 +41,9 @@
         damage:
           types:
             Blunt: 2
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Dylovene
@@ -86,8 +88,8 @@
       - !type:AdjustReagent
         reagent: Histamine
         amount: -3.0
-      - !type:GenericStatusEffect
-        key: Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
         time: 3.0
         type: Remove
       - !type:ModifyStatusEffect
@@ -164,7 +166,9 @@
           reagent: Bicaridine
           min: 30
         probability: 0.02
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Bicaridine
@@ -246,7 +250,9 @@
             Asphyxiation: 1
             Cold: 2
             Blunt: 0.5
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Dermaline
@@ -417,7 +423,9 @@
         damage:
           types:
            Heat: 2
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Hyronalin
@@ -571,7 +579,9 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
       - !type:Emote
         emote: Scream
         probability: 0.2
@@ -981,7 +991,9 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
@@ -1050,7 +1062,9 @@
         damage:
           types:
             Heat: 1 # 4 per u
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Sigynate
@@ -1288,7 +1302,9 @@
           reagent: Insuzine
           min: 12
         amount: -30000
-      - !type:Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: Insuzine
@@ -1402,8 +1418,8 @@
           min: 30
         type: Add
         time: 8
-      - !type:GenericStatusEffect
-        key: Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
         time: 2.0
         type: Remove
       - !type:ModifyStatusEffect
@@ -1462,8 +1478,8 @@
         effectProto: StatusEffectDrowsiness
         time: 4
         type: Add
-      - !type:GenericStatusEffect
-        key: Jitter
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectJitter
         time: 4.0
         type: Remove
       - !type:ModifyStatusEffect

@@ -8,6 +8,8 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
+using Content.Shared.Jittering;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Projectiles;
@@ -26,6 +28,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -42,6 +45,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private MovementModStatusSystem _movementMod = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private SharedJitteringSystem _jitter = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] protected SharedStunSystem StunSystem = default!;
 
@@ -232,8 +236,33 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SetStaminaAnimation(entity);
     }
 
-    // Here so server can properly tell all clients in PVS range to start the animation
-    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity){}
+    private void SetStaminaAnimation(Entity<StaminaComponent> entity)
+    {
+        DebugTools.Assert(entity.Comp.CritThreshold > entity.Comp.AnimationThreshold, $"Animation threshold on {ToPrettyString(entity)} was greater than or equal to the crit threshold. This will cause no animation to be played.");
+
+        if (!_status.TryGetStatusEffect(entity, StaminaLow, out var status))
+            return;
+
+        // Get the intensity of the jitter
+        var intensity = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
+                                            (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
+                                        0f,
+                                        1f); // The things we do for project 0 warnings
+
+        if (intensity == 0f)
+        {
+            _jitter.RemoveJitter(status.Value);
+            return;
+        }
+
+        // intensify the base jitter
+        var newJitter = entity.Comp.JitterBase;
+        newJitter.Frequency = entity.Comp.JitterBase.Frequency + intensity * entity.Comp.JitterAddedFrequency;
+        newJitter.MinRadius = entity.Comp.JitterBase.MinRadius * intensity * entity.Comp.JitterRadiusScalar;
+        newJitter.MaxRadius = entity.Comp.JitterBase.MaxRadius * intensity * entity.Comp.JitterRadiusScalar;
+
+        _jitter.AdjustJitter(status.Value, newJitter);
+    }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
@@ -302,7 +331,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         UpdateStaminaVisuals((uid, component));
 
         // Checking if the stamina damage has decreased to zero after exiting the stamcrit
-        if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
+        if (oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
             component.AfterCritical = false; // Since the recovery from the crit has been completed, we are no longer 'after crit'
             _status.TryRemoveStatusEffect(uid, StaminaLow);
