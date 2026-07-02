@@ -69,6 +69,12 @@ alerts-piloting-desc = You are piloting a shuttle. Click the alert to stop.
 alerts-hunger-name = [color=yellow]Peckish[/color]
 alerts-hunger-desc = Some food would be good right about now.
 
+alerts-hunger-okay-name = [color=yellow]Okay[/color]
+alerts-hunger-okay-desc = Your hunger is satisfied.
+
+alerts-overfed-name = [color=yellow]Overfed[/color]
+alerts-overfed-desc = You've eaten too much. You're feeling overfed.
+
 alerts-stamina-name = Stamina
 alerts-stamina-desc = Stuns you if it is too low.
 
