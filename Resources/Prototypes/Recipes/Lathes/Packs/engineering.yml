@@ -52,6 +52,7 @@
   id: EngineeringBoardsStatic
   recipes:
   - SpaceHeaterMachineCircuitBoard
+  - LiquidVaporizerMachineCircuitBoard
 
 ## Dynamic
 
@@ -90,3 +91,4 @@
   - TelecomServerCircuitboard
   - SMESAdvancedMachineCircuitboard
   - HolopadMachineCircuitboard
+

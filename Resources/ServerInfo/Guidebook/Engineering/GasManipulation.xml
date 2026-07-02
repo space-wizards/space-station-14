@@ -106,4 +106,15 @@
   <Box>
     [color=#999999][italic]Condensing gasses for further use[italic][/color]
   </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="BaseLiquidVaporizer" Caption=""/>
+  </Box>
+  <Box>
+    ## Liquid Vaporisation
+  </Box>
+  <Box>
+    [color=#999999][italic]Vaporising liquids to feed atmospherics[italic][/color]
+  </Box>
+
 </Document>

@@ -473,3 +473,107 @@
     guides:
     - GasCondensing
 
+- type: entity
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  id: BaseLiquidVaporizer
+  name: vaporizer
+  description: Vaporizes liquids into gases. Mind excess smoke!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Solution
+    id: overflow
+    solution:
+      maxVol: 500 # should never hit this, since no container can hold this much.
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/vaporizer.rsi
+    snapCardinals: true
+    granularLayersRendering: true
+    layers:
+    - state: off
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: working
+      map: [ "enum.LiquidVaporizerVisualLayers.Working" ]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: pipe
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      renderingStrategy: Default
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: on }
+          False: { state: off }
+      enum.LiquidVaporizerVisuals.Working:
+        enum.LiquidVaporizerVisualLayers.Working:
+          True:
+            state: working
+            visible: true
+          False:
+            state: working
+            visible: false
+  - type: PipeColorVisuals
+  - type: Rotatable
+  - type: AtmosPipeColor
+  - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: Structures/Piping/Atmospherics/vaporizer.rsi
+        Secondary: Structures/Piping/Atmospherics/vaporizer_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/vaporizer_alt2.rsi
+  - type: AtmosDevice
+  - type: PipeRestrictOverlap
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: Machine
+    board: LiquidVaporizerMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: ItemSlots
+    slots:
+      loadedContainerSlot:
+        whitelist:
+          components:
+          - Solution
+  - type: ContainerContainer
+    containers:
+      loadedContainerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Transform
+    noRot: false
+  - type: PowerSwitch
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
+  - type: LiquidVaporizer
+  - type: GuideHelp
+    guides:
+    - LiquidVaporisation # replace with guide to vaporize
+
+

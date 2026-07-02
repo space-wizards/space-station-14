@@ -1,0 +1,42 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Created by EWanderer (github) for Space Station 14. With art from tgstation and EmoGarbage404 (github) and chromiumboy",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "off"
+        },
+        {
+            "name": "on"
+        },
+        {
+            "name": "working",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "panel"
+        },
+        {
+            "name": "pipe",
+            "directions": 4
+        },
+        {
+            "name": "display"
+        }
+    ]
+}
