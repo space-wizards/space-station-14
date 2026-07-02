@@ -49,6 +49,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+      enum.PowerDeviceVisuals.BatteryPowered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: onbattery }
+          False: { state: unshaded }
   - type: ContainerFill
     containers:
       board: [ StationMapCircuitboard ]
@@ -57,6 +61,15 @@
       board: !type:Container
   - type: ApcPowerReceiver
     powerLoad: 50
+  - type: Battery
+    netsync: false
+    maxCharge: 15000
+    startingCharge: 15000
+  - type: ExaminableBattery
+  - type: ApcPowerReceiverBattery
+    idleLoad: 50
+    batteryRechargeRate: 100
+    batteryRechargeEfficiency: 0
   - type: PowerState
     idlePowerDraw: 50
     workingPowerDraw: 200
