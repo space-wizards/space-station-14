@@ -262,6 +262,7 @@
   id: BaseBorgChassis
   components:
   - type: IonStormTarget
+  - type: IonStormSiliconLaw
 
 - type: entity
   abstract: true
@@ -393,6 +394,7 @@
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1
+  - type: IonStormSiliconLaw
   - type: ShowJobIcons
   - type: ShowCrewIcons
 
@@ -407,6 +409,7 @@
     ionStormAmount: 3
   - type: IonStormTarget
     chance: 1
+  - type: IonStormSiliconLaw
   - type: ShowJobIcons
   - type: ShowCrewIcons
   - type: NpcFactionMember # They're still syndicate even if they can't listen to the radio or see icons

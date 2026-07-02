@@ -28,7 +28,7 @@ public sealed partial class StartIonStormedSystem : EntitySystem
 
         for (int currentIonStorm = 0; currentIonStorm < ent.Comp.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget((ent.Owner, lawBound, target), false);
+            _ionStorm.IonStormTarget((ent.Owner, target), false);
         }
 
         var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
