@@ -89,6 +89,8 @@ public abstract class TileAtmosphereTest : AtmosTest
         sourceMix.AdjustMoles(Gas.Oxygen, Moles - Moles / 10);
         sourceMix.Temperature = Atmospherics.FireMinimumTemperatureToExist - 10;
 
+        var before = GetGridComposition(RelevantAtmos);
+
         Assert.Multiple(() =>
         {
             Assert.That(SAtmos.IsHotspotActive(MapData.Grid, sourceXY), Is.False);
@@ -121,7 +123,29 @@ public abstract class TileAtmosphereTest : AtmosTest
         });
 
         AssertMixMoles(mix1, mix2, Tolerance);
-        AssertGridMoles(Moles, Tolerance);
+
+        var after = GetGridComposition(RelevantAtmos);
+
+        var plasmaConsumed = before.GetMoles(Gas.Plasma) - after.GetMoles(Gas.Plasma);
+        var oxygenConsumed = before.GetMoles(Gas.Oxygen) - after.GetMoles(Gas.Oxygen);
+        var co2Produced = after.GetMoles(Gas.CarbonDioxide) - before.GetMoles(Gas.CarbonDioxide);
+
+        // Set up can't produce Tritium, moles aren't conserved in Tritium Fires.
+        Assert.Multiple(() =>
+        {
+            Assert.That(plasmaConsumed, Is.GreaterThan(1f), "Plasma was not meaningfully consumed");
+            // oxygenBurnRate = OxygenBurnRateBase - temperatureScale, temperatureScale in (0,1]
+            Assert.That(oxygenConsumed, Is.InRange(0.4f * plasmaConsumed, 1.4f * plasmaConsumed),
+                "Oxygen consumption outside oxygenBurnRate bounds");
+            Assert.That(after.GetMoles(Gas.Tritium), Is.Zero, "Tritium was produced below supersaturation threshold");
+            Assert.That(after.GetMoles(Gas.WaterVapor), Is.Zero, "Water vapor was produced by a TritiumFire");
+            Assert.That(co2Produced,
+                Is.EqualTo(plasmaConsumed + oxygenConsumed).Within(1e-3f),
+                "PlasmaFire did not conserve moles");
+            Assert.That(after.TotalMoles,
+                Is.EqualTo(before.TotalMoles).Within(1e-3f),
+                "Grid moles were not conserved");
+        });
     }
 }
 
