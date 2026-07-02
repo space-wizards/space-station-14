@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Examine;
 using Content.Shared.Construction.Components;
@@ -88,7 +87,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, false, out var failMessage))
+        if (!Valid(uid, userUid, usingUid, false, out var failMessage, out var actualDelay))
         {
             if (failMessage != null)
                 _popup.PopupClient(failMessage, uid, userUid);
@@ -98,7 +97,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         // Log unanchor attempt (server only)
         _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
 
-        _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
+        _tool.UseTool(usingUid, userUid, uid, actualDelay, usingTool.Qualities, new TryUnanchorCompletedEvent());
     }
 
     private void OnInteractUsing(EntityUid uid, AnchorableComponent anchorable, InteractUsingEvent args)
@@ -243,7 +242,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, true, out var failMessage, anchorable, usingTool))
+        if (!Valid(uid, userUid, usingUid, true, out var failMessage, out var actualDelay, anchorable, usingTool))
         {
             if (failMessage != null)
                 _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
@@ -262,18 +261,32 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
         }
 
-        _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
+        _tool.UseTool(usingUid, userUid, uid, actualDelay, usingTool.Qualities, new TryAnchorCompletedEvent());
     }
 
+    /// <summary>
+    /// Checks if a given entity can be (un)anchored by a particular user and tool.
+    /// </summary>
+    /// <param name="uid">The target entity to be (un)anchored.</param>
+    /// <param name="userUid">The user attempting to anchor it.</param>
+    /// <param name="usingUid">The tool being used to (un)anchor the target entity.</param>
+    /// <param name="anchoring">True if the target will be anchored, false if unanchored.</param>
+    /// <param name="failMessage">On failure, may contain a message stating why the target could not be (un)anchored.</param>
+    /// <param name="actualDelay">On success, contains the actual delay that the entity should take to anchor, in seconds.</param>
+    /// <param name="anchorable">The AnchorableComponent of the target.</param>
+    /// <param name="usingTool">The ToolComponent of the tool.</param>
+    /// <returns>true if the target can be (un)anchored, false otherwise.</returns>
     private bool Valid(
         EntityUid uid,
         EntityUid userUid,
         EntityUid usingUid,
         bool anchoring,
         out string? failMessage,
+        out float actualDelay,
         AnchorableComponent? anchorable = null,
         ToolComponent? usingTool = null)
     {
+        actualDelay = 0f;
         failMessage = null;
 
         if (!Resolve(uid, ref anchorable))
@@ -297,7 +310,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         else
             RaiseLocalEvent(uid, (UnanchorAttemptEvent)attempt);
 
-        anchorable.Delay += attempt.Delay;
+        actualDelay = anchorable.Delay + attempt.Delay;
 
         failMessage = attempt.FailMessage;
 
