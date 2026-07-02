@@ -390,10 +390,8 @@ public abstract partial class SharedMagicSystem : EntitySystem
         ev.Handled = true;
 
         var direction = _transform.GetMapCoordinates(ev.Target, Transform(ev.Target)).Position - _transform.GetMapCoordinates(ev.Performer, Transform(ev.Performer)).Position;
-        var impulseVector = direction * 10000;
 
-        _physics.ApplyLinearImpulse(ev.Target, impulseVector);
-        _gibbing.Gib(ev.Target);
+        _gibbing.Gib(ev.Target, true, 25f, direction, Angle.FromDegrees(60f));
     }
 
     // End Touch Spells

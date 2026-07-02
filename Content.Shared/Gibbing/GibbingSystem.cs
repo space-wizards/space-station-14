@@ -1,4 +1,6 @@
+using System.Numerics;
 using Content.Shared.Destructible;
+using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Network;
@@ -15,6 +17,7 @@ public sealed partial class GibbingSystem : EntitySystem
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
 
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
@@ -23,9 +26,12 @@ public sealed partial class GibbingSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity to gib.</param>
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
+    /// <param name="gibletLaunchImpulse">The force applied to launched giblets.</param>
+    /// <param name="gibletLaunchDirection">Direction in which the giblets will launch, in a cone.</param>
+    /// <param name="scatterGiblets">Whether to instantly scatter giblets around the entity.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>
     /// <returns>The set of giblets for this entity, if any.</returns>
-    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
+    public HashSet<EntityUid> Gib(EntityUid ent, bool dropGiblets = true, float gibletLaunchImpulse = 5, Vector2? gibletLaunchDirection = null, Angle throwCone = default, bool scatterGiblets = false, EntityUid? user = null)
     {
         // user is unused because of prediction woes, eventually it'll be used for audio
 
@@ -48,24 +54,15 @@ public sealed partial class GibbingSystem : EntitySystem
             foreach (var giblet in gibbed)
             {
                 _transform.DropNextTo(giblet, ent);
-                FlingDroppedEntity(giblet);
             }
+
+            _throwing.TryThrowManyRandom(gibbed, gibletLaunchDirection, throwCone, gibletLaunchImpulse, scatterGiblets);
         }
 
         var beforeDeletion = new GibbedBeforeDeletionEvent(gibbed);
         RaiseLocalEvent(ent, ref beforeDeletion);
 
         return gibbed;
-    }
-
-    private const float GibletLaunchImpulse = 8;
-    private const float GibletLaunchImpulseVariance = 3;
-
-    private void FlingDroppedEntity(EntityUid target)
-    {
-        var impulse = GibletLaunchImpulse + _random.NextFloat(GibletLaunchImpulseVariance);
-        var scatterVec = _random.NextAngle().ToVec() * impulse;
-        _physics.ApplyLinearImpulse(target, scatterVec);
     }
 }
 
