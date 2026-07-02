@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Popups;
+using Content.Shared.Prototypes;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -20,9 +21,14 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    /// <summary> Cached EntProtoIds of all XenoArtifactEffect prototypes. Used for text hints. </summary>
+    public readonly HashSet<string> EffectPrototypeIds = [];
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         SubscribeLocalEvent<XenoArtifactComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<XenoArtifactComponent, ArtifactSelfActivateEvent>(OnSelfActivate);
 
@@ -30,6 +36,28 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         InitializeUnlock();
         InitializeXAT();
         InitializeXAE();
+
+        ReloadEffectCache();
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        ReloadEffectCache();
+    }
+
+    private void ReloadEffectCache()
+    {
+        EffectPrototypeIds.Clear();
+
+        foreach (var entityPrototype in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            // all effect prototypes are marked as nodes, as nodes are born from those prototypes
+            if (entityPrototype.HasComponent<XenoArtifactNodeComponent>() && !entityPrototype.Abstract)
+                EffectPrototypeIds.Add(entityPrototype.ID);
+        }
     }
 
     /// <inheritdoc />
