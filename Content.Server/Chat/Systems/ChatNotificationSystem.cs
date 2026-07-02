@@ -18,9 +18,6 @@ public sealed partial class ChatNotificationSystem : EntitySystem
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ILogManager _logManager = default!;
-
-    private ISawmill _sawmill = default!;
 
     // The following data does not need to be saved
 
@@ -37,8 +34,6 @@ public sealed partial class ChatNotificationSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ActorComponent, ChatNotificationEvent>(OnChatNotification);
-
-        _sawmill = _logManager.GetSawmill("chatnotification");
     }
 
     /// <summary>
@@ -50,7 +45,7 @@ public sealed partial class ChatNotificationSystem : EntitySystem
     {
         if (!ProtoMan.TryIndex(args.ChatNotification, out var chatNotification))
         {
-            _sawmill.Warning("Attempted to index ChatNotificationPrototype " + args.ChatNotification + " but the prototype does not exist.");
+            Log.Warning("Attempted to index ChatNotificationPrototype " + args.ChatNotification + " but the prototype does not exist.");
             return;
         }
 
