@@ -2,7 +2,7 @@
   parent: [BaseItem, BaseXenoborgContraband]
   id: WeaponNaniteGun
   name: nanite gun
-  description: A strange gun that shoots regenerating crystal shards.
+  description: A strange gun that shoots nanites encased in crystal shards that heals borgs but hurts fleshy inferior beings.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/nanite.rsi
