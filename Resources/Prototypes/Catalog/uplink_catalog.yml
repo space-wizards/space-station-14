@@ -360,6 +360,16 @@
   - UplinkExplosives
 
 - type: listing
+  id: UplinkGlueGrenade
+  name: uplink-glue-grenade-name
+  description: uplink-glue-grenade-desc
+  productEntity: GlueGrenade
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkExplosives
+
+- type: listing
   id: UplinkSyndieMiniBomb
   name: uplink-mini-bomb-name
   description: uplink-mini-bomb-desc
