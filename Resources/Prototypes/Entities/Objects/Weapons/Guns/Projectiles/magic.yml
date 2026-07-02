@@ -235,7 +235,7 @@
   id: ProjectileHealingBolt
   name: healing bolt
   description: I COMMAND YOU TO LIVE!
-  parent: BaseBullet
+  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -243,21 +243,8 @@
     layers:
     - state: spell
       color: white
-  - type: Projectile
-    damage:
-      types: # good enough. Maybe make it call the rejuvenate command later.
-        Asphyxiation: -200
-        Bloodloss: -200
-        Blunt: -200
-        Caustic: -200
-        Cold: -200
-        Heat: -200
-        Piercing: -200
-        Poison: -200
-        Radiation: -200
-        Shock: -200
-        Slash: -200
-    ignoreResistances: true
+  - type: RejuvenateOnTrigger
+    targetUser: true
 
 - type: entity
   id: BulletInstakillMagic

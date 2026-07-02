@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: WeaponWandBase
   id: WeaponWandPolymorphBase
   abstract: true
@@ -97,7 +97,7 @@
           False: { visible: False }
 
 - type: entity
-  name: magical wand of instant death
+  name: wand of death
   parent: WeaponWandBase
   id: WeaponWandDeath
   description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
@@ -115,6 +115,34 @@
     proto: BulletInstakillMagic
     capacity: 3
     count: 3
+
+- type: entity
+  name: wand of healing
+  parent: WeaponWandBase
+  id: WeaponWandHealing
+  description: You don't foresee having to use this in your quest for carnage too often.
+  components:
+  - type: Sprite
+    layers:
+    - state: healing
+    - state: healing-effect
+      map: ["effect"]
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: healing-inhand-left
+      right:
+      - state: healing-inhand-right
+  - type: GenericVisualizer
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_healing.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileHealingBolt
+    capacity: 10
+    count: 10
+  - type: PacifismAllowedGun
 
 - type: entity
   name: wand of entrance
