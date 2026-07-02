@@ -29,7 +29,6 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private AlertsSystem _alertsSystem = default!;
-    [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ShuttleSystem _shuttle = default!;
@@ -103,16 +102,12 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var query = AllEntityQuery<ShuttleConsoleComponent, TransformComponent>();
         DockingInterfaceState? dockState = null;
 
-        while (query.MoveNext(out var uid, out var console, out var xform))
+        while (query.MoveNext(out var uid, out _, out var xform))
         {
-            if (
-                xform.ParentUid == gridUid
-                || (
-                    TryComp<DroneConsoleComponent>(uid, out var drone)
-                    && drone.Entity is { } puppetConsoleUid
-                    && Transform(puppetConsoleUid).ParentUid == gridUid
-                )
-            )
+            if (xform.ParentUid == gridUid
+                || TryComp<DroneConsoleComponent>(uid, out var drone)
+                && drone.Entity is { } puppetConsoleUid
+                && Transform(puppetConsoleUid).ParentUid == gridUid)
             {
                 UpdateState(uid, ref dockState);
             }
