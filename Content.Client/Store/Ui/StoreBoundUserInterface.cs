@@ -31,6 +31,8 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
+        _menu.ApplyStylesheetFrom(Owner);
+
         if (_storeSystem.TryGetStore(Owner, out var store))
             _menu.Title = Loc.GetString(store.Value.Comp.Name);
 
@@ -61,6 +63,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             SendMessage(new StoreRequestRefundMessage());
         };
     }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
@@ -87,9 +90,17 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         var filteredListings = new HashSet<ListingDataWithCostModifiers>(_listings);
         if (!string.IsNullOrEmpty(_search))
         {
-            filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
-                                                        !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
+            filteredListings.RemoveWhere(listingData =>
+                !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager)
+                    .Trim()
+                    .ToLowerInvariant()
+                    .Contains(_search) &&
+                !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager)
+                    .Trim()
+                    .ToLowerInvariant()
+                    .Contains(_search));
         }
+
         _menu.PopulateStoreCategoryButtons(filteredListings);
         _menu.UpdateListing(filteredListings.ToList());
     }

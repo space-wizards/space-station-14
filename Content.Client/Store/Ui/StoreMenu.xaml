@@ -1,6 +1,7 @@
-<DefaultWindow
+<controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'store-ui-default-title'}"
     MinSize="512 512"
     SetSize="512 512">
@@ -23,36 +24,32 @@
                     HorizontalAlignment="Right"
                     Text="{Loc 'store-ui-refund-text'}" />
             </BoxContainer>
-            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="Search" HorizontalExpand="True"/>
-                <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
-                </PanelContainer.PanelOverride>
+            <LineEdit Name="SearchBar" Margin="4" PlaceHolder="Search" HorizontalExpand="True" />
+            <PanelContainer VerticalExpand="True">
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                     <PanelContainer VerticalExpand="True">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#80808005" />
-                        </PanelContainer.PanelOverride>
                         <BoxContainer Name="CategoryListContainer" Orientation="Vertical">
                             <!--  Category buttons are added here by code  -->
                         </BoxContainer>
                     </PanelContainer>
-                    <ScrollContainer
-                        Name="StoreListingsScroll"
-                        HScrollEnabled="False"
-                        HorizontalExpand="True"
-                        MinSize="100 256"
-                        SizeFlagsStretchRatio="2"
-                        VerticalExpand="True">
-                        <BoxContainer
-                            Name="StoreListingsContainer"
+                    <PanelContainer StyleClasses="PanelDark" HorizontalExpand="True">
+                        <ScrollContainer
+                            Name="StoreListingsScroll"
+                            HScrollEnabled="False"
+                            HorizontalExpand="True"
                             MinSize="100 256"
-                            Orientation="Vertical"
                             SizeFlagsStretchRatio="2"
                             VerticalExpand="True">
-                            <!--  Listings are added here by code  -->
-                        </BoxContainer>
-                    </ScrollContainer>
+                            <BoxContainer
+                                Name="StoreListingsContainer"
+                                MinSize="100 256"
+                                Orientation="Vertical"
+                                SizeFlagsStretchRatio="2"
+                                VerticalExpand="True">
+                                <!--  Listings are added here by code  -->
+                            </BoxContainer>
+                        </ScrollContainer>
+                    </PanelContainer>
                 </BoxContainer>
             </PanelContainer>
         </BoxContainer>
@@ -63,8 +60,8 @@
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'store-ui-traitor-flavor'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'store-ui-traitor-warning'}" StyleClasses="WindowFooterText"
-                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

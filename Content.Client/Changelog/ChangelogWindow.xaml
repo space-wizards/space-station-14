@@ -3,7 +3,7 @@
                     Title="{Loc 'changelog-window-title'}"
                     MinSize="500 400"
                     SetSize="500 400"
-                    Stylesheet="Interface">
+                    Stylesheet="System">
     <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Orientation="Vertical">
         <TabContainer Name="Tabs" Access="Public" HorizontalExpand="True" VerticalExpand="True" />
