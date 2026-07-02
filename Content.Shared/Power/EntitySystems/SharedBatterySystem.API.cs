@@ -176,6 +176,18 @@ public abstract partial class SharedBatterySystem
     }
 
     /// <summary>
+    /// Gets the battery's max charge.
+    /// </summary>
+    [PublicAPI]
+    public float GetMaxCharge(Entity<BatteryComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return 0f;
+
+        return ent.Comp.MaxCharge;
+    }
+
+    /// <summary>
     /// Gets the fraction of charge remaining (0–1).
     /// </summary>
     [PublicAPI]
