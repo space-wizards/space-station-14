@@ -114,6 +114,11 @@
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
+  - type: ApcPowerReceiver
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 1000
 
 - type: entity
   id: DisposalUnit
