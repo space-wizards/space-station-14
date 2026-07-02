@@ -33,8 +33,6 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
         UpdatesAfter.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, MapInitEvent>(OnMapInit, after: [typeof(BatterySystem)]);
-        SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanChargeChangedEvent>(OnBatteryCanChargeChanged);
-        SubscribeLocalEvent<PowerNetworkBatteryVisualsComponent, PowerNetworkBatteryCanDischargeChangedEvent>(OnBatteryCanDischargeChanged);
     }
 
     /// <summary>
@@ -50,6 +48,7 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     /// <summary>
     /// Handler for PowerNetworkBatteryCanDischargeChangedEvent, updates the charge capacity of the entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBatteryCanChargeChanged(Entity<PowerNetworkBatteryVisualsComponent> ent, ref PowerNetworkBatteryCanChargeChangedEvent args)
     {
         UpdateChargeCapabilities(ent);
@@ -58,6 +57,7 @@ public sealed partial class PowerNetworkBatteryVisualsSystem : EntitySystem
     /// <summary>
     /// Handler for PowerNetworkBatteryCanDischargeChangedEvent, updates the charge capacity of the entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnBatteryCanDischargeChanged(Entity<PowerNetworkBatteryVisualsComponent> ent, ref PowerNetworkBatteryCanDischargeChangedEvent args)
     {
         UpdateChargeCapabilities(ent);
