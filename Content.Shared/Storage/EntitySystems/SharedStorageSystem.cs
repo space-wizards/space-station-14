@@ -51,17 +51,17 @@ public abstract partial class SharedStorageSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
 
     [Dependency] protected ActionBlockerSystem ActionBlocker = default!;
-    [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private AreaPickupSystem _areaPickup = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private SharedInteractionSystem _interactionSystem = default!;
     [Dependency] protected SharedItemSystem ItemSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private QuickPickupSystem _quickPickup = default!;
     [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
@@ -71,7 +71,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
     [Dependency] private EntityQuery<StackComponent> _stackQuery = default!;
-    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
     [Dependency] private EntityQuery<UserInterfaceUserComponent> _userQuery = default!;
 
     /// <summary>
@@ -96,13 +95,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     public bool CheckingCanInsert;
 
-    private readonly List<EntityUid> _entList = new();
-    private readonly HashSet<EntityUid> _entSet = new();
-
     private readonly List<ItemSizePrototype> _sortedSizes = new();
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
-    private const string QuickInsertUseDelayID = "quickInsert";
     private const string OpenUiUseDelayID = "storage";
 
     /// <summary>
@@ -139,7 +134,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
         SubscribeLocalEvent<StorageComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<StorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
-        SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
@@ -147,8 +141,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-        SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
+        SubscribeLocalEvent<StorageComponent, QuickPickupEvent>(OnQuickPickup);
+        SubscribeLocalEvent<StorageComponent, BeforeAreaPickupEvent>(OnBeforeAreaPickup);
+        SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnAreaPickupDoAfter);
 
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
@@ -205,7 +201,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
-        UseDelay.SetLength(entity.Owner, entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
         UseDelay.SetLength(entity.Owner, entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
     }
 
@@ -226,8 +221,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
             SavedLocations = component.SavedLocations,
             Whitelist = component.Whitelist,
             Blacklist = component.Blacklist,
-            QuickInsert = component.QuickInsert,
-            AreaInsert = component.AreaInsert,
             StorageInsertSound = component.StorageInsertSound,
             StorageRemoveSound = component.StorageRemoveSound,
             StorageOpenSound = component.StorageOpenSound,
@@ -360,13 +353,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
         var targetComp = EnsureComp<StorageComponent>(target);
         targetComp.Grid = new List<Box2i>(source.Comp.Grid);
         targetComp.MaxItemSize = source.Comp.MaxItemSize;
-        targetComp.QuickInsert = source.Comp.QuickInsert;
-        targetComp.QuickInsertCooldown = source.Comp.QuickInsertCooldown;
         targetComp.OpenUiCooldown = source.Comp.OpenUiCooldown;
         targetComp.ClickInsert = source.Comp.ClickInsert;
         targetComp.OpenOnActivate = source.Comp.OpenOnActivate;
-        targetComp.AreaInsert = source.Comp.AreaInsert;
-        targetComp.AreaInsertRadius = source.Comp.AreaInsertRadius;
         targetComp.Whitelist = source.Comp.Whitelist;
         targetComp.Blacklist = source.Comp.Blacklist;
         targetComp.StorageInsertSound = source.Comp.StorageInsertSound;
@@ -758,6 +747,58 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         var failedEv = new StorageInsertFailedEvent((storage, storage.Comp), (player, player.Comp));
         RaiseLocalEvent(storage, ref failedEv);
+    }
+
+    private void OnQuickPickup(Entity<StorageComponent> entity, ref QuickPickupEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        // Copy event fields because the lambda doesn't like capturing `ref` values.
+        var user = args.User;
+        var pickedUp = args.PickedUp;
+        args.Handled = _quickPickup.TryDoQuickPickup(
+            args,
+            () => PlayerInsertEntityInWorld(entity.AsNullable(), user, pickedUp)
+        );
+    }
+
+    private void OnBeforeAreaPickup(Entity<StorageComponent> entity, ref BeforeAreaPickupEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = _areaPickup.DoBeforeAreaPickup(
+            ref args,
+            insertedEntity => CanInsert(entity, insertedEntity, out _, entity, insertedEntity)
+        );
+    }
+
+    private void OnAreaPickupDoAfter(Entity<StorageComponent> entity, ref AreaPickupDoAfterEvent args)
+    {
+        if (args.Handled ||
+            args.Cancelled)
+            return;
+
+        // Copy event fields because the lambda doesn't like capturing `ref` values.
+        var user = args.User;
+
+        // Don't play the insertion sound if the user has the silent tag.
+        var insertionSound = _prototype.TryIndex(entity.Comp.SilentStorageUserTag, out var silentTag) && _tag.HasTag(args.User, silentTag)
+            ? null
+            : entity.Comp.StorageInsertSound;
+
+        args.Handled = _areaPickup.TryDoAreaPickup(
+            ref args,
+            entity.Owner,
+            insertionSound,
+            entityToPickUp => PlayerInsertEntityInWorld(
+                entity.AsNullable(),
+                user,
+                entityToPickUp,
+                playSound: false
+            )
+        );
     }
 
     private void OnSetItemLocation(StorageSetItemLocationEvent msg, EntitySessionEventArgs args)
@@ -2001,8 +2042,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         public ProtoId<ItemSizePrototype>? MaxItemSize;
         public EntityWhitelist? Whitelist;
         public EntityWhitelist? Blacklist;
-        public bool QuickInsert;
-        public bool AreaInsert;
         public SoundSpecifier? StorageInsertSound;
         public SoundSpecifier? StorageRemoveSound;
         public SoundSpecifier? StorageOpenSound;

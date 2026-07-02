@@ -57,16 +57,6 @@ namespace Content.Shared.Storage
         [Access(typeof(SharedStorageSystem))]
         public ProtoId<ItemSizePrototype>? MaxItemSize;
 
-        // TODO: Make area insert its own component.
-        [DataField]
-        public bool QuickInsert; // Can insert storables by clicking them with the storage entity
-
-        /// <summary>
-        /// Minimum delay between quick/area insert actions.
-        /// </summary>
-        /// <remarks>Used to prevent autoclickers spamming server with individual pickup actions.</remarks>
-        public TimeSpan QuickInsertCooldown = TimeSpan.FromSeconds(0.5);
-
         /// <summary>
         /// Minimum delay between UI open actions.
         /// <remarks>Used to spamming opening sounds.</remarks>
@@ -86,17 +76,6 @@ namespace Content.Shared.Storage
         /// </summary>
         [DataField]
         public bool OpenOnActivate = true;
-
-        /// <summary>
-        /// How many entities area pickup can pickup at once.
-        /// </summary>
-        public const int AreaPickupLimit = 10;
-
-        [DataField]
-        public bool AreaInsert; // Clicking with the storage entity causes it to insert all nearby storables after a delay
-
-        [DataField]
-        public int AreaInsertRadius = 1;
 
         /// <summary>
         /// Whitelist for entities that can go into the storage.

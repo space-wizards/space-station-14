@@ -4,6 +4,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -15,8 +17,10 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
+    [Dependency] private AreaPickupSystem _areaPickup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private QuickPickupSystem _quickPickup = default!;
     [Dependency] private SharedStackSystem _stack = null!;
 
     [MustCallBase]
@@ -33,6 +37,9 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, QuickPickupEvent>(OnQuickPickup);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, BeforeAreaPickupEvent>(OnBeforeAreaPickup);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, AreaPickupDoAfterEvent>(OnAreaPickupDoAfter);
 
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
@@ -145,8 +152,11 @@ public abstract partial class SharedGunSystem
             }
             else
             {
-                // play sound to be cool
-                Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+                if (!TagSystem.HasTag(args.User, component.SilentInsertUserTag))
+                {
+                    // play sound to be cool
+                    Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+                }
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
@@ -277,33 +287,48 @@ public abstract partial class SharedGunSystem
         args.Capacity = ent.Comp.Capacity;
     }
 
-    /// <summary>
-    /// Causes <paramref name="entity"/> to pause its refilling for either at least <paramref name="overridePauseDuration"/>
-    /// (if not null) or the entity's <see cref="BallisticAmmoSelfRefillerComponent.AutoRefillPauseDuration"/>. If the
-    /// entity's next refill would occur after the pause duration, this function has no effect.
-    /// </summary>
-    public void PauseSelfRefill(
-        Entity<BallisticAmmoSelfRefillerComponent> entity,
-        TimeSpan? overridePauseDuration = null
-    )
+    private void OnQuickPickup(Entity<BallisticAmmoProviderComponent> entity, ref QuickPickupEvent args)
     {
-        if (overridePauseDuration == null && !entity.Comp.FiringPausesAutoRefill)
+        if (args.Handled)
             return;
 
-        var nextRefillByPause = Timing.CurTime + (overridePauseDuration ?? entity.Comp.AutoRefillPauseDuration);
-        if (nextRefillByPause > entity.Comp.NextAutoRefill)
-        {
-            entity.Comp.NextAutoRefill = nextRefillByPause;
-            DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
-        }
+        // Copy event fields because the lambda doesn't like capturing `ref` values.
+        var user = args.User;
+        var pickedUp = args.PickedUp;
+        args.Handled = _quickPickup.TryDoQuickPickup(args, () => TryBallisticInsert(entity, pickedUp, user));
     }
 
-    /// <summary>
-    /// Returns true if the given <paramref name="entity"/>'s ballistic ammunition is full, false otherwise.
-    /// </summary>
-    public bool IsFull(Entity<BallisticAmmoProviderComponent> entity)
+    private void OnBeforeAreaPickup(Entity<BallisticAmmoProviderComponent> entity, ref BeforeAreaPickupEvent args)
     {
-        return GetBallisticShots(entity.Comp) >= entity.Comp.Capacity;
+        if (args.Handled)
+            return;
+
+        args.Handled = _areaPickup.DoBeforeAreaPickup(
+            ref args,
+            pickupCandidate => CanInsertBallistic(entity, pickupCandidate)
+        );
+    }
+
+    private void OnAreaPickupDoAfter(Entity<BallisticAmmoProviderComponent> entity, ref AreaPickupDoAfterEvent args)
+    {
+        if (args.Handled ||
+            args.Cancelled)
+            return;
+
+        // Copy event fields because the lambda doesn't like capturing `ref` values.
+        var user = args.User;
+
+        // Don't play a sound if the user has the silent user tag.
+        var insertSound = ProtoManager.TryIndex(entity.Comp.SilentInsertUserTag, out var tag) &&
+                          TagSystem.HasTag(args.User, tag)
+            ? null
+            : entity.Comp.SoundInsert;
+        args.Handled = _areaPickup.TryDoAreaPickup(
+            ref args,
+            entity.Owner,
+            insertSound,
+            entityToInsert => TryBallisticInsert(entity, entityToInsert, user, suppressInsertionSound: true)
+        );
     }
 
     /// <summary>
@@ -341,7 +366,8 @@ public abstract partial class SharedGunSystem
 
         entity.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, entity.Comp.Container);
-        if (!suppressInsertionSound)
+        if (!suppressInsertionSound &&
+            !(user is { } u && TagSystem.HasTag(u, entity.Comp.SilentInsertUserTag)))
         {
             Audio.PlayPredicted(entity.Comp.SoundInsert, entity, user);
         }
@@ -351,6 +377,35 @@ public abstract partial class SharedGunSystem
         DirtyField(entity.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
 
         return true;
+    }
+
+    /// <summary>
+    /// Causes <paramref name="entity"/> to pause its refilling for either at least <paramref name="overridePauseDuration"/>
+    /// (if not null) or the entity's <see cref="BallisticAmmoSelfRefillerComponent.AutoRefillPauseDuration"/>. If the
+    /// entity's next refill would occur after the pause duration, this function has no effect.
+    /// </summary>
+    public void PauseSelfRefill(
+        Entity<BallisticAmmoSelfRefillerComponent> entity,
+        TimeSpan? overridePauseDuration = null
+    )
+    {
+        if (overridePauseDuration == null && !entity.Comp.FiringPausesAutoRefill)
+            return;
+
+        var nextRefillByPause = Timing.CurTime + (overridePauseDuration ?? entity.Comp.AutoRefillPauseDuration);
+        if (nextRefillByPause > entity.Comp.NextAutoRefill)
+        {
+            entity.Comp.NextAutoRefill = nextRefillByPause;
+            DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the given <paramref name="entity"/>'s ballistic ammunition is full, false otherwise.
+    /// </summary>
+    public bool IsFull(Entity<BallisticAmmoProviderComponent> entity)
+    {
+        return GetBallisticShots(entity.Comp) >= entity.Comp.Capacity;
     }
 
     public void UpdateBallisticAppearance(Entity<BallisticAmmoProviderComponent> ent)
