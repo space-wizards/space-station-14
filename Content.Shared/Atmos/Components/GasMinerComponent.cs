@@ -11,6 +11,7 @@ public sealed partial class GasMinerComponent : Component
     /// <summary>
     /// If it should show the examine text
     /// </summary>
+    [DataField]
     public bool ShowExamineText = true;
 
     /// <summary>
