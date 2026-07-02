@@ -27,12 +27,12 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     private readonly List<ResPath> _filePaths = [];
 
     /// <summary>
-    /// Raised after a MIDI file has been added to the library. Contains added file name as argument.
+    /// Raised after a MIDI file has been added to the library. Contains added file path as argument.
     /// </summary>
     public event Action<ResPath>? MidiFileAdded;
 
     /// <summary>
-    /// Raised after a MIDI file has been removed from the library. Contains removed file name as argument.
+    /// Raised after a MIDI file has been removed from the library. Contains removed file path as argument.
     /// </summary>
     public event Action<ResPath>? MidiFileRemoved;
 
@@ -52,7 +52,7 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     /// <summary>
     /// Returns the binary content of the given MIDI file.
     /// </summary>
-    /// <param name="filePath">MIDI file name to get.</param>
+    /// <param name="filePath">MIDI file path to get.</param>
     /// <returns>MIDI binary as a byte array or an empty byte array if the file doesn't exist.</returns>
     public byte[] GetMidiData(ResPath filePath)
     {
@@ -78,9 +78,9 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     }
 
     /// <summary>
-    /// Stores the given byte stream with the given file name inside the <see cref="UserMidiDirectory"/> directory.
+    /// Stores the given byte stream with the given file path inside the <see cref="UserMidiDirectory"/> directory.
     /// </summary>
-    /// <param name="filePath">File name to write.</param>
+    /// <param name="filePath">File path to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
     public async Task<bool> AddMidiFile(ResPath filePath, Stream data)
@@ -101,9 +101,9 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     }
 
     /// <summary>
-    /// Stores the given byte array with the given file name inside the <see cref="UserMidiDirectory"/> directory.
+    /// Stores the given byte array with the given file path inside the <see cref="UserMidiDirectory"/> directory.
     /// </summary>
-    /// <param name="filePath">File name to write.</param>
+    /// <param name="filePath">File path to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
     public async Task<bool> AddMidiFile(ResPath filePath, byte[] data)
@@ -114,8 +114,8 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     /// <summary>
     /// Renames a MIDI file inside the library.
     /// </summary>
-    /// <param name="oldPath">Current file name</param>
-    /// <param name="newPath">New file name</param>
+    /// <param name="oldPath">Current file path</param>
+    /// <param name="newPath">New file path</param>
     /// <remarks>Raises <see cref="MidiFileRemoved"/> and <see cref="MidiFileAdded"/> on success.</remarks>
     public bool RenameMidiFile(ResPath oldPath, ResPath newPath)
     {
@@ -142,7 +142,7 @@ public sealed partial class MidiFileCollection : IPostInjectInit
     /// <summary>
     /// Permanently removes the given MIDI file if it exists inside <see cref="UserMidiDirectory"/>.
     /// </summary>
-    /// <param name="filePath">File name to remove.</param>
+    /// <param name="filePath">File path to remove.</param>
     /// <remarks>Raises <see cref="MidiFileRemoved"/></remarks>
     public void RemoveMidiFile(ResPath filePath)
     {
