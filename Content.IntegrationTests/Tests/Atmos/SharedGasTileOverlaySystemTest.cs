@@ -12,14 +12,15 @@ using System.Numerics;
 namespace Content.IntegrationTests.Tests.Atmos;
 
 /// <summary>
-/// GasTileOverlay is being tested here
+/// Checks networking of temperature data inside GasTileOverlay
 /// </summary>
-public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
+public sealed partial class SharedGasTileOverlayTest : AtmosTest
 {
     protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/DeltaPressure/deltapressuretest.yml");
 
     [Test]
-    public async Task TestGasOverlayDataSync()
+    [Description("Checks networking of temperature data inside GasTileOverlay.")]
+    public async Task TestGasTileTemperatureOverlayDataSync()
     {
         var sMapSys = Server.System<SharedMapSystem>();
 
@@ -97,7 +98,6 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
             }
         });
 
-        await RunTicks(60);
-        await Task.WhenAll(Client.WaitIdleAsync(), Server.WaitIdleAsync());
+        await Pair.RunTicksSync(10);
     }
 }
