@@ -1772,7 +1772,7 @@
     - Plating
     - FloorAstroAsteroidSandBorderless
   - type: Stack
-    stackType: FloorTileAstroAsteroidSand
+    stackType: FloorTileAstroAsteroidSandBorderless
 
 - type: entity
   parent: FloorTileItemBase
