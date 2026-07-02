@@ -14,7 +14,7 @@ namespace Content.Shared.Changeling.Components;
 /// Component responsible for Changelings Devour attack. Including the amount of damage
 /// and how long it takes to devour someone
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly), AutoGenerateComponentState]
 [Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
@@ -135,8 +135,6 @@ public sealed partial class ChangelingDevourComponent : Component
     {
         { "ChangelingDNA", 10 }
     };
-
-    public override bool SendOnlyToOwner => true;
 }
 
 /// <summary>

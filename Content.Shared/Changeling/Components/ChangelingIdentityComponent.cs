@@ -10,7 +10,7 @@ namespace Content.Shared.Changeling.Components;
 /// The storage component for Changelings, it handles the link between a changeling and its consumed identities
 /// that exist on a paused map.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly)]
 public sealed partial class ChangelingIdentityComponent : Component
 {
     /// <summary>
@@ -42,8 +42,6 @@ public sealed partial class ChangelingIdentityComponent : Component
     /// </summary>
     [DataField]
     public int MaxStoredDisguises = 5;
-
-    public override bool SendOnlyToOwner => true;
 }
 
 [Serializable, NetSerializable]
