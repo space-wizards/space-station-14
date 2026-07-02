@@ -12,10 +12,9 @@
       steps:
       - material: MetalRod
         amount: 4
-        doAfter: 6
       - material: Steel
         amount: 1
-        doAfter: 2
+        doAfter: 6
 
   - node: turnstile
     entity: Turnstile
