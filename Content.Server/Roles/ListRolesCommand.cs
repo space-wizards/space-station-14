@@ -7,9 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class ListRolesCommand : LocalizedCommands
+    public sealed partial class ListRolesCommand : LocalizedCommands
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public override string Command => "listroles";
 

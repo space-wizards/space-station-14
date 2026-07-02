@@ -10,7 +10,7 @@ namespace Content.Server.Store.Systems;
 
 public sealed partial class StoreSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     private void InitializeRefund()
     {

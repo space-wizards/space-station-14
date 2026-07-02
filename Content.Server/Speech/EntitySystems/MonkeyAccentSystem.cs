@@ -5,9 +5,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentComponent>
+public sealed partial class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override string Accentuate(string message, Entity<MonkeyAccentComponent>? _)
     {

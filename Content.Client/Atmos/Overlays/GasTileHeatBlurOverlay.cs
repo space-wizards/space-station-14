@@ -21,19 +21,19 @@ namespace Content.Client.Atmos.Overlays;
 /// <summary>
 ///     Overlay responsible for rendering heat distortion shader.
 /// </summary>
-public sealed class GasTileHeatBlurOverlay : Overlay
+public sealed partial class GasTileHeatBlurOverlay : Overlay
 {
     public override bool RequestScreenTexture { get; set; } = true;
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
     private static readonly ProtoId<ShaderPrototype> HeatOverlayShader = "HeatBlur";
 
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
+    private readonly SharedMapSystem _maps;
     private readonly SharedTransformSystem _xformSys;
     private readonly ShaderInstance _shader;
 
@@ -63,6 +63,7 @@ public sealed class GasTileHeatBlurOverlay : Overlay
     public GasTileHeatBlurOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _maps = _entManager.System<SharedMapSystem>();
         _xformSys = _entManager.System<SharedTransformSystem>();
 
         _noiseTexture = _resourceCache.GetTexture("/Textures/Effects/HeatBlur/perlin_noise.png");
@@ -126,7 +127,7 @@ public sealed class GasTileHeatBlurOverlay : Overlay
             () =>
             {
                 _intersectingGrids.Clear();
-                _mapManager.FindGridsIntersecting(mapId, worldAABB, ref _intersectingGrids);
+                _maps.FindGridsIntersecting(mapId, worldAABB, ref _intersectingGrids);
                 foreach (var grid in _intersectingGrids)
                 {
                     if (!overlayQuery.TryGetComponent(grid.Owner, out var comp))

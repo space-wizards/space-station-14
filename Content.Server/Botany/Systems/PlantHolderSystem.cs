@@ -11,7 +11,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -23,33 +22,32 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Labels.Components;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class PlantHolderSystem : EntitySystem
+public sealed partial class PlantHolderSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private AppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private RandomHelperSystem _randomHelper = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -323,7 +321,8 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (HasComp<SharpComponent>(args.Used))
+        var harvestToolQuality = entity.Comp.HarvestToolQuality;
+        if (harvestToolQuality.HasValue && _tool.HasQuality(args.Used, harvestToolQuality.Value))
         {
             args.Handled = true;
             DoHarvest(uid, args.User, component);
@@ -895,7 +894,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (entry.Quantity < PlantMetabolismRate)
                     continue;
 
-                var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
+                var reagentProto = ProtoMan.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray(), entry.Quantity);
             }
 

@@ -10,12 +10,12 @@ using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCan
 
 namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
-public abstract class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
+public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
 {
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {

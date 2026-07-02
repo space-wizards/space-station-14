@@ -193,7 +193,7 @@ public partial class SeedData
     [DataField] public bool Viable = true;
 
     /// <summary>
-    ///     If true, a sharp tool is required to harvest this plant.
+    ///     If true, a tool with sliceable quality is required to harvest this plant.
     /// </summary>
     [DataField] public bool Ligneous;
 

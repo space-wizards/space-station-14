@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
-public sealed class ChemicalAmmoSystem : EntitySystem
+public sealed partial class ChemicalAmmoSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {

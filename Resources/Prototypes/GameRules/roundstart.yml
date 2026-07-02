@@ -225,9 +225,15 @@
       range:
         min: 1
         max: 3
-  - type: AntagObjectives
-    objectives:
-    - ChangelingSurviveObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: ChangelingObjectiveGroupDevourDummy
+      maxPicks: 1
+    - groups: ChangelingObjectiveGroupEscapeDummy
+      maxPicks: 1
+    - groups: ChangelingObjectiveGroupKillDummy
+      maxPicks: 1
+    maxDifficulty: 8
 
 - type: entity
   id: Revolutionary

@@ -2,7 +2,7 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
+public sealed partial class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
     public override void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh)
     {

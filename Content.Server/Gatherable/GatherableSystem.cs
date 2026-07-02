@@ -13,13 +13,13 @@ namespace Content.Server.Gatherable;
 
 public sealed partial class GatherableSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     public override void Initialize()
     {

@@ -16,9 +16,8 @@ namespace Content.Server.Speech.EntitySystems;
 /// </summary>
 public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccentComponent>
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
         _cachedReplacements = new();
@@ -27,14 +26,14 @@ public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccen
     {
         base.Initialize();
 
-        _proto.PrototypesReloaded += OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
 
-        _proto.PrototypesReloaded -= OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
     }
 
     public override string Accentuate(string message, Entity<ReplacementAccentComponent>? ent)
@@ -51,7 +50,7 @@ public sealed class ReplacementAccentSystem : RelayAccentSystem<ReplacementAccen
     [PublicAPI]
     public string ApplyReplacements(string message, string accent)
     {
-        if (!_proto.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
+        if (!ProtoMan.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
             return message;
 
         if (!_random.Prob(prototype.ReplacementChance))

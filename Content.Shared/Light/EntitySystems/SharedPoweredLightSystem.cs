@@ -21,21 +21,21 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public abstract class SharedPoweredLightSystem : EntitySystem
+public abstract partial class SharedPoweredLightSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
-    [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedLightBulbSystem _bulbSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] private DamageOnInteractSystem _damageOnInteractSystem = default!;
+    [Dependency] private SharedAmbientSoundSystem _ambientSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedContainerSystem ContainerSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedLightBulbSystem _bulbSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private SharedPointLightSystem _pointLight = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";

@@ -16,7 +16,6 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -24,14 +23,13 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // to it via local APC net, and starts sending updates of the
 // current atmosphere. Monitors fire (which always triggers as
 // a danger), and atmos (which triggers based on set thresholds).
-public sealed class AtmosMonitorSystem : EntitySystem
+public sealed partial class AtmosMonitorSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainerSystem = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private AtmosDeviceSystem _atmosDeviceSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetSystem = default!;
+    [Dependency] private NodeContainerSystem _nodeContainerSystem = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -84,13 +82,13 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         if (component.TemperatureThresholdId != null)
         {
-            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.TemperatureThresholdId);
+            var proto = ProtoMan.Index<AtmosAlarmThresholdPrototype>(component.TemperatureThresholdId);
             component.TemperatureThreshold ??= new(proto);
         }
 
         if (component.PressureThresholdId != null)
         {
-            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.PressureThresholdId);
+            var proto = ProtoMan.Index<AtmosAlarmThresholdPrototype>(component.PressureThresholdId);
             component.PressureThreshold ??= new(proto);
         }
 
@@ -100,7 +98,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         component.GasThresholds ??= new();
         foreach (var (gas, id) in component.GasThresholdPrototypes)
         {
-            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(id);
+            var proto = ProtoMan.Index<AtmosAlarmThresholdPrototype>(id);
             component.GasThresholds.TryAdd(gas, new(proto));
         }
     }

@@ -7,18 +7,16 @@ using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Body;
 
-public sealed class VisualBodySystem : SharedVisualBodySystem
+public sealed partial class VisualBodySystem : SharedVisualBodySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly DisplacementMapSystem _displacement = default!;
-    [Dependency] private readonly MarkingManager _marking = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private MarkingManager _marking = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -149,7 +147,7 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         if (!censorNudity)
             yield break;
 
-        var group = _prototype.Index(ent.Comp.MarkingData.Group);
+        var group = ProtoMan.Index(ent.Comp.MarkingData.Group);
         foreach (var layer in ent.Comp.MarkingData.Layers)
         {
             if (!group.Limits.TryGetValue(layer, out var layerLimits))

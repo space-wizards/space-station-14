@@ -22,15 +22,14 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Wires;
 
-public sealed class WiresSystem : SharedWiresSystem
+public sealed partial class WiresSystem : SharedWiresSystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ConstructionSystem _construction = default!;
 
     private static readonly ProtoId<ToolQualityPrototype> CuttingQuality = "Cutting";
     private static readonly ProtoId<ToolQualityPrototype> PulsingQuality = "Pulsing";
@@ -74,7 +73,7 @@ public sealed class WiresSystem : SharedWiresSystem
         List<IWireAction> wireActions = new();
         var dummyWires = 0;
 
-        if (!_protoMan.Resolve(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
+        if (!ProtoMan.Resolve(wires.LayoutId, out WireLayoutPrototype? layoutPrototype))
         {
             return;
         }
@@ -88,7 +87,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         // does the prototype have a parent (and are the wires empty?) if so, we just create
         // a new layout based on that
-        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
+        foreach (var parentLayout in ProtoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
         {
             if (parentLayout.Wires != null)
             {

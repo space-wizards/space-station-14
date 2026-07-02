@@ -27,17 +27,16 @@ namespace Content.Server.Cloning;
 /// </summary>
 public sealed partial class CloningSystem : SharedCloningSystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
+    [Dependency] private SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     public override bool TryCloning(
         EntityUid original,
@@ -46,13 +45,13 @@ public sealed partial class CloningSystem : SharedCloningSystem
         [NotNullWhen(true)] out EntityUid? clone)
     {
         clone = null;
-        if (!_prototype.Resolve(settingsId, out var settings))
+        if (!ProtoMan.Resolve(settingsId, out var settings))
             return false; // invalid settings
 
         if (!TryComp<HumanoidProfileComponent>(original, out var humanoid))
             return false; // whatever body was to be cloned, was not a humanoid
 
-        if (!_prototype.Resolve(humanoid.Species, out var speciesPrototype))
+        if (!ProtoMan.Resolve(humanoid.Species, out var speciesPrototype))
             return false; // invalid species
 
         if (!settings.ForceCloning)
@@ -100,7 +99,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
         EntityUid clone,
         ProtoId<CloningSettingsPrototype> settings)
     {
-        if (!_prototype.Resolve(settings, out var proto))
+        if (!ProtoMan.Resolve(settings, out var proto))
             return;
 
         CloneComponents(original, clone, proto);

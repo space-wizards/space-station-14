@@ -10,11 +10,11 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// The component allows lightning to strike this target. And determining the behavior of the target when struck by lightning.
 /// </summary>
-public sealed class LightningTargetSystem : EntitySystem
+public sealed partial class LightningTargetSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {

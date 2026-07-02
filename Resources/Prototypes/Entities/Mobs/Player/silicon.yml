@@ -105,9 +105,6 @@
   description: Handles AI interactions across holocards + AI cores
   components:
   - type: ItemSlots
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
@@ -182,9 +179,6 @@
     - Anchorable
   - type: Rotatable
   - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Fixtures
     fixtures:
       fix1:
@@ -201,6 +195,7 @@
     container: station_ai_mind_slot
   - type: Damageable
     damageModifierSet: StrongMetallic
+  - type: Injurable
   - type: Repairable
     doAfterDelay: 10
     allowSelfRepair: false
@@ -385,6 +380,7 @@
         density: 200
   - type: Damageable
     damageModifierSet: StrongMetallic
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
@@ -497,14 +493,8 @@
         layer:
         - GhostImpassable
   - type: NoFTL
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -526,14 +516,8 @@
   components:
   - type: Transform
     anchored: true
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Eye
   - type: ContentEye
   - type: Examiner

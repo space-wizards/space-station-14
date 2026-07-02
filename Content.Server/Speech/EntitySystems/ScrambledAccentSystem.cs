@@ -4,36 +4,35 @@ using Content.Server.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems
+namespace Content.Server.Speech.EntitySystems;
+
+public sealed class ScrambledAccentSystem : RelayAccentSystem<ScrambledAccentComponent>
 {
-    public sealed class ScrambledAccentSystem : RelayAccentSystem<ScrambledAccentComponent>
+    private static readonly Regex RegexLoneI = new(@"(?<=\ )i(?=[\ \.\?]|$)");
+
+    [Dependency] private readonly IRobustRandom _random = default!;
+
+    public override string Accentuate(string message, Entity<ScrambledAccentComponent>? _)
     {
-        private static readonly Regex RegexLoneI = new(@"(?<=\ )i(?=[\ \.\?]|$)");
+        var words = message.ToLower().Split();
 
-        [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Accentuate(string message, Entity<ScrambledAccentComponent>? _)
+        if (words.Length < 2)
         {
-            var words = message.ToLower().Split();
-
-            if (words.Length < 2)
-            {
-                var pick = _random.Next(1, 8);
-                // If they try to weasel out of it by saying one word at a time we give them this.
-                return Loc.GetString($"accent-scrambled-words-{pick}");
-            }
-
-            // Scramble the words
-            var scrambled = words.OrderBy(x => _random.Next()).ToArray();
-
-            var msg = string.Join(" ", scrambled);
-
-            // First letter should be capital
-            msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
-
-            // Capitalize lone i's
-            msg = RegexLoneI.Replace(msg, "I");
-            return msg;
+            var pick = _random.Next(1, 8);
+            // If they try to weasel out of it by saying one word at a time we give them this.
+            return Loc.GetString($"accent-scrambled-words-{pick}");
         }
+
+        // Scramble the words
+        var scrambled = words.OrderBy(x => _random.Next()).ToArray();
+
+        var msg = string.Join(" ", scrambled);
+
+        // First letter should be capital
+        msg = msg[0].ToString().ToUpper() + msg.Remove(0, 1);
+
+        // Capitalize lone i's
+        msg = RegexLoneI.Replace(msg, "I");
+        return msg;
     }
 }

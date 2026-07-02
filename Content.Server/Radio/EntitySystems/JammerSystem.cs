@@ -3,9 +3,9 @@ using Content.Shared.Radio.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
-public sealed class JammerSystem : SharedJammerSystem
+public sealed partial class JammerSystem : SharedJammerSystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

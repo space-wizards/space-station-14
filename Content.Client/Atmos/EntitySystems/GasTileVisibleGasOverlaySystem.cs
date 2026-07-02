@@ -8,9 +8,9 @@ namespace Content.Client.Atmos.EntitySystems;
 ///     System responsible for rendering visible atmos gasses (like plasma for example) using <see cref="GasTileVisibleGasOverlay"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed class GasTileVisibleGasOverlaySystem : EntitySystem
+public sealed partial class GasTileVisibleGasOverlaySystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     private GasTileVisibleGasOverlay _visibleGasOverlay = default!;
 

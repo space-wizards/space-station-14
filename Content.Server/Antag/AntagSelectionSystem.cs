@@ -20,10 +20,9 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
-using Content.Shared.Mind;
-using Content.Shared.Players;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -56,21 +55,22 @@ namespace Content.Server.Antag;
 /// </remarks>
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
-    [Dependency] private readonly IBanManager _ban = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _pref = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ArrivalsSystem _arrivals = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
-    [Dependency] private readonly JobSystem _jobs = default!;
-    [Dependency] private readonly LoadoutSystem _loadout = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IBanManager _ban = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IServerPreferencesManager _pref = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ArrivalsSystem _arrivals = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private FollowerSystem _follower = default!;
+    [Dependency] private GhostRoleSystem _ghostRole = default!;
+    [Dependency] private JobSystem _jobs = default!;
+    [Dependency] private LoadoutSystem _loadout = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private PlayTimeTrackingSystem _playTime = default!;
+    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -126,9 +126,18 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // Antags haven't been selected so we need to select them! Only if we select when the game rule starts though!
         if (component.PreSelectionsComplete)
+        {
             AssignPreSelectedSessions((uid, component));
-        else if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
-            AssignAntags((uid, component));
+            return;
+        }
+
+        // If pre-selections haven't completed, then we need to select and assign antags.
+        var players = GetActivePlayers().ToArray();
+
+        if (component.SelectionTime == RuleStarted) // Only pre-select antags if we pre-select on rule start
+            AssignAntags((uid, component), players);
+        else // Otherwise, we only spawn the ghost roles!
+            SpawnGhostRoles((uid, component), players.Length);
     }
 
     private void OnTakeGhostRole(Entity<GhostRoleAntagSpawnerComponent> ent, ref TakeGhostRoleEvent args)
@@ -139,14 +148,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (ent.Comp.Rule is not { } rule || ent.Comp.Definition is not { } proto)
             return;
 
-        if (!Proto.Resolve(proto, out var def))
+        if (!ProtoMan.Resolve(proto, out var def))
             return;
 
         if (!Exists(rule) || !RuleQuery.TryComp(rule, out var select))
             return;
 
-        // This likely means player was banned or lacks playtime.
-        if (!CanBeAntag(args.Player, (rule, select), def, false))
+        // Ensure the player is allowed to play this antagonist!
+        if (IsAntagBanned(args.Player, def) || !_playTime.IsAllowed(args.Player, def.PrefRoles))
             return;
 
         if (!TrySpawnAntagonist((rule, select), def, args.Player, _transform.GetMapCoordinates(ent), out var uid))
@@ -159,6 +168,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         PreSelectSession((rule, select), def, args.Player);
         InitializeAntag((rule, select), def, uid.Value, args.Player);
         args.TookRole = true;
+
+        // Move ghosts that were watching the raffle on the spawner over to the freshly spawned antag.
+        _follower.TransferFollowers(ent.Owner, uid.Value);
+
         _ghostRole.UnregisterGhostRole((ent, Comp<GhostRoleComponent>(ent)));
     }
 
@@ -291,7 +304,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(antag.Proto, out var proto))
+            if (!ProtoMan.Resolve(antag.Proto, out var proto))
                 continue;
 
             // We do it this way in case our resolve fails.
@@ -299,24 +312,22 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
     }
 
-    private AntagCount[]  GetAntags(Entity<AntagSelectionComponent> gameRule,
+    private List<AntagCount> GetAntags(Entity<AntagSelectionComponent> gameRule,
         int playerCount)
     {
         var runningCount = 0;
-        var antags = new AntagCount[gameRule.Comp.Antags.Length];
+        var antags = new List<AntagCount>(gameRule.Comp.Antags.Length);
 
         // We assume that antag definitions are prioritized by order, and take up slots that other roles may take.
         // I.E for Nukies, it selects 1 commander which takes up 10 players, then one corpsman which takes up another 10, then we select X nukies based on the remaining player count.
         // This is how the system worked when I got here, and I decided not to change it to avoid fucking with team antag balance
-        var i = 0;
         foreach (var antag in gameRule.Comp.Antags)
         {
-            if (!Proto.Resolve(antag.Proto, out var definition))
+            if (!ProtoMan.Resolve(antag.Proto, out var definition))
                 continue;
 
             // We do it this way in case our resolve fails.
-            antags[i] = (definition, GetTargetAntagCount(antag, playerCount, ref runningCount));
-            i++;
+            antags.Add((definition, GetTargetAntagCount(antag, playerCount, ref runningCount)));
         }
 
         return antags;
@@ -351,19 +362,19 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         gameRule.Comp.PreSelectionsComplete = true;
     }
 
-    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, AntagCount[] antags)
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, IList<ICommonSession> players, List<AntagCount> antags)
     {
         AssignAntags(gameRule, GetWeightedPlayerPool(players), antags);
     }
 
-    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, Dictionary<ICommonSession, float> weightedPool, AntagCount[] antags)
+    private void AssignAntags(Entity<AntagSelectionComponent> gameRule, Dictionary<ICommonSession, float> weightedPool, List<AntagCount> antags)
     {
         while (RobustRandom.TryPickAndTake(weightedPool, out var session))
         {
             AssignAntag(gameRule, session, ref antags);
 
             // Assignment complete, return early.
-            if (antags.Length == 0)
+            if (antags.Count == 0)
                 return;
         }
 
@@ -487,13 +498,13 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Selects and assigns antags from a list.
     /// Is private because it has it should only ever be run in very specific scenarios.
     /// </summary>
-    private bool AssignAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player, ref AntagCount[] antags)
+    private bool AssignAntag(Entity<AntagSelectionComponent> gameRule, ICommonSession player, ref List<AntagCount> antags)
     {
         // If this session cannot be an antag, then get the next session!
         if (!TryGetValidAntagPreferences(player, out var prefs))
             return false;
 
-        for (var i = antags.Length - 1; i >= 0; i--)
+        for (var i = antags.Count - 1; i >= 0; i--)
         {
             var antag = antags[i];
 
@@ -628,6 +639,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return false;
         }
 
+        // Re-check entity validity now that the player has spawned.
+        // Pre-selection bypasses the blacklist (AttachedEntity was null at that time),
+        // so we must verify here before applying antag components.
+        if (!IsEntityValid(antagEnt.Value, prototype))
+        {
+            if (antagEnt.Value != player.AttachedEntity)
+                QueueDel(antagEnt.Value);
+            DeSelectSession(gameRule, prototype, player);
+            return false;
+        }
+
         InitializeAntag(gameRule, prototype, antagEnt.Value, player);
         return true;
     }
@@ -701,7 +723,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         foreach (var (proto, set) in gameRule.Comp.PreSelectedSessions)
         {
             // How did we even get here?
-            if (!Proto.Resolve(proto, out var def))
+            if (!ProtoMan.Resolve(proto, out var def))
                 continue;
 
             foreach (var session in set)
@@ -711,6 +733,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 if (!IsSessionValid(session, gameRule, def))
                 {
                     DeSelectSession(gameRule, proto, session, set);
+                    SpawnGhostRole(gameRule, def);
                     continue;
                 }
 
@@ -766,10 +789,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         _loadout.Equip(antag, gear, prototype.RoleLoadout);
 
-        // Ensure that we have a mind for our entity!
-        if (player.GetMind() is not { } mind
-            || !TryComp<MindComponent>(mind, out var mindComp)
-            || mindComp.OwnedEntity != antag)
+        // Ensure that we have the right mind for our entity.
+        if (!_mind.TryGetMind(player, out var mind, out var mindComp) || mindComp.OwnedEntity != antag)
             mind = _mind.CreateMind(player.UserId, Name(antag));
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
