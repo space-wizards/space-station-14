@@ -1,4 +1,5 @@
 using Content.Server.UserInterface;
+using Content.Shared.Audio;
 using Content.Shared.Communications;
 using Robust.Shared.Audio;
 
@@ -66,6 +67,7 @@ namespace Content.Server.Communications
         /// Announce sound file path
         /// </summary>
         [DataField]
+        [AllowStereo]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
         /// <summary>
