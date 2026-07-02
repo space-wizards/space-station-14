@@ -8,17 +8,12 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class TargetInRangePrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
 
     [DataField("targetKey", required: true)] public string TargetKey = default!;
 
     [DataField("rangeKey", required: true)]
     public string RangeKey = default!;
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _transformSystem = sysManager.GetEntitySystem<SharedTransformSystem>();
-    }
 
     [DataField]
     public bool Invert;

@@ -1,6 +1,6 @@
-using Content.Server.Interaction;
 using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Content.Shared.Timing;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
@@ -8,13 +8,10 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 public sealed partial class InteractWithOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private SharedDoAfterSystem _doAfterSystem = default!;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _doAfterSystem = sysManager.GetEntitySystem<SharedDoAfterSystem>();
-    }
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private UseDelaySystem _useDelaySystem = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
     /// <summary>
     /// Key that contains the target entity.
@@ -26,7 +23,7 @@ public sealed partial class InteractWithOperator : HTNOperator
     /// Exit with failure if doafter wasn't raised
     /// </summary>
     [DataField]
-    public bool ExpectDoAfter = false;
+    public bool ExpectDoAfter;
 
     public string CurrentDoAfter = "CurrentInteractWithDoAfter";
 
@@ -56,7 +53,7 @@ public sealed partial class InteractWithOperator : HTNOperator
             // if CurrentDoAfter contains something, we have an active doAfter
             if (blackboard.TryGetValue<ushort>(CurrentDoAfter, out var doAfterId, _entManager))
             {
-                var status = _doAfterSystem.GetStatus(owner, doAfterId, null);
+                var status = _doAfterSystem.GetStatus(owner, doAfterId);
                 return status switch
                 {
                     DoAfterStatus.Running => HTNOperatorStatus.Continuing,
@@ -68,8 +65,7 @@ public sealed partial class InteractWithOperator : HTNOperator
             nextId = doAfter.NextId;
         }
 
-
-        if (_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) && _entManager.System<UseDelaySystem>().IsDelayed((owner, useDelay)) ||
+        if (_entManager.TryGetComponent<UseDelayComponent>(owner, out var useDelay) && _useDelaySystem.IsDelayed((owner, useDelay)) ||
             !blackboard.TryGetValue<EntityUid>(TargetKey, out var moveTarget, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(moveTarget, out var targetXform))
         {
@@ -78,10 +74,10 @@ public sealed partial class InteractWithOperator : HTNOperator
 
         if (_entManager.TryGetComponent<CombatModeComponent>(owner, out var combatMode))
         {
-            _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false, combatMode);
+            _combatModeSystem.SetInCombatMode(owner, false, combatMode);
         }
 
-        _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget);
+        _interactionSystem.UserInteraction(owner, targetXform.Coordinates, moveTarget);
 
         // Detect doAfter, save it, and don't exit from this operator
         if (doAfter != null && nextId != doAfter.NextId)

@@ -10,6 +10,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Components;
 using Content.Shared.Popups;
 
@@ -27,6 +28,7 @@ public sealed partial class MedibotSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -91,7 +93,8 @@ public sealed partial class MedibotSystem : EntitySystem
     /// </summary>
     public bool CheckInjectable(Entity<MedibotComponent?> medibot, EntityUid target, bool manual = false)
     {
-        if (!Resolve(medibot, ref medibot.Comp, false)) return false;
+        if (!Resolve(medibot, ref medibot.Comp, false))
+            return false;
 
         if (HasComp<NPCRecentlyInjectedComponent>(target))
         {
@@ -99,26 +102,28 @@ public sealed partial class MedibotSystem : EntitySystem
             return false;
         }
 
-        if (!TryComp<MobStateComponent>(target, out var mobState)) return false;
-        if (!TryComp<DamageableComponent>(target, out var damageable)) return false;
-        if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _)) return false;
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return false;
 
-        if (mobState.CurrentState != MobState.Alive && mobState.CurrentState != MobState.Critical)
+        if (!TryComp<DamageableComponent>(target, out var damageable))
+            return false;
+
+        if (!_solutionContainer.TryGetInjectableSolution(target, out _, out _))
+            return false;
+
+        if (_mobState.IsDead(target))
         {
             _popup.PopupClient(Loc.GetString("medibot-target-dead"), medibot, medibot);
             return false;
         }
 
-        var total = _damageable.GetTotalDamage((target, damageable));
-        if (total == 0 && !HasComp<EmaggedComponent>(medibot))
+        if (_damageable.GetPositiveDamage((target, damageable)).Empty && !HasComp<EmaggedComponent>(medibot))
         {
             _popup.PopupClient(Loc.GetString("medibot-target-healthy"), medibot, medibot);
             return false;
         }
 
-        if (!TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) || !manual) return false;
-
-        return true;
+        return TryGetTreatment(medibot.Comp, mobState.CurrentState, out var treatment) && manual;
     }
 
     /// <summary>

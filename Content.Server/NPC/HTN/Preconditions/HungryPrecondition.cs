@@ -1,6 +1,4 @@
-using Content.Shared.Hands.Components;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 

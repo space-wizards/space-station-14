@@ -13,9 +13,9 @@ public abstract partial class HTNOperator
     /// <summary>
     /// Called once whenever prototypes reload. Typically used to inject dependencies.
     /// </summary>
-    public virtual void Initialize(IEntitySystemManager sysManager)
+    public virtual void Initialize(IDependencyCollection deps)
     {
-        IoCManager.InjectDependencies(this);
+        deps.InjectDependencies(this);
     }
 
     /// <summary>

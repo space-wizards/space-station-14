@@ -1,30 +1,24 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared.CombatMode;
-using Robust.Server.Containers;
+using Content.Shared.Storage.EntitySystems;
+using Robust.Shared.Containers;
 
-namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
+namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
 public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private IEntityManager _entManager = default!;
-    private ContainerSystem _container = default!;
-    private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedCombatModeSystem _combatModeSystem = default!;
 
     [DataField("shutdownState")]
     public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
 
     [DataField("targetKey", required: true)]
     public string TargetKey = default!;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _container = sysManager.GetEntitySystem<ContainerSystem>();
-        _entityStorage = sysManager.GetEntitySystem<EntityStorageSystem>();
-    }
 
     public override void Startup(NPCBlackboard blackboard)
     {
@@ -68,7 +62,7 @@ public sealed partial class EscapeOperator : HTNOperator, IHtnConditionalShutdow
     public void ConditionalShutdown(NPCBlackboard blackboard)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
+        _combatModeSystem.SetInCombatMode(owner, false);
         _entManager.RemoveComponent<NPCMeleeCombatComponent>(owner);
         blackboard.Remove<EntityUid>(TargetKey);
     }

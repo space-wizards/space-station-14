@@ -1,39 +1,19 @@
-using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Silicons.Bots;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entMan = default!;
-    private ChatSystem _chat = default!;
-    private MedibotSystem _medibot = default!;
-    private SharedAudioSystem _audio = default!;
-    private SharedInteractionSystem _interaction = default!;
-    private SharedPopupSystem _popup = default!;
-    private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedChatSystem _chat = default!;
+    [Dependency] private MedibotSystem _medibot = default!;
 
     /// <summary>
     /// Target entity to inject.
     /// </summary>
     [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
-
-    public override void Initialize(IEntitySystemManager sysManager)
-    {
-        base.Initialize(sysManager);
-        _chat = sysManager.GetEntitySystem<ChatSystem>();
-        _medibot = sysManager.GetEntitySystem<MedibotSystem>();
-        _audio = sysManager.GetEntitySystem<SharedAudioSystem>();
-        _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
-        _popup = sysManager.GetEntitySystem<SharedPopupSystem>();
-        _solutionContainer = sysManager.GetEntitySystem<SharedSolutionContainerSystem>();
-    }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
