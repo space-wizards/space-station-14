@@ -96,6 +96,3 @@
   - type: WarpPoint
     follow: true
     location: location-nar-sie
-    blacklist:
-      tags:
-      - GhostOnlyWarp

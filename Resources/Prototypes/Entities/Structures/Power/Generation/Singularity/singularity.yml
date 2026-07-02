@@ -70,9 +70,6 @@
   - type: WarpPoint
     follow: true
     location: location-singularity
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     layers:
