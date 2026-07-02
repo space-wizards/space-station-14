@@ -16,7 +16,6 @@ namespace Content.Server.Speech.EntitySystems
     public sealed partial class ReplacementAccentSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private ILocalizationManager _loc = default!;
 
         private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
             _cachedReplacements = new();
@@ -124,8 +123,8 @@ namespace Content.Server.Speech.EntitySystems
             return replacements.Select(kv =>
                 {
                     var (first, replace) = kv;
-                    var firstLoc = _loc.GetString(first);
-                    var replaceLoc = _loc.GetString(replace);
+                    var firstLoc = Loc.GetString(first);
+                    var replaceLoc = Loc.GetString(replace);
 
                     var regex = new Regex($@"(?<![\w']){firstLoc}(?![\w'])", RegexOptions.IgnoreCase);
 

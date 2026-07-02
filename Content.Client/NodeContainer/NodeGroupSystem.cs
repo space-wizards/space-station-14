@@ -5,9 +5,6 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Client.NodeContainer
 {
@@ -16,7 +13,6 @@ namespace Content.Client.NodeContainer
     {
         [Dependency] private IOverlayManager _overlayManager = default!;
         [Dependency] private EntityLookupSystem _entityLookup = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IInputManager _inputManager = default!;
         [Dependency] private IResourceCache _resourceCache = default!;
 
@@ -88,7 +84,6 @@ namespace Content.Client.NodeContainer
                 var overlay = new NodeVisualizationOverlay(
                     this,
                     _entityLookup,
-                    _mapManager,
                     _inputManager,
                     _resourceCache,
                     EntityManager);
