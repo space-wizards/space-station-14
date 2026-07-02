@@ -17,20 +17,29 @@
       entity: SolarAssembly
       edges:
         - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2
           completed:
             - !type:SpawnPrototype
               prototype: SolarAssemblyFlatpack
               amount: 1
             - !type:DeleteEntity {}
+        - to: solarpanel
+          conditions:
+            - !type:EntityAnchored
           steps:
-            - tool: Screwing
-              doAfter: 2
+            - material: Glass
+              amount: 1
+              doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
         - to: solarpanelplasma
           conditions:
             - !type:EntityAnchored
           steps:
             - material: PlasmaGlass
-              amount: 2
+              amount: 1
               doAfter: 0.5
           completed:
             - !type:SnapToGrid
@@ -39,16 +48,7 @@
             - !type:EntityAnchored
           steps:
             - material: UraniumGlass
-              amount: 2
-              doAfter: 0.5
-          completed:
-            - !type:SnapToGrid
-        - to: solarpanel
-          conditions:
-            - !type:EntityAnchored
-          steps:
-            - material: Glass
-              amount: 2
+              amount: 1
               doAfter: 0.5
           completed:
             - !type:SnapToGrid
@@ -68,112 +68,208 @@
           completed:
             - !type:SnapToGrid
 
-    - node: solarpanelplasma
-      entity: SolarPanelPlasma
-      edges:
-        - to: solarassembly
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-            - !type:SpawnPrototype
-              prototype: SheetPGlass1
-              amount: 2
-          conditions:
-            - !type:EntityAnchored
-              anchored: true
-          steps:
-            - tool: Prying
-              doAfter: 0.5
-
-    - node: solarpaneluranium
-      entity: SolarPanelUranium
-      edges:
-        - to: solarassembly
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-            - !type:SpawnPrototype
-              prototype: SheetUGlass1
-              amount: 2
-          conditions:
-            - !type:EntityAnchored
-              anchored: true
-          steps:
-            - tool: Prying
-              doAfter: 0.5
-
     - node: solarpanel
       entity: SolarPanel
       edges:
         - to: solarassembly
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
           completed:
             - !type:SnapToGrid
               southRotation: true
             - !type:SpawnPrototype
               prototype: SheetGlass1
-              amount: 2
+              amount: 1
+        - to: solarpanelplasma
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Plasma
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+        - to: solarpanelplasma
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: PlasmaGlass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetGlass1
+            amount: 1
+        - to: solarpaneluranium
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Uranium
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+        - to: solarpaneluranium
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: UraniumGlass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetGlass1
+            amount: 1
+
+    - node: solarpanelplasma
+      entity: SolarPanelPlasma
+      edges:
+        - to: solarassembly
           conditions:
             - !type:EntityAnchored
               anchored: true
           steps:
             - tool: Prying
               doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 1
+        - to: solarpanel
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Glass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetPGlass1
+            amount: 1
+        - to: solarpaneluranium
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: UraniumGlass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetPGlass1
+            amount: 1
+
+    - node: solarpaneluranium
+      entity: SolarPanelUranium
+      edges:
+        - to: solarassembly
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 1
+        - to: solarpanel
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: Glass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetUGlass1
+            amount: 1
+        - to: solarpanelplasma
+          conditions:
+          - !type:EntityAnchored
+          steps:
+          - material: PlasmaGlass
+            amount: 1
+            doAfter: 0.5
+          completed:
+          - !type:SnapToGrid
+          - !type:SpawnPrototype
+            prototype: SheetUGlass1
+            amount: 1
 
     - node: solarpanel_broken
       entity: SolarPanelBroken
       edges:
         - to: solarassembly
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-            - !type:SpawnPrototype
-              prototype: ShardGlass
-              amount: 2
           conditions:
             - !type:EntityAnchored
               anchored: true
           steps:
             - tool: Prying
               doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: ShardGlass
+              amount: 1
 
     - node: solarpanelplasma_broken
       entity: SolarPanelPlasmaBroken
       edges:
       - to: solarassembly
+        conditions:
+        - !type:EntityAnchored
+          anchored: true
+        steps:
+        - tool: Prying
+          doAfter: 0.5
         completed:
         - !type:SnapToGrid
           southRotation: true
         - !type:SpawnPrototype
           prototype: ShardGlassPlasma
-          amount: 2
-        conditions:
-        - !type:EntityAnchored
-          anchored: true
-        steps:
-        - tool: Prying
-          doAfter: 0.5
+          amount: 1
 
     - node: solarpaneluranium_broken
       entity: SolarPanelUraniumBroken
       edges:
       - to: solarassembly
-        completed:
-        - !type:SnapToGrid
-          southRotation: true
-        - !type:SpawnPrototype
-          prototype: ShardGlassUranium
-          amount: 2
         conditions:
         - !type:EntityAnchored
           anchored: true
         steps:
         - tool: Prying
           doAfter: 0.5
+        completed:
+        - !type:SnapToGrid
+          southRotation: true
+        - !type:SpawnPrototype
+          prototype: ShardGlassUranium
+          amount: 1
 
     - node: solartracker
       entity: SolarTracker
       edges:
         - to: solarassembly
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 1
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -183,9 +279,3 @@
             - !type:SpawnPrototype
               prototype: SolarTrackerElectronics
               amount: 1
-          conditions:
-            - !type:EntityAnchored
-              anchored: true
-          steps:
-            - tool: Prying
-              doAfter: 1
