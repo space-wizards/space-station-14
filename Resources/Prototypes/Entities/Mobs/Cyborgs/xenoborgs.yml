@@ -21,6 +21,17 @@
       shader: unshaded
       map: ["light"]
       visible: false
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
   - type: BorgChassis
     maxModules: 7
     hasMindState: xenoborg_engi_e
