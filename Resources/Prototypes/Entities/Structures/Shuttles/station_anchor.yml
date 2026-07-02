@@ -42,9 +42,9 @@
           bounds: "-0.7,-0.7,0.7,0.7"
         density: 190
         mask:
-        - LargeMobMask
+        - LargeMachineMask
         layer:
-        - WallLayer
+        - LargeMachineLayer
 
 - type: entity
   id: StationAnchorIndestructible
