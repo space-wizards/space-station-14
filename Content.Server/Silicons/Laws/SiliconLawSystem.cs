@@ -108,7 +108,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
         TryComp(uid, out IntrinsicRadioTransmitterComponent? intrinsicRadio);
         var radioChannels = intrinsicRadio?.Channels;
 
-        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
+        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels, component.Version);
         _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
     }
 
@@ -253,6 +253,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+        UpdateLawVersion(uid);
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
 
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
@@ -312,6 +313,18 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
             }
             SetLaws(lawset.Laws, update, provider.LawUploadSound);
         }
+    }
+
+    /// <summary>
+    /// Updates the version on a target SiliconLawBoundComponent. This is used in the law UI as flair to show the
+    /// number of updates a silicon player's laws has had
+    /// </summary>
+    private void UpdateLawVersion(Entity<SiliconLawBoundComponent?> target)
+    {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
+        target.Comp.Version++;
     }
 }
 

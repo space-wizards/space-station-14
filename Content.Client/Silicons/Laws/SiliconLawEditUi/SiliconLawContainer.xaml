@@ -2,30 +2,63 @@
     xmlns="https://spacestation14.io"
     xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    HorizontalExpand="True"
-    Orientation="Vertical"
-    >
+    Orientation="Vertical">
     <customControls:HSeparator></customControls:HSeparator>
     <BoxContainer>
-        <Label StyleClasses="SiliconLawPositionLabel" Name="PositionText" Margin="5 0 0 0"></Label>
+        <BoxContainer
+            Orientation="Vertical"
+            VerticalAlignment="Center"
+            Margin="0 0 5 0">
+            <Button
+                Name="MoveUp"
+                Text="{Loc silicon-law-ui-minus-one}"
+                StyleClasses="OpenLeft">
+            </Button>
+            <Label
+                StyleClasses="SiliconLawPositionLabel"
+                Name="PositionText"
+                Align="Center">
+            </Label>
+            <Button
+                Name="MoveDown"
+                Text="{Loc silicon-law-ui-plus-one}"
+                StyleClasses="OpenRight">
+            </Button>
+        </BoxContainer>
         <PanelContainer
-            Margin="20 10 0 0"
+            Margin="0 10 10 0"
             MinHeight="128"
-        >
+            HorizontalExpand="True">
             <PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BackgroundColor="#1B1B1B"></graphics:StyleBoxFlat>
             </PanelContainer.PanelOverride>
-            <BoxContainer Orientation="Horizontal" SeparationOverride="5">
-                <TextEdit Name="LawContent" HorizontalExpand="True" Editable="True" MinWidth="500" MinHeight="80"></TextEdit>
+            <BoxContainer
+                Orientation="Horizontal"
+                SeparationOverride="5">
+                <TextEdit
+                    Name="LawContent"
+                    HorizontalExpand="True"
+                    Editable="True">
+                </TextEdit>
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>
-    <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" MaxHeight="64" Align="Begin">
-        <Button Name="MoveUp" Text="{Loc silicon-law-ui-minus-one}" StyleClasses="OpenRight"></Button>
-        <Button Name="MoveDown" Text="{Loc silicon-law-ui-plus-one}" StyleClasses="OpenLeft"></Button>
-        <CheckBox Name="Corrupted" Text="{Loc silicon-law-ui-check-corrupted}" ToolTip="{Loc silicon-law-ui-check-corrupted-tooltip}"></CheckBox>
-    </BoxContainer>
-    <BoxContainer Orientation="Horizontal" Align="End" Margin="0 10 5 10">
-        <Button Name="Delete" Text="{Loc silicon-law-ui-delete}" ModulateSelfOverride="Red"></Button>
+    <BoxContainer
+        Orientation="Horizontal"
+        Margin="5 10 5 10">
+        <CheckBox
+            Name="Corrupted"
+            Text="{Loc silicon-law-ui-check-corrupted}"
+            ToolTip="{Loc silicon-law-ui-check-corrupted-tooltip}">
+        </CheckBox>
+        <BoxContainer
+            HorizontalExpand="True"> <!--> This is here just to seperate the two buttons on the UI. I hate this. <!-->
+        </BoxContainer>
+        <Button
+            Name="Delete"
+            Text="{Loc silicon-law-ui-delete}"
+            ModulateSelfOverride="Red"
+            Margin="5 0 0 0">
+        </Button>
     </BoxContainer>
 </BoxContainer>
