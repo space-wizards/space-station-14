@@ -2,7 +2,7 @@
   id: RadiationCollector
   name: radiation collector
   suffix: Empty tank
-  description: A machine that collects radiation and turns it into power. Requires plasma gas to function.
+  description: A machine that collects radiation and turns it into power. Requires plasma or tritium gas to function.
   placement:
     mode: SnapgridCenter
   components:
@@ -62,6 +62,9 @@
       - reactantPrototype: Plasma
         powerGenerationEfficiency: 1
         reactantBreakdownRate: 0.0001
+      - reactantPrototype: Tritium
+        powerGenerationEfficiency: 1.5
+        reactantBreakdownRate: 0.00005
   - type: RadiationReceiver
   - type: PowerSupplier
   - type: Anchorable
