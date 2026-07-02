@@ -301,7 +301,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         var index = rand.Next(butcherable.SpawnedEntities.Count);
         var entry = butcherable.SpawnedEntities[index];
 
-        var uid = PredictedSpawnNextToOrDrop(entry.PrototypeId, ent);
+        var uid = PredictedSpawnNextToOrDrop(entry.PrototypeId, ent.Owner);
         _metaDataSystem.SetEntityName(uid,
             Loc.GetString("comp-kitchen-spike-meat-name",
                 ("name", Name(uid)),

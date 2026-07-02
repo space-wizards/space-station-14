@@ -20,14 +20,14 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
         {
             for (var i = 0; i < quantity; i++)
             {
-                PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+                PredictedSpawnNextToOrDrop(proto, entity!);
             }
         }
         else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {
-                SpawnNextToOrDrop(proto, entity, entity.Comp);
+                SpawnNextToOrDrop(proto, entity!);
             }
         }
     }
