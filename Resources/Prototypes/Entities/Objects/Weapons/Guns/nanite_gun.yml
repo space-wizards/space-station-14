@@ -36,6 +36,10 @@
     magState: mag-unshaded
     steps: 6
     zeroVisible: true
+  - type: CustomSpriteAmmoCounter
+    loadedAmmoSprite: Interface/ItemStatus/Crystals/crystal.png
+    spentAmmoSprite: Interface/ItemStatus/Crystals/crystal_empty.png
+    numberOfRows: 1
   - type: Appearance
   - type: ContainerContainer
     containers:
