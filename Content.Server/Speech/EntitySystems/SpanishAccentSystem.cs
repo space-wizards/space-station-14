@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
@@ -6,6 +7,10 @@ namespace Content.Server.Speech.EntitySystems
 {
     public sealed class SpanishAccentSystem : EntitySystem
     {
+        private static readonly Regex RegexLower = new(@"(?<!\w)(s+h*[bcdfgjklmnpqrtvwxz])"); // for words in all lowercase (multiple "s" are allowed)
+        private static readonly Regex RegexCaps = new(@"(?<!\w)S(s*h*[bcdfgjklmnpqrtvwxz])"); // For Capitalized Words (Station -> Estation; Capital "S" Is Replaced Directly, Multiple "S" Are Allowed)
+        private static readonly Regex RegexUpper = new(@"(?<!\w)(SH*[BCDFGJKLMNPQRTVWXZ])"); // FOR WORDS IN ALL UPPERCASE (ONLY ONE "S" IS ALLOWED, ASSUMING IT'S NOT AN ACRONYM)
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SpanishAccentComponent, AccentGetEvent>(OnAccent);
@@ -13,7 +18,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            // Insert E before every S
+            // Insert E before every S that is followed by a consonant that makes a distinct sound (H is excluded because [sh] is a single sound)
             message = InsertS(message);
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
             message = ReplacePunctuation(message);
@@ -22,20 +27,12 @@ namespace Content.Server.Speech.EntitySystems
 
         private string InsertS(string message)
         {
-            // Replace every new Word that starts with s/S
-            var msg = message.Replace(" s", " es").Replace(" S", " Es");
+            // Replace every new Word that starts with s/S and a consonant
+            message = RegexLower.Replace(message, "e$1");
+            message = RegexCaps.Replace(message, "Es$1");
+            message = RegexUpper.Replace(message, "E$1");
 
-            // Still need to check if the beginning of the message starts
-            if (msg.StartsWith("s", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "es");
-            }
-            else if (msg.StartsWith("S", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "Es");
-            }
-
-            return msg;
+            return message;
         }
 
         private string ReplacePunctuation(string message)
