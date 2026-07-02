@@ -1,7 +1,7 @@
 - type: entity
-  id: MobCreatureTest
+  id: MobSpaceLeechTest
   parent: [ BaseMob, BaseMobAnimal ]
-  name: the creature
+  name: space leech
   description: Something ancient and hungry has found its way aboard.
   suffix: TEST
   components:
@@ -96,7 +96,7 @@
   # ── Stealth ───────────────────────────────────────────────────────────────
   - type: Stealth
   - type: StealthOnMove
-    passiveVisibilityRate: -0.15  # rank-0 value; overwritten by CreatureSystem on MapInit
+    passiveVisibilityRate: -0.15  # rank-0 value; overwritten by SpaceLeechSystem on MapInit
     movementVisibilityRate: 0.15
 
   # ── Pulling ───────────────────────────────────────────────────────────────
@@ -106,36 +106,36 @@
 
   # ── Prying ────────────────────────────────────────────────────────────────
   - type: Prying
-    speedModifier: 1.0  # rank-0 value; overwritten by CreatureSystem on MapInit
+    speedModifier: 1.0  # rank-0 value; overwritten by SpaceLeechSystem on MapInit
     pryPowered: true
     force: true
 
-  # ── Creature-specific state ───────────────────────────────────────────────
-  - type: Creature
+  # ── Space Leech state ─────────────────────────────────────────────────────
+  - type: SpaceLeech
     bloodPool: 0
     maxBloodPool: 400
 
   # ── Upgrade menu BUI ──────────────────────────────────────────────────────
   - type: UserInterface
     interfaces:
-      enum.CreatureUiKey.UpgradeMenu:
-        type: CreatureUpgradeMenuBoundUserInterface
+      enum.SpaceLeechUiKey.UpgradeMenu:
+        type: SpaceLeechUpgradeMenuBoundUserInterface
 
   # ── Upgrade menu action ───────────────────────────────────────────────────
   - type: ActionGrant
     actions:
-    - ActionCreatureUpgradeMenu
+    - ActionSpaceLeechUpgradeMenu
 
   # ── Sting ability (gated by sting upgrade rank) ───────────────────────────
   - type: ActionGun
-    action: ActionCreatureSting
-    gunProto: CreatureStingGun
+    action: ActionSpaceLeechSting
+    gunProto: SpaceLeechStingGun
 
   # ── Ghost role ────────────────────────────────────────────────────────────
   - type: GhostRole
     makeSentient: true
-    name: ghost-role-information-creature-test-name
-    description: ghost-role-information-creature-test-description
+    name: ghost-role-information-space-leech-test-name
+    description: ghost-role-information-space-leech-test-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
@@ -146,12 +146,12 @@
 # ── Sting supporting entities ──────────────────────────────────────────────
 
 - type: entity
-  id: CreatureStingGun
+  id: SpaceLeechStingGun
   categories: [ HideSpawnMenu ]
-  name: creature sting gland
+  name: space leech sting gland
   components:
   - type: BasicEntityAmmoProvider
-    proto: ProjectileCreatureSting
+    proto: ProjectileSpaceLeechSting
     capacity: 1
     count: 1
   - type: RechargeBasicEntityAmmo
@@ -163,7 +163,7 @@
 
 - type: entity
   parent: BaseBullet
-  id: ProjectileCreatureSting
+  id: ProjectileSpaceLeechSting
   categories: [ HideSpawnMenu ]
   name: venom bolt
   components:
@@ -178,4 +178,4 @@
     damage:
       types:
         Piercing: 1
-  - type: CreatureStingProjectile
+  - type: SpaceLeechStingProjectile

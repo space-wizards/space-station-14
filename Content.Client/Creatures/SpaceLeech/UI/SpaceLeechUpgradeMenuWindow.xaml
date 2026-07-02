@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      Title="{Loc 'creature-upgrade-menu-title'}"
+                      Title="{Loc 'space-leech-upgrade-menu-title'}"
                       MinSize="940 510"
                       SetSize="940 510"
                       Resizable="False">
@@ -20,7 +20,7 @@
 
                     <!-- "BLOOD · ml" heading row -->
                     <BoxContainer Orientation="Horizontal" Margin="0 0 0 6">
-                        <Label Text="{Loc 'creature-upgrade-blood-section'}"
+                        <Label Text="{Loc 'space-leech-upgrade-blood-section'}"
                                StyleClasses="LabelHeading" />
                         <Control HorizontalExpand="True" />
                         <Label Text="ml" StyleClasses="LabelSubText" VAlign="Bottom" />
@@ -49,14 +49,14 @@
                         </PanelContainer.PanelOverride>
                         <BoxContainer Orientation="Vertical" Margin="8 6">
                             <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc 'creature-upgrade-lifetime'}"
+                                <Label Text="{Loc 'space-leech-upgrade-lifetime'}"
                                        StyleClasses="LabelSubText" />
                                 <Control HorizontalExpand="True" />
                                 <Label Name="LifetimeLabel" />
                             </BoxContainer>
                             <PanelContainer StyleClasses="LowDivider" Margin="0 3" />
                             <BoxContainer Orientation="Horizontal">
-                                <Label Text="{Loc 'creature-upgrade-mutations'}"
+                                <Label Text="{Loc 'space-leech-upgrade-mutations'}"
                                        StyleClasses="LabelSubText" />
                                 <Control HorizontalExpand="True" />
                                 <Label Name="MutationsLabel" />
@@ -82,12 +82,12 @@
 
                 <!-- Catalog heading row -->
                 <BoxContainer Orientation="Horizontal" Margin="0 0 0 8">
-                    <Label Text="{Loc 'creature-upgrade-catalog-section'}"
+                    <Label Text="{Loc 'space-leech-upgrade-catalog-section'}"
                            StyleClasses="LabelHeading" />
                     <PanelContainer StyleClasses="LowDivider"
                                     HorizontalExpand="True"
                                     Margin="8 0" />
-                    <Label Text="{Loc 'creature-upgrade-catalog-hint'}"
+                    <Label Text="{Loc 'space-leech-upgrade-catalog-hint'}"
                            StyleClasses="LabelSubText"
                            VAlign="Bottom" />
                 </BoxContainer>
@@ -107,7 +107,7 @@
         <!-- Footer -->
         <PanelContainer StyleClasses="HighDivider" />
         <BoxContainer Orientation="Horizontal" Margin="10 2">
-            <Label Text="{Loc 'creature-upgrade-footer'}"
+            <Label Text="{Loc 'space-leech-upgrade-footer'}"
                    StyleClasses="WindowFooterText"
                    HorizontalExpand="True" />
             <Label Text="◉ REC" StyleClasses="WindowFooterText" />

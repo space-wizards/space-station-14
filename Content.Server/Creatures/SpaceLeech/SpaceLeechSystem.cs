@@ -3,7 +3,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Content.Shared.Creatures.TheCreature;
+using Content.Shared.Creatures.SpaceLeech;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mind;
@@ -22,9 +22,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Creatures.TheCreature;
+namespace Content.Server.Creatures.SpaceLeech;
 
-public sealed class CreatureSystem : EntitySystem
+public sealed class SpaceLeechSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
@@ -39,78 +39,78 @@ public sealed class CreatureSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CreatureComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<CreatureComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<CreatureComponent, MindAddedMessage>(OnMindAdded);
+        SubscribeLocalEvent<SpaceLeechComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SpaceLeechComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<SpaceLeechComponent, MindAddedMessage>(OnMindAdded);
 
         // Action → open upgrade menu
-        SubscribeLocalEvent<CreatureComponent, CreatureUpgradeMenuActionEvent>(OnMenuAction);
+        SubscribeLocalEvent<SpaceLeechComponent, SpaceLeechUpgradeMenuActionEvent>(OnMenuAction);
 
         // BUI lifecycle
-        Subs.BuiEvents<CreatureComponent>(CreatureUiKey.UpgradeMenu, subs =>
+        Subs.BuiEvents<SpaceLeechComponent>(SpaceLeechUiKey.UpgradeMenu, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnMenuOpened);
-            subs.Event<CreatureEvolveMessage>(OnEvolve);
+            subs.Event<SpaceLeechEvolveMessage>(OnEvolve);
         });
 
         // Runtime upgrade effects (event-based — no explicit refresh needed)
-        SubscribeLocalEvent<CreatureComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        SubscribeLocalEvent<CreatureComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
-        SubscribeLocalEvent<CreatureComponent, DamageModifyEvent>(OnDamageModify);
+        SubscribeLocalEvent<SpaceLeechComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+        SubscribeLocalEvent<SpaceLeechComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+        SubscribeLocalEvent<SpaceLeechComponent, DamageModifyEvent>(OnDamageModify);
 
         // Sting hit — apply rank-scaled knockdown
-        SubscribeLocalEvent<CreatureStingProjectileComponent, ProjectileHitEvent>(OnStingHit);
+        SubscribeLocalEvent<SpaceLeechStingProjectileComponent, ProjectileHitEvent>(OnStingHit);
 
         // Blood feeding
-        SubscribeLocalEvent<CreatureComponent, IngestingEvent>(OnCreatureIngesting);
+        SubscribeLocalEvent<SpaceLeechComponent, IngestingEvent>(OnSpaceLeechIngesting);
 
         // Ravenous - speed up eating DoAfter; directed on PuddleComponent so it fires during RaiseLocalEvent(puddle, ref ev)
         // after IngestionSystem's OnEdible sets the base delay (broadcast=false means broadcast subs never fire).
-        SubscribeLocalEvent<PuddleComponent, EdibleEvent>(OnCreatureEdible,
+        SubscribeLocalEvent<PuddleComponent, EdibleEvent>(OnSpaceLeechEdible,
             after: [typeof(IngestionSystem)]);
     }
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
 
-    private void OnMapInit(EntityUid uid, CreatureComponent comp, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, SpaceLeechComponent comp, MapInitEvent args)
     {
         ApplyUpgrades(uid, comp);
     }
 
-    private void OnMobStateChanged(EntityUid uid, CreatureComponent comp, MobStateChangedEvent args)
+    private void OnMobStateChanged(EntityUid uid, SpaceLeechComponent comp, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
             _stealth.SetEnabled(uid, false);
     }
 
-    private void OnMindAdded(EntityUid uid, CreatureComponent comp, MindAddedMessage args)
+    private void OnMindAdded(EntityUid uid, SpaceLeechComponent comp, MindAddedMessage args)
     {
-        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "CreatureSurviveObjective");
-        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "CreatureBloodObjective");
-        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "CreaturePetBloodObjective");
+        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "SpaceLeechSurviveObjective");
+        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "SpaceLeechBloodObjective");
+        _mind.TryAddObjective(args.Mind, args.Mind.Comp, "SpaceLeechPetBloodObjective");
     }
 
     // ── BUI ───────────────────────────────────────────────────────────────────
 
-    private void OnMenuAction(EntityUid uid, CreatureComponent comp, CreatureUpgradeMenuActionEvent args)
+    private void OnMenuAction(EntityUid uid, SpaceLeechComponent comp, SpaceLeechUpgradeMenuActionEvent args)
     {
-        _uiSystem.TryToggleUi(uid, CreatureUiKey.UpgradeMenu, args.Performer);
+        _uiSystem.TryToggleUi(uid, SpaceLeechUiKey.UpgradeMenu, args.Performer);
     }
 
-    private void OnMenuOpened(EntityUid uid, CreatureComponent comp, BoundUIOpenedEvent args)
+    private void OnMenuOpened(EntityUid uid, SpaceLeechComponent comp, BoundUIOpenedEvent args)
     {
         ApplyUpgrades(uid, comp);
         UpdateBuiState(uid, comp);
     }
 
-    private void OnEvolve(EntityUid uid, CreatureComponent comp, CreatureEvolveMessage msg)
+    private void OnEvolve(EntityUid uid, SpaceLeechComponent comp, SpaceLeechEvolveMessage msg)
     {
-        if (!_proto.TryIndex<CreatureUpgradePrototype>(msg.UpgradeId, out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>(msg.UpgradeId, out var upgrade))
             return;
 
         comp.UpgradeRanks.TryGetValue(msg.UpgradeId, out var currentRank);
 
-        if (currentRank >= CreatureUpgradePrototype.MaxRank)
+        if (currentRank >= SpaceLeechUpgradePrototype.MaxRank)
             return;
 
         var cost = upgrade.Costs[currentRank];
@@ -125,13 +125,13 @@ public sealed class CreatureSystem : EntitySystem
         UpdateBuiState(uid, comp);
     }
 
-    public void UpdateBuiState(EntityUid uid, CreatureComponent? comp = null)
+    public void UpdateBuiState(EntityUid uid, SpaceLeechComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
 
-        _uiSystem.SetUiState(uid, CreatureUiKey.UpgradeMenu,
-            new CreatureUpgradeMenuBuiState(
+        _uiSystem.SetUiState(uid, SpaceLeechUiKey.UpgradeMenu,
+            new SpaceLeechUpgradeMenuBuiState(
                 comp.BloodPool,
                 comp.MaxBloodPool,
                 comp.BloodConsumedTotal,
@@ -140,12 +140,12 @@ public sealed class CreatureSystem : EntitySystem
 
     // ── Upgrade application ───────────────────────────────────────────────────
 
-    private void ApplyUpgrades(EntityUid uid, CreatureComponent comp)
+    private void ApplyUpgrades(EntityUid uid, SpaceLeechComponent comp)
     {
-        comp.UpgradeRanks.TryGetValue("CreatureUpgradeShadow", out var shadowRank);
+        comp.UpgradeRanks.TryGetValue("SpaceLeechUpgradeShadow", out var shadowRank);
         ApplyStealthUpgrade(uid, shadowRank);
 
-        comp.UpgradeRanks.TryGetValue("CreatureUpgradePry", out var pryRank);
+        comp.UpgradeRanks.TryGetValue("SpaceLeechUpgradePry", out var pryRank);
         ApplyPryUpgrade(uid, pryRank);
 
         _movement.RefreshMovementSpeedModifiers(uid);
@@ -156,7 +156,7 @@ public sealed class CreatureSystem : EntitySystem
         if (!TryComp<StealthOnMoveComponent>(uid, out var stealthMove))
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradeShadow", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradeShadow", out var upgrade))
             return;
 
         stealthMove.PassiveVisibilityRate = upgrade.Magnitudes[rank];
@@ -167,7 +167,7 @@ public sealed class CreatureSystem : EntitySystem
         if (!TryComp<PryingComponent>(uid, out var prying))
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradePry", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradePry", out var upgrade))
             return;
 
         // SpeedModifier is a divisor on pry time (time = base / modifier), so invert the time-fraction magnitude.
@@ -176,13 +176,13 @@ public sealed class CreatureSystem : EntitySystem
 
     // ── Event handlers for runtime upgrade effects ────────────────────────────
 
-    private void OnGetMeleeDamage(EntityUid uid, CreatureComponent comp, ref GetMeleeDamageEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, SpaceLeechComponent comp, ref GetMeleeDamageEvent args)
     {
-        comp.UpgradeRanks.TryGetValue("CreatureUpgradePredator", out var rank);
+        comp.UpgradeRanks.TryGetValue("SpaceLeechUpgradePredator", out var rank);
         if (rank == 0)
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradePredator", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradePredator", out var upgrade))
             return;
 
         var coeff = upgrade.Magnitudes[rank];
@@ -192,49 +192,49 @@ public sealed class CreatureSystem : EntitySystem
         });
     }
 
-    private void OnRefreshSpeed(EntityUid uid, CreatureComponent comp, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshSpeed(EntityUid uid, SpaceLeechComponent comp, RefreshMovementSpeedModifiersEvent args)
     {
-        comp.UpgradeRanks.TryGetValue("CreatureUpgradeQuickness", out var rank);
+        comp.UpgradeRanks.TryGetValue("SpaceLeechUpgradeQuickness", out var rank);
         if (rank == 0)
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradeQuickness", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradeQuickness", out var upgrade))
             return;
 
         var mult = upgrade.Magnitudes[rank];
         args.ModifySpeed(mult, mult);
     }
 
-    private void OnStingHit(EntityUid uid, CreatureStingProjectileComponent comp, ref ProjectileHitEvent args)
+    private void OnStingHit(EntityUid uid, SpaceLeechStingProjectileComponent comp, ref ProjectileHitEvent args)
     {
-        if (args.Shooter is not { } shooter || !TryComp<CreatureComponent>(shooter, out var creature))
+        if (args.Shooter is not { } shooter || !TryComp<SpaceLeechComponent>(shooter, out var leech))
             return;
 
-        creature.UpgradeRanks.TryGetValue("CreatureUpgradeVenom", out var rank);
+        leech.UpgradeRanks.TryGetValue("SpaceLeechUpgradeVenom", out var rank);
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradeVenom", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradeVenom", out var upgrade))
             return;
 
         var stunTime = TimeSpan.FromSeconds(upgrade.Magnitudes[rank]);
         _stun.TryKnockdown(args.Target, stunTime, refresh: true, autoStand: true, drop: false, force: true);
     }
 
-    private void OnCreatureEdible(EntityUid uid, PuddleComponent comp, ref EdibleEvent args)
+    private void OnSpaceLeechEdible(EntityUid uid, PuddleComponent comp, ref EdibleEvent args)
     {
-        if (!TryComp<CreatureComponent>(args.User, out var creature))
+        if (!TryComp<SpaceLeechComponent>(args.User, out var leech))
             return;
 
-        creature.UpgradeRanks.TryGetValue("CreatureUpgradeRavenous", out var rank);
+        leech.UpgradeRanks.TryGetValue("SpaceLeechUpgradeRavenous", out var rank);
         if (rank == 0)
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradeRavenous", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradeRavenous", out var upgrade))
             return;
 
         args.Time = TimeSpan.FromSeconds(args.Time.TotalSeconds * upgrade.Magnitudes[rank]);
     }
 
-    private void OnCreatureIngesting(EntityUid uid, CreatureComponent comp, ref IngestingEvent args)
+    private void OnSpaceLeechIngesting(EntityUid uid, SpaceLeechComponent comp, ref IngestingEvent args)
     {
         // Measure blood reagents for the pool, then clear the entire split so nothing is metabolized.
         // Clearing everything prevents toxicity from non-standard blood types and any accompanying reagents.
@@ -259,13 +259,13 @@ public sealed class CreatureSystem : EntitySystem
         Dirty(uid, comp);
         UpdateBuiState(uid, comp);
 
-        // Restore a fraction of the creature's own bloodstream directly — bypasses metabolism so FerrochromicAcid is never injected.
+        // Restore a fraction of the space leech's own bloodstream directly — bypasses metabolism so FerrochromicAcid is never injected.
         _bloodstream.TryModifyBloodLevel(uid, FixedPoint2.New(bloodGained * 0.2f));
     }
 
     private bool IsBloodReagent(string prototypeId)
     {
-        // Exclude the creature's own blood type to prevent drinking spilled self-blood for infinite resources/healing.
+        // Exclude the space leech's own blood type to prevent drinking spilled self-blood for infinite resources/healing.
         if (prototypeId == "FerrochromicAcid")
             return false;
 
@@ -277,13 +277,13 @@ public sealed class CreatureSystem : EntitySystem
                && proto.Parents.Contains("Blood");
     }
 
-    private void OnDamageModify(EntityUid uid, CreatureComponent comp, DamageModifyEvent args)
+    private void OnDamageModify(EntityUid uid, SpaceLeechComponent comp, DamageModifyEvent args)
     {
-        comp.UpgradeRanks.TryGetValue("CreatureUpgradeIronhide", out var rank);
+        comp.UpgradeRanks.TryGetValue("SpaceLeechUpgradeIronhide", out var rank);
         if (rank == 0)
             return;
 
-        if (!_proto.TryIndex<CreatureUpgradePrototype>("CreatureUpgradeIronhide", out var upgrade))
+        if (!_proto.TryIndex<SpaceLeechUpgradePrototype>("SpaceLeechUpgradeIronhide", out var upgrade))
             return;
 
         var coeff = upgrade.Magnitudes[rank];

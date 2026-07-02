@@ -1,9 +1,9 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Creatures.TheCreature;
+namespace Content.Shared.Creatures.SpaceLeech;
 
 [Serializable, NetSerializable]
-public enum CreatureUiKey : byte
+public enum SpaceLeechUiKey : byte
 {
     UpgradeMenu,
 }

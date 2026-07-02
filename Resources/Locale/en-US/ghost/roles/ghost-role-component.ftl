@@ -351,5 +351,5 @@ ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your ma
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.
 
-ghost-role-information-creature-test-name = The Creature
-ghost-role-information-creature-test-description = Something ancient and hungry has found its way aboard. Hunt. Feed. Evolve.
+ghost-role-information-space-leech-test-name = Space Leech
+ghost-role-information-space-leech-test-description = Something ancient and hungry has found its way aboard. Hunt. Feed. Evolve.

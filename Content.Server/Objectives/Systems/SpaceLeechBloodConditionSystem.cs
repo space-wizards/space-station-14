@@ -1,11 +1,11 @@
 using Content.Server.Objectives.Components;
-using Content.Shared.Creatures.TheCreature;
+using Content.Shared.Creatures.SpaceLeech;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class CreatureBloodConditionSystem : EntitySystem
+public sealed class SpaceLeechBloodConditionSystem : EntitySystem
 {
     [Dependency] private readonly NumberObjectiveSystem _number = default!;
 
@@ -13,10 +13,10 @@ public sealed class CreatureBloodConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CreatureBloodConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<SpaceLeechBloodConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetProgress(EntityUid uid, CreatureBloodConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(EntityUid uid, SpaceLeechBloodConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetProgress(args.Mind, _number.GetTarget(uid));
     }
@@ -26,9 +26,9 @@ public sealed class CreatureBloodConditionSystem : EntitySystem
         if (target <= 0)
             return 1f;
 
-        if (mind.OwnedEntity is not { } ent || !TryComp<CreatureComponent>(ent, out var creature))
+        if (mind.OwnedEntity is not { } ent || !TryComp<SpaceLeechComponent>(ent, out var leech))
             return 0f;
 
-        return Math.Min(1f, creature.BloodConsumedTotal / target);
+        return Math.Min(1f, leech.BloodConsumedTotal / target);
     }
 }

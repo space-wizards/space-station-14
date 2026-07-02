@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseAction
-  id: ActionCreatureUpgradeMenu
+  id: ActionSpaceLeechUpgradeMenu
   name: Evolve
   description: Opens the evolution terminal to spend blood on upgrades.
   components:
@@ -8,11 +8,11 @@
     icon: Interface/Actions/shop.png
     checkCanInteract: false
   - type: InstantAction
-    event: !type:CreatureUpgradeMenuActionEvent
+    event: !type:SpaceLeechUpgradeMenuActionEvent
 
 - type: entity
   parent: BaseAction
-  id: ActionCreatureSting
+  id: ActionSpaceLeechSting
   name: Venom Spit
   description: Spit a paralyzing bolt that knocks the target down. Stun duration scales with Venom upgrade rank.
   components:

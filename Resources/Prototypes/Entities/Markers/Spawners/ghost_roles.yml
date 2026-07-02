@@ -362,21 +362,21 @@
       state: icon
 
 - type: entity
-  id: SpawnPointGhostCreatureTest
+  id: SpawnPointGhostSpaceLeechTest
   name: ghost role spawn point
-  suffix: creature test
+  suffix: space leech test
   parent: MarkerBase
   components:
   - type: GhostRole
-    name: ghost-role-information-creature-test-name
-    description: ghost-role-information-creature-test-description
+    name: ghost-role-information-space-leech-test-name
+    description: ghost-role-information-space-leech-test-description
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
-    prototype: MobCreatureTest
+    prototype: MobSpaceLeechTest
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

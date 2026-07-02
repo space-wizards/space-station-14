@@ -3,7 +3,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Creatures.TheCreature.UI;
+namespace Content.Client.Creatures.SpaceLeech.UI;
 
 /// <summary>
 ///     Vertical blood gauge with a red fill level and tick-mark scale.

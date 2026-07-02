@@ -1360,7 +1360,7 @@
   id: StationMapElectronics # ConstructionGraph: StationMap
 
 - type: Tag
-  id: StationPet # Named unique station pets. Used by the Creature antag's drain-pet-blood objective.
+  id: StationPet # Named unique station pets. Used by the Space Leech antag's drain-pet-blood objective.
 
 - type: Tag
   id: Steak # CargoBounty: BountySteak

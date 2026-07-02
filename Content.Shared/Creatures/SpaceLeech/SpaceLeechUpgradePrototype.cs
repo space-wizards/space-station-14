@@ -1,9 +1,9 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Creatures.TheCreature;
+namespace Content.Shared.Creatures.SpaceLeech;
 
-[Prototype("CreatureUpgrade")]
-public sealed partial class CreatureUpgradePrototype : IPrototype
+[Prototype("SpaceLeechUpgrade")]
+public sealed partial class SpaceLeechUpgradePrototype : IPrototype
 {
     public const int MaxRank = 3;
 
@@ -26,7 +26,7 @@ public sealed partial class CreatureUpgradePrototype : IPrototype
 
     /// <summary>
     /// Numeric magnitudes indexed by rank (0 = base/unpurchased, 1-3 = purchased).
-    /// Interpretation is upgrade-specific - see CreatureSystem for usage.
+    /// Interpretation is upgrade-specific - see SpaceLeechSystem for usage.
     /// </summary>
     [DataField]
     public float[] Magnitudes = { 0f, 0f, 0f, 0f };

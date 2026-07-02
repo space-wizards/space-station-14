@@ -1,12 +1,12 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Creatures.TheCreature;
+namespace Content.Shared.Creatures.SpaceLeech;
 
 /// <summary>
-///     Tracks blood pool and evolution state for The Creature antag.
+///     Tracks blood pool and evolution state for the Space Leech antag.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class CreatureComponent : Component
+public sealed partial class SpaceLeechComponent : Component
 {
     /// <summary>Spendable blood right now. Stored as float to preserve fractional units from impure blood.</summary>
     [DataField, AutoNetworkedField]

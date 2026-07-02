@@ -7,8 +7,8 @@
 #   Pry       - pry speed modifier (lower = faster)
 #   Ironhide  - incoming damage coefficient (lower = less damage taken)
 
-- type: CreatureUpgrade
-  id: CreatureUpgradePredator
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradePredator
   name: Strike
   stat: ATTACK
   costs: [100, 185, 215]
@@ -18,8 +18,8 @@
   - "Bite damage +15."
   magnitudes: [1.0, 1.5, 2.0, 2.5]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradeQuickness
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradeQuickness
   name: Quickness
   stat: MOVE
   costs: [100, 145, 185]
@@ -29,8 +29,8 @@
   - "Move speed +25%."
   magnitudes: [1.0, 1.08, 1.16, 1.25]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradeShadow
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradeShadow
   name: Shadow
   stat: STEALTH
   costs: [100, 145, 185]
@@ -40,8 +40,8 @@
   - "Passive fade speed +153%."
   magnitudes: [-0.15, -0.20, -0.27, -0.38]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradeVenom
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradeVenom
   name: Venom
   stat: STING
   costs: [100, 145, 185]
@@ -51,8 +51,8 @@
   - "Sting stun 14 seconds."
   magnitudes: [5.0, 8.0, 11.0, 14.0]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradeRavenous
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradeRavenous
   name: Ravenous
   stat: FEED
   costs: [100, 145, 185]
@@ -62,8 +62,8 @@
   - "Drink blood 50% faster."
   magnitudes: [1.0, 0.80, 0.65, 0.50]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradePry
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradePry
   name: Pry Mastery
   stat: PRY
   costs: [100, 145, 185]
@@ -73,8 +73,8 @@
   - "Near-instant pry."
   magnitudes: [1.0, 0.75, 0.40, 0.05]
 
-- type: CreatureUpgrade
-  id: CreatureUpgradeIronhide
+- type: SpaceLeechUpgrade
+  id: SpaceLeechUpgradeIronhide
   name: Iron Hide
   stat: ARMOR
   costs: [100, 145, 185]
