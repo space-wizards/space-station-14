@@ -44,9 +44,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
     [Dependency] private EntityQuery<TradeStationComponent> _tradeStationQuery = default!;
 
-    private HashSet<EntityUid> _setEnts = new();
     private List<EntityUid> _listEnts = new();
-    private List<(EntityUid, CargoPalletComponent, TransformComponent)> _pads = new();
 
     public override void Initialize()
     {

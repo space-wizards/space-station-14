@@ -36,16 +36,15 @@ public sealed partial class CargoSystem
     {
         if (Transform(uid).GridUid is not { } gridUid)
         {
-            _uiSystem.SetUiState(uid,
-                CargoPalletConsoleUiKey.Sale,
-                new CargoPalletConsoleInterfaceState(0, 0, false));
+            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale, new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
-        GetPalletGoods(gridUid, out var toSell, out var goods);
-        var totalAmount = goods.Sum(t => t.Item3);
-        _uiSystem.SetUiState(uid,
+        GetPalletGoods(gridUid, out var goods);
+        _uiSystem.SetUiState(
+            uid,
             CargoPalletConsoleUiKey.Sale,
-            new CargoPalletConsoleInterfaceState((int) totalAmount, toSell.Count, true));
+            new CargoPalletConsoleInterfaceState((int)goods.Sum(t => t.price), goods.Count, true)
+        );
     }
 
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
@@ -60,7 +59,6 @@ public sealed partial class CargoSystem
     /// I dont want it to explode if cargo uses a conveyor to move 8000 pineapple slices or whatever, they are
     /// known for their entity spam i wouldnt put it past them
     /// </summary>
-
     private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
     {
         UpdatePalletConsoleInterface(uid);
@@ -75,63 +73,98 @@ public sealed partial class CargoSystem
         }
     }
 
-    /// GetCargoPallets(gridUid, BuySellType.Sell) to return only Sell pads
-    /// GetCargoPallets(gridUid, BuySellType.Buy) to return only Buy pads
-    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, BuySellType requestType = BuySellType.All)
-    {
-        _pads.Clear();
+    #endregion
 
-        var query = AllEntityQuery<CargoPalletComponent, TransformComponent>();
+    #region Pallets
+
+    /// <summary>
+    /// Returns all cargo pallets on a grid, filtered by buy/sell type.
+    /// </summary>
+    /// <param name="gridUid">The grid to search for pallets.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.All"/>.</param>
+    /// <returns>Each pallet entity with its <see cref="TransformComponent"/>.</returns>
+    public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)> GetCargoPallets(
+        EntityUid gridUid,
+        BuySellType requestType = BuySellType.All
+    )
+    {
+        var query = EntityQueryEnumerator<CargoPalletComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
         {
-            if (compXform.ParentUid != gridUid ||
-                !compXform.Anchored)
-            {
+            if ((requestType & comp.PalletType) == 0 || compXform.ParentUid != gridUid || !compXform.Anchored)
                 continue;
-            }
-
-            if ((requestType & comp.PalletType) == 0)
-            {
-                continue;
-            }
-
-            _pads.Add((uid, comp, compXform));
-
+            yield return ((uid, comp), compXform);
         }
-
-        return _pads;
     }
 
-    private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)>
-        GetFreeCargoPallets(EntityUid gridUid,
-            List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> pallets)
+    /// <summary>
+    /// Returns all unoccupied cargo pallets on a grid, filtered by buy/sell type.
+    /// A pallet is considered free if no dynamic entities are intersecting it.
+    /// </summary>
+    /// <param name="gridUid">The grid to search for pallets.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Buy"/>.</param>
+    /// <returns>Each free pallet entity with its <see cref="TransformComponent"/>.</returns>
+    public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent Transform)> GetFreeCargoPallets(
+        EntityUid gridUid,
+        BuySellType requestType = BuySellType.Buy
+    )
     {
-        _setEnts.Clear();
-
-        List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent Transform)> outList = new();
-
-        foreach (var pallet in pallets)
+        foreach (var pallet in GetCargoPallets(gridUid, requestType))
         {
-            var aabb = _lookup.GetAABBNoContainer(pallet.Entity, pallet.Transform.LocalPosition, pallet.Transform.LocalRotation);
-
-            if (_lookup.AnyLocalEntitiesIntersecting(gridUid, aabb, LookupFlags.Dynamic))
+            if (IsPalletOccupied(pallet))
                 continue;
 
-            outList.Add(pallet);
+            yield return (pallet.Entity, pallet.PalletXform);
         }
-
-        return outList;
     }
 
+    /// <summary>
+    /// Is the given pallet free of dynamic entities
+    /// </summary>
+    /// <param name="pallet"> The pallet to check. </param>
+    /// <returns> <c>true</c> if the pallet has no dynamic entities on it; otherwise <c>false</c>. </returns>
+    public bool IsPalletOccupied((Entity<CargoPalletComponent> Entity, TransformComponent PalletXform) pallet)
+    {
+        var aabb = _lookup.GetAABBNoContainer(
+            pallet.Entity,
+            pallet.PalletXform.LocalPosition,
+            pallet.PalletXform.LocalRotation
+        );
+        return _lookup.AnyLocalEntitiesIntersecting(pallet.PalletXform.ParentUid, aabb, LookupFlags.Dynamic);
+    }
+
+    /// <summary>
+    /// Returns all dynamic entities currently sitting on pallets on a grid, filtered by buy/sell type.
+    /// </summary>
+    /// <param name="gridUid">The grid to search.</param>
+    /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
+    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored. </param>
+    /// <returns>Distinct set of entity UIDs found on pallets.</returns>
+    public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
+        EntityUid gridUid,
+        BuySellType requestType = BuySellType.Sell,
+        IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)>? pallets = null
+    )
+    {
+        var entities = new HashSet<EntityUid>();
+        foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
+        {
+            var aabb = _lookup.GetAABBNoContainer(
+                pallet.Entity,
+                pallet.PalletXform.LocalPosition,
+                pallet.PalletXform.LocalRotation
+            );
+            _lookup.GetLocalEntitiesIntersecting(gridUid, aabb, entities, LookupFlags.Dynamic | LookupFlags.Sundries);
+        }
+        return entities;
+    }
     #endregion
 
     #region Station
 
-    private bool SellPallets(EntityUid gridUid, EntityUid station, out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
+    private bool SellPallets(EntityUid gridUid, EntityUid station, HashSet<EntityUid> toSell)
     {
-        GetPalletGoods(gridUid, out var toSell, out goods);
-
         if (toSell.Count == 0)
             return false;
 
@@ -146,52 +179,49 @@ public sealed partial class CargoSystem
         return true;
     }
 
-    private void GetPalletGoods(EntityUid gridUid, out HashSet<EntityUid> toSell,  out HashSet<(EntityUid, OverrideSellComponent?, double)> goods)
+    /// <summary>
+    /// Collects all sellable goods from cargo pallets on a grid, along with their prices
+    /// and any sell overrides. Excludes anchored entities, mobs, blacklisted entities,
+    /// and anything with a price of zero.
+    /// </summary>
+    /// <param name="gridUid">The grid to appraise.</param>
+    /// <param name="goods">
+    /// Output set of <c>(entity, overrideSellComponent, price)</c> tuples for each sellable item.
+    /// </param>
+    public void GetPalletGoods(
+        EntityUid gridUid,
+        out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
+    )
     {
         goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
-        toSell = new HashSet<EntityUid>();
 
-        foreach (var (palletUid, _, _) in GetCargoPallets(gridUid, BuySellType.Sell))
+        foreach (var ent in GetEntitiesOnCargoPallets(gridUid))
         {
-            // Containers should already get the sell price of their children so can skip those.
-            _setEnts.Clear();
+            // Don't sell:
+            // - anything already being sold
+            // - anything anchored (e.g. light fixtures)
+            // - anything blacklisted (e.g. players).
+            if (Transform(ent).Anchored || !CanSell(ent))
+                continue;
 
-            _lookup.GetEntitiesIntersecting(
-                palletUid,
-                _setEnts,
-                LookupFlags.Dynamic | LookupFlags.Sundries);
-
-            foreach (var ent in _setEnts)
-            {
-                // Dont sell:
-                // - anything already being sold
-                // - anything anchored (e.g. light fixtures)
-                // - anything blacklisted (e.g. players).
-                if (toSell.Contains(ent) ||
-                    TryComp(ent, out TransformComponent? xform) &&
-                    (xform.Anchored || !CanSell(ent)))
-                {
-                    continue;
-                }
-
-                if (_cargoSellBlacklistQuery.HasComponent(ent))
-                    continue;
-
-                var price = _pricing.GetPrice(ent);
-                if (price == 0)
-                    continue;
-                toSell.Add(ent);
-                goods.Add((ent, CompOrNull<OverrideSellComponent>(ent), price));
-            }
+            var price = _pricing.GetPrice(ent);
+            if (price == 0)
+                continue;
+            goods.Add((ent, CompOrNull<OverrideSellComponent>(ent), price));
         }
     }
 
-    private bool CanSell(EntityUid uid)
+    /// <summary>
+    /// Determines whether an entity is eligible to be sold.
+    /// An entity cannot be sold if it is a mob, is cargo-blacklisted,
+    /// or contains any such entities recursively in its children.
+    /// </summary>
+    /// <param name="uid">The entity to check.</param>
+    /// <returns><c>true</c> if the entity and all its children are sellable; otherwise <c>false</c>.</returns>
+    public bool CanSell(EntityUid uid)
     {
-        if (_mobStateQuery.HasComponent(uid))
-        {
+        if (_mobStateQuery.HasComponent(uid) || _cargoSellBlacklistQuery.HasComponent(uid))
             return false;
-        }
 
         var complete = IsBountyComplete(uid, out var bountyEntities);
 
@@ -214,21 +244,23 @@ public sealed partial class CargoSystem
     {
         var xform = Transform(uid);
 
-        if (_station.GetOwningStation(uid) is not { } station ||
-            !TryComp<StationBankAccountComponent>(station, out var bankAccount))
+        if (
+            _station.GetOwningStation(uid) is not { } station
+            || !TryComp<StationBankAccountComponent>(station, out var bankAccount)
+        )
         {
             return;
         }
 
         if (xform.GridUid is not { } gridUid)
         {
-            _uiSystem.SetUiState(uid,
-                CargoPalletConsoleUiKey.Sale,
-                new CargoPalletConsoleInterfaceState(0, 0, false));
+            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale, new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
 
-        if (!SellPallets(gridUid, station, out var goods))
+        GetPalletGoods(gridUid, out var goods);
+
+        if (!SellPallets(gridUid, station, goods.Select(x => x.ent).ToHashSet()))
             return;
 
         var baseDistribution = CreateAccountDistribution((station, bankAccount));
@@ -249,7 +281,7 @@ public sealed partial class CargoSystem
                 distribution = baseDistribution;
             }
 
-            UpdateBankAccount((station, bankAccount), (int) Math.Round(value), distribution, false);
+            UpdateBankAccount((station, bankAccount), (int)Math.Round(value), distribution, false);
         }
 
         Dirty(station, bankAccount);
