@@ -1,7 +1,7 @@
 # Generic Markings
 - type: marking
   id: GauzeLefteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -14,7 +14,7 @@
 
 - type: marking
   id: GauzeLefteyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
   coloring:
     default:
@@ -27,7 +27,7 @@
 
 - type: marking
   id: GauzeRighteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -40,7 +40,7 @@
 
 - type: marking
   id: GauzeRighteyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Human, Reptilian, Arachnid, Vulpkanin]
   coloring:
     default:
@@ -53,7 +53,7 @@
 
 - type: marking
   id: GauzeBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Human, Arachnid]
   coloring:
     default:
@@ -223,7 +223,7 @@
 # Lizard Specific Markings
 - type: marking
   id: GauzeLizardLefteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -236,7 +236,7 @@
 
 - type: marking
   id: GauzeLizardRighteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -275,7 +275,7 @@
 
 - type: marking
   id: GauzeLizardBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Reptilian]
   coloring:
     default:
@@ -289,7 +289,7 @@
 # Moth Specific Markings
 - type: marking
   id: GauzeMothBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -328,7 +328,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -341,7 +341,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -354,7 +354,7 @@
 
 - type: marking
   id: GauzeMothRightEyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -367,7 +367,7 @@
 
 - type: marking
   id: GauzeMothRightEyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Moth]
   coloring:
     default:
@@ -472,7 +472,7 @@
 
 - type: marking
   id: GauzeVulpBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -537,7 +537,7 @@
 
 - type: marking
   id: GauzeVulpLefteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Vulpkanin]
   coloring:
     default:
@@ -589,7 +589,7 @@
 
 - type: marking
   id: GauzeVulpRighteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   groupWhitelist: [Vulpkanin]
   coloring:
     default:

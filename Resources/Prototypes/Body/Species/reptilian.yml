@@ -110,6 +110,8 @@
       Kidneys: OrganReptilianKidneys
   - type: HumanoidProfile
     species: Reptilian
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
 
 - type: entity
   parent:

@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "8 pixels made by qrwas",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eyelid-left-1",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-left-2",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-left-3",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-left-4",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-right-1",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-right-2",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-right-3",
+      "directions": 4
+    },
+    {
+      "name": "eyelid-right-4",
+      "directions": 4
+    }
+  ]
+}
