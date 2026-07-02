@@ -327,6 +327,8 @@
       - state: beakerbluespace
   - type: SolutionContainerVisuals
     maxFillLevels: 0
+  - type: SolutionItemStatus
+    locControlVolume: "solution-status-volume-short"
 
 - type: entity
   name: dropper
