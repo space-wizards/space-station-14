@@ -15,6 +15,16 @@ genpop-prisoner-id-examine-served = You have served your sentence for {$crime}.
 genpop-locker-name-default = prisoner closet
 genpop-locker-desc-default = It's a secure locker for an inmate's personal belongings during their time in prison.
 
+genpop-locker-examine-wait = The prisoner has served {$minutes} {$minutes ->
+    [1] minute
+    *[other] minutes
+} {$seconds} {$seconds ->
+    [1] second
+    *[other] seconds
+} of the {$sentence} minute sentence for {$crime}.
+genpop-locker-examine-wait-perm = The prisoner is serving a permanent sentence for {$crime}.
+genpop-locker-examine-served = The prisoner has served the sentence for {$crime}.
+
 genpop-locker-name-used = prisoner closet ({$name})
 genpop-locker-desc-used = It's a secure locker for an inmate's personal belongings during their time in prison. It contains the personal effects of {$name}.
 
