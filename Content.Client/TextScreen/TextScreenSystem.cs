@@ -102,13 +102,10 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
-        SubscribeLocalEvent<TextScreenVisualsComponent, EntityUnpausedEvent>(OnUnpaused);
-
         UpdatesOutsidePrediction = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnInit(Entity<TextScreenVisualsComponent> ent, ref ComponentInit args)
     {
         if (!TryComp(ent, out SpriteComponent? sprite))
@@ -125,6 +122,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     ///     Instantiates <see cref="SpriteComponent.Layers"/> with {<see cref="TimerMapKey"/> + int : <see cref="DefaultState"/>} pairs.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTimerInit(Entity<TextScreenTimerComponent> ent, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite) || !TryComp<TextScreenVisualsComponent>(ent, out var screen))
@@ -143,6 +141,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// <summary>
     ///     Handles non-trivial pause timing for scrolling.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnUnpaused(Entity<TextScreenVisualsComponent> ent, ref EntityUnpausedEvent args)
     {
         for (int i = 0; i < ent.Comp.NextScrollTime.Length; i++)
