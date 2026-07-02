@@ -207,6 +207,14 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
                 if (displacement != null && proto.CanBeDisplaced)
                     _displacement.TryAddDisplacement(displacement, (target, target.Comp), index + i + 1, layerId, out _);
+
+                if (proto.Shaders is not null &&
+                    proto.Shaders.TryGetValue(rsi.RsiState, out var shader))
+                {
+                    // TODO: fix this when LayerSetShader is moved out of component
+                    EnsureComp<SpriteComponent>(target, out var spriteComp);
+                    spriteComp.LayerSetShader(index + i + 1, shader);
+                }
             }
 
             applied.Add(marking);

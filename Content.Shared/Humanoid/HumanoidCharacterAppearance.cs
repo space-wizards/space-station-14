@@ -87,28 +87,50 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
-
-        // TODO: Add random markings
-
-        var newEyeColor = random.Pick(_realisticEyeColors);
-
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
         var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
         var strategy = protoMan.Index(skinType).Strategy;
 
-        var newSkinColor = strategy.InputType switch
+        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
+        var colorPalette = GetPaletteFromBase(baseColor, random.Next(3));
+
+        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType), random);
+
+        var markingData = markingManager.GetMarkingData(species);
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings = [];
+
+        foreach (var (organ, organData) in markingData)
         {
-            SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
-            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
-            _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
-        };
+            // if this is an organ with no markings (heart, stomach, etc)
+            if (!protoMan.TryIndex(organData.Group, out var groupProto))
+                continue;
+
+            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
+            foreach (var layer in organData.Layers)
+            {
+                var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
+
+                if (allMarkings.Count == 0)
+                    continue;
+
+                var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
+                if (layerLimits is null || layerLimits.Limit <= 0)
+                    continue;
+
+                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict, random));
+            }
+            newMarkings.Add(organ, layerMarkings);
+        }
+
+        HumanoidCharacterAppearance appearance = new(
+            colorDict.GetValueOrDefault(EyeColorKey),
+            colorDict.GetValueOrDefault(SkinColorKey),
+            newMarkings);
 
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
-        return EnsureValid(
-            new HumanoidCharacterAppearance(newEyeColor, newSkinColor, new()),
-            species,
-            sex);
+        return EnsureValid(appearance, species, sex);
     }
 
     public static Color ClampColor(Color color)
