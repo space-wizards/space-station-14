@@ -19,6 +19,9 @@
   description: This implant plays a sad tune when the user dies.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     whitelist:
       components:
@@ -49,6 +52,7 @@
     autoRot: true
   - type: Tag
     tags:
+    - Deimplantable
     - SubdermalImplant
     - HideContextMenu
     - Flashlight
@@ -73,6 +77,7 @@
   - type: Tag
     tags:
     - BikeHorn
+    - Deimplantable
 
 #Security implants
 
@@ -83,6 +88,9 @@
   description: This implant has a tracking device attached to the suit sensor network.
   categories: [ HideSpawnMenu ]
   components:
+    - type: Tag
+      tags:
+      - Deimplantable
     - type: SubdermalImplant
       whitelist:
         components:
@@ -108,6 +116,9 @@
   description: This implant grants hidden storage within a person's body using bluespace technology.
   categories: [ HideSpawnMenu ]
   components:
+    - type: Tag
+      tags:
+      - Deimplantable
     - type: StorageImplant
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
@@ -136,6 +147,9 @@
   description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: ActionActivateFreedomImplant
     whitelist:
@@ -152,6 +166,9 @@
   description: This implant grants access to the Syndicate channel without a headset.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
   - type: RadioImplant
     radioChannels:
@@ -164,6 +181,9 @@
   description: This implant lets the user access a hidden Syndicate uplink at will.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: ActionOpenUplinkImplant
     whitelist:
@@ -182,6 +202,9 @@
   description: This implant creates an electromagnetic pulse when activated.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: ActionActivateEmpImplant
   - type: TriggerOnActivateImplant
@@ -197,6 +220,9 @@
   description: This implant randomly teleports the user within a large radius when activated.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: ActionActivateScramImplant
   - type: TriggerOnActivateImplant
@@ -210,6 +236,9 @@
   description: This implant lets the user randomly change their appearance and name once.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: ActionActivateDnaScramblerImplant
     whitelist:
@@ -227,6 +256,9 @@
   name: chameleon controller implant
   description: This implant allows you to instantly change the appearance of all worn chameleon clothing.
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: ChameleonControllerImplant
   - type: SubdermalImplant
     implantAction: ActionChameleonController
@@ -256,6 +288,7 @@
   - type: Tag
     tags:
     - SubdermalImplant
+    - Deimplantable
 
 #Nuclear Operative/Special Exclusive implants
 
@@ -288,6 +321,7 @@
     - SubdermalImplant
     - HideContextMenu
     - MicroBomb
+    - Deimplantable
 
 
 - type: entity
@@ -331,6 +365,7 @@
       tags:
       - SubdermalImplant
       - HideContextMenu
+      - Deimplantable
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -356,6 +391,7 @@
     tags:
     - SubdermalImplant
     - HideContextMenu
+    - Deimplantable
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -364,6 +400,9 @@
   description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
   categories: [ HideSpawnMenu ]
   components:
+    - type: Tag
+      tags:
+      - Deimplantable
     - type: SubdermalImplant
       permanent: true
       whitelist:
@@ -383,6 +422,9 @@
   description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Tag
+    tags:
+    - Deimplantable
   - type: SubdermalImplant
     implantAction: FakeMindShieldToggleAction
     implantComponents:
@@ -398,6 +440,9 @@
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
+   - type: Tag
+     tags:
+     - Deimplantable
    - type: SubdermalImplant
    - type: MindShieldImplant
 

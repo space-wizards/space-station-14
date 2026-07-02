@@ -12,7 +12,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -31,6 +30,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
@@ -59,6 +59,12 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnComponentInit(Entity<ImplanterComponent> ent, ref ComponentInit args)
     {
+        ent.Comp.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
+            .Where(proto => _whitelist.IsValid(ent.Comp.DeimplantWhitelist, proto))
+            .Select(proto => new EntProtoId(proto.ID))
+            .OrderBy(proto => proto)
+            .ToList();
+
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
@@ -67,7 +73,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
+        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
 
@@ -157,9 +163,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnSelected(Entity<ImplanterComponent> ent, ref DeimplantChangeVerbMessage args)
     {
-        ent.Comp.DeimplantChosen = args.Implant;
-        Dirty(ent);
-        SetSelectedDeimplant(ent.AsNullable(), args.Implant);
+        SetSelectedDeimplant(ent.AsNullable(), args.Implant ?? new EntProtoId());
     }
 
     private void TryOpenUi(Entity<ImplanterComponent?> ent, EntityUid user)
@@ -168,7 +172,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         _ui.TryToggleUi(ent.Owner, DeimplantUiKey.Key, user);
-        ent.Comp.DeimplantChosen ??= ent.Comp.DeimplantWhitelist.FirstOrNull();
+        ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
 
@@ -498,13 +502,13 @@ public abstract partial class SharedImplanterSystem : EntitySystem
     /// <summary>
     /// Sets the selected deimplant in the UI.
     /// </summary>
-    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, string? implant)
+    public void SetSelectedDeimplant(Entity<ImplanterComponent?> ent, EntProtoId implant)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        if (implant != null && ProtoMan.TryIndex<EntityPrototype>(implant, out var proto)) // TODO: Why???
-            ent.Comp.DeimplantChosen = proto;
+        if (_whitelist.IsValid(ent.Comp.DeimplantWhitelist, implant))
+            ent.Comp.DeimplantChosen = implant;
 
         UpdateUi(ent!);
         Dirty(ent);
@@ -546,7 +550,7 @@ public sealed class AddImplantAttemptEvent(EntityUid user, EntityUid target, Ent
 [Serializable, NetSerializable]
 public sealed class DeimplantChangeVerbMessage(string? implant) : BoundUserInterfaceMessage
 {
-    public readonly string? Implant = implant;
+    public readonly EntProtoId? Implant = implant;
 }
 
 [Serializable, NetSerializable]
