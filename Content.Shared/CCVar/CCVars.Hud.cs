@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -15,6 +15,9 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> LoocAboveHeadShow =
         CVarDef.Create("hud.show_looc_above_head", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+    public static readonly CVarDef<bool> DeadAboveGhostShow =
+        CVarDef.Create("hud.show_death_above_ghost", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
     public static readonly CVarDef<float> HudHeldItemOffset =
         CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
