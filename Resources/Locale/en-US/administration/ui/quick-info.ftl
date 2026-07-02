@@ -2,6 +2,7 @@
 admin-quick-info-entity = Entity: [color=white]{ESCAPE($name)}[/color] ([color=cyan]{ESCAPE($prototype)}[/color], [color=lime]{ESCAPE($entity)}[/color])
 admin-quick-info-entity-missing = Entity {ESCAPE($entity)} no longer exists
 admin-quick-info-no-prototype = (No prototype)
+admin-quick-info-inactive = [color=yellow]No longer player-controlled.[/color] Last player:
 
 admin-quick-info-username = Username: [color=white]{ESCAPE($username)}[/color] (playtime: [color=white]{ESCAPE($playtime)}[/color])
 admin-quick-info-character = Character: [color=white]{ESCAPE($character)}[/color]
