@@ -63,6 +63,31 @@ public sealed partial class ExplosionPrototype : IPrototype
     public float TileBreakRerollReduction = 10f;
 
     /// <summary>
+    /// Whether this explosion type leaves burnt decals on grid tiles it affects.
+    /// </summary>
+    [DataField]
+    public bool BurntDecals = false;
+
+    /// <summary>
+    /// Minimum explosion intensity at a tile required to place any burnt decals.
+    /// </summary>
+    [DataField]
+    public float BurntDecalMinIntensity = 1f;
+
+    /// <summary>
+    /// Controls how intensity scales the number of burnt decals placed per tile.
+    /// One additional decal placement is attempted for every multiple of this value in the tile's explosion intensity.
+    /// </summary>
+    [DataField]
+    public float BurntDecalIntensityPerDecal = 5f;
+
+    /// <summary>
+    /// Maximum number of burnt decals this explosion can place on a single tile per pass.
+    /// </summary>
+    [DataField]
+    public int BurntDecalMaxPerExplosion = 2;
+
+    /// <summary>
     ///     Color emitted by a point light at the center of the explosion.
     /// </summary>
     [DataField("lightColor")]

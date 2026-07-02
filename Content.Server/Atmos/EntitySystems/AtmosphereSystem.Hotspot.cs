@@ -1,12 +1,9 @@
-using System.Globalization;
-using Content.Server.Atmos.Components;
 using Content.Server.Decals;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -106,31 +103,7 @@ public sealed partial class AtmosphereSystem
             var gridUid = ent.Owner;
             var tilePos = tile.GridIndices;
 
-            // Get the existing decals on the tile
-            var tileDecals = _decalSystem.GetDecalsInRange(gridUid, tilePos);
-
-            // Count the burnt decals on the tile
-            var tileBurntDecals = 0;
-
-            foreach (var set in tileDecals)
-            {
-                if (Array.IndexOf(_burntDecals, set.Decal.Id) == -1)
-                    continue;
-
-                tileBurntDecals++;
-
-                if (tileBurntDecals > 4)
-                    break;
-            }
-
-            // Add a random burned decal to the tile only if there are less than 4 of them
-            if (tileBurntDecals < 4)
-            {
-                _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Length)],
-                    new EntityCoordinates(gridUid, tilePos),
-                    out _,
-                    cleanable: true);
-            }
+            _decalSystem.TryAddBurntDecal(gridUid, tilePos);
 
             if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
             {

@@ -14,6 +14,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -70,6 +71,9 @@ namespace Content.Server.Decals
             SubscribeLocalEvent<PostGridSplitEvent>(OnGridSplit);
 
             Subs.CVar(_conf, CVars.NetPVS, OnPvsToggle, true);
+
+            CacheBurntDecals();
+            SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnDecalPrototypesReloaded);
         }
 
         private void OnPvsToggle(bool value)
