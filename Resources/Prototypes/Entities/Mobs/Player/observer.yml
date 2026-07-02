@@ -98,9 +98,6 @@
   - type: ActiveRadio
     receiveAllChannels: true
     globalReceive: true
-  - type: Tag
-    tags:
-    - BypassInteractionRangeChecks
   - type: PointLight
     netsync: false
     radius: 6
@@ -114,8 +111,9 @@
   components:
   - type: Spectral
   - type: Tag
-    tags: # BAD: Intentional removal of inherited tag
+    tags:
     - AllowGhostShownByEvent
+    - AllowPortalTraversal
 
 - type: entity
   parent: BaseMentalAction
