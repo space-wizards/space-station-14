@@ -47,3 +47,8 @@
   license: "CC-BY-4.0"
   copyright: "Created by simeonradivoev"
   source: "https://freesound.org/people/simeonradivoev/sounds/740218"
+
+- files: ["nanite_gun.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by sadiefei"
+  source: "https://freesound.org/people/torn.rugged.audio.35/sounds/45934/"
