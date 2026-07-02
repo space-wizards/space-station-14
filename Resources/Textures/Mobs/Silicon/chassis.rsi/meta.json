@@ -526,6 +526,10 @@
             "directions": 4
         },
         {
+            "name": "xenoborg_heavy_rad",
+            "directions": 4
+        },
+        {
             "name": "xenoborg_scout",
             "directions": 4
         },
