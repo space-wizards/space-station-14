@@ -34,6 +34,9 @@ public abstract partial class SharedConveyorController : VirtualController
 
     protected HashSet<EntityUid> Intersecting = new();
 
+    // So I don't need to recalculate this every time, it's used for corner conveyors to turn 90 degrees instead of 180.
+    private const float HalfPI = MathF.PI / 2f;
+
     public override void Initialize()
     {
         _job = new ConveyorJob(this);
@@ -286,8 +289,7 @@ public abstract partial class SharedConveyorController : VirtualController
         conveyorRot += bestConveyor.Comp!.Angle;
 
         if (comp.State == ConveyorState.Reverse)
-            conveyorRot += MathF.PI;
-
+            conveyorRot += comp.ConveyorCorner ? -HalfPI : MathF.PI
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;
 
