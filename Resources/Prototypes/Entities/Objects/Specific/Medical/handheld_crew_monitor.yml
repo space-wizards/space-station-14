@@ -10,7 +10,21 @@
     heldPrefix: scanner
   - type: Sprite
     sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi
-    state: scanner
+    layers:
+      - state: icon
+      - state: scanner
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
   - type: UserInterface

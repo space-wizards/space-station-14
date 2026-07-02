@@ -38,6 +38,24 @@
   - BaseHandheldStationMap
   - BaseHandheldComputer
   suffix: Handheld
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/tablets.rsi
+    layers:
+      - state: tablet
+      - state: generic
+        shader: unshaded
+        visible: false
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
 
 - type: entity
   id: HandheldStationMapEmpty
@@ -75,6 +93,8 @@
     - state: tablet
     - state: syndie
       shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Item
     sprite: Objects/Devices/tablets.rsi
     inhandVisuals:
