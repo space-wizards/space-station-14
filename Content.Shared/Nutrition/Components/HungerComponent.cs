@@ -46,6 +46,18 @@ public sealed partial class HungerComponent : Component
     public float ActualDecayRate;
 
     /// <summary>
+    /// The minimum possible starting hunger value.
+    /// </summary>
+    [DataField]
+    public float MinStartingHunger = 110f; // Peckish + 10
+
+    /// <summary>
+    /// The maximum possible starting hunger value.
+    /// </summary>
+    [DataField]
+    public float MaxStartingHunger = 150f; // Okay
+
+    /// <summary>
     /// The last threshold this entity was at.
     /// Stored in order to prevent recalculating
     /// </summary>
