@@ -8,9 +8,9 @@ namespace Content.Shared.Engineering.Systems;
 
 public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

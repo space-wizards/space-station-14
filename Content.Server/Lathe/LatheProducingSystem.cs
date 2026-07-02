@@ -8,9 +8,9 @@ namespace Content.Server.Lathe;
 /// The component is used more so as a marker for EntityQueryEnumerator,
 /// however it's also used to set the power state of the lathe when producing.
 /// </summary>
-public sealed class LatheProducingSystem : EntitySystem
+public sealed partial class LatheProducingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+    [Dependency] private SharedPowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {

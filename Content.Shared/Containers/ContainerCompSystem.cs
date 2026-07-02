@@ -7,10 +7,10 @@ namespace Content.Shared.Containers;
 /// <summary>
 /// Applies / removes an entity prototype from a child entity when it's inserted into a container.
 /// </summary>
-public sealed class ContainerCompSystem : EntitySystem
+public sealed partial class ContainerCompSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public override void Initialize()
     {
