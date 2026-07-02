@@ -53,7 +53,8 @@ food-sequence-content-rat = rat
 food-sequence-content-lizard = lizard meat
 food-sequence-content-plant = plant meat
 food-sequence-content-rotten = rotten meat
-food-sequence-content-spider = spider legs
+food-sequence-content-spider = spider meat
+food-sequence-content-spider-legs = spider legs
 food-sequence-content-carrot = carrot
 food-sequence-content-cabbage = cabbage
 food-sequence-content-garlic = garlic
@@ -120,6 +121,7 @@ food-sequence-burger-content-spacemans-trumpet = spacetrump
 food-sequence-burger-content-anomaly-berry = anom
 food-sequence-burger-content-extradimensional-orange = 3d
 food-sequence-burger-content-world-pea = peace
+food-sequence-burger-content-snake = snek
 
 # COTTON BURGERS
 

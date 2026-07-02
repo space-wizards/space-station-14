@@ -1622,6 +1622,7 @@
     entries:
       Taco: Lingzhi
       Burger: Lingzhi
+      Skewer: LingzhiSkewer
   - type: Tag
     tags:
     - Mushroom

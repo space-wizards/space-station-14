@@ -538,6 +538,10 @@
       right:
       - state: snake-inhand-right
         color: "#333333"
+  - type: Construction
+    graph: SpiderLegs
+    node: start
+    defaultTarget: spider legs
 
 - type: entity
   parent: [SolutionTiny, FoodMeatBase]
@@ -594,6 +598,40 @@
       - state: snake-inhand-left
       right:
       - state: snake-inhand-right
+  - type: Construction
+    graph: SnakeMeat
+    node: start
+    defaultTarget: snake meat
+
+- type: entity
+  parent: FoodMeatSnake
+  id: FoodMeatSnakeCooked
+  name: cooked snake meat
+  description: A long piece of cooked snake meat, no longer poisonous.
+  components:
+    - type: Sprite
+      layers:
+      - state: snake-cooked
+    - type: Tag
+      tags:
+      - Cooked
+      - Meat
+    - type: Solution
+      solution:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+    - type: FoodSequenceElement
+      entries:
+        Taco: SnakeTaco
+        Burger: SnakeBurger
+        Skewer: SnakeSkewer
+    - type: FlavorProfile
+      flavors:
+      - meaty
+      - chewy
 
 - type: entity
   # not raw since acid kills bacteria or something, same as xeno
@@ -1277,9 +1315,9 @@
       - state: plain-cooked-inhand-right
 
 - type: entity
-  parent: FoodMeatCookedBase
+  parent: FoodMeatSpiderLeg
   id: FoodMeatSpiderlegCooked
-  name: boiled spider leg
+  name: cooked spider leg
   description: A giant spider's leg that's still twitching after being cooked. Gross!
   components:
   - type: Sprite
@@ -1289,15 +1327,7 @@
     entries:
       Burger: MeatSpiderBurger
       Taco: MeatSpider
-  - type: Item
-    storedOffset: -1,-1
-    inhandVisuals:
-      left:
-      - state: snake-inhand-left
-        color: "#44201A"
-      right:
-      - state: snake-inhand-right
-        color: "#44201A"
+      Skewer: SpiderLegSkewer
 
 - type: entity
   parent: [SolutionTiny, FoodMeatCookedBase]
@@ -1761,6 +1791,7 @@
     entries:
       Burger: MeatCutlet
       Taco: MeatCutlet
+      Skewer: MeatCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1789,6 +1820,7 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+      Skewer: BearCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1815,6 +1847,7 @@
     entries:
       Burger: PenguinCutletBurger
       Taco: PenguinCutlet
+      Skewer: PenguinCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1841,6 +1874,7 @@
     entries:
       Burger: ChickenCutlet
       Taco: ChickenCutlet
+      Skewer: ChickenCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1867,6 +1901,7 @@
     entries:
       Burger: DuckCutlet
       Taco: DuckCutlet
+      Skewer: DuckCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1894,6 +1929,7 @@
     entries:
       Burger: LizardCutletBurger
       Taco: LizardCutlet
+      Skewer: LizardCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1919,6 +1955,7 @@
     entries:
       Burger: SpiderCutletBurger
       Taco: SpiderCutlet
+      Skewer: SpiderCutletSkewer
   - type: Item
     storedOffset: -1,0
     inhandVisuals:
@@ -1944,6 +1981,7 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+      Skewer: XenoCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:
@@ -1978,6 +2016,7 @@
     entries:
       Burger: DragonCutlet
       Taco: DragonCutlet
+      Skewer: DragonCutletSkewer
   - type: Item
     storedOffset: -1,1
     inhandVisuals:

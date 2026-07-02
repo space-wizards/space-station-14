@@ -219,6 +219,9 @@
       "name": "snake"
     },
     {
+      "name": "snake-cooked"
+    },
+    {
       "name": "snake-inhand-right",
       "directions": 4
     },
