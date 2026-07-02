@@ -63,6 +63,14 @@
   - type: StunnedStatusEffect
   - type: KnockdownStatusEffect
 
+# Makes the creature immune to pressure damage.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectPressureImmunity
+  name: pressure immunity
+  components:
+  - type: PressureImmunityStatusEffect
+
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
   parent: MobStatusEffectDebuff

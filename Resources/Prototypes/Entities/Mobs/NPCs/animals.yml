@@ -3427,7 +3427,9 @@
     tags:
       - DoorBumpOpener
   - type: MovementAlwaysTouching
-  - type: PressureImmunity
+  - type: PermanentStatusEffects
+    statusEffects:
+    - StatusEffectPressureImmunity
   - type: ProtectedFromStepTriggers
   - type: Insulated
   - type: InteractionPopup

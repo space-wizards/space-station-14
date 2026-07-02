@@ -565,9 +565,9 @@
           - !type:ReagentCondition
             reagent: Barozine
             min: 30
-      - !type:GenericStatusEffect
-        key: PressureImmunity
-        component: PressureImmunity
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPressureImmunity
+        type: Add
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
