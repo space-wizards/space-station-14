@@ -79,12 +79,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
                 var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
                 var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
-                var filteredGasMixture = new GasMixture { Temperature = removed.Temperature };
 
-                filteredGasMixture.SetMoles(filter.FilteredGas.Value, filteredMoles);
-                removed.AdjustMoles(filter.FilteredGas.Value, -filteredMoles);
+                var filteredGas = new GasMixture { Temperature = removed.Temperature };
+                filteredGas.SetMoles(filter.FilteredGas.Value, filteredMoles);
+                _atmosphereSystem.Merge(filterNode.Air, filteredGas);
 
-                _atmosphereSystem.Merge(filterNode.Air, filteredGasMixture);
+                inletNode.Air.AdjustMoles(filter.FilteredGas.Value, availableMoles - filteredMoles);
+
+                removed.SetMoles(filter.FilteredGas.Value, 0f);
 
                 _ambientSoundSystem.SetAmbience(uid, filteredMoles > 0f);
             }
