@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/station_map.rsi
-    drawdepth: WallMountedItems
     layers:
     - state: station_map_broken
   - type: Destructible

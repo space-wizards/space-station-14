@@ -14,7 +14,6 @@
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
@@ -64,7 +63,6 @@
     onPort: Pressed
     offPort: Pressed
     statusPort: Pressed
-  - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
@@ -103,7 +101,6 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
-  - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Apc

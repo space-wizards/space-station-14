@@ -62,7 +62,6 @@
     graph: WallmountTelevision
     node: TelevisionFrame
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/flatscreentv.rsi
     layers:
     - map: ["computerLayerBody"]

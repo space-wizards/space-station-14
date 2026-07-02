@@ -101,7 +101,6 @@
     castShadows: false
     netsync: false
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -136,7 +135,6 @@
   description: A construction frame for a wallmount generator.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel

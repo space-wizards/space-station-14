@@ -144,12 +144,10 @@
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
-  parent: CoreSubstation
+  parent: [CoreSubstation, BaseWallmount]
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: AmbientSound
     range: 2
@@ -160,22 +158,14 @@
     netsync: false
     castShadows: false
     offset: 0, -0.2
-  - type: Clickable
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
-    drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
@@ -207,7 +197,6 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: WallMount
 
 # Substations in use
 
@@ -247,29 +236,20 @@
       manipulator: !type:Container
       powercell: !type:Container
 
-      # Construction Frame
+# Construction Frame
+
 - type: entity
+  parent: BaseWallmountMetallic
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]
   name: wallmount substation frame
   description: A substation frame for construction.
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
   - type: Construction
     graph: WallmountSubstation
     node: frame
-  - type: WallMount

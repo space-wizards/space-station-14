@@ -6,7 +6,6 @@
   components:
   - type: WallMount
     arc: 360
-  - type: Rotatable
   - type: Destructible
     thresholds:
     - trigger:

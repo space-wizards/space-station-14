@@ -1,11 +1,12 @@
 - type: entity
   abstract: true
+  parent: BaseWallmountMachine
   id: SurveillanceCameraBase
   name: camera
   description: A surveillance camera. It's watching you. Kinda.
   components:
   - type: Physics
-    bodyType: Static
+    canCollide: true
   - type: Fixtures
     fixtures:
       light:
@@ -32,22 +33,17 @@
   - type: SlimPoweredLight
     enabled: false
   - type: StationAiVision
-  - type: Clickable
-  - type: InteractionOutline
   - type: Construction
     graph: SurveillanceCamera
     node: camera
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: WallMount
   - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
+    powerLoad: 5
   - type: Eye
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
-  - type: Transform
-    anchored: true
   - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
@@ -57,7 +53,6 @@
   - type: Injurable
     damageContainer: StructuralInorganic
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/camera.rsi
     layers:
       - map: [ "enum.SurveillanceCameraVisualsKey.Layer" ]

@@ -4,13 +4,11 @@
   name: screen
   description: Displays text or time.
   components:
-  - type: Rotatable
   - type: TextScreenVisuals
     textOffset: 0,3
     timerOffset: 0,-4
     rows: 2
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/screen.rsi
     state: screen
     noRot: true
@@ -35,8 +33,8 @@
     receiveFrequencyId: ShuttleTimer
 
 - type: entity
-  id: ArrivalsShuttleTimer
   parent: Screen
+  id: ArrivalsShuttleTimer
   name: arrivals screen
   description: Displays time of arrivals shuttle ETA.
   components:

@@ -49,8 +49,6 @@
   - type: AirAlarm
   - type: AtmosAlertsDevice
     group: AirAlarm
-  - type: Clickable
-  - type: InteractionOutline
   - type: UserInterface
     interfaces:
       enum.SharedAirAlarmInterfaceKey.Key:
@@ -126,8 +124,6 @@
   - type: Construction
     graph: AirAlarm
     node: assembly
-  - type: Transform
-    anchored: true
   - type: Destructible
     thresholds:
     - trigger:

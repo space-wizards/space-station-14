@@ -23,7 +23,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: Rotatable
   - type: SignalTimer
     canEditLabel: false
   - type: DeviceLinkSource
@@ -103,12 +102,13 @@
 # Construction Frame
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: TimerFrame
+  categories: [ HideSpawnMenu ]
   name: timer frame
   description: A construction frame for a timer.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/signalscreen.rsi
     state: signalscreen
   - type: Construction
