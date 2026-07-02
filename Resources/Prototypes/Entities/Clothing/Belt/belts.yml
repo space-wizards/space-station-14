@@ -8,7 +8,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Belt/sheath.rsi
-    state: sheath
+    layers:
+    - state: sheath
+    - state: sheath-sabre
+      map: [ "enum.ItemSlotVisualLayers.Fill" ]
   - type: Clothing
     sprite: Clothing/Belt/sheath.rsi
   - type: Item
@@ -24,12 +27,10 @@
         whitelist:
           tags:
           - CaptainSabre
-  - type: ItemMapper
-    mapLayers:
-      sheath-sabre:
-        whitelist:
-          tags:
-          - CaptainSabre
+  - type: ItemSlotVisuals
+    fillBaseName: sheath-sabre
+    inHandsFillBaseName: -sabre
+    equippedFillBaseName: -sabre
   - type: Appearance
 
 - type: entity

@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
@@ -33,6 +35,7 @@ namespace Content.Shared.Containers.ItemSlots
         [Dependency] private SharedHandsSystem _handsSystem = default!;
         [Dependency] private SharedAudioSystem _audioSystem = default!;
         [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -76,6 +79,29 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
             }
+
+            UpdateAppearance(uid, itemSlots);
+        }
+
+        /// For ItemSlotVisualsSystem & Component.
+        private void UpdateAppearance(EntityUid uid, ItemSlotsComponent itemSlots)
+        {
+            if (!TryComp<ItemSlotVisualsComponent>(uid, out var visuals) || !TryComp<AppearanceComponent>(uid, out _))
+                return;
+
+            var contains = false;
+
+            // For the items that have one ItemSlot and the rest.
+            if (string.IsNullOrEmpty(visuals.SlotName))
+            {
+                contains = itemSlots.Slots.Values.Any(slot => slot.HasItem);
+            }
+            else if (itemSlots.Slots.TryGetValue(visuals.SlotName, out var slot))
+            {
+                contains = slot.HasItem;
+            }
+
+            _appearance.SetData(uid, visuals.Layer, contains);
         }
 
         /// <summary>
@@ -299,6 +325,11 @@ namespace Content.Shared.Containers.ItemSlots
                 _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            {
+                UpdateAppearance(uid, itemSlots);
+            }
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
@@ -577,6 +608,12 @@ namespace Content.Shared.Containers.ItemSlots
                 return false;
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
+
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            {
+                UpdateAppearance(uid, itemSlots);
+            }
+
             return true;
         }
 
@@ -905,6 +942,11 @@ namespace Content.Shared.Containers.ItemSlots
                     slot.Local = false;
                     AddItemSlot(uid, serverKey, slot);
                 }
+            }
+
+            if (TryComp(uid, out ItemSlotsComponent? itemSlots))
+            {
+                UpdateAppearance(uid, itemSlots);
             }
         }
 

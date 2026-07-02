@@ -1,4 +1,6 @@
+using Content.Client.Items.Systems;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Containers.ItemSlot;
 using Content.Shared.Rounding;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
@@ -7,6 +9,8 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
+    [Dependency] private ItemSystem _itemSystem = default!;
+
     private void InitializeMagazineVisuals()
     {
         SubscribeLocalEvent<MagazineVisualsComponent, ComponentInit>(OnMagazineVisualsInit);
@@ -93,6 +97,13 @@ public sealed partial class GunSystem
             {
                 _sprite.LayerSetVisible((ent, sprite), GunVisualLayers.MagUnshaded, false);
             }
+        }
+
+        // If ItemSlotVisuals is in the prototype, then update inhands, only for insert fill visuals.
+        if (TryComp(ent, out AppearanceComponent? _)
+            && TryComp(ent, out ItemSlotVisualsComponent? _))
+        {
+            _itemSystem.VisualsChanged(ent);
         }
     }
 }
