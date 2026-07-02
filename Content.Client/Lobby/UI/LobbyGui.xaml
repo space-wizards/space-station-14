@@ -61,9 +61,6 @@
                         </PanelContainer>
                     </BoxContainer>
                 </Control>
-                <!-- Character setup state -->
-                <!-- This is injected on startup. Funky! -->
-                <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
             </BoxContainer>
             <!-- Right Panel -->
             <PanelContainer Name="RightSide" Access="Public" StyleClasses="BackgroundPanel" HorizontalAlignment="Right" VerticalExpand="True"
@@ -127,4 +124,7 @@
                         Scale="0.5 0.5"/>
         </PanelContainer>
     </BoxContainer>
+    <!-- Character setup state -->
+    <!-- This is injected on startup. Funky! -->
+    <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" HorizontalExpand="True" />
 </lobbyUi:LobbyGui>

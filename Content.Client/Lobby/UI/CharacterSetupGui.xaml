@@ -3,7 +3,8 @@
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-         VerticalExpand="True">
+         VerticalExpand="True"
+         HorizontalExpand="True">
     <Control>
         <PanelContainer Name="BackgroundPanel" />
         <BoxContainer Orientation="Vertical" SeparationOverride="0">
