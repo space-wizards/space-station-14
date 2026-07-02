@@ -54,7 +54,7 @@ public sealed partial class TriggerSystem
             return;
 
         Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
-        args.Handled = true;
+        args.Handled |= ent.Comp.Handled;
     }
 
     private void OnInteractHand(Entity<TriggerOnInteractHandComponent> ent, ref InteractHandEvent args)

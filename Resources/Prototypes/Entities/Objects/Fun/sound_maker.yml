@@ -4,7 +4,7 @@
 ## Bike horns
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSoundTriggerDelay ]
   id: BikeHorn
   name: bike horn
   description: A horn off of a bicycle.
@@ -21,19 +21,15 @@
     quickEquip: false
   - type: UseDelay
     delay: 0.5
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundBikeHorn
       collection: BikeHorn
       params:
         variation: 0.125
   - type: EmitSoundOnLand
     sound: *SoundBikeHorn
-  - type: EmitSoundOnTrigger
-    sound: *SoundBikeHorn
-  - type: EmitSoundOnActivate
-    sound: *SoundBikeHorn
-  - type: EmitSoundOnCollide
-    sound: *SoundBikeHorn
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
@@ -50,7 +46,7 @@
     useSound: *SoundBikeHorn
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSoundTriggerDelay ]
   id: CluwneHorn
   name: broken bike horn
   description: A broken horn off of a bicycle.
@@ -75,14 +71,10 @@
       collection: CluwneHorn
       params:
         variation: 0.125
-  - type: EmitSoundOnUse
-    sound: *SoundCluwneHorn
-  - type: EmitSoundOnActivate
-    sound: *SoundCluwneHorn
-  - type: EmitSoundOnCollide
-    sound: *SoundCluwneHorn
   - type: EmitSoundOnLand
     sound: *SoundCluwneHorn
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: MeleeWeapon
     wideAnimationRotation: 135
     soundHit: *SoundCluwneHorn
@@ -133,26 +125,15 @@
     quickEquip: false
   - type: UseDelay
     delay: 3
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundBananiumHorn
       collection: BananiumHorn
       params:
         variation: 0.246
   - type: EmitSoundOnLand
     sound: *SoundBananiumHorn
-  - type: EmitSoundOnTrigger
-    sound: *SoundBananiumHorn
-  - type: EmitSoundOnActivate
-    sound: *SoundBananiumHorn
-  - type: EmitSoundOnCollide
-    sound: *SoundBananiumHorn
   - type: MeleeWeapon
-    wideAnimationRotation: 135
     soundHit: *SoundBananiumHorn
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
@@ -175,9 +156,9 @@
     sprite: Objects/Fun/push_horn.rsi
     slots: [Belt]
     quickEquip: false
-  - type: EmitSoundOnUse
-    handle: false
+  - type: EmitSoundOnTrigger
     sound: "/Audio/Items/Toys/pushHornHonk.ogg"
+    predicted: true
   - type: EmitSoundOnLand
     sound: "/Audio/Items/Toys/pushHornFloor.ogg"
   - type: UseDelay
@@ -258,14 +239,15 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseStash]
+  parent: [BaseSoundTriggerDelay, BaseItem, BaseStash]
   id: BaseRubberToy
   components:
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: Tag
     tags:
     - Payload
   - type: UseDelay
-    delay: 1.0
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -296,16 +278,10 @@
     - HEAD
   - type: Item
     size: Tiny
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundQuack
       path: /Audio/Items/Toys/quack.ogg
   - type: EmitSoundOnLand
-    sound: *SoundQuack
-  - type: EmitSoundOnActivate
-    sound: *SoundQuack
-  - type: EmitSoundOnTrigger
-    sound: *SoundQuack
-  - type: EmitSoundOnCollide
     sound: *SoundQuack
   - type: MeleeWeapon
     soundHit: *SoundQuack
@@ -322,18 +298,12 @@
   - type: Sprite
     sprite: Objects/Fun/rubber_chicken.rsi
     state: icon
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundRubberChicken
       collection: RubberChicken
       params:
         variation: 0.125
   - type: EmitSoundOnLand
-    sound: *SoundRubberChicken
-  - type: EmitSoundOnActivate
-    sound: *SoundRubberChicken
-  - type: EmitSoundOnCollide
-    sound: *SoundRubberChicken
-  - type: EmitSoundOnTrigger
     sound: *SoundRubberChicken
   - type: MeleeWeapon
     wideAnimationRotation: 110
@@ -360,7 +330,6 @@
           False: { state: icon-off }
   - type: ItemToggle
   - type: UseDelay
-    delay: 1
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Items/newton_cradle.ogg
@@ -369,7 +338,7 @@
         maxDistance: 3
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseSoundTriggerDelay, BaseItem ]
   id: ClownRecorder
   name: clown recorder
   description: When you just can't get those laughs coming the natural way!
@@ -377,16 +346,12 @@
   - type: Sprite
     sprite: Objects/Fun/clownrecorder.rsi
     state: icon
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundClownRecorder
       collection: ClownRecorder
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: EmitSoundOnLand
-    sound: *SoundClownRecorder
-  - type: EmitSoundOnActivate
-    sound: *SoundClownRecorder
-  - type: EmitSoundOnTrigger
-    sound: *SoundClownRecorder
-  - type: EmitSoundOnCollide
     sound: *SoundClownRecorder
   - type: UseDelay
     delay: 30.0
@@ -396,7 +361,7 @@
     - Payload
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseSoundTriggerDelay, BaseItem ]
   id: WhoopieCushion
   name: whoopie cushion
   description: A practical joke device involving flatulence humour.
@@ -407,17 +372,15 @@
   - type: Tag
     tags:
     - Payload
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundParp
       collection: Parp
       params:
         variation: 0.125
   - type: EmitSoundOnLand
     sound: *SoundParp
-  - type: EmitSoundOnActivate
-    sound: *SoundParp
-  - type: EmitSoundOnCollide
-    sound: *SoundParp
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: UseDelay
     delay: 0.8
   - type: Slippery
@@ -459,7 +422,7 @@
         - ItemMask
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseSoundTriggerDelay, BaseItem ]
   id: Skub
   name: skub
   description: Skub is the fifth Chaos God.
@@ -472,17 +435,13 @@
     - Payload
   - type: Item
     sprite: Objects/Misc/skub.rsi
-  - type: EmitSoundOnUse
+  - type: EmitSoundOnTrigger
     sound: &SoundSkub
       collection: Skub
   - type: EmitSoundOnLand
     sound: *SoundSkub
-  - type: EmitSoundOnTrigger
-    sound: *SoundSkub
-  - type: EmitSoundOnActivate
-    sound: *SoundSkub
-  - type: EmitSoundOnCollide
-    sound: *SoundSkub
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: MeleeWeapon
     soundHit: *SoundSkub
     damage:
