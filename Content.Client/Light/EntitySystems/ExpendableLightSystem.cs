@@ -5,7 +5,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
+public sealed partial class ExpendableLightVisualsSystem : VisualizerSystem<ExpendableLightComponent>
 {
     [Dependency] private PointLightSystem _pointLightSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
@@ -15,14 +15,7 @@ public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableL
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExpendableLightComponent, ComponentShutdown>(OnLightShutdown);
     }
-
-    private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
-    {
-        component.PlayingStream = _audioSystem.Stop(component.PlayingStream);
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -49,10 +42,6 @@ public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableL
         switch (state)
         {
             case ExpendableLightState.Lit:
-                _audioSystem.Stop(comp.PlayingStream);
-                comp.PlayingStream = _audioSystem.PlayPvs(
-                    comp.LoopedSound, uid)?.Entity;
-
                 if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
@@ -72,7 +61,6 @@ public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableL
 
                 break;
             case ExpendableLightState.Dead:
-                comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
                 if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
@@ -87,4 +75,11 @@ public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableL
                 break;
         }
     }
+}
+
+public enum ExpendableLightVisualLayers : byte
+{
+    Base = 0,
+    Glow = 1,
+    Overlay = 2,
 }
