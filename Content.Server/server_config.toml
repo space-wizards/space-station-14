@@ -8,7 +8,7 @@
 [net]
 # The ticks per second the server runs at.
 # Lower values mean less load on the server, but also less responsiveness.
-# Higher values mean more load, but also more responsiveness. 
+# Higher values mean more load, but also more responsiveness.
 # 30 is what most servers on the hub use and going higher has minimal effect.
 tickrate = 30
 # The port the server will bind to. 1212 is the default port for Space Station 14.
@@ -46,6 +46,12 @@ flavor_text = false
 [admin]
 # Should players be able to see their own notes?
 see_own_notes = false
+# Should admins count towards the max players count?
+# Explanation: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
+# So someone who is not an admin can join, since technically the server is at 9/10 players.
+admins_count_for_max_players = false
+# Should admins be displayed on the player count? Just subtracts active admins from the player count. This is hub rule safe.
+admins_count_in_playercount = false
 
 [server]
 # Change this to have the changelog and rules "last seen" date stored separately from other servers.
@@ -54,12 +60,6 @@ id = "unknown_server_id"
 [events]
 # Controls if the game should run station events. (Meteors, Sleeper Syndicates ETC)
 enabled = true
-# Should admins count towards the max players count?
-# Explanation: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
-# So someone who is not an admin can join, since technically the server is at 9/10 players.
-admins_count_for_max_players = false
-# Should admins be displayed on the player count? Just subtracts active admins from the player count. This is hub rule safe.
-admins_count_in_playercount = false
 
 [shuttle]
 # Should the emergency shuttle be allowed to launch early by command staff?
@@ -140,7 +140,7 @@ engine = "sqlite"
 # PostgreSQL database information. Ignored if engine is not "postgres".
 pg_host = "localhost"
 pg_port = 5432
-pg_user = "postgres"
+pg_username = "postgres"
 pg_password = ""
 pg_database = "ss14"
 
