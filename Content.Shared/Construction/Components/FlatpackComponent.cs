@@ -14,21 +14,22 @@ namespace Content.Shared.Construction.Components;
 public sealed partial class FlatpackComponent : Component
 {
     /// <summary>
-    /// The tool quality that, upon used to interact with this object, will create the <see cref="Entity"/>
+    /// The tool quality that, upon used to interact with this object, will create the <see cref="Entity"/>.
+    /// If null, the flatpack must be interacted with using an open hand to unpack.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public ProtoId<ToolQualityPrototype> QualityNeeded = "Pulsing";
+    [DataField, AutoNetworkedField]
+    public ProtoId<ToolQualityPrototype>? QualityNeeded = "Pulsing";
 
     /// <summary>
     /// The entity that is spawned when this object is unpacked.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public EntProtoId? Entity;
+    [DataField(required: true), AutoNetworkedField]
+    public EntProtoId Entity;
 
     /// <summary>
     /// Sound effect played upon the object being unpacked.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier UnpackSound = new SoundPathSpecifier("/Audio/Effects/unwrap.ogg");
 
     /// <summary>
@@ -42,10 +43,10 @@ public sealed partial class FlatpackComponent : Component
 [Serializable, NetSerializable]
 public enum FlatpackVisuals : byte
 {
-    Machine
+    Machine,
 }
 
 public enum FlatpackVisualLayers : byte
 {
-    Overlay
+    Overlay,
 }

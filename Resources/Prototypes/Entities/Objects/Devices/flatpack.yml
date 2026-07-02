@@ -18,6 +18,7 @@
     - state: icon-default
   - type: Appearance
   - type: Flatpack
+    entity: MachineFrame
     boardColors:
       command: "#334E6D"
       medical: "#52B4E9"

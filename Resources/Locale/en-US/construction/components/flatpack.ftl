@@ -1,7 +1,10 @@
 flatpack-unpack-no-room = No room to unpack!
-flatpack-examine = Use a [color=yellow]multitool[/color] to unpack this.
+flatpack-examine = Use { INDEFINITE($toolNeeded) } [color=yellow]{ $toolNeeded }[/color] to unpack this.
+flatpack-examine-no-tool-needed = You can unpack this with your [color=yellow]bare hands[/color].
 flatpack-entity-name = {$name} flatpack
 flatpack-entity-description = A flatpack used for constructing {INDEFINITE($name)} {$name}.
+flatpack-unpack-verb-text = Unpack
+flatpack-unpack-verb-need-tool-message = You need { INDEFINITE($toolNeeded) } { $toolNeeded } to unpack this.
 
 flatpacker-item-slot-name = Machine board slot
 flatpacker-ui-title = Flatpacker 1001
