@@ -4,4 +4,4 @@ namespace Content.Shared.Speech.Components;
 /// Marks a speech status effect that transforms spoken text to uppercase.
 /// </summary>
 [RegisterComponent]
-public sealed partial class AllCapsAccentComponent : Component;
+public sealed partial class AllCapsAccentComponent : BaseAccentComponent;

@@ -1,10 +1,9 @@
-﻿namespace Content.Server.Speech.Components;
+﻿using Content.Shared.Speech.Components;
+
+namespace Content.Server.Speech.Components;
 
 /// <summary>
 ///     Buzzz!
 /// </summary>
 [RegisterComponent]
-public sealed partial class MothAccentComponent : Component
-{
-
-}
+public sealed partial class MothAccentComponent : BaseAccentComponent;

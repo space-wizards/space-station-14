@@ -12,7 +12,7 @@ public sealed partial class ScrambledAccentSystem : RelayAccentSystem<ScrambledA
 
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override string AccentuateInternal(EntityUid uid, ScrambledAccentComponent comp, string message)
+    public override string Accentuate(string message)
     {
         var words = message.ToLower().Split();
 

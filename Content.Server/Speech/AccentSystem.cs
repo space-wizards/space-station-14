@@ -20,7 +20,7 @@ public sealed class AccentSystem : EntitySystem
 
         var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
-        RaiseLocalEvent(args.Sender, accentEvent, true);
+        RaiseLocalEvent(args.Sender, ref accentEvent);
         args.Message = accentEvent.Message;
     }
 }

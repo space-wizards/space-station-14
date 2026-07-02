@@ -1,7 +1,9 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Speech.Components;
 
-[RegisterComponent]
-public sealed partial class StutteringAccentComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class StutteringAccentComponent : BaseAccentComponent
 {
     /// <summary>
     /// Percentage chance that a stutter will occur if it matches.

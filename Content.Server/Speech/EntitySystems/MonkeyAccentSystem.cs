@@ -1,20 +1,15 @@
 using System.Text;
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed partial class MonkeyAccentSystem : EntitySystem
+public sealed partial class MonkeyAccentSystem : RelayAccentSystem<MonkeyAccentComponent>
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<MonkeyAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    public string Accentuate(string message)
+    public override string Accentuate(string message)
     {
         var words = message.Split();
         var accentedMessage = new StringBuilder(message.Length + 2);
@@ -27,7 +22,7 @@ public sealed partial class MonkeyAccentSystem : EntitySystem
             {
                 if (word.Length > 1)
                 {
-                    foreach (var _ in word)
+                    foreach (var __ in word)
                     {
                         accentedMessage.Append('O');
                     }
@@ -40,7 +35,7 @@ public sealed partial class MonkeyAccentSystem : EntitySystem
             }
             else
             {
-                foreach (var _ in word)
+                foreach (var __ in word)
                 {
                     if (_random.NextDouble() >= 0.8)
                         accentedMessage.Append('H');
@@ -57,10 +52,5 @@ public sealed partial class MonkeyAccentSystem : EntitySystem
         accentedMessage.Append('!');
 
         return accentedMessage.ToString();
-    }
-
-    private void OnAccent(EntityUid uid, MonkeyAccentComponent component, AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message);
     }
 }

@@ -1,4 +1,5 @@
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Speech.Components;
 
 namespace Content.Server.Speech.Components;
 
@@ -7,4 +8,4 @@ namespace Content.Server.Speech.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(FrenchAccentSystem))]
-public sealed partial class FrenchAccentComponent : Component {}
+public sealed partial class FrenchAccentComponent : BaseAccentComponent;
