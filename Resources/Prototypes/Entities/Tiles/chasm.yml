@@ -1,5 +1,6 @@
 ﻿- type: entity
-  id: FloorChasmEntity
+  abstract: true
+  id: BaseFloorChasmEntity
   name: chasm
   description: You can't even see the bottom.
   placement:
@@ -7,7 +8,6 @@
     snap:
     - Wall
   components:
-  - type: Chasm
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.4
@@ -44,9 +44,17 @@
         - ItemMask
         density: 1000
         hard: false
+  - type: Chasm
   - type: Tag
     tags:
     - HideContextMenu
+
+- type: entity
+  parent: BaseFloorChasmEntity
+  id: FloorChasmEntity
+  suffix: Basalt
+  components:
+  - type: ChasmDelete
 
 - type: entity
   parent: FloorChasmEntity
@@ -57,7 +65,7 @@
     sprite: Tiles/Planet/Chasms/chromite_chasm.rsi
   - type: Icon
     sprite: Tiles/Planet/Chasms/chromite_chasm.rsi
-    
+
 - type: entity
   parent: FloorChasmEntity
   id: FloorDesertChasm
@@ -67,7 +75,7 @@
     sprite: Tiles/Planet/Chasms/desert_chasm.rsi
   - type: Icon
     sprite: Tiles/Planet/Chasms/desert_chasm.rsi
-    
+
 - type: entity
   parent: FloorChasmEntity
   id: FloorSnowChasm
@@ -77,3 +85,15 @@
     sprite: Tiles/Planet/Chasms/snow_chasm.rsi
   - type: Icon
     sprite: Tiles/Planet/Chasms/snow_chasm.rsi
+
+- type: entity
+  parent: BaseFloorChasmEntity
+  id: FloorChasmEntityContainer
+  suffix: DO NOT MAP, Basalt, Container
+  categories: [ DoNotMap ] # Only for admin use
+  components:
+  - type: ContainerContainer
+    containers:
+      chasm: !type:Container
+  - type: ChasmContainer
+    containerId: chasm
