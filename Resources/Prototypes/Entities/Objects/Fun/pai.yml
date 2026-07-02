@@ -156,6 +156,8 @@
       shader: unshaded
       map: ["screen"]
   - type: Appearance
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: PersonalAI
