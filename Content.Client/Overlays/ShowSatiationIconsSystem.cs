@@ -18,13 +18,6 @@ public sealed partial class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSa
 
     private HashSet<ProtoId<SatiationTypePrototype>> _types = [];
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SatiationComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-    }
-
     protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowSatiationIconsComponent> args)
     {
         base.UpdateInternal(args);
@@ -43,6 +36,7 @@ public sealed partial class ShowSatiationIconsSystem : EquipmentHudSystem<ShowSa
         _types.Clear();
     }
 
+    [SubscribeLocalEvent]
     private void OnGetStatusIconsEvent(Entity<SatiationComponent> entity, ref GetStatusIconsEvent args)
     {
         if (!IsActive)

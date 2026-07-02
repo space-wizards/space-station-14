@@ -11,13 +11,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// <seealso cref="ExaminableSatiationComponent"/>
 public sealed partial class ExaminableSatiationSystem : BaseSatiationEffectSystem<ExaminableSatiationComponent>
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ExaminableSatiationComponent, ExaminedEvent>(OnExamine);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<ExaminableSatiationComponent> entity, ref ExaminedEvent args)
     {
         if (!SatiationQuery.TryComp(entity, out var satiationComp))

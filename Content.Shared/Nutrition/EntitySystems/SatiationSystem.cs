@@ -34,12 +34,7 @@ public sealed partial class SatiationSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        InitCaching();
-
-        SubscribeLocalEvent<SatiationComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SatiationComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<SatiationComponent, RejuvenateEvent>(OnRejuvenate);
+        RepopulateThresholdCache();
     }
 
     /// <inheritdoc/>
@@ -72,6 +67,7 @@ public sealed partial class SatiationSystem : EntitySystem
     /// <summary>
     /// Sets starting satiation values.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<SatiationComponent> entity, ref MapInitEvent args)
     {
         foreach (var (type, satiation) in entity.Comp.Satiations)
@@ -94,6 +90,7 @@ public sealed partial class SatiationSystem : EntitySystem
     /// <summary>
     /// Clears alerts.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<SatiationComponent> entity, ref ComponentShutdown args)
     {
         foreach (var (_, proto) in GetSatiationsAndTypes(entity))
@@ -105,6 +102,7 @@ public sealed partial class SatiationSystem : EntitySystem
     /// <summary>
     /// Sets all satiations to their maximums.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<SatiationComponent> entity, ref RejuvenateEvent args)
     {
         foreach (var type in entity.Comp.Satiations.Keys)

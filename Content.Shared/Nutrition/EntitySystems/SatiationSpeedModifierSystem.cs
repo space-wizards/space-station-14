@@ -10,14 +10,6 @@ public sealed partial class SatiationSpeedModifierSystem : BaseSatiationEffectSy
 {
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SatiationSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(
-            OnRefreshMovementSpeed);
-    }
-
     /// <summary>
     /// Forwards threshold changes to movement speed modifier refresh events.
     /// </summary>
@@ -35,6 +27,7 @@ public sealed partial class SatiationSpeedModifierSystem : BaseSatiationEffectSy
     /// <summary>
     /// Applies a speed modifier based on the current satiation level.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnRefreshMovementSpeed(
         Entity<SatiationSpeedModifierComponent> entity,
         ref RefreshMovementSpeedModifiersEvent args

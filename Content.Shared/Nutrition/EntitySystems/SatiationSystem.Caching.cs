@@ -20,13 +20,7 @@ public sealed partial class SatiationSystem
     /// <seealso cref="SatiationPrototypesCache"/>
     private readonly SatiationPrototypesCache _thresholdCache = new();
 
-    private void InitCaching()
-    {
-        RepopulateThresholdCache();
-
-        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
         if (!args.WasModified<SatiationPrototype>())
