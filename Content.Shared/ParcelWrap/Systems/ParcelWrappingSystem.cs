@@ -1,3 +1,4 @@
+using Content.Shared.Buckle;
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Item;
@@ -19,6 +20,7 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
     [Dependency] private SharedChargesSystem _charges = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
