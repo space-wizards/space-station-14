@@ -35,16 +35,34 @@ public sealed partial class XenoborgSystem : EntitySystem
 
     private void OnXenoborgDestroyed(EntityUid uid, XenoborgComponent component, DestructionEventArgs args)
     {
+        // do nothing if the uid was in fact the mothership core
+        // let OnCoreDestroyed deal with that
+        if (HasComp<MothershipCoreComponent>(uid))
+            return;
+
+        var mothershipCoreAlive = false;
+
         // if a xenoborg is destroyed, it will check to see if it was the last one
+        // and if the mothership core still exists
         var xenoborgQuery = AllEntityQuery<XenoborgComponent>(); // paused xenoborgs still count
         while (xenoborgQuery.MoveNext(out var xenoborg, out _))
         {
-            if (xenoborg != uid)
-                return;
-        }
+            // check if this xenoborg is actually the mothership core
+            if (HasComp<MothershipCoreComponent>(xenoborg))
+            {
+                mothershipCoreAlive = true;
+                continue;
+            }
 
-        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>(); // paused mothership cores still count
-        var mothershipCoreAlive = mothershipCoreQuery.MoveNext(out _, out _);
+            // we don't care about xenoborgs that are not being controlled by a player
+            if (!HasComp<ActorComponent>(xenoborg))
+                continue;
+
+            // found a xenoborg different from the one being destroyed that still exists
+            // and is being controlled by a player
+            if (xenoborg != uid)
+                return; // in this case, the fight is not over and there is no need to send any announcement
+        }
 
         var xenoborgsRuleQuery = EntityQueryEnumerator<XenoborgsRuleComponent>();
         if (xenoborgsRuleQuery.MoveNext(out var xenoborgsRuleEnt, out var xenoborgsRuleComp))
