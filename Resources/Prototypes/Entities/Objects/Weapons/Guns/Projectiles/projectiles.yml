@@ -816,6 +816,8 @@
     layers:
       - state: frag
   - type: ExplodeOnTrigger
+  - type: AcceleratingProjectile
+    fullAccelerationTime: 1.0
   - type: Explosive
     explosionType: Default
     maxIntensity: 40
@@ -838,6 +840,7 @@
     layers:
       - state: frag
   - type: ExplodeOnTrigger
+  - type: AcceleratingProjectile
   - type: Explosive
     explosionType: Default
     maxIntensity: 2 # max 30 per tile
