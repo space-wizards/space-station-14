@@ -100,7 +100,7 @@
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
   - type: ContainmentField
-    throwForce: 50
+    throwImpulse: 2000
   - type: SyncSprite
   - type: GuideHelp
     guides:
