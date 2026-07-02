@@ -13,7 +13,7 @@ public sealed class FrontalLispSystem : RelayAccentSystem<FrontalLispComponent>
     private static readonly Regex RegexLowerEcks = new(@"[e]+[x]+[c]*|[x]+");
     // @formatter:on
 
-    public override string Accentuate(string message, Entity<FrontalLispComponent>? _)
+    public override string Accentuate(string message)
     {
         // handles ts, sc(i|e|y), c(i|e|y), ps, st(io(u|n)), ch(i|e), z, s
         message = RegexUpperTh.Replace(message, "TH");

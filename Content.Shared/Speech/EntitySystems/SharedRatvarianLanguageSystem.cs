@@ -46,7 +46,7 @@ public abstract partial class SharedRatvarianLanguageSystem : RelayAccentSystem<
     {
     }
 
-    public override string Accentuate(string message, Entity<RatvarianLanguageComponent>? _)
+    public override string Accentuate(string message)
     {
         var ruleTranslation = message;
         var finalMessage = new StringBuilder();
