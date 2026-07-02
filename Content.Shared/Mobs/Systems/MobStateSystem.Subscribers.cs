@@ -41,7 +41,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(OnPointAttempt);
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
@@ -179,6 +179,17 @@ public partial class MobStateSystem
     private void CheckAct(EntityUid target, MobStateComponent component, CancellableEntityEventArgs args)
     {
         switch (component.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.Critical:
+                args.Cancel();
+                break;
+        }
+    }
+
+    private void OnPointAttempt(Entity<MobStateComponent> ent, ref PointAttemptEvent args)
+    {
+        switch (ent.Comp.CurrentState)
         {
             case MobState.Dead:
             case MobState.Critical:

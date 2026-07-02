@@ -286,7 +286,7 @@ public sealed partial class StorageUIController : UIController, IOnSystemChanged
         }
         else if (args.Function == ContentKeyFunctions.Point)
         {
-            _pointing.TryPointAtEntity(EntityManager.GetNetEntity(control.Entity));
+            _pointing.TryPointAtEntity(control.Entity);
             args.Handle();
         }
 

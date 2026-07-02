@@ -111,7 +111,7 @@ public sealed partial class CCVars
     ///     The number of seconds that must pass for a single entity to be able to point at something again.
     /// </summary>
     public static readonly CVarDef<float> PointingCooldownSeconds =
-        CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
+        CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     The last time the client recorded a valid connection to a game server.

@@ -6,7 +6,6 @@
 [RegisterComponent]
 public sealed partial class PointingArrowAngeringComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("remainingAnger")]
     public int RemainingAnger = 5;
 }
