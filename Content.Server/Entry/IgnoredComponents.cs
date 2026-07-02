@@ -20,7 +20,9 @@ namespace Content.Server.Entry
             "LightFade",
             "HolidayRsiSwap",
             "OptionsVisualizer",
-            "MultipartMachineGhost"
+            "AnomalyScannerScreen",
+            "MultipartMachineGhost",
+            "DirectionalArrowIndicator"
         };
     }
 }

@@ -23,7 +23,6 @@
   - type: Tag
     tags:
     - HighRiskItem
-    - GhostOnlyWarp
   - type: StealTarget
     stealGroup: NukeDisk
 

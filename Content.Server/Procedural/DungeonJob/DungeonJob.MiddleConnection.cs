@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
-using Content.Shared.Storage;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Procedural.DungeonJob;
@@ -13,7 +13,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="MiddleConnectionDunGen"/>
     /// </summary>
-    private async Task PostGen(MiddleConnectionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(MiddleConnectionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, IRobustRandom random)
     {
         // Grab all of the room bounds
         // Then, work out connections between them
@@ -57,7 +57,7 @@ public sealed partial class DungeonJob
 
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
         var tileDef = _tileDefManager[gen.Tile];
-        _prototype.TryIndex(gen.Flank, out var flankContents);
+        _prototype.Resolve(gen.Flank, out var flankContents);
         var contents = _prototype.Index(gen.Contents);
 
         foreach (var (room, border) in roomBorders)

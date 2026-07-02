@@ -17,7 +17,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// Can be null if not linked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? AnalyzerEntity;
+    public EntityUid? AnalyzerEntity;
 
     [DataField]
     public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
@@ -35,7 +35,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     };
 
     /// <summary>
-    /// The machine linking port for the analyzer
+    /// The machine linking port for linking the console with the analyzer.
     /// </summary>
     [DataField]
     public ProtoId<SourcePortPrototype> LinkingPort = "ArtifactAnalyzerSender";

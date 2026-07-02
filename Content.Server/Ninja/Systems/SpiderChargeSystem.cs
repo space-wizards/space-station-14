@@ -1,10 +1,10 @@
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Sticky;
 using Content.Shared.Trigger;
 
@@ -13,13 +13,13 @@ namespace Content.Server.Ninja.Systems;
 /// <summary>
 /// Prevents planting a spider charge outside of its location and handles greentext.
 /// </summary>
-public sealed class SpiderChargeSystem : SharedSpiderChargeSystem
+public sealed partial class SpiderChargeSystem : SharedSpiderChargeSystem
 {
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SpaceNinjaSystem _ninja = default!;
 
     public override void Initialize()
     {

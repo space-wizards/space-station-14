@@ -17,8 +17,8 @@ namespace Content.Client.Changelog;
 [GenerateTypedNameReferences]
 public sealed partial class ChangelogTab : Control
 {
-    [Dependency] private readonly ChangelogManager _changelog = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private ChangelogManager _changelog = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     public bool AdminOnly;
 
@@ -58,7 +58,7 @@ public sealed partial class ChangelogTab : Control
             ChangelogBody.AddChild(new Label
             {
                 Text = dayNice,
-                StyleClasses = { StyleBase.StyleClassLabelHeading },
+                StyleClasses = { StyleClass.LabelHeading },
                 Margin = new Thickness(4, 6, 0, 0)
             });
 
@@ -117,7 +117,7 @@ public sealed partial class ChangelogTab : Control
                     };
 
                     readDivider.AddChild(hBox);
-                    readDivider.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
+                    readDivider.AddChild(new PanelContainer { StyleClasses = { StyleClass.LowDivider } });
                     ChangelogBody.AddChild(readDivider);
 
                     if (first)

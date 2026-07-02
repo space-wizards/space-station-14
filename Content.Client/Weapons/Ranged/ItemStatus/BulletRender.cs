@@ -41,7 +41,7 @@ public abstract class BaseBulletRenderer : Control
     {
         var countPerRow = Math.Min(Capacity, CountPerRow(availableSize.X));
 
-        var rows = Math.Min((int) MathF.Ceiling(Capacity / (float) countPerRow), Rows);
+        var rows = Math.Min((int)MathF.Ceiling(Capacity / (float)countPerRow), Rows);
 
         var height = _params.ItemHeight * rows + (_params.VerticalSeparation * rows - 1);
         var width = RowWidth(countPerRow);
@@ -110,7 +110,7 @@ public abstract class BaseBulletRenderer : Control
 
     private int CountPerRow(float width)
     {
-        return (int) ((width - _params.ItemWidth + _params.ItemSeparation) / _params.ItemSeparation);
+        return (int)((width - _params.ItemWidth + _params.ItemSeparation) / _params.ItemSeparation);
     }
 
     private int RowWidth(int count)
@@ -149,6 +149,15 @@ public sealed class BulletRender : BaseBulletRenderer
     public const int BulletHeight = 12;
     public const int VerticalSeparation = 2;
 
+    private static readonly LayoutParameters LayoutLarge = new LayoutParameters
+    {
+        ItemHeight = BulletHeight,
+        ItemSeparation = 6,
+        ItemWidth = 5,
+        VerticalSeparation = VerticalSeparation,
+        MinCountPerRow = MinCountPerRow
+    };
+
     private static readonly LayoutParameters LayoutNormal = new LayoutParameters
     {
         ItemHeight = BulletHeight,
@@ -185,8 +194,9 @@ public sealed class BulletRender : BaseBulletRenderer
             if (_type == value)
                 return;
 
-            Parameters = _type switch
+            Parameters = value switch
             {
+                BulletType.Large => LayoutLarge,
                 BulletType.Normal => LayoutNormal,
                 BulletType.Tiny => LayoutTiny,
                 _ => throw new ArgumentOutOfRangeException()
@@ -218,6 +228,7 @@ public sealed class BulletRender : BaseBulletRenderer
 
     public enum BulletType
     {
+        Large,
         Normal,
         Tiny
     }

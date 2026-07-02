@@ -1,0 +1,15 @@
+- type: entity
+  parent: [ MobNightVision ]
+  id: BaseMobMothroach
+  abstract: true
+  components:
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganAnimalLungs
+        - id: OrganAnimalHeart
+        - id: OrganMothStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys

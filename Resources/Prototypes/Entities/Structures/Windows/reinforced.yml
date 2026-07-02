@@ -1,7 +1,7 @@
 - type: entity
   id: ReinforcedWindow
   name: reinforced window
-  parent: Window
+  parent: [BaseDeltaPressureReinforcedGlass, Window]
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -12,23 +12,15 @@
     fuelCost: 10
     doAfterDelay: 2
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 6
     fx: EffectRCDDeconstruct6
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
     - trigger:
         !type:DamageTrigger
         damage: 75
@@ -58,7 +50,7 @@
 
 - type: entity
   id: WindowReinforcedDirectional
-  parent: WindowDirectional
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, WindowDirectional]
   name: directional reinforced window
   description: Don't smudge up the glass down there.
   placement:
@@ -92,15 +84,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-    - trigger:
-        !type:DamageTrigger
         damage: 37
       behaviors:
       - !type:PlaySoundBehavior
@@ -132,6 +115,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: IconSmooth
     mode: Diagonal
     key: windows

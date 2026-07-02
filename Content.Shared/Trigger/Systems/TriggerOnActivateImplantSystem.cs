@@ -3,10 +3,8 @@ using Content.Shared.Trigger.Components.Triggers;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed partial class TriggerOnActivateImplantSystem : EntitySystem
+public sealed partial class TriggerOnActivateImplantSystem : TriggerOnXSystem
 {
-    [Dependency] private readonly TriggerSystem _trigger = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -16,7 +14,7 @@ public sealed partial class TriggerOnActivateImplantSystem : EntitySystem
 
     private void OnActivateImplant(Entity<TriggerOnActivateImplantComponent> ent, ref ActivateImplantEvent args)
     {
-        _trigger.Trigger(ent.Owner, args.Performer, ent.Comp.KeyOut);
+        Trigger.Trigger(ent.Owner, args.Performer, ent.Comp.KeyOut);
         args.Handled = true;
     }
 }

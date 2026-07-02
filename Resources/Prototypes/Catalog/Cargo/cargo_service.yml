@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: ServiceJanitorial
   icon:
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
     state: cleaner
   product: CrateServiceJanitorialSupplies
   cost: 560
@@ -53,7 +53,10 @@
   icon:
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
-  product: CrateMousetrapBoxes
+  product: BoxMousetrap
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 500
   category: cargoproduct-category-name-service
   group: market

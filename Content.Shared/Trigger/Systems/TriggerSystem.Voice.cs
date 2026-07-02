@@ -11,29 +11,38 @@ public sealed partial class TriggerSystem
 {
     private void InitializeVoice()
     {
-        SubscribeLocalEvent<TriggerOnVoiceComponent, ComponentInit>(OnVoiceInit);
+        SubscribeLocalEvent<TriggerOnVoiceComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ExaminedEvent>(OnVoiceExamine);
         SubscribeLocalEvent<TriggerOnVoiceComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TriggerOnVoiceComponent, GetVerbsEvent<AlternativeVerb>>(OnVoiceGetAltVerbs);
     }
 
-    private void OnVoiceInit(Entity<TriggerOnVoiceComponent> ent, ref ComponentInit args)
+    private void OnMapInit(Entity<TriggerOnVoiceComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.IsListening)
-            EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
-        else
-            RemCompDeferred<ActiveListenerComponent>(ent);
+        if (ent.Comp.DefaultKeyPhrase != null)
+        {
+            ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
+            Dirty(ent);
+        }
+
+        UpdateListening(ent);
     }
 
-    private void OnVoiceExamine(Entity<TriggerOnVoiceComponent> ent, ref ExaminedEvent args)
+    private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
+        if (!args.IsInDetailsRange || !component.ShowExamine)
+            return;
+
+        if (component.InspectUninitializedLoc != null && string.IsNullOrWhiteSpace(component.KeyPhrase))
         {
-            args.PushText(string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase)
-                ? Loc.GetString("trigger-on-voice-uninitialized")
-                : Loc.GetString("trigger-on-voice-examine", ("keyphrase", ent.Comp.KeyPhrase)));
+            args.PushText(Loc.GetString(component.InspectUninitializedLoc));
+        }
+        else if (component.InspectInitializedLoc != null && !string.IsNullOrWhiteSpace(component.KeyPhrase))
+        {
+            args.PushText(Loc.GetString(component.InspectInitializedLoc.Value, ("keyphrase", component.KeyPhrase)));
         }
     }
+
     private void OnListen(Entity<TriggerOnVoiceComponent> ent, ref ListenEvent args)
     {
         var component = ent.Comp;
@@ -71,13 +80,13 @@ public sealed partial class TriggerSystem
 
     private void OnVoiceGetAltVerbs(Entity<TriggerOnVoiceComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !ent.Comp.ShowVerbs)
             return;
 
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString(ent.Comp.IsRecording ? "trigger-on-voice-stop" : "trigger-on-voice-record"),
+            Text = Loc.GetString(ent.Comp.IsRecording ? ent.Comp.StopRecordingVerb : ent.Comp.StartRecordingVerb),
             Act = () =>
             {
                 if (ent.Comp.IsRecording)
@@ -88,17 +97,41 @@ public sealed partial class TriggerSystem
             Priority = 1
         });
 
+        if (ent.Comp.DefaultKeyPhrase != null
+            && ent.Comp.KeyPhrase != Loc.GetString(ent.Comp.DefaultKeyPhrase))
+        {
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString(ent.Comp.ResetRecordingVerb),
+                Act = () =>
+                {
+                    SetToDefault(ent, user);
+                },
+            });
+        }
+
         if (string.IsNullOrWhiteSpace(ent.Comp.KeyPhrase))
             return;
 
         args.Verbs.Add(new AlternativeVerb
         {
-            Text = Loc.GetString("trigger-on-voice-clear"),
+            Text = Loc.GetString(ent.Comp.ClearRecordingVerb),
             Act = () =>
             {
                 ClearRecording(ent);
             }
         });
+    }
+
+    /// <summary>
+    /// Updates the presence/absence of the ActiveListenerComponent based on IsListening.
+    /// </summary>
+    private void UpdateListening(Entity<TriggerOnVoiceComponent> ent)
+    {
+        if (ent.Comp.IsListening)
+            EnsureComp<ActiveListenerComponent>(ent).Range = ent.Comp.ListenRange;
+        else
+            RemCompDeferred<ActiveListenerComponent>(ent);
     }
 
     /// <summary>
@@ -156,5 +189,24 @@ public sealed partial class TriggerSystem
         ent.Comp.IsRecording = false;
         Dirty(ent);
         RemComp<ActiveListenerComponent>(ent);
+    }
+
+    /// <summary>
+    /// Resets the current key phrase to default.
+    /// </summary>
+    public void SetToDefault(Entity<TriggerOnVoiceComponent> ent, EntityUid? user = null)
+    {
+        if (ent.Comp.DefaultKeyPhrase == null)
+            return;
+
+        ent.Comp.KeyPhrase = Loc.GetString(ent.Comp.DefaultKeyPhrase);
+        ent.Comp.IsRecording = false;
+        Dirty(ent);
+        UpdateListening(ent);
+
+        _adminLogger.Add(LogType.Trigger, LogImpact.Low,
+            $"A voice-trigger on {ToPrettyString(ent):entity} has been reset to default keyphrase: '{ent.Comp.KeyPhrase}'. User: {ToPrettyString(user):speaker}");
+
+        _popup.PopupPredicted(Loc.GetString("trigger-on-voice-set-default", ("keyphrase", ent.Comp.KeyPhrase)), ent, user);
     }
 }
