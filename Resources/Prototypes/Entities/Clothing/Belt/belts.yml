@@ -42,7 +42,8 @@
     sprite: Clothing/Belt/quiver.rsi
     layers:
     - state: icon
-    - map: [ "enum.StorageContainerVisualLayers.Fill" ]
+    - state: fill-1
+      map: [ "enum.StorageContainerVisualLayers.Fill" ]
       visible: false
   - type: Clothing
   - type: Storage
@@ -57,6 +58,10 @@
   - type: StorageContainerVisuals
     maxFillLevels: 3
     fillBaseName: fill-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+    equippedMaxFillLevels: 2
+    equippedFillBaseName: -fill-
   - type: Construction
     graph: Quiver
     node: Quiver
