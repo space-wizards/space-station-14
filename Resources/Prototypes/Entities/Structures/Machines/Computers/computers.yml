@@ -936,7 +936,6 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
-    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Engineering
@@ -970,7 +969,6 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
-    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Medical
@@ -1004,7 +1002,6 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
-    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Science
@@ -1037,7 +1034,6 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
-    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Security
@@ -1070,7 +1066,6 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
-    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Service
