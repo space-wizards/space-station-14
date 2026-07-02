@@ -7,7 +7,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
@@ -23,7 +23,7 @@ public abstract partial class SharedDoorRemoteSystem : EntitySystem
     [Dependency] private SharedDoorSystem _doorSystem = default!;
     [Dependency] private SharedElectrocutionSystem _electrify = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private TagSystem _tagSystem = default!;

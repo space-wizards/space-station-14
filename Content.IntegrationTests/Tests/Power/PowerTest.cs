@@ -1,12 +1,12 @@
 #nullable enable
 using Content.IntegrationTests.Fixtures;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.Nodes;
+using Content.Shared.Power.Nodes;
 using Content.Shared.Coordinates;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -106,9 +106,11 @@ namespace Content.IntegrationTests.Tests.Power
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: BatteryCharger
-    voltage: High
   - type: BatteryDischarger
-    voltage: Medium
+  - type: PowerNetworkConnector
+    voltages:
+      input: High
+      output: Medium
   - type: PowerNetworkBattery
     maxChargeRate: 1000
     maxSupply: 1000
@@ -132,11 +134,12 @@ namespace Content.IntegrationTests.Tests.Power
     maxSupply: 1000
     supplyRampTolerance: 1000
   - type: BatteryCharger
-    voltage: Medium
   - type: BatteryDischarger
-    voltage: Apc
+  - type: PowerNetworkConnector
+    voltages:
+      input: Medium
+      output: Apc
   - type: Apc
-    voltage: Apc
   - type: NodeContainer
     nodes:
       input:
@@ -155,9 +158,9 @@ namespace Content.IntegrationTests.Tests.Power
     access: [['Engineering']]
 
 - type: entity
-  id: ApcPowerReceiverDummy
+  id: PowerReceiverDummy
   components:
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Transform
     anchored: true
@@ -201,8 +204,8 @@ namespace Content.IntegrationTests.Tests.Power
                 // Plenty of surplus and tolerance
                 supplier.MaxSupply = loadPower * 4;
                 supplier.SupplyRampTolerance = loadPower * 4;
-                consumer1.DrawRate = loadPower;
-                consumer2.DrawRate = loadPower;
+                consumer1.DesiredPower = loadPower;
+                consumer2.DesiredPower = loadPower;
             });
 
             server.RunTicks(1); //let run a tick for PowerNet to process power
@@ -212,8 +215,8 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.Multiple(() =>
                 {
                     // Assert both consumers fully powered
-                    Assert.That(consumer1.ReceivedPower, Is.EqualTo(consumer1.DrawRate).Within(0.1));
-                    Assert.That(consumer2.ReceivedPower, Is.EqualTo(consumer2.DrawRate).Within(0.1));
+                    Assert.That(consumer1.ReceivingPower, Is.EqualTo(consumer1.DesiredPower).Within(0.1));
+                    Assert.That(consumer2.ReceivingPower, Is.EqualTo(consumer2.DesiredPower).Within(0.1));
 
                     // Assert that load adds up on supply.
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(loadPower * 2).Within(0.1));
@@ -261,8 +264,8 @@ namespace Content.IntegrationTests.Tests.Power
                 // Too little supply, both consumers should get 33% power.
                 supplier.MaxSupply = loadPower;
                 supplier.SupplyRampTolerance = loadPower;
-                consumer1.DrawRate = loadPower;
-                consumer2.DrawRate = loadPower * 2;
+                consumer1.DesiredPower = loadPower;
+                consumer2.DesiredPower = loadPower * 2;
             });
 
             server.RunTicks(1); //let run a tick for PowerNet to process power
@@ -272,8 +275,8 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.Multiple(() =>
                 {
                     // Assert both consumers get 33% power.
-                    Assert.That(consumer1.ReceivedPower, Is.EqualTo(consumer1.DrawRate / 3).Within(0.1));
-                    Assert.That(consumer2.ReceivedPower, Is.EqualTo(consumer2.DrawRate / 3).Within(0.1));
+                    Assert.That(consumer1.ReceivingPower, Is.EqualTo(consumer1.DesiredPower / 3).Within(0.1));
+                    Assert.That(consumer2.ReceivingPower, Is.EqualTo(consumer2.DesiredPower / 3).Within(0.1));
 
                     // Supply should be maxed out
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.1));
@@ -315,7 +318,7 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.MaxSupply = 400;
                 supplier.SupplyRampRate = 400;
                 supplier.SupplyRampTolerance = 100;
-                consumer.DrawRate = 400;
+                consumer.DesiredPower = 400;
             });
 
             // Exact values can/will be off by a tick, add tolerance for that.
@@ -330,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Power
                 {
                     // First tick, supply should be delivering 100 W (max tolerance) and start ramping up.
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(100).Within(0.1));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(100).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(100).Within(0.1));
                 });
             });
 
@@ -345,7 +348,7 @@ namespace Content.IntegrationTests.Tests.Power
                     // After 15 ticks (0.25 seconds), supply ramp pos should be at 100 W and supply at 100, approx.
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(200).Within(tickDev));
                     Assert.That(supplier.SupplyRampPosition, Is.EqualTo(100).Within(tickDev));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(200).Within(tickDev));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(200).Within(tickDev));
                 });
             });
 
@@ -362,7 +365,7 @@ namespace Content.IntegrationTests.Tests.Power
                     // After 1 second total, ramp should be at 400 and supply should be at 400, everybody happy.
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(400).Within(tickDev));
                     Assert.That(supplier.SupplyRampPosition, Is.EqualTo(400).Within(tickDev));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(400).Within(tickDev));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(400).Within(tickDev));
                 });
             });
         }
@@ -409,7 +412,7 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.MaxSupply = 400;
                 netBattery.SupplyRampRate = 400;
                 netBattery.SupplyRampTolerance = 100;
-                consumer.DrawRate = 400;
+                consumer.DesiredPower = 400;
             });
 
             // Exact values can/will be off by a tick, add tolerance for that.
@@ -424,7 +427,7 @@ namespace Content.IntegrationTests.Tests.Power
                 {
                     // First tick, supply should be delivering 100 W (max tolerance) and start ramping up.
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(100).Within(0.1));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(100).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(100).Within(0.1));
                 });
             });
 
@@ -439,7 +442,7 @@ namespace Content.IntegrationTests.Tests.Power
                     // After 15 ticks (0.25 seconds), supply ramp pos should be at 100 W and supply at 100, approx.
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(200).Within(tickDev));
                     Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(100).Within(tickDev));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(200).Within(tickDev));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(200).Within(tickDev));
 
                     // Trivial integral to calculate expected power spent.
                     const double spentExpected = (200 + 100) / 2.0 * 0.25;
@@ -459,7 +462,7 @@ namespace Content.IntegrationTests.Tests.Power
                     // After 1 second total, ramp should be at 400 and supply should be at 400, everybody happy.
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(400).Within(tickDev));
                     Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(400).Within(tickDev));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(400).Within(tickDev));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(400).Within(tickDev));
 
                     // Trivial integral to calculate expected power spent.
                     const double spentExpected = (400 + 100) / 2.0 * 0.75 + 400 * 0.25;
@@ -509,7 +512,7 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier = entityManager.GetComponent<PowerSupplierComponent>(generatorEnt);
                 consumer = entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
 
-                consumer.DrawRate = draw;
+                consumer.DesiredPower = draw;
 
                 supplier.MaxSupply = draw / 2;
                 supplier.SupplyRampRate = rampRate;
@@ -530,7 +533,7 @@ namespace Content.IntegrationTests.Tests.Power
                 {
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(rampTol).Within(0.1));
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(rampTol).Within(0.1));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(rampTol * 2).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(rampTol * 2).Within(0.1));
                 });
             });
 
@@ -544,12 +547,12 @@ namespace Content.IntegrationTests.Tests.Power
                     Assert.That(supplier.SupplyRampPosition, Is.EqualTo(draw / 2).Within(0.1));
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(draw / 2).Within(0.1));
                     Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(draw / 2).Within(0.1));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(draw).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(draw).Within(0.1));
                 });
             });
 
             // now we disconnect the load;
-            consumer.NetworkLoad.Enabled = false;
+            consumer.Enabled = false;
 
             server.RunTicks(60);
 
@@ -561,7 +564,7 @@ namespace Content.IntegrationTests.Tests.Power
                     Assert.That(supplier.SupplyRampPosition, Is.EqualTo(0).Within(0.1));
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(0).Within(0.1));
                     Assert.That(netBattery.SupplyRampPosition, Is.EqualTo(0).Within(0.1));
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(0).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(0).Within(0.1));
                 });
             });
         }
@@ -667,7 +670,7 @@ namespace Content.IntegrationTests.Tests.Power
                 battery = entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
                 // Consumer needs 1000 W, supplier can only provide 800, battery fills in the remaining 200.
-                consumer.DrawRate = 1000;
+                consumer.DesiredPower = 1000;
                 supplier.MaxSupply = 800;
                 supplier.SupplyRampTolerance = 800;
 
@@ -689,7 +692,7 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(consumer.DrawRate).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(consumer.DesiredPower).Within(0.1));
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.1));
 
                     // Battery's current supply includes passed-through power from the supply.
@@ -748,7 +751,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 // Consumer needs 1000 W, supply and battery can only provide 400 each.
                 // BUT the battery has 50% input efficiency, so 50% of the power of the supply gets lost.
-                consumer.DrawRate = 1000;
+                consumer.DesiredPower = 1000;
                 supplier.MaxSupply = 400;
                 supplier.SupplyRampTolerance = 400;
 
@@ -771,7 +774,7 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(600).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(600).Within(0.1));
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.1));
 
                     Assert.That(netBattery.CurrentSupply, Is.EqualTo(600).Within(0.1));
@@ -841,8 +844,8 @@ namespace Content.IntegrationTests.Tests.Power
                 // Assert that both are getting 50% power.
                 // Batteries are empty and only a bridge.
 
-                consumer1.DrawRate = 500;
-                consumer2.DrawRate = 1000;
+                consumer1.DesiredPower = 500;
+                consumer2.DesiredPower = 1000;
                 supplier.MaxSupply = 1000;
                 supplier.SupplyRampTolerance = 1000;
 
@@ -868,8 +871,8 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(consumer1.ReceivedPower, Is.EqualTo(250).Within(0.1));
-                    Assert.That(consumer2.ReceivedPower, Is.EqualTo(500).Within(0.1));
+                    Assert.That(consumer1.ReceivingPower, Is.EqualTo(250).Within(0.1));
+                    Assert.That(consumer2.ReceivingPower, Is.EqualTo(500).Within(0.1));
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.1));
                 });
             });
@@ -935,7 +938,7 @@ namespace Content.IntegrationTests.Tests.Power
                 // Consumer wants 2k, supplies can only provide 1k (500 each). Expectation is that batteries will only provide the necessary remaining 1k (500 each).
                 // Previously this failed with a 2x 333 w supplies and 2x 666 w batteries.
 
-                consumer.DrawRate = 2000;
+                consumer.DesiredPower = 2000;
 
                 supplier1.MaxSupply = 500;
                 supplier2.MaxSupply = 500;
@@ -961,7 +964,7 @@ namespace Content.IntegrationTests.Tests.Power
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(consumer.DrawRate).Within(0.1));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(consumer.DesiredPower).Within(0.1));
                     Assert.That(supplier1.CurrentSupply, Is.EqualTo(supplier1.MaxSupply).Within(0.1));
                     Assert.That(supplier2.CurrentSupply, Is.EqualTo(supplier2.MaxSupply).Within(0.1));
 
@@ -1027,8 +1030,8 @@ namespace Content.IntegrationTests.Tests.Power
                 var battery1 = entityManager.GetComponent<BatteryComponent>(batteryEnt1);
                 var battery2 = entityManager.GetComponent<BatteryComponent>(batteryEnt2);
 
-                consumer1.DrawRate = 500;
-                consumer2.DrawRate = 1000;
+                consumer1.DesiredPower = 500;
+                consumer2.DesiredPower = 1000;
                 supplier.MaxSupply = 1000;
                 supplier.SupplyRampTolerance = 1000;
 
@@ -1055,8 +1058,8 @@ namespace Content.IntegrationTests.Tests.Power
                     // NOTE: MaxChargeRate on batteries actually skews the demand.
                     // So that's why the tolerance is so high, the charge rate is so *low*,
                     // and we run so many ticks to stabilize.
-                    Assert.That(consumer1.ReceivedPower, Is.EqualTo(333.333).Within(10));
-                    Assert.That(consumer2.ReceivedPower, Is.EqualTo(666.666).Within(10));
+                    Assert.That(consumer1.ReceivingPower, Is.EqualTo(333.333).Within(10));
+                    Assert.That(consumer2.ReceivingPower, Is.EqualTo(666.666).Within(10));
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.1));
                 });
             });
@@ -1099,7 +1102,7 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(batteryEnt);
                 var battery = entityManager.GetComponent<BatteryComponent>(batteryEnt);
 
-                consumer.DrawRate = 1000;
+                consumer.DesiredPower = 1000;
                 supplier.MaxSupply = 1000;
                 supplier.SupplyRampTolerance = 1000;
 
@@ -1118,7 +1121,7 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.Multiple(() =>
                 {
                     // Supply and consumer are fully loaded/supplied.
-                    Assert.That(consumer.ReceivedPower, Is.EqualTo(consumer.DrawRate).Within(0.5));
+                    Assert.That(consumer.ReceivingPower, Is.EqualTo(consumer.DesiredPower).Within(0.5));
                     Assert.That(supplier.CurrentSupply, Is.EqualTo(supplier.MaxSupply).Within(0.5));
                 });
 
@@ -1135,7 +1138,7 @@ namespace Content.IntegrationTests.Tests.Power
                 Assert.Multiple(() =>
                 {
                     // Assert that network drops to 0 power and starts ramping up
-                    Assert.That(consumer.ReceivedPower, Is.LessThan(50).And.GreaterThan(0));
+                    Assert.That(consumer.ReceivingPower, Is.LessThan(50).And.GreaterThan(0));
                     Assert.That(netBattery.CurrentReceiving, Is.EqualTo(0));
                     Assert.That(netBattery.CurrentSupply, Is.GreaterThan(0));
                 });
@@ -1278,8 +1281,8 @@ namespace Content.IntegrationTests.Tests.Power
             var extensionCableSystem = entityManager.System<ExtensionCableSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
             PowerNetworkBatteryComponent apcNetBattery = default!;
-            ApcPowerReceiverComponent receiver = default!;
-            ApcPowerReceiverComponent unpoweredReceiver = default!;
+            PowerReceiverComponent receiver = default!;
+            PowerReceiverComponent unpoweredReceiver = default!;
 
             await server.WaitAssertion(() =>
             {
@@ -1298,12 +1301,12 @@ namespace Content.IntegrationTests.Tests.Power
                 var apcExtensionEnt = entityManager.SpawnEntity("CableApcExtension", grid.Owner.ToCoordinates(0, 0));
 
                 // Create a powered receiver in range (range is 0 indexed)
-                var powerReceiverEnt = entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.Owner.ToCoordinates(0, range - 1));
-                receiver = entityManager.GetComponent<ApcPowerReceiverComponent>(powerReceiverEnt);
+                var powerReceiverEnt = entityManager.SpawnEntity("PowerReceiverDummy", grid.Owner.ToCoordinates(0, range - 1));
+                receiver = entityManager.GetComponent<PowerReceiverComponent>(powerReceiverEnt);
 
                 // Create an unpowered receiver outside range
-                var unpoweredReceiverEnt = entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.Owner.ToCoordinates(0, range));
-                unpoweredReceiver = entityManager.GetComponent<ApcPowerReceiverComponent>(unpoweredReceiverEnt);
+                var unpoweredReceiverEnt = entityManager.SpawnEntity("PowerReceiverDummy", grid.Owner.ToCoordinates(0, range));
+                unpoweredReceiver = entityManager.GetComponent<PowerReceiverComponent>(unpoweredReceiverEnt);
 
                 var battery = entityManager.GetComponent<BatteryComponent>(apcEnt);
                 apcNetBattery = entityManager.GetComponent<PowerNetworkBatteryComponent>(apcEnt);
@@ -1314,7 +1317,7 @@ namespace Content.IntegrationTests.Tests.Power
                 batterySys.SetMaxCharge((apcEnt, battery), 10000);  //arbitrary nonzero amount of charge
                 batterySys.SetCharge((apcEnt, battery), battery.MaxCharge); //fill battery
 
-                receiver.Load = 1; //arbitrary small amount of power
+                receiver.DesiredPower = 1; //arbitrary small amount of power
             });
 
             server.RunTicks(1); //let run a tick for ApcNet to process power

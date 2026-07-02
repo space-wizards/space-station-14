@@ -35,6 +35,9 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: input
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
@@ -84,6 +87,9 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: input
   - type: Anchorable
 
 - type: entity
@@ -120,6 +126,9 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: input
   - type: BatteryDischarger
   - type: Anchorable
 
@@ -177,6 +186,6 @@
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: wirelessmachine
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Anchorable

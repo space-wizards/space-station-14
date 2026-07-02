@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
 using Robust.Shared.Utility;
 
@@ -49,7 +47,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleSelect(EntityUid uid, ResearchClientComponent component, ConsoleServerSelectionMessage args)
     {
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, args.Actor);

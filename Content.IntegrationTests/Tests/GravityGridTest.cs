@@ -1,6 +1,6 @@
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.Components;
 using Content.Shared.Gravity;
+using Content.Shared.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests
     idlePower: 50
     chargeRate: 1000000000 # Set this really high so it discharges in a single tick.
     activePower: 500
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: UserInterface
 ";
         [Test]
@@ -59,10 +59,10 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));
-                    Assert.That(entityMan.HasComponent<ApcPowerReceiverComponent>(generator));
+                    Assert.That(entityMan.HasComponent<PowerReceiverComponent>(generator));
                 });
 
-                var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
+                var powerComponent = entityMan.GetComponent<PowerReceiverComponent>(generator);
                 powerComponent.NeedsPower = false;
             });
 
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 var generatorComponent = entityMan.GetComponent<GravityGeneratorComponent>(generator);
-                var powerComponent = entityMan.GetComponent<ApcPowerReceiverComponent>(generator);
+                var powerComponent = entityMan.GetComponent<PowerReceiverComponent>(generator);
 
                 Assert.Multiple(() =>
                 {

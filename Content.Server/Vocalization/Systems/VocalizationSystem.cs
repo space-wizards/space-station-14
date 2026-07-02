@@ -1,8 +1,8 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
+using Content.Shared.Power.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -35,7 +35,7 @@ public sealed partial class VocalizationSystem : EntitySystem
 
     private void OnRequiresPowerTryVocalize(Entity<VocalizerRequiresPowerComponent> ent, ref TryVocalizeEvent args)
     {
-        if (!TryComp<ApcPowerReceiverComponent>(ent, out var receiver))
+        if (!TryComp<PowerReceiverComponent>(ent, out var receiver))
             return;
 
         args.Cancelled |= !receiver.Powered;

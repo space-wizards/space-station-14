@@ -3,7 +3,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
@@ -22,7 +21,8 @@ using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
-using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Tools;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
@@ -90,7 +90,7 @@ public sealed partial class FaxSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<FaxMachineComponent, ApcPowerReceiverComponent>();
+        var query = EntityQueryEnumerator<FaxMachineComponent, PowerReceiverComponent>();
         while (query.MoveNext(out var uid, out var fax, out var receiver))
         {
             if (!receiver.Powered)

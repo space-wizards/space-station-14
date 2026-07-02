@@ -23,7 +23,7 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: ActivatableUI
     key: enum.ReagentDispenserUiKey.Key

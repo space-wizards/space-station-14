@@ -2,14 +2,14 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
@@ -22,6 +22,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private SharedAppearanceSystem _appearance = default!;
         [Dependency] private SharedMapSystem _mapping = default!;
         [Dependency] private PointLightSystem _pointLight = default!;
+        [Dependency] private PowerReceiverSystem _power = default!;
 
         [Dependency] private EntityQuery<AtmosAlarmableComponent> _atmosAlarmQuery = default!;
         [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
@@ -59,7 +60,7 @@ namespace Content.Server.Doors.Systems
             {
                 if (_atmosAlarmQuery.TryComp(uid, out var alarmable)
                     && alarmable.LastAlarmState == AtmosAlarmType.Danger
-                    && this.IsPowered(uid, EntityManager)
+                    && _power.IsPowered(uid)
                     && door.State == DoorState.Open)
                 {
                     EmergencyPressureStop(uid, firelock, door);
@@ -94,7 +95,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosAlarmEvent args)
         {
-            if (!this.IsPowered(uid, EntityManager))
+            if (!_power.IsPowered(uid))
                 return;
 
             if (!TryComp<DoorComponent>(uid, out var doorComponent))

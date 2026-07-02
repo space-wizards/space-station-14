@@ -1,18 +1,17 @@
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
-using Content.Server.Power.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-[TestFixture, TestOf(typeof(SharedPowerStateSystem))]
+[TestFixture, TestOf(typeof(PowerStateSystem))]
 public sealed class PowerStatePrototypeTest : GameTest
 {
     /// <summary>
-    /// Asserts that the <see cref="SharedApcPowerReceiverComponent"/>'s load is the same
+    /// Asserts that the <see cref="PowerReceiverComponent"/>'s load is the same
     /// as the idle or working power draw from <see cref="PowerStateComponent"/>,
     /// depending on the current power state.
     /// </summary>
@@ -38,19 +37,19 @@ public sealed class PowerStatePrototypeTest : GameTest
 
                     // LESSON LEARNED:
                     // ENSURE THAT THE COMPONENT YOU ARE TRYING TO GET IS THE SERVER-SIDE VARIANT
-                    if (!prototype.TryComp<ApcPowerReceiverComponent>(out var powerReceiverComp, entMan.ComponentFactory))
+                    if (!prototype.TryComp<PowerReceiverComponent>(out var powerReceiverComp, entMan.ComponentFactory))
                     {
                         Assert.Fail(
-                            $"Entity prototype '{prototype.ID}' has a PowerStateComponent but is missing the required ApcPowerReceiverComponent.");
+                            $"Entity prototype '{prototype.ID}' has a PowerStateComponent but is missing the required PowerReceiverComponent.");
                     }
 
                     var expectedLoad = powerStateComp.IsWorking
                         ? powerStateComp.WorkingPowerDraw
                         : powerStateComp.IdlePowerDraw;
 
-                    Assert.That(powerReceiverComp.Load,
+                    Assert.That(powerReceiverComp.DesiredPower,
                         Is.EqualTo(expectedLoad),
-                        $"Entity prototype '{prototype.ID}' has mismatched power draw between PowerStateComponent and SharedApcPowerReceiverComponent.");
+                        $"Entity prototype '{prototype.ID}' has mismatched power draw between PowerStateComponent and PowerReceiverComponent.");
                 }
             });
         });

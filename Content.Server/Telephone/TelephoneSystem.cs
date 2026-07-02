@@ -2,12 +2,10 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Labels.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Speech;
@@ -20,6 +18,8 @@ using Robust.Shared.Utility;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Telephone;
 
@@ -34,6 +34,7 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IReplayRecordingManager _replay = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     // Has set used to prevent telephone feedback loops
     private HashSet<(EntityUid, string, Entity<TelephoneComponent>)> _recentChatMessages = new();
@@ -513,6 +514,6 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsTelephonePowered(Entity<TelephoneComponent> entity)
     {
-        return this.IsPowered(entity, EntityManager);
+        return _power.IsPowered(entity.Owner);
     }
 }

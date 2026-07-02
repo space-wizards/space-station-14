@@ -4,8 +4,8 @@ using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -23,7 +23,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()

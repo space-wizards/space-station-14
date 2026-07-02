@@ -1,7 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Gibbing;
@@ -18,6 +17,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
+using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
@@ -64,6 +64,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private SharedAccessSystem _access = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedBatterySystem Battery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

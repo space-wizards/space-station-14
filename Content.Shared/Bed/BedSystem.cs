@@ -7,8 +7,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Metabolism;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -23,7 +23,7 @@ public sealed partial class BedSystem : EntitySystem
     [Dependency] private MetabolizerSystem _metabolizer = default!;
     [Dependency] private MobStateSystem _mobStateSystem = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SleepingSystem _sleepingSystem = default!;
 
     [Dependency] private EntityQuery<SleepingComponent> _sleepingQuery = default!;

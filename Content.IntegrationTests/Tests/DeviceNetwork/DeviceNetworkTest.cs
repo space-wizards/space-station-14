@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
       transmitFrequency: 0
       receiveFrequency: 0
     - type: WiredNetworkConnection
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
 
 - type: entity
   name: WirelessNetworkDeviceDummy

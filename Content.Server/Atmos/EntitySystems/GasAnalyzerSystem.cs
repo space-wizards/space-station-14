@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Atmos.Components;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer;
 using JetBrains.Annotations;

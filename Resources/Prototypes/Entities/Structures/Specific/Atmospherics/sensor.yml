@@ -67,7 +67,7 @@
         friction: 0.2
   - type: Clickable
   - type: InteractionOutline
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]

@@ -1,7 +1,7 @@
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio.Jukebox;
-using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
@@ -13,6 +13,7 @@ namespace Content.Server.Audio.Jukebox;
 public sealed partial class JukeboxSystem : SharedJukeboxSystem
 {
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -30,7 +31,7 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
 
     private void OnComponentInit(Entity<JukeboxComponent> ent, ref ComponentInit args)
     {
-        if (HasComp<ApcPowerReceiverComponent>(ent))
+        if (HasComp<PowerReceiverComponent>(ent))
         {
             TryUpdateVisualState(ent.AsNullable());
         }
@@ -59,7 +60,7 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
     {
         TryUpdateVisualState(entity.AsNullable());
 
-        if (!this.IsPowered(entity.Owner, EntityManager))
+        if (!_power.IsPowered(entity.Owner))
         {
             Stop(entity.AsNullable());
         }
@@ -113,7 +114,7 @@ public sealed partial class JukeboxSystem : SharedJukeboxSystem
 
         var finalState = JukeboxVisualState.On;
 
-        if (!this.IsPowered(ent, EntityManager))
+        if (!_power.IsPowered(ent.Owner))
         {
             finalState = JukeboxVisualState.Off;
         }

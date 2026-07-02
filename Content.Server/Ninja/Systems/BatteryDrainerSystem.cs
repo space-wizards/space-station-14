@@ -1,12 +1,11 @@
 using Content.Server.Ninja.Events;
-using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;

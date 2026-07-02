@@ -26,7 +26,7 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
   - type: Damageable

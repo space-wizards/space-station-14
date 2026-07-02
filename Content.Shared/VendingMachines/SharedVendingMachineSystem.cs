@@ -10,7 +10,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -29,7 +29,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] protected SharedPointLightSystem Light = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedSpeakOnUIClosedSystem _speakOn = default!;
     [Dependency] protected SharedUserInterfaceSystem UISystem = default!;

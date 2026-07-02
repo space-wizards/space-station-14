@@ -2,7 +2,8 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -22,13 +23,21 @@ public abstract partial class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<SolutionContainerMixerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SolutionContainerMixerComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<SolutionContainerMixerComponent, ContainerIsRemovingAttemptEvent>(OnRemoveAttempt);
+    }
+
+    private void OnPowerChanged(Entity<SolutionContainerMixerComponent> ent, ref PowerChangedEvent args)
+    {
+        if (!args.Powered)
+            StopMix(ent);
     }
 
     private void OnActivateInWorld(Entity<SolutionContainerMixerComponent> entity, ref ActivateInWorldEvent args)
@@ -46,18 +55,13 @@ public abstract partial class SharedSolutionContainerMixerSystem : EntitySystem
             args.Cancel();
     }
 
-    protected virtual bool HasPower(Entity<SolutionContainerMixerComponent> entity)
-    {
-        return true;
-    }
-
     public void TryStartMix(Entity<SolutionContainerMixerComponent> entity, EntityUid? user)
     {
         var (uid, comp) = entity;
         if (comp.Mixing)
             return;
 
-        if (!HasPower(entity))
+        if (!_power.IsPowered(entity.Owner))
         {
             if (user != null)
                 _popup.PopupClient(Loc.GetString("solution-container-mixer-no-power"), entity, user.Value);

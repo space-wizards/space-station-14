@@ -88858,7 +88858,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 17589
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: DamageOnInteract
       isDamageActive: False
@@ -88874,7 +88874,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 17783
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: DamageOnInteract
       isDamageActive: False

@@ -79,7 +79,7 @@
   - type: ContainerContainer
     containers:
       light_bulb: !type:ContainerSlot
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Wireless

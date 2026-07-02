@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Serialization;
-using Content.Shared.NodeContainer.NodeGroups;
 
 namespace Content.Shared.Atmos.Components;
 
@@ -118,7 +117,7 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
     [ViewVariables]
-    public readonly HashSet<IPipeNet> PipeNets = new();
+    public readonly HashSet<PipeNet> PipeNets = new();
 
     [ViewVariables]
     public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
@@ -130,7 +129,7 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
 
     [ViewVariables]
-    public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
+    public readonly Queue<PipeNet> CurrentRunPipeNet = new();
 
     [ViewVariables]
     public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();

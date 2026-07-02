@@ -2,14 +2,14 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
 public abstract partial class SharedGasThermoMachineSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
 
     public override void Initialize()
     {

@@ -1,6 +1,6 @@
 using Content.Shared.Emp;
 using Content.Shared.Kitchen;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 

@@ -37,7 +37,7 @@
     layers:
     - map: [ "grinder" ]
       state: "grinder_empty"
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: PowerState
     idlePowerDraw: 5

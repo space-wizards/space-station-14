@@ -1,8 +1,8 @@
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
@@ -12,6 +12,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private BotanySystem _botanySystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -22,7 +23,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, SeedExtractorComponent seedExtractor, InteractUsingEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         if (!TryComp(args.Used, out ProduceComponent? produce))

@@ -15,7 +15,7 @@ namespace Content.Client.NodeContainer
 {
     public sealed class NodeVisualizationOverlay : Overlay
     {
-        private readonly NodeGroupSystem _system;
+        private readonly NodeGroupVisualsSystem _system;
         private readonly EntityLookupSystem _lookup;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
@@ -36,7 +36,7 @@ namespace Content.Client.NodeContainer
         public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
         public NodeVisualizationOverlay(
-            NodeGroupSystem system,
+            NodeGroupVisualsSystem system,
             EntityLookupSystem lookup,
             IMapManager mapManager,
             IInputManager inputManager,

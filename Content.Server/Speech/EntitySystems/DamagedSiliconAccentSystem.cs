@@ -4,7 +4,7 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Speech;
 using Robust.Shared.Random;

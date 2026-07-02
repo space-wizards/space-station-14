@@ -123,11 +123,11 @@
     netsync: false
     maxCharge: 2000
     startingCharge: 2000
-  - type: ApcPowerReceiverBattery
+  - type: PowerReceiverBattery
     idleLoad: 5
     batteryRechargeRate: 200
     batteryRechargeEfficiency: 0.0 # temporarily no power draw because this was causing potentially seizure inducing light flickering
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5
   - type: ExtensionCableReceiver
   - type: HTN

@@ -1,12 +1,12 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;
-using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wall;
@@ -59,7 +59,7 @@ namespace Content.Server.VendingMachines
         {
             base.OnMapInit(uid, component, args);
 
-            if (HasComp<ApcPowerReceiverComponent>(uid))
+            if (HasComp<PowerReceiverComponent>(uid))
             {
                 TryUpdateVisualState((uid, component));
             }

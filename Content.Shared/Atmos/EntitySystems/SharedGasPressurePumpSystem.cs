@@ -5,8 +5,8 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
@@ -14,7 +14,7 @@ public abstract partial class SharedGasPressurePumpSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] protected SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
     // TODO: Check enabled for activatableUI

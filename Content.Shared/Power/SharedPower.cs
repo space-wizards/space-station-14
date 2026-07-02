@@ -31,7 +31,7 @@ namespace Content.Shared.Power
         HighVoltage,
         MediumVoltage,
         Apc,
-        ExCable
+        ExCable,
     }
 
     [Serializable, NetSerializable]

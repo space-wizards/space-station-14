@@ -1,10 +1,8 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
 using Content.Shared.Atmos.Piping.Components;
@@ -14,6 +12,8 @@ using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
             if (!pump.Enabled ||
-                (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered) ||
+                (TryComp<PowerReceiverComponent>(uid, out var power) && !power.Powered) ||
                 !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(uid, false);

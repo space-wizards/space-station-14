@@ -1,8 +1,8 @@
 using System.Linq;
-using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;

@@ -1,6 +1,5 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Telephone;
 using Content.Shared.Access.Systems;
 using Content.Shared.Audio;
@@ -10,7 +9,6 @@ using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.Components;
 using Content.Shared.Mobs;
-using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
@@ -23,7 +21,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Holopad;
 
@@ -41,8 +40,9 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PvsOverrideSystem _pvs = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
     [Dependency] private MetaDataSystem _meta = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     public override void Initialize()
     {
@@ -258,7 +258,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
                 break;
 
             default:
-                SetHolopadAmbientState(holopad, this.IsPowered(holopad, EntityManager));
+                SetHolopadAmbientState(holopad, _power.IsPowered(holopad.Owner));
                 break;
         }
 
@@ -407,7 +407,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!this.IsPowered(entity, EntityManager))
+        if (!_power.IsPowered(entity.Owner))
             return;
 
         if (HasComp<StationAiCoreComponent>(entity))

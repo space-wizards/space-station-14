@@ -4,17 +4,15 @@ using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
 using Content.Server.Research.Systems;
 using Content.Shared.Alert;
-using Content.Shared.Doors.Components;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Ninja.Systems;
 

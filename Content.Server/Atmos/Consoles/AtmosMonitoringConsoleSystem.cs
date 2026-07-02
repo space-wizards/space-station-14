@@ -1,11 +1,4 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.DeviceNetwork.Components;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
@@ -18,8 +11,12 @@ using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Atmos.Consoles;
 
@@ -215,7 +212,7 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
             address = deviceNet.Address;
 
         // Entry for unpowered devices
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver) && !apcPowerReceiver.Powered)
+        if (TryComp<PowerReceiverComponent>(uid, out var PowerReceiver) && !PowerReceiver.Powered)
         {
             entry = new AtmosMonitoringConsoleEntry(netEnt, GetNetCoordinates(xform.Coordinates), netId.Value, name, address)
             {

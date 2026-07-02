@@ -1,5 +1,5 @@
-using Content.Server.Power.Components;
 using Content.Shared.Placeable;
+using Content.Shared.Power.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
@@ -23,13 +23,13 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
     private void OnMapInit(Entity<EntityHeaterComponent> ent, ref MapInitEvent args)
     {
         // Set initial power level
-        if (TryComp<ApcPowerReceiverComponent>(ent, out var power))
-            power.Load = SettingPower(ent.Comp.Setting, ent.Comp.Power);
+        if (TryComp<PowerReceiverComponent>(ent, out var power))
+            power.DesiredPower = SettingPower(ent.Comp.Setting, ent.Comp.Power);
     }
 
     public override void Update(float deltaTime)
     {
-        var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
+        var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, PowerReceiverComponent>();
         while (query.MoveNext(out _, out _, out var placer, out var power))
         {
             if (!power.Powered)
@@ -38,7 +38,7 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
             // don't divide by total entities since it's a big grill
             // excess would just be wasted in the air but that's not worth simulating
             // if you want a heater thermomachine just use that...
-            var energy = power.PowerReceived * deltaTime;
+            var energy = power.ReceivingPower * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
                 _temperature.ChangeHeat(ent, energy);
@@ -47,16 +47,16 @@ public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem
     }
 
     /// <remarks>
-    /// <see cref="ApcPowerReceiverComponent"/> doesn't exist on the client, so we need
+    /// <see cref="PowerReceiverComponent"/> doesn't exist on the client, so we need
     /// this server-only override to handle setting the network load.
     /// </remarks>
     protected override void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
     {
         base.ChangeSetting(ent, setting, user);
 
-        if (!TryComp<ApcPowerReceiverComponent>(ent, out var power))
+        if (!TryComp<PowerReceiverComponent>(ent, out var power))
             return;
 
-        power.Load = SettingPower(setting, ent.Comp.Power);
+        power.DesiredPower = SettingPower(setting, ent.Comp.Power);
     }
 }

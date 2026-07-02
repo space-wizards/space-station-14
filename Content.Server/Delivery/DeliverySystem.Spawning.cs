@@ -1,6 +1,6 @@
 using Content.Shared.Delivery;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.EntityTable;
+using Content.Shared.Power.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -16,7 +16,7 @@ public sealed partial class DeliverySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     private void InitializeSpawning()
     {

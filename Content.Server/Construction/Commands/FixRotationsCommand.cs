@@ -1,7 +1,7 @@
 using Content.Server.Administration;
-using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Construction;
+using Content.Shared.Power.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;

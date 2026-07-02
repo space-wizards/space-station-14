@@ -1,17 +1,18 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer.Nodes;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Nodes;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Power.Generation.Teg;
+using Content.Shared.Power.Generation.Teg.Nodes;
+using Content.Shared.Power.Systems;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 
@@ -71,7 +72,7 @@ public sealed partial class TegSystem : EntitySystem
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private PointLightSystem _pointLight = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
 
     public override void Initialize()
@@ -106,7 +107,7 @@ public sealed partial class TegSystem : EntitySystem
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, ref AtmosDeviceUpdateEvent args)
     {
         var supplier = Comp<PowerSupplierComponent>(uid);
-        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
+        var powerReceiver = Comp<PowerReceiverComponent>(uid);
         if (!powerReceiver.Powered)
         {
             supplier.MaxSupply = 0;
@@ -208,7 +209,7 @@ public sealed partial class TegSystem : EntitySystem
     private void UpdateAppearance(
         EntityUid uid,
         TegGeneratorComponent component,
-        ApcPowerReceiverComponent powerReceiver,
+        PowerReceiverComponent powerReceiver,
         TegNodeGroup nodeGroup)
     {
         int powerLevel;
@@ -237,7 +238,7 @@ public sealed partial class TegSystem : EntitySystem
         }
     }
 
-    [Access(typeof(TegNodeGroup))]
+    [Access(typeof(TegNodeGroupHandler))]
     public void UpdateGeneratorConnectivity(
         EntityUid uid,
         TegNodeGroup group,
@@ -246,13 +247,13 @@ public sealed partial class TegSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
+        var powerReceiver = Comp<PowerReceiverComponent>(uid);
 
-        _receiver.SetPowerDisabled(uid, !group.IsFullyBuilt, powerReceiver);
+        _receiver.SetPowerDisabled((uid, powerReceiver), !group.IsFullyBuilt);
         UpdateAppearance(uid, component, powerReceiver, group);
     }
 
-    [Access(typeof(TegNodeGroup))]
+    [Access(typeof(TegNodeGroupHandler))]
     public void UpdateCirculatorConnectivity(
         EntityUid uid,
         TegNodeGroup group,
@@ -309,7 +310,7 @@ public sealed partial class TegSystem : EntitySystem
         if (nodeGroup == null)
             return;
 
-        UpdateAppearance(uid, component, Comp<ApcPowerReceiverComponent>(uid), nodeGroup);
+        UpdateAppearance(uid, component, Comp<PowerReceiverComponent>(uid), nodeGroup);
     }
 
     /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>

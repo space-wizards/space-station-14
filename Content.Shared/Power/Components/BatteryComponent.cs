@@ -1,6 +1,7 @@
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Guidebook;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -13,7 +14,7 @@ namespace Content.Shared.Power.Components;
 /// Also used for power cells using <see cref="PowerCellComponent"/> or battery powered guns with intrinsic battery.
 /// </summary>
 /// <remarks>
-/// IMPORTANT: If your battery has an update loop setting the charge every single tick you should set <see cref="Component.NetSyncEnabled"> to false
+/// IMPORTANT: If your battery has an update loop setting the charge every single tick you should set <see cref="Component.NetSyncEnabled"/> to false
 /// in your prototype to prevent it from getting networked every single tick. However, this will disable prediction.
 /// This is mostly needed for anything connected to the power network (APCs, SMES, turrets with battery), as their power supply ramps up over time.
 /// Everything else that only has a constant charge rate (e.g. charging/discharging a battery at a certain wattage) or instantaneous power draw (e.g. shooting a gun) is fine being networked.

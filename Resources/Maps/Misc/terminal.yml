@@ -1571,7 +1571,7 @@ entities:
       fixtures: {}
     missingComponents:
     - Destructible
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: BlockGameArcade
   entities:
   - uid: 727
@@ -1582,7 +1582,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - PowerState
     - Anchorable
     - Construction
@@ -1595,7 +1595,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - PowerState
     - Anchorable
     - Construction
@@ -1631,7 +1631,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - Anchorable
     - Destructible
     - Construction
@@ -7891,7 +7891,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - Anchorable
     - Destructible
     - Construction
@@ -7905,7 +7905,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - PowerState
     - Anchorable
     - Construction
@@ -7918,7 +7918,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
-    - ApcPowerReceiver
+    - PowerReceiver
     - PowerState
     - Anchorable
     - Construction
@@ -8448,7 +8448,7 @@ entities:
     - type: Godmode
     missingComponents:
     - Destructible
-    - ApcPowerReceiver
+    - PowerReceiver
     - Anchorable
     - Construction
 - proto: VendingMachineBooze
@@ -8462,7 +8462,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: VendingMachineChang
   entities:
   - uid: 692
@@ -8485,7 +8485,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: VendingMachineCola
   entities:
   - uid: 635
@@ -8497,7 +8497,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: VendingMachineColaBlack
   entities:
   - uid: 834
@@ -8542,7 +8542,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: VendingMachineSnack
   entities:
   - uid: 637
@@ -8554,7 +8554,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
-    - ApcPowerReceiver
+    - PowerReceiver
 - proto: WallRiveted
   entities:
   - uid: 10

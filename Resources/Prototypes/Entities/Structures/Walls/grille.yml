@@ -54,6 +54,11 @@
       low:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerNetworkConnector
+    voltages:
+      high: High
+      medium: Medium
+      low: Apc
   - type: Physics
     bodyType: Static
   - type: Fixtures

@@ -39,6 +39,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerNetworkConnector
+    voltage: High
+    node: output
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: output

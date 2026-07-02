@@ -6,7 +6,7 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Interaction;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Disposal.Mailing;
@@ -14,7 +14,7 @@ namespace Content.Shared.Disposal.Mailing;
 public abstract partial class SharedMailingUnitSystem : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     private const string MailTag = "mail";

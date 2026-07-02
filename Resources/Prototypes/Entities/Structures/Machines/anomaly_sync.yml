@@ -46,7 +46,7 @@
   - type: Transform
     anchored: true
     noRot: false
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 2500
     needsPower: true
   - type: ItemPlacer

@@ -178,7 +178,6 @@
         !type:CableNode
         nodeGroupID: Apc
   - type: PowerProvider
-    voltage: Apc
   - type: ExtensionCableProvider
   - type: Cable
     cableDroppedOnCutPrototype: CableApcStack1

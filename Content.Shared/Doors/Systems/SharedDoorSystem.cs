@@ -9,7 +9,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.Prying.Components;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Stunnable;
@@ -45,7 +45,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private PryingSystem _pryingSystem = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
-    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
 
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 

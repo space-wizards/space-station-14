@@ -1,14 +1,13 @@
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.Events;
 using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Color = Robust.Shared.Maths.Color;
@@ -156,9 +155,9 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
             _battery.ChangeCharge((entity.Owner, battery), entity.Comp.ChargingWattage * frameTime * entity.Comp.ChargingEfficiency);
             if (_battery.IsFull((entity.Owner, battery)))
             {
-                if (TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
+                if (TryComp<PowerReceiverComponent>(entity.Owner, out var receiver))
                 {
-                    receiver.Load = 1;
+                    receiver.DesiredPower = 1;
                 }
 
                 SetState(entity.Owner, entity.Comp, EmergencyLightState.Full);
@@ -171,7 +170,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
     /// </summary>
     public void UpdateState(Entity<EmergencyLightComponent> entity)
     {
-        if (!TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
+        if (!TryComp<PowerReceiverComponent>(entity.Owner, out var receiver))
             return;
 
         if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(entity.Owner), out var alerts))
@@ -185,7 +184,7 @@ public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
 
         if (receiver.Powered && !entity.Comp.ForciblyEnabled) // Green alert
         {
-            receiver.Load = (int) Math.Abs(entity.Comp.Wattage);
+            receiver.DesiredPower = (int) Math.Abs(entity.Comp.Wattage);
             TurnOff(entity, details.Color);
             SetState(entity.Owner, entity.Comp, EmergencyLightState.Charging);
         }

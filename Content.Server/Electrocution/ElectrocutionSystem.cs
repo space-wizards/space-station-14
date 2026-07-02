@@ -1,8 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.NodeGroups;
 using Content.Server.Weapons.Melee;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -17,7 +14,11 @@ using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.NodeGroups;
+using Content.Shared.Power.Systems;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -53,6 +54,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     private static readonly ProtoId<StatusEffectPrototype> StatusKeyIn = "Electrocution";
     private static readonly ProtoId<DamageTypePrototype> DamageType = "Shock";
@@ -142,7 +144,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
         if (electrified.UsesApcPower)
         {
-            if (!this.IsPowered(uid, EntityManager))
+            if (!_power.IsPowered(uid))
                 return false;
         }
         else if (electrified.RequirePower && PoweredNode(uid, electrified) == null)
@@ -251,7 +253,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node?.NodeGroup is not IBasePowerNet)
+        if (node?.NodeGroup is not PowerNet)
             return false;
 
         var (damageScalar, timeScalar) = node.NodeGroupID switch
@@ -290,7 +292,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         {
             if (id != null &&
                 _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedMaxSupply: > 0 } })
+                tryNode.NodeGroup is PowerNet { LastCombinedMaxSupply: > 0 })
             {
                 return tryNode;
             }

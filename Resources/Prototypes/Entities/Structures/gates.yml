@@ -260,6 +260,11 @@
         !type:CableDeviceNode
         nodeGroupID: Apc
         enabled: false
+  - type: PowerNetworkConnector
+    voltages:
+      hv: High
+      mv: Medium
+      lv: Apc
   - type: DeviceLinkSource
     ports:
     - PowerCharging

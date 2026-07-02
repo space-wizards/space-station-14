@@ -1,5 +1,5 @@
-using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Power.Systems;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 

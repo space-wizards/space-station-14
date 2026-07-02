@@ -1627,7 +1627,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 111
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 100
   - uid: 112
     components:
@@ -1641,7 +1641,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 126
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 60
   - uid: 265
     components:
@@ -1660,7 +1660,7 @@ entities:
           showEnts: False
           occludes: True
           ent: 266
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 100
 - proto: RadioHandheldSecurity
   entities:

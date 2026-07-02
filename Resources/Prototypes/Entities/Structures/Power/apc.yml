@@ -81,11 +81,12 @@
     sprite: Structures/Power/apc.rsi
     state: static
   - type: BatteryCharger
-    voltage: Medium
+  - type: PowerNetworkConnector
+    voltages:
+      input: Medium
+      output: Apc
   - type: PowerProvider
-    voltage: Apc
   - type: Apc
-    voltage: Apc
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:

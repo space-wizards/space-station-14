@@ -16,7 +16,7 @@
     containers:
       - board
   - type: Computer
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50

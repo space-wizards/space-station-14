@@ -2,9 +2,9 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost;
-using Content.Server.Power.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Power.Components;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Speech;
@@ -178,7 +178,7 @@ public sealed partial class RadioSystem : EntitySystem
     /// <inheritdoc cref="TelecomServerComponent"/>
     private bool HasActiveServer(MapId mapId, string channelId)
     {
-        var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
+        var servers = EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, PowerReceiverComponent, TransformComponent>();
         foreach (var (_, keys, power, transform) in servers)
         {
             if (transform.MapID == mapId &&

@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server.Audio;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -17,7 +16,8 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -31,6 +31,7 @@ public sealed partial class ThrusterSystem : EntitySystem
     [Dependency] private SharedPointLightSystem _light = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     [Dependency] private EntityQuery<ThrusterComponent> _thrusterQuery = default!;
     [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery = default!;
@@ -434,7 +435,7 @@ public sealed partial class ThrusterSystem : EntitySystem
 
         var xform = Transform(uid);
 
-        if (!xform.Anchored || !this.IsPowered(uid, EntityManager))
+        if (!xform.Anchored || !_power.IsPowered(uid))
         {
             return false;
         }

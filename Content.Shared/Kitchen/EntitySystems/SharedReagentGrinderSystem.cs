@@ -8,8 +8,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Jittering;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
-using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -38,8 +38,8 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedJitteringSystem _jitter = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private SharedPowerStateSystem _powerState = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {

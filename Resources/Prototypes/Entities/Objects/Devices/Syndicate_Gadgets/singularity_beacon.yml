@@ -37,7 +37,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 5000
   - type: StaticPrice
     price: 7500

@@ -53,7 +53,7 @@
   id: BaseWallmountMachine
   abstract: true
   components:
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
   - type: LightningTarget

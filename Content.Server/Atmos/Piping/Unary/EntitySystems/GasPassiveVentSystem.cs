@@ -1,9 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Nodes;
+using Content.Shared.NodeContainer.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems

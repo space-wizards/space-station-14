@@ -96,7 +96,7 @@
     castShadows: false
     radius: 1.5
   - type: LitOnPowered
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200
   - type: Actions
   - type: SentienceTarget

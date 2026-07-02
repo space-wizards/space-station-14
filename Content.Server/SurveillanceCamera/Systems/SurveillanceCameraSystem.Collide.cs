@@ -1,4 +1,4 @@
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Physics.Events;
@@ -9,7 +9,7 @@ namespace Content.Server.SurveillanceCamera;
 public partial class SurveillanceCameraSystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private EntityQuery<CameraActiveOnCollideComponent> _cameraQuery = default!;
 
     public void InitializeCollide()

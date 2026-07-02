@@ -24,7 +24,7 @@
         map: ["enum.GravityGeneratorVisualLayers.Core"]
   - type: Transform
     anchored: true
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 2500
   - type: ExtensionCableReceiver
   - type: Physics
@@ -130,7 +130,7 @@
   - type: WiresPanel
   - type: Machine
     board: MiniGravityGeneratorCircuitboard
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 500
   - type: PowerCharge
     idlePower: 15

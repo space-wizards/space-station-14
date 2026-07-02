@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Doors
   - type: Door
   - type: Airlock
   - type: DoorBolt
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     needsPower: false
   - type: Physics
     bodyType: Static

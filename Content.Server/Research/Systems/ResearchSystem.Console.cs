@@ -1,4 +1,3 @@
-using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
@@ -29,7 +28,7 @@ public sealed partial class ResearchSystem
     {
         var act = args.Actor;
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         if (!ProtoMan.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))

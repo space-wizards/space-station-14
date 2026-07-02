@@ -1,8 +1,8 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Power.Components;
 using Content.Shared.Stacks;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
@@ -27,7 +27,7 @@ public sealed partial class CableSystem
             return;
 
         var component = placer.Comp;
-        if (component.CablePrototypeId == null)
+        if (component.CablePrototypeID == null)
             return;
 
         if (!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
@@ -52,7 +52,7 @@ public sealed partial class CableSystem
         if (TryComp<StackComponent>(placer, out var stack) && !_stack.TryUse((placer.Owner, stack), 1))
             return;
 
-        var newCable = Spawn(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));
+        var newCable = Spawn(component.CablePrototypeID, _map.GridTileToLocal(gridUid, grid, snapPos));
         _adminLogger.Add(LogType.Construction, LogImpact.Low,
             $"{ToPrettyString(args.User):player} placed {ToPrettyString(newCable):cable} at {Transform(newCable).Coordinates}");
         args.Handled = true;

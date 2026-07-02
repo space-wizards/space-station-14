@@ -39,7 +39,7 @@
   - type: GasPipeSensor
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasPipeSensor
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction
     graph: GasPipeSensor

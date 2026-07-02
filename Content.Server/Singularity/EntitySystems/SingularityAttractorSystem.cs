@@ -1,10 +1,10 @@
 using Content.Server.Physics.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -15,6 +15,7 @@ public sealed partial class SingularityAttractorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -56,7 +57,7 @@ public sealed partial class SingularityAttractorSystem : EntitySystem
         if (!Resolve(uid, ref attractor, ref xform))
             return;
 
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
             return;
 
         attractor.LastPulseTime = _timing.CurTime;

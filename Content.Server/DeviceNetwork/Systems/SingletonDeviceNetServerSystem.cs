@@ -2,8 +2,8 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Station.Systems;
-using Content.Shared.Power;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Power.Events;
 
 namespace Content.Server.DeviceNetwork.Systems;
 

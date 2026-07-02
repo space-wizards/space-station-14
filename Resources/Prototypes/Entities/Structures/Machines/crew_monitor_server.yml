@@ -37,7 +37,7 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
   - type: WiresPanel

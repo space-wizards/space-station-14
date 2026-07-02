@@ -51,6 +51,9 @@
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg
+    - type: PowerNetworkConnector
+      voltage: High
+      node: output
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
@@ -82,7 +85,7 @@
       supplyRampTolerance: 10000000000
 
     - type: Appearance
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 1000
 
     - type: LitOnPowered

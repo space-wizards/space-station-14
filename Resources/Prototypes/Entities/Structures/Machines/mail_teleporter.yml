@@ -31,7 +31,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Injurable
     damageContainer: StructuralInorganic
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 1000
   - type: Appearance
   - type: GenericVisualizer

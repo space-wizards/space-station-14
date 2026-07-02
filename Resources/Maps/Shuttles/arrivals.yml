@@ -289,7 +289,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,5.5
       parent: 292
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: Godmode
     missingComponents:
@@ -302,7 +302,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,3.5
       parent: 292
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: Godmode
     missingComponents:
@@ -315,7 +315,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,-1.5
       parent: 292
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: Godmode
     missingComponents:
@@ -328,7 +328,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-3.5
       parent: 292
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: Godmode
     missingComponents:
@@ -341,7 +341,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,7.5
       parent: 292
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
     - type: Godmode
     missingComponents:

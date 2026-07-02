@@ -1,20 +1,20 @@
-using Content.Server.NodeContainer.EntitySystems;
-using Content.Server.Power.Components;
-using Content.Server.Power.Nodes;
-using Content.Server.Power.NodeGroups;
+using Content.Shared.Power.Nodes;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Station.Components;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Systems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Monitoring;
+using Content.Shared.Power.NodeGroups;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -24,6 +24,11 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private SharedMapSystem _sharedMapSystem = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private EntityQuery<PowerConsumerComponent> _consumerQuery = default!;
+    [Dependency] private EntityQuery<PowerSupplierComponent> _supplierQuery = default!;
+    [Dependency] private EntityQuery<BatteryDischargerComponent> _dischargerQuery = default!;
+    [Dependency] private EntityQuery<BatteryChargerComponent> _chargerQuery = default!;
+    [Dependency] private EntityQuery<PowerNetworkBatteryComponent> _batteryQuery = default!;
 
     // Note: this data does not need to be saved
     private Dictionary<EntityUid, Dictionary<Vector2i, PowerCableChunk>> _gridPowerCableChunks = new();
@@ -152,7 +157,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     public void OnCableAnchorStateChanged(EntityUid uid, CableComponent component, CableAnchorStateChangedEvent args)
     {
-        var xform = args.Transform;
+        var xform = args.Xform.Comp;
 
         if (xform.GridUid == null || !TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
@@ -331,10 +336,10 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 continue;
 
             // Flag an alert if power consumption is ridiculous
-            if (powerConsumer.ReceivedPower >= RoguePowerConsumerThreshold)
+            if (powerConsumer.ReceivingPower >= RoguePowerConsumerThreshold)
                 component.Flags |= PowerMonitoringFlags.RoguePowerConsumer;
 
-            totalLoads += powerConsumer.DrawRate;
+            totalLoads += powerConsumer.DesiredPower;
         }
 
         if (component.Flags != flags)
@@ -446,7 +451,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
             else if (TryComp<BatteryDischargerComponent>(uid, out var _) &&
                 TryComp<PowerNetworkBatteryComponent>(uid, out var battery))
             {
-                stats.PowerValue = battery.NetworkBattery.CurrentSupply;
+                stats.PowerValue = battery.CurrentSupply;
                 stats.PowerSupplied += stats.PowerValue;
 
 
@@ -474,7 +479,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
                 // Records loads attached to APCs
                 if (device.Group == PowerMonitoringConsoleGroup.APC && battery.Enabled)
                 {
-                    stats.PowerUsage += battery.NetworkBattery.LoadingNetworkDemand;
+                    stats.PowerUsage += battery.LoadingNetworkDemand;
                 }
             }
         }
@@ -528,12 +533,14 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         foreach (var powerSupplier in netQ.Suppliers)
         {
-            var ent = powerSupplier.Owner;
+            if (!_supplierQuery.TryComp(powerSupplier, out var powerSupplierComp))
+                continue;
 
+            var ent = powerSupplier;
             if (uid == ent)
                 continue;
 
-            currentSupply += powerSupplier.CurrentSupply;
+            currentSupply += powerSupplierComp.CurrentSupply;
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
@@ -543,19 +550,19 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 if (indexedSources.TryGetValue(ent, out var entry))
                 {
-                    entry.PowerValue += powerSupplier.CurrentSupply;
+                    entry.PowerValue += powerSupplierComp.CurrentSupply;
                     indexedSources[ent] = entry;
 
                     continue;
                 }
 
-                indexedSources.Add(ent, new PowerMonitoringConsoleEntry(GetNetEntity(ent), entDevice.Group, powerSupplier.CurrentSupply, GetBatteryLevel(ent)));
+                indexedSources.Add(ent, new PowerMonitoringConsoleEntry(GetNetEntity(ent), entDevice.Group, powerSupplierComp.CurrentSupply, GetBatteryLevel(ent)));
             }
         }
 
         foreach (var batteryDischarger in netQ.Dischargers)
         {
-            var ent = batteryDischarger.Owner;
+            var ent = batteryDischarger;
 
             if (uid == ent)
                 continue;
@@ -588,17 +595,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         // Get the total demand for the network
         foreach (var powerConsumer in netQ.Consumers)
         {
-            currentDemand += powerConsumer.ReceivedPower;
+            if (!_consumerQuery.TryComp(powerConsumer, out var powerConsumerComp))
+                continue;
+
+            currentDemand += powerConsumerComp.ReceivingPower;
         }
 
         foreach (var batteryCharger in netQ.Chargers)
         {
-            var ent = batteryCharger.Owner;
-
-            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var entBattery))
+            if (!_batteryQuery.TryComp(batteryCharger, out var powerConsumerComp))
                 continue;
 
-            currentDemand += entBattery.CurrentReceiving;
+            currentDemand += powerConsumerComp.CurrentReceiving;
         }
 
         // Exit if supply / demand is negligible
@@ -642,12 +650,15 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
         foreach (var powerConsumer in netQ.Consumers)
         {
-            var ent = powerConsumer.Owner;
+            if (!_consumerQuery.TryComp(powerConsumer, out var powerConsumerComp))
+                continue;
+
+            var ent = powerConsumer;
 
             if (uid == ent)
                 continue;
 
-            currentDemand += powerConsumer.ReceivedPower;
+            currentDemand += powerConsumerComp.ReceivingPower;
 
             if (TryComp<PowerMonitoringDeviceComponent>(ent, out var entDevice))
             {
@@ -657,24 +668,24 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 if (indexedLoads.TryGetValue(ent, out var entry))
                 {
-                    entry.PowerValue += powerConsumer.ReceivedPower;
+                    entry.PowerValue += powerConsumerComp.ReceivingPower;
                     indexedLoads[ent] = entry;
 
                     continue;
                 }
 
-                indexedLoads.Add(ent, new PowerMonitoringConsoleEntry(GetNetEntity(ent), entDevice.Group, powerConsumer.ReceivedPower, GetBatteryLevel(ent)));
+                indexedLoads.Add(ent, new PowerMonitoringConsoleEntry(GetNetEntity(ent), entDevice.Group, powerConsumerComp.ReceivingPower, GetBatteryLevel(ent)));
             }
         }
 
         foreach (var batteryCharger in netQ.Chargers)
         {
-            var ent = batteryCharger.Owner;
+            var ent = batteryCharger;
 
             if (uid == ent)
                 continue;
 
-            if (!TryComp<PowerNetworkBatteryComponent>(ent, out var battery))
+            if (!_batteryQuery.TryComp(batteryCharger, out var battery))
                 continue;
 
             currentDemand += battery.CurrentReceiving;

@@ -1,12 +1,13 @@
 using Content.Server.DeviceNetwork.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
-public sealed class DeviceNetworkRequiresPowerSystem : EntitySystem
+public sealed partial class DeviceNetworkRequiresPowerSystem : EntitySystem
 {
+    [Dependency] private PowerReceiverSystem _power = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<DeviceNetworkRequiresPowerComponent, BeforePacketSentEvent>(OnBeforePacketSent);
@@ -15,7 +16,7 @@ public sealed class DeviceNetworkRequiresPowerSystem : EntitySystem
     private void OnBeforePacketSent(EntityUid uid, DeviceNetworkRequiresPowerComponent component,
         BeforePacketSentEvent args)
     {
-        if (!this.IsPowered(uid, EntityManager))
+        if (!_power.IsPowered(uid))
         {
             args.Cancel();
         }

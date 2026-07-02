@@ -46,7 +46,9 @@
     soundGunshot:
       path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
+  - type: PowerNetworkConnector
     voltage: Medium
+    node: input
   - type: NodeContainer
     examinable: true
     nodes:

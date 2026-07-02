@@ -9416,7 +9416,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,0.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1642
     components:
@@ -9424,7 +9424,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,0.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1646
     components:
@@ -9432,7 +9432,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 24.5,0.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1647
     components:
@@ -9440,7 +9440,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 28.5,0.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1648
     components:
@@ -9448,14 +9448,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 21.5,6.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1649
     components:
     - type: Transform
       pos: 13.5,10.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1650
     components:
@@ -9463,14 +9463,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 16.5,6.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1651
     components:
     - type: Transform
       pos: 18.5,10.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1693
     components:
@@ -9478,7 +9478,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 32.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1701
     components:
@@ -9486,14 +9486,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 18.5,12.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1702
     components:
     - type: Transform
       pos: 20.5,16.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1703
     components:
@@ -9501,7 +9501,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 34.5,20.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1704
     components:
@@ -9509,7 +9509,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 16.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1705
     components:
@@ -9517,14 +9517,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,27.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1706
     components:
     - type: Transform
       pos: 18.5,40.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1741
     components:
@@ -9532,14 +9532,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,21.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1743
     components:
     - type: Transform
       pos: 21.5,22.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1830
     components:
@@ -9547,7 +9547,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 30.5,43.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1831
     components:
@@ -9555,7 +9555,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 30.5,47.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: PoweredlightLED
   entities:
@@ -9565,7 +9565,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,42.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1708
     components:
@@ -9573,7 +9573,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,42.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1709
     components:
@@ -9581,7 +9581,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 14.5,46.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1710
     components:
@@ -9589,7 +9589,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,46.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1725
     components:
@@ -9597,7 +9597,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 28.5,27.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: PoweredSmallLight
   entities:
@@ -9607,7 +9607,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 26.5,14.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 940
     components:
@@ -9615,7 +9615,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,28.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 948
     components:
@@ -9623,7 +9623,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,28.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 953
     components:
@@ -9631,7 +9631,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1603
     components:
@@ -9639,7 +9639,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 26.5,10.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1604
     components:
@@ -9647,14 +9647,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 32.5,10.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1605
     components:
     - type: Transform
       pos: 29.5,6.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1606
     components:
@@ -9662,21 +9662,21 @@ entities:
       rot: 3.141592653589793 rad
       pos: 29.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1607
     components:
     - type: Transform
       pos: 32.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1608
     components:
     - type: Transform
       pos: 26.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1643
     components:
@@ -9684,14 +9684,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,1.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1644
     components:
     - type: Transform
       pos: 20.5,4.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1645
     components:
@@ -9699,7 +9699,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 19.5,0.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1652
     components:
@@ -9707,7 +9707,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 9.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1653
     components:
@@ -9715,7 +9715,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 7.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1654
     components:
@@ -9723,7 +9723,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1655
     components:
@@ -9731,7 +9731,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,8.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1656
     components:
@@ -9739,7 +9739,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 5.5,14.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1657
     components:
@@ -9747,14 +9747,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,14.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1659
     components:
     - type: Transform
       pos: 3.5,18.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1661
     components:
@@ -9762,7 +9762,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,22.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1662
     components:
@@ -9770,7 +9770,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,27.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1663
     components:
@@ -9778,14 +9778,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1664
     components:
     - type: Transform
       pos: 0.5,28.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1665
     components:
@@ -9793,7 +9793,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,24.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1666
     components:
@@ -9801,7 +9801,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,30.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1667
     components:
@@ -9809,7 +9809,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,30.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1668
     components:
@@ -9817,14 +9817,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,36.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1669
     components:
     - type: Transform
       pos: 8.5,34.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1670
     components:
@@ -9832,7 +9832,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,38.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1671
     components:
@@ -9840,7 +9840,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,38.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1672
     components:
@@ -9848,7 +9848,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,43.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1673
     components:
@@ -9856,42 +9856,42 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,43.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1674
     components:
     - type: Transform
       pos: 2.5,47.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1675
     components:
     - type: Transform
       pos: 4.5,47.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1676
     components:
     - type: Transform
       pos: 9.5,40.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1677
     components:
     - type: Transform
       pos: 13.5,40.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1678
     components:
     - type: Transform
       pos: 13.5,36.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1679
     components:
@@ -9899,7 +9899,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 21.5,34.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1680
     components:
@@ -9907,7 +9907,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 32.5,35.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1681
     components:
@@ -9915,28 +9915,28 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 34.5,35.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1682
     components:
     - type: Transform
       pos: 25.5,36.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1683
     components:
     - type: Transform
       pos: 28.5,38.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1684
     components:
     - type: Transform
       pos: 19.5,46.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1685
     components:
@@ -9944,7 +9944,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 17.5,47.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1686
     components:
@@ -9952,21 +9952,21 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 21.5,47.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1687
     components:
     - type: Transform
       pos: 23.5,32.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1688
     components:
     - type: Transform
       pos: 17.5,32.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1689
     components:
@@ -9974,7 +9974,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 22.5,27.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1690
     components:
@@ -9982,7 +9982,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 20.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1694
     components:
@@ -9990,7 +9990,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 28.5,19.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1695
     components:
@@ -9998,14 +9998,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 24.5,19.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1696
     components:
     - type: Transform
       pos: 13.5,22.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1697
     components:
@@ -10013,7 +10013,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 13.5,18.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1698
     components:
@@ -10021,7 +10021,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,18.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1699
     components:
@@ -10029,7 +10029,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,16.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1700
     components:
@@ -10037,7 +10037,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 10.5,13.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1828
     components:
@@ -10045,14 +10045,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 25.5,42.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1829
     components:
     - type: Transform
       pos: 25.5,48.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: PoweredSmallLightEmpty
   entities:
@@ -10062,7 +10062,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 26.5,25.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
   - uid: 1658
     components:
@@ -10070,7 +10070,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 24.5,27.5
       parent: 588
-    - type: ApcPowerReceiver
+    - type: PowerReceiver
       powerLoad: 0
 - proto: Rack
   entities:

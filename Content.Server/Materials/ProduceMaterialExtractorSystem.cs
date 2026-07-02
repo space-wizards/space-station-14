@@ -1,10 +1,10 @@
 using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Materials.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power.Systems;
 using Robust.Server.Audio;
 
 namespace Content.Server.Materials;
@@ -15,6 +15,7 @@ public sealed partial class ProduceMaterialExtractorSystem : EntitySystem
     [Dependency] private MaterialStorageSystem _materialStorage = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,7 +28,7 @@ public sealed partial class ProduceMaterialExtractorSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!this.IsPowered(ent, EntityManager))
+        if (!_power.IsPowered(ent.Owner))
             return;
 
         if (!TryComp<ProduceComponent>(args.Used, out var produce))

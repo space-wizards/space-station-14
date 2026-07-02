@@ -1,11 +1,11 @@
 using Content.Client.Stylesheets;
-using Content.Shared.Power;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Power.Monitoring;
 
 namespace Content.Client.Power;
 

@@ -62,7 +62,7 @@
       shader: unshaded
       visible: false
   - type: AnimationPlayer
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: DoorSignalControl
   - type: DeviceNetwork

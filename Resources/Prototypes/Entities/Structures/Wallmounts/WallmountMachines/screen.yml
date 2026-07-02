@@ -26,7 +26,7 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
   - type: Screen

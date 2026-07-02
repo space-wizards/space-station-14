@@ -59,7 +59,7 @@
 #    drawdepth: WallTops
 #    sprite: Structures/Wallmounts/sylphs.rsi
 #    state: sylph
-#  - type: ApcPowerReceiver
+#  - type: PowerReceiver
 #  - type: ExtensionCableReceiver
 #  - type: BarSign
 
@@ -291,7 +291,7 @@
 - type: entity
   parent: BaseBarSign
   id: BarSignEmped
-  name: glitchy bar sign 
+  name: glitchy bar sign
   description: You imagine a good smack might fix it.
   components:
   - type: BarSign

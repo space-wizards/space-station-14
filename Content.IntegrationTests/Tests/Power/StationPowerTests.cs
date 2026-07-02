@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.NodeGroups;
-using Content.Server.Power.Pow3r;
 using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
+using Content.Shared.Power.NodeGroups;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
 
@@ -67,26 +65,26 @@ public sealed class StationPowerTests : GameTest
 
         // Find the power network with the greatest stored charge in its batteries.
         // This keeps backup SMESes out of the calculation.
-        var networks = new Dictionary<PowerState.Network, float>();
+        var networks = new Dictionary<PowerNet, float>();
         var batteryQuery = entMan.EntityQueryEnumerator<PowerNetworkBatteryComponent, BatteryComponent, NodeContainerComponent>();
         while (batteryQuery.MoveNext(out var uid, out _, out var battery, out var nodeContainer))
         {
             if (!nodeContainer.Nodes.TryGetValue("output", out var node))
                 continue;
-            if (node.NodeGroup is not IBasePowerNet group)
+            if (node.NodeGroup is not PowerNet group)
                 continue;
-            networks.TryGetValue(group.NetworkNode, out var charge);
+            networks.TryGetValue(group, out var charge);
             var currentCharge = batterySys.GetCharge((uid, battery));
-            networks[group.NetworkNode] = charge + currentCharge;
+            networks[group] = charge + currentCharge;
         }
         var totalStartingCharge = networks.MaxBy(n => n.Value).Value;
 
         // Find how much charge all the APC-connected devices would like to use per second.
         var totalAPCLoad = 0f;
-        var receiverQuery = entMan.EntityQueryEnumerator<ApcPowerReceiverComponent>();
+        var receiverQuery = entMan.EntityQueryEnumerator<PowerReceiverComponent>();
         while (receiverQuery.MoveNext(out _, out var receiver))
         {
-            totalAPCLoad += receiver.Load;
+            totalAPCLoad += receiver.DesiredPower;
         }
 
         var estimatedDuration = totalStartingCharge / totalAPCLoad;

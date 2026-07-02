@@ -317,6 +317,9 @@
         output_hv:
           !type:CableDeviceNode
           nodeGroupID: HVPower
+    - type: PowerNetworkConnector
+      voltage: High
+      node: output_hv
 
 - type: entity
   parent: BaseOneTimeXenoArtifactEffect

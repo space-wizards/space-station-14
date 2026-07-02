@@ -1,19 +1,12 @@
-using Content.Client.Power.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Systems;
 
 namespace Content.Client.Power.EntitySystems;
 
 public sealed class PowerNetSystem : SharedPowerNetSystem
 {
-    public override bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp)
+    public override bool IsPoweredCalculate(PowerReceiverComponent comp)
     {
-        return IsPoweredCalculate((ApcPowerReceiverComponent)comp);
-    }
-
-    private bool IsPoweredCalculate(ApcPowerReceiverComponent comp)
-    {
-        return !comp.PowerDisabled
-               && !comp.NeedsPower;
+        return comp.Enabled && !comp.NeedsPower;
     }
 }

@@ -55,7 +55,7 @@
   - type: ContainerContainer
     containers:
       board: !type:Container
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 50
   - type: PowerState
     idlePowerDraw: 50

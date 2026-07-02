@@ -13,7 +13,7 @@
     syncWith:
     - FireAlarm
     - AirAlarm
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: AtmosDevices

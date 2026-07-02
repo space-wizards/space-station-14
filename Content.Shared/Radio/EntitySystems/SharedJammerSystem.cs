@@ -6,7 +6,7 @@ using Content.Shared.Radio.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
 
 namespace Content.Shared.Radio.EntitySystems;
 

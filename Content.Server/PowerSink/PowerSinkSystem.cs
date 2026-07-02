@@ -1,6 +1,5 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
@@ -46,7 +45,7 @@ namespace Content.Server.PowerSink
             if (!args.IsInDetailsRange || !TryComp<PowerConsumerComponent>(uid, out var consumer))
                 return;
 
-            var drainAmount = (int) consumer.NetworkLoad.ReceivingPower / 1000;
+            var drainAmount = (int) consumer.ReceivingPower / 1000;
             args.PushMarkup(
                 Loc.GetString(
                     "powersink-examine-drain-amount",
@@ -66,7 +65,7 @@ namespace Content.Server.PowerSink
                 if (!transform.Anchored)
                     continue;
 
-                _battery.ChangeCharge((entity, battery), networkLoad.NetworkLoad.ReceivingPower * frameTime);
+                _battery.ChangeCharge((entity, battery), networkLoad.ReceivingPower * frameTime);
 
                 var currentBatteryThreshold = _battery.GetChargeLevel((entity, battery));
 

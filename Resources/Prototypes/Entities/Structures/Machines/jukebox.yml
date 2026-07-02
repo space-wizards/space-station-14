@@ -19,7 +19,7 @@
   - type: Machine
     board: JukeboxCircuitBoard
   - type: Appearance
-  - type: ApcPowerReceiver
+  - type: PowerReceiver
     powerLoad: 100
   - type: ExtensionCableReceiver
   - type: ActivatableUI

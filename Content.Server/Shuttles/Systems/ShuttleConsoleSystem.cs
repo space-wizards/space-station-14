@@ -1,4 +1,3 @@
-using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
@@ -11,7 +10,8 @@ using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Power;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Timing;
 using Robust.Server.GameObjects;
@@ -37,6 +37,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private TagSystem _tags = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
     [Dependency] private EntityQuery<PilotComponent> _pilotQuery = default!;
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
@@ -166,7 +167,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         if (!_tags.HasTag(user, CanPilotTag) ||
             !TryComp<ShuttleConsoleComponent>(uid, out var component) ||
-            !this.IsPowered(uid, EntityManager) ||
+            !_power.IsPowered(uid) ||
             !Transform(uid).Anchored ||
             !_blocker.CanInteract(user, uid))
         {

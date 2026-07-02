@@ -1,5 +1,4 @@
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DeviceLinking;
@@ -11,9 +10,9 @@ using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
-using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Events;
+using Content.Shared.Power.Systems;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -32,7 +31,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedLightBulbSystem _bulbSystem = default!;
     [Dependency] private SharedHandsSystem _handsSystem = default!;
-    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private SharedDeviceLinkSystem _deviceLink = default!;
@@ -256,7 +255,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
 
     protected void UpdateLight(EntityUid uid,
         PoweredLightComponent? light = null,
-        SharedApcPowerReceiverComponent? powerReceiver = null,
+        PowerReceiverComponent? powerReceiver = null,
         AppearanceComponent? appearance = null,
         EntityUid? user = null)
     {
@@ -271,9 +270,6 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         if (!Resolve(uid, ref light, false))
             return;
 
-        if (!_receiver.ResolveApc(uid, ref powerReceiver))
-            return;
-
         // Optional component.
         Resolve(uid, ref appearance, false);
 
@@ -282,7 +278,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         if (bulbUid == null || !TryComp<LightBulbComponent>(bulbUid.Value, out var lightBulb))
         {
             SetLight(uid, false, light: light);
-            powerReceiver.Load = 0;
+            _receiver.SetLoad((uid, powerReceiver), 0);
             _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.Empty, appearance);
             return;
         }
@@ -290,7 +286,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
         switch (lightBulb.State)
         {
             case LightBulbState.Normal:
-                if (powerReceiver.Powered && light.On)
+                if (_receiver.IsPowered(uid) && light.On)
                 {
                     SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                     _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
@@ -318,7 +314,7 @@ public abstract partial class SharedPoweredLightSystem : EntitySystem
                 break;
         }
 
-        powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
+        _receiver.SetLoad((uid, powerReceiver), light.On && lightBulb.State == LightBulbState.Normal ? lightBulb.PowerUse : 0);
     }
 
     /// <summary>
