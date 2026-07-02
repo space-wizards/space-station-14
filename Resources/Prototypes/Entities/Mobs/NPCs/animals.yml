@@ -1053,7 +1053,7 @@
       Alive:
         Base: goat
       Critical:
-        Base: dead
+        Base: crit
       Dead:
         Base: dead
   - type: SolutionManager
