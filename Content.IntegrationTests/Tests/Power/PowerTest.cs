@@ -170,7 +170,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapSys = entityManager.System<SharedMapSystem>();
             const float loadPower = 200;
@@ -181,7 +180,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -230,7 +229,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapSys = entityManager.System<SharedMapSystem>();
             const float loadPower = 200;
@@ -241,7 +239,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -286,7 +284,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var mapSys = entityManager.System<SharedMapSystem>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -296,7 +293,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -372,7 +369,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -388,7 +384,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -476,7 +472,6 @@ namespace Content.IntegrationTests.Tests.Power
 
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -492,7 +487,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -571,7 +566,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -584,7 +578,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -629,7 +623,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -645,7 +638,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -709,7 +702,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -725,7 +717,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -789,7 +781,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -800,7 +791,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Map layout here is
                 // C - consumer
@@ -884,7 +875,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -900,7 +890,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Layout is two generators, two batteries, and one load. As to why two: because previously this test
                 // would fail ONLY if there were more than two batteries present, because each of them tries to supply
@@ -981,7 +971,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -992,7 +981,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Map layout here is
                 // C - consumer
@@ -1067,7 +1056,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -1078,7 +1066,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitPost(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -1150,7 +1138,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var nodeContainer = entityManager.System<NodeContainerSystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -1162,7 +1149,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 4; i++)
@@ -1214,7 +1201,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var mapSys = entityManager.System<SharedMapSystem>();
@@ -1227,7 +1213,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 // Power only works when anchored
                 for (var i = 0; i < 3; i++)
@@ -1272,7 +1258,6 @@ namespace Content.IntegrationTests.Tests.Power
         {
             var pair = Pair;
             var server = pair.Server;
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
             var extensionCableSystem = entityManager.System<ExtensionCableSystem>();
@@ -1284,7 +1269,7 @@ namespace Content.IntegrationTests.Tests.Power
             await server.WaitAssertion(() =>
             {
                 var map = mapSys.CreateMap(out var mapId);
-                var grid = mapManager.CreateGridEntity(mapId);
+                var grid = mapSys.CreateGridEntity(mapId);
 
                 const int range = 5;
 

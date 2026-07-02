@@ -17,6 +17,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Tiles;
@@ -24,7 +25,6 @@ namespace Content.Shared.Tiles;
 public sealed partial class FloorTileSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private INetManager _netManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -79,7 +79,7 @@ public sealed partial class FloorTileSystem : EntitySystem
         // so we're just gon with this for now.
         const bool inRange = true;
         var state = (inRange, location.EntityId);
-        _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - CheckRange, map.Position + CheckRange), ref state,
+        _map.FindGridsIntersecting(map.MapId, new Box2(map.Position - CheckRange, map.Position + CheckRange), ref state,
             static (EntityUid entityUid, MapGridComponent grid, ref (bool weh, EntityUid EntityId) tuple) =>
             {
                 if (tuple.EntityId == entityUid)
@@ -162,7 +162,7 @@ public sealed partial class FloorTileSystem : EntitySystem
                 if (_netManager.IsClient)
                     return;
 
-                var grid = _mapManager.CreateGridEntity(locationMap.MapId);
+                var grid = _map.CreateGridEntity(locationMap.MapId);
                 var gridXform = Transform(grid);
                 _transform.SetWorldPosition((grid, gridXform), locationMap.Position);
                 location = new EntityCoordinates(grid, Vector2.Zero);
@@ -195,8 +195,9 @@ public sealed partial class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileId];
-        var random = new System.Random((int)_timing.CurTick.Value);
+        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileId];
+        var random = new RobustRandom();
+        random.SetSeed((int)_timing.CurTick.Value);
         var variant = _tile.PickVariant(tileDef, random);
 
         var tileRef = _map.GetTileRef(gridUid, mapGrid, location.Offset(new Vector2(offset, offset)));

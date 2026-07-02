@@ -1,23 +1,20 @@
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.SprayPainter;
 
 /// <summary>
 /// Updates an object's layer zero sprite whenever it is spraypainted.
 /// </summary>
-public sealed partial class PosterVisualizerSystem : VisualizerSystem<PaintableVisualizerComponent>
+public sealed partial class PaintableVisualizerSystem : VisualizerSystem<PaintableVisualizerComponent>
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, PaintableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
             return;
 
-        if (!_prototypeManager.HasIndex(protoName))
+        if (!ProtoMan.HasIndex(protoName))
             return;
 
         // Create the given prototype and get its first layer.
