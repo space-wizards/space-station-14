@@ -104,7 +104,8 @@ public sealed partial class RCDSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var prototype = ProtoMan.Index(component.ProtoId);
+        if (!ProtoMan.TryIndex(component.ProtoId, out var prototype))
+            return;
 
         var msg = Loc.GetString("rcd-component-examine-mode-details", ("mode", Loc.GetString(prototype.SetName)));
 
@@ -129,7 +130,9 @@ public sealed partial class RCDSystem : EntitySystem
 
         var user = args.User;
         var location = args.ClickLocation;
-        var prototype = ProtoMan.Index(component.ProtoId);
+
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
+            return;
 
         // Initial validity checks
         if (!location.IsValid(EntityManager))
@@ -218,7 +221,7 @@ public sealed partial class RCDSystem : EntitySystem
             GetNetCoordinates(location),
             GetNetEntity(gridUid.Value),
             component.ConstructionDirection,
-            component.ProtoId,
+            prototype,
             cost,
             GetNetEntity(effect));
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
@@ -335,7 +338,8 @@ public sealed partial class RCDSystem : EntitySystem
 
     public bool IsRCDOperationStillValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid? target, EntityUid user, bool popMsgs = true)
     {
-        var prototype = ProtoMan.Index(component.ProtoId);
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
+            return false;
 
         // Check that the RCD has enough ammo to get the job done
         var charges = _sharedCharges.GetCurrentCharges(uid);
@@ -380,7 +384,9 @@ public sealed partial class RCDSystem : EntitySystem
 
     private bool IsConstructionLocationValid(EntityUid uid, RCDComponent component, EntityUid gridUid, MapGridComponent mapGrid, TileRef tile, Vector2i position, Direction direction, EntityUid user, bool popMsgs = true)
     {
-        var prototype = ProtoMan.Index(component.ProtoId);
+
+        if(!ProtoMan.TryIndex(component.ProtoId, out var prototype))
+            return false;
 
         // Check rule: Must build on empty tile
         if (prototype.ConstructionRules.Contains(RcdConstructionRule.MustBuildOnEmptyTile) && !tile.Tile.IsEmpty)
@@ -579,9 +585,7 @@ public sealed partial class RCDSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        var prototype = ProtoMan.Index(component.ProtoId);
-
-        if (prototype.Prototype == null)
+        if (!ProtoMan.TryIndex(component.ProtoId, out var prototype) || prototype.Prototype == null)
             return;
 
         switch (prototype.Mode)
