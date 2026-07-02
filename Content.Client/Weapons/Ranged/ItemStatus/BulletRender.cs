@@ -286,7 +286,6 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        // get the standard item separation
         var itemSeparation = _loadedSprite.Width + Separation;
 
         // if there is more than one item per row, then we need to recalculate the separation between them.
