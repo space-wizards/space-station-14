@@ -23,10 +23,18 @@ public sealed partial class BorgModuleComponent : Component
     public bool Installed => InstalledEntity != null;
 
     /// <summary>
-    /// If true, this is a "default" module that cannot be removed from a borg.
+    /// If true, this is a required module that cannot be removed from a borg.
+    /// </summary>
+    /// <seealso cref="BorgTypePrototype.DefaultModules"/>
+    /// <seealso cref="BorgTypePrototype.RequiredModules"/>
+    [DataField, AutoNetworkedField]
+    public bool Required;
+
+    /// <summary>
+    /// A user-facing reason why this module is required.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool DefaultModule;
+    public HashSet<LocId> RequiredReasons = [];
 
     /// <summary>
     /// List of types of borgs this module fits into.

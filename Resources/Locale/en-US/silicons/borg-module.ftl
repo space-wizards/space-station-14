@@ -1,5 +1,14 @@
 borg-module-fit = This module fits into {$types}.
 
+borg-module-requirement-reason-single = This module can only be removed if another { $module } module is installed.
+borg-module-requirement-reason-multi-header = This module can only be removed if additional modules of the following types are installed:
+borg-module-requirement-reason-multi-item = - { $module } module
+
+borg-module-requirement-tool = tool
+borg-module-requirement-mining = mining
+borg-module-requirement-cleaning = cleaning
+borg-module-requirement-topical = topical
+
 borg-type-all = [color=white]any cyborg[/color]
 borg-type-salvage = [color= #d6b328]salvage cyborgs[/color]
 borg-type-engineer = [color= #ff9900]engineer cyborgs[/color]
