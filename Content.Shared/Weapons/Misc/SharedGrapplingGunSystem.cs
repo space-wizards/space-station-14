@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -31,6 +32,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
     [Dependency] private SharedJointSystem _joints = default!;
     [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPvsOverrideSystem _pvs = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedContainerSystem _container = default!;
 
@@ -73,6 +75,13 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
             visuals.Sprite = component.RopeSprite;
             visuals.Target = uid;
             Dirty(shotUid.Value, visuals);
+
+            // Prevent the grapple's rope from disappearing once it leaves PVS.
+            // Global instead of per-session to allow other players to also see the rope.
+            // TODO: global PVS override should be removed once a better alternative exists
+            _pvs.AddGlobalOverride(shotUid.Value);
+            // Include the gun so other clients know the position of the entity at other end of the rope.
+            _pvs.AddGlobalOverride(uid);
         }
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -143,6 +152,9 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         grapple.Comp.Projectile = null;
         DirtyField(grapple.Owner, grapple.Comp, nameof(GrapplingGunComponent.Projectile));
         _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
+
+        // TODO: global PVS override should be removed once a better alternative exists
+        _pvs.RemoveGlobalOverride(grapple.Owner);
     }
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
