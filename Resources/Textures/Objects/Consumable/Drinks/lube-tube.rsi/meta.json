@@ -5,10 +5,10 @@
         "y": 32
     },
     "license": "CC-BY-NC-SA-4.0",
-    "copyright": "Created by discord: brainfood#7460 / github: brainfood1183.",
+    "copyright": "Created by discord: brainfood#7460 / github: brainfood1183. Inhands by Tiniest Shark (Github)",
     "states": [
         {
-            "name": "icon"
+            "name": "icon_empty"
         },
         {
             "name": "icon_open"
@@ -17,22 +17,54 @@
             "name": "icon-front"
         },
         {
-            "name": "fill1"
+            "name": "fill-1"
         },
         {
-            "name": "fill2"
+            "name": "fill-2"
         },
         {
-            "name": "fill3"
+            "name": "fill-3"
         },
         {
-            "name": "fill4"
+            "name": "fill-4"
         },
         {
-            "name": "fill5"
+            "name": "fill-5"
         },
         {
-            "name": "fill6"
+            "name": "fill-6"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-3",
+            "directions": 4
         }
     ]
 }

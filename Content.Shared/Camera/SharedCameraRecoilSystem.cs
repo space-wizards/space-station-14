@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Camera;
 
 [UsedImplicitly]
-public abstract class SharedCameraRecoilSystem : EntitySystem
+public abstract partial class SharedCameraRecoilSystem : EntitySystem
 {
     /// <summary>
     ///     Maximum rate of magnitude restore towards 0 kick.
@@ -30,8 +30,8 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     /// </summary>
     protected const float KickMagnitudeMax = 1f;
 
-    [Dependency] private readonly SharedContentEyeSystem _eye = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedContentEyeSystem _eye = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {

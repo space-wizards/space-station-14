@@ -58,6 +58,11 @@
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/machines/warning-buzzer.ogg"
 
+- files: ["warning_buzzer_xenoborg.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Toast (Discord)"
+  source: "https://github.com/space-wizards/space-station-14/pull/36935"
+
 - files: ["anomaly_sync_connect.ogg"]
   license: "CC0-1.0"
   copyright: "Created by newagesoup, convert to ogg mono by TheShuEd"
@@ -108,10 +113,15 @@
   copyright: "cmorris035"
   source: "https://freesound.org/people/cmorris035/sounds/319152/"
 
-- files: ["airlock_open.ogg", "airlock_close.ogg", "airlock_deny.ogg"]
+- files: ["airlock_open.ogg", "airlock_deny.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "/tg/station"
   source: "https://github.com/tgstation/tgstation/tree/5f5002b21253354c20ea224be3f604d79299b37e/sound/machines"
+
+- files: ["airlock_close.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "From eris/bay at commit 789ed19064ac42376d2355192cd1069a45a310f1, modified by mirrorcult to be shorter and match airlock timings"
+  source: "https://github.com/discordia-space/CEV-Eris/commit/789ed19064ac42376d2355192cd1069a45a310f1"
 
 - files: ["machine_vend_hot_drink.ogg"]
   license: "CC0-1.0"

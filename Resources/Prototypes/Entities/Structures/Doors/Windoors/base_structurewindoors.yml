@@ -1,11 +1,15 @@
 #Normal windoors
 - type: entity
   id: BaseWindoor
-  parent: BaseStructure
+  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -53,6 +57,10 @@
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: AnimationPlayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -75,8 +83,9 @@
     lastSignals:
       DoorStatus: false
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: RCDDeconstructable
@@ -85,12 +94,6 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 200
@@ -129,8 +132,8 @@
     denyAnimationTime: 0.4
     animatePanel: false
     openUnlitVisible: true
-    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
-    safety: false
+    # needed so that windoors loop between closing and reopening less often even though they don't crush
+    safety: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: Electrified
@@ -167,10 +170,14 @@
   - type: StaticPrice
     price: 150
   - type: PryUnpowered
+  - type: Tag
+    tags:
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 - type: entity
   id: BaseSecureWindoor
-  parent: BaseWindoor
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindoor]
   abstract: true
   components:
   - type: Sprite
@@ -204,16 +211,14 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Damageable
     damageModifierSet: RGlass
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -237,12 +242,14 @@
     tags:
       - SecureWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 
 #Plasma Windoors
 - type: entity
   id: BasePlasmaWindoor
-  parent: BaseWindoor
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
   components:
   - type: Sprite
@@ -275,14 +282,12 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 480
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 240
@@ -307,7 +312,7 @@
 
 - type: entity
   id: BaseSecurePlasmaWindoor
-  parent: BaseSecureWindoor
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
   components:
   - type: Sprite
@@ -341,14 +346,12 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 800
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 530
@@ -374,12 +377,14 @@
     tags:
       - SecurePlasmaWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door
 
 
 #Uranium Windoors
 - type: entity
   id: BaseUraniumWindoor
-  parent: BaseWindoor
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
   abstract: true
   components:
   - type: Sprite
@@ -412,14 +417,12 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 240
@@ -444,7 +447,7 @@
 
 - type: entity
   id: BaseSecureUraniumWindoor
-  parent: BaseSecureWindoor
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
   abstract: true
   components:
   - type: Sprite
@@ -478,14 +481,12 @@
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -511,3 +512,5 @@
     tags:
       - SecureUraniumWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+      - DoorRemoteWhitelist
+      # This tag is used by door remotes to allow or not a door remote to normally be able to interact with a door

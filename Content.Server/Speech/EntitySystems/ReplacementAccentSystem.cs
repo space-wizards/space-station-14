@@ -13,11 +13,10 @@ namespace Content.Server.Speech.EntitySystems
     /// <summary>
     /// Replaces text in messages, either with full replacements or word replacements.
     /// </summary>
-    public sealed class ReplacementAccentSystem : EntitySystem
+    public sealed partial class ReplacementAccentSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private ILocalizationManager _loc = default!;
 
         private readonly Dictionary<ProtoId<ReplacementAccentPrototype>, (Regex regex, string replacement)[]>
             _cachedReplacements = new();
@@ -26,14 +25,14 @@ namespace Content.Server.Speech.EntitySystems
         {
             SubscribeLocalEvent<ReplacementAccentComponent, AccentGetEvent>(OnAccent);
 
-            _proto.PrototypesReloaded += OnPrototypesReloaded;
+            ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            _proto.PrototypesReloaded -= OnPrototypesReloaded;
+            ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
         }
 
         private void OnAccent(EntityUid uid, ReplacementAccentComponent component, AccentGetEvent args)
@@ -47,7 +46,7 @@ namespace Content.Server.Speech.EntitySystems
         [PublicAPI]
         public string ApplyReplacements(string message, string accent)
         {
-            if (!_proto.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
+            if (!ProtoMan.TryIndex<ReplacementAccentPrototype>(accent, out var prototype))
                 return message;
 
             if (!_random.Prob(prototype.ReplacementChance))
@@ -128,7 +127,7 @@ namespace Content.Server.Speech.EntitySystems
                     var firstLoc = _loc.GetString(first);
                     var replaceLoc = _loc.GetString(replace);
 
-                    var regex = new Regex($@"(?<!\w){firstLoc}(?!\w)", RegexOptions.IgnoreCase);
+                    var regex = new Regex($@"(?<![\w']){firstLoc}(?![\w'])", RegexOptions.IgnoreCase);
 
                     return (regex, replaceLoc);
 

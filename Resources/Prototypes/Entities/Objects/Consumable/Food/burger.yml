@@ -2,40 +2,28 @@
 # Bun
 
 - type: entity
-  name: bun
-  parent: FoodBreadSliceBase
+  parent: [FoodBreadSliceBase, BaseSlicingRefinableFood]
   id: FoodBreadBun
+  name: bun
   description: A hamburger bun. Round and convenient to hold.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     layers:
     - state: bun
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6.66 # 1/3 of a loaf of bread, technically losing 0.01 nutriment per batch of three buns over making bread loaves/slices
-  - type: Butcherable
-    butcherDelay: 1
-    spawned:
-      - id: FoodBreadBunTop
-        amount: 1
-      - id: FoodBreadBunBottom
-        amount: 1
+  - type: ToolRefinable
+    refineResult:
+    - id: FoodBreadBunTop
+    - id: FoodBreadBunBottom
 
 - type: entity
-  id: FoodBreadBunBottom
   parent: FoodBreadSliceBase
+  id: FoodBreadBunBottom
   name: bottom bun
-  description: It's time to start building the burger tower. 
+  description: It's time to start building the burger tower.
   components:
   - type: Item
-    size: Normal #patch until there is an adequate resizing system in place 
-  - type: Food
+    size: Normal #patch until there is an adequate resizing system in place
   - type: Sprite
     drawdepth: Mobs
     noRot: true
@@ -53,70 +41,68 @@
     nameGeneration: food-sequence-burger-gen
   - type: Appearance
   - type: FoodMetamorphableByAdding
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        canReact: false # Dont want cause reactions inside burgers after merging ingredients
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.3 # 1/2 of a bun
+  - type: Solution
+    solution:
+      maxVol: 7.5
+      canReact: false # Dont want cause reactions inside burgers after merging ingredients, TODO Remove
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5 # 1/2 of a bun
 
 - type: entity
-  id: FoodBreadBunTop
   parent: FoodBreadSliceBase
+  id: FoodBreadBunTop
   name: top bun
   description: The perfect finish for your burger tower.
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/burger_sequence.rsi
     layers:
     - state: bun_top
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3.3 # 1/2 of a bun
+  - type: Solution
+    solution:
+      maxVol: 7.5
+      canReact: false # Dont want cause reactions inside burgers after merging ingredients, TODO Remove
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5 # 1/2 of a bun
   - type: FoodSequenceElement
     entries:
       Burger: BunTopBurger
-  
+
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBurgerBase
-  abstract: true
   components:
   - type: FlavorProfile
     flavors:
       - bun
       - meaty
-  - type: Food
-    transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 30
+      - ReagentId: Protein
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
+    shape:
+    - 0,0,1,0
 
 # Custom Burger Example
 
 - type: entity
-  name: jelly burger
   parent: FoodBurgerBase
   id: FoodBurgerJelly
+  name: jelly burger
   description: Culinary delight..?
   components:
   - type: FlavorProfile
@@ -129,13 +115,27 @@
     - state: custburg-filling
       color: red
     - state: custburg-top
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#f70000"
+      - state: alpha-filling-inhand-left
+        color: "#f70000"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#f70000"
+      - state: alpha-filling-inhand-right
+        color: "#f70000"
 
 # Burger
 
 - type: entity
-  name: appendix burger
   parent: FoodBurgerBase
   id: FoodBurgerAppendix
+  name: appendix burger
   description: Tastes like appendicitis.
   components:
   - type: FlavorProfile
@@ -144,26 +144,29 @@
       - grass
   - type: Sprite
     state: appendix
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 6
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#382010"
+      - state: alpha-filling-inhand-left
+        color: "#bd9451"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#382010"
+      - state: alpha-filling-inhand-right
+        color: "#bd9451"
 # Tastes like bun, grass.
 
 - type: entity
-  name: bacon burger
   parent: FoodBurgerBase
   id: FoodBurgerBacon
+  name: bacon burger
   description: The perfect combination of all things American.
   components:
   - type: FlavorProfile
@@ -172,24 +175,38 @@
       - bacon
   - type: Sprite
     state: bacon
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 19
-        - ReagentId: Vitamin
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 35
+      - ReagentId: Protein
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#b37659"
+      - state: alpha-filling-inhand-left
+        color: "#e8634f"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#b37659"
+      - state: alpha-filling-inhand-right
+        color: "#e8634f"
 # Tastes like bun, bacon.
 
 - type: entity
-  name: baseball burger
   parent: FoodBurgerBase
   id: FoodBurgerBaseball
+  name: baseball burger
   description: It's still warm. The steam coming off of it smells kinda sweaty.
   components:
   - type: FlavorProfile
@@ -198,70 +215,83 @@
       - homerun
   - type: Sprite
     state: baseball
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Cellulose
+        Quantity: 30
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#f7f7f7"
+      - state: burger-inhand-left
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#f7f7f7"
+      - state: burger-inhand-right
 
 - type: entity
-  name: bearger
   parent: FoodBurgerBase
   id: FoodBurgerBear
+  name: bearger
   description: Best served rawr.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bear-inhand-left
+      right:
+      - state: bear-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
       - meaty
   - type: Sprite
     state: bearger
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: big bite burger
-  parent: FoodBurgerBase
+  parent: [SolutionNormal, FoodBurgerBase]
   id: FoodBurgerBig
+  name: big bite burger
   description: Forget the Big Mac. THIS is the future!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    storedOffset: 0,3
+    inhandVisuals:
+      left:
+      - state: burger-big-inhand-left
+      right:
+      - state: burger-big-inhand-right
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
       - oily
       - cheesy
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 18
-        - ReagentId: Protein
-          Quantity: 18
-        - ReagentId: Vitamin
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 75
+      - ReagentId: Protein
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Allicin
+        Quantity: 2
   - type: Sprite
     state: bigbite
   - type: Tag
@@ -270,39 +300,44 @@
 # Tastes like bun, silver, magic.
 
 - type: entity
-  name: brain burger
   parent: FoodBurgerBase
   id: FoodBurgerBrain
+  name: brain burger
   description: A strange looking burger. It looks almost sentient.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: brain-inhand-left
+      right:
+      - state: brain-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
       - meaty
   - type: Sprite
     state: brain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
 # Tastes like bun, brains.
 
 - type: entity
-  name: cat burger
   parent: FoodBurgerBase
   id: FoodBurgerCat
+  name: cat burger
   description: Finally those cats and catpeople are worth something!
   components:
+  - type: Item
+    storedOffset: -1,1
+    inhandVisuals:
+      left:
+      - state: cat-inhand-left
+      - state: plain-inhand-left
+      right:
+      - state: cat-inhand-right
+      - state: plain-inhand-right
   - type: Sprite
     state: cat
   - type: FlavorProfile
@@ -310,25 +345,14 @@
       - bun
       - meaty
       - cat
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Protein
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: cheese burger
   parent: FoodBurgerBase
   id: FoodBurgerCheese
+  name: cheese burger
   description: This noble burger stands proudly clad in golden cheese.
   components:
   - type: FlavorProfile
@@ -338,20 +362,22 @@
       - cheesy
   - type: Sprite
     state: cheese
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 7
-        - ReagentId: Protein
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 45
+      - ReagentId: Protein
+        Quantity: 10
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 # TODO: Make this work.
   # - type: Sprite
   #   state: plate
@@ -363,9 +389,9 @@
 # Tastes like bun, beef patty, cheese.
 
 - type: entity
-  name: chicken sandwich # Burger for you euro-cucks
   parent: FoodBurgerBase
   id: FoodBurgerChicken
+  name: chicken sandwich
   description: A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier.
   components:
   - type: FlavorProfile
@@ -374,55 +400,63 @@
       - chicken
   - type: Sprite
     state: chicken
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Mayo
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 30
+      - ReagentId: Protein
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: Mayo
+        Quantity: 2
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#98d966"
+      - state: alpha-patty-inhand-left
+        color: "#f7b125"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#98d966"
+      - state: alpha-patty-inhand-right
+        color: "#f7b125"
 # Tastes like bun, chicken.
 
 - type: entity
-  name: clown burger
   parent: FoodBurgerBase
   id: FoodBurgerClown
+  name: clown burger
   description: This tastes funny...
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: clown-inhand-left
+      right:
+      - state: clown-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
       - funny
   - type: Sprite
     state: clown
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 6
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: corger #not curger
   parent: FoodBurgerBase
   id: FoodBurgerCorgi
+  name: corger #not curger
   description: The Head of Personnel's favorite!
   components:
   - type: FlavorProfile
@@ -431,23 +465,29 @@
       - validhunting
   - type: Sprite
     state: ian
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 12
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 20
+      - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 10
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dog-inhand-left
+      right:
+      - state: dog-inhand-right
 
 - type: entity
-  name: crab burger
   parent: FoodBurgerBase
   id: FoodBurgerCrab
+  name: crab burger
   description: A delicious patty of the crabby kind, slapped in between a bun.
   components:
   - type: FlavorProfile
@@ -456,27 +496,40 @@
       - crabby
   - type: Sprite
     state: crab
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 4
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#7e1a07"
+      - state: alpha-patty-inhand-left
+        color: "#7e1a07"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#7e1a07"
+      - state: alpha-patty-inhand-right
+        color: "#7e1a07"
 
 - type: entity
-  name: crazy hamburger # Burger for you euro-cucks
-  parent: FoodBurgerBase
+  parent: [SolutionNormal, FoodBurgerBase]
   id: FoodBurgerCrazy
+  name: crazy hamburger # Burger for you euro-cucks
   description: This looks like the sort of food that a demented clown in a trenchcoat would make.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,2
+    storedOffset: -2,0
+    inhandVisuals:
+      left:
+      - state: crazy-inhand-left
+      right:
+      - state: crazy-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -485,80 +538,120 @@
       - flare
   - type: Sprite
     state: crazy
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 65
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 31
-        - ReagentId: Protein
-          Quantity: 15
-        - ReagentId: CapsaicinOil
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 8
-        - ReagentId: Sulfur # What you get for eating something with a flare in it
-          Quantity: 5 
+  - type: Solution
+    solution:
+      maxVol: 180
+      reagents:
+      - ReagentId: Nutriment # Adds up to 180, completely filled to the brim.
+        Quantity: 100
+      - ReagentId: Protein
+        Quantity: 20
+      - ReagentId: CapsaicinOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: MindbreakerToxin
+        Quantity: 10
+      # Taken from flare entity :)
+      - ReagentId: Iron
+        Quantity: 10
+      - ReagentId: Phosphorus
+        Quantity: 6
+      - ReagentId: Carbon
+        Quantity: 2
+      - ReagentId: Oxygen
+        Quantity: 4
+      - ReagentId: Charcoal
+        Quantity: 4
+      - ReagentId: Sulfur
+        Quantity: 4
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: duck sandwich # Burger for you sick bastards
   parent: FoodBurgerBase
   id: FoodBurgerDuck
+  name: duck sandwich # Burger for you sick bastards
   description: A duck sandwich, only the criminally insane would dare to eat the meat of such an adorable creature.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#98d966"
+      - state: alpha-patty-inhand-left
+        color: "#e8b348"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#98d966"
+      - state: alpha-patty-inhand-right
+        color: "#e8b348"
   - type: FlavorProfile
     flavors:
       - bun
       - duck
   - type: Sprite
     state: chicken
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-        - ReagentId: Protein
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
 # Tastes like bun, duck.
 
 - type: entity
-  name: empowered burger
   parent: FoodBurgerBase
   id: FoodBurgerEmpowered
+  name: empowered burger
   description: It's shockingly good, if you live off of electricity that is.
   components:
+  - type: Item
+    storedOffset: -2,1
+    inhandVisuals:
+      left:
+      - state: plasma-inhand-left
+      right:
+      - state: plasma-inhand-right
   - type: Sprite
     state: empowered
   - type: FlavorProfile
     flavors:
       - bun
       - shocking
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Licoxide
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Plasma
+        Quantity: 20
+      - ReagentId: Licoxide
+        Quantity: 10
 # Tastes like bun, pure electricity.
 
 - type: entity
-  name: fillet-o-carp burger
   parent: FoodBurgerBase
   id: FoodBurgerCarp
+  name: fillet-o-carp burger
   description: Almost like a carp is yelling somewhere...
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#feffba"
+      - state: alpha-patty-inhand-left
+        color: "#f4bb53"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#feffba"
+      - state: alpha-patty-inhand-right
+        color: "#f4bb53"
   - type: FlavorProfile
     flavors:
       - bun
@@ -571,32 +664,39 @@
 # Tastes like bun, fish.
 
 - type: entity
-  name: five alarm burger
-  parent: FoodBurgerBase
+  parent: [SolutionNormal, FoodBurgerBase]
   id: FoodBurgerFive
+  name: five alarm burger
   description: HOT! HOT! HOT!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
   - type: FlavorProfile
     flavors:
       - meaty
       - spicy
   - type: Sprite
     state: fivealarm
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 55
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 25
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: CapsaicinOil
-          Quantity: 5
-        - ReagentId: Blackpepper
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 12
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 45
+      - ReagentId: Protein
+        Quantity: 10
+      - ReagentId: CapsaicinOil
+        Quantity: 30
+      - ReagentId: Blackpepper
+        Quantity: 3
+      - ReagentId: Vitamin
+        Quantity: 12
   - type: Tag
     tags:
     - Meat
@@ -604,26 +704,45 @@
 # Tastes like bun, HEAT.
 
 - type: entity
-  name: ghost burger
   parent: FoodBurgerBase
   id: FoodBurgerGhost
+  name: ghost burger
   description: Too spooky!
   components:
+  - type: Item
+    size: Normal # Just annoying to store not actually that big :)
+    shape:
+    storedOffset: 0,3
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#cededa"
+      - state: alpha-filling-inhand-left
+        color: "#6a6281"
+      - state: alpha-patty-inhand-left
+        color: "#95a79f"
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#cededa"
+      - state: alpha-filling-inhand-right
+        color: "#6a6281"
+      - state: alpha-patty-inhand-right
+        color: "#95a79f"
   - type: FlavorProfile
     flavors:
       - bun
       - spooky
   - type: Sprite
     state: ghost
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 12
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 10
+      - ReagentId: Fresium
+        Quantity: 15
   - type: Tag
     tags:
       - ClothMade
@@ -642,56 +761,66 @@
       - people
   - type: Sprite
     state: human
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
-  name: McGuffin
   parent: FoodBurgerBase
   id: FoodBurgerMcguffin
+  name: McGuffin
   description: A cheap and greasy imitation of an eggs Benedict.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#f2efce"
+      - state: alpha-patty-inhand-left
+        color: "#e3756d"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#f2efce"
+      - state: alpha-patty-inhand-right
+        color: "#e3756d"
   - type: FlavorProfile
     flavors:
       - muffin
       - egg
   - type: Sprite
     state: mcguffin
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 8
-        - ReagentId: Vitamin
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 25
+      - ReagentId: EggCooked
+        Quantity: 6
+      - ReagentId: Protein
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Tag
     tags:
     - Meat
 
 - type: entity
-  name: BBQ Rib Sandwich
-  parent: FoodBurgerBase
+  parent: [SolutionNormal, FoodBurgerBase]
   id: FoodBurgerMcrib
+  name: BBQ Rib Sandwich
   description: An elusive rib shaped burger with limited availability across the galaxy. Not as good as you remember it.
   components:
-  - type: Food
-    trash: 
+  - type: Edible
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -699,22 +828,38 @@
       - bacon
   - type: Sprite
     state: mcrib
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 30 
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 11
-        - ReagentId: Protein
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: BbqSauce
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 70
+      - ReagentId: Protein
+        Quantity: 30
+      - ReagentId: BbqSauce
+        Quantity: 10
+      - ReagentId: Allicin
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    size: Normal
+    shape:
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#899660"
+      - state: alpha-patty-inhand-left
+        color: "#a94a31"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#899660"
+      - state: alpha-patty-inhand-right
+        color: "#a94a31"
 # Tastes like bun, pork patty.
 
 - type: entity
@@ -729,19 +874,21 @@
       - nothing
   - type: Sprite
     state: mime
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Protein
-          Quantity: 9
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Nothing
-          Quantity: 1
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Nothing
+        Quantity: 30
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: mime-inhand-left
+      right:
+      - state: mime-inhand-right
 # Tastes like  .
 
 - type: entity
@@ -756,20 +903,15 @@
       - meaty
   - type: Sprite
     state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 25
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 3
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: rat burger
@@ -783,20 +925,29 @@
       - meaty
   - type: Sprite
     state: rat
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+      - ReagentId: Protein
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: Fat
+        Quantity: 1
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: rat-inhand-left
+      right:
+      - state: bun-inhand-right
+      - state: rat-inhand-right
+
 # Tastes like bun, HEAT.
 
 - type: entity
@@ -812,92 +963,139 @@
       - metallic
   - type: Sprite
     state: ro
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: SulfuricAcid
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 15
+      - ReagentId: Vitamin
+        Quantity: 5
+      - ReagentId: SulfuricAcid
+        Quantity: 5
+      - ReagentId: Oil
+        Quantity: 5
+      - ReagentId: Phosphorus
+        Quantity: 5
+      - ReagentId: Iron
+        Quantity: 9
+      - ReagentId: Carbon
+        Quantity: 1
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-bun-inhand-left
+        color: "#7f7f7f"
+      - state: alpha-patty-inhand-left
+        color: "#c0c0c0"
+      - state: alpha-filling-inhand-left
+        color: "#141414"
+      right:
+      - state: alpha-bun-inhand-right
+        color: "#7f7f7f"
+      - state: alpha-patty-inhand-right
+        color: "#c0c0c0"
+      - state: alpha-filling-inhand-right
+        color: "#141414"
 # Tastes like bun, lettuce, sludge.
 
 - type: entity
-  name: soylent burger
   parent: FoodBurgerBase
   id: FoodBurgerSoy
+  name: soylent burger
   description: After eating this you have the overwhelming urge to purchase overpriced figurines of superheroes.
   components:
+  - type: Item
+    storedOffset: 0,1
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#91d90b"
+      - state: alpha-filling-inhand-left
+        color: "#91d90b"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#91d90b"
+      - state: alpha-filling-inhand-right
+        color: "#91d90b"
   - type: FlavorProfile
     flavors:
       - bun
       - soy
   - type: Sprite
     state: soylent
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 13
-        - ReagentId: Vitamin
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 37
+      - ReagentId: Protein
+        Quantity: 8
+      - ReagentId: Vitamin
+        Quantity: 5
 # Tastes like bun, redditors.
 
 - type: entity
-  name: spell burger
   parent: FoodBurgerBase
   id: FoodBurgerSpell
+  name: spell burger
   description: This is absolutely Ei Nath.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+    storedOffset: -1,2
+    inhandVisuals:
+      left:
+      - state: spell-inhand-left
+      right:
+      - state: spell-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
       - magical
   - type: Sprite
     state: spell
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Protein
-          Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 10
 # Tastes like bun, silver.
 
 - type: entity
-  name: super bite burger
   parent: FoodBurgerBase
   id: FoodBurgerSuper
+  name: super bite burger
   description: This is a mountain of a burger. FOOD!
   components:
+  - type: Item
+    size: Normal
+    shape:
+    storedOffset: 0,4
+    inhandVisuals:
+      left:
+      - state: burger-super-inhand-left
+      right:
+      - state: burger-super-inhand-right
   - type: FlavorProfile
     flavors: # What bun?
       - meaty
       - oily
       - cheesy
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 90
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 44
-        - ReagentId: Vitamin
-          Quantity: 24
-        - ReagentId: TableSalt
-          Quantity: 5
-        - ReagentId: Blackpepper
-          Quantity: 5
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 79
+      - ReagentId: Protein
+        Quantity: 20
+      - ReagentId: Vitamin
+        Quantity: 11
+      - ReagentId: TableSalt
+        Quantity: 5
+      - ReagentId: Blackpepper
+        Quantity: 5
   - type: Sprite
     state: superbite
   - type: Tag
@@ -917,15 +1115,29 @@
       - tofu
   - type: Sprite
     state: tofu
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Protein
-          Quantity: 3
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 16
+      - ReagentId: Protein
+        Quantity: 9
+      - ReagentId: Vitamin
+        Quantity: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#f0d8a1"
+      - state: alpha-filling-inhand-left
+        color: "#e5ad29"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#f0d8a1"
+      - state: alpha-filling-inhand-right
+        color: "#e5ad29"
 # Tastes like bun, tofu.
 
 - type: entity
@@ -941,31 +1153,42 @@
       - acid
   - type: Sprite
     state: x
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 5
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bun-inhand-left
+      - state: alpha-patty-inhand-left
+        color: "#00cc33"
+      - state: alpha-filling-inhand-left
+        color: "#9900cc"
+      right:
+      - state: bun-inhand-right
+      - state: alpha-patty-inhand-right
+        color: "#00cc33"
+      - state: alpha-filling-inhand-right
+        color: "#9900cc"
 # Tastes like bun, acid.
 
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
 
 - type: entity
-  name: mothroachburger
   parent: FoodBurgerBase
   id: FoodBurgerMothRoach
+  name: mothroachburger
   description: The last lamp it saw was the one inside the microwave.
   components:
+  - type: Item
+    shape:
+    - 0,0,0,1
+    inhandVisuals:
+      left:
+      - state: mothroach-inhand-left
+      right:
+      - state: mothroach-inhand-right
   - type: FlavorProfile
     flavors:
       - bun
@@ -973,18 +1196,7 @@
       - light
   - type: Sprite
     state: mothroach
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Protein
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 7
   - type: Tag
     tags:
     - Meat
-    
+

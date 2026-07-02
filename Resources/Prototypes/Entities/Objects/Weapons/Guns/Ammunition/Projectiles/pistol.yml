@@ -1,8 +1,8 @@
 - type: entity
-  id: BulletPistol
-  name: bullet (.35 auto)
   parent: BaseBullet
+  id: BulletPistol
   categories: [ HideSpawnMenu ]
+  name: bullet (.35 auto)
   components:
   - type: Projectile
     damage:
@@ -10,10 +10,10 @@
         Piercing: 16
 
 - type: entity
-  id: BulletPistolPractice
-  name: bullet (.35 auto practice)
   parent: BaseBulletPractice
+  id: BulletPistolPractice
   categories: [ HideSpawnMenu ]
+  name: bullet (.35 auto practice)
   components:
   - type: Projectile
     damage:
@@ -21,22 +21,22 @@
         Blunt: 2
 
 - type: entity
-  id: BulletPistolIncendiary
   parent: BaseBulletIncendiary
-  name: bullet (.35 auto incendiary)
+  id: BulletPistolIncendiary
   categories: [ HideSpawnMenu ]
+  name: bullet (.35 auto incendiary)
   components:
   - type: Projectile
     damage:
       types:
-        Blunt: 2
-        Heat: 14
+        Piercing: 12
+        Heat: 4
 
 - type: entity
-  id: BulletPistolUranium
   parent: BaseBulletUranium
-  name: bullet (.35 auto uranium)
+  id: BulletPistolUranium
   categories: [ HideSpawnMenu ]
+  name: bullet (.35 auto uranium)
   components:
   - type: Projectile
     damage:

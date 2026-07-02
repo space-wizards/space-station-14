@@ -5,6 +5,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Trigger;
 using Robust.Server.Containers;
 
 namespace Content.Server.VoiceTrigger;
@@ -12,14 +13,14 @@ namespace Content.Server.VoiceTrigger;
 /// <summary>
 /// Allows storages to be manipulated using voice commands.
 /// </summary>
-public sealed class StorageVoiceControlSystem : EntitySystem
+public sealed partial class StorageVoiceControlSystem : EntitySystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private StorageSystem _storage = default!;
 
     public override void Initialize()
     {
@@ -29,10 +30,9 @@ public sealed class StorageVoiceControlSystem : EntitySystem
 
     private void VoiceTriggered(Entity<StorageVoiceControlComponent> ent, ref VoiceTriggeredEvent args)
     {
-        // Check if the component has any slot restrictions via AllowedSlots
         // If it has slot restrictions, check if the item is in a slot that is allowed
-        if (ent.Comp.AllowedSlots != null && _inventory.TryGetContainingSlot(ent.Owner, out var itemSlot) &&
-            (itemSlot.SlotFlags & ent.Comp.AllowedSlots) == 0)
+        if (ent.Comp.AllowedSlots is { } allowedSlots
+            && !_inventory.InSlotWithAnyFlags(ent.Owner, allowedSlots))
             return;
 
         // Get the storage component

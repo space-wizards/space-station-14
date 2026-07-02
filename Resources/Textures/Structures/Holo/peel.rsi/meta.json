@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by thatguyusa (discord) / ThatGuyUSA (github) for SS14",
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        }
+    ]
+}

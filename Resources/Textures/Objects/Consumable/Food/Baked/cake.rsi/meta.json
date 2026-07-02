@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, inhands by mubururu_ (github), cotton cake sprites by DispenserG0inUp",
+    "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, inhands by mubururu_ (github), cotton cake sprites by DispenserG0inUp, berry delighht sprites by FairlySadPanda (Github)",
     "size": {
         "x": 32,
         "y": 32
@@ -330,6 +330,12 @@
         {
             "name": "cotton-slice-inhand-right",
             "directions": 4
+        },
+        {
+            "name": "berry_delight"
+        },
+        {
+            "name": "berry_delight_slice"
         }
     ]
 }

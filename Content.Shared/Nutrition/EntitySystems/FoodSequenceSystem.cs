@@ -13,16 +13,16 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
+public sealed partial class FoodSequenceSystem : SharedFoodSequenceSystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -44,7 +44,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (!TryComp<FoodSequenceStartPointComponent>(args.Start, out var start))
             return;
 
-        if (!_proto.TryIndex(args.Proto, out var elementProto))
+        if (!ProtoMan.Resolve(args.Proto, out var elementProto))
             return;
 
         if (!ent.Comp.OnlyFinal || elementProto.Final || start.FoodLayers.Count == start.MaxLayers)
@@ -56,7 +56,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     private bool TryMetamorph(Entity<FoodSequenceStartPointComponent> start)
     {
         List<MetamorphRecipePrototype> availableRecipes = new();
-        foreach (var recipe in _proto.EnumeratePrototypes<MetamorphRecipePrototype>())
+        foreach (var recipe in ProtoMan.EnumeratePrototypes<MetamorphRecipePrototype>())
         {
             if (recipe.Key != start.Comp.Key)
                 continue;
@@ -64,7 +64,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             bool allowed = true;
             foreach (var rule in recipe.Rules)
             {
-                if (!rule.Check(_proto, EntityManager, start, start.Comp.FoodLayers))
+                if (!rule.Check(ProtoMan, EntityManager, start, start.Comp.FoodLayers))
                 {
                     allowed = false;
                     break;
@@ -78,13 +78,13 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return true;
 
         Metamorf(start, _random.Pick(availableRecipes)); //In general, if there's more than one recipe, the yml-guys screwed up. Maybe some kind of unit test is needed.
-        QueueDel(start);
+        PredictedQueueDel(start.Owner);
         return true;
     }
 
     private void Metamorf(Entity<FoodSequenceStartPointComponent> start, MetamorphRecipePrototype recipe)
     {
-        var result = SpawnAtPosition(recipe.Result, Transform(start).Coordinates);
+        var result = PredictedSpawnNextToOrDrop(recipe.Result, start);
 
         //Try putting in container
         _transform.DropNextTo(result, (start, Transform(start)));
@@ -96,26 +96,28 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return;
 
         _solutionContainer.RemoveAllSolution(resultSoln.Value); //Remove all YML reagents
-        resultSoln.Value.Comp.Solution.MaxVolume = startSoln.Value.Comp.Solution.MaxVolume;
+        _solutionContainer.SetCapacity(resultSoln.Value, startSoln.Value.Comp.Solution.MaxVolume);
         _solutionContainer.TryAddSolution(resultSoln.Value, startSolution);
 
         MergeFlavorProfiles(start, result);
-        MergeTrash(start, result);
+        MergeTrash(start.Owner, result);
         MergeTags(start, result);
     }
 
-    private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent> element, EntityUid? user = null)
+    private bool TryAddFoodElement(Entity<FoodSequenceStartPointComponent> start, Entity<FoodSequenceElementComponent, EdibleComponent?> element, EntityUid? user = null)
     {
         // we can't add a live mouse to a burger.
-        if (!TryComp<FoodComponent>(element, out var elementFood))
+        if (!Resolve(element, ref element.Comp2, false))
             return false;
-        if (elementFood.RequireDead && _mobState.IsAlive(element))
+
+        if (element.Comp2.RequireDead && _mobState.IsAlive(element))
             return false;
 
         //looking for a suitable FoodSequence prototype
-        if (!element.Comp.Entries.TryGetValue(start.Comp.Key, out var elementProto))
+        if (!element.Comp1.Entries.TryGetValue(start.Comp.Key, out var elementProto))
             return false;
-        if (!_proto.TryIndex(elementProto, out var elementIndexed))
+
+        if (!ProtoMan.Resolve(elementProto, out var elementIndexed))
             return false;
 
         //if we run out of space, we can still put in one last, final finishing element.
@@ -150,15 +152,15 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             start.Comp.Finished = true;
 
         UpdateFoodName(start);
-        MergeFoodSolutions(start, element);
+        MergeFoodSolutions(start.Owner, element.Owner);
         MergeFlavorProfiles(start, element);
-        MergeTrash(start, element);
+        MergeTrash(start.Owner, element.Owner);
         MergeTags(start, element);
 
         var ev = new FoodSequenceIngredientAddedEvent(start, element, elementProto, user);
         RaiseLocalEvent(start, ev);
 
-        QueueDel(element);
+        PredictedQueueDel(element.Owner);
         return true;
     }
 
@@ -182,7 +184,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         var nameCounter = 1;
         foreach (var proto in existedContentNames)
         {
-            if (!_proto.TryIndex(proto, out var protoIndexed))
+            if (!ProtoMan.Resolve(proto, out var protoIndexed))
                 continue;
 
             if (protoIndexed.Name is null)
@@ -203,18 +205,18 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         _metaData.SetEntityName(start, newName);
     }
 
-    private void MergeFoodSolutions(EntityUid start, EntityUid element)
+    private void MergeFoodSolutions(Entity<EdibleComponent?> start, Entity<EdibleComponent?> element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
+        if (!Resolve(start, ref start.Comp, false))
             return;
 
-        if (!TryComp<FoodComponent>(element, out var elementFood))
+        if (!Resolve(element, ref element.Comp, false))
             return;
 
-        if (!_solutionContainer.TryGetSolution(start, startFood.Solution, out var startSolutionEntity, out var startSolution))
+        if (!_solutionContainer.TryGetSolution(start.Owner, start.Comp.Solution, out var startSolutionEntity, out var startSolution))
             return;
 
-        if (!_solutionContainer.TryGetSolution(element, elementFood.Solution, out _, out var elementSolution))
+        if (!_solutionContainer.TryGetSolution(element.Owner, element.Comp.Solution, out _, out var elementSolution))
             return;
 
         startSolution.MaxVolume += elementSolution.MaxVolume;
@@ -236,18 +238,15 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         }
     }
 
-    private void MergeTrash(EntityUid start, EntityUid element)
+    private void MergeTrash(Entity<EdibleComponent?> start, Entity<EdibleComponent?> element)
     {
-        if (!TryComp<FoodComponent>(start, out var startFood))
+        if (!Resolve(start, ref start.Comp, false))
             return;
 
-        if (!TryComp<FoodComponent>(element, out var elementFood))
+        if (!Resolve(element, ref element.Comp, false))
             return;
 
-        foreach (var trash in elementFood.Trash)
-        {
-            startFood.Trash.Add(trash);
-        }
+        _ingestion.AddTrash((start, start.Comp), element.Comp.Trash);
     }
 
     private void MergeTags(EntityUid start, EntityUid element)

@@ -53,6 +53,7 @@ flavor-base-terrible = terrible
 flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-trashy = trashy
+flavor-base-motivating = motivating
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -114,7 +115,7 @@ flavor-complex-tomato = like tomatoes
 flavor-complex-corn = like corn
 flavor-complex-banana = like bananas
 flavor-complex-apple = like apples
-flavor-complex-cotton = like cottons
+flavor-complex-cotton = like cotton
 flavor-complex-bungo = like tropical sweetness
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
@@ -182,6 +183,7 @@ flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
 flavor-complex-dog-food = like dog food
+flavor-complex-canned-tuna = like canned tuna
 
 # Drink-specific flavors.
 

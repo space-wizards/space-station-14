@@ -1,4 +1,5 @@
 using Content.Shared.FixedPoint;
+using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,13 @@ public sealed partial class StoreComponent : Component
     /// </summary>
     [DataField]
     public HashSet<ProtoId<CurrencyPrototype>> CurrencyWhitelist = new();
+
+    /// <summary>
+    /// The expected Faction to use this store. (Optional)
+    /// Used to increase the severity of the admin log upon purchase if the purchaser is not a member of one of the listed factions.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<NpcFactionPrototype>>? ExpectedFaction = new ();
 
     /// <summary>
     /// The person/mind who "owns" the store/account. Used if you want the listings to be fixed

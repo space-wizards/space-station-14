@@ -73,7 +73,7 @@ namespace Content.Shared.Popups
         /// <summary>
         ///    Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> for use with prediction. The local client will
         ///    the popup to the recipient, and the server will show it to every other player in PVS range. If recipient is null, the local
-        //     client will do nothing and the server will show the message to every player in PVS range.
+        ///    client will do nothing and the server will show the message to every player in PVS range.
         /// </summary>
         public abstract void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small);
 

@@ -1,0 +1,80 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseChangelingObjective
+  components:
+  - type: Objective
+    issuer: Changeling
+    difficulty: 1
+  - type: RoleRequirement
+    roles:
+    - ChangelingRole
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseSurviveObjective]
+  id: ChangelingSurviveObjective
+  name: Survive.
+  description: We must stay alive at all cost.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Species/Human/organs.rsi
+      state: heart-on
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingUniqueIdentityObjective
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: NumberObjective
+    min: 3
+    max: 4
+    title: objective-unique-identity-name
+    description: objective-unique-identity-description
+  - type: ChangelingUniqueIdentityCondition
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseLivingObjective]
+  id: ChangelingEscapeIdentityObjective
+  description: We must escape with the target person's identity and wear an ID card with their name on it.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    icon:
+      sprite: Objects/Fun/Plushies/human.rsi
+      state: icon
+  - type: TargetObjective
+    title: objective-escape-identity-title
+  - type: ChangelingEscapeIdentityCondition
+  - type: PickRandomPerson
+    filters:
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - ChangelingRole
+
+- type: entity
+  parent: [BaseChangelingObjective, BaseKillObjective]
+  id: ChangelingKillRandomPersonObjective
+  description: This person is our prey. We must ensure they stay dead on the station.
+  components:
+  - type: Objective
+    difficulty: 2.0
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-maroon-title
+  - type: PickRandomPerson
+    filters:
+    # Can't have multiple objectives to kill the same person.
+    - !type:TargetObjectiveMindFilter
+      blacklist:
+        components:
+        - KillPersonCondition
+  - type: KillPersonCondition
+    requireDead: true
+    requireMaroon: true

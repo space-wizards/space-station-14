@@ -8,17 +8,14 @@
     drawdepth: Effects
     noRot: true
     layers:
-      - shader: unshaded
-        map: ["enum.EffectLayers.Unshaded"]
-        sprite: Effects/emp.rsi
-        state: emp_pulse
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/emp.rsi
+      state: emp_pulse
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
-  - type: EmitSoundOnSpawn
-    sound: 
-      path: /Audio/Effects/Lightning/lightningbolt.ogg
+    - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
@@ -31,12 +28,12 @@
     drawdepth: Effects
     noRot: true
     layers:
-      - shader: unshaded
-        map: ["enum.EffectLayers.Unshaded"]
-        sprite: Effects/emp.rsi
-        state: emp_disable
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Effects/emp.rsi
+      state: emp_disable
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
