@@ -11,7 +11,7 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateExudeGases effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;
@@ -19,7 +19,7 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
         var gasses = entity.Comp.Seed.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
-        float amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
+        float amount = _random.NextFloat(effect.MinValue, effect.MaxValue);
         var gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
 
         if (!gasses.TryAdd(gas, amount))
@@ -33,7 +33,7 @@ public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEf
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateConsumeGases effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;
@@ -41,7 +41,7 @@ public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEf
         var gasses = entity.Comp.Seed.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
-        var amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
+        var amount = _random.NextFloat(effect.MinValue, effect.MaxValue);
         var gas = _random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
 
         if (!gasses.TryAdd(gas, amount))

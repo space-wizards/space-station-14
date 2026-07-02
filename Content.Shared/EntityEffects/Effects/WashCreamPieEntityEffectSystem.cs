@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 
@@ -13,14 +13,14 @@ public sealed partial class WashCreamPieEntityEffectSystem : EntityEffectSystem<
 {
     [Dependency] private SharedCreamPieSystem _creamPie = default!;
 
-    protected override void Effect(Entity<CreamPiedComponent> entity, ref EntityEffectEvent<WashCreamPie> args)
+    protected override void Effect(Entity<CreamPiedComponent> entity, WashCreamPie effect, EntityEffectData data)
     {
         _creamPie.SetCreamPied((entity, entity.Comp), false);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class WashCreamPie : EntityEffectBase<WashCreamPie>
+public sealed partial class WashCreamPie : EntityEffect
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("entity-effect-guidebook-wash-cream-pie-reaction", ("chance", Probability));

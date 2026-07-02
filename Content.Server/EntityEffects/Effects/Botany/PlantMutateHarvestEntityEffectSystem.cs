@@ -7,7 +7,7 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 
 public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateHarvest>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateHarvest> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateHarvest effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;

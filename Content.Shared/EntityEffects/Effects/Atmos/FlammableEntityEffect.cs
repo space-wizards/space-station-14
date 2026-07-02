@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Atmos;
@@ -7,7 +7,7 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 /// See serverside system.
 /// </summary>
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Flammable : EntityEffectBase<Flammable>
+public sealed partial class Flammable : EntityEffect
 {
     /// <summary>
     /// Fire stack multiplier applied on an entity,

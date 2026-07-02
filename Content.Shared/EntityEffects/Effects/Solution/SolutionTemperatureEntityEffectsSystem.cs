@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Prototypes;
 
@@ -13,14 +13,14 @@ public sealed partial class SetSolutionTemperatureEntityEffectSystem : EntityEff
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<SetSolutionTemperature> args)
+    protected override void Effect(Entity<SolutionComponent> entity, SetSolutionTemperature effect, EntityEffectData data)
     {
-        _solutionContainer.SetTemperature(entity, args.Effect.Temperature);
+        _solutionContainer.SetTemperature(entity, effect.Temperature);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class SetSolutionTemperature : EntityEffectBase<SetSolutionTemperature>
+public sealed partial class SetSolutionTemperature : EntityEffect
 {
     /// <summary>
     ///     The temperature to set the solution to.
@@ -43,17 +43,17 @@ public sealed partial class AdjustSolutionTemperatureEntityEffectSystem : Entity
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustSolutionTemperature> args)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionTemperature effect, EntityEffectData data)
     {
         var solution = entity.Comp.Solution;
-        var temperature = Math.Clamp(solution.Temperature + args.Scale * args.Effect.Delta, args.Effect.MinTemp, args.Effect.MaxTemp);
+        var temperature = Math.Clamp(solution.Temperature + data.Scale * effect.Delta, effect.MinTemp, effect.MaxTemp);
 
         _solutionContainer.SetTemperature(entity, temperature);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AdjustSolutionTemperature : EntityEffectBase<AdjustSolutionTemperature>
+public sealed partial class AdjustSolutionTemperature : EntityEffect
 {
     /// <summary>
     ///     The change in temperature.
@@ -90,33 +90,33 @@ public sealed partial class AdjustSolutionThermalEnergyEntityEffectSystem : Enti
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustSolutionThermalEnergy> args)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustSolutionThermalEnergy effect, EntityEffectData data)
     {
         var solution = entity.Comp.Solution;
 
-        var delta = args.Scale * args.Effect.Delta;
+        var delta = data.Scale * effect.Delta;
 
         // Don't adjust thermal energy if we're already at or above max temperature.
         switch (delta)
         {
             case > 0:
-                if (solution.Temperature >= args.Effect.MaxTemp)
+                if (solution.Temperature >= effect.MaxTemp)
                     return;
                 break;
             case < 0:
-                if (solution.Temperature <= args.Effect.MinTemp)
+                if (solution.Temperature <= effect.MinTemp)
                     return;
                 break;
             default:
                 return;
         }
 
-        _solutionContainer.AddThermalEnergyClamped(entity, delta, args.Effect.MinTemp, args.Effect.MaxTemp);
+        _solutionContainer.AddThermalEnergyClamped(entity, delta, effect.MinTemp, effect.MaxTemp);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AdjustSolutionThermalEnergy : EntityEffectBase<AdjustSolutionThermalEnergy>
+public sealed partial class AdjustSolutionThermalEnergy : EntityEffect
 {
     /// <summary>
     ///     The change in thermal energy.

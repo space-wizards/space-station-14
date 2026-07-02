@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
@@ -12,27 +12,27 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
 {
     [Dependency] private StatusEffectsSystem _status = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<ModifyStatusEffect> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, ModifyStatusEffect effect, EntityEffectData data)
     {
-        var time = args.Effect.Time * args.Scale;
-        var delay = args.Effect.Delay;
+        var time = effect.Time * data.Scale;
+        var delay = effect.Delay;
 
-        switch (args.Effect.Type)
+        switch (effect.Type)
         {
             case StatusEffectMetabolismType.Update:
-                _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                _status.TryUpdateStatusEffectDuration(entity, effect.EffectProto, time, delay);
                 break;
             case StatusEffectMetabolismType.Add:
                 if (time != null)
-                    _status.TryAddStatusEffectDuration(entity, args.Effect.EffectProto, time.Value, delay);
+                    _status.TryAddStatusEffectDuration(entity, effect.EffectProto, time.Value, delay);
                 else
-                    _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                    _status.TryUpdateStatusEffectDuration(entity, effect.EffectProto, time, delay);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.EffectProto, time);
+                _status.TryRemoveTime(entity, effect.EffectProto, time);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                _status.TrySetStatusEffectDuration(entity, effect.EffectProto, time, delay);
                 break;
         }
     }

@@ -9,7 +9,7 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantCryoxadone effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;

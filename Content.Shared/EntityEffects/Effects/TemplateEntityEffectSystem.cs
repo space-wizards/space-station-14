@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
 
@@ -8,14 +8,14 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
 public sealed partial class TemplateEntityEffectSystem : EntityEffectSystem<MetaDataComponent, Template>
 {
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Template> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, Template effect, EntityEffectData data)
     {
         // Effect goes here.
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Template : EntityEffectBase<Template>
+public sealed partial class Template : EntityEffect
 {
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 }

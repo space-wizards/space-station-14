@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Containers;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
@@ -13,13 +13,13 @@ public sealed partial class SpawnEntityInContainerEntityEffectSystem : EntityEff
 {
     [Dependency] private INetManager _net = default!;
 
-    protected override void Effect(Entity<ContainerManagerComponent> entity, ref EntityEffectEvent<SpawnEntityInContainer> args)
+    protected override void Effect(Entity<ContainerManagerComponent> entity, SpawnEntityInContainer effect, EntityEffectData data)
     {
-        var quantity = args.Effect.Number * (int)Math.Floor(args.Scale);
-        var proto = args.Effect.Entity;
-        var container = args.Effect.ContainerName;
+        var quantity = effect.Number * (int)Math.Floor(data.Scale);
+        var proto = effect.Entity;
+        var container = effect.ContainerName;
 
-        if (args.Effect.Predicted)
+        if (effect.Predicted)
         {
             for (var i = 0; i < quantity; i++)
             {

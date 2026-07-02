@@ -9,12 +9,12 @@ public sealed partial class DestructibleActEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private SharedDestructibleSystem _destructible = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<DestructibleAct> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, DestructibleAct effect, EntityEffectData data)
     {
-        if ((args.Effect.Acts & ThresholdActs.Breakage) != 0)
+        if ((effect.Acts & ThresholdActs.Breakage) != 0)
             _destructible.BreakEntity(entity);
 
-        if ((args.Effect.Acts & ThresholdActs.Destruction) != 0)
+        if ((effect.Acts & ThresholdActs.Destruction) != 0)
             _destructible.DestroyEntity(entity.AsNullable());
     }
 }
@@ -22,7 +22,7 @@ public sealed partial class DestructibleActEntityEffectSystem : EntityEffectSyst
 /// <summary>
 /// Destroys or breaks an entity.
 /// </summary>
-public sealed partial class DestructibleAct : EntityEffectBase<DestructibleAct>
+public sealed partial class DestructibleAct : EntityEffect
 {
     /// <summary>
     /// What acts should be triggered upon activation.

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -15,34 +15,34 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<PopupMessage> args)
+    protected override void Effect(Entity<TransformComponent> entity, PopupMessage effect, EntityEffectData data)
     {
         // TODO: When we get proper random prediction remove this check.
         if (_net.IsClient)
             return;
 
-        var msg = Loc.GetString(_random.Pick(args.Effect.Messages), ("entity", entity));
+        var msg = Loc.GetString(_random.Pick(effect.Messages), ("entity", entity));
 
-        switch ((args.Effect.Method, args.Effect.Type))
+        switch ((effect.Method, effect.Type))
         {
             case (PopupMethod.PopupEntity, PopupRecipients.Local):
-                _popup.PopupEntity(msg, entity, entity, args.Effect.VisualType);
+                _popup.PopupEntity(msg, entity, entity, effect.VisualType);
                 break;
             case (PopupMethod.PopupEntity, PopupRecipients.Pvs):
-                _popup.PopupEntity(msg, entity, args.Effect.VisualType);
+                _popup.PopupEntity(msg, entity, effect.VisualType);
                 break;
             case (PopupMethod.PopupCoordinates, PopupRecipients.Local):
-                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, entity, args.Effect.VisualType);
+                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, entity, effect.VisualType);
                 break;
             case (PopupMethod.PopupCoordinates, PopupRecipients.Pvs):
-                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, args.Effect.VisualType);
+                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, effect.VisualType);
                 break;
         }
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class PopupMessage : EntityEffectBase<PopupMessage>
+public sealed partial class PopupMessage : EntityEffect
 {
     /// <summary>
     /// Array of messages that can popup.

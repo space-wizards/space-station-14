@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
@@ -11,11 +11,11 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem<LungComponent, ModifyLungGas>
 {
     // TODO: This shouldn't be an entity effect, gasses should just metabolize and make a byproduct by default...
-    protected override void Effect(Entity<LungComponent> entity, ref EntityEffectEvent<ModifyLungGas> args)
+    protected override void Effect(Entity<LungComponent> entity, ModifyLungGas effect, EntityEffectData data)
     {
-        var amount = args.Scale;
+        var amount = data.Scale;
 
-        foreach (var (gas, ratio) in args.Effect.Ratios)
+        foreach (var (gas, ratio) in effect.Ratios)
         {
             var quantity = ratio * amount / Atmospherics.BreathMolesToReagentMultiplier;
             if (quantity < 0)
@@ -26,7 +26,7 @@ public sealed partial class ModifyLungGasEntityEffectSystem : EntityEffectSystem
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ModifyLungGas : EntityEffectBase<ModifyLungGas>
+public sealed partial class ModifyLungGas : EntityEffect
 {
     /// <summary>
     /// The new gas composition to set in the lung.

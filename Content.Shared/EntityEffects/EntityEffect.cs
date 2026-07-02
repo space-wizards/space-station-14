@@ -11,15 +11,6 @@ namespace Content.Shared.EntityEffects;
 public abstract partial class EntityEffect
 {
     /// <summary>
-    /// Applies this effect to a target.
-    /// </summary>
-    /// <param name="target">Target we're applying an effect to.</param>
-    /// <param name="raiser">The type of effect raising the event.</param>
-    /// <param name="scale">Optional scale multiplier for the effect.</param>
-    /// <param name="user">The entity causing the effect.</param>
-    public abstract void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale, EntityUid? user);
-
-    /// <summary>
     /// Conditions for this effect to happen.
     /// </summary>
     [DataField]
@@ -65,17 +56,4 @@ public abstract partial class EntityEffect
     public virtual LogType LogType => LogType.EntityEffect;
 }
 
-/// <summary>
-/// Used to store an <see cref="EntityEffect"/> so it can be raised without losing the type of the condition.
-/// </summary>
-/// <typeparam name="T">The Condition wer are raising.</typeparam>
-public abstract partial class EntityEffectBase<T> : EntityEffect where T : EntityEffectBase<T>
-{
-    public override void RaiseEvent(EntityUid target, IEntityEffectRaiser raiser, float scale, EntityUid? user)
-    {
-        if (this is not T type)
-            return;
 
-        raiser.RaiseEffectEvent(target, type, scale, user);
-    }
-}

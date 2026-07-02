@@ -6,7 +6,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <summary>
 /// Applies the effect of an <see cref="EntityEffectPrototype"/>.
 /// </summary>
-public sealed partial class NestedEffect : EntityEffectBase<NestedEffect>
+public sealed partial class NestedEffect : EntityEffect
 {
     /// <summary>
     /// The effect prototype to use.
@@ -58,8 +58,8 @@ public sealed partial class NestedEffectSystem : EntityEffectSystem<TransformCom
 {
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
-    protected override void Effect(Entity<TransformComponent> ent, ref EntityEffectEvent<NestedEffect> args)
+    protected override void Effect(Entity<TransformComponent> ent, NestedEffect effect, EntityEffectData data)
     {
-        _effects.TryApplyEffect(ent, args.Effect.Proto, args.Scale, args.User);
+        _effects.TryApplyEffect(ent, effect.Proto, data.Scale, data.User);
     }
 }

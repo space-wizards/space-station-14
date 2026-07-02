@@ -15,29 +15,29 @@ public sealed partial class FlashEntityEffectSystem : EntityEffectSystem<Transfo
     [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private SharedPointLightSystem _pointLight = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<Flash> args)
+    protected override void Effect(Entity<TransformComponent> entity, Flash effect, EntityEffectData data)
     {
-        var range = MathF.Min(args.Scale * args.Effect.RangePerUnit, args.Effect.MaxRange);
+        var range = MathF.Min(data.Scale * effect.RangePerUnit, effect.MaxRange);
 
         _flash.FlashArea(
             entity,
             null,
             range,
-            args.Effect.Duration,
-            slowTo: args.Effect.SlowTo,
-            sound: args.Effect.Sound);
+            effect.Duration,
+            slowTo: effect.SlowTo,
+            sound: effect.Sound);
 
-        if (args.Effect.FlashEffectPrototype == null)
+        if (effect.FlashEffectPrototype == null)
             return;
 
-        var uid = PredictedSpawnAtPosition(args.Effect.FlashEffectPrototype, _xform.GetMoverCoordinates(entity));
+        var uid = PredictedSpawnAtPosition(effect.FlashEffectPrototype, _xform.GetMoverCoordinates(entity));
 
         _pointLight.SetRadius(uid, MathF.Max(1.1f, range));
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Flash : EntityEffectBase<Flash>
+public sealed partial class Flash : EntityEffect
 {
     /// <summary>
     ///     Flash range per unit of reagent.

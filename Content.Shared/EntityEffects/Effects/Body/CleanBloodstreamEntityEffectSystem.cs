@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -15,16 +15,16 @@ public sealed partial class CleanBloodstreamEntityEffectSystem : EntityEffectSys
 {
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, ref EntityEffectEvent<CleanBloodstream> args)
+    protected override void Effect(Entity<BloodstreamComponent> entity, CleanBloodstream effect, EntityEffectData data)
     {
-        var scale = args.Scale * args.Effect.CleanseRate;
+        var cleanseScale = data.Scale * effect.CleanseRate;
 
-        _bloodstream.FlushChemicals((entity, entity), scale, args.Effect.Excluded);
+        _bloodstream.FlushChemicals((entity, entity), cleanseScale, effect.Excluded);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class CleanBloodstream : EntityEffectBase<CleanBloodstream>
+public sealed partial class CleanBloodstream : EntityEffect
 {
     /// <summary>
     ///     Amount of reagent we're cleaning out of our bloodstream.

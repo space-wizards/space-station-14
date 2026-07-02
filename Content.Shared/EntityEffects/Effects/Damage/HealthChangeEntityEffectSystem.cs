@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -17,22 +17,22 @@ public sealed partial class HealthChangeEntityEffectSystem : EntityEffectSystem<
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<HealthChange> args)
+    protected override void Effect(Entity<DamageableComponent> entity, HealthChange effect, EntityEffectData data)
     {
-        var damageSpec = new DamageSpecifier(args.Effect.Damage);
+        var damageSpec = new DamageSpecifier(effect.Damage);
 
-        damageSpec *= args.Scale;
+        damageSpec *= data.Scale;
 
         _damageable.TryChangeDamage(
                 entity.AsNullable(),
                 damageSpec,
-                args.Effect.IgnoreResistances,
+                effect.IgnoreResistances,
                 interruptsDoAfters: false);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class HealthChange : EntityEffectBase<HealthChange>
+public sealed partial class HealthChange : EntityEffect
 {
     /// <summary>
     /// Damage to apply every cycle. Damage Ignores resistances.

@@ -9,11 +9,11 @@ public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAffectGrowth effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        _plantHolder.AffectGrowth(entity, (int)args.Effect.Amount, entity);
+        _plantHolder.AffectGrowth(entity, (int)effect.Amount, entity);
     }
 }

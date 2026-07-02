@@ -1,4 +1,4 @@
-﻿using Content.Server.Fluids.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Coordinates.Helpers;
@@ -26,12 +26,11 @@ public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem
     [Dependency] private TurfSystem _turf = default!;
 
     // TODO: A sane way to make Smoke without a solution.
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AreaReactionEffect> args)
+    protected override void Effect(Entity<SolutionComponent> entity, AreaReactionEffect effect, EntityEffectData data)
     {
         var xform = Transform(entity);
         var mapCoords = _xform.GetMapCoordinates(entity);
-        var spreadAmount = (int) Math.Max(0, Math.Ceiling(args.Scale / args.Effect.OverflowThreshold));
-        var effect = args.Effect;
+        var spreadAmount = (int)Math.Max(0, Math.Ceiling(data.Scale / effect.OverflowThreshold));
 
         if (!_map.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
             !_map.TryGetTileRef(gridUid, grid, xform.Coordinates, out var tileRef))
@@ -41,10 +40,10 @@ public sealed partial class AreaReactionEntityEffectsSystem : EntityEffectSystem
             return;
 
         var coords = _map.MapToGrid(gridUid, mapCoords);
-        var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
+        var ent = Spawn(effect.PrototypeId, coords.SnapToGrid());
 
-        _smoke.StartSmoke(ent, entity.Comp.Solution, args.Effect.Duration, spreadAmount);
+        _smoke.StartSmoke(ent, entity.Comp.Solution, effect.Duration, spreadAmount);
 
-        _audio.PlayPvs(args.Effect.Sound, entity, AudioParams.Default.WithVariation(0.25f));
+        _audio.PlayPvs(effect.Sound, entity, AudioParams.Default.WithVariation(0.25f));
     }
 }

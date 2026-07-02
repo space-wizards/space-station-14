@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
@@ -13,32 +13,32 @@ public sealed partial class GenericStatusEffectEntityEffectSystem : EntityEffect
 {
     [Dependency] private StatusEffectsSystem _status = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<GenericStatusEffect> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, GenericStatusEffect effect, EntityEffectData data)
     {
-        var time = args.Effect.Time * args.Scale;
+        var time = effect.Time * data.Scale;
 
-        switch (args.Effect.Type)
+        switch (effect.Type)
         {
             case StatusEffectMetabolismType.Update:
-                if (args.Effect.Component != String.Empty)
-                    _status.TryAddStatusEffect(entity, args.Effect.Key, time, true, args.Effect.Component);
+                if (effect.Component != String.Empty)
+                    _status.TryAddStatusEffect(entity, effect.Key, time, true, effect.Component);
                 break;
             case StatusEffectMetabolismType.Add:
-                if (args.Effect.Component != String.Empty)
-                    _status.TryAddStatusEffect(entity, args.Effect.Key, time, false, args.Effect.Component);
+                if (effect.Component != String.Empty)
+                    _status.TryAddStatusEffect(entity, effect.Key, time, false, effect.Component);
                 break;
             case StatusEffectMetabolismType.Remove:
-                _status.TryRemoveTime(entity, args.Effect.Key, time);
+                _status.TryRemoveTime(entity, effect.Key, time);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetTime(entity, args.Effect.Key, time);
+                _status.TrySetTime(entity, effect.Key, time);
                 break;
         }
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class GenericStatusEffect : EntityEffectBase<GenericStatusEffect>
+public sealed partial class GenericStatusEffect : EntityEffect
 {
     /// <summary>
     /// Identifier key for the status effect.

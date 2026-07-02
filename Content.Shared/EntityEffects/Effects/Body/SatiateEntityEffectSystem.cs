@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 
@@ -13,9 +13,9 @@ namespace Content.Shared.EntityEffects.Effects.Body;
 public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSystem<ThirstComponent, SatiateThirst>
 {
     [Dependency] private ThirstSystem _thirst = default!;
-    protected override void Effect(Entity<ThirstComponent> entity, ref EntityEffectEvent<SatiateThirst> args)
+    protected override void Effect(Entity<ThirstComponent> entity, SatiateThirst effect, EntityEffectData data)
     {
-        _thirst.ModifyThirst(entity, entity.Comp, args.Effect.Factor * args.Scale);
+        _thirst.ModifyThirst(entity, entity.Comp, effect.Factor * data.Scale);
     }
 }
 
@@ -26,18 +26,18 @@ public sealed partial class SatiateThirstEntityEffectsSystem : EntityEffectSyste
 public sealed partial class SatiateHungerEntityEffectsSystem : EntityEffectSystem<HungerComponent, SatiateHunger>
 {
     [Dependency] private HungerSystem _hunger = default!;
-    protected override void Effect(Entity<HungerComponent> entity, ref EntityEffectEvent<SatiateHunger> args)
+    protected override void Effect(Entity<HungerComponent> entity, SatiateHunger effect, EntityEffectData data)
     {
-        _hunger.ModifyHunger(entity, args.Effect.Factor * args.Scale, entity.Comp);
+        _hunger.ModifyHunger(entity, effect.Factor * data.Scale, entity.Comp);
     }
 }
 
 /// <summary>
-/// A type of <see cref="EntityEffectBase{T}"/> made for satiation effects.
+/// A type of <see cref="EntityEffect"/> made for satiation effects.
 /// </summary>
 /// <typeparam name="T">The effect inheriting this BaseEffect</typeparam>
 /// <inheritdoc cref="EntityEffect"/>
-public abstract partial class Satiate<T> : EntityEffectBase<T> where T : EntityEffectBase<T>
+public abstract partial class Satiate<T> : EntityEffect where T : Satiate<T>
 {
     public const float AverageSatiation = 3f; // Magic number. Not sure how it was calculated since I didn't make it.
 

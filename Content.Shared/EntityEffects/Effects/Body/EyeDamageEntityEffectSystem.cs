@@ -1,4 +1,4 @@
-﻿using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Eye.Blinding.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
@@ -11,15 +11,15 @@ public sealed partial class EyeDamageEntityEffectSystem : EntityEffectSystem<Met
 {
     [Dependency] private BlindableSystem _blindable = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<EyeDamage> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, EyeDamage effect, EntityEffectData data)
     {
-        var amount = (int) Math.Floor(args.Effect.Amount * args.Scale);
+        var amount = (int) Math.Floor(effect.Amount * data.Scale);
         _blindable.AdjustEyeDamage(entity.Owner, amount);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class EyeDamage : EntityEffectBase<EyeDamage>
+public sealed partial class EyeDamage : EntityEffect
 {
     /// <summary>
     /// The amount of eye damage we're adding or removing

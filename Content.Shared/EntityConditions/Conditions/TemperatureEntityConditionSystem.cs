@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Prototypes;
 
@@ -10,10 +10,13 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TemperatureEntityConditionSystem : EntityConditionSystem<TemperatureComponent, TemperatureCondition>
 {
-    protected override void Condition(Entity<TemperatureComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
+    protected override void Condition(Entity<TemperatureComponent> entity,
+        TemperatureCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        if (entity.Comp.CurrentTemperature >= args.Condition.Min && entity.Comp.CurrentTemperature <= args.Condition.Max)
-            args.Result = true;
+        if (entity.Comp.CurrentTemperature >= condition.Min && entity.Comp.CurrentTemperature <= condition.Max)
+            result = true;
     }
 }
 
@@ -23,15 +26,18 @@ public sealed partial class TemperatureEntityConditionSystem : EntityConditionSy
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class SolutionTemperatureEntityConditionSystem : EntityConditionSystem<SolutionComponent, TemperatureCondition>
 {
-    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<TemperatureCondition> args)
+    protected override void Condition(Entity<SolutionComponent> entity,
+        TemperatureCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        if (entity.Comp.Solution.Temperature >= args.Condition.Min && entity.Comp.Solution.Temperature <= args.Condition.Max)
-            args.Result = true;
+        if (entity.Comp.Solution.Temperature >= condition.Min && entity.Comp.Solution.Temperature <= condition.Max)
+            result = true;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TemperatureCondition : EntityConditionBase<TemperatureCondition>
+public sealed partial class TemperatureCondition : EntityCondition
 {
     /// <summary>
     /// Minimum allowed temperature

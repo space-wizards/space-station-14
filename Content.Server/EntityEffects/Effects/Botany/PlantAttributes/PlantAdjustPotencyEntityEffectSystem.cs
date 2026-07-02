@@ -7,11 +7,11 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPotency>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustPotency effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        entity.Comp.Seed.Potency = Math.Max(entity.Comp.Seed.Potency + args.Effect.Amount, 1);
+        entity.Comp.Seed.Potency = Math.Max(entity.Comp.Seed.Potency + effect.Amount, 1);
     }
 }

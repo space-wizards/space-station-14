@@ -12,8 +12,8 @@ public sealed partial class PolymorphEntityEffectSystem : EntityEffectSystem<Pol
 {
     [Dependency] private PolymorphSystem _polymorph = default!;
 
-    protected override void Effect(Entity<PolymorphableComponent> entity, ref EntityEffectEvent<Shared.EntityEffects.Effects.Polymorph> args)
+     protected override void Effect(Entity<PolymorphableComponent> entity, Shared.EntityEffects.Effects.Polymorph effect, EntityEffectData data)
     {
-        _polymorph.PolymorphEntity(entity, args.Effect.Prototype);
+        _polymorph.PolymorphEntity(entity, effect.Prototype);
     }
 }

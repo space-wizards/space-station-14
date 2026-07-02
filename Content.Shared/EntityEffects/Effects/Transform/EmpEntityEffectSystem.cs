@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.Emp;
 using Robust.Shared.Prototypes;
 
@@ -14,16 +14,16 @@ public sealed partial class EmpEntityEffectSystem : EntityEffectSystem<Transform
     [Dependency] private SharedEmpSystem _emp = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<Emp> args)
+    protected override void Effect(Entity<TransformComponent> entity, Emp effect, EntityEffectData data)
     {
-        var range = MathF.Min(args.Effect.RangeModifier * args.Scale, args.Effect.MaxRange);
+        var range = MathF.Min(effect.RangeModifier * data.Scale, effect.MaxRange);
 
-        _emp.EmpPulse(_xform.GetMapCoordinates(entity, xform: entity.Comp), range, args.Effect.EnergyConsumption, args.Effect.Duration);
+        _emp.EmpPulse(_xform.GetMapCoordinates(entity, xform: entity.Comp), range, effect.EnergyConsumption, effect.Duration);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Emp : EntityEffectBase<Emp>
+public sealed partial class Emp : EntityEffect
 {
     /// <summary>
     ///     Impulse range per unit of quantity

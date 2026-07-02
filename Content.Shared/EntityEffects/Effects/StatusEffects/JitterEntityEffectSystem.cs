@@ -1,4 +1,4 @@
-﻿using Content.Shared.Jittering;
+using Content.Shared.Jittering;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 
@@ -14,16 +14,16 @@ public sealed partial class JitterEntityEffectSystem : EntityEffectSystem<Status
 {
     [Dependency] private SharedJitteringSystem _jittering = default!;
 
-    protected override void Effect(Entity<StatusEffectsComponent> entity, ref EntityEffectEvent<Jitter> args)
+    protected override void Effect(Entity<StatusEffectsComponent> entity, Jitter effect, EntityEffectData data)
     {
-        var time = args.Effect.Time * args.Scale;
+        var time = effect.Time * data.Scale;
 
-        _jittering.DoJitter(entity, TimeSpan.FromSeconds(time), args.Effect.Refresh, args.Effect.Amplitude, args.Effect.Frequency);
+        _jittering.DoJitter(entity, TimeSpan.FromSeconds(time), effect.Refresh, effect.Amplitude, effect.Frequency);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Jitter : EntityEffectBase<Jitter>
+public sealed partial class Jitter : EntityEffect
 {
     /// <summary>
     /// How intense the jitter is.

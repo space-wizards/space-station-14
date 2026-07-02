@@ -11,7 +11,7 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private PopupSystem _popup = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantDestroySeeds effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;

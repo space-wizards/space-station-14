@@ -1,4 +1,4 @@
-﻿using Content.Shared.Popups;
+using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Prototypes;
@@ -13,9 +13,9 @@ public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : Entit
 {
     [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
-    protected override void Effect(Entity<XenoArtifactComponent> entity, ref EntityEffectEvent<ArtifactDurabilityRestore> args)
+    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactDurabilityRestore effect, EntityEffectData data)
     {
-        var durability = args.Effect.RestoredDurability;
+        var durability = effect.RestoredDurability;
 
         foreach (var node in _xenoArtifact.GetActiveNodes(entity))
         {
@@ -33,7 +33,7 @@ public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSyste
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
-    protected override void Effect(Entity<XenoArtifactComponent> entity, ref EntityEffectEvent<ArtifactUnlock> args)
+    protected override void Effect(Entity<XenoArtifactComponent> entity, ArtifactUnlock effect, EntityEffectData data)
     {
         if (EnsureComp<XenoArtifactUnlockingComponent>(entity, out var unlocking))
         {
@@ -52,7 +52,7 @@ public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSyste
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<ArtifactDurabilityRestore>
+public sealed partial class ArtifactDurabilityRestore : EntityEffect
 {
     /// <summary>
     ///     Amount of durability that will be restored per effect interaction.
@@ -65,7 +65,7 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffectBase<Artifac
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ArtifactUnlock : EntityEffectBase<ArtifactUnlock>
+public sealed partial class ArtifactUnlock : EntityEffect
 {
     public override string EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Loc.GetString("entity-effect-guidebook-artifact-unlock", ("chance", Probability));

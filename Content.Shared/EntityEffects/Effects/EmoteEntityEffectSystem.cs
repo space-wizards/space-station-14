@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chat;
+using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 
@@ -12,17 +12,17 @@ public sealed partial class EmoteEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private SharedChatSystem _chat = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Emote> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, Emote effect, EntityEffectData data)
     {
-        if (args.Effect.ShowInChat)
-            _chat.TryEmoteWithChat(entity, args.Effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: args.Effect.Force);
+        if (effect.ShowInChat)
+            _chat.TryEmoteWithChat(entity, effect.EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: effect.Force);
         else
-            _chat.TryEmoteWithoutChat(entity, args.Effect.EmoteId);
+            _chat.TryEmoteWithoutChat(entity, effect.EmoteId);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Emote : EntityEffectBase<Emote>
+public sealed partial class Emote : EntityEffect
 {
     /// <summary>
     ///     The emote the entity will preform.

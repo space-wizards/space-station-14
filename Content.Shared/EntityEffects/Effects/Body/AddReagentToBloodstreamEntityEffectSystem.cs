@@ -17,10 +17,10 @@ public sealed partial class AddReagentToBloodstreamEntityEffectSystem : EntityEf
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private ReactiveSystem _reactive = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, ref EntityEffectEvent<AddReagentToBloodstream> args)
+    protected override void Effect(Entity<BloodstreamComponent> entity, AddReagentToBloodstream effect, EntityEffectData data)
     {
         var solution = new Content.Shared.Chemistry.Components.Solution();
-        solution.AddReagent(args.Effect.Reagent, args.Effect.Quantity * args.Scale);
+        solution.AddReagent(effect.Reagent, effect.Quantity * data.Scale);
 
         _bloodstream.TryAddToBloodstream(entity.AsNullable(), solution);
         _reactive.DoEntityReaction(entity, solution, ReactionMethod.Injection); // TODO: This should be part of TryAddToBloodstream
@@ -28,7 +28,7 @@ public sealed partial class AddReagentToBloodstreamEntityEffectSystem : EntityEf
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AddReagentToBloodstream : EntityEffectBase<AddReagentToBloodstream>
+public sealed partial class AddReagentToBloodstream : EntityEffect
 {
     /// <summary>
     /// Prototype of the reagent we're adding.

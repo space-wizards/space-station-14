@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -13,9 +13,9 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedPointLightSystem _lightSystem = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Glow> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, Glow effect, EntityEffectData data)
     {
-        var color = args.Effect.Color;
+        var color = effect.Color;
 
         if (color == Color.Black)
         {
@@ -27,7 +27,7 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
         }
 
         var light = _lightSystem.EnsureLight(entity);
-        _lightSystem.SetRadius(entity, args.Effect.Radius, light);
+        _lightSystem.SetRadius(entity, effect.Radius, light);
         _lightSystem.SetColor(entity, color, light);
         _lightSystem.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
     }
@@ -45,7 +45,7 @@ public sealed partial class GlowEntityEffectSystem : EntityEffectSystem<MetaData
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Glow : EntityEffectBase<Glow>
+public sealed partial class Glow : EntityEffect
 {
     /// <summary>
     /// Radius of the glow.

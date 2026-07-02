@@ -1,4 +1,4 @@
-﻿using Content.Server.Explosion.EntitySystems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.EntityEffects;
 using ExplosionEffect = Content.Shared.EntityEffects.Effects.Transform.Explosion;
 
@@ -13,16 +13,16 @@ public sealed partial class ExplosionEntityEffectSystem : EntityEffectSystem<Tra
 {
     [Dependency] private ExplosionSystem _explosion = default!;
 
-    protected override void Effect(Entity<TransformComponent> entity, ref EntityEffectEvent<ExplosionEffect> args)
+    protected override void Effect(Entity<TransformComponent> entity, ExplosionEffect effect, EntityEffectData data)
     {
-        var intensity = MathF.Min(args.Effect.IntensityPerUnit * args.Scale, args.Effect.MaxTotalIntensity);
+        var intensity = MathF.Min(effect.IntensityPerUnit * data.Scale, effect.MaxTotalIntensity);
 
         _explosion.QueueExplosion(
             entity,
-            args.Effect.ExplosionType,
+            effect.ExplosionType,
             intensity,
-            args.Effect.IntensitySlope,
-            args.Effect.MaxIntensity,
-            args.Effect.TileBreakScale);
+            effect.IntensitySlope,
+            effect.MaxIntensity,
+            effect.TileBreakScale);
     }
 }

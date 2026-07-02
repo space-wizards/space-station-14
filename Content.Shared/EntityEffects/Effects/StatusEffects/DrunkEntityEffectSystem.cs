@@ -1,4 +1,4 @@
-﻿using Content.Shared.Drunk;
+using Content.Shared.Drunk;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
@@ -12,16 +12,16 @@ public sealed partial class DrunkEntityEffectSystem : EntityEffectSystem<MetaDat
 {
     [Dependency] private SharedDrunkSystem _drunk = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<Drunk> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, Drunk effect, EntityEffectData data)
     {
-        var boozePower = args.Effect.BoozePower * args.Scale;
+        var boozePower = effect.BoozePower * data.Scale;
 
         _drunk.TryApplyDrunkenness(entity, boozePower);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Drunk : EntityEffectBase<Drunk>
+public sealed partial class Drunk : EntityEffect
 {
     /// <summary>
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.

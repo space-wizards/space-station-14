@@ -6,11 +6,11 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantAdjustWeedsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustWeeds>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustWeeds> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustWeeds effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        entity.Comp.WeedLevel += args.Effect.Amount;
+        entity.Comp.WeedLevel += effect.Amount;
     }
 }

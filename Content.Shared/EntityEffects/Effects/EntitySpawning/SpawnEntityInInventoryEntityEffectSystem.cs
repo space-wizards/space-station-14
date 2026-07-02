@@ -1,4 +1,4 @@
-﻿using Content.Shared.Inventory;
+using Content.Shared.Inventory;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
@@ -12,14 +12,14 @@ public sealed partial class SpawnEntityInInventoryEntityEffectSystem : EntityEff
 {
     [Dependency] private InventorySystem _inventory = default!;
 
-    protected override void Effect(Entity<InventoryComponent> entity, ref EntityEffectEvent<SpawnEntityInInventory> args)
+    protected override void Effect(Entity<InventoryComponent> entity, SpawnEntityInInventory effect, EntityEffectData data)
     {
-        _inventory.SpawnItemInSlot(entity, args.Effect.Slot, args.Effect.Entity);
+        _inventory.SpawnItemInSlot(entity, effect.Slot, effect.Entity);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class SpawnEntityInInventory : EntityEffectBase<SpawnEntityInInventory>
+public sealed partial class SpawnEntityInInventory : EntityEffect
 {
     /// <summary>
     /// Name of the slot we're spawning the item into.

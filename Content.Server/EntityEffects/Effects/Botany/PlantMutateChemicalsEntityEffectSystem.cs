@@ -12,13 +12,13 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantMutateChemicals effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null)
             return;
 
         var chemicals = entity.Comp.Seed.Chemicals;
-        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
+        var randomChems = ProtoMan.Index(effect.RandomPickBotanyReagent);
 
         // Add a random amount of a random chemical to this set of chemicals
         var (chemicalId, quantity) = randomChems.Pick(_random);

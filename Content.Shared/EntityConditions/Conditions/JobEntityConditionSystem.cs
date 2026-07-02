@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Localizations;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -14,7 +14,10 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<MindContainerComponent, JobCondition>
 {
-    protected override void Condition(Entity<MindContainerComponent> entity, ref EntityConditionEvent<JobCondition> args)
+    protected override void Condition(Entity<MindContainerComponent> entity,
+        JobCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         // We need a mind in our mind container...
         if (!TryComp<MindComponent>(entity.Comp.Mind, out var mind))
@@ -37,17 +40,17 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
                 continue;
             }
 
-            if (!args.Condition.Jobs.Contains(mindRole.JobPrototype.Value))
+            if (!condition.Jobs.Contains(mindRole.JobPrototype.Value))
                 continue;
 
-            args.Result = true;
+            result = true;
             return;
         }
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class JobCondition : EntityConditionBase<JobCondition>
+public sealed partial class JobCondition : EntityCondition
 {
     /// <summary>
     /// Jobs required to fulfill this condition (only needs single match).

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 
@@ -12,15 +12,18 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
 {
     [Dependency] private HungerSystem _hunger = default!;
 
-    protected override void Condition(Entity<HungerComponent> entity, ref EntityConditionEvent<HungerCondition> args)
+    protected override void Condition(Entity<HungerComponent> entity,
+        HungerCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         var total = _hunger.GetHunger(entity.Comp);
-        args.Result = total >= args.Condition.Min && total <= args.Condition.Max;
+        result = total >= condition.Min && total <= condition.Max;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class HungerCondition : EntityConditionBase<HungerCondition>
+public sealed partial class HungerCondition : EntityCondition
 {
     /// <summary>
     /// Minimum hunger required to fulfill this condition.

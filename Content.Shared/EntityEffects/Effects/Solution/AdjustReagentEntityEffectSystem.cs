@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -15,10 +15,10 @@ public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem
 {
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AdjustReagent> args)
+    protected override void Effect(Entity<SolutionComponent> entity, AdjustReagent effect, EntityEffectData data)
     {
-        var quantity = args.Effect.Amount * args.Scale;
-        var reagent = args.Effect.Reagent;
+        var quantity = effect.Amount * data.Scale;
+        var reagent = effect.Reagent;
 
         if (quantity > 0)
             _solutionContainer.TryAddReagent(entity, reagent, quantity);
@@ -28,7 +28,7 @@ public sealed partial class AdjustReagentEntityEffectSystem : EntityEffectSystem
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AdjustReagent : EntityEffectBase<AdjustReagent>
+public sealed partial class AdjustReagent : EntityEffect
 {
     /// <summary>
     ///     The reagent ID to add or remove.

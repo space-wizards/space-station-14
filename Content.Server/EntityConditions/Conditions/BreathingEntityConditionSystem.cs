@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Components;
+using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Body;
@@ -12,8 +12,11 @@ namespace Content.Server.EntityConditions.Conditions;
 public sealed partial class IsBreathingEntityConditionSystem : EntityConditionSystem<RespiratorComponent, BreathingCondition>
 {
     [Dependency] private RespiratorSystem _respirator = default!;
-    protected override void Condition(Entity<RespiratorComponent> entity, ref EntityConditionEvent<BreathingCondition> args)
+    protected override void Condition(Entity<RespiratorComponent> entity,
+        BreathingCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        args.Result = _respirator.IsBreathing(entity.AsNullable());
+        result = _respirator.IsBreathing(entity.AsNullable());
     }
 }

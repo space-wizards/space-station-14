@@ -3,7 +3,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <summary>
 /// See serverside system.
 /// </summary>
-public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMutateConsumeGases>
+public sealed partial class PlantMutateConsumeGases : EntityEffect
 {
     /// <summary>
     /// When actualizing this mutation, this value is the minimum volume of gas, the plant could consume.
@@ -18,7 +18,7 @@ public sealed partial class PlantMutateConsumeGases : EntityEffectBase<PlantMuta
     public float MaxValue = 0.5f;
 }
 
-public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutateExudeGases>
+public sealed partial class PlantMutateExudeGases : EntityEffect
 {
     /// <summary>
     /// When actualizing this mutation, this value is the minimum volume of gas, the plant could produce.

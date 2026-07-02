@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Atmos;
@@ -13,7 +13,7 @@ public sealed partial class IngiteEntityEffectSystem : EntityEffectSystem<Flamma
 {
     [Dependency] private FlammableSystem _flammable = default!;
 
-    protected override void Effect(Entity<FlammableComponent> entity, ref EntityEffectEvent<Ignite> args)
+    protected override void Effect(Entity<FlammableComponent> entity, Ignite effect, EntityEffectData data)
     {
         // TODO: Proper BodySystem Metabolism Effect relay...
         // TODO: If this fucks over downstream shitmed, I give you full approval to use whatever shitcode method you need to fix it. Metabolism is awful.

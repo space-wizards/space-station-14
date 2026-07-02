@@ -9,8 +9,8 @@ public sealed partial class PlantAdjustNutritionEntityEffectSystem : EntityEffec
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustNutrition> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustNutrition effect, EntityEffectData data)
     {
-        _plantHolder.AdjustNutrient(entity, args.Effect.Amount, entity);
+        _plantHolder.AdjustNutrient(entity, effect.Amount, entity);
     }
 }

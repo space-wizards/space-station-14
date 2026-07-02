@@ -1,4 +1,4 @@
-﻿using Content.Shared.Standing;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 
@@ -13,32 +13,32 @@ public sealed partial class ModifyKnockdownEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private SharedStunSystem _stun = default!;
 
-    protected override void Effect(Entity<StandingStateComponent> entity, ref EntityEffectEvent<ModifyKnockdown> args)
+    protected override void Effect(Entity<StandingStateComponent> entity, ModifyKnockdown effect, EntityEffectData data)
     {
-        var time = args.Effect.Time * args.Scale;
+        var time = effect.Time * data.Scale;
 
-        switch (args.Effect.Type)
+        switch (effect.Type)
         {
             case StatusEffectMetabolismType.Update:
-                if (args.Effect.Crawling)
-                    _stun.TryCrawling(entity.Owner, time, drop: args.Effect.Drop);
+                if (effect.Crawling)
+                    _stun.TryCrawling(entity.Owner, time, drop: effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, time, drop: args.Effect.Drop);
+                    _stun.TryKnockdown(entity.Owner, time, drop: effect.Drop);
                 break;
             case StatusEffectMetabolismType.Add:
-                if (args.Effect.Crawling)
-                    _stun.TryCrawling(entity.Owner, time, false, drop: args.Effect.Drop);
+                if (effect.Crawling)
+                    _stun.TryCrawling(entity.Owner, time, false, drop: effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, time, false, drop: args.Effect.Drop);
+                    _stun.TryKnockdown(entity.Owner, time, false, drop: effect.Drop);
                 break;
             case StatusEffectMetabolismType.Remove:
                 _stun.AddKnockdownTime(entity.Owner, - time ?? TimeSpan.Zero);
                 break;
             case StatusEffectMetabolismType.Set:
-                if (args.Effect.Crawling)
-                    _stun.TryCrawling(entity.Owner, drop: args.Effect.Drop);
+                if (effect.Crawling)
+                    _stun.TryCrawling(entity.Owner, drop: effect.Drop);
                 else
-                    _stun.TryKnockdown(entity.Owner, time, drop: args.Effect.Drop);
+                    _stun.TryKnockdown(entity.Owner, time, drop: effect.Drop);
                 _stun.SetKnockdownTime(entity.Owner, time ?? TimeSpan.Zero);
                 break;
         }

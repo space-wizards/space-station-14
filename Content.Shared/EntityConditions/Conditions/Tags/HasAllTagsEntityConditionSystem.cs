@@ -1,4 +1,4 @@
-﻿using Content.Shared.Localizations;
+using Content.Shared.Localizations;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 
@@ -12,14 +12,17 @@ public sealed partial class HasAllTagsEntityConditionSystem : EntityConditionSys
 {
     [Dependency] private TagSystem _tag = default!;
 
-    protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<AllTagsCondition> args)
+    protected override void Condition(Entity<TagComponent> entity,
+        AllTagsCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        args.Result = _tag.HasAllTags(entity.Comp, args.Condition.Tags);
+        result = _tag.HasAllTags(entity.Comp, condition.Tags);
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class AllTagsCondition : EntityConditionBase<AllTagsCondition>
+public sealed partial class AllTagsCondition : EntityCondition
 {
     /// <summary>
     /// Tags which all need to be possessed to fulfill the condition.

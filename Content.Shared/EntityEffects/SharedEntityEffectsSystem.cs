@@ -8,16 +8,31 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects;
 
+public readonly record struct EntityEffectData(EntityEffect Effect, float Scale, EntityUid? User)
+{
+    public static implicit operator EntityEffectData((EntityEffect effect, float scale, EntityUid? user) tuple)
+    {
+        return new EntityEffectData(tuple.effect, tuple.scale, tuple.user);
+    }
+}
+
 /// <summary>
 /// This handles entity effects.
 /// Specifically it handles the receiving of events for causing entity effects, and provides
 /// public API for other systems to take advantage of entity effects.
 /// </summary>
-public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEffectRaiser
+public sealed partial class SharedEntityEffectsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
     [Dependency] private SharedEntityConditionsSystem _condition = default!;
+
+    private Dictionary<Type, EntityEffectHandler> _handlers = new();
+
+    public void RegisterHandler(EntityEffectHandler handler)
+    {
+        _handlers[handler.EffectType] = handler;
+    }
 
     public override void Initialize()
     {
@@ -58,8 +73,8 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
         }
     }
 
-    /// <inheritdoc cref="ApplyEffects(EntityUid,EntityEffect[],float,EntityUid?)"/>
-    public void ApplyEffects(EntityUid target, EntityEffect[] effects, FixedPoint2 scale, EntityUid? user = null)
+    /// <inheritdoc cref="ApplyEffects{T}(EntityUid,T[],float,EntityUid?)"/>
+    public void ApplyEffects<T>(EntityUid target, T[] effects, FixedPoint2 scale, EntityUid? user = null) where T : EntityEffect
     {
         ApplyEffects(target, effects, scale.Float());
     }
@@ -71,7 +86,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     /// <param name="effects">Effects we're applying to the entity</param>
     /// <param name="scale">Optional scale multiplier for the effects</param>
     /// <param name="user">The entity causing the effect.</param>
-    public void ApplyEffects(EntityUid target, EntityEffect[] effects, float scale = 1f, EntityUid? user = null)
+    public void ApplyEffects<T>(EntityUid target, T[] effects, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         // do all effects, if conditions apply
         foreach (var effect in effects)
@@ -88,14 +103,14 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     /// <param name="scale">Optional scale multiplier for the effect.</param>
     /// <param name="user">The entity causing the effect.</param>
     /// <returns>True if all conditions pass!</returns>
-    public bool TryApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f, EntityUid? user = null)
+    public bool TryApplyEffect<T>(EntityUid target, T effect, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         if (scale < effect.MinScale)
             return false;
 
         // TODO: Replace with proper random prediciton when it exists.
         if (effect.Probability <= 1f && !SharedRandomExtensions.PredictedProb(_timing, effect.Probability, GetNetEntity(target), GetNetEntity(user)))
-                return false;
+            return false;
 
         // See if conditions apply
         if (!_condition.TryConditions(target, effect.Conditions))
@@ -113,7 +128,7 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
     /// <param name="effect">Effect we're applying</param>
     /// <param name="scale">Optional scale multiplier for the effect.</param>
     /// <param name="user">The entity causing the effect.</param>
-    public void ApplyEffect(EntityUid target, EntityEffect effect, float scale = 1f, EntityUid? user = null)
+    public void ApplyEffect<T>(EntityUid target, T effect, float scale = 1f, EntityUid? user = null) where T : EntityEffect
     {
         // Clamp the scale if the effect doesn't allow scaling.
         if (!effect.Scaling)
@@ -131,16 +146,26 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
             );
         }
 
-        effect.RaiseEvent(target, this, scale, user);
+        if (_handlers.TryGetValue(effect.GetType(), out var handler))
+            handler.ApplyEffect(target,(effect, scale, user));
     }
+}
 
-    /// <summary>
-    /// Raises an effect to an entity. You should not be calling this unless you know what you're doing.
-    /// </summary>
-    public void RaiseEffectEvent<T>(EntityUid target, T effect, float scale, EntityUid? user) where T : EntityEffectBase<T>
+/// <summary>
+/// Abstract base class for entity effect handlers.
+/// Extends EntitySystem so concrete handlers are proper engine systems.
+/// </summary>
+public abstract partial class EntityEffectHandler : EntitySystem
+{
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+
+    public abstract Type EffectType { get; }
+    public abstract void ApplyEffect(EntityUid target, EntityEffectData args);
+
+    /// <inheritdoc/>
+    public override void Initialize()
     {
-        var effectEv = new EntityEffectEvent<T>(effect, scale, user);
-        RaiseLocalEvent(target, ref effectEv);
+        _effects.RegisterHandler(this);
     }
 }
 
@@ -149,21 +174,21 @@ public sealed partial class SharedEntityEffectsSystem : EntitySystem, IEntityEff
 /// </summary>
 /// <typeparam name="T">The Component that is required for the effect</typeparam>
 /// <typeparam name="TEffect">The Entity Effect itself</typeparam>
-public abstract partial class EntityEffectSystem<T, TEffect> : EntitySystem where T : Component where TEffect : EntityEffectBase<TEffect>
+public abstract partial class EntityEffectSystem<T, TEffect> : EntityEffectHandler
+    where T : Component where TEffect : EntityEffect
 {
-    /// <inheritdoc/>
-    public override void Initialize()
+    [Dependency] private EntityQuery<T> _query = default!;
+
+    public override Type EffectType => typeof(TEffect);
+
+    protected abstract void Effect(Entity<T> entity, TEffect effect, EntityEffectData data);
+
+    public override void ApplyEffect(EntityUid target, EntityEffectData args)
     {
-        SubscribeLocalEvent<T, EntityEffectEvent<TEffect>>(Effect);
+        if (args.Effect is not TEffect typed)
+            return;
+        if (!_query.TryGetComponent(target, out var comp))
+            return;
+        Effect((target, comp), typed, args);
     }
-
-    protected abstract void Effect(Entity<T> entity, ref EntityEffectEvent<TEffect> args);
-}
-
-/// <summary>
-/// Used to raise an EntityEffect without losing the type of effect.
-/// </summary>
-public interface IEntityEffectRaiser
-{
-    void RaiseEffectEvent<T>(EntityUid target, T effect, float scale, EntityUid? user) where T : EntityEffectBase<T>;
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Rotting;
+using Content.Shared.Atmos.Rotting;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Body;
@@ -12,16 +12,16 @@ public sealed partial class ReduceRottingEntityEffectSystem : EntityEffectSystem
 {
     [Dependency] private SharedRottingSystem _rotting = default!;
 
-    protected override void Effect(Entity<PerishableComponent> entity, ref EntityEffectEvent<ReduceRotting> args)
+    protected override void Effect(Entity<PerishableComponent> entity, ReduceRotting effect, EntityEffectData data)
     {
-        var amount = args.Effect.Seconds * args.Scale;
+        var amount = effect.Seconds * data.Scale;
 
         _rotting.ReduceAccumulator(entity, amount);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ReduceRotting : EntityEffectBase<ReduceRotting>
+public sealed partial class ReduceRotting : EntityEffect
 {
     /// <summary>
     /// Number of seconds removed from the rotting timer.

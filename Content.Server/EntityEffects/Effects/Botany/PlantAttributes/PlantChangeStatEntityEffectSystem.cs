@@ -14,17 +14,16 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantChangeStat effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        var effect = args.Effect;
-        var member = entity.Comp.Seed.GetType().GetField(args.Effect.TargetValue);
+        var member = entity.Comp.Seed.GetType().GetField(effect.TargetValue);
 
         if (member == null)
         {
-            Log.Error($"{ effect.GetType().Name } Error: Member { args.Effect.TargetValue} not found on { entity.Comp.Seed.GetType().Name }. Did you misspell it?");
+            Log.Error($"{ effect.GetType().Name } Error: Member { effect.TargetValue} not found on { entity.Comp.Seed.GetType().Name }. Did you misspell it?");
             return;
         }
 
@@ -35,13 +34,13 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         if (member.FieldType == typeof(float))
         {
             var floatVal = (float)currentValObj;
-            MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
+            MutateFloat(ref floatVal, effect.MinValue, effect.MaxValue, effect.Steps);
             member.SetValue(entity.Comp.Seed, floatVal);
         }
         else if (member.FieldType == typeof(int))
         {
             var intVal = (int)currentValObj;
-            MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
+            MutateInt(ref intVal, (int)effect.MinValue, (int)effect.MaxValue, effect.Steps);
             member.SetValue(entity.Comp.Seed, intVal);
         }
         else if (member.FieldType == typeof(bool))

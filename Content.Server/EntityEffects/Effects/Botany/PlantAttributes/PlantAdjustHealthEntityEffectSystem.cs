@@ -9,12 +9,12 @@ public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustHealth effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        entity.Comp.Health += args.Effect.Amount;
+        entity.Comp.Health += effect.Amount;
         _plantHolder.CheckHealth(entity, entity.Comp);
     }
 }

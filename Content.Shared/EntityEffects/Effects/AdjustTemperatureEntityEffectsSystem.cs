@@ -1,4 +1,4 @@
-﻿using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Prototypes;
 
@@ -12,16 +12,16 @@ namespace Content.Shared.EntityEffects.Effects;
 public sealed partial class AdjustTemperatureEntityEffectSystem : EntityEffectSystem<TemperatureComponent, AdjustTemperature>
 {
     [Dependency] private SharedTemperatureSystem _temperature = default!;
-    protected override void Effect(Entity<TemperatureComponent> entity, ref EntityEffectEvent<AdjustTemperature> args)
+    protected override void Effect(Entity<TemperatureComponent> entity, AdjustTemperature effect, EntityEffectData data)
     {
-        var amount = args.Effect.Amount * args.Scale;
+        var amount = effect.Amount * data.Scale;
 
         _temperature.ChangeHeat(entity, amount, true, entity.Comp);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AdjustTemperature : EntityEffectBase<AdjustTemperature>
+public sealed partial class AdjustTemperature : EntityEffect
 {
     /// <summary>
     ///     Amount we're adjusting temperature by.

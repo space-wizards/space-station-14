@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -14,36 +14,39 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionManagerComponent, AddReagentToSolution>
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<SolutionComponent, EntityEffectEvent<AddReagentToSolution>>(Effect);
-    }
-
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
 
-    protected override void Effect(Entity<SolutionManagerComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
+    public override void ApplyEffect(EntityUid target, EntityEffectData args)
     {
-        var solution = args.Effect.Solution;
-        var reagent = args.Effect.Reagent;
-
-        if (!_solutionContainer.TryGetSolution((entity, entity), solution, out var solutionContainer))
+        if (args.Effect is not AddReagentToSolution typed)
             return;
 
-        _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale * args.Effect.StrengthModifier);
+        if (TryComp(target, out SolutionManagerComponent? mgr))
+            Effect((target, mgr), typed, args);
+
+        if (TryComp(target, out SolutionComponent? sol))
+            Effect((target, sol), typed, args.Scale, args.User);
     }
 
-    private void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
+    protected override void Effect(Entity<SolutionManagerComponent> entity, AddReagentToSolution effect, EntityEffectData data)
     {
-        if (entity.Comp.Id != args.Effect.Solution)
+        if (!_solutionContainer.TryGetSolution((entity, entity), effect.Solution, out var solutionContainer))
             return;
 
-        _solutionContainer.TryAddReagent(entity, args.Effect.Reagent, args.Scale * args.Effect.StrengthModifier);
+        _solutionContainer.TryAddReagent(solutionContainer.Value, effect.Reagent, data.Scale * effect.StrengthModifier);
+    }
+
+    private void Effect(Entity<SolutionComponent> entity, AddReagentToSolution effect, float scale, EntityUid? user)
+    {
+        if (entity.Comp.Id != effect.Solution)
+            return;
+
+        _solutionContainer.TryAddReagent(entity, effect.Reagent, scale * effect.StrengthModifier);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AddReagentToSolution : EntityEffectBase<AddReagentToSolution>
+public sealed partial class AddReagentToSolution : EntityEffect
 {
     /// <summary>
     ///     Prototype of the reagent we're adding.

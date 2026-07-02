@@ -2,7 +2,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class RobustHarvest : EntityEffectBase<RobustHarvest>
+public sealed partial class RobustHarvest : EntityEffect
 {
     /// <summary>
     /// How high potency can go.

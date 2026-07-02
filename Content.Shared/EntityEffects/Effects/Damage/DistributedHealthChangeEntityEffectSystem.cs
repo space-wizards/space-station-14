@@ -1,4 +1,4 @@
-﻿using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -17,17 +17,17 @@ public sealed partial class DistributedHealthChangeEntityEffectSystem : EntityEf
 {
     [Dependency] private DamageableSystem _damageable = default!;
 
-    protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<DistributedHealthChange> args)
+    protected override void Effect(Entity<DamageableComponent> entity, DistributedHealthChange effect, EntityEffectData data)
     {
-        foreach (var (group, amount) in args.Effect.Damage)
+        foreach (var (group, amount) in effect.Damage)
         {
-            _damageable.HealDistributed(entity.AsNullable(), amount * args.Scale, group);
+            _damageable.HealDistributed(entity.AsNullable(), amount * data.Scale, group);
         }
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class DistributedHealthChange : EntityEffectBase<DistributedHealthChange>
+public sealed partial class DistributedHealthChange : EntityEffect
 {
     /// <summary>
     /// Damage to heal, collected into entire damage groups.

@@ -1,5 +1,6 @@
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
-public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
+
+public sealed partial class PlantChangeStat : EntityEffect
 {
     /// <summary>
     /// The property of the plant we target (by reflecting on its type)

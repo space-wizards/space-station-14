@@ -1,4 +1,4 @@
-﻿using Content.Shared.Database;
+using Content.Shared.Database;
 using Content.Shared.EntityEffects.Effects.Transform;
 using Robust.Shared.Prototypes;
 
@@ -6,7 +6,7 @@ namespace Content.Shared.EntityEffects.Effects;
 
 /// <inheritdoc cref="EntityEffect"/>
 /// <seealso cref="Explosion"/>
-public sealed partial class Explode : EntityEffectBase<Explode>
+public sealed partial class Explode : EntityEffect
 {
     /// <summary>
     /// Optional override for the explosion intensity.

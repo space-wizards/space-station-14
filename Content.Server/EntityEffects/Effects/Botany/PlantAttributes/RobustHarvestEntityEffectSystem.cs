@@ -15,16 +15,16 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, RobustHarvest effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        if (entity.Comp.Seed.Potency < args.Effect.PotencyLimit)
+        if (entity.Comp.Seed.Potency < effect.PotencyLimit)
         {
-            entity.Comp.Seed.Potency = Math.Min(entity.Comp.Seed.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
+            entity.Comp.Seed.Potency = Math.Min(entity.Comp.Seed.Potency + effect.PotencyIncrease, effect.PotencyLimit);
 
-            if (entity.Comp.Seed.Potency > args.Effect.PotencySeedlessThreshold)
+            if (entity.Comp.Seed.Potency > effect.PotencySeedlessThreshold)
             {
                 entity.Comp.Seed.Seedless = true;
             }

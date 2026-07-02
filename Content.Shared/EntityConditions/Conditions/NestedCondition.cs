@@ -5,7 +5,7 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <summary>
 /// Uses the conditions of an <see cref="EntityConditionPrototype"/>.
 /// </summary>
-public sealed partial class NestedCondition : EntityConditionBase<NestedCondition>
+public sealed partial class NestedCondition : EntityCondition
 {
     /// <summary>
     /// The condition prototype to use.
@@ -24,8 +24,11 @@ public sealed partial class NestedConditionSystem : EntityConditionSystem<Transf
 {
     [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
-    protected override void Condition(Entity<TransformComponent> ent, ref EntityConditionEvent<NestedCondition> args)
+    protected override void Condition(Entity<TransformComponent> ent,
+        NestedCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        args.Result = _conditions.TryCondition(ent, args.Condition.Proto);
+        result = _conditions.TryCondition(ent, condition.Proto);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 
@@ -14,11 +14,11 @@ public sealed partial class ModifyParalysisEntityEffectSystem : EntityEffectSyst
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private SharedStunSystem _stun = default!;
 
-    protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<ModifyParalysis> args)
+    protected override void Effect(Entity<MetaDataComponent> entity, ModifyParalysis effect, EntityEffectData data)
     {
-        var time = args.Effect.Time * args.Scale;
+        var time = effect.Time * data.Scale;
 
-        switch (args.Effect.Type)
+        switch (effect.Type)
         {
             case StatusEffectMetabolismType.Update:
                 _stun.TryUpdateParalyzeDuration(entity, time);

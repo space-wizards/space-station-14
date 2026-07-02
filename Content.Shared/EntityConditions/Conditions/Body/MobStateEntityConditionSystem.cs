@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mobs;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Prototypes;
 
@@ -10,15 +10,18 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class MobStateEntityConditionSystem : EntityConditionSystem<MobStateComponent, MobStateCondition>
 {
-    protected override void Condition(Entity<MobStateComponent> entity, ref EntityConditionEvent<MobStateCondition> args)
+    protected override void Condition(Entity<MobStateComponent> entity,
+        MobStateCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
-        if (entity.Comp.CurrentState == args.Condition.Mobstate)
-            args.Result = true;
+        if (entity.Comp.CurrentState == condition.Mobstate)
+            result = true;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class MobStateCondition : EntityConditionBase<MobStateCondition>
+public sealed partial class MobStateCondition : EntityCondition
 {
     /// <summary>
     /// The mobstate necessary to fulfill this condition.

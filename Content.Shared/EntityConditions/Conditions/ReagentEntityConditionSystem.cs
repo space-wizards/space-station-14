@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -11,17 +11,20 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class ReagentEntityConditionSystem : EntityConditionSystem<SolutionComponent, ReagentCondition>
 {
-    protected override void Condition(Entity<SolutionComponent> entity, ref EntityConditionEvent<ReagentCondition> args)
+    protected override void Condition(Entity<SolutionComponent> entity,
+        ReagentCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         var soln = entity.Comp.Solution;
-        var quant = soln.GetTotalPrototypeQuantity(args.Condition.Reagent);
+        var quant = soln.GetTotalPrototypeQuantity(condition.Reagent);
 
-        args.Result = quant >= args.Condition.Min && quant <= args.Condition.Max;
+        result = quant >= condition.Min && quant <= condition.Max;
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class ReagentCondition : EntityConditionBase<ReagentCondition>
+public sealed partial class ReagentCondition : EntityCondition
 {
     [DataField]
     public FixedPoint2 Min = FixedPoint2.Zero;

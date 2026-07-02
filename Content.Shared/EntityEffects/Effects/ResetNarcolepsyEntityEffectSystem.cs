@@ -1,4 +1,4 @@
-﻿using Content.Shared.Traits.Assorted;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects;
@@ -12,16 +12,16 @@ public sealed partial class ResetNarcolepsyEntityEffectSystem : EntityEffectSyst
 {
     [Dependency] private NarcolepsySystem _narcolepsy = default!;
 
-    protected override void Effect(Entity<NarcolepsyComponent> entity, ref EntityEffectEvent<ResetNarcolepsy> args)
+    protected override void Effect(Entity<NarcolepsyComponent> entity, ResetNarcolepsy effect, EntityEffectData data)
     {
-        var timer = args.Effect.TimerReset * args.Scale;
+        var timer = effect.TimerReset * data.Scale;
 
         _narcolepsy.AdjustNarcolepsyTimer(entity.AsNullable(), timer);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ResetNarcolepsy : EntityEffectBase<ResetNarcolepsy>
+public sealed partial class ResetNarcolepsy : EntityEffect
 {
     /// <summary>
     /// The time we set our narcolepsy timer to.

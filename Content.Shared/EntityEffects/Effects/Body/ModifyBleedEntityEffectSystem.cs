@@ -1,4 +1,4 @@
-﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Robust.Shared.Prototypes;
 
@@ -12,14 +12,14 @@ public sealed partial class ModifyBleedEntityEffectSystem : EntityEffectSystem<B
 {
     [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
-    protected override void Effect(Entity<BloodstreamComponent> entity, ref EntityEffectEvent<ModifyBleed> args)
+    protected override void Effect(Entity<BloodstreamComponent> entity, ModifyBleed effect, EntityEffectData data)
     {
-        _bloodstream.TryModifyBleedAmount(entity.AsNullable(), args.Effect.Amount * args.Scale);
+        _bloodstream.TryModifyBleedAmount(entity.AsNullable(), effect.Amount * data.Scale);
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class ModifyBleed : EntityEffectBase<ModifyBleed>
+public sealed partial class ModifyBleed : EntityEffect
 {
     /// <summary>
     /// Amount of bleed we're applying or removing if negative.

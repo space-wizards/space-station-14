@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions.Conditions;
 ///<summary>
@@ -7,14 +7,17 @@ namespace Content.Shared.EntityConditions.Conditions;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TemplateEntityConditionSystem : EntityConditionSystem<MetaDataComponent, TemplateCondition>
 {
-    protected override void Condition(Entity<MetaDataComponent> entity, ref EntityConditionEvent<TemplateCondition> args)
+    protected override void Condition(Entity<MetaDataComponent> entity,
+        TemplateCondition condition,
+        EntityUid? sourceEnt,
+        ref bool result)
     {
         // Condition goes here.
     }
 }
 
 /// <inheritdoc cref="EntityCondition"/>
-public sealed partial class TemplateCondition : EntityConditionBase<TemplateCondition>
+public sealed partial class TemplateCondition : EntityCondition
 {
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) => String.Empty;
 }

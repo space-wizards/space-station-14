@@ -6,11 +6,11 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustMutationMod>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantAdjustMutationMod effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        entity.Comp.MutationMod += args.Effect.Amount;
+        entity.Comp.MutationMod += effect.Amount;
     }
 }

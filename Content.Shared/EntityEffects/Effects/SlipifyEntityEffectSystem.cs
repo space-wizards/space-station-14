@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
@@ -16,10 +16,10 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
     [Dependency] private CollisionWakeSystem _collisionWake = default!;
     [Dependency] private FixtureSystem _fixture = default!;
 
-    protected override void Effect(Entity<FixturesComponent> entity, ref EntityEffectEvent<Slipify> args)
+    protected override void Effect(Entity<FixturesComponent> entity, Slipify effect, EntityEffectData data)
     {
         EnsureComp<SlipperyComponent>(entity, out var slippery);
-        slippery.SlipData = args.Effect.Slippery;
+        slippery.SlipData = effect.Slippery;
 
         Dirty(entity, slippery);
 
@@ -37,7 +37,7 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class Slipify : EntityEffectBase<Slipify>
+public sealed partial class Slipify : EntityEffect
 {
     /// <summary>
     /// The slippery properties to apply upon the target.

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.Prototypes;
 
@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects.Atmos;
 /// See serverside system.
 /// </summary>
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class CreateGas : EntityEffectBase<CreateGas>
+public sealed partial class CreateGas : EntityEffect
 {
     /// <summary>
     ///     The gas we're creating

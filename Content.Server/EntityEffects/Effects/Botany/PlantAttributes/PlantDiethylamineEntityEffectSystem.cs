@@ -10,7 +10,7 @@ public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
+    protected override void Effect(Entity<PlantHolderComponent> entity, PlantDiethylamine effect, EntityEffectData data)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;

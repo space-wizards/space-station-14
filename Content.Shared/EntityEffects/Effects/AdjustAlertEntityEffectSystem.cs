@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -13,11 +13,11 @@ public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<A
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AlertsSystem _alerts = default!;
 
-    protected override void Effect(Entity<AlertsComponent> entity, ref EntityEffectEvent<AdjustAlert> args)
+    protected override void Effect(Entity<AlertsComponent> entity, AdjustAlert effect, EntityEffectData data)
     {
-        var time = args.Effect.Time;
-        var clear = args.Effect.Clear;
-        var type = args.Effect.AlertType;
+        var time = effect.Time;
+        var clear = effect.Clear;
+        var type = effect.AlertType;
 
         if (clear && time <= TimeSpan.Zero)
         {
@@ -27,17 +27,17 @@ public sealed partial class AdjustAlertEntityEffectSysten : EntityEffectSystem<A
         {
             (TimeSpan, TimeSpan)? cooldown = null;
 
-            if ((args.Effect.ShowCooldown || clear) && args.Effect.Time >= TimeSpan.Zero)
+            if ((effect.ShowCooldown || clear) && effect.Time >= TimeSpan.Zero)
                 cooldown = (_timing.CurTime, _timing.CurTime + time);
 
-            _alerts.ShowAlert(entity.AsNullable(), type, cooldown: cooldown, autoRemove: clear, showCooldown: args.Effect.ShowCooldown);
+            _alerts.ShowAlert(entity.AsNullable(), type, cooldown: cooldown, autoRemove: clear, showCooldown: effect.ShowCooldown);
         }
 
     }
 }
 
 /// <inheritdoc cref="EntityEffect"/>
-public sealed partial class AdjustAlert : EntityEffectBase<AdjustAlert>
+public sealed partial class AdjustAlert : EntityEffect
 {
     /// <summary>
     /// The specific Alert that will be adjusted
