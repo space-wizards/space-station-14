@@ -17,17 +17,13 @@ public sealed partial class IonLawSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStationSystem _stationSystem = default!;
     [Dependency] private StationRecordsSystem _stationRecordsSystem = default!;
-    [Dependency] private ILogManager _logManager = default!;
 
-    private ISawmill _sawmill = default!;
     private readonly Dictionary<string, List<IonLawSelector>> _selectors = new();
     private IonLawPrototype? _ionLaw;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _sawmill = _logManager.GetSawmill("ion-law");
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         BuildSelectors();
@@ -136,7 +132,7 @@ public sealed partial class IonLawSystem : EntitySystem
         var laws = ProtoMan.EnumeratePrototypes<IonLawPrototype>().ToList();
         if (laws.Count == 0)
         {
-            _sawmill.Error("No Ion Laws found");
+            Log.Error("No Ion Laws found");
             return Loc.GetString("ion-law-error-no-protos");
         }
 
@@ -168,7 +164,7 @@ public sealed partial class IonLawSystem : EntitySystem
 
         if (_ionLaw == null)
         {
-            _sawmill.Error("Ion Law was null");
+            Log.Error("Ion Law was null");
             return Loc.GetString("ion-law-error-was-null");
         }
 
@@ -185,7 +181,7 @@ public sealed partial class IonLawSystem : EntitySystem
     {
         if (!_selectors.TryGetValue(selectorName, out var selectors))
         {
-            _sawmill.Error("No selectors for Ion Laws found");
+            Log.Error("No selectors for Ion Laws found");
             return Loc.GetString("ion-law-error-no-selectors");
         }
 
@@ -206,7 +202,7 @@ public sealed partial class IonLawSystem : EntitySystem
             return newValue;
         }
 
-        _sawmill.Error("No available selectors found for the Ion Law found - this should never happen, selector was: " + selectorName);
+        Log.Error("No available selectors found for the Ion Law found - this should never happen, selector was: " + selectorName);
         return Loc.GetString("ion-law-error-no-available-selectors");
     }
 
@@ -258,7 +254,7 @@ public sealed partial class IonLawSystem : EntitySystem
                 {
                     return _random.Pick(dataset.Values);
                 }
-                _sawmill.Error("Selected DataSet (" + selector + ") was empty or not found" );
+                Log.Error("Selected DataSet (" + selector + ") was empty or not found" );
                 return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
             case RandomManifestFill randomManifestFill:
                 var stations = _stationSystem.GetStations();
@@ -278,16 +274,16 @@ public sealed partial class IonLawSystem : EntitySystem
                 {
                     return _random.Pick(fallbackDataset.Values);
                 }
-                _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found" );
+                Log.Error("Fallback DataSet (" + selector + ") was empty or not found" );
                 return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
             case ConstantFill constantFill:
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
-                _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill );
+                Log.Error("The selected Constant Fill did not have a value: " + constantFill );
                 return Loc.GetString("ion-law-error-no-bool-value");
             default:
             {
-                _sawmill.Error("Selected DataSet (" + selector + ") was not selected" );
+                Log.Error("Selected DataSet (" + selector + ") was not selected" );
                 return Loc.GetString("ion-law-error-no-selector-selected");
             }
         }
