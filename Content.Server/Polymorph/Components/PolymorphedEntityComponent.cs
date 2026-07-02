@@ -21,6 +21,12 @@ public sealed partial class PolymorphedEntityComponent : Component
     public EntityUid? Parent;
 
     /// <summary>
+    /// Whether this polymorph has been reverted.
+    /// </summary>
+    [DataField]
+    public bool Reverted;
+
+    /// <summary>
     /// The amount of time that has passed since the entity was created
     /// used for tracking the duration
     /// </summary>

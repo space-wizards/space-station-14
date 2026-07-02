@@ -1,32 +1,33 @@
-using Content.Server.Access.Components;
-using Content.Server.Popups;
-using Content.Shared.UserInterface;
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
-using Content.Shared.Interaction;
-using Content.Shared.StatusIcon;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
-using Content.Shared.Roles;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Access.Components;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
+using Content.Server.Popups;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.PDA;
+using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
+using Content.Shared.UserInterface;
+using Content.Shared.VoiceMask;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Access.Systems
 {
-    public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
+    public sealed partial class AgentIDCardSystem : SharedAgentIdCardSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IdCardSystem _cardSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ChameleonClothingSystem _chameleon = default!;
-        [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
-        [Dependency] private readonly LockSystem _lock = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private IdCardSystem _cardSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private ChameleonClothingSystem _chameleon = default!;
+        [Dependency] private ChameleonControllerSystem _chamController = default!;
+        [Dependency] private LockSystem _lock = default!;
+        [Dependency] private SharedJobStatusSystem _jobStatus = default!;
 
         public override void Initialize()
         {
@@ -38,6 +39,7 @@ namespace Content.Server.Access.Systems
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
             SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
             SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(OnChameleonControllerOutfitChangedItem);
+            SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<VoiceMaskNameUpdatedEvent>>(OnVoiceMaskNameChanged);
         }
 
         private void OnChameleonControllerOutfitChangedItem(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
@@ -45,13 +47,13 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCardComp))
                 return;
 
-            _prototypeManager.TryIndex(args.Args.ChameleonOutfit.Job, out var jobProto);
+            ProtoMan.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
             var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
 
             if (jobIcon != null)
-                _cardSystem.TryChangeJobIcon(ent, _prototypeManager.Index(jobIcon.Value), idCardComp);
+                _cardSystem.TryChangeJobIcon(ent, ProtoMan.Index(jobIcon.Value), idCardComp);
 
             if (jobName != "")
                 _cardSystem.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
@@ -72,11 +74,23 @@ namespace Content.Server.Access.Systems
             if (idSlotGear == null)
                 return;
 
-            var proto = _prototypeManager.Index(idSlotGear);
-            if (!proto.TryGetComponent<PdaComponent>(out var comp, EntityManager.ComponentFactory))
+            var proto = ProtoMan.Index(idSlotGear);
+            if (!proto.TryComp<PdaComponent>(out var comp, EntityManager.ComponentFactory))
                 return;
 
-            _chameleon.SetSelectedPrototype(ent, comp.IdCard);
+            if (TryComp<ChameleonClothingComponent>(ent, out var chameleonComp) && chameleonComp.CanBeSetByController)
+                _chameleon.SetSelectedPrototype(ent, comp.IdCard, component: chameleonComp);
+        }
+
+        private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
+        {
+            if (!TryComp<IdCardComponent>(ent, out var idCard))
+                return;
+
+            if (!args.Args.VoiceMask.Comp.ChangeIDName)
+                return;
+
+            _cardSystem.TryChangeFullName(ent, args.Args.NewName, idCard);
         }
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
@@ -130,18 +144,20 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            if (!_prototypeManager.TryIndex(args.JobIconId, out var jobIcon))
+            if (!ProtoMan.Resolve(args.JobIconId, out var jobIcon))
                 return;
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
 
             if (TryFindJobProtoFromIcon(jobIcon, out var job))
                 _cardSystem.TryChangeJobDepartment(uid, job, idCard);
+
+            _jobStatus.UpdateStatus(Transform(uid).ParentUid);
         }
 
         private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
         {
-            foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            foreach (var jobPrototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
             {
                 if (jobPrototype.Icon == jobIcon.ID)
                 {

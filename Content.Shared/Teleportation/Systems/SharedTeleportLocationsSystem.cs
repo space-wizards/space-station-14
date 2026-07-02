@@ -10,10 +10,10 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
-    [Dependency] protected readonly UseDelaySystem Delay = default!;
+    [Dependency] protected UseDelaySystem Delay = default!;
 
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     protected const string TeleportDelay = "TeleportDelay";
 

@@ -12,3 +12,12 @@
   interval: 5.0
   chance: 0.5
   withChat: false
+# Kudzu
+- type: autoEmote
+  id: MeatGasp
+  emote: Gasp
+  interval: 4.0 # Same interval as a full breathing cycle
+  chance: 0.01 # Make it very rare
+  ignoreActionBlocker: true
+  force: true
+  hiddenFromChatWindow: true

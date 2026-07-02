@@ -237,3 +237,18 @@
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_8
+
+- type: entity
+  id: LockerWallSyndicate
+  parent: BaseWallLocker
+  name: blood-red wall locker
+  description: It's a wall storage unit with a blood-red design.
+  suffix: "Locked"
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: syndicate_open
+    stateDoorClosed: syndicate_closed
+  - type: AccessReader
+    access: [["SyndicateAgent"]]

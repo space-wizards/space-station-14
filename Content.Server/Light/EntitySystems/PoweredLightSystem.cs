@@ -1,4 +1,3 @@
-using Content.Server.Emp;
 using Content.Server.Ghost;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
@@ -16,30 +15,23 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
 
         SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-
-        SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
     {
-        if (light.IgnoreGhostsBoo)
-            return;
+        if (light.IgnoreGhostsBoo || HasComp<BlinkingPoweredLightComponent>(uid))
+            return; // The light is immune or already blinking.
 
         // check cooldown first to prevent abuse
-        var time = GameTiming.CurTime;
-        if (light.LastGhostBlink != null)
-        {
-            if (time <= light.LastGhostBlink + light.GhostBlinkingCooldown)
-                return;
-        }
+        var curTime = GameTiming.CurTime;
+        if (light.LastGhostBlink != null && curTime <= light.LastGhostBlink + light.GhostBlinkingCooldown)
+            return;
 
-        light.LastGhostBlink = time;
+        light.LastGhostBlink = curTime;
 
-        ToggleBlinkingLight(uid, light, true);
-        uid.SpawnTimer(light.GhostBlinkingTime, () =>
-        {
-            ToggleBlinkingLight(uid, light, false);
-        });
+        var blinkingComp = EnsureComp<BlinkingPoweredLightComponent>(uid);
+        blinkingComp.StopBlinkingTime = curTime + light.GhostBlinkingTime;
+        Dirty(uid, blinkingComp);
 
         args.Handled = true;
     }
@@ -49,16 +41,10 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         // TODO: Use ContainerFill dog
         if (light.HasLampOnSpawn != null)
         {
-            var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+            var entity = Spawn(light.HasLampOnSpawn, Comp<TransformComponent>(uid).Coordinates);
             ContainerSystem.Insert(entity, light.LightBulbContainer);
         }
         // need this to update visualizers
         UpdateLight(uid, light);
-    }
-
-    private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
-    {
-        if (TryDestroyBulb(uid, component))
-            args.Affected = true;
     }
 }

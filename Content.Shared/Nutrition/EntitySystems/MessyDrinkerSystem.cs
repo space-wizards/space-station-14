@@ -2,17 +2,19 @@ using Content.Shared.Fluids;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Tag;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
-public sealed class MessyDrinkerSystem : EntitySystem
+public sealed partial class MessyDrinkerSystem : EntitySystem
 {
-    [Dependency] private readonly IngestionSystem _ingestion = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -23,7 +25,11 @@ public sealed class MessyDrinkerSystem : EntitySystem
 
     private void OnIngested(Entity<MessyDrinkerComponent> ent, ref IngestingEvent ev)
     {
-        if (ev.Split.Volume <= ent.Comp.SpillAmount)
+        if (ent.Comp.SpillImmuneTag != null && _tag.HasTag(ev.Food, ent.Comp.SpillImmuneTag.Value))
+            return;
+
+        // Cannot spill if you're being forced to drink.
+        if (ev.ForceFed)
             return;
 
         var proto = _ingestion.GetEdibleType(ev.Food);
@@ -31,14 +37,7 @@ public sealed class MessyDrinkerSystem : EntitySystem
         if (proto == null || !ent.Comp.SpillableTypes.Contains(proto.Value))
             return;
 
-        // Cannot spill if you're being forced to drink.
-        if (ev.ForceFed)
-            return;
-
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(ent).Id });
-        var rand = new System.Random(seed);
-        if (!rand.Prob(ent.Comp.SpillChance))
+        if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.SpillChance, GetNetEntity(ent)))
             return;
 
         if (ent.Comp.SpillMessagePopup != null)

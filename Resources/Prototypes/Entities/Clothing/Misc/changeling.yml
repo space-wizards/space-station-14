@@ -1,0 +1,269 @@
+# this file contains chameleon clothing for the changelings transformation ability
+# one for each slot
+
+- type: entity
+  abstract: true
+  parent: Clothing
+  id : ChangelingFleshClothingBase
+  suffix: Changeling
+  components:
+  - type: Clothing
+    quickEquip: false
+  - type: FleetingClothing
+    removedSound:
+      path: /Audio/Voice/Slime/slime_squish.ogg # TODO: replace placeholder
+    playSoundOnSelfUnequip: false # silent if you remove it yourself
+    selfUnquipPopupWearer: null
+    selfUnquipPopupOthers: null
+    removedPopup: changeling-flesh-clothing-removed-popop
+    examineWearer: changeling-flesh-clothing-examine-wearer
+    examineOthers: null # stealthy unless stripped
+  - type: ChangelingFleshClothing
+  - type: ChameleonClothing # has the component, but not the BUI, so that it cannot be set manually
+    affectedByEmp: false
+    canBeSetByController: false
+    showVerb: false
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingBack
+  name: changeling flesh backpack
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  - type: Item
+    size: Huge
+  - type: Clothing
+    slots:
+    - back
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingBack
+    slot:
+    - back
+  # does not have storage, it's just a visual replacement for stealth purposes
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingBelt
+  name: changeling flesh belt
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/utility.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Clothing
+    slots:
+    - belt
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingBelt
+    slot:
+    - belt
+  - type: StaticPrice # same as ClothingBeltBase
+    price: 20
+  # does not have storage, it's just a visual replacement for stealth purposes
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingEars
+  name: changeling flesh headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/base.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots:
+    - ears
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingEars
+    slot:
+    - ears
+  # not functional, it's just a visual replacement for stealth purposes
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingEyes
+  name: changeling flesh glasses
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/glasses.rsi
+    state: icon
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - eyes
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingEyes
+    slot:
+    - eyes
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingGloves
+  name: changeling flesh gloves
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    layers:
+    - state: icon
+      color: "#999999"
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - gloves
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingGloves
+    slot:
+    - gloves
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingHead
+  name: changeling flesh hat
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/greysoft.rsi
+    state: icon
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - head
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingHead
+    slot:
+    - head
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingMask
+  name: changeling flesh mask
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots:
+    - mask
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingMask
+    slot:
+    - mask
+  - type: StaticPrice # same as ClothingMaskBase
+    price: 25
+  # identity blockers are dynamically added by ChameleonClothingSystem
+  # TODO: check if we need to do the same for HideLayerClothingComponent
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingNeck
+  name: changeling flesh tie
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/redtie.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Clothing
+    slots:
+    - neck
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingNeck
+    slot:
+    - neck
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingInner
+  name: changeling flesh jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/color.rsi
+    layers:
+    - state: icon
+      color: "#b3b3b3"
+    - state: trinkets-icon
+  - type: Item
+    size: Normal
+  - type: Clothing
+    slots:
+    - innerclothing
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingInner
+    slot:
+    - innerclothing
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingOuter
+  name: changeling flesh vest
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/vest.rsi
+    state: icon
+  - type: Item
+    size: Huge
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingOuter
+    slot:
+    - outerClothing
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingFeet
+  name: changeling flesh shoes
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/color.rsi
+    layers:
+    - state: icon
+      color: "#EAE8E8" #Deliberately NOT pure white
+  - type: Item
+    size: Normal
+  - type: Clothing
+    slots:
+    - feet
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingFeet
+    slot:
+    - feet
+  # not functional, it's just a visual replacement for stealth purposes
+
+- type: entity
+  parent: ChangelingFleshClothingBase
+  id: ChangelingFleshClothingSuitStorage
+  name: changeling flesh gas tank
+  components:
+  - type: Sprite
+    sprite: Objects/Tanks/generic.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Tanks/generic.rsi
+    slots:
+    - suitStorage
+  - type: ChameleonClothing
+    default: ChangelingFleshClothingSuitStorage
+    slot:
+    - suitStorage
+  # not functional, it's just a visual replacement for stealth purposes

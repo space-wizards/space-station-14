@@ -5,6 +5,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Revolutionary.Components;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -12,10 +13,10 @@ namespace Content.Server.Objectives.Systems;
 /// Handles assinging a target to an objective entity with <see cref="TargetObjectiveComponent"/> using different components.
 /// These can be combined with condition components for objective completions in order to create a variety of objectives.
 /// </summary>
-public sealed class PickObjectiveTargetSystem : EntitySystem
+public sealed partial class PickObjectiveTargetSystem : EntitySystem
 {
-    [Dependency] private readonly TargetObjectiveSystem _target = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private TargetObjectiveSystem _objective = default!;
+    [Dependency] private TargetSystem _target = default!;
 
     public override void Initialize()
     {
@@ -51,7 +52,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             return;
         }
 
-        _target.SetTarget(ent.Owner, targetComp.Target.Value);
+        _objective.SetTarget(ent.Owner, targetComp.Target.Value);
     }
 
     private void OnRandomPersonAssigned(Entity<PickRandomPersonComponent> ent, ref ObjectiveAssignedEvent args)
@@ -68,12 +69,12 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             return;
 
         // couldn't find a target :(
-        if (_mind.PickFromPool(ent.Comp.Pool, ent.Comp.Filters, args.MindId) is not {} picked)
+        if (_target.PickFromPool(ent.Comp.Pool, ent.Comp.Filters, args.MindId) is not {} picked)
         {
             args.Cancelled = true;
             return;
         }
 
-        _target.SetTarget(ent, picked, target);
+        _objective.SetTarget(ent, picked, target);
     }
 }

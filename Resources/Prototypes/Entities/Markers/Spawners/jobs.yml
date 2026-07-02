@@ -36,6 +36,17 @@
   - type: SpawnPoint
     spawn_type: LateJoin
 
+- type: entity
+  name: any job spawn point
+  id: SpawnPointAnyJob # used for integration tests so we don't need to map every single job spawner on the test map
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    spawn_type: Job
+    job_id: null # any job can spawn here
+
 # Cargo
 
 - type: entity
@@ -268,18 +279,6 @@
     layers:
       - state: green
       - state: musician
-
-- type: entity
-  id: SpawnPointBoxer
-  parent: SpawnPointJobBase
-  name: boxer
-  components:
-  - type: SpawnPoint
-    job_id: Boxer
-  - type: Sprite
-    layers:
-      - state: green
-      - state: boxer
 
 - type: entity
   id: SpawnPointBorg
@@ -595,15 +594,3 @@
     layers:
       - state: green
       - state: psychologist
-
-- type: entity
-  id: SpawnPointZookeeper
-  parent: SpawnPointJobBase
-  name: zookeeper
-  components:
-  - type: SpawnPoint
-    job_id: Zookeeper
-  - type: Sprite
-    layers:
-      - state: green
-      - state: zookeeper

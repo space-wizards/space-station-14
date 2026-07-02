@@ -3,31 +3,31 @@
 namespace Content.Shared.Changeling.Systems;
 
 /// <summary>
-/// Send when a player selects an intentity to transform into in the radial menu.
+/// Send when a player selects an identity to transform into in the radial menu.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
 {
     /// <summary>
-    /// The uid of the cloned identity.
+    /// The uid of the stored identity.
     /// </summary>
     public readonly NetEntity TargetIdentity = targetIdentity;
 }
 
-// TODO: Replace with component states.
-// We are already networking the ChangelingIdentityComponent, which contains all this information,
-// so we can just read it from them from the component and update the UI in an AfterAuotHandleState subscription.
+/// <summary>
+/// Send when a player selects an identity to drop from their storage.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class ChangelingTransformBoundUserInterfaceState(List<NetEntity> identities) : BoundUserInterfaceState
+public sealed class ChangelingTransformIdentityDropMessage(NetEntity targetIdentity) : BoundUserInterfaceMessage
 {
     /// <summary>
-    /// The uids of the cloned identities.
+    /// The uid of the stored identity.
     /// </summary>
-    public readonly List<NetEntity> Identites = identities;
+    public readonly NetEntity TargetIdentity = targetIdentity;
 }
 
 [Serializable, NetSerializable]
-public enum TransformUI : byte
+public enum ChangelingTransformUiKey : byte
 {
     Key,
 }

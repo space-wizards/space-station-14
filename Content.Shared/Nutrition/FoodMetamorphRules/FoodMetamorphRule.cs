@@ -53,7 +53,7 @@ public sealed partial class LastElementHasTags : FoodMetamorphRule
     {
         var lastIngredient = ingredients[ingredients.Count - 1];
 
-        if (!protoMan.TryIndex(lastIngredient.Proto, out var protoIndexed))
+        if (!protoMan.Resolve(lastIngredient.Proto, out var protoIndexed))
             return false;
 
         foreach (var tag in Tags)
@@ -96,7 +96,7 @@ public sealed partial class ElementHasTags : FoodMetamorphRule
         if (ingredients.Count < ElementNumber + 1)
             return false;
 
-        if (!protoMan.TryIndex(ingredients[ElementNumber].Proto, out var protoIndexed))
+        if (!protoMan.Resolve(ingredients[ElementNumber].Proto, out var protoIndexed))
             return false;
 
         foreach (var tag in Tags)
@@ -136,9 +136,6 @@ public sealed partial class FoodHasReagent : FoodMetamorphRule
 
     public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
-        if (!entMan.TryGetComponent<SolutionContainerManagerComponent>(food, out var solMan))
-            return false;
-
         var solutionMan = entMan.System<SharedSolutionContainerSystem>();
 
         if (!solutionMan.TryGetSolution(food, Solution, out var foodSoln, out var foodSolution))
@@ -180,7 +177,7 @@ public sealed partial class IngredientsWithTags : FoodMetamorphRule
         var count = 0;
         foreach (var ingredient in ingredients)
         {
-            if (!protoMan.TryIndex(ingredient.Proto, out var protoIndexed))
+            if (!protoMan.Resolve(ingredient.Proto, out var protoIndexed))
                 continue;
 
             var allowed = false;

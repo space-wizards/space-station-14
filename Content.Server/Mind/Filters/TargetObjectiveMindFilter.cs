@@ -20,7 +20,7 @@ public sealed partial class TargetObjectiveMindFilter : MindFilter
     [DataField]
     public EntityWhitelist? Blacklist;
 
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? excluded, IEntityManager entMan, SharedMindSystem mindSys)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? excluded, IEntityManager entMan)
     {
         // ignore this filter if there is no user to check
         if (!entMan.TryGetComponent<MindComponent>(excluded, out var excludedMind))
@@ -33,7 +33,7 @@ public sealed partial class TargetObjectiveMindFilter : MindFilter
             if (entMan.TryGetComponent<TargetObjectiveComponent>(objective, out var kill) && kill.Target == mind.Owner)
             {
                 // remove the mind if this objective is blacklisted
-                if (whitelistSys.IsBlacklistPassOrNull(Blacklist, objective))
+                if (whitelistSys.IsWhitelistPassOrNull(Blacklist, objective))
                     return true;
             }
         }
