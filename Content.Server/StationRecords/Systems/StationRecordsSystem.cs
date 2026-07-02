@@ -219,7 +219,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
     /// <param name="entry">The resulting entry.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if a record was obtained. False otherwise.</returns>
-    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry)
+    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry) where T : StationRecord
     {
         entry = default;
 
@@ -252,7 +252,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
     /// <param name="record">The record to add.</param>
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">The type of record to add.</typeparam>
-    public StationRecordKey AddRecordEntry<T>(EntityUid station, T record, StationRecordsComponent? records = null)
+    public StationRecordKey AddRecordEntry<T>(EntityUid station, T record, StationRecordsComponent? records = null) where T : StationRecord
     {
         if (!Resolve(station, ref records))
             return StationRecordKey.Invalid;
@@ -272,7 +272,7 @@ public sealed partial class StationRecordsSystem : SharedStationRecordsSystem
     /// <param name="records">Station records component.</param>
     /// <typeparam name="T">The type of record to add.</typeparam>
     public void AddRecordEntry<T>(StationRecordKey key, T record,
-        StationRecordsComponent? records = null)
+        StationRecordsComponent? records = null) where T : StationRecord
     {
         if (!Resolve(key.OriginStation, ref records))
             return;
