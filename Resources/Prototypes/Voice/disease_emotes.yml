@@ -1,6 +1,7 @@
 - type: emote
   id: Sneeze
   name: chat-emote-name-sneeze
+  icon: Interface/Emotes/sneeze.png
   category: Vocal
   whitelist:
     components:
