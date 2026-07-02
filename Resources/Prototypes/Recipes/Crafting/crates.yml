@@ -90,3 +90,11 @@
   targetNode: cratecoffin
   category: construction-category-storage
   objectType: Structure
+  
+- type: construction
+  id: Barrel
+  graph: Barrel
+  startNode: start
+  targetNode: barrel
+  category: construction-category-storage
+  objectType: Item

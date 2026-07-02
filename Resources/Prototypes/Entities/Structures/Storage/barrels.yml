@@ -35,11 +35,41 @@
         acts: ["Destruction"]
   - type: PhysicalComposition
     materialComposition:
-      Steel: 3000 # 30 sheets, 1 stack
+      Steel: 250
   - type: ExaminableSolution
     solution: tank
+    exactVolume: true
+  - type: RefillableSolution
+    solution: tank
+  - type: InjectableSolution
+    solution: tank
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: tank
   - type: StaticPrice
-    price: 500
+    price: 75
+  - type: Construction
+    graph: Barrel
+    node: barrel
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand
+      right:
+      - state: inhand
+    shape:
+    - 0,0,7,3
+  - type: MultiHandedItem
+  - type: HeldSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToolRefinable
+    refineResult:
+    - id: SheetSteel1
+      amount: 5
 
 - type: entity
   parent: BaseBarrelChem
@@ -53,6 +83,14 @@
   - type: RadiationSource
     intensity: 1.0
     slope: 0.25
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-radbarrel
+      right:
+      - state: inhand-radbarrel
 
 - type: entityTable
   id: RandomChemicalBarrel
@@ -160,6 +198,14 @@
       reagents:
       - ReagentId: Silicon
         Quantity: 960
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-silicate
+      right:
+      - state: inhand-silicate
 
 - type: entity
   parent: BaseBarrelChem
@@ -174,6 +220,14 @@
       reagents:
       - ReagentId: SpaceLube
         Quantity: 960
+  - type: Item
+    sprite: Structures/Storage/barrels.rsi
+    size: Huge
+    inhandVisuals:
+      left:
+      - state: inhand-silicate
+      right:
+      - state: inhand-silicate
 
 - type: entity
   parent: BaseBarrelChemRadioactive
