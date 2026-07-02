@@ -1,5 +1,5 @@
 # Welcome to the example configuration file for Space Station 14!
-# If you are in a watchdog enviroment, please create config.toml in your instence's root directory instead of editing this.
+# If you are in a watchdog environment, please create config.toml in your instance's root directory instead of editing this.
 # If you are in a development environment, ensure you are editing /bin/Content.Server/server_config.toml. Be aware that this file may be overwritten on build.
 
 # This configuration file contains **some popular** options most often changed by sandboxers and server hosts.
@@ -23,7 +23,7 @@ max_connections = 256
 [game]
 # Name of the server. This is what will be displayed in the server list and lobby.
 hostname = "MyServer"
-# Decscription of the server. This is what will be displayed in the server list.
+# Description of the server. This is what will be displayed in the server list.
 desc = "Just another server, don't mind me!"
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
