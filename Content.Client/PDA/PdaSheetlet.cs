@@ -77,6 +77,22 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
                 .Prop(PdaProgramItem.StylePropertyBgColor, Color.FromHex(PdaProgramItem.HoverColor)),
 
+            //PDA - Copy buttons
+            E<ContainerButton>()
+                .Class("PdaCopyButton")
+                .Pseudo(ContainerButton.StylePseudoClassNormal)
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(Color.Transparent)),
+
+            E<ContainerButton>()
+                .Class("PdaCopyButton")
+                .Pseudo(ContainerButton.StylePseudoClassHover)
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(Color.FromHex("#3a3a42"))),
+
+            E<ContainerButton>()
+                .Class("PdaCopyButton")
+                .Pseudo(ContainerButton.StylePseudoClassPressed)
+                .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat(Color.FromHex("#4a4a55"))),
+
             //PDA - Text
             E<Label>()
                 .Class("PdaContentFooterText")
@@ -87,6 +103,11 @@ public sealed class PdaSheetlet : Sheetlet<NanotrasenStylesheet>
                 .Class("PdaWindowFooterText")
                 .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
+
+            E<Label>()
+                .Class("PdaCopiedLabel")
+                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(10))
+                .Prop(Label.StylePropertyFontColor, Color.FromHex("#77cc77")),
         ];
     }
 }

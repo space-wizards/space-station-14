@@ -97,32 +97,38 @@ namespace Content.Client.PDA
             PdaOwnerButton.OnPressed += _ =>
             {
                 _clipboard.SetText(_pdaOwner);
+                ShowCopiedFeedback();
             };
 
             IdInfoButton.OnPressed += _ =>
             {
                 _clipboard.SetText(_owner + ", " + _jobTitle);
+                ShowCopiedFeedback();
             };
 
             StationNameButton.OnPressed += _ =>
             {
                 _clipboard.SetText(_stationName);
+                ShowCopiedFeedback();
             };
 
             StationAlertLevelButton.OnPressed += _ =>
             {
                 _clipboard.SetText(_alertLevel);
+                ShowCopiedFeedback();
             };
 
             StationTimeButton.OnPressed += _ =>
             {
                 var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
                 _clipboard.SetText((stationTime.ToString("hh\\:mm\\:ss")));
+                ShowCopiedFeedback();
             };
 
             StationAlertLevelInstructionsButton.OnPressed += _ =>
             {
                 _clipboard.SetText(_instructions);
+                ShowCopiedFeedback();
             };
 
 
@@ -326,6 +332,16 @@ namespace Content.Client.PDA
                 Orientation = BoxContainer.LayoutOrientation.Horizontal,
                 HorizontalExpand = true
             };
+        }
+
+        private void ShowCopiedFeedback()
+        {
+            CopiedLabel.Visible = true;
+            Timer.Spawn(1500, () =>
+            {
+                if (!Disposed)
+                    CopiedLabel.Visible = false;
+            });
         }
 
         private void HideAllViews()
