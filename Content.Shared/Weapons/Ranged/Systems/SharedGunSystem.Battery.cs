@@ -3,6 +3,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Projectiles;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -14,6 +15,8 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
+    [Dependency] private SharedBatterySystem _battery = default!;
+
     protected virtual void InitializeBattery()
     {
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
@@ -80,20 +83,23 @@ public abstract partial class SharedGunSystem
         args.Capacity = ent.Comp.Capacity;
     }
 
+    /// <inhereitdoc cref="TakeCharge(EntityUid,float,int)"/>
+    public void TakeCharge(Entity<BatteryAmmoProviderComponent> ent, int shots = 1)
+    {
+        TakeCharge(ent, ent.Comp.FireCost, shots);
+    }
+
     /// <summary>
     /// Use up the required amount of battery charge for firing.
     /// </summary>
-    public void TakeCharge(Entity<BatteryAmmoProviderComponent> ent, int shots = 1)
+    public void TakeCharge(EntityUid gun, float fireCost, int shots = 1)
     {
-        // Take charge from either the BatteryComponent or PowerCellSlotComponent.
-        var ev = new ChangeChargeEvent(-ent.Comp.FireCost * shots);
-        RaiseLocalEvent(ent, ref ev);
+        _battery.ChangeCharge(gun, -fireCost * shots);
         // UpdateShots is already called by the resulting ChargeChangedEvent
     }
 
     private (EntityUid? Entity, IShootable) GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)
     {
-
         var ent = Spawn(component.Prototype, coordinates);
         return (ent, EnsureShootable(ent));
     }
@@ -181,10 +187,9 @@ public abstract partial class SharedGunSystem
     /// </summary>
     public (int, int) GetShots(Entity<BatteryAmmoProviderComponent> ent)
     {
-        var ev = new GetChargeEvent();
-        RaiseLocalEvent(ent, ref ev);
-        var currentShots = (int)(ev.CurrentCharge / ent.Comp.FireCost);
-        var maxShots = (int)(ev.MaxCharge / ent.Comp.FireCost);
+        var charge = _battery.GetCharge(ent);
+        var currentShots = (int)(charge.Charge / ent.Comp.FireCost);
+        var maxShots = (int)(charge.MaxCharge / ent.Comp.FireCost);
 
         return (currentShots, maxShots);
     }

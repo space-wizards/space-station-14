@@ -79,3 +79,12 @@
   - type: StatusEffectAlert
     alert: Stun
   - type: StunnedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectDebuff
+  id: StatusEffectKnockdown
+  name: knockdown
+  components:
+  - type: KnockdownStatusEffect
+    crawl: true
+    drop: false
