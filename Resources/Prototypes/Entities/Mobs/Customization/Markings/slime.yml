@@ -32,7 +32,7 @@
 
 - type: marking
   id: SlimeGradientLeftFoot
-  bodyPart: LFoot
+  bodyPart: LLeg
   groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
@@ -40,7 +40,7 @@
 
 - type: marking
   id: SlimeGradientRightFoot
-  bodyPart: RFoot
+  bodyPart: RLeg
   groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
@@ -48,7 +48,7 @@
 
 - type: marking
   id: SlimeGradientLeftHand
-  bodyPart: LHand
+  bodyPart: LArm
   groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi
@@ -56,7 +56,7 @@
 
 - type: marking
   id: SlimeGradientRightHand
-  bodyPart: RHand
+  bodyPart: RArm
   groupWhitelist: [Slime]
   sprites:
   - sprite: Mobs/Customization/slime_parts.rsi

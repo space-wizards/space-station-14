@@ -132,7 +132,54 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
             var organs = markingManager.GetOrgans(species);
             skinColor = strategy.EnsureVerified(skinColor);
 
-            foreach (var (organ, markings) in appearance.Markings)
+            // Migrate old split hand/foot categories to unified arm/leg categories
+            var oldCategoryMap = new Dictionary<ProtoId<OrganCategoryPrototype>, ProtoId<OrganCategoryPrototype>>
+            {
+                ["HandLeft"] = "ArmLeft",
+                ["HandRight"] = "ArmRight",
+                ["FootLeft"] = "LegLeft",
+                ["FootRight"] = "LegRight",
+            };
+
+            var layerMap = new Dictionary<HumanoidVisualLayers, HumanoidVisualLayers>
+            {
+                [HumanoidVisualLayers.LHand] = HumanoidVisualLayers.LArm,
+                [HumanoidVisualLayers.RHand] = HumanoidVisualLayers.RArm,
+                [HumanoidVisualLayers.LFoot] = HumanoidVisualLayers.LLeg,
+                [HumanoidVisualLayers.RFoot] = HumanoidVisualLayers.RLeg,
+            };
+
+            foreach (var (oldCategory, newCategory) in oldCategoryMap)
+            {
+                if (!validatedMarkings.TryGetValue(oldCategory, out var oldMarkings))
+                    continue;
+
+                validatedMarkings.Remove(oldCategory);
+
+                var remapped = new Dictionary<HumanoidVisualLayers, List<Marking>>();
+                foreach (var (layer, markings) in oldMarkings)
+                {
+                    var newLayer = layerMap.GetValueOrDefault(layer, layer);
+                    remapped[newLayer] = markings;
+                }
+
+                if (validatedMarkings.TryGetValue(newCategory, out var existing))
+                {
+                    foreach (var (layer, markings) in remapped)
+                    {
+                        if (existing.TryGetValue(layer, out var existingList))
+                            existingList.AddRange(markings);
+                        else
+                            existing[layer] = markings;
+                    }
+                }
+                else
+                {
+                    validatedMarkings[newCategory] = remapped;
+                }
+            }
+
+            foreach (var organ in validatedMarkings.Keys.ToArray())
             {
                 if (!organs.ContainsKey(organ))
                     validatedMarkings.Remove(organ);

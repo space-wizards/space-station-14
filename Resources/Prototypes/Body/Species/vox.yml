@@ -21,37 +21,21 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.LArm:
-      limit: 2
-      required: false
-      default: [ VoxLArmScales ]
+      limit: 3
+      required: true
+      default: [ VoxLArmScales, VoxLHandScales ]
     enum.HumanoidVisualLayers.RArm:
-      limit: 2
-      required: false
-      default: [ VoxRArmScales ]
-    enum.HumanoidVisualLayers.LHand:
-      limit: 1
+      limit: 3
       required: true
-      default: [ VoxLHandScales ]
-    enum.HumanoidVisualLayers.RHand:
-      limit: 1
-      required: true
-      default: [ VoxRHandScales ]
+      default: [ VoxRArmScales, VoxRHandScales ]
     enum.HumanoidVisualLayers.LLeg:
-      limit: 1
-      required: false
-      default: [ VoxLLegScales ]
+      limit: 2
+      required: true
+      default: [ VoxLLegScales, VoxLFootScales ]
     enum.HumanoidVisualLayers.RLeg:
-      limit: 1
-      required: false
-      default: [ VoxRLegScales ]
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 1
+      limit: 2
       required: true
-      default: [ VoxLFootScales ]
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 1
-      required: true
-      default: [ VoxRFootScales ]
+      default: [ VoxRLegScales, VoxRFootScales ]
     enum.HumanoidVisualLayers.Chest:
       limit: 2
       required: false
@@ -137,12 +121,8 @@
       Head: OrganVoxHead
       ArmLeft: OrganVoxArmLeft
       ArmRight: OrganVoxArmRight
-      HandRight: OrganVoxHandRight
-      HandLeft: OrganVoxHandLeft
       LegLeft: OrganVoxLegLeft
       LegRight: OrganVoxLegRight
-      FootLeft: OrganVoxFootLeft
-      FootRight: OrganVoxFootRight
       Brain: OrganVoxBrain
       Eyes: OrganVoxEyes
       Tongue: OrganVoxTongue
@@ -326,28 +306,12 @@
   id: OrganVoxArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganVoxExternal ]
-  id: OrganVoxHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganVoxExternal ]
-  id: OrganVoxHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganVoxExternal ]
   id: OrganVoxLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganVoxExternal ]
   id: OrganVoxLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganVoxExternal ]
-  id: OrganVoxFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganVoxExternal ]
-  id: OrganVoxFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganVoxInternal ]

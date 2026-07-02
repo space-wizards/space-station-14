@@ -113,7 +113,7 @@
 
 - type: marking
   id: VoxRHandScales
-  bodyPart: RHand
+  bodyPart: RArm
   forcedColoring: true
   groupWhitelist: [Vox]
   sprites:
@@ -127,7 +127,7 @@
 
 - type: marking
   id: VoxLHandScales
-  bodyPart: LHand
+  bodyPart: LArm
   forcedColoring: true
   groupWhitelist: [Vox]
   sprites:
@@ -141,7 +141,7 @@
 
 - type: marking
   id: VoxLFootScales
-  bodyPart: LFoot
+  bodyPart: LLeg
   forcedColoring: true
   groupWhitelist: [Vox]
   sprites:
@@ -155,7 +155,7 @@
 
 - type: marking
   id: VoxRFootScales
-  bodyPart: RFoot
+  bodyPart: RLeg
   forcedColoring: true
   groupWhitelist: [Vox]
   sprites:

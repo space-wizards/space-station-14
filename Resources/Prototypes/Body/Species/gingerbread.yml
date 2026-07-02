@@ -17,12 +17,8 @@
       Head: OrganGingerbreadHead
       ArmLeft: OrganGingerbreadArmLeft
       ArmRight: OrganGingerbreadArmRight
-      HandRight: OrganGingerbreadHandRight
-      HandLeft: OrganGingerbreadHandLeft
       LegLeft: OrganGingerbreadLegLeft
       LegRight: OrganGingerbreadLegRight
-      FootLeft: OrganGingerbreadFootLeft
-      FootRight: OrganGingerbreadFootRight
       Brain: OrganHumanBrain
       Eyes: OrganHumanEyes
       Tongue: OrganHumanTongue
@@ -115,28 +111,12 @@
   id: OrganGingerbreadArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganGingerbreadExternal ]
-  id: OrganGingerbreadHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganGingerbreadExternal ]
-  id: OrganGingerbreadHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganGingerbreadExternal ]
   id: OrganGingerbreadLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganGingerbreadExternal ]
   id: OrganGingerbreadLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganGingerbreadExternal ]
-  id: OrganGingerbreadFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganGingerbreadExternal ]
-  id: OrganGingerbreadFootRight
 
 - type: entity
   name: gingerbread man

@@ -52,12 +52,8 @@
       Head: OrganDionaHead
       ArmLeft: OrganDionaArmLeft
       ArmRight: OrganDionaArmRight
-      HandRight: OrganDionaHandRight
-      HandLeft: OrganDionaHandLeft
       LegLeft: OrganDionaLegLeft
       LegRight: OrganDionaLegRight
-      FootLeft: OrganDionaFootLeft
-      FootRight: OrganDionaFootRight
       Brain: OrganDionaBrainNymphing
       Eyes: OrganDionaEyes
       Lungs: OrganDionaLungsNymphing
@@ -225,28 +221,12 @@
   id: OrganDionaArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganDionaExternal ]
-  id: OrganDionaHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganDionaExternal ]
-  id: OrganDionaHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganDionaExternal ]
   id: OrganDionaLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganDionaExternal ]
   id: OrganDionaLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganDionaExternal ]
-  id: OrganDionaFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganDionaExternal ]
-  id: OrganDionaFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganDionaInternal ]

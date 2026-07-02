@@ -1990,13 +1990,6 @@ entities:
     - type: Transform
       pos: 6.8180027,-5.7761726
       parent: 16
-- proto: OrganSkeletonPersonHandLeft
-  entities:
-  - uid: 174
-    components:
-    - type: Transform
-      pos: 7.1148777,-5.8855476
-      parent: 16
 - proto: LockerFreezerBase
   entities:
   - uid: 141

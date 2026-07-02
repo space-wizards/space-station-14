@@ -27,28 +27,16 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.LArm:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RArm:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LHand:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RHand:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.LLeg:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RLeg:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 1
+      limit: 2
       required: false
 
 - type: entity
@@ -92,12 +80,8 @@
       Head: OrganReptilianHead
       ArmLeft: OrganReptilianArmLeft
       ArmRight: OrganReptilianArmRight
-      HandRight: OrganReptilianHandRight
-      HandLeft: OrganReptilianHandLeft
       LegLeft: OrganReptilianLegLeft
       LegRight: OrganReptilianLegRight
-      FootLeft: OrganReptilianFootLeft
-      FootRight: OrganReptilianFootRight
       Brain: OrganReptilianBrain
       Eyes: OrganReptilianEyes
       Tongue: OrganReptilianTongue
@@ -230,28 +214,12 @@
   id: OrganReptilianArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganReptilianExternal ]
-  id: OrganReptilianHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganReptilianExternal ]
-  id: OrganReptilianHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganReptilianExternal ]
   id: OrganReptilianLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganReptilianExternal ]
   id: OrganReptilianLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganReptilianExternal ]
-  id: OrganReptilianFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganReptilianExternal ]
-  id: OrganReptilianFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganReptilianInternal ]
