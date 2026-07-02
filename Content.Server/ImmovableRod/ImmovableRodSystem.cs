@@ -125,7 +125,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
 
             _adminLogger.Add(LogType.Gib, LogImpact.Low, $"Entity {ToPrettyString(uid)} hit {ToPrettyString(ent)} at X:{coords.X} Y:{coords.Y}");
 
-            if (!component.ShouldGib || !_gibbing.TryGib(ent, out _))
+            if (!component.ShouldGib || !_gibbing.TryGib(ent))
             {
                 if (component.Damage == null)
                     return;

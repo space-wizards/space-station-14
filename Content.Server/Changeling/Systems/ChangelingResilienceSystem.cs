@@ -7,7 +7,6 @@ using Content.Shared.Changeling.Systems;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.Utility;
 
-
 namespace Content.Server.Changeling.Systems;
 
 public sealed partial class ChangelingResilienceSystem : SharedChangelingResilienceSystem

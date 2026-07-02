@@ -1,6 +1,6 @@
 - type: entity
-  id: OrganChangelingMetabolizer
   abstract: true
+  id: OrganChangelingMetabolizer
   components:
   - type: Metabolizer
     metabolizerTypes: [ Human, Moth, Slime, Changeling ] # Eat and breathe basically everything

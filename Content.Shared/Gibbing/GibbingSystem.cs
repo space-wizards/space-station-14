@@ -23,6 +23,18 @@ public sealed partial class GibbingSystem : EntitySystem
     /// Attempts to gib an entity.
     /// </summary>
     /// <param name="ent">The entity to gib.</param>
+    /// <param name="dropGiblets">Whether or not to drop giblets.</param>
+    /// <param name="user">The user gibbing the entity, if any.</param>
+    /// <returns>True if the entity was gibbed, otherwise False.</returns>
+    public bool TryGib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
+    {
+        return TryGib(ent, out _, dropGiblets, user);
+    }
+
+    /// <summary>
+    /// Attempts to gib an entity.
+    /// </summary>
+    /// <param name="ent">The entity to gib.</param>
     /// <param name="giblets">A hashset of giblets this entity dropped. Not null if the gibbing was successful.</param>
     /// <param name="dropGiblets">Whether or not to drop giblets.</param>
     /// <param name="user">The user gibbing the entity, if any.</param>

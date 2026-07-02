@@ -327,7 +327,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         // Gib the victim if there is nothing else to butcher.
         if (butcherable.SpawnedEntities.Count == 0)
         {
-            if (!_gibbing.TryGib(args.Target.Value, out _))
+            if (!_gibbing.TryGib(args.Target.Value))
                 return;
 
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;

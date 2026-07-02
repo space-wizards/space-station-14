@@ -79,7 +79,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
-        if (_gibbing.TryGib(victim, out _))
+        if (_gibbing.TryGib(victim))
             _appearance.SetData(entity.Owner, RecyclerVisuals.Bloody, true);
 
         args.Handled = true;

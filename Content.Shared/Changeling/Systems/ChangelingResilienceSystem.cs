@@ -17,9 +17,6 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChangelingResilienceComponent, MapInitEvent>(OnMapInit, after: [typeof(InitialBodySystem)]);
-
-        SubscribeLocalEvent<ChangelingResilienceComponent, AttemptConvertRevolutionaryEvent>(OnAttemptRevConvert);
-        SubscribeLocalEvent<ChangelingResilienceComponent, AttemptGibEvent>(OnGibAttempt);
     }
 
     private void OnMapInit(Entity<ChangelingResilienceComponent> ent, ref MapInitEvent args)
@@ -29,14 +26,15 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 
         if (ent.Comp.PreventGibbing)
             PreventGibbing(ent);
-
     }
 
+    [SubscribeLocalEvent]
     private void OnAttemptRevConvert(Entity<ChangelingResilienceComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
         args.Cancelled |= ent.Comp.PreventConversion;
     }
 
+    [SubscribeLocalEvent]
     private void OnGibAttempt(Entity<ChangelingResilienceComponent> ent, ref AttemptGibEvent args)
     {
         args.Cancelled |= ent.Comp.PreventGibbing;
