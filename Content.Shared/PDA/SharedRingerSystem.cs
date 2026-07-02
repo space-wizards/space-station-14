@@ -16,19 +16,20 @@ namespace Content.Shared.PDA;
 /// <summary>
 /// Handles the shared functionality for PDA ringtones.
 /// </summary>
-public abstract class SharedRingerSystem : EntitySystem
+public abstract partial class SharedRingerSystem : EntitySystem
 {
     public const int RingtoneLength = 6;
     public const int NoteTempo = 300;
     public const float NoteDelay = 60f / NoteTempo;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPdaSystem _pda = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPdaSystem _pda = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] protected SharedStoreSystem Store = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -145,12 +146,12 @@ public abstract class SharedRingerSystem : EntitySystem
     /// On the client side, it does nothing since the client cannot know the code in advance.
     /// On the server side, the code is verified.
     /// </summary>
-    /// <param name="uid">The entity with the RingerUplinkComponent.</param>
+    /// <param name="entity">The entity with the RingerUplinkComponent.</param>
     /// <param name="ringtone">The ringtone to check against the uplink code.</param>
     /// <param name="user">The entity attempting to toggle the uplink.</param>
     /// <returns>True if the uplink state was toggled, false otherwise.</returns>
     [PublicAPI]
-    public virtual bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null)
+    public virtual bool TryToggleUplink(Entity<RingerUplinkComponent?> entity, Note[] ringtone, EntityUid? user = null)
     {
         return false;
     }
@@ -177,7 +178,7 @@ public abstract class SharedRingerSystem : EntitySystem
             return;
 
         // Try to toggle the uplink first
-        if (TryToggleUplink(ent, args.Ringtone))
+        if (TryToggleUplink(ent.Owner, args.Ringtone))
             return; // Don't save the uplink code as the ringtone
 
         UpdateRingerRingtone(ent, args.Ringtone);
@@ -244,12 +245,13 @@ public abstract class SharedRingerSystem : EntitySystem
         ent.Comp.Unlocked = !ent.Comp.Unlocked;
 
         // Update PDA UI if needed
-        if (TryComp<PdaComponent>(ent, out var pda))
-            _pda.UpdatePdaUi(ent, pda);
+        _pda.UpdatePdaUi(ent.Owner);
 
         // Close store UI if we're locking
         if (!ent.Comp.Unlocked)
+        {
             UI.CloseUi(ent.Owner, StoreUiKey.Key);
+        }
 
         return true;
     }

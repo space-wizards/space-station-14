@@ -1,4 +1,4 @@
-﻿using Lidgren.Network;
+using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -35,13 +35,21 @@ public sealed class SendRulesInformationMessage : NetMessage
 /// </summary>
 public sealed class RulesAcceptedMessage : NetMessage
 {
+    /// <summary>
+    /// Whether or not the player used the "fuckrules" command to skip the rules window countdown.
+    /// If true this will create an admin log and a warning the for the admins to see.
+    /// </summary>
+    public bool FuckRules;
+
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
+        FuckRules = buffer.ReadBoolean();
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
+        buffer.Write(FuckRules);
     }
 }

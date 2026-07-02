@@ -39,9 +39,7 @@
     - Belt
   - type: Item
     sprite: Objects/Tools/crowbar.rsi
-    size: Normal
-    shape:
-    - 0,0,0,1
+    size: Small
 
 # Standard (grey) Crowbar
 - type: entity

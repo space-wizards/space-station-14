@@ -1,6 +1,8 @@
 wires-panel-component-on-examine-open = The [color=lightgray]maintenance panel[/color] is [color=red]open[/color].
 wires-panel-component-on-examine-closed = The [color=lightgray]maintenance panel[/color] is [color=darkgreen]closed[/color].
 
+wires-panel-verb-view-panel = View maintenance panel
+
 # wire colors
 
 wire-name-color-red = Red

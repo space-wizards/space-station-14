@@ -10,8 +10,8 @@ namespace Content.Client.Interactable.Components
         private static readonly ProtoId<ShaderPrototype> ShaderInRange = "SelectionOutlineInrange";
         private static readonly ProtoId<ShaderPrototype> ShaderOutOfRange = "SelectionOutline";
 
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entMan = default!;
 
         private const float DefaultWidth = 1;
 

@@ -12,7 +12,7 @@ namespace Content.Client.Administration.UI.AdminRemarks;
 [GenerateTypedNameReferences]
 public sealed partial class AdminMessagePopupWindow : Control
 {
-    [Dependency] private readonly IStylesheetManager _styleMan = default!;
+    [Dependency] private IStylesheetManager _styleMan = default!;
 
     private float _timer = float.MaxValue;
 

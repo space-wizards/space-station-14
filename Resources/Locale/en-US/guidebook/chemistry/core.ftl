@@ -17,7 +17,9 @@ guidebook-reagent-sources-header = Sources
 guidebook-reagent-sources-ent-wrapper = [bold]{$name}[/bold] \[1\]
 guidebook-reagent-sources-gas-wrapper = [bold]{$name} (gas)[/bold] \[1\]
 guidebook-reagent-effects-header = Effects
-guidebook-reagent-effects-metabolism-group-rate = [bold]{$group}[/bold] [color=gray]({$rate} units per second)[/color]
+guidebook-reagent-effects-metabolism-stage-rate = [bold]{$stage}[/bold] [color=gray]({$rate} units per second)[/color]
+guidebook-reagent-effects-metabolite-item = {$reagent} at a rate of { NATURALPERCENT($rate, 2) }
+guidebook-reagent-effects-metabolites = Metabolizes into { $items }.
 guidebook-reagent-plant-metabolisms-header = Plant Metabolism
 guidebook-reagent-plant-metabolisms-rate = [bold]Plant Metabolism[/bold] [color=gray](1 unit every 3 seconds as base)[/color]
 guidebook-reagent-physical-description = [italic]Seems to be {$description}.[/italic]

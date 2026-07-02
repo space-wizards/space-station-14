@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Content.Shared.Humanoid.Markings;
+namespace Content.Shared.Humanoid.Markings.ColoringTypes;
 
 /// <summary>
 ///     Colors marking in color of first defined marking from specified category (in e.x. from Hair category)
@@ -8,15 +8,15 @@ namespace Content.Shared.Humanoid.Markings;
 public sealed partial class CategoryColoring : LayerColoringType
 {
     [DataField("category", required: true)]
-    public MarkingCategories Category;
+    public HumanoidVisualLayers Category;
 
-    public override Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet)
+    public override Color? GetCleanColor(Color? skin, Color? eyes, List<Marking> otherMarkings)
     {
         Color? outColor = null;
-        if (markingSet.TryGetCategory(Category, out var markings) &&
-            markings.Count > 0)
+
+        if (otherMarkings.Count > 0)
         {
-            outColor = markings[0].MarkingColors.FirstOrDefault();
+            outColor = otherMarkings[0].MarkingColors.FirstOrDefault();
         }
 
         return outColor;

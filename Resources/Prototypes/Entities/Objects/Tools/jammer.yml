@@ -1,58 +1,64 @@
 - type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseJammer
   name: radio jammer
-  parent: [BaseItem, BaseSyndicateContraband]
-  id: RadioJammer
   description: This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
   components:
   - type: Sprite
     sprite: Objects/Devices/jammer.rsi
     layers:
-        - state: jammer
-        - state: jammer_high_charge
-          map: ["enum.RadioJammerLayers.LED"]
-          shader: unshaded
-          visible: false
+    - state: jammer
+    - state: jammer_high_charge
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+      visible: false
   - type: RadioJammer
     settings:
-    - wattage: 1
-      range: 2.5
-      message: radio-jammer-component-set-message-low
-      name: radio-jammer-component-setting-low
     - wattage: 2
       range: 6
-      message: radio-jammer-component-set-message-medium
-      name: radio-jammer-component-setting-medium
+      message: radio-jammer-component-set-message-low
+      name: radio-jammer-component-setting-low
     - wattage: 12
       range: 12
       message: radio-jammer-component-set-message-high
       name: radio-jammer-component-setting-high
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
-  - type: ContainerContainer
-    containers:
-      cell_slot: !type:ContainerSlot
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
   - type: Appearance
+  - type: ItemToggle
   - type: GenericVisualizer
     visuals:
-      enum.RadioJammerVisuals.LEDOn:
-        RadioJammerLayers.LED:
-          True: { visible: True }
-          False: { visible: False }
-      enum.RadioJammerVisuals.ChargeLevel:
-        RadioJammerLayers.LED:
-          Low: {state: jammer_low_charge}
-          Medium: {state: jammer_medium_charge}
-          High: {state: jammer_high_charge}
+      enum.ToggleableVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: BatteryVisuals
   - type: StaticPrice
     price: 1500
 
 - type: entity
-  parent: [RadioJammer, BaseXenoborgContraband]
+  name: radio jammer
+  parent: [BaseJammer, PowerCellSlotMediumItem, BaseSyndicateContraband]
+  id: RadioJammer
+  description: This device will disrupt any nearby outgoing and incoming radio communication as well as suit sensors when activated.
+  components:
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { state: jammer_high_charge }
+          Neither: { state: jammer_medium_charge }
+          Empty: { state: jammer_low_charge }
+      enum.ToggleableVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ToggleCellDraw
+  - type: BatteryVisuals
+  - type: StaticPrice
+    price: 1500
+
+- type: entity
+  parent: [BaseJammer, BaseXenoborgContraband]
   id: XenoborgRadioJammer
   name: xenoborg radio jammer
   components:
@@ -62,10 +68,3 @@
     - 2003 # mothership radio
     - 2004 # xenoborg network
     - 2005 # mothership network
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMicroreactor
-        disableEject: true
-        swap: false

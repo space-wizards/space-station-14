@@ -60,7 +60,7 @@ public static class ServerPackaging
         "zh-Hant"
     };
 
-    public static async Task PackageServer(bool skipBuild, bool hybridAcz, IPackageLogger logger, string configuration, List<string>? platforms = null)
+    public static async Task PackageServer(bool skipBuild, bool hybridAcz, bool logBuild, IPackageLogger logger, string configuration, List<string>? platforms = null)
     {
         if (platforms == null)
         {
@@ -73,7 +73,7 @@ public static class ServerPackaging
             // Rather than hosting the client ZIP on the watchdog or on a separate server,
             //  Hybrid ACZ uses the ACZ hosting functionality to host it as part of the status host,
             //  which means that features such as automatic UPnP forwarding still work properly.
-            await ClientPackaging.PackageClient(skipBuild, configuration, logger);
+            await ClientPackaging.PackageClient(skipBuild, logBuild, configuration, logger);
         }
 
         // Good variable naming right here.
@@ -82,17 +82,22 @@ public static class ServerPackaging
             if (!platforms.Contains(platform.Rid))
                 continue;
 
-            await BuildPlatform(platform, skipBuild, hybridAcz, configuration, logger);
+            await BuildPlatform(platform, skipBuild, hybridAcz, logBuild, configuration, logger);
         }
     }
 
-    private static async Task BuildPlatform(PlatformReg platform, bool skipBuild, bool hybridAcz, string configuration, IPackageLogger logger)
+    private static async Task BuildPlatform(PlatformReg platform,
+        bool skipBuild,
+        bool hybridAcz,
+        bool logBuild,
+        string configuration,
+        IPackageLogger logger)
     {
         logger.Info($"Building project for {platform.TargetOs}...");
 
         if (!skipBuild)
         {
-            await ProcessHelpers.RunCheck(new ProcessStartInfo
+            var startInfo = new ProcessStartInfo
             {
                 FileName = "dotnet",
                 ArgumentList =
@@ -107,7 +112,15 @@ public static class ServerPackaging
                     "/p:FullRelease=true",
                     "/m"
                 }
-            });
+            };
+
+            if (logBuild)
+            {
+                startInfo.ArgumentList.Add($"/bl:{Path.Combine("release", $"server-{platform.Rid}.binlog")}");
+                startInfo.ArgumentList.Add("/p:ReportAnalyzer=true");
+            }
+
+            await ProcessHelpers.RunCheck(startInfo);
 
             await PublishClientServer(platform.Rid, platform.TargetOs, configuration);
         }

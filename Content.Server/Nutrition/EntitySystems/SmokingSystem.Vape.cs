@@ -19,12 +19,12 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly EmagSystem _emag = default!;
-        [Dependency] private readonly IngestionSystem _ingestion = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private EmagSystem _emag = default!;
+        [Dependency] private IngestionSystem _ingestion = default!;
+        [Dependency] private ExplosionSystem _explosionSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         private void InitializeVapes()
         {
@@ -42,7 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!args.CanReach
                 || !_solutionContainerSystem.TryGetRefillableSolution(entity.Owner, out _, out var solution)
                 || !HasComp<BloodstreamComponent>(args.Target)
-                || !_ingestion.HasMouthAvailable(args.Target.Value, args.User)
+                || !_ingestion.HasMouthAvailable(args.User, args.Target.Value)
                 )
             {
                 return;

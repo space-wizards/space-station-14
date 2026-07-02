@@ -91,16 +91,18 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    /// Spawn an entity at the target coordinates and set it as the target.
+    /// Spawn an entity at the given coordinates and set it as the target.
+    /// If no coordinates are given it will default to <see cref="TargetCoords"/>
     /// </summary>
     [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
 #pragma warning disable CS8774 // Member must have a non-null value when exiting.
-    protected async Task<NetEntity> SpawnTarget(string prototype)
+    protected async Task<NetEntity> SpawnTarget(string prototype, NetCoordinates? coords = null)
     {
+        coords ??= TargetCoords;
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(coords.Value)));
         });
 
         await RunTicks(5);
@@ -110,14 +112,16 @@ public abstract partial class InteractionTest
 #pragma warning restore CS8774 // Member must have a non-null value when exiting.
 
     /// <summary>
-    /// Spawn an entity entity at the target coordinates without setting it as the target.
+    /// Spawn an entity entity at the given coordinates without setting it as the target.
+    /// If no coordinates are given it will default to <see cref="TargetCoords"/>
     /// </summary>
-    protected async Task<NetEntity> Spawn(string prototype)
+    protected async Task<NetEntity> Spawn(string prototype, NetCoordinates? coords = null)
     {
+        coords ??= TargetCoords;
         var entity = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            entity = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            entity = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(coords.Value)));
         });
 
         await RunTicks(5);
@@ -255,6 +259,7 @@ public abstract partial class InteractionTest
 
     /// <summary>
     /// Drops the currently held entity.
+    /// Causes an error if no entity was held.
     /// </summary>
     protected async Task Drop()
     {
@@ -271,6 +276,36 @@ public abstract partial class InteractionTest
 
         await RunTicks(1);
         Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
+    }
+
+    /// <summary>
+    /// Drops all currently held entities.
+    /// Does nothing if no entity was held.
+    /// </summary>
+    protected async Task DropAll()
+    {
+        await Server.WaitPost(() =>
+        {
+            HandSys.DropAll((ToServer(Player), Hands));
+        });
+
+        await RunTicks(1);
+
+        // make sure that all hands are empty
+        Assert.That(HandSys.GetEmptyHandCount((ToServer(Player), Hands)), Is.EqualTo(HandSys.GetHandCount((ToServer(Player), Hands))));
+    }
+
+    /// <summary>
+    /// Swaps the current hand.
+    /// </summary>
+    protected async Task SwapHands(bool reverse = false)
+    {
+        await Server.WaitPost(() =>
+        {
+            HandSys.SwapHands((ToServer(Player), Hands), reverse: reverse);
+        });
+
+        await RunTicks(1);
     }
 
     #region Interact
@@ -405,6 +440,33 @@ public abstract partial class InteractionTest
         {
             await InteractUsing(spec);
         }
+    }
+
+    /// <summary>
+    /// Simulates a drag and drop mouse interaction from one entity to another.
+    /// </summary>
+    protected async Task DragDrop(NetEntity source, NetEntity target)
+    {
+        // ScreenCoordinates diff needs to be larger than DragDropSystem.Deadzone for the drag drop to initiate
+        var screenX = CDragDropSys.Deadzone + 1f;
+
+        // Start drag
+        await SetKey(EngineKeyFunctions.Use,
+            BoundKeyState.Down,
+            NetPosition(source),
+            source,
+            screenCoordinates: new ScreenCoordinates(screenX, 0f, WindowId.Main));
+
+        await RunTicks(3);
+
+        // End drag
+        await SetKey(EngineKeyFunctions.Use,
+            BoundKeyState.Up,
+            NetPosition(target),
+            target,
+            screenCoordinates: new ScreenCoordinates(0f, 0f, WindowId.Main));
+
+        await RunTicks(3);
     }
 
     /// <summary>
@@ -727,7 +789,7 @@ public abstract partial class InteractionTest
         var pos = Transform.ToMapCoordinates(serverCoords);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out var gridUid, out var grid))
+            if (MapSystem.TryFindGridAt(pos, out var gridUid, out var grid))
                 tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
@@ -1086,7 +1148,7 @@ public abstract partial class InteractionTest
                 MapSystem.SetTile(gridEnt, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
             }
-            else if (MapMan.TryFindGridAt(pos, out var gUid, out var gComp))
+            else if (MapSystem.TryFindGridAt(pos, out var gUid, out var gComp))
             {
                 MapSystem.SetTile(gUid, gComp, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
@@ -1095,7 +1157,7 @@ public abstract partial class InteractionTest
             if (proto == null)
                 return;
 
-            gridEnt = MapMan.CreateGridEntity(MapData.MapId);
+            gridEnt = MapSystem.CreateGridEntity(MapData.MapId);
             grid = gridEnt;
             gridUid = gridEnt;
             gridComp = gridEnt.Comp;
@@ -1103,7 +1165,7 @@ public abstract partial class InteractionTest
             Transform.SetWorldPosition((gridUid, gridXform), pos.Position);
             MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
-            if (!MapMan.TryFindGridAt(pos, out _, out _))
+            if (!MapSystem.TryFindGridAt(pos, out _, out _))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);
@@ -1125,11 +1187,6 @@ public abstract partial class InteractionTest
     protected async Task RunTicks(int ticks)
     {
         await Pair.RunTicksSync(ticks);
-    }
-
-    protected async Task RunSeconds(float seconds)
-    {
-        await Pair.RunSeconds(seconds);
     }
 
     #endregion
@@ -1607,6 +1664,7 @@ public abstract partial class InteractionTest
 
     protected EntityCoordinates Position(NetEntity uid) => Position(ToServer(uid));
     protected EntityCoordinates Position(EntityUid uid) => Xform(uid).Coordinates;
+    protected NetCoordinates NetPosition(NetEntity uid) => FromServer(Position(uid));
 
     #endregion
 }

@@ -10,7 +10,7 @@ namespace Content.Shared.EntityConditions.Conditions.Body;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSystem<HungerComponent, HungerCondition>
 {
-    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private HungerSystem _hunger = default!;
 
     protected override void Condition(Entity<HungerComponent> entity, ref EntityConditionEvent<HungerCondition> args)
     {
@@ -22,9 +22,15 @@ public sealed partial class TotalHungerEntityConditionSystem : EntityConditionSy
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class HungerCondition : EntityConditionBase<HungerCondition>
 {
+    /// <summary>
+    /// Minimum hunger required to fulfill this condition.
+    /// </summary>
     [DataField]
     public float Min;
 
+    /// <summary>
+    /// Maximum hunger required to fulfill this condition.
+    /// </summary>
     [DataField]
     public float Max = float.PositiveInfinity;
 

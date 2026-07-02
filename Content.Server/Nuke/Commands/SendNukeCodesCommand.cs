@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Nuke.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class SendNukeCodesCommand : LocalizedEntityCommands
+public sealed partial class SendNukeCodesCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly NukeCodePaperSystem _nukeCodeSystem = default!;
+    [Dependency] private NukeCodePaperSystem _nukeCodeSystem = default!;
 
     public override string Command => "nukecodes";
 

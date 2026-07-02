@@ -1,7 +1,6 @@
 ﻿entity-effect-status-effect-Stun = stunning
 entity-effect-status-effect-KnockedDown = knockdown
 entity-effect-status-effect-Jitter = jittering
-entity-effect-status-effect-TemporaryBlindness = blindness
 entity-effect-status-effect-SeeingRainbows = hallucinations
 entity-effect-status-effect-Muted = inability to speak
 entity-effect-status-effect-Stutter = stuttering

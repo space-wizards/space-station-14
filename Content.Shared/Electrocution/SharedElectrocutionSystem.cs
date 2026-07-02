@@ -3,9 +3,9 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Electrocution
 {
-    public abstract class SharedElectrocutionSystem : EntitySystem
+    public abstract partial class SharedElectrocutionSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -16,6 +16,9 @@ namespace Content.Shared.Electrocution
             SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
         }
 
+        /// <summary>
+        /// Tries to set Siemens Coefficient on an entity's insulated component.
+        /// </summary>
         public void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
         {
             if (!Resolve(uid, ref insulated))
@@ -41,6 +44,9 @@ namespace Content.Shared.Electrocution
             _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
         }
 
+        /// <summary>
+        /// Set a wire's cut state.
+        /// </summary>
         public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
         {
             if (ent.Comp.IsWireCut == value)
@@ -52,6 +58,10 @@ namespace Content.Shared.Electrocution
             Dirty(ent);
         }
 
+        /// <summary>
+        /// Attempts to electrocute an entity interacting with electrified components.
+        /// Only call server side.
+        /// </summary>
         /// <param name="uid">Entity being electrocuted.</param>
         /// <param name="sourceUid">Source entity of the electrocution.</param>
         /// <param name="shockDamage">How much shock damage the entity takes.</param>

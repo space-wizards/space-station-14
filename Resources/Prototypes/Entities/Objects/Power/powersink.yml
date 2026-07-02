@@ -50,17 +50,11 @@
     - type: ExaminableBattery
     - type: PowerConsumer
       voltage: High
-      drawRate: 1000000
+      drawRate: 10000000
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink
-    - type: Tag
-      tags:
-      - GhostOnlyWarp
     - type: WarpPoint
       location: powersink
-      blacklist:
-        tags:
-        - GhostOnlyWarp
     - type: StaticPrice
       price: 3000

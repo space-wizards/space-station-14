@@ -8,10 +8,6 @@
   - type: CollideOnAnchor
   - type: Transform
     anchored: false
-  - type: AnchoredStorageFilter
-    blacklist:
-      components:
-      - HumanoidAppearance # for forks with felines
   - type: BlockAnchorOn
     blacklist:
       components:

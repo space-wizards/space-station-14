@@ -12,6 +12,11 @@
       state: storage
       sprite: Objects/Tools/scissors.rsi
   - type: MagicMirror
+    organs:
+    - Head
+    layers:
+    - Hair
+    - FacialHair
   - type: ActivatableUI
     key: enum.MagicMirrorUiKey.Key
     inHandsOnly: true
@@ -28,6 +33,9 @@
         Piercing: 6
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+  - type: Tool
+    qualities:
+    - Shearing
   - type: PhysicalComposition
     materialComposition:
       Steel: 200

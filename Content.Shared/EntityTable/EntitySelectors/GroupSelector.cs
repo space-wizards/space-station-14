@@ -1,5 +1,7 @@
+using System.Linq;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
@@ -8,10 +10,13 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// </summary>
 public sealed partial class GroupSelector : EntityTableSelector
 {
+    /// <summary>
+    /// The child entries of this selector.
+    /// </summary>
     [DataField(required: true)]
     public List<EntityTableSelector> Children = new();
 
-    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
@@ -32,5 +37,33 @@ public sealed partial class GroupSelector : EntityTableSelector
         var pick = SharedRandomExtensions.Pick(children, rand);
 
         return pick.GetSpawns(rand, entMan, proto, ctx);
+    }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        var totalWeight = Children.Sum(x => x.Weight);
+
+        foreach (var child in Children)
+        {
+            var weightMod = child.Weight / totalWeight;
+            foreach (var (ent, prob) in child.ListSpawns(entMan, proto, ctx, weightMod))
+            {
+                yield return (ent, prob);
+            }
+        }
+    }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        var totalWeight = Children.Sum(x => x.Weight);
+
+        foreach (var child in Children)
+        {
+            var weightMod = child.Weight / totalWeight;
+            foreach (var (ent, prob) in child.AverageSpawns(entMan, proto, ctx, weightMod))
+            {
+                yield return (ent, prob);
+            }
+        }
     }
 }

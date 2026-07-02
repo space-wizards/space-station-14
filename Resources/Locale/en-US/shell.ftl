@@ -12,6 +12,8 @@ shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 shell-must-have-body = You must have a body to run this command.
 
+shell-unknown-error = An unknown error has occured.
+
 ## Arguments
 
 shell-need-exactly-one-argument = Need exactly one argument.
@@ -35,6 +37,7 @@ shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
 shell-invalid-bool = Invalid boolean.
+shell-invalid-bool-value = Invalid boolean: '{$value}'
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
 shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}

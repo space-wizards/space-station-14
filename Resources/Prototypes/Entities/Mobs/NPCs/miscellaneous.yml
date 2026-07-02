@@ -1,7 +1,7 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: SimpleMobBase
+  parent: [SimpleMobBase, BaseSlicingRefinable]
   description: From the Viking age.
   components:
     - type: NpcFactionMember
@@ -37,8 +37,8 @@
       thresholds:
         0: Alive
         100: Dead
-    - type: Butcherable
-      spawned:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatChicken
         amount: 2
     - type: MovementSpeedModifier
@@ -102,26 +102,23 @@
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -0.15
+          Brute: -0.15
     - reagents: [ Blood ]
       methods: [ Touch ]
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -0.25
-            Burn: -0.25
+          Brute: -0.25
+          Burn: -0.25
     - reagents: [ RobustHarvest ]
       methods: [ Touch ]
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -1
-            Burn: -1
+          Brute: -1
+          Burn: -1
     - reagents: [ WeedKiller, PlantBGone ]
       methods: [ Touch ]
       effects:
@@ -145,7 +142,7 @@
   - type: NPCImprintingOnSpawnBehaviour
     whitelist:
       components:
-      - HumanoidAppearance
+      - HumanoidProfile
   - type: Sprite
     sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
@@ -163,8 +160,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Butcherable
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatTomato
       amount: 2
   - type: Destructible
@@ -202,8 +199,10 @@
   - type: MeleeWeapon
     hidden: true
     damage:
-      groups:
-        Brute: 9
+      types:
+        Blunt: 3
+        Piercing: 3
+        Slash: 3
     animation: WeaponArcBite
   - type: Climbing
   - type: NameIdentifier
@@ -225,7 +224,6 @@
     allowedStates:
     - Alive
     - Dead
-    damageCap: 50
     damage:
       types:
         Blunt: 0.11
