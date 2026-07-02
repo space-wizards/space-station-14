@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
+using Content.Server.BugReports;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -12,6 +13,7 @@ using Content.Server.Discord.WebhookMessages;
 using Content.Server.EUI;
 using Content.Server.FeedbackSystem;
 using Content.Server.GhostKick;
+using Content.Server.Github;
 using Content.Server.Info;
 using Content.Server.Mapping;
 using Content.Server.Maps;
@@ -80,5 +82,9 @@ internal static class ServerContentIoC
         deps.Register<DiscordChatLink>();
         deps.Register<ServerFeedbackManager>();
         deps.Register<ISharedFeedbackManager, ServerFeedbackManager>();
+        deps.Register<IBugReportManager, BugReportManager>();
+        deps.Register<GithubApiManager>();
+        deps.Register<GithubBackgroundWorker>();
+        deps.Register<GithubClient>();
     }
 }
