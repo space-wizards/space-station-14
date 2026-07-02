@@ -26,7 +26,7 @@ namespace Content.Client.Construction
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private ExamineSystemShared _examineSystem = default!;
         [Dependency] private SharedTransformSystem _transformSystem = default!;
-        [Dependency] private SpriteSystem _sprite = default!;
+        [Dependency] public SpriteSystem _sprite = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
 
         private readonly Dictionary<int, EntityUid> _ghosts = new();

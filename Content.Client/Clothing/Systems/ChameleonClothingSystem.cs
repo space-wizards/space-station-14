@@ -7,8 +7,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Clothing.Systems;
 
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
-public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
+public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
+    [Dependency] private SpriteSystem _sprite = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -35,7 +36,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (TryComp(uid, out SpriteComponent? sprite)
             && proto.TryComp(out SpriteComponent? otherSprite, Factory))
         {
-            sprite.CopyFrom(otherSprite);
+            _sprite.CopySprite((EntityUid.Invalid, otherSprite), (uid, sprite)); // Invalid because Component.Owner is Invalid
         }
 
         // Edgecase for PDAs to include visuals when UI is open
