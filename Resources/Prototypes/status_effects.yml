@@ -45,8 +45,5 @@
   id: RatvarianLanguage #Praise him
 
 - type: statusEffect
-  id: Flashed
-
-- type: statusEffect
   id: Adrenaline
   alert: Adrenaline

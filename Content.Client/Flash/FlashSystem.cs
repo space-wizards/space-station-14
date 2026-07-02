@@ -1,5 +1,6 @@
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -10,6 +11,7 @@ public sealed partial class FlashSystem : SharedFlashSystem
 {
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IOverlayManager _overlayMan = default!;
+    [Dependency] private StatusEffectsSystem _statusEffects = default!;
 
     private FlashOverlay _overlay = default!;
 
@@ -17,42 +19,49 @@ public sealed partial class FlashSystem : SharedFlashSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<FlashedComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<FlashedComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<FlashedComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<FlashedComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<FlashedStatusEffectComponent, StatusEffectAppliedEvent>(OnApplied);
+        SubscribeLocalEvent<FlashedStatusEffectComponent, StatusEffectRemovedEvent>(OnRemoved);
+        SubscribeLocalEvent<FlashedStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnPlayerAttached);
+        SubscribeLocalEvent<FlashedStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, FlashedComponent component, LocalPlayerAttachedEvent args)
+    private void OnApplied(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        _overlayMan.AddOverlay(_overlay);
-    }
-
-    private void OnPlayerDetached(EntityUid uid, FlashedComponent component, LocalPlayerDetachedEvent args)
-    {
-        _overlay.ScreenshotTexture = null;
-        _overlay.RequestScreenTexture = false;
-        _overlayMan.RemoveOverlay(_overlay);
-    }
-
-    private void OnInit(EntityUid uid, FlashedComponent component, ComponentInit args)
-    {
-        if (_player.LocalEntity == uid)
+        if (_player.LocalEntity == args.Target)
         {
             _overlay.RequestScreenTexture = true;
             _overlayMan.AddOverlay(_overlay);
         }
     }
 
-    private void OnShutdown(EntityUid uid, FlashedComponent component, ComponentShutdown args)
+    private void OnRemoved(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
-        if (_player.LocalEntity == uid)
+        if (_player.LocalEntity != args.Target)
+            return;
+
+        if (!_statusEffects.HasEffectComp<FlashedStatusEffectComponent>(args.Target))
         {
             _overlay.ScreenshotTexture = null;
             _overlay.RequestScreenTexture = false;
             _overlayMan.RemoveOverlay(_overlay);
         }
+    }
+
+    private void OnPlayerAttached(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
+    {
+        _overlay.RequestScreenTexture = true;
+        _overlayMan.AddOverlay(_overlay);
+    }
+
+    private void OnPlayerDetached(Entity<FlashedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
+    {
+        if (_player.LocalEntity is null || _statusEffects.HasEffectComp<FlashedStatusEffectComponent>(_player.LocalEntity.Value))
+            return;
+
+        _overlay.ScreenshotTexture = null;
+        _overlay.RequestScreenTexture = false;
+        _overlayMan.RemoveOverlay(_overlay);
     }
 }

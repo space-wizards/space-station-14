@@ -1,7 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -21,7 +21,6 @@ namespace Content.Client.Flash
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IConfigurationManager _configManager = default!;
 
-        private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -34,7 +33,6 @@ namespace Content.Client.Flash
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index(FlashedEffectShader).InstanceUnique();
-            _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
 
             _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
@@ -47,16 +45,18 @@ namespace Content.Client.Flash
             if (playerEntity == null)
                 return;
 
-            if (!_entityManager.HasComponent<FlashedComponent>(playerEntity)
-                || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
+            if (!_statusSys.HasEffectComp<FlashedStatusEffectComponent>(playerEntity))
                 return;
 
-            if (!_statusSys.TryGetTime(playerEntity.Value, _flash.FlashedKey, out var time, status))
+            if (!_statusSys.TryGetTime(playerEntity.Value, SharedFlashSystem.FlashedKey, out var time))
                 return;
 
             var curTime = _timing.CurTime;
-            var lastsFor = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            var timeDone = (float)(curTime - time.Value.Item1).TotalSeconds;
+            if (time.StartEffectTime == null || time.EndEffectTime == null)
+                return;
+
+            var lastsFor = (float)(time.EndEffectTime.Value - time.StartEffectTime.Value).TotalSeconds;
+            var timeDone = (float)(curTime - time.StartEffectTime.Value).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
         }

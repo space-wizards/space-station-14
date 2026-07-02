@@ -13,7 +13,7 @@ using Content.Shared.Light;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Timing;
@@ -42,15 +42,14 @@ public abstract partial class SharedFlashSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
 
-    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
     [Dependency] private EntityQuery<DamagedByFlashingComponent> _damagedByFlashingQuery = default!;
 
     private HashSet<EntityUid> _entSet = new();
 
     // The tag to add when a flash has no charges left.
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
-    // The key string for the status effect.
-    public ProtoId<StatusEffectPrototype> FlashedKey = "Flashed";
+    // The status effect entity applied to flashed targets.
+    public static readonly EntProtoId FlashedKey = "StatusEffectFlashed";
 
     public override void Initialize()
     {
@@ -186,7 +185,7 @@ public abstract partial class SharedFlashSystem : EntitySystem
             return;
 
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
-        if (!_statusEffectsSystem.TryAddStatusEffect<FlashedComponent>(target, FlashedKey, flashDuration, true))
+        if (!_statusEffectsSystem.TryAddStatusEffectDuration(target, FlashedKey, flashDuration))
             return;
 
         if (stunDuration != null)
@@ -232,7 +231,7 @@ public abstract partial class SharedFlashSystem : EntitySystem
                 continue;
 
             // Is the entity affected by the flash either through status effects or by taking damage?
-            if (!_statusEffectsQuery.HasComponent(entity) && !_damagedByFlashingQuery.HasComponent(entity))
+            if (!_statusEffectsSystem.CanAddStatusEffect(entity, FlashedKey) && !_damagedByFlashingQuery.HasComponent(entity))
                 continue;
 
             // Check for entites in view.
