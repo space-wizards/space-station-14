@@ -14,12 +14,17 @@ namespace Content.Client.Lobby.UI;
 /// A toggle button with a lock icon meant to lock values for randomizing in the character editor screen.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class RandomizeLockButton : TextureButton
+public sealed partial class RandomizeLockButton : BoxContainer
 {
     /// <summary>
     /// Which value this button locks.
     /// </summary>
     public HumanoidCharacterProfile.RandomizeCfg For { get; set; }
+
+    /// <summary>
+    /// Name of the button
+    /// </summary>
+    public string? LabelText { get => LockName.Text; set => LockName.Text = value; }
 
     /// <summary>
     /// Tracks which values are allowed to be randomized.
@@ -30,7 +35,11 @@ public sealed partial class RandomizeLockButton : TextureButton
     {
         RobustXamlLoader.Load(this);
 
-        OnToggled += args => HandleToggle(args.Pressed);
+        // Ensure we reset this value to default every time the button is created
+        // Otherwise toggling, disconnecting and reconnecting will leave the cfg in an inconsistent state
+        RandomizeCfg = HumanoidCharacterProfile.RandomizeConfigAll;
+
+        LockButton.OnToggled += args => HandleToggle(args.Pressed);
     }
 
     private void HandleToggle(bool toggle)
@@ -80,4 +89,3 @@ public sealed class RandomizeLockButtonStyles : Sheetlet<PalettedStylesheet>
         ];
     }
 }
-

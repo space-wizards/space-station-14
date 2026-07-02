@@ -32,15 +32,4 @@ public sealed partial class HumanoidProfileEditor
         SetProfile(Profile, CharacterSlot);
         SetDirty();
     }
-
-    /// <summary>
-    /// Randomize name.
-    /// </summary>
-    private void RandomizeName()
-    {
-        if (Profile == null) return;
-        var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
-        SetName(name);
-        UpdateNameEdit();
-    }
 }
