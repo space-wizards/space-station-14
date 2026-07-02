@@ -83,10 +83,10 @@
   - type: ReagentTank
     tankType: Fuel
   - type: DamageOnToolInteract
-    tools: Welding
-    weldingDamage:
-      types:
-        Heat: 20
+    damage:
+      Welding:
+        types:
+          Heat: 20
   - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
