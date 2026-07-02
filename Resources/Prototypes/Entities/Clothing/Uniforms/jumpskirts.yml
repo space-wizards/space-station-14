@@ -337,6 +337,7 @@
     - Recyclable
     - PrisonUniform
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -905,3 +906,4 @@
     tags:
     - ClownSuit
     - WhitelistChameleon
+    - TorsoWearable

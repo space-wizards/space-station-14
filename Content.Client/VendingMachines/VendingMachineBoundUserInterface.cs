@@ -3,6 +3,7 @@ using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
+using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
 
 namespace Content.Client.VendingMachines
@@ -26,6 +27,11 @@ namespace Content.Client.VendingMachines
             _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
             _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
             _menu.OnItemSelected += OnItemSelected;
+            _menu.OnCategorySelected += OnCategorySelected;
+
+            EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
+            _menu.CreateCategories(categories);
+
             Refresh();
         }
 
@@ -67,6 +73,18 @@ namespace Content.Client.VendingMachines
             SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
+        private void OnCategorySelected(GUIBoundKeyEventArgs args, ListData data)
+        {
+            if (args.Function != EngineKeyFunctions.UIClick)
+                return;
+
+            if (data is not CategoryListData { Category: var category })
+                return;
+
+            _menu?.SetCategory(category);
+            Refresh();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -78,7 +96,7 @@ namespace Content.Client.VendingMachines
 
             _menu.OnItemSelected -= OnItemSelected;
             _menu.OnClose -= Close;
-            _menu.Dispose();
+            _menu.Close();
         }
     }
 }

@@ -12,6 +12,7 @@
     tags:
     - Apron
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -28,6 +29,7 @@
     tags:
     - Apron
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -44,6 +46,7 @@
     tags:
     - Apron
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -60,6 +63,7 @@
     tags:
     - Apron
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -109,6 +113,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterBaseToggleable
@@ -203,6 +208,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -218,6 +224,7 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -232,6 +239,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   parent: ClothingOuterBase

@@ -15,6 +15,7 @@
     tags:
     - Kangaroo # Kangaroo wearable. Dare to challenge the champ?
     - WhitelistChameleon
+    - BeltWearable
 
 - type: entity
   parent: ClothingBeltBase
@@ -32,6 +33,7 @@
     tags:
     - MimeBelt
     - WhitelistChameleon
+    - BeltWearable
 
 - type: entity
   parent: ClothingBeltSuspendersRed

@@ -1,0 +1,11 @@
+- type: itemCategory
+  id: GlassesCategory
+  name: item-category-glasses
+  icon: ClothingEyesGlasses
+  whitelist:
+    tags:
+    - GlassesWearable
+    - Sunglasses
+    components:
+    - FlashImmunity
+    - EyeProtection

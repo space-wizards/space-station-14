@@ -8,6 +8,7 @@
     - type: Tag
       tags: # ignore "WhitelistChameleon" tag
       - ClothMade
+      - HeadWearable
     - type: Sprite
       sprite: Clothing/Head/Hats/beret.rsi
     - type: Clothing
@@ -23,7 +24,8 @@
   description: A novel hat with a built in toolkit. Automatically stores and retrieves items at the say of a phrase!
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+      - HeadWearable
   - type: TriggerOnVoice
     defaultKeyPhrase: key-phrase-gadget
     listenRange: 0

@@ -182,7 +182,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+    - BackpackWearable
 
 - type: entity
   parent: ClothingBackpackDuffel
@@ -190,7 +191,8 @@
   abstract: true
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+    - BackpackWearable
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -210,7 +212,8 @@
   abstract: true
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+      - BackpackWearable
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
@@ -230,7 +233,8 @@
   abstract: true
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+      - BackpackWearable
 
 - type: entity
   parent: ClothingBackpackDuffel

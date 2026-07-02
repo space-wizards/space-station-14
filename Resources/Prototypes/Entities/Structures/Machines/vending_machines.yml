@@ -265,6 +265,15 @@
     guides:
     - Bartender
     - Drinks
+  - type: VendingCategory
+    categories:
+      - BarToolCategory
+      - BottleCategory
+      - CanCategory
+      - CartonCategory
+      # - NoAlcoholCategory
+
+
 
 - type: entity
   parent: VendingMachineBooze
@@ -423,6 +432,14 @@
     radius: 1.8
     energy: 3.0
     color: "#3db83b"
+  - type: VendingCategory
+    categories:
+      - BagCategory
+      - HatCategory
+      - SuitCategory
+      - ShoeCategory
+      - GloveCategory
+      - GlassesCategory
 
 - type: entity
   parent: VendingMachine
@@ -1297,6 +1314,11 @@
     radius: 1.5
     energy: 3.0
     color: "#c73434"
+  - type: VendingCategory
+    categories:
+      - HatCategory
+      - SuitCategory
+      - ShoeCategory
 
 - type: entity
   parent: VendingMachine

@@ -1,0 +1,7 @@
+- type: itemCategory
+  id: ShoeCategory
+  name: item-category-shoe
+  icon: ClothingShoesBootsCowboyBrown
+  whitelist:
+    tags:
+      - FeetWearable

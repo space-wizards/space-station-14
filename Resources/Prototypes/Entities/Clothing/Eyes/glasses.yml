@@ -69,6 +69,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -85,6 +86,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -99,6 +101,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -115,6 +118,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -146,6 +150,7 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
   - type: IdentityBlocker
     coverage: EYES
 
@@ -164,6 +169,7 @@
     - PetWearable
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
@@ -186,6 +192,7 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
   - type: GuideHelp
     guides:
     - Security
@@ -211,6 +218,7 @@
     - HamsterWearable
     - PetWearable
     - WhitelistChameleon
+    - GlassesWearable
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
@@ -268,6 +276,7 @@
       tags:
       - PetWearable
       - WhitelistChameleon
+      - GlassesWearable
 
 - type: entity
   parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
@@ -301,3 +310,4 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesWearable

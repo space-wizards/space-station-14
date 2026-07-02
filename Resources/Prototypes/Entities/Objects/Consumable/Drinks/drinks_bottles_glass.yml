@@ -23,6 +23,7 @@
     tags:
     - DrinkBottle
     - Trash
+    - BottledDrink
   - type: Destructible # Same as parent, but spawns BrokenBottle instead of ShardGlass
     thresholds:
     - trigger:
@@ -51,6 +52,7 @@
   - type: Tag
     tags:
     - DrinkBottle
+    - BottledDrink
 
 - type: entity
   abstract: true
@@ -355,6 +357,7 @@
     tags:
     - Wine
     - DrinkBottle
+    - BottledDrink
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassBase]
@@ -481,6 +484,7 @@
     - Wine
     - DrinkBottle
     - Trash
+    - BottledDrink
 
 - type: entity
   parent: DrinkBottleWine
@@ -496,6 +500,7 @@
     tags:
     - Wine
     - DrinkBottle
+    - BottledDrink
 
 - type: entity
   name: nt cahors bottle
@@ -509,6 +514,7 @@
     - Wine
     - DrinkBottle
     - Trash
+    - BottledDrink
 
 - type: entity
   name: nt cahors bottle
@@ -525,6 +531,7 @@
     tags:
     - Wine
     - DrinkBottle
+    - BottledDrink
 
 # Large bottles
 
@@ -551,6 +558,7 @@
     tags:
     - Beer
     - DrinkBottle
+    - BottledDrink
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottleGlassLargeBaseFull]
@@ -592,6 +600,7 @@
   - type: Tag
     tags:
     - Beer
+    - BottledDrink
 
 - type: entity
   parent: DrinkBottleBeer

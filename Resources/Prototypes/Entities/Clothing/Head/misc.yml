@@ -163,6 +163,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - HeadWearable
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
@@ -212,8 +213,9 @@
   description: "NYAH!"
   categories: [ DoNotMap ]
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag # ignore "WhitelistChameleon" tag
+    tags:
+    - HeadWearable
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
@@ -236,8 +238,9 @@
     parent: true
     components:
     - type: KillSign
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Tag # ignore "WhitelistChameleon" tag
+    tags:
+    - HeadWearable
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
@@ -357,6 +360,7 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
+      - HeadWearable
       - WhitelistChameleon
   - type: StaticPrice
     price: 1

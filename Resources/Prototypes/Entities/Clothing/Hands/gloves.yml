@@ -20,6 +20,7 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+    - GloveWearable
 
 - type: entity
   parent: ClothingHandsGlovesBoxingBase
@@ -409,7 +410,8 @@
   suffix: Thieving
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags:  # ignore "WhitelistChameleon" tag
+    - GloveWearable
   - type: Thieving
     stripTimeReduction: 1.5
     stealthy: true
@@ -462,6 +464,7 @@
     tags:
     - Kangaroo
     - WhitelistChameleon
+    - GloveWearable
 
 - type: entity
   parent: [ClothingHandsBase, BaseSecurityContraband]
@@ -521,6 +524,7 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+    - GloveWearable
 
 - type: entity
   parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
@@ -540,6 +544,7 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+    - GloveWearable
 
 - type: entity
   parent: [ClothingHandsBase, BaseGrandTheftContraband]
@@ -567,6 +572,7 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+    - GloveWearable
   - type: StealTarget
     stealGroup: ClothingHandsKnuckleDustersQM
 
@@ -595,6 +601,7 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+    - GloveWearable
   - type: StaticPrice
     price: 2000
 
@@ -690,3 +697,4 @@
   - type: Tag
     tags:
     - Kangaroo
+    - GloveWearable

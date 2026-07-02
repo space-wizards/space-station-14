@@ -1,0 +1,8 @@
+- type: itemCategory
+  id: BagCategory
+  name: item-category-bag
+  icon: ClothingBackpack
+  whitelist:
+    tags:
+    - BackpackWearable
+    - BeltWearable

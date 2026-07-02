@@ -8,6 +8,9 @@
     - outerClothing
   - type: Sprite
     state: icon
+  - type: Tag
+    tags:
+    - TorsoWearable
 
 - type: entity
   abstract: true
@@ -158,6 +161,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
   - type: DamageOnInteractProtection

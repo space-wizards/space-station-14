@@ -48,6 +48,9 @@
   id: Backpack # ConstructionGraph: ClothingBagPet
 
 - type: Tag
+  id: BackpackWearable # Things wearable in the backpack slot
+
+- type: Tag
   id: Balloon # Default value in BalloonPopperComponent. Tagged entities will be viscously maimed by corresponding poppers.
 
 - type: Tag
@@ -60,6 +63,9 @@
   id: Bandana # CargoBounty: BountyBandana
 
 - type: Tag
+  id: BarTool # BarToolCategory ItemCategory
+
+- type: Tag
   id: BaseballBat # CargoBounty: BountyBaseballBat
 
 - type: Tag
@@ -70,6 +76,9 @@
 
 - type: Tag
   id: Bee # CreateEntityTileReaction whitelist on BuzzochloricBees and mode switching (only damages non-bees)
+
+- type: Tag
+  id: BeltWearable # Things wearable in the belt slot
 
 - type: Tag
   id: Beer # CargoBounty: BountyBeer
@@ -158,6 +167,9 @@
 - type: Tag # Used for specifically chemistry bottles.
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
+- type: Tag         # Used for the BottleCategory ItemCategory
+  id: BottledDrink  # and no, i can't use DrinkBottle because it also covers some canned drinks to make them fit in the dispenser
+
 - type: Tag
   id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart
 
@@ -244,6 +256,9 @@
 
 - type: Tag
   id: CarrotFries # CargoBounty: BountyCarrotFries
+
+- type: Tag
+  id: CartonDrink # CartonCategory ItemCategory
 
 - type: Tag # NOT bullets. This is for the cart to load PDA programs.
   id: Cartridge # Storage whitelist: BasePDA
@@ -560,6 +575,9 @@
   id: FakeNukeDisk # Exists so that the fake nuke disk can be blacklisted by storages that blacklist the real disk.
 
 - type: Tag
+  id: FeetWearable # Things wearable in the feet slot
+
+- type: Tag
   id: Figurine # Storage whitelist: BooksBag, BorgModuleService. CargoBounty: BountyFigurine
 
 - type: Tag
@@ -646,6 +664,12 @@
   id: GlassShard # ConstructionGraph: BladedFlatcapBrown, BladedFlatcapGrey, ImprovisedArrow, ImprovisedShotgunShellGraph, Shiv, Spear
 
 - type: Tag
+  id: GlassesWearable # Things wearable in the glasses slot
+
+- type: Tag
+  id: GloveWearable # Things wearable in the glove slot
+
+- type: Tag
   id: Goat # Reproductive partner key
 
 - type: Tag
@@ -724,6 +748,9 @@
 
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
+
+- type: Tag
+  id: HeadWearable # Things wearable in the head slot
 
 - type: Tag
   id: HelmetEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit. PartAssembly: VimHarness. ItemMapper: VimHarness
@@ -1444,6 +1471,9 @@
 
 - type: Tag
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
+
+- type: Tag
+  id: TorsoWearable # Things wearable in the torso (suit) slot
 
 - type: Tag
   id: Tourniquet # Storage whitelist: ClothingBeltMedical

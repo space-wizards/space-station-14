@@ -8,6 +8,7 @@
   components:
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
   - type: HideLayerClothing
     layers:
@@ -40,6 +41,7 @@
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
     - SecurityHelmet
   - type: HideLayerClothing
@@ -202,6 +204,7 @@
     sprite: Clothing/Head/Helmets/spaceninja.rsi
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
   - type: IngestionBlocker
   - type: IdentityBlocker
@@ -282,6 +285,7 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
     - FireHelmet
   - type: HideLayerClothing
@@ -313,6 +317,7 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
+    - HeadWearable
     - WhitelistChameleon
     - FireHelmet
   - type: HideLayerClothing

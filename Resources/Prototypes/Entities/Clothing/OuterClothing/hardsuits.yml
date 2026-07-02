@@ -40,6 +40,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Engineering Hardsuit
 - type: entity
@@ -76,6 +77,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Spationaut Hardsuit
 - type: entity
@@ -110,6 +112,7 @@
     - Hardsuit
     - WhitelistChameleon
     - HardsuitSpatio
+    - TorsoWearable
 
 #Salvage Hardsuit
 - type: entity
@@ -146,6 +149,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Goliath Hardsuit
 - type: entity
@@ -185,6 +189,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Maxim Hardsuit
 - type: entity
@@ -253,6 +258,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Brigmedic Hardsuit
 - type: entity
@@ -347,6 +353,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -385,6 +392,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -416,6 +424,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Research Director's Hardsuit
 - type: entity
@@ -455,6 +464,7 @@
     - WhitelistChameleon
     - HighRiskItem
     - Hardsuit
+    - TorsoWearable
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
   - type: StaticPrice
@@ -569,6 +579,7 @@
     - Hardsuit
     - WhitelistChameleon
     - ScurretWearable
+    - TorsoWearable
   - type: StaticPrice
     price: 5000
 
@@ -589,6 +600,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -634,6 +646,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -672,7 +685,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
-
+    - TorsoWearable
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -709,6 +722,7 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Wizard Hardsuit
 - type: entity
@@ -745,6 +759,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #Ling Space Suit
 - type: entity
@@ -921,6 +936,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - TorsoWearable
 
 #ERT Janitor Hardsuit
 - type: entity

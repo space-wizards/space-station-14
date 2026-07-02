@@ -28,6 +28,7 @@
     - ClothMade
     - Recyclable
     - WhitelistChameleon
+    - TorsoWearable
 
 - type: entity
   abstract: true
