@@ -1,5 +1,7 @@
+using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.NPC.Prototypes;
+using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -78,5 +80,38 @@ namespace Content.Server.Dragon
         /// </summary>
         [DataField]
         public Solution SmokeSolution = new ([new("Blood", 1)]);
+        
+        /// <summary>
+        /// This alert displays how long the dragon has to spawn a rift
+        /// </summary>
+        [DataField]
+        public ProtoId<AlertPrototype> RiftTimerAlert = "DragonRiftTimer";
+
+        /// <summary>
+        /// How often the threshold for the alert icon will be checked (blue/orange/red)
+        /// </summary>
+        [DataField]
+        public TimeSpan RiftTimerThresholdCheckInterval = TimeSpan.FromSeconds(3f);
+
+        /// <summary>
+        /// The time threshold for changing the alert icon color
+        /// </summary>
+        [DataField]
+        public Dictionary<RiftTimerThreshold, float> RiftTimerThresholds = new()
+        {
+            { RiftTimerThreshold.Blue, 300f },
+            { RiftTimerThreshold.Orange, 150f },
+            { RiftTimerThreshold.Red, 60f }
+        };
+    }
+
+    /// <summary>
+    /// The different color thresholds for the rift timer alert
+    /// </summary>
+    public enum RiftTimerThreshold : byte
+    {
+        Blue = 1 << 1,
+        Orange = 1 << 0,
+        Red = 0,
     }
 }
