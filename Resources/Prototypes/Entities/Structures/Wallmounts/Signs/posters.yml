@@ -1028,6 +1028,8 @@
   components:
   - type: Sprite
     state: poster42_legit
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: PosterBase
