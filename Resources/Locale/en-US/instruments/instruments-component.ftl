@@ -17,6 +17,7 @@ instruments-component-band-menu = Choose band leader
 instrument-component-band-refresh = Refresh
 instruments-component-channels-menu = MIDI Channel Selection
 instrument-component-channel-name = MIDI Channel {$number}
+instrument-component-channel-name-percussion = MIDI Channel {$number} [Percussion]
 instruments-component-channels-all-button = All
 instruments-component-channels-clear-button = Clear
 instruments-component-channels-track-names-toggle = Show Track Names
