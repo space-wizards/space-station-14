@@ -4,165 +4,193 @@
   storage:
     back:
     - GlockenspielInstrument
+  groupBy: "keyed"
 
 - type: loadout
   id: MusicBox
   storage:
     back:
     - MusicBoxInstrument
+  groupBy: "special"
 
 - type: loadout
   id: Xylophone
   storage:
     back:
     - XylophoneInstrument
+  groupBy: "special"
 
 - type: loadout
   id: Microphone
   storage:
     back:
     - MicrophoneInstrument
+  groupBy: "special"
 
 - type: loadout
   id: Synthesizer
   storage:
     back:
     - SynthesizerInstrument
+  groupBy: "keyed"
 
 - type: loadout
   id: Kalimba
   storage:
     back:
     - KalimbaInstrument
+  groupBy: "keyed"
 
 - type: loadout
   id: Woodblock
   storage:
     back:
     - WoodblockInstrument
+  groupBy: "keyed"
 
 - type: loadout
   id: ElectricGuitar
   storage:
     back:
     - ElectricGuitarInstrument
+  groupBy: "string"
 
 - type: loadout
   id: BassGuitar
   storage:
     back:
     - BassGuitarInstrument
+  groupBy: "string"
 
 - type: loadout
   id: RockGuitar
   storage:
     back:
     - RockGuitarInstrument
+  groupBy: "string"
 
 - type: loadout
   id: AcousticGuitar
   storage:
     back:
     - AcousticGuitarInstrument
+  groupBy: "string"
 
 - type: loadout
   id: Banjo
   storage:
     back:
     - BanjoInstrument
+  groupBy: "string"
 
 - type: loadout
   id: Violin
   storage:
     back:
     - ViolinInstrument
+  groupBy: "string"
 
 - type: loadout
   id: Viola
   storage:
     back:
     - ViolaInstrument
+  groupBy: "string"
 
 - type: loadout
   id: Cello
   storage:
     back:
     - CelloInstrument
+  groupBy: "string"
 
 - type: loadout
   id: Trumpet
   storage:
     back:
     - TrumpetInstrument
+  groupBy: "brass"
 
 - type: loadout
   id: Trombone
   storage:
     back:
     - TromboneInstrument
+  groupBy: "brass"
 
 - type: loadout
   id: FrenchHorn
   storage:
     back:
     - FrenchHornInstrument
+  groupBy: "brass"
 
 - type: loadout
   id: Euphonium
   storage:
     back:
     - EuphoniumInstrument
+  groupBy: "brass"
 
 - type: loadout
   id: Saxophone
   storage:
     back:
     - SaxophoneInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Accordion
   storage:
     back:
     - AccordionInstrument
+  groupBy: "keyed"
 
 - type: loadout
   id: Harmonica
   storage:
     back:
     - HarmonicaInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Clarinet
   storage:
     back:
     - ClarinetInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Flute
   storage:
     back:
     - FluteInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Recorder
   storage:
     back:
     - RecorderInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: PanFlute
   storage:
     back:
     - PanFluteInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Ocarina
   storage:
     back:
     - OcarinaInstrument
+  groupBy: "woodwind"
 
 - type: loadout
   id: Bagpipe
   storage:
     back:
     - BagpipeInstrument
+  groupBy: "woodwind"
