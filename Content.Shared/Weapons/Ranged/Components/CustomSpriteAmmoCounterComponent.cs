@@ -20,4 +20,10 @@ public sealed partial class CustomSpriteAmmoCounterComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public SpriteSpecifier SpentAmmoSprite;
+
+    /// <summary>
+    /// The number of rows in the ammo counter UI
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int NumberOfRows = 2;
 }

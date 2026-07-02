@@ -269,10 +269,11 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
 
     private const int Separation = 2;
 
-    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite)
+    public CustomBulletRenderer(Texture loadedSprite, Texture spentSprite, int numberOfRows)
     {
         _loadedSprite = loadedSprite;
         _spentSprite = spentSprite;
+        Rows = numberOfRows;
 
         Parameters = new LayoutParameters
         {
