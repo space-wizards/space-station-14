@@ -148,7 +148,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private void OnNamePainted(Entity<PaintableNameComponent> ent, ref EntityPaintedEvent args)
     {
-        if (!Proto.TryIndex<EntityPrototype>(args.Prototype, out var proto))
+        if (!ProtoMan.TryIndex<EntityPrototype>(args.Prototype, out var proto))
             return;
 
         _metaData.SetEntityName(ent, proto.Name);
