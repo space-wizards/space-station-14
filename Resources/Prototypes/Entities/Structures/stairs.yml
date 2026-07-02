@@ -20,7 +20,6 @@
   - type: Anchorable
     flags:
     - Anchorable
-  - type: Rotatable
   - type: Sprite
     sprite: Structures/stairs.rsi
     state: stairs_steel
@@ -30,12 +29,6 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

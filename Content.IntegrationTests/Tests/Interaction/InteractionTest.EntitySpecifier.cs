@@ -80,7 +80,7 @@ public abstract partial class InteractionTest
             StackComponent? stack = null;
             await server.WaitPost(() =>
             {
-                entProto.TryGetComponent(factory.GetComponentName<StackComponent>(), out stack);
+                entProto.TryComp(out stack, factory);
             });
 
             if (stack != null)
@@ -110,7 +110,7 @@ public abstract partial class InteractionTest
         StackComponent? stack = null;
         await Server.WaitPost(() =>
         {
-            entProto.TryGetComponent(Factory.GetComponentName<StackComponent>(), out stack);
+            entProto.TryComp(out stack, Factory);
         });
 
         if (stack != null)

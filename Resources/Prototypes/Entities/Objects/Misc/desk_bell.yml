@@ -15,12 +15,6 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger50
-        !type:DamageTrigger
-        damage: 50
-      behaviors: &OverkillBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger: &DamageTrigger20
         !type:DamageTrigger
         damage: 20
@@ -70,8 +64,6 @@
     node: deskBellNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger20
       behaviors:
       - !type:PlaySoundBehavior
@@ -113,8 +105,6 @@
     node: deskBuzzerNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger20
       behaviors:
       - !type:PlaySoundBehavior
@@ -168,8 +158,6 @@
     node: deskHornNode
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger50
-      behaviors: *OverkillBehavior
     - trigger: *DamageTrigger20
       behaviors:
       - !type:PlaySoundBehavior
