@@ -41,6 +41,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Rounding;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Enumerators;
+using System.Numerics;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -1203,6 +1204,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
             if (canPlaySound)
                 Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
+            if (storageComp.Animation)
+                PlayStorageAnimation(uid, storageComp.AnimationScale, user);
+
             return true;
         }
 
@@ -1232,6 +1236,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         if (canPlaySound)
             Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
+
+        if (storageComp.Animation)
+            PlayStorageAnimation(uid, storageComp.AnimationScale, user);
 
         return true;
     }
@@ -1918,6 +1925,13 @@ public abstract partial class SharedStorageSystem : EntitySystem
     /// </summary>
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
+
+    /// <summary>
+    /// Plays a clientside animation that "squeezes" entity.
+    /// </summary>
+    /// <param name="uid">Entity to squeeze.</param>
+    /// <param name="user">User entity that will be ignored during raising this event on server side.</param>
+    public abstract void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null);
 
     private bool ValidateInput(
         EntitySessionEventArgs args,

@@ -4,7 +4,11 @@ using Content.Client.Animations;
 using Content.Shared.Hands;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.Events;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -13,6 +17,7 @@ namespace Content.Client.Storage.Systems;
 
 public sealed partial class StorageSystem : SharedStorageSystem
 {
+    [Dependency] private AnimationPlayerSystem _animations = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private EntityPickupAnimationSystem _entityPickupAnimation = default!;
@@ -21,12 +26,16 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
     private List<(StorageBoundUserInterface Bui, bool Value)> _queuedBuis = new();
 
+    [Dependency] private EntityQuery<AnimationPlayerComponent> _animationQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StorageComponent, ComponentHandleState>(OnStorageHandleState);
         SubscribeNetworkEvent<PickupAnimationEvent>(HandlePickupAnimation);
+        SubscribeNetworkEvent<StorageAnimationEvent>(HandleStorageAnimation);
         SubscribeAllEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
     }
 
@@ -120,6 +129,48 @@ public sealed partial class StorageSystem : SharedStorageSystem
         PickupAnimation(uid, initialCoordinates, finalCoordinates, initialRotation);
     }
 
+    /// <inheritdoc/>
+    public override void PlayStorageAnimation(EntityUid uid, Vector2 scale, EntityUid? user = null)
+    {
+        if (!_timing.IsFirstTimePredicted || // Checks that this doesn't play twice because of prediction.
+            !_animationQuery.TryComp(uid, out var animations) ||
+            !_spriteQuery.TryComp(uid, out var sprite) ||
+            _animations.HasRunningAnimation(uid, "storage_animation_bounce")) // Throws if we try to play the same animation twice.
+            return;
+
+        var animation = new Animation
+        {
+            Length = TimeSpan.FromMilliseconds(400),
+            AnimationTracks =
+            {
+                new AnimationTrackComponentProperty
+                {
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Scale),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    KeyFrames =
+                    {
+                        // I suppose InQuad is the finest solution here, it's not really fast/slow or too much chaotic, but adds some noise.
+                        // Biggest part of easing don't really different because animation is pretty short, so I don't see huge issues with usage of just quad.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale,
+                            0,
+                            Easings.InQuad), // Start frame with start scale.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale * scale,
+                            0.1f,
+                            Easings.InQuad), // Here we decrease thickness and increase height of sprite.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale,
+                            0.2f,
+                            Easings.InQuad), // Here we return start scale, but because of some shenanigans its cursed (like a 1.23132131 height) so there is two additional keyframes.
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.3f, Easings.InQuad),
+                        new AnimationTrackProperty.KeyFrame(sprite.Scale, 0.4f, Easings.InQuad),
+                    },
+                },
+            },
+        };
+
+        _animations.Play(new Entity<AnimationPlayerComponent>(uid, animations), animation, "storage_animation_bounce");
+    }
+
     private void HandlePickupAnimation(PickupAnimationEvent msg)
     {
         PickupAnimation(GetEntity(msg.ItemUid), GetCoordinates(msg.InitialPosition), GetCoordinates(msg.FinalPosition), msg.InitialAngle);
@@ -140,6 +191,11 @@ public sealed partial class StorageSystem : SharedStorageSystem
         var finalPos = Vector2.Transform(finalMapPos, TransformSystem.GetInvWorldMatrix(initialCoords.EntityId));
 
         _entityPickupAnimation.AnimateEntityPickup(item, initialCoords, finalPos, initialAngle);
+    }
+
+    public void HandleStorageAnimation(StorageAnimationEvent msg)
+    {
+        PlayStorageAnimation(GetEntity(msg.Uid), msg.Scale);
     }
 
     /// <summary>
