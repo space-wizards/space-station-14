@@ -166,7 +166,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         if (_inventorySystem.TryGetSlotEntity(target, slot, out _))
         {
-            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-occupied", ("owner", targetIdentity)));
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-occupied-message", ("owner", targetIdentity)));
             return false;
         }
 
