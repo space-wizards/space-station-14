@@ -7,6 +7,7 @@ using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.Verbs;
+using Content.Client.Viewport;
 using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Input;
@@ -898,8 +899,10 @@ public sealed partial class MappingState : GameplayStateBase
             return null;
         }
 
-        var mapPos = viewport.PixelToMap(position.Position);
-        return GetClickedEntity(mapPos);
+        if (viewport is ScalingViewport svp)
+            return svp.TryScreenToMap(position.Position, out var mapPos) ? GetClickedEntity(mapPos) : null;
+
+        return GetClickedEntity(viewport.PixelToMap(position.Position));
     }
 
     public override void FrameUpdate(FrameEventArgs e)

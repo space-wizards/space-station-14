@@ -5,6 +5,7 @@ using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
+using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
@@ -169,6 +170,9 @@ namespace Content.Client.ContextMenu.UI
                 return false;
 
             if (_combatMode.IsInCombatMode(args.Session?.AttachedEntity))
+                return false;
+
+            if (_eyeManager.MainViewport is ScalingViewport vp && !vp.IsInDrawArea(args.ScreenCoordinates.Position))
                 return false;
 
             var coords = _xform.ToMapCoordinates(args.Coordinates);

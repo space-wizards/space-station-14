@@ -62,7 +62,12 @@ namespace Content.Client.Gameplay
             {
                 case IViewportControl vp:
                     if (_inputManager.MouseScreenPosition.IsValid)
-                        return GetClickedEntity(vp.PixelToMap(_inputManager.MouseScreenPosition.Position));
+                    {
+                        var screenPos = _inputManager.MouseScreenPosition.Position;
+                        return vp is ScalingViewport svp
+                            ? svp.TryScreenToMap(screenPos, out var worldPos) ? GetClickedEntity(worldPos, svp.Eye) : null
+                            : GetClickedEntity(vp.PixelToMap(screenPos));
+                    }
                     return null;
                 case SpriteView sprite:
                     return sprite.Entity;
@@ -226,16 +231,23 @@ namespace Content.Client.Gameplay
             EntityUid? entityToClick = null;
             if (args.Viewport is IViewportControl vp && kArgs.PointerLocation.IsValid)
             {
-                var mousePosWorld = vp.PixelToMap(kArgs.PointerLocation.Position);
+                var screenPos = kArgs.PointerLocation.Position;
+                var svp = vp as ScalingViewport;
 
-                if (vp is ScalingViewport svp)
+                if (svp is not null)
                 {
-                    entityToClick = GetClickedEntity(mousePosWorld, svp.Eye);
+                    if (svp.TryScreenToMap(screenPos, out var worldPos))
+                        entityToClick = GetClickedEntity(worldPos, svp.Eye);
                 }
                 else
                 {
-                    entityToClick = GetClickedEntity(mousePosWorld);
+                    entityToClick = GetClickedEntity(vp.PixelToMap(screenPos));
                 }
+
+                var mousePosWorld = svp is not null
+                    ? svp.ScreenToMap(screenPos)
+                    : vp.PixelToMap(screenPos);
+
                 var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
                 var mapSystem = _entitySystemManager.GetEntitySystem<MapSystem>();
 

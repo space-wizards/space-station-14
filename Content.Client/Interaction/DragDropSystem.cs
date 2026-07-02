@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Outline;
+using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.DragDrop;
@@ -245,7 +246,10 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
                 return;
 
             // pop up drag shadow under mouse
-            var mousePos = _eyeManager.PixelToMap(screenPos);
+            var mousePos = _eyeManager.MainViewport is ScalingViewport vp
+                ? vp.ClampedScreenToMap(screenPos.Position)
+                : _eyeManager.PixelToMap(screenPos);
+
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             _sprite.CopySprite((_draggedEntity.Value, draggedSprite), (_dragShadow.Value, dragSprite));
@@ -425,9 +429,23 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
         // remove current highlights
         RemoveHighlights();
 
+        var mouseScreenPos = _inputManager.MouseScreenPosition;
+        if (!mouseScreenPos.IsValid)
+            return;
+
         // find possible targets on screen even if not reachable
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
-        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+        MapCoordinates mousePos;
+        if (_eyeManager.MainViewport is ScalingViewport vp)
+        {
+            if (!vp.TryScreenToMap(mouseScreenPos.Position, out mousePos))
+                return;
+        }
+        else
+        {
+            mousePos = _eyeManager.PixelToMap(mouseScreenPos);
+        }
+
         var expansion = new Vector2(1.5f, 1.5f);
 
         var bounds = new Box2(mousePos.Position - expansion, mousePos.Position + expansion);
@@ -556,7 +574,12 @@ public sealed partial class DragDropSystem : SharedDragDropSystem
         // Update position every frame to make it smooth.
         if (Exists(_dragShadow))
         {
-            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+            var screenPos = _inputManager.MouseScreenPosition;
+
+            var mousePos = _eyeManager.MainViewport is ScalingViewport vp
+                ? vp.ClampedScreenToMap(screenPos.Position)
+                : _eyeManager.PixelToMap(screenPos);
+
             _transformSystem.SetWorldPosition(_dragShadow.Value, mousePos.Position);
         }
     }

@@ -92,7 +92,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // TODO using targeted actions while combat mode is enabled should NOT trigger attacks.
 
-        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition.Position);
 
         if (mousePos.MapId == MapId.Nullspace)
         {

@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Graphics;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Viewport
@@ -185,7 +179,7 @@ namespace Content.Client.Viewport
             DebugTools.AssertNotNull(_viewport);
 
             var vpSize = _viewport!.Size;
-            var ourSize = (Vector2) PixelSize;
+            var ourSize = (Vector2)PixelSize;
 
             if (FixedStretchSize == null)
             {
@@ -208,13 +202,13 @@ namespace Content.Client.Viewport
                 // Size
                 var pos = (ourSize - size) / 2;
 
-                return (UIBox2i) UIBox2.FromDimensions(pos, size);
+                return (UIBox2i)UIBox2.FromDimensions(pos, size);
             }
             else
             {
                 // Center only, no scaling.
                 var pos = (ourSize - FixedStretchSize.Value) / 2;
-                return (UIBox2i) UIBox2.FromDimensions(pos, FixedStretchSize.Value);
+                return (UIBox2i)UIBox2.FromDimensions(pos, FixedStretchSize.Value);
             }
         }
 
@@ -224,16 +218,16 @@ namespace Content.Client.Viewport
 
             var vpSizeBase = ViewportSize;
             var ourSize = PixelSize;
-            var (ratioX, ratioY) = ourSize / (Vector2) vpSizeBase;
+            var (ratioX, ratioY) = ourSize / (Vector2)vpSizeBase;
             var ratio = Math.Min(ratioX, ratioY);
             var renderScale = 1;
             switch (_renderScaleMode)
             {
                 case ScalingViewportRenderScaleMode.CeilInt:
-                    renderScale = (int) Math.Ceiling(ratio);
+                    renderScale = (int)Math.Ceiling(ratio);
                     break;
                 case ScalingViewportRenderScaleMode.FloorInt:
-                    renderScale = (int) Math.Floor(ratio);
+                    renderScale = (int)Math.Floor(ratio);
                     break;
                 case ScalingViewportRenderScaleMode.Fixed:
                     renderScale = _fixedRenderScale;
@@ -325,7 +319,7 @@ namespace Content.Client.Viewport
             EnsureViewportCreated();
 
             var drawBox = GetDrawBox();
-            var scaleFactor = drawBox.Size / (Vector2) _viewport!.Size;
+            var scaleFactor = drawBox.Size / (Vector2)_viewport!.Size;
 
             if (scaleFactor.X == 0 || scaleFactor.Y == 0)
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.
@@ -342,6 +336,59 @@ namespace Content.Client.Viewport
             }
 
             DebugTools.AssertNotNull(_viewport);
+        }
+
+        /// <summary>
+        /// Checks if the given screen-space pixel position falls within the actual rendered game area.
+        /// </summary>
+        public bool IsInDrawArea(Vector2 screenPos)
+        {
+            var localPos = screenPos - GlobalPixelPosition;
+            var drawBox = GetDrawBox();
+
+            return drawBox.Contains(new Vector2i((int)Math.Floor(localPos.X), (int)Math.Floor(localPos.Y)));
+        }
+
+        /// <summary>
+        /// Tries to convert screen pixel coordinates to map coordinates, but only if the position is within the visible draw area.
+        /// Returns false if the point is outside the draw area.
+        /// </summary>
+        public bool TryScreenToMap(Vector2 screenPos, out MapCoordinates mapCoords)
+        {
+            mapCoords = default;
+
+            if (_eye is null)
+                return false;
+
+            EnsureViewportCreated();
+
+            if (!IsInDrawArea(screenPos))
+                return false;
+
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            var localCoords = Vector2.Transform(screenPos, matrix);
+            mapCoords = _viewport!.LocalToWorld(localCoords);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Converts screen pixel coordinates to map coordinates, clamped to the visible draw area.
+        /// If the point is outside, the result is clamped to the nearest edge.
+        /// </summary>
+        public MapCoordinates ClampedScreenToMap(Vector2 screenPos)
+        {
+            if (_eye is null)
+                return default;
+
+            EnsureViewportCreated();
+
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            var localCoords = Vector2.Transform(screenPos, matrix);
+
+            var clampedLocal = Vector2.Clamp(localCoords, Vector2.Zero, (Vector2)_viewport!.Size);
+
+            return _viewport.LocalToWorld(clampedLocal);
         }
     }
 

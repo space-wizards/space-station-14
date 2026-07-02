@@ -65,7 +65,7 @@ public sealed partial class TetherGunSystem : SharedTetherGunSystem
         }
 
         var mousePos = _input.MouseScreenPosition;
-        var mouseWorldPos = _eyeManager.PixelToMap(mousePos);
+        var mouseWorldPos = _eyeManager.ScreenToMap(mousePos.Position);
 
         if (mouseWorldPos.MapId == MapId.Nullspace)
             return;

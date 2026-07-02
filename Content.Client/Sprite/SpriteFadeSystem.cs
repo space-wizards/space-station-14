@@ -10,6 +10,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Physics;
+using Content.Client.Viewport;
 
 namespace Content.Client.Sprite;
 
@@ -67,7 +68,15 @@ public sealed partial class SpriteFadeSystem : EntitySystem
         if (_uiManager.CurrentlyHovered is IViewportControl vp
             && _inputManager.MouseScreenPosition.IsValid)
         {
-            _points.Add((vp.PixelToMap(_inputManager.MouseScreenPosition.Position), true));
+            if (vp is ScalingViewport svp)
+            {
+                if (svp.TryScreenToMap(_inputManager.MouseScreenPosition.Position, out var mapPos))
+                    _points.Add((mapPos, true));
+            }
+            else
+            {
+                _points.Add((vp.PixelToMap(_inputManager.MouseScreenPosition.Position), true));
+            }
         }
 
         if (TryComp(player, out TransformComponent? playerXform))

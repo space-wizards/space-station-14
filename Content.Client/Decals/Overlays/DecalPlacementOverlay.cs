@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Viewport;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -35,7 +36,12 @@ public sealed partial class DecalPlacementOverlay : Overlay
             return;
 
         var mouseScreenPos = _inputManager.MouseScreenPosition;
-        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
+        if (!mouseScreenPos.IsValid)
+            return;
+
+        var mousePos = _eyeManager.MainViewport is ScalingViewport vp
+            ? vp.ClampedScreenToMap(mouseScreenPos.Position)
+            : _eyeManager.ScreenToMap(mouseScreenPos.Position);
 
         if (mousePos.MapId != args.MapId)
             return;

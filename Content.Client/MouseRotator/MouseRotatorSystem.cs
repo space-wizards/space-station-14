@@ -32,7 +32,7 @@ public sealed partial class MouseRotatorSystem : SharedMouseRotatorSystem
 
         // Get mouse loc and convert to angle based on player location
         var coords = _input.MouseScreenPosition;
-        var mapPos = _eye.PixelToMap(coords);
+        var mapPos = _eye.ScreenToMap(coords.Position);
 
         if (mapPos.MapId == MapId.Nullspace)
             return;

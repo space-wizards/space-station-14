@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Actions;
 using Content.Client.Decals.Overlays;
+using Content.Client.Viewport;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Decals;
@@ -9,6 +10,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Decals;
@@ -20,6 +22,8 @@ public sealed partial class DecalPlacementSystem : EntitySystem
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedMapSystem _maps = default!;
@@ -57,24 +61,42 @@ public sealed partial class DecalPlacementSystem : EntitySystem
                 if (!_active || _placing || _decalId == null)
                     return false;
 
+                if (!_inputManager.MouseScreenPosition.IsValid)
+                    return false;
+
                 _placing = true;
+
+                var mousePos = _eyeManager.MainViewport is ScalingViewport vp
+                    ? vp.ClampedScreenToMap(_inputManager.MouseScreenPosition.Position)
+                    : _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition.Position);
+
+                if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+                {
+                    _placing = false;
+                    return false;
+                }
+
+                var finalCoords = _transform.ToCoordinates(gridUid, mousePos);
 
                 if (_snap)
                 {
                     var newPos = new Vector2(
-                        (float) (MathF.Round(coords.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
-                        (float) (MathF.Round(coords.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
+                        (float)(MathF.Round(finalCoords.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
+                        (float)(MathF.Round(finalCoords.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
                     );
-                    coords = coords.WithPosition(newPos);
+                    finalCoords = finalCoords.WithPosition(newPos);
                 }
 
-                coords = coords.Offset(new Vector2(-0.5f, -0.5f));
+                finalCoords = finalCoords.Offset(new Vector2(-0.5f, -0.5f));
 
-                if (!coords.IsValid(EntityManager))
+                if (!finalCoords.IsValid(EntityManager))
+                {
+                    _placing = false;
                     return false;
+                }
 
-                var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(coords)));
+                var decal = new Decal(finalCoords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(finalCoords)));
 
                 return true;
             },
@@ -92,9 +114,23 @@ public sealed partial class DecalPlacementSystem : EntitySystem
                 if (!_active || _erasing)
                     return false;
 
+                if (!_inputManager.MouseScreenPosition.IsValid)
+                    return false;
+
                 _erasing = true;
 
-                RaiseNetworkEvent(new RequestDecalRemovalEvent(GetNetCoordinates(coords)));
+                var mousePos = _eyeManager.MainViewport is ScalingViewport vp
+                    ? vp.ClampedScreenToMap(_inputManager.MouseScreenPosition.Position)
+                    : _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition.Position);
+
+                if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+                {
+                    _erasing = false;
+                    return false;
+                }
+
+                var finalCoords = _transform.ToCoordinates(gridUid, mousePos);
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(GetNetCoordinates(finalCoords)));
 
                 return true;
             }, (session, coords, uid) =>

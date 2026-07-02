@@ -52,7 +52,7 @@ public sealed class GunSpreadOverlay : Overlay
             return;
 
         var mouseScreenPos = _input.MouseScreenPosition;
-        var mousePos = _eye.PixelToMap(mouseScreenPos);
+        var mousePos = _eye.ScreenToMap(mouseScreenPos.Position);
 
         if (mapPos.MapId != mousePos.MapId)
             return;

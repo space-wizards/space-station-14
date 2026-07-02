@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Viewport;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Robust.Client.GameObjects;
@@ -125,9 +126,25 @@ public sealed partial class TargetOutlineSystem : EntitySystem
         // remove current highlights
         RemoveHighlights();
 
+        var mouseScreenPos = _inputManager.MouseScreenPosition;
+        if (!mouseScreenPos.IsValid)
+            return;
+
+        Vector2 mousePos;
+        if (_eyeManager.MainViewport is ScalingViewport vp)
+        {
+            if (!vp.TryScreenToMap(mouseScreenPos.Position, out var mapCoords))
+                return;
+
+            mousePos = mapCoords.Position;
+        }
+        else
+        {
+            mousePos = _eyeManager.PixelToMap(mouseScreenPos).Position;
+        }
+
         // find possible targets on screen
         // TODO: Duplicated in SpriteSystem and DragDropSystem. Should probably be cached somewhere for a frame?
-        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition).Position;
         var bounds = new Box2(mousePos - LookupVector, mousePos + LookupVector);
         var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentEye.Position.MapId, bounds, LookupFlags.Approximate | LookupFlags.Static);
 
