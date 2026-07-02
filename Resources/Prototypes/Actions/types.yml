@@ -109,6 +109,7 @@
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
   components:
+  - type: DangerousAction
   - type: Action
     itemIconStyle: BigAction
     priority: -20
