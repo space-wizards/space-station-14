@@ -17,8 +17,12 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// </summary>
     private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
 
+    private const string SawmillCategory = "midilibrary";
+
     [Dependency] private IResourceManager _resManager = default!;
     [Dependency] private ILogManager _logManager = default!;
+
+    private ISawmill _sawmill = default!;
 
     private readonly List<string> _fileList = [];
 
@@ -42,6 +46,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     {
         EnsureMidiDirectoryExists();
         ReloadLibrary();
+        _sawmill = _logManager.GetSawmill(SawmillCategory);
     }
 
     /// <summary>
@@ -58,9 +63,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
         }
         catch (Exception e)
         {
-            _logManager
-                .GetSawmill("midilibrary")
-                .Error($"Failed to read MIDI data from '{fileName}': {e.Message}");
+            _sawmill.Error($"Failed to read MIDI data from '{fileName}': {e.Message}");
             return [];
         }
     }
@@ -92,9 +95,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
         }
         catch (Exception e)
         {
-            _logManager
-                .GetSawmill("midilibrary")
-                .Error($"Failed to store MIDI file '{fileName}' in library: {e.Message}");
+            _sawmill.Error($"Failed to store MIDI file '{fileName}' in library: {e.Message}");
             return false;
         }
     }
@@ -133,9 +134,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
         }
         catch (Exception e)
         {
-            _logManager
-                .GetSawmill("midilibrary")
-                .Error($"Failed to rename MIDI file '{oldName}' with '{newName}': {e.Message}");
+            _sawmill.Error($"Failed to rename MIDI file '{oldName}' with '{newName}': {e.Message}");
             return false;
         }
     }
