@@ -23,6 +23,7 @@ namespace Content.Server.Power.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentStartup>(OnReceiverStartup);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExaminedEvent>(OnExamined);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
@@ -36,6 +37,11 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentGetState>(OnGetState);
+        }
+
+        private void OnReceiverStartup(Entity<ApcPowerReceiverComponent> ent, ref ComponentStartup args)
+        {
+            ent.Comp.PowerDisabled = ent.Comp.StartingPowerDisabled;
         }
 
         private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
