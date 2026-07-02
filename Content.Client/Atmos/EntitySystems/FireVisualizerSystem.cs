@@ -1,7 +1,10 @@
 using Content.Client.Atmos.Components;
+using Content.Client.DisplacementMap;
 using Content.Shared.Atmos;
+using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.EntitySystems;
@@ -12,6 +15,8 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
     [Dependency] private PointLightSystem _lights = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -65,6 +70,7 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
 
         AppearanceSystem.TryGetData<bool>(uid, FireVisuals.OnFire, out var onFire, appearance);
         AppearanceSystem.TryGetData<float>(uid, FireVisuals.FireStacks, out var fireStacks, appearance);
+        AppearanceSystem.TryGetData<string?>(uid, FireVisuals.FireDisplacement, out var fireDisplacement, appearance);
         SpriteSystem.LayerSetVisible((uid, sprite), index, onFire);
 
         if (!onFire)
@@ -82,6 +88,16 @@ public sealed partial class FireVisualizerSystem : VisualizerSystem<FireVisualsC
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.AlternateState);
         else
             SpriteSystem.LayerSetRsiState((uid, sprite), index, component.NormalState);
+
+        if (component.Displacement != fireDisplacement)
+        {
+            if (fireDisplacement != null && _prototype.Resolve<DisplacementDataPrototype>(fireDisplacement, out var displacementProto))
+                _displacement.TryAddDisplacement(displacementProto.Displacement, (uid, sprite), index, FireVisualLayers.Fire, out _);
+            else
+                _displacement.EnsureDisplacementIsNotOnSprite((uid, sprite), FireVisualLayers.Fire);
+
+            component.Displacement = fireDisplacement;
+        }
 
         component.LightEntity ??= Spawn(null, new EntityCoordinates(uid, default));
         var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);

@@ -66,6 +66,20 @@ public sealed partial class DamageableSystem : EntitySystem
                 new DamageVisualizerGroupData(ent.Comp.DamagePerGroup.Keys.ToList()),
                 appearance
             );
+
+            if (ent.Comp.Displacement != null)
+            {
+                _appearance.SetData(
+                    ent,
+                    DamageVisualizerKeys.Displacement,
+                    ent.Comp.Displacement.Value.Id,
+                    appearance
+                );
+            }
+            else
+            {
+                _appearance.RemoveData(ent, DamageVisualizerKeys.Displacement);
+            }
         }
 
         // TODO DAMAGE

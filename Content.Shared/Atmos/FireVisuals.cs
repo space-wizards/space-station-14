@@ -7,5 +7,6 @@ namespace Content.Shared.Atmos
     {
         OnFire,
         FireStacks,
+        FireDisplacement,
     }
 }

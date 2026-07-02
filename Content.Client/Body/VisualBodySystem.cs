@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
@@ -73,6 +74,16 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetData(target, index, ent.Comp.Data);
+
+        var displacement = ent.Comp.Displacement;
+        if (displacement != null && _prototype.Resolve(displacement, out var displacementProto))
+        {
+            _displacement.TryAddDisplacement(displacementProto.Displacement,
+                (target, Comp<SpriteComponent>(target)),
+                index,
+                ent.Comp.Layer,
+                out _);
+        }
     }
 
     private void RemoveVisual(Entity<VisualOrganComponent> ent, EntityUid target)
@@ -81,6 +92,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetRsiState(target, index, RSI.StateId.Invalid);
+
+        _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer);
     }
 
     private void OnMarkingsGotInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)
