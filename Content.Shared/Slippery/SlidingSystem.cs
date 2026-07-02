@@ -36,7 +36,7 @@ public sealed partial class SlidingSystem : EntitySystem
     private void OnComponentInit(Entity<SlidingComponent> entity, ref ComponentInit args)
     {
         if (CalculateSlidingModifier(entity))
-            _speedModifierSystem.RefreshFrictionModifiers(entity);
+            _speedModifierSystem.RefreshFrictionModifiers(entity.Owner);
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed partial class SlidingSystem : EntitySystem
     private void OnComponentShutdown(Entity<SlidingComponent> entity, ref ComponentShutdown args)
     {
         entity.Comp.FrictionModifier = 1;
-        _speedModifierSystem.RefreshFrictionModifiers(entity);
+        _speedModifierSystem.RefreshFrictionModifiers(entity.Owner);
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ public sealed partial class SlidingSystem : EntitySystem
             return;
 
         CalculateSlidingModifier(entity);
-        _speedModifierSystem.RefreshFrictionModifiers(entity);
+        _speedModifierSystem.RefreshFrictionModifiers(entity.Owner);
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public sealed partial class SlidingSystem : EntitySystem
             return;
         }
 
-        _speedModifierSystem.RefreshFrictionModifiers(entity);
+        _speedModifierSystem.RefreshFrictionModifiers(entity.Owner);
     }
 
     /// <summary>
