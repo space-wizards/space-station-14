@@ -1,0 +1,177 @@
+- type: constructionGraph
+  id: WindowDirectionalCorner
+  start: start
+  graph:
+    - node: start
+      edges:
+
+        - to: windowDirectionalCorner
+          steps:
+            - material: Glass
+              amount: 1
+              doAfter: 2
+
+        - to: windowReinforcedDirectionalCorner
+          steps:
+            - material: ReinforcedGlass
+              amount: 1
+              doAfter: 3
+
+        - to: plasmaWindowDirectionalCorner
+          steps:
+            - material: PlasmaGlass
+              amount: 1
+              doAfter: 2
+
+        - to: plasmaReinforcedWindowDirectionalCorner
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 1
+              doAfter: 3
+
+        - to: uraniumWindowDirectionalCorner
+          steps:
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 2
+
+        - to: uraniumReinforcedWindowDirectionalCorner
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 1
+              doAfter: 3
+
+        - to: windowClockworkDirectionalCorner
+          steps:
+            - material: ClockworkGlass
+              amount: 1
+              doAfter: 3
+
+    - node: windowDirectionalCorner
+      entity: WindowDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: windowReinforcedDirectionalCorner
+      entity: WindowReinforcedDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetRGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: plasmaWindowDirectionalCorner
+      entity: PlasmaWindowDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetPGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: windowClockworkDirectionalCorner
+      entity: WindowClockworkDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetClockworkGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: plasmaReinforcedWindowDirectionalCorner
+      entity: PlasmaReinforcedWindowDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetRPGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumWindowDirectionalCorner
+      entity: UraniumWindowDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetUGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumReinforcedWindowDirectionalCorner
+      entity: UraniumReinforcedWindowDirectionalCorner
+      edges:
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetRUGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
