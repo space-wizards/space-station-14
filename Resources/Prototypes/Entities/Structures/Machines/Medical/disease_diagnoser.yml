@@ -37,7 +37,7 @@
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_virus.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 6.0
+    headerMargin: 0.0, 6.0, 0.0, 0.0
     backgroundImageTile: true
     backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
     contentMargin: 12.0, 0.0, 12.0, 0.0
