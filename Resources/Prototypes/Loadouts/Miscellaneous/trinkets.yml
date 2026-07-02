@@ -1,13 +1,3 @@
-# Timers
-- type: loadoutEffectGroup
-  id: Command
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 1h
-
 # Flowers
 - type: loadout
   id: FlowerWreath
@@ -90,7 +80,7 @@
   id: CigarCase
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - CigarCase
@@ -100,7 +90,7 @@
   id: CigarGold
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - CigarGold
@@ -125,7 +115,7 @@
   id: BoxFolderClipboardThreePapers
   effects:
   - !type:GroupLoadoutEffect
-    proto: Command
+    proto: CommandStarter
   storage:
     back:
     - BoxFolderClipboardThreePapers
@@ -277,11 +267,8 @@
 - type: loadout
   id: OffsetCaneClown
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobClown
-      time: 3600 # 1hr
+  - !type:GroupLoadoutEffect
+    proto: ClownStarter
   storage:
     back:
     - OffsetCaneClown
@@ -290,11 +277,8 @@
 - type: loadout
   id: OffsetCaneMime
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobMime
-      time: 3600 # 1hr
+  - !type:GroupLoadoutEffect
+    proto: MimeStarter
   storage:
     back:
     - OffsetCaneMime
@@ -303,11 +287,8 @@
 - type: loadout
   id: OffsetCaneNT
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 18000 # 5hr
+  - !type:GroupLoadoutEffect
+    proto: CommandStarter
   storage:
     back:
     - OffsetCaneNT
@@ -316,11 +297,8 @@
 - type: loadout
   id: Cane
   effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobLibrarian
-      time: 3600 # 1hr same as Jamjar.
+  - !type:GroupLoadoutEffect
+    proto: LibrarianStarter
   storage:
     back:
     - Cane

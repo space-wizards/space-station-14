@@ -1,0 +1,282 @@
+# If you are adding a new unlock, please follow these guidelines:
+
+# Departmental:
+# 5h overall - Past the learning stage, small reward as encouragement. Clothing cosmetics. "Starter"
+# 15h overall, of which 6h in 1 sub-job - Experienced unlock, Senior items. "Senior"
+# 30h overall - Capstone unlock for engaged players. Personalized to the job, with pizzaz. "Capstone"
+
+# Individual jobs/sub-job:
+# 3h - Past the learning stage, small reward as encouragement. Clothing cosmetics. "Starter"
+# 10h - Experienced unlock, 10h to experience most what a role has to offer. Senior items. "Senior"
+# 30h - Capstone unlock for engaged players. Personalized to the job, with pizzaz. "Capstone"
+
+# Naming convention: Department/Job + Stage. E.g. "JanitorCapstone"
+# Avoid straying away from these guidelines, reuse where possible.
+
+# Cargo
+
+- type: loadoutEffectGroup
+  id: CargoStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 5h
+
+- type: loadoutEffectGroup
+  id: CargoSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 15h
+
+- type: loadoutEffectGroup
+  id: QuartermasterSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobQuartermaster
+      time: 10h
+
+# Civilian
+
+- type: loadoutEffectGroup
+  id: BartenderCapstone
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 30h
+
+- type: loadoutEffectGroup
+  id: BotanyStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBotanist
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: ClownStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: JanitorCapstone
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobJanitor
+      time: 30h
+
+- type: loadoutEffectGroup
+  id: LibrarianStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: MimeStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: PassengerStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: PassengerSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 10h
+
+# Command
+
+- type: loadoutEffectGroup
+  id: CommandStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 5h
+
+- type: loadoutEffectGroup
+  id: CaptainStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: CaptainSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 10h
+
+- type: loadoutEffectGroup
+  id: HeadOfPersonnelSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 10h
+
+- type: loadoutEffectGroup
+  id: HeadOfPersonnelCapstone
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfPersonnel
+      time: 30h
+
+# Engineering
+
+- type: loadoutEffectGroup
+  id: EngineeringSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 15h
+
+- type: loadoutEffectGroup
+  id: ChiefEngineerSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 10h
+
+# Medical
+
+- type: loadoutEffectGroup
+  id: MedicalStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 5h
+
+- type: loadoutEffectGroup
+  id: MedicalSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist # More distinct gameplay than Paramedic
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 15h
+
+- type: loadoutEffectGroup
+  id: ChiefMedicalOfficerSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 10h
+
+# Science
+
+- type: loadoutEffectGroup
+  id: ScienceSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement # Science has no sub-jobs, so we just put the full time
+      department: Science
+      time: 15h
+
+- type: loadoutEffectGroup
+  id: ResearchDirectorSenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobResearchDirector
+      time: 10h
+
+# Security
+
+- type: loadoutEffectGroup
+  id: SecuritySenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden # More distinct gameplay than Detective
+      time: 6h
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 15h
+
+- type: loadoutEffectGroup
+  id: SecurityCapstone
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 30h
+
+- type: loadoutEffectGroup
+  id: HeadOfSecuritySenior
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 10h
