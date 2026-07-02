@@ -56,8 +56,11 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
             var filePath = new ResPath(UserMidiDirectory + fileName);
             return _resManager.UserData.ReadAllBytes(filePath);
         }
-        catch
+        catch (Exception e)
         {
+            _logManager
+                .GetSawmill("midilibrary")
+                .Error($"Failed to read MIDI data from '{fileName}': {e.Message}");
             return [];
         }
     }
@@ -89,7 +92,9 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
         }
         catch (Exception e)
         {
-            _logManager.GetSawmill("midilibrary").Error($"Exception on trying to store file '{fileName}' in MIDI library: {e.Message}");
+            _logManager
+                .GetSawmill("midilibrary")
+                .Error($"Failed to store MIDI file '{fileName}' in library: {e.Message}");
             return false;
         }
     }
@@ -111,7 +116,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <param name="oldName">Current file name</param>
     /// <param name="newName">New file name</param>
     /// <remarks>Raises <see cref="MidiFileRemoved"/> and <see cref="MidiFileAdded"/> on success.</remarks>
-    public void RenameMidiFile(string oldName, string newName)
+    public bool RenameMidiFile(string oldName, string newName)
     {
         try
         {
@@ -124,10 +129,14 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
             MidiFileRemoved?.Invoke(oldName);
             _fileList.Add(newName);
             MidiFileAdded?.Invoke(newName);
+            return true;
         }
-        catch
+        catch (Exception e)
         {
-            // ignored
+            _logManager
+                .GetSawmill("midilibrary")
+                .Error($"Failed to rename MIDI file '{oldName}' with '{newName}': {e.Message}");
+            return false;
         }
     }
 
