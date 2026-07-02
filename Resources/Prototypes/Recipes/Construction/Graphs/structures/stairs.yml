@@ -1,0 +1,166 @@
+- type: constructionGraph
+  id: Stairs
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: stairs
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsStage
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsWhite
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsStageWhite
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsDark
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsStageDark
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: Steel
+              amount: 5
+              doAfter: 2
+        - to: stairsWood
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 2
+        - to: stairsStageWood
+          completed:
+            - !type:SnapToGrid
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 2
+
+    - node: stairs
+      entity: Stairs
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsStage
+      entity: StairStage
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsWhite
+      entity: StairWhite
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsStageWhite
+      entity: StairStageWhite
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsDark
+      entity: StairDark
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsStageDark
+      entity: StairStageDark
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsWood
+      entity: StairWood
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+    - node: stairsStageWood
+      entity: StairStageWood
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
