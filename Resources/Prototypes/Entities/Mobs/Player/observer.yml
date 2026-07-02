@@ -104,7 +104,7 @@
   - type: NightVision
     netsync: false
     enabled: false
-    lightingColor: '#FFFFFF25'
+    lightingColor: '#FFFFFF20'
     overlayColor: '#FFFFFF00'
     noiseAmount: 0 # In case default values change
     noiseMultiplier: 0 # In case default values change

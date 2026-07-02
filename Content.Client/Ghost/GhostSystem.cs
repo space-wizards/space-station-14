@@ -84,15 +84,13 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            TryComp<NightVisionComponent>(uid, out var nv);
-
             if (!component.DrawLight)
             {
                 // normal lighting
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
                 _contentEye.RequestEye(component.DrawFov, true);
             }
-            else if (!nv?.Enabled ?? false)
+            else if (TryComp<NightVisionComponent>(uid, out var nv) && !nv.Enabled)
             {
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-half-bright"), args.Performer);
                 _nv.SetEnabled((uid, nv), true);
