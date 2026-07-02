@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
@@ -24,6 +25,7 @@ public abstract partial class SharedXenoArtifactSystem
         XATRelayLocalEvent<InteractHandEvent>();
         XATRelayLocalEvent<ReactionEntityEvent>();
         XATRelayLocalEvent<LandEvent>();
+        XATRelayLocalEvent<BeingMicrowavedEvent>();
 
         // special case this one because we need to order the messages
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
