@@ -122,6 +122,7 @@ public abstract partial class SharedGunSystem
 
         // Update the visuals.
         Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, newShots != 0, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.IsFull, newShots == newCapacity, appearance);
         Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, newShots, appearance);
         if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
             Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, newCapacity, appearance);

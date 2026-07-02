@@ -1,0 +1,74 @@
+- type: entity
+  parent: [BaseItem, BaseXenoborgContraband]
+  id: WeaponOilGun
+  name: oil gun
+  description: This gun launches ampoules of xenoborg oil to make organics slip or become flammable if hit with a direct hit. It comes with a tiny flame to light them on fire!
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/oilgun.rsi
+    layers:
+    - state: icon
+    - state: flame
+      shader: unshaded
+    - state: mag-5
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: reloading
+      map: ["reloading"]
+      visible: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.IsFull:
+        reloading:
+          True: {visible: false}
+          False: {visible: true}
+  - type: Item
+    size: Large
+  # - type: CustomSpriteAmmoCounter
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 5
+    projectileSpeed: 30
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/magnetic_shot.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty_beep.ogg
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2.5
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: XenoborgOilChemistryAmpoule
+    capacity: 5
+    count: 5
+  - type: IgniteOnMeleeHit
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    damage:
+      types:
+        Heat: 8
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    soundNoDamage:
+      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+      params:
+        variation: 0.250
+        volume: -12
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: IgnitionSource
+    ignited: true
+    temperature: 700
+  - type: PointLight
+    radius: 1.5
+    color: lightblue

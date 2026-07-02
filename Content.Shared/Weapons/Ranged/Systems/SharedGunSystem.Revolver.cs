@@ -338,6 +338,7 @@ public partial class SharedGunSystem
 
         var count = GetRevolverCount(ent.Comp);
         Appearance.SetData(ent, AmmoVisuals.HasAmmo, count != 0, appearance);
+        Appearance.SetData(ent, AmmoVisuals.IsFull, count == ent.Comp.Capacity, appearance);
         Appearance.SetData(ent, AmmoVisuals.AmmoCount, count, appearance);
         Appearance.SetData(ent, AmmoVisuals.AmmoMax, ent.Comp.Capacity, appearance);
     }
