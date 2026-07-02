@@ -3,7 +3,9 @@ using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
@@ -32,6 +34,7 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     private static readonly ProtoId<SiliconLawsetPrototype> DefaultCrewLawset = "Crewsimov";
 
@@ -80,6 +83,8 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
     {
+        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{ent.Owner} laws at MindAdded are [{ent.Comp.Lawset?.LoggingString()}]");
+
         if (!ent.Comp.Subverted)
             return;
         EnsureSubvertedSiliconRole(args.Mind);
@@ -247,6 +252,10 @@ public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
     public override void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
     {
         base.NotifyLawsChanged(uid, cue);
+
+        if (!TryComp<SiliconLawProviderComponent>(uid, out var lawProvider))
+            return;
+        _adminLogger.Add(LogType.SiliconLaw, LogImpact.Low, $"{uid} laws changed to [{lawProvider.Lawset?.LoggingString()}]");
 
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
