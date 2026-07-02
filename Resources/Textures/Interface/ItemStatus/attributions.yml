@@ -1,0 +1,14 @@
+- files: ["Tiles/*.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Samuka-C"
+  source: "https://github.com/space-wizards/space-station-14/pull/44368"
+
+- files: ["Shotgun Shells/*.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Samuka-C"
+  source: "???"
+
+- files: ["Sniper Cartriges/*.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Samuka-C"
+  source: "???"
