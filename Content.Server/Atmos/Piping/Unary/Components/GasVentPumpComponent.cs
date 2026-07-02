@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Guidebook;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
@@ -69,6 +70,21 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         [AutoPausedField]
         public TimeSpan ManualLockoutReenabledAt;
+
+        /// <summary>
+        /// Length of time that a vent will be forced into under-pressure lockout after experiencing a
+        /// monstermos depressurization.
+        /// </summary>
+        [DataField]
+        public TimeSpan ForcedPressureLockoutTime = TimeSpan.FromSeconds(5);
+
+        /// <summary>
+        /// The time when the forced pressure lockdown will expire, and the vent will operate normally.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoPausedField]
+        public TimeSpan ForcedPressureLockoutExpireAtTime = TimeSpan.Zero;
+
         /// <summary>
         /// How long the lockout should remain manually disabled after being interacted with.
         /// </summary>
