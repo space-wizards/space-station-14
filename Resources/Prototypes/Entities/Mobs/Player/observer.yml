@@ -101,15 +101,10 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
-  - type: PointLight
-    netsync: false
-    radius: 6
-    castShadows: false
-    enabled: false
   - type: NightVision
     netsync: false
     enabled: false
-    lightingColor: '#FFFFFF20'
+    lightingColor: '#FFFFFF25'
     overlayColor: '#FFFFFF00'
     noiseAmount: 0 # In case default values change
     noiseMultiplier: 0 # In case default values change
