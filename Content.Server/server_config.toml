@@ -22,9 +22,9 @@ max_connections = 256
 
 [game]
 # Name of the server. This is what will be displayed in the server list and lobby.
-hostname = "MyServer"
+hostname = "TonyStation"
 # Description of the server. This is what will be displayed in the server list.
-desc = "Just another server, don't mind me!"
+desc = "This server is evil!"
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
 # Controls the lobby timer in seconds.
