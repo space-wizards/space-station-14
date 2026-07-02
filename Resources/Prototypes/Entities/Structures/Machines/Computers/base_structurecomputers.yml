@@ -27,30 +27,18 @@
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: generic
-    - map: ["computerLayerKeys"]
-      state: generic_keys
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
+    - map: ["enum.ComputerVisualLayers.Frame"]
+    - map: ["enum.ComputerVisualLayers.Keyboard"]
+    - map: ["enum.ComputerVisualLayers.Screen"]
+    - map: ["enum.ComputerVisualLayers.Keys"]
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ComputerVisuals
+    stateFrame: computer
+    stateKeyboard: generic_keyboard
+    stateScreen: generic
+    stateKeys: generic_keys
+    statePanel: generic_panel_open
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.ComputerVisuals.Powered:
-        computerLayerScreen:
-          True: { visible: true, shader: unshaded }
-          False: { visible: false }
-        computerLayerKeys:
-          True: { visible: true, shader: unshaded }
-          False: { visible: true, shader: shaded }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
