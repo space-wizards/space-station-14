@@ -34,13 +34,32 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// </summary>
     private static readonly Dictionary<char, string> CharStatePairs = new()
         {
+            { '<', "angle-l" },
+            { '>', "angle-r" },
+            {'\'', "apostrophe" },
+            {'\\', "backslash" },
+            { ' ', "blank" },
+            { '[', "bracket-l" },
+            { ']', "bracket-r" },
+            { '^', "caret" },
             { ':', "colon" },
-            { '!', "exclamation" },
-            { '?', "question" },
-            { '*', "star" },
-            { '+', "plus" },
+            { ',', "comma" },
             { '-', "dash" },
-            { ' ', "blank" }
+            { '=', "equals" },
+            { '!', "exclamation" },
+            { '#', "hash" },
+            { '(', "paren-l" },
+            { ')', "paren-r" },
+            { '%', "percent" },
+            { '.', "period" },
+            { '+', "plus" },
+            { '?', "question" },
+            { '"', "quotation" },
+            { ';', "semicolon" },
+            { '/', "slash" },
+            { '$', "speso" },
+            { '*', "star" },
+            { '_', "underscore" },
         };
 
     private const string DefaultState = "blank";
@@ -53,47 +72,82 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     ///     A string prefix for all timer layers.
     /// </summary>
     private const string TimerMapKey = "timerMapKey";
+
+    /// <summary>
+    ///     The path to the RSI containing the text sprites.
+    /// </summary>
     private const string TextPath = "Effects/text.rsi";
+
+    /// <summary>
+    ///     The width of an individual character, in pixels.
+    /// </summary>
     private const int CharWidth = 4;
+
+    /// <summary>
+    ///     The maximum number of characters to display per line when scrolled.
+    /// </summary>
+    private const int MaxScrollingCharacters = 32;
+
+    /// <summary>
+    ///     The longest that a message should take to cross the screen before wrapping around.
+    /// </summary>
+    private static readonly TimeSpan MaxMessageScrollTime = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    ///     The longest that it should take to scroll one pixel on a screen.
+    /// </summary>
+    private static readonly TimeSpan MaxPixelScrollTime = TimeSpan.FromMilliseconds(100);
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
-
         UpdatesOutsidePrediction = true;
     }
 
-    private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<TextScreenVisualsComponent> ent, ref ComponentInit args)
     {
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (!TryComp(ent, out SpriteComponent? sprite))
             return;
 
         // awkward to specify a textoffset of e.g. 0.1875 in the prototype
-        component.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TextOffset);
-        component.TimerOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, component.TimerOffset);
+        ent.Comp.TextOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, ent.Comp.TextOffset);
+        ent.Comp.TimerOffset = Vector2.Multiply(TextScreenVisualsComponent.PixelSize, ent.Comp.TimerOffset);
 
-        ResetText(uid, component, sprite);
-        BuildTextLayers(uid, component, sprite);
+        ResetText(ent, ent.Comp, sprite);
+        BuildTextLayers(ent, ent.Comp, sprite);
     }
 
     /// <summary>
     ///     Instantiates <see cref="SpriteComponent.Layers"/> with {<see cref="TimerMapKey"/> + int : <see cref="DefaultState"/>} pairs.
     /// </summary>
-    private void OnTimerInit(EntityUid uid, TextScreenTimerComponent timer, ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnTimerInit(Entity<TextScreenTimerComponent> ent, ref ComponentInit args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<TextScreenVisualsComponent>(uid, out var screen))
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || !TryComp<TextScreenVisualsComponent>(ent, out var screen))
             return;
 
         for (var i = 0; i < screen.RowLength; i++)
         {
-            SpriteSystem.LayerMapReserve((uid, sprite), TimerMapKey + i);
-            timer.LayerStatesToDraw.Add(TimerMapKey + i, null);
-            SpriteSystem.LayerSetRsi((uid, sprite), TimerMapKey + i, new ResPath(TextPath));
-            SpriteSystem.LayerSetColor((uid, sprite), TimerMapKey + i, screen.Color);
-            SpriteSystem.LayerSetRsiState((uid, sprite), TimerMapKey + i, DefaultState);
+            SpriteSystem.LayerMapReserve((ent, sprite), TimerMapKey + i);
+            ent.Comp.LayerStatesToDraw.Add(TimerMapKey + i, null);
+            SpriteSystem.LayerSetRsi((ent, sprite), TimerMapKey + i, new ResPath(TextPath));
+            SpriteSystem.LayerSetColor((ent, sprite), TimerMapKey + i, screen.Color);
+            SpriteSystem.LayerSetRsiState((ent, sprite), TimerMapKey + i, DefaultState);
+        }
+    }
+
+    /// <summary>
+    ///     Handles non-trivial pause timing for scrolling.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnUnpaused(Entity<TextScreenVisualsComponent> ent, ref EntityUnpausedEvent args)
+    {
+        for (int i = 0; i < ent.Comp.NextScrollTime.Length; i++)
+        {
+            if (ent.Comp.NextScrollTime[i] != TimeSpan.MaxValue) // Reserved value, should stay at max.
+                ent.Comp.NextScrollTime[i] += args.PausedTime;
         }
     }
 
@@ -117,12 +171,13 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             component.Text = SegmentText((string)newDefault, component);
 
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string)
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var screenText) && screenText is string text && text != component.LastText)
         {
-            component.TextToDraw = SegmentText((string)text, component);
+            component.TextToDraw = SegmentText(text, component);
             ResetText(uid, component);
             BuildTextLayers(uid, component, args.Sprite);
             DrawLayers(uid, component.LayerStatesToDraw);
+            ResetScrollingState((uid, component));
         }
 
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan target)
@@ -168,14 +223,34 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
     /// </summary>
     private string?[] SegmentText(string text, TextScreenVisualsComponent component)
     {
-        int segment = component.RowLength;
-        var segmented = new string?[Math.Min(component.Rows, (text.Length - 1) / segment + 1)];
+        var segmented = new string?[component.Rows];
 
-        // populate segmented with a string sliding window using Substring.
-        // (Substring(5, 5) will return the 5 characters starting from 5th index)
-        // the Mins are for the very short string case, the very long string case, and to not OOB the end of the string.
-        for (int i = 0; i < Math.Min(text.Length, segment * component.Rows); i += segment)
-            segmented[i / segment] = text.Substring(i, Math.Min(text.Length - i, segment)).Trim();
+        // Split by newlines, reduce each line to MaxCharacters
+        var sublines = text.Split("\n");
+        for (var i = 0; i < component.Rows && i < sublines.Length; i++)
+        {
+            sublines[i] = sublines[i].Trim();
+            if (component.ScrollEnabled)
+            {
+                if (sublines[i].Length > MaxScrollingCharacters)
+                    sublines[i] = sublines[i].Substring(0, MaxScrollingCharacters);
+
+                if (sublines[i].Length > component.RowLength)
+                {
+                    // If the text will scroll, ensure that we have a buffer between lines.
+                    for (var j = 0; j < component.RowLength - 1; j++)
+                    {
+                        sublines[i] += " ";
+                    }
+                }
+            }
+            else
+            {
+                if (sublines[i].Length > component.RowLength)
+                    sublines[i] = sublines[i].Substring(0, component.RowLength);
+            }
+            segmented[i] = sublines[i];
+        }
 
         return segmented;
     }
@@ -194,7 +269,7 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
         component.LayerStatesToDraw.Clear();
 
         for (var row = 0; row < component.Rows; row++)
-            for (var i = 0; i < component.RowLength; i++)
+            for (var i = 0; i < component.RowLength + 1; i++) // Extra index needed for scrolling.
             {
                 var key = TextMapKey + row + i;
                 SpriteSystem.LayerMapReserve((uid, sprite), key);
@@ -203,6 +278,14 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
                 SpriteSystem.LayerSetColor((uid, sprite), key, component.Color);
                 SpriteSystem.LayerSetRsiState((uid, sprite), key, DefaultState);
             }
+
+        if (component.FrameState != null)
+        {
+            var key = TextScreenVisualLayers.Frame;
+            SpriteSystem.RemoveLayer((uid, sprite), key, logMissing: false); // State may not exist, remove it if it does - needs to be on top of the text.
+            SpriteSystem.LayerMapReserve((uid, sprite), key);
+            SpriteSystem.LayerSetData((uid, sprite), key, component.FrameState);
+        }
     }
 
     /// <summary>
@@ -281,21 +364,114 @@ public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisual
             SpriteSystem.LayerSetRsiState((uid, sprite), key, state);
     }
 
+    /// <summary>
+    ///     Handles scrolling, updates the scrolled state of a text screen.
+    /// </summary>
+    /// <remarks>
+    ///     Be sure to call BuildTimerLayers before using this to set up the text layers used.
+    /// </remarks>
+    private void DrawScrolledLayers(EntityUid uid, TextScreenVisualsComponent screen, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite))
+            return;
+
+        for (int i = 0; i < screen.Rows; i++)
+        {
+            bool scrolled = false;
+            bool newChar = false;
+            while (screen.NextScrollTime[i] < _gameTiming.CurTime)
+            {
+                screen.NextScrollTime[i] += screen.TimeBetweenScrolls[i];
+                var newPosition = ++screen.ScrollPosition[i];
+                scrolled = true;
+                newChar |= newPosition % CharWidth == 0; // Rolled over onto a new character, need to update the sprites.
+            }
+
+            if (scrolled)
+            {
+                var charOffset = screen.ScrollPosition[i] % CharWidth; // The amount to scroll each character off to the left by.
+                for (int j = 0; j < screen.RowLength + 1; j++)
+                {
+                    SpriteSystem.LayerSetOffset(
+                        (uid, sprite),
+                        TextMapKey + i + j,
+                        Vector2.Multiply(
+                            new Vector2((j - screen.RowLength / 2f + 0.5f) * CharWidth - charOffset, -i * screen.RowOffset),
+                            TextScreenVisualsComponent.PixelSize
+                            ) + screen.TextOffset
+                    );
+                }
+
+                if (newChar)
+                {
+                    var textOffset = screen.ScrollPosition[i] / CharWidth; // The total number of characters scrolled so far.
+                    for (int j = 0; j < screen.RowLength + 1; j++)
+                    {
+                        var chr = (textOffset + j) % screen.TextToDraw[i]!.Length;
+                        SpriteSystem.LayerSetRsiState(
+                            (uid, sprite),
+                            TextMapKey + i + j,
+                            GetStateFromChar(screen.TextToDraw[i]![chr])
+                            );
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Resets the scrolling state for a particular text screen.
+    /// </summary>
+    private void ResetScrollingState(Entity<TextScreenVisualsComponent> ent)
+    {
+        if (ent.Comp.ScrollEnabled)
+        {
+            for (int i = 0; i < ent.Comp.Rows; i++)
+            {
+                // Short/null string, shouldn't scroll.
+                if (ent.Comp.TextToDraw[i] == null || ent.Comp.TextToDraw[i]!.Length <= ent.Comp.RowLength)
+                {
+                    ent.Comp.NextScrollTime[i] = TimeSpan.MaxValue;
+                    ent.Comp.TimeBetweenScrolls[i] = TimeSpan.MaxValue;
+                }
+                else
+                {
+                    // Find our desired scroll speed.
+                    var newMaxScrollTime = MaxMessageScrollTime / ent.Comp.TextToDraw[i]!.Length / CharWidth;
+                    var scrollTime = newMaxScrollTime < MaxPixelScrollTime ? newMaxScrollTime : MaxPixelScrollTime;
+                    ent.Comp.NextScrollTime[i] = _gameTiming.CurTime + scrollTime;
+                    ent.Comp.TimeBetweenScrolls[i] = scrollTime;
+                }
+                ent.Comp.ScrollPosition[i] = 0;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Update handler - keep timers and scrolling text up to date.
+    /// </summary>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<TextScreenTimerComponent, TextScreenVisualsComponent>();
-        while (query.MoveNext(out var uid, out var timer, out var screen))
+        var query = EntityQueryEnumerator<TextScreenVisualsComponent>();
+        while (query.MoveNext(out var uid, out var screen))
         {
-            if (timer.Target < _gameTiming.CurTime)
+            if (TryComp<TextScreenTimerComponent>(uid, out var timer))
             {
-                OnTimerFinish(uid, screen);
-                continue;
-            }
+                if (timer.Target < _gameTiming.CurTime)
+                {
+                    OnTimerFinish(uid, screen);
+                    continue;
+                }
 
-            BuildTimerLayers(uid, timer, screen);
-            DrawLayers(uid, timer.LayerStatesToDraw);
+                BuildTimerLayers(uid, timer, screen);
+                DrawLayers(uid, timer.LayerStatesToDraw);
+            }
+            else if (screen.ScrollEnabled && screen.NextScrollTime.Any(x => x < _gameTiming.CurTime))
+            {
+                DrawScrolledLayers(uid, screen);
+            }
         }
     }
 

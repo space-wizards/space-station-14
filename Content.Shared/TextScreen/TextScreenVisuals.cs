@@ -29,3 +29,13 @@ public enum TextScreenVisuals : byte
     /// </summary>
     Color
 }
+
+[Serializable, NetSerializable]
+public enum TextScreenVisualLayers : byte
+{
+    /// <summary>
+    ///     A frame to draw over the text on screen to obscure the scrolling effect.
+    ///     Will be reordered to be on top of the text layers.
+    /// </summary>
+    Frame
+}

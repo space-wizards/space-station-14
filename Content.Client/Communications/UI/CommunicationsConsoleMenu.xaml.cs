@@ -55,7 +55,7 @@ namespace Content.Client.Communications.UI
             AnnounceButton.OnPressed += _ => OnAnnounce?.Invoke(Rope.Collapse(MessageInput.TextRope));
             AnnounceButton.Disabled = !CanAnnounce;
 
-            BroadcastButton.OnPressed += _ => OnBroadcast?.Invoke(Rope.Collapse(MessageInput.TextRope));
+            BroadcastButton.OnPressed += _ => OnBroadcast?.Invoke(BroadcastInputTop.Text + "\n" + BroadcastInputBottom.Text);
             BroadcastButton.Disabled = !CanBroadcast;
 
             AlertLevelButton.OnItemSelected += args =>
