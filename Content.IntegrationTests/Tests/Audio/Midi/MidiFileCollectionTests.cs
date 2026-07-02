@@ -2,15 +2,15 @@
 
 using System.IO;
 using System.Linq;
-using Content.Client.Midi;
+using Content.Client.Audio.Midi;
 using Content.IntegrationTests.Fixtures;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
-namespace Content.IntegrationTests.Tests.Midi;
+namespace Content.IntegrationTests.Tests.Audio.Midi;
 
 [TestFixture]
-public sealed partial class MidiLibraryTests : GameTest
+public sealed partial class MidiFileCollectionTests : GameTest
 {
     private static readonly byte[] TestBytes = [1, 2, 3, 4, 5, 6];
     private static readonly ResPath TestFileName = new ResPath("unit_test.midi");
@@ -18,7 +18,7 @@ public sealed partial class MidiLibraryTests : GameTest
     private static ResPath TestFullPath => TestUserDataDir / TestFileName;
 
     private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
-    private MidiLibraryManager MidiLibManager => Pair.Client.ResolveDependency<MidiLibraryManager>();
+    private MidiFileCollection MidiLibManager => Pair.Client.ResolveDependency<MidiFileCollection>();
 
     [TearDown]
     public void CleanUserData()

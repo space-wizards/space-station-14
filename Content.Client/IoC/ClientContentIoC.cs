@@ -1,4 +1,5 @@
 using Content.Client.Administration.Managers;
+using Content.Client.Audio.Midi;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
@@ -21,7 +22,6 @@ using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration.Logs;
 using Content.Client.Lobby;
-using Content.Client.Midi;
 using Content.Client.Players.RateLimiting;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
@@ -67,7 +67,7 @@ namespace Content.Client.IoC
             collection.Register<ClientsidePlaytimeTrackingManager>();
             collection.Register<ClientFeedbackManager>();
             collection.Register<ISharedFeedbackManager, ClientFeedbackManager>();
-            collection.Register<MidiLibraryManager>();
+            collection.Register<MidiFileCollection>();
         }
     }
 }

@@ -4,20 +4,20 @@ using JetBrains.Annotations;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Midi;
+namespace Content.Client.Audio.Midi;
 
 /// <summary>
 /// Handles storage/management of MIDI files stored inside the user data directory.
 /// </summary>
 [PublicAPI]
-public sealed partial class MidiLibraryManager : IPostInjectInit
+public sealed partial class MidiFileCollection : IPostInjectInit
 {
     /// <summary>
     /// Directory path to use inside UserData for storing MIDIs.
     /// </summary>
     private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
 
-    private const string SawmillCategory = "midilibrary";
+    private const string SawmillCategory = "midifilecollection";
 
     [Dependency] private IResourceManager _resManager = default!;
     [Dependency] private ILogManager _logManager = default!;
