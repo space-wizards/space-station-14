@@ -27,7 +27,9 @@ public sealed partial class ContainerFillSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var coords = new EntityCoordinates(uid, Vector2.Zero);
+
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var coords, xform))
+            return;
 
         foreach (var (contaienrId, prototypes) in component.Containers)
         {
@@ -39,7 +41,7 @@ public sealed partial class ContainerFillSystem : EntitySystem
 
             foreach (var proto in prototypes)
             {
-                var ent = Spawn(proto, coords);
+                var ent = Spawn(proto, coords.Value);
                 if (!_containerSystem.Insert(ent, container, containerXform: xform))
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
