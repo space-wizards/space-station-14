@@ -8,9 +8,10 @@
   - type: BorgTransponder
     name: engi xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/Chassis/xenoborg_engi.rsi
       state: xenoborg_engi
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/xenoborg_engi.rsi
     layers:
     - state: xenoborg_engi
     - state: xenoborg_engi_e
@@ -64,9 +65,10 @@
   - type: BorgTransponder
     name: heavy xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/Chassis/xenoborg_heavy.rsi
       state: xenoborg_heavy
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/xenoborg_heavy.rsi
     layers:
     - state: xenoborg_heavy
     - state: xenoborg_heavy_e
@@ -157,9 +159,10 @@
   - type: BorgTransponder
     name: scout xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/Chassis/xenoborg_scout.rsi
       state: xenoborg_scout
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/xenoborg_scout.rsi
     layers:
       - state: xenoborg_scout
       - state: xenoborg_scout_e
@@ -212,9 +215,10 @@
   - type: BorgTransponder
     name: stealth xenoborg
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
+      sprite: Mobs/Silicon/Chassis/xenoborg_stealth.rsi
       state: xenoborg_stealth
   - type: Sprite
+    sprite: Mobs/Silicon/Chassis/xenoborg_stealth.rsi
     layers:
       - state: xenoborg_stealth
       - state: xenoborg_stealth_e

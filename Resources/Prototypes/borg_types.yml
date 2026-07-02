@@ -23,6 +23,7 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  spriteBodyRsi: Mobs/Silicon/Chassis/robot.rsi
   spriteBodyState: robot
   spriteHasMindState: robot_e
   spriteNoMindState: robot_e_r
@@ -60,6 +61,7 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  spriteBodyRsi: Mobs/Silicon/Chassis/engineer.rsi
   spriteBodyState: engineer
   spriteHasMindState: engineer_e
   spriteNoMindState: engineer_e_r
@@ -97,6 +99,7 @@
 
   # Visual
   inventoryTemplateId: borgTall
+  spriteBodyRsi: Mobs/Silicon/Chassis/miner.rsi
   spriteBodyState: miner
   spriteBodyMovementState: miner_moving
   spriteHasMindState: miner_e
@@ -133,6 +136,7 @@
 
   # Visual
   inventoryTemplateId: borgShort
+  spriteBodyRsi: Mobs/Silicon/Chassis/janitor.rsi
   spriteBodyState: janitor
   spriteBodyMovementState: janitor_moving
   spriteHasMindState: janitor_e
@@ -179,6 +183,7 @@
 
   # Visual
   inventoryTemplateId: borgDutch
+  spriteBodyRsi: Mobs/Silicon/Chassis/medical.rsi
   spriteBodyState: medical
   spriteBodyMovementState: medical_moving
   spriteHasMindState: medical_e
@@ -221,6 +226,7 @@
 
   # Visual
   inventoryTemplateId: borgTall
+  spriteBodyRsi: Mobs/Silicon/Chassis/service.rsi
   spriteBodyState: service
   spriteHasMindState: service_e
   spriteNoMindState: service_e_r
