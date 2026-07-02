@@ -60,37 +60,18 @@ public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
         UpdateUI((uid, component));
     }
 
+    /// <summary>
+    /// AppearanceChangeEvent handler: updates the disposal unit's animation if it's flushing.
+    /// </summary>
     private void OnAppearanceChange(Entity<DisposalUnitComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
-            return;
-
-        UpdateState(ent, args.Sprite, args.Component);
-    }
-
-    /// <summary>
-    /// Updates the animation of a disposal unit.
-    /// </summary>
-    /// <param name="ent">The disposal unit.</param>
-    /// <param name="sprite">The disposal unit's sprite.</param>
-    /// <param name="appearance">The disposal unit's appearance.</param>
-    private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
-    {
-        if (!_appearanceSystem.TryGetData<bool>(ent, DisposalUnitVisuals.IsFlushing, out var isFlushing, appearance))
-            return;
-
         // This is a transient state so not too worried about replaying in range.
-        if (isFlushing)
+        if (_appearanceSystem.TryGetData<bool>(ent, DisposalUnitVisuals.IsFlushing, out var isFlushing, args.Component)
+            && isFlushing
+            && !_animationSystem.HasRunningAnimation(ent, AnimationKey))
         {
-            if (!_animationSystem.HasRunningAnimation(ent, AnimationKey))
-            {
-                _animationSystem.Play(ent, (Animation)ent.Comp.FlushingAnimation, AnimationKey);
-            }
-
-            return;
+            _animationSystem.Play(ent, (Animation)ent.Comp.FlushingAnimation, AnimationKey);
         }
-
-        _animationSystem.Stop(ent.Owner, AnimationKey);
     }
 }
 
