@@ -1295,7 +1295,7 @@
 - type: tile
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/grassjungle.png
+  sprite: /Textures/Tiles/grassjungle.png # TODO grassjungle.png is practically identical to grass.png
   baseTurf: FloorDirt
   isSubfloor: true
   footstepSounds:
@@ -1836,7 +1836,7 @@
   name: tiles-astro-asteroid-sand-borderless
   isSubfloor: false
   deconstructTools: [ Prying ]
-  itemDrop: FloorTileItemAstroAsteroidSand
+  itemDrop: FloorTileItemAstroAsteroidSandBorderless
   weather: false
 
 - type: tile

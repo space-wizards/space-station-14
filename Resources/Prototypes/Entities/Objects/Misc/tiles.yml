@@ -1628,7 +1628,7 @@
   description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
   components:
   - type: Sprite
-    state: astrograss
+    state: astrograss-overgrown
   - type: Item
     heldPrefix: grass
   - type: FloorTile
@@ -1645,7 +1645,7 @@
   description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
   components:
   - type: Sprite
-    state: grass
+    state: astrograss
   - type: Item
     heldPrefix: grass
   - type: FloorTile
@@ -1772,7 +1772,7 @@
     - Plating
     - FloorAstroAsteroidSandBorderless
   - type: Stack
-    stackType: FloorTileAstroAsteroidSand
+    stackType: FloorTileAstroAsteroidSandBorderless
 
 - type: entity
   parent: FloorTileItemBase
