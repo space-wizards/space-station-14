@@ -214,23 +214,3 @@ public sealed partial class SatiationSystem
 
     #endregion
 }
-
-/// <summary>
-/// Defines
-/// </summary>
-public static class SatiationComponentExt
-{
-    extension(SatiationComponent comp)
-    {
-        /// <summary>
-        /// Checks if this has a <see cref="Satiation"/> of the specified <paramref name="type"/>.
-        /// </summary>
-        public bool Has(ProtoId<SatiationTypePrototype> type) => comp.GetOrNull(type) != null;
-
-        /// <summary>
-        /// Gets the <see cref="Satiation"/> of the given <paramref name="type"/> on <paramref name="comp"/>, or
-        /// <c>null</c> if no such satiation exists.
-        /// </summary>
-        public Satiation? GetOrNull(ProtoId<SatiationTypePrototype> type) => comp.Satiations.GetValueOrDefault(type);
-    }
-}

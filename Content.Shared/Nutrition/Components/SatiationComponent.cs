@@ -18,4 +18,17 @@ public sealed partial class SatiationComponent : Component
     [DataField(required: true)]
     [AutoNetworkedField]
     public Dictionary<ProtoId<SatiationTypePrototype>, Satiation> Satiations = [];
+
+    /// <summary>
+    /// Checks if this has a <see cref="Satiation"/> of the specified <paramref name="type"/>.
+    /// </summary>
+    [Access(Other = AccessPermissions.Execute)]
+    public bool Has(ProtoId<SatiationTypePrototype> type) => GetOrNull(type) != null;
+
+    /// <summary>
+    /// Gets the <see cref="Satiation"/> of the given <paramref name="type"/> on this component, or
+    /// <c>null</c> if no such satiation exists.
+    /// </summary>
+    [Access(Other = AccessPermissions.Execute)]
+    public Satiation? GetOrNull(ProtoId<SatiationTypePrototype> type) => Satiations.GetValueOrDefault(type);
 }
