@@ -3,81 +3,131 @@ using Robust.Client.UserInterface.Controls;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
+using Robust.Client.Graphics;
 
-namespace Content.Client.Kitchen.UI
+namespace Content.Client.Kitchen.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class MicrowaveMenu : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class MicrowaveMenu : FancyWindow
+    [Dependency] private IGameTiming _timing = default!;
+
+    public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
+
+    public ButtonGroup CookTimeButtonGroup { get; }
+    public bool IsBusy;
+    public TimeSpan CurrentCooktimeEnd;
+
+    private readonly StyleBoxFlat _ingredientsStylebox = new();
+
+    public MicrowaveMenu()
     {
-        [Dependency] private IGameTiming _timing = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
+        IngredientsPanel.PanelOverride = _ingredientsStylebox;
 
-        public ButtonGroup CookTimeButtonGroup { get; }
-
-        public bool IsBusy;
-        public TimeSpan CurrentCooktimeEnd;
-
-        public MicrowaveMenu()
+        CookTimeButtonGroup = new ButtonGroup();
+        InstantCookButton.Group = CookTimeButtonGroup;
+        InstantCookButton.OnPressed += args =>
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            CookTimeButtonGroup = new ButtonGroup();
-            InstantCookButton.Group = CookTimeButtonGroup;
-            InstantCookButton.OnPressed += args =>
+            OnCookTimeSelected?.Invoke(args, 0);
+        };
+
+        for (var i = 1; i <= 6; i++)
+        {
+            var newButton = new MicrowaveCookTimeButton
             {
-                OnCookTimeSelected?.Invoke(args, 0);
+                Text = (i * 5).ToString(),
+                TextAlign = Label.AlignMode.Center,
+                ToggleMode = true,
+                CookTime = (uint)(i * 5),
+                Group = CookTimeButtonGroup,
+                HorizontalExpand = true,
             };
-
-            for (var i = 1; i <= 6; i++)
+            if (i == 4)
             {
-                var newButton = new MicrowaveCookTimeButton
-                {
-                    Text = (i * 5).ToString(),
-                    TextAlign = Label.AlignMode.Center,
-                    ToggleMode = true,
-                    CookTime = (uint) (i * 5),
-                    Group = CookTimeButtonGroup,
-                    HorizontalExpand = true,
-                };
-                if (i == 4)
-                {
-                    newButton.StyleClasses.Add("OpenRight");
-                }
-                else
-                {
-                    newButton.StyleClasses.Add("OpenBoth");
-                }
-                CookTimeButtonVbox.AddChild(newButton);
-                newButton.OnPressed += args =>
-                {
-                    OnCookTimeSelected?.Invoke(args, i);
-                };
+                newButton.StyleClasses.Add("OpenRight");
+            }
+            else
+            {
+                newButton.StyleClasses.Add("OpenBoth");
+            }
+            CookTimeButtonVbox.AddChild(newButton);
+            newButton.OnPressed += args =>
+            {
+                OnCookTimeSelected?.Invoke(args, i);
+            };
+        }
+    }
+
+    /// <summary>
+    ///     Set the visibility of the "busy overlay panel" over the microwave's ingredients,
+    ///     indicating to the player that the ingredients list cannot be interacted with
+    ///     (namely while the microwave is active.)
+    /// </summary>
+    /// <param name="shouldDisable">Whether or not this microwave is "busy".</param>
+    public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
+    {
+        DisableCookingPanelOverlay.Visible = shouldDisable;
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if (!IsBusy)
+            return;
+
+        if (CurrentCooktimeEnd > _timing.CurTime)
+        {
+            CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+            ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
+        }
+    }
+
+    /// <summary>
+    ///     Set the "color light" state of the ingredient panel's ingredient box.
+    /// </summary>
+    /// <param name="value">Wheether or not the panel is "lit" (yellow) or "unlit" (gray).</param>
+    public void SetIngredientPanelLight(bool value)
+    {
+        var panelColor = value
+            ? Color.FromHex("#947300")
+            : Color.FromHex("#1B1B1E");
+
+        _ingredientsStylebox.BackgroundColor = panelColor;
+    }
+
+    /// <summary>
+    ///     Attempt to get the cook time button at the given index.
+    /// </summary>
+    /// <param name="index">The index to select.</param>
+    /// <param name="button">The cook time button, if found.</param>
+    /// <returns>Whether or not this operation was successful.</returns>
+    public bool TryGetCookTimeButton(int index,
+        [NotNullWhen(true)] out Button? button)
+    {
+        button = null;
+
+        if (index == 0)
+            button = InstantCookButton;
+        else
+        {
+            if (index <= CookTimeButtonVbox.ChildCount)
+            {
+                var control = CookTimeButtonVbox.GetChild(index - 1);
+                if (control is Button timeButton)
+                    button = timeButton;
             }
         }
 
-        public void ToggleBusyDisableOverlayPanel(bool shouldDisable)
-        {
-            DisableCookingPanelOverlay.Visible = shouldDisable;
-        }
+        return button != null;
+    }
 
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-
-            if (!IsBusy)
-                return;
-
-            if (CurrentCooktimeEnd > _timing.CurTime)
-            {
-                CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
-            }
-        }
-
-        public sealed class MicrowaveCookTimeButton : Button
-        {
-            public uint CookTime;
-        }
+    public sealed class MicrowaveCookTimeButton : Button
+    {
+        public uint CookTime;
     }
 }

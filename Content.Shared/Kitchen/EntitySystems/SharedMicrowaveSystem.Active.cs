@@ -1,0 +1,127 @@
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Kitchen.Components;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
+
+namespace Content.Shared.Kitchen.EntitySystems;
+
+public abstract partial class SharedMicrowaveSystem
+{
+    /// <summary>
+    ///     Subscribe to events related to active microwaves.
+    /// </summary>
+    private void InitializeActive()
+    {
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
+
+        SubscribeLocalEvent<ActivelyMicrowavedComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
+    }
+
+    /// <summary>
+    ///     Set the end time of this microwave's cooking operation.
+    /// </summary>
+    private void InitializeTimer(Entity<ActiveMicrowaveComponent> ent)
+    {
+        if (!TryComp<MicrowaveComponent>(ent.Owner, out var microwave))
+            return;
+
+        var curTime = _timing.CurTime;
+        var cookTime = microwave.CurrentCookTimerTime * microwave.CookTimeMultiplier;
+        ent.Comp.TotalTime = microwave.CurrentCookTimerTime;
+        ent.Comp.CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime);
+        DirtyFields(ent.Owner, ent.Comp, null,
+            nameof(ActiveMicrowaveComponent.TotalTime),
+            nameof(ActiveMicrowaveComponent.CookTimeEnd));
+    }
+
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
+    {
+        InitializeTimer(ent);
+
+        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
+            return;
+
+        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
+        var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
+        var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, null, audioParams);
+        microwaveComponent.PlayingStream = pvs?.Entity;
+
+        _powerState.SetWorkingState(ent.Owner, true);
+    }
+
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnCookStop(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
+    {
+        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
+            return;
+
+        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Idle);
+        microwaveComponent.PlayingStream = AudioSys.Stop(microwaveComponent.PlayingStream);
+
+        _powerState.SetWorkingState(ent.Owner, false);
+    }
+
+    /// <summary>
+    ///     Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        var microwavedComp = AddComp<ActivelyMicrowavedComponent>(args.Entity);
+        microwavedComp.Microwave = ent.Owner;
+    }
+
+    /// <summary>
+    ///     Removes ActivelyMicrowavedComponent from entities removed from an active microwave.
+    /// </summary>
+    /// <param name="ent">The microwave entity.</param>
+    private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        RemCompDeferred<ActivelyMicrowavedComponent>(args.Entity);
+    }
+
+    /// <summary>
+    ///     Prevents reagent reactions in entitites that are actively being microwaved.
+    /// </summary>
+    /// <remarks>
+    ///     For example, raw egg would otherwise turn into cooked egg during the process, preventing it from being
+    ///     "spent" when the microwave is finished cooking.
+    /// </remarks>
+    /// <param name="ent">An entity that is actively being microwaved.</param>
+    private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
+    {
+        if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))
+            return;
+
+        if (activeMicrowaveComp.PortionedRecipe.Recipe == null) // no recipe selected
+            return;
+
+        var recipeReagents = activeMicrowaveComp.PortionedRecipe.Recipe.Ingredients.Reagents.Keys;
+
+        foreach (var reagent in recipeReagents)
+        {
+            if (args.Event.Reaction.Reactants.ContainsKey(reagent))
+            {
+                args.Event.Cancelled = true;
+                return;
+            }
+        }
+    }
+}
