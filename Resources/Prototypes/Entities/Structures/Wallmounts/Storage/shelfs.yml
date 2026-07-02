@@ -3,33 +3,19 @@
   parent: BaseWallmount
   id: ShelfBase
   abstract: true
-  name: shelf
-  description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
   components:
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
   - type: Damageable
     damageModifierSet: Wood
   - type: Injurable
     damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 60
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroyHeavy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,3,1
-    - 0,3,3,4
-    maxItemSize: Normal
+    - 0,0,5,2
+    - 0,4,5,6
+    maxItemSize: Large
   - type: UserInterface
     interfaces:
      enum.StorageUiKey.Key:
@@ -37,20 +23,18 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Construction
+    graph: Shelf
 
 - type: entity
   abstract: true
   id: ShelfBaseReinforced
   parent: ShelfBase
-  name: reinforced shelf
-  description: It looks as strong as reality itself.
   components:
   - type: Lock
   - type: LockedStorage
   - type: LockVisuals
   - type: Sprite
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: base
     layers:
     - state: rbase
       map: ["enum.StorageVisualLayers.Base"]
@@ -75,6 +59,10 @@
   name: wooden shelf
   description: A convenient place to place, well, anything really.
   components:
+  - type: Sprite
+    sprite: Structures/Storage/Shelfs/wood.rsi
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -96,7 +84,6 @@
     - Structure
     - Wooden
   - type: Construction
-    graph: Shelf
     node: ShelfWood
 
 - type: entity
@@ -107,7 +94,6 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/metal.rsi
-    state: base
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -129,7 +115,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Shelf
     node: ShelfMetal
 
 - type: entity
@@ -140,7 +125,6 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/glass.rsi
-    state: base
   - type: Damageable
     damageModifierSet: Glass
   - type: Injurable
@@ -162,19 +146,16 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Shelf
     node: ShelfGlass
 
 # Reinforced
 - type: entity
   id: ShelfRWood
-  parent: ShelfBaseReinforced
+  parent: [ ShelfBaseReinforced, ShelfWood ]
   name: sturdy wood shelf
   description: A safe place to put your favorite bottle of whiskey.
   components:
   - type: Sprite
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: base
     layers:
     - state: rbase
       map: ["enum.StorageVisualLayers.Base"]
@@ -200,17 +181,14 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Shelf
     node: ShelfRWood
 
 - type: entity
   id: ShelfRMetal
-  parent: ShelfBaseReinforced
+  parent: [ ShelfBaseReinforced, ShelfMetal ]
   name: sturdy metal shelf
   description: A strong & shiny place to keep all your vials safe.
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Shelfs/metal.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -234,17 +212,14 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Shelf
     node: ShelfRMetal
 
 - type: entity
   id: ShelfRGlass
-  parent: ShelfBaseReinforced
+  parent: [ ShelfBaseReinforced, ShelfGlass ]
   name: sturdy glass shelf
   description: Crystal clear reinforced glass doors to show off all your fancy bottles you definitely didn't sell a co-worker's favorite mothroach for.
   components:
-  - type: Sprite
-    sprite: Structures/Storage/Shelfs/glass.rsi
   - type: Destructible
     thresholds:
     - trigger:
@@ -268,7 +243,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Shelf
     node: ShelfRGlass
 
 # Departmental
@@ -280,7 +254,6 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/Departments/Service/bar.rsi
-    state: base
     layers:
       - state: base
       - state: bar-0
@@ -289,6 +262,8 @@
   - type: StorageFillVisualizer
     maxFillLevels: 13
     fillBaseName: bar
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -307,10 +282,9 @@
         acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
+    - 0,0,9,1
+    - 0,3,9,4
   - type: Construction
-    graph: Shelf
     node: ShelfBar
 
 - type: entity
@@ -321,7 +295,6 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Shelfs/Departments/Service/kitchen.rsi
-    state: base
     layers:
       - state: base
       - state: kitchen-0
@@ -330,6 +303,8 @@
   - type: StorageFillVisualizer
     maxFillLevels: 13
     fillBaseName: kitchen
+  - type: Damageable
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -356,8 +331,8 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
+    - 0,6,5,7
   - type: Construction
-    graph: Shelf
     node: ShelfKitchen
 
 - type: entity
@@ -383,6 +358,8 @@
   - type: StorageFillVisualizer
     maxFillLevels: 7
     fillBaseName: chem
+  - type: Damageable
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -407,10 +384,9 @@
         acts: ["Destruction"]
   - type: Storage
     grid:
-    - 0,0,5,1
-    - 0,3,5,4
+    - 0,0,9,1
+    - 0,3,9,5
   - type: Construction
-    graph: Shelf
     node: ShelfChemistry
   - type: AmbientMusicMarkerMedical
 
@@ -424,4 +400,3 @@
   components:
   - type: AccessReader
     access: [["Chemistry"]]
-
