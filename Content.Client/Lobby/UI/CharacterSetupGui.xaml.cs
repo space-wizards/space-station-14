@@ -83,9 +83,11 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
+            var maxCharactersSlots = _preferencesManager.Settings!.MaxCharacterSlots;
+
             _createNewCharacterButton.ToolTip =
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
-                    ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
+                    ("maxCharacters", maxCharactersSlots));
 
             var selectedSlot = _preferencesManager.Preferences?.SelectedCharacterIndex;
 
@@ -97,6 +99,14 @@ namespace Content.Client.Lobby.UI
                     characterButtonsGroup,
                     character,
                     slot == selectedSlot);
+
+                if (slot >= maxCharactersSlots)
+                {
+                    characterPickerButton.Disabled = true;
+                    characterPickerButton.ToolTip =
+                        Loc.GetString("character-setup-gui-character-picker-select-limited-tooltip",
+                                      ("maxCharacters", maxCharactersSlots));
+                }
 
                 Characters.AddChild(characterPickerButton);
 
