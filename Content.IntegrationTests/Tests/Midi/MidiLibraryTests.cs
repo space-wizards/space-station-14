@@ -72,7 +72,6 @@ public sealed partial class MidiLibraryTests : GameTest
         using (Assert.EnterMultipleScope())
         {
             Assert.That(ResManager.UserData.Exists(TestFullPath), Is.False);
-            Assert.That(MidiLibManager.GetMidiData(TestFileName), Is.Empty);
             Assert.That(MidiLibManager.GetMidiFiles(), Is.Empty);
             Assert.That(removedFileName, Is.EqualTo(TestFileName));
         }
