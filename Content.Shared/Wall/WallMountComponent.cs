@@ -17,7 +17,7 @@ public sealed partial class WallMountComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("arc"), AutoNetworkedField]
-    public Angle Arc = new(MathF.PI);
+    public Angle Arc = new(MathHelper.DegreesToRadians(112f));
 
     /// <summary>
     ///     The direction in which the exemption arc is facing, relative to the entity's rotation. Defaults to south.
