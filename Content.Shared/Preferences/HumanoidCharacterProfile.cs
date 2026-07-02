@@ -351,6 +351,31 @@ namespace Content.Shared.Preferences
             };
         }
 
+        /// <summary>
+        /// Return a HumanoidCharacterProfile with only the job priorities listed in the NewCharacterJobs cvar
+        /// </summary>
+        public HumanoidCharacterProfile WithJobFromCvar(IConfigurationManager cfg)
+        {
+            // This path should run only rarely, so the cvar does not need to be locally stored
+            var jobs = new HashSet<string>( cfg.GetCVar(CCVars.NewCharacterJobs).Split(","));
+            var priority = JobPriority.High;
+            Dictionary<ProtoId<JobPrototype>, JobPriority> priorities = new();
+
+            foreach (var job in jobs)
+            {
+                // Remove whitespaces in case the input contained any
+                priorities.Add(job.Trim(), priority);
+
+                // There can be only one High priority
+                priority = JobPriority.Medium;
+            }
+
+            return new(this)
+            {
+                _jobPriorities = priorities,
+            };
+        }
+
         public HumanoidCharacterProfile WithJobPriority(ProtoId<JobPrototype> jobId, JobPriority priority)
         {
             var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(_jobPriorities);
