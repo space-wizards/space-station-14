@@ -1,0 +1,54 @@
+# Spells unique to the adventuring wizard's grimoire.
+# Their listings live in Catalog/spellbook_catalog.yml tagged with only the
+# AdventurerGrimoire category (see the tagging note at the top of that file).
+
+# Firebolt: functions identically to the wizard's fireball, just smaller and weaker.
+- type: entity
+  parent: BaseAction
+  id: ActionFireBolt
+  name: Firebolt
+  description: Fires a small explosive bolt of flame towards the clicked location.
+  components:
+  - type: Magic
+  - type: Action
+    useDelay: 15
+    itemIconStyle: BigAction
+    raiseOnUser: true
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/fireball.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball
+  - type: TargetAction
+    range: 60
+    checkCanAccess: false
+  - type: WorldTargetAction
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileFireBolt
+  - type: SpeakOnAction
+    sentence: action-speech-spell-firebolt
+
+- type: entity
+  parent: ProjectileFireball
+  id: ProjectileFireBolt
+  name: firebolt
+  description: A fireball's little sibling.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    scale: 0.6, 0.6
+  - type: PointLight
+    radius: 1.5
+    energy: 3.0
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 30
+    maxTileBreak: 0
+  - type: IgniteOnCollide
+    fireStacks: 0.2

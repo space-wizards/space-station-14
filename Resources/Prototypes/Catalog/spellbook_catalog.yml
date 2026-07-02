@@ -19,6 +19,20 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# Adventuring wizard only: a smaller, weaker fireball.
+- type: listing
+  id: SpellbookFireBolt
+  name: spellbook-firebolt-name
+  description: spellbook-firebolt-desc
+  productAction: ActionFireBolt
+  cost:
+    WizCoin: 1
+  categories:
+  - AdventurerGrimoire
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 - type: listing
   id: SpellbookRodForm
   name: spellbook-polymorph-rod-name

@@ -38,3 +38,8 @@ adventurer-gun-fail-message = You fumble with {THE($gun)}. This strange machiner
 # Wizard grimoire store
 store-preset-name-adventurer-grimoire = Apprentice's Grimoire
 store-category-adventurer-grimoire = Apprentice spells
+
+# Apprentice spells
+spellbook-firebolt-name = Firebolt
+spellbook-firebolt-desc = A fireball for wizards who haven't finished the syllabus: smaller, cheaper, still sets things on fire.
+action-speech-spell-firebolt = ONI'SOMI!
