@@ -82,11 +82,15 @@
         Quantity: 960
   - type: ReagentTank
     tankType: Fuel
-  - type: DamageOnToolInteract
-    tools: Welding
-    weldingDamage:
-      types:
-        Heat: 20
+  - type: SimpleToolInteraction
+  - type: EffectOnToolInteraction
+    effects:
+      Welding:
+      - target:
+        - !type:HealthChange
+          damage:
+            types:
+              Heat: 20
   - type: PacifismDangerousAttack
   - type: Explosive
     explosionType: Default
