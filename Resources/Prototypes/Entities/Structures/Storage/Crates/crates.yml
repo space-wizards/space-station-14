@@ -433,6 +433,9 @@
   - type: EntityStorage
     capacity: 1
     airtight: false
+    whitelist:
+      sizes:
+      - Tiny
   - type: Fixtures
     fixtures:
       fix1:
