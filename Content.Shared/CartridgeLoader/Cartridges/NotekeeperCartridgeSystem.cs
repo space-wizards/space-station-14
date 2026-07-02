@@ -1,18 +1,17 @@
-using Content.Server.Administration.Logs;
-using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed partial class NotekeeperCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<NotekeeperCartridgeComponent, CartridgeMessageEvent>(OnUiMessage);
         SubscribeLocalEvent<NotekeeperCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
     }
@@ -49,6 +48,7 @@ public sealed partial class NotekeeperCartridgeSystem : EntitySystem
                 $"{ToPrettyString(args.Actor)} removed a note from PDA: '{message.Note}' was contained on: {ToPrettyString(uid)}");
         }
 
+        Dirty(uid, component);
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
@@ -58,6 +58,6 @@ public sealed partial class NotekeeperCartridgeSystem : EntitySystem
             return;
 
         var state = new NotekeeperUiState(component.Notes);
-        _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
+        _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 }

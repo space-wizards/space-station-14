@@ -17,7 +17,7 @@ public enum NanoTaskPriority : byte
 ///     The data relating to a single NanoTask item, but not its identifier
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed partial class NanoTaskItem
+public sealed partial class NanoTaskItem : IRobustCloneable<NanoTaskItem>
 {
     /// <summary>
     ///     The maximum length of the Description and TaskIsFor fields
@@ -54,6 +54,10 @@ public sealed partial class NanoTaskItem
     public bool Validate()
     {
         return Description.Length <= MaximumStringLength && TaskIsFor.Length <= MaximumStringLength;
+    }
+    public NanoTaskItem Clone()
+    {
+        return new(Description, TaskIsFor, IsTaskDone, Priority);
     }
 };
 

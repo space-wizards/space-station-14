@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.GameTicking.Managers;
 using Content.Shared.PDA;
 using Robust.Shared.Utility;
@@ -200,10 +201,10 @@ namespace Content.Client.PDA
 
         public void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)
         {
-            ProgramList.RemoveAllChildren();
-
             if (programs.Count == 0)
             {
+                ProgramList.RemoveAllChildren();
+
                 ProgramList.AddChild(new Label()
                 {
                     Text = Loc.GetString("comp-pda-io-no-programs-available"),
@@ -215,50 +216,43 @@ namespace Content.Client.PDA
                 return;
             }
 
-            var row = CreateProgramListRow();
-            var itemCount = 1;
-            ProgramList.AddChild(row);
-
-            foreach (var (uid, component) in programs)
+            if (ProgramList.ChildCount >= 1 && ProgramList.Children[0] is Label label)
             {
-                //Create a new row every second program item starting from the first
-                if (itemCount % 2 != 0)
+                label.Orphan();
+            }
+
+            while (ProgramList.ChildCount > programs.Count)
+            {
+                ProgramList.Children[ProgramList.ChildCount - 1].Orphan();
+            }
+
+            for (var i = 0; i < programs.Count; i++)
+            {
+                var cartridge = programs[i];
+
+                if (i < ProgramList.ChildCount)
                 {
-                    row = CreateProgramListRow();
-                    ProgramList.AddChild(row);
+                    var currentItem = ProgramList.Children[i];
+                    if (currentItem is PdaProgramItem programItem)
+                    {
+                        programItem.SetCartridge(cartridge);
+                        continue;
+                    }
+
+                    DebugTools.Assert(i == ProgramList.ChildCount-1);
+                    currentItem.Orphan();
                 }
 
-                var item = new PdaProgramItem();
-
-                if (component.Icon is not null)
-                    item.Icon.SetFromSpriteSpecifier(component.Icon);
-
-                item.OnPressed += _ => OnProgramItemPressed?.Invoke(uid);
-
-                switch (component.InstallationStatus)
-                {
-                    case InstallationStatus.Cartridge:
-                        item.InstallButton.Visible = true;
-                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-install-button");
-                        item.InstallButton.OnPressed += _ => OnInstallButtonPressed?.Invoke(uid);
-                        break;
-                    case InstallationStatus.Installed:
-                        item.InstallButton.Visible = true;
-                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-uninstall-button");
-                        item.InstallButton.OnPressed += _ => OnUninstallButtonPressed?.Invoke(uid);
-                        break;
-                }
-
-                item.ProgramName.Text = Loc.GetString(component.ProgramName);
-                item.SetHeight = 20;
-                row.AddChild(item);
-
-                itemCount++;
+                var item = new PdaProgramItem(cartridge);
+                item.OnProgramItemPressed += uid => OnProgramItemPressed?.Invoke(uid);
+                item.OnUninstallButtonPressed += uid => OnUninstallButtonPressed?.Invoke(uid);
+                item.OnInstallButtonPressed += uid => OnInstallButtonPressed?.Invoke(uid);
+                ProgramList.AddChild(item);
             }
 
             //Add a filler item to the last row when it only contains one item
-            if (itemCount % 2 == 0)
-                row.AddChild(new Control() { HorizontalExpand = true });
+            if (programs.Count % 2 == 0)
+                 ProgramList.AddChild(new Control() { HorizontalExpand = true });
         }
 
         /// <summary>
@@ -317,15 +311,6 @@ namespace Content.Client.PDA
             ViewContainer.GetChild(_currentView).Visible = false;
             ViewContainer.GetChild(view).Visible = true;
             _currentView = view;
-        }
-
-        private static BoxContainer CreateProgramListRow()
-        {
-            return new BoxContainer()
-            {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                HorizontalExpand = true
-            };
         }
 
         private void HideAllViews()
