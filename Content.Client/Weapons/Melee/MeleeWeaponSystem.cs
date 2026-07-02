@@ -234,4 +234,36 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (Exists(ent) && Exists(entWeapon))
             DoLunge(ent, entWeapon, ev.Angle, ev.LocalPos, ev.Animation);
     }
+
+    protected override void UndamagedAttack(Entity<MeleeWeaponComponent> ent, EntityUid target, EntityUid user)
+    {
+        if (ent.Comp.UndamagedAlertThreshold == 0)
+            return;
+
+        if (ent.Comp.LastUndamagedHitEntity != target)
+        {
+            ent.Comp.UndamagedSwings = 0;
+            ent.Comp.LastUndamagedHitEntity = target;
+        }
+
+        ent.Comp.UndamagedSwings++;
+        if (ent.Comp.UndamagedSwings >= ent.Comp.UndamagedAlertThreshold)
+        {
+            if (ent.Owner == user)
+            {
+                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", target)), target, user);
+            }
+            else
+            {
+                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", target)), target, user);
+            }
+
+            ent.Comp.UndamagedSwings = 0;
+        }
+    }
+
+    protected override void ResetUndamagedSwingsCount(Entity<MeleeWeaponComponent> ent)
+    {
+        ent.Comp.UndamagedSwings = 0;
+    }
 }
