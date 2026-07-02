@@ -18,6 +18,7 @@
         Security: [ ]
         Service: [ ]
     - type: StationCargoBountyDatabase
+      maxClaimants: 3
 
 - type: entity
   id: BaseStationJobsSpawning
