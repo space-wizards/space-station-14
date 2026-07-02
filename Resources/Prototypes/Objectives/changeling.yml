@@ -78,3 +78,16 @@
   - type: KillPersonCondition
     requireDead: true
     requireMaroon: true
+
+- type: entity
+  parent: BaseChangelingObjective
+  id: ChangelingDevourMostObjective
+  name: Devour the most humanoids.
+  description: We must devour the most unique humanoids out of all other changelings.
+  components:
+  - type: Objective
+    difficulty: 1
+    icon:
+      sprite: Mobs/Aliens/flesh.rsi
+      state: golem
+  - type: ChangelingDevourMostCondition
