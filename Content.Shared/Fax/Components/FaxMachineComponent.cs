@@ -11,6 +11,12 @@ namespace Content.Shared.Fax.Components;
 public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
+    /// Fax must refresh after map init when all faxes are powered
+    /// </summary>
+    [DataField]
+    public float RefreshDelay = 3f;
+
+    /// <summary>
     /// Name with which the fax will be visible to others on the network
     /// </summary>
     [DataField("name")]
