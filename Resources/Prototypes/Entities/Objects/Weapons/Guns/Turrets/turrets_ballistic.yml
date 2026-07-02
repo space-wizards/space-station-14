@@ -67,6 +67,8 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: Damageable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: BaseWeaponBallisticTurret
@@ -76,6 +78,8 @@
   - type: NpcFactionMember
     factions:
     - AllHostile
+  - type: Damageable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: BaseWeaponBallisticTurret
