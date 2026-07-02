@@ -1,6 +1,6 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Power.Generator;
+using Content.Shared.Power.Components;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -11,7 +11,7 @@ namespace Content.Server.DeviceLinking.Components;
 /// <summary>
 /// A power sensor checks the power network it's anchored to.
 /// Has 2 ports for when it is charging or discharging. They should never both be high.
-/// Requires <see cref="PowerSwitchableComponent"/> to function.
+/// Requires <see cref="VoltageTogglerComponent"/> to function.
 /// </summary>
 [RegisterComponent, Access(typeof(PowerSensorSystem))]
 public sealed partial class PowerSensorComponent : Component
