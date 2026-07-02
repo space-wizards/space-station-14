@@ -157,7 +157,7 @@
       map: ["screen"]
   - type: Appearance
   - type: StaticPrice
-    price: 2500
+    price: 5000
 
 - type: entity
   parent: PersonalAI
