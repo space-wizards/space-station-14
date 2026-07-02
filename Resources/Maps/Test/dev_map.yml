@@ -9720,14 +9720,6 @@ entities:
     - type: Transform
       pos: 93.5,11.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -11692,14 +11684,6 @@ entities:
       parent: 1
     - type: Lock
       locked: False
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: LockerChiefEngineerFilledHardsuit
   entities:
   - uid: 1332

@@ -432,14 +432,6 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container

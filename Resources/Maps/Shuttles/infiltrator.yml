@@ -3568,14 +3568,6 @@ entities:
     - type: Transform
       pos: 4.5,-5.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -3599,14 +3591,6 @@ entities:
     - type: Transform
       pos: -1.5,-17.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container

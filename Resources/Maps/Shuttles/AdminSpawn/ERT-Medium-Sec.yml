@@ -790,14 +790,6 @@ entities:
     - type: Transform
       pos: -4.5,-0.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: BoxBodyBag
   entities:
   - uid: 25
@@ -1622,14 +1614,6 @@ entities:
     - type: Transform
       pos: -4.5,6.5
       parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
 - proto: DoorRemoteSecurity
   entities:
   - uid: 122
@@ -2952,14 +2936,6 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: GunSafeLaserCarbine
   entities:
   - uid: 257
@@ -2970,14 +2946,6 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
 - proto: GunSafeShotgunEnforcer
   entities:
   - uid: 258
@@ -2988,14 +2956,6 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
 - proto: GunSafeSubMachineGunDrozd
   entities:
   - uid: 260
@@ -3006,14 +2966,6 @@ entities:
       parent: 1
     - type: Physics
       bodyType: Static
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.8856695
-          Nitrogen: 7.0937095
 - proto: Gyroscope
   entities:
   - uid: 423

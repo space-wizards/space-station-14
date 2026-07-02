@@ -2372,23 +2372,6 @@ entities:
       pos: -6.5,11.5
       parent: 2
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 75.31249
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
   - uid: 354
     components:
     - type: Transform

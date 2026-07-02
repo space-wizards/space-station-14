@@ -6258,14 +6258,6 @@ entities:
     - type: Transform
       pos: -3.5,-6.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -13106,14 +13098,6 @@ entities:
     - type: Transform
       pos: 21.5,-2.5
       parent: 2
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-          Oxygen: 1.7459903
-          Nitrogen: 6.568249
 - proto: LockerChemistryFilled
   entities:
   - uid: 1648

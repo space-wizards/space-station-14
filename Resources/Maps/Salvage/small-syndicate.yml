@@ -618,23 +618,6 @@ entities:
       pos: 1.5,-1.5
       parent: 1
     - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 27.09326
-        moles:
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
