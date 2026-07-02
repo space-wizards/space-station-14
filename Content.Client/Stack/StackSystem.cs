@@ -3,7 +3,6 @@ using Content.Client.Storage.Systems;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.Client.Stack
 {

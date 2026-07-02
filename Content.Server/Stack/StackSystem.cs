@@ -1,4 +1,3 @@
-using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
