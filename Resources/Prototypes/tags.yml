@@ -25,6 +25,9 @@
   id: AllowGhostShownByEvent # Used by GhostSystem to show tagged ghosts (usually at round end).
 
 - type: Tag
+  id: AllowPortalTraversal # Used by PortalSystem to allow traversing a portal by verb.
+
+- type: Tag
   id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
@@ -1171,6 +1174,9 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
+  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal by collision.
+
+- type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
 
 - type: Tag
@@ -1420,7 +1426,7 @@
 
 - type: Tag
   id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
-  
+
 - type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater
 
