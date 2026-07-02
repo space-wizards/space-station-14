@@ -22,3 +22,6 @@
   - type: AutoRecharge
   - type: StaticPrice
     price: 2500
+  - type: Tag
+    tags:
+      - Hacking

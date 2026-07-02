@@ -1536,6 +1536,8 @@
   parent: MobKangaroo
   id: MobBoxingKangaroo
   components:
+  - type: CombatPower
+    factor: 1.0
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
   - type: NpcFactionMember
@@ -2762,6 +2764,8 @@
   id: MobSpiderAngryBase
   abstract: true
   components:
+  - type: CombatPower
+    factor: 1.0
   - type: NpcFactionMember
     factions:
       - Xeno
@@ -3170,6 +3174,8 @@
   id: MobCorgiNarsi
   description: Ian! No!
   components:
+  - type: CombatPower
+    factor: 0.8
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi

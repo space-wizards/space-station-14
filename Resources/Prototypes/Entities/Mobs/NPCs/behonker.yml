@@ -40,6 +40,8 @@
     - type: NpcFactionMember
       factions:
         - SimpleHostile
+    - type: CombatPower
+      factor: 2.0
     - type: Speech
       speechVerb: Cluwne
     - type: CombatMode

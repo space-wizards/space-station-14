@@ -37,6 +37,9 @@
   id: Apron # ConstructionGraph: scraparmor
 
 - type: Tag
+  id: Armor # Threat assessment: protective gear
+
+- type: Tag
   id: Arrow # Storage whitelist: ClothingBeltQuiver
 
 - type: Tag
@@ -88,6 +91,9 @@
 
 - type: Tag
   id: Boll # MaterialStorage whitelist: Sheetifier
+
+- type: Tag
+  id: Bomb # Used on explosive entities for categorization.
 
 - type: Tag
   id: Book # Storage whitelist: BorgModuleService, BooksBag, Bookshelf. Blacklisting on various entities whitelisting PaperComponent
@@ -350,6 +356,9 @@
 
 - type: Tag
   id: Coldsauce # Storage whitelist: ClothingBeltChef and FoodCartHot. ItemMapper: ClothingBeltChef and FoodCartHot
+
+- type: Tag
+  id: CombatHardsuit # Threat assessment: combat-capable hardsuit
 
 - type: Tag
   id: CombatKnife # Storage whitelist: ClothingBeltSecurity
@@ -708,6 +717,9 @@
   id: Handcuffs # It's handcuffs. ConstructionGraph: makeshiftstunprod, Bola, PneumaticCannon
 
 - type: Tag
+  id: Hacking # Used on emag and hacking-related items.
+
+- type: Tag
   id: HandGrenade # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
@@ -724,6 +736,12 @@
 
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
+
+- type: Tag
+  id: HeavyCombatHardsuit # Threat assessment: heavy combat hardsuit
+
+- type: Tag
+  id: HeavyArmor # Threat assessment: heavy armor
 
 - type: Tag
   id: HelmetEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit. PartAssembly: VimHarness. ItemMapper: VimHarness
@@ -792,6 +810,9 @@
 - type: Tag
   id: Hypospray # ItemMapper: ClothingBeltMedical
 
+- type: Tag
+  id: HeavyMachineGun # Heavy machine gun weapons
+
 ## I ##
 
 - type: Tag
@@ -826,6 +847,9 @@
 
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
+
+- type: Tag
+  id: Jetpack # Used on jetpack entities for categorization.
 
 ## K ##
 
@@ -867,6 +891,12 @@
 
 - type: Tag
   id: Lime # CargoBounty: BountyLime
+
+- type: Tag
+  id: Launcher # Launcher weapons
+
+- type: Tag
+  id: LightMachineGun # Light machine gun weapons
 
 ## M ##
 
@@ -1207,6 +1237,9 @@
   id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
 - type: Tag
+  id: Rifle # Used on rifle weapons for categorization.
+
+- type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
 
 - type: Tag
@@ -1378,6 +1411,9 @@
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
 
 - type: Tag
+  id: Stunbaton # Threat assessment: melee stun weapon
+
+- type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
 
 - type: Tag
@@ -1403,6 +1439,15 @@
 
 - type: Tag
   id: Spellbook # Storage whitelist: Bookshelf
+
+- type: Tag
+  id: SubMachineGun # Submachine gun weapons
+
+- type: Tag
+  id: Shotgun # Shotgun weapons
+
+- type: Tag
+  id: Sniper # Sniper weapons
 
 ## T ##
 

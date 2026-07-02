@@ -72,6 +72,9 @@
         base:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - Bomb
 
 ## Plastic Explosives used in game
 - type: entity

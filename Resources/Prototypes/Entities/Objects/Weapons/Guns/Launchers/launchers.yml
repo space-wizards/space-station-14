@@ -6,6 +6,9 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
+  - type: Tag
+    tags:
+    - Launcher
   - type: Item
     size: Ginormous
   - type: ContainerContainer

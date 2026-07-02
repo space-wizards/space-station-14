@@ -129,6 +129,8 @@
       gender: male
   - type: Tool
     qualities: Slicing
+  - type: CombatPower
+    factor: 2 # times more dangerous than a crew-member
 
 - type: entity
   id: MobRatKingBuff
@@ -304,6 +306,8 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+  - type: CombatPower
+    factor: 0.25 # only a fraction of a crew-member
 
 - type: entityTable
   id: RatKingLoot

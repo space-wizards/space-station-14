@@ -27,6 +27,8 @@
     speedModifier: 1.5
     useSound:
       path: /Audio/Items/crowbar.ogg
+  - type: CombatPower
+    factor: 1.0
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -395,6 +397,8 @@
     factions:
     - Xeno
     - SimpleHostile
+  - type: CombatPower
+    factor: 1.5
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -495,6 +499,8 @@
   - type: NpcFactionMember
     factions:
     - Xeno
+  - type: CombatPower
+    factor: 1.5
   - type: Hands
   - type: ComplexInteraction
   - type: MobState

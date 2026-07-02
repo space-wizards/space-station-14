@@ -9,6 +9,9 @@
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
+  - type: Tag
+    tags:
+    - Shotgun
   - type: Item
     size: Large
     shape:
@@ -58,6 +61,9 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+    - Shotgun
   - type: Item
     size: Large
   - type: Clothing

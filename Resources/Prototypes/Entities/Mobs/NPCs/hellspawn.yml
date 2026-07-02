@@ -26,6 +26,8 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: CombatPower
+    factor: 3.0
   - type: NpcFactionMember
     factions:
       - SimpleHostile

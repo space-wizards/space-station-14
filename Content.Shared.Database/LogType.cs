@@ -483,4 +483,6 @@ public enum LogType
     /// Events related to players connecting/disconnecting.
     /// </summary>
     Connection = 104,
+
+    GameDirector = 105,
 }

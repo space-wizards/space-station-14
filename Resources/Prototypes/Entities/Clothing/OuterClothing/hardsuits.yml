@@ -185,6 +185,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Maxim Hardsuit
 - type: entity
@@ -218,6 +219,9 @@
     coolingCoefficient: 0.001
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMaxim
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #Security Hardsuit
 - type: entity
@@ -253,6 +257,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Brigmedic Hardsuit
 - type: entity
@@ -280,6 +285,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #Warden's Hardsuit
 - type: entity
@@ -311,6 +319,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #Captain's Hardsuit
 - type: entity
@@ -347,6 +358,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -493,6 +505,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #Luxury Mining Hardsuit
 - type: entity
@@ -569,6 +584,7 @@
     - Hardsuit
     - WhitelistChameleon
     - ScurretWearable
+    - CombatHardsuit
   - type: StaticPrice
     price: 5000
 
@@ -589,6 +605,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -634,6 +651,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -672,6 +690,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - HeavyCombatHardsuit
 
 
 #Cybersun Juggernaut Hardsuit
@@ -709,6 +728,7 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
+    - HeavyCombatHardsuit
 
 #Wizard Hardsuit
 - type: entity
@@ -745,6 +765,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #Ling Space Suit
 - type: entity
@@ -844,6 +865,9 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
   - type: StaticPrice
     price: 0
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
@@ -921,6 +945,7 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+    - CombatHardsuit
 
 #ERT Janitor Hardsuit
 - type: entity
@@ -974,6 +999,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
+  - type: Tag
+    tags:
+    - HeavyCombatHardsuit
 
 #CBURN Hardsuit
 - type: entity
@@ -1013,6 +1041,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
+  - type: Tag
+    tags:
+    - CombatHardsuit
 
 #MISC. HARDSUITS
 #Clown Hardsuit

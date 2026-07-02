@@ -86,6 +86,9 @@
     materialComposition:
       Steel: 100
       Plastic: 100
+  - type: Tag
+    tags:
+    - Stunbaton
   - type: GuideHelp
     guides:
     - Security
