@@ -1,4 +1,3 @@
-using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
@@ -13,7 +12,6 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<CigarComponent, ActivateInWorldEvent>(OnCigarActivatedEvent);
             SubscribeLocalEvent<CigarComponent, InteractUsingEvent>(OnCigarInteractUsingEvent);
             SubscribeLocalEvent<CigarComponent, SmokableSolutionEmptyEvent>(OnCigarSolutionEmptyEvent);
-            SubscribeLocalEvent<CigarComponent, AfterInteractEvent>(OnCigarAfterInteract);
         }
 
         private void OnCigarActivatedEvent(Entity<CigarComponent> entity, ref ActivateInWorldEvent args)
@@ -52,17 +50,13 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Handled = true;
         }
 
-        public void OnCigarAfterInteract(Entity<CigarComponent> entity, ref AfterInteractEvent args)
+        protected override void TryLightCigarFromInteraction(Entity<CigarComponent> entity, SmokableComponent smokable, ref AfterInteractEvent args)
         {
-            var targetEntity = args.Target;
-            if (targetEntity == null ||
-                !args.CanReach ||
-                !TryComp(entity, out SmokableComponent? smokable) ||
-                smokable.State == SmokableState.Lit)
+            if (args.Target is not { } target)
                 return;
 
             var isHotEvent = new IsHotEvent();
-            RaiseLocalEvent(targetEntity.Value, isHotEvent, true);
+            RaiseLocalEvent(target, isHotEvent, true);
 
             if (!isHotEvent.IsHot)
                 return;
