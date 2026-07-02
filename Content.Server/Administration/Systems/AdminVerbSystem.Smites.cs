@@ -22,6 +22,7 @@ using Content.Shared.Administration.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
@@ -69,7 +70,7 @@ public sealed partial class AdminVerbSystem
 
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private BodySystem _bodySystem = default!;
     [Dependency] private CreamPieSystem _creamPieSystem = default!;
     [Dependency] private ElectrocutionSystem _electrocutionSystem = default!;

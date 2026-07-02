@@ -19,6 +19,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Body.Systems;
 using Content.Shared.EntityEffects.Effects.Solution;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
@@ -35,7 +36,7 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
-    [Dependency] private BloodstreamSystem _blood = default!;
+    [Dependency] private SharedBloodstreamSystem _blood = default!;
     [Dependency] private InternalsSystem _internals = default!;
     [Dependency] private ReactiveSystem _reactive = default!;
     [Dependency] private SharedBroadphaseSystem _broadphase = default!;

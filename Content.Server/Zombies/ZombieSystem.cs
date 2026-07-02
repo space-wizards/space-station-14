@@ -8,6 +8,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
@@ -33,7 +34,7 @@ namespace Content.Server.Zombies
     {
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
-        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
         [Dependency] private DamageableSystem _damageable = default!;
         [Dependency] private ChatSystem _chat = default!;
         [Dependency] private ActionsSystem _actions = default!;

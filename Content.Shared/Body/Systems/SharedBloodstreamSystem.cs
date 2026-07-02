@@ -10,6 +10,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Gibbing;
 using Content.Shared.HealthExaminable;
@@ -21,7 +22,6 @@ using Content.Shared.StatusEffectNew;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Body.Systems;
@@ -54,6 +54,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BloodstreamComponent, MetabolismExclusionEvent>(OnMetabolismExclusion);
+        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
     }
 
     public override void Update(float frameTime)
@@ -140,6 +141,24 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
         if (args.Entity == entity.Comp.TemporarySolution?.Owner)
             entity.Comp.TemporarySolution = null;
+    }
+
+    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
+    {
+        if (SolutionContainer.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
+        {
+            var data = NewEntityBloodData(entity);
+            entity.Comp.BloodReferenceSolution.SetReagentData(data);
+
+            foreach (var reagent in bloodSolution.Contents)
+            {
+                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.RemoveAll(x => x is DnaData);
+                reagentData.AddRange(data);
+            }
+        }
+        else
+            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     private void OnReactionAttempt(Entity<BloodstreamComponent> ent, ref ReactionAttemptEvent args)

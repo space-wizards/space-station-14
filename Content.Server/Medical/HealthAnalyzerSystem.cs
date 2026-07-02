@@ -19,6 +19,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Content.Server.Body.Systems;
+using Content.Shared.Body.Systems;
 
 namespace Content.Server.Medical;
 
@@ -33,7 +34,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstreamSystem = default!;
 
     public override void Initialize()
     {
