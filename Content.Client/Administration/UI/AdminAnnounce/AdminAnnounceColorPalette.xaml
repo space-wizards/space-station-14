@@ -1,0 +1,27 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc admin-announce-palette-title}"
+               Resizable="False"
+               SetSize="330 300">
+    <BoxContainer Orientation="Vertical" Margin="10" HorizontalExpand="True" VerticalExpand="True">
+        <ColorSelectorSliders Name="Picker" 
+                              IsAlphaVisible="False" 
+                              VerticalExpand="True" 
+                              HorizontalExpand="True" />
+        <BoxContainer Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
+            <Label Text="{Loc admin-announce-hex}" Margin="0,0,8,0" />
+            <LineEdit Name="HexInput" 
+                      Access="Public"
+                      HorizontalExpand="True" 
+                      PlaceHolder="{Loc admin-announce-hex-color}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,4">
+            <Label Text="{Loc admin-announce-presets}" HorizontalAlignment="Center" Margin="0,0,0,4" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4,0,4">
+            <Button Name="PresetWizard" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-wizard}" />
+            <Button Name="PresetNukeOp" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-nukeops}" />
+            <Button Name="PresetCentComm" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-centcomm}" />
+            <Button Name="PresetStation" MinSize="32,32" Margin="4,0" ToolTip="{Loc admin-announce-preset-station}" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
