@@ -1,5 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Trigger.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Payload.Components;
@@ -7,13 +8,13 @@ namespace Content.Shared.Payload.Components;
 /// <summary>
 ///     Chemical payload that mixes the solutions of two drain-able solution containers when triggered.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ChemicalPayloadComponent : Component
 {
-    [DataField("beakerSlotA", required: true)]
+    [DataField(required: true)]
     public ItemSlot BeakerSlotA = new();
 
-    [DataField("beakerSlotB", required: true)]
+    [DataField(required: true)]
     public ItemSlot BeakerSlotB = new();
 
     /// <summary>
