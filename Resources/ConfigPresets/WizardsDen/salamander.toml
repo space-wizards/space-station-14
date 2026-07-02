@@ -4,6 +4,7 @@
 desc = "Official English Space Station 14 servers. Medium roleplay ruleset. Open to anyone with at least 20 hours of playtime on any Wizard's Den server. Freely joinable when the player count is less than 15 players."
 hostname = "[EN][MRP] Wizard's Den Salamander [US West]"
 round_restart_time = 300
+showgreentext = false
 
 [server]
 rules_file = "MRPRuleset"
