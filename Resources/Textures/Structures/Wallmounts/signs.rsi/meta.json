@@ -89,9 +89,6 @@
             "name": "bridge"
         },
         {
-            "name": "canisters"
-        },
-        {
             "name": "cargo"
         },
         {
@@ -110,13 +107,7 @@
             "name": "conference_room"
         },
         {
-            "name": "corrosives"
-        },
-        {
-            "name": "cryogenics"
-        },
-        {
-            "name": "danger"
+            "name": "medium_corrosives"
         },
         {
             "name": "deathsposal"
@@ -242,9 +233,6 @@
             "name": "mats"
         },
         {
-            "name": "electrical"
-        },
-        {
             "name": "eng"
         },
         {
@@ -255,15 +243,6 @@
         },
         {
             "name": "examroom"
-        },
-        {
-            "name": "explosives"
-        },
-        {
-            "name": "fire"
-        },
-        {
-            "name": "flammable"
         },
         {
             "name": "cloning"
@@ -284,16 +263,10 @@
             "name": "janitor"
         },
         {
-            "name": "laser"
-        },
-        {
             "name": "laundromat"
         },
         {
             "name": "law"
-        },
-        {
-            "name": "magnetics"
         },
         {
             "name": "mail"
@@ -302,7 +275,7 @@
             "name": "medbay"
         },
         {
-            "name": "memetic"
+            "name": "medium_memetic"
         },
         {
             "name": "monkey_painting"
@@ -338,10 +311,7 @@
             "name": "surgery"
         },
         {
-            "name": "optical"
-        },
-        {
-            "name": "oxidants"
+            "name": "medium_oxidants"
         },
         {
             "name": "pods"
@@ -369,12 +339,6 @@
         },
         {
             "name": "sci"
-        },
-        {
-            "name": "secure"
-        },
-        {
-            "name": "securearea"
         },
         {
             "name": "cans"
