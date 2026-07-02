@@ -288,9 +288,10 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
     protected override void Draw(DrawingHandleScreen handle)
     {
         var itemSeparation = _loadedSprite.Width + Separation;
+        var numberItemsPerRow = (int)Math.Ceiling((double)Capacity / Rows);
 
         // if there is more than one item per row, then we need to recalculate the separation between them.
-        if (Capacity / Rows > 1)
+        if (numberItemsPerRow > 1)
         {
             // the item separation is the distance from the start of a item to the start of the next item,
             // so the total horizontal size will be the item separation times the number of items - 1 + item width.
@@ -301,10 +302,10 @@ public sealed class CustomBulletRenderer : BaseBulletRenderer
             // total horizontal size = item separation * (number of items - 1) + width of the item
 
             // converting to the variables:
-            // Size.X = itemSeparation * (Capacity / Rows - 1) + _loadedSprite.Width
-            // Size.X - _loadedSprite.Width = itemSeparation * (Capacity / Rows - 1)
-            // (Size.X - _loadedSprite.Width) / (Capacity / Rows - 1) = itemSeparation
-            itemSeparation = (int)(Size.X - _loadedSprite.Width) / (Capacity / Rows - 1);
+            // Size.X = itemSeparation * (numberItemsPerRow - 1) + _loadedSprite.Width
+            // Size.X - _loadedSprite.Width = itemSeparation * (numberItemsPerRow - 1)
+            // (Size.X - _loadedSprite.Width) / (numberItemsPerRow - 1) = itemSeparation
+            itemSeparation = (int)(Size.X - _loadedSprite.Width) / (numberItemsPerRow - 1);
 
             // make sure the itemSeparation is less or equal to the standard item separation
             itemSeparation = int.Min(_loadedSprite.Width + Separation, itemSeparation);
