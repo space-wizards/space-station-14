@@ -18,6 +18,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
 
     [Dependency] private IResourceManager _resManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
     private readonly List<string> _fileList = [];
 
@@ -76,7 +77,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <param name="fileName">File name to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
-    public async Task AddMidiFile(string fileName, Stream data)
+    public async Task<bool> AddMidiFile(string fileName, Stream data)
     {
         try
         {
@@ -84,10 +85,12 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
             await data.CopyToAsync(file);
             _fileList.Add(fileName);
             MidiFileAdded?.Invoke(fileName);
+            return true;
         }
-        catch
+        catch (Exception e)
         {
-            // ignored
+            _logManager.GetSawmill("midilibrary").Error($"Exception on trying to store file '{fileName}' in MIDI library: {e.Message}");
+            return false;
         }
     }
 
@@ -97,9 +100,9 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
     /// <param name="fileName">File name to write.</param>
     /// <param name="data">Binary data to write.</param>
     /// <remarks>Raises <see cref="MidiFileAdded"/> on success.</remarks>
-    public async Task AddMidiFile(string fileName, byte[] data)
+    public async Task<bool> AddMidiFile(string fileName, byte[] data)
     {
-        await AddMidiFile(fileName, new MemoryStream(data));
+        return await AddMidiFile(fileName, new MemoryStream(data));
     }
 
     /// <summary>
@@ -150,6 +153,7 @@ public sealed partial class MidiLibraryManager : IPostInjectInit
         {
             DeleteMidiFile(fileName);
         }
+
         _fileList.Clear();
         MidiFilesReset?.Invoke();
     }

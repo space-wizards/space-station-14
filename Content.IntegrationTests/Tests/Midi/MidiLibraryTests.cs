@@ -20,7 +20,6 @@ public sealed partial class MidiLibraryTests : GameTest
     private IResourceManager ResManager => Pair.Client.ResolveDependency<IResourceManager>();
     private MidiLibraryManager MidiLibManager => Pair.Client.ResolveDependency<MidiLibraryManager>();
 
-
     [TearDown]
     public void CleanUserData()
     {
