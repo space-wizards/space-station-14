@@ -39,13 +39,6 @@
           - !type:MaxRuleOccurenceCondition
           - !type:PlayerCountCondition
             min: 20
-        - id: Wizard
-          weight: 5
-          conditions:
-          - !type:HasBudgetCondition
-          - !type:MaxRuleOccurenceCondition
-          - !type:PlayerCountCondition
-            min: 10
       # Roundstart Minor Rules
       - !type:GroupSelector
         conditions:
@@ -57,6 +50,13 @@
           conditions:
           - !type:HasBudgetCondition
           - !type:MaxRuleOccurenceCondition
+        - id: SubXenoborgs
+          prob: 0.05
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 30
       # Midround rules
       - !type:GroupSelector
         conditions:
@@ -110,3 +110,12 @@
             min: 20
           - !type:RoundDurationCondition
             min: 2100 # 35 minutes
+        - id: WizardSpawn
+          weight: 1
+          conditions:
+          - !type:HasBudgetCondition
+          - !type:MaxRuleOccurenceCondition
+          - !type:PlayerCountCondition
+            min: 30
+          - !type:RoundDurationCondition
+            min: 1800 # 30 minutes
