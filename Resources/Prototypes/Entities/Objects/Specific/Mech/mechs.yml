@@ -109,8 +109,19 @@
         acts: ["Destruction"]
 
 - type: entity
-  id: MechRipley
+  id: BaseMechCanPry
+  abstract: true
   parent: BaseMech
+  components:
+  - type: Prying
+    pryPowered: false
+    force: false
+    bypassVerb: true
+    useSound: /Audio/Items/jaws_pry.ogg
+
+- type: entity
+  id: MechRipley
+  parent: BaseMechCanPry
   name: Ripley APLU
   description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
@@ -141,6 +152,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: Prying
+    speedModifier: 1.2 # little faster than usual since big mechs are stronk
 
 - type: entity
   id: MechRipleyBattery
@@ -154,7 +167,7 @@
 
 # TODO: have a whitelist for honker equipment
 - type: entity
-  parent: BaseMech
+  parent: BaseMechCanPry
   id: MechHonker
   name: H.O.N.K.
   description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
@@ -179,6 +192,8 @@
     pilotWhitelist:
       components:
       - HumanoidProfile
+  - type: Prying
+    speedModifier: 1.2 # little faster than usual since big mechs are stronk
 
 - type: entity
   parent: MechHonker
@@ -191,7 +206,7 @@
       - PowerCellHigh
 
 - type: entity
-  parent: BaseMech
+  parent: BaseMechCanPry
   id: MechHamtr
   name: HAMTR
   description: "An experimental mech which uses a brain–computer interface to connect directly to a hamsters brain."
@@ -243,7 +258,7 @@
 # Vim!!!!!!!
 
 - type: entity
-  parent: BaseMech
+  parent: BaseMechCanPry
   id: MechVim
   name: Vim
   description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
@@ -295,6 +310,9 @@
   - type: Access
     tags:
     - Maintenance
+  - type: Prying
+    speedModifier: 0.7 # slower than usual because the only thing the vim has to pry with are its legs
+    useSound: /Audio/Items/crowbar.ogg
   # TOOD: buzz / chime actions
   # TODO: builtin flashlight
 

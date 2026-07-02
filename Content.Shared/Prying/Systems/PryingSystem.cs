@@ -121,7 +121,7 @@ public sealed partial class PryingSystem : EntitySystem
 
         // hand-prying is much slower
         var modifier = CompOrNull<PryingComponent>(user)?.SpeedModifier ?? unpoweredComp.PryModifier;
-        return StartPry(target, user, null, modifier, out id);
+        return StartPry(target, user, HasComp<PryingComponent>(user) ? user : null, modifier, out id);
     }
 
     private bool CanPry(EntityUid target, EntityUid user, out string? message, PryingComponent? comp = null, PryUnpoweredComponent? unpoweredComp = null)

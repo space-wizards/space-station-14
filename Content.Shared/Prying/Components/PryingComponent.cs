@@ -22,6 +22,13 @@ public sealed partial class PryingComponent : Component
     public bool Force;
 
     /// <summary>
+    /// Whether the entity should pry directly on click, instead of using an alternative verb
+    /// Only useful for mobs that can pry, such as mechs, cyborgs, and zombies
+    /// </summary>
+    [DataField]
+    public bool BypassVerb = false;
+
+    /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
     /// </summary>
