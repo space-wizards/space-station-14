@@ -1,4 +1,4 @@
-﻿using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
@@ -24,6 +24,7 @@ public abstract partial class SharedArmorSystem : EntitySystem
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<CoefficientQueryEvent>>(OnCoefficientQuery);
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
+        SubscribeLocalEvent<AllowSuitStorageComponent, GetVerbsEvent<ExamineVerb>>(OnArmorStorageVerbExamine);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
 
@@ -58,6 +59,17 @@ public abstract partial class SharedArmorSystem : EntitySystem
             return;
 
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+    }
+
+    private void OnArmorStorageVerbExamine(Entity<AllowSuitStorageComponent> ent, ref GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var msg = new FormattedMessage();
+        msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.Examine));
+
+        _examine.AddDetailedExamineVerb(args, ent.Comp, msg, Loc.GetString("suit-storage-examinable-verb-text"), "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png", Loc.GetString("suit-storage-examinable-verb-message"));
     }
 
     private void OnArmorVerbExamine(EntityUid uid, ArmorComponent component, GetVerbsEvent<ExamineVerb> args)

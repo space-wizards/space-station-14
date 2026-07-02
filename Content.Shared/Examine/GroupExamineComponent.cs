@@ -22,6 +22,7 @@ namespace Content.Shared.Examine
                 {
                     "Armor",
                     "ClothingSpeedModifier",
+                    "AllowSuitStorage"
                 },
             },
         };
@@ -67,7 +68,7 @@ namespace Content.Shared.Examine
         ///     Details shown when hovering over the button.
         /// </summary>
         [DataField]
-        public string HoverMessage = string.Empty;
+        public string HoverMessage = "verb-examine-group-other-message";
     }
 
     /// <summary>
