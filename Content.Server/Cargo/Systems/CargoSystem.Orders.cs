@@ -21,9 +21,24 @@ namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
-        [Dependency] private TransformSystem _transformSystem = default!;
+        [Dependency]
+        private TransformSystem _transformSystem = default!;
 
-        [Dependency] private EmagSystem _emag = default!;
+        [Dependency]
+        private EmagSystem _emag = default!;
+
+        private void InitializeConsole()
+        {
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, BoundUIOpenedEvent>(OnOrderUIOpened);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
+
+            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentInit>(OnStationInit);
+        }
 
         private void OnInteractUsingCash(
             EntityUid uid,
@@ -96,7 +111,6 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
-        [SubscribeLocalEvent]
         private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
         {
             if (HasComp<CashComponent>(args.Used))
@@ -112,20 +126,17 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        [SubscribeLocalEvent]
         private void OnInit(EntityUid uid, CargoOrderConsoleComponent orderConsole, ComponentInit args)
         {
             var station = _station.GetOwningStation(uid);
             UpdateOrderState(uid, station);
         }
 
-        [SubscribeLocalEvent]
         private void OnStationInit(EntityUid uid, StationCargoOrderDatabaseComponent orderDatabase, ComponentInit args)
         {
             orderDatabase.NextOrderCheck = Timing.CurTime + orderDatabase.OrderCheckDelay;
         }
 
-        [SubscribeLocalEvent]
         private void OnEmagged(Entity<CargoOrderConsoleComponent> ent, ref GotEmaggedEvent args)
         {
             if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
@@ -158,7 +169,6 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        [SubscribeLocalEvent]
         private void OnApproveOrderMessage(
             EntityUid uid,
             CargoOrderConsoleComponent component,
@@ -314,7 +324,6 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        [SubscribeLocalEvent]
         private void OnRemoveOrderMessage(
             EntityUid uid,
             CargoOrderConsoleComponent component,
@@ -374,7 +383,6 @@ namespace Content.Server.Cargo.Systems
             slip.Account = component.Account;
         }
 
-        [SubscribeLocalEvent]
         private void OnAddOrderMessage(
             EntityUid uid,
             CargoOrderConsoleComponent component,
@@ -442,7 +450,6 @@ namespace Content.Server.Cargo.Systems
             );
         }
 
-        [SubscribeLocalEvent]
         private void OnOrderUIOpened(EntityUid uid, CargoOrderConsoleComponent component, BoundUIOpenedEvent args)
         {
             var station = _station.GetOwningStation(uid);
