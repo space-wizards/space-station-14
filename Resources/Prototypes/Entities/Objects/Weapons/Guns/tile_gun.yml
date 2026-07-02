@@ -25,7 +25,7 @@
   - type: CustomSpriteAmmoCounter
     loadedAmmoSprite: Interface/ItemStatus/Tiles/tile.png
     spentAmmoSprite: Interface/ItemStatus/Tiles/tile_empty.png
-    numberOfRows: 4
+    numberOfRows: 3
   - type: AmmoCounter
   - type: Gun
     fireRate: 4
@@ -43,7 +43,7 @@
     whitelist:
       components:
       - FloorTile
-    capacity: 30
+    capacity: 27
     proto: FloorTileItemXenoborg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/tile_load.ogg
