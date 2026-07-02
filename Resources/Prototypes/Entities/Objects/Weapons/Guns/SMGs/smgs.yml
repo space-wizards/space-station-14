@@ -1,9 +1,9 @@
 - type: entity
-  name: BaseSMG
+  abstract: true
   parent: BaseItem
   id: BaseWeaponSubMachineGun
+  name: BaseSMG
   description: A rooty tooty point and shooty.
-  abstract: true
   components:
   - type: Sprite
   - type: Item
@@ -31,6 +31,14 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/smg.ogg
     defaultDirection: 1, 0
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponSubMachineGun
+  id: BaseWeaponSubMachineGunClosedBolt
+  components:
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
@@ -44,24 +52,44 @@
         priority: 2
         whitelist:
           tags:
-            - MagazinePistolSubMachineGun
+          - MagazinePistolSubMachineGun
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
         priority: 1
         whitelist:
           tags:
-            - CartridgePistol
+          - CartridgePistol
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
       gun_chamber: !type:ContainerSlot
-  - type: StaticPrice
-    price: 500
+
+- type: entity
+  abstract: true
+  parent: BaseWeaponSubMachineGun
+  id: BaseWeaponSubMachineGunOpenBolt
+  components:
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSubMachineGun
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
 
 - type: entity
   name: Atreides
-  parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
+  parent: [BaseWeaponSubMachineGunClosedBolt, BaseMajorContraband]
   id: WeaponSubMachineGunAtreides
   description: A rare machine pistol hailing from the Corporate Wars. Its extremely high fire rate and compact profile make it useful in close quarters combat. Despite its age, it is in remarkably good condition. Feeds from .35 SMG magazines.
   components:
@@ -84,7 +112,7 @@
 
 - type: entity
   name: C-20r submachine gun
-  parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
+  parent: [BaseWeaponSubMachineGunClosedBolt, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
   description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
   components:
@@ -166,7 +194,7 @@
 
 - type: entity
   name: Drozd
-  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
+  parent: [BaseWeaponSubMachineGunClosedBolt, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
   description: A modern SMG manufactured by Nanotrasen’s Small Arms Division. It features an exceptional rate of fire in burst mode, useful for holding defensive angles or engaging hostiles at longer ranges. Feeds from .35 SMG magazines.
   components:
@@ -224,7 +252,7 @@
 
 - type: entity
   name: WT550
-  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
+  parent: [BaseWeaponSubMachineGunOpenBolt, BaseSecurityContraband]
   id: WeaponSubMachineGunWt550
   description: A truly unique firearm, the WT550 was designed by Nanotrasen's Small Arms Division as a compact submachine gun fully controllable with one hand. It contains an exotic internal recoil buffer and feeds from special top-mounted .35 magazines.
   components:
@@ -243,8 +271,6 @@
         shader: unshaded
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
-  - type: ChamberMagazineAmmoProvider
-    boltClosed: null
   - type: Gun
     fireRate: 5.5
     minAngle: 1
@@ -271,12 +297,6 @@
           tags:
             - MagazinePistolSubMachineGunTopMounted
         whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgePistol
   - type: MagazineVisuals
     magState: mag
     steps: 6
@@ -285,7 +305,7 @@
 
 - type: entity
   name: brown briefcase
-  parent: [BaseWeaponSubMachineGun]
+  parent: [BaseWeaponSubMachineGunOpenBolt]
   id: WeaponSubMachineGunBriefcase
   description: Useful for carrying items in your hands.
   suffix: Gun
@@ -316,8 +336,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
-  - type: ChamberMagazineAmmoProvider
-    autoEject: false
   - type: Appearance
   - type: StaticPrice
     price: 5000
