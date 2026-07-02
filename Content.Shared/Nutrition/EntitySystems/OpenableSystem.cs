@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -222,7 +223,16 @@ public sealed partial class OpenableSystem : EntitySystem
             return false;
 
         SetOpen(uid, true, comp, user);
-        _audio.PlayPredicted(comp.Sound, uid, user);
+        if (TryComp<SolutionComponent>(uid, out var solution) &&
+            comp.OpenEmptySound != null && //if we have a different sound to play when it's empty
+            solution.Solution.Volume == 0) //AND it's empty
+        {
+            _audio.PlayPredicted(comp.OpenEmptySound, uid, user);
+        }
+        else
+        {
+            _audio.PlayPredicted(comp.Sound, uid, user);
+        }
         return true;
     }
 
