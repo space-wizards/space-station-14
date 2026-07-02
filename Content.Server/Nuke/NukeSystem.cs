@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
@@ -8,12 +9,13 @@ using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.Examine;
 using Content.Shared.Kitchen;
 using Content.Shared.Maps;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -25,11 +27,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Nuke;
 
-public sealed partial class NukeSystem : EntitySystem
+/// <inheritdoc />
+public sealed partial class NukeSystem : SharedNukeSystem
 {
     [Dependency] private AlertLevelSystem _alertLevel = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private ExplosionSystem _explosions = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private NavMapSystem _navMap = default!;
@@ -49,13 +53,13 @@ public sealed partial class NukeSystem : EntitySystem
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
     /// </summary>
-    private float _nukeSongLength;
+    private TimeSpan _nukeSongLength;
     private ResolvedSoundSpecifier _selectedNukeSong = String.Empty;
 
     /// <summary>
     ///     Time to leave between the nuke song and the nuke alarm playing.
     /// </summary>
-    private const float NukeSongBuffer = 1.5f;
+    private static readonly TimeSpan NukeSongBuffer = TimeSpan.FromSeconds(1.5);
 
     public override void Initialize()
     {
@@ -66,7 +70,6 @@ public sealed partial class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
-        SubscribeLocalEvent<NukeComponent, ExaminedEvent>(OnExaminedEvent);
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -86,47 +89,29 @@ public sealed partial class NukeSystem : EntitySystem
 
     private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
     {
-        _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeDiskSlotId, component.DiskSlot);
+        _itemSlots.AddItemSlot(uid, NukeComponent.NukeDiskSlotId, component.DiskSlot);
 
         UpdateStatus(uid, component);
         UpdateUserInterface(uid, component);
     }
 
-    public override void Update(float frameTime)
+    private void OnMapInit(Entity<NukeComponent> ent, ref MapInitEvent args)
     {
-        base.Update(frameTime);
+        ent.Comp.ArmingTime = ent.Comp.Timer;
 
-        var query = EntityQueryEnumerator<NukeComponent>();
-        while (query.MoveNext(out var uid, out var nuke))
-        {
-            switch (nuke.Status)
-            {
-                case NukeStatus.ARMED:
-                    TickTimer(uid, frameTime, nuke);
-                    break;
-                case NukeStatus.COOLDOWN:
-                    TickCooldown(uid, frameTime, nuke);
-                    break;
-            }
-        }
-    }
-
-    private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
-    {
-        nuke.RemainingTime = nuke.Timer;
-        var originStation = _station.GetOwningStation(uid);
+        var originStation = _station.GetOwningStation(ent);
 
         if (originStation != null)
         {
-            nuke.OriginStation = originStation;
+            ent.Comp.OriginStation = originStation;
         }
         else
         {
-            var transform = Transform(uid);
-            nuke.OriginMapGrid = (transform.MapID, transform.GridUid);
+            var transform = Transform(ent);
+            ent.Comp.OriginMapGrid = (transform.MapID, transform.GridUid);
         }
 
-        nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
+        ent.Comp.Code = GenerateRandomNumberString(ent.Comp.CodeLength);
     }
 
     /// <summary>
@@ -165,11 +150,14 @@ public sealed partial class NukeSystem : EntitySystem
     {
         UpdateUserInterface(uid, component);
 
-        if (args.Anchored == false && component.Status == NukeStatus.ARMED && component.RemainingTime > component.DisarmDoAfterLength)
+        if (!args.Anchored
+            && component.Status == NukeStatus.ARMED
+            && component.ExplosionTime != null
+            && component.ExplosionTime.Value.TotalSeconds > component.DisarmDoAfterLength)
         {
             // yes, this means technically if you can find a way to unanchor the nuke, you can disarm it
             // without the doafter. but that takes some effort, and it won't allow you to disarm a nuke that can't be disarmed by the doafter.
-            DisarmBomb(uid, component);
+            DisarmBomb((uid, component));
         }
 
         UpdateAppearance(uid, component);
@@ -200,6 +188,7 @@ public sealed partial class NukeSystem : EntitySystem
         {
             _transform.Unanchor(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, true);
+            _adminLog.Add(LogType.Anchor, LogImpact.High, $"{args.Actor} unanchored {uid}");
         }
         else
         {
@@ -222,6 +211,7 @@ public sealed partial class NukeSystem : EntitySystem
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
             _itemSlots.SetLock(uid, component.DiskSlot, false);
+            _adminLog.Add(LogType.Anchor, LogImpact.High, $"{args.Actor} anchored {uid}");
         }
 
         UpdateUserInterface(uid, component);
@@ -233,7 +223,7 @@ public sealed partial class NukeSystem : EntitySystem
             return;
 
         var curTime = _timing.CurTime;
-        if (curTime < component.LastCodeEnteredAt + SharedNukeComponent.EnterCodeCooldown)
+        if (curTime < component.LastCodeEnteredAt + NukeComponent.EnterCodeCooldown)
             return; // Validate that they are not entering codes faster than the cooldown.
 
         component.LastCodeEnteredAt = curTime;
@@ -273,10 +263,11 @@ public sealed partial class NukeSystem : EntitySystem
             return;
 
         if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
-            ArmBomb(uid, component);
+            ArmBomb((uid, component), args.Actor);
 
         else
         {
+            _adminLog.Add(LogType.Explosion, LogImpact.High, $"{args.Actor} is attempting to disarm {uid}");
             DisarmBombDoAfter(uid, args.Actor, component);
         }
     }
@@ -290,7 +281,7 @@ public sealed partial class NukeSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
-        DisarmBomb(uid, component);
+        DisarmBomb((uid, component), args.User);
 
         var ev = new NukeDisarmSuccessEvent();
         RaiseLocalEvent(ev);
@@ -299,55 +290,73 @@ public sealed partial class NukeSystem : EntitySystem
     }
     #endregion
 
-    private void TickCooldown(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+    public override void Update(float frameTime)
     {
-        if (!Resolve(uid, ref nuke))
-            return;
+        base.Update(frameTime);
 
-        nuke.CooldownTime -= frameTime;
-        if (nuke.CooldownTime <= 0)
+        var query = EntityQueryEnumerator<NukeComponent>();
+        while (query.MoveNext(out var uid, out var nuke))
         {
-            // reset nuke to default state
-            nuke.CooldownTime = 0;
-            nuke.Status = NukeStatus.AWAIT_ARM;
-            UpdateStatus(uid, nuke);
+            switch (nuke.Status)
+            {
+                case NukeStatus.ARMED:
+                    TickTimer((uid, nuke));
+                    break;
+                case NukeStatus.COOLDOWN:
+                    TickCooldown((uid, nuke));
+                    break;
+            }
         }
-
-        UpdateUserInterface(uid, nuke);
     }
 
-    private void TickTimer(EntityUid uid, float frameTime, NukeComponent? nuke = null)
+    private void TickCooldown(Entity<NukeComponent> ent)
     {
-        if (!Resolve(uid, ref nuke))
+        if (ent.Comp.CooldownTime == null)
             return;
 
-        nuke.RemainingTime -= frameTime;
+        if (ent.Comp.CooldownTime <= _timing.CurTime)
+        {
+            // reset nuke to default state
+            ent.Comp.CooldownTime = null;
+            ent.Comp.Status = NukeStatus.AWAIT_ARM;
+            UpdateStatus(ent.Owner, ent.Comp);
+        }
+
+        UpdateUserInterface(ent.Owner, ent.Comp);
+    }
+
+    private void TickTimer(Entity<NukeComponent> ent)
+    {
+        if (ent.Comp.ExplosionTime == null)
+            return;
+
+        var remainingTime = ent.Comp.ExplosionTime.Value - _timing.CurTime;
 
         // Start playing the nuke event song so that it ends a couple seconds before the alert sound
         // should play
-        if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
+        if (remainingTime <= _nukeSongLength + ent.Comp.AlertSoundTime + NukeSongBuffer && !ent.Comp.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
         {
-            _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
-            nuke.PlayedNukeSong = true;
+            _sound.DispatchStationEventMusic(ent, _selectedNukeSong, StationEventMusicType.Nuke);
+            ent.Comp.PlayedNukeSong = true;
         }
 
         // play alert sound if time is running out
-        if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
+        if (remainingTime <= ent.Comp.AlertSoundTime && !ent.Comp.PlayedAlertSound)
         {
-            _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(nuke.AlertSound), new AudioParams{Volume = -5f});
-            _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
-            nuke.PlayedAlertSound = true;
-            UpdateAppearance(uid, nuke);
+            _sound.PlayGlobalOnStation(ent, _audio.ResolveSound(ent.Comp.AlertSound), new AudioParams{Volume = -5f});
+            _sound.StopStationEventMusic(ent, StationEventMusicType.Nuke);
+            ent.Comp.PlayedAlertSound = true;
+            UpdateAppearance(ent.Owner, ent.Comp);
         }
 
-        if (nuke.RemainingTime <= 0)
+        if (remainingTime.TotalSeconds <= 0)
         {
-            nuke.RemainingTime = 0;
-            ActivateBomb(uid, nuke);
+            ent.Comp.ExplosionTime = null;
+            ActivateBomb(ent.Owner, ent.Comp);
         }
 
         else
-            UpdateUserInterface(uid, nuke);
+            UpdateUserInterface(ent.Owner, ent.Comp);
     }
 
     private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
@@ -372,14 +381,14 @@ public sealed partial class NukeSystem : EntitySystem
                 if (component.EnteredCode == component.Code)
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
-                    var modifier = CompOrNull<NukeDiskComponent>(component.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
-                    component.RemainingTime = MathF.Max(component.Timer + (float)modifier.TotalSeconds, component.MinimumTime);
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
+                    _adminLog.Add(LogType.Action, LogImpact.Extreme, $"Nuke code entered correctly on {uid}");
                 }
                 else
                 {
                     component.EnteredCode = "";
                     _audio.PlayPvs(component.AccessDeniedSound, uid);
+                    _adminLog.Add(LogType.Action, LogImpact.High, $"Nuke code entered incorrectly on {uid}");
                 }
 
                 break;
@@ -390,9 +399,8 @@ public sealed partial class NukeSystem : EntitySystem
                 // handling case of wizard recalling disk out of armed Nuke
                 if (!component.DiskSlot.HasItem)
                 {
-                    DisarmBomb(uid, component);
+                    DisarmBomb((uid, component));
                 }
-
                 break;
         }
     }
@@ -414,13 +422,14 @@ public sealed partial class NukeSystem : EntitySystem
         var state = new NukeUiState
         {
             Status = component.Status,
-            RemainingTime = (int) component.RemainingTime,
+            RemainingTime = component.ExplosionTime - _timing.CurTime,
             DiskInserted = component.DiskSlot.HasItem,
             IsAnchored = anchored,
             AllowArm = allowArm,
             EnteredCodeLength = component.EnteredCode.Length,
             MaxCodeLength = component.CodeLength,
-            CooldownTime = (int) component.CooldownTime,
+            CooldownTime = component.CooldownTime - _timing.CurTime,
+            ArmingTime = component.ArmingTime,
         };
 
         _ui.SetUiState(uid, NukeUiKey.Key, state);
@@ -475,100 +484,156 @@ public sealed partial class NukeSystem : EntitySystem
     /// <summary>
     ///     Force a nuclear bomb to start a countdown timer
     /// </summary>
+    [PublicAPI, Obsolete("Use Entity<T> version instead.")]
     public void ArmBomb(EntityUid uid, NukeComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        ArmBomb((uid, component));
+    }
+
+    /// <summary>
+    /// Begins the countdown timer for a nuclear bomb.
+    /// </summary>
+    /// <param name="nuke">Thing the goes boom.</param>
+    /// <param name="user">Entity who started the boom.</param>
+    [PublicAPI]
+    public void ArmBomb(Entity<NukeComponent?> nuke, EntityUid? user = null)
+    {
+        if (!Resolve(nuke.Owner, ref nuke.Comp))
             return;
 
-        if (component.Status == NukeStatus.ARMED)
+        if (nuke.Comp.Status == NukeStatus.ARMED)
             return;
 
-        var nukeXform = Transform(uid);
+        var nukeXform = Transform(nuke);
         var stationUid = _station.GetStationInMap(nukeXform.MapID);
         // The nuke may not be on a station, so it's more important to just
         // let people know that a nuclear bomb was armed in their vicinity instead.
         // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
         if (stationUid != null)
-            _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
-
-        var pos = _transform.GetMapCoordinates(uid, xform: nukeXform);
-        var x = (int) pos.X;
-        var y = (int) pos.Y;
-        var posText = $"({x}, {y})";
+            _alertLevel.SetLevel(stationUid.Value, nuke.Comp.AlertLevelOnActivate, true, true, true, true);
 
         // We are collapsing the randomness here, otherwise we would get separate random song picks for checking duration and when actually playing the song afterwards
-        _selectedNukeSong = _audio.ResolveSound(component.ArmMusic);
+        _selectedNukeSong = _audio.ResolveSound(nuke.Comp.ArmMusic);
 
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-armed",
-            ("time", (int) component.RemainingTime),
-            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, nukeXform)))));
+            ("time", nuke.Comp.ArmingTime.TotalSeconds),
+            ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((nuke, nukeXform)))));
         var sender = Loc.GetString("nuke-component-announcement-sender");
-        _chatSystem.DispatchStationAnnouncement(stationUid ?? uid, announcement, sender, false, null, Color.Red);
+        _chatSystem.DispatchStationAnnouncement(stationUid ?? nuke, announcement, sender, false, null, Color.Red);
 
-        _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.ArmSound));
-        _nukeSongLength = (float) _audio.GetAudioLength(_selectedNukeSong).TotalSeconds;
+        _sound.PlayGlobalOnStation(nuke, _audio.ResolveSound(nuke.Comp.ArmSound));
+        _nukeSongLength = _audio.GetAudioLength(_selectedNukeSong);
 
         // turn on the spinny light
-        _pointLight.SetEnabled(uid, true);
+        _pointLight.SetEnabled(nuke, true);
         // enable the navmap beacon for people to find it
-        _navMap.SetBeaconEnabled(uid, true);
+        _navMap.SetBeaconEnabled(nuke, true);
 
-        _itemSlots.SetLock(uid, component.DiskSlot, true);
+        _itemSlots.SetLock(nuke, nuke.Comp.DiskSlot, true);
         if (!nukeXform.Anchored)
         {
             // Admin command shenanigans, just make sure.
-            _transform.AnchorEntity(uid, nukeXform);
+            _transform.AnchorEntity(nuke, nukeXform);
         }
 
-        component.Status = NukeStatus.ARMED;
-        UpdateUserInterface(uid, component);
-        UpdateAppearance(uid, component);
+        // Set the fuse
+        var modifier = CompOrNull<NukeDiskComponent>(nuke.Comp.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
+        var secondsTillBoom = Math.Max(nuke.Comp.ArmingTime.TotalSeconds + modifier.TotalSeconds, nuke.Comp.MinimumTime.TotalSeconds);
+
+        nuke.Comp.ExplosionTime = _timing.CurTime + TimeSpan.FromSeconds(secondsTillBoom);
+        DirtyField(nuke, "ExplosionTime");
+
+        var pos = _transform.GetMapCoordinates(nuke, xform: nukeXform);
+
+        _adminLog.Add(
+            LogType.Explosion,
+            LogImpact.Extreme,
+            $"{nuke} has been armed with a {(int) nuke.Comp.ArmingTime.TotalSeconds} second timer! " +
+                   $"Preformed by {user} at position: {pos}.");
+
+        nuke.Comp.Status = NukeStatus.ARMED;
+        UpdateUserInterface(nuke, nuke.Comp);
+        UpdateAppearance(nuke, nuke.Comp);
     }
 
     /// <summary>
     ///     Stop nuclear bomb timer
     /// </summary>
+    [PublicAPI, Obsolete("Use Entity<T> version instead.")]
     public void DisarmBomb(EntityUid uid, NukeComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        DisarmBomb((uid, component));
+    }
+
+    /// <summary>
+    /// Disables an active nuke.
+    /// </summary>
+    /// <param name="nuke">Thing that isn't going boom any longer.</param>
+    /// <param name="user">Hero of the station.</param>
+    [PublicAPI]
+    public void DisarmBomb(Entity<NukeComponent?> nuke, EntityUid? user = null)
+    {
+        if (!Resolve(nuke, ref nuke.Comp))
             return;
 
-        if (component.Status != NukeStatus.ARMED)
+        if (nuke.Comp.Status != NukeStatus.ARMED)
             return;
 
-        var stationUid = _station.GetOwningStation(uid);
+        TimeSpan remainingTime;
+        if (nuke.Comp.ExplosionTime == null)
+        {
+            Log.Error($"A nuke was disarmed without having had its timer set when armed! Entity: {ToPrettyString(nuke)}");
+            remainingTime = nuke.Comp.Timer;
+        }
+        else
+            remainingTime = nuke.Comp.ExplosionTime.Value - _timing.CurTime;
+
+        nuke.Comp.ExplosionTime = null;
+        DirtyField(nuke, "ExplosionTime");
+
+        // reset nuke remaining time to either itself or the minimum time, whichever is higher
+        nuke.Comp.ArmingTime = remainingTime < nuke.Comp.MinimumTime
+                             ? nuke.Comp.MinimumTime
+                             : remainingTime;
+
+        var stationUid = _station.GetOwningStation(nuke);
         if (stationUid != null)
-            _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
+            _alertLevel.SetLevel(stationUid.Value, nuke.Comp.AlertLevelOnDeactivate, true, true, true);
 
         // warn a crew
         var announcement = Loc.GetString("nuke-component-announcement-unarmed");
         var sender = Loc.GetString("nuke-component-announcement-sender");
-        _chatSystem.DispatchStationAnnouncement(uid, announcement, sender, false);
+        _chatSystem.DispatchStationAnnouncement(nuke, announcement, sender, false);
 
-        component.PlayedNukeSong = false;
-        _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(component.DisarmSound));
-        _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
-
-        // reset nuke remaining time to either itself or the minimum time, whichever is higher
-        component.RemainingTime = Math.Max(component.RemainingTime, component.MinimumTime);
+        nuke.Comp.PlayedNukeSong = false;
+        _sound.PlayGlobalOnStation(nuke, _audio.ResolveSound(nuke.Comp.DisarmSound));
+        _sound.StopStationEventMusic(nuke, StationEventMusicType.Nuke);
 
         // disable sound and reset it
-        component.PlayedAlertSound = false;
-        component.AlertAudioStream = _audio.Stop(component.AlertAudioStream);
+        if (nuke.Comp.PlayedAlertSound)
+        {
+            nuke.Comp.PlayedAlertSound = false;
+            nuke.Comp.AlertAudioStream = _audio.Stop(nuke.Comp.AlertAudioStream); // Does this ever even get set?
+        }
 
         // turn off the spinny light
-        _pointLight.SetEnabled(uid, false);
+        _pointLight.SetEnabled(nuke, false);
         // disable the navmap beacon now that its disarmed
-        _navMap.SetBeaconEnabled(uid, false);
+        _navMap.SetBeaconEnabled(nuke, false);
 
         // start bomb cooldown
-        _itemSlots.SetLock(uid, component.DiskSlot, false);
-        component.Status = NukeStatus.COOLDOWN;
-        component.CooldownTime = component.Cooldown;
+        _itemSlots.SetLock(nuke, nuke.Comp.DiskSlot, false);
+        nuke.Comp.Status = NukeStatus.COOLDOWN;
+        nuke.Comp.CooldownTime = _timing.CurTime + nuke.Comp.Cooldown;
 
-        UpdateUserInterface(uid, component);
-        UpdateAppearance(uid, component);
+        _adminLog.Add(
+            LogType.Explosion,
+            LogImpact.Extreme,
+            $"Nuke {nuke} was disarmed by {user} with {(int)remainingTime.TotalSeconds} seconds remaining!");
+
+        UpdateUserInterface(nuke.Owner, nuke.Comp);
+        UpdateAppearance(nuke.Owner, nuke.Comp);
     }
 
     /// <summary>
@@ -580,9 +645,9 @@ public sealed partial class NukeSystem : EntitySystem
             return;
 
         if (component.Status == NukeStatus.ARMED)
-            DisarmBomb(uid, component);
+            DisarmBomb((uid, component));
         else
-            ArmBomb(uid, component);
+            ArmBomb((uid, component));
     }
 
     /// <summary>
@@ -598,6 +663,8 @@ public sealed partial class NukeSystem : EntitySystem
             return;
 
         component.Exploded = true;
+
+        _adminLog.Add(LogType.Explosion, LogImpact.Extreme, $"{uid} detonated.");
 
         _explosions.QueueExplosion(uid,
             component.ExplosionType,
@@ -615,14 +682,17 @@ public sealed partial class NukeSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set remaining time value
+    /// Set remaining time value.
     /// </summary>
+    /// <param name="uid">The nuke.</param>
+    /// <param name="timer">Seconds until the nuke explodes!!</param>
+    /// <param name="component">The nuke component.</param>
     public void SetRemainingTime(EntityUid uid, float timer, NukeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        component.RemainingTime = timer;
+        component.ExplosionTime = _timing.CurTime + TimeSpan.FromSeconds(timer);
         UpdateUserInterface(uid, component);
     }
 
@@ -661,19 +731,6 @@ public sealed partial class NukeSystem : EntitySystem
             state = NukeVisualState.Idle;
 
         _appearance.SetData(uid, NukeVisuals.State, state);
-    }
-
-    private void OnExaminedEvent(EntityUid uid, NukeComponent component, ExaminedEvent args)
-    {
-        if (component.PlayedAlertSound)
-            args.PushMarkup(Loc.GetString("nuke-examine-exploding"));
-        else if (component.Status == NukeStatus.ARMED)
-            args.PushMarkup(Loc.GetString("nuke-examine-armed"));
-
-        if (Transform(uid).Anchored)
-            args.PushMarkup(Loc.GetString("examinable-anchored"));
-        else
-            args.PushMarkup(Loc.GetString("examinable-unanchored"));
     }
 }
 
