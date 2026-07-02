@@ -25,7 +25,6 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed partial class StationSystem : SharedStationSystem
 {
-    [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -43,7 +42,7 @@ public sealed partial class StationSystem : SharedStationSystem
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("station");
+        _sawmill = LogManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
