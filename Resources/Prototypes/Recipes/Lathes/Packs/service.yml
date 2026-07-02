@@ -33,6 +33,7 @@
   - BiogeneratorMachineCircuitboard
   - UniformPrinterMachineCircuitboard
   - MicrowaveMachineCircuitboard
+  - DeepFryerMachineCircuitboard
   - ReagentGrinderMachineCircuitboard
   - ElectricGrillMachineCircuitboard
   - BoozeDispenserMachineCircuitboard
