@@ -60,6 +60,7 @@ construction-graph-tag-pipe = gas pipe
 construction-graph-tag-human-head = human head
 construction-graph-tag-bucket = bucket
 construction-graph-tag-borg-arm = borg arm
+construction-graph-tag-borg-leg = borg leg
 construction-graph-tag-borg-head = borg head
 construction-graph-tag-medkit = medkit
 construction-graph-tag-flower = flower
@@ -73,6 +74,8 @@ construction-graph-tag-apron = an apron
 construction-graph-tag-utility-belt = a utility belt
 soil-construction-graph-any-mushroom = any mushroom
 construction-graph-tag-mop-basic = mop
+construction-graph-tag-cardboardbox = a cardboard box
+construction-graph-tag-synthesizer = synthesizer
 construction-graph-tag-paper = office paper
 construction-graph-tag-core-pinpointer-piece = piece of core pinpointer
 
