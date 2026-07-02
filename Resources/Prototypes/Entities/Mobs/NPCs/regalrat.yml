@@ -1,7 +1,7 @@
 - type: entity
   name: rat king
   id: MobRatKing
-  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, BaseThirstSlowdown ]
+  parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable, MobNightVision, BaseThirstSlowdown ]
   description: He's da rat. He make da roolz.
   components:
   - type: CombatMode
@@ -263,10 +263,7 @@
     - id: FoodMeatRat
       amount: 1
   - type: Vocal
-    sounds:
-      Male: Mouse
-      Female: Mouse
-      Unsexed: Mouse
+    emoteSounds: Mouse
     wilhelmProbability: 0.001
   - type: Tag
     tags:
