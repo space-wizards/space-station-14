@@ -63,6 +63,10 @@
     damage:
       types:
         Blunt: 0
+  - type: ExaminableSolution
+    solution: food
+    examinableWhileClosed: false
+    heldOnly: true
 
 - type: entity
   abstract: true
@@ -268,6 +272,13 @@
         Quantity: 50
   - type: Edible
     edible: Drink # slurping sounds!
+    solution: food
+    destroyOnEmpty: false
+    utensil: None
+  - type: Openable
+    sound:
+      collection: pop
+    closeable: true
 
 - type: entity
   parent: ReagentPacketBase # TODO Move to condiments.yml and parent off of BaseFoodCondimentBottle
@@ -295,6 +306,13 @@
   - type: Tag
     tags:
       - Mayo
+  - type: Openable
+    closeable: true
+  - type: Edible
+    edible: Drink # slurping sounds!
+    solution: food
+    destroyOnEmpty: false
+    utensil: None
 
 # Baking
 
