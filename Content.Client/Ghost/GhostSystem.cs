@@ -84,7 +84,6 @@ namespace Content.Client.Ghost
             if (args.Handled)
                 return;
 
-            TryComp<PointLightComponent>(uid, out var light);
             TryComp<NightVisionComponent>(uid, out var nv);
 
             if (!component.DrawLight)
@@ -93,16 +92,9 @@ namespace Content.Client.Ghost
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-normal"), args.Performer);
                 _contentEye.RequestEye(component.DrawFov, true);
             }
-            else if ((!light?.Enabled ?? false) && (!nv?.Enabled ?? false)) // skip this option if we have no PointLightComponent
-            {
-                // enable personal light
-                Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-personal-light"), args.Performer);
-                _pointLightSystem.SetEnabled(uid, true, light);
-            }
-            else if ((light?.Enabled ?? false) && (!nv?.Enabled ?? false))
+            else if (!nv?.Enabled ?? false)
             {
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-half-bright"), args.Performer);
-                _pointLightSystem.SetEnabled(uid, false, light);
                 _nv.SetEnabled((uid, nv), true);
             }
             else
@@ -110,7 +102,6 @@ namespace Content.Client.Ghost
                 // fullbright mode
                 Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-lighting-manager-popup-fullbright"), args.Performer);
                 _contentEye.RequestEye(component.DrawFov, false);
-                _pointLightSystem.SetEnabled(uid, false, light);
                 _nv.SetEnabled((uid, nv), false);
             }
 

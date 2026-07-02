@@ -4,7 +4,6 @@ ghost-gui-ghost-roles-button = Ghost Roles ({$count})
 ghost-gui-toggle-ghost-visibility-popup-on = Enabled visibility of ghosts.
 ghost-gui-toggle-ghost-visibility-popup-off = Disabled visibility of ghosts.
 ghost-gui-toggle-lighting-manager-popup-normal = Normal light.
-ghost-gui-toggle-lighting-manager-popup-personal-light = Personal light.
 ghost-gui-toggle-lighting-manager-popup-half-bright = Half-Bright.
 ghost-gui-toggle-lighting-manager-popup-fullbright = Fullbright.
 ghost-gui-toggle-fov-popup = Toggled field-of-view.

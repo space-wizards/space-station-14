@@ -70,7 +70,7 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
 
     public void SetEnabled(Entity<NightVisionComponent?> ent, bool enabled)
     {
-        if (ent.Comp == null)
+        if (!Resolve(ent, ref ent.Comp, false))
             return;
 
         ent.Comp.Enabled = enabled;
