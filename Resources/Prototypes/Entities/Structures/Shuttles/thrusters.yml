@@ -100,7 +100,12 @@
   parent: Thruster
   id: ThrusterXenoborg
   components:
+  - type: Machine
+    board: ThrusterXenoborgMachineCircuitboard
   # temporary solution until thruster rework
+  - type: Construction
+    graph: machineWelded
+    node: machine
   - type: Thruster
     canToggle: false # no turning it off by just clicking it
   - type: Anchorable

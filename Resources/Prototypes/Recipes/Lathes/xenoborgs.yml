@@ -2,6 +2,13 @@
 
 - type: latheRecipe
   abstract: true
+  id: BaseXenoborgMachineRecipe
+  categories:
+  - Machines
+  completetime: 2
+
+- type: latheRecipe
+  abstract: true
   id: BaseXenoborgRecipe
   categories:
   - Robotics
@@ -13,6 +20,15 @@
   categories:
   - Modules
   completetime: 2
+
+# machines
+
+- type: latheRecipe
+  parent: BaseXenoborgMachineRecipe
+  id: ThrusterXenoborgFlatpackRecipe
+  result: ThrusterXenoborgFlatpack
+  materials:
+    Steel: 2000
 
 # xenoborgs
 
