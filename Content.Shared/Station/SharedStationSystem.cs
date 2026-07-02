@@ -24,21 +24,29 @@ public abstract partial class SharedStationSystem : EntitySystem
     /// <summary>
     /// Gets the largest member grid from a station.
     /// </summary>
+    /// <remarks>
+    /// "Largest" is determined by the total area of the grid's bounding box, not by the tile count.
+    /// If two of the station's grids have the same area, this method returns whichever happens to
+    /// be first in the station's grid list.
+    /// </remarks>
     public EntityUid? GetLargestGrid(Entity<StationDataComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
             return null;
 
         EntityUid? largestGrid = null;
-        Box2 largestBounds = new Box2();
+        var largestArea = 0.0f;
 
         foreach (var gridUid in ent.Comp.Grids)
         {
-            if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.LocalAABB.Size.LengthSquared() < largestBounds.Size.LengthSquared())
+            if (!TryComp<MapGridComponent>(gridUid, out var grid))
                 continue;
 
-            largestBounds = grid.LocalAABB;
+            var gridArea = Box2.Area(grid.LocalAABB);
+            if (gridArea < largestArea)
+                continue;
+
+            largestArea = gridArea;
             largestGrid = gridUid;
         }
 
