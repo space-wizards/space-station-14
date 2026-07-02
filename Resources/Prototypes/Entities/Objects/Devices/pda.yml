@@ -1265,6 +1265,25 @@
 
 - type: entity
   parent: BasePDA
+  id: TramDriverPDA
+  name: tram driver PDA
+  description: A serious driver will always arrive on time.
+  components:
+  - type: Pda
+    id: TramDriverIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-tramdriver
+  - type: PdaBorderColor
+    borderColor: "#454a50"
+    accentVColor: "#ffc500"
+  - type: Icon
+    state: pda-tramdriver
+
+- type: entity
+  parent: BasePDA
   id: ReporterPDA
   name: reporter PDA
   description: Smells like freshly printed press.

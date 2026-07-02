@@ -30,6 +30,7 @@
   - Reporter
   - Visitor
   - ServiceWorker
+  - TramDriver
 
 - type: department
   id: CentralCommand
@@ -139,4 +140,5 @@
   roles:
   - Reporter
   - Psychologist
+  - TramDriver
   primary: false

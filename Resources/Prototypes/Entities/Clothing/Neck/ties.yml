@@ -54,3 +54,18 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieSerious
+  name: serious tie
+  description: A perfectly tied tie to get you through the working day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/serioustie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/serioustie.rsi
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Clothing/Neck/Ties/serioustie.rsi
