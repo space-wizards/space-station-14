@@ -24,7 +24,6 @@ namespace Content.Server.Salvage
         [Dependency] private IChatManager _chat = default!;
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IGameTiming _timing = default!;
-        [Dependency] private ILogManager _logManager = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private AnchorableSystem _anchorable = default!;
         [Dependency] private BiomeSystem _biome = default!;
