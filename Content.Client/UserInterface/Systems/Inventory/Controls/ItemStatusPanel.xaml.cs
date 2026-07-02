@@ -162,6 +162,7 @@ public sealed partial class ItemStatusPanel : Control
 
         if (_entityManager.HasComponent<BlockItemNameInHandComponent>(_entity))
         {
+            StatusContents.VerticalAlignment = VAlignment.Center;
             ItemNameLabel.Visible = false;
             return;
         }
