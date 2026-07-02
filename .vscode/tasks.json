@@ -5,12 +5,11 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet",
+            "detail": "Builds the game. This requires Just.",
+            "command": "just",
             "type": "shell",
             "args": [
-                "build",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "build"
             ],
             "group": {
                 "kind": "build",
@@ -23,28 +22,21 @@
         },
         {
             "label": "build-yaml-linter",
-            "command": "dotnet",
+            "detail": "Builds the YAML Linter. This requires Just.",
+            "command": "just",
             "type": "process",
             "args": [
-                "build",
-                "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
+                "build-yaml-linter"
             ],
             "problemMatcher": "$msCompile"
         },
         {
             "label": "test",
-            "command": "dotnet",
+            "command": "just",
+            "detail": "Runs all unit tests. This requires Just.",
             "type": "shell",
             "args": [
-                "test",
-                "--no-build",
-                "--configuration",
-                "DebugOpt",
-                "Content.Tests/Content.Tests.csproj",
-                "--",
-                "NUnit.ConsoleOut=0"
+                "run-tests"
             ],
             "group": {
                 "kind": "test"
@@ -56,18 +48,11 @@
         },
         {
             "label": "integration-test",
-            "command": "dotnet",
+            "detail": "Runs all integration tests. This requires Just. These tests take a while.",
+            "command": "just",
             "type": "shell",
             "args": [
-                "test",
-                "--no-build",
-                "--configuration",
-                "DebugOpt",
-                "Content.IntegrationTests/Content.IntegrationTests.csproj",
-                "--",
-                "NUnit.ConsoleOut=0",
-                "NUnit.MapWarningTo=Failed.ConsoleOut=0",
-                "NUnit.MapWarningTo=Failed"
+                "run-integration-tests"
             ],
             "group": {
                 "kind": "test"
