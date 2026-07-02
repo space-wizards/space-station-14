@@ -10,7 +10,7 @@
     emagType: Access
   - type: Sprite
     sprite: Objects/Tools/access_breaker.rsi
-    state: icon
+    state: syndi-icon
   - type: Item
     sprite: Objects/Tools/access_breaker.rsi
 
@@ -23,3 +23,19 @@
   - type: AutoRecharge
   - type: StaticPrice
     price: 2000
+
+- type: entity
+  parent: [BaseItem, BaseXenoborgContraband]
+  id: XenoborgAccessBreaker
+  suffix: Limited
+  name: xenoborg authentication disruptor
+  description: An access scrubbing device, engineered by xenoborgs for disrupting digital locks.
+  components:
+  - type: Emag
+    emagImmuneTag: AccessBreakerImmune
+    emagType: Access
+  - type: LimitedCharges
+  - type: AutoRecharge
+  - type: Sprite
+    sprite: Objects/Tools/access_breaker.rsi
+    state: xorg-icon

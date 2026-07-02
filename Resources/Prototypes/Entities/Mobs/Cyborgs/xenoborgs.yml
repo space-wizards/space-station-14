@@ -37,12 +37,9 @@
       - MMIFilled
       borg_module:
       - XenoborgModuleBasic
-      - BorgModuleAdvancedTool
-      - BorgModuleConstruction
-      - BorgModuleRCD
-      - BorgModuleCable
+      - XenoborgModuleAdvancedTool
+      - XenoborgModuleConstruction
       - XenoborgModuleAccessBreaker
-      - XenoborgModuleFireExtinguisher
   - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
@@ -269,12 +266,9 @@
       - MMI
       borg_module:
       - XenoborgModuleBasic
-      - BorgModuleAdvancedTool
-      - BorgModuleConstruction
-      - BorgModuleRCD
-      - BorgModuleCable
+      - XenoborgModuleAdvancedTool
+      - XenoborgModuleConstruction
       - XenoborgModuleAccessBreaker
-      - XenoborgModuleFireExtinguisher
   - type: ItemSlots
     slots:
       cell_slot:

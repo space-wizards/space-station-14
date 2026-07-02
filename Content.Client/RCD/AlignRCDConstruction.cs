@@ -24,7 +24,7 @@ public sealed partial class AlignRCDConstruction : PlacementMode
     [Dependency] private IStateManager _stateManager = default!;
 
     private const float SearchBoxSize = 2f;
-    private const float PlaceColorBaseAlpha = 0.5f;
+    private const float PlaceColorBaseAlpha = 0.70f;
 
     private EntityCoordinates _unalignedMouseCoords = default;
 

@@ -89,3 +89,41 @@
         Blunt: 14
   - type: StaticPrice
     price: 1000
+
+- type: entity
+  name: xenoborg jaws of death
+  parent: [JawsOfLife, BaseXenoborgContraband ]
+  id: XenoborgJawsOfLife
+  description: Useful for prying open bolted doors where organics are hiding.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: xorg_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: xorg_inhand-left
+      right:
+      - state: xorg_inhand-right
+    size: Normal
+  - type: Prying
+    force: true
+    speedModifier: 3.0
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: xorg_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: Objects/Tools/jaws_of_life.rsi
+        state: xorg_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
