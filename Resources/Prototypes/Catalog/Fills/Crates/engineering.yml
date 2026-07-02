@@ -256,6 +256,7 @@
     - id: CellRechargerCircuitboard
     - id: SpaceVillainArcadeComputerCircuitboard
     - id: BlockGameArcadeComputerCircuitboard
+    - id: MineGameArcadeComputerCircuitboard
 
 - type: entity
   parent: ToteBase

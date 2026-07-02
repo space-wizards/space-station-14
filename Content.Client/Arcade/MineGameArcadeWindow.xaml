@@ -1,0 +1,42 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      MinSize="160 160" Title="{Loc 'minegame-menu-title'}">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+            <BoxContainer Name="MainHeader"
+                          Orientation="Horizontal"
+                          HorizontalExpand="True"
+                          HorizontalAlignment="Center">
+                <Label Name="TimeLabel" Align="Center"/>
+                <BoxContainer Name="BoardOptionsPresetsContainer"
+                              Orientation="Horizontal"
+                              HorizontalExpand="True">
+                    <Button Name="ToggleCustomOptionsMenuButton"
+                            Text="{Loc 'minegame-menu-button-custom-menu'}"/>
+                </BoxContainer>
+                <Label Name="MineCountLabel" Align="Center"/>
+            </BoxContainer>
+            <BoxContainer Name="CustomBoardOptionsContainer"
+                          Orientation="Horizontal"
+                          HorizontalExpand="True"
+                          Visible="False">
+                <LineEdit Name="CustomWidthField" HorizontalExpand="True" MinWidth="60"
+                          PlaceHolder="{Loc 'minegame-menu-field-custom-width'}"/>
+                <LineEdit Name="CustomHeightField" HorizontalExpand="True" MinWidth="60"
+                          PlaceHolder="{Loc 'minegame-menu-field-custom-height'}"/>
+                <LineEdit Name="CustomMinesField" HorizontalExpand="True" MinWidth="60"
+                          PlaceHolder="{Loc 'minegame-menu-field-custom-mines'}"/>
+                <Button Name="ApplyCustomBoardButton" Text="{Loc 'minegame-menu-button-custom-apply'}"/>
+            </BoxContainer>
+            <GridContainer Name="BoardGrid"
+                           HorizontalExpand="True"
+                           VerticalExpand="True"
+                           HSeparationOverride="1"
+                           VSeparationOverride="1"
+                           HorizontalAlignment="Center">
+                <!-- Populated by MineGameArcadeWindow code -->
+            </GridContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
