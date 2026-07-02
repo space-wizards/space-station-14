@@ -13,6 +13,7 @@
     bodyType: Dynamic
     bodyStatus: InAir
   - type: CanMoveInAir
+  - type: TileFrictionModifier
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false
@@ -66,15 +67,9 @@
     - SingularityEngine
     - SingularityTeslaEngine
     - Power
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
     location: singularity
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     layers:

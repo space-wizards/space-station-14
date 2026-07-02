@@ -7,6 +7,7 @@ cargoproduct-category-name-engineering = Engineering
 cargoproduct-category-name-food = Food
 cargoproduct-category-name-fun = Fun
 cargoproduct-category-name-hydroponics = Hydroponics
+cargoproduct-category-name-instruments = Instruments
 cargoproduct-category-name-livestock = Livestock
 cargoproduct-category-name-materials = Materials
 cargoproduct-category-name-medical = Medical

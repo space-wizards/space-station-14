@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Construction.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Construction
@@ -9,7 +8,6 @@ namespace Content.Shared.Construction
     public abstract partial class SharedConstructionSystem : EntitySystem
     {
         [Dependency] private SharedMapSystem _map = default!;
-        [Dependency] protected IPrototypeManager PrototypeManager = default!;
         [Dependency] protected SharedTransformSystem TransformSystem = default!;
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace Content.Shared.Construction
             if (info.ExamineName is not null)
                 return Loc.GetString(info.ExamineName.Value);
 
-            return PrototypeManager.Index(info.DefaultPrototype).Name;
+            return ProtoMan.Index(info.DefaultPrototype).Name;
         }
     }
 }

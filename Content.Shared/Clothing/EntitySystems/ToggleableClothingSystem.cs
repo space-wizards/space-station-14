@@ -60,10 +60,6 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null || component.ClothingUid == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? (component.ActionEntity == null ? null : Name(component.ActionEntity.Value));
-        if (text == null)
-            return;
-
         if (!_inventorySystem.InSlotWithFlags(uid, component.RequiredFlags))
             return;
 
@@ -74,7 +70,7 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         var verb = new EquipmentVerb()
         {
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/outfit.svg.192dpi.png")),
-            Text = Loc.GetString(text),
+            Text = Loc.GetString(component.VerbText),
         };
 
         if (args.User == wearer)
@@ -245,7 +241,8 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
             _popupSystem.PopupClient(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                user, user);
+                user,
+                user);
         }
         else
             _inventorySystem.TryEquip(user, parent, component.ClothingUid.Value, component.Slot, triggerHandContact: true);
@@ -282,7 +279,7 @@ public sealed partial class ToggleableClothingSystem : EntitySystem
         {
             DebugTools.Assert(Exists(component.ClothingUid), "Toggleable clothing is missing expected entity.");
             DebugTools.Assert(TryComp(component.ClothingUid, out AttachedClothingComponent? comp), "Toggleable clothing is missing an attached component");
-            DebugTools.Assert(comp?.AttachedUid == uid, "Toggleable clothing uid mismatch");
+            DebugTools.Assert(comp.AttachedUid == uid, "Toggleable clothing uid mismatch");
         }
         else
         {

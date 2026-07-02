@@ -70,3 +70,63 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingDna
+
+- type: listing
+  id: ChangelingStingBlind
+  name: changeling-catalog-blind-sting-name
+  description: changeling-catalog-blind-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: blind_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingBlind
+
+- type: listing
+  id: ChangelingStingCryogenic
+  name: changeling-catalog-cryogenic-sting-name
+  description: changeling-catalog-cryogenic-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: cryogenic_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 15
+  categories:
+  - ChangelingStoreCombat
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingCryogenic
+
+- type: listing
+  id: ChangelingStingLead
+  name: changeling-catalog-lethal-sting-name
+  description: changeling-catalog-lethal-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: lethal_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingLead
+
+- type: listing
+  id: ChangelingStingHallucinogenic
+  name: changeling-catalog-hallucinogenic-sting-name
+  description: changeling-catalog-hallucinogenic-sting-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: hallucination_sting }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 10
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingStingHallucinogenic

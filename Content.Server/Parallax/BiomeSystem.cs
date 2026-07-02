@@ -37,7 +37,6 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private IConfigurationManager _configManager = default!;
     [Dependency] private IConsoleHost _console = default!;
     [Dependency] private IParallelManager _parallel = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AtmosphereSystem _atmos = default!;
@@ -118,7 +117,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             SetSeed(uid, component, _random.Next());
         }
 
-        if (_proto.Resolve(component.Template, out var biome))
+        if (ProtoMan.Resolve(component.Template, out var biome))
             SetTemplate(uid, component, biome);
 
         var xform = Transform(uid);
@@ -301,7 +300,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var layer in markers)
         {
-            var proto = ProtoManager.Index(layer);
+            var proto = ProtoMan.Index(layer);
             var enumerator = new ChunkIndicesEnumerator(area, proto.Size);
 
             while (enumerator.MoveNext(out var chunk))
@@ -346,7 +345,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var layer in biome.MarkerLayers)
                 {
-                    var layerProto = ProtoManager.Index(layer);
+                    var layerProto = ProtoMan.Index(layer);
                     AddMarkerChunksInRange(biome, worldPos, layerProto);
                 }
             }
@@ -367,7 +366,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var layer in biome.MarkerLayers)
                 {
-                    var layerProto = ProtoManager.Index(layer);
+                    var layerProto = ProtoMan.Index(layer);
                     AddMarkerChunksInRange(biome, worldPos, layerProto);
                 }
             }
@@ -481,9 +480,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 // Essentially get the seed + work out a buffer to adjacent chunks so we don't
                 // inadvertantly spawn too many near the edges.
-                var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
+                var layerProto = ProtoMan.Index<BiomeMarkerLayerPrototype>(layer);
                 var markerSeed = seed + chunk.X * ChunkSize + chunk.Y + localIdx;
-                var rand = new Random(markerSeed);
+                var rand = new RobustRandom();
+                rand.SetSeed(markerSeed);
                 var buffer = (int)(layerProto.Radius / 2f);
                 var bounds = new Box2i(chunk + buffer, chunk + layerProto.Size - buffer);
                 var count = (int)(bounds.Area / (layerProto.Radius * layerProto.Radius));
@@ -566,7 +566,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         bool forced,
         Box2i bounds,
         int count,
-        Random rand,
+        IRobustRandom rand,
         out Dictionary<Vector2i, string?> spawnSet,
         out HashSet<EntityUid> existingEnts,
         bool emptyTiles = true)
@@ -637,7 +637,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
             // While we have remaining tiles keep iterating
             while (groupSize > 0 && remainingTiles.Count > 0)
             {
-                var startNode = rand.PickAndTake(remainingTiles);
+                var startNode = rand.Pick(remainingTiles);
+                remainingTiles.Remove(startNode);
                 frontier.Clear();
                 frontier.Add(startNode);
 
@@ -710,7 +711,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         foreach (var (layer, nodes) in layers)
         {
-            var layerProto = ProtoManager.Index<BiomeMarkerLayerPrototype>(layer);
+            var layerProto = ProtoMan.Index<BiomeMarkerLayerPrototype>(layer);
 
             foreach (var node in nodes)
             {
