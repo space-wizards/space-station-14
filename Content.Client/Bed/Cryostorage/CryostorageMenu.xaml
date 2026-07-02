@@ -14,10 +14,8 @@
         <PanelContainer
             VerticalExpand="True"
             HorizontalExpand="True"
-            Margin="15">
-            <PanelContainer.PanelOverride>
-                <graphics:StyleBoxFlat BackgroundColor="{xNamespace:Static style:StyleNano.PanelDark}" />
-            </PanelContainer.PanelOverride>
+            Margin="15"
+            StyleClasses="PanelDark">
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
                 <Control>
                     <Label Text="{Loc 'cryostorage-ui-label-no-bodies'}" Name="EmptyLabel" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -1,7 +1,7 @@
 - type: entity
   description: "If you want to get cancer, might as well do it in style."
   id: BaseSmokable
-  parent: BaseItem
+  parent: [SolutionSmokable, SolutionTiny, BaseItem]
   abstract: true
   components:
   - type: Reactive
@@ -33,13 +33,11 @@
   - type: Tag
     tags:
     - Trash
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 20
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nicotine
+        Quantity: 10
 
 - type: entity
   parent: BaseSmokable
@@ -62,13 +60,9 @@
         path: /Audio/Weapons/Guns/Empty/empty.ogg
       ejectSound:
         path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 30
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionSmokable, SolutionTiny, BaseItem]
   id: BaseVape
   abstract: true
   components:
@@ -76,10 +70,6 @@
     damage:
       types:
         Heat: 2
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 10
   - type: RefillableSolution
     solution: smokable
   - type: ExaminableSolution

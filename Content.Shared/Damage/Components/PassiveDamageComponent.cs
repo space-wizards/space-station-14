@@ -29,12 +29,6 @@ public sealed partial class PassiveDamageComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Interval = 1f;
 
-    /// <summary>
-    /// The maximum HP the damage will be given to. If 0, disabled.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 DamageCap = 0;
-
     [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextDamage = TimeSpan.Zero;
 }

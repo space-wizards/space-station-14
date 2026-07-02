@@ -3,9 +3,9 @@ using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public sealed class UseDelayOnShootSystem : EntitySystem
+public sealed partial class UseDelayOnShootSystem : EntitySystem
 {
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
@@ -13,9 +13,9 @@ public sealed class UseDelayOnShootSystem : EntitySystem
         SubscribeLocalEvent<UseDelayOnShootComponent, GunShotEvent>(OnUseShoot);
     }
 
-    private void OnUseShoot(EntityUid uid, UseDelayOnShootComponent component, ref GunShotEvent args)
+    private void OnUseShoot(Entity<UseDelayOnShootComponent> ent, ref GunShotEvent args)
     {
-        if (TryComp(uid, out UseDelayComponent? useDelay))
-            _delay.TryResetDelay((uid, useDelay));
+        if (TryComp(ent, out UseDelayComponent? useDelay))
+            _delay.TryResetDelay((ent, useDelay));
     }
 }

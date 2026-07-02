@@ -37,4 +37,9 @@ public sealed class SeeIdentityAttemptEvent : CancellableEntityEventArgs, IInven
 
     // cumulative coverage from each relayed slot
     public IdentityBlockerCoverage TotalCoverage = IdentityBlockerCoverage.NONE;
+
+    /// <summary>
+    /// A specific name to override your identiy with.
+    /// </summary>
+    public string? NameOverride = null;
 }

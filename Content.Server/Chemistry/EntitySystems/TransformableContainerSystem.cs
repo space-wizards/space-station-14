@@ -2,23 +2,21 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.NameModifier.EntitySystems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class TransformableContainerSystem : EntitySystem
+public sealed partial class TransformableContainerSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private MetaDataSystem _metadataSystem = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TransformableContainerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<TransformableContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<TransformableContainerComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
@@ -31,7 +29,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         }
     }
 
-    private void OnSolutionChange(Entity<TransformableContainerComponent> entity, ref SolutionContainerChangedEvent args)
+    private void OnSolutionChange(Entity<TransformableContainerComponent> entity, ref SolutionChangedEvent args)
     {
         if (!_solutionsSystem.TryGetFitsInDispenser(entity.Owner, out _, out var solution))
             return;
@@ -53,7 +51,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
         //Only reagents with spritePath property can change appearance of transformable containers!
         if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
-            && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
+            && ProtoMan.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
         {
             var metadata = MetaData(entity.Owner);
             _metadataSystem.SetEntityDescription(entity.Owner, proto.LocalizedDescription, metadata);
@@ -66,7 +64,7 @@ public sealed class TransformableContainerSystem : EntitySystem
 
     private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
     {
-        if (_prototypeManager.Resolve(entity.Comp.CurrentReagent, out var currentReagent))
+        if (ProtoMan.Resolve(entity.Comp.CurrentReagent, out var currentReagent))
         {
             args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
         }

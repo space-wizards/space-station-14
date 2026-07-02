@@ -2,11 +2,11 @@ using System.Numerics;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
@@ -19,7 +19,7 @@ public sealed partial class DungeonSystem
     /// <summary>
     /// Gets a random dungeon room matching the specified area, whitelist and size.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, EntityWhitelist? whitelist = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, IRobustRandom random, EntityWhitelist? whitelist = null)
     {
         return GetRoomPrototype(random, whitelist, minSize: size, maxSize: size);
     }
@@ -27,7 +27,7 @@ public sealed partial class DungeonSystem
     /// <summary>
     /// Gets a random dungeon room matching the specified area and whitelist and size range
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Random random,
+    public DungeonRoomPrototype? GetRoomPrototype(IRobustRandom random,
         EntityWhitelist? whitelist = null,
         Vector2i? minSize = null,
         Vector2i? maxSize = null)
@@ -40,7 +40,7 @@ public sealed partial class DungeonSystem
 
         _availableRooms.Clear();
 
-        foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<DungeonRoomPrototype>())
         {
             if (minSize is not null && (proto.Size.X < minSize.Value.X || proto.Size.Y < minSize.Value.Y))
                 continue;
@@ -77,7 +77,7 @@ public sealed partial class DungeonSystem
         MapGridComponent grid,
         Vector2i origin,
         DungeonRoomPrototype room,
-        Random random,
+        IRobustRandom random,
         HashSet<Vector2i>? reservedTiles,
         bool clearExisting = false,
         bool rotation = false)
@@ -96,7 +96,7 @@ public sealed partial class DungeonSystem
         SpawnRoom(gridUid, grid, finalTransform, room, reservedTiles, clearExisting);
     }
 
-    public Angle GetRoomRotation(DungeonRoomPrototype room, Random random)
+    public Angle GetRoomRotation(DungeonRoomPrototype room, IRobustRandom random)
     {
         var roomRotation = Angle.Zero;
 
@@ -250,7 +250,7 @@ public sealed partial class DungeonSystem
                 // but place 1 nanometre off grid and fail the add.
                 if (!_maps.TryGetTileRef(gridUid, grid, tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
                 {
-                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random.GetRandom()));
+                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random));
                 }
 
                 var result = _decals.TryAddDecal(

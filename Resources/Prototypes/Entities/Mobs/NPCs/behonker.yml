@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -19,14 +19,13 @@
     - type: HTN
       rootTask:
         task: SimpleRangedHostileCompound
-    - type: HitscanBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: RedLaser
       fireCost: 62.5
     - type: Battery
       maxCharge: 1000
       startingCharge: 1000
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 40
     - type: Gun
       fireRate: 0.75
@@ -91,15 +90,12 @@
       solutionOnBody: false
       updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
-      groups:
-        - id: Medicine
-        - id: Poison
-    - type: Butcherable
-      spawned:
-        - id: MaterialBananium1
-          amount: 2
-        - id: WeaponBehonkerLaser
-          amount: 1
+      stages: [ Digestion, Bloodstream ]
+    - type: ToolRefinable
+      refineResult:
+      - id: MaterialBananium1
+        amount: 2
+      - id: WeaponBehonkerLaser
     - type: MeleeWeapon
       soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -115,23 +111,24 @@
     - type: Input
       context: "human"
     - type: Bloodstream
-      bloodMaxVolume: 300
-      bloodReagent: Laughter
-
+      bloodReferenceSolution:
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 300
 - type: entity
   name: behonker
   parent: BaseMobBehonker
   id: MobBehonkerElectrical
   suffix: "Pyro"
   components:
-    - type: PyroclasticAnomaly
-    - type: TempAffectingAnomaly
-      tempChangePerSecond: 25
-      hotspotExposeTemperature: 1000
-    - type: GasProducerAnomaly
-      releasedGas: 3
-      releaseOnMaxSeverity: true
-      spawnRadius: 0
+  - type: PyroclasticAnomaly
+  - type: TempAffectingAnomaly
+    tempChangePerSecond: 25
+    hotspotExposeTemperature: 1000
+  - type: GasProducerAnomaly
+    releasedGas: 3
+    releaseOnMaxSeverity: true
+    spawnRadius: 0
 
 - type: entity
   name: behonker
