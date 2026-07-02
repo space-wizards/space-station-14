@@ -202,6 +202,7 @@
       45: Dead
   - type: Stamina
     baseCritThreshold: 150
+  - type: VentCrawler
   - type: DamageStateVisuals
     states:
       Alive:

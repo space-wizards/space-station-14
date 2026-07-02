@@ -385,6 +385,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 5
+  - type: VentCrawler
   - type: DamageStateVisuals
     states:
       Alive:
@@ -962,6 +963,7 @@
     noMovementLayers:
       movement:
         state: crab
+  - type: VentCrawler
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1549,6 +1551,7 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  - type: VentCrawler
   - type: CombatMode
     canDisarm: true
   - type: Inventory
@@ -1735,6 +1738,7 @@
     # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
+  - type: VentCrawler
 
 - type: entity
   id: MobMonkeySyndicateAgentNukeops # Reinforcement exclusive to nukeops uplink
@@ -1742,6 +1746,7 @@
   suffix: NukeOps
   components:
   - type: NukeOperative
+  - type: VentCrawler
 
 - type: entity
   name: kobold
@@ -1924,6 +1929,7 @@
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
+  - type: VentCrawler
   - type: Speech
     speechSounds: Squeak
     speechVerb: SmallMob
@@ -2275,6 +2281,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2325,6 +2332,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2637,6 +2645,7 @@
         - SmallMobMask
         layer:
         - SmallMobLayer
+  - type: VentCrawler
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2681,6 +2690,7 @@
         - MobMask
         layer:
         - MobLayer
+  - type: VentCrawler
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatSpider
@@ -3242,6 +3252,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
+  - type: VentCrawler
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -3635,6 +3646,7 @@
     noMovementLayers:
       movement:
         state: hamster-0
+  - type: VentCrawler
   - type: Item
     size: Tiny
   - type: Physics

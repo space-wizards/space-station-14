@@ -73,6 +73,12 @@
     - type: Weldable
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+    - type: VentCrawlEntry
+      holderPrototypeId: VentCrawlHolder
     - type: GuideHelp
       guides:
       - AirVent
@@ -106,6 +112,14 @@
       node: passivevent
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
+    - type: Weldable
+      time: 3
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+    - type: VentCrawlEntry
+      holderPrototypeId: VentCrawlHolder
     - type: GuideHelp
       guides:
       - PassiveVent
@@ -163,6 +177,12 @@
     - type: Weldable
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentScrubber
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+    - type: VentCrawlEntry
+      holderPrototypeId: VentCrawlHolder
     - type: GuideHelp
       guides:
       - AirScrubber
@@ -208,6 +228,10 @@
       - enum.LightLayers.Unshaded
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
     - type: GuideHelp
       guides:
       - AirInjector
@@ -263,6 +287,10 @@
     - type: PowerSwitch
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: Thermoregulator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
     - type: GuideHelp
       guides:
       - Thermomachines
@@ -302,6 +330,10 @@
       prefix: device-address-prefix-freezer
     - type: StealTarget
       stealGroup: FreezerHeater
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -347,6 +379,10 @@
       prefix: device-address-prefix-heater
     - type: StealTarget
       stealGroup: FreezerHeater
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
 
 - type: entity
   parent: GasThermoMachineHeater
@@ -469,6 +505,10 @@
   - type: PowerSwitch
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: Thermoregulator
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
   - type: GuideHelp
     guides:
     - GasCondensing

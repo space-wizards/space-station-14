@@ -75,6 +75,12 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+      - West
+      - North
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -125,6 +131,12 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - West
+    - North
 
 - type: entity
   parent: GasTrinaryBase
@@ -174,6 +186,12 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+      - West
+      - North
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -220,6 +238,12 @@
         pipeDirection: North
   - type: Construction
     node: mixerflipped
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - South
+    - West
+    - North
 
 - type: entity
   parent: GasPipeBase
@@ -280,6 +304,12 @@
       node: pneumaticvalve
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+      - West
+      - North
     - type: GuideHelp
       guides:
       - PneumaticValve

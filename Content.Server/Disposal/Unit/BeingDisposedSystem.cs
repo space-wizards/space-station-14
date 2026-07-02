@@ -14,30 +14,41 @@ public sealed class BeingDisposedSystem : SharedBeingDisposedSystem
         SubscribeLocalEvent<BeingDisposedComponent, InhaleLocationEvent>(OnInhaleLocation);
         SubscribeLocalEvent<BeingDisposedComponent, ExhaleLocationEvent>(OnExhaleLocation);
         SubscribeLocalEvent<BeingDisposedComponent, AtmosExposedGetAirEvent>(OnGetAir);
+        SubscribeLocalEvent<DisposalHolderComponent, GetBeingDisposedGasEvent>(OnGetBeingDisposedGas);
     }
 
     private void OnGetAir(Entity<BeingDisposedComponent> ent, ref AtmosExposedGetAirEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
-        {
-            args.Gas = holder.Air;
-            args.Handled = true;
-        }
+        var ev = new GetBeingDisposedGasEvent();
+        RaiseLocalEvent(ent.Comp.Holder, ref ev);
+
+        if (ev.Gas == null)
+            return;
+
+        args.Gas = ev.Gas;
+        args.Handled = true;
     }
 
     private void OnInhaleLocation(Entity<BeingDisposedComponent> ent, ref InhaleLocationEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
-        {
-            args.Gas = holder.Air;
-        }
+        var ev = new GetBeingDisposedGasEvent();
+        RaiseLocalEvent(ent.Comp.Holder, ref ev);
+
+        if (ev.Gas != null)
+            args.Gas = ev.Gas;
     }
 
     private void OnExhaleLocation(Entity<BeingDisposedComponent> ent, ref ExhaleLocationEvent args)
     {
-        if (TryComp<DisposalHolderComponent>(ent.Comp.Holder, out var holder))
-        {
-            args.Gas = holder.Air;
-        }
+        var ev = new GetBeingDisposedGasEvent();
+        RaiseLocalEvent(ent.Comp.Holder, ref ev);
+
+        if (ev.Gas != null)
+            args.Gas = ev.Gas;
+    }
+
+    private void OnGetBeingDisposedGas(Entity<DisposalHolderComponent> ent, ref GetBeingDisposedGasEvent args)
+    {
+        args.Gas = ent.Comp.Air;
     }
 }

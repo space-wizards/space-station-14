@@ -87,6 +87,11 @@
       path: /Audio/Ambience/Objects/gas_pump.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - Pumps
@@ -159,6 +164,11 @@
     - type: WiredNetworkConnection
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasFlowRegulator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - North
+      - South
     - type: GuideHelp
       guides:
       - Pumps
@@ -219,6 +229,11 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - PressureRegulator
@@ -261,6 +276,11 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - North
+      - South
     - type: GuideHelp
       guides:
       - PassiveGate
@@ -322,6 +342,11 @@
         path: /Audio/Ambience/Objects/gas_hiss.ogg
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasValve
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - North
+      - South
     - type: GuideHelp
       guides:
       - ManualValve
@@ -394,6 +419,11 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - SignalValve
@@ -433,6 +463,10 @@
       node: port
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
     - type: GuideHelp
       guides:
       - GasCanisters
@@ -499,6 +533,11 @@
       enabled: true
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - North
+      - South
     - type: GuideHelp
       guides:
       - AirVent
@@ -576,6 +615,11 @@
     navMapBlip: GasValve
   - type: Transform
     noRot: false
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - GasRecycling
@@ -624,6 +668,11 @@
     node: radiator
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: Thermoregulator
+  - type: DisposalTube
+    network: Atmospherics
+    exits:
+    - North
+    - South
   - type: GuideHelp
     guides:
     - Radiators
@@ -656,3 +705,8 @@
     - type: Construction
       graph: GasBinary
       node: bendradiator
+    - type: DisposalTube
+      network: Atmospherics
+      exits:
+      - South
+      - East

@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Disposal.Tube;
@@ -10,6 +11,13 @@ namespace Content.Shared.Disposal.Tube;
 [Access(typeof(DisposalTubeSystem))]
 public sealed partial class DisposalTubeComponent : Component
 {
+    /// <summary>
+    /// Logical traversal network this tube belongs to.
+    /// Only tubes with the same network can connect to each other.
+    /// </summary>
+    [DataField]
+    public ProtoId<DisposalTubeNetworkPrototype> Network = "Disposal";
+
     /// <summary>
     /// Array of directions that entities can potentially exit the disposal tube.
     /// </summary>
@@ -29,4 +37,14 @@ public sealed partial class DisposalTubeComponent : Component
 public enum DisposalTubeVisuals
 {
     VisualState
+}
+
+/// <summary>
+/// Prototype representing a logical traversal network for disposal tube connections.
+/// </summary>
+[Prototype]
+public sealed partial class DisposalTubeNetworkPrototype : IPrototype
+{
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 }

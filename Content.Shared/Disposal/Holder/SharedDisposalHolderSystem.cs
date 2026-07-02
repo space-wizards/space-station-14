@@ -179,16 +179,16 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
     /// <summary>
     /// Links an entity with a disposal holder.
     /// </summary>
-    /// <param name="ent">The disposal holder.</param>
+    /// <param name="holder">The disposal holder.</param>
     /// <param name="uid">The entity being linked.</param>
-    public void AttachEntity(Entity<DisposalHolderComponent> ent, EntityUid uid)
+    public void AttachEntity(EntityUid holder, EntityUid uid)
     {
         var comp = EnsureComp<BeingDisposedComponent>(uid);
 
-        if (comp.Holder == ent.Owner)
+        if (comp.Holder == holder)
             return;
 
-        comp.Holder = ent;
+        comp.Holder = holder;
         Dirty(uid, comp);
 
         var ev = new DisposalSystemTransitionEvent();
