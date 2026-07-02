@@ -15,7 +15,7 @@ public sealed class Table : TableContainer, IDocumentTag
 
         if (!args.TryGetValue("Columns", out var columns) || !int.TryParse(columns, out var columnsCount))
         {
-            Logger.Error("Guidebook tag \"Table\" does not specify required property \"Columns.\"");
+            Log.Error("Guidebook tag \"Table\" does not specify required property \"Columns.\"");
             control = null;
             return false;
         }
