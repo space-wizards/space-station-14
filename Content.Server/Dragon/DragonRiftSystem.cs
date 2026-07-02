@@ -1,17 +1,18 @@
+using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.NPC;
 using Content.Server.NPC.Systems;
 using Content.Server.Pinpointer;
+using Content.Shared.Damage.Components;
 using Content.Shared.Dragon;
 using Content.Shared.Examine;
 using Content.Shared.Sprite;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager;
-using System.Numerics;
-using Content.Shared.Damage.Components;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Dragon;
@@ -81,7 +82,7 @@ public sealed partial class DragonRiftSystem : EntitySystem
                 var msg = Loc.GetString("carp-rift-warning",
                     ("location", FormattedMessage.RemoveMarkupOrThrow(_navMap.GetNearestBeaconString((uid, xform)))));
                 _chat.DispatchGlobalAnnouncement(msg, playSound: false, colorOverride: Color.Red);
-                _audio.PlayGlobal("/Audio/Misc/notice1.ogg", Filter.Broadcast(), true);
+                _audio.PlayGlobal(new SoundPathSpecifier("/Audio/Misc/notice1.ogg"), Filter.Broadcast(), true);
                 _navMap.SetBeaconEnabled(uid, true);
             }
 

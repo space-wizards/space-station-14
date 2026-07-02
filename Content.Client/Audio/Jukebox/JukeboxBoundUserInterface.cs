@@ -60,8 +60,9 @@ public sealed partial class JukeboxBoundUserInterface : BoundUserInterface
 
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
-            var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            var audio = EntMan.System<AudioSystem>();
+            var length = audio.GetAudioLength(audio.ResolveSound(songProto.Path));
+            _menu.SetSelectedSong(songProto.Name, (float)length.TotalSeconds);
         }
         else
         {

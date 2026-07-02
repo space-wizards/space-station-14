@@ -179,7 +179,7 @@ public sealed partial class ContentAudioSystem
         }
 
         var playResult = _audio.PlayGlobal(
-            soundtrackFilename,
+            new SoundPathSpecifier(soundtrackFilename),
             Filter.Local(),
             false,
             _lobbySoundtrackParams.WithVolume(_lobbySoundtrackParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
