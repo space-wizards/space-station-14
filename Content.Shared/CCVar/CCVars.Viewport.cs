@@ -16,6 +16,9 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> ViewportSnapToleranceClip =
         CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    public static readonly CVarDef<int> ViewportSeparatedSnapTolerance =
+        CVarDef.Create("viewport.separated_snap_tolerance", 16, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     public static readonly CVarDef<bool> ViewportScaleRender =
         CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
