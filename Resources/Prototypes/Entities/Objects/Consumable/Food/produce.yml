@@ -2809,3 +2809,72 @@
         - MobMask
         layer:
         - MobLayer
+
+- type: entity
+  name: Suniom
+  description: SON!!
+  parent: [ SolutionCryo, ImpactGrenadeBase, ProduceBase, BaseMajorContraband ]
+  id: FoodSunion
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sunion.rsi
+    state: produce
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Hydroponics/sunion.rsi
+    heldPrefix: icon
+  - type: Produce
+    seedId: sunion
+  - type: Tag
+    tags:
+    - Vegetable
+  - type: PotencyVisuals
+  - type: FlavorProfile
+    flavors:
+    - onion
+    - strange
+    - spicy
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Aluminium
+        Quantity: 5
+      - ReagentId: Potassium
+        Quantity: 5
+      - ReagentId: Sulfur
+        Quantity: 5
+      - ReagentId: Vitamin
+        Quantity: 5
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: FlashOnTrigger
+    keysIn:
+    - trigger
+    range: 5
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - trigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
+  - type: DeleteOnTrigger
+    keysIn:
+    - trigger
+  - type: SpawnOnTrigger
+    keysIn:
+    - trigger
+    proto: GrenadeFlashEffect
+    predicted: true
