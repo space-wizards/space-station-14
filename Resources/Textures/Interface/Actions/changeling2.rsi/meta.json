@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by ketufaispikinut from a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (scientist suit), a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (hydro suit) and the changeling ability border/background sprites created by TiniestShark. Biodegrade, Mimicry and Extract Dna On/Off, Blind, Mute, Neurodepressant, Cryogenic, Lethal and Hallucination sting by ketufaispikinut, based on TiniestShark's textures. Shop icon by ketufaispikinut, based on TiniestShark's textures.",
+    "copyright": "Made by ketufaispikinut from a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (scientist suit), a sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 (hydro suit) and the changeling ability border/background sprites created by TiniestShark. Biodegrade, Mimicry and Extract Dna On/Off, Blind, Mute, Neurodepressant, Cryogenic, Lethal and Hallucination sting by ketufaispikinut, based on TiniestShark's textures. Shop icon by ketufaispikinut, based on TiniestShark's textures. last_resort taken from https://github.com/tgstation/tgstation/blob/5c90546a27a1e5ea59b9f127ae274d7341acc70b/icons/mob/actions/actions_changeling.dmi and modified by Pok27 (GitHub). take_over_corpse by Pok27 (GitHub).",
     "size": {
         "x": 32,
         "y": 32
@@ -45,6 +45,12 @@
         },
         {
             "name": "shop"
+        },
+        {
+            "name": "last_resort"
+        },
+        {
+            "name": "take_over_corpse"
         }
     ]
 }

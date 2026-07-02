@@ -773,11 +773,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// Initializes the antagonist status on the specified entity.
     /// Adds the needed components, loadouts, items, attaches the player and fires off an event.
     /// </summary>
-    private void InitializeAntag(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, EntityUid antag, ICommonSession player)
+    private void InitializeAntag(Entity<AntagSelectionComponent> gameRule, AntagSpecifierPrototype prototype, EntityUid antag, ICommonSession player, bool skipAssignmentConditions = false)
     {
-        // Make sure player was properly pre-selected.
-        Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player),
-            $"Game rule {ToPrettyString(gameRule)}, failed to pre-assign {player.Name} to antag {prototype.ID}");
+        if (!skipAssignmentConditions)
+        {
+            // Make sure player was properly pre-selected.
+            Debug.Assert(gameRule.Comp.PreSelectedSessions.TryGetValue(prototype.ID, out var value) && value.Contains(player),
+                $"Game rule {ToPrettyString(gameRule)}, failed to pre-assign {player.Name} to antag {prototype.ID}");
+        }
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(antag, prototype.Components);
@@ -795,12 +798,14 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         _mind.TransferTo(mind, antag, ghostCheckOverride: true);
         _role.MindAddRoles(mind, prototype.MindRoles, silent: true);
-        AssignMind(gameRule, prototype, mind, antag);
+        if (!skipAssignmentConditions)
+            AssignMind(gameRule, prototype, mind, antag);
 
         Log.Debug($"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
         _adminLogger.Add(LogType.AntagSelection, $"Assigned {ToPrettyString(antag):target}, mind {ToPrettyString(mind):target} as antagonist: {ToPrettyString(gameRule):user}");
 
-        SendBriefing(player, prototype.Briefing);
+        if (!skipAssignmentConditions)
+            SendBriefing(player, prototype.Briefing);
 
         var afterEv = new AfterAntagEntitySelectedEvent(player, antag, gameRule, prototype);
         RaiseLocalEvent(gameRule, ref afterEv, true);

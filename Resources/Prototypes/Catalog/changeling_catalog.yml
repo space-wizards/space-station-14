@@ -130,3 +130,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingHallucinogenic
+
+- type: listing
+  id: ChangelingLastResort
+  name: changeling-catalog-last-resort-name
+  description: changeling-catalog-last-resort-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingLastResort
