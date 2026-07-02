@@ -41,6 +41,7 @@
   - type: Sprite
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
+    drawOverFov: true
   - type: TimedDespawn
     lifetime: 10
   - type: Tag
