@@ -414,8 +414,8 @@
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterRedRacoon
-  name: red racoon suit
-  description: Fluffy suit of red racoon!
+  name: red panda suit
+  description: It's a red panda costume! Wah!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/red_racoon.rsi

@@ -287,8 +287,8 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatRedRacoon
-  name: red racoon hat
-  description: Fluffy hat of red racoon!
+  name: red panda head
+  description: It's a red panda suit head! Wah!
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/red_racoon.rsi
