@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Effects.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Movement.Components;
@@ -189,7 +190,18 @@ public abstract partial class SharedJetpackSystem : EntitySystem
             RemoveUser(user.Value, component);
             RemComp<ActiveJetpackComponent>(uid);
         }
+        if (TryComp<ParticleEmitterComponent>(uid, out var emitter))
+        {
+            emitter.Enabled = enabled;
 
+            if (enabled)
+            {
+                // Reset coordinates to prevent spawning effects from wherever it was last turned off
+                emitter.LastCoordinates = Transform(uid).Coordinates;
+            }
+
+            Dirty(uid, emitter);
+        }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);
         Dirty(uid, component);
