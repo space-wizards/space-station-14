@@ -1,4 +1,6 @@
-using  Content.Shared.Inventory;
+using Content.Shared.Cloning.Events;
+using Content.Shared.Inventory;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Actions;
 
@@ -14,6 +16,7 @@ public sealed partial class ActionGrantSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ActionGrantComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ActionGrantComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ActionGrantComponent, CloningEvent>(OnClone);
         SubscribeLocalEvent<ItemActionGrantComponent, GetItemActionsEvent>(OnItemGet);
     }
 
@@ -42,6 +45,16 @@ public sealed partial class ActionGrantSystem : EntitySystem
             if (actionEnt != null)
                 ent.Comp.ActionEntities.Add(actionEnt.Value);
         }
+    }
+
+    private void OnClone(Entity<ActionGrantComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var cloneComp = Factory.GetComponent<ActionGrantComponent>();
+        cloneComp.Actions = new List<EntProtoId>(ent.Comp.Actions);
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnShutdown(Entity<ActionGrantComponent> ent, ref ComponentShutdown args)

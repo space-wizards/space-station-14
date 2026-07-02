@@ -13,6 +13,7 @@ using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
 using Content.Shared.VoiceMask;
+using Content.Shared.Cloning.Events;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 
@@ -73,6 +74,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
         SubscribeLocalEvent<VoiceMaskComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<VoiceMaskComponent, CloningEvent>(OnClone);
 
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
     }
@@ -88,6 +90,24 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         _actions.AddAction(ent, ent.Comp.Action);
         _uiSystem.SetUi((ent, null), VoiceMaskUIKey.Key, new InterfaceData(UiGeneratedName));
         _identity.QueueIdentityUpdate(ent.Owner);
+    }
+
+    private void OnClone(Entity<VoiceMaskComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var cloneComp = Factory.GetComponent<VoiceMaskComponent>();
+        cloneComp.VoiceMaskName = ent.Comp.VoiceMaskName;
+        cloneComp.VoiceMaskSpeechVerb = ent.Comp.VoiceMaskSpeechVerb;
+        cloneComp.OverrideIdentity = ent.Comp.OverrideIdentity;
+        cloneComp.Action = ent.Comp.Action;
+        cloneComp.Active = ent.Comp.Active;
+        cloneComp.AccentHide = ent.Comp.AccentHide;
+        cloneComp.ChangeIDName = ent.Comp.ChangeIDName;
+        cloneComp.IsInnate = ent.Comp.IsInnate;
+        cloneComp.TitleText = ent.Comp.TitleText;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     /// <summary>

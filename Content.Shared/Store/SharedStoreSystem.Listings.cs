@@ -40,6 +40,27 @@ public abstract partial class SharedStoreSystem
     }
 
     /// <summary>
+    /// Refreshes the store's listing cache while preserving runtime listing state.
+    /// </summary>
+    /// <param name="component">The store to refresh.</param>
+    public void RefreshAllListingsKeepState(StoreComponent component)
+    {
+        var previousListings = component.FullListingsCatalog;
+        RefreshAllListings(component);
+
+        if (previousListings.Count == 0)
+            return;
+
+        foreach (var previousListing in previousListings)
+        {
+            if (!TryGetListing(component.FullListingsCatalog, previousListing.ID, out var currentListing))
+                continue;
+
+            currentListing.PurchaseAmount = previousListing.PurchaseAmount;
+        }
+    }
+
+    /// <summary>
     /// Gets all listings from a prototype.
     /// </summary>
     /// <returns>All the listings</returns>

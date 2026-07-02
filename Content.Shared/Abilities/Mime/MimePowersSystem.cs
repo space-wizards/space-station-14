@@ -8,6 +8,7 @@ using Content.Shared.Maps;
 using Content.Shared.Paper;
 using Content.Shared.Physics;
 using Content.Shared.Speech.Muting;
+using Content.Shared.Cloning.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -33,6 +34,7 @@ public sealed partial class MimePowersSystem : EntitySystem
 
         SubscribeLocalEvent<MimePowersComponent, BreakVowAlertEvent>(OnBreakVowAlert);
         SubscribeLocalEvent<MimePowersComponent, RetakeVowAlertEvent>(OnRetakeVowAlert);
+        SubscribeLocalEvent<MimePowersComponent, CloningEvent>(OnClone);
     }
 
     public override void Update(float frameTime)
@@ -68,6 +70,26 @@ public sealed partial class MimePowersSystem : EntitySystem
 
         _alertsSystem.ShowAlert(ent.Owner, ent.Comp.VowAlert);
         _actionsSystem.AddAction(ent, ref ent.Comp.InvisibleWallActionEntity, ent.Comp.InvisibleWallAction);
+    }
+
+    private void OnClone(Entity<MimePowersComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var cloneComp = Factory.GetComponent<MimePowersComponent>();
+        cloneComp.Enabled = ent.Comp.Enabled;
+        cloneComp.WallPrototype = ent.Comp.WallPrototype;
+        cloneComp.InvisibleWallAction = ent.Comp.InvisibleWallAction;
+        cloneComp.VowBroken = ent.Comp.VowBroken;
+        cloneComp.ReadyToRepent = ent.Comp.ReadyToRepent;
+        cloneComp.VowRepentTime = ent.Comp.VowRepentTime;
+        cloneComp.VowCooldown = ent.Comp.VowCooldown;
+        cloneComp.VowAlert = ent.Comp.VowAlert;
+        cloneComp.VowBrokenAlert = ent.Comp.VowBrokenAlert;
+        cloneComp.PreventWriting = ent.Comp.PreventWriting;
+        cloneComp.FailWriteMessage = ent.Comp.FailWriteMessage;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnComponentShutdown(Entity<MimePowersComponent> ent, ref ComponentShutdown args)

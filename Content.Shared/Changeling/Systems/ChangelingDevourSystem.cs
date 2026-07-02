@@ -3,7 +3,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Store;
+using Content.Shared.Cloning.Events;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -12,10 +13,12 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Systems;
 
@@ -42,11 +45,31 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
         SubscribeLocalEvent<ChangelingDevourComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ChangelingDevourComponent, CloningEvent>(OnClone);
     }
 
     private void OnMapInit(Entity<ChangelingDevourComponent> ent, ref MapInitEvent args)
     {
         _actionsSystem.AddAction(ent, ref ent.Comp.ChangelingDevourActionEntity, ent.Comp.ChangelingDevourAction);
+    }
+
+    private void OnClone(Entity<ChangelingDevourComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var cloneComp = Factory.GetComponent<ChangelingDevourComponent>();
+        cloneComp.ChangelingDevourAction = ent.Comp.ChangelingDevourAction;
+        cloneComp.Whitelist = ent.Comp.Whitelist;
+        cloneComp.ConsumeNoise = ent.Comp.ConsumeNoise;
+        cloneComp.DevourWindupNoise = ent.Comp.DevourWindupNoise;
+        cloneComp.DevourWindupTime = ent.Comp.DevourWindupTime;
+        cloneComp.DevourConsumeTime = ent.Comp.DevourConsumeTime;
+        cloneComp.WindupDamage = ent.Comp.WindupDamage;
+        cloneComp.DevourDamage = ent.Comp.DevourDamage;
+        cloneComp.ProtectiveDamageTypes = new List<ProtoId<DamageTypePrototype>>(ent.Comp.ProtectiveDamageTypes);
+        cloneComp.DevourPreventionPercentageThreshold = ent.Comp.DevourPreventionPercentageThreshold;
+        AddComp(args.CloneUid, cloneComp, true);
     }
 
     private void OnShutdown(Entity<ChangelingDevourComponent> ent, ref ComponentShutdown args)

@@ -72,9 +72,13 @@
   - BibleUser
   - CommandStaff
   - MindShield
-  - MimePowers
   - SpaceNinja
   - Thieving
+  eventComponents:
+  - ActionGrant
+  - MimePowers
+  - Store
+  - VoiceMask
 
 # antag roles
 - type: cloningSettings
@@ -83,6 +87,12 @@
   - HeadRevolutionary
   - Revolutionary
   - NukeOperative
+  # Changeling
+  - ChangelingFleshClothingAbility
+  eventComponents:
+  - ChangelingDevour
+  - ChangelingIdentity
+  - ChangelingTransform
 
 - type: cloningSettings
   abstract: true
