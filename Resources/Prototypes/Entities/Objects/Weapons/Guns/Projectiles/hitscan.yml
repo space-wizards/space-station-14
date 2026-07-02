@@ -102,11 +102,17 @@
         Heat: 1
 
 - type: entity
-  parent: BasicHitscan
   id: XrayLaser
   name: X-ray pulse beam
   categories: [ HideSpawnMenu ]
   components:
+  - type: HitscanAmmo
+  - type: HitscanNoCollideRaycast
+  - type: HitscanReflect
+  - type: HitscanBasicEffects
+  - type: DamageModifierOnHit
+  - type: RadioactiveRay
+    radsPerSecondToPercentDamageDecrease: 10.0 # 1 rad per second -> -10% damage if passed through.
   - type: HitscanBasicDamage
     damage:
       types:
