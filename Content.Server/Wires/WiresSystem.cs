@@ -786,6 +786,68 @@ public sealed partial class WiresSystem : SharedWiresSystem
     }
 
     /// <summary>
+    /// Causes the passed wire action to be activated on the target entity and wire ID.
+    /// </summary>
+    /// <param name="uid">The target entity</param>
+    /// <param name="id">The ID of the wire to call the action on</param>
+    /// <param name="action">The wire action to activate</param>
+    /// <returns>True if the action was called, false otherwise</returns>
+    public bool TryForceWireAction(EntityUid uid, int id, WiresAction action, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return false;
+        
+        var wire = TryGetWire(uid, id, wires);
+        if (wire == null)
+            return false;
+
+        return TryForceWireAction(uid, wire, action, wires);
+    }
+
+    /// <summary>
+    /// Causes the passed wire action to be activated on the target entity and wire.
+    /// </summary>
+    /// <param name="uid">The target entity</param>
+    /// <param name="wire">The wire to call the action on</param>
+    /// <param name="action">The wire action to activate</param>
+    /// <returns>True if the action was called, false otherwise</returns>
+    public bool TryForceWireAction(EntityUid uid, Wire wire, WiresAction action, WiresComponent? wires = null)
+    {
+        if (!Resolve(uid, ref wires))
+            return false;
+
+        if (wire.Owner != uid)
+            return false;
+        
+        switch (action)
+        {
+            case WiresAction.Cut:
+                if (wire.Action == null || wire.Action.Cut(null, wire))
+                {
+                    wire.IsCut = true;
+                }
+
+                UpdateUserInterface(uid);
+                break;
+            case WiresAction.Mend:
+                if (wire.Action == null || wire.Action.Mend(null, wire))
+                {
+                    wire.IsCut = false;
+                }
+
+                UpdateUserInterface(uid);
+                break;
+            case WiresAction.Pulse:
+                wire.Action?.Pulse(null, wire);
+
+                UpdateUserInterface(uid);
+                break;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     ///     Tries to get the stateful data stored in this entity's WiresComponent.
     /// </summary>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>

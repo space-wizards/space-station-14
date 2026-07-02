@@ -59,11 +59,11 @@ public abstract partial class BaseWireAction : IWireAction
     }
 
     public virtual bool AddWire(Wire wire, int count) => count == 1;
-    public virtual bool Cut(EntityUid user, Wire wire) => Log(user, wire, "cut");
-    public virtual bool Mend(EntityUid user, Wire wire) => Log(user, wire, "mended");
-    public virtual void Pulse(EntityUid user, Wire wire) => Log(user, wire, "pulsed");
+    public virtual bool Cut(EntityUid? user, Wire wire) => Log(user, wire, "cut");
+    public virtual bool Mend(EntityUid? user, Wire wire) => Log(user, wire, "mended");
+    public virtual void Pulse(EntityUid? user, Wire wire) => Log(user, wire, "pulsed");
 
-    private bool Log(EntityUid user, Wire wire, string verb)
+    private bool Log(EntityUid? user, Wire wire, string verb)
     {
         var player = EntityManager.ToPrettyString(user);
         var owner = EntityManager.ToPrettyString(wire.Owner);
@@ -72,7 +72,11 @@ public abstract partial class BaseWireAction : IWireAction
         var action = GetType().Name;
 
         // logs something like "... mended red POWR wire (PowerWireAction) in ...."
-        _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
+        if (user is not null)
+            _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
+        else
+            // Lower impact if being caused without a user.
+            _adminLogger.Add(LogType.WireHacking, LogImpact.Low, $"{color} {name} {verb} ({action}) in {owner}");
         return true;
     }
 
