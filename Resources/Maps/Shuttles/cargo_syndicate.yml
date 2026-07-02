@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 268.0.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/22/2025 00:19:53
-  entityCount: 201
+  time: 05/28/2026 21:55:25
+  entityCount: 210
 maps: []
 grids:
 - 1
@@ -164,13 +164,18 @@ entities:
     - type: Shuttle
       dampingModifier: 0.25
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AirCanister
   entities:
   - uid: 140
     components:
     - type: Transform
+      anchored: True
       pos: -0.5,-3.5
       parent: 1
+    - type: Physics
+      bodyType: Static
 - proto: AirlockCargoGlassLocked
   entities:
   - uid: 107
@@ -221,25 +226,25 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,-0.5
+      pos: 3.5,-0.5
       parent: 1
   - uid: 199
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -2.5,1.5
+      pos: 3.5,1.5
       parent: 1
   - uid: 200
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,1.5
+      pos: -2.5,-0.5
       parent: 1
   - uid: 201
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.5,-0.5
+      pos: -2.5,1.5
       parent: 1
 - proto: BlastDoor
   entities:
@@ -765,6 +770,15 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 1
+- proto: GasPassiveVent
+  entities:
+  - uid: 203
+    components:
+    - type: Transform
+      pos: -2.5,7.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeBend
   entities:
   - uid: 142
@@ -773,6 +787,23 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-3.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 204
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 205
+    components:
+    - type: Transform
+      pos: 0.5,5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeStraight
   entities:
   - uid: 143
@@ -781,18 +812,63 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-2.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 144
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-1.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
   - uid: 145
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-0.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+  - uid: 206
+    components:
+    - type: Transform
+      pos: -2.5,6.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 207
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 208
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -0.5,5.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 209
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,4.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
+  - uid: 210
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,3.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPort
   entities:
   - uid: 139
@@ -801,6 +877,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -0.5,-3.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
 - proto: GasVentPump
   entities:
   - uid: 141
@@ -808,6 +886,18 @@ entities:
     - type: Transform
       pos: 0.5,0.5
       parent: 1
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+- proto: GasVentScrubber
+  entities:
+  - uid: 202
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,2.5
+      parent: 1
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GeneratorBasic15kW
   entities:
   - uid: 111
