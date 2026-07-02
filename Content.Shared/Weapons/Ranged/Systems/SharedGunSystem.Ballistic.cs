@@ -15,9 +15,9 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract partial class SharedGunSystem
 {
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
-    [Dependency] private SharedStackSystem _stack = null!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedStackSystem _stack = null!;
 
     [MustCallBase]
     protected virtual void InitializeBallistic()
@@ -225,7 +225,24 @@ public abstract partial class SharedGunSystem
     {
         // TODO this should be part of the prototype, not set on map init.
         // Alternatively, just track spawned count, instead of unspawned count.
-        if (ent.Comp.Proto != null)
+        if (ent.Comp.Protos.Count > 0)
+        {
+            var spawnCount = Math.Min(ent.Comp.Protos.Count, ent.Comp.Capacity);
+    
+            for (var i = 0; i < spawnCount; i++)
+            {
+                var ammo = Spawn(ent.Comp.Protos[i], Transform(ent).Coordinates);
+                Containers.Insert(ammo, ent.Comp.Container);
+                ent.Comp.Entities.Add(ammo);
+            }
+    
+            ent.Comp.UnspawnedCount = 0;
+            DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
+            DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
+            UpdateBallisticAppearance(ent);
+            return;
+        }
+        else if (ent.Comp.Proto != null)
         {
             ent.Comp.UnspawnedCount = Math.Max(0, ent.Comp.Capacity - ent.Comp.Container.ContainedEntities.Count);
             UpdateBallisticAppearance(ent);
@@ -245,8 +262,8 @@ public abstract partial class SharedGunSystem
             EntityUid? ammoEntity = null;
             if (ent.Comp.Entities.Count > 0)
             {
-                var existingEnt = ent.Comp.Entities[^1];
-                ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
+                var existingEnt = ent.Comp.Entities[0];
+                ent.Comp.Entities.RemoveAt(0);
                 DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
                 Containers.Remove(existingEnt, ent.Comp.Container);
                 ammoEntity = existingEnt;
@@ -257,17 +274,17 @@ public abstract partial class SharedGunSystem
                 DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
                 ammoEntity = Spawn(ent.Comp.Proto, args.Coordinates);
             }
-
+    
             if (ammoEntity is not { } ammoEnt)
                 continue;
 
             args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
+    
             if (TryComp<BallisticAmmoSelfRefillerComponent>(ent, out var refiller))
             {
                 PauseSelfRefill((ent, refiller));
             }
         }
-
         UpdateBallisticAppearance(ent);
     }
 

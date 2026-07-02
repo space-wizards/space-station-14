@@ -13,14 +13,14 @@ public sealed partial class GunSystem
         // TODO: Combine with TakeAmmo
         if (ent.Comp.Entities.Count > 0)
         {
-            var existing = ent.Comp.Entities[^1];
-            ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
+            var existing = ent.Comp.Entities[0];
+            ent.Comp.Entities.RemoveAt(0);
             DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
-
             Containers.Remove(existing, ent.Comp.Container);
             EnsureShootable(existing);
+            ammoEnt = existing;
         }
-        else if (ent.Comp.UnspawnedCount > 0)
+        else if (ent.Comp.UnspawnedCount > 0 && ent.Comp.Proto != null)
         {
             ent.Comp.UnspawnedCount--;
             DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
