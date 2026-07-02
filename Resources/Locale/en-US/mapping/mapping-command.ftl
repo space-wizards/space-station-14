@@ -8,6 +8,8 @@ cmd-mapping-success-load-grid = Loaded uninitialized grid from file {$path} onto
 cmd-mapping-success = Created uninitialized map with id {$mapId}.
 cmd-mapping-warning = WARNING: The server is using a debug build. You are risking losing your changes.
 
+cmd-toggleautosave-desc = Toggles autosaving for a map.
+cmd-toggleautosave-help = Usage: toggleautosave [MapId] [Path]
 
 # duplicate text from engine load/save map commands.
 # I CBF making this PR depend on that one.

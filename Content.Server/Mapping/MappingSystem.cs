@@ -1,9 +1,6 @@
 using System.IO;
-using Content.Server.Administration;
-using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
@@ -18,83 +15,67 @@ namespace Content.Server.Mapping;
 /// </summary>
 public sealed partial class MappingSystem : EntitySystem
 {
-    [Dependency] private IConsoleHost _conHost = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IResourceManager _resMan = default!;
     [Dependency] private MapLoaderSystem _loader = default!;
 
-    // Not a comp because I don't want to deal with this getting saved onto maps ever
-    /// <summary>
-    ///     map id -> next autosave timespan & original filename.
-    /// </summary>
-    /// <returns></returns>
-    private Dictionary<EntityUid, (TimeSpan next, string fileName)> _currentlyAutosaving = new();
-
     private bool _autosaveEnabled;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _conHost.RegisterCommand("toggleautosave",
-            "Toggles autosaving for a map.",
-            "autosave <map> <path if enabling>",
-            ToggleAutosaveCommand);
-
-        Subs.CVar(_cfg, CCVars.AutosaveEnabled, SetAutosaveEnabled, true);
-    }
-
-    private void SetAutosaveEnabled(bool b)
-    {
-        if (!b)
-            _currentlyAutosaving.Clear();
-        _autosaveEnabled = b;
+        Subs.CVar(_cfg, CCVars.AutosaveEnabled, b => _autosaveEnabled = b, true);
     }
 
     public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
+	{
+		base.Update(frameTime);
 
-        if (!_autosaveEnabled)
-            return;
+		if (!_autosaveEnabled)
+			return;
 
-        foreach (var (uid, (time, name))in _currentlyAutosaving)
-        {
-            if (_timing.RealTime <= time)
-                continue;
+        // Maps are paused while in mapping, so we have to use AllEntityQuery to get them.
+		var query = AllEntityQuery<AutoSaveComponent>();
+		while (query.MoveNext(out var uid, out var autoSave))
+		{
+			if (_timing.RealTime <= autoSave.NextSaveTime)
+				continue;
 
-            if (LifeStage(uid) >= EntityLifeStage.MapInitialized)
+            if (LifeStage(uid) >= EntityLifeStage.MapInitialized) // Saving post-init maps or grids has a high chance of throwing errors.
             {
-                Log.Warning($"Can't autosave entity {uid}; it doesn't exist, or is initialized. Removing from autosave.");
-                _currentlyAutosaving.Remove(uid);
+                Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not paused. Removing component.");
+                RemCompDeferred<AutoSaveComponent>(uid);
                 continue;
             }
 
-            _currentlyAutosaving[uid] = (CalculateNextTime(), name);
-            var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), name).Replace(Path.DirectorySeparatorChar, '/'));
+			if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
+			{
+				Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not a map or grid. Removing component.");
+				RemCompDeferred<AutoSaveComponent>(uid);
+				continue;
+			}
+
+			autoSave.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
+
+			var saveDir = new ResPath(Path.Combine(_cfg.GetCVar(CCVars.AutosaveDirectory), autoSave.FileName).Replace(Path.DirectorySeparatorChar, '/'));
             _resMan.UserData.CreateDir(saveDir.ToRootedPath());
 
             var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
-            Log.Info($"Autosaving map {name} ({uid}) to {path}. Next save in {ReadableTimeLeft(uid)} seconds.");
+            Log.Info($"Autosaving map {autoSave.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft((uid, autoSave))} seconds.");
 
-            if (HasComp<MapComponent>(uid))
-                _loader.TrySaveMap(uid, path);
-            else
-                _loader.TrySaveGrid(uid, path);
-        }
-    }
+			if (HasComp<MapComponent>(uid))
+				_loader.TrySaveMap(uid, path);
+			else
+				_loader.TrySaveGrid(uid, path);
+		}
+	}
 
-    private TimeSpan CalculateNextTime()
+    private double ReadableTimeLeft(Entity<AutoSaveComponent> ent)
     {
-        return _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
-    }
-
-    private double ReadableTimeLeft(EntityUid uid)
-    {
-        return Math.Round(_currentlyAutosaving[uid].next.TotalSeconds - _timing.RealTime.TotalSeconds);
-    }
+		return Math.Round(ent.Comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
+	}
 
     #region Public API
 
@@ -104,57 +85,31 @@ public sealed partial class MappingSystem : EntitySystem
             ToggleAutosave(uid.Value, path);
     }
 
-    public void ToggleAutosave(EntityUid uid, string? path=null)
+    public void ToggleAutosave(EntityUid uid, string? path = null)
     {
         if (!_autosaveEnabled)
             return;
 
-        if (_currentlyAutosaving.Remove(uid) || path == null)
-            return;
+		if (HasComp<AutoSaveComponent>(uid))
+		{
+			RemCompDeferred<AutoSaveComponent>(uid);
+			return;
+		}
 
-        if (LifeStage(uid) >= EntityLifeStage.MapInitialized)
-        {
-            Log.Error("Tried to enable autosaving on a post map-init entity.");
-            return;
-        }
+		if (string.IsNullOrWhiteSpace(path))
+			return;
 
-        if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
-        {
-            Log.Error($"{ToPrettyString(uid)} is neither a grid or map");
-            return;
-        }
+		if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
+		{
+			Log.Error($"Tried to toggle autosave for {ToPrettyString(uid)}, but it is neither a grid or map!");
+			return;
+		}
 
-        _currentlyAutosaving[uid] = (CalculateNextTime(), Path.GetFileName(path));
-        Log.Info($"Started autosaving map {path} ({uid}). Next save in {ReadableTimeLeft(uid)} seconds.");
-    }
+		var comp = EnsureComp<AutoSaveComponent>(uid);
+		comp.FileName = Path.GetFileName(path);
+		comp.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-    #endregion
-
-    #region Commands
-
-    [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    private void ToggleAutosaveCommand(IConsoleShell shell, string argstr, string[] args)
-    {
-        if (args.Length != 1 && args.Length != 2)
-        {
-            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
-            return;
-        }
-
-        if (!int.TryParse(args[0], out var intMapId))
-        {
-            shell.WriteError(Loc.GetString("cmd-mapping-failure-integer", ("arg", args[0])));
-            return;
-        }
-
-        string? path = null;
-        if (args.Length == 2)
-        {
-            path = args[1];
-        }
-
-        var mapId = new MapId(intMapId);
-        ToggleAutosave(mapId, path);
+        Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft((uid, comp))} seconds.");
     }
 
     #endregion
