@@ -184,3 +184,24 @@
 - type: latheCategory
   id: Neck
   name: lathe-category-neck
+
+#Food Replicator
+- type: latheCategory
+  id: Snacks
+  name: lathe-category-snacks
+
+- type: latheCategory
+  id: Drinks
+  name: lathe-category-drinks
+
+- type: latheCategory
+  id: Juice
+  name: lathe-category-juice
+
+- type: latheCategory
+  id: Treats
+  name: lathe-category-treats
+
+- type: latheCategory
+  id: Alcohol
+  name: lathe-category-alcohol

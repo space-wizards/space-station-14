@@ -70,6 +70,18 @@
     - JukeboxCircuitBoard
 
 - type: technology
+  id: FoodService
+  name: research-technology-food-service
+  icon:
+    sprite: Structures/Machines/replicator.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - FoodReplicatorMachineCircuitboard
+
+- type: technology
   id: MeatManipulation
   name: research-technology-meat-manipulation
   icon:

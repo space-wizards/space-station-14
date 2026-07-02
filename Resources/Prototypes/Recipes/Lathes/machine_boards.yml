@@ -299,6 +299,11 @@
   id: FatExtractorMachineCircuitboard
   result: FatExtractorMachineCircuitboard
 
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseServiceMachineRecipeCategory ]
+  id: FoodReplicatorMachineCircuitboard
+  result: FoodReplicatorMachineCircuitboard
+
 ## Supply
 
 - type: latheRecipe

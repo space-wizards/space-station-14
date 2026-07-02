@@ -83,6 +83,7 @@
   - APECircuitboard
   - ArtifactAnalyzerMachineCircuitboard
   - ArtifactCrusherMachineCircuitboard
+  - FoodReplicatorMachineCircuitboard
 
 - type: latheRecipePack
   id: CameraBoards

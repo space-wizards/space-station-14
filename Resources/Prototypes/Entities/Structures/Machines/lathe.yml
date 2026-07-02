@@ -707,3 +707,46 @@
   - type: MaterialStorage
     whitelist: *StandardMaterialWhitelist
   - type: OreSiloClient
+
+- type: entity
+  id: FoodReplicator
+  parent: BaseLathe
+  name: food replicator
+  description: "Computer, Tea, Earl Grey, Hot."
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/replicator.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+    - state: building
+      map: ["anim"]
+      visible: false
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: GenericVisualizer
+    visuals:
+      enum.LatheVisuals.IsRunning:
+        anim:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Machine
+    board: FoodReplicatorMachineCircuitboard
+  - type: TriggerOnVoice
+    keyPhrase: "computer"
+    showVerbs: false
+    showExamine: false
+    listenRange: 4
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+  - type: Lathe
+    producingSound: /Audio/Machines/high_tech_confirm.ogg
+    staticPacks:
+    - AlcoholReplicatorStatic
+    - FoodReplicatorStatic
+    - DrinkReplicatorStatic
+    - TreatsReplicatorStatic
+    - SnacksReplicatorStatic
