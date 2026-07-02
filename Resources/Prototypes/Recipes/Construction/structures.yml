@@ -661,8 +661,66 @@
       failIfSpace: false
     - !type:TileType
       targets:
+        # Lattic types
         - Lattice
+        - TrainLattice
+        # Plating type
         - Plating
+        - PlatingRCD #not sure if this is needed
+        - PlatingDamaged
+        - PlatingAsteroid
+        - PlatingBrass
+        - PlatingSnow
+        - PlatingIronsand
+        - FloorHullReinforced
+        # Planet type
+        - FloorPlanetDirt
+        - FloorDesert
+        - FloorLowDesert
+        - FloorPlanetGrass
+        - FloorBasalt
+        - FloorSnow
+        - FloorIce
+        - FloorSnowDug
+        # Grass type
+        - FloorGrass
+        - FloorGrassJungle
+        - FloorGrassDark
+        - FloorGrassLight
+        - FloorDirt
+        # Asteroid type
+        - FloorAsteroidSandBorderless
+        - FloorAsteroidSand
+        - FloorAsteroidSandDugBorderless
+        - FloorAsteroidSandDug
+        - FloorAsteroidSandRedBorderless
+        - FloorAsteroidSandRed
+        - FloorAsteroidIronsandBorderless
+        - FloorAsteroidIronsand
+        - FloorAsteroidSandUnvariantizedBorderless
+        - FloorAsteroidSandUnvariantized
+        - FloorAsteroidIronsandUnvariantizedBorderless
+        - FloorAsteroidIronsandUnvariantized
+        # Cave type
+        - FloorCave
+        - FloorCaveDrought
+        # Astro type
+        - FloorAstroGrass
+        - FloorMowedAstroGrass
+        - FloorJungleAstroGrass
+        - FloorDarkAstroGrass
+        - FloorLightAstroGrass
+        - FloorAstroIce
+        - FloorAstroSnow
+        - FloorAstroAsteroidSand
+        - FloorAstroAsteroidSandBorderless
+        - FloorDesertAstroSand
+        - FloorAstroIronsand
+        - FloorAstroIronsandBorderless
+        # Other type
+        - FloorAsphalt
+        - IronsandPacked
+        - FloorChromite
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
