@@ -480,7 +480,8 @@ public abstract partial class InventorySystem
             if (slotDef != slotDefinition && slotDef.DependsOn == slotDefinition.Name)
             {
                 //this recursive call might be risky
-                TryUnequip(actor, target, slotDef.Name, out _, ref itemsDropped, true, true, predicted, inventory, reparent: reparent);
+                if (TryUnequip(actor, target, slotDef.Name, out var dropped, ref itemsDropped, true, true, predicted, inventory, reparent: reparent))
+                    _handsSystem.PickupOrDrop(actor, dropped.Value);
             }
         }
 
@@ -488,7 +489,7 @@ public abstract partial class InventorySystem
         // the reason we check for > 1 is because the first item is always the one we are trying to unequip,
         // whereas we only want to notify for extra dropped items.
         if (!silent && firstRun && itemsDropped > 1)
-            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped - 1)), target, target);
+            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped - 1)), target, target, PopupType.Medium);
 
         // TODO: Inventory needs a hot cleanup hoo boy
         // Check if something else (AKA toggleable) dumped it into a container.
@@ -501,6 +502,193 @@ public abstract partial class InventorySystem
         }
 
         // If gloves are unequipped, OnContactInteraction should trigger for held items
+        if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
+            TriggerHandContactInteraction(target);
+
+        _movementSpeed.RefreshMovementSpeedModifiers(target);
+
+        return true;
+    }
+
+    public bool TryReequip(
+        EntityUid actor,
+        EntityUid target,
+        string slot,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true,
+        bool checkDoafter = false,
+        bool triggerHandContact = false)
+    {
+        return TryReequip(actor, target, slot, out _, silent, force, predicted, inventory, clothing, reparent, checkDoafter, triggerHandContact);
+    }
+
+    public bool TryReequip(
+        EntityUid uid,
+        EntityUid equiped,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true,
+        bool checkDoafter = false,
+        bool triggerHandContact = false)
+    {
+        return TryReequip(uid, uid, equiped, slot, out removedItem, silent, force, predicted, inventory, clothing, reparent, checkDoafter);
+    }
+
+    public bool TryReequip(
+        EntityUid actor,
+        EntityUid target,
+        EntityUid equiped,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        ClothingComponent? clothing = null,
+        bool reparent = true,
+        bool checkDoafter = false)
+    {
+        var itemsDropped = 0;
+        return TryReequip(actor, target, equiped, slot, out removedItem, ref itemsDropped,
+            silent, force, predicted, inventory, reparent, checkDoafter);
+    }
+
+    private bool TryReequip(
+        EntityUid actor,
+        EntityUid target,
+        EntityUid equiped,
+        string slot,
+        [NotNullWhen(true)] out EntityUid? removedItem,
+        ref int itemsDropped,
+        bool silent = false,
+        bool force = false,
+        bool predicted = false,
+        InventoryComponent? inventory = null,
+        bool reparent = true,
+        bool checkDoafter = false,
+        bool triggerHandContact = false)
+    {
+        removedItem = null;
+
+        if (TerminatingOrDeleted(target))
+            return false;
+
+        if (!Resolve(target, ref inventory, false))
+        {
+            if(!silent)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
+            return false;
+        }
+
+        if (!TryGetSlotContainer(target, slot, out var slotContainer, out var slotDefinition, inventory))
+        {
+            if(!silent)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
+            return false;
+        }
+
+        removedItem = slotContainer.ContainedEntity;
+
+        if (!removedItem.HasValue || TerminatingOrDeleted(removedItem.Value))
+            return false;
+
+        if (!force && !CanUnequip(actor, target, slot, out var reason, slotContainer, slotDefinition, inventory))
+        {
+            if(!silent)
+                _popup.PopupCursor(Loc.GetString(reason));
+            return false;
+        }
+
+        //we need to do this to make sure we are 100% removing this entity, since we are now dropping dependant slots
+        if (!force && !_containerSystem.CanRemove(removedItem.Value, slotContainer))
+            return false;
+
+        if (checkDoafter &&
+            TryComp<ClothingComponent>(target, out var clothingUn) &&
+            (clothingUn.Slots & slotDefinition.SlotFlags) != 0 &&
+            clothingUn.UnequipDelay > TimeSpan.Zero)
+        {
+            var args = new DoAfterArgs(
+                EntityManager,
+                actor,
+                clothingUn.UnequipDelay,
+                new ClothingUnequipDoAfterEvent(slot),
+                removedItem.Value,
+                target,
+                removedItem.Value)
+            {
+                BreakOnMove = !clothingUn.EquipWhileMoving,
+                NeedHand = true,
+            };
+
+            _doAfter.TryStartDoAfter(args);
+            return false;
+        }
+
+        if (!_containerSystem.Remove(removedItem.Value, slotContainer, force: force, reparent: reparent))
+            return false;
+
+        // this is in order to keep track of whether this is the first instance of a recursion call
+        var firstRun = itemsDropped == 0;
+        ++itemsDropped;
+
+        // we check if any items were dropped, and make a popup if they were.
+        // the reason we check for > 1 is because the first item is always the one we are trying to unequip,
+        // whereas we only want to notify for extra dropped items.
+        if (!silent && firstRun && itemsDropped > 1)
+            _popup.PopupClient(Loc.GetString("inventory-component-dropped-from-unequip", ("items", itemsDropped - 1)), target, target);
+
+        // TODO: Inventory needs a hot cleanup hoo boy
+        // Check if something else (AKA toggleable) dumped it into a container.
+        if (!_containerSystem.IsEntityInContainer(removedItem.Value))
+            _transform.DropNextTo(removedItem.Value, target);
+
+        ClothingComponent? clothing = null;
+        if (checkDoafter &&
+            TryComp(target, out clothing) &&
+            clothing.EquipDelay > TimeSpan.Zero &&
+            (clothing.Slots & slotDefinition.SlotFlags) != 0 &&
+            _containerSystem.CanInsert(equiped, slotContainer))
+        {
+            var args = new DoAfterArgs(
+                EntityManager,
+                actor,
+                clothing.EquipDelay,
+                new ClothingEquipDoAfterEvent(slot),
+                equiped,
+                target,
+                equiped)
+            {
+                BreakOnMove = !clothing.EquipWhileMoving,
+                NeedHand = true,
+            };
+
+            _doAfter.TryStartDoAfter(args);
+            return false;
+        }
+
+        if (!_containerSystem.Insert(equiped, slotContainer))
+        {
+            if(!silent)
+                _popup.PopupCursor(Loc.GetString("inventory-component-can-unequip-cannot"));
+            return false;
+        }
+
+        if (!silent && clothing != null)
+        {
+            _audio.PlayPredicted(clothing.EquipSound, target, actor);
+        }
+
+        // If new gloves are equipped, trigger OnContactInteraction for held items
         if (triggerHandContact && !((slotDefinition.SlotFlags & SlotFlags.GLOVES) == 0))
             TriggerHandContactInteraction(target);
 

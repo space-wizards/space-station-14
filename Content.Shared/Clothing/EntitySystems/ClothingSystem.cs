@@ -61,10 +61,7 @@ public abstract partial class ClothingSystem : EntitySystem
                 if (TryComp(slotEntity, out ClothingComponent? item) && !item.QuickEquip)
                     continue;
 
-                if (!_invSystem.TryUnequip(userEnt, slotDef.Name, true, inventory: userEnt, checkDoafter: true))
-                    continue;
-
-                if (!_invSystem.TryEquip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, clothing: toEquipEnt, checkDoafter: true, triggerHandContact: true))
+                if (!_invSystem.TryReequip(userEnt, toEquipEnt, slotDef.Name, inventory: userEnt, checkDoafter: true, triggerHandContact: true))
                     continue;
 
                 _handsSystem.PickupOrDrop(userEnt, slotEntity.Value, handsComp: userEnt);
