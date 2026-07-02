@@ -5,6 +5,7 @@
   description: Safely and efficiently extracts excess fat from a subject.
   components:
   - type: FatExtractor
+    minHungerThreshold: Peckish
     processSound:
       path: /Audio/Machines/microwave_loop.ogg
       params:

@@ -199,7 +199,7 @@
 
 - type: entity
   name: chicken
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobChicken
   description: Comes before an egg, and IS a dinosaur!
   components:
@@ -239,6 +239,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Chicken
@@ -274,7 +275,6 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -404,8 +404,10 @@
     - horrible
     - terrible
     - chewy
-  - type: Hunger
-    baseDecayRate: 0.25
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: CockroachHunger
   - type: Extractable
     grindableSolutionName: food
   - type: Solution
@@ -651,7 +653,7 @@
 
 - type: entity
   name: mallard duck #Quack
-  parent: [SimpleMobBase, BaseSlicingRefinable]
+  parent: [SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobDuckMallard
   description: An adorable mallard duck, it's fluffy and soft!
   components:
@@ -681,6 +683,7 @@
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
     makeOffspringInfant: false
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Duck
@@ -716,7 +719,6 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -854,7 +856,7 @@
 
 - type: entity
   name: cow
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger ]
   id: MobCow
   description: Moo.
   components:
@@ -869,6 +871,7 @@
     - DoorBumpOpener
     - Cow
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Cow
@@ -899,10 +902,10 @@
     solutions:
     - SolutionUdder
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-  - type: ExaminableHunger
   - type: ToolRefinable
     refineResult:
     - id: FoodMeat
@@ -1013,7 +1016,7 @@
 
 - type: entity
   name: goat
-  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable ]
+  parent: [ BaseMobRuminant, SimpleMobBase, BaseSlicingRefinable, BaseExaminableHunger ]
   id: MobGoat
   description: Her spine consists of long sharp segments, no wonder she is so grumpy.
   components:
@@ -1041,6 +1044,7 @@
     - DoorBumpOpener
     - Goat
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Goat
@@ -1061,11 +1065,12 @@
     - SolutionUdderGoat
     - SolutionWool
   - type: Udder
+    minHungerThreshold: Peckish
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExaminableHunger
   - type: Wooly
+    minHungerThreshold: Peckish
   - type: Edible
     destroyOnEmpty: false
     solution: wool
@@ -1125,7 +1130,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseMobRuminant, BaseSlicingRefinable]
+  parent: [BaseMobRuminant, BaseSlicingRefinable, BaseExaminableHunger]
   id: MobSheepBase
   name: sheepBase
   description: A sheep.
@@ -1194,8 +1199,9 @@
     reagentId: MilkSheep
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExaminableHunger
+    minHungerThreshold: Peckish
   - type: Wooly
+    minHungerThreshold: Peckish
   - type: Shearable
     targetSolutionName: wool
     shearedProductId: MaterialCotton1 # Cotton is spawned because there is no wool item.
@@ -1999,23 +2005,12 @@
   - type: FlavorProfile
     flavors:
     - meaty
-  - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
-    thresholds:
-      OverHydrated: 35
-      Okay: 25
-      Thirsty: 15
-      Parched: 10
-      Dead: 0
-    baseDecayRate: 0.04
-  - type: Hunger
-    thresholds:
-      Overfed: 35
-      Okay: 25
-      Peckish: 15
-      Starving: 10
-      Dead: 0
-    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: MouseHunger
+      Thirst:
+        prototype: MouseThirst
   - type: Extractable
     grindableSolutionName: food
   - type: ToolRefinable
@@ -3682,8 +3677,10 @@
   - type: FlavorProfile
     flavors:
     - meaty
-  - type: Hunger
-    baseDecayRate: 0.3
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: HamsterHunger
   - type: Extractable
     grindableSolutionName: food
   - type: Solution
@@ -3791,6 +3788,7 @@
     - Pig
     - VimPilot
   - type: Reproductive
+    minHungerThreshold: Peckish
     partnerWhitelist:
       tags:
       - Pig

@@ -19,7 +19,8 @@
       metabolites:
         UncookedAnimalProteins: 0.2
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1.0
         conditions:
           - !type:MetabolizerTypeCondition
@@ -74,7 +75,8 @@
     Digestion:
       # Delicious!
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
@@ -106,9 +108,11 @@
     Digestion:
       # Sweet!
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1
   footstepSound:
     collection: FootstepSlime
@@ -160,7 +164,8 @@
     Digestion:
       # Disgusting!
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: -0.5
     Bloodstream:
       effects:
@@ -183,7 +188,8 @@
   metabolisms:
     Bloodstream:
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 1.5
     # Dragon doesn't require airloss healing, so omnizine is still best for humans.
       - !type:ModifyBloodLevel
@@ -237,7 +243,8 @@
       metabolites:
         Nutriment: 0.1
       effects:
-      - !type:SatiateThirst
+      - !type:Satiate
+        satiationType: Thirst
         factor: 0.5
   footstepSound:
     collection: FootstepBlood
@@ -255,7 +262,8 @@
   metabolisms:
     Digestion:
       effects:
-      - !type:SatiateHunger
+      - !type:Satiate
+        satiationType: Hunger
         factor: 1.5
       - !type:HealthChange
         damage:

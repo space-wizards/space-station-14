@@ -1,0 +1,12 @@
+- type: entity
+  abstract: true
+  id: BaseExaminableHunger
+  components:
+  - type: ExaminableSatiation
+    satiations:
+      Hunger:
+        Dead: "examinable-satiation-component-examine-hunger-desperate"
+        Starving: "examinable-satiation-component-examine-hunger-desperate"
+        Peckish: "examinable-satiation-component-examine-hunger-concerned"
+        Okay: "examinable-satiation-component-examine-hunger-okay"
+        Overfed: "examinable-satiation-component-examine-hunger-full"
