@@ -183,6 +183,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
 
+            var numDisplacements = 0;
             for (var i = 0; i < proto.Sprites.Count; i++)
             {
                 var sprite = proto.Sprites[i];
@@ -195,7 +196,14 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
 
                 if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
                 {
-                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + 1);
+                    // Having three separate indices and a magic +1 is cursed, but:
+                    // - index refers to the index of the organ the marking is applied to
+                    // - i is the current sprite of the marking that is being applied
+                    // - numDisplacements tracks how many displacements have been applied, and is
+                    //   an additional offset to ensure that the order of the base sprites is correct
+                    //   after inserting a displacement layer
+                    // - The +1 ensures that markings render on top of the base organ
+                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
                 }
@@ -206,7 +214,18 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     _sprite.LayerSetColor(target, layerId, Color.White);
 
                 if (displacement != null && proto.CanBeDisplaced)
-                    _displacement.TryAddDisplacement(displacement, (target, target.Comp), index + i + 1, layerId, out _);
+                {
+                    _displacement.TryAddDisplacement(
+                        displacement,
+                        (target, target.Comp),
+                        // Similar logic as above, but this makes the displacement layer go below the
+                        // original sprite. So it should be all the displacements, then all the sprite layers on top
+                        index + i + 1,
+                        layerId,
+                        out _
+                    );
+                    numDisplacements++;
+                }
             }
 
             applied.Add(marking);
