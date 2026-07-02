@@ -5,23 +5,6 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// Causes the zombie infection on this entity.
-/// </summary>
-/// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>
-public sealed partial class CauseZombieInfectionEntityEffectsSystem : EntityEffectSystem<MobStateComponent, CauseZombieInfection>
-{
-    // MobState because you have to die to become a zombie...
-    protected override void Effect(Entity<MobStateComponent> entity, ref EntityEffectEvent<CauseZombieInfection> args)
-    {
-        if (HasComp<ZombieImmuneComponent>(entity) || HasComp<IncurableZombieComponent>(entity))
-            return;
-
-        EnsureComp<ZombifyOnDeathComponent>(entity);
-        EnsureComp<PendingZombieComponent>(entity);
-    }
-}
-
-/// <summary>
 /// Cures the Zombie infection on this entity and optionally inoculates them against future infection.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T, TEffect}"/>

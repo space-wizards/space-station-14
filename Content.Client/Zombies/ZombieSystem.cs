@@ -34,17 +34,17 @@ public sealed partial class ZombieSystem : SharedZombieSystem
         args.StatusIcons.Add(iconPrototype);
     }
 
-    private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
+    private void OnStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
     {
-        if (HasComp<VisualBodyComponent>(uid))
+        if (HasComp<VisualBodyComponent>(ent))
             return;
 
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
         for (var i = 0; i < sprite.AllLayers.Count(); i++)
         {
-            _sprite.LayerSetColor((uid, sprite), i, component.SkinColor);
+            _sprite.LayerSetColor((ent, sprite), i, ent.Comp.SkinColor);
         }
     }
 }
