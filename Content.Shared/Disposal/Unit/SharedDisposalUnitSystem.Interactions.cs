@@ -120,7 +120,7 @@ public abstract partial class SharedDisposalUnitSystem
 
     private void OnDoAfter(Entity<DisposalUnitComponent> ent, ref DisposalDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null || ent.Comp.IsDeleted)
             return;
 
         Insert(ent, args.Args.Target.Value, args.Args.User);
