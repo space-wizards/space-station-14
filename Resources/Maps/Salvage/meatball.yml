@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 267.2.0
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/15/2025 02:40:28
+  time: 05/30/2026 17:22:39
   entityCount: 237
 maps: []
 grids:
@@ -72,6 +72,9 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: TileHistory
+      chunkHistory: {}
+    - type: ExplosionAirtightGrid
 - proto: AirlockFreezerLocked
   entities:
   - uid: 14
@@ -1112,11 +1115,7 @@ entities:
       parent: 1
     - type: Destructible
       thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 20
-        triggersOnce: False
-        triggered: False
-        behaviors:
+      - behaviors:
         - !type:SpawnEntitiesBehavior
           offset: 0.5
           spawnInContainer: False
@@ -1127,6 +1126,10 @@ entities:
               min: 1
         - !type:DoActsBehavior
           acts: Destruction
+        trigger: !type:DamageTrigger
+          damage: 20
+        triggersOnce: False
+        triggered: False
   - uid: 46
     components:
     - type: Transform
@@ -1454,28 +1457,7 @@ entities:
   entities:
   - uid: 103
     components:
-    - type: MetaData
-      desc: A fuel tank. It used to store high amounts of welding fuel, now it's only good as a small explosive.
-      name: damaged fuel tank
     - type: Transform
-      anchored: True
       pos: -3.5,-4.5
       parent: 1
-    - type: SolutionContainerManager
-      solutions:
-        tank:
-          temperature: 293.15
-          canReact: True
-          maxVol: 200
-          name: null
-          reagents:
-          - data: []
-            ReagentId: WeldingFuel
-            Quantity: 1500
-    - type: Explosive
-      totalIntensity: 25
-      intensitySlope: 3
-      maxIntensity: 5
-    - type: Physics
-      bodyType: Static
 ...
