@@ -27,6 +27,9 @@
       visible: true
     - state: glass
       map: ["enum.OpenableVisuals.Layer"]
+    - state: locked
+      shader: unshaded
+      map: ["enum.LockVisualLayers.Lock"]
   - type: ItemSlots
     slots:
       ItemCabinet:
