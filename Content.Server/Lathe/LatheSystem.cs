@@ -9,6 +9,9 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
+using Content.Shared.Trigger;
+using Content.Shared.Trigger.Components.Triggers;
+using Content.Shared.Trigger.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -52,11 +55,16 @@ namespace Content.Server.Lathe
         [Dependency] private StackSystem _stack = default!;
         [Dependency] private TransformSystem _transform = default!;
         [Dependency] private RadioSystem _radio = default!;
+        [Dependency] private TriggerSystem _trigger = default!;
 
         /// <summary>
         /// Per-tick cache
         /// </summary>
         private readonly List<GasMixture> _environments = new();
+
+        // EmaggedComponent is added after GotEmaggedEvent fires, so emag recipes aren't visible yet
+        // during OnLatheEmagged; defer the voice-trigger rebuild to Update so it sees them.
+        private readonly HashSet<EntityUid> _voiceRebuilds = new();
 
         public override void Initialize()
         {
@@ -79,9 +87,16 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
+            SubscribeLocalEvent<LatheComponent, VoiceCommandMatchedEvent>(OnLatheVoiceCommand);
+            SubscribeLocalEvent<LatheComponent, VoiceCommandsGetTriggersEvent>(OnLatheGetVoiceTriggers);
+            SubscribeLocalEvent<LatheComponent, GotEmaggedEvent>(OnLatheEmagged);
         }
         public override void Update(float frameTime)
         {
+            foreach (var uid in _voiceRebuilds)
+                RefreshVoiceTriggers(uid);
+            _voiceRebuilds.Clear();
+
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
             while (query.MoveNext(out var uid, out var comp, out var lathe))
             {
@@ -364,6 +379,14 @@ namespace Content.Server.Lathe
         private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
         {
             UpdateUserInterfaceState(uid, component);
+            RefreshVoiceTriggers(uid);
+        }
+
+        private void RefreshVoiceTriggers(EntityUid uid)
+        {
+            if (!TryComp<VoiceCommandsComponent>(uid, out var voice))
+                return;
+            _trigger.RebuildVoiceCommandLookup((uid, voice));
         }
 
         private void OnTechnologyDatabaseModified(Entity<LatheAnnouncingComponent> ent, ref TechnologyDatabaseModifiedEvent args)
@@ -411,6 +434,7 @@ namespace Content.Server.Lathe
         private void OnResearchRegistrationChanged(EntityUid uid, LatheComponent component, ref ResearchRegistrationChangedEvent args)
         {
             UpdateUserInterfaceState(uid, component);
+            RefreshVoiceTriggers(uid);
         }
 
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
@@ -599,6 +623,55 @@ namespace Content.Server.Lathe
             component.CurrentRecipe = null;
             FinishProducing(uid, component);
         }
+        #endregion
+
+        #region Voice Activated Lathes
+
+        private void OnLatheEmagged(Entity<LatheComponent> ent, ref GotEmaggedEvent args)
+        {
+            _voiceRebuilds.Add(ent.Owner);
+        }
+
+        private void OnLatheGetVoiceTriggers(Entity<LatheComponent> ent, ref VoiceCommandsGetTriggersEvent args)
+        {
+            foreach (var recipeId in GetAvailableRecipes(ent, ent.Comp))
+            {
+                if (!_proto.TryIndex(recipeId, out var recipe))
+                    continue;
+                var phrase = GetRecipeName(recipe).Trim();
+                if (string.IsNullOrEmpty(phrase))
+                    continue;
+                if (!args.Triggers.TryAdd(phrase, recipe.ID))
+                    Log.Warning($"Lathe {ToPrettyString(ent)} voice trigger '{phrase}' already taken by '{args.Triggers[phrase]}'; skipped '{recipe.ID}'.");
+            }
+        }
+
+        private void OnLatheVoiceCommand(Entity<LatheComponent> ent, ref VoiceCommandMatchedEvent args)
+        {
+            if (!this.IsPowered(ent, EntityManager))
+                return;
+
+            if (!_proto.TryIndex<LatheRecipePrototype>(args.Tag, out var recipe)
+                || !GetAvailableRecipes(ent, ent.Comp).Contains(recipe.ID))
+            {
+                _popup.PopupEntity(Loc.GetString("lathe-voice-recipe-not-found"), ent, args.Source);
+                return;
+            }
+
+            var name = GetRecipeName(recipe);
+
+            if (!TryAddToQueue(ent, recipe, args.Quantity, ent.Comp))
+                return;
+
+            _adminLogger.Add(LogType.Action,
+                LogImpact.Low,
+                $"{ToPrettyString(args.Source):player} voice-queued {args.Quantity} {name} at {ToPrettyString(ent):lathe}");
+
+            _popup.PopupEntity(Loc.GetString("lathe-voice-fabricating", ("item", name)), ent, args.Source);
+            TryStartProducing(ent, ent.Comp);
+            UpdateUserInterfaceState(ent, ent.Comp);
+        }
+
         #endregion
     }
 }
