@@ -1,4 +1,3 @@
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -6,7 +5,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using System.Linq;
 using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Atmos;
@@ -76,7 +74,7 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
             var localY = MathHelper.Mod(indices.Y, SharedGasTileOverlaySystem.ChunkSize);
             int tileIndex = localX + localY * SharedGasTileOverlaySystem.ChunkSize;
 
-            var tile = chunk.TileData[tileIndex];
+            var tile = chunk.TileGasTemperatureData[tileIndex];
             tile.ByteGasTemperature.TryGetTemperature(out var actualTemp);
 
             Assert.That(actualTemp, Is.EqualTo(expectedTemp).Within(0.01f), $"Tile at {indices} had wrong temperature!");

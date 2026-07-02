@@ -163,7 +163,7 @@ namespace Content.Server.Atmos.EntitySystems
                 _thresholds) * 255 / (_thresholds - 1));
         }
 
-        public GasOverlayData GetOverlayData(GasMixture? mixture)
+        public SharedGasTemperatureData GetTemperatureData(GasMixture? mixture)
         {
             ThermalByte byteTemp;
             if (mixture == null)
@@ -174,27 +174,28 @@ namespace Content.Server.Atmos.EntitySystems
             else
                 byteTemp = new(mixture.Temperature);
 
-            var data = new GasOverlayData(0, new byte[VisibleGasId.Length], byteTemp);
+            return new SharedGasTemperatureData(byteTemp);
+        }
+
+        public SharedVisibleGasData GetVisibleGasData(GasMixture? mixture)
+        {
+            var opacity = new byte[VisibleGasId.Length];
 
             for (var i = 0; i < VisibleGasId.Length; i++)
             {
                 var id = VisibleGasId[i];
                 var gas = _atmosphereSystem.GetGas(id);
                 var moles = mixture?[id] ?? 0f;
-                ref var opacity = ref data.Opacity[i];
 
                 if (moles < gas.GasMolesVisible)
                 {
                     continue;
                 }
 
-                opacity = (byte) (ContentHelpers.RoundToLevels(
-                    MathHelper.Clamp01((moles - gas.GasMolesVisible) /
-                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
-                    _thresholds) * 255 / (_thresholds - 1));
+                opacity[i] = GetOpacity(moles, gas.GasMolesVisible, gas.GasMolesVisibleMax);
             }
 
-            return data;
+            return new SharedVisibleGasData(opacity);
         }
 
         /// <summary>
@@ -202,14 +203,19 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private bool UpdateChunkTile(GridAtmosphereComponent gridAtmosphere, GasOverlayChunk chunk, Vector2i index)
         {
-            ref var oldData = ref chunk.TileData[chunk.GetDataIndex(index)];
+            ref var oldFireData = ref chunk.TileFireData[chunk.GetDataIndex(index)];
+            ref var oldVisibleGasData = ref chunk.TileVisibleGasData[chunk.GetDataIndex(index)];
+            ref var oldTemperatureData = ref chunk.TileGasTemperatureData[chunk.GetDataIndex(index)];
+
             if (!gridAtmosphere.Tiles.TryGetValue(index, out var tile))
             {
-                if (oldData.Equals(default))
+                if (oldFireData.Equals(default) && oldVisibleGasData.Equals(default) && oldTemperatureData.Equals(default))
                     return false;
 
                 chunk.LastUpdate = _gameTiming.CurTick;
-                oldData = default;
+                oldFireData = default;
+                oldVisibleGasData = default;
+                oldTemperatureData = default;
                 return true;
             }
 
@@ -224,27 +230,31 @@ namespace Content.Server.Atmos.EntitySystems
             else if (!tile.Space && tile.Air != null)
                 newByteTemp = new(tile.Air.Temperature);
 
-            if (oldData.Equals(default))
+            if (oldFireData.Equals(default) && oldVisibleGasData.Equals(default) && oldTemperatureData.Equals(default))
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, new byte[VisibleGasId.Length], newByteTemp);
+                oldFireData = new SharedFireData(tile.Hotspot.State);
+                oldVisibleGasData = new SharedVisibleGasData(new byte[VisibleGasId.Length]);
+                oldTemperatureData = new SharedGasTemperatureData(newByteTemp);
             }
-            else if (oldData.FireState != tile.Hotspot.State ||
-                     Math.Abs(oldData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
-                     (oldData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution)) // change of special ThermalByte value
+            else if (oldFireData.FireState != tile.Hotspot.State ||
+                     Math.Abs(oldTemperatureData.ByteGasTemperature.Value - newByteTemp.Value) > 1 || // Dirty Temperature when there is more then 1 byte difference. That should measure up to minimum 4 degreese difference, 6 degreese on average.
+                     (oldTemperatureData.ByteGasTemperature.Value != newByteTemp.Value && newByteTemp.Value > ThermalByte.TempResolution)) // change of special ThermalByte value
             {
                 changed = true;
-                oldData = new GasOverlayData(tile.Hotspot.State, oldData.Opacity, newByteTemp);
+                oldFireData = new SharedFireData(tile.Hotspot.State);
+                oldVisibleGasData = new SharedVisibleGasData(oldVisibleGasData.Opacity);
+                oldTemperatureData = new SharedGasTemperatureData(newByteTemp);
             }
 
-            if (tile is {Air: not null, NoGridTile: false})
+            if (tile is { Air: not null, NoGridTile: false })
             {
                 for (var i = 0; i < VisibleGasId.Length; i++)
                 {
                     var id = VisibleGasId[i];
                     var gas = _atmosphereSystem.GetGas(id);
                     var moles = tile.Air[id];
-                    ref var oldOpacity = ref oldData.Opacity[i];
+                    ref var oldOpacity = ref oldVisibleGasData.Opacity[i];
 
                     if (moles < gas.GasMolesVisible)
                     {
@@ -270,8 +280,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 for (var i = 0; i < VisibleGasId.Length; i++)
                 {
-                    changed |= oldData.Opacity[i] != 0;
-                    oldData.Opacity[i] = 0;
+                    changed |= oldVisibleGasData.Opacity[i] != 0;
+                    oldVisibleGasData.Opacity[i] = 0;
                 }
             }
 
