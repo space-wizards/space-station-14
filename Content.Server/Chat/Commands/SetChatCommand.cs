@@ -29,7 +29,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length > 2)
+        if (args.Length > 2 || args.Length == 0)
         {
             shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2)));
             return;
@@ -43,7 +43,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         }
 
         bool enabled;
-        if (args[1] == string.Empty)
+        if (args.Length == 1)
         {
             enabled = !_configManager.GetCVar(entry.CVar);
         }
@@ -64,7 +64,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromOptions([DeadChat, LoocChat, OocChat]),
+            1 => CompletionResult.FromOptions(ChatMap.Keys),
             2 => CompletionResult.FromOptions(CompletionHelper.Booleans),
             _ => CompletionResult.Empty,
         };
