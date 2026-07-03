@@ -98,7 +98,6 @@ public sealed partial class ImplanterComponent : Component
     /// <summary>
     /// The list of implants that may be removed via this implanter
     /// </summary>
-    [DataField]
     public List<EntProtoId> ImplantsList = new List<EntProtoId>();
 
     /// <summary>

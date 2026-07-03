@@ -49,6 +49,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         SubscribeLocalEvent<ImplanterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ImplanterComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<ImplanterComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnProtoReloaded);
 
         SubscribeLocalEvent<ImplanterComponent, AfterInteractEvent>(OnImplanterAfterInteract);
         SubscribeLocalEvent<ImplanterComponent, UseInHandEvent>(OnUseInHand);
@@ -61,12 +62,6 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnComponentInit(Entity<ImplanterComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
-            .Where(proto => _whitelist.IsValid(ent.Comp.DeimplantWhitelist, proto))
-            .Select(proto => new EntProtoId(proto.ID))
-            .OrderBy(proto => proto)
-            .ToList();
-
         if (ent.Comp.Implant != null)
             ent.Comp.ImplanterSlot.StartingItem = ent.Comp.Implant;
 
@@ -75,6 +70,8 @@ public abstract partial class SharedImplanterSystem : EntitySystem
 
     private void OnMapInit(Entity<ImplanterComponent> ent, ref MapInitEvent args)
     {
+        UpdateImplantList(ent, ent.Comp);
+
         ent.Comp.DeimplantChosen ??= ent.Comp.ImplantsList.FirstOrNull();
         Dirty(ent);
     }
@@ -98,6 +95,28 @@ public abstract partial class SharedImplanterSystem : EntitySystem
             return;
 
         args.PushMarkup(Loc.GetString("implanter-contained-implant-text", ("desc", ent.Comp.ImplantData.Item2)));
+    }
+
+    private void OnProtoReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        var implantQuery = EntityQueryEnumerator<ImplanterComponent>();
+        while (implantQuery.MoveNext(out var uid, out var comp))
+        {
+            UpdateImplantList(uid, comp);
+        }
+    }
+
+    private void UpdateImplantList(EntityUid uid, ImplanterComponent component)
+    {
+        //  TODO: Probably should be cached in loops
+        component.ImplantsList = _proto.EnumeratePrototypes<EntityPrototype>()
+            .Where(proto => _whitelist.IsValid(component.DeimplantWhitelist, proto))
+            .OrderBy(proto => proto.Name)
+            .Select(proto => new EntProtoId(proto.ID))
+            .ToList();
     }
 
     private void OnImplanterAfterInteract(Entity<ImplanterComponent> ent, ref AfterInteractEvent args)
