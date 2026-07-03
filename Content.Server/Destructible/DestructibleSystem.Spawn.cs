@@ -38,7 +38,7 @@ public sealed partial class DestructibleSystem
             }
         }
 
-        _stackSystem.MergeStacks(totalSpawned);
+        _stackSystem.MergeStacks(ref totalSpawned);
     }
 
     /// <summary>
