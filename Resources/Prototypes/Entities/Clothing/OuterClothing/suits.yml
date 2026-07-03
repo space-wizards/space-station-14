@@ -110,7 +110,6 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
   - type: HideLayerClothing
     slots:
@@ -135,6 +134,8 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodRad
     slot: head
+    verbText: toggle-clothing-verb-hood
+    action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -278,6 +279,8 @@
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodIan
+    verbText: toggle-clothing-verb-hood
+    action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -288,7 +291,6 @@
     slots: WITHOUT_POCKET
   - type: Tag
     tags:
-    - CorgiWearable
     - WhitelistChameleon
   - type: AddAccentClothing
     accent: BarkAccent
@@ -308,6 +310,8 @@
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodCarp
+    verbText: toggle-clothing-verb-hood
+    action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}

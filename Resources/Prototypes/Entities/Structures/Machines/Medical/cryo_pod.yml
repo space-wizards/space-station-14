@@ -10,18 +10,18 @@
     noRot: true
     offset: 0, 0.5
     layers:
-      - sprite: Structures/Piping/Atmospherics/pipe.rsi
-        state: pipeHalf
-        offset: 0, -0.5
-        map: [ "enum.PipeVisualLayers.Pipe" ]
-      - state: pod-open
-        map: [ "enum.CryoPodVisualLayers.Base" ]
-      - state: cover-on
-        map: [ "enum.CryoPodVisualLayers.Cover" ]
-        visible: false
-      - state: pod-panel
-        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-        visible: false
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeHalf
+      offset: 0, -0.5
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pod-open
+      map: [ "enum.CryoPodVisualLayers.Base" ]
+    - state: cover-on
+      map: [ "enum.CryoPodVisualLayers.Cover" ]
+      visible: false
+    - state: pod-panel
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
   - type: InteractionOutline
   - type: Transform
     noRot: true
@@ -54,22 +54,23 @@
     boardName: wires-board-name-cryopod
     layoutId: CryoPod
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-        - !type:EmptyAllContainersBehaviour
-        - !type:PlaySoundBehavior
-          sound:
-            collection: WindowShatter
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:EmptyAllContainersBehaviour
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 3000
   - type: ExtensionCableReceiver
@@ -105,10 +106,9 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      injectionBuffer:
-        maxVol: 50
+    - SolutionCryoBuffer
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck
@@ -118,6 +118,15 @@
   - type: GuideHelp
     guides:
     - Cryogenics
+  - type: AmbientMusicMarkerMedical
+
+- type: entity
+  parent: SolutionSmall
+  id: SolutionCryoBuffer
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Solution
+    id: injectionBuffer
 
 - type: entity
   parent: BaseMachine

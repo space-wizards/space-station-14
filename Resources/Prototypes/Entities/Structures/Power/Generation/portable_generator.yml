@@ -8,98 +8,92 @@
   id: PortableGeneratorBase
   parent: [ BaseMachine, SmallConstructibleMachine, StructureWheeled]
   components:
-    # Basic properties
-    - type: Transform
-      anchored: False
-    - type: Physics
-      bodyType: Dynamic
-    - type: StaticPrice
-      price: 500
-    - type: AmbientSound
-      range: 5
-      volume: -5
-      sound:
-        path: /Audio/Ambience/Objects/engine_hum.ogg
-      enabled: false
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.40,-0.40,0.40,0.40"
-          # Despite the heavy weight, it has wheels, so it's still fairly portable.
-          density: 155
-          mask:
-            - MachineMask
-          layer:
-            - MachineLayer
+  # Basic properties
+  - type: Transform
+    anchored: False
+  - type: Physics
+    bodyType: Dynamic
+  - type: StaticPrice
+    price: 500
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.40,-0.40,0.40,0.40"
+        # Despite the heavy weight, it has wheels, so it's still fairly portable.
+        density: 155
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
-    # Visuals
-    - type: Appearance
-    - type: Sprite
-      sprite: Structures/Power/Generation/portable_generator.rsi
-      noRot: true
+  # Visuals
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    noRot: true
 
-    # Construction, interaction
-    - type: WiresPanel
-    - type: UserInterface
-      interfaces:
-        enum.GeneratorComponentUiKey.Key:
-          type: PortableGeneratorBoundUserInterface
-    - type: ActivatableUI
-      key: enum.GeneratorComponentUiKey.Key
-    - type: Electrified
-      onHandInteract: false
-      onInteractUsing: false
-      onBump: false
-      requirePower: true
-      highVoltageNode: output
+  # Construction, interaction
+  - type: WiresPanel
+  - type: UserInterface
+    interfaces:
+      enum.GeneratorComponentUiKey.Key:
+        type: PortableGeneratorBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:ChangeConstructionNodeBehavior
-              node: machineFrame
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-    - type: GuideHelp
-      guides:
-      - PortableGenerator
-      - Power
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: GuideHelp
+    guides:
+    - PortableGenerator
+    - Power
 
     # Core functionality
-    - type: PortableGenerator
-      startSoundEmpty: { collection: GeneratorTugEmpty }
-      startSound: { collection: GeneratorTug }
-    - type: FuelGenerator
-    - type: PowerSupplier
-      supplyRate: 3000
-      supplyRampRate: 500
-      supplyRampTolerance: 500
-      enabled: false
-    - type: DeviceLinkSink
-      ports:
-      - On
-      - Off
-      - Toggle
-    - type: GeneratorSignalControl
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: BasicDevice
-    - type: WirelessNetworkConnection
-      range: 200
+  - type: PortableGenerator
+    startSoundEmpty: { collection: GeneratorTugEmpty }
+    startSound: { collection: GeneratorTug }
+  - type: FuelGenerator
+  - type: PowerSupplier
+    supplyRate: 3000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+    enabled: false
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: GeneratorSignalControl
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
 
 - type: entity
   abstract: true
@@ -245,120 +239,110 @@
       supplyRampTolerance: 2500
 
 - type: entity
+  parent: [SolutionTank, SolutionSmall, PortableGeneratorBase]
+  id: PortableGeneratorJrPacman
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
     A small generator capable of powering individual rooms, in case of emergencies.
     Runs off welding fuel and is rated for up to 8 kW.
     Rated ages 3 and up.
-  parent: PortableGeneratorBase
-  id: PortableGeneratorJrPacman
   suffix: Welding Fuel, 8 kW
   components:
-    - type: AmbientSound
-      range: 4
-      volume: -8
+  - type: AmbientSound
+    range: 4
+    volume: -8
 
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.30,-0.30,0.30,0.30"
-          density: 80
-          mask:
-            - MachineMask
-          layer:
-            - MachineLayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.30,-0.30,0.30,0.30"
+        density: 80
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
-    - type: Sprite
-      layers:
-        - state: portgen3
-          map: [ "enum.GeneratorVisualLayers.Body" ]
-        - state: portgen3on_unlit
-          map: [ "enum.GeneratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: GenericVisualizer
-      visuals:
-        enum.GeneratorVisuals.Running:
-          enum.GeneratorVisualLayers.Body:
-            True: { state: portgen3on }
-            False: { state: portgen3 }
-          enum.GeneratorVisualLayers.Unlit:
-            True: { visible: true }
-            False: { visible: false }
+  - type: Sprite
+    layers:
+    - state: portgen3
+      map: [ "enum.GeneratorVisualLayers.Body" ]
+    - state: portgen3on_unlit
+      map: [ "enum.GeneratorVisualLayers.Unlit" ]
+      shader: unshaded
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.GeneratorVisuals.Running:
+        enum.GeneratorVisualLayers.Body:
+          True: { state: portgen3on }
+          False: { state: portgen3 }
+        enum.GeneratorVisualLayers.Unlit:
+          True: { visible: true }
+          False: { visible: false }
 
-    - type: Machine
-      board: PortableGeneratorJrPacmanMachineCircuitboard
-    - type: FuelGenerator
-      targetPower: 5000
-      minTargetPower: 4000
-      optimalPower: 8000
-      maxTargetPower: 8000
-      # 7.5 minutes at full tank.
-      optimalBurnRate: 0.11111111
-      # Shallow curve that allows you to just barely eek out 12 minutes at lowest.
-      fuelEfficiencyConstant: 0.3
-    - type: ChemicalFuelGeneratorAdapter
-      solution: tank
-      reagents:
-        WeldingFuel: 1
-    - type: SolutionContainerManager
-      solutions:
-        tank:
-          maxVol: 50
-    - type: RefillableSolution
-      solution: tank
-    - type: PortableGenerator
-      # Unreliable bugger
-      startChance: 0.5
-    - type: NodeContainer
-      examinable: true
-      nodes:
-        output:
-          !type:CableDeviceNode
-          nodeGroupID: Apc
-    - type: PowerMonitoringDevice
-      group: Generator
-      loadNode: output
-      sprite: Structures/Power/Generation/portable_generator.rsi
-      state: portgen3
-    - type: PowerSupplier
-      # No ramping needed on this bugger.
-      voltage: Apc
-      supplyRampTolerance: 2000
-    - type: GeneratorExhaustGas
-      gasType: CarbonDioxide
-      # Full tank is 25 moles of gas
-      moleRatio: 0.5
-    - type: Explosive
-      explosionType: Default
-      tileBreakScale: 0
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:SpillBehavior
-              solution: tank
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:ChangeConstructionNodeBehavior
-              node: machineFrame
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
-        - trigger:
-            !type:DamageTypeTrigger
-            damageType: Piercing
-            damage: 75
-          behaviors:
-            - !type:SolutionExplosionBehavior
-              solution: tank
+  - type: Machine
+    board: PortableGeneratorJrPacmanMachineCircuitboard
+  - type: FuelGenerator
+    targetPower: 5000
+    minTargetPower: 4000
+    optimalPower: 8000
+    maxTargetPower: 8000
+    # 7.5 minutes at full tank.
+    optimalBurnRate: 0.11111111
+    # Shallow curve that allows you to just barely eek out 12 minutes at lowest.
+    fuelEfficiencyConstant: 0.3
+  - type: ChemicalFuelGeneratorAdapter
+    solution: tank
+    reagents:
+      WeldingFuel: 1
+  - type: RefillableSolution
+    solution: tank
+  - type: PortableGenerator
+    # Unreliable bugger
+    startChance: 0.5
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/portable_generator.rsi
+    state: portgen3
+  - type: PowerSupplier
+    # No ramping needed on this bugger.
+    voltage: Apc
+    supplyRampTolerance: 2000
+  - type: GeneratorExhaustGas
+    gasType: CarbonDioxide
+    # Full tank is 25 moles of gas
+    moleRatio: 0.5
+  - type: Explosive
+    explosionType: Default
+    tileBreakScale: 0
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
+        damage: 75
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank

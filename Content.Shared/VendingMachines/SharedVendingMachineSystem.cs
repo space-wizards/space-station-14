@@ -23,19 +23,18 @@ namespace Content.Shared.VendingMachines;
 
 public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] private   readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] protected readonly SharedPointLightSystem Light = default!;
-    [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly SharedSpeakOnUIClosedSystem _speakOn = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UISystem = default!;
-    [Dependency] protected readonly IRobustRandom Randomizer = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] protected SharedPointLightSystem Light = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] private SharedSpeakOnUIClosedSystem _speakOn = default!;
+    [Dependency] protected SharedUserInterfaceSystem UISystem = default!;
+    [Dependency] protected IRobustRandom Randomizer = default!;
+    [Dependency] private EmagSystem _emag = default!;
 
     public override void Initialize()
     {
@@ -325,7 +324,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+        if (!ProtoMan.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
         AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component, restockQuality);
@@ -405,7 +404,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var (id, amount) in entries)
         {
-            if (PrototypeManager.HasIndex<EntityPrototype>(id))
+            if (ProtoMan.HasIndex<EntityPrototype>(id))
             {
                 var restock = amount;
                 var chanceOfMissingStock = 1 - restockQuality;
