@@ -42,6 +42,15 @@ jobs:
         $env:DOTNET_gcServer=1
         dotnet test --no-build --configuration DebugOpt Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0 NUnit.MapWarningTo=Failed NUnit.TestOutputXml="logs" NUnit.WorkDirectory="$(pwd)/test_results"
 
+    - name: Archive NUnit3 test results.
+      if: failure()
+      uses: actions/upload-artifact@v7
+      with:
+        name: nunit3-results
+        path: test_results/*
+        retention-days: 7
+        compression-level: 9
+
     - name: Extract Failures
       if: failure()
       id: get_fails
