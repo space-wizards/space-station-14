@@ -60,20 +60,6 @@ public sealed partial class MoverController : SharedMoverController
         UpdateMoverStatus((ent, ent.Comp));
     }
 
-    protected override void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
-    {
-        base.OnInputMoverCanMoveUpdated(ent, ref args);
-
-        if (!args.CanMove)
-        {
-            // Remove from active mover query when entity cannot move
-            RemCompDeferred<ActiveInputMoverComponent>(ent);
-            return;
-        }
-
-        UpdateMoverStatus((ent, ent.Comp));
-    }
-
     protected override void OnMoverStartup(Entity<InputMoverComponent> ent, ref ComponentStartup args)
     {
         base.OnMoverStartup(ent, ref args);
