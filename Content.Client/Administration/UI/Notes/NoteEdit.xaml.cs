@@ -109,8 +109,8 @@ public sealed partial class NoteEdit : FancyWindow
 
                 var timeLeft = ConvertDateToTimeFromNow(ExpiryTime.Value.ToLocalTime());
 
-                ExpiryLineEdit.Text = TruncateTwoDecimal(timeLeft.Item2).ToString();
-                ExpiryLengthDropdown.SelectId((int) timeLeft.Item1);
+                ExpiryLineEdit.Text = Math.Round(timeLeft.Item2, 2).ToString();
+                ExpiryLengthDropdown.SelectId((int)timeLeft.Item1);
             }
         }
 
@@ -119,6 +119,7 @@ public sealed partial class NoteEdit : FancyWindow
 
     // Convert the given date time into a multiplier and value.
     // This is for having a simple format like 2 weeks instead of everything being in hours.
+    // For example, a 2 weeks old date would return (Multipliers.Days, 14)
     private (Multipliers, double) ConvertDateToTimeFromNow(DateTime expirationDate)
     {
         var deltaTime = expirationDate - DateTime.Now;
@@ -132,11 +133,6 @@ public sealed partial class NoteEdit : FancyWindow
             < 365 => (Multipliers.Days, deltaTime.TotalDays),     // Less than a year
             _ => (Multipliers.Months, deltaTime.TotalDays / 30)   // More than a year
         };
-    }
-
-    private double TruncateTwoDecimal(double value)
-    {
-        return Math.Truncate(value * 100) / 100;
     }
 
     private void OnSubmitButtonMouseEntered(GUIMouseHoverEventArgs args)
