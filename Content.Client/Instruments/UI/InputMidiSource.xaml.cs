@@ -27,13 +27,7 @@ public sealed partial class InputMidiSource : InstrumentMidiSourceBase
     public override void Enable()
     {
         base.Enable();
-        // Another timer because rushing the MIDI-Renderer often breaks it.
-        Timer.Spawn(1000,
-            () =>
-        {
-            if (Enabled)
-                OpenInputRequest?.Invoke();
-        });
+        OpenInputRequest?.Invoke();
     }
 
     public override void Disable()
