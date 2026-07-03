@@ -193,6 +193,15 @@ namespace Content.Shared.Containers.ItemSlots
         public bool EjectOnBreak = false;
 
         /// <summary>
+        ///     If this slot belongs to some reclaimable entity, should the item inside the slot be
+        ///     ejected when it is reclaimed?
+        /// </summary>
+        [DataField]
+        [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
+        [NonSerialized]
+        public bool EjectOnReclaim = true;
+
+        /// <summary>
         ///     When specified, a popup will be generated whenever someone attempts to insert a bad item into this slot.
         /// </summary>
         [DataField]
