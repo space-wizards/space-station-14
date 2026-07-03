@@ -98,7 +98,6 @@
   - type: ActiveRadio
     receiveAllChannels: true
     globalReceive: true
-  - type: PointLight
   - type: NightVision
     netsync: false
     enabled: false
