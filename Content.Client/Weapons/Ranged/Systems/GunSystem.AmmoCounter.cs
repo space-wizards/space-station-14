@@ -163,13 +163,10 @@ public sealed partial class GunSystem
         private readonly Texture _loadedSprite;
         private readonly Texture _spentSprite;
 
-        private readonly Texture? _loadedRotatedSprite;
-        private readonly Texture? _spentRotatedSprite;
-
         private readonly CustomBulletRenderer _customBulletRenderer;
         private readonly TextureRect _chamberedBullet;
 
-        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows, Texture? loadedRotatedSprite=null, Texture? spentRotatedSprite=null)
+        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows)
         {
             MinHeight = 15;
             HorizontalExpand = true;
@@ -177,9 +174,6 @@ public sealed partial class GunSystem
 
             _loadedSprite = loadedSprite;
             _spentSprite = spentTexture;
-
-            _loadedRotatedSprite = loadedRotatedSprite;
-            _spentRotatedSprite = spentRotatedSprite;
 
             AddChild(new BoxContainer
             {
@@ -196,7 +190,7 @@ public sealed partial class GunSystem
                     ),
                     (_chamberedBullet = new TextureRect
                     {
-                        Texture = spentRotatedSprite ?? spentTexture,
+                        Texture = spentTexture,
                         Margin = new Thickness(5, 0, 0, 0),
                         HorizontalAlignment = HAlignment.Left,
                         VerticalAlignment = VAlignment.Bottom,
@@ -217,7 +211,7 @@ public sealed partial class GunSystem
             _chamberedBullet.Visible = drawChamber;
             if (drawChamber)
             {
-                _chamberedBullet.Texture = chambered ? _loadedRotatedSprite ?? _loadedSprite : _spentRotatedSprite ?? _spentSprite;
+                _chamberedBullet.Texture = chambered ? _loadedSprite : _spentSprite;
             }
         }
     }
