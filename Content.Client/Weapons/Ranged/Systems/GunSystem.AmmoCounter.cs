@@ -166,7 +166,7 @@ public sealed partial class GunSystem
         private readonly CustomBulletRenderer _customBulletRenderer;
         private readonly TextureRect _chamberedBullet;
 
-        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows, bool drawChamber=false)
+        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows)
         {
             MinHeight = 15;
             HorizontalExpand = true;
