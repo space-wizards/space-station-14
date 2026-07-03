@@ -13,7 +13,6 @@
   id: BloodstreamStatusEffectDebuff
   abstract: true
   components:
-  - type: StatusEffectDebuff
   - type: RejuvenateRemovedStatusEffect
 
 - type: entity
