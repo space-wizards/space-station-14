@@ -191,7 +191,7 @@ public sealed partial class GunSystem
                     (_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
                     {
                         HorizontalAlignment = HAlignment.Right,
-                        VerticalAlignment = VAlignment.Bottom,
+                        VerticalAlignment = VAlignment.Center,
                     }
                     ),
                     (_chamberedBullet = new TextureRect
@@ -199,7 +199,7 @@ public sealed partial class GunSystem
                         Texture = spentRotatedSprite ?? spentTexture,
                         Margin = new Thickness(5, 0, 0, 0),
                         HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Bottom,
+                        VerticalAlignment = VAlignment.Center,
                     }),
                 },
             });
