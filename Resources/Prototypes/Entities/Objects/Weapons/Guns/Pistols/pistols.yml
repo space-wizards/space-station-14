@@ -157,8 +157,6 @@
   - type: CustomSpriteAmmoCounter
     loadedAmmoSprite: Interface/ItemStatus/Caseless/not_spent.png
     spentAmmoSprite: Interface/ItemStatus/Caseless/spent.png
-    rotatedLoadedAmmoSprite: Interface/ItemStatus/Caseless/not_spent_rotated.png
-    rotatedSpentAmmoSprite: Interface/ItemStatus/Caseless/spent_rotated.png
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
