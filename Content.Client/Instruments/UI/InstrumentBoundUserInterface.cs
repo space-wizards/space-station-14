@@ -1,36 +1,29 @@
-using System.IO;
-using System.Threading.Tasks;
 using Content.Client.Interactable;
-using Content.Client.UserInterface.Controls;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Robust.Client.Audio.Midi;
 using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Containers;
-using Robust.Shared.ContentPack;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
 
 public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 {
-    private static readonly ResPath UserMidiDirectory = new("/UserMidis/");
     private const int MaxSearchDepth = 16;
+    private const string SawmillCategory = "instrumentui";
 
     [Dependency] private IMidiManager _midiManager = default!;
-    [Dependency] private IFileDialogManager _dialogs = default!;
-    [Dependency] private IResourceManager _resManager = default!;
-    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private ILocalizationManager _loc = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+
+    private InstrumentSystem _instruments = default!;
     private ActionBlockerSystem _actionBlockerSystem = default!;
     private InteractionSystem _interactionSystem = default!;
     private SharedContainerSystem _sharedContainerSystem = default!;
-
-    private readonly InstrumentSystem _instruments;
 
     private readonly FileMidiSource _fileSource = new();
     private readonly BandMidiSource _bandSource = new();
@@ -38,14 +31,13 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private readonly ChannelsControl _channelsControl = new();
 
-    private bool _isMidiFileDialogueWindowOpen;
-    private DialogWindow? _reasonDialog;
     private InstrumentMenu? _instrumentMenu;
 
     public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
 
+        _sawmill = _logManager.GetSawmill(SawmillCategory);
         _instruments = EntMan.System<InstrumentSystem>();
         _actionBlockerSystem = EntMan.System<ActionBlockerSystem>();
         _interactionSystem = EntMan.System<InteractionSystem>();
@@ -59,8 +51,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             return;
 
-        LoadStoredUserMidis();
-
         instrument.OnMidiPlaybackEnded += OnMidiPlaybackEnded;
 
         _instruments.OnChannelsUpdated += OnChannelsUpdated;
@@ -69,9 +59,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest += OnStopPlayingRequest;
         _fileSource.LoopingToggled += OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest += OnTrackPositionChangeRequest;
-        _fileSource.FileAddNewRequest += OnFileAddNewRequest;
-        _fileSource.FileRenameRequest += OnFileRenameRequest;
-        _fileSource.FileRemoveRequest += OnFileRemoveRequest;
         _fileSource.SetEntity(Owner);
 
         _bandSource.RefreshBandRequest += OnRefreshBandsRequest;
@@ -124,9 +111,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest -= OnStopPlayingRequest;
         _fileSource.LoopingToggled -= OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest -= OnTrackPositionChangeRequest;
-        _fileSource.FileAddNewRequest -= OnFileAddNewRequest;
-        _fileSource.FileRenameRequest -= OnFileRenameRequest;
-        _fileSource.FileRemoveRequest -= OnFileRemoveRequest;
         _fileSource.SetEntity(Owner);
 
         _bandSource.RefreshBandRequest -= OnRefreshBandsRequest;
@@ -158,8 +142,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private void OnMidiPlaybackEnded()
     {
-        // Give the InstrumentSystem time to clear the renderer, preventing it from reusing the renderer it's about to dispose.
-        Timer.Spawn(1000, () => { _fileSource.SelectNextTrack(); });
+        _fileSource.SelectNextTrack();
     }
 
     private void OnSetBandMasterRequest(EntityUid ent)
@@ -217,13 +200,10 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instruments.CloseMidi(Owner, false, instrument);
     }
 
-    private async void OnStartPlayingRequest(string fileName)
+    private void OnStartPlayingRequest(byte[] trackData)
     {
         try
         {
-            if (!PlayCheck())
-                return;
-
             if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
                 return;
 
@@ -231,107 +211,20 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             if (instrument.IsMidiOpen)
                 _instruments.CloseMidi(Owner, false, instrument);
 
-            var trackData = await Task.Run(() => LoadMidiData(fileName));
+            if (!_fileSource.IsPlaying)
+                return;
 
-            Timer.Spawn(1000,
-                () =>
-                {
-                    if (!_fileSource.IsPlaying)
-                        return;
+            if (!PlayCheck())
+                return;
 
-                    if (!PlayCheck())
-                        return;
-
-                    if (!_instruments.OpenMidi(Owner, trackData, instrument))
-                        _fileSource.IsPlaying = false;
-                });
+            if (!_instruments.OpenMidi(Owner, trackData, instrument))
+                _fileSource.IsPlaying = false;
         }
-        catch
+        catch (Exception e)
         {
+            _sawmill.Error($"Failed to play next midi track: {e.Message}");
             _fileSource.IsPlaying = false;
         }
-    }
-
-    private async void OnFileAddNewRequest()
-    {
-        try
-        {
-            if (_isMidiFileDialogueWindowOpen)
-                return;
-
-            var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
-
-            // TODO: Once the file dialogue manager can handle focusing or closing windows, improve this logic to close
-            //  or focus the previously-opened window.
-            _isMidiFileDialogueWindowOpen = true;
-
-            await using var file = await _dialogs.OpenFile(filters, FileAccess.Read);
-
-            _isMidiFileDialogueWindowOpen = false;
-
-            // did the instrument menu get closed while waiting for the user to select a file?
-            if (!IsOpened)
-                return;
-
-            if (file == null)
-                return;
-
-            // TODO: At the time of this comment, the file dialog only returns bytes and loses the original file name.
-            //  Find a better solution one day.
-            var fileName = DateTime.Now.Ticks + ".midi";
-            StoreMidiFile(fileName, file);
-            _fileSource.AddTrack(fileName);
-        }
-        catch
-        {
-            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
-        }
-    }
-
-    private void OnFileRemoveRequest(string name)
-    {
-        try
-        {
-            var path = new ResPath(UserMidiDirectory + name).Clean();
-            _resManager.UserData.Delete(path);
-            _fileSource.RemoveTrack(name);
-        }
-        catch
-        {
-            // ignored
-        }
-    }
-
-    private void OnFileRenameRequest(string originalName)
-    {
-        if (_reasonDialog != null)
-        {
-            _reasonDialog.MoveToFront();
-            return;
-        }
-
-        if (originalName.Length == 0)
-            return;
-
-        const string field = "name";
-        var title = Loc.GetString("instruments-component-menu-files-rename-dialog-title");
-        var prompt = Loc.GetString("instruments-component-menu-files-rename-dialog-prompt");
-        var entry = new QuickDialogEntry(field, QuickDialogEntryType.ShortText, prompt, originalName);
-        var entries = new List<QuickDialogEntry> { entry };
-        _reasonDialog = new DialogWindow(title, entries);
-
-        _reasonDialog.OnConfirmed += responses =>
-        {
-            var newName = responses[field];
-            if (newName.Length < 1)
-                return;
-            if (!newName.EndsWith(".midi") && !newName.EndsWith(".mid"))
-                newName += ".midi";
-            if (RenameMidiFile(originalName, newName))
-                _fileSource.UpdateTrackName(originalName, newName);
-        };
-
-        _reasonDialog.OnClose += () => { _reasonDialog = null; };
     }
 
     private bool PlayCheck()
@@ -440,87 +333,5 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         _channelsControl.SetChannels(channelSettings);
         _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
-    }
-
-    private void EnsureMidiDirectoryExists()
-    {
-        if (!_resManager.UserData.Exists(UserMidiDirectory))
-            _resManager.UserData.CreateDir(UserMidiDirectory);
-    }
-
-    private async void StoreMidiFile(string filename, Stream data)
-    {
-        try
-        {
-            EnsureMidiDirectoryExists();
-            await using var file = _resManager.UserData.OpenWrite(new ResPath(UserMidiDirectory + filename));
-            await data.CopyToAsync(file);
-        }
-        catch
-        {
-            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
-        }
-    }
-
-    private bool RenameMidiFile(string oldName, string newName)
-    {
-        try
-        {
-            EnsureMidiDirectoryExists();
-            var oldPath = new ResPath(UserMidiDirectory + oldName);
-            var newPath = new ResPath(UserMidiDirectory + newName);
-            oldPath = oldPath.Clean();
-            newPath = newPath.Clean();
-            _resManager.UserData.Rename(oldPath, newPath);
-            return true;
-        }
-        catch
-        {
-            _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
-            return false;
-        }
-    }
-
-    private void LoadStoredUserMidis()
-    {
-        if (!_resManager.UserData.IsDir(UserMidiDirectory))
-            return;
-
-        _fileSource.PopulateTrackList(LoadMidisFromDirectory(UserMidiDirectory));
-    }
-
-    private List<string> LoadMidisFromDirectory(ResPath directory)
-    {
-        List<string> tracks = [];
-        foreach (var path in _resManager.UserData.DirectoryEntries(directory))
-        {
-            try
-            {
-                var filePath = new ResPath(UserMidiDirectory + path);
-                if (!filePath.Extension.Equals("midi") && !filePath.Extension.Equals("mid"))
-                    continue;
-
-                tracks.Add(filePath.Filename);
-            }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        return tracks;
-    }
-
-    private byte[] LoadMidiData(string fileName)
-    {
-        try
-        {
-            var filePath = new ResPath(UserMidiDirectory + fileName);
-            return _resManager.UserData.ReadAllBytes(filePath);
-        }
-        catch
-        {
-            return [];
-        }
     }
 }
