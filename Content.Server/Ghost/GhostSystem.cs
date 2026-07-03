@@ -394,7 +394,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true, 0);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
             }
         }
 
@@ -413,7 +413,7 @@ namespace Content.Server.Ghost
                 var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
 
                 if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, 0);
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
             }
         }
 

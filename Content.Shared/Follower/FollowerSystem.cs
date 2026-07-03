@@ -356,7 +356,6 @@ public sealed partial class FollowerSystem : EntitySystem
         var most = 0;
 
         var followedEnts = GetAllFollowed();
-
         foreach (var (followed, followers) in followedEnts)
         {
             if (followers > most)

@@ -17,8 +17,8 @@ ghost-target-window-warp-to-title = [bold]Quick Warp[/bold]
 ghost-target-window-warp-to-most-followed = The Most Followed
 ghost-target-window-warp-to-random-followed = Random Followed
 ghost-target-window-warp-to-random = Random
-ghost-target-window-warp-to-most-followed-tooltip = Warp to the most followed entity
-ghost-target-window-warp-to-random-followed-tooltip = Warp to a random entity that is being followed by at least one ghost
+ghost-target-window-warp-to-most-followed-tooltip = Warp to the most followed
+ghost-target-window-warp-to-random-followed-tooltip = Warp to a random followed entity
 ghost-target-window-warp-to-random-tooltip = Warp to a random entity
 
 ghost-roles-window-title = Ghost Roles

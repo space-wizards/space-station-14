@@ -132,12 +132,11 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public struct GhostWarp
     {
-        public GhostWarp(NetEntity entity, string displayName, bool isWarpPoint, int followersCount)
+        public GhostWarp(NetEntity entity, string displayName, bool isWarpPoint)
         {
             Entity = entity;
             DisplayName = displayName;
             IsWarpPoint = isWarpPoint;
-            FollowersCount = followersCount;
         }
 
         /// <summary>
@@ -155,11 +154,6 @@ namespace Content.Shared.Ghost
         /// Whether this warp represents a warp point or a player
         /// </summary>
         public bool IsWarpPoint { get;  }
-
-        /// <summary>
-        /// How many ghosts are following this point.
-        /// </summary>
-        public int FollowersCount { get;  }
     }
 
     /// <summary>
