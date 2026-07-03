@@ -36,6 +36,7 @@ public sealed partial class ShuttleSystem
     [Dependency] private EntityQuery<FTLSmashImmuneComponent> _immuneQuery = default!;
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<MapComponent> _mapQuery = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
     {
@@ -473,12 +474,18 @@ public sealed partial class ShuttleSystem
 
         if (!Exists(entity.Comp1.TargetCoordinates.EntityId))
         {
-            // Uhh good luck
-            // Pick earliest map?
-            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-            var map = maps.Min(o => o.GetHashCode());
+            // Get a list of maps
+            var maps = EntityQuery<MapComponent>()
+                .Select(o => o.MapId)
+                .ToList()
+                .OrderBy(o => o.GetHashCode());
+            
+            // Get the first map that passes the FTL whitelist
+            mapId = maps.First(o =>
+                TryComp<FTLDestinationComponent>(Maps.GetMapOrInvalid(o), out var destination)
+                && _whitelistSystem.IsWhitelistPassOrNull(destination.Whitelist, entity)
+                );
 
-            mapId = new MapId(map);
             TryFTLProximity(uid, _mapSystem.GetMap(mapId));
         }
         // Docking FTL
