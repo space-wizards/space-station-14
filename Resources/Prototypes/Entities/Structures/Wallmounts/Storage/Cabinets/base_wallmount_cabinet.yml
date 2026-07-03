@@ -1,12 +1,12 @@
 - type: entity
+  abstract: true
   parent: [BaseWallmountMetallic, BaseItemCabinet]
   id: BaseWallmountCabinet
-  abstract: true
 
 - type: entity
+  abstract: true
   parent: [BaseWallmountGlass, BaseItemCabinetGlass]
   id: BaseWallmountCabinetGlass
-  abstract: true
   components:
   - type: GenericVisualizer # Distinct visualizer - lock layer disappears when open
     visuals:
