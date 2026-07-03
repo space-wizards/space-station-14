@@ -14,9 +14,9 @@ namespace Content.Client.UserInterface.Systems.BugReport.Windows;
 [GenerateTypedNameReferences]
 public sealed partial class BugReportWindow : DefaultWindow
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     // TODO: Use SharedPlaytimeManager when its refactored out of job requirements
-    [Dependency] private readonly JobRequirementsManager _job = default!;
+    [Dependency] private JobRequirementsManager _job = default!;
 
     // This action gets invoked when the user submits a bug report.
     public event Action<PlayerBugReportInformation>? OnBugReportSubmitted;

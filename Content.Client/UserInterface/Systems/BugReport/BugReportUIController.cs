@@ -16,11 +16,11 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.BugReport;
 
 [UsedImplicitly]
-public sealed class BugReportUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+public sealed partial class BugReportUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
 {
-    [Dependency] private readonly IClientNetManager _net = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IResourceCache _resource = default!;
+    [Dependency] private IClientNetManager _net = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceCache _resource = default!;
 
     // This is the link to the hotbar button
     private MenuButton? BugReportButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.ReportBugButton;
