@@ -13,21 +13,22 @@
   color: "#ffcd00"
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_star.png"
-  
+  placement: Offset
+
 - type: navMapBlip
   id: GasVentOpening
-  scale: 0.6667
+  scale: 0.75
   color: LightGray
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_square.png"
-  
+
 - type: navMapBlip
   id: GasVentScrubber
-  scale: 0.6667
+  scale: 0.75
   color: LightGray
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_circle.png"
-  
+
 - type: navMapBlip
   id: GasFlowRegulator
   scale: 0.75
@@ -37,7 +38,8 @@
   - "/Textures/Interface/NavMap/beveled_arrow_east.png"
   - "/Textures/Interface/NavMap/beveled_arrow_north.png"
   - "/Textures/Interface/NavMap/beveled_arrow_west.png"
-  
+  placement: Offset
+
 - type: navMapBlip
   id: GasValve
   scale: 0.6667
@@ -45,12 +47,23 @@
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"
   - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
-  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"   
+  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"
   - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
-  
+  placement: Offset
+
 - type: navMapBlip
   id: Thermoregulator
-  scale: 0.6667
+  scale: 0.75
   color: LightGray
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_hexagon.png"
+
+- type: navMapBlip
+  id: GasPipeManifold
+  scale: 0.9
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_rectangle_east_west.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_north_south.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_east_west.png"
+  - "/Textures/Interface/NavMap/beveled_rectangle_north_south.png"

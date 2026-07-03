@@ -9,10 +9,10 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
-public sealed class CloseRecentWindowUIController : UIController
+public sealed partial class CloseRecentWindowUIController : UIController
 {
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
 
     /// <summary>
     /// A list of windows that have been interacted with recently.  Windows should only
@@ -74,7 +74,7 @@ public sealed class CloseRecentWindowUIController : UIController
     /// internal recentlyInteractedWindows tracking.
     /// </summary>
     /// <param name="window"></param>
-    private void SetMostRecentlyInteractedWindow(BaseWindow window)
+    public void SetMostRecentlyInteractedWindow(BaseWindow window)
     {
         // Search through the list and see if already added.
         // (This search is backwards since it's fairly common that the user is clicking the same
@@ -134,7 +134,6 @@ public sealed class CloseRecentWindowUIController : UIController
             if (window.IsOpen)
                 return true;
 
-            recentlyInteractedWindows.RemoveAt(i);
             // continue going down the list, hoping to find a still-open window
         }
 

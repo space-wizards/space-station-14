@@ -2,10 +2,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural;
 
-[Prototype("dungeonPreset")]
+[Prototype]
 public sealed partial class DungeonPresetPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The room pack bounds we need to fill.

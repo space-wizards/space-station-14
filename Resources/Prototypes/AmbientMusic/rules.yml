@@ -1,0 +1,84 @@
+- type: rules
+  id: AlwaysTrue
+  rules:
+  - !type:AlwaysTrueRule
+
+- type: rules
+  id: NearMedical
+  rules:
+  - !type:NearbyComponentsRule
+    components:
+    - type: AmbientMusicMarkerMedical
+    count: 3
+    range: 5
+
+- type: rules
+  id: NearEngineering
+  rules:
+  - !type:NearbyComponentsRule
+    components:
+    - type: AmbientMusicMarkerEngineering
+    count: 3
+    range: 5
+
+- type: rules
+  id: InSpace
+  rules:
+  - !type:InSpaceRule
+  - !type:GridInRangeRule
+    inverted: true
+    range: 3
+
+- type: rules
+  id: NearMaintenance
+  rules:
+  - !type:NearbyTilesPercentRule
+    ignoreAnchored: true
+    percent: 0.25
+    tiles:
+    - Plating
+    range: 2
+
+- type: rules
+  id: NearTrain
+  rules:
+  - !type:NearbyTilesPercentRule
+    ignoreAnchored: true
+    percent: 0.05
+    tiles:
+    - TrainLattice
+    range: 4
+
+- type: rules
+  id: NearPrayable
+  rules:
+  - !type:NearbyComponentsRule
+    anchored: true
+    components:
+    - type: Prayable
+    range: 5
+
+- type: rules
+  id: NearMorgue
+  rules:
+  - !type:NearbyComponentsRule
+    anchored: true
+    count: 2
+    components:
+    - type: Morgue
+    range: 3
+
+- type: rules
+  id: NearSpookyFog
+  rules:
+  - !type:NearbyEntitiesRule
+    count: 5
+    whitelist:
+      tags:
+      - SpookyFog
+    range: 4
+
+- type: rules
+  id: OnMapGrid
+  rules:
+  - !type:OnMapGridRule

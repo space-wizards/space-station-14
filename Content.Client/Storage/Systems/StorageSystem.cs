@@ -11,11 +11,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Storage.Systems;
 
-public sealed class StorageSystem : SharedStorageSystem
+public sealed partial class StorageSystem : SharedStorageSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly EntityPickupAnimationSystem _entityPickupAnimation = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private EntityPickupAnimationSystem _entityPickupAnimation = default!;
 
     private Dictionary<EntityUid, ItemStorageLocation> _oldStoredItems = new();
 
@@ -40,6 +40,11 @@ public sealed class StorageSystem : SharedStorageSystem
         component.MaxItemSize = state.MaxItemSize;
         component.Whitelist = state.Whitelist;
         component.Blacklist = state.Blacklist;
+        component.StorageInsertSound = state.StorageInsertSound;
+        component.StorageRemoveSound = state.StorageRemoveSound;
+        component.StorageOpenSound = state.StorageOpenSound;
+        component.StorageCloseSound = state.StorageCloseSound;
+        component.DefaultStorageOrientation = state.DefaultStorageOrientation;
 
         _oldStoredItems.Clear();
 
@@ -62,6 +67,8 @@ public sealed class StorageSystem : SharedStorageSystem
         {
             component.SavedLocations[loc.Key] = new(loc.Value);
         }
+
+        UpdateOccupied((uid, component));
 
         var uiDirty = !component.StoredItems.SequenceEqual(_oldStoredItems);
 

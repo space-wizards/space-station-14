@@ -5,8 +5,10 @@ using Content.Shared.Implants.Components;
 
 namespace Content.Client.Implants;
 
-public sealed class ImplanterSystem : SharedImplanterSystem
+public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -15,8 +17,18 @@ public sealed class ImplanterSystem : SharedImplanterSystem
         Subs.ItemStatus<ImplanterComponent>(ent => new ImplanterStatusControl(ent));
     }
 
-    private void OnHandleImplanterState(EntityUid uid, ImplanterComponent component, ref AfterAutoHandleStateEvent args)
+    private void OnHandleImplanterState(Entity<ImplanterComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        component.UiUpdateNeeded = true;
+        UpdateUi(ent);
+    }
+
+    protected override void UpdateUi(Entity<ImplanterComponent> ent)
+    {
+        if (_uiSystem.TryGetOpenUi(ent.Owner, DeimplantUiKey.Key, out var bui))
+        {
+            bui.Update();
+        }
+
+        ent.Comp.UiUpdateNeeded = true;
     }
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Derby",
+  "copyright": "Made by Derby, equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES, inhand-left and inhand-right modified from medsec inhand-left and inhand-right, both by HTMLSystem",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,22 @@
     },
     {
       "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-arachnid",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-moth",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     }
   ]

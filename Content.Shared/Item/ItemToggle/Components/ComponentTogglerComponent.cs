@@ -29,4 +29,10 @@ public sealed partial class ComponentTogglerComponent : Component
     /// </summary>
     [DataField]
     public bool Parent;
+
+    // <summary>
+    // It holds the entity that the component gave the component to, so it can remove from it even if it changes parent.
+    // </summary>
+    [DataField]
+    public EntityUid? Target;
 }

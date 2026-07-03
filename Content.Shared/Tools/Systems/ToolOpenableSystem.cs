@@ -7,10 +7,10 @@ using Content.Shared.Verbs;
 
 namespace Content.Shared.Tools.EntitySystems;
 
-public sealed class ToolOpenableSystem : EntitySystem
+public sealed partial class ToolOpenableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -30,7 +30,7 @@ public sealed class ToolOpenableSystem : EntitySystem
 
     private void OnInteractUsing(Entity<ToolOpenableComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || entity.Comp.VerbOnly)
             return;
 
         if (TryOpenClose(entity, args.Used, args.User))

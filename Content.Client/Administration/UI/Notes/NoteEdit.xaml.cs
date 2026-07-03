@@ -14,8 +14,8 @@ namespace Content.Client.Administration.UI.Notes;
 [GenerateTypedNameReferences]
 public sealed partial class NoteEdit : FancyWindow
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IClientConsoleHost _console = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IClientConsoleHost _console = default!;
 
     private enum Multipliers
     {
@@ -159,7 +159,7 @@ public sealed partial class NoteEdit : FancyWindow
     private bool IsSecret { get; set; }
     private NoteType NoteType { get; set; }
 
-    private NoteSeverity? NoteSeverity
+    public NoteSeverity? NoteSeverity
     {
         get => _noteSeverity;
         set

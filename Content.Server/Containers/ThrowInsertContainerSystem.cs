@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -8,13 +9,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Containers;
 
-public sealed class ThrowInsertContainerSystem : EntitySystem
+public sealed partial class ThrowInsertContainerSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _containerSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -30,7 +31,13 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (!_containerSystem.CanInsert(args.Thrown, container))
             return;
 
-        if (_random.Prob(ent.Comp.Probability))
+        var beforeThrowArgs = new BeforeThrowInsertEvent(args.Thrown);
+        RaiseLocalEvent(ent, ref beforeThrowArgs);
+
+        if (beforeThrowArgs.Cancelled)
+            return;
+
+        if (!_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);

@@ -8,9 +8,9 @@ using Content.Server.GameTicking;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed class GhostCommand : IConsoleCommand
+    public sealed partial class GhostCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "ghost";
         public string Description => Loc.GetString("ghost-command-description");
@@ -50,7 +50,7 @@ namespace Content.Server.Ghost
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
-            if (!_entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind))
+            if (!_entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind: mind))
             {
                 shell.WriteLine(Loc.GetString("ghost-command-denied"));
             }

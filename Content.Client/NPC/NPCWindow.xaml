@@ -1,24 +1,24 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            Title="NPC debug"
+            Title="{Loc npc-debug-overlay-window-title}"
             MinSize="200 200">
     <BoxContainer Name="Options" Orientation="Vertical" Margin="8 8">
         <controls:StripeBack>
-            <Label Text="NPC" HorizontalAlignment="Center"/>
+            <Label Text="{Loc npc-debug-overlay-window-section-npc-label}" HorizontalAlignment="Center"/>
         </controls:StripeBack>
         <BoxContainer Name="NPCBox" Orientation="Vertical">
-            <CheckBox Name="NPCThonk" Text="Thonk"/>
+            <CheckBox Name="NPCThonk" Text="{Loc npc-debug-overlay-window-show-htn-tree-checkbox}"/>
         </BoxContainer>
         <controls:StripeBack>
-            <Label Text="Pathfinder" HorizontalAlignment="Center"/>
+            <Label Text="{Loc npc-debug-overlay-window-section-pathfinder-label}" HorizontalAlignment="Center"/>
         </controls:StripeBack>
         <BoxContainer Name="PathfinderBox" Orientation="Vertical">
-            <CheckBox Name="PathCrumbs" Text="Breadcrumbs"/>
-            <CheckBox Name="PathPolys" Text="Polygons"/>
-            <CheckBox Name="PathNeighbors" Text="Neighbors"/>
-            <CheckBox Name="PathRouteCosts" Text="Route costs"/>
-            <CheckBox Name="PathRoutes" Text="Routes"/>
+            <CheckBox Name="PathCrumbs" Text="{Loc npc-debug-overlay-window-path-breadcrumbs-checkbox}"/>
+            <CheckBox Name="PathPolys" Text="{Loc npc-debug-overlay-window-path-polygons-checkbox}"/>
+            <CheckBox Name="PathNeighbors" Text="{Loc npc-debug-overlay-window-path-neighbors-checkbox}"/>
+            <CheckBox Name="PathRouteCosts" Text="{Loc npc-debug-overlay-window-path-route-costs-checkbox}"/>
+            <CheckBox Name="PathRoutes" Text="{Loc npc-debug-overlay-window-path-routes-checkbox}"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Ghost.Roles.Components
 {
     /// <summary>
-    ///     Allows a ghost to take this role, spawning a new entity.
+    /// Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent, EntityCategory("Spawner")]
     public sealed partial class GhostRoleMobSpawnerComponent : Component
@@ -21,9 +21,9 @@ namespace Content.Shared.Ghost.Roles.Components
         public EntProtoId? Prototype;
 
         /// <summary>
-        ///     If this ghostrole spawner has multiple selectable ghostrole prototypes.
+        /// If this ghostrole spawner has multiple selectable ghostrole prototypes.
         /// </summary>
         [DataField]
-        public List<string> SelectablePrototypes = [];
+        public List<ProtoId<GhostRolePrototype>> SelectablePrototypes = [];
     }
 }

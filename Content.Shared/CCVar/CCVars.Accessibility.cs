@@ -19,6 +19,13 @@ public sealed partial class CCVars
     public static readonly CVarDef<bool> ReducedMotion =
         CVarDef.Create("accessibility.reduced_motion", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
+    /// <summary>
+    ///     Replaces the AI static camera effect with a plain gradient.
+    ///     Used for photosensitivity triggers.
+    /// </summary>
+    public static readonly CVarDef<bool> DisableAiStatic =
+        CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
     public static readonly CVarDef<bool> ChatEnableColorName =
         CVarDef.Create("accessibility.enable_color_name",
             true,
@@ -38,4 +45,39 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AccessibilityColorblindFriendly =
         CVarDef.Create("accessibility.colorblind_friendly", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Speech bubble text opacity slider, controlling the alpha of speech bubble's text.
+    ///     Goes from to 0 (completely transparent) to 1 (completely opaque)
+    /// </summary>
+    public static readonly CVarDef<float> SpeechBubbleTextOpacity =
+        CVarDef.Create("accessibility.speech_bubble_text_opacity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Speech bubble speaker opacity slider, controlling the alpha of the speaker's name in a speech bubble.
+    ///     Goes from to 0 (completely transparent) to 1 (completely opaque)
+    /// </summary>
+    public static readonly CVarDef<float> SpeechBubbleSpeakerOpacity =
+        CVarDef.Create("accessibility.speech_bubble_speaker_opacity", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Speech bubble background opacity slider, controlling the alpha of the speech bubble's background.
+    ///     Goes from to 0 (completely transparent) to 1 (completely opaque)
+    /// </summary>
+    public static readonly CVarDef<float> SpeechBubbleBackgroundOpacity =
+        CVarDef.Create("accessibility.speech_bubble_background_opacity", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the client.
+    /// Both this and AccessibilityServerCensorNudity must be false to display nudity on the client.
+    /// </summary>
+    public static readonly CVarDef<bool> AccessibilityClientCensorNudity =
+        CVarDef.Create("accessibility.censor_nudity", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If enabled, censors character nudity by forcing clothes markings on characters, selected by the server.
+    /// Both this and AccessibilityClientCensorNudity must be false to display nudity on the client.
+    /// </summary>
+    public static readonly CVarDef<bool> AccessibilityServerCensorNudity =
+            CVarDef.Create("accessibility.server_censor_nudity", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 }

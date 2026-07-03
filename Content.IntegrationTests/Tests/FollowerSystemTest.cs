@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Shared.Follower;
 using Robust.Shared.GameObjects;
@@ -7,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests;
 
 [TestFixture, TestOf(typeof(FollowerSystem))]
-public sealed class FollowerSystemTest
+public sealed class FollowerSystemTest : GameTest
 {
     /// <summary>
     ///     This test ensures that deleting a map while an entity follows another doesn't throw any exceptions.
@@ -15,7 +16,7 @@ public sealed class FollowerSystemTest
     [Test]
     public async Task FollowerMapDeleteTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
@@ -44,6 +45,5 @@ public sealed class FollowerSystemTest
 
             entMan.DeleteEntity(mapSys.GetMap(map));
         });
-        await pair.CleanReturnAsync();
     }
 }

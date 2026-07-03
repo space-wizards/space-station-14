@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySystem
+public sealed partial class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedMapSystem _map = default!;
 
     private readonly HashSet<ICommonSession> _playerObservers = [];
     private List<Entity<MapGridComponent>> _grids = [];
@@ -55,7 +55,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             if (session.AttachedEntity is not { Valid: true } entity)
                 continue;
 
-            var transform = EntityManager.GetComponent<TransformComponent>(entity);
+            var transform = Comp<TransformComponent>(entity);
 
 
             var worldBounds = Box2.CenteredAround(_transform.GetWorldPosition(transform),

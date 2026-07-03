@@ -2,20 +2,18 @@ using Content.Server.Chat.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles;
 
-public sealed class RoleSystem : SharedRoleSystem
+public sealed partial class RoleSystem : SharedRoleSystem
 {
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IChatManager _chat = default!;
 
     public string? MindGetBriefing(EntityUid? mindId)
     {
         if (mindId == null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -23,7 +21,7 @@ public sealed class RoleSystem : SharedRoleSystem
 
         if (mindComp is null)
         {
-            Log.Error($"MingGetBriefing failed for mind {mindId}");
+            Log.Error($"MindGetBriefing failed for mind {mindId}");
             return null;
         }
 
@@ -36,7 +34,7 @@ public sealed class RoleSystem : SharedRoleSystem
 
         // Briefing is no longer raised on the mind entity itself
         // because all the components that briefings subscribe to should be on Mind Role Entities
-        foreach(var role in mindComp.MindRoles)
+        foreach (var role in mindComp.MindRoleContainer.ContainedEntities)
         {
             RaiseLocalEvent(role, ref ev);
         }
@@ -46,16 +44,14 @@ public sealed class RoleSystem : SharedRoleSystem
 
     public void RoleUpdateMessage(MindComponent mind)
     {
-        if (mind.Session is null)
+        if (!Player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!_proto.TryIndex(mind.RoleType, out var proto))
+        if (!ProtoMan.Resolve(mind.RoleType, out var proto))
             return;
 
         var roleText = Loc.GetString(proto.Name);
         var color = proto.Color;
-
-        var session = mind.Session;
 
         //TODO add audio? Would need to be optional so it does not play on role changes that already come with their own audio
         // _audio.PlayGlobal(Sound, session);

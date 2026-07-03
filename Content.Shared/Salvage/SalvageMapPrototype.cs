@@ -6,7 +6,7 @@ namespace Content.Shared.Salvage;
 [Prototype]
 public sealed partial class SalvageMapPrototype : IPrototype
 {
-    [ViewVariables] [IdDataField] public string ID { get; } = default!;
+    [ViewVariables] [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Relative directory path to the given map, i.e. `Maps/Salvage/template.yml`

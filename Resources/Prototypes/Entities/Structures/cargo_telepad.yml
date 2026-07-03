@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: CargoTelepad
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: cargo telepad
@@ -30,8 +30,9 @@
       map: [ "enum.CargoTelepadLayers.Beam" ]
       shader: unshaded
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -49,3 +50,4 @@
   - type: CollideOnAnchor
   - type: NameIdentifier
     group: CargoTelepads
+  - type: AnimationPlayer

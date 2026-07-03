@@ -1,16 +1,27 @@
+# Base prototypes
+
 - type: latheRecipe
+  abstract: true
+  id: BasePowerCellRecipe
+  categories:
+  - Parts
+
+## Recipes
+
+# Power cells
+- type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCellSmall
   result: PowerCellSmallPrinted
-  category: Parts
   completetime: 1
   materials:
     Steel: 100
     Plastic: 50
 
 - type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCellMedium
   result: PowerCellMediumPrinted
-  category: Parts
   completetime: 6
   materials:
     Steel: 300
@@ -19,9 +30,9 @@
     Gold: 10
 
 - type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCellHigh
   result: PowerCellHighPrinted
-  category: Parts
   completetime: 10
   materials:
     Steel: 300
@@ -30,9 +41,21 @@
     Gold: 50
 
 - type: latheRecipe
+  parent: BasePowerCellRecipe
+  id: PowerCellHyper
+  result: PowerCellHyperPrinted
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 700
+    Plasma: 300
+    Gold: 200
+    Silver: 300
+
+- type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCellMicroreactor
   result: PowerCellMicroreactorPrinted
-  category: Parts
   completetime: 10
   materials:
     Steel: 500
@@ -40,7 +63,9 @@
     Uranium: 200
     Gold: 100
 
+# Power cages
 - type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCageSmall
   result: PowerCageSmall
   completetime: 3
@@ -49,6 +74,7 @@
     Plastic: 100
 
 - type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCageMedium
   result: PowerCageMedium
   completetime: 6
@@ -59,6 +85,7 @@
     Gold: 40
 
 - type: latheRecipe
+  parent: BasePowerCellRecipe
   id: PowerCageHigh
   result: PowerCageHigh
   completetime: 10

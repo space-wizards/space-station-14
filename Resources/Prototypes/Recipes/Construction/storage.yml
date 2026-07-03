@@ -1,15 +1,10 @@
 #bureaucracy
 - type: construction
   id: FilingCabinet
-  name: filing cabinet
-  description: A cabinet for all your filing needs.
   graph: FilingCabinet
   startNode: start
   targetNode: filingCabinet
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: filingcabinet
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -18,15 +13,10 @@
 
 - type: construction
   id: TallCabinet
-  name: tall cabinet
-  description: A cabinet for all your filing needs.
   graph: FilingCabinet
   startNode: start
   targetNode: tallCabinet
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: tallcabinet
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -35,15 +25,10 @@
 
 - type: construction
   id: ChestDrawer
-  name: chest drawer
-  description: A small drawer for all your filing needs, Now with wheels!
   graph: FilingCabinet
   startNode: start
   targetNode: chestDrawer
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/cabinets.rsi
-    state: chestdrawer
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -53,15 +38,10 @@
 # ItemCabinets
 - type: construction
   id: ShowCase
-  name: showcase
-  description: A sturdy showcase for an expensive exhibit.
   graph: GlassBox
   startNode: start
   targetNode: glassBox
   category: construction-category-storage
-  icon:
-    sprite: Structures/Storage/glassbox.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -72,14 +52,9 @@
 # Normals
 - type: construction
   id: ShelfWood
-  name: wooden shelf
-  description: A convenient place to place, well, anything really.
   graph: Shelf
   startNode: start
   targetNode: ShelfWood
-  icon:
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -88,14 +63,9 @@
 
 - type: construction
   id: ShelfMetal
-  name: metal shelf
-  description: A sturdy place to place, well, anything really.
   graph: Shelf
   startNode: start
   targetNode: ShelfMetal
-  icon:
-    sprite: Structures/Storage/Shelfs/metal.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -104,14 +74,9 @@
 
 - type: construction
   id: ShelfGlass
-  name: glass shelf
-  description: Just like a normal shelf! But fragile and without the walls!
   graph: Shelf
   startNode: start
   targetNode: ShelfGlass
-  icon:
-    sprite: Structures/Storage/Shelfs/glass.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -121,14 +86,9 @@
 # Reinforced
 - type: construction
   id: ShelfRWood
-  name: sturdy wooden shelf
-  description: The perfect place to store all your vintage records.
   graph: Shelf
   startNode: start
   targetNode: ShelfRWood
-  icon:
-    sprite: Structures/Storage/Shelfs/wood.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -137,14 +97,9 @@
 
 - type: construction
   id: ShelfRMetal
-  name: sturdy metal shelf
-  description: Nice and strong, and keeps your maints loot secure.
   graph: Shelf
   startNode: start
   targetNode: ShelfRMetal
-  icon:
-    sprite: Structures/Storage/Shelfs/metal.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -153,14 +108,9 @@
 
 - type: construction
   id: ShelfRGlass
-  name: sturdy glass shelf
-  description: See through, decent strength, shiny plastic case. Whats not to love?
   graph: Shelf
   startNode: start
   targetNode: ShelfRGlass
-  icon:
-    sprite: Structures/Storage/Shelfs/glass.rsi
-    state: rbase
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -170,14 +120,9 @@
 # Departmental
 - type: construction
   id: ShelfBar
-  name: bar shelf
-  description: A convenient place for all your extra booze, specifically designed to hold more bottles!
   graph: Shelf
   startNode: start
   targetNode: ShelfBar
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Service/bar.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -186,14 +131,9 @@
 
 - type: construction
   id: ShelfKitchen
-  name: kitchen shelf
-  description: Holds your knifes, spice, and everything nice!
   graph: Shelf
   startNode: start
   targetNode: ShelfKitchen
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Service/kitchen.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -202,14 +142,9 @@
 
 - type: construction
   id: ShelfChemistry
-  name: chemical shelf
-  description: Perfect for keeping the most important chemicals safe, and out of the clumsy clowns hands!
   graph: Shelf
   startNode: start
   targetNode: ShelfChemistry
-  icon:
-    sprite: Structures/Storage/Shelfs/Departments/Medical/chemistry.rsi
-    state: base
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true

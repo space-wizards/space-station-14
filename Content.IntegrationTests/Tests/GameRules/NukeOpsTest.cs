@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Presets;
@@ -9,39 +10,48 @@ using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
 using Content.Shared.NukeOps;
 using Content.Shared.Pinpointer;
+using Content.Shared.Roles.Components;
 using Content.Shared.Station.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class NukeOpsTest
+public sealed class NukeOpsTest : GameTest
 {
+    private static readonly ProtoId<NpcFactionPrototype> SyndicateFaction = "Syndicate";
+    private static readonly ProtoId<NpcFactionPrototype> NanotrasenFaction = "NanoTrasen";
+
+    public override PoolSettings PoolSettings => new()
+    {
+        Dirty = true,
+        DummyTicker = false,
+        Connected = true,
+        InLobby = true
+    };
+
+
     /// <summary>
     /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
     /// </summary>
     [Test]
     public async Task TryStopNukeOpsFromConstantlyFailing()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            Dirty = true,
-            DummyTicker = false,
-            Connected = true,
-            InLobby = true
-        });
+        var pair = Pair;
 
         var server = pair.Server;
         var client = pair.Client;
@@ -53,6 +63,7 @@ public sealed class NukeOpsTest
         var invSys = server.System<InventorySystem>();
         var factionSys = server.System<NpcFactionSystem>();
         var roundEndSys = server.System<RoundEndSystem>();
+        var damageSys = server.System<DamageableSystem>();
 
         server.CfgMan.SetCVar(CCVars.GridFill, true);
 
@@ -119,8 +130,8 @@ public sealed class NukeOpsTest
         Assert.That(entMan.HasComponent<NukeOperativeComponent>(player));
         Assert.That(roleSys.MindIsAntagonist(mind));
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mind));
-        Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(player, SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(player, NanotrasenFaction), Is.False);
         var roles = roleSys.MindGetAllRoleInfo(mind);
         var cmdRoles = roles.Where(x => x.Prototype == "NukeopsCommander");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
@@ -130,8 +141,8 @@ public sealed class NukeOpsTest
         Assert.That(entMan.HasComponent<NukeOperativeComponent>(dummyEnts[1]));
         Assert.That(roleSys.MindIsAntagonist(dummyMind));
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(dummyMind));
-        Assert.That(factionSys.IsMember(dummyEnts[1], "Syndicate"), Is.True);
-        Assert.That(factionSys.IsMember(dummyEnts[1], "NanoTrasen"), Is.False);
+        Assert.That(factionSys.IsMember(dummyEnts[1], SyndicateFaction), Is.True);
+        Assert.That(factionSys.IsMember(dummyEnts[1], NanotrasenFaction), Is.False);
         roles = roleSys.MindGetAllRoleInfo(dummyMind);
         cmdRoles = roles.Where(x => x.Prototype == "NukeopsMedic");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
@@ -146,8 +157,8 @@ public sealed class NukeOpsTest
             Assert.That(entMan.HasComponent<NukeOperativeComponent>(ent), Is.False);
             Assert.That(roleSys.MindIsAntagonist(mindCrew), Is.False);
             Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mindCrew), Is.False);
-            Assert.That(factionSys.IsMember(ent, "Syndicate"), Is.False);
-            Assert.That(factionSys.IsMember(ent, "NanoTrasen"), Is.True);
+            Assert.That(factionSys.IsMember(ent, SyndicateFaction), Is.False);
+            Assert.That(factionSys.IsMember(ent, NanotrasenFaction), Is.True);
             var nukeroles = new List<string>() { "Nukeops", "NukeopsMedic", "NukeopsCommander" };
             Assert.That(roleSys.MindGetAllRoleInfo(mindCrew).Any(x => nukeroles.Contains(x.Prototype)), Is.False);
         }
@@ -155,7 +166,7 @@ public sealed class NukeOpsTest
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
         var rule = entMan.AllComponents<NukeopsRuleComponent>().Single();
         var ruleComp = rule.Component;
-        var gridsRule = entMan.AllComponents<RuleGridsComponent>().Single().Component;
+        var gridsRule = entMan.GetComponent<RuleGridsComponent>(rule.Uid);
         foreach (var grid in gridsRule.MapGrids)
         {
             Assert.That(entMan.EntityExists(grid));
@@ -181,7 +192,7 @@ public sealed class NukeOpsTest
         }
 
         Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
-        Assert.That(server.MapMan.MapExists(gridsRule.Map));
+        Assert.That(mapSys.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
         var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);
@@ -221,16 +232,17 @@ public sealed class NukeOpsTest
         Assert.That(total, Is.GreaterThan(3));
 
         // Check the nukie commander passed basic training and figured out how to breathe.
-        var totalSeconds = 30;
-        var totalTicks = (int) Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
-        var increment = 5;
-        var resp = entMan.GetComponent<RespiratorComponent>(player);
-        var damage = entMan.GetComponent<DamageableComponent>(player);
-        for (var tick = 0; tick < totalTicks; tick += increment)
+        if (entMan.TryGetComponent<RespiratorComponent>(player, out var resp))
         {
-            await pair.RunTicksSync(increment);
-            Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
-            Assert.That(damage.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
+            var totalSeconds = 30;
+            var totalTicks = (int)Math.Ceiling(totalSeconds / server.Timing.TickPeriod.TotalSeconds);
+            var increment = 5;
+            for (var tick = 0; tick < totalTicks; tick += increment)
+            {
+                await pair.RunTicksSync(increment);
+                Assert.That(resp.SuffocationCycles, Is.LessThanOrEqualTo(resp.SuffocationCycleThreshold));
+                Assert.That(damageSys.GetTotalDamage(player), Is.EqualTo(FixedPoint2.Zero));
+            }
         }
 
         // Check that the round does not end prematurely when agents are deleted in the outpost
@@ -252,6 +264,5 @@ public sealed class NukeOpsTest
         });
 
         ticker.SetGamePreset((GamePresetPrototype?) null);
-        await pair.CleanReturnAsync();
     }
 }

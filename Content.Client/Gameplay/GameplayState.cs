@@ -17,14 +17,14 @@ using Robust.Shared.Timing;
 namespace Content.Client.Gameplay
 {
     [Virtual]
-    public class GameplayState : GameplayStateBase, IMainViewportState
+    public partial class GameplayState : GameplayStateBase, IMainViewportState
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-        [Dependency] private readonly ChangelogManager _changelog = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private IOverlayManager _overlayManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IUserInterfaceManager _uiManager = default!;
+        [Dependency] private ChangelogManager _changelog = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
 
         private FpsCounter _fpsCounter = default!;
         private Label _version = default!;
@@ -59,13 +59,13 @@ namespace Content.Client.Gameplay
 
             // Version number watermark.
             _version = new Label();
+            _version.FontColorOverride = Color.FromHex("#FFFFFF20");
             _version.Text = _changelog.GetClientVersion();
-            _version.Visible = VersionVisible();
             UserInterfaceManager.PopupRoot.AddChild(_version);
-            _configurationManager.OnValueChanged(CCVars.HudVersionWatermark, (show) => { _version.Visible = VersionVisible(); });
-            _configurationManager.OnValueChanged(CCVars.ForceClientHudVersionWatermark, (show) => { _version.Visible = VersionVisible(); });
+            _configurationManager.OnValueChanged(CCVars.HudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
+            _configurationManager.OnValueChanged(CCVars.ForceClientHudVersionWatermark, (show) => { _version.Visible = VersionVisible(); }, true);
             // TODO make this centered or something
-            LayoutContainer.SetPosition(_version, new Vector2(800, 0));
+            LayoutContainer.SetPosition(_version, new Vector2(70, 0));
         }
 
         // This allows servers to force the watermark on clients

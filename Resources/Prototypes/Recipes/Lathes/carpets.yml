@@ -1,6 +1,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseCarpetRecipe
+  categories:
+  - Carpets
   completetime: 1
   materials:
     Cloth: 100
@@ -24,6 +26,11 @@
   parent: BaseCarpetRecipe
   id: CarpetBlue
   result: FloorCarpetItemBlue
+
+- type: latheRecipe
+  parent: BaseCarpetRecipe
+  id: CarpetSkyBlue
+  result: FloorCarpetItemSkyBlue
 
 - type: latheRecipe
   parent: BaseCarpetRecipe
