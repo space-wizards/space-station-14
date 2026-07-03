@@ -1,0 +1,21 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'afk-confirm-window-title'}"
+               MinSize="420 160">
+    <BoxContainer Orientation="Vertical"
+                  Margin="10"
+                  SeparationOverride="8">
+        <Label Text="{Loc 'afk-confirm-window-prompt'}"
+               HorizontalExpand="True"
+               Align="Center"
+               HorizontalAlignment="Center" />
+        <Label Name="TimerLabel"
+               Access="Public"
+               HorizontalExpand="True"
+               Align="Center"
+               HorizontalAlignment="Center" />
+        <Button Name="ConfirmButton"
+                Access="Public"
+                Text="{Loc 'afk-confirm-window-confirm'}"
+                HorizontalExpand="True" />
+    </BoxContainer>
+</DefaultWindow>

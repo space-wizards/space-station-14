@@ -8,7 +8,6 @@ namespace Content.Server.RandomMetadata;
 
 public sealed partial class RandomMetadataSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
 
@@ -50,7 +49,7 @@ public sealed partial class RandomMetadataSystem : EntitySystem
         _outputSegments.Clear();
         for (var i = 0; i < segments.Count; ++i)
         {
-            var localizedProto = _prototype.Index(segments[i]);
+            var localizedProto = ProtoMan.Index(segments[i]);
             _outputSegments.Add(($"part{i}", _random.Pick(localizedProto)));
         }
 
