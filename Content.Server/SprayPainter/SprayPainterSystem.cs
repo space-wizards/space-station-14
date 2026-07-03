@@ -15,6 +15,7 @@ using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 using System.Linq;
 using System.Numerics;
 
@@ -32,6 +33,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ChargesSystem _charges = default!;
     [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {
@@ -41,6 +43,7 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         SubscribeLocalEvent<SprayPainterComponent, AfterInteractEvent>(OnFloorAfterInteract);
         SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
         SubscribeLocalEvent<GasCanisterComponent, EntityPaintedEvent>(OnCanisterPainted);
+        SubscribeLocalEvent<PaintableNameComponent, EntityPaintedEvent>(OnNamePainted);
     }
 
     /// <summary>
@@ -138,6 +141,18 @@ public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
         CopyComp(dummy, ent, destructibleComp);
 
         Del(dummy);
+    }
+
+    /// <summary>
+    /// Event handler to update an object's name and desc metadata when it is painted.
+    /// </summary>
+    private void OnNamePainted(Entity<PaintableNameComponent> ent, ref EntityPaintedEvent args)
+    {
+        if (!ProtoMan.TryIndex<EntityPrototype>(args.Prototype, out var proto))
+            return;
+
+        _metaData.SetEntityName(ent, proto.Name);
+        _metaData.SetEntityDescription(ent, proto.Description);
     }
 
     private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)

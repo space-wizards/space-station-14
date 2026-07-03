@@ -28,7 +28,12 @@
         offset: 0
   - type: Construction
     graph: PosterGraph
-    node: start
+    node: poster
+  - type: Appearance
+  - type: PaintableVisualizer
+  - type: PaintableName
+  - type: Paintable
+    group: Posters
 
 - type: entity
   parent: BaseSign
@@ -56,6 +61,16 @@
   - type: Construction
     graph: PosterGraph
     node: tornPoster
+
+# Blank Poster
+- type: entity
+  parent: PosterBase
+  id: PosterBlank
+  name: "blank poster"
+  description: "This poster lacks any print. Maybe it is yet to be painted. Maybe the originator wishes to make a minimalist statement."
+  components:
+  - type: Sprite
+    state: poster_blank
 
 # Contraband
 - type: entity
@@ -1013,6 +1028,8 @@
   components:
   - type: Sprite
     state: poster42_legit
+  - type: Paintable
+    group: null
 
 - type: entity
   parent: PosterBase
