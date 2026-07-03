@@ -84,7 +84,9 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
                 ent.Comp.InletName,
                 ent.Comp.OutletName,
                 out PipeNode? inletPipeNode,
-                out PipeNode? outletPipeNode))
+                out PipeNode? outletPipeNode)
+            || inletPipeNode.PipeNet == null
+            || outletPipeNode.PipeNet == null)
         {
             ChangeStatus(false, ent, inletPipeNode, outletPipeNode, 0);
             return;
@@ -104,8 +106,10 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
         Can be used to calculate the amount of gas we need to transfer.
         */
 
-        var p1 = inletPipeNode.Air.Pressure;
-        var p2 = outletPipeNode.Air.Pressure;
+        var inletPipeNodeAir = inletPipeNode.PipeNet.Value.Comp.Air;
+        var outletPipeNodeAir = outletPipeNode.PipeNet.Value.Comp.Air;
+        var p1 = inletPipeNodeAir.Pressure;
+        var p2 = outletPipeNodeAir.Pressure;
 
         if (p1 <= ent.Comp.Threshold || p2 >= p1)
         {
@@ -113,17 +117,17 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
             return;
         }
 
-        var t1 = inletPipeNode.Air.Temperature;
+        var t1 = inletPipeNodeAir.Temperature;
 
         // First, calculate the amount of gas we need to transfer to bring us below the threshold.
         var deltaMolesToPressureThreshold =
-            AtmosphereSystem.MolesToPressureThreshold(inletPipeNode.Air, ent.Comp.Threshold);
+            AtmosphereSystem.MolesToPressureThreshold(inletPipeNodeAir, ent.Comp.Threshold);
 
         // Second, calculate the moles required to equalize the pressure.
         // We round here to avoid the valve staying enabled for 0.00001 pressure differences.
         var deltaMolesToEqualizePressure =
-            float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNode.Air, outletPipeNode.Air) *
-                        inletPipeNode.Air.TotalMoles,
+            float.Round(_atmosphere.FractionToEqualizePressure(inletPipeNodeAir, outletPipeNodeAir) *
+                        inletPipeNodeAir.TotalMoles,
                 1,
                 MidpointRounding.ToPositiveInfinity);
 
@@ -140,8 +144,8 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
             ent.Comp.MaxTransferRate * _atmosphere.PumpSpeedup() * args.dt);
 
         // We remove the gas from the inlet and merge it into the outlet.
-        var removed = inletPipeNode.Air.RemoveVolume(actualVolumeToTransfer);
-        _atmosphere.Merge(outletPipeNode.Air, removed);
+        var removed = inletPipeNodeAir.RemoveVolume(actualVolumeToTransfer);
+        _atmosphere.Merge(outletPipeNodeAir, removed);
 
         // Calculate the flow rate in L/s for the UI.
         var sentFlowRate = MathF.Round(actualVolumeToTransfer / args.dt, 1);
@@ -178,8 +182,8 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
         float flowRate)
     {
         // First, set data on the component server-side.
-        ent.Comp.InletPressure = inletNode?.Air.Pressure ?? 0f;
-        ent.Comp.OutletPressure = outletNode?.Air.Pressure ?? 0f;
+        ent.Comp.InletPressure = inletNode?.PipeNet?.Comp.Air.Pressure ?? 0f;
+        ent.Comp.OutletPressure = outletNode?.PipeNet?.Comp.Air.Pressure ?? 0f;
         ent.Comp.FlowRate = flowRate;
 
         // We need to prevent spamming the network with updates, so only check if we've

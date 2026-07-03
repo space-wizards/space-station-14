@@ -5,6 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
+using Content.Shared.NodeContainer.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -640,7 +641,7 @@ public partial class AtmosphereSystem
     /// <param name="pipeNet">The pipe net to add.</param>
     /// <returns>True if the pipe net was added, false otherwise.</returns>
     [PublicAPI]
-    public bool AddPipeNet(Entity<GridAtmosphereComponent?> grid, PipeNet pipeNet)
+    public bool AddPipeNet(Entity<GridAtmosphereComponent?> grid, Entity<PipeNetComponent> pipeNet)
     {
         return _gridAtmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Add(pipeNet);
     }
@@ -652,17 +653,17 @@ public partial class AtmosphereSystem
     /// <param name="pipeNet">The pipe net to remove.</param>
     /// <returns>True if the pipe net was removed, false otherwise.</returns>
     [PublicAPI]
-    public bool RemovePipeNet(Entity<GridAtmosphereComponent?> grid, PipeNet pipeNet)
+    public bool RemovePipeNet(Entity<GridAtmosphereComponent?> grid, Entity<NodeGroupComponent, PipeNetComponent> pipeNet)
     {
         // Technically this event can be fired even on grids that don't
         // actually have grid atmospheres.
-        if (pipeNet.Grid is not null)
+        if (pipeNet.Comp2.Grid is not null)
         {
-            var ev = new PipeNodeGroupRemovedEvent(grid, pipeNet.NetId);
+            var ev = new PipeNodeGroupRemovedEvent(grid, pipeNet.Comp1.NetId);
             RaiseLocalEvent(ref ev);
         }
 
-        return _gridAtmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Remove(pipeNet);
+        return _gridAtmosQuery.Resolve(grid, ref grid.Comp, false) && grid.Comp.PipeNets.Remove((pipeNet.Owner, pipeNet.Comp2));
     }
 
     /// <summary>

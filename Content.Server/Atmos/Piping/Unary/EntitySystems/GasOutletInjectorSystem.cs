@@ -53,15 +53,17 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!injector.Enabled)
                 return;
 
-            if (!_nodeContainer.TryGetNode(uid, injector.InletName, out PipeNode? inlet))
+            if (!_nodeContainer.TryGetNode(uid, injector.InletName, out PipeNode? inlet)
+                || inlet.PipeNet == null)
                 return;
 
+            var inletAir = inlet.PipeNet.Value.Comp.Air;
             var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, true, true);
 
             if (environment == null)
                 return;
 
-            if (inlet.Air.Temperature < 0)
+            if (inletAir.Temperature < 0)
                 return;
 
             if (environment.Pressure > injector.MaxPressure)
@@ -70,8 +72,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var timeDelta = args.dt;
 
             // TODO adjust ratio so that environment does not go above MaxPressure?
-            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate * _atmosphereSystem.PumpSpeedup() / inlet.Air.Volume);
-            var removed = inlet.Air.RemoveRatio(ratio);
+            var ratio = MathF.Min(1f, timeDelta * injector.TransferRate * _atmosphereSystem.PumpSpeedup() / inletAir.Volume);
+            var removed = inletAir.RemoveRatio(ratio);
 
             _atmosphereSystem.Merge(environment, removed);
         }

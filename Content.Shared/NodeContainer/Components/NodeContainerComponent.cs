@@ -1,10 +1,9 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Utility;
 
-namespace Content.Shared.NodeContainer;
+namespace Content.Shared.NodeContainer.Components;
 
 /// <summary>
-///     Creates and maintains a set of <see cref="Rope.Node"/>s.
+///     Creates and maintains a set of <see cref="Node"/>s.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NodeContainerComponent : Component

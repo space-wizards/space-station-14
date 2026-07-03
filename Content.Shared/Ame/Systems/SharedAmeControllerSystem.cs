@@ -3,7 +3,7 @@ using Content.Shared.Ame.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.Events;
@@ -104,7 +104,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         if (!ent.Comp1.Injecting)
             return;
 
-        if (!_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroup>((ent.Owner, ent.Comp2), out var group))
+        if (!_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroupComponent>((ent.Owner, ent.Comp2), out var group))
             return;
 
         if (TryComp<AmeFuelContainerComponent>(ent.Comp1.FuelSlot.Item, out var fuelContainer))
@@ -117,7 +117,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
             else
             {
                 var availableInject = Math.Min(ent.Comp1.InjectionAmount, fuelContainer.FuelAmount);
-                var powerOutput = _ameHandler.InjectFuel(group, availableInject, out var overloading);
+                var powerOutput = _ameHandler.InjectFuel(group.Value, availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(ent, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
 
@@ -133,13 +133,13 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
             }
         }
 
-        ent.Comp1.Stability = _ameHandler.GetTotalStability(group);
+        ent.Comp1.Stability = _ameHandler.GetTotalStability(group.Value);
 
-        _ameHandler.UpdateCoreVisuals(group);
+        _ameHandler.UpdateCoreVisuals(group.Value);
         UpdateDisplay((ent.Owner, ent.Comp1), ent.Comp1.Stability);
 
         if (ent.Comp1.Stability <= 0)
-            _ameHandler.ExplodeCores(group);
+            _ameHandler.ExplodeCores(group.Value);
     }
 
     public abstract void UpdateUi(Entity<AmeControllerComponent?> ent);
@@ -149,8 +149,8 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroup>(ent.Owner, out var group))
-            _ameHandler.UpdateCoreVisuals(group);
+        if (_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroupComponent>(ent.Owner, out var group))
+            _ameHandler.UpdateCoreVisuals(group.Value);
     }
 
     public void TryEject(Entity<AmeControllerComponent?> ent, EntityUid? user = null)
@@ -221,8 +221,8 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         var humanReadableState = ent.Comp.Injecting ? "Inject" : "Not inject";
 
         var safeLimit = int.MaxValue;
-        if (_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroup>(ent.Owner, out var group))
-            safeLimit = group.Cores.Count * 4;
+        if (_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroupComponent>(ent.Owner, out var group))
+            safeLimit = group.Value.Comp.Cores.Count * 4;
 
         var logImpact = (oldValue <= safeLimit && value > safeLimit) ? LogImpact.Extreme : LogImpact.Medium;
 
@@ -242,10 +242,10 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
 
     public int GetMaxInjectionAmount(Entity<AmeControllerComponent> ent)
     {
-        if (!_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroup>(ent.Owner, out var group))
+        if (!_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroupComponent>(ent.Owner, out var group))
             return 0;
 
-        return  group.Cores.Count * 8;
+        return  group.Value.Comp.Cores.Count * 8;
     }
 
     private void UpdateDisplay(Entity<AmeControllerComponent?, AppearanceComponent?> ent, int stability)

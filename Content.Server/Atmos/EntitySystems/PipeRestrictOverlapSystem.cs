@@ -5,7 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Construction.Components;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;

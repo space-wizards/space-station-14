@@ -5,7 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
@@ -196,14 +196,16 @@ public sealed partial class GasAnalyzerSystem : EntitySystem
                 {
                     foreach (var pair in node.Nodes)
                     {
-                        if (pair.Value is PipeNode pipeNode)
+                        if (pair.Value is PipeNode pipeNode
+                            && pipeNode.NodeGroup != null
+                            && TryComp(pipeNode.NodeGroup, out PipeNetComponent? pipeNet))
                         {
                             // check if the volume is zero for some reason so we don't divide by zero
-                            if (pipeNode.Air.Volume == 0f)
+                            if (pipeNet.Air.Volume == 0f)
                                 continue;
                             // only display the gas in the analyzed pipe element, not the whole system
-                            var pipeAir = pipeNode.Air.Clone();
-                            pipeAir.Multiply(pipeNode.Volume / pipeNode.Air.Volume);
+                            var pipeAir = pipeNet.Air.Clone();
+                            pipeAir.Multiply(pipeNode.Volume / pipeNet.Air.Volume);
                             pipeAir.Volume = pipeNode.Volume;
                             gasMixList.Add(GenerateGasMixEntry(pair.Key, pipeAir));
                             validTarget = true;

@@ -31,16 +31,18 @@ public sealed partial class GasCondenserSystem : EntitySystem
     {
         if (!(TryComp<PowerReceiverComponent>(entity, out var receiver) && _power.IsPowered((entity, receiver)))
             || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
+            || inlet.PipeNet == null
             || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
         {
             return;
         }
 
-        if (solution.AvailableVolume == 0 || inlet.Air.TotalMoles == 0)
+        var inletAir = inlet.PipeNet.Value.Comp.Air;
+        if (solution.AvailableVolume == 0 || inletAir.TotalMoles == 0)
             return;
 
-        var molesToConvert = NumberOfMolesToConvert(receiver, inlet.Air, args.dt);
-        var removed = inlet.Air.Remove(molesToConvert);
+        var molesToConvert = NumberOfMolesToConvert(receiver, inletAir, args.dt);
+        var removed = inletAir.Remove(molesToConvert);
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             var moles = removed[i];
@@ -58,7 +60,7 @@ public sealed partial class GasCondenserSystem : EntitySystem
             solution.AddReagent(gasReagent, amount);
 
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.
-            inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
+            inletAir.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
         }
 
         _solution.UpdateChemicals(entity.Comp.Solution.Value);

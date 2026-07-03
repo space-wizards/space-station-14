@@ -5,7 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -36,10 +36,11 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe)
+                if (node is not PipeNode pipe
+                    || pipe.PipeNet == null)
                     continue;
 
-                if (pipe.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
+                if (pipe.PipeNet.Value.Comp.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
                 {
                     args.Delay += 2f;
                     _popup.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
@@ -87,14 +88,17 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             foreach (var node in nodes.Nodes.Values)
             {
-                if (node is not PipeNode pipe)
+                if (node is not PipeNode pipe
+                    || pipe.PipeNet == null)
                     continue;
 
+                var netAir = pipe.PipeNet.Value.Comp.Air;
+
                 if (removeFromPipe)
-                    _atmosphere.Merge(buffer, pipe.Air.RemoveVolume(pipe.Volume));
+                    _atmosphere.Merge(buffer, netAir.RemoveVolume(pipe.Volume));
                 else
                 {
-                    var copy = new GasMixture(pipe.Air); //clone, then remove to keep the original untouched
+                    var copy = new GasMixture(netAir); //clone, then remove to keep the original untouched
                     _atmosphere.Merge(buffer, copy.RemoveVolume(pipe.Volume));
                 }
             }

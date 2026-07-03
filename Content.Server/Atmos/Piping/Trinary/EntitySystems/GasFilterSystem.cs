@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -55,11 +54,17 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             if (!filter.Enabled
                 || !_nodeContainer.TryGetNodes(uid, filter.InletName, filter.FilterName, filter.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
-                || (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure && filterNode.Air.Pressure >= Atmospherics.MaxOutputPressure)) // No need to transfer if targets are full.
+                || outletNode.PipeNet == null
+                || inletNode.PipeNet == null
+                || filterNode.PipeNet == null
+                || (outletNode.PipeNet.Value.Comp.Air.Pressure >= Atmospherics.MaxOutputPressure && filterNode.PipeNet.Value.Comp.Air.Pressure >= Atmospherics.MaxOutputPressure)) // No need to transfer if targets are full.
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
+
+            var inletAir = inletNode.PipeNet.Value.Comp.Air;
+            var outletAir = outletNode.PipeNet.Value.Comp.Air;
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
             var transferVol = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
@@ -70,13 +75,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
             }
 
-            var removed = inletNode.Air.RemoveVolume(transferVol);
+            var removed = inletAir.RemoveVolume(transferVol);
 
             if (filter.FilteredGas.HasValue)
             {
+                var filterAir = filterNode.PipeNet.Value.Comp.Air;
                 // Make sure we don't pump over the pressure limit.
                 var limitMolesFilter =
-                    AtmosphereSystem.MolesToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
+                    AtmosphereSystem.MolesToMaxPressure(removed, filterAir, Atmospherics.MaxOutputPressure);
 
                 var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
                 var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
@@ -85,20 +91,20 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 filteredGasMixture.SetMoles(filter.FilteredGas.Value, filteredMoles);
                 removed.AdjustMoles(filter.FilteredGas.Value, -filteredMoles);
 
-                _atmosphereSystem.Merge(filterNode.Air, filteredGasMixture);
+                _atmosphereSystem.Merge(filterAir, filteredGasMixture);
 
                 _ambientSoundSystem.SetAmbience(uid, filteredMoles > 0f);
             }
 
             // Fraction of `removed` that can be sent to outlet without exceeding max pressure.
             var limitRatioOutlet =
-                AtmosphereSystem.FractionToMaxPressure(removed, outletNode.Air, Atmospherics.MaxOutputPressure);
+                AtmosphereSystem.FractionToMaxPressure(removed, outletAir, Atmospherics.MaxOutputPressure);
 
             // This might end up negative, but such cases are handled correctly by the `RemoveRatio` method
             var passthrough = removed.RemoveRatio(limitRatioOutlet);
 
-            _atmosphereSystem.Merge(outletNode.Air, passthrough);
-            _atmosphereSystem.Merge(inletNode.Air, removed);
+            _atmosphereSystem.Merge(outletAir, passthrough);
+            _atmosphereSystem.Merge(inletAir, removed);
         }
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
@@ -201,24 +207,30 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             args.GasMixtures ??= new List<(string, GasMixture?)>();
 
             // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-            if (_nodeContainer.TryGetNode(uid, component.InletName, out PipeNode? inlet) && inlet.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.InletName, out PipeNode? inlet)
+                && inlet.PipeNet != null
+                && inlet.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var inletAirLocal = inlet.Air.Clone();
-                inletAirLocal.Multiply(inlet.Volume / inlet.Air.Volume);
+                var inletAirLocal = inlet.PipeNet.Value.Comp.Air.Clone();
+                inletAirLocal.Multiply(inlet.Volume / inlet.PipeNet.Value.Comp.Air.Volume);
                 inletAirLocal.Volume = inlet.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-inlet"), inletAirLocal));
             }
-            if (_nodeContainer.TryGetNode(uid, component.FilterName, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.FilterName, out PipeNode? filterNode)
+                && filterNode.PipeNet != null
+                && filterNode.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var filterNodeAirLocal = filterNode.Air.Clone();
-                filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.Air.Volume);
+                var filterNodeAirLocal = filterNode.PipeNet.Value.Comp.Air.Clone();
+                filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.PipeNet.Value.Comp.Air.Volume);
                 filterNodeAirLocal.Volume = filterNode.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-filter"), filterNodeAirLocal));
             }
-            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet)
+                && outlet.PipeNet != null
+                && outlet.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var outletAirLocal = outlet.Air.Clone();
-                outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);
+                var outletAirLocal = outlet.PipeNet.Value.Comp.Air.Clone();
+                outletAirLocal.Multiply(outlet.Volume / outlet.PipeNet.Value.Comp.Air.Volume);
                 outletAirLocal.Volume = outlet.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
             }

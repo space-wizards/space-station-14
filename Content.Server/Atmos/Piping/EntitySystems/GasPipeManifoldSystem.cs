@@ -1,10 +1,10 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Shared.Atmos;
-using Content.Shared.NodeContainer;
 using System.Linq;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Atmos.Nodes.Handlers;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
@@ -29,12 +29,12 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
 
         foreach (var inletName in ent.Comp.InletNames)
         {
-            if (!_nodeContainer.TryGetNode(nodeContainer, inletName, out PipeNode? inlet))
+            if (!_nodeContainer.TryGetNode((ent.Owner, nodeContainer), inletName, out PipeNode? inlet))
                 continue;
 
             foreach (var outletName in ent.Comp.OutletNames)
             {
-                if (!_nodeContainer.TryGetNode(nodeContainer, outletName, out PipeNode? outlet))
+                if (!_nodeContainer.TryGetNode((ent.Owner, nodeContainer), outletName, out PipeNode? outlet))
                     continue;
 
                 _pipeHandler.AddAlwaysReachable(inlet, outlet);
@@ -57,11 +57,13 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
 
         foreach (var pipeName in pipeNames)
         {
-            if (!_nodeContainer.TryGetNode(nodeContainer, pipeName, out PipeNode? pipe))
+            if (!_nodeContainer.TryGetNode((ent.Owner, nodeContainer), pipeName, out PipeNode? pipe)
+                || pipe.PipeNet == null)
                 continue;
 
-            var pipeLocal = pipe.Air.Clone();
-            pipeLocal.Multiply(pipe.Volume * pipeCount / pipe.Air.Volume);
+            var netAir = pipe.PipeNet.Value.Comp.Air;
+            var pipeLocal = netAir.Clone();
+            pipeLocal.Multiply(pipe.Volume * pipeCount / netAir.Volume);
             pipeLocal.Volume = pipe.Volume * pipeCount;
 
             args.GasMixtures.Add((Name(ent), pipeLocal));

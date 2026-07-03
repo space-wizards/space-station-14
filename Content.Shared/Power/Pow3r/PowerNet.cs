@@ -1,29 +1,9 @@
-using Content.Shared.Collections;
-using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Power.Pow3r;
 
 namespace Content.Shared.Power.NodeGroups;
 
-public sealed class PowerNet : BaseNodeGroup, IPowerNetwork
+public partial struct PowerNet : IPowerNetwork
 {
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Chargers = new();
-
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Dischargers = new();
-
-    [ViewVariables]
-    public HashSet<EntityUid> Consumers { get; set; } = new();
-
-    [ViewVariables]
-    public HashSet<EntityUid> Suppliers { get; set; } = new();
-
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Apcs = new();
-
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Providers = new();
-
     /*public override string? GetDebugData()
     {
         if (PowerNetSystem == null)

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Map.Components;
+﻿using Content.Shared.NodeContainer.Components;
+using Robust.Shared.Map.Components;
 
 namespace Content.Shared.NodeContainer.Systems;
 

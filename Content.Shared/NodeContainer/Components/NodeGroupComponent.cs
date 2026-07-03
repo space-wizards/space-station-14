@@ -1,9 +1,16 @@
-namespace Content.Shared.NodeContainer.NodeGroups;
+﻿using Robust.Shared.GameStates;
 
-[Virtual]
-public class BaseNodeGroup : INodeGroup
+namespace Content.Shared.NodeContainer.Components;
+
+/// <summary>
+/// Assigned to a null-space entity that represents a group o
+/// connected <see cref="Node"/>s - a node group network.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class NodeGroupComponent : Component
 {
-    public bool Remaking { get; set; }
+    [DataField]
+    public NodeGroupID GroupId { get; set; }
 
     /// <summary>
     ///     The list of nodes in this group.
@@ -26,6 +33,5 @@ public class BaseNodeGroup : INodeGroup
     [ViewVariables]
     public int NetId;
 
-    [ViewVariables]
-    public NodeGroupID GroupId { get; set; }
+    public bool Remaking { get; set; }
 }

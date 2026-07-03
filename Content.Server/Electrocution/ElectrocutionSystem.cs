@@ -13,7 +13,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;
 using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
@@ -253,7 +253,8 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
 
         var node = PoweredNode(uid, electrified, nodeContainer);
-        if (node?.NodeGroup is not PowerNet)
+
+        if (!HasComp<PowerNetComponent>(node?.NodeGroup))
             return false;
 
         var (damageScalar, timeScalar) = node.NodeGroupID switch
@@ -290,9 +291,10 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         Node? TryNode(string? id)
         {
-            if (id != null &&
-                _nodeContainer.TryGetNode<Node>(nodeContainer, id, out var tryNode) &&
-                tryNode.NodeGroup is PowerNet { LastCombinedMaxSupply: > 0 })
+            if (id != null
+                && _nodeContainer.TryGetNode<Node>((uid, nodeContainer), id, out var tryNode)
+                && TryComp(tryNode.NodeGroup, out PowerNetComponent? powerNet)
+                && powerNet.LastCombinedMaxSupply > 0)
             {
                 return tryNode;
             }

@@ -31,6 +31,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     [Dependency] private DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainerSystem = default!;
     [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private EntityQuery<PipeNetComponent> _pipeNetQuery = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -70,9 +71,11 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
-        if (atmosMonitor.MonitorsPipeNet && _nodeContainerSystem.TryGetNode<PipeNode>(uid, atmosMonitor.NodeNameMonitoredPipe, out var pipeNode))
+        if (atmosMonitor.MonitorsPipeNet
+            && _nodeContainerSystem.TryGetNode<PipeNode>(uid, atmosMonitor.NodeNameMonitoredPipe, out var pipeNode)
+            && _pipeNetQuery.TryComp(pipeNode.NodeGroup, out var pipeNet))
         {
-            atmosMonitor.TileGas = pipeNode.Air;
+            atmosMonitor.TileGas = pipeNet.Air;
             return;
         }
 
@@ -242,8 +245,10 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
             return;
 
         // If monitoring a pipe network, get its most recent gas mixture
-        if (component.MonitorsPipeNet && _nodeContainerSystem.TryGetNode<PipeNode>(uid, component.NodeNameMonitoredPipe, out var pipeNode))
-            component.TileGas = pipeNode.Air;
+        if (component.MonitorsPipeNet
+            && _nodeContainerSystem.TryGetNode<PipeNode>(uid, component.NodeNameMonitoredPipe, out var pipeNode)
+            && _pipeNetQuery.TryComp(pipeNode.NodeGroup, out var pipeNet))
+            component.TileGas = pipeNet.Air;
 
         UpdateState(uid, component.TileGas, component);
     }

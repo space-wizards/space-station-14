@@ -111,10 +111,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             else
             {
-                if (!_nodeContainer.TryGetNode(uid, thermoMachine.InletName, out PipeNode? inlet))
+                if (!_nodeContainer.TryGetNode(uid, thermoMachine.InletName, out PipeNode? inlet)
+                    || inlet.PipeNet == null)
                     return;
 
-                heatExchangeGasMixture = inlet.Air;
+                heatExchangeGasMixture = inlet.PipeNet.Value.Comp.Air;
             }
         }
 

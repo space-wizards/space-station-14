@@ -1,15 +1,20 @@
-﻿using Content.Shared.NodeContainer.NodeGroups;
+﻿using Content.Shared.NodeContainer.Components;
+using Content.Shared.NodeContainer.Systems;
 
 namespace Content.Shared.NodeContainer;
 
 public interface INode
 {
+    /// <summary>
+    ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroupHandler"/>
+    ///     implementation is used as a group.
+    /// </summary>
     NodeGroupID NodeGroupID { get; set; }
 
     /// <summary>
     ///     The node group this node is a part of.
     /// </summary>
-    INodeGroup? NodeGroup { get; set; }
+    Entity<NodeGroupComponent>? NodeGroup { get; set; }
 
     /// <summary>
     ///     The entity that owns this node via its <see cref="NodeContainerComponent"/>.

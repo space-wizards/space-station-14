@@ -1,12 +1,9 @@
-﻿using System.Collections.Frozen;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Robust.Shared.Enums;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -14,39 +11,35 @@ namespace Content.Shared.NodeContainer.Systems;
 
 public sealed partial class NodeGroupSystem : EntitySystem
 {
-    [Dependency] private IDynamicTypeFactory _typeFactory = default!;
+    [Dependency] private IComponentFactory _compFactory = default!;
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private INetManager _net = default!;
-    [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
-
-    public Dictionary<NodeGroupID, Type> NodeGroupTypes = new();
-    private FrozenDictionary<NodeGroupID, Type> _nodeGroupTypes = default!;
 
     /// <summary>
-    /// A dictionary of <see cref="INodeGroup"/> Types and <see cref="INodeGroupHandler"/>s.
+    /// A dictionary that associates each <see cref="NodeGroupID"/> with a node group ID specific component type.
+    /// </summary>
+    public Dictionary<NodeGroupID, Type> NodeGroupTypes = new();
+
+    /// <summary>
+    /// A dictionary <see cref="INodeGroupHandler"/>s that handle <see cref="NodeGroupComponent"/>s with a specific Node group component Type.
     /// </summary>
     public Dictionary<Type, INodeGroupHandler> NodeGroupHandlers = new();
-    private FrozenDictionary<Type, INodeGroupHandler> _nodeGroupHandlers = default!;
 
     /// <summary>
     /// A dictionary of <see cref="INode"/> Types and <see cref="INodeHandler"/>s.
     /// </summary>
     public Dictionary<Type, INodeHandler> NodeHandlers = new();
-    private FrozenDictionary<Type, INodeHandler> _nodeHandlers = default!;
 
     // TODO figure what the hell is going on here
     private readonly List<int> _visDeletes = new();
-    private readonly List<BaseNodeGroup> _visSends = new();
+    private readonly List<Entity<NodeGroupComponent>> _visSends = new();
 
     private readonly HashSet<ICommonSession> _visPlayers = new();
-    private readonly HashSet<BaseNodeGroup> _toRemake = new();
-    private readonly HashSet<BaseNodeGroup> _nodeGroups = new();
+    private readonly HashSet<Entity<NodeGroupComponent>> _toRemake = new();
+    private readonly HashSet<Entity<NodeGroupComponent>> _nodeGroups = new();
     private readonly HashSet<Node> _toRemove = new();
     private readonly List<Node> _toReflood = new();
 
-    private ISawmill _sawmill = default!;
 
     private const float VisDataUpdateInterval = 1;
     private float _accumulatedFrameTime;
@@ -69,23 +62,14 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("nodegroup");
-
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         SubscribeNetworkEvent<NodeVis.MsgEnable>(HandleEnableMsg);
     }
 
-    public void PostInitialize()
-    {
-        _nodeGroupTypes = NodeGroupTypes.ToFrozenDictionary();
-        _nodeGroupHandlers = NodeGroupHandlers.ToFrozenDictionary();
-        _nodeHandlers = NodeHandlers.ToFrozenDictionary();
-    }
-
     public INodeHandler GetNodeHandler(Type nodeType)
     {
-        return _nodeHandlers[nodeType];
+        return NodeHandlers[nodeType];
     }
 
     public INodeHandler GetNodeHandler(Node node)
@@ -123,20 +107,20 @@ public sealed partial class NodeGroupSystem : EntitySystem
             _visPlayers.Remove(e.Session);
     }
 
-    public void QueueRemakeGroup(BaseNodeGroup group)
+    public void QueueRemakeGroup(Entity<NodeGroupComponent> group)
     {
-        if (group.Remaking)
+        if (group.Comp.Remaking)
             return;
 
         _toRemake.Add(group);
-        group.Remaking = true;
+        group.Comp.Remaking = true;
 
-        foreach (var node in group.Nodes)
+        foreach (var node in group.Comp.Nodes)
         {
             QueueReflood(node);
         }
 
-        if (group.NodeCount == 0)
+        if (group.Comp.NodeCount == 0)
         {
             _nodeGroups.Remove(group);
         }
@@ -170,8 +154,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        // TODO implement logic to split node groups into predicted/unpredicted ones
-        if (_net.IsClient || PauseUpdating)
+        if (PauseUpdating)
             return;
 
         DoGroupUpdates();
@@ -184,6 +167,9 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         DoGroupUpdates();
     }
+
+    private readonly List<Entity<NodeGroupComponent>> _newGroups = new();
+    private readonly HashSet<EntityUid> _updateEnts = new();
 
     private void DoGroupUpdates()
     {
@@ -200,12 +186,11 @@ public sealed partial class NodeGroupSystem : EntitySystem
             if (toRemove.NodeGroup == null)
                 continue;
 
-            var group = (BaseNodeGroup) toRemove.NodeGroup;
-            var groupHandler = _nodeGroupHandlers[group.GetType()];
-            groupHandler.RemoveNode(group, toRemove);
+            var group = toRemove.NodeGroup.Value.Comp;
+            var groupHandler = NodeGroupHandlers[group.GetType()];
+            groupHandler.RemoveNode(toRemove.NodeGroup.Value, toRemove);
+            QueueRemakeGroup(toRemove.NodeGroup.Value);
             toRemove.NodeGroup = null;
-
-            QueueRemakeGroup(group);
         }
 
         // Break up all remaking groups.
@@ -231,9 +216,9 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
             ClearReachableIfNecessary(node);
 
-            if (node.NodeGroup?.Remaking == false)
+            if (node.NodeGroup is { Comp.Remaking: false })
             {
-                QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
+                QueueRemakeGroup(node.NodeGroup.Value);
             }
 
             // GetCompatibleNodes will involve getting the transform & grid as most connection requirements are
@@ -244,12 +229,11 @@ public sealed partial class NodeGroupSystem : EntitySystem
             {
                 ClearReachableIfNecessary((Node) compatible);
 
-                if (compatible.NodeGroup?.Remaking == false)
+                if (compatible.NodeGroup is { Comp.Remaking: false })
                 {
                     // We are expanding into an existing group,
                     // remake it so that we can treat it uniformly.
-                    var group = (BaseNodeGroup) compatible.NodeGroup;
-                    QueueRemakeGroup(group);
+                    QueueRemakeGroup(compatible.NodeGroup.Value);
                 }
 
                 node.ReachableNodes.Add((Node) compatible);
@@ -257,7 +241,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
             }
         }
 
-        var newGroups = new List<BaseNodeGroup>();
+        _newGroups.Clear();
 
         // Flood fill over nodes. Every node will only be flood filled once.
         foreach (var node in _toReflood)
@@ -272,7 +256,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
             var groupNodes = FloodFillNode(node);
 
             var newGroup = InitGroup(node, groupNodes);
-            newGroups.Add(newGroup);
+            _newGroups.Add(newGroup);
         }
 
         // Go over dead groups that need to be cleaned up.
@@ -280,14 +264,14 @@ public sealed partial class NodeGroupSystem : EntitySystem
         foreach (var oldGroup in _toRemake)
         {
             // Group by the NEW group.
-            var newGrouped = oldGroup.Nodes.GroupBy(n => n.NodeGroup);
+            var newGrouped = oldGroup.Comp.Nodes.GroupBy(n => n.NodeGroup);
 
-            oldGroup.Removed = true;
-            var handler = _nodeGroupHandlers[oldGroup.GetType()];
+            oldGroup.Comp.Removed = true;
+            var handler = NodeGroupHandlers[oldGroup.GetType()];
             handler.AfterRemake(oldGroup, newGrouped);
             _nodeGroups.Remove(oldGroup);
             if (VisEnabled)
-                _visDeletes.Add(oldGroup.NetId);
+                _visDeletes.Add(oldGroup.Comp.NetId);
         }
 
         var refloodCount = _toReflood.Count;
@@ -297,22 +281,22 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _toRemove.Clear();
 
         // notify entities that node groups have been updated, so they can do things like update their visuals.
-        HashSet<EntityUid> entities = new();
-        foreach (var group in newGroups)
+        _updateEnts.Clear();
+        foreach (var group in _newGroups)
         {
-            foreach (var node in group.Nodes)
+            foreach (var node in group.Comp.Nodes)
             {
-                entities.Add(node.Owner);
+                _updateEnts.Add(node.Owner);
             }
         }
 
-        foreach (var uid in entities)
+        foreach (var uid in _updateEnts)
         {
             var ev = new NodeGroupsRebuilt(uid);
             RaiseLocalEvent(uid, ref ev, true);
         }
 
-        _sawmill.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {newGroups.Count} new groups, {refloodCount} nodes processed.");
+        Log.Debug($"Updated node groups in {sw.Elapsed.TotalMilliseconds}ms. {_newGroups.Count} new groups, {refloodCount} nodes processed.");
     }
 
     private void ClearReachableIfNecessary(Node node)
@@ -324,29 +308,35 @@ public sealed partial class NodeGroupSystem : EntitySystem
         }
     }
 
-    private BaseNodeGroup InitGroup(Node node, List<Node> groupNodes)
+    private Entity<NodeGroupComponent> InitGroup(Node node, List<Node> groupNodes)
     {
-        var type = _nodeGroupTypes[node.NodeGroupID];
-        var handler = _nodeGroupHandlers[type];
-        var newGroup = (BaseNodeGroup) _typeFactory.CreateInstance(type);
-        handler.InitializeGroup(newGroup, node);
-        newGroup.NetId = _groupNetIdCounter++;
+        var type = NodeGroupTypes[node.NodeGroupID];
+        var handler = NodeGroupHandlers[type];
+
+        var uid = Spawn();
+        var group = EnsureComp<NodeGroupComponent>(uid);
+        var comp = _compFactory.GetComponent(type);
+        AddComp(uid, comp);
+        var groupEnt = (uid, group);
+
+        handler.InitializeGroup(groupEnt, node);
+        group.NetId = _groupNetIdCounter++;
 
         var netIdCounter = 0;
         foreach (var groupNode in groupNodes)
         {
-            groupNode.NodeGroup = newGroup;
+            groupNode.NodeGroup = groupEnt;
             groupNode.NetId = ++netIdCounter;
         }
 
-        handler.LoadNodes(newGroup, groupNodes);
+        handler.LoadNodes(groupEnt, groupNodes);
 
-        _nodeGroups.Add(newGroup);
+        _nodeGroups.Add(groupEnt);
 
         if (VisEnabled)
-            _visSends.Add(newGroup);
+            _visSends.Add(groupEnt);
 
-        return newGroup;
+        return groupEnt;
     }
 
     private List<Node> FloodFillNode(Node rootNode)
@@ -377,10 +367,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private IEnumerable<INode> GetCompatibleNodes(Node node)
     {
-        var xform = Transform(node.Owner);
-        Entity<MapGridComponent>? gridEnt = TryComp<MapGridComponent>(xform.GridUid, out var grid) ? (xform.GridUid.Value, grid) : null;
-
-        var nodeHandler = _nodeHandlers[node.GetType()];
+        var nodeHandler = NodeHandlers[node.GetType()];
         if (!nodeHandler.Connectable(node))
             yield break;
 
@@ -388,7 +375,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         {
             DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-            var reachableNodeHandler = _nodeHandlers[reachable.GetType()];
+            var reachableNodeHandler = NodeHandlers[reachable.GetType()];
             if (reachable.NodeGroupID == node.NodeGroupID
                 && reachableNodeHandler.Connectable(reachable))
             {
@@ -422,8 +409,8 @@ public sealed partial class NodeGroupSystem : EntitySystem
                 if (_visSends.Contains(group))
                     continue;
 
-                var handler = _nodeGroupHandlers[group.GetType()];
-                msg.GroupDataUpdates.Add(group.NetId, handler.GetDebugData(group));
+                var handler = NodeGroupHandlers[group.GetType()];
+                msg.GroupDataUpdates.Add(group.Comp.NetId, handler.GetDebugData(group));
             }
         }
 
@@ -448,29 +435,30 @@ public sealed partial class NodeGroupSystem : EntitySystem
         RaiseNetworkEvent(msg, player.Channel);
     }
 
-    private NodeVis.GroupData VisMakeGroupState(BaseNodeGroup group)
+    private NodeVis.GroupData VisMakeGroupState(Entity<NodeGroupComponent> group)
     {
-        var handler = _nodeGroupHandlers[group.GetType()];
+        var handler = NodeGroupHandlers[group.GetType()];
         return new()
         {
-            NetId = group.NetId,
-            GroupId = group.GroupId.ToString(),
-            Color = CalcNodeGroupColor(group),
-            Nodes = group.Nodes.Select(n => new NodeVis.NodeDatum
+            NetId = group.Comp.NetId,
+            GroupId = group.Comp.GroupId.ToString(),
+            Color = CalcNodeGroupColor(group.Comp.GroupId),
+            Nodes = group.Comp.Nodes.Select(n => new NodeVis.NodeDatum
             {
                 Name = n.Name,
                 NetId = n.NetId,
                 Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
                 Entity = GetNetEntity(n.Owner),
                 Type = n.GetType().Name
-            }).ToArray(),
+            })
+                .ToArray(),
             DebugData = handler.GetDebugData(group),
         };
     }
 
-    private static Color CalcNodeGroupColor(BaseNodeGroup group)
+    private static Color CalcNodeGroupColor(NodeGroupID groupId)
     {
-        return group.GroupId switch
+        return groupId switch
         {
             NodeGroupID.HVPower => Color.Orange,
             NodeGroupID.MVPower => Color.Yellow,

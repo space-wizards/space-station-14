@@ -1,4 +1,4 @@
-namespace Content.Shared.NodeContainer.NodeGroups;
+namespace Content.Shared.NodeContainer;
 
 public enum NodeGroupID : byte
 {

@@ -10,6 +10,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Events;
 using Content.Shared.Power.Monitoring;
@@ -407,13 +408,13 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                     if (sourceNode?.NodeGroup != null)
                     {
-                        foreach (var node in sourceNode.NodeGroup.Nodes)
+                        foreach (var node in sourceNode.NodeGroup.Value.Comp.Nodes)
                             reachableEntities.Add(node.Owner);
                     }
 
                     if (loadNode?.NodeGroup != null)
                     {
-                        foreach (var node in loadNode.NodeGroup.Nodes)
+                        foreach (var node in loadNode.NodeGroup.Value.Comp.Nodes)
                             reachableEntities.Add(node.Owner);
                     }
 

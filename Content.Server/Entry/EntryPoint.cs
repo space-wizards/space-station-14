@@ -24,7 +24,6 @@ using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Localizations;
-using Content.Shared.NodeContainer.Systems;
 using Robust.Server;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
@@ -160,7 +159,6 @@ namespace Content.Server.Entry
             _discordChatLink.Initialize();
             _euiManager.Initialize();
             _gameMap.Initialize();
-            _entSys.GetEntitySystem<NodeGroupSystem>().PostInitialize();
             _entSys.GetEntitySystem<GameTicker>().PostInitialize();
             _ban.Initialize();
             _connection.PostInit();

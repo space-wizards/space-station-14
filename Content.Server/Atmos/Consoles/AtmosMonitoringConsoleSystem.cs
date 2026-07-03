@@ -13,8 +13,7 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
 
@@ -196,9 +195,8 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
         if (xform.GridUid == null)
             return null;
 
-        if (!TryGettingFirstPipeNode(uid, out var pipeNode, out var netId) ||
-            pipeNode == null ||
-            netId == null)
+        if (!TryGettingFirstPipeNode(uid, out var pipeNode, out var netId)
+            || !TryComp(pipeNode.NodeGroup, out PipeNetComponent? group))
             return null;
 
         var pipeColor = TryComp<AtmosPipeColorComponent>(uid, out var colorComponent) ? colorComponent.Color : Color.White;
@@ -225,22 +223,22 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
 
         // Entry for powered devices
         var gasData = new Dictionary<Gas, float>();
-        var isAirPresent = pipeNode.Air.TotalMoles > 0;
+        var isAirPresent = group.Air.TotalMoles > 0;
 
         if (isAirPresent)
         {
             foreach (var gas in Enum.GetValues<Gas>())
             {
-                if (pipeNode.Air[(int)gas] > 0)
-                    gasData.Add(gas, pipeNode.Air[(int)gas] / pipeNode.Air.TotalMoles);
+                if (group.Air[(int)gas] > 0)
+                    gasData.Add(gas, group.Air[(int)gas] / group.Air.TotalMoles);
             }
         }
 
         entry = new AtmosMonitoringConsoleEntry(netEnt, GetNetCoordinates(xform.Coordinates), netId.Value, name, address)
         {
-            TemperatureData = isAirPresent ? pipeNode.Air.Temperature : 0f,
-            PressureData = pipeNode.Air.Pressure,
-            TotalMolData = pipeNode.Air.TotalMoles,
+            TemperatureData = isAirPresent ? group.Air.Temperature : 0f,
+            PressureData = group.Air.Pressure,
+            TotalMolData = group.Air.TotalMoles,
             GasData = gasData,
             Color = pipeColor
         };
@@ -462,14 +460,11 @@ public sealed partial class AtmosMonitoringConsoleSystem : SharedAtmosMonitoring
 
     private int GetPipeNodeNetId(PipeNode pipeNode)
     {
-        if (pipeNode.NodeGroup is BaseNodeGroup)
-        {
-            var nodeGroup = (BaseNodeGroup)pipeNode.NodeGroup;
+        if (pipeNode.NodeGroup is null)
+            return -1;
 
-            return nodeGroup.NetId;
-        }
-
-        return -1;
+        var nodeGroup = pipeNode.NodeGroup;
+        return nodeGroup.Value.Comp.NetId;
     }
 
     #endregion

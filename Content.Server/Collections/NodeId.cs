@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Collections;
+﻿namespace Content.Server.Collections;
 
 public readonly struct NodeId : IEquatable<NodeId>
 {

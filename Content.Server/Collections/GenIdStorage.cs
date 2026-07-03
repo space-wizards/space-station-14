@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Collections;
+namespace Content.Server.Collections;
 
 public static class GenIdStorage
 {

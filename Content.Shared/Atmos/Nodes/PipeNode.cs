@@ -1,7 +1,6 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Nodes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.Nodes;
 
@@ -45,26 +44,12 @@ public partial class PipeNode : Node, IPipeNode
     [DataField]
     public bool RotationsEnabled { get; set; } = true;
 
-    /// <summary>
-    ///     The <see cref="PipeNet"/> this pipe is a part of.
-    /// </summary>
-    [ViewVariables]
-    private PipeNet? PipeNet => (PipeNet?) NodeGroup;
-
-    /// <summary>
-    ///     The gases in this pipe.
-    /// </summary>
-    [ViewVariables]
-    public GasMixture Air
-    {
-        get => PipeNet?.Air ?? GasMixture.SpaceGas;
-        set
-        {
-            DebugTools.Assert(PipeNet != null);
-            PipeNet!.Air = value;
-        }
-    }
-
     [DataField]
     public float Volume { get; set; } = 200f;
+
+    /// <summary>
+    /// Cached <see cref="PipeNetComponent"/> so systems don't have to constantly resolve it (and tank performance as the result)
+    /// </summary>
+    [ViewVariables]
+    public Entity<PipeNetComponent>? PipeNet { get; set; }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.NodeGroups;
@@ -57,7 +58,7 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
             var compatibleNet = container.Nodes.Values
                 .Where(node => (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage!)
                 .Select(node => node.NodeGroup)
-                .OfType<PowerNet>()
+                .Select(group => )
                 .FirstOrDefault();
 
             if (compatibleNet != null)

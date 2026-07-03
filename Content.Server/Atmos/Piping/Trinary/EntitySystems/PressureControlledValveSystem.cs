@@ -33,22 +33,36 @@ public sealed partial class PressureControlledValveSystem : EntitySystem
 
     private void OnUpdate(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceUpdateEvent args)
     {
-        if (!_nodeContainer.TryGetNodes(uid, comp.InletName, comp.ControlName, comp.OutletName, out PipeNode? inletNode, out PipeNode? controlNode, out PipeNode? outletNode))
+        if (!_nodeContainer.TryGetNodes(
+                uid,
+                comp.InletName,
+                comp.ControlName,
+                comp.OutletName,
+                out PipeNode? inletNode,
+                out PipeNode? controlNode,
+                out PipeNode? outletNode)
+            || inletNode.PipeNet == null
+            || controlNode.PipeNet == null
+            || outletNode.PipeNet == null)
         {
             _ambientSoundSystem.SetAmbience(uid, false);
             comp.Enabled = false;
             return;
         }
 
+        var inletNodeAir = inletNode.PipeNet.Value.Comp.Air;
+        var controlNodeAir = controlNode.PipeNet.Value.Comp.Air;
+        var outletNodeAir = controlNode.PipeNet.Value.Comp.Air;
+
         // If output is higher than input, flip input/output to enable bidirectional flow.
-        if (outletNode.Air.Pressure > inletNode.Air.Pressure)
+        if (outletNodeAir.Pressure > inletNodeAir.Pressure)
         {
             PipeNode temp = outletNode;
             outletNode = inletNode;
             inletNode = temp;
         }
 
-        float control = (controlNode.Air.Pressure - outletNode.Air.Pressure) - comp.Threshold;
+        float control = (controlNodeAir.Pressure - outletNodeAir.Pressure) - comp.Threshold;
         float transferRate;
         if (control < 0)
         {
@@ -71,13 +85,13 @@ public sealed partial class PressureControlledValveSystem : EntitySystem
         }
 
         // clamp to equalization so we don't overshoot (happens with silly euler)
-        var maxFrac = _atmosphereSystem.FractionToEqualizePressure(inletNode.Air, outletNode.Air);
-        var maxVol = inletNode.Air.Volume * maxFrac;
+        var maxFrac = _atmosphereSystem.FractionToEqualizePressure(inletNodeAir, outletNodeAir);
+        var maxVol = inletNodeAir.Volume * maxFrac;
         var clampedVolume = Math.Min(transferVolume, maxVol);
 
         _ambientSoundSystem.SetAmbience(uid, true);
-        var removed = inletNode.Air.RemoveVolume(clampedVolume);
-        _atmosphereSystem.Merge(outletNode.Air, removed);
+        var removed = inletNodeAir.RemoveVolume(clampedVolume);
+        _atmosphereSystem.Merge(outletNodeAir, removed);
     }
 
     private void OnFilterLeaveAtmosphere(EntityUid uid, PressureControlledValveComponent comp, ref AtmosDeviceDisabledEvent args)

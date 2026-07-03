@@ -68,17 +68,18 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnCryoPodUpdateAtmosphere(Entity<CryoPodComponent> entity, ref AtmosDeviceUpdateEvent args)
     {
-        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PortablePipeNode? portNode))
+        if (!_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PortablePipeNode? portNode)
+            || portNode.PipeNet == null)
             return;
 
         if (!TryComp(entity, out CryoPodAirComponent? cryoPodAir))
             return;
 
-        _atmosphereSystem.React(cryoPodAir.Air, portNode);
+        _atmosphereSystem.React(cryoPodAir.Air, portNode.PipeNet.Value.Comp);
 
-        if (portNode.NodeGroup is PipeNet { NodeCount: > 1 } net)
+        if (portNode.NodeGroup!.Value.Comp.NodeCount > 1)
         {
-            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, net.Air);
+            _gasCanisterSystem.MixContainerWithPipeNet(cryoPodAir.Air, portNode.PipeNet.Value.Comp.Air);
         }
     }
 
@@ -91,10 +92,12 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         args.GasMixtures.Add((Name(entity.Owner), cryoPodAir.Air));
         // If it's connected to a port, include the port side
         // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-        if (_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PipeNode? port) && port.Air.Volume != 0f)
+        if (_nodeContainer.TryGetNode(entity.Owner, entity.Comp.PortName, out PipeNode? port)
+            && port.PipeNet != null
+            && port.PipeNet.Value.Comp.Air.Volume != 0f)
         {
-            var portAirLocal = port.Air.Clone();
-            portAirLocal.Multiply(port.Volume / port.Air.Volume);
+            var portAirLocal = port.PipeNet.Value.Comp.Air.Clone();
+            portAirLocal.Multiply(port.Volume / port.PipeNet.Value.Comp.Air.Volume);
             portAirLocal.Volume = port.Volume;
             args.GasMixtures.Add((entity.Comp.PortName, portAirLocal));
         }

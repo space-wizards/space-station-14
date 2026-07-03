@@ -14,6 +14,7 @@ public sealed partial class HeatExchangerSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityQuery<PipeNetComponent> _pipeNetQuery = default!;
 
     float tileLoss;
 
@@ -41,13 +42,18 @@ public sealed partial class HeatExchangerSystem : EntitySystem
             return;
         }
 
-        if (!_nodeContainer.TryGetNodes(uid, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+        if (!_nodeContainer.TryGetNodes(uid, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet)
+            || !_pipeNetQuery.TryComp(inlet.NodeGroup, out var inletNet)
+            || !_pipeNetQuery.TryComp(outlet.NodeGroup, out var outletNet))
             return;
+
+        var inletAir = inletNet.Air;
+        var outletAir = outletNet.Air;
 
         var dt = args.dt;
 
         // Let n = moles(inlet) - moles(outlet), really a Δn
-        var P = inlet.Air.Pressure - outlet.Air.Pressure; // really a ΔP
+        var P = inletAir.Pressure - outletAir.Pressure; // really a ΔP
         // Such that positive P causes flow from the inlet to the outlet.
 
         // We want moles transferred to be proportional to the pressure difference, i.e.
@@ -56,7 +62,7 @@ public sealed partial class HeatExchangerSystem : EntitySystem
         // To solve this we need to write dn in terms of P. Since PV=nRT, dP/dn=RT/V.
         // This assumes that the temperature change from transferring dn moles is negligible.
         // Since we have P=Pi-Po, then dP/dn = dPi/dn-dPo/dn = R(Ti/Vi - To/Vo):
-        float dPdn = Atmospherics.R * (outlet.Air.Temperature / outlet.Air.Volume + inlet.Air.Temperature / inlet.Air.Volume);
+        float dPdn = Atmospherics.R * (outletAir.Temperature / outletAir.Volume + inletAir.Temperature / inletAir.Volume);
 
         // Multiplying both sides of the differential equation by dP/dn:
         // dn/dt * dP/dn = dP/dt = G*P * (dP/dn)
@@ -70,9 +76,9 @@ public sealed partial class HeatExchangerSystem : EntitySystem
 
         GasMixture xfer;
         if (n > 0)
-            xfer = inlet.Air.Remove(n);
+            xfer = inletAir.Remove(n);
         else
-            xfer = outlet.Air.Remove(-n);
+            xfer = outletAir.Remove(-n);
 
         float CXfer = _atmosphereSystem.GetHeatCapacity(xfer, true);
         if (CXfer < Atmospherics.MinimumHeatCapacity)
@@ -124,9 +130,9 @@ public sealed partial class HeatExchangerSystem : EntitySystem
         }
 
         if (n > 0)
-            _atmosphereSystem.Merge(outlet.Air, xfer);
+            _atmosphereSystem.Merge(outletAir, xfer);
         else
-            _atmosphereSystem.Merge(inlet.Air, xfer);
+            _atmosphereSystem.Merge(inletAir, xfer);
 
     }
 }

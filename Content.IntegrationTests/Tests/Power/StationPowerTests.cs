@@ -6,6 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.Power.NodeGroups;
 using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
@@ -65,13 +66,13 @@ public sealed class StationPowerTests : GameTest
 
         // Find the power network with the greatest stored charge in its batteries.
         // This keeps backup SMESes out of the calculation.
-        var networks = new Dictionary<PowerNet, float>();
+        var networks = new Dictionary<PowerNetComponent, float>();
         var batteryQuery = entMan.EntityQueryEnumerator<PowerNetworkBatteryComponent, BatteryComponent, NodeContainerComponent>();
         while (batteryQuery.MoveNext(out var uid, out _, out var battery, out var nodeContainer))
         {
             if (!nodeContainer.Nodes.TryGetValue("output", out var node))
                 continue;
-            if (node.NodeGroup is not PowerNet group)
+            if (!entMan.TryGetComponent(node.NodeGroup, out PowerNetComponent? group))
                 continue;
             networks.TryGetValue(group, out var charge);
             var currentCharge = batterySys.GetCharge((uid, battery));

@@ -1,34 +1,27 @@
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 
 namespace Content.Shared.NodeContainer;
 
 /// <summary>
-///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
+///     Organizes themselves into distinct node groups with other <see cref="Node"/>s
 ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class Node : INode
 {
-    /// <summary>
-    ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
-    ///     implementation is used as a group.
-    /// </summary>
-    [DataField("nodeGroupID")]
+    [DataField]
     public NodeGroupID NodeGroupID { get; set; } = NodeGroupID.Default;
 
-    /// <summary>
-    ///     The node group this node is a part of.
-    /// </summary>
-    [ViewVariables] public INodeGroup? NodeGroup { get; set; }
+    [ViewVariables]
+    public Entity<NodeGroupComponent>? NodeGroup { get; set; }
 
-    /// <summary>
-    ///     The entity that owns this node via its <see cref="NodeContainerComponent"/>.
-    /// </summary>
-    [ViewVariables] public EntityUid Owner { get; set; }
+    [ViewVariables]
+    public EntityUid Owner { get; set; }
 
     /// <summary>
     ///     Name of this node on the owning <see cref="NodeContainerComponent"/>.
     /// </summary>
+    [ViewVariables]
     public string Name { get; set; }
 
     [DataField]
@@ -40,12 +33,14 @@ public abstract partial class Node : INode
     /// <summary>
     ///    Prevents a node from being used by other nodes while midway through removal.
     /// </summary>
+    [ViewVariables]
     public bool Deleting { get; set; }
 
     /// <summary>
     ///     All compatible nodes that are reachable by this node.
     ///     Effectively, active connections out of this node.
     /// </summary>
+    [ViewVariables]
     public HashSet<Node> ReachableNodes { get; set; } = new();
 
     public int FloodGen { get; set; }

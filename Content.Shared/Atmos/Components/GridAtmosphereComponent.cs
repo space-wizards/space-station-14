@@ -117,7 +117,7 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly ConcurrentQueue<DeltaPressureDamageResult> DeltaPressureDamageResults = new();
 
     [ViewVariables]
-    public readonly HashSet<PipeNet> PipeNets = new();
+    public readonly HashSet<Entity<PipeNetComponent>> PipeNets = new();
 
     [ViewVariables]
     public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
@@ -129,7 +129,7 @@ public sealed partial class GridAtmosphereComponent : Component
     public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
 
     [ViewVariables]
-    public readonly Queue<PipeNet> CurrentRunPipeNet = new();
+    public readonly Queue<Entity<PipeNetComponent>> CurrentRunPipeNet = new();
 
     [ViewVariables]
     public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();

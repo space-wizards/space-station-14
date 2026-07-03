@@ -2,7 +2,7 @@ using Content.Server.DeviceNetwork.Components;
 using JetBrains.Annotations;
 using Content.Shared.Power.Nodes;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Events;
 
@@ -42,15 +42,14 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!TryComp(args.Provider, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (_nodeContainer.TryGetNode(nodeContainer, "power", out CableNode? node))
+            if (_nodeContainer.TryGetNode((args.Provider.Value, nodeContainer), "power", out CableNode? node))
             {
                 component.ConnectedNode = node;
             }
-            else if (_nodeContainer.TryGetNode(nodeContainer, "output", out CableDeviceNode? deviceNode))
+            else if (_nodeContainer.TryGetNode((args.Provider.Value, nodeContainer), "output", out CableDeviceNode? deviceNode))
             {
                 component.ConnectedNode = deviceNode;
             }
-
         }
 
         private void OnProviderDisconnected(EntityUid uid, ApcNetworkComponent component, ProviderDisconnectedEvent args)

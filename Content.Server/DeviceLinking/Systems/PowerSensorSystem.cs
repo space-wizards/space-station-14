@@ -2,7 +2,7 @@ using Content.Server.DeviceLinking.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Power.NodeGroups;

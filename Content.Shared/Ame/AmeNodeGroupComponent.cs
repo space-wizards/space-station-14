@@ -1,11 +1,12 @@
-using Content.Shared.NodeContainer.NodeGroups;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ame;
 
 /// <summary>
 /// Node group class for handling the Antimatter Engine's console and parts.
 /// </summary>
-public sealed class AmeNodeGroup : BaseNodeGroup
+[RegisterComponent, NetworkedComponent]
+public sealed partial class AmeNodeGroupComponent : Component
 {
     /// <summary>
     /// The AME controller which is currently in control of this node group.

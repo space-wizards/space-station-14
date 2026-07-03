@@ -29,28 +29,32 @@ public sealed partial class GasPressurePumpSystem : SharedGasPressurePumpSystem
     {
         if (!ent.Comp.Enabled
             || !_power.IsPowered(ent.Owner)
-            || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+            || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.OutletName, out PipeNode? inlet, out PipeNode? outlet)
+            || inlet.PipeNet == null
+            || outlet.PipeNet == null)
         {
             _ambientSoundSystem.SetAmbience(ent, false);
             return;
         }
 
-        var outputStartingPressure = outlet.Air.Pressure;
+        var inletAir = inlet.PipeNet.Value.Comp.Air;
+        var outletAir = outlet.PipeNet.Value.Comp.Air;
 
+        var outputStartingPressure = outletAir.Pressure;
         if (outputStartingPressure >= ent.Comp.TargetPressure)
         {
             _ambientSoundSystem.SetAmbience(ent, false);
             return; // No need to pump gas if target has been reached.
         }
 
-        if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
+        if (inletAir.TotalMoles > 0 && inletAir.Temperature > 0)
         {
             // We calculate the necessary moles to transfer using our good ol' friend PV=nRT.
             var pressureDelta = ent.Comp.TargetPressure - outputStartingPressure;
-            var transferMoles = (pressureDelta * outlet.Air.Volume) / (inlet.Air.Temperature * Atmospherics.R);
+            var transferMoles = (pressureDelta * outletAir.Volume) / (inletAir.Temperature * Atmospherics.R);
 
-            var removed = inlet.Air.Remove(transferMoles);
-            _atmosphereSystem.Merge(outlet.Air, removed);
+            var removed = inletAir.Remove(transferMoles);
+            _atmosphereSystem.Merge(outletAir, removed);
             _ambientSoundSystem.SetAmbience(ent, removed.TotalMoles > 0f);
         }
     }

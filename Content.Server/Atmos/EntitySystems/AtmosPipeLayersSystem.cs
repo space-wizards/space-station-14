@@ -3,8 +3,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Nodes;
 using Content.Shared.Construction.Components;
-using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 
@@ -55,7 +54,7 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
             pipeNode.CurrentPipeLayer = ent.Comp.CurrentPipeLayer;
 
             if (pipeNode.NodeGroup != null)
-                _nodeGroup.QueueRemakeGroup((BaseNodeGroup)pipeNode.NodeGroup);
+                _nodeGroup.QueueRemakeGroup(pipeNode.NodeGroup.Value);
         }
 
         // If a user wasn't responsible for unanchoring the pipe, leave it be

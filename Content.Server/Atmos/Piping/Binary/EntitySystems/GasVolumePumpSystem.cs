@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.NodeContainer.Systems;
-using Content.Shared.Power.Components;
+using Content.Shared.Power.Systems;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -25,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private NodeContainerSystem _nodeContainer = default!;
         [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+        [Dependency] private PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {
@@ -38,16 +39,21 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled ||
-                (TryComp<PowerReceiverComponent>(uid, out var power) && !power.Powered) ||
-                !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+            if (!pump.Enabled
+                || !_power.IsPowered(uid)
+                || !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet)
+                || inlet.PipeNet == null
+                || outlet.PipeNet == null)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            var inputStartingPressure = inlet.Air.Pressure;
-            var outputStartingPressure = outlet.Air.Pressure;
+            var inletAir = inlet.PipeNet.Value.Comp.Air;
+            var outletAir = outlet.PipeNet.Value.Comp.Air;
+
+            var inputStartingPressure = inletAir.Pressure;
+            var outputStartingPressure = outletAir.Pressure;
 
             var previouslyBlocked = pump.Blocked;
             pump.Blocked = false;
@@ -71,15 +77,15 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
             var transferVol = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
-            var transferRatio = transferVol / inlet.Air.Volume;
+            var transferRatio = transferVol / inletAir.Volume;
 
             // Make sure we don't pump over the pressure limit.
-            var limitRatio = AtmosphereSystem.FractionToMaxPressure(inlet.Air, outlet.Air, pump.HigherThreshold);
+            var limitRatio = AtmosphereSystem.FractionToMaxPressure(inletAir, outletAir, pump.HigherThreshold);
 
             // This might end up negative under overclock conditions, but such cases are handled correctly by the
             // `RemoveRatio` method
             var removedRatio = Math.Min(transferRatio, limitRatio);
-            var removed = inlet.Air.RemoveRatio(removedRatio);
+            var removed = inletAir.RemoveRatio(removedRatio);
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
@@ -95,7 +101,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             pump.LastMolesTransferred = removed.TotalMoles;
 
-            _atmosphereSystem.Merge(outlet.Air, removed);
+            _atmosphereSystem.Merge(outletAir, removed);
             _ambientSoundSystem.SetAmbience(uid, removed.TotalMoles > 0f);
         }
 

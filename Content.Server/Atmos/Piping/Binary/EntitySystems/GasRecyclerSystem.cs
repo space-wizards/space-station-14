@@ -41,9 +41,11 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!Comp<TransformComponent>(ent).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
                 return;
 
-            if (!_nodeContainer.TryGetNode(ent.Owner, comp.InletName, out PipeNode? inlet))
+            if (!_nodeContainer.TryGetNode(ent.Owner, comp.InletName, out PipeNode? inlet)
+                || inlet.PipeNet == null)
                 return;
 
+            var inletAir = inlet.PipeNet.Value.Comp.Air;
             using (args.PushGroup(nameof(GasRecyclerComponent)))
             {
                 if (comp.Reacting)
@@ -52,12 +54,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 }
                 else
                 {
-                    if (inlet.Air.Pressure < comp.MinPressure)
+                    if (inletAir.Pressure < comp.MinPressure)
                     {
                         args.PushMarkup(Loc.GetString("gas-recycler-low-pressure"));
                     }
 
-                    if (inlet.Air.Temperature < comp.MinTemp)
+                    if (inletAir.Temperature < comp.MinTemp)
                     {
                         args.PushMarkup(Loc.GetString("gas-recycler-low-temperature"));
                     }
@@ -68,15 +70,20 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnUpdate(Entity<GasRecyclerComponent> ent, ref AtmosDeviceUpdateEvent args)
         {
             var comp = ent.Comp;
-            if (!_nodeContainer.TryGetNodes(ent.Owner, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+            if (!_nodeContainer.TryGetNodes(ent.Owner, comp.InletName, comp.OutletName, out PipeNode? inlet, out PipeNode? outlet)
+                || inlet.PipeNet == null
+                || outlet.PipeNet == null)
             {
                 _ambientSoundSystem.SetAmbience(ent, false);
                 return;
             }
 
+            var inletAir = inlet.PipeNet.Value.Comp.Air;
+            var outletAir = outlet.PipeNet.Value.Comp.Air;
+
             // The gas recycler is a passive device, so it permits gas flow even if nothing is being reacted.
-            comp.Reacting = inlet.Air.Temperature >= comp.MinTemp && inlet.Air.Pressure >= comp.MinPressure;
-            var removed = inlet.Air.RemoveVolume(PassiveTransferVol(inlet.Air, outlet.Air));
+            comp.Reacting = inletAir.Temperature >= comp.MinTemp && inletAir.Pressure >= comp.MinPressure;
+            var removed = inletAir.RemoveVolume(PassiveTransferVol(inletAir, outletAir));
             if (comp.Reacting)
             {
                 var nCO2 = removed.GetMoles(Gas.CarbonDioxide);
@@ -87,7 +94,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 removed.AdjustMoles(Gas.Nitrogen, nN2O);
             }
 
-            _atmosphereSystem.Merge(outlet.Air, removed);
+            _atmosphereSystem.Merge(outletAir, removed);
             UpdateAppearance(ent, comp);
             _ambientSoundSystem.SetAmbience(ent, true);
         }

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Examine;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Nodes.Handlers;
 
@@ -144,20 +144,20 @@ public sealed partial class NodeContainerSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The entity to get the node grom.</param>
     /// <param name="node">The first node of a target type.</param>
-    /// <typeparam name="T">The type of node to look for.</typeparam>
+    /// <typeparam name="T">The type of node group component to look for.</typeparam>
     /// <returns></returns>
-    public bool TryGetFirstNodeGroup<T>(Entity<NodeContainerComponent?> ent, [NotNullWhen(true)] out T? node) where T : BaseNodeGroup
+    public bool TryGetFirstNodeGroup<T>(Entity<NodeContainerComponent?> ent, [NotNullWhen(true)] out Entity<T>? node) where T : IComponent
     {
-        node = null;
+        node = default;
         if (!_nodeContainerQuery.Resolve(ent, ref ent.Comp, false))
             return false;
 
         foreach (var n in ent.Comp.Nodes.Values)
         {
-            if (n.NodeGroup is not T tn)
+            if (!TryComp<T>(n.NodeGroup, out var comp))
                 continue;
 
-            node = tn;
+            node = (ent.Owner, comp);
             return true;
         }
 

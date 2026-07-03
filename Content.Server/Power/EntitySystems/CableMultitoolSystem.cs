@@ -1,8 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.NodeGroups;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
@@ -71,9 +70,9 @@ public sealed partial class CableMultitoolSystem : EntitySystem
 
         foreach (var node in nodeContainer.Nodes)
         {
-            if (!(node.Value.NodeGroup is PowerNet))
+            if (!TryComp(node.Value.NodeGroup, out PowerNetComponent? p))
                 continue;
-            var p = (PowerNet) node.Value.NodeGroup;
+
             var ps = _pnSystem.GetNetworkStatistics(p);
 
             float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);

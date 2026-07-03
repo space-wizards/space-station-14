@@ -1,5 +1,4 @@
 ﻿using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Nodes.Handlers;
 using Content.Shared.NodeContainer.Systems;
@@ -161,7 +160,7 @@ public abstract class BasePipeNodeHandler<T> : NodeHandler<T>, IRotatableNodeHan
         node.AlwaysReachable.Add(other);
 
         if (node.NodeGroup != null)
-            NodeGroupSys.QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
+            NodeGroupSys.QueueRemakeGroup(node.NodeGroup.Value);
     }
 
     public void RemoveAlwaysReachable(T node, PipeNode other)
@@ -169,6 +168,6 @@ public abstract class BasePipeNodeHandler<T> : NodeHandler<T>, IRotatableNodeHan
         node.AlwaysReachable?.Remove(other);
 
         if (node.NodeGroup != null)
-            NodeGroupSys.QueueRemakeGroup((BaseNodeGroup) node.NodeGroup);
+            NodeGroupSys.QueueRemakeGroup(node.NodeGroup.Value);
     }
 }

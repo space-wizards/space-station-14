@@ -13,6 +13,7 @@ public sealed partial class GasPassiveGateSystem : EntitySystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private EntityQuery<PipeNetComponent> _pipeNetQuery = default!;
 
     public override void Initialize()
     {
@@ -24,24 +25,29 @@ public sealed partial class GasPassiveGateSystem : EntitySystem
 
     private void OnPassiveGateUpdated(EntityUid uid, GasPassiveGateComponent gate, ref AtmosDeviceUpdateEvent args)
     {
-        if (!_nodeContainer.TryGetNodes(uid, gate.InletName, gate.OutletName, out PipeNode? inlet, out PipeNode? outlet))
+        if (!_nodeContainer.TryGetNodes(uid, gate.InletName, gate.OutletName, out PipeNode? inlet, out PipeNode? outlet)
+            || inlet.PipeNet == null
+            || outlet.PipeNet == null)
             return;
 
+        var inletAir = inlet.PipeNet.Value.Comp.Air;
+        var outletAir = outlet.PipeNet.Value.Comp.Air;
+
         // ReSharper disable thrice InconsistentNaming
-        var P1 = inlet.Air.Pressure;
-        var P2 = outlet.Air.Pressure;
-        var V1 = inlet.Air.Volume;
+        var P1 = inletAir.Pressure;
+        var P2 = outletAir.Pressure;
+        var V1 = inletAir.Volume;
         var pressureDelta = P1 - P2;
 
         var dt = args.dt;
         float dV = 0;
         if (pressureDelta > 0 && P1 > 0)
         {
-            var transferFrac = _atmosphereSystem.FractionToEqualizePressure(inlet.Air, outlet.Air);
+            var transferFrac = _atmosphereSystem.FractionToEqualizePressure(inletAir, outletAir);
             dV = transferFrac * V1;
 
             // Actually transfer the gas.
-            _atmosphereSystem.Merge(outlet.Air, inlet.Air.RemoveRatio(transferFrac));
+            _atmosphereSystem.Merge(outletAir, inletAir.RemoveRatio(transferFrac));
         }
 
         gate.FlowRate = AtmosphereSystem.ExponentialMovingAverage(dV, gate.FlowRate, dt);

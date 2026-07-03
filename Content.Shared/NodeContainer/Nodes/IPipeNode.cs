@@ -4,7 +4,7 @@ using Content.Shared.Atmos.Nodes;
 
 namespace Content.Shared.NodeContainer.Nodes;
 
-public interface IPipeNode : IRotatableNode, IGasMixtureHolder
+public interface IPipeNode : IRotatableNode
 {
     /// <summary>
     ///     The directions in which this pipe can connect to other pipes around it.

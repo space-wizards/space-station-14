@@ -27,6 +27,7 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private AmbientSoundSystem _ambientSound = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
         [Dependency] private NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private EntityQuery<PipeNetComponent> _pipeNetQuery = default!;
 
         public override void Initialize()
         {
@@ -53,11 +54,12 @@ namespace Content.Server.Atmos.Portable
 
             // If we are on top of a connector port, empty into it.
             if (_nodeContainer.TryGetNode(uid, component.PortName, out PortablePipeNode? portableNode)
-                && portableNode.ConnectionsEnabled)
+                && portableNode.ConnectionsEnabled
+                && _pipeNetQuery.TryComp(portableNode.NodeGroup, out var pipeNet))
             {
-                _atmosphereSystem.React(component.Air, portableNode);
-                if (portableNode.NodeGroup is PipeNet {NodeCount: > 1} net)
-                    _canisterSystem.MixContainerWithPipeNet(component.Air, net.Air);
+                _atmosphereSystem.React(component.Air, pipeNet);
+                if (portableNode.NodeGroup?.Comp.NodeCount > 1)
+                    _canisterSystem.MixContainerWithPipeNet(component.Air, pipeNet.Air);
             }
 
             if (IsFull(component))

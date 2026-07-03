@@ -10,7 +10,6 @@ using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
-using Content.Shared.NodeContainer.Nodes;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -56,42 +55,56 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             // TODO ATMOS: Cache total moles since it's expensive.
 
             if (!mixer.Enabled
-                || !_nodeContainer.TryGetNodes(uid, mixer.InletOneName, mixer.InletTwoName, mixer.OutletName, out PipeNode? inletOne, out PipeNode? inletTwo, out PipeNode? outlet))
+                || !_nodeContainer.TryGetNodes(
+                    uid,
+                    mixer.InletOneName,
+                    mixer.InletTwoName,
+                    mixer.OutletName,
+                    out PipeNode? inletOne,
+                    out PipeNode? inletTwo,
+                    out PipeNode? outlet)
+                || inletOne.PipeNet == null
+                || inletTwo.PipeNet == null
+                || outlet.PipeNet == null)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 return;
             }
 
-            var outputStartingPressure = outlet.Air.Pressure;
+            var inletOneAir = inletOne.PipeNet.Value.Comp.Air;
+            var inletTwoAir = inletTwo.PipeNet.Value.Comp.Air;
+            var outletAir = outlet.PipeNet.Value.Comp.Air;
+
+            var outputStartingPressure = outletAir.Pressure;
 
             if (outputStartingPressure >= mixer.TargetPressure)
                 return; // Target reached, no need to mix.
 
-            var generalTransfer = (mixer.TargetPressure - outputStartingPressure) * outlet.Air.Volume / Atmospherics.R;
+            var generalTransfer = (mixer.TargetPressure - outputStartingPressure) * outletAir.Volume / Atmospherics.R;
 
-            var transferMolesOne = inletOne.Air.Temperature > 0 ? mixer.InletOneConcentration * generalTransfer / inletOne.Air.Temperature : 0f;
-            var transferMolesTwo = inletTwo.Air.Temperature > 0 ? mixer.InletTwoConcentration * generalTransfer / inletTwo.Air.Temperature : 0f;
+            var transferMolesOne = inletOneAir.Temperature > 0 ? mixer.InletOneConcentration * generalTransfer / inletOneAir.Temperature : 0f;
+            var transferMolesTwo = inletTwoAir.Temperature > 0 ? mixer.InletTwoConcentration * generalTransfer / inletTwoAir.Temperature : 0f;
 
             if (mixer.InletTwoConcentration <= 0f)
             {
-                if (inletOne.Air.Temperature <= 0f)
+                if (inletOneAir.Temperature <= 0f)
                     return;
 
-                transferMolesOne = MathF.Min(transferMolesOne, inletOne.Air.TotalMoles);
+                transferMolesOne = MathF.Min(transferMolesOne, inletOneAir.TotalMoles);
                 transferMolesTwo = 0f;
             }
 
             else if (mixer.InletOneConcentration <= 0)
             {
-                if (inletTwo.Air.Temperature <= 0f)
+                if (inletTwoAir.Temperature <= 0f)
                     return;
 
                 transferMolesOne = 0f;
-                transferMolesTwo = MathF.Min(transferMolesTwo, inletTwo.Air.TotalMoles);
+                transferMolesTwo = MathF.Min(transferMolesTwo, inletTwoAir.TotalMoles);
             }
             else
             {
-                if (inletOne.Air.Temperature <= 0f || inletTwo.Air.Temperature <= 0f)
+                if (inletOneAir.Temperature <= 0f || inletTwoAir.Temperature <= 0f)
                     return;
 
                 if (transferMolesOne <= 0 || transferMolesTwo <= 0)
@@ -100,9 +113,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                     return;
                 }
 
-                if (inletOne.Air.TotalMoles < transferMolesOne || inletTwo.Air.TotalMoles < transferMolesTwo)
+                if (inletOneAir.TotalMoles < transferMolesOne || inletTwoAir.TotalMoles < transferMolesTwo)
                 {
-                    var ratio = MathF.Min(inletOne.Air.TotalMoles / transferMolesOne, inletTwo.Air.TotalMoles / transferMolesTwo);
+                    var ratio = MathF.Min(inletOneAir.TotalMoles / transferMolesOne, inletTwoAir.TotalMoles / transferMolesTwo);
                     transferMolesOne *= ratio;
                     transferMolesTwo *= ratio;
                 }
@@ -114,15 +127,15 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (transferMolesOne > 0f)
             {
                 transferred = true;
-                var removed = inletOne.Air.Remove(transferMolesOne);
-                _atmosphereSystem.Merge(outlet.Air, removed);
+                var removed = inletOneAir.Remove(transferMolesOne);
+                _atmosphereSystem.Merge(outletAir, removed);
             }
 
             if (transferMolesTwo > 0f)
             {
                 transferred = true;
-                var removed = inletTwo.Air.Remove(transferMolesTwo);
-                _atmosphereSystem.Merge(outlet.Air, removed);
+                var removed = inletTwoAir.Remove(transferMolesTwo);
+                _atmosphereSystem.Merge(outletAir, removed);
             }
 
             if (transferred)
@@ -212,24 +225,30 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             args.GasMixtures ??= new List<(string, GasMixture?)>();
 
             // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-            if (_nodeContainer.TryGetNode(uid, component.InletOneName, out PipeNode? inletOne) && inletOne.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.InletOneName, out PipeNode? inletOne)
+                && inletOne.PipeNet != null
+                && inletOne.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var inletOneAirLocal = inletOne.Air.Clone();
-                inletOneAirLocal.Multiply(inletOne.Volume / inletOne.Air.Volume);
+                var inletOneAirLocal = inletOne.PipeNet.Value.Comp.Air.Clone();
+                inletOneAirLocal.Multiply(inletOne.Volume / inletOne.PipeNet.Value.Comp.Air.Volume);
                 inletOneAirLocal.Volume = inletOne.Volume;
                 args.GasMixtures.Add(($"{inletOne.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOneAirLocal));
             }
-            if (_nodeContainer.TryGetNode(uid, component.InletTwoName, out PipeNode? inletTwo) && inletTwo.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.InletTwoName, out PipeNode? inletTwo)
+                && inletTwo.PipeNet != null
+                && inletTwo.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var inletTwoAirLocal = inletTwo.Air.Clone();
-                inletTwoAirLocal.Multiply(inletTwo.Volume / inletTwo.Air.Volume);
+                var inletTwoAirLocal = inletTwo.PipeNet.Value.Comp.Air.Clone();
+                inletTwoAirLocal.Multiply(inletTwo.Volume / inletTwo.PipeNet.Value.Comp.Air.Volume);
                 inletTwoAirLocal.Volume = inletTwo.Volume;
                 args.GasMixtures.Add(($"{inletTwo.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwoAirLocal));
             }
-            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
+            if (_nodeContainer.TryGetNode(uid, component.OutletName, out PipeNode? outlet)
+                && outlet.PipeNet != null
+                && outlet.PipeNet.Value.Comp.Air.Volume != 0f)
             {
-                var outletAirLocal = outlet.Air.Clone();
-                outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);
+                var outletAirLocal = outlet.PipeNet.Value.Comp.Air.Clone();
+                outletAirLocal.Multiply(outlet.Volume / outlet.PipeNet.Value.Comp.Air.Volume);
                 outletAirLocal.Volume = outlet.Volume;
                 args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-outlet"), outletAirLocal));
             }

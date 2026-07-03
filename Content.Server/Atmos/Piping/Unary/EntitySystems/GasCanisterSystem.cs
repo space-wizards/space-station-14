@@ -6,7 +6,7 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Database;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
 using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCanisterComponent;
@@ -55,7 +55,7 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
         var portStatus = false;
         var tankPressure = 0f;
 
-        if (_nodeContainer.TryGetNode(nodeContainer, canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Nodes.Count > 1)
+        if (_nodeContainer.TryGetNode((uid, nodeContainer), canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Comp.Nodes.Count > 1)
             portStatus = true;
 
         if (canister.GasTankSlot.Item != null)
@@ -94,12 +94,13 @@ public sealed partial class GasCanisterSystem : SharedGasCanisterSystem
             || !TryComp<AppearanceComponent>(entity, out var appearance))
             return;
 
-        if (!_nodeContainer.TryGetNode(nodeContainer, entity.Comp.PortName, out PortablePipeNode? portNode))
+        if (!_nodeContainer.TryGetNode((entity.Owner, nodeContainer), entity.Comp.PortName, out PortablePipeNode? portNode))
             return;
 
-        if (portNode.NodeGroup is PipeNet {NodeCount: > 1} net)
+        if (TryComp(portNode.NodeGroup, out PipeNetComponent? pipeNet)
+            && portNode.NodeGroup.Value.Comp.NodeCount > 1)
         {
-            MixContainerWithPipeNet(entity.Comp.Air, net.Air);
+            MixContainerWithPipeNet(entity.Comp.Air, pipeNet.Air);
         }
 
         // If safety valve is open, we release gas through there ignoring other outputs.
