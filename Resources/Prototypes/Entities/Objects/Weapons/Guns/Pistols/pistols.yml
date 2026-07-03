@@ -154,6 +154,9 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+  - type: CustomSpriteAmmoCounter
+    loadedAmmoSprite: Interface/ItemStatus/Caseless/not_spent.png
+    spentAmmoSprite: Interface/ItemStatus/Caseless/spent.png
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Gun
