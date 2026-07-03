@@ -1,10 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
-using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.NodeGroups;
 
 namespace Content.Shared.Power.Systems;
 
@@ -47,23 +44,24 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         if (ent.Comp.Net == null)
             return;
 
-        _handler.RemoveConnector(ent.Comp.Net, ent);
+        _handler.RemoveConnector(ent.Comp.Net.Value, ent);
         ent.Comp.Net = null;
     }
 
-    private bool TryFindNet(Entity<PowerNetworkConnectorComponent> ent, [NotNullWhen(true)] out PowerNet? foundNet)
+    private bool TryFindNet(Entity<PowerNetworkConnectorComponent> ent, [NotNullWhen(true)] out Entity<PowerNetComponent>? foundNet)
     {
         if (TryComp(ent, out NodeContainerComponent? container))
         {
-            var compatibleNet = container.Nodes.Values
-                .Where(node => (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage!)
-                .Select(node => node.NodeGroup)
-                .Select(group => )
-                .FirstOrDefault();
-
-            if (compatibleNet != null)
+            foreach (var node in container.Nodes.Values)
             {
-                foundNet = compatibleNet;
+                if ((ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name)
+                    && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage!)
+                    continue;
+
+                if (!TryComp(node.NodeGroup, out PowerNetComponent? net))
+                    continue;
+
+                foundNet = (node.NodeGroup.Value.Owner, net);
                 return true;
             }
         }
@@ -81,21 +79,21 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         {
             if (!ent.Comp.Voltages.TryGetValue(net.Name, out var voltage)
                 || net.NodeGroupID != (NodeGroupID) voltage
-                || net.NodeGroup is not PowerNet netGroup)
+                || !TryComp(net.NodeGroup, out PowerNetComponent? netGroup))
                 continue;
 
             ent.Comp.Nets ??= new();
-            ent.Comp.Nets.Add(net.Name, netGroup);
+            ent.Comp.Nets.Add(net.Name, (net.NodeGroup.Value.Owner, netGroup));
         }
     }
 
-    public void SetNet(Entity<PowerNetworkConnectorComponent> ent, PowerNet? newNet)
+    public void SetNet(Entity<PowerNetworkConnectorComponent> ent, Entity<PowerNetComponent>? newNet)
     {
         if (ent.Comp.Net != null)
-            _handler.RemoveConnector(ent.Comp.Net, ent);
+            _handler.RemoveConnector(ent.Comp.Net.Value, ent);
 
         if (newNet != null)
-            _handler.AddConnector(newNet, ent);
+            _handler.AddConnector(newNet.Value, ent);
 
         ent.Comp.Net = newNet;
     }

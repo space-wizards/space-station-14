@@ -1,6 +1,4 @@
-﻿using Content.Shared.Power.NodeGroups;
-
-namespace Content.Shared.Power.Components;
+﻿namespace Content.Shared.Power.Components;
 
 [RegisterComponent]
 public sealed partial class PowerNetworkConnectorComponent : Component
@@ -16,7 +14,7 @@ public sealed partial class PowerNetworkConnectorComponent : Component
     /// Current PowerNet this connector is a part of.
     /// </summary>
     [ViewVariables]
-    public PowerNet? Net;
+    public Entity<PowerNetComponent>? Net;
 
     /// <summary>
     /// The name of the node this power network connector will try to connect to.
@@ -36,5 +34,5 @@ public sealed partial class PowerNetworkConnectorComponent : Component
     /// A set of nets this device is a part of.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, PowerNet?>? Nets;
+    public Dictionary<string, Entity<PowerNetComponent>?>? Nets;
 }

@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
-using Content.Shared.Power.NodeGroups;
 using Content.Shared.Power.Nodes;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;

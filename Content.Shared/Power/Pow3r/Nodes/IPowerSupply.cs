@@ -1,6 +1,4 @@
-﻿using Content.Shared.Collections;
-
-namespace Content.Shared.Power.Pow3r.Nodes;
+﻿namespace Content.Shared.Power.Pow3r.Nodes;
 
 public interface IPowerSupply : IPowerNode
 {
@@ -26,8 +24,6 @@ public interface IPowerSupply : IPowerNode
     ///     Position of the supply ramp.
     /// </summary>
     float SupplyRampPosition { get; set; }
-
-    NodeId LinkedNetwork { get; set; }
 
     /// <summary>
     ///     Supply available during a tick. The actual current supply will be less than or equal to this. Used

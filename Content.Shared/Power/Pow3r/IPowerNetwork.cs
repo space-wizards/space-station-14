@@ -1,30 +1,14 @@
-﻿using Content.Shared.Collections;
-
-namespace Content.Shared.Power.Pow3r;
+﻿namespace Content.Shared.Power.Pow3r;
 
 public interface IPowerNetwork
 {
-    NodeId Id { get; set; }
+    HashSet<EntityUid> Chargers { get; set; }
 
-    /// <summary>
-    ///     Power generators
-    /// </summary>
-    List<NodeId> Supplies { get; set; }
+    HashSet<EntityUid> Dischargers { get; set; }
 
-    /// <summary>
-    ///     Power consumers.
-    /// </summary>
-    List<NodeId> Loads { get; set; }
+    HashSet<EntityUid> Consumers { get; set; }
 
-    /// <summary>
-    ///     Batteries that are draining power from this network (connected to the INPUT port of the battery).
-    /// </summary>
-    List<NodeId> BatteryLoads { get; set; }
-
-    /// <summary>
-    ///     Batteries that are supplying power to this network (connected to the OUTPUT port of the battery).
-    /// </summary>
-    List<NodeId> BatterySupplies { get; set; }
+    HashSet<EntityUid> Suppliers { get; set; }
 
     /// <summary>
     ///     The total load on the power network as of last tick.

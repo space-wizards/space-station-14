@@ -1,6 +1,5 @@
 using Content.Shared.Power.Components;
 using Content.Shared.Power.Events;
-using Content.Shared.Power.NodeGroups;
 
 namespace Content.Shared.Power.Systems;
 
@@ -21,9 +20,9 @@ public abstract partial class SharedPowerNetSystem : EntitySystem
         _appearance.SetData(ent, PowerDeviceVisuals.Powered, args.Powered, ent.Comp);
     }
 
-    public virtual void InitPowerNet(PowerNet powerNet) { }
+    public virtual void InitPowerNet(Entity<PowerNetComponent> powerNet) { }
 
-    public virtual void DestroyPowerNet(PowerNet powerNet) { }
+    public virtual void DestroyPowerNet(Entity<PowerNetComponent> powerNet) { }
 
-    public virtual void QueueReconnectPowerNet(PowerNet powerNet) { }
+    public virtual void QueueReconnectPowerNet(Entity<PowerNetComponent> powerNet) { }
 }

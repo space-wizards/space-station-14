@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Shared.Collections;
-using Content.Shared.Power.Pow3r;
+using Content.Server.Collections;
+using Content.Server.Power.Pow3r.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.Threading;
 
@@ -23,14 +23,14 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         };
     }
 
-    private sealed class HeightComparer : Comparer<IPowerNetwork>
+    private sealed class HeightComparer : Comparer<SolverPowerNetwork>
     {
         public static HeightComparer Instance { get; } = new();
 
-        public override int Compare(IPowerNetwork? x, IPowerNetwork? y)
+        public override int Compare(SolverPowerNetwork x, SolverPowerNetwork y)
         {
-            if (x!.Height == y!.Height) return 0;
-            if (x!.Height > y!.Height) return 1;
+            if (x.Height == y.Height) return 0;
+            if (x.Height > y.Height) return 1;
             return -1;
         }
     }
@@ -76,7 +76,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
 
     private void ClearLoadsAndSupplies(PowerState state)
     {
-        foreach (var load in state.Loads.Values)
+        foreach (ref var load in state.Loads.Values)
         {
             if (load.Paused)
                 continue;
@@ -84,7 +84,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
             load.ReceivingPower = 0;
         }
 
-        foreach (var supply in state.Supplies.Values)
+        foreach (ref var supply in state.Supplies.Values)
         {
             if (supply.Paused)
                 continue;
@@ -94,7 +94,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private void UpdateNetwork(IPowerNetwork network, PowerState state, float frameTime)
+    private void UpdateNetwork(SolverPowerNetwork network, PowerState state, float frameTime)
     {
         // TODO Look at SIMD.
         // a lot of this is performing very basic math on arrays of data objects like batteries
@@ -297,7 +297,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
     {
         // Clear supplying/loading on any batteries that haven't been marked by usage.
         // Because we need this data while processing ramp-pegging, we can't clear it at the start.
-        foreach (var battery in state.Batteries.Values)
+        foreach (ref var battery in state.Batteries.Values)
         {
             if (battery.Paused)
                 continue;
@@ -319,10 +319,10 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private List<List<IPowerNetwork>> GroupByNetworkDepth(PowerState state)
+    private List<List<SolverPowerNetwork>> GroupByNetworkDepth(PowerState state)
     {
-        List<List<IPowerNetwork>> groupedNetworks = new();
-        foreach (var network in state.Networks.Values)
+        List<List<SolverPowerNetwork>> groupedNetworks = new();
+        foreach (ref var network in state.Networks.Values)
         {
             network.Height = -1;
         }
@@ -349,9 +349,9 @@ public sealed class BatteryRampPegSolver : IPowerSolver
     /// group in parallel. This assumes that batteries are the only device that connects to multiple networks, and
     /// is thus the only obstacle to solving everything in parallel.
     /// </summary>
-    private void ValidateNetworkGroups(PowerState state, List<List<IPowerNetwork>> groupedNetworks)
+    private void ValidateNetworkGroups(PowerState state, List<List<SolverPowerNetwork>> groupedNetworks)
     {
-        HashSet<IPowerNetwork> nets = new();
+        HashSet<SolverPowerNetwork> nets = new();
         HashSet<NodeId> netIds = new();
         foreach (var layer in groupedNetworks)
         {
@@ -419,7 +419,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private static void RecursivelyEstimateNetworkDepth(PowerState state, IPowerNetwork network, List<List<IPowerNetwork>> groupedNetworks)
+    private static void RecursivelyEstimateNetworkDepth(PowerState state, SolverPowerNetwork network, List<List<SolverPowerNetwork>> groupedNetworks)
     {
         network.Height = -2;
         var height = -1;
@@ -460,7 +460,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         public BatteryRampPegSolver Solver;
         public PowerState State;
         public float FrameTime;
-        public List<IPowerNetwork> Networks;
+        public List<SolverPowerNetwork> Networks;
 
         public void Execute(int index)
         {

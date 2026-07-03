@@ -217,7 +217,7 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
 
         (float, float)? networkStats = null;
         if (connector.Net != null)
-            networkStats = (connector.Net.LastCombinedLoad, connector.Net.LastCombinedSupply);
+            networkStats = (connector.Net.Value.Comp.LastCombinedLoad, connector.Net.Value.Comp.LastCombinedSupply);
 
         _uiSystem.SetUiState(
             uid,

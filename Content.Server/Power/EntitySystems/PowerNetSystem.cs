@@ -1,12 +1,11 @@
-using System.Linq;
 using Content.Server.Power.Pow3r;
+using Content.Server.Power.Pow3r.Nodes;
 using Content.Server.Power.Pow3r.Solvers;
 using Content.Shared.CCVar;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.Events;
-using Content.Shared.Power.NodeGroups;
 using Content.Shared.Power.Pow3r;
 using Content.Shared.Power.Pow3r.Nodes;
 using Content.Shared.Power.Systems;
@@ -35,7 +34,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
     [Dependency] private EntityQuery<PowerSupplierComponent> _supplierQuery = default!;
 
     private readonly PowerState _powerState = new();
-    private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
+    private readonly HashSet<Entity<PowerNetComponent>> _powerNetReconnectQueue = new();
 
     private BatteryRampPegSolver _solver = new();
 
@@ -89,7 +88,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
     private void PowerReceiverShutdown(EntityUid uid, PowerReceiverComponent component,
         ComponentShutdown args)
     {
-        _powerState.Loads.Free(component.Id);
+        _powerState.Loads.Free(((SolverPowerLoad)component.Load).Id);
     }
 
     private void PowerReceiverRemove(Entity<PowerReceiverComponent> ent, ref ComponentRemove args)
@@ -97,7 +96,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         if (ent.Comp.Provider != null
             && _connectorQuery.TryComp(ent.Owner, out var connector)
             && connector.Net != null)
-            _handler.RemoveReceiver(connector.Net, ent.AsNullable(), ent.Comp.Provider.Value);
+            _handler.RemoveReceiver(connector.Net.Value, ent.AsNullable(), ent.Comp.Provider.Value);
     }
 
     private static void PowerReceiverPaused(
@@ -176,19 +175,19 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         component.Paused = false;
     }
 
-    public override void InitPowerNet(PowerNet powerNet)
+    public override void InitPowerNet(Entity<PowerNetComponent> powerNet)
     {
         AllocNetwork(powerNet);
         _powerState.GroupedNets = null;
     }
 
-    public override void DestroyPowerNet(PowerNet powerNet)
+    public override void DestroyPowerNet(Entity<PowerNetComponent> powerNet)
     {
         _powerState.Networks.Free(powerNet.Id);
         _powerState.GroupedNets = null;
     }
 
-    public override void QueueReconnectPowerNet(PowerNet powerNet)
+    public override void QueueReconnectPowerNet(Entity<PowerNetComponent> powerNet)
     {
         _powerNetReconnectQueue.Add(powerNet);
         _powerState.GroupedNets = null;
@@ -434,14 +433,15 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         battery.Id = batteryId;
     }
 
-    private void AllocNetwork<T>(T network) where T : class, IPowerNetwork
+    private void AllocNetwork(Entity<PowerNetComponent> network)
     {
         _powerState.Networks.Allocate(out var networkId) = network;
         network.Id = networkId;
     }
 
-    private void DoReconnectPowerNet(PowerNet net)
+    private void DoReconnectPowerNet(Entity<PowerNetComponent> network)
     {
+        var net = (SolverPowerNetwork) network.Comp.Network;
         net.Loads.Clear();
         net.Supplies.Clear();
         net.BatteryLoads.Clear();

@@ -3,7 +3,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Sandbox.Commands
@@ -73,7 +73,7 @@ namespace Content.Server.Sandbox.Commands
             if (group == null)
                 return;
 
-            foreach (var x in group.Nodes)
+            foreach (var x in group.Value.Comp.Nodes)
             {
                 if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
                     continue;

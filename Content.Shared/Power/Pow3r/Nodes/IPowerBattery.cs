@@ -1,6 +1,4 @@
-﻿using Content.Shared.Collections;
-
-namespace Content.Shared.Power.Pow3r.Nodes;
+﻿namespace Content.Shared.Power.Pow3r.Nodes;
 
 public interface IPowerBattery : IPowerNode
 {
@@ -51,10 +49,6 @@ public interface IPowerBattery : IPowerNode
     float DesiredPower { get; set; }
 
     float SupplyRampTarget { get; set; }
-
-    NodeId LinkedNetworkCharging { get; set; }
-
-    NodeId LinkedNetworkDischarging { get; set; }
 
     /// <summary>
     ///  Theoretical maximum effective supply, assuming the network providing power to this battery continues to supply it

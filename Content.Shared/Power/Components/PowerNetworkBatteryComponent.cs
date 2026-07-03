@@ -1,5 +1,4 @@
-﻿using Content.Shared.Collections;
-using Content.Shared.Guidebook;
+﻿using Content.Shared.Guidebook;
 using Content.Shared.Power.Pow3r.Nodes;
 
 namespace Content.Shared.Power.Components;
@@ -12,84 +11,166 @@ namespace Content.Shared.Power.Components;
 ///     and battery storage should be handed off to components like <see cref="BatteryComponent"/>.
 /// </remarks>
 [RegisterComponent]
-public sealed partial class PowerNetworkBatteryComponent : Component, IPowerBattery
+public sealed partial class PowerNetworkBatteryComponent : Component
 {
     [ViewVariables]
     public float LastSupply = 0f;
 
-    [ViewVariables]
-    public NodeId Id { get; set; }
+    [DataField]
+    public bool Enabled
+    {
+        get => Battery.Enabled;
+        set => Battery.Enabled = value;
+    }
 
     [DataField]
-    public bool Enabled { get; set; }
+    public bool Paused
+    {
+        get => Battery.Paused;
+        set => Battery.Paused = value;
+    }
 
     [DataField]
-    public bool Paused { get; set; }
+    public bool CanCharge
+    {
+        get => Battery.CanCharge;
+        set => Battery.CanCharge = value;
+    }
 
     [DataField]
-    public bool CanDischarge { get; set; }
+    public bool CanDischarge
+    {
+        get => Battery.CanDischarge;
+        set => Battery.CanDischarge = value;
+    }
 
     [DataField]
-    public bool CanCharge { get; set; }
+    public float Capacity
+    {
+        get => Battery.Capacity;
+        set => Battery.Capacity = value;
+    }
 
     [DataField]
-    public float Capacity { get; set; }
+    public float MaxChargeRate
+    {
+        get => Battery.MaxChargeRate;
+        set => Battery.MaxChargeRate = value;
+    }
 
     [DataField]
-    public float MaxChargeRate { get; set; }
-
-    [DataField]
-    public float MaxThroughput { get; set; }
+    public float MaxThroughput
+    {
+        get => Battery.MaxThroughput;
+        set => Battery.MaxThroughput = value;
+    }
 
     [DataField]
     [GuidebookData]
-    public float MaxSupply { get; set; }
+    public float MaxSupply
+    {
+        get => Battery.MaxSupply;
+        set => Battery.MaxSupply = value;
+    }
 
     [DataField]
-    public float SupplyRampTolerance { get; set; }
+    public float SupplyRampTolerance
+    {
+        get => Battery.SupplyRampTolerance;
+        set => Battery.SupplyRampTolerance = value;
+    }
 
     [DataField]
-    public float SupplyRampRate { get; set; }
+    public float SupplyRampRate
+    {
+        get => Battery.SupplyRampRate;
+        set => Battery.SupplyRampRate = value;
+    }
 
     [DataField]
-    public float Efficiency { get; set; }
+    public float Efficiency
+    {
+        get => Battery.Efficiency;
+        set => Battery.Efficiency = value;
+    }
 
     [ViewVariables]
-    public float SupplyRampPosition { get; set; }
+    public float SupplyRampPosition
+    {
+        get => Battery.SupplyRampPosition;
+        set => Battery.SupplyRampPosition = value;
+    }
 
     [ViewVariables]
-    public float CurrentSupply { get; set; }
+    public float CurrentSupply
+    {
+        get => Battery.CurrentSupply;
+        set => Battery.CurrentSupply = value;
+    }
 
     [ViewVariables]
-    public float CurrentStorage { get; set; }
+    public float CurrentStorage
+    {
+        get => Battery.CurrentStorage;
+        set => Battery.CurrentStorage = value;
+    }
 
     [ViewVariables]
-    public float CurrentReceiving { get; set; }
+    public float CurrentReceiving
+    {
+        get => Battery.CurrentReceiving;
+        set => Battery.CurrentReceiving = value;
+    }
 
     [ViewVariables]
-    public float LoadingNetworkDemand { get; set; }
+    public float LoadingNetworkDemand
+    {
+        get => Battery.LoadingNetworkDemand;
+        set => Battery.LoadingNetworkDemand = value;
+    }
 
     [ViewVariables]
-    public bool SupplyingMarked { get; set; }
+    public bool SupplyingMarked
+    {
+        get => Battery.SupplyingMarked;
+        set => Battery.SupplyingMarked = value;
+    }
 
     [ViewVariables]
-    public bool LoadingMarked { get; set; }
+    public bool LoadingMarked
+    {
+        get => Battery.LoadingMarked;
+        set => Battery.LoadingMarked = value;
+    }
 
     [ViewVariables]
-    public float AvailableSupply { get; set; }
+    public float AvailableSupply
+    {
+        get => Battery.AvailableSupply;
+        set => Battery.AvailableSupply = value;
+    }
 
     [ViewVariables]
-    public float DesiredPower { get; set; }
+    public float DesiredPower
+    {
+        get => Battery.DesiredPower;
+        set => Battery.DesiredPower = value;
+    }
 
     [ViewVariables]
-    public float SupplyRampTarget { get; set; }
+    public float SupplyRampTarget
+    {
+        get => Battery.SupplyRampTarget;
+        set => Battery.SupplyRampTarget = value;
+    }
 
     [ViewVariables]
-    public NodeId LinkedNetworkCharging { get; set; }
+    public float MaxEffectiveSupply
+    {
+        get => Battery.MaxEffectiveSupply;
+        set => Battery.MaxEffectiveSupply = value;
+    }
 
     [ViewVariables]
-    public NodeId LinkedNetworkDischarging { get; set; }
-
-    [ViewVariables]
-    public float MaxEffectiveSupply { get; set; }
+    public IPowerBattery Battery;
 }

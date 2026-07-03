@@ -5,7 +5,7 @@ public static class PowerSolverShared
     public static void UpdateRampPositions(float frameTime, PowerState state)
     {
         // Update supplies to move their ramp position towards target, if necessary.
-        foreach (var supply in state.Supplies.Values)
+        foreach (ref var supply in state.Supplies.Values)
         {
             if (supply.Paused)
                 continue;
@@ -45,7 +45,7 @@ public static class PowerSolverShared
         }
 
         // Batteries too.
-        foreach (var battery in state.Batteries.Values)
+        foreach (ref var battery in state.Batteries.Values)
         {
             if (battery.Paused)
                 continue;

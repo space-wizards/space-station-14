@@ -1,6 +1,6 @@
 ﻿using Content.Server.Popups;
 using Content.Shared.Power.Nodes;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;

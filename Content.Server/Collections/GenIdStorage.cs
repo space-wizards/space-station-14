@@ -19,7 +19,7 @@ public static class GenIdStorage
 /// <remarks>
 /// The advantage of this storage method is extremely fast, O(1) lookup (way faster than Dictionary).
 /// Resolving a value in the storage is a single array load and generation compare. Extremely fast.
-/// Indices can also be cached into temporary
+///
 /// Disadvantages are that storage cannot be shrunk, and sparse storage is inefficient space wise.
 /// Also, this implementation does not have optimizations necessary to make sparse iteration efficient.
 ///
@@ -32,6 +32,15 @@ public static class GenIdStorage
 /// When we free a node, we bump the generation of the slot and make it the head of the linked list.
 /// The generation being bumped means that any IDs to this slot will fail to resolve (generation mismatch).
 /// </remarks>
+/// <example>
+/// To iterate through this collection, use a foreach loop with a ref var definition:
+/// <code>
+/// foreach(ref var i in storage)
+/// {
+///     foo++;
+/// }
+/// </code>
+/// </example>
 public sealed class GenIdStorage<T>
 {
 
@@ -45,7 +54,7 @@ public sealed class GenIdStorage<T>
 
     public ref T this[NodeId id]
     {
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
             ref var slot = ref _storage[id.Index];
@@ -144,7 +153,7 @@ public sealed class GenIdStorage<T>
         _nextFree = idx;
     }
 
-    //[MethodImpl(MethodImplOptions.NoInlining)]
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void ReAllocate()
     {
         var oldLength = _storage.Length;
@@ -187,7 +196,7 @@ public sealed class GenIdStorage<T>
         public T Value;
     }
 
-    //[MethodImpl(MethodImplOptions.NoInlining)]
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static void ThrowKeyNotFound()
     {
         throw new KeyNotFoundException();
@@ -209,26 +218,29 @@ public sealed class GenIdStorage<T>
 
         public int Count => _owner.Count;
 
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumeratorInterface();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumeratorInterface();
+
+        private IEnumerator<T> GetEnumeratorInterface()
         {
-            return GetEnumerator();
+            var slots = _owner._storage;
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].NextSlot < 0)
+                {
+                    yield return slots[i].Value;
+                }
+            }
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public ref struct Enumerator
         {
-            return GetEnumerator();
-        }
-
-        public struct Enumerator : IEnumerator<T>
-        {
-            // Save the array in the enumerator here to avoid a few pointer dereferences.
-            private readonly Slot[] _owner;
+            private readonly Slot[] _slots;
             private int _index;
 
             public Enumerator(GenIdStorage<T> owner)
             {
-                _owner = owner._storage;
-                Current = default!;
+                _slots = owner._storage;
                 _index = -1;
             }
 
@@ -237,31 +249,16 @@ public sealed class GenIdStorage<T>
                 while (true)
                 {
                     _index += 1;
-                    if (_index >= _owner.Length)
+                    if (_index >= _slots.Length)
                         return false;
 
-                    ref var slot = ref _owner[_index];
-
-                    if (slot.NextSlot < 0)
-                    {
-                        Current = slot.Value;
+                    if (_slots[_index].NextSlot < 0)
                         return true;
-                    }
                 }
             }
 
-            public void Reset()
-            {
-                _index = -1;
-            }
-
-            object IEnumerator.Current => Current!;
-
-            public T Current { get; private set; }
-
-            public void Dispose()
-            {
-            }
+            // Returns a direct managed pointer to the array element
+            public ref T Current => ref _slots[_index].Value;
         }
     }
 }

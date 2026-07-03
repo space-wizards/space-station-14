@@ -1,11 +1,10 @@
-﻿using Content.Shared.Collections;
-using Content.Shared.Power.Pow3r.Nodes;
+﻿using Content.Shared.Power.Pow3r.Nodes;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class PowerReceiverComponent : Component, IPowerLoad
+public sealed partial class PowerReceiverComponent : Component
 {
     [ViewVariables]
     public bool Powered;
@@ -17,7 +16,11 @@ public sealed partial class PowerReceiverComponent : Component, IPowerLoad
     ///     Amount of charge this needs from an APC per second to function.
     /// </summary>
     [DataField("powerLoad")]
-    public float DesiredPower { get; set; }
+    public float DesiredPower
+    {
+        get => Load.DesiredPower;
+        set => Load.DesiredPower = value;
+    }
 
     /// <summary>
     ///     When false, causes this to appear powered even if not receiving power from an Apc.
@@ -29,10 +32,11 @@ public sealed partial class PowerReceiverComponent : Component, IPowerLoad
     ///     When false, causes this to never appear powered.
     /// </summary>
     [DataField]
-    public bool Enabled { get; set; } = true;
-
-    [ViewVariables]
-    public NodeId Id { get; set; }
+    public bool Enabled
+    {
+        get => Load.Enabled;
+        set => Load.Enabled = value;
+    }
 
     [DataField]
     public bool Paused { get; set; }
@@ -40,6 +44,6 @@ public sealed partial class PowerReceiverComponent : Component, IPowerLoad
     [ViewVariables]
     public float ReceivingPower { get; set; }
 
-    [ViewVariables]
-    public NodeId LinkedNetwork { get; set; }
+    [DataField]
+    public IPowerLoad Load { get; set; }
 }
