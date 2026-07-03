@@ -6,6 +6,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Chat.Commands;
 
+[Obsolete("Use SetChatCommand instead.")]
 [AdminCommand(AdminFlags.Admin)]
 public sealed partial class SetOOCCommand : LocalizedCommands
 {
