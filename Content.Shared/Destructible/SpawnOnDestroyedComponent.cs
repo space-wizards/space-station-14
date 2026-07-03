@@ -5,16 +5,17 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Destructible;
 
 /// <summary>
-/// This entity will spawn things at its location while getting destroyed.
+/// This entity will spawn things at its location while getting *destroyed*.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDestructibleSystem))]
 public sealed partial class SpawnOnDestroyedComponent : Component
 {
+    // Filthy dummy entity for spawning delayed.
     public static readonly EntProtoId TempEntity = "TemporaryEntityForTimedDespawnSpawners";
 
     /// <summary>
-    ///     Entity table to spawn from.
+    /// Entities that will spawn from this entity.
     /// </summary>
     [DataField(required: true)]
     public EntityTableSelector Spawn;
@@ -23,17 +24,16 @@ public sealed partial class SpawnOnDestroyedComponent : Component
     /// Time in seconds to wait before spawning entities. Useful when your entity also explodes.
     /// </summary>
     /// <remarks>
-    /// Overrides <see cref="TransferForensics"/> and won't spawn
+    /// Overrides <see cref="TransferForensics"/> and won't spawn in containers.
     /// </remarks>
     [DataField]
     public TimeSpan? SpawnAfter;
 
     /// <summary>
-    /// How far from the destroyed entity to spawn, using ((-Offset, Offset), (-Offset, Offset)).
-    /// todo make radius?
+    /// How far from the destroyed entity to spawn.
     /// </summary>
     [DataField]
-    public float Offset = 0.5f;
+    public float? Offset = 0.5f;
 
     /// <summary>
     /// Spawned items will try to copy the forensics of the destroyed entity.

@@ -1,9 +1,5 @@
-using Content.Server.Forensics;
 using Content.Server.Spawners.Components;
-using Content.Server.Spawners.EntitySystems;
 using Content.Shared.Destructible;
-using Content.Shared.EntityTable;
-using Content.Shared.Stacks;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -14,38 +10,41 @@ namespace Content.Server.Destructible;
 // Partial for spawning entities on destruction.
 public sealed partial class DestructibleSystem
 {
-    [Dependency] private SharedStackSystem _stackSystem = default!;
-    [Dependency] private SharedTransformSystem _xformSystem = default!;
-    [Dependency] private EntityTableSystem _entityTableSystem = default!;
-    [Dependency] private SpawnOnDespawnSystem _spawnOnDespawnSystem = default!;
-    [Dependency] private ForensicsSystem _forensicsSystem = default!;
-
     [SubscribeLocalEvent]
     private void OnSpawnDestroy(Entity<SpawnOnDestroyedComponent> ent, ref DestructionEventArgs _)
     {
         var xform = Transform(ent);
+        var totalSpawned = new HashSet<EntityUid>();
 
         for (var i = 0; i < _stackSystem.GetCount(ent.Owner); i++)
         {
             foreach (var spawn in _entityTableSystem.GetSpawns(ent.Comp.Spawn))
             {
-                var position = xform.Coordinates.Offset(Random.NextVector2(ent.Comp.Offset));
+                var position = xform.Coordinates;
+                if (ent.Comp.Offset is not null)
+                    position = position.Offset(Random.NextVector2(ent.Comp.Offset.Value));
 
                 if (ent.Comp.SpawnAfter is not null)
-                    SpawnDelayed(spawn, position, ent.Comp.SpawnAfter.Value);
+                {
+                    var spawned = SpawnDelayed(spawn, position, ent.Comp.SpawnAfter.Value);
+                    totalSpawned.Add(spawned);
+                }
                 else
                 {
                     var spawned = SpawnNow(spawn, position, (ent.Owner, ent.Comp, xform));
                     CopyForensics(ent, spawned);
+                    totalSpawned.Add(spawned);
                 }
             }
         }
+
+        _stackSystem.MergeStacks(totalSpawned);
     }
 
     /// <summary>
     /// Delayed spawning is done here. Entities spawned this way can't be in containers or have forensics.
     /// </summary>
-    private void SpawnDelayed(EntProtoId toSpawn, EntityCoordinates position, TimeSpan delay)
+    private EntityUid SpawnDelayed(EntProtoId toSpawn, EntityCoordinates position, TimeSpan delay)
     {
         var spawner = Spawn(SpawnOnDestroyedComponent.TempEntity, position);
 
@@ -54,6 +53,8 @@ public sealed partial class DestructibleSystem
 
         EnsureComp<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
         _spawnOnDespawnSystem.SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
+
+        return spawner;
     }
 
     private EntityUid SpawnNow(EntProtoId toSpawn, EntityCoordinates position, Entity<SpawnOnDestroyedComponent, TransformComponent> source)

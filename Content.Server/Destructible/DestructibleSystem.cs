@@ -7,15 +7,19 @@ using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
+using Content.Server.Spawners.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Triggers;
+using Content.Shared.EntityTable;
 using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Humanoid;
+using Content.Shared.Stacks;
 using Content.Shared.Trigger.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -41,6 +45,12 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     [Dependency] public SharedSolutionContainerSystem SolutionContainerSystem = default!;
     [Dependency] public StackSystem StackSystem = default!;
     [Dependency] public TriggerSystem TriggerSystem = default!;
+
+    [Dependency] private EntityTableSystem _entityTableSystem = default!;
+    [Dependency] private ForensicsSystem _forensicsSystem = default!;
+    [Dependency] private SharedStackSystem _stackSystem = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private SpawnOnDespawnSystem _spawnOnDespawnSystem = default!;
 
     /// <summary>
     /// Minimum damage to invoke overkill behavior.
