@@ -132,11 +132,12 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public struct GhostWarp
     {
-        public GhostWarp(NetEntity entity, string displayName, bool isWarpPoint)
+        public GhostWarp(NetEntity entity, string displayName, bool isWarpPoint, int followersCount)
         {
             Entity = entity;
             DisplayName = displayName;
             IsWarpPoint = isWarpPoint;
+            FollowersCount = followersCount;
         }
 
         /// <summary>
@@ -154,6 +155,11 @@ namespace Content.Shared.Ghost
         /// Whether this warp represents a warp point or a player
         /// </summary>
         public bool IsWarpPoint { get;  }
+
+        /// <summary>
+        /// How many ghosts are following this point.
+        /// </summary>
+        public int FollowersCount { get;  }
     }
 
     /// <summary>
@@ -163,15 +169,21 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public sealed class GhostWarpsResponseEvent : EntityEventArgs
     {
-        public GhostWarpsResponseEvent(List<GhostWarp> warps)
+        public GhostWarpsResponseEvent(List<GhostWarp> playerWarps, List<GhostWarp> locationWarps)
         {
-            Warps = warps;
+            PlayerWarps = playerWarps;
+            LocationWarps = locationWarps;
         }
 
         /// <summary>
-        /// A list of warp points.
+        /// A list of warp points that are players.
         /// </summary>
-        public List<GhostWarp> Warps { get; }
+        public List<GhostWarp> PlayerWarps { get; }
+
+        /// <summary>
+        /// A list of warp points that are places.
+        /// </summary>
+        public List<GhostWarp> LocationWarps { get; }
     }
 
     /// <summary>

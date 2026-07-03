@@ -1,4 +1,5 @@
-﻿using Content.Client.Gameplay;
+﻿using System.Linq;
+using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Ghost.Widgets;
@@ -96,7 +97,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         if (Gui?.TargetWindow is not { } window)
             return;
 
-        window.UpdateWarps(msg.Warps);
+        window.UpdateWarps(msg.PlayerWarps.Concat(msg.LocationWarps));
         window.Populate();
     }
 
