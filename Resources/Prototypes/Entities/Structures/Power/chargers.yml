@@ -1,13 +1,10 @@
+# Base recharging behaviours
 - type: entity
   abstract: true
-  parent: [BaseMachinePowered, ConstructibleMachine]
   id: BaseRecharger
   placement:
     mode: SnapgridCenter
   components:
-  - type: Transform
-    anchored: true
-    noRot: false
   - type: Sprite
     snapCardinals: true
   - type: Appearance
@@ -15,8 +12,6 @@
     slotId: charger_slot
   - type: ApcPowerReceiver
     powerLoad: 1 # same as draw given in ChargerComponent.PassiveDraw; increased when it is actually charging something
-  - type: Anchorable
-    delay: 1
   - type: Destructible
     thresholds:
     - trigger:
@@ -37,6 +32,31 @@
   parent: BaseRecharger
   id: BaseItemRecharger
   components:
+  - type: PowerChargerVisuals
+  - type: ContainerContainer
+    containers:
+      charger_slot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: RequireProjectileTarget
+
+# Base physical rechargers
+- type: entity
+  abstract: true
+  parent: [BaseRecharger, BaseMachinePowered, ConstructibleMachine]
+  id: BaseRechargerMachine
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Anchorable
+    delay: 1
+
+- type: entity
+  abstract: true
+  parent: [BaseItemRecharger, BaseMachinePowered, ConstructibleMachine]
+  id: BaseItemRechargerMachine
+  components:
   - type: Sprite
     drawdepth: SmallObjects
     layers:
@@ -56,16 +76,10 @@
         - TabletopMachineMask
         layer:
         - BulletImpassable
-  - type: PowerChargerVisuals
-  - type: ContainerContainer
-    containers:
-      charger_slot: !type:ContainerSlot
-      machine_board: !type:Container
-      machine_parts: !type:Container
-  - type: RequireProjectileTarget
 
+# Instances
 - type: entity
-  parent: BaseItemRecharger
+  parent: BaseItemRechargerMachine
   id: PowerCellRecharger
   name: cell recharger
   description: An older model recharger that can recharge power cells.
@@ -110,7 +124,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: [ BaseItemRecharger, ConstructibleMachine ]
+  parent: [ BaseItemRechargerMachine, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
   description: A specialized machine made for recharging the heavy cage batteries used by ship-mounted weapons.
@@ -151,7 +165,7 @@
     price: 500
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: BaseItemRechargerMachine
   id: WeaponCapacitorRecharger
   name: recharger
   description: A modern recharging station that can fit both power cells and small electronic devices.
@@ -177,7 +191,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: BaseItemRechargerMachine
   id: TurboItemRecharger
   name: turbo recharger
   description: An overclocked recharger. Not recommended for use around asthmatics.
@@ -233,7 +247,7 @@
           - PotatoBattery
 
 - type: entity
-  parent: BaseRecharger
+  parent: BaseRechargerMachine
   id: BorgCharger
   name: cyborg recharging station
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.

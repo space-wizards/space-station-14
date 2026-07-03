@@ -4,7 +4,6 @@
   name: screen
   description: Displays text or time.
   components:
-  - type: Rotatable
   - type: TextScreenVisuals
     textOffset: 0,3
     timerOffset: 0,-4

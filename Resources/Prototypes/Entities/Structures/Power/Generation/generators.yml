@@ -2,7 +2,6 @@
 
 - type: entity
   abstract: true
-  parent: BaseMachine
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
@@ -13,17 +12,6 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/engine_hum.ogg
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.4,-0.5,0.4,0.3"
-        density: 190
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
@@ -43,7 +31,6 @@
     supplyRate: 3000
     supplyRampRate: 500
     supplyRampTolerance: 500
-  - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -78,6 +65,23 @@
   - type: GuideHelp
     guides:
     - ShuttleCraft
+
+- type: entity
+  abstract: true
+  parent: [BaseGenerator, BaseMachine]
+  id: BaseGeneratorStanding
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
 
 # Base Wallmount Generator
 
@@ -147,7 +151,7 @@
 # Generators in use
 
 - type: entity
-  parent: BaseGenerator
+  parent: BaseGeneratorStanding
   id: GeneratorBasic
   suffix: Basic, 3kW
   components:
@@ -155,7 +159,7 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseGenerator
+  parent: BaseGeneratorStanding
   id: GeneratorBasic15kW
   suffix: Basic, 15kW
   components:
@@ -226,7 +230,7 @@
 # RTG - no fuel requirement
 
 - type: entity
-  parent: BaseGenerator
+  parent: BaseGeneratorStanding
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.

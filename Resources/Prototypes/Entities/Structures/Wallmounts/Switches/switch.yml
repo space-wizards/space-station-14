@@ -14,7 +14,6 @@
   - type: SignalSwitch
   - type: UseDelay
     delay: 0.5 # prevent light-toggling auto-clickers.
-  - type: Rotatable
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
@@ -64,7 +63,6 @@
     onPort: Pressed
     offPort: Pressed
     statusPort: Pressed
-  - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
@@ -75,8 +73,6 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
-  - type: Transform
-    anchored: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -103,15 +99,12 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
-  - type: Rotatable
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: Apc
     transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
   - type: ApcNetworkConnection
   - type: ApcNetSwitch
-  - type: Transform
-    anchored: false
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
@@ -444,7 +437,6 @@
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
-  - type: Rotatable
   - type: Fixtures
 
 - type: entity

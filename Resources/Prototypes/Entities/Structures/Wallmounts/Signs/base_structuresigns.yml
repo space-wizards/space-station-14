@@ -6,7 +6,6 @@
   components:
   - type: WallMount
     arc: 360
-  - type: Rotatable
   - type: Destructible
     thresholds:
     - trigger:
@@ -20,5 +19,3 @@
     snapCardinals: true
   - type: StaticPrice
     price: 20
-  - type: Transform
-    anchored: false
