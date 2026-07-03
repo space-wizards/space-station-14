@@ -479,7 +479,7 @@ public sealed partial class ShuttleSystem
                 .Select(o => o.MapId)
                 .ToList()
                 .OrderBy(o => o.GetHashCode());
-            
+
             // Get the first map that passes the FTL whitelist
             mapId = maps.First(o =>
                 TryComp<FTLDestinationComponent>(Maps.GetMapOrInvalid(o), out var destination)
