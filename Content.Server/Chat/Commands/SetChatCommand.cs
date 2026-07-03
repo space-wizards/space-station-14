@@ -29,7 +29,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length > 2)
+        if (args.Length > 2 || args.Length == 0)
         {
             shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2)));
             return;
@@ -38,12 +38,12 @@ public sealed partial class SetChatCommand : LocalizedCommands
         // If we can't find the chat name in the look-up, send an error.
         if (!ChatMap.TryGetValue(args[0], out var entry))
         {
-            shell.WriteError("shell-unknown-error"); // Needs to be its own separate error message, I think
+            shell.WriteError(Loc.GetString("shell-unknown-error")); // Needs to be its own separate error message, I think
             return;
         }
 
         bool enabled;
-        if (args[1] == string.Empty)
+        if (args.Length == 1)
         {
             enabled = !_configManager.GetCVar(entry.CVar);
         }
@@ -51,7 +51,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         {
             if (!bool.TryParse(args[1], out enabled))
             {
-                shell.WriteError("shell-invalid-bool");
+                shell.WriteError(Loc.GetString("shell-invalid-bool"));
                 return;
             }
         }
@@ -64,7 +64,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
     {
         return args.Length switch
         {
-            1 => CompletionResult.FromOptions([DeadChat, LoocChat, OocChat]),
+            1 => CompletionResult.FromOptions(ChatMap.Keys),
             2 => CompletionResult.FromOptions(CompletionHelper.Booleans),
             _ => CompletionResult.Empty,
         };
