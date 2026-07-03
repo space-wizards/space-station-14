@@ -317,13 +317,10 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the entity with the most non-admin ghosts following it.
+    /// Gets all entities that are being followed by non-admin ghosts along with follow count for each entity.
     /// </summary>
-    public EntityUid? GetMostGhostFollowed()
+    public Dictionary<EntityUid, int> GetAllFollowed()
     {
-        EntityUid? picked = null;
-        var most = 0;
-
         // Keep a tally of how many ghosts are following each entity
         var followedEnts = new Dictionary<EntityUid, int>();
 
@@ -345,11 +342,27 @@ public sealed partial class FollowerSystem : EntitySystem
             // Add new entry or increment existing
             followedEnts.TryGetValue(followed, out var currentValue);
             followedEnts[followed] = currentValue + 1;
+        }
 
-            if (followedEnts[followed] > most)
+        return followedEnts;
+    }
+
+    /// <summary>
+    /// Gets the entity with the most non-admin ghosts following it.
+    /// </summary>
+    public EntityUid? GetMostGhostFollowed()
+    {
+        EntityUid? picked = null;
+        var most = 0;
+
+        var followedEnts = GetAllFollowed();
+
+        foreach (var (followed, followers) in followedEnts)
+        {
+            if (followers > most)
             {
                 picked = followed;
-                most = followedEnts[followed];
+                most = followers;
             }
         }
 

@@ -169,21 +169,15 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public sealed class GhostWarpsResponseEvent : EntityEventArgs
     {
-        public GhostWarpsResponseEvent(List<GhostWarp> playerWarps, List<GhostWarp> locationWarps)
+        public GhostWarpsResponseEvent(List<GhostWarp> warps)
         {
-            PlayerWarps = playerWarps;
-            LocationWarps = locationWarps;
+            Warps = warps;
         }
 
         /// <summary>
-        /// A list of warp points that are players.
+        /// A list of warp points.
         /// </summary>
-        public List<GhostWarp> PlayerWarps { get; }
-
-        /// <summary>
-        /// A list of warp points that are places.
-        /// </summary>
-        public List<GhostWarp> LocationWarps { get; }
+        public List<GhostWarp> Warps { get; }
     }
 
     /// <summary>
@@ -205,6 +199,18 @@ namespace Content.Shared.Ghost
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class GhostnadoRequestEvent : EntityEventArgs;
+
+    /// <summary>
+    /// A client to server request for their ghost to be warped to a random followed entity.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class WarpToRandomFollowedRequestEvent : EntityEventArgs;
+    /// <summary>
+
+    /// A client to server request for their ghost to be warped to a random followable entity.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class WarpToRandomRequestEvent : EntityEventArgs;
 
     /// <summary>
     /// A client to server request for their ghost to return to body

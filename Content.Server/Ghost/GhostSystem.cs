@@ -37,6 +37,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost
 {
@@ -91,6 +92,8 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
             SubscribeNetworkEvent<GhostnadoRequestEvent>(OnGhostnadoRequest);
+            SubscribeNetworkEvent<WarpToRandomFollowedRequestEvent>(OnWarpToRandomFollowedRequest);
+            SubscribeNetworkEvent<WarpToRandomRequestEvent>(OnWarpToRandomRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
@@ -294,9 +297,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var playerWarps = GetPlayerWarps(entity);
-            var locationWarps = GetLocationWarps();
-            var response = new GhostWarpsResponseEvent(playerWarps.ToList(), locationWarps.ToList());
+            var response = new GhostWarpsResponseEvent(GetPlayerWarps(entity).Concat(GetLocationWarps()).ToList());
             RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
@@ -337,6 +338,37 @@ namespace Content.Server.Ghost
 
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
             _followerSystem.StartFollowingEntity(uid, target);
+        }
+
+        private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (!CanGhostWarp(args.SenderSession, out var uid))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random followed entity without being a ghost.");
+                return;
+            }
+
+            var allFollowed = _followerSystem.GetAllFollowed();
+            if (!allFollowed.TryFirstOrNull(x => x.Value > 0, out var match))
+                return;
+
+            _followerSystem.StartFollowingEntity(uid, match.Value.Key);
+        }
+
+        private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (!CanGhostWarp(args.SenderSession, out var uid))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random followable entity without being a ghost.");
+                return;
+            }
+
+            var allFollowed = _followerSystem.GetAllFollowed();
+            if(allFollowed.Count == 0)
+                return;
+            var match = _random.Pick(allFollowed);
+
+            _followerSystem.StartFollowingEntity(uid, match.Key);
         }
 
         private void WarpTo(EntityUid uid, EntityUid target)

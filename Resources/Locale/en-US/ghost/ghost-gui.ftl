@@ -13,9 +13,13 @@ ghost-gui-toggle-hearing-popup-off = You can now only hear radio and nearby mess
 
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
-ghost-target-window-warp-to-most-followed = Warp to Most Followed
-ghost-target-window-warp-to-random = Random warp
-ghost-target-window-warp-to-random-followed = Random followed warp
+ghost-target-window-warp-to-title = [bold]Quick Warp[/bold]
+ghost-target-window-warp-to-most-followed = The Most Followed
+ghost-target-window-warp-to-random-followed = Random Followed
+ghost-target-window-warp-to-random = Random
+ghost-target-window-warp-to-most-followed-tooltip = Warp to the most followed entity
+ghost-target-window-warp-to-random-followed-tooltip = Warp to a random entity that is being followed by at least one ghost
+ghost-target-window-warp-to-random-tooltip = Warp to a random entity
 
 ghost-roles-window-title = Ghost Roles
 ghost-roles-window-available-button = Available ({$rolesCount})

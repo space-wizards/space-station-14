@@ -17,6 +17,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
 
         public event Action<NetEntity>? WarpClicked;
         public event Action? OnGhostnadoClicked;
+        public event Action? OnWarpToRandomFollowedClicked;
+        public event Action? OnWarpToRandomClicked;
 
         public GhostTargetWindow()
         {
@@ -24,7 +26,8 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             SearchBar.OnTextChanged += OnSearchTextChanged;
 
             GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke();
-            WarpToRandomButton.OnPressed += WarpToRandomClicked;
+            WarpToRandomFollowedButton.OnPressed += _ => OnWarpToRandomFollowedClicked?.Invoke();
+            WarpToRandomButton.OnPressed += _ => OnWarpToRandomClicked?.Invoke();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -94,16 +97,6 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             UpdateVisibleButtons();
             // Reset scroll bar so they can see the relevant results.
             GhostScroll.SetScrollValue(Vector2.Zero);
-        }
-
-        private void WarpToRandomClicked(BaseButton.ButtonEventArgs args)
-        {
-            var random = IoCManager.Resolve<IRobustRandom>();
-
-            // todo check for null ?
-            var randomWarp = random.Pick(_warps);
-            var (name, warpTarget) = randomWarp;
-            WarpClicked?.Invoke(warpTarget);
         }
     }
 }
