@@ -12,10 +12,10 @@ namespace Content.Server.Github.Commands;
 /// and will also create one new issue on the targeted repository.
 /// </summary>
 [AdminCommand(AdminFlags.Server)]
-public sealed class TestGithubApiCommand : LocalizedCommands
+public sealed partial class TestGithubApiCommand : LocalizedCommands
 {
-    [Dependency] private readonly GithubApiManager _git = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private GithubApiManager _git = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public override string Command => Loc.GetString("github-command-test-name");
 

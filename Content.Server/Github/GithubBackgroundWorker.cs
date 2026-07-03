@@ -7,11 +7,11 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Github;
 
-public sealed class GithubBackgroundWorker
+public sealed partial class GithubBackgroundWorker
 {
-    [Dependency] private readonly GithubClient _client = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private GithubClient _client = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private ISawmill _sawmill = default!;
 

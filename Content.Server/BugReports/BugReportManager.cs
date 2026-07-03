@@ -18,16 +18,16 @@ namespace Content.Server.BugReports;
 /// <inheritdoc cref="IBugReportManager"/>
 public sealed partial class BugReportManager : IBugReportManager, IPostInjectInit
 {
-    [Dependency] private readonly IServerNetManager _net = default!;
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IAdminLogManager _admin = default!;
-    [Dependency] private readonly IGameMapManager _map = default!;
-    [Dependency] private readonly GithubApiManager _githubApiManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private IServerNetManager _net = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private PlayTimeTrackingManager _playTime = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IAdminLogManager _admin = default!;
+    [Dependency] private IGameMapManager _map = default!;
+    [Dependency] private GithubApiManager _githubApiManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private ISawmill _sawmill = default!;
 

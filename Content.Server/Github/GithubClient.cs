@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Content.Server.Github.Requests;
 using Content.Server.Github.Responses;
 using Content.Shared.CCVar;
-using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 
 namespace Content.Server.Github;
@@ -29,10 +28,10 @@ namespace Content.Server.Github;
 /// <br/> <see href="https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api?apiVersion=2022-11-28">Troubleshooting</see>
 /// </summary>
 /// <remarks>As it uses async, it should be called from background worker when possible, like <see cref="GithubBackgroundWorker"/>.</remarks>
-public sealed class GithubClient
+public sealed partial class GithubClient
 {
-    [Dependency] private readonly ILogManager _log = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private ILogManager _log = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     private HttpClient _httpClient = default!;
 
     private ISawmill _sawmill = default!;

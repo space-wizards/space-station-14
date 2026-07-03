@@ -4,9 +4,9 @@ using Content.Server.BugReports;
 
 namespace Content.Server.Github;
 
-public sealed class GithubApiManager
+public sealed partial class GithubApiManager
 {
-    [Dependency] private readonly GithubBackgroundWorker _githubWorker = default!;
+    [Dependency] private GithubBackgroundWorker _githubWorker = default!;
 
     public void Initialize()
     {
