@@ -143,6 +143,25 @@
       - NukeOpsUplink
 
 - type: listing
+  id: UplinkFingerGuns
+  name: uplink-finger-guns-name
+  description: uplink-finger-guns-desc
+  productEntity: WeaponFingerGuns
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWeaponry
+  - UplinkWearables
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+
+- type: listing
   id: uplinkRiggedBoxingGloves
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc

@@ -260,3 +260,87 @@
         whitelist:
           tags:
             - CartridgeMagnum
+
+- type: entity
+  name: white gloves
+  parent: ClothingHandsGlovesColorWhite
+  id: WeaponFingerGuns
+  description: Regular white gloves that do not keep you from frying.
+  components:
+  - type: Fiber
+    fiberColor: fibers-gunpowder-white
+  - type: FingerGuns
+  - type: ContainerContainer
+    containers:
+      finger_gun: !type:ContainerSlot
+  - type: StaticPrice
+    price: 1500
+
+- type: entity
+  name: finger guns
+  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
+  id: WeaponFingerGunsGun
+  description: Point and shoot.
+  noSpawn: true
+  components:
+  - type: FingerGunsGun
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/fingerguns.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/fingerguns.rsi
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+      params:
+        volume: -14
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+      params:
+        volume: -14
+    soundBoltOpened:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+      params:
+        volume: -14
+  - type: Gun
+    fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -14
+    availableModes:
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolCaselessRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazinePistolCaselessRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 1500
