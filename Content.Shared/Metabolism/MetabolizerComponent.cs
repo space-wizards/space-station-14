@@ -58,7 +58,7 @@ public sealed partial class MetabolizerComponent : Component
             SolutionName = "stomach",
             SolutionOnBody = false,
             TransferSolutionName = BloodstreamComponent.DefaultBloodSolutionName,
-            TransferRate = 0.1
+            TransferRate = 0.2
         },
         ["Bloodstream"] = new()
         {
