@@ -212,10 +212,10 @@
     - SiliconEmotes
   chatMessages: [chat-emote-msg-hiss]
   chatTriggers:
-   - hiss
-   - hisses
-   - hissed
-   - hissing
+  - hiss
+  - hisses
+  - hissed
+  - hissing
 
 # Vulpkanin
 - type: emote
@@ -323,10 +323,10 @@
     - SiliconEmotes
   chatMessages: [chat-emote-msg-caw]
   chatTriggers:
-   - caw
-   - caws
-   - cawed
-   - cawing
+  - caw
+  - caws
+  - cawed
+  - cawing
 
 # hand emotes
 - type: emote
