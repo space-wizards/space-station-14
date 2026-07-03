@@ -47,7 +47,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     /// <summary> Normal interactions. </summary>
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
             return;
 
         var component = ent.Comp;
@@ -86,14 +86,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
                 ? null
                 : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
         }
-        // make an attempt to ensure refinement is not blocked.
-        var attemptEvent = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(args.Target, ref attemptEvent);
-
-        if (attemptEvent.IsCancelled)
+        else
         {
-            verbDisabled = true;
-            verbMessage = attemptEvent.BlockCause;
+            // We have the necessary tool, make an attempt to ensure refinement is not blocked.
+            var attemptEvent = new AttemptToolRefineEvent(tool);
+            RaiseLocalEvent(args.Target, ref attemptEvent);
+
+            if (attemptEvent.IsCancelled)
+            {
+                verbDisabled = true;
+                verbMessage = attemptEvent.BlockCause;
+            }
         }
 
         verbMessage ??= component.VerbDefaultTooltip == null

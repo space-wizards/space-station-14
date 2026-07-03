@@ -17,7 +17,6 @@ public sealed partial class IonLawSystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedStationSystem _stationSystem = default!;
     [Dependency] private StationRecordsSystem _stationRecordsSystem = default!;
-    [Dependency] private ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
     private readonly Dictionary<string, List<IonLawSelector>> _selectors = new();
@@ -27,7 +26,7 @@ public sealed partial class IonLawSystem : EntitySystem
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("ion-law");
+        _sawmill = LogManager.GetSawmill("ion-law");
 
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         BuildSelectors();
@@ -258,7 +257,7 @@ public sealed partial class IonLawSystem : EntitySystem
                 {
                     return _random.Pick(dataset.Values);
                 }
-                _sawmill.Error("Selected DataSet (" + selector + ") was empty or not found" );
+                _sawmill.Error("Selected DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-dataset-empty-or-not-found");
             case RandomManifestFill randomManifestFill:
                 var stations = _stationSystem.GetStations();
@@ -278,18 +277,16 @@ public sealed partial class IonLawSystem : EntitySystem
                 {
                     return _random.Pick(fallbackDataset.Values);
                 }
-                _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found" );
+                _sawmill.Error("Fallback DataSet (" + selector + ") was empty or not found");
                 return Loc.GetString("ion-law-error-fallback-dataset-empty-or-not-found");
             case ConstantFill constantFill:
                 if (constantFill.BoolValue.HasValue)
                     return constantFill.BoolValue.Value;
-                _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill );
+                _sawmill.Error("The selected Constant Fill did not have a value: " + constantFill);
                 return Loc.GetString("ion-law-error-no-bool-value");
             default:
-            {
-                _sawmill.Error("Selected DataSet (" + selector + ") was not selected" );
+                _sawmill.Error("Selected DataSet (" + selector + ") was not selected");
                 return Loc.GetString("ion-law-error-no-selector-selected");
-            }
         }
     }
 }
