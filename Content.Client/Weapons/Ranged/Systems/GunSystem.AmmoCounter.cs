@@ -160,59 +160,25 @@ public sealed partial class GunSystem
 
     public sealed class CustomIconStatusControl : Control
     {
-        private readonly Texture _loadedSprite;
-        private readonly Texture _spentSprite;
-
         private readonly CustomBulletRenderer _customBulletRenderer;
-        private readonly TextureRect _chamberedBullet;
 
-        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows, bool drawChamber=false)
+        public CustomIconStatusControl(Texture loadedSprite, Texture spentTexture, int numberOfRows)
         {
             MinHeight = 15;
             HorizontalExpand = true;
             VerticalAlignment = VAlignment.Center;
 
-            _loadedSprite = loadedSprite;
-            _spentSprite = spentTexture;
-
-            AddChild(new BoxContainer
+            AddChild(_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
             {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
                 HorizontalAlignment = HAlignment.Right,
-                HorizontalExpand = true,
-                Children =
-                {
-                    (_customBulletRenderer = new CustomBulletRenderer(loadedSprite, spentTexture, numberOfRows)
-                    {
-                        HorizontalAlignment = HAlignment.Right,
-                        VerticalAlignment = VAlignment.Bottom,
-                    }
-                    ),
-                    (_chamberedBullet = new TextureRect
-                    {
-                        Texture = spentTexture,
-                        Margin = new Thickness(5, 0, 0, 0),
-                        HorizontalAlignment = HAlignment.Left,
-                        VerticalAlignment = VAlignment.Bottom,
-                    }),
-                },
+                VerticalAlignment = VAlignment.Bottom,
             });
         }
 
-        public void Update(int count, int capacity, bool drawMagazine=true, bool drawChamber=false, bool chambered=false)
+        public void Update(int count, int capacity)
         {
-            _customBulletRenderer.Visible = drawMagazine;
-            if (drawMagazine)
-            {
-                _customBulletRenderer.Capacity = capacity - (drawChamber ? 1 : 0);
-                _customBulletRenderer.Count = count - (drawChamber && chambered ? 1 : 0);
-            }
-
-            _chamberedBullet.Visible = drawChamber;
-            if (drawChamber)
-            {
-                _chamberedBullet.Texture = chambered ? _loadedSprite : _spentSprite;
-            }
+            _customBulletRenderer.Capacity = capacity;
+            _customBulletRenderer.Count = count;
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using Content.Shared.Weapons.Ranged;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
+﻿using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -19,23 +17,7 @@ public sealed partial class GunSystem
         if (args.Control is not CustomIconStatusControl customIcon)
             return;
 
-        var ammoEv = new GetAmmoCountEvent();
-        RaiseLocalEvent(ent, ref ammoEv);
-
-        if (HasComp<ChamberMagazineAmmoProviderComponent>(ent))
-        {
-            var chambered = GetChamberEntity(ent);
-            var magEntity = GetMagazineEntity(ent);
-            customIcon.Update(
-                ammoEv.Count,
-                ammoEv.Capacity,
-                magEntity != null,
-                true,
-                chambered != null);
-            return;
-        }
-
-        customIcon.Update(ammoEv.Count, ammoEv.Capacity);
+        customIcon.Update(GetAmmoCount(ent), GetAmmoCapacity(ent));
     }
 
     private void OnControl(Entity<CustomSpriteAmmoCounterComponent> ent, ref AmmoCounterControlEvent args)
