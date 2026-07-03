@@ -475,16 +475,13 @@ public sealed partial class ShuttleSystem
         if (!Exists(entity.Comp1.TargetCoordinates.EntityId))
         {
             // Get a list of maps
-            var maps = EntityQuery<MapComponent>()
-                .Select(o => o.MapId)
-                .ToList()
-                .OrderBy(o => o.GetHashCode());
+            var maps = EntityQuery<MapComponent, FTLDestinationComponent>()
+                .OrderBy(o => o.Item1.MapId.GetHashCode());
 
             // Get the first map that passes the FTL whitelist
             mapId = maps.First(o =>
-                TryComp<FTLDestinationComponent>(Maps.GetMapOrInvalid(o), out var destination)
-                && _whitelistSystem.IsWhitelistPassOrNull(destination.Whitelist, entity)
-                );
+                _whitelistSystem.IsWhitelistPassOrNull(o.Item2.Whitelist, entity))
+                .Item1.MapId;
 
             TryFTLProximity(uid, _mapSystem.GetMap(mapId));
         }
