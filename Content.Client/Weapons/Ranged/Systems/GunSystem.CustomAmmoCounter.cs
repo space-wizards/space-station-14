@@ -42,7 +42,18 @@ public sealed partial class GunSystem
     {
         var loadedTexture = _sprite.GetFrame(ent.Comp.LoadedAmmoSprite, TimeSpan.Zero);
         var spentTexture = _sprite.GetFrame(ent.Comp.SpentAmmoSprite, TimeSpan.Zero);
+        var loadedRotatedTexture = ent.Comp.RotatedLoadedAmmoSprite != null
+            ? _sprite.GetFrame(ent.Comp.RotatedLoadedAmmoSprite, TimeSpan.Zero)
+            : null;
+        var spentRotatedTexture = ent.Comp.RotatedSpentAmmoSprite != null
+            ? _sprite.GetFrame(ent.Comp.RotatedSpentAmmoSprite, TimeSpan.Zero)
+            : null;
 
-        args.Control = new CustomIconStatusControl(loadedTexture, spentTexture, ent.Comp.NumberOfRows);
+        args.Control = new CustomIconStatusControl(
+            loadedTexture,
+            spentTexture,
+            ent.Comp.NumberOfRows,
+            loadedRotatedTexture,
+            spentRotatedTexture);
     }
 }
