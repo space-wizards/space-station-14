@@ -58,6 +58,9 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
+        if (ent.Comp.Enabled != enabled == enabled)
+            return;
+        
         ent.Comp.Enabled = enabled;
         Dirty(ent);
 
