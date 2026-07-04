@@ -38,7 +38,6 @@ public sealed partial class GrinderMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-
         _slots = _entityManager.System<ItemSlotsSystem>();
         _power = _entityManager.System<SharedPowerReceiverSystem>();
         _grinder = _entityManager.System<SharedReagentGrinderSystem>();

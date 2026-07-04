@@ -82,7 +82,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
             }
         }
 
-        IngredientsPanel.PanelOverride = state is { IsMicrowaveBusy: true, ContainedSolids.Length: > 0 } 
+        IngredientsPanel.PanelOverride = state is { IsMicrowaveBusy: true, ContainedSolids.Length: > 0 }
             ? BusyStyle
             : IdleStyle;
     }

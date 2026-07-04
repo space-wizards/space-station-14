@@ -56,12 +56,12 @@ public static class ReagentListHelper
             Margin = new Thickness(4, 2),
             Children =
             {
-                new Label 
-                { 
+                new Label
+                {
                     Text = $"{name}: ",
                     ClipText = true,
                     HorizontalExpand = true,
-                    VerticalAlignment = Control.VAlignment.Center 
+                    VerticalAlignment = Control.VAlignment.Center
                 },
                 new Label
                 {

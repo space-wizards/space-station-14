@@ -18,7 +18,6 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
 
         _menu = this.CreateWindow<GrinderMenu>();
         _menu.SetEntity(Owner);
-
         _menu.OnToggleAuto += ToggleAutoMode;
         _menu.OnGrind += StartGrinding;
         _menu.OnJuice += StartJuicing;

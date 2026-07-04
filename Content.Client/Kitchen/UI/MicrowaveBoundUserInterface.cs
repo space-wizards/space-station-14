@@ -13,7 +13,7 @@ public sealed class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : B
     {
         base.Open();
         _menu = this.CreateWindow<MicrowaveMenu>();
-        
+
         _menu.StartButton.OnPressed += _ => SendPredictedMessage(new MicrowaveStartCookMessage());
         _menu.EjectButton.OnPressed += _ => SendPredictedMessage(new MicrowaveEjectMessage());
         _menu.OnEjectSolid += netEntity => SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(netEntity));
@@ -23,7 +23,9 @@ public sealed class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : B
             if (args.Button is MicrowaveMenu.MicrowaveCookTimeButton actualButton)
             {
                 SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, actualButton.CookTime));
+                return;
             }
+            SendPredictedMessage(new MicrowaveSelectCookTimeMessage(buttonIndex, 0));
         };
     }
 
