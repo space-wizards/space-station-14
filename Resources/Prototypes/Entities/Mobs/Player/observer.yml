@@ -101,11 +101,13 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
-  - type: PointLight
+  - type: NightVision
     netsync: false
-    radius: 6
-    castShadows: false
     enabled: false
+    lightingColor: '#FFFFFF20'
+    overlayColor: '#FFFFFF00'
+    noiseAmount: 0 # In case default values change
+    noiseMultiplier: 0 # In case default values change
 
 # proto for player ghosts specifically
 - type: entity
