@@ -1,9 +1,13 @@
 using Robust.Client.GameObjects;
+using Content.Shared.Eye.Blinking;
 
 namespace Content.Client.Eye.Blinking;
 
-[RegisterComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+/// <summary>
+/// A client component that manages eyelid states (e.g., when they need to be opened, closed, etc.). Attached to an entity after the <see cref="EyeBlinkingComponent"> component is initialized.
+/// </summary>
+
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingClientComponent : Component
 {
     /// <summary>

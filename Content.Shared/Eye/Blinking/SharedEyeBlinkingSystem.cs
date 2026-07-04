@@ -30,22 +30,25 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void SetEyelidsColor(Entity<EyeBlinkingComponent> ent)
     {
         var eyelidColor = Color.Red;
+
         if (!TryComp<BodyComponent>(ent.Owner, out var body)) return;
 
         VisualOrganComponent? visualHead = null;
+
+        // Obtains the "head" organ component in order to retrieve the character's skin color from it.
         foreach (var organ in body.Organs?.ContainedEntities ?? Array.Empty<EntityUid>())
         {
             if (!TryComp<OrganComponent>(organ, out var organComp))
                 continue;
+
             if (organComp.Category != "Head")
-            {
                 continue;
-            }
+
             visualHead = CompOrNull<VisualOrganComponent>(organ);
             if (visualHead != null)
                 break;
         }
-
+        // Gets the skin color from VisualOrganComponent, or returns pink as a fallback color if not found.
         var skinColor = visualHead?.Profile.SkinColor ?? Color.Pink;
         var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
         eyelidColor = new Color(
@@ -57,6 +60,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Handles changeling transformation/cloning and enables the component if it was copied from a dead original in a disabled state.
+    /// </summary>
     private void AfterChangelingTransformEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterChangelingTransformEvent args)
     {
         ent.Comp.Enabled = true;
