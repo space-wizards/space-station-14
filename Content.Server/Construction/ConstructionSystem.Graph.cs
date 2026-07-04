@@ -5,7 +5,6 @@ using Content.Shared.Construction.Steps;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Robust.Shared.Containers;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -363,9 +362,12 @@ namespace Content.Server.Construction
 
             // Transform transferring.
             var newTransform = Transform(newUid);
+            var oldAnchored = transform.Anchored;
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
-            _transformSystem.SetLocalRotationNoLerp(newUid, transform.LocalRotation, newTransform);
-            newTransform.Anchored = transform.Anchored; // FIXME: AnchorEntity/Unanchor don't work here.
+            TransformSystem.SetLocalRotationNoLerp(newUid, transform.LocalRotation, newTransform);
+#pragma warning disable CS0618 // Setting anchored state directly, AnchorEntity/Unanchor requires an initialized entity.
+            newTransform.Anchored = transform.Anchored;
+#pragma warning restore CS0618
 
             // Container transferring.
             if (containerManager != null)
