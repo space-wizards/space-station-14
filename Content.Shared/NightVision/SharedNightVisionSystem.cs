@@ -13,13 +13,13 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStartup(Entity<NightVisionComponent> ent, ref ComponentStartup args)
     {
-        RefreshOverlay(ent.AsNullable());
+        RefreshOverlay(ent);
     }
 
     [SubscribeLocalEvent]
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentRemove args)
     {
-        RefreshOverlay(ent.AsNullable());
+        RefreshOverlay(ent);
     }
 
     [SubscribeLocalEvent]
@@ -63,5 +63,12 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
         RefreshOverlay(ent);
     }
 
-    protected virtual void RefreshOverlay(Entity<NightVisionComponent?> ent) { }
+    protected virtual void RefreshOverlay(EntityUid entity) { }
+}
+
+[ByRefEvent]
+public record struct RefreshNightVisionEvent() : IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
+    public List<NightVisionComponent> Components = new();
 }

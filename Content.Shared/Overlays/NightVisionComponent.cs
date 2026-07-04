@@ -23,12 +23,6 @@ public sealed partial class NightVisionComponent : Component
     public bool Prioritized = true;
 
     /// <summary>
-    /// The slots this entity needs to be equipped in to grant night vision.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public SlotFlags Slots = SlotFlags.WITHOUT_POCKET;
-
-    /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.
     /// Does not control lighting coloring, just serves as an effect on the screen.
     /// </summary>

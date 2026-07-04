@@ -32,15 +32,13 @@ public sealed partial class NightVisionSystem : SharedNightVisionSystem
     [SubscribeLocalEvent]
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
     {
-        var localPlayer = _player.LocalSession?.AttachedEntity;
-        if (localPlayer != null)
-            Deactivate(localPlayer.Value);
+        Deactivate(_player.LocalEntity);
     }
 
     [SubscribeLocalEvent]
     private void OnHandleState(Entity<NightVisionComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        RefreshOverlay(ent.AsNullable());
+        RefreshOverlay(ent);
     }
 
     [SubscribeLocalEvent]
@@ -91,7 +89,7 @@ public sealed partial class NightVisionSystem : SharedNightVisionSystem
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void Deactivate(EntityUid ent)
+    private void Deactivate(EntityUid? ent)
     {
         if (ent != _player.LocalSession?.AttachedEntity)
             return;
@@ -99,20 +97,17 @@ public sealed partial class NightVisionSystem : SharedNightVisionSystem
         _overlayMan.RemoveOverlay(_overlay);
     }
 
-    protected override void RefreshOverlay(Entity<NightVisionComponent?> ent)
+    protected override void RefreshOverlay(EntityUid target)
     {
-        if (ent != _player.LocalSession?.AttachedEntity)
+        if (target != _player.LocalSession?.AttachedEntity)
             return;
 
-        if (!Resolve(ent, ref ent.Comp, false))
-            return;
-
-        var ev = new RefreshNightVisionEvent(ent.Comp.Slots);
-        RaiseLocalEvent(ent, ref ev);
+        var ev = new RefreshNightVisionEvent();
+        RaiseLocalEvent(target, ref ev);
 
         if (ev.Components.Count > 0)
-            Update(ent, ev.Components);
+            Update(target, ev.Components);
         else
-            Deactivate(ent);
+            Deactivate(target);
     }
 }
