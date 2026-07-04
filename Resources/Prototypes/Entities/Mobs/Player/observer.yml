@@ -105,7 +105,6 @@
     netsync: false
     enabled: false
     prioritized: false
-    slots: none
     lightingColor: '#FFFFFF20'
     overlayColor: '#FFFFFF00'
     noiseAmount: 0 # In case default values change
