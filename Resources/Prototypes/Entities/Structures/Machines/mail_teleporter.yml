@@ -28,8 +28,9 @@
       visible: false
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Appearance

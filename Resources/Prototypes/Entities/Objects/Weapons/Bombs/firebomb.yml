@@ -16,7 +16,8 @@
     - state: wires
   - type: Item
     sprite: Objects/Weapons/Bombs/ied.rsi
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 5
     examinable: false
     initialBeepDelay: 0
@@ -34,11 +35,14 @@
     maxIntensity: 3
     canCreateVacuum: false
   - type: ExplodeOnTrigger
+    keysIn:
+    - timer
   - type: Appearance
   - type: AnimationPlayer
   - type: TimerTriggerVisuals
     unprimedSprite: base
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
@@ -93,13 +97,11 @@
     - state: base
       map: ["enum.OpenableVisuals.Layer"]
     - state: fuel
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 40
   - type: Construction
     node: fuel
     defaultTarget: firebomb

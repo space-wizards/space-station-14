@@ -3,18 +3,19 @@ using Content.Server.Station.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CCVar;
+using Content.Shared.CrewManifest;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
-public sealed class CrewManifestCartridgeSystem : EntitySystem
+public sealed partial class CrewManifestCartridgeSystem : EntitySystem
 {
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly CrewManifestSystem _crewManifest = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private CrewManifestSystem _crewManifest = default!;
+    [Dependency] private StationSystem _stationSystem = default!;
 
     private static readonly EntProtoId CartridgePrototypeName = "CrewManifestCartridge";
 
@@ -60,7 +61,13 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
         var owningStation = _stationSystem.GetOwningStation(uid);
 
         if (owningStation is null)
+        {
+            // Display "loading failed" message
+            var failureMessage = Loc.GetString("crew-manifest-cartridge-loading-failed");
+            var failureState = new CrewManifestUiState(failureMessage, new CrewManifestEntries());
+            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, failureState);
             return;
+        }
 
         var (stationName, entries) = _crewManifest.GetCrewManifest(owningStation.Value);
 

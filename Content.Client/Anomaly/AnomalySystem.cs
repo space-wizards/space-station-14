@@ -7,11 +7,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly;
 
-public sealed class AnomalySystem : SharedAnomalySystem
+public sealed partial class AnomalySystem : SharedAnomalySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly FloatingVisualizerSystem _floating = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private FloatingVisualizerSystem _floating = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -24,6 +24,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
 
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentShutdown>(OnShutdown);
     }
+
     private void OnStartup(EntityUid uid, AnomalyComponent component, ComponentStartup args)
     {
         _floating.FloatAnimation(uid, component.FloatingOffset, component.AnimationKey, component.AnimationTime);
