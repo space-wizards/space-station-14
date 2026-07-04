@@ -68,7 +68,7 @@ public sealed partial class DestructibleSystem
 
     private void CopyForensics(Entity<SpawnOnDestroyedComponent> original, EntityUid copy)
     {
-        if (!original.Comp.TransferForensics || !Random.Prob(original.Comp.ForensicsChance))
+        if (original.Comp.ForensicsChance is null || !Random.Prob(original.Comp.ForensicsChance.Value))
             return;
 
         _forensicsSystem.CopyForensicsFrom(original.Owner, copy);

@@ -28,7 +28,7 @@ public sealed partial class SpawnOnDestroyedComponent : Component
     /// Time in seconds to wait before spawning entities. Useful when your entity also explodes.
     /// </summary>
     /// <remarks>
-    /// Overrides <see cref="TransferForensics"/> and won't spawn in containers.
+    /// Overrides forensics transfering and won't spawn in containers.
     /// </remarks>
     [DataField]
     public TimeSpan? SpawnAfter;
@@ -40,15 +40,10 @@ public sealed partial class SpawnOnDestroyedComponent : Component
     public float Offset = 0.5f;
 
     /// <summary>
-    /// Spawned items will try to copy the forensics of the destroyed entity.
+    /// Chance for forensics to be transferred.
+    /// Transferring is skipped if null.
     /// </summary>
     [DataField]
-    public bool TransferForensics = true;
-
-    /// <summary>
-    /// Chance for forensics to be transferred if <see cref="TransferForensics"/> is true.
-    /// </summary>
-    [DataField]
-    public float ForensicsChance = .4f;
+    public float? ForensicsChance = .4f;
 
 }
