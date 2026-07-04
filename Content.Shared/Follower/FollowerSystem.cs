@@ -379,15 +379,13 @@ public sealed partial class FollowerSystem : EntitySystem
                 continue;
 
             // Don't count admin followers so that players cannot notice if admins are in stealth mode and following someone.
-            // !! TODO enable back before publishing
-            // if (_adminManager.IsAdmin(actor.PlayerSession))
-            //     continue;
+            if (_adminManager.IsAdmin(actor.PlayerSession))
+                continue;
 
             // If the followed entity cannot be ghostnado'd to, we don't count it.
             // Used for making admins not warpable to, but IsAdmin isn't used for cases where the admin wants to be followed, for example during events.
-            // !! TODO enable back before publishing
-            // if (_tagSystem.HasTag(followed, PreventGhostnadoWarpTag))
-            //     continue;
+            if (_tagSystem.HasTag(followed, PreventGhostnadoWarpTag))
+                continue;
 
             // Add new entry or increment existing
             followedEnts.TryGetValue(followed, out var currentValue);
