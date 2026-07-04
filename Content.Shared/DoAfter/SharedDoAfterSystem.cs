@@ -248,6 +248,20 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialItem = _hands.GetActiveItem((args.User, handsComponent));
         }
 
+        // This arg requires us to have our active hand empty, and to stay on that same hand.
+
+        var activehandisempty =  _hands.ActiveHandIsEmpty(args.User);
+
+        if (args.NeedFreeHand && args.BreakOnHandChange)
+        {
+            if (!TryComp(args.User, out HandsComponent? handsComponent))
+                return false;
+
+            doAfter.InitialHand = handsComponent.ActiveHandId;
+            if (activehandisempty == false)
+                return false;
+        }
+
         doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
 
         // Initial checks

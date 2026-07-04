@@ -1,8 +1,8 @@
 - type: entity
-  name: bola
+  name: makeshift bola
   parent: [BaseItem, BaseSecurityContraband]
   id: Bola
-  description: Linked together with some spare cuffs and metal.
+  description: A makeshift bola, cobbled together with some spare cuffs and metal. It doesn't look like it's going to stay together for very long.
   components:
   - type: Item
     size: Normal
@@ -44,6 +44,65 @@
     freeTime: 2.0
     breakoutTime: 3.5 #all bola should generally be fast to remove
     walkSpeed: 0.5 #makeshift bola shouldn't slow too much
+    sprintSpeed: 0.5
+    staminaDamage: 0 # anything but this is gamebreaking
+    canThrowTrigger: true
+    canMoveBreakout: true
+    maxEnsnares: 1
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
+- type: entity
+  name: tactical bola
+  parent: [ BaseItem, BaseSecurityContraband ]
+  id: SecurityBola
+  description: A bola, comprised of steel anchors linked together with a wire cable. Reliable and reusable.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/securitybola.rsi
+    state: icon
+  - type: EmitSoundOnThrow
+    sound: /Audio/Weapons/bolathrow.ogg
+  - type: EmitSoundOnLand
+    sound: /Audio/Effects/snap.ogg
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 0 #reusable, in contrast to makeshift
+  - type: Ensnaring
+    freeTime: 2.5 #slightly slower free time than makeshift
+    breakoutTime: 4.0 #slightly slower breakout time than makeshift
+    walkSpeed: 0.5
     sprintSpeed: 0.5
     staminaDamage: 0 # anything but this is gamebreaking
     canThrowTrigger: true
