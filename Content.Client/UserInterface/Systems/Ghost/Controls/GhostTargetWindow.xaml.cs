@@ -12,12 +12,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
     [GenerateTypedNameReferences]
     public sealed partial class GhostTargetWindow : DefaultWindow
     {
-        [Dependency] private IRobustRandom _random = default!;
-
-        private List<Warp> _warps = new();
+        private List<(string, NetEntity)> _warps = new();
         private string _searchText = string.Empty;
 
-        public event Action<NetEntity>? WarpRequested;
+        public event Action<NetEntity>? WarpClicked;
         public event Action? OnGhostnadoClicked;
         public event Action? OnWarpToRandomFollowedClicked;
         public event Action? OnWarpToRandomFollowableClicked;
@@ -25,13 +23,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
         public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-
             SearchBar.OnTextChanged += OnSearchTextChanged;
 
             GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke();
             WarpToRandomFollowedButton.OnPressed += _ => OnWarpToRandomFollowedClicked?.Invoke();
-            WarpToRandomFollowableButton.OnPressed += WarpToRandomFollowableClicked;
+            WarpToRandomFollowableButton.OnPressed += _ => OnWarpToRandomFollowableClicked?.Invoke();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -47,7 +43,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         ? Loc.GetString("ghost-target-window-current-button", ("name", w.DisplayName))
                         : w.DisplayName;
 
-                    return new Warp(name, w.Entity, w.IsWarpPoint);
+                    return (name, w.Entity);
                 })
                 .ToList();
         }
@@ -60,11 +56,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
 
         private void AddButtons()
         {
-            foreach (var warp in _warps)
+            foreach (var (name, warpTarget) in _warps)
             {
                 var currentButtonRef = new Button
                 {
-                    Text = warp.Name,
+                    Text = name,
                     TextAlign = Label.AlignMode.Right,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
@@ -73,7 +69,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += _ => WarpRequested?.Invoke(warp.Ent);
+                currentButtonRef.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
                 currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
                 ButtonContainer.AddChild(currentButtonRef);
@@ -101,27 +97,6 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             UpdateVisibleButtons();
             // Reset scroll bar so they can see the relevant results.
             GhostScroll.SetScrollValue(Vector2.Zero);
-        }
-
-        private void WarpToRandomFollowableClicked(BaseButton.ButtonEventArgs args)
-        {
-            if(_warps.Count == 0)
-                return;
-
-            // exclude locations since who wants to warp on those
-            var pool = _warps.Where(warp => !warp.IsWarpPoint).ToArray();
-            if(pool.Length == 0)
-                return;
-
-            var randomWarp = _random.Pick(pool);
-            WarpRequested?.Invoke(randomWarp.Ent);
-        }
-
-        private struct Warp (string name, NetEntity ent, bool isWarpPoint)
-        {
-            public string Name = name;
-            public NetEntity Ent = ent;
-            public bool IsWarpPoint = isWarpPoint;
         }
     }
 }

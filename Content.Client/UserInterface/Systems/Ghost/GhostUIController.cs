@@ -137,7 +137,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.RequestWarpsPressed += RequestWarps;
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
-        Gui.TargetWindow.WarpRequested += OnWarpRequested;
+        Gui.TargetWindow.WarpClicked += OnWarpRequested;
         Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
         Gui.TargetWindow.OnWarpToRandomFollowedClicked += OnWarpToRandomFollowedClicked;
         Gui.TargetWindow.OnWarpToRandomFollowableClicked += OnWarpToRandomFollowableClicked;
@@ -153,7 +153,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.RequestWarpsPressed -= RequestWarps;
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
-        Gui.TargetWindow.WarpRequested -= OnWarpRequested;
+        Gui.TargetWindow.WarpClicked -= OnWarpRequested;
 
         Gui.Hide();
     }

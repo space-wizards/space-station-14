@@ -319,65 +319,39 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets all entities that are being followed by with a follower count for each.
-    /// <remarks>Admin ghosts are excluded from the list of entities so that players can't spy on them.</remarks>
-    /// </summary>
-    public Dictionary<EntityUid, int> GetAllFollowed()
-    {
-        // Keep a tally of how many ghosts are following each entity
-        var followedEnts = new Dictionary<EntityUid, int>();
-
-        // Look for followers that are ghosts and are player controlled
-        var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
-        while (query.MoveNext(out _, out var follower, out _, out var actor))
-        {
-            // Don't count admin followers so that players cannot notice if admins are in stealth mode and following someone.
-            if (_adminManager.IsAdmin(actor.PlayerSession))
-                continue;
-
-            var followed = follower.Following;
-
-            // If the followed entity cannot be ghostnado'd to, we don't count it.
-            // Used for making admins not warpable to, but IsAdmin isn't used for cases where the admin wants to be followed, for example during events.
-            if (_tagSystem.HasTag(followed, PreventGhostnadoWarpTag))
-                continue;
-
-            // Add new entry or increment existing
-            followedEnts.TryGetValue(followed, out var currentValue);
-            followedEnts[followed] = currentValue + 1;
-        }
-
-        return followedEnts;
-    }
-
-    /// <summary>
     /// Gets the entity with the most non-admin ghosts following it.
+    /// If there are multiple entities with the same amount of followers, returns a random one.
     /// </summary>
-    public EntityUid? GetMostGhostFollowed()
+    public EntityUid? GetMostGhostFollowed(EntityUid? except = null)
     {
-        EntityUid? picked = null;
+        var pool = new List<EntityUid>();
         var most = 0;
 
-        var followedEnts = GetAllFollowed();
+        var followedEnts = GetAllFollowed(except);
         foreach (var (followed, followers) in followedEnts)
         {
-            if (followers > most)
+            if (followers == most)
             {
-                picked = followed;
+                pool.Add(followed);
+            }
+            else if (followers > most)
+            {
+                pool.Clear();
+                pool.Add(followed);
                 most = followers;
             }
         }
 
-        return picked;
+        return pool.Any() ? _random.Pick(pool) : null;
     }
 
     /// <summary>
     /// Gets a random entity that is being followed by at least one ghost.
     /// </summary>
-    public EntityUid? GetRandomGhostFollowed()
+    public EntityUid? GetRandomGhostFollowed(EntityUid? except = null)
     {
-        var followedEnts = GetAllFollowed()
-            .Where(item => item.Value > 0)
+        var followedEnts = GetAllFollowed(except)
+            .Where(item => item.Value > 0 && item.Key != except)
             .ToArray();
         if (followedEnts.Length == 0)
             return null;
@@ -387,16 +361,40 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets a random entity that is being followed by at least one ghost.
+    /// Gets all entities that are being followed by with a follower count for each.
+    /// <remarks>Admin ghosts are excluded from the list of entities so that players can't spy on them.</remarks>
     /// </summary>
-    public EntityUid? GetRandomGhostFollowable()
+    private Dictionary<EntityUid, int> GetAllFollowed(EntityUid? except = null)
     {
-        var followableEnts = GetAllFollowed();
-        if (followableEnts.Count == 0)
-            return null;
+        // Keep a tally of how many ghosts are following each entity
+        var followedEnts = new Dictionary<EntityUid, int>();
 
-        var picked = _random.Pick(followableEnts);
-        return picked.Key;
+        // Look for followers that are ghosts and are player controlled
+        var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
+        while (query.MoveNext(out _, out var follower, out _, out var actor))
+        {
+            var followed = follower.Following;
+
+            if (follower.Following == except)
+                continue;
+
+            // Don't count admin followers so that players cannot notice if admins are in stealth mode and following someone.
+            // !! TODO enable back before publishing
+            // if (_adminManager.IsAdmin(actor.PlayerSession))
+            //     continue;
+
+            // If the followed entity cannot be ghostnado'd to, we don't count it.
+            // Used for making admins not warpable to, but IsAdmin isn't used for cases where the admin wants to be followed, for example during events.
+            // !! TODO enable back before publishing
+            // if (_tagSystem.HasTag(followed, PreventGhostnadoWarpTag))
+            //     continue;
+
+            // Add new entry or increment existing
+            followedEnts.TryGetValue(followed, out var currentValue);
+            followedEnts[followed] = currentValue + 1;
+        }
+
+        return followedEnts;
     }
 }
 

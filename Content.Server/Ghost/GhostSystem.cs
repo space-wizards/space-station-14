@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.GhostTypes;
 using Content.Shared.Mind;
@@ -68,6 +69,7 @@ namespace Content.Server.Ghost
         [Dependency] private GhostSpriteStateSystem _ghostState = default!;
 
         [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private EntityQuery<FollowerComponent> _followerQuery = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
@@ -347,7 +349,8 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetRandomGhostFollowed() is not {} target)
+            var following = _followerQuery.CompOrNull(uid)?.Following;
+            if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
                 return;
 
             _followerSystem.StartFollowingEntity(uid, target);
@@ -361,10 +364,16 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetRandomGhostFollowable() is not {} target)
+            var following = _followerQuery.CompOrNull(uid)?.Following;
+            // select player warps cuz no one wants to warp to places
+            if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
+            if (warps.Length == 0)
+                return;
+            var warp = _random.Pick(warps);
 
-            _followerSystem.StartFollowingEntity(uid, target);
+            var realTarget = GetEntity(warp.Entity);
+            _followerSystem.StartFollowingEntity(uid, realTarget);
         }
 
 
@@ -395,7 +404,7 @@ namespace Content.Server.Ghost
             }
         }
 
-        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid except)
+        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid? except = null)
         {
             foreach (var player in _player.Sessions)
             {
