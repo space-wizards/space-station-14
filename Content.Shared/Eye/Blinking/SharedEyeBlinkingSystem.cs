@@ -1,7 +1,6 @@
 using Content.Shared.Body;
 using Content.Shared.Changeling;
 using Content.Shared.Chat;
-using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
@@ -64,7 +63,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         Dirty(ent);
     }
 
-    public void EmoteEventHandler(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
+    private void EmoteEventHandler(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
     {
         if (!ent.Comp.BlinkEmoteId.Contains(args.Emote.ID))
             return;
@@ -81,7 +80,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         SetEnabled(ent, args.NewMobState != MobState.Dead);
     }
 
-    public virtual void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
+    private void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
         _apperance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
         SetEnabled(ent, !args.Blind);
@@ -97,6 +96,9 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Enum for force closing the eyes of an entity by Apperance system.
+/// </summary>
 [Serializable, NetSerializable]
 public enum EyeBlinkingVisuals : byte
 {
@@ -113,10 +115,4 @@ public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
     /// The entity performing the blink.
     /// </summary>
     public readonly NetEntity NetEntity = netEntity;
-}
-
-[Serializable, NetSerializable]
-public sealed class UpdateEyelidsAfterApplyOrganMarkingsEvent(NetEntity entity) : EntityEventArgs
-{
-    public readonly NetEntity Entity = entity;
 }

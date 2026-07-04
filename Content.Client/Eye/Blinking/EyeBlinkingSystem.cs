@@ -1,4 +1,3 @@
-using Content.Shared.Body;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Content.Shared.StatusEffectNew;
@@ -50,11 +49,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         {
             clientComp.Eyelids.Add(new EyelidState(layer));
         }
-
-        // Attempt to sync the eyelids' RSI and state with the Eyes layer for a consistent look.
-        // NOTE: This logic needs to be expanded to support other mobs that use randomized colors or sprites (e.g., Scurrets).
-        // - Mice and other simple mobs work out-of-the-box. They only require an eyelid sprite and a set color of #ffffff so it isn't overridden.
-        // - Scurrets are currently problematic due to their use of RandomSprite; we need a way to handle this after color initialization.
 
         // Initialize and randomize the blink timer.
         ResetBlink(ent);

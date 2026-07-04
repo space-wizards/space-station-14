@@ -75,18 +75,25 @@ public sealed partial class EyeBlinkingComponent : Component
     public bool BlinkInProgress = false;
 
     /// <summary>
-    /// The specific color of the eyelids.
-    /// If null, the color is derived from <see cref="HumanoidAppearanceComponent.SkinColor"/> multiplied by <see cref="BlinkSkinColorMultiplier"/>.
-    /// Entities without appearance components will have transparent eyelids.
+    /// The specific color of the eyelids. In the future, a new field can be added to override this color for mascara labeling.
     /// </summary>
     [DataField, AutoNetworkedField]
     public Color? EyelidsColor = null;
 
+    /// <summary>
+    /// Max async blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0);
+    /// <summary>
+    /// Max async open blink duration, in seconds. This is used for status effects that can affect blinking, such as dyspraxia.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0);
 
+    /// <summary>
+    /// Path to the entity's eyelid RSI. Eyelids must include the 'eyelids-' prefix followed by anything, but ideally, there should be left and right eyelids (like eyelids-left-0, eyelids-right-0) to easily add winking in the future.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ResPath? EyelidsSprite { get; set; }
 }
