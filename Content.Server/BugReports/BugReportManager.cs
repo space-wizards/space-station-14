@@ -169,10 +169,10 @@ public sealed partial class BugReportManager : IBugReportManager, IPostInjectIni
     /// the original text report from the user.
     /// </summary>
     /// <param name="message">The message from user.</param>
-    /// <returns>A <see cref="ValidPlayerBugReportReceivedEvent"/> based of the user report.</returns>
-    private ValidPlayerBugReportReceivedEvent CreateBugReport(BugReportMessage message)
+    /// <returns>A <see cref="ValidatedPlayerBugReport"/> based of the user report.</returns>
+    private ValidatedPlayerBugReport CreateBugReport(BugReportMessage message)
     {
-        // todo: dont request entity system out of sim, check if you are in-sim before doing so. Bug report should work out of sim too.
+        // todo: don't request entity system out of sim, check if you are in-sim before doing so. Bug report should work out of sim too.
         var ticker = _entity.System<GameTicker>();
         var metadata = new BugReportMetaData
         {
@@ -185,7 +185,7 @@ public sealed partial class BugReportManager : IBugReportManager, IPostInjectIni
             EngineVersion = _cfg.GetCVar(CVars.BuildEngineVersion),
         };
 
-        // Only add these if your in round.
+        // Only add these if you are in round.
         if (ticker.Preset != null)
         {
             metadata.RoundTime = _timing.CurTime.Subtract(ticker.RoundStartTimeSpan);
@@ -194,7 +194,7 @@ public sealed partial class BugReportManager : IBugReportManager, IPostInjectIni
             metadata.Map = _map.GetSelectedMap()?.MapName ?? Loc.GetString("bug-report-report-unknown");
         }
 
-        return new ValidPlayerBugReportReceivedEvent(
+        return new ValidatedPlayerBugReport(
             message.ReportInformation.BugReportTitle.Trim(),
             message.ReportInformation.BugReportDescription.Trim(),
             metadata,
@@ -207,6 +207,9 @@ public sealed partial class BugReportManager : IBugReportManager, IPostInjectIni
         _sawmill = _log.GetSawmill("BugReport");
     }
 
+    /// <summary>
+    /// Container for rate/text-size limits of bug reports.
+    /// </summary>
     private sealed class BugReportLimits
     {
         public int TitleMaxLength;

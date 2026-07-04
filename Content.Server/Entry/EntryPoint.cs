@@ -137,7 +137,6 @@ namespace Content.Server.Entry
             _rateLimit.Initialize();
 
             IoCManager.Resolve<GithubClient>().Initialize();
-            IoCManager.Resolve<GithubApiManager>().Initialize();
             IoCManager.Resolve<GithubBackgroundWorker>().Initialize();
         }
 

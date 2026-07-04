@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization;
+using Content.Server.Github.Requests;
 
 namespace Content.Server.Github.Responses;
 
 /// <summary>
-/// Not all fields are filled out - only the necessary ones. If you need more just add them.
-/// <see href="https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app"/>>
+/// Response for Account installation request from GitHub API.
+/// <seealso cref="InstallationsRequest"/>
 /// </summary>
 public sealed class InstallationResponse
 {
@@ -13,7 +13,9 @@ public sealed class InstallationResponse
     public required GithubInstallationAccount Account { get; set; }
 }
 
-/// <inheritdoc cref="InstallationResponse"/>
+/// <summary>
+/// Represents account associated with a GitHub installation.
+/// </summary>
 public sealed class GithubInstallationAccount
 {
     public required string Login { get; set; }

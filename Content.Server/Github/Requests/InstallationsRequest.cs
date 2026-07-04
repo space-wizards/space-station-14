@@ -3,6 +3,7 @@ using System.Net.Http;
 namespace Content.Server.Github.Requests;
 
 /// <summary>
+/// Request for Account installation from GitHub API.
 /// <see href="https://docs.github.com/en/rest/apps/installations?apiVersion=2022-11-28#list-app-installations-accessible-to-the-user-access-token"/>>
 /// </summary>
 public sealed class InstallationsRequest : IGithubRequest

@@ -19,14 +19,14 @@ public interface IGithubRequest
     /// The kind of request method for the request.
     /// </summary>
     [JsonIgnore]
-    public HttpMethod RequestMethod { get; }
+    HttpMethod RequestMethod { get; }
 
     /// <summary>
     /// There are different types of authentication methods depending on which endpoint you are working with.
     /// E.g. the app api endpoint mostly uses JWTs, while stuff like issue creation uses Tokens
     /// </summary>
     [JsonIgnore]
-    public GithubAuthMethod AuthenticationMethod { get; }
+    GithubAuthMethod AuthenticationMethod { get; }
 
     /// <summary>
     /// Location of the api endpoint for this request.
@@ -34,11 +34,12 @@ public interface IGithubRequest
     /// <param name="owner">Owner of the repository.</param>
     /// <param name="repository">The repository to make the request.</param>
     /// <returns>The api location for this request.</returns>
-    public string GetLocation(string owner, string repository);
+    string GetLocation(string owner, string repository);
 }
 
 public enum GithubAuthMethod
 {
+    // ReSharper disable once InconsistentNaming
     JWT,
     Token,
 }

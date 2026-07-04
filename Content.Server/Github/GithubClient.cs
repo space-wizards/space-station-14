@@ -33,19 +33,20 @@ public sealed partial class GithubClient
     [Dependency] private ILogManager _log = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     private HttpClient _httpClient = default!;
+    private RetryHandler? _httpMessageHandler;
 
     private ISawmill _sawmill = default!;
 
     // Token data for the GitHub app (This is used to authenticate stuff like new issue creation)
-    private (DateTime? Expiery, string Token) _tokenData;
+    private GithubTokenInfo? _tokenData;
 
     // Json web token for the GitHub app (This is used to authenticate stuff like seeing where the app is installed)
     // The token is created locally.
-    private (DateTime? Expiery, string JWT) _jwtData;
+    private GithubTokenInfo? _jwtData;
 
     private const int ErrorResponseMaxLogSize = 200;
 
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
@@ -58,7 +59,7 @@ public sealed partial class GithubClient
     private readonly TimeSpan _jwtBuffer = TimeSpan.FromMinutes(2);
     private readonly TimeSpan _tokenBuffer = TimeSpan.FromMinutes(2);
 
-    private string _privateKey = "";
+    private RSA? _privateKey;
 
     #region Header constants
 
@@ -83,65 +84,15 @@ public sealed partial class GithubClient
     private string _appId = "";
     private string _repository = "";
     private string _owner = "";
-    private int _maxRetries;
 
     #endregion
 
     public void Initialize()
     {
         _sawmill = _log.GetSawmill("github");
-        _tokenData = (null, "");
-        _jwtData = (null, "");
 
-        _cfg.OnValueChanged(CCVars.GithubAppPrivateKeyPath, OnPrivateKeyPathChanged, true);
-        _cfg.OnValueChanged(CCVars.GithubAppId, val => Interlocked.Exchange(ref _appId, val), true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => Interlocked.Exchange(ref _repository, val), true);
-        _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => Interlocked.Exchange(ref _owner, val), true);
-        _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => SetValueAndInitHttpClient(ref _maxRetries, val), true);
-    }
-
-    private void OnPrivateKeyPathChanged(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return;
-
-        if (!File.Exists(path))
-        {
-            _sawmill.Error($"\"{path}\" does not exist.");
-            return;
-        }
-
-        string fileText;
-        try
-        {
-            fileText = File.ReadAllText(path);
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error($"\"{path}\" could not be read!\n{e}");
-            return;
-        }
-
-        var rsa = RSA.Create();
-        try
-        {
-            rsa.ImportFromPem(fileText);
-        }
-        catch
-        {
-            _sawmill.Error($"\"{path}\" does not contain a valid private key!");
-            return;
-        }
-
-        _privateKey = fileText;
-    }
-
-    private void SetValueAndInitHttpClient<T>(ref T toSet, T value)
-    {
-        Interlocked.Exchange(ref toSet, value);
-
-        var httpMessageHandler = new RetryHandler(new HttpClientHandler(), _maxRetries, _sawmill);
-        var newClient = new HttpClient(httpMessageHandler)
+        _httpMessageHandler = new RetryHandler(new HttpClientHandler(), _cfg.GetCVar(CCVars.GithubIssuesMaxRetries), _sawmill);
+        var newClient = new HttpClient(_httpMessageHandler)
         {
             BaseAddress = _baseUri,
             DefaultRequestHeaders =
@@ -153,8 +104,50 @@ public sealed partial class GithubClient
         };
 
         newClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(ProductName, ProductVersion));
+        _httpClient = newClient;
 
-        Interlocked.Exchange(ref _httpClient, newClient);
+        _cfg.OnValueChanged(CCVars.GithubIssuesAppPrivateKeyPath, OnPrivateKeyPathChanged, true);
+        _cfg.OnValueChanged(CCVars.GithubIssuesAppId, val => _appId = val, true);
+        _cfg.OnValueChanged(CCVars.GithubIssuesRepositoryName, val => _repository = val, true);
+        _cfg.OnValueChanged(CCVars.GithubIssuesRepositoryOwner, val => _owner = val, true);
+        _cfg.OnValueChanged(CCVars.GithubIssuesMaxRetries, val => _httpMessageHandler.MaxRetries = val, true);
+    }
+
+    private void OnPrivateKeyPathChanged(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return;
+
+        if (!File.Exists(path))
+        {
+            _sawmill.Error($"Github app for issue private key pat - \"{path}\" - does not exist.");
+            return;
+        }
+
+        string fileText;
+        try
+        {
+            fileText = File.ReadAllText(path);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Github app for issue private key pat - \"{path}\" could not be read!\n{e}");
+            return;
+        }
+
+        var rsa = RSA.Create();
+        try
+        {
+            rsa.ImportFromPem(fileText);
+        }
+        catch
+        {
+            _sawmill.Error($"Github app for issue private key pat -\"{path}\" does not contain a valid private key!");
+            return;
+        }
+
+        // let finalizer handle disposing unmanaged resources in previous instance of RSA.
+        _privateKey = rsa;
     }
 
     #region Public functions
@@ -169,21 +162,21 @@ public sealed partial class GithubClient
     /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
     public async Task<HttpResponseMessage?> TryMakeRequestSafe(IGithubRequest request, CancellationToken ct)
     {
-        if (!HaveFullApiData())
+        if (!HaveFullApiData(out var errorDetails, out var rsa))
         {
-            _sawmill.Info("Tried to make a github api request but the api was not enabled.");
+            _sawmill.Info("Tried to make a github api request but the api is not properly set up. " + errorDetails);
             return null;
         }
 
-        if (request.AuthenticationMethod == GithubAuthMethod.Token && !await TryEnsureTokenNotExpired(ct))
+        if (request.AuthenticationMethod == GithubAuthMethod.Token && !await TryEnsureTokenNotExpired(rsa, ct))
             return null;
 
-        return await MakeRequest(request, ct);
+        return await MakeRequest(request, rsa, ct);
     }
 
-    private async Task<HttpResponseMessage?> MakeRequest(IGithubRequest request, CancellationToken ct)
+    private async Task<HttpResponseMessage?> MakeRequest(IGithubRequest request, RSA privateKey, CancellationToken ct)
     {
-        var httpRequestMessage = BuildRequest(request);
+        var httpRequestMessage = BuildRequest(request, privateKey);
 
         var response = await _httpClient.SendAsync(httpRequestMessage, ct);
 
@@ -233,14 +226,13 @@ public sealed partial class GithubClient
 
     #region Helper functions
 
-    private HttpRequestMessage BuildRequest(IGithubRequest request)
+    private HttpRequestMessage BuildRequest(IGithubRequest request, RSA privateKey)
     {
-        var json = JsonSerializer.Serialize(request, _jsonSerializerOptions);
+        var json = JsonSerializer.Serialize(request, JsonSerializerOptions);
         var payload = new StringContent(json, Encoding.UTF8, "application/json");
 
         var builder = new UriBuilder(_baseUri)
         {
-            Port = -1,
             Path = request.GetLocation(_owner, _repository),
         };
 
@@ -251,24 +243,33 @@ public sealed partial class GithubClient
             Content = payload,
         };
 
-        httpRequest.Headers.Add(AuthHeader, CreateAuthenticationHeader(request));
+        httpRequest.Headers.Add(AuthHeader, CreateAuthenticationHeader(request, privateKey));
 
         return httpRequest;
     }
 
-    private bool HaveFullApiData()
+    private bool HaveFullApiData(out string errorDetails, [NotNullWhen(true)] out RSA? rsa)
     {
-        return !string.IsNullOrWhiteSpace(_privateKey) &&
-               !string.IsNullOrWhiteSpace(_repository) &&
-               !string.IsNullOrWhiteSpace(_owner);
+        errorDetails = string.Empty;
+        if (_privateKey == null)
+            errorDetails += "\r\n * github app private key path is not set (specified by github_issues.github_app_private_key_path cvar), is unreachable, or does not contain valid key";
+
+        if (string.IsNullOrWhiteSpace(_repository))
+            errorDetails += "\r\n * name of github repository for issues was not specified by github_issues.github_repository_name cvar";
+
+        if (string.IsNullOrWhiteSpace(_owner))
+            errorDetails += "\r\n * name of owner for github repository, used for issues was not specified by github_issues.github_repository_owner cvar";
+
+        rsa = _privateKey;
+        return errorDetails.Length == 0;
     }
 
-    private string CreateAuthenticationHeader(IGithubRequest request)
+    private string CreateAuthenticationHeader(IGithubRequest request, RSA privateKey)
     {
         return request.AuthenticationMethod switch
         {
-            GithubAuthMethod.Token => AuthHeaderBearer + _tokenData.Token,
-            GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJwt(),
+            GithubAuthMethod.Token => AuthHeaderBearer + _tokenData?.Token,
+            GithubAuthMethod.JWT => AuthHeaderBearer + GetValidJwt(privateKey),
             _ => throw new Exception("Unknown auth method!"),
         };
     }
@@ -278,22 +279,22 @@ public sealed partial class GithubClient
     /// Try to get a valid verification token from the GitHub api
     /// </summary>
     /// <returns>True if the token is valid and successfully found, false if there was an error.</returns>
-    private async Task<bool> TryEnsureTokenNotExpired(CancellationToken ct)
+    private async Task<bool> TryEnsureTokenNotExpired(RSA privateKey, CancellationToken ct)
     {
-        if (_tokenData.Expiery != null && _tokenData.Expiery - _tokenBuffer > DateTime.UtcNow)
+        if (_tokenData != null && _tokenData.Expiry != null && _tokenData.Expiry - _tokenBuffer > DateTime.UtcNow)
             return true;
 
         _sawmill.Info("Token expired - requesting new token!");
 
         var installationRequest = new InstallationsRequest();
-        var installationHttpResponse = await MakeRequest(installationRequest, ct);
+        var installationHttpResponse = await MakeRequest(installationRequest, privateKey, ct);
         if (installationHttpResponse == null)
         {
             _sawmill.Error("Could not make http installation request when creating token.");
             return false;
         }
 
-        var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(_jsonSerializerOptions, ct);
+        var installationResponse = await installationHttpResponse.Content.ReadFromJsonAsync<List<InstallationResponse>>(JsonSerializerOptions, ct);
         if (installationResponse == null)
         {
             _sawmill.Error("Could not parse installation response.");
@@ -327,32 +328,31 @@ public sealed partial class GithubClient
             InstallationId = installationId.Value,
         };
 
-        var tokenHttpResponse = await MakeRequest(tokenRequest, ct);
+        var tokenHttpResponse = await MakeRequest(tokenRequest, privateKey, ct);
         if (tokenHttpResponse == null)
         {
             _sawmill.Error("Could not make http token request when creating token..");
             return false;
         }
 
-        var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(_jsonSerializerOptions, ct);
+        var tokenResponse = await tokenHttpResponse.Content.ReadFromJsonAsync<TokenResponse>(JsonSerializerOptions, ct);
         if (tokenResponse == null)
         {
             _sawmill.Error("Could not parse token response.");
             return false;
         }
 
-        _tokenData = (tokenResponse.ExpiresAt, tokenResponse.Token);
+        _tokenData = new(tokenResponse.ExpiresAt, tokenResponse.Token);
         return true;
     }
 
     // See: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-json-web-token-jwt-for-a-github-app
-    private string GetValidJwt()
+    private string GetValidJwt(RSA privateKey)
     {
-        if (_jwtData.Expiery != null && _jwtData.Expiery - _jwtBuffer > DateTime.UtcNow)
-            return _jwtData.JWT;
+        if (_jwtData != null && _jwtData.Expiry != null && _jwtData.Expiry - _jwtBuffer > DateTime.UtcNow)
+            return _jwtData.Token;
 
         var githubClientId = _appId;
-        var apiPrivateKey = _privateKey;
 
         var time = DateTime.UtcNow;
         var expTime = time + _jwtExpiration;
@@ -382,17 +382,14 @@ public sealed partial class GithubClient
 
         var headPayload = $"{headerEncoded}.{payloadJsonEncoded}";
 
-        var rsa = System.Security.Cryptography.RSA.Create();
-        rsa.ImportFromPem(apiPrivateKey);
-
         var bytesPlainTextData = Encoding.UTF8.GetBytes(headPayload);
 
-        var signedData = rsa.SignData(bytesPlainTextData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        var signedData = privateKey.SignData(bytesPlainTextData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         var signBase64 = Base64EncodeUrlSafe(signedData);
 
         var jwt = $"{headPayload}.{signBase64}";
 
-        _jwtData = (expTime, jwt);
+        _jwtData = new(expTime, jwt);
 
         _sawmill.Info("Generated new JWT.");
 
@@ -413,4 +410,10 @@ public sealed partial class GithubClient
     }
 
     #endregion
+
+    private sealed class GithubTokenInfo(DateTime? expiry, string token)
+    {
+        public DateTime? Expiry { get; } = expiry;
+        public string Token { get; } = token;
+    }
 }

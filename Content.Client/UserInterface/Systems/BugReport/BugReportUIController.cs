@@ -28,8 +28,8 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
     // Don't clear this window. It needs to be saved so the input doesn't get erased when it's closed!
     private BugReportWindow _bugReportWindow = default!;
 
-    private ResPath Bug = new("/Textures/Interface/bug.svg.192dpi.png");
-    private ResPath Splat = new("/Textures/Interface/splat.svg.192dpi.png");
+    private static readonly ResPath Bug = new("/Textures/Interface/bug.svg.192dpi.png");
+    private static readonly ResPath Splat = new("/Textures/Interface/splat.svg.192dpi.png");
 
     public void OnStateEntered(GameplayState state)
     {
@@ -73,7 +73,7 @@ public sealed partial class BugReportUIController : UIController, IOnStateEntere
 
         _bugReportWindow.OnBugReportSubmitted += OnBugReportSubmitted;
 
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility, true);
+        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, UpdateButtonVisibility, true); // having sub for this does not work, PJB is sayin, need to test and investigate
     }
 
     private void CleanupWindow()

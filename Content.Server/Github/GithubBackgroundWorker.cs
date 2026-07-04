@@ -17,17 +17,19 @@ public sealed partial class GithubBackgroundWorker
 
     private bool _enabled;
     private readonly Channel<IGithubRequest> _channel = Channel.CreateUnbounded<IGithubRequest>();
-    private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+    private readonly CancellationTokenSource _cts = new();
 
     public ChannelWriter<IGithubRequest> Writer => _channel.Writer;
 
     public void Initialize()
     {
         _sawmill = _log.GetSawmill("github-ratelimit");
-        _cfg.OnValueChanged(CCVars.GithubEnabled, val => Interlocked.Exchange(ref _enabled, val), true);
+        _cfg.OnValueChanged(CCVars.GithubIssuesEnabled, val => _enabled = val, true);
+
+        Task.Run(HandleQueue);
     }
 
-    public async Task HandleQueue()
+    private async Task HandleQueue()
     {
         var token = _cts.Token;
         var reader = _channel.Reader;
@@ -41,7 +43,7 @@ public sealed partial class GithubBackgroundWorker
         }
     }
 
-    // this should be called in BaseServer.Cleanup!
+    // todo: make it so this will be called during BaseServer.Cleanup!
     public void Shutdown()
     {
         _cts.Cancel();

@@ -19,7 +19,7 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
     private const int MaxWaitSeconds = 32;
 
     /// Extra buffer time (In seconds) after getting rate limited we don't make the request exactly when we get more credits.
-    private const long ExtraBufferTime = 1L;
+    private static readonly TimeSpan ExtraBufferTime = TimeSpan.FromSeconds(1);
 
     #region Headers
 
@@ -27,6 +27,8 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
 
     private const string RemainingHeader = "x-ratelimit-remaining";
     private const string RateLimitResetHeader = "x-ratelimit-reset";
+
+    public int MaxRetries { private get; set; } = maxRetries;
 
     #endregion
 
@@ -36,6 +38,7 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
     )
     {
         HttpResponseMessage response;
+        var maxRetriesPreset = MaxRetries;
         var i = 0;
         do
         {
@@ -44,12 +47,12 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
                 return response;
 
             i++;
-            if (i < maxRetries)
+            if (i < maxRetriesPreset)
             {
                 var waitTime = CalculateNextRequestTime(response, i);
                 await Task.Delay(waitTime, cancellationToken);
             }
-        } while (!response.IsSuccessStatusCode && i < maxRetries);
+        } while (!response.IsSuccessStatusCode && i < maxRetriesPreset);
 
         return response;
     }
@@ -72,20 +75,20 @@ public sealed class RetryHandler(HttpMessageHandler innerHandler, int maxRetries
         {
             // Retry after header
             if (GithubClient.TryGetHeaderAsLong(headers, RetryAfterHeader, out var retryAfterSeconds))
-                return TimeSpan.FromSeconds(retryAfterSeconds.Value + ExtraBufferTime);
+                return TimeSpan.FromSeconds(retryAfterSeconds.Value) + ExtraBufferTime;
 
             // Reset header (Tells us when we get more api credits)
             if (GithubClient.TryGetHeaderAsLong(headers, RemainingHeader, out var remainingRequests)
                 && GithubClient.TryGetHeaderAsLong(headers, RateLimitResetHeader, out var resetTime)
                 && remainingRequests == 0)
             {
-                var delayTime = resetTime.Value - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var delayTime = DateTimeOffset.FromUnixTimeSeconds(resetTime.Value) - DateTimeOffset.UtcNow;
                 sawmill.Warning(
                     "github returned '{status}' status, have to wait until limit reset - in '{delay}' seconds",
                     response.StatusCode,
                     delayTime
                 );
-                return TimeSpan.FromSeconds(delayTime + ExtraBufferTime);
+                return delayTime + ExtraBufferTime;
             }
         }
 

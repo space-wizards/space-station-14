@@ -1,5 +1,4 @@
 using Content.Server.Github.Requests;
-using System.Threading.Tasks;
 using Content.Server.BugReports;
 
 namespace Content.Server.Github;
@@ -8,12 +7,7 @@ public sealed partial class GithubApiManager
 {
     [Dependency] private GithubBackgroundWorker _githubWorker = default!;
 
-    public void Initialize()
-    {
-        Task.Run(() => _githubWorker.HandleQueue());
-    }
-
-    public bool TryCreateIssue(ValidPlayerBugReportReceivedEvent bugReport)
+    public bool TryCreateIssue(ValidatedPlayerBugReport bugReport)
     {
         var createIssueRequest = ConvertToCreateIssue(bugReport);
         return TryMakeRequest(createIssueRequest);
@@ -24,7 +18,7 @@ public sealed partial class GithubApiManager
         return _githubWorker.Writer.TryWrite(request);
     }
 
-    private CreateIssueRequest ConvertToCreateIssue(ValidPlayerBugReportReceivedEvent bugReport)
+    private CreateIssueRequest ConvertToCreateIssue(ValidatedPlayerBugReport bugReport)
     {
         var request = new CreateIssueRequest
         {

@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 namespace Content.Server.Github.Requests;
 
 /// <summary>
-/// <see href="https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app"/>>
+/// Request for github api for acquiring access token that could be used for further API calls.
+/// <see href="https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app"/>
 /// </summary>
 public sealed class TokenRequest : IGithubRequest
 {

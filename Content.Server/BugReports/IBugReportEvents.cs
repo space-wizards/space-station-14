@@ -5,7 +5,7 @@ namespace Content.Server.BugReports;
 /// <summary>
 /// This event stores information related to a player submitted bug report.
 /// </summary>
-public sealed class ValidPlayerBugReportReceivedEvent(string title, string description, BugReportMetaData metaData, List<string> tags) : EventArgs
+public sealed class ValidatedPlayerBugReport(string title, string description, BugReportMetaData metaData, List<string> tags)
 {
     /// <summary>
     /// Title for the bug report. This is player controlled!
@@ -73,7 +73,7 @@ public sealed class BugReportMetaData
     /// <summary>
     /// The map being played.
     /// </summary>
-    /// <example>"Dev"</example>>
+    /// <example>"Dev"</example>
     public string? Map;
 
     /// <summary>

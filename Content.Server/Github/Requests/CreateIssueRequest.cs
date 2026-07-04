@@ -16,7 +16,7 @@ public sealed class CreateIssueRequest : IGithubRequest
 
     #region JSON fields
 
-    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude]
     public required string Title;
     [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Body;
@@ -24,9 +24,9 @@ public sealed class CreateIssueRequest : IGithubRequest
     public string? Assignee;
     [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Milestone;
-    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude]
     public List<string> Labels = [];
-    [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonInclude]
     public List<string> Assignees = [];
 
     #endregion

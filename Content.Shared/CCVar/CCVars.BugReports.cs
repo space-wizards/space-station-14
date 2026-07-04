@@ -5,17 +5,17 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    /// Allow users to submit bug reports. Will enable a button on the hotbar. See <see cref="GithubEnabled" /> for
+    /// Allow users to submit bug reports. Will enable a button on the hotbar. See <see cref="GithubIssuesEnabled" /> for
     /// setting up the GitHub API!
     /// </summary>
     public static readonly CVarDef<bool> EnablePlayerBugReports =
-        CVarDef.Create("bug_reports.enable_player_bug_reports", false, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.enable_player_bug_reports", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum playtime that players need to have played to submit bug reports.
     /// </summary>
     public static readonly CVarDef<int> MinimumPlaytimeInMinutesToEnableBugReports =
-        CVarDef.Create("bug_reports.minimum_playtime_in_minutes_to_enable_bug_reports", 120, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.minimum_playtime_in_minutes_to_enable_bug_reports", 0, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Maximum number of bug reports a user can submit per round.
@@ -33,7 +33,7 @@ public sealed partial class CCVars
     /// Maximum length of a bug report title.
     /// </summary>
     public static readonly CVarDef<int> MaximumBugReportTitleLength =
-        CVarDef.Create("bug_reports.maximum_bug_report_title_length", 35, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.maximum_bug_report_title_length", 120, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum length of a bug report title.

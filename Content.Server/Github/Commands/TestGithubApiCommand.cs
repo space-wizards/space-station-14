@@ -21,11 +21,11 @@ public sealed partial class TestGithubApiCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var enabled = _cfg.GetCVar(CCVars.GithubEnabled);
-        var path = _cfg.GetCVar(CCVars.GithubAppPrivateKeyPath);
-        var appId = _cfg.GetCVar(CCVars.GithubAppId);
-        var repoName = _cfg.GetCVar(CCVars.GithubRepositoryName);
-        var owner = _cfg.GetCVar(CCVars.GithubRepositoryOwner);
+        var enabled = _cfg.GetCVar(CCVars.GithubIssuesEnabled);
+        var path = _cfg.GetCVar(CCVars.GithubIssuesAppPrivateKeyPath);
+        var appId = _cfg.GetCVar(CCVars.GithubIssuesAppId);
+        var repoName = _cfg.GetCVar(CCVars.GithubIssuesRepositoryName);
+        var owner = _cfg.GetCVar(CCVars.GithubIssuesRepositoryOwner);
 
         if (!enabled)
         {

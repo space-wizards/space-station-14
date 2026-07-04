@@ -8,6 +8,6 @@ bug-report-window-title-place-holder = Bug report title
 bug-report-window-description-place-holder = Type bug report here
 bug-report-window-submit-button-text = Submit
 bug-report-window-submit-button-confirm-text = Click again to submit!
-bug-report-window-submit-button-disclaimer = Your SS14 username and other in game information will be saved.
+bug-report-window-submit-button-disclaimer = Your SS14 username and other in-game information will be saved and will be publicly available as part of created issue.
 
 bug-report-window-submit-char-split = {$typed}/{$total}
