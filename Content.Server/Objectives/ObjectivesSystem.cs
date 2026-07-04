@@ -13,7 +13,6 @@ using System.Linq;
 using System.Text;
 using Content.Server.Objectives.Commands;
 using Content.Shared.CCVar;
-using Content.Shared.Objectives.Prototypes;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
