@@ -10,6 +10,8 @@ using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -23,6 +25,7 @@ public sealed partial class ScreechSystem : EntitySystem
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
+    [Dependency] private INetManager _net = default!;
 
     [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery;
 
@@ -32,7 +35,7 @@ public sealed partial class ScreechSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ScreechShockWaveComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ScreechShockWaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NoiseProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
         SubscribeLocalEvent<NoiseProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
         SubscribeLocalEvent<ActionsComponent, ScreechActionEvent>(OnScreechAction);
@@ -58,7 +61,7 @@ public sealed partial class ScreechSystem : EntitySystem
         args.Heard = false;
     }
 
-    private void OnMapInit(Entity<ScreechShockWaveComponent> ent, ref MapInitEvent args)
+    private void OnComponentInit(Entity<ScreechShockWaveComponent> ent, ref ComponentInit args)
     {
         ent.Comp.InitTime = _timing.CurTime;
         Dirty(ent);
@@ -71,11 +74,7 @@ public sealed partial class ScreechSystem : EntitySystem
     {
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
-        {
-            var vfxEntity = Spawn(vfx.Value);
-            var container = _containers.EnsureContainer<ContainerSlot>(source, "screechHolder");
-            _containers.Insert(vfxEntity, container);
-        }
+            PredictedSpawnAttachedTo(vfx.Value, new EntityCoordinates(source, 0f, 0f));
 
         // then, we do the screech per-se
         var transform = Transform(source);

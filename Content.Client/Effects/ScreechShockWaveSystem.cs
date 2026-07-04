@@ -15,11 +15,11 @@ public sealed partial class ScreechShockWaveSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ScreechShockWaveComponent, AfterAutoHandleStateEvent>(OnScreechShockWaveStateHandled);
+        SubscribeLocalEvent<ScreechShockWaveComponent, ComponentStartup>(OnScreechShockWaveStartup);
         SubscribeLocalEvent<ScreechShockWaveComponent, ComponentRemove>(OnScreechShockWaveRemoved);
     }
 
-    private void OnScreechShockWaveStateHandled(Entity<ScreechShockWaveComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnScreechShockWaveStartup(Entity<ScreechShockWaveComponent> ent, ref ComponentStartup args)
     {
         var overlay = _overlayMan.GetOverlay<ScreechShockWaveOverlay>();
         // we must only pass here once
