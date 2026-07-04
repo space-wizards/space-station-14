@@ -18,7 +18,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Systems;
 
@@ -48,7 +47,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     /// <summary> Normal interactions. </summary>
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
             return;
 
         var component = ent.Comp;
@@ -87,14 +86,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
                 ? null
                 : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
         }
-        // make an attempt to ensure refinement is not blocked.
-        var attemptEvent = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(args.Target, ref attemptEvent);
-
-        if (attemptEvent.IsCancelled)
+        else
         {
-            verbDisabled = true;
-            verbMessage = attemptEvent.BlockCause;
+            // We have the necessary tool, make an attempt to ensure refinement is not blocked.
+            var attemptEvent = new AttemptToolRefineEvent(tool);
+            RaiseLocalEvent(args.Target, ref attemptEvent);
+
+            if (attemptEvent.IsCancelled)
+            {
+                verbDisabled = true;
+                verbMessage = attemptEvent.BlockCause;
+            }
         }
 
         verbMessage ??= component.VerbDefaultTooltip == null
@@ -163,12 +165,16 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     {
         var spawns = EntitySpawnCollection.GetSpawns(spawnList, rng);
         var spawned = new List<EntityUid>(spawns.Count);
+
+        if (_container.TryGetContainingContainer(source, out var container))
+            _container.Remove((source, null, null), container);
+
         foreach (var protoId in spawns)
         {
             var refineResultUid = PredictedSpawnNextToOrDrop(protoId, source);
             spawned.Add(refineResultUid);
 
-            if (!_container.IsEntityOrParentInContainer(refineResultUid))
+            if (container == null || !_container.Insert(refineResultUid, container))
             {
                 var randVect = rng.NextVector2(2.0f, 2.5f);
                 _physics.SetLinearVelocity(refineResultUid, randVect);
