@@ -103,7 +103,7 @@ namespace Content.Client.Sandbox
                 if (_placement.Eraser)
                     _placement.ToggleEraser();
 
-                _placement.Direction = Transform(uid).WorldRotation.GetCardinalDir();
+                _placement.Direction = _transform.GetWorldRotation(uid).GetCardinalDir();
 
                 _placement.BeginPlacing(new()
                 {
@@ -123,7 +123,7 @@ namespace Content.Client.Sandbox
             if (_placement.Eraser)
                 _placement.ToggleEraser();
 
-            _placement.Direction = (Direction)((tileRef.Tile.RotationMirroring % 4) * 2);
+            _placement.Direction = (Direction)(tileRef.Tile.RotationMirroring % 4 * 2);
             _placement.Mirrored = tileRef.Tile.RotationMirroring >= 4;
 
             _placement.BeginPlacing(new()
