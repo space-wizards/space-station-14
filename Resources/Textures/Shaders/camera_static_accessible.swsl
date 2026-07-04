@@ -1,0 +1,6 @@
+void fragment() {
+    highp vec2 coords = FRAGCOORD.xy;
+    highp vec2 value = vec2(coords * SCREEN_PIXEL_SIZE);
+    highp vec3 color = vec3(0.0,value.x/3.0,value.x/2.0);
+    COLOR = vec4(0.1 * color,1.0);
+}
