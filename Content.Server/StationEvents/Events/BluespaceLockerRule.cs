@@ -6,13 +6,14 @@ using Content.Shared.Access.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.GameTicking.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
+public sealed partial class BluespaceLockerRule : StationEventSystem<BluespaceLockerRuleComponent>
 {
-    [Dependency] private readonly BluespaceLockerSystem _bluespaceLocker = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private BluespaceLockerSystem _bluespaceLocker = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     protected override void Started(EntityUid uid, BluespaceLockerRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

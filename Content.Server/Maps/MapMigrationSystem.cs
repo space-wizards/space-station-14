@@ -15,12 +15,12 @@ namespace Content.Server.Maps;
 /// <summary>
 ///     Performs basic map migration operations by listening for engine <see cref="MapLoaderSystem"/> events.
 /// </summary>
-public sealed class MapMigrationSystem : EntitySystem
+public sealed partial class MapMigrationSystem : EntitySystem
 {
-#pragma warning disable CS0414
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-#pragma warning restore CS0414
-    [Dependency] private readonly IResourceManager _resMan = default!;
+#if DEBUG
+    [Dependency] private IPrototypeManager _protoMan = default!;
+#endif
+    [Dependency] private IResourceManager _resMan = default!;
 
     private const string MigrationFile = "/migration.yml";
 

@@ -51,10 +51,13 @@
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True" />
                     <!-- Left Bot Panel -->
-                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
-                        <PanelContainer StyleClasses="BackgroundPanel">
-                            <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                        <PanelContainer StyleClasses="BackgroundPanel" Margin="3 3 3 3">
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="3 3 3 3">
+                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Left" />
+                                <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Left" />
+                            </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
                 </Control>

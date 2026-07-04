@@ -31,9 +31,7 @@ public sealed partial class NearbyAccessRule : RulesRule
 
     public override bool Check(EntityManager entManager, EntityUid uid)
     {
-        var xformQuery = entManager.GetEntityQuery<TransformComponent>();
-
-        if (!xformQuery.TryGetComponent(uid, out var xform) ||
+        if (!entManager.TryGetComponent(uid, out TransformComponent? xform) ||
             xform.MapUid == null)
         {
             return false;
@@ -44,7 +42,7 @@ public sealed partial class NearbyAccessRule : RulesRule
         var reader = entManager.System<AccessReaderSystem>();
 
         var found = false;
-        var worldPos = transform.GetWorldPosition(xform, xformQuery);
+        var worldPos = transform.GetWorldPosition(xform);
         var count = 0;
 
         // TODO: Update this when we get the callback version
@@ -54,7 +52,7 @@ public sealed partial class NearbyAccessRule : RulesRule
         {
             if (!reader.AreAccessTagsAllowed(Access, comp) ||
                 Anchored &&
-                (!xformQuery.TryGetComponent(comp, out var compXform) ||
+                (!entManager.TryGetComponent(comp, out TransformComponent? compXform) ||
                  !compXform.Anchored))
             {
                 continue;

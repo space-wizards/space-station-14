@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.PowerSink
 {
-    public sealed class PowerSinkSystem : EntitySystem
+    public sealed partial class PowerSinkSystem : EntitySystem
     {
         /// <summary>
         /// Percentage of battery full to trigger the announcement warning at.
@@ -27,12 +27,12 @@ namespace Content.Server.PowerSink
         /// <returns></returns>
         private readonly TimeSpan _explosionDelayTime = TimeSpan.FromSeconds(1.465);
 
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly BatterySystem _battery = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private ExplosionSystem _explosionSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private BatterySystem _battery = default!;
 
         public override void Initialize()
         {
@@ -68,7 +68,7 @@ namespace Content.Server.PowerSink
 
                 _battery.ChangeCharge((entity, battery), networkLoad.NetworkLoad.ReceivingPower * frameTime);
 
-                var currentBatteryThreshold = battery.CurrentCharge / battery.MaxCharge;
+                var currentBatteryThreshold = _battery.GetChargeLevel((entity, battery));
 
                 // Check for warning message threshold
                 if (!component.SentImminentExplosionWarningMessage &&
@@ -90,7 +90,7 @@ namespace Content.Server.PowerSink
                 }
 
                 // Check for explosion
-                if (battery.CurrentCharge < battery.MaxCharge)
+                if (!_battery.IsFull((entity, battery)))
                     continue;
 
                 if (component.ExplosionTime == null)

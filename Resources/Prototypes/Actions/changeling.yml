@@ -21,6 +21,23 @@
       collection: gib # Placeholder
 
 - type: entity
+  parent: BaseAction
+  id: ActionChangelingBiodegrade
+  name: Biodegrade
+  description: Vomit acid over your restraints, setting yourself free.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Short cooldown but chemical cost
+    raiseOnAction: true
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: biodegrade
+  - type: InstantAction
+    event: !type:ChangelingBiodegradeActionEvent
+  - type: ChangelingBiodegradeAbility
+
+- type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own.
@@ -28,6 +45,7 @@
   - type: Action
     icon: { sprite : Interface/Actions/changeling.rsi, state: "devour" }
     iconOn: { sprite : Interface/Actions/changeling.rsi, state: "devour_on" }
+    itemIconStyle: BigAction
     priority: 1
   - type: TargetAction
   - type: EntityTargetAction
@@ -42,3 +60,145 @@
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
   - type: InstantAction
     event: !type:ChangelingTransformActionEvent
+
+- type: entity
+  parent: ActionIntrinsicStore
+  id: ActionChangelingStore
+  name: DNA Store
+  description: Opens the ability store.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "shop" }
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingVoiceMimic
+  name: Voice Mimicry
+  description: Model your vocal cords to imitate the voice of someone else.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: mimicry
+  - type: InstantAction
+    event: !type:VoiceMaskSetNameEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingStingDna
+  name: Extract DNA
+  description: Sneakily absorb the identity of unsuspecting victims. Does not grant DNA to your store or objective progress.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_off" }
+    iconOn: { sprite : Interface/Actions/changeling2.rsi, state: "extract_dna_on" }
+    itemIconStyle: BigAction
+    priority: 1
+    useDelay: 90 # TODO: Chemical cost, maybe this could be a DoAfter action?
+    raiseOnUser: true
+  - type: TargetAction
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidProfile
+    event: !type:ChangelingStingDnaEvent
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
+
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseActionChangelingSting
+  components:
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Bloodstream
+    event: !type:EntityEffectActionEvent
+  - type: PopupOnAction
+    popupType: Medium
+    selfMessage: changeling-sting-success
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingBlind
+  name: Blind Sting
+  description: Silently sting a target and worsen their sight for a short duration.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: blind_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: NorepinephricAcid
+      quantity: 23
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingCryogenic
+  name: Cryogenic Sting
+  description: Silently sting a target and slow down their movement drastically.
+  components:
+  - type: Action
+    useDelay: 60 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: cryogenic_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Fresium
+      quantity: 10 # About 20 seconds of slowdown.
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingLead
+  name: Lethal Sting
+  description: Silently sting a target and inject them with a lethal dose of a slow acting poison.
+  components:
+  - type: Action
+    useDelay: 180 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: lethal_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: Lead
+      quantity: 5 # Exactly 100 poison damage over 3 minutes.
+
+- type: entity
+  parent: BaseActionChangelingSting
+  id: ActionChangelingStingHallucinogenic
+  name: Hallucinogenic Sting
+  description: Silently sting a target and inject them with chemicals that slow down their higher brain functions.
+  components:
+  - type: Action
+    useDelay: 90 # TODO: Chemical cost
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: hallucination_sting
+  - type: EntityEffectAction
+    effects:
+    - !type:AddReagentToBloodstream
+      reagent: SpaceDrugs
+      quantity: 10 # About 100s of being high
+    - !type:AddReagentToBloodstream
+      reagent: Cryptobiolin
+      quantity: 10 # About 20s of your speech being scrambled

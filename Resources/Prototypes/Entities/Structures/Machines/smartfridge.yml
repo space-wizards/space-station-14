@@ -48,6 +48,7 @@
   - type: SmartFridge
     whitelist:
       components:
+      - Edible
       - FitsInDispenser
       - Pill
       - Produce
@@ -104,8 +105,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -115,6 +117,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: Airtight
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: SmartFridge

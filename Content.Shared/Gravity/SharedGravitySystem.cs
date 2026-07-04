@@ -14,14 +14,14 @@ namespace Content.Shared.Gravity;
 
 public abstract partial class SharedGravitySystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     public static readonly ProtoId<AlertPrototype> WeightlessAlert = "Weightless";
 
-    protected EntityQuery<GravityComponent> GravityQuery;
-    private EntityQuery<GravityAffectedComponent> _weightlessQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] protected EntityQuery<GravityComponent> GravityQuery = default!;
+    [Dependency] private EntityQuery<GravityAffectedComponent> _weightlessQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {
@@ -43,10 +43,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
         // Impulse
         SubscribeLocalEvent<GravityAffectedComponent, ShooterImpulseEvent>(OnShooterImpulse);
         SubscribeLocalEvent<GravityAffectedComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
-
-        GravityQuery = GetEntityQuery<GravityComponent>();
-        _weightlessQuery = GetEntityQuery<GravityAffectedComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
     }
 
     public override void Update(float frameTime)

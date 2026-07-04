@@ -11,14 +11,14 @@ namespace Content.Server.NPC.Systems;
 
 public sealed partial class NPCCombatSystem
 {
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+    [Dependency] private SharedCombatModeSystem _combat = default!;
+    [Dependency] private RotateToFaceSystem _rotate = default!;
 
-    private EntityQuery<CombatModeComponent> _combatQuery;
-    private EntityQuery<NPCSteeringComponent> _steeringQuery;
-    private EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<CombatModeComponent> _combatQuery = default!;
+    [Dependency] private EntityQuery<NPCSteeringComponent> _steeringQuery = default!;
+    [Dependency] private EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;
@@ -30,12 +30,6 @@ public sealed partial class NPCCombatSystem
 
     private void InitializeRanged()
     {
-        _combatQuery = GetEntityQuery<CombatModeComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-        _rechargeQuery = GetEntityQuery<RechargeBasicEntityAmmoComponent>();
-        _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
-
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentStartup>(OnRangedStartup);
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentShutdown>(OnRangedShutdown);
     }
@@ -96,7 +90,7 @@ public sealed partial class NPCCombatSystem
                 _combat.SetInCombatMode(uid, true, combatMode);
             }
 
-            if (!_gun.TryGetGun(uid, out var gunUid, out var gun))
+            if (!_gun.TryGetGun(uid, out var gun))
             {
                 comp.Status = CombatStatus.NoWeapon;
                 comp.ShootAccumulator = 0f;
@@ -104,12 +98,12 @@ public sealed partial class NPCCombatSystem
             }
 
             var ammoEv = new GetAmmoCountEvent();
-            RaiseLocalEvent(gunUid, ref ammoEv);
+            RaiseLocalEvent(gun, ref ammoEv);
 
             if (ammoEv.Count == 0)
             {
                 // Recharging then?
-                if (_rechargeQuery.HasComponent(gunUid))
+                if (_rechargeQuery.HasComponent(gun))
                 {
                     continue;
                 }
@@ -200,12 +194,12 @@ public sealed partial class NPCCombatSystem
 
             comp.Status = CombatStatus.Normal;
 
-            if (gun.NextFire > _timing.CurTime)
+            if (gun.Comp.NextFire > _timing.CurTime)
             {
                 return;
             }
 
-            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates, comp.Target);
+            _gun.AttemptShoot(uid, gun, targetCordinates, comp.Target);
         }
     }
 }

@@ -193,7 +193,7 @@ public abstract partial class SharedChatSystem
 
         // Check the whitelist and blacklist
         if (_whitelist.IsWhitelistFail(emote.Whitelist, source) ||
-            _whitelist.IsBlacklistPass(emote.Blacklist, source))
+            _whitelist.IsWhitelistPass(emote.Blacklist, source))
         {
             return false;
         }

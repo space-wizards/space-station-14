@@ -11,12 +11,12 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class BotanySwabSystem : EntitySystem
+public sealed partial class BotanySwabSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly MutationSystem _mutationSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private MutationSystem _mutationSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {

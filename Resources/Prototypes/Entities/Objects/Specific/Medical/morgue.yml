@@ -1,6 +1,6 @@
 - type: entity
   id: BodyBag
-  parent: BaseDeployFoldable
+  parent: [ BaseDeployFoldable, BasePaperLabelableVisualized ]
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
@@ -54,16 +54,6 @@
     openSound:
       path: /Audio/Misc/zip.ogg
   - type: EntityStorageLayingDownOverride
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: comp-paper-label-insert
-      ejectVerbText: comp-paper-label-eject
-      whitelist:
-        components:
-        - Paper
-      blacklist:
-        tags:
-        - Book
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open_overlay
@@ -88,7 +78,6 @@
           False: {visible: true}
   - type: Pullable
   - type: AntiRottingContainer
-  - type: ItemSlots
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
@@ -111,7 +100,7 @@
 #   snap: Center
 
 - type: entity
-  parent: BaseItem
+  parent: [SolutionFood, SolutionTiny, BaseItem]
   id: Ash
   name: ash
   description: This used to be something, but now it's not.
@@ -125,13 +114,11 @@
     tags:
     - Burnt
     - Trash
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 50
-        reagents:
-        - ReagentId: Ash
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ash
+        Quantity: 15
   - type: SolutionSpiker
     sourceSolution: food
     ignoreEmpty: true
@@ -146,22 +133,18 @@
   name: ectoplasm
   description: Much less deadly in this form.
   components:
-    - type: Sprite
-      sprite: Mobs/Ghosts/revenant.rsi
-      state: ectoplasm
-    - type: Tag
-      tags:
-        - Trash
-        - Ectoplasm
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 50
-          reagents:
-            - ReagentId: Ash
-              Quantity: 25
-            - ReagentId: Necrosol
-              Quantity: 25
-    - type: GuideHelp
-      guides:
-      - MinorAntagonists
+  - type: Sprite
+    sprite: Mobs/Ghosts/revenant.rsi
+    state: ectoplasm
+  - type: Tag
+    tags:
+      - Trash
+      - Ectoplasm
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fresium
+        Quantity: 15
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists

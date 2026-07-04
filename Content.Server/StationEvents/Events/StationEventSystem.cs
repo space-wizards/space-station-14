@@ -9,19 +9,20 @@ using Content.Shared.GameTicking.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
 
 /// <summary>
 ///     An abstract entity system inherited by all station events for their behavior.
 /// </summary>
-public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
+public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
-    [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly ChatSystem ChatSystem = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly StationSystem StationSystem = default!;
+    [Dependency] protected IAdminLogManager AdminLogManager = default!;
+    [Dependency] protected IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected ChatSystem ChatSystem = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected StationSystem StationSystem = default!;
 
     protected ISawmill Sawmill = default!;
 

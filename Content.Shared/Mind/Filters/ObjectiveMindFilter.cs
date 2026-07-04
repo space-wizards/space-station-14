@@ -10,13 +10,13 @@ public sealed partial class ObjectiveMindFilter : MindFilter
     [DataField(required: true)]
     public EntityWhitelist Blacklist = new();
 
-    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan, SharedMindSystem mindSys)
+    protected override bool ShouldRemove(Entity<MindComponent> mind, EntityUid? exclude, IEntityManager entMan)
     {
         var whitelistSys = entMan.System<EntityWhitelistSystem>();
         foreach (var obj in mind.Comp.Objectives)
         {
             // mind has a blacklisted objective, remove it from the pool
-            if (whitelistSys.IsBlacklistPass(Blacklist, obj))
+            if (whitelistSys.IsWhitelistPass(Blacklist, obj))
                 return true;
         }
 

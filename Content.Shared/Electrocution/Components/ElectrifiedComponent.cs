@@ -112,10 +112,10 @@ public sealed partial class ElectrifiedComponent : Component
     public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_on.ogg");
+    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_off.ogg");
 
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_off.ogg");
+    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_on.ogg");
 
     [DataField, AutoNetworkedField]
     public bool PlaySoundOnShock = true;

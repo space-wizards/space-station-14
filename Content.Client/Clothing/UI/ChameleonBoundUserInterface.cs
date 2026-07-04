@@ -10,9 +10,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Clothing.UI;
 
 [UsedImplicitly]
-public sealed class ChameleonBoundUserInterface : BoundUserInterface
+public sealed partial class ChameleonBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
     private readonly ChameleonClothingSystem _chameleon;
     private readonly TagSystem _tag;
 
