@@ -425,6 +425,7 @@ public sealed partial class CCVars
     public static readonly CVarDef<int> TileStackLimit =
         CVarDef.Create("game.tile_stack_limit", 5, CVar.SERVER | CVar.REPLICATED);
 
+    /// <summary>
     /// The list of jobs that will be enabled on newly created characters.
     /// The first job will be set to High priority, subsequent ones to Medium.
     /// </summary>
