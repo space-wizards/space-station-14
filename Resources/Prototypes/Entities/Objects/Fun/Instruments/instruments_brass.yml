@@ -52,6 +52,6 @@
   components:
   - type: Instrument
     program: 3
-    bank: 1
+    bank: 100 # Defined in space-station-14.sf2
   - type: Sprite
     sprite: Objects/Fun/Instruments/euphonium.rsi

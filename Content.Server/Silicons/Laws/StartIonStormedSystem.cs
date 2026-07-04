@@ -7,11 +7,11 @@ namespace Content.Server.Silicons.Laws;
 /// <summary>
 /// This handles running the ion storm event a on specific entity when that entity is spawned in.
 /// </summary>
-public sealed class StartIonStormedSystem : EntitySystem
+public sealed partial class StartIonStormedSystem : EntitySystem
 {
-    [Dependency] private readonly IonStormSystem _ionStorm = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
+    [Dependency] private IonStormSystem _ionStorm = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SiliconLawSystem _siliconLaw = default!;
 
     public override void Initialize()
     {

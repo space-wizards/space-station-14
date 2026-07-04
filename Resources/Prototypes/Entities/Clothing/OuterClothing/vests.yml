@@ -13,6 +13,11 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
+    - state: icon-unshaded
+      shader: shaded
+      #This is a neat trick I found to sort of "hack" an emissive map into ss14. Basically, the icon-unshaded texture has an alpha channel.
+      #Alpha doesn't work for unshaded, but for *shaded* it does, and by putting a shaded texture infront of the unshaded, we can dim the unshaded texture, effectively allowing brightness control.
+      #I go further indepth on this in my PR, https://github.com/space-wizards/space-station-14/pull/37869
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
     clothingVisuals:
@@ -20,9 +25,18 @@
       - state: equipped-OUTERCLOTHING
       - state: equipped-OUTERCLOTHING-unshaded
         shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded
+        #same trick here
+  - type: Reflect
+    reflectProb: 0.02
+    reflects:
+    - Energy
+    reflectingInHands: false
   - type: Tag
     tags:
     - HiViz
+    - WhitelistChameleon
 
 #(Bartender) vest
 - type: entity
@@ -51,3 +65,34 @@
     size: Normal # Make smaller than typical outer clothing
     shape:
     - 0, 0, 0, 1
+
+# Reporter unlockable PRESS vest
+- type: entity
+  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks]
+  id: ClothingOuterVestPress
+  name: press vest
+  description: A cloth vest for the fearless reporter in the field. Go land an interview with that space dragon!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/pressvest.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded # See ClothingOuterVestHazard for why we double-add these unshaded states this way
+      shader: unshaded
+    - state: icon-unshaded
+      shader: shaded
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/pressvest.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded
+      outerClothing-vox:
+      - state: equipped-OUTERCLOTHING-vox
+      - state: equipped-OUTERCLOTHING-unshaded-vox
+        shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded-vox
+        shader: shaded

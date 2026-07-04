@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.Forensics;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
@@ -32,29 +31,27 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
 
-public sealed class AdminSystem : EntitySystem
+public sealed partial class AdminSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IChatManager _chat = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly SharedJobSystem _jobs = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTime = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StationRecordsSystem _stationRecords = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private IChatManager _chat = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private HandsSystem _hands = default!;
+    [Dependency] private SharedJobSystem _jobs = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private MindSystem _minds = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private PlayTimeTrackingManager _playTime = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private StationRecordsSystem _stationRecords = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 
@@ -224,27 +221,27 @@ public sealed class AdminSystem : EntitySystem
         // Visible (identity) name can be different from real name
         if (session?.AttachedEntity != null)
         {
-            entityName = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+            entityName = Comp<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
             identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
         }
 
         var antag = false;
 
         // Starting role, antagonist status and role type
-        RoleTypePrototype roleType = new();
+        RoleTypePrototype? roleType = null;
         var startingRole = string.Empty;
         LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp) && mindComp is not null)
         {
             sortWeight = _role.GetRoleCompByTime(mindComp)?.Comp.SortWeight ?? 0;
 
-            if (_proto.TryIndex(mindComp.RoleType, out var role))
+            if (ProtoMan.TryIndex(mindComp.RoleType, out var role))
             {
                 roleType = role;
                 subtype = mindComp.Subtype;
             }
             else
-                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
+                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(RoleTypePrototype.FallbackName)}' instead");
 
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);
@@ -270,7 +267,7 @@ public sealed class AdminSystem : EntitySystem
             identityName,
             startingRole,
             antag,
-            roleType,
+            roleType?.ID,
             subtype,
             sortWeight,
             GetNetEntity(session?.AttachedEntity),
@@ -383,8 +380,13 @@ public sealed class AdminSystem : EntitySystem
         {
             _chat.DeleteMessagesBy(uid);
 
+            var eraseEvent = new EraseEvent(uid);
+
             if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.OwnedEntity == null || TerminatingOrDeleted(mind.OwnedEntity.Value))
+            {
+                RaiseLocalEvent(ref eraseEvent);
                 return;
+            }
 
             var entity = mind.OwnedEntity.Value;
 
@@ -433,9 +435,9 @@ public sealed class AdminSystem : EntitySystem
 
             if (TryComp(entity, out HandsComponent? hands))
             {
-                foreach (var hand in _hands.EnumerateHands(entity, hands))
+                foreach (var hand in _hands.EnumerateHands((entity, hands)))
                 {
-                    _hands.TryDrop(entity, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                    _hands.TryDrop((entity, hands), hand, checkActionBlocker: false, doDropInteraction: false);
                 }
             }
 
@@ -444,6 +446,8 @@ public sealed class AdminSystem : EntitySystem
 
             if (_playerManager.TryGetSessionById(uid, out var session))
                 _gameTicker.SpawnObserver(session);
+
+            RaiseLocalEvent(ref eraseEvent);
         }
 
     private void OnSessionPlayTimeUpdated(ICommonSession session)
@@ -451,3 +455,10 @@ public sealed class AdminSystem : EntitySystem
         UpdatePlayerList(session);
     }
 }
+
+/// <summary>
+/// Event fired after a player is erased by an admin
+/// </summary>
+/// <param name="PlayerNetUserId">NetUserId of the player that was the target of the Erase</param>
+[ByRefEvent]
+public record struct EraseEvent(NetUserId PlayerNetUserId);

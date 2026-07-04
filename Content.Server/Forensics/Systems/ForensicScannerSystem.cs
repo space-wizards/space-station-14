@@ -13,26 +13,24 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Robust.Shared.Prototypes;
 // todo: remove this stinky LINQy
 
 namespace Content.Server.Forensics
 {
-    public sealed class ForensicScannerSystem : EntitySystem
+    public sealed partial class ForensicScannerSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly PaperSystem _paperSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
-        [Dependency] private readonly TagSystem _tag = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private PaperSystem _paperSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
+        [Dependency] private ForensicsSystem _forensicsSystem = default!;
+        [Dependency] private TagSystem _tag = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";
 
@@ -69,7 +67,7 @@ namespace Content.Server.Forensics
             if (args.Handled || args.Cancelled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out ForensicScannerComponent? scanner))
+            if (!TryComp(uid, out ForensicScannerComponent? scanner))
                 return;
 
             if (args.Args.Target != null)
@@ -125,7 +123,9 @@ namespace Content.Server.Forensics
                 Act = () => StartScan(uid, component, args.User, args.Target),
                 IconEntity = GetNetEntity(uid),
                 Text = Loc.GetString("forensic-scanner-verb-text"),
-                Message = Loc.GetString("forensic-scanner-verb-message")
+                Message = Loc.GetString("forensic-scanner-verb-message"),
+                // This is important because if its true using the scanner will count as touching the object.
+                DoContactInteraction = false
             };
 
             args.Verbs.Add(verb);
@@ -196,7 +196,7 @@ namespace Content.Server.Forensics
             }
 
             // Spawn a piece of paper.
-            var printed = EntityManager.SpawnEntity(component.MachineOutput, Transform(uid).Coordinates);
+            var printed = Spawn(component.MachineOutput, Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Actor, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paperComp))

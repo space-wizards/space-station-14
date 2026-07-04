@@ -7,7 +7,7 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
-    [Dependency] private readonly SharedStorageSystem _storageSystem = default!;
+    [Dependency] private SharedStorageSystem _storageSystem = default!;
 
     /// <summary>
     /// Yields all entities in hands or inventory slots with the specific flags.
@@ -16,12 +16,9 @@ public partial class InventorySystem
     {
         if (Resolve(user.Owner, ref user.Comp1, false))
         {
-            foreach (var hand in user.Comp1.Hands.Values)
+            foreach (var held in _handsSystem.EnumerateHeld(user))
             {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                yield return hand.HeldEntity.Value;
+                yield return held;
             }
         }
 
@@ -50,12 +47,24 @@ public partial class InventorySystem
     }
 
     /// <summary>
-    ///     Returns true if the given entity is equipped to an inventory slot with the given inventory slot flags.
+    /// Returns true if the given entity is equipped to an inventory slot with exactly matching inventory slot flags.
     /// </summary>
+    /// <seealso cref="InSlotWithAnyFlags" />
     public bool InSlotWithFlags(Entity<TransformComponent?, MetaDataComponent?> entity, SlotFlags flags)
     {
         return TryGetContainingSlot(entity, out var slot)
                && (slot.SlotFlags & flags) == flags;
+    }
+
+    /// <summary>
+    /// Returns true if the given entity is equipped to an inventory slot that
+    /// has any flags in common with the given ones.
+    /// </summary>
+    /// <seealso cref="InSlotWithFlags" />
+    public bool InSlotWithAnyFlags(Entity<TransformComponent?, MetaDataComponent?> ent, SlotFlags flags)
+    {
+        return TryGetContainingSlot(ent, out var slot)
+               && (slot.SlotFlags & flags) != 0;
     }
 
     public bool SpawnItemInSlot(EntityUid uid, string slot, string prototype, bool silent = false, bool force = false, InventoryComponent? inventory = null)
@@ -72,71 +81,20 @@ public partial class InventorySystem
             return false;
 
         // If the prototype in question doesn't exist, we do nothing.
-        if (!_prototypeManager.HasIndex<EntityPrototype>(prototype))
+        if (!ProtoMan.HasIndex<EntityPrototype>(prototype))
             return false;
 
         // Let's spawn this first...
-        var item = EntityManager.SpawnEntity(prototype, Transform(uid).Coordinates);
+        var item = Spawn(prototype, Transform(uid).Coordinates);
 
         // Helper method that deletes the item and returns false.
         bool DeleteItem()
         {
-            EntityManager.DeleteEntity(item);
+            Del(item);
             return false;
         }
 
         // We finally try to equip the item, otherwise we delete it.
         return TryEquip(uid, item, slot, silent, force) || DeleteItem();
-    }
-
-    /// <summary>
-    /// Will attempt to spawn a list of items inside of an entities bag, pockets, hands or nearby
-    /// </summary>
-    /// <param name="entity">The entity that you want to spawn an item on</param>
-    /// <param name="items">A list of prototype IDs that you want to spawn in the bag.</param>
-    public void SpawnItemsOnEntity(EntityUid entity, List<string> items)
-    {
-        foreach (var item in items)
-        {
-            SpawnItemOnEntity(entity, item);
-        }
-    }
-
-    /// <summary>
-    /// Will attempt to spawn an item inside of an entities bag, pockets, hands or nearby
-    /// </summary>
-    /// <param name="entity">The entity that you want to spawn an item on</param>
-    /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void SpawnItemOnEntity(EntityUid entity, EntProtoId item)
-    {
-        //Transform() throws error if TransformComponent doesnt exist
-        if (!HasComp<TransformComponent>(entity))
-            return;
-
-        var xform = Transform(entity);
-        var mapCoords = _transform.GetMapCoordinates(xform);
-
-        var itemToSpawn = Spawn(item, mapCoords);
-
-        //Try insert into the backpack
-        if (TryGetSlotContainer(entity, "back", out var backSlot, out _)
-            && backSlot.ContainedEntity.HasValue
-            && _storageSystem.Insert(backSlot.ContainedEntity.Value, itemToSpawn, out _)
-            )
-            return;
-
-        //Try insert into pockets
-        if (TryGetSlotContainer(entity, "pocket1", out var pocket1, out _)
-            && _containerSystem.Insert(itemToSpawn, pocket1)
-            )
-            return;
-
-        if (TryGetSlotContainer(entity, "pocket2", out var pocket2, out _)
-            && _containerSystem.Insert(itemToSpawn, pocket2)
-            )
-            return;
-
-        //Try insert into hands, or drop on the floor
-        _handsSystem.PickupOrDrop(entity, itemToSpawn, false);
     }
 }

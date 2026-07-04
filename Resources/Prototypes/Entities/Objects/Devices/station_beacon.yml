@@ -1,11 +1,11 @@
 - type: entity
   parent: BaseItem
-  id: DefaultStationBeacon
+  id: BaseStationBeacon 
   name: station beacon
   description: A small device that transmits information to station maps. Can be configured.
   placement:
     mode: SnapgridCenter
-  suffix: General
+  suffix: Not teleport point, Ninja bombing target blacklist
   components:
   - type: Sprite
     sprite: Objects/Devices/station_beacon.rsi
@@ -38,9 +38,6 @@
     layer: 1
   - type: SubFloorHide
   - type: Anchorable
-  - type: Construction
-    graph: StationBeaconPart
-    node: complete
   - type: CollideOnAnchor
   - type: Physics
     canCollide: false
@@ -48,40 +45,63 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger: # for nukes
         !type:DamageTrigger
         damage: 200
       behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-            params:
-              volume: -8
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel1:
-              min: 1
-              max: 1
-          offset: 0
-        - !type:DoActsBehavior
-          acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: StaticPrice
     price: 25
 
 - type: entity
+  parent: BaseStationBeacon
+  id: TeleportStationBeacon # You can teleport to this Beacon using a teleport scroll
+  suffix: Ninja bombing target blacklist
+  components:
+  - type: Tag
+    tags:
+    - TeleportScrollWarp
+
+- type: entity
+  parent: BaseStationBeacon
+  id: DefaultStationBeacon  # the ninja's objective is to bomb this location.
+  suffix: General
+  components:
+  - type: Tag
+    tags:
+    - NinjaBombingTarget
+    - TeleportScrollWarp
+  - type: Construction
+    graph: StationBeaconPart
+    node: complete
+
+- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconUnanchored
-  suffix: General, Unanchored
+  suffix: Unanchored
   placement:
     mode: PlaceFree
   components:
@@ -449,12 +469,77 @@
     defaultText: station-beacon-ame
 
 - type: entity
-  parent: DefaultStationBeaconEngineering
+  parent: TeleportStationBeacon
   id: DefaultStationBeaconSolars
   suffix: Solars
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-solars
+    color: "#EFB341"
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsN
+  suffix: Solars, North
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-N
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsNE
+  suffix: Solars, Northeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-NE
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsE
+  suffix: Solars, East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-E
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsSE
+  suffix: Solars, Southeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-SE
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsS
+  suffix: Solars, South
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-S
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsSW
+  suffix: Solars, Southwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-SW
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsW
+  suffix: Solars, West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-W
+
+- type: entity
+  parent: DefaultStationBeaconSolars
+  id: DefaultStationBeaconSolarsNW
+  suffix: Solars, Northwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-NW
 
 - type: entity
   parent: DefaultStationBeaconEngineering
@@ -603,7 +688,7 @@
     defaultText: station-beacon-ai-power
 
 - type: entity
-  parent: DefaultStationBeacon
+  parent: TeleportStationBeacon
   id: DefaultStationBeaconArrivals
   suffix: Arrivals
   components:
@@ -708,55 +793,105 @@
 
 - type: entity
   parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodN
+  suffix: Escape Pod, North
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-N
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodNE
+  suffix: Escape Pod, Northeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-NE
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodE
+  suffix: Escape Pod, East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-E
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodSE
+  suffix: Escape Pod, Southeast
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-SE
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodS
+  suffix: Escape Pod, South
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-S
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodSW
+  suffix: Escape Pod, Southwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-SW
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodW
+  suffix: Escape Pod, West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-W
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconEscapePodNW
+  suffix: Escape Pod, Northwest
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-escape-pod-NW
+
+- type: entity
+  parent: DefaultStationBeacon
   id: DefaultStationBeaconVox
   suffix: Vox
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-vox
 
-# Ghost Only Beacons
-- type: entity
-  parent: DefaultStationBeacon
-  id: DefaultStationBeaconGhost
-  suffix: Boo
-  components:
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
-  - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
-
 # CentComm Beacons
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: BaseStationBeacon
   id: DefaultStationBeaconCentComm
-  suffix: CentComm
+  suffix: Not teleport point, CentComm
   components:
   - type: NavMapBeacon
     text: CentComm
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: DefaultStationBeaconCentComm
   id: DefaultStationBeaconCentCommAfterhours
-  suffix: CentComm Afterhours
+  suffix: Not teleport point, CentComm Afterhours
   components:
   - type: NavMapBeacon
     text: Afterhours
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: DefaultStationBeaconCentComm
   id: DefaultStationBeaconCentCommThunderdome
-  suffix: CentComm Thunder Dome
+  suffix: Not teleport point, CentComm Thunder Dome
   components:
   - type: NavMapBeacon
     text: Thunderdome
 
 - type: entity
-  parent: DefaultStationBeaconGhost
+  parent: DefaultStationBeaconCentComm
   id: DefaultStationBeaconCentCommERT
-  suffix: CentComm ERT
+  suffix: Not teleport point, CentComm ERT
   components:
   - type: NavMapBeacon
     text: ERT

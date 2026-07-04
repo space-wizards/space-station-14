@@ -11,11 +11,12 @@ namespace Content.Client.Animations;
 /// <summary>
 ///     System that handles animating an entity that a player has picked up.
 /// </summary>
-public sealed class EntityPickupAnimationSystem : EntitySystem
+public sealed partial class EntityPickupAnimationSystem : EntitySystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animations = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private AnimationPlayerSystem _animations = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -56,8 +57,8 @@ public sealed class EntityPickupAnimationSystem : EntitySystem
         }
 
         var sprite = Comp<SpriteComponent>(animatableClone);
-        sprite.CopyFrom(sprite0);
-        sprite.Visible = true;
+        _sprite.CopySprite((uid, sprite0), (animatableClone, sprite));
+        _sprite.SetVisible((animatableClone, sprite), true);
 
         var animations = Comp<AnimationPlayerComponent>(animatableClone);
 

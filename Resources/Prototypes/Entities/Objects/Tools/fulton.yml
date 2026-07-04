@@ -28,6 +28,11 @@
             - Impassable
     - type: Item
       size: Normal
+      inhandVisuals:
+        left:
+        - state: inhand-left-beacon
+        right:
+        - state: inhand-right-beacon
     - type: Foldable
       folded: true
     - type: Clickable
@@ -58,6 +63,11 @@
   - type: Fulton
   - type: Item
     size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left-fulton
+      right:
+      - state: inhand-right-fulton
   - type: Stack
     stackType: Fulton
     count: 10
@@ -66,15 +76,16 @@
     sprite: Objects/Tools/fulton.rsi
     state: extraction_pack
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: Fulton1

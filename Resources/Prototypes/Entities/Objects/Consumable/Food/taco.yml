@@ -1,14 +1,14 @@
 # When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_single.yml
 
 - type: entity
-  name: taco shell
-  parent: FoodMealBase
+  parent: [SolutionSmall, FoodMealBase]
   id: FoodTacoShell
+  name: taco shell
   description: A taco shell, easy to hold, but falls on its side when put down.
   components:
   - type: Item
-    storedRotation: -90
-  - type: Food
+    storedOffset: 0,-3
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco_sequence.rsi
@@ -16,14 +16,12 @@
     - state: tacoshell_back
     - map: ["foodSequenceLayers"]
     - state: tacoshell_forward
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        canReact: false # Dont want cause reactions inside tacos after merging ingredients
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6.66
+  - type: Solution
+    solution:
+      canReact: false # Dont want cause reactions inside tacos after merging ingredients, TODO KILL
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 10
   - type: FoodSequenceStartPoint
     key: Taco
     maxLayers: 3
@@ -38,30 +36,30 @@
 # Old tacos
 
 - type: entity
-  parent: FoodInjectableBase
-  id: FoodTacoBase
   abstract: true
+  parent: [SolutionSmall, FoodInjectableBase]
+  id: FoodTacoBase
   components:
   - type: FlavorProfile
     flavors:
       - meaty
       - cheesy
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 29
+      - ReagentId: Protein
+        Quantity: 2
   - type: Item
     sprite: Objects/Consumable/Food/taco.rsi
-    storedRotation: -90
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,1
   - type: Tag
     tags:
       - Meat
@@ -72,7 +70,6 @@
   id: FoodTacoBeef
   description: A very basic and run of the mill beef taco, now with cheese!
   components:
-  - type: Food
   - type: Sprite
     state: beeftaco
 
@@ -82,7 +79,6 @@
   id: FoodTacoChicken
   description: A very basic and run of the mill chicken taco, now with cheese!
   components:
-  - type: Food
   - type: Sprite
     state: chickentaco
 
@@ -96,18 +92,19 @@
     flavors:
       - onion
       - fishy
-  - type: Food
   - type: Sprite
     state: fishtaco
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 42
+      - ReagentId: Protein
+        Quantity: 2
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 9
 
 - type: entity
   name: rat taco
@@ -115,83 +112,76 @@
   id: FoodTacoRat
   description: Yeah, that looks about right...
   components:
-  - type: Food
   - type: Sprite
     state: rattaco
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
 
 - type: entity
   name: beef taco supreme
   parent: FoodTacoBase
   id: FoodTacoBeefSupreme
-  description: It's like a regular beef taco, but surpeme!
+  description: It's like a regular beef taco, but supreme!
   components:
-  - type: Food
   - type: Sprite
     state: beeftacosupreme
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 14
-        - ReagentId: Vitamin
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 42
+      - ReagentId: Protein
+        Quantity: 2
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 9
 
 - type: entity
   name: chicken taco supreme
   parent: FoodTacoBase
   id: FoodTacoChickenSupreme
-  description: It's like a regular chicken taco, but surpeme!
+  description: It's like a regular chicken taco, but supreme!
   components:
-  - type: Food
   - type: Sprite
     state: chickentacosupreme
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 14
-        - ReagentId: Vitamin
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 42
+      - ReagentId: Protein
+        Quantity: 2
+      - ReagentId: Allicin
+        Quantity: 1
+      - ReagentId: Vitamin
+        Quantity: 9
 
 - type: entity
-  name: draco
   parent: FoodTacoBase
   id: FoodTacoDragon
+  name: draco
   description: A dragon taco, which is technically also a fish taco.
   components:
+  - type: Item
+    storedOffset: 0,3
   - type: FlavorProfile
     flavors:
     - meaty
     - spicy
-  - type: Food
   - type: Sprite
     state: dragontaco
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 32
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 14
-        - ReagentId: Vitamin
-          Quantity: 4
-        - ReagentId: Ichor
-          Quantity: 4
-        - ReagentId: CapsaicinOil
-          Quantity: 6
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 18
+      - ReagentId: Protein
+        Quantity: 6
+      - ReagentId: Ichor
+        Quantity: 2
+      - ReagentId: CapsaicinOil
+        Quantity: 10
+      - ReagentId: Vitamin
+        Quantity: 3
 
 - type: entity
   name: soft taco

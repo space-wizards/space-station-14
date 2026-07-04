@@ -9,6 +9,10 @@
     snap:
     - Wall
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -29,8 +33,9 @@
   - type: PlacementReplacement
     key: walls
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -183,6 +188,17 @@
   - type: IconSmooth
     key: walls
     base: clown
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 8000 # really good ramming wall, bananium is rare so it's probably fine
 
 - type: entity
   parent: BaseWall
@@ -253,7 +269,6 @@
   - type: Tag
     tags:
       - Wall
-      - Debug
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -325,15 +340,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -343,6 +349,17 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
   - type: IconSmooth
     key: walls
     base: gold
@@ -393,15 +410,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -437,15 +445,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -472,9 +471,21 @@
     - type: IconSmooth
       key: walls
       base: plastitanium
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
+          density: 4000
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: StructuralMetallicStrong
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: RadiationBlocker
       resistance: 5
 
@@ -484,19 +495,19 @@
   name: plastitanium wall
   suffix: ""
   components:
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 1000
-          behaviors:
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                Girder:
-                  min: 1
-                  max: 1
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WallDiagonalBase
@@ -512,8 +523,9 @@
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RadiationBlocker
     resistance: 5
 
@@ -561,19 +573,11 @@
     graph: Girder
     node: reinforcedWall
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -605,6 +609,17 @@
     price: 250
   - type: RadiationBlocker
     resistance: 5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 2000
 
 - type: entity
   parent: WallReinforced
@@ -624,15 +639,6 @@
     base: reinf_over
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 350
@@ -658,19 +664,11 @@
     sprite: Structures/Walls/reinforced_diagonal.rsi
     state: state0
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -696,8 +694,9 @@
   - type: Icon
     sprite: Structures/Walls/riveted.rsi
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -767,15 +766,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -804,20 +794,32 @@
     state: state0
   - type: Reflect
     reflectProb: 1
+  - type: Pullable
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 2000
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -843,19 +845,11 @@
   name: shuttle wall
   components:
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 400
@@ -868,7 +862,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: StaticPrice
-    price: 250
+    price: 300
   - type: RadiationBlocker
     resistance: 5
   - type: Sprite
@@ -896,6 +890,17 @@
           5: { state: shuttle_construct-5, visible: true}
   - type: Reflect
     reflectProb: 1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 2000
 
 - type: entity
   parent: BaseWall
@@ -916,15 +921,6 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 200
@@ -954,15 +950,6 @@
     state: state0
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 200
@@ -995,15 +982,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -1013,6 +991,119 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+
+- type: entity
+  parent: BaseWall
+  id: WallSolidChitin
+  name: solid chitin
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+  - type: IconSmooth
+    key: chitin
+    base: solid
+  - type: Construction
+    graph: Girder
+    node: wallChitin
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+
+- type: entity
+  parent: BaseWall
+  id: WallReinforcedChitin
+  name: reinforced chitin
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xeno.rsi
+  - type: Icon
+    sprite: Structures/Walls/xeno.rsi
+    state: rgeneric
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ReinforcedWallVisuals.DeconstructionStage:
+        ReinforcedWallVisualLayers.Deconstruction:
+          -1: { visible: false }
+          0: { state: reinf_construct-0, visible: true}
+          1: { state: reinf_construct-1, visible: true}
+          2: { state: reinf_construct-2, visible: true}
+          3: { state: reinf_construct-3, visible: true}
+          4: { state: reinf_construct-4, visible: true}
+          5: { state: reinf_construct-5, visible: true}
+  - type: StaticPrice
+    price: 250
+  - type: RadiationBlocker
+    resistance: 5
+  - type: IconSmooth
+    key: chitin
+    base: reinf_over
+  - type: Construction
+    graph: Girder
+    node: reinforcedWallChitin
+
+- type: entity
+  parent: WallPlastitanium
+  id: WallXenoborg
+  name: xenoborg wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: Icon
+    sprite: Structures/Walls/xenoborg.rsi
+  - type: IconSmooth
+    key: walls
+    base: xenoborg
+
+- type: entity
+  parent: WallPlastitaniumDiagonal
+  id: WallXenoborgDiagonal
+  name: xenoborg wall
+  suffix: diagonal
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    state: state0
 
 - type: entity
   parent: BaseWall
@@ -1030,15 +1121,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-    - trigger:
-        !type:DamageTrigger
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
@@ -1048,6 +1130,17 @@
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 6000
   - type: IconSmooth
     key: walls
     base: uranium
@@ -1069,15 +1162,6 @@
     node: woodWall
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroyHeavy
     - trigger:
         !type:DamageTrigger
         damage: 150
@@ -1196,19 +1280,11 @@
     sprite: Structures/Walls/mining_diagonal.rsi
     state: state0
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalSlam
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -1301,30 +1377,30 @@
   id: WallForce
   name: force wall
   components:
-    - type: TimedDespawn
-      lifetime: 12
-    - type: Tag
-      tags:
-        - Wall
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-            - FullTileMask
-          layer:
-            - WallLayer
-    - type: Airtight
-    - type: Sprite
-      sprite: Structures/Magic/forcewall.rsi
-      state: forcewall
-    - type: Icon
-      sprite: Structures/Magic/forcewall.rsi
-      state: forcewall
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - Wall
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - SpecialWallLayer
+        layer:
+        - SpecialWallLayer
+  - type: Airtight
+  - type: Sprite
+    sprite: Structures/Magic/forcewall.rsi
+    state: forcewall
+  - type: Icon
+    sprite: Structures/Magic/forcewall.rsi
+    state: forcewall
 
 - type: entity
   parent: BaseWall
@@ -1430,3 +1506,103 @@
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
+
+- type: entity
+  parent: WallCobblebrick
+  id: WallIronsandCobblebrick
+  name: ironsand brick wall
+  description: The pale, rounded shapes that make up this wall look strikingly different from the iron sands they were allegedly made from.
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/cobblebrick_ironsand.rsi
+  - type: Icon
+    sprite: Structures/Walls/cobblebrick_ironsand.rsi
+  - type: IconSmooth
+    key: cobblebricks
+    base: cobblebrick
+  - type: RCDDeconstructable
+    deconstructable: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 0
+            max: 2
+
+# Cardboard
+
+- type: entity
+  id: Cardwall
+  parent: BaseStructure
+  name: cardboard wall
+  description: Budget cuts are hitting hard.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/pierce.ogg"
+  - type: Tag
+    tags:
+    - Wall
+  - type: Sprite
+    drawdepth: SmallObjects #so bullets pass 'through'
+    sprite: Structures/Walls/card.rsi
+  - type: Icon
+    sprite: Structures/Walls/card.rsi
+    state: full
+  - type: Construction
+    graph: Cardwall
+    node: cardwall
+    deconstructionTarget: start
+  - type: Damageable
+    damageModifierSet: Card
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - FlimsyLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: cards
+    base: card
+  - type: Occluder
+  - type: BlockWeather
+  - type: SunShadowCast

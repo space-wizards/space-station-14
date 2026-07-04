@@ -32,18 +32,24 @@ public sealed partial class ExplosionPrototype : IPrototype
     public float? FireStacks;
 
     /// <summary>
+    ///     Temperature of the explosion
+    /// </summary>
+    [DataField]
+    public float? Temperature;
+
+    /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakChance")]
-    private float[] _tileBreakChance = { 0f, 1f };
+    public float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakIntensity")]
-    private float[] _tileBreakIntensity = {0f, 15f };
+    public float[] _tileBreakIntensity = { 0f, 15f };
 
     /// <summary>
     ///     When a tile is broken by an explosion, the intensity is reduced by this amount and is used to try and
@@ -84,18 +90,34 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField]
     public float MaxCombineDistance = 1f;
 
+    /// <summary>
+    /// Normal sound of the explosion.
+    /// </summary>
     [DataField("sound")]
     public SoundSpecifier Sound = new SoundCollectionSpecifier("Explosion");
 
+/// <summary>
+/// Sound if the explosion is small.
+/// <seealso cref="SmallSoundIterationThreshold"/>
+/// </summary>
     [DataField("smallSound")]
     public SoundSpecifier SmallSound = new SoundCollectionSpecifier("ExplosionSmall");
 
+/// <summary>
+/// Secondary sound that will be projected farther than normal sound.
+/// </summary>
     [DataField("soundFar")]
     public SoundSpecifier SoundFar = new SoundCollectionSpecifier("ExplosionFar", AudioParams.Default.WithVolume(2f));
 
+    /// <summary>
+    /// Secondary sound that will be projected farther than normal sound for a small explosion.
+    /// </summary>
     [DataField("smallSoundFar")]
     public SoundSpecifier SmallSoundFar = new SoundCollectionSpecifier("ExplosionSmallFar", AudioParams.Default.WithVolume(2f));
 
+    /// <summary>
+    /// The texture of the explosion.
+    /// </summary>
     [DataField("texturePath")]
     public ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
@@ -105,8 +127,11 @@ public sealed partial class ExplosionPrototype : IPrototype
     [DataField("intensityPerState")]
     public float IntensityPerState = 12;
 
-    // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
-    // steal code from.
+    /// <summary>
+    /// Number of states in the rsi of ResPath. To quote the original author:
+    ///  Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
+    /// steal code from.
+    /// </summary>
     [DataField("fireStates")]
     public int FireStates = 3;
 
@@ -115,19 +140,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// </summary>
     public float TileBreakChance(float intensity)
     {
-        if (_tileBreakChance.Length == 0 || _tileBreakChance.Length != _tileBreakIntensity.Length)
-        {
-            Logger.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
-            return 0;
-        }
-
         if (intensity >= _tileBreakIntensity[^1] || _tileBreakIntensity.Length == 1)
             return _tileBreakChance[^1];
 
         if (intensity <= _tileBreakIntensity[0])
             return _tileBreakChance[0];
 
-        int i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
+        var i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
 
         var slope = (_tileBreakChance[i] - _tileBreakChance[i - 1]) / (_tileBreakIntensity[i] - _tileBreakIntensity[i - 1]);
         return _tileBreakChance[i - 1] + slope * (intensity - _tileBreakIntensity[i - 1]);

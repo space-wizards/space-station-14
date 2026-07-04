@@ -12,8 +12,8 @@ namespace Content.Server.Arcade.SpaceVillain;
 /// </summary>
 public sealed partial class SpaceVillainGame
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
     private readonly SharedAudioSystem _audioSystem = default!;
     private readonly UserInterfaceSystem _uiSystem = default!;
     private readonly SpaceVillainArcadeSystem _svArcade = default!;
@@ -243,7 +243,7 @@ public sealed partial class SpaceVillainGame
                 UpdateUi(
                     uid,
                     Loc.GetString("space-villain-game-player-loses-message"),
-                    Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _villainName)),
+                    Loc.GetString("space-villain-game-enemy-dies-with-player-message", ("enemyName", _villainName)),
                     true
                 );
                 _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioParams.Default.WithVolume(-4f));

@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/blob/bbe32606902c90f5290b57d905a3f31b84dc6d7d/icons/obj/pipes/disposal.dmi and modified by DrSmugleaf. Signal router sprites based on normal router modified by deltanedas (github). disposal bins by EmoGarbage404 (github). pipe-x pipe-xf, conpipe-x by K-Dynamic (github).",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/blob/bbe32606902c90f5290b57d905a3f31b84dc6d7d/icons/obj/pipes/disposal.dmi and modified by DrSmugleaf. Signal router sprites based on normal router modified by deltanedas (github). disposal bins by EmoGarbage404 (github). pipe-x pipe-xf, conpipe-x by K-Dynamic (github). Signaler sprites based on tagger modified by Wolfkey. Mailing unit sprites based on Structures/mailbox.rsi from commit 3281f408eb58c91ceb7b72ea556ba29e4760b9a1 and made by ketufaispikinut.",
     "states": [
         {
             "name": "condisposal",
@@ -49,6 +49,10 @@
         },
         {
             "name": "conpipe-tagger",
+            "directions": 4
+        },
+        {
+            "name": "conpipe-signaller",
             "directions": 4
         },
         {
@@ -96,20 +100,16 @@
             "directions": 1,
             "delays": [
                 [
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.5,
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.066,
-                    0.066
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.30
                 ]
             ]
+        },
+        {
+            "name": "mailing-full",
+            "directions": 1
         },
         {
             "name": "dispover-charge",
@@ -138,6 +138,10 @@
         {
             "name": "mailover-handle",
             "directions": 1
+        },
+	    {
+	        "name": "mailover-handle-off",
+	        "directions": 1
         },
         {
             "name": "dispover-ready",
@@ -322,6 +326,52 @@
         {
             "name": "pipe-tagger-partial",
             "directions": 4
+        },
+        {
+            "name": "pipe-signaller",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141
+                ],
+                [
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141
+                ],
+                [
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141
+                ],
+                [
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141,
+                    0.1,
+                    0.141
+                ]
+            ]
         },
         {
             "name": "pipe-tf",
