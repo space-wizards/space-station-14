@@ -7,7 +7,7 @@ namespace Content.Shared.Stunnable;
 
 /// <summary>
 /// Component used for stun batons.
-/// Works in combintation with <see cref="StaminaDamageOnHitComponent"/>, <see cref="PredictedBatteryComponent"/> and <see cref="ItemToggleComponent"/>
+/// Works in combination with <see cref="StaminaDamageOnHitComponent"/>, <see cref="BatteryComponent"/> and <see cref="ItemToggleComponent"/>
 /// to make the entity require battery charge to deal stamina damage to someone while it is toggled on and used as a weapon.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

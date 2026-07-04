@@ -1,4 +1,5 @@
 #nullable enable
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -21,14 +22,15 @@ public sealed class StunBatonTests : InteractionTest
     // If you are rebalancing stun batons you will have to change this number.
     private const int NumberOfHitsToStun = 3;
 
+    [SidedDependency(Side.Server)] private readonly SharedBatterySystem _battery = default!;
+    [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
+
     /// <summary>
     /// Checks that an activated stun baton stuns the target.
     /// </summary>
     [Test]
     public async Task StunBatonTest()
     {
-        var batterySystem = SEntMan.System<SharedBatterySystem>();
-        var damageSystem = SEntMan.System<DamageableSystem>();
         // Prevent the test mob from suffocating.
         await AddAtmosphere();
 
@@ -37,8 +39,8 @@ public sealed class StunBatonTests : InteractionTest
         var sBaton = ToServer(baton);
         var batonStaminaDamage = Comp<StaminaDamageOnHitComponent>(baton).Damage;
         var batonComp = Comp<StunbatonComponent>(baton);
-        var batonIntialCharges = batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
-        var batonMaxCharges = batterySystem.GetMaxUses(sBaton, batonComp.EnergyPerUse);
+        var batonIntialCharges = _battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
+        var batonMaxCharges = _battery.GetMaxUses(sBaton, batonComp.EnergyPerUse);
 
         using (Assert.EnterMultipleScope())
         {
@@ -57,7 +59,7 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob spawned knocked down.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob spawned stunned.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing when spawned.");
-            Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
             Assert.That(staminaComp.StaminaDamage, Is.Zero, "Target mob spawned with stamina damage.");
         }
 
@@ -69,9 +71,9 @@ public sealed class StunBatonTests : InteractionTest
         // Not stunned yet after the first hit.
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
             Assert.That(staminaComp.StaminaDamage, Is.EqualTo(batonStaminaDamage), "Target mob did not take the correct amount of stamina damage.");
-            Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
+            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - 1), "Stun baton did not loose a charge when used.");
         }
 
         // Continue attacking, checking that the mob gets stunned when it's supposed to.
@@ -94,8 +96,8 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<KnockedDownComponent>(), Is.True, "Target mob was not knocked down from the expected number of stun baton hits.");
             Assert.That(HasComp<StunnedComponent>(), Is.True, "Target mob was not stunned from the expected number of stun baton hits.");
             Assert.That(standingStateComp.Standing, Is.False, "Target mob was not downed from the expected number of stun baton hits.");
-            Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
-            Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - NumberOfHitsToStun), "Stun baton did not loose the correct charge when stunning.");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Activated stun baton caused damage.");
+            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges - NumberOfHitsToStun), "Stun baton did not loose the correct charge when stunning.");
         }
     }
 
@@ -105,8 +107,6 @@ public sealed class StunBatonTests : InteractionTest
     [Test]
     public async Task HarmBatonTest()
     {
-        var batterySystem = SEntMan.System<SharedBatterySystem>();
-        var damageSystem = SEntMan.System<DamageableSystem>();
         // Prevent the test mob from suffocating.
         await AddAtmosphere();
 
@@ -114,8 +114,8 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: false);
         var sBaton = ToServer(baton);
         var batonComp = Comp<StunbatonComponent>(baton);
-        var batonIntialCharges = batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
-        var batonMaxCharges = batterySystem.GetMaxUses(sBaton, batonComp.EnergyPerUse);
+        var batonIntialCharges = _battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse);
+        var batonMaxCharges = _battery.GetMaxUses(sBaton, batonComp.EnergyPerUse);
 
         using (Assert.EnterMultipleScope())
         {
@@ -134,7 +134,7 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob spawned knocked down.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob spawned stunned.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was not standing when spawned.");
-            Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero), "Target mob spawned with damage.");
             Assert.That(staminaComp.StaminaDamage, Is.Zero, "Target mob spawned with stamina damage.");
         }
 
@@ -152,8 +152,8 @@ public sealed class StunBatonTests : InteractionTest
             Assert.That(HasComp<KnockedDownComponent>(), Is.False, "Target mob was knocked down from harmbaton attacks.");
             Assert.That(HasComp<StunnedComponent>(), Is.False, "Target mob was stunned from harmbaton attacks.");
             Assert.That(standingStateComp.Standing, Is.True, "Target mob was downed from harmbaton attacks.");
-            Assert.That(damageSystem.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Deactivated stun baton did not cause damage.");
-            Assert.That(batterySystem.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges), "Stun baton lost charge while deactivated.");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Deactivated stun baton did not cause damage.");
+            Assert.That(_battery.GetRemainingUses(sBaton, batonComp.EnergyPerUse), Is.EqualTo(batonMaxCharges), "Stun baton lost charge while deactivated.");
         }
     }
 
@@ -163,13 +163,11 @@ public sealed class StunBatonTests : InteractionTest
     [Test]
     public async Task StunBatonMissTest()
     {
-        var batterySystem = SEntMan.System<SharedBatterySystem>();
-
         // Spawn a stun baton in the player's hands and turn it on.
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batteryComp = Comp<BatteryComponent>(baton);
-        var batonIntialCharge = batterySystem.GetCharge(sBaton);
+        var batonIntialCharge = _battery.GetCharge(sBaton);
 
         using (Assert.EnterMultipleScope())
         {
@@ -182,7 +180,7 @@ public sealed class StunBatonTests : InteractionTest
         await RunSeconds(2); // Weapon cooldown.
         await AttemptLightAttackMiss();
 
-        var batonNewCharge = batterySystem.GetCharge(sBaton);
+        var batonNewCharge = _battery.GetCharge(sBaton);
         Assert.That(batonNewCharge, Is.EqualTo(batonIntialCharge), "Stun baton lost charge when missing an attack.");
     }
 }

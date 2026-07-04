@@ -1,3 +1,4 @@
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
@@ -17,6 +18,8 @@ public sealed class RiggableTest : InteractionTest
     private static readonly EntProtoId FlashlightProto = "EmptyFlashlightLantern";
     private static readonly EntProtoId StunbatonProto = "Stunbaton";
 
+    [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -28,6 +31,7 @@ public sealed class RiggableTest : InteractionTest
       reagents:
       - ReagentId: Plasma
         Quantity: 15
+
 - type: entity
   parent: PrefilledSyringe
   id: TestMilkSyringe
@@ -47,13 +51,11 @@ public sealed class RiggableTest : InteractionTest
     [TestCase("TestMilkSyringe", ExpectedResult = false)]
     public async Task<bool> RigBatteryTest(string syringe)
     {
-        var damageSys = SEntMan.System<DamageableSystem>();
-
         await AddAtmosphere();
         await SpawnTarget(HumanProtoId);
 
         Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
-        Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
+        Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
             "Player spawned with damage.");
 
         var battery = await SpawnTarget(BatteryProto);
@@ -72,7 +74,7 @@ public sealed class RiggableTest : InteractionTest
         {
             Assert.That(HandSys.GetActiveItem((SPlayer, Hands)), Is.Null,
                 "Battery did not get inserted into the flashlight.");
-            Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
                 "Player received damage before flashlight activation.");
         }
 
@@ -80,7 +82,7 @@ public sealed class RiggableTest : InteractionTest
         await Activate();
         await RunTicks(5);
 
-        if (damageSys.GetPositiveDamage(mob).GetTotal() > FixedPoint2.Zero)
+        if (_damageable.GetPositiveDamage(mob).GetTotal() > FixedPoint2.Zero)
         {
             // Flashlight exploded
             AssertDeleted(battery);
@@ -99,13 +101,11 @@ public sealed class RiggableTest : InteractionTest
     [Test]
     public async Task RigActivatedTest()
     {
-        var damageSys = SEntMan.System<DamageableSystem>();
-
         await AddAtmosphere();
         await SpawnTarget(HumanProtoId);
 
         Entity<DamageableComponent> mob = (STarget.Value, Comp<DamageableComponent>());
-        Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
+        Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.EqualTo(FixedPoint2.Zero),
             "Player spawned with damage.");
 
         var baton = await PlaceInHands(StunbatonProto);
@@ -120,7 +120,7 @@ public sealed class RiggableTest : InteractionTest
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(damageSys.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Rigged stunbaton did not explode?");
+            Assert.That(_damageable.GetPositiveDamage(mob).GetTotal(), Is.GreaterThan(FixedPoint2.Zero), "Rigged stunbaton did not explode?");
             AssertDeleted(baton);
         }
     }

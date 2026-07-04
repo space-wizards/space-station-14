@@ -22,6 +22,7 @@ public sealed partial class RiggableSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
         SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
