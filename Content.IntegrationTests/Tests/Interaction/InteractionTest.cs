@@ -102,8 +102,7 @@ public abstract partial class InteractionTest : GameTest
 
     // SERVER dependencies
     [SidedDependency(Side.Server)] protected ITileDefinitionManager TileMan = default!;
-    [SidedDependency(Side.Server)] protected IMapManager MapMan = default!;
-    protected IPrototypeManager ProtoMan => SProtoMan;
+    [SidedDependency(Side.Server)] protected IPrototypeManager ProtoMan => SProtoMan;
     protected IGameTiming STiming => SGameTiming;
     [SidedDependency(Side.Server)] protected IComponentFactory Factory = default!;
     [SidedDependency(Side.Server)] protected HandsSystem HandSys = default!;

@@ -37,7 +37,6 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private ISharedAdminLogManager _logger = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private MetaDataSystem _metaDataSystem = default!;
@@ -132,7 +131,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || !victim.HasValue)
             return;
 
-        var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+        var quality = ProtoMan.Index(ent.Comp.RequiredToolQuality);
         _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
             ("target", Identity.Entity(victim.Value, EntityManager)),
             ("quality", Loc.GetString(quality.Name))),
@@ -154,7 +153,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
-            var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
+            var quality = ProtoMan.Index(ent.Comp.RequiredToolQuality);
             _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
                 ("target", Identity.Entity(victim.Value, EntityManager)),
                 ("quality", Loc.GetString(quality.Name))),
