@@ -204,7 +204,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         if (clone == null)
             return null;
 
-        var updated = true;
+        var isNew = false;
 
         // We see if we already have a identity slot for this entity.
         // This can happen if we devoured them before, but then dropped their stored identity.
@@ -212,7 +212,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         {
             newIdentity = new ChangelingIdentityData();
             ent.Comp.ConsumedIdentities.Add(newIdentity);
-            updated = false; // Data didn't exist before so its not an update.
+            isNew = true; // Data didn't exist before so its not an update.
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
@@ -227,7 +227,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
             newIdentity.GrantedDna = true;
         }
 
-        var ev = new ChangelingGainedIdentityEvent(ent, newIdentity, updated);
+        var ev = new ChangelingGainedOrUpdatedIdentityEvent(ent, newIdentity, isNew);
         RaiseLocalEvent(ent, ref ev, true); // Broadcast it to allow the mind tracker to update.
 
         HandlePvsOverride(ent, clone.Value);

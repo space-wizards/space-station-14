@@ -16,20 +16,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
     [Dependency] private JobSystem _job = default!;
     [Dependency] private IPrototypeManager _protoMan = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ChangelingMindIdentityTrackerComponent, MindAgentTextAppendEvent>(OnAgentAppendText);
-
-        SubscribeLocalEvent<ChangelingUniqueIdentityConditionComponent, ObjectiveGetProgressEvent>(OnGetUniqueIdentitiesProgress);
-
-        SubscribeLocalEvent<ChangelingDevourMostConditionComponent, ObjectiveGetProgressEvent>(OnGetMostIdentitiesProgress);
-
-        SubscribeLocalEvent<ChangelingDevouredEvent>(OnChangelingDevoured);
-        SubscribeLocalEvent<ChangelingGainedIdentityEvent>(OnChangelingGainedIdentity);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAgentAppendText(Entity<ChangelingMindIdentityTrackerComponent> ent, ref MindAgentTextAppendEvent args)
     {
         if (ent.Comp.AppendIssuer == null)
@@ -53,6 +40,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         args.Text += summary.ToString();
     }
 
+    [SubscribeLocalEvent]
     private void OnChangelingDevoured(ref ChangelingDevouredEvent args)
     {
         if (!_mind.TryGetMind(args.Changeling, out var mind, out _))
@@ -67,7 +55,8 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         AddOrUpdateUniqueIdentityToTracker(mind, args.Devoured, args.GrantedDna, job?.LocalizedName);
     }
 
-    private void OnChangelingGainedIdentity(ref ChangelingGainedIdentityEvent args)
+    [SubscribeLocalEvent]
+    private void OnChangelingGainedIdentity(ref ChangelingGainedOrUpdatedIdentityEvent args)
     {
         if (!_mind.TryGetMind(args.Changeling, out var mind, out _))
             return;
@@ -83,16 +72,23 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         AddOrUpdateUniqueIdentityToTracker(mind, args.Identity.Original.Value, args.Identity.GrantedDna, args.Identity.OriginalJob);
     }
 
+    [SubscribeLocalEvent]
     private void OnGetUniqueIdentitiesProgress(Entity<ChangelingUniqueIdentityConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetUniqueIdentitiesProgress(args.MindId, _number.GetTarget(ent));
     }
 
+    [SubscribeLocalEvent]
     private void OnGetMostIdentitiesProgress(Entity<ChangelingDevourMostConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetMostIdentitiesProgress(args.MindId);
     }
 
+    /// <summary>
+    /// Returns the progress for <see cref="ChangelingUniqueIdentityConditionComponent"/>.
+    /// Uses data stored on the mind.
+    /// </summary>
+    /// <returns>Objective progress, between 0 and 1.</returns>
     private float GetUniqueIdentitiesProgress(EntityUid mind, int target)
     {
         // We've never actually gained an identity.
@@ -111,6 +107,11 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         return (float)uniqueCount / (float)target;
     }
 
+    /// <summary>
+    /// Returns the progress for <see cref="ChangelingDevourMostConditionComponent"/> for a given mind.
+    /// Uses data stored on the mind.
+    /// </summary>
+    /// <returns>Objective progress, between 0 and 1.</returns>
     private float GetMostIdentitiesProgress(EntityUid mind)
     {
         // Can't progress if we've never eaten anyone.
@@ -144,9 +145,18 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         return (float)selfUniqueCount / (float)(highest+1);
     }
 
-    private void AddOrUpdateUniqueIdentityToTracker(EntityUid mind, EntityUid target, bool devoured, ProtoId<JobPrototype>? job)
+    /// <summary>
+    /// Adds a new identity to the changeling's identity tracker.
+    /// If one already exists, it instead updates it's devour state.
+    /// </summary>
+    /// <param name="mind">The changeling's mind.</param>
+    /// <param name="target">The entity we obtained the identity of.</param>
+    /// <param name="devoured">Whether they were devoured.</param>
+    /// <param name="job">The job of the identity we obtained.</param>
+    private void AddOrUpdateUniqueIdentityToTracker(Entity<ChangelingMindIdentityTrackerComponent?> mind, EntityUid target, bool devoured, ProtoId<JobPrototype>? job)
     {
-        EnsureComp<ChangelingMindIdentityTrackerComponent>(mind, out var tracker);
+        if (!Resolve(mind, ref mind.Comp))
+            return;
 
         _protoMan.TryIndex(job, out var jobPrototype);
 
@@ -157,15 +167,15 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
         // If the identity already exists, we just update if it was Devoured.
         // We check by EntityUid here because we still count paradox clones and such as unique devours.
         // Tracking by name alone would make it inconsistent to how devours are tracked by the ChangelingDevourSystem and ChangelingIdentitySystem.
-        if (tracker.Identities.ContainsKey(key))
+        if (mind.Comp.Identities.ContainsKey(key))
         {
             // We don't want to set it to False afterward, because this entity was Devoured at SOME point before.
             // So we either keep it the same, or mark is as true.
-            tracker.Identities[key] = tracker.Identities[key] || devoured;
+            mind.Comp.Identities[key] = mind.Comp.Identities[key] || devoured;
             return;
         }
 
-        tracker.Identities.Add(key, devoured);
+        mind.Comp.Identities.Add(key, devoured);
     }
 
     private string GetIdentityKey(EntityUid target, string job)

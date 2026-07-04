@@ -160,6 +160,6 @@ public sealed partial class ChangelingNetworkedIdentityData
 /// </summary>
 /// <param name="Changeling">The changeling that gained an identity.</param>
 /// <param name="Identity">The identity data that was obtained.</param>
-/// <param name="Updated">Whether an identity was granted, but it only updates existing data.</param>
+/// <param name="NewIdentity">Whether this is the first time an identity was gained.</param>
 [ByRefEvent]
-public record struct ChangelingGainedIdentityEvent(EntityUid Changeling, ChangelingIdentityData Identity, bool Updated);
+public record struct ChangelingGainedOrUpdatedIdentityEvent(EntityUid Changeling, ChangelingIdentityData Identity, bool NewIdentity);

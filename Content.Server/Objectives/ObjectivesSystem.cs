@@ -123,6 +123,10 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
         }
     }
 
+    /// <summary>
+    /// Generates a summary for a list of antag minds based on their agent.
+    /// Contains the objective issuer, objectives, completion rate and any other text that might be appended as part of the summary.
+    /// </summary>
     private void AddSummary(StringBuilder result, string agent, List<(EntityUid, string)> minds)
     {
         var agentSummaries = new List<(string summary, float successRate, int completedObjectives)>();
@@ -210,10 +214,22 @@ public sealed partial class ObjectivesSystem : SharedObjectivesSystem
                     }
                 }
 
+                /*
+                We raise an event on the mind to get any text to append post-antag-summary. Cool for adding anything that might've been related to their objectives.
+                For example Urist McAntag needs to steal brains of people
+                Then we can keep track of the brains, and append who's brain they stole after their objectives.
+
+                Brain-Thief
+                - Steal 4 brains | Success (100%)
+                Brains Stolen
+                - Urist McFirst, Scientist
+                - Urist McSecond, Head of Security
+                */
                 var agentMindAppend = new MindAgentTextAppendEvent("", objectiveGroup.Key);
                 RaiseLocalEvent(mindId, ref agentMindAppend);
 
-                agentSummary.AppendLine(agentMindAppend.Text);
+                if (agentMindAppend.Text.Length > 0)
+                    agentSummary.AppendLine(agentMindAppend.Text);
             }
 
             var successRate = totalObjectives > 0 ? (float) completedObjectives / totalObjectives : 0f;
