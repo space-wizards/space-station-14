@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Content.Shared.Humanoid.Markings;
-using Content.Shared.IoC;
 using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Configuration;
@@ -16,18 +15,20 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Entry
 {
-    public sealed class EntryPoint : GameShared
+    public sealed partial class EntryPoint : GameShared
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IResourceManager _resMan = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private IResourceManager _resMan = default!;
+#if DEBUG
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+#endif
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
         public override void PreInit()
         {
-            IoCManager.InjectDependencies(this);
-            SharedContentIoC.Register();
+            Dependencies.InjectDependencies(this);
         }
 
         public override void Shutdown()
@@ -45,13 +46,12 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             InitTileDefinitions();
-            IoCManager.Resolve<MarkingManager>().Initialize();
+            Dependencies.Resolve<MarkingManager>().Initialize();
 
 #if DEBUG
-            var configMan = IoCManager.Resolve<IConfigurationManager>();
-            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
-            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
-            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+            _configurationManager.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            _configurationManager.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            _configurationManager.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
 #endif
         }
 

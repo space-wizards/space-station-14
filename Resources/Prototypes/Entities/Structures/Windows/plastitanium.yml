@@ -77,6 +77,9 @@
   name: plastitanium window
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindow
@@ -85,12 +88,6 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 500
@@ -118,8 +115,9 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic
 
 - type: entity
   id: PlastitaniumWindowDiagonalBase
@@ -135,6 +133,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: Icon
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0
@@ -167,6 +166,9 @@
   name: plastitanium window
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindowDiagonal
@@ -176,12 +178,6 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1000
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 500
@@ -209,5 +205,6 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: RGlass
+  - type: Injurable
+    damageContainer: StructuralInorganic

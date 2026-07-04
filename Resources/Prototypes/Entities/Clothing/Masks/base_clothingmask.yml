@@ -32,27 +32,24 @@
     event: !type:ToggleMaskEvent
 
 - type: entity
-  id: ClothingMaskBaseButcherable
-  parent: ClothingMaskBase
   abstract: true
+  parent: [SolutionFood, SolutionToolSmall, ClothingMaskBase, BaseSlicingRefinable]
+  id: ClothingMaskBaseButcherable
   components:
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
       amount: 1
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
     materialComposition:
       Cloth: 50
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 15
   - type: Tag
     tags:
     - ClothMade

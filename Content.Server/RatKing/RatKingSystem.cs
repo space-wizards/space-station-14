@@ -6,6 +6,7 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
+using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -13,19 +14,18 @@ using Content.Shared.Pointing;
 using Content.Shared.Random.Helpers;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
 
 namespace Content.Server.RatKing
 {
     /// <inheritdoc/>
-    public sealed class RatKingSystem : SharedRatKingSystem
+    public sealed partial class RatKingSystem : SharedRatKingSystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly HTNSystem _htn = default!;
-        [Dependency] private readonly HungerSystem _hunger = default!;
-        [Dependency] private readonly NPCSystem _npc = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private AtmosphereSystem _atmos = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private HTNSystem _htn = default!;
+        [Dependency] private HungerSystem _hunger = default!;
+        [Dependency] private NPCSystem _npc = default!;
+        [Dependency] private PopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -121,7 +121,7 @@ namespace Content.Server.RatKing
             base.DoCommandCallout(uid, component);
 
             if (!component.OrderCallouts.TryGetValue(component.CurrentOrder, out var datasetId) ||
-                !PrototypeManager.TryIndex<LocalizedDatasetPrototype>(datasetId, out var datasetPrototype))
+                !ProtoMan.TryIndex<LocalizedDatasetPrototype>(datasetId, out var datasetPrototype))
                 return;
 
             var msg = Random.Pick(datasetPrototype);

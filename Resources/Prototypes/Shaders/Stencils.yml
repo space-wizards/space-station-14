@@ -7,6 +7,7 @@
     op: Replace
     func: Always
 
+# Draws to the stencil buffer if the alpha is not set to 0.
 - type: shader
   id: StencilMask
   kind: source
@@ -16,6 +17,7 @@
     op: Replace
     func: Always
 
+# Draws if the texture in the stencil buffer is not equal to white.
 - type: shader
   id: StencilDraw
   kind: canvas
@@ -23,3 +25,12 @@
     ref: 1
     op: Keep
     func: NotEqual
+
+# Draws if the texture in the stencil buffer is equal to white.
+- type: shader
+  id: StencilEqualDraw
+  kind: canvas
+  stencil:
+    ref: 1
+    op: Keep
+    func: Equal

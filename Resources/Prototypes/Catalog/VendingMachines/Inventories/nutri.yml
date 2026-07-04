@@ -17,10 +17,11 @@
     Bucket: 3
     BoxMouthSwab: 1
     BoxAgrichem: 1
+    MortarAndPestle: 1
+    HandheldJuicer: 1
     #TO DO:
     #plant analyzer
   contrabandInventory:
     ChemistryBottleUnstableMutagen: 1
     Joint: 1
-  emaggedInventory:
     ChemistryBottleLeft4Zed: 1

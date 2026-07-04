@@ -12,13 +12,13 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class SpawnAfterInteractSystem : EntitySystem
+    public sealed partial class SpawnAfterInteractSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly TurfSystem _turfSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly SharedMapSystem _maps = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private TurfSystem _turfSystem = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private SharedMapSystem _maps = default!;
 
         public override void Initialize()
         {
@@ -63,13 +63,13 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || !IsTileClear())
                 return;
 
-            if (EntityManager.TryGetComponent(uid, out StackComponent? stackComp)
-                && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
+            if (TryComp<StackComponent>(uid, out var stackComp)
+                && component.RemoveOnInteract && !_stackSystem.TryUse((uid, stackComp), 1))
             {
                 return;
             }
 
-            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
+            Spawn(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
             if (component.RemoveOnInteract && stackComp == null)
                 TryQueueDel(uid);

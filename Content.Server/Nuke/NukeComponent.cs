@@ -5,6 +5,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Nuke;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Nuke
@@ -56,7 +57,7 @@ namespace Content.Server.Nuke
         ///     How long a user must wait to disarm the bomb.
         /// </summary>
         [DataField("disarmDoafterLength")]
-        public float DisarmDoafterLength = 30.0f;
+        public float DisarmDoAfterLength = 30.0f;
 
         [DataField("alertLevelOnActivate")] public string AlertLevelOnActivate = default!;
         [DataField("alertLevelOnDeactivate")] public string AlertLevelOnDeactivate = default!;
@@ -163,6 +164,14 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField]
         public string EnteredCode = "";
+
+        /// <summary>
+        ///     Time at which the last nuke code was entered.
+        ///     Used to apply a cooldown to prevent clients from attempting to brute force the nuke code by sending keypad messages every tick.
+        ///     <seealso cref="SharedNukeComponent.EnterCodeCooldown"/>
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        public TimeSpan LastCodeEnteredAt = TimeSpan.Zero;
 
         /// <summary>
         ///     Current status of a nuclear bomb.

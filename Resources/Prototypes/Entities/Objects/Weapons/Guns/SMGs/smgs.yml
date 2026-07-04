@@ -8,6 +8,8 @@
   - type: Sprite
   - type: Item
     size: Large
+    shape:
+    - 0,0,2,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     quickEquip: false
@@ -46,7 +48,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistol
         priority: 1
         whitelist:
           tags:
@@ -122,6 +123,48 @@
     price: 5000
 
 - type: entity
+  name: C-20r ROW #I think ROW stands for Recharging Onboard Weapon so i'm following the L6C's example
+  id: WeaponSubMachineGunC20rROW
+  parent: BaseItem
+  description: A burst-fire C-20r submachine gun for use by cyborgs. Creates .35 caliber ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  components:
+  - type: Gun
+    minAngle: 2
+    maxAngle: 16
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 8
+    burstFireRate: 8
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-5
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Huge
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgePistol
+    capacity: 30
+    proto: CartridgePistol
+    cycleable: false # No synthesizing ammo for your syndicate masters.
+  - type: BallisticAmmoSelfRefiller
+    autoRefillRate: 4s
+    affectedByEmp: true
+  - type: AmmoCounter
+
+- type: entity
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
@@ -169,7 +212,6 @@
           whitelistFailPopup: gun-magazine-whitelist-fail
         gun_chamber:
           name: Chamber
-          startingItem: CartridgePistol
           priority: 1
           whitelist:
             tags:
@@ -182,7 +224,7 @@
 
 - type: entity
   name: WT550
-  parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunWt550
   description: A truly unique firearm, the WT550 was designed by Nanotrasen's Small Arms Division as a compact submachine gun fully controllable with one hand. It contains an exotic internal recoil buffer and feeds from special top-mounted .35 magazines.
   components:
@@ -231,7 +273,6 @@
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistol
         priority: 1
         whitelist:
           tags:
@@ -241,3 +282,46 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: brown briefcase
+  parent: [BaseWeaponSubMachineGun]
+  id: WeaponSubMachineGunBriefcase
+  description: Useful for carrying items in your hands.
+  suffix: Gun
+  components:
+  - type: Item
+    size: Ginormous
+    inhandVisuals:
+      left:
+        - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+          state: inhand-left
+        - state: inhand-left-muzzle
+      right:
+        - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+          state: inhand-right
+        - state: inhand-right-muzzle
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/briefcase.rsi
+    layers:
+    - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+      state: icon
+    - state: icon-muzzle
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 9
+    minAngle: 25
+    maxAngle: 32
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+  - type: ChamberMagazineAmmoProvider
+    autoEject: false
+  - type: Appearance
+  - type: StaticPrice
+    price: 5000
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
