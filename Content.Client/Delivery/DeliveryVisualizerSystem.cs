@@ -5,11 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Delivery;
 
-public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponent>
+public sealed partial class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponent>
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     private static readonly ProtoId<JobIconPrototype> UnknownIcon = "JobIconUnknown";
 
@@ -23,13 +21,13 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
         if (string.IsNullOrEmpty(job))
             job = UnknownIcon;
 
-        if (!_prototype.TryIndex<JobIconPrototype>(job, out var icon))
+        if (!ProtoMan.TryIndex<JobIconPrototype>(job, out var icon))
         {
-            args.Sprite.LayerSetTexture(DeliveryVisualLayers.JobStamp, _sprite.Frame0(_prototype.Index("JobIconUnknown")));
+            SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(ProtoMan.Index(UnknownIcon).Icon));
             return;
         }
 
-        args.Sprite.LayerSetTexture(DeliveryVisualLayers.JobStamp, _sprite.Frame0(icon.Icon));
+        SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(icon.Icon));
     }
 }
 
@@ -42,6 +40,8 @@ public enum DeliveryVisualLayers : byte
     PriorityTape,
     Breakage,
     Trash,
+    Bomb,
+    BombPrimed,
 }
 
 public enum DeliverySpawnerVisualLayers : byte

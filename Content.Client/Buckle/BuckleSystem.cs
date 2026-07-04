@@ -8,11 +8,12 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Buckle;
 
-internal sealed class BuckleSystem : SharedBuckleSystem
+internal sealed partial class BuckleSystem : SharedBuckleSystem
 {
-    [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private RotationVisualizerSystem _rotationVisualizerSystem = default!;
+    [Dependency] private IEyeManager _eye = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -48,6 +49,9 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         // Give some of the sprite rotations their own drawdepth, maybe as an offset within the rsi, or something like this
         // And we won't ever need to set the draw depth manually
 
+        if (!component.ModifyBuckleDrawDepth)
+            return;
+
         if (args.NewRotation == args.OldRotation)
             return;
 
@@ -69,11 +73,11 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             {
                 // This will only assign if empty, it won't get overwritten by new depth on multiple calls, which do happen easily
                 buckle.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-                buckledSprite.DrawDepth = strapSprite.DrawDepth - 1;
+                _sprite.SetDrawDepth((buckledEntity, buckledSprite), strapSprite.DrawDepth - 1);
             }
             else if (buckle.OriginalDrawDepth.HasValue)
             {
-                buckledSprite.DrawDepth = buckle.OriginalDrawDepth.Value;
+                _sprite.SetDrawDepth((buckledEntity, buckledSprite), buckle.OriginalDrawDepth.Value);
                 buckle.OriginalDrawDepth = null;
             }
         }
@@ -85,6 +89,9 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// </summary>
     private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
+        if (!args.Strap.Comp.ModifyBuckleDrawDepth)
+            return;
+
         if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite))
             return;
 
@@ -97,7 +104,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-        buckledSprite.DrawDepth = strapSprite.DrawDepth - 1;
+        _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth - 1);
     }
 
     /// <summary>
@@ -105,13 +112,16 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// </summary>
     private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
+        if (!args.Strap.Comp.ModifyBuckleDrawDepth)
+            return;
+
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
         if (!ent.Comp.OriginalDrawDepth.HasValue)
             return;
 
-        buckledSprite.DrawDepth = ent.Comp.OriginalDrawDepth.Value;
+        _sprite.SetDrawDepth((ent.Owner, buckledSprite), ent.Comp.OriginalDrawDepth.Value);
         ent.Comp.OriginalDrawDepth = null;
     }
 

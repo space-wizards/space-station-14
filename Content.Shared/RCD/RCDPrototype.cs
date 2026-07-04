@@ -9,7 +9,7 @@ namespace Content.Shared.RCD;
 /// Contains the parameters for an RCD construction / operation
 /// </summary>
 [Prototype("rcd")]
-public sealed class RCDPrototype : IPrototype
+public sealed partial class RCDPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -43,6 +43,12 @@ public sealed class RCDPrototype : IPrototype
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
     public string? Prototype { get; private set; }
+
+    /// <summary>
+    /// If true, allows placing the entity once per direction (North, West, South and East)
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public bool AllowMultiDirection { get; private set; }
 
     /// <summary>
     /// Number of charges consumed when the operation is completed

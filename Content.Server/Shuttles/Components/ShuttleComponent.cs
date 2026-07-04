@@ -17,10 +17,10 @@ namespace Content.Server.Shuttles.Components
         public const float BrakeCoefficient = 1.5f;
 
         /// <summary>
-        /// Maximum velocity assuming unupgraded, tier 1 thrusters
+        /// Maximum velocity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseMaxLinearVelocity = 20f;
+        [DataField]
+        public float BaseMaxLinearVelocity = 60f;
 
         public const float MaxAngularVelocity = 4f;
 
@@ -68,5 +68,12 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField]
         public float DampingModifier;
+
+        /// <summary>
+        /// Optional override for the FTL cooldown for this shuttle.
+        /// If not null, then the value will be used instead of the shuttle.cooldown CCVar.
+        /// </summary>
+        [DataField]
+        public TimeSpan? FTLCooldownOverride = null;
     }
 }

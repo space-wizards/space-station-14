@@ -7,48 +7,56 @@ namespace Content.IntegrationTests.Tests.Destructible
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
         public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
+        public const string TestBruteDamageGroupId = "TestBrute";
+        public const string TestBurnDamageGroupId = "TestBurn";
+        public const string TestBluntDamageTypeId = "TestBlunt";
+        public const string TestSlashDamageTypeId = "TestSlash";
+        public const string TestPiercingDamageTypeId = "TestPiercing";
+        public const string TestHeatDamageTypeId = "TestHeat";
+        public const string TestShockDamageTypeId = "TestShock";
+        public const string TestColdDamageTypeId = "TestCold";
 
         [TestPrototypes]
         public const string DamagePrototypes = $@"
 - type: damageType
-  id: TestBlunt
+  id: {TestBluntDamageTypeId}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestSlash
+  id: {TestSlashDamageTypeId}
   name: damage-type-slash
 
 - type: damageType
-  id: TestPiercing
+  id: {TestPiercingDamageTypeId}
   name: damage-type-piercing
 
 - type: damageType
-  id: TestHeat
+  id: {TestHeatDamageTypeId}
   name: damage-type-heat
 
 - type: damageType
-  id: TestShock
+  id: {TestShockDamageTypeId}
   name: damage-type-shock
 
 - type: damageType
-  id: TestCold
+  id: {TestColdDamageTypeId}
   name: damage-type-cold
 
 - type: damageGroup
-  id: TestBrute
+  id: {TestBruteDamageGroupId}
   name: damage-group-brute
   damageTypes:
-    - TestBlunt
-    - TestSlash
-    - TestPiercing
+    - {TestBluntDamageTypeId}
+    - {TestSlashDamageTypeId}
+    - {TestPiercingDamageTypeId}
 
 - type: damageGroup
-  id: TestBurn
+  id: {TestBurnDamageGroupId}
   name: damage-group-burn
   damageTypes:
-    - TestHeat
-    - TestShock
-    - TestCold
+    - {TestHeatDamageTypeId}
+    - {TestShockDamageTypeId}
+    - {TestColdDamageTypeId}
 
 - type: entity
   id: {SpawnedEntityId}
@@ -59,6 +67,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleEntityId}
   components:
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
@@ -86,6 +95,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDestructionEntityId}
   components:
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,16 +118,17 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDamageTypeEntityId}
   components:
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
         !type:AndTrigger
         triggers:
         - !type:DamageTypeTrigger
-          damageType: TestBlunt
+          damageType: {TestBluntDamageTypeId}
           damage: 10
         - !type:DamageTypeTrigger
-          damageType: TestSlash
+          damageType: {TestSlashDamageTypeId}
           damage: 10
 
 - type: entity
@@ -125,16 +136,17 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
         !type:AndTrigger
         triggers:
         - !type:DamageGroupTrigger
-          damageGroup: TestBrute
+          damageGroup: {TestBruteDamageGroupId}
           damage: 10
         - !type:DamageGroupTrigger
-          damageGroup: TestBurn
+          damageGroup: {TestBurnDamageGroupId}
           damage: 10";
     }
 }

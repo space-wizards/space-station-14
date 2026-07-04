@@ -11,7 +11,7 @@ public sealed class StatValuesEui : BaseEui
     public StatValuesEui()
     {
         _window = new StatsWindow();
-        _window.Title = "Melee stats";
+        _window.Title = Loc.GetString("stat-values-ui-title");
         _window.OpenCentered();
         _window.OnClose += Closed;
     }

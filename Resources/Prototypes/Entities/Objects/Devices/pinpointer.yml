@@ -22,6 +22,19 @@
     state: pinpointer
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#8e1518"
+      - state: inhand-left-stripe
+        color: "#8e1518"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#8e1518"
+      - state: inhand-right-stripe
+        color: "#8e1518"
+      - state: inhand-right-top
   - type: Pinpointer
   - type: Appearance
   - type: GenericVisualizer
@@ -62,6 +75,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#202020"
+      - state: inhand-left-stripe
+        color: "#6c0014"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#202020"
+      - state: inhand-right-stripe
+        color: "#6c0014"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
@@ -82,6 +109,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#606060"
+      - state: inhand-left-stripe
+        color: "#606060"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#606060"
+      - state: inhand-right-stripe
+        color: "#606060"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
@@ -103,6 +144,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#3a3a3a"
+      - state: inhand-left-stripe
+        color: "#3a3a3a"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#3a3a3a"
+      - state: inhand-right-stripe
+        color: "#3a3a3a"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
@@ -113,19 +168,71 @@
   parent: [ PinpointerBase, BaseXenoborgContraband ]
   id: PinpointerMothership
   name: core pinpointer
-  suffix: Mothership
-  description: A handheld tracking device that leads to the direction of the mothership core.
+  description: A handheld tracking device that leads to the direction of the Mothership core.
   components:
   - type: Sprite
     layers:
-    - state: pinpointer-station
+    - state: pinpointer-xenoborg
       map: ["enum.PinpointerLayers.Base"]
     - state: pinonnull
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#3a3a3a"
+      - state: inhand-left-stripe
+        color: "#3a3a3a"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#3a3a3a"
+      - state: inhand-right-stripe
+        color: "#3a3a3a"
+      - state: inhand-right-top
   - type: Icon
-    state: pinpointer-station
+    state: pinpointer-xenoborg
   - type: Pinpointer
-    component: XenoborgMothership
-    targetName: the mothership
+    component: MothershipCore
+    targetName: the Mothership
+
+- type: entity
+  parent: BaseItem
+  id: PinpointerMothershipPiece
+  name: piece of core pinpointer
+  description: A piece of a core pinpointer. You need four pieces to repair it.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer-xenoborg-piece-1
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        pinpointer-xenoborg-piece-1: ""
+        pinpointer-xenoborg-piece-2: ""
+        pinpointer-xenoborg-piece-3: ""
+        pinpointer-xenoborg-piece-4: ""
+  - type: Item
+  - type: Tag
+    tags:
+    - MothershipPinpointerPiece
+
+- type: entity
+  parent: PinpointerMothership
+  id: PinpointerMothershipRepaired
+  name: repaired core pinpointer
+  description: A handheld tracking device that leads to the direction of the Mothership core. This one has seen better days.
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-xenoborg-repaired
+      map: ["enum.PinpointerLayers.Base"]
+  - type: Icon
+    state: pinpointer-xenoborg-repaired
+  - type: Construction
+    graph: RepairMothershipPinpointer
+    node: repairedPinpointer

@@ -46,7 +46,7 @@
   - blood4.ogg
   - blood5.ogg
   license: "CC-BY-NC-4.0"
-  copyright: "Created by Robinhood76 on freesound.org, modified by EmoGarbage404 (github)"
+  copyright: "Created by Robinhood76 on freesound.org, modified by EmoGarbage404 (github), background noise removed by Prole0 (Github)"
   source: "https://freesound.org/people/Robinhood76/sounds/98731/"
 
 - files:
@@ -101,6 +101,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "Taken from IENBA freesound.org and modified by https://github.com/MilenVolf. borgwalk2 clipped my metalgearsloth."
   source: "https://freesound.org/people/IENBA/sounds/697379/"
+
+- files:
+  - borgwalk3.ogg
+  - borgwalk4.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Modified version from borgwalk1 and borgwalk2 by https://github.com/Samuka-C."
+  source: "https://github.com/space-wizards/space-station-14/pull/36867"
 
 - files:
   - heelsclack1.ogg

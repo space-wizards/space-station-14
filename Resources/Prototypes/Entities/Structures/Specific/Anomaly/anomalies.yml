@@ -37,7 +37,6 @@
     sprite: Structures/Specific/anomaly.rsi
   - type: InteractionOutline
   - type: Clickable
-  - type: Damageable
   - type: Appearance
   - type: AnimationPlayer
   - type: GuideHelp
@@ -72,6 +71,8 @@
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPyroSupercritical
   - type: Sprite
     sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:
@@ -124,6 +125,9 @@
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
     coreInertPrototype: AnomalyCoreGravityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyGravitySupercritical
+    supercriticalDuration: 15s
   - type: Sprite
     layers:
     - state: anom2
@@ -156,6 +160,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
     coreInertPrototype: AnomalyCoreElectricityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyElectricitySupercritical
   - type: Sprite
     layers:
     - state: anom3
@@ -181,6 +187,8 @@
     coreInertPrototype: AnomalyCoreFleshInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFleshSupercritical
   - type: Sprite
     layers:
     - state: anom5
@@ -306,6 +314,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreBluespace
     coreInertPrototype: AnomalyCoreBluespaceInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyBluespaceSupercritical
     pulseSound:
       collection: RadiationPulse
       params:
@@ -332,6 +342,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreIce
     coreInertPrototype: AnomalyCoreIceInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyIceSupercritical
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 300
@@ -376,6 +388,8 @@
     coreInertPrototype: AnomalyCoreRockInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyRockSupercritical
   - type: Sprite
     layers:
     - state: anom6
@@ -452,6 +466,56 @@
         maxRange: 5
       spawns:
       - MobSpawnCrabUranium
+
+- type: entity
+  id: AnomalyRockBananium
+  parent: AnomalyRockBase
+  suffix: Rock, Bananium
+  components:
+  - type: Sprite
+    color: "#ddde40"
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#ddde40"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 8
+        maxAmount: 15
+        minRange: 4.5
+        maxRange: 7.5
+      spawns:
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidBananium
+      - WallSpawnAsteroidBananiumCrab
+    - settings:
+        spawnOnPulse: true
+        maxAmount: 3
+        minRange: 2.5
+        maxRange: 4.5
+      spawns:
+      - CrystalYellow
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 30
+        maxAmount: 40
+        minRange: 5
+        maxRange: 15
+      spawns:
+      - CrystalYellow
+      - WallSpawnAsteroid
+      - WallSpawnAsteroid
+      - WallSpawnAsteroidBananiumCrab
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 3
+        maxAmount: 6
+        maxRange: 5
+      spawns:
+      - MobSpawnCrabBananium
 
 - type: entity
   id: AnomalyRockQuartz
@@ -728,6 +792,8 @@
     coreInertPrototype: AnomalyCoreFloraInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFloraSupercritical
   - type: TileSpawnAnomaly
     entries:
     - settings:
@@ -778,21 +844,22 @@
           radius: 0.2
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Biological
     damageModifierSet: Diona
+  - type: Injurable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 1
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              EffectAnomalyFloraBulb:
-                min: 1
-                max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EffectAnomalyFloraBulb:
+            min: 1
+            max: 1
   - type: PointLight
     radius: 2.0
     energy: 4.5
@@ -831,6 +898,8 @@
     coreInertPrototype: AnomalyCoreLiquidInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFluidSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -840,10 +909,10 @@
         maxRange: 2
       spawns:
       - ReagentSlimeSpawner
-  - type: SolutionContainerManager
-    solutions:
-      anomaly:
-        maxVol: 1500
+  - type: Solution
+    id: anomaly
+    solution:
+      maxVol: 1550 # Doesn't really matter since it's an anom anyways
   - type: PuddleCreateAnomaly
     solution: anomaly
   - type: InjectionAnomaly
@@ -902,14 +971,19 @@
     - Honk
     - Carpetium
     - JuiceThatMakesYouWeh
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: anomaly
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: DrainableSolution
     solution: anomaly
   - type: DrawableSolution
     solution: anomaly
   - type: ExaminableSolution
     solution: anomaly
+    exactVolume: true
+    locVolume: "examinable-solution-on-examine-volume-no-max"
   - type: RefillableSolution
     solution: anomaly
   - type: InjectableSolution
@@ -944,6 +1018,8 @@
     maxPulseLength: 120
     animationTime: 4
     offset: "-0.1,0.1"
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyShadowSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -1004,6 +1080,8 @@
     coreInertPrototype: AnomalyCoreTechInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyTechSupercritical
   - type: TechAnomaly
   - type: DeviceLinkSource
     ports:
@@ -1062,6 +1140,8 @@
     coreInertPrototype: AnomalyCoreSantaInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPresentSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:

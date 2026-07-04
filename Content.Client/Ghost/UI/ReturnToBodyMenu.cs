@@ -15,7 +15,7 @@ public sealed class ReturnToBodyMenu : DefaultWindow
     {
         Title = Loc.GetString("ghost-return-to-body-title");
 
-        Contents.AddChild(new BoxContainer
+        ContentsContainer.AddChild(new BoxContainer
         {
             Orientation = LayoutOrientation.Vertical,
             Children =

@@ -7,10 +7,20 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.EUI
 {
-    public sealed class EuiManager : IPostInjectInit
+    /// <summary>
+    /// Manager for server-side EUI handling.
+    /// </summary>
+    /// <remarks>
+    /// An EUI is a system for making a relatively-easy connection between client and server
+    /// for the purposes of UIs.
+    /// </remarks>
+    public sealed partial class EuiManager : IPostInjectInit
     {
-        [Dependency] private readonly IPlayerManager _players = default!;
-        [Dependency] private readonly IServerNetManager _net = default!;
+        [Dependency] private ILogManager _log = default!;
+        [Dependency] private IPlayerManager _players = default!;
+        [Dependency] private IServerNetManager _net = default!;
+
+        private ISawmill? _sawmill;
 
         private readonly Dictionary<ICommonSession, PlayerEuiData> _playerData =
             new();
@@ -29,13 +39,20 @@ namespace Content.Server.EUI
             _players.PlayerStatusChanged += PlayerStatusChanged;
         }
 
+        /// <summary>
+        /// Initialisation of the EuIManager.
+        /// </summary>
         public void Initialize()
         {
             _net.RegisterNetMessage<MsgEuiCtl>();
             _net.RegisterNetMessage<MsgEuiState>();
             _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
+            _sawmill = _log.GetSawmill("eui");
         }
 
+        /// <summary>
+        /// Dispatches all queued state updates to the respective clients.
+        /// </summary>
         public void SendUpdates()
         {
             while (_stateUpdateQueue.TryDequeue(out var tuple))
@@ -53,6 +70,12 @@ namespace Content.Server.EUI
             }
         }
 
+        /// <summary>
+        /// Sends an "open" message to a client.
+        /// </summary>
+        /// <param name="eui">The Eui to open.</param>
+        /// <param name="player">The player client to receive the message.</param>
+        /// <exception cref="ArgumentException">Throws if the Eui is somehow already open.</exception>
         public void OpenEui(BaseEui eui, ICommonSession player)
         {
             if (eui.Id != 0)
@@ -74,6 +97,10 @@ namespace Content.Server.EUI
             _net.ServerSendMessage(msg, player.Channel);
         }
 
+        /// <summary>
+        /// Sends a "close" message to whatever client holds the provded Eui.
+        /// </summary>
+        /// <param name="eui">Eui to close.</param>
         public void CloseEui(BaseEui eui)
         {
             eui.Shutdown();
@@ -99,7 +126,7 @@ namespace Content.Server.EUI
 
             if (!dat.OpenUIs.TryGetValue(message.Id, out var eui))
             {
-                Logger.WarningS("eui", $"Got EUI message from player {ply} for non-existing UI {message.Id}");
+                _sawmill?.Warning($"Got EUI message from player {ply} for non-existing UI {message.Id}");
                 return;
             }
 
@@ -127,6 +154,10 @@ namespace Content.Server.EUI
             }
         }
 
+        /// <summary>
+        /// Queues an update notification for a specific Eui.
+        /// </summary>
+        /// <param name="eui">The Eui to be updated.</param>
         public void QueueStateUpdate(BaseEui eui)
         {
             DebugTools.Assert(eui.Id != 0, "EUI has not been opened yet.");

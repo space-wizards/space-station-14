@@ -9,13 +9,13 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Administration.UI.PlayerPanel;
 
 [UsedImplicitly]
-public sealed class PlayerPanelEui : BaseEui
+public sealed partial class PlayerPanelEui : BaseEui
 {
-    [Dependency] private readonly IClientConsoleHost _console = default!;
-    [Dependency] private readonly IClientAdminManager _admin = default!;
-    [Dependency] private readonly IClipboardManager _clipboard = default!;
+    [Dependency] private IClientConsoleHost _console = default!;
+    [Dependency] private IClientAdminManager _admin = default!;
+    [Dependency] private IClipboardManager _clipboard = default!;
 
-    private PlayerPanel PlayerPanel { get;  }
+    private PlayerPanel PlayerPanel { get; }
 
     public PlayerPanelEui()
     {
@@ -25,6 +25,7 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.OnOpenNotes += id => _console.ExecuteCommand($"adminnotes \"{id}\"");
         // Kick command does not support GUIDs
         PlayerPanel.OnKick += username => _console.ExecuteCommand($"kick \"{username}\"");
+        PlayerPanel.OnCamera += username => _console.ExecuteCommand($"camera \"{username}\"");
         PlayerPanel.OnOpenBanPanel += id => _console.ExecuteCommand($"banpanel \"{id}\"");
         PlayerPanel.OnOpenBans += id => _console.ExecuteCommand($"banlist \"{id}\"");
         PlayerPanel.OnAhelp += id => _console.ExecuteCommand($"openahelp \"{id}\"");
@@ -37,7 +38,7 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.OnFreeze += () => SendMessage(new PlayerPanelFreezeMessage());
         PlayerPanel.OnLogs += () => SendMessage(new PlayerPanelLogsMessage());
         PlayerPanel.OnRejuvenate += () => SendMessage(new PlayerPanelRejuvenationMessage());
-        PlayerPanel.OnDelete+= () => SendMessage(new PlayerPanelDeleteMessage());
+        PlayerPanel.OnDelete += () => SendMessage(new PlayerPanelDeleteMessage());
         PlayerPanel.OnFollow += () => SendMessage(new PlayerPanelFollowMessage());
 
         PlayerPanel.OnClose += () => SendMessage(new CloseEuiMessage());
@@ -68,6 +69,8 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.SetSharedConnections(s.SharedConnections);
         PlayerPanel.SetFrozen(s.CanFreeze, s.Frozen);
         PlayerPanel.SetAhelp(s.CanAhelp);
+        PlayerPanel.SetTrustScore(s.TrustScore);
+        PlayerPanel.SetAccountCreationDate(s.AccountCreationDate);
         PlayerPanel.SetButtons();
     }
 }

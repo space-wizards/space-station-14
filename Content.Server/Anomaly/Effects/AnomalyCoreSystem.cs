@@ -1,5 +1,5 @@
-using Content.Server.Cargo.Systems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Cargo;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
@@ -7,9 +7,9 @@ namespace Content.Server.Anomaly.Effects;
 /// <summary>
 /// This component reduces the value of the entity during decay
 /// </summary>
-public sealed class AnomalyCoreSystem : EntitySystem
+public sealed partial class AnomalyCoreSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {

@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
     [GenerateTypedNameReferences]
     public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
-        [Dependency] private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
+        [Dependency] private IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
         private float _timer;
 
         public GhostRoleRulesWindow(string rules, Action<BaseButton.ButtonEventArgs> requestAction)

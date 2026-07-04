@@ -103,6 +103,14 @@
   objectType: Item
 
 - type: construction
+  id: CardShield
+  graph: CardShield
+  startNode: start
+  targetNode: cardShield
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
   id: MakeshiftShield
   graph: MakeshiftShield
   startNode: start
@@ -143,6 +151,14 @@
   objectType: Item
 
 - type: construction
+  id: CardArrow
+  graph: CardArrow
+  startNode: start
+  targetNode: CardArrow
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
   id: ImprovisedBow
   graph: ImprovisedBow
   startNode: start
@@ -163,5 +179,13 @@
   graph: ClothingHandsKnuckleDustersBrass
   startNode: start
   targetNode: icon
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: CardSword
+  graph: CardSword
+  startNode: start
+  targetNode: cardSword
   category: construction-category-weapons
   objectType: Item

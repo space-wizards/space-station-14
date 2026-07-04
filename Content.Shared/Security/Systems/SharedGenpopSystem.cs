@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
@@ -8,21 +9,25 @@ using Content.Shared.Security.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Security.Systems;
 
-public abstract class SharedGenpopSystem : EntitySystem
+public abstract partial class SharedGenpopSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] protected readonly SharedIdCardSystem IdCard = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] protected readonly MetaDataSystem MetaDataSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] protected SharedIdCardSystem IdCard = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] protected MetaDataSystem MetaDataSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
+    // CCvar.
+    private int _maxIdJobLength;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,12 +38,14 @@ public abstract class SharedGenpopSystem : EntitySystem
         SubscribeLocalEvent<GenpopLockerComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<GenpopLockerComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
         SubscribeLocalEvent<GenpopIdCardComponent, ExaminedEvent>(OnExamine);
+
+        Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);
     }
 
     private void OnIdConfigured(Entity<GenpopLockerComponent> ent, ref GenpopLockerIdConfiguredMessage args)
     {
         // validation.
-        if (string.IsNullOrWhiteSpace(args.Name) || args.Name.Length > IdCardConsoleComponent.MaxFullNameLength ||
+        if (string.IsNullOrWhiteSpace(args.Name) || args.Name.Length > _maxIdJobLength ||
             args.Sentence < 0 ||
             string.IsNullOrWhiteSpace(args.Crime) || args.Crime.Length > GenpopLockerComponent.MaxCrimeLength)
         {
@@ -52,7 +59,7 @@ public abstract class SharedGenpopSystem : EntitySystem
         // Instead, we just fill in the spot temporarily til the checks pass.
         ent.Comp.LinkedId = EntityUid.Invalid;
 
-        _lock.Lock(ent.Owner, null);
+        _lock.Lock(ent.Owner, args.Actor);
         _entityStorage.CloseStorage(ent);
 
         CreateId(ent, args.Name, args.Sentence, args.Crime);

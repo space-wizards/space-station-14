@@ -20,11 +20,11 @@
     tags:
     - WhitelistChameleon
   - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    - HeadTop
-    - HeadSide
+    layers:
+      Hair: HEAD
+      Snout: HEAD
+      HeadTop: HEAD
+      HeadSide: HEAD
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
@@ -165,6 +165,7 @@
         Heat: 0.95
         Radiation: 0.65
   - type: IdentityBlocker
+  - type: IngestionBlocker
   - type: BreathMask
   - type: HideLayerClothing
     slots:
@@ -204,6 +205,10 @@
   - type: HideLayerClothing
     slots:
     - Hair
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase

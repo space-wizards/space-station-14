@@ -11,43 +11,33 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Flash
 {
-    public sealed class FlashOverlay : Overlay
+    public sealed partial class FlashOverlay : Overlay
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        private static readonly ProtoId<ShaderPrototype> FlashedEffectShader = "FlashedEffect";
+
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private ShaderInstance _shader;
-        public float PercentComplete = 0.0f;
+        private readonly ShaderInstance _shader;
+        private bool _reducedMotion;
+        public float PercentComplete;
         public Texture? ScreenshotTexture;
-
-        private readonly ProtoId<ShaderPrototype> _flashedEffect = "FlashedEffect";
-        private readonly ProtoId<ShaderPrototype> _flashedEffectReducedMotion = "FlashedEffectReducedMotion";
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            // Default to the normal flashed effect so that _shader can be initialized in the constructor
-            // and does not need to be nullable
-            _shader = _prototypeManager.Index(_flashedEffect).InstanceUnique();
-
-            // Set the shader according to the CVar when it is changed and also now.
-            _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
-
+            _shader = _prototypeManager.Index(FlashedEffectShader).InstanceUnique();
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
-        }
 
-        private void OnReducedMotionChanged(bool reducedMotion)
-        {
-            var effectName = reducedMotion ? _flashedEffectReducedMotion : _flashedEffect;
-            _shader = _prototypeManager.Index<ShaderPrototype>(effectName).InstanceUnique();
+            _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -65,8 +55,8 @@ namespace Content.Client.Flash
                 return;
 
             var curTime = _timing.CurTime;
-            var lastsFor = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
+            var lastsFor = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
+            var timeDone = (float)(curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
         }
@@ -92,10 +82,22 @@ namespace Content.Client.Flash
                 return;
 
             var worldHandle = args.WorldHandle;
-            _shader.SetParameter("percentComplete", PercentComplete);
-            worldHandle.UseShader(_shader);
-            worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
-            worldHandle.UseShader(null);
+            if (_reducedMotion)
+            {
+                // TODO: This is a very simple placeholder.
+                // Replace it with a proper shader once we come up with something good.
+                // Turns out making an effect that is supposed to be a bright, sudden, and disorienting flash
+                // not do any of that while also being equivalent in terms of game balance is hard.
+                var alpha = 1 - MathF.Pow(PercentComplete, 8f); // similar falloff curve to the flash shader
+                worldHandle.DrawRect(args.WorldBounds, new Color(0f, 0f, 0f, alpha));
+            }
+            else
+            {
+                _shader.SetParameter("percentComplete", PercentComplete);
+                worldHandle.UseShader(_shader);
+                worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
+                worldHandle.UseShader(null);
+            }
         }
 
         protected override void DisposeBehavior()
