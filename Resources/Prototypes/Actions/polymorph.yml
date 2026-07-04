@@ -4,6 +4,8 @@
   name: Revert
   description: Revert back into your original form.
   components:
+  - type: ConfirmableAction
+    popup: revert-polymorph-action-popup
   - type: InstantAction
     event: !type:RevertPolymorphActionEvent
 

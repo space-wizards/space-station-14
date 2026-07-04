@@ -15,11 +15,11 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank;
 
-public sealed class GasTankWindow
+public sealed partial class GasTankWindow
     : BaseWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     private readonly RichTextLabel _lblPressure;
     private readonly FloatSpinBox _spbPressure;
@@ -95,7 +95,7 @@ public sealed class GasTankWindow
         _topLabel = new Label
         {
             FontOverride = font,
-            FontColorOverride = StyleNano.NanoGold,
+           StyleClasses = { StyleClass.LabelKeyText },
             VerticalAlignment = VAlignment.Center,
             HorizontalExpand = true,
             HorizontalAlignment = HAlignment.Left,
@@ -207,7 +207,9 @@ public sealed class GasTankWindow
         _btnInternals.Disabled = !canConnectInternals;
         _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
             ("status", Loc.GetString(internalsConnected ? "gas-tank-window-internal-connected" : "gas-tank-window-internal-disconnected"))));
-        _spbPressure.Value = outputPressure;
+        if (!_spbPressure.HasKeyboardFocus())
+            // Don't update release pressure if we're currently editing it
+            _spbPressure.Value = outputPressure;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

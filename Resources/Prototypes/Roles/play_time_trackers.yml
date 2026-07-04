@@ -147,9 +147,3 @@
 
 - type: playTimeTracker
   id: JobWarden
-
-- type: playTimeTracker
-  id: JobBoxer
-
-- type: playTimeTracker
-  id: JobZookeeper

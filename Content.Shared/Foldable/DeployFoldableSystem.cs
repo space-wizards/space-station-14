@@ -8,12 +8,12 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Foldable;
 
-public sealed class DeployFoldableSystem : EntitySystem
+public sealed partial class DeployFoldableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly FoldableSystem _foldable = default!;
-    [Dependency] private readonly AnchorableSystem _anchorable = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private FoldableSystem _foldable = default!;
+    [Dependency] private AnchorableSystem _anchorable = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -37,7 +37,7 @@ public sealed class DeployFoldableSystem : EntitySystem
     private void OnDragDropDragged(Entity<DeployFoldableComponent> ent, ref DragDropDraggedEvent args)
     {
         if (!TryComp<FoldableComponent>(ent, out var foldable)
-            || !_foldable.TrySetFolded(ent, foldable, true))
+            || !_foldable.TrySetFolded(ent, foldable, true, args.User))
             return;
 
         _hands.PickupOrDrop(args.User, ent.Owner);
@@ -59,6 +59,10 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
+        // Don't do anything unless you clicked on the floor.
+        if (args.Target.HasValue)
+            return;
+
         if (!TryComp<FoldableComponent>(ent, out var foldable))
             return;
 
@@ -70,10 +74,10 @@ public sealed class DeployFoldableSystem : EntitySystem
         }
 
         if (!TryComp(args.User, out HandsComponent? hands)
-            || !_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation, handsComp: hands))
+            || !_hands.TryDrop((args.User, hands), args.Used, targetDropLocation: args.ClickLocation))
             return;
 
-        if (!_foldable.TrySetFolded(ent, foldable, false))
+        if (!_foldable.TrySetFolded(ent, foldable, false, args.User))
         {
             _hands.TryPickup(args.User, args.Used, handsComp: hands);
             return;

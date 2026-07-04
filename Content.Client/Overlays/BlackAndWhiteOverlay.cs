@@ -6,7 +6,9 @@ namespace Content.Client.Overlays;
 
 public sealed partial class BlackAndWhiteOverlay : Overlay
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private static readonly ProtoId<ShaderPrototype> Shader = "GreyscaleFullscreen";
+
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -15,7 +17,7 @@ public sealed partial class BlackAndWhiteOverlay : Overlay
     public BlackAndWhiteOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _greyscaleShader = _prototypeManager.Index<ShaderPrototype>("GreyscaleFullscreen").InstanceUnique();
+        _greyscaleShader = _prototypeManager.Index(Shader).InstanceUnique();
         ZIndex = 10; // draw this over the DamageOverlay, RainbowOverlay etc.
     }
 

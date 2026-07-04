@@ -1,4 +1,5 @@
 using Content.Client.Atmos.UI;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
@@ -12,6 +13,12 @@ public sealed class GasCanisterSystem : SharedGasCanisterSystem
     {
         base.Initialize();
         SubscribeLocalEvent<GasCanisterComponent, AfterAutoHandleStateEvent>(OnGasState);
+    }
+
+    protected override void DeviceUpdated(Entity<GasCanisterComponent> entity, ref AtmosDeviceUpdateEvent args)
+    {
+        // Atmos not predicted :(
+        throw new NotImplementedException();
     }
 
     private void OnGasState(Entity<GasCanisterComponent> ent, ref AfterAutoHandleStateEvent args)

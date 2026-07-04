@@ -3,7 +3,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.UserInterface;
 
 namespace Content.Server.Cargo.Systems;
@@ -46,22 +45,21 @@ public sealed partial class CargoSystem
         }
 
         ent.Comp.NextAccountActionTime = Timing.CurTime + ent.Comp.AccountActionDelay;
-        UpdateBankAccount((station, bank), -args.Amount,  ent.Comp.Account, dirty: false);
+        UpdateBankAccount((station, bank), -args.Amount, ent.Comp.Account, dirty: false);
         _audio.PlayPvs(ApproveSound, ent);
 
-        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, args.Actor);
-        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-
-        var ourAccount = _protoMan.Index(ent.Comp.Account);
+        var ourAccount = ProtoMan.Index(ent.Comp.Account);
+        var name = _identity.GetIdentityShortInfo(args.Actor, ent)
+                   ?? Loc.GetString("cargo-console-fund-transfer-user-unknown");
         if (args.Account == null)
         {
-            var stackPrototype = _protoMan.Index(ent.Comp.CashType);
-            _stack.Spawn(args.Amount, stackPrototype, Transform(ent).Coordinates);
+            var stackPrototype = ProtoMan.Index(ent.Comp.CashType);
+            _stack.SpawnAtPosition(args.Amount, stackPrototype, Transform(ent).Coordinates);
 
             if (!_emag.CheckFlag(ent, EmagType.Interaction))
             {
                 var msg = Loc.GetString("cargo-console-fund-withdraw-broadcast",
-                    ("name", tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("cargo-console-fund-transfer-user-unknown")),
+                    ("name", name),
                     ("amount", args.Amount),
                     ("name1", Loc.GetString(ourAccount.Name)),
                     ("code1", Loc.GetString(ourAccount.Code)));
@@ -70,13 +68,13 @@ public sealed partial class CargoSystem
         }
         else
         {
-            var otherAccount = _protoMan.Index(args.Account.Value);
+            var otherAccount = ProtoMan.Index(args.Account.Value);
             UpdateBankAccount((station, bank), args.Amount, args.Account.Value);
 
             if (!_emag.CheckFlag(ent, EmagType.Interaction))
             {
                 var msg = Loc.GetString("cargo-console-fund-transfer-broadcast",
-                    ("name", tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("cargo-console-fund-transfer-user-unknown")),
+                    ("name", name),
                     ("amount", args.Amount),
                     ("name1", Loc.GetString(ourAccount.Name)),
                     ("code1", Loc.GetString(ourAccount.Code)),

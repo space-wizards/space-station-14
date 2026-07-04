@@ -238,6 +238,9 @@ namespace Content.Client.Light.Components
 
         public override void OnInitialize()
         {
+            // This is very janky. This could easily result in no visible animation at all if the random values happen
+            // to all be close to each other.
+            // TODO ANIMATIONS
             _randomValue1 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());
             _randomValue2 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());
             _randomValue3 = (float)InterpolateLinear(StartValue, EndValue, (float)_random.NextDouble());

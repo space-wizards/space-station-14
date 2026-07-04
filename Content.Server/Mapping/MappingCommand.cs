@@ -13,12 +13,12 @@ using Robust.Shared.Utility;
 namespace Content.Server.Mapping
 {
     [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-    public sealed class MappingCommand : LocalizedEntityCommands
+    public sealed partial class MappingCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IResourceManager _resourceMgr = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] private readonly MappingSystem _mappingSystem = default!;
-        [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
+        [Dependency] private IResourceManager _resourceMgr = default!;
+        [Dependency] private SharedMapSystem _mapSystem = default!;
+        [Dependency] private MappingSystem _mappingSystem = default!;
+        [Dependency] private MapLoaderSystem _mapLoader = default!;
 
         public override string Command => "mapping";
 
@@ -146,7 +146,7 @@ namespace Content.Server.Mapping
 
             // map successfully created. run misc helpful mapping commands
             if (player.AttachedEntity is { Valid: true } playerEntity &&
-                EntityManager.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName)
+                (EntityManager.GetComponent<MetaDataComponent>(playerEntity).EntityPrototype is not { } proto || proto != GameTicker.AdminObserverPrototypeName))
             {
                 shell.ExecuteCommand("aghost");
             }
