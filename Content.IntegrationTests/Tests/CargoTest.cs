@@ -55,8 +55,9 @@ public sealed class CargoTest : GameTest
                         continue;
                     var entProto = SProtoMan.Index<EntityPrototype>(proto.Product);
                     double price = 0;
+                    bool contentsChecked = false;
                     EntityUid ent;
-                    if (entProto.TryGetComponent<EntityTableContainerFillComponent>(out var fill, _sCompFact))
+                    if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
                         var averageSpawns = _sTableSystem.AverageSpawns(fill.Containers.First().Value);
                         // Randomness will lead to non integer expected values, if all the expected values are integers then we skip
@@ -69,19 +70,17 @@ public sealed class CargoTest : GameTest
                                 price += _sPricing.GetPrice(ent) * item.Item2;
                                 SDeleteNow(ent);
                             }
-                            // Price of container is not included right now
                             Assert.That(
                                 price,
                                 Is.AtMost(proto.Cost),
                                 $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!"
                             );
-                            // If the price was found using the average price it won't spawn the whole container and skips
-                            continue;
+                            contentsChecked = true;
                         }
                     }
 
                     ent = SSpawnAtPosition(proto.Product, coordinates);
-                    price = _sPricing.GetPrice(ent);
+                    price += _sPricing.GetPrice(ent, includeContents: !contentsChecked);
 
                     Assert.That(
                         price,
