@@ -26,6 +26,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(ComponentInitHandler);
+    }
+
+    private void ComponentInitHandler(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
+    {
+        InitEyeBlinking(ent);
     }
 
     private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -91,7 +97,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.LayerMapTryGet((ent.Owner, comp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
             return;
 
-        var eyelidColor = Color.Red;
+        var eyelidColor = Color.White;
 
         if (ent.Comp.EyelidsColor != null)
         {

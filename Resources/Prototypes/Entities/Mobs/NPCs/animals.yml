@@ -1942,15 +1942,14 @@
     speechVerb: SmallMob
     allowedEmotes: ['Squeak']
   - type: EyeBlinking
-    eyelidsColor: "#ffffff"
+    eyelidsSprite: /Textures/Mobs/Animals/mouse/mouse-eyelids-0.rsi
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/mouse.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-0
-    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
-      state: mouse-eyelids-0
+    - map: ["enum.HumanoidVisualLayers.Eyelids"]
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -2138,8 +2137,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-1
-    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
-      state: mouse-eyelids-1
+    - map: ["enum.HumanoidVisualLayers.Eyelids"]
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -2159,6 +2157,8 @@
         Base: splat-1
   - type: Item
     heldPrefix: 1
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Animals/mouse/mouse-eyelids-1.rsi
 
 - type: entity
   parent: MobMouse
@@ -2168,8 +2168,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-2
-    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
-      state: mouse-eyelids-2
+    - map: ["enum.HumanoidVisualLayers.Eyelids"]
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -2189,6 +2188,8 @@
         Base: splat-2
   - type: Item
     heldPrefix: 2
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Animals/mouse/mouse-eyelids-2.rsi
 
 - type: entity
   name: cancer mouse
