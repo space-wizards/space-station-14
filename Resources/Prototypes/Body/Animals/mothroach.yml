@@ -1,4 +1,5 @@
 - type: entity
+  parent: [ MobNightVision ]
   id: BaseMobMothroach
   abstract: true
   components:

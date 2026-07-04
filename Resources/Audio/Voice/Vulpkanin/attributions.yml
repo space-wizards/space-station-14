@@ -63,3 +63,8 @@
   license: "CC0-1.0"
   copyright: "Original sound by https://freesound.org/people/qubodup/sounds/827660/, cleaned up, cut, converted to ogg"
   source: "https://freesound.org/people/qubodup/sounds/827660/"
+
+- files: ["vulp_sneeze.ogg"]
+  license: "CC0-1.0"
+  copyright: "Original sound by blukotek on freesound.org, Modified by Minemoder5000 on github by cleaning the audio, cropping, and re-encoding to Ogg Vorbis"
+  source: "https://freesound.org/people/blukotek/sounds/424949/"

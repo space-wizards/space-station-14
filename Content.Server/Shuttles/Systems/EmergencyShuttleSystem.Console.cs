@@ -16,6 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Timer = Robust.Shared.Timing.Timer;
+using Robust.Shared.Random;
 
 namespace Content.Server.Shuttles.Systems;
 

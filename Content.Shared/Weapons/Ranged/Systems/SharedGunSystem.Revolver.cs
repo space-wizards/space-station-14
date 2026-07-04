@@ -118,8 +118,7 @@ public partial class SharedGunSystem
                 return false;
             }
 
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var xform = xformQuery.GetComponent(insertEnt);
+            var xform = Transform(insertEnt);
             var ammo = new List<(EntityUid? Entity, IShootable Shootable)>(freeSlots);
             var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
             RaiseLocalEvent(insertEnt, ev);
@@ -151,7 +150,7 @@ public partial class SharedGunSystem
 
                 ent.Comp.AmmoSlots[index] = ammoEnt.Value;
                 Containers.Insert(ammoEnt.Value, ent.Comp.AmmoContainer);
-                SetChamber(ent, insertEnt, index);
+                SetChamber(ent, ammoEnt.Value, index);
 
                 if (ev.Ammo.Count == 0)
                     break;
