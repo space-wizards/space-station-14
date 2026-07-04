@@ -25,10 +25,10 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
         if (!_appearance.TryGetData<string>(ent, FlatpackVisuals.Machine, out var machineBoardId) || args.Sprite == null)
             return;
 
-        if (!PrototypeManager.TryIndex<EntityPrototype>(machineBoardId, out var machineBoardPrototype))
+        if (!ProtoMan.TryIndex<EntityPrototype>(machineBoardId, out var machineBoardPrototype))
             return;
 
-        if (!machineBoardPrototype.TryGetComponent<SpriteComponent>(out var sprite, EntityManager.ComponentFactory))
+        if (!machineBoardPrototype.TryComp(out SpriteComponent? sprite, EntityManager.ComponentFactory))
             return;
 
         Color? color = null;

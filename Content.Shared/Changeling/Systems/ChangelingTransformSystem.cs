@@ -27,7 +27,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedCloningSystem _cloning = default!;
     [Dependency] private SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IdentitySystem _identity = default!;
     [Dependency] private SharedChangelingIdentitySystem _changelingIdentity = default!;
@@ -175,7 +174,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         }
         ent.Comp.CurrentTransformSound = null;
 
-        if (!_prototype.Resolve(ent.Comp.TransformCloningSettings, out var settings))
+        if (!ProtoMan.Resolve(ent.Comp.TransformCloningSettings, out var settings))
             return;
 
         if (args.Target is not { } targetIdentity)
@@ -186,6 +185,9 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         _visualBody.CopyAppearanceFrom(targetIdentity, args.User);
         _cloning.CloneComponents(targetIdentity, args.User, settings);
+
+        if (settings.CopyStatusEffects)
+            _cloning.CopyStatusEffects(targetIdentity, args.User, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
