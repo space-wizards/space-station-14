@@ -362,7 +362,6 @@ namespace Content.Server.Construction
 
             // Transform transferring.
             var newTransform = Transform(newUid);
-            var oldAnchored = transform.Anchored;
             TransformSystem.AttachToGridOrMap(newUid, newTransform); // in case in hands or a container
             TransformSystem.SetLocalRotationNoLerp(newUid, transform.LocalRotation, newTransform);
 #pragma warning disable CS0618 // Setting anchored state directly, AnchorEntity/Unanchor requires an initialized entity.
