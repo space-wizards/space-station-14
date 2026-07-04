@@ -22,35 +22,15 @@ public sealed partial class HumanoidProfileEditor
         NameEdit.Text = Profile?.Name ?? "";
     }
 
-    private void RandomizeEverything()
-    {
-        Profile = HumanoidCharacterProfile.Random();
-        SetProfile(Profile, CharacterSlot);
-        SetDirty();
-    }
-
     /// <summary>
-    ///     Randomizes only the appearance of the character, without touching species, name, etc.
+    /// Randomize values selectively while respecting locked values.
     /// </summary>
-    private void RandomizeAppearance()
+    private void RandomizeProfile()
     {
-        if (Profile == null)
-        {
-            return;
-        }
-
-        var appearance = HumanoidCharacterAppearance.Random(Profile.Species, Profile.Sex);
-
-        Profile = Profile.WithCharacterAppearance(appearance);
+        Profile = Profile == null
+            ? HumanoidCharacterProfile.Random()
+            : HumanoidCharacterProfile.Random(RandomizeLockButton.RandomizeCfg, Profile!);
         SetProfile(Profile, CharacterSlot);
         SetDirty();
-    }
-
-    private void RandomizeName()
-    {
-        if (Profile == null) return;
-        var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
-        SetName(name);
-        UpdateNameEdit();
     }
 }
