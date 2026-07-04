@@ -15,8 +15,11 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
-        // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
-        SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
+
+        // As long as legally distinct electric-mice are never added, this should be fine
+        // otherwise a mouse-hat will transfer its power to the wearer.
+        SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>(
+            (e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
     }
 
     protected void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
@@ -29,14 +32,12 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets electrified value of component and marks dirty if required.
+    ///     Sets electrified value of component and marks dirty if required.
     /// </summary>
     public void SetElectrified(Entity<ElectrifiedComponent> ent, bool value)
     {
         if (ent.Comp.Enabled == value)
-        {
             return;
-        }
 
         ent.Comp.Enabled = value;
         Dirty(ent, ent.Comp);
@@ -44,12 +45,13 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
         _appearance.SetData(ent.Owner, ElectrifiedVisuals.IsElectrified, value);
     }
 
+    /// <summary>
+    ///     Set a wire's cut state.
+    /// </summary>
     public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
     {
         if (ent.Comp.IsWireCut == value)
-        {
             return;
-        }
 
         ent.Comp.IsWireCut = value;
         Dirty(ent);
@@ -59,15 +61,20 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
     /// <param name="sourceUid">Source entity of the electrocution.</param>
     /// <param name="shockDamage">How much shock damage the entity takes.</param>
     /// <param name="time">How long the entity will be stunned.</param>
-    /// <param name="refresh">Should <paramref>time</paramref> be refreshed (instead of accumilated) if the entity is already electrocuted?</param>
+    /// <param name="refresh">Should <paramref name="time"/> be refreshed instead of accumulated if the entity is already electrocuted?</param>
     /// <param name="siemensCoefficient">How insulated the entity is from the shock. 0 means completely insulated, and 1 means no insulation.</param>
     /// <param name="ignoreInsulation">Should the electrocution bypass the Insulated component?</param>
     /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
     public virtual bool TryDoElectrocution(
-        EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, bool refresh, float siemensCoefficient = 1f,
+        EntityUid uid,
+        EntityUid? sourceUid,
+        int shockDamage,
+        TimeSpan time,
+        bool refresh,
+        float siemensCoefficient = 1f,
         bool ignoreInsulation = false)
     {
-        // only done serverside
+        // Only done server side.
         return false;
     }
 
