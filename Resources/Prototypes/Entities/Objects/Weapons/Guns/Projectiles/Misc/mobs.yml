@@ -35,7 +35,7 @@
         - MidImpassable
         - HighImpassable
         - LowImpassable
-        hard: False
+        hard: false
   - type: Projectile
     #soundHit: Waiting on serv3
     impactEffect: BulletImpactEffectDisabler

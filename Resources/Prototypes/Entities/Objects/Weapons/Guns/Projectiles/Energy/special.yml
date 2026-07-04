@@ -18,7 +18,7 @@
         hard: false
         mask:
         - Opaque
-      fly-by: &flybyfixture
+      fly-by:
         shape: !type:PhysShapeCircle
           radius: 1.5
         layer:
@@ -26,7 +26,7 @@
         - MidImpassable
         - HighImpassable
         - LowImpassable
-        hard: False
+        hard: false
   - type: Ammo
     muzzleFlash: null
   - type: Projectile

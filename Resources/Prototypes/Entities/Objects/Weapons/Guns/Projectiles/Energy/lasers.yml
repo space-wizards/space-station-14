@@ -28,7 +28,7 @@
         - Opaque
         - Impassable
         - BulletImpassable
-      fly-by: &flybyfixture
+      fly-by:
         shape: !type:PhysShapeCircle
           radius: 1.5
         layer:
@@ -36,7 +36,7 @@
         - MidImpassable
         - HighImpassable
         - LowImpassable
-        hard: False
+        hard: false
   - type: Ammo
   - type: Projectile
     impactEffect: BulletImpactEffectOrangeDisabler

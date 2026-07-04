@@ -23,7 +23,8 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape: !type:PhysShapeCircle
+        shape:
+          !type:PhysShapeCircle
           radius: 0.4
         density: 100
         hard: false
@@ -56,7 +57,8 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape: !type:PhysShapeCircle
+        shape:
+          !type:PhysShapeCircle
           radius: 0.45
         density: 100
         hard: false
@@ -69,7 +71,8 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -89,7 +92,8 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape: !type:PhysShapeCircle
+        shape:
+          !type:PhysShapeCircle
           radius: 0.25
         density: 100
         hard: false
@@ -127,7 +131,8 @@
   - type: Fixtures
     fixtures:
       projectile:
-        shape: !type:PhysShapeCircle
+        shape:
+          !type:PhysShapeCircle
           radius: 0.3
         density: 100
         hard: false
