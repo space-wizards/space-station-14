@@ -60,6 +60,8 @@ public abstract partial class SharedStackSystem
             }
         }
 
+        stacks.Clear();
+
         // Set the count
         foreach (var (type, stackList) in stacksByType)
         {
@@ -71,7 +73,6 @@ public abstract partial class SharedStackSystem
                 if (count == 0)
                 {
                     SetCount(stack.AsNullable(), count);
-                    stacks.Remove(stack);
                     continue;
                 }
 
@@ -79,6 +80,7 @@ public abstract partial class SharedStackSystem
                 SetCount(stack.AsNullable(), amount);
 
                 count -= amount;
+                stacks.Add(stack);
             }
         }
     }
@@ -152,22 +154,22 @@ public abstract partial class SharedStackSystem
         if (!Resolve(user.Owner, ref user.Comp, false))
             return;
 
-        if (!Resolve(item.Owner, ref item.Comp, false))
+        if (!_stackQuery.Resolve(item.Owner, ref item.Comp, false))
         {
             // This isn't even a stack. Just try to pickup as normal.
-            Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
+            _hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
             return;
         }
 
-        foreach (var held in Hands.EnumerateHeld(user))
+        foreach (var held in _hands.EnumerateHeld(user))
         {
             TryMergeStacks(item, held, out _);
 
-            if (item.Comp.Count == 0)
+            if (GetCount(item) == 0)
                 return;
         }
 
-        Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
+        _hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
     }
 
     /// <summary>
@@ -233,7 +235,7 @@ public abstract partial class SharedStackSystem
     /// <remarks> All setter functions should end up here. </remarks>
     public void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         // Do nothing if amount is already the same.
@@ -251,7 +253,7 @@ public abstract partial class SharedStackSystem
         ent.Comp.UiUpdateNeeded = true;
         Dirty(ent);
 
-        Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count);
+        _appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count);
         RaiseLocalEvent(ent.Owner, new StackCountChangedEvent(old, ent.Comp.Count));
 
         // Queue delete stack if count reaches zero.
@@ -280,7 +282,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public void ReduceCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         // Don't reduce unlimited stacks
@@ -298,7 +300,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public bool TryUse(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         // We're unlimited and always greater than amount
@@ -323,7 +325,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetCount(Entity<StackComponent?> ent)
     {
-        return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
+        return _stackQuery.Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
     }
 
     /// <summary>
@@ -334,8 +336,7 @@ public abstract partial class SharedStackSystem
         var count = 0;
         foreach (var stack in stacks)
         {
-            var (uid, stackComponent) = stack;
-            if (stackComponent.StackTypeId != id)
+            if (stack.Comp.StackTypeId != id)
                 continue;
 
             count += GetCount(stack.AsNullable());
@@ -381,7 +382,9 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetMaxCount(EntityPrototype entityId)
     {
-        entityId.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        if (!entityId.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory))
+            return 1;
+
         return GetMaxCount(stackComp);
     }
 
@@ -389,7 +392,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetMaxCount(EntityUid uid)
     {
-        return GetMaxCount(CompOrNull<StackComponent>(uid));
+        return GetMaxCount(_stackQuery.CompOrNull(uid));
     }
 
     /// <summary>

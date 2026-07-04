@@ -14,97 +14,28 @@ public sealed class StackTest : GameTest
 {
     [SidedDependency(Side.Server)] private readonly StackSystem _sStackSystem = default!;
 
-    private const string StackEnt1 = "StackEnt1";
-    private const string StackEnt2 = "StackEnt2";
-    private const string StackEnt3 = "StackEnt3";
-    private const string StackPrototype = "StackProtodsfsd";
-    private const string StackCount1 = "1";
-    private const string StackCount2 = "2";
-    private const string StackCount30 = "30";
-
-    [TestPrototypes]
-    private const string Prototypes =
-        @$"
-        - type: stack
-          id: {StackPrototype}
-          spawn: {StackEnt1}
-          maxCount: {StackCount30}
-
-        - type: entity
-          id: {StackEnt1}
-          components:
-          - type: Stack
-            stackType: {StackPrototype}
-            count: {StackCount1}
-          - type: Physics
-            bodyType: Dynamic
-          - type: Fixtures
-            fixtures:
-              fix1:
-                shape:
-                  !type:PhysShapeCircle
-                    bounds: ""-0.49,-0.49,0.49,0.49""
-                layer:
-                - Impassable
-
-        - type: entity
-          id: {StackEnt2}
-          components:
-          - type: Stack
-            stackType: {StackPrototype}
-            count: {StackCount2}
-          - type: Physics
-            bodyType: Dynamic
-          - type: Fixtures
-            fixtures:
-              fix1:
-                shape:
-                  !type:PhysShapeCircle
-                    bounds: ""-0.49,-0.49,0.49,0.49""
-                layer:
-                - Impassable
-
-        - type: entity
-          id: {StackEnt3}
-          components:
-          - type: Stack
-            stackType: {StackPrototype}
-            count: {StackCount30}
-          - type: Physics
-            bodyType: Dynamic
-          - type: Fixtures
-            fixtures:
-              fix1:
-                shape:
-                  !type:PhysShapeCircle
-                    bounds: ""-0.49,-0.49,0.49,0.49""
-                layer:
-                - Impassable
-        ";
-
-
     /// <summary>
     /// Tests for <see cref="SharedStackSystem.SetCount(Entity{StackComponent}, int)"/>.
     /// </summary>
     [Test]
     public async Task SetTest()
     {
-        var stack = await Spawn(StackEnt1);
+        var stack = await Spawn(StackTestPrototypes.StackEnt1);
 
         // Raising the count
-        _sStackSystem.SetCount(stack, int.Parse(StackCount2));
-        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(int.Parse(StackCount2)));
+        _sStackSystem.SetCount((stack, null), StackTestPrototypes.Count2);
+        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(StackTestPrototypes.Count2));
 
         // Lowering the count
-        _sStackSystem.SetCount(stack, int.Parse(StackCount1));
-        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(int.Parse(StackCount1)));
+        _sStackSystem.SetCount((stack, null), StackTestPrototypes.Count1);
+        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(StackTestPrototypes.Count1));
 
         // Setting above the max count clamps to max
-        _sStackSystem.SetCount(stack, int.Parse(StackCount30) + 1);
-        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(int.Parse(StackCount30)));
+        _sStackSystem.SetCount((stack, null), StackTestPrototypes.Count30 + 1);
+        Assert.That(_sStackSystem.GetCount(stack), Is.EqualTo(StackTestPrototypes.Count30));
 
         // Setting to 0 deletes the stack
-        _sStackSystem.SetCount(stack, 0);
+        _sStackSystem.SetCount((stack, null), 0);
         await Server.WaitRunTicks(1);
         Assert.That(SEntMan.EntityCount, Is.Zero);
     }
@@ -116,14 +47,14 @@ public sealed class StackTest : GameTest
     public async Task MergeTest()
     {
         var stacks = new HashSet<EntityUid>();
-        var spawnCount = int.Parse(StackCount1) + int.Parse(StackCount2);
+        var spawnCount = StackTestPrototypes.Count1 + StackTestPrototypes.Count2;
 
         await Server.WaitPost(() =>
         {
             stacks =
             [
-                SSpawn(StackEnt1),
-                SSpawn(StackEnt2),
+                SSpawn(StackTestPrototypes.StackEnt1),
+                SSpawn(StackTestPrototypes.StackEnt2),
             ];
 
             _sStackSystem.MergeStacks(ref stacks);
@@ -151,15 +82,15 @@ public sealed class StackTest : GameTest
     public async Task MergeOverflowTest()
     {
         var stacks = new HashSet<EntityUid>();
-        var spawnCount = int.Parse(StackCount1) + int.Parse(StackCount2) + int.Parse(StackCount30);
+        var spawnCount = StackTestPrototypes.Count1 + StackTestPrototypes.Count2 +StackTestPrototypes.Count30;
 
         await Server.WaitPost(() =>
         {
              stacks =
              [
-                 SSpawn(StackEnt1),
-                 SSpawn(StackEnt2),
-                 SSpawn(StackEnt3),
+                 SSpawn(StackTestPrototypes.StackEnt1),
+                 SSpawn(StackTestPrototypes.StackEnt2),
+                 SSpawn(StackTestPrototypes.StackEnt30),
              ];
 
             _sStackSystem.MergeStacks(ref stacks);
@@ -192,32 +123,40 @@ public sealed class StackTest : GameTest
     [Test]
     public async Task MergeContactsTest()
     {
-        var spawnCount = int.Parse(StackCount1) + int.Parse(StackCount1);
+        var spawnCount = StackTestPrototypes.Count1 + StackTestPrototypes.Count1;
 
         var map = await Pair.CreateTestMap();
         await Server.WaitIdleAsync();
 
-        var doner = await SpawnAtPosition(StackEnt1, map.GridCoords);
-        var receiver = await SpawnAtPosition(StackEnt1, map.GridCoords);
+        // Spawn two stacks at the same position so they're contacting
+        var doner = await SpawnAtPosition(StackTestPrototypes.StackEnt1, map.GridCoords);
+        var receiver = await SpawnAtPosition(StackTestPrototypes.StackEnt1, map.GridCoords);
 
         _sStackSystem.TryMergeToContacts(doner);
 
+        // Wait for queue deletion
         await Server.WaitRunTicks(1);
 
         Assert.Multiple(() =>
         {
+            // Assert that the receiver has the total count
+            // And that the doner was deleted
             Assert.That(_sStackSystem.GetCount(receiver), Is.EqualTo(spawnCount));
             Assert.That(SEntMan.EntityExists(doner), Is.False);
         });
 
-        doner = await SpawnAtPosition(StackEnt3, map.GridCoords);
+        // Now test for when there's more count than the receiver can hold
+        doner = await SpawnAtPosition(StackTestPrototypes.StackEnt30, map.GridCoords);
+        spawnCount += StackTestPrototypes.Count30;
 
         _sStackSystem.TryMergeToContacts(doner);
 
         Assert.Multiple(() =>
         {
-            Assert.That(_sStackSystem.GetCount(receiver), Is.EqualTo(int.Parse(StackCount30)));
-            Assert.That(_sStackSystem.GetCount(doner), Is.EqualTo(spawnCount));
+            // Assert that the receiver is at its maximum count
+            // And that the doner has the remainder of the spawned count
+            Assert.That(_sStackSystem.GetCount(receiver), Is.EqualTo(StackTestPrototypes.Count30));
+            Assert.That(_sStackSystem.GetCount(doner), Is.EqualTo(spawnCount - StackTestPrototypes.Count30));
         });
     }
 }
