@@ -25,7 +25,7 @@ public sealed partial class HumanoidCharacterAppearance
     ///     Personally I think this should be weighted, but I can't
     ///     be bothered to implement that. -widgetbeck (and mq)
     /// </remarks>
-    private static List<Color> GetPaletteFromBase(Color baseColor, int strategy)
+    private static Color[] GetPaletteFromBase(Color baseColor, int strategy)
     {
         return strategy switch
         {
@@ -45,10 +45,10 @@ public sealed partial class HumanoidCharacterAppearance
     /// <returns>
     ///     A 3-toned color palette with keys skinColor, hairColor, and eyeColor.
     /// </returns>
-    private static Dictionary<string, Color> ClampPaletteToStrategy(List<Color> colorPalette, SkinColorationPrototype skinType, IRobustRandom random, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
+    private static Dictionary<string, Color> ClampPaletteToStrategy(Color[] colorPalette, SkinColorationPrototype skinType, IRobustRandom random, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
     {
-        if (colorPalette.Count != 3)
-            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {colorPalette.Count} colours");
+        if (colorPalette.Length != 3)
+            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {colorPalette.Length} colours");
 
         var newSkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
             ? colorPalette[0] : baseAppearance.SkinColor;
