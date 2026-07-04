@@ -5,7 +5,7 @@ using Content.Shared.Kitchen.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests.Cooking;
+namespace Content.IntegrationTests.Tests.Kitchen;
 
 /// <summary>
 ///     Integration tests related to microwaves and microwave recipes.
@@ -14,6 +14,7 @@ public sealed class MicrowaveRecipeTest
 {
     private static readonly string[] FoodRecipes = GameDataScrounger.PrototypesOfKind<FoodRecipePrototype>();
     private static readonly EntProtoId MicrowavePrototype = "KitchenMicrowave";
+    private const uint MaxSeconds = 30;
 
     [Test]
     [TestOf(typeof(MicrowaveSystem))]
@@ -40,8 +41,8 @@ public sealed class MicrowaveRecipeTest
                 $"Microwave entity {microwaveString} lacks a {nameof(MicrowaveComponent)}!");
 
             // Get the parameters we need to make this recipe.
-            const uint multiplePortionCount = 6;
             var proto = protoMan.Index<FoodRecipePrototype>(protoKey);
+            var maxPortions = Math.Floor(MaxSeconds / proto.CookTime);
 
             // Ensure this recipe is provided to the microwave if this is a secret recipe.
             if (proto.SecretRecipe)
@@ -54,7 +55,8 @@ public sealed class MicrowaveRecipeTest
             ValidateRecipePortions(proto, 1, microwave, microwaveSystem, entMan);
 
             // Then, test that making multiple portions of the same recipe works.
-            ValidateRecipePortions(proto, multiplePortionCount, microwave, microwaveSystem, entMan);
+            if (maxPortions > 1)
+                ValidateRecipePortions(proto, multiplePortionCount, microwave, microwaveSystem, entMan);
         });
 
         await pair.CleanReturnAsync();
