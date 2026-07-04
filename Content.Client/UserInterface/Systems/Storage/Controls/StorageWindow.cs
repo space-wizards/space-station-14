@@ -21,9 +21,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Storage.Controls;
 
-public sealed class StorageWindow : BaseWindow
+public sealed partial class StorageWindow : BaseWindow
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
+    [Dependency] private IEntityManager _entity = default!;
     private readonly StorageUIController _storageController;
 
     public EntityUid? StorageEntity;
@@ -111,7 +111,7 @@ public sealed class StorageWindow : BaseWindow
             HorizontalExpand = true,
             Name = "StorageLabel",
             ClipText = true,
-            Text = "Dummy",
+            Text = Loc.GetString("comp-storage-window-dummy"),
             StyleClasses =
             {
                 "FancyWindowTitle",
@@ -621,7 +621,7 @@ public sealed class StorageWindow : BaseWindow
                         {
                             marked.Add(cell);
                             cell.ModulateSelfOverride = spotFree
-                                ? Color.FromHsv((0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f))
+                                ? Color.FromHsv(new Vector4(0.18f, 1 / spot, 0.5f / spot + 0.5f, 1f))
                                 : Color.FromHex("#2222CC");
                         }
                     }

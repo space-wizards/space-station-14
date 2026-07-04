@@ -18,20 +18,21 @@ namespace Content.Server.Power.EntitySystems
     ///     Manages power networks, power state, and all power components.
     /// </summary>
     [UsedImplicitly]
-    public sealed class PowerNetSystem : SharedPowerNetSystem
+    public sealed partial class PowerNetSystem : SharedPowerNetSystem
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IParallelManager _parMan = default!;
-        [Dependency] private readonly BatterySystem _battery = default!;
+        [Dependency] private AppearanceSystem _appearance = default!;
+        [Dependency] private PowerNetConnectorSystem _powerNetConnector = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IParallelManager _parMan = default!;
+        [Dependency] private BatterySystem _battery = default!;
+
+        [Dependency] private EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery = default!;
+        [Dependency] private EntityQuery<PowerNetworkBatteryComponent> _powerNetworkBatteryQuery = default!;
+        [Dependency] private EntityQuery<BatteryComponent> _batteryQuery = default!;
 
         private readonly PowerState _powerState = new();
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
-
-        private EntityQuery<ApcPowerReceiverBatteryComponent> _apcBatteryQuery;
-        private EntityQuery<BatteryComponent> _batteryQuery;
 
         private BatteryRampPegSolver _solver = new();
 
@@ -39,12 +40,10 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            _apcBatteryQuery = GetEntityQuery<ApcPowerReceiverBatteryComponent>();
-            _batteryQuery = GetEntityQuery<BatteryComponent>();
-
             UpdatesAfter.Add(typeof(NodeGroupSystem));
             _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
 
+            SubscribeLocalEvent<ApcPowerReceiverComponent, MapInitEvent>(ApcPowerReceiverMapInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentRemove>(ApcPowerReceiverRemove);
@@ -72,6 +71,11 @@ namespace Content.Server.Power.EntitySystems
         private void DebugPow3rDisableParallelChanged(bool val)
         {
             _solver = new(val);
+        }
+
+        private void ApcPowerReceiverMapInit(Entity<ApcPowerReceiverComponent> ent, ref MapInitEvent args)
+        {
+            _appearance.SetData(ent, PowerDeviceVisuals.Powered, ent.Comp.Powered);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
@@ -317,10 +321,15 @@ namespace Content.Server.Power.EntitySystems
 
         private bool IsPoweredCalculate(ApcPowerReceiverComponent comp)
         {
-            return !comp.PowerDisabled
-                   && (!comp.NeedsPower
-                       || MathHelper.CloseToPercent(comp.NetworkLoad.ReceivingPower,
-                           comp.Load));
+            // Power is disabled, so unpowered
+            if (comp.PowerDisabled)
+                return false;
+
+            // Doesn't need power, so always powered
+            if (!comp.NeedsPower)
+                return true;
+
+            return comp.Load > 0 && MathHelper.CloseToPercent(comp.NetworkLoad.ReceivingPower, comp.Load);
         }
 
         public override bool IsPoweredCalculate(SharedApcPowerReceiverComponent comp)
@@ -341,6 +350,10 @@ namespace Content.Server.Power.EntitySystems
                 // Check if the entity has an internal battery
                 if (_apcBatteryQuery.TryComp(uid, out var apcBattery) && _batteryQuery.TryComp(uid, out var battery))
                 {
+                    metadata = MetaData(uid);
+                    if (Paused(uid, metadata))
+                        continue;
+
                     apcReceiver.Load = apcBattery.IdleLoad;
 
                     // Try to draw power from the battery if there isn't sufficient external power
@@ -348,22 +361,22 @@ namespace Content.Server.Power.EntitySystems
 
                     if (requireBattery)
                     {
-                        _battery.SetCharge(uid, battery.CurrentCharge - apcBattery.IdleLoad * frameTime, battery);
+                        _battery.ChangeCharge((uid, battery), -apcBattery.IdleLoad * frameTime);
                     }
                     // Otherwise try to charge the battery
-                    else if (powered && !_battery.IsFull(uid, battery))
+                    else if (powered && !_battery.IsFull((uid, battery)))
                     {
                         apcReceiver.Load += apcBattery.BatteryRechargeRate * apcBattery.BatteryRechargeEfficiency;
-                        _battery.SetCharge(uid, battery.CurrentCharge + apcBattery.BatteryRechargeRate * frameTime, battery);
+                        _battery.ChangeCharge((uid, battery), apcBattery.BatteryRechargeRate * frameTime);
                     }
 
                     // Enable / disable the battery if the state changed
-                    var enableBattery = requireBattery && battery.CurrentCharge > 0;
+                    var currentCharge = _battery.GetCharge((uid, battery));
+                    var enableBattery = requireBattery && currentCharge > 0;
 
                     if (apcBattery.Enabled != enableBattery)
                     {
                         apcBattery.Enabled = enableBattery;
-                        metadata = MetaData(uid);
                         Dirty(uid, apcBattery, metadata);
 
                         var apcBatteryEv = new ApcPowerReceiverBatteryChangedEvent(enableBattery);
@@ -376,14 +389,13 @@ namespace Content.Server.Power.EntitySystems
                 }
 
                 // If new value is the same as the old, then exit
-                if (!apcReceiver.Recalculate && apcReceiver.Powered == powered)
+                if (apcReceiver.Powered == powered)
                     continue;
 
                 metadata ??= MetaData(uid);
                 if (Paused(uid, metadata))
                     continue;
 
-                apcReceiver.Recalculate = false;
                 apcReceiver.Powered = powered;
                 Dirty(uid, apcReceiver, metadata);
 
@@ -471,11 +483,9 @@ namespace Content.Server.Power.EntitySystems
 
             DoReconnectBasePowerNet(net, netNode);
 
-            var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
-
             foreach (var apc in net.Apcs)
             {
-                var netBattery = batteryQuery.GetComponent(apc.Owner);
+                var netBattery = _powerNetworkBatteryQuery.GetComponent(apc.Owner);
                 netNode.BatterySupplies.Add(netBattery.NetworkBattery.Id);
                 netBattery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
@@ -492,18 +502,16 @@ namespace Content.Server.Power.EntitySystems
 
             DoReconnectBasePowerNet(net, netNode);
 
-            var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
-
             foreach (var charger in net.Chargers)
             {
-                var battery = batteryQuery.GetComponent(charger.Owner);
+                var battery = _powerNetworkBatteryQuery.GetComponent(charger.Owner);
                 netNode.BatteryLoads.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = netNode.Id;
             }
 
             foreach (var discharger in net.Dischargers)
             {
-                var battery = batteryQuery.GetComponent(discharger.Owner);
+                var battery = _powerNetworkBatteryQuery.GetComponent(discharger.Owner);
                 netNode.BatterySupplies.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }

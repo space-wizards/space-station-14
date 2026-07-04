@@ -41,7 +41,7 @@
     - type: FireVisuals
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
       spriteLayer: null
       inhandVisuals:
         left:
@@ -52,6 +52,7 @@
           shader: unshaded
     - type: Damageable
       damageModifierSet: Wood
+    - type: Injurable
     - type: Destructible
       thresholds:
       - trigger:

@@ -11,11 +11,10 @@ using Robust.Shared.Physics;
 
 namespace Content.Client.Light;
 
-public sealed class RoofOverlay : Overlay
+public sealed partial class RoofOverlay : Overlay
 {
     private readonly IEntityManager _entManager;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
 
     private readonly EntityLookupSystem _lookup;
     private readonly SharedMapSystem _mapSystem;
@@ -51,25 +50,26 @@ public sealed class RoofOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         var lightoverlay = _overlay.GetOverlay<BeforeLightTargetOverlay>();
+        var lightRes = lightoverlay.GetCachedForViewport(args.Viewport);
         var bounds = lightoverlay.EnlargedBounds;
-        var target = lightoverlay.EnlargedLightTarget;
+        var target = lightRes.EnlargedLightTarget;
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);
+        _mapSystem.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);
         var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
 
         worldHandle.RenderInRenderTarget(target,
             () =>
             {
+                var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
+
                 for (var i = 0; i < _grids.Count; i++)
                 {
                     var grid = _grids[i];
 
                     if (!_entManager.TryGetComponent(grid.Owner, out ImplicitRoofComponent? roof))
                         continue;
-
-                    var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
 
                     var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
                     var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
@@ -94,12 +94,12 @@ public sealed class RoofOverlay : Overlay
         worldHandle.RenderInRenderTarget(target,
             () =>
             {
+                var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
+
                 foreach (var grid in _grids)
                 {
                     if (!_entManager.TryGetComponent(grid.Owner, out RoofComponent? roof))
                         continue;
-
-                    var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
 
                     var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
                     var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);

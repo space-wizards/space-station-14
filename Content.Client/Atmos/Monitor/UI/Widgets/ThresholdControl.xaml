@@ -6,7 +6,7 @@
         <CollapsibleBody Margin="20 0 0 0">
             <BoxContainer Orientation="Vertical">
                 <BoxContainer Orientation="Horizontal">
-                    <CheckBox Name="CEnabled" Text="{Loc 'Enabled'}" />
+                    <CheckBox Name="CEnabled" Text="{Loc 'air-alarm-ui-widget-enable'}" />
                 </BoxContainer>
                 <!-- Upper row: Danger bounds -->
                 <BoxContainer Name="CDangerBounds" Orientation="Horizontal" Margin="0 0 0 2"/>

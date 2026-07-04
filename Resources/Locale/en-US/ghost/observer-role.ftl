@@ -1,2 +1,0 @@
-observer-role-name = Observer
-

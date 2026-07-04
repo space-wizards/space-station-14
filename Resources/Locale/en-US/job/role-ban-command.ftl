@@ -22,6 +22,8 @@ cmd-roleban-hint-duration-6 = 1 month
 
 cmd-roleunban-desc = Pardons a player's role ban
 cmd-roleunban-help = Usage: roleunban <role ban id>
+cmd-roleunban-unable-to-parse-id = Unable to parse {$id} as a ban id integer.
+                                   {$help}
 
 ## Completion result hints
 cmd-roleunban-hint-1 = <role ban id>
@@ -42,7 +44,6 @@ cmd-roleban-severity-parse = ${severity} is not a valid severity\n{$help}.
 cmd-roleban-arg-count = Invalid amount of arguments.
 cmd-roleban-job-parse = Job {$job} does not exist.
 cmd-roleban-name-parse = Unable to find a player with that name.
-cmd-roleban-existing = {$target} already has a role ban for {$role}.
 cmd-roleban-success = Role banned {$target} from {$role} with reason {$reason} {$length}.
 
 cmd-roleban-inf = permanently

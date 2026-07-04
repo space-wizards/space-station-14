@@ -63,3 +63,6 @@
 
 - file: ["amber.yml"]
   authors: Southbridge, Flipsie27
+
+  - files: ["snowball.yml"]
+  authors: Spacemann

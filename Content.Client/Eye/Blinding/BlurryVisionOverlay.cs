@@ -8,12 +8,15 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Eye.Blinding
 {
-    public sealed class BlurryVisionOverlay : Overlay
+    public sealed partial class BlurryVisionOverlay : Overlay
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        private static readonly ProtoId<ShaderPrototype> CataractsShader = "Cataracts";
+        private static readonly ProtoId<ShaderPrototype> CircleShader = "CircleMask";
+
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         public override bool RequestScreenTexture => true;
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -33,8 +36,8 @@ namespace Content.Client.Eye.Blinding
         public BlurryVisionOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _cataractsShader = _prototypeManager.Index<ShaderPrototype>("Cataracts").InstanceUnique();
-            _circleMaskShader = _prototypeManager.Index<ShaderPrototype>("CircleMask").InstanceUnique();
+            _cataractsShader = _prototypeManager.Index(CataractsShader).InstanceUnique();
+            _circleMaskShader = _prototypeManager.Index(CircleShader).InstanceUnique();
 
             _circleMaskShader.SetParameter("CircleMinDist", 0.0f);
             _circleMaskShader.SetParameter("CirclePow", NoMotion_Pow);

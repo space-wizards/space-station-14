@@ -17,9 +17,9 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTab : Control
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IPlayerManager _playerMan = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private IPlayerManager _playerMan = default!;
 
     private const string ArrowUp = "↑";
     private const string ArrowDown = "↓";
@@ -172,6 +172,7 @@ public sealed partial class PlayerTab : Control
             _playerTabSymbolSetting);
         button.AddChild(entry);
         button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
+        button.StyleClasses.Clear();
     }
 
     /// <summary>
@@ -237,7 +238,9 @@ public sealed partial class PlayerTab : Control
             Header.Username => Compare(x.Username, y.Username),
             Header.Character => Compare(x.CharacterName, y.CharacterName),
             Header.Job => Compare(x.StartingJob, y.StartingJob),
-            Header.RoleType => y.SortWeight - x.SortWeight,
+            Header.RoleType => y.SortWeight != x.SortWeight
+                ? y.SortWeight - x.SortWeight
+                : string.Compare(x.RoleProto?.Id ?? "", y.RoleProto?.Id ?? "", StringComparison.Ordinal),
             Header.Playtime => TimeSpan.Compare(x.OverallPlaytime ?? default, y.OverallPlaytime ?? default),
             _ => 1
         };

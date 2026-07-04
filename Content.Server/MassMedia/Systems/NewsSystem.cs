@@ -31,21 +31,22 @@ using System.Threading.Tasks;
 
 namespace Content.Server.MassMedia.Systems;
 
-public sealed class NewsSystem : SharedNewsSystem
+public sealed partial class NewsSystem : SharedNewsSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly DiscordWebhook _discord = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IBaseServer _baseServer = default!;
+    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private StationSystem _station = default!;
+    [Dependency] private GameTicker _ticker = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private DiscordWebhook _discord = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IBaseServer _baseServer = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     private WebhookIdentifier? _webhookId = null;
     private Color _webhookEmbedColor;
@@ -133,7 +134,7 @@ public sealed class NewsSystem : SharedNewsSystem
             _adminLogger.Add(
                 LogType.Chat, LogImpact.Medium,
                 $"{ToPrettyString(msg.Actor):actor} deleted news article {article.Title} by {article.Author}: {article.Content}"
-                );
+            );
 
             articles.RemoveAt(msg.ArticleNum);
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
@@ -164,58 +165,91 @@ public sealed class NewsSystem : SharedNewsSystem
         if (!ent.Comp.PublishEnabled)
             return;
 
-        if (!TryGetArticles(ent, out var articles))
-            return;
-
         if (!CanUse(msg.Actor, ent.Owner))
             return;
 
         ent.Comp.PublishEnabled = false;
         ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
 
-        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, msg.Actor);
-        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
-        string? authorName = tryGetIdentityShortInfoEvent.Title;
+        var authorName = _identity.GetIdentityShortInfo(msg.Actor, ent);
 
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        var article = new NewsArticle
+        if (TryAddNews(ent, title, content, out var article, authorName, msg.Actor))
+        {
+            _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+
+            _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
+                                                             ("actor", msg.Actor),
+                                                             ("title", article.Value.Title),
+                                                             ("author", article.Value.Author ?? Loc.GetString("news-read-ui-no-author"))
+            ));
+        }
+    }
+
+    /// <summary>
+    /// Set the alert level based on the station's entity ID.
+    /// </summary>
+    /// <param name="uid">Entity on the station to which news will be added.</param>
+    /// <param name="title">Title of the news article.</param>
+    /// <param name="content">Content of the news article.</param>
+    /// <param name="author">Author of the news article.</param>
+    /// <param name="actor">Entity which caused the news article to publish. Used for admin logs.</param>
+    public bool TryAddNews(EntityUid uid, string title, string content, [NotNullWhen(true)] out NewsArticle? article, string? author = null, EntityUid? actor = null)
+    {
+        if (!TryGetArticles(uid, out var articles))
+        {
+            article = null;
+            return false;
+        }
+
+        article = new NewsArticle
         {
             Title = title.Length <= MaxTitleLength ? title : $"{title[..MaxTitleLength]}...",
             Content = content.Length <= MaxContentLength ? content : $"{content[..MaxContentLength]}...",
-            Author = authorName,
+            Author = author,
             ShareTime = _ticker.RoundDuration()
         };
 
-        _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
+        articles.Add(article.Value);
 
-        _adminLogger.Add(
-            LogType.Chat,
-            LogImpact.Medium,
-            $"{ToPrettyString(msg.Actor):actor} created news article {article.Title} by {article.Author}: {article.Content}"
-            );
+        if (actor != null)
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{ToPrettyString(actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"Created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
 
-        _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
-            ("actor", msg.Actor),
-            ("title", article.Title),
-            ("author", article.Author ?? Loc.GetString("news-read-ui-no-author"))
-            ));
-
-        articles.Add(article);
-
-        var args = new NewsArticlePublishedEvent(article);
+        var args = new NewsArticlePublishedEvent(article.Value);
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+
         while (query.MoveNext(out var readerUid, out _))
         {
             RaiseLocalEvent(readerUid, ref args);
         }
 
         if (_webhookSendDuringRound)
-            Task.Run(async () => await SendArticleToDiscordWebhook(article));
+            AddNewsSendWebhook(article.Value);
 
         UpdateWriterDevices();
+
+        return true;
     }
+
+    private async void AddNewsSendWebhook(NewsArticle article)
+    {
+        await Task.Run(async () => await SendArticleToDiscordWebhook(article));
+    }
+
     #endregion
 
     #region Reader Event Handlers
@@ -369,7 +403,7 @@ public sealed class NewsSystem : SharedNewsSystem
         if (_webhookSendDuringRound)
             return;
 
-        var query = EntityManager.EntityQueryEnumerator<StationNewsComponent>();
+        var query = EntityQueryEnumerator<StationNewsComponent>();
 
         while (query.MoveNext(out _, out var comp))
         {

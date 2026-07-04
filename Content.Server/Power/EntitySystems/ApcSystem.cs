@@ -1,13 +1,16 @@
-using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
 using Content.Server.StationEvents.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.APC;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Emp;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -16,16 +19,17 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class ApcSystem : EntitySystem
+public sealed partial class ApcSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly PowerGridCheckRule _powerGridCheckRule = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private PowerGridCheckRule _powerGridCheckRule = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -46,11 +50,12 @@ public sealed class ApcSystem : EntitySystem
     public override void Update(float deltaTime)
     {
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
+        var curTime = _gameTiming.CurTime;
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < curTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
             {
-                apc.LastUiUpdate = _gameTiming.CurTime;
+                apc.LastUiUpdate = curTime;
                 UpdateUIState(uid, apc, battery);
             }
 
@@ -58,13 +63,36 @@ public sealed class ApcSystem : EntitySystem
             {
                 UpdateApcState(uid, apc, battery);
             }
+
+            // Overload
+            if (apc.MainBreakerEnabled && battery.CurrentSupply > apc.MaxLoad)
+            {
+                // Not already overloaded, start timer
+                if (apc.TripStartTime == null)
+                {
+                    apc.TripStartTime = curTime;
+                }
+                else
+                {
+                    if (curTime - apc.TripStartTime > apc.TripTime)
+                    {
+                        apc.TripFlag = true;
+                        ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
+                    }
+                }
+            }
+            else
+            {
+                apc.TripStartTime = null;
+            }
         }
     }
 
     // Change the APC's state only when the battery state changes, or when it's first created.
     private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ref ChargeChangedEvent args)
     {
-        UpdateApcState(uid, component);
+        // Defer until the next tick.
+        component.NeedStateUpdate = true;
     }
 
     private void OnApcStartup(EntityUid uid, ApcComponent component, ref ComponentStartup args)
@@ -98,7 +126,7 @@ public sealed class ApcSystem : EntitySystem
 
         if (_accessReader.IsAllowed(args.Actor, uid))
         {
-            ApcToggleBreaker(uid, component);
+            ApcToggleBreaker(uid, component, user: args.Actor);
         }
         else
         {
@@ -116,7 +144,21 @@ public sealed class ApcSystem : EntitySystem
                 args.Cancelled = true;
     }
 
-    public void ApcToggleBreaker(EntityUid uid, ApcComponent? apc = null, PowerNetworkBatteryComponent? battery = null)
+    private void OnApcToggleMainBreakerAttempt(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
+    {
+        var query = AllEntityQuery<PowerGridCheckRuleComponent>();
+
+        while (query.MoveNext(out var ruleUid, out var ruleComp))
+            if (_powerGridCheckRule.ContainsUnpoweredApc((ruleUid, ruleComp), ent))
+                args.Cancelled = true;
+    }
+
+    /// <summary>Toggles the enabled state of the APC's main breaker.</summary>
+    public void ApcToggleBreaker(
+        EntityUid uid,
+        ApcComponent? apc = null,
+        PowerNetworkBatteryComponent? battery = null,
+        EntityUid? user = null)
     {
         if (!Resolve(uid, ref apc, ref battery))
             return;
@@ -124,8 +166,18 @@ public sealed class ApcSystem : EntitySystem
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
+        if (apc.MainBreakerEnabled)
+            apc.TripFlag = false;
+
         UpdateUIState(uid, apc);
         _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
+
+        if (user != null)
+        {
+            var humanReadableState = apc.MainBreakerEnabled ? "Enabled" : "Disabled";
+            _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium,
+                $"{ToPrettyString(user):user} set the main breaker state of {ToPrettyString(uid):entity} to {humanReadableState:state}.");
+        }
     }
 
     private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
@@ -190,7 +242,9 @@ public sealed class ApcSystem : EntitySystem
 
         var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
-            charge);
+            charge,
+            apc.MaxLoad,
+            apc.TripFlag);
 
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
@@ -225,6 +279,9 @@ public sealed class ApcSystem : EntitySystem
         return ApcExternalPowerState.Good;
     }
 
+    // TODO: This subscription should be in shared.
+    // But I am not moving ApcComponent to shared, this PR already got soaped enough and that component uses several layers of OOP.
+    // At least the EMP visuals won't mispredict, since all APCs also have the BatteryComponent, which also has a EMP effect and is in shared.
     private void OnEmpPulse(EntityUid uid, ApcComponent component, ref EmpPulseEvent args)
     {
         if (component.MainBreakerEnabled)

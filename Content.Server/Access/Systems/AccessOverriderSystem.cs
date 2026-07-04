@@ -19,15 +19,15 @@ using static Content.Shared.Access.Components.AccessOverriderComponent;
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
-public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
+public sealed partial class AccessOverriderSystem : SharedAccessOverriderSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterface = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -113,7 +113,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
-            targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + EntityManager.GetComponent<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
+            targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + Comp<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
             targetLabelColor = Color.White;
 
             if (!_accessReader.GetMainAccessReader(accessReader, out var accessReaderEnt))
@@ -125,7 +125,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(idCard).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(idCard).EntityName;
 
             if (component.TargetAccessReaderId is { Valid: true })
             {
@@ -148,7 +148,8 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             missingAccess,
             privilegedIdName,
             targetLabel,
-            targetLabelColor);
+            targetLabelColor,
+            component.ShowPrivilegedId);
 
         _userInterface.SetUiState(uid, AccessOverriderUiKey.Key, newState);
     }
@@ -166,21 +167,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         }
 
         return accessList;
-    }
-
-    private List<HashSet<ProtoId<AccessLevelPrototype>>> ConvertAccessListToHashSet(List<ProtoId<AccessLevelPrototype>> accessList)
-    {
-        List<HashSet<ProtoId<AccessLevelPrototype>>> accessHashsets = new List<HashSet<ProtoId<AccessLevelPrototype>>>();
-
-        if (accessList != null && accessList.Any())
-        {
-            foreach (ProtoId<AccessLevelPrototype> access in accessList)
-            {
-                accessHashsets.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
-            }
-        }
-
-        return accessHashsets;
     }
 
     /// <summary>
@@ -244,12 +230,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _adminLogger.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
-        accessReaderEnt.Value.Comp.AccessLists = ConvertAccessListToHashSet(newAccessList);
+        _accessReader.TrySetAccesses(accessReaderEnt.Value, newAccessList);
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
-
-        Dirty(accessReaderEnt.Value);
     }
 
     /// <summary>

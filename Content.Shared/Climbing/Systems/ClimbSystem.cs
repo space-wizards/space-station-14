@@ -2,7 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
@@ -29,33 +29,30 @@ namespace Content.Shared.Climbing.Systems;
 
 public sealed partial class ClimbSystem : VirtualController
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private FixtureSystem _fixtureSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private SharedTransformSystem _xformSystem = default!;
+
+    [Dependency] private EntityQuery<ClimbableComponent> _climbableQuery = default!;
+    [Dependency] private EntityQuery<FixturesComponent> _fixturesQuery = default!;
+    [Dependency] private EntityQuery<TransformComponent> _xformQuery = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private EntityQuery<ClimbableComponent> _climbableQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _climbableQuery = GetEntityQuery<ClimbableComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ClimbingComponent, UpdateCanMoveEvent>(OnMoveAttempt);
         SubscribeLocalEvent<ClimbingComponent, EntParentChangedMessage>(OnParentChange);
@@ -170,7 +167,7 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void AddClimbableVerb(EntityUid uid, ClimbableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
+        if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User) || !component.Vaultable)
             return;
 
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing || !climbingComponent.CanClimb)
@@ -571,7 +568,7 @@ public sealed partial class ClimbSystem : VirtualController
 
         _damageableSystem.TryChangeDamage(args.Climber, component.ClimberDamage, origin: args.Climber);
         _damageableSystem.TryChangeDamage(uid, component.TableDamage, origin: args.Climber);
-        _stunSystem.TryParalyze(args.Climber, TimeSpan.FromSeconds(component.StunTime), true);
+        _stunSystem.TryUpdateParalyzeDuration(args.Climber, TimeSpan.FromSeconds(component.StunTime));
 
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(

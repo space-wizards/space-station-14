@@ -1,21 +1,24 @@
-﻿using Robust.Client.Graphics;
+﻿using System.Numerics;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Cooldown
 {
-    public sealed class CooldownGraphic : Control
+    public sealed partial class CooldownGraphic : Control
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        private static readonly ProtoId<ShaderPrototype> Shader = "CooldownAnimation";
+
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IPrototypeManager _protoMan = default!;
 
         private readonly ShaderInstance _shader;
 
         public CooldownGraphic()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _protoMan.Index<ShaderPrototype>("CooldownAnimation").InstanceUnique();
+            _shader = _protoMan.Index(Shader).InstanceUnique();
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Content.Client.Cooldown
             if (Progress >= 0f)
             {
                 var hue = (5f / 18f) * lerp;
-                color = Color.FromHsv((hue, 0.75f, 0.75f, 0.50f));
+                color = Color.FromHsv(new Vector4(hue, 0.75f, 0.75f, 0.50f));
             }
             else
             {

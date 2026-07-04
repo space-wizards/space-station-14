@@ -1,0 +1,48 @@
+- type: entity
+  abstract: true
+  parent: BaseMentalAction
+  id: BaseMappingAction
+  components:
+  - type: Action
+    clientExclusive: true
+
+- type: entity
+  parent: BaseMappingAction
+  id: BaseMappingDecalAction # not abstract but the event has to be set in code
+  components:
+  - type: TargetAction
+    repeat: true
+    range: -1
+  - type: WorldTargetAction
+    event: null # has to be set with SetEvent in DecalPlacementSystem
+
+- type: entity
+  parent: BaseMappingAction
+  id: BaseMappingSpawnAction # not abstract but the event has to be set in code
+  components:
+  - type: Action
+    icon: Tiles/cropped_parallax.png
+  - type: InstantAction
+    event: null # has to be set with SetEvent in MappingSystem
+
+- type: entity
+  parent: BaseMappingAction
+  id: ActionMappingEraser
+  name: Erase Entity
+  components:
+  - type: Action
+    icon: Interface/VerbIcons/delete.svg.192dpi.png
+  - type: InstantAction
+    event: !type:StartPlacementActionEvent
+      eraser: true
+
+# these are used for mapping actions yml files
+- type: entity
+  parent: BaseMappingSpawnAction
+  id: BaseMappingEntityAction # not abstract but the event has to be set in code
+  components:
+  - type: Action
+    autoPopulate: False
+    temporary: True
+  - type: InstantAction
+    event: null # has to be set with SetEvent in ActionsSystem
