@@ -272,7 +272,15 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dockAUid, out DoorComponent? doorA))
             {
-                if (_doorSystem.TryOpen(dockAUid, doorA))
+                if (Paused(dockAUid))
+                {
+                    _doorSystem.OpenNow(dockAUid, doorA);
+                    if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
+                    {
+                        _doorSystem.SetBoltsDownNow((dockAUid, airlockA));
+                    }
+                }
+                else if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
@@ -284,7 +292,15 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp(dockBUid, out DoorComponent? doorB))
             {
-                if (_doorSystem.TryOpen(dockBUid, doorB))
+                if (Paused(dockBUid))
+                {
+                    _doorSystem.OpenNow(dockBUid, doorB);
+                    if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
+                    {
+                        _doorSystem.SetBoltsDownNow((dockBUid, airlockB));
+                    }
+                }
+                else if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
