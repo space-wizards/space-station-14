@@ -84,6 +84,7 @@
       - NotekeeperCartridge
       - NanoTaskCartridge
       - NewsReaderCartridge
+      - MessengerCartridge
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -156,6 +157,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -170,6 +172,7 @@
       - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -483,6 +486,7 @@
     - NanoTaskCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BasePDA
@@ -878,6 +882,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -950,6 +955,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -976,6 +982,7 @@
       - WantedListCartridge
       - MedTekCartridge
       - AstroNavCartridge
+      - MessengerCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1180,6 +1187,7 @@
       - WantedListCartridge
       - LogProbeCartridge
       - AstroNavCartridge
+      - MessengerCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1349,6 +1357,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - MessengerCartridge
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1377,6 +1386,8 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - MedTekCartridge
+    - MessengerCartridge
+
 
 - type: entity
   parent: ClownPDA

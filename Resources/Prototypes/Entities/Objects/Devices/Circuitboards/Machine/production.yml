@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -1367,3 +1367,16 @@
         GlassBeaker:
           amount: 2
           defaultPrototype: Beaker
+
+- type: entity
+  id: MessengerServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Messenger server machine board
+  description: A machine printed circuit board for a Messenger server.
+  components:
+    - type: MachineBoard
+      prototype: MessengerServer
+      stackRequirements:
+        Steel: 1
+        Cable: 2
+        Glass: 5

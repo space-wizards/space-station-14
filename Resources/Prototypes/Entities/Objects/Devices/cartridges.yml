@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BasePDACartridge
   abstract: true
@@ -173,3 +173,25 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+
+- type: entity
+  parent: BasePDACartridge
+  id: MessengerCartridge
+  name: Messenger cartridge
+  description: A Messenger cartridge.
+  components:
+  - type: Sprite
+    state: cart-y
+  - type: UIFragment
+    ui: !type:MessengerCartridgeUi
+  - type: Cartridge
+    programName: messenger-cartridge-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: nano_chat
+  - type: MessengerCartridge
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: Messenger
+    receiveFrequencyId: Messenger
+    autoConnect: true
