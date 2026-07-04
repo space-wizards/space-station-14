@@ -84,6 +84,11 @@ namespace Content.Server.StationEvents.Events
                 return null;
             }
 
+            if (!HasComp<BecomesStationComponent>(xform.GridUid))
+            {
+                return null;
+            }
+
             if (!TryComp<StationMemberComponent>(xform.GridUid, out var stationMemberComp))
             {
                 return null;
