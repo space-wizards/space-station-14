@@ -247,9 +247,9 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         var minInterval = ent.Comp.MinBlinkInterval;
         var maxInterval = ent.Comp.MaxBlinkInterval;
-        var randomSeconds = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
+        var randomBlinkInterval = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
 
-        ent.Comp.NextBlinkingTime = ent.Comp.NextOpenEyesTime + randomSeconds;
+        ent.Comp.NextBlinkingTime = ent.Comp.NextOpenEyesTime + randomBlinkInterval;
     }
 
     public override void Update(float frameTime)
