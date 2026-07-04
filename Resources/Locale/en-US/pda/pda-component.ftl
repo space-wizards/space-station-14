@@ -54,3 +54,7 @@ comp-pda-ui-unassigned = Unassigned
 
 pda-notification-message = [font size=12][bold]PDA[/bold] { $header }: [/font]
     "{ $message }"
+
+comp-pda-ui-copy-tooltip = Click to copy
+
+comp-pda-ui-copied = Copied!
