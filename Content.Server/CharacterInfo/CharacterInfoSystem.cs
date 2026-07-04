@@ -1,4 +1,4 @@
-﻿using Content.Server.Mind;
+using Content.Server.Mind;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
@@ -6,6 +6,7 @@ using Content.Shared.Objectives;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CharacterInfo;
 
