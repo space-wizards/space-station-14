@@ -1,6 +1,7 @@
 using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Stack;
+using static Content.IntegrationTests.Tests.Stacks.StackTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Stacks;
 
@@ -16,12 +17,12 @@ public sealed class StackInteractionTest : InteractionTest
     [Test]
     public async Task InteractUsingTest()
     {
-        var spawnCount = StackTestPrototypes.Count1 + StackTestPrototypes.Count1;
+        var spawnCount = Count1 + Count1;
 
-        var held = await Spawn(StackTestPrototypes.StackEnt1);
+        var held = await Spawn(StackEnt1);
         await Pickup(held);
 
-        await SpawnTarget(StackTestPrototypes.StackEnt1);
+        await SpawnTarget(StackEnt1);
         await Interact();
 
         Assert.Multiple(() =>
@@ -36,7 +37,7 @@ public sealed class StackInteractionTest : InteractionTest
     [Test]
     public async Task SplitTest()
     {
-        await SpawnTarget(StackTestPrototypes.StackEnt30);
+        await SpawnTarget(StackEnt30);
         await Interact(altInteract: true);
 
         Assert.That(_sStackSystem.GetCount(ToServer(Target).Value), Is.EqualTo(15));

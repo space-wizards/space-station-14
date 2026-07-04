@@ -1,6 +1,6 @@
 namespace Content.IntegrationTests.Tests.Stacks;
 
-public sealed class StackTestPrototypes
+public static class StackTestPrototypes
 {
     public const string StackPrototype = "TestStack";
 
@@ -21,6 +21,7 @@ public sealed class StackTestPrototypes
         @$"
         - type: stack
           id: {StackPrototype}
+          name: stack-steel
           spawn: {StackEnt1}
           maxCount: {StackCount30}
 
