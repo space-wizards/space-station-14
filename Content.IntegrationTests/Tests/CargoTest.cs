@@ -59,24 +59,16 @@ public sealed class CargoTest : GameTest
                     EntityUid ent;
                     if (entProto.TryComp<EntityTableContainerFillComponent>(out var fill, _sCompFact))
                     {
-                        var averageSpawns = _sTableSystem.AverageSpawns(fill.Containers.First().Value);
-                        // Randomness will lead to non integer expected values, if all the expected values are integers then we skip
-                        // Compares against epsilon in case of any floating point stuff
-                        if (!averageSpawns.All(item => Math.Abs(item.Item2 % 1) <= Double.Epsilon * 100))
+                        foreach (var container in fill.Containers)
                         {
-                            foreach (var item in averageSpawns)
+                            foreach (var item in _sTableSystem.AverageSpawns(container.Value))
                             {
                                 ent = SSpawnAtPosition(item.spawn, coordinates);
                                 price += _sPricing.GetPrice(ent) * item.Item2;
                                 SDeleteNow(ent);
                             }
-                            Assert.That(
-                                price,
-                                Is.AtMost(proto.Cost),
-                                $"Found arbitrage on {proto.ID} cargo product!  Cost is {proto.Cost} but mean sell price is {price}!"
-                            );
-                            contentsChecked = true;
                         }
+                        contentsChecked = true;
                     }
 
                     ent = SSpawnAtPosition(proto.Product, coordinates);
