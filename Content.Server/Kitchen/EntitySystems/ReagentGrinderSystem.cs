@@ -23,14 +23,21 @@ public sealed partial class ReagentGrinderSystem : SharedReagentGrinderSystem
         if (!TryComp<ReagentGrinderComponent>(uid, out var comp))
             return;
 
-        var chamberEntities = comp.InputContainer.ContainedEntities.Select(x => GetNetEntity(x)).ToArray();
+        var chamberEntities = comp.InputContainer.ContainedEntities
+            .Select(x => GetNetEntity(x))
+            .ToArray();
+
         var beaker = _itemSlotsSystem.GetItemOrNull(uid, ReagentGrinderComponent.BeakerSlotId);
-        var beakerNet = beaker.HasValue ? GetNetEntity(beaker.Value) : (NetEntity?)null;
+        var beakerNet = beaker.HasValue
+            ? GetNetEntity(beaker.Value)
+            : (NetEntity?) null;
+
         var reagents = new List<ReagentQuantity>();
         FixedPoint2 currentVolume = 0;
         FixedPoint2 maxVolume = 0;
 
-        if (beaker is { } beakerEnt && _solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
+        if (beaker is { } beakerEnt &&
+            _solutionContainer.TryGetFitsInDispenser(beakerEnt, out _, out var solution))
         {
             reagents = solution.Contents.ToList();
             currentVolume = solution.Volume;
