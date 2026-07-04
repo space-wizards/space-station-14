@@ -1,14 +1,16 @@
+using Content.Client.Overlays;
 using Content.Shared.Inventory.Events;
+using Content.Shared.NightVision;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
 
-namespace Content.Client.Overlays;
+namespace Content.Client.NightVision;
 
 /// <summary>
 /// Shows/hides the <see cref="NightVisionOverlay"/> based on whether the observed
 /// entity has a <see cref="NightVisionComponent"/> equipped.
 /// </summary>
-public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightVisionComponent>
+public sealed partial class NightVisionSystem : SharedNightVisionSystem
 {
     [Dependency] private IOverlayManager _overlayMan = default!;
 
@@ -23,10 +25,8 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
         SubscribeLocalEvent<NightVisionComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
-    protected override void UpdateInternal(RefreshEquipmentHudEvent<NightVisionComponent> component)
+    protected void UpdateInternal(RefreshEquipmentHudEvent<NightVisionComponent> component)
     {
-        base.UpdateInternal(component);
-
         // Find the component with the lowest noise.
         NightVisionComponent? nvision = null;
         var bestNoise = float.MaxValue;
@@ -56,16 +56,15 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
             _overlayMan.AddOverlay(_overlay);
     }
 
-    protected override void DeactivateInternal()
+    protected void DeactivateInternal()
     {
-        base.DeactivateInternal();
 
         _overlayMan.RemoveOverlay(_overlay);
     }
 
     private void OnHandleState(Entity<NightVisionComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        RefreshOverlay();
+        //RefreshOverlay();
     }
 
     /// <summary>
@@ -78,6 +77,6 @@ public sealed partial class NightVisionOverlaySystem : EquipmentHudSystem<NightV
 
         ent.Comp.Enabled = enabled;
 
-        RefreshOverlay();
+        //RefreshOverlay();
     }
 }

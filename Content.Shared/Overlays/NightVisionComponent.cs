@@ -15,6 +15,12 @@ public sealed partial class NightVisionComponent : Component
     public bool Enabled = true;
 
     /// <summary>
+    /// Whether this entity grants night vision when worn.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Wearable = false;
+
+    /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.
     /// Does not control lighting coloring, just serves as an effect on the screen.
     /// </summary>
