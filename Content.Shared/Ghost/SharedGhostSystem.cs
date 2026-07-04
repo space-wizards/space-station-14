@@ -204,7 +204,7 @@ namespace Content.Shared.Ghost
     /// A client to server request for their ghost to be warped to a random followable entity.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class WarpToRandomRequestEvent : EntityEventArgs;
+    public sealed class WarpToRandomFollowableRequestEvent : EntityEventArgs;
 
     /// <summary>
     /// A client to server request for their ghost to return to body

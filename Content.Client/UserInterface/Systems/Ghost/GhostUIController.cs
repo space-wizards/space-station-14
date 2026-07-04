@@ -105,7 +105,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         UpdateGui();
     }
 
-    private void OnWarpClicked(NetEntity player)
+    private void OnWarpRequested(NetEntity player)
     {
         var msg = new GhostWarpToTargetRequestEvent(player);
         _net.SendSystemNetworkMessage(msg);
@@ -123,9 +123,9 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnWarpToRandomClicked()
+    private void OnWarpToRandomFollowableClicked()
     {
-        var msg = new WarpToRandomRequestEvent();
+        var msg = new WarpToRandomFollowableRequestEvent();
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -137,10 +137,10 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.RequestWarpsPressed += RequestWarps;
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
-        Gui.TargetWindow.WarpClicked += OnWarpClicked;
+        Gui.TargetWindow.WarpRequested += OnWarpRequested;
         Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
         Gui.TargetWindow.OnWarpToRandomFollowedClicked += OnWarpToRandomFollowedClicked;
-        Gui.TargetWindow.OnWarpToRandomClicked += OnWarpToRandomClicked;
+        Gui.TargetWindow.OnWarpToRandomFollowableClicked += OnWarpToRandomFollowableClicked;
 
         UpdateGui();
     }
@@ -153,7 +153,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.RequestWarpsPressed -= RequestWarps;
         Gui.ReturnToBodyPressed -= ReturnToBody;
         Gui.GhostRolesPressed -= GhostRolesPressed;
-        Gui.TargetWindow.WarpClicked -= OnWarpClicked;
+        Gui.TargetWindow.WarpRequested -= OnWarpRequested;
 
         Gui.Hide();
     }

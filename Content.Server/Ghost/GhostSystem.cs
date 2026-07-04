@@ -37,7 +37,6 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Ghost
 {
@@ -93,7 +92,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
             SubscribeNetworkEvent<GhostnadoRequestEvent>(OnGhostnadoRequest);
             SubscribeNetworkEvent<WarpToRandomFollowedRequestEvent>(OnWarpToRandomFollowedRequest);
-            SubscribeNetworkEvent<WarpToRandomRequestEvent>(OnWarpToRandomRequest);
+            SubscribeNetworkEvent<WarpToRandomFollowableRequestEvent>(OnWarpToRandomFollowableRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
@@ -348,14 +347,13 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var allFollowed = _followerSystem.GetAllFollowed();
-            if (!allFollowed.TryFirstOrNull(x => x.Value > 0, out var match))
+            if (_followerSystem.GetRandomGhostFollowed() is not {} target)
                 return;
 
-            _followerSystem.StartFollowingEntity(uid, match.Value.Key);
+            _followerSystem.StartFollowingEntity(uid, target);
         }
 
-        private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
+        private void OnWarpToRandomFollowableRequest(WarpToRandomFollowableRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
             {
@@ -363,13 +361,12 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var allFollowed = _followerSystem.GetAllFollowed();
-            if(allFollowed.Count == 0)
+            if (_followerSystem.GetRandomGhostFollowable() is not {} target)
                 return;
-            var match = _random.Pick(allFollowed);
 
-            _followerSystem.StartFollowingEntity(uid, match.Key);
+            _followerSystem.StartFollowingEntity(uid, target);
         }
+
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {

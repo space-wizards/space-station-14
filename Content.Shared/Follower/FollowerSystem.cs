@@ -20,6 +20,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
@@ -33,6 +34,7 @@ public sealed partial class FollowerSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
     private static readonly ProtoId<TagPrototype> PreventGhostnadoWarpTag = "NotGhostnadoWarpable";
@@ -317,7 +319,8 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets all entities that are being followed by non-admin ghosts along with follow count for each entity.
+    /// Gets all entities that are being followed by with a follower count for each.
+    /// <remarks>Admin ghosts are excluded from the list of entities so that players can't spy on them.</remarks>
     /// </summary>
     public Dictionary<EntityUid, int> GetAllFollowed()
     {
@@ -366,6 +369,34 @@ public sealed partial class FollowerSystem : EntitySystem
         }
 
         return picked;
+    }
+
+    /// <summary>
+    /// Gets a random entity that is being followed by at least one ghost.
+    /// </summary>
+    public EntityUid? GetRandomGhostFollowed()
+    {
+        var followedEnts = GetAllFollowed()
+            .Where(item => item.Value > 0)
+            .ToArray();
+        if (followedEnts.Length == 0)
+            return null;
+
+        var picked = _random.Pick(followedEnts);
+        return picked.Key;
+    }
+
+    /// <summary>
+    /// Gets a random entity that is being followed by at least one ghost.
+    /// </summary>
+    public EntityUid? GetRandomGhostFollowable()
+    {
+        var followableEnts = GetAllFollowed();
+        if (followableEnts.Count == 0)
+            return null;
+
+        var picked = _random.Pick(followableEnts);
+        return picked.Key;
     }
 }
 
