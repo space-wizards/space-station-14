@@ -281,4 +281,5 @@
   components:
   - type: NightVision
     prioritized: false
+    wearable: false
     lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.

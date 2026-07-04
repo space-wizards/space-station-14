@@ -25,7 +25,8 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnCompEquip(Entity<NightVisionComponent> ent, ref GotEquippedEvent args)
     {
-        RefreshOverlay(args.EquipTarget);
+        if (ent.Comp.Wearable)
+            RefreshOverlay(args.EquipTarget);
     }
 
     [SubscribeLocalEvent]
