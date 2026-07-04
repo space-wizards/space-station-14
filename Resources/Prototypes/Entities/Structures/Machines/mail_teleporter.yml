@@ -20,18 +20,26 @@
     snapCardinals: true
     layers:
     - state: icon
+    - state: contents
+      map: [ "enum.DeliverySpawnerVisualLayers.Contents" ]
+      visible: false
     - state: unlit
       shader: unshaded
       visible: false
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.DeliverySpawnerVisuals.Contents:
+        enum.DeliverySpawnerVisualLayers.Contents:
+          True: { visible: true }
+          False: { visible: false }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
@@ -39,6 +47,9 @@
   - type: Machine
     board: MailTeleporterMachineCircuitboard
   - type: PowerSwitch
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mail-teleporter
+    interactFailureString: petting-failure-mail-teleporter
   - type: DeliverySpawner
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic

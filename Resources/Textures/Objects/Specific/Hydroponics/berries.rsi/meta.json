@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation: https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f",
+  "copyright": "Taken from tgstation: https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f, inhands by mubururu_ (github), Growth, harvest, and dead sprites created by Chaoticaa (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -35,7 +35,15 @@
       "name": "stage-5"
     },
     {
-      "name": "stage-6"
+        "name": "stage-6"
+    },
+    {
+      "name": "produce-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "produce-inhand-right",
+      "directions": 4
     }
   ]
 }

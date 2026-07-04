@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Guidebook;
 
-[Prototype("guideEntry")]
+[Prototype]
 public sealed partial class GuideEntryPrototype : GuideEntry, IPrototype
 {
     public string ID => Id;
@@ -26,7 +26,7 @@ public class GuideEntry
     /// <summary>
     ///     The name of this guide. This gets localized.
     /// </summary>
-    [DataField(required: true)] public string Name = default!;
+    [DataField(required: true)] public LocId Name = default!;
 
     /// <summary>
     ///     The "children" of this guide for when guides are shown in a tree / table of contents.

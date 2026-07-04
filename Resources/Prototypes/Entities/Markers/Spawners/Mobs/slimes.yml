@@ -1,0 +1,77 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesBlue
+  name: Slimes Spawner Blue
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesBlue
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesBlueAngry
+  name: Slimes Spawner Blue Angry
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesBlueAngry
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesGreen
+  name: Slimes Spawner Green
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesGreen
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesGreenAngry
+  name: Slimes Spawner Green Angry
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesGreenAngry
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesYellow
+  name: Slimes Spawner Yellow
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesYellow
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobAdultSlimesYellowAngry
+  name: Slimes Spawner Yellow Angry
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobAdultSlimesYellowAngry

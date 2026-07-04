@@ -5,7 +5,7 @@ namespace Content.Shared.Access
     /// <summary>
     ///     Defines a single access level that can be stored on ID cards and checked for.
     /// </summary>
-    [Prototype("accessLevel")]
+    [Prototype]
     public sealed partial class AccessLevelPrototype : IPrototype
     {
         [ViewVariables]

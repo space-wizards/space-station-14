@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -12,11 +13,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CartridgeLoader;
 
-public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
+public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly PdaSystem _pda = default!;
+    [Dependency] private ContainerSystem _containerSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private PdaSystem _pda = default!;
 
     public override void Initialize()
     {

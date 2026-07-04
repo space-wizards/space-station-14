@@ -8,7 +8,7 @@ namespace Content.Shared.Materials
     ///     Materials are read-only storage for the properties of specific materials.
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
-    [Prototype("material")]
+    [Prototype]
     public sealed partial class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
