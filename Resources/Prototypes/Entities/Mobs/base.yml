@@ -280,4 +280,6 @@
   abstract: true
   components:
   - type: NightVision
+    prioritized: false
+    slots: none
     lightingColor: '#FFFFFF15' # Basically makes it impossible for things to be "Pitch black" but can still be dark.

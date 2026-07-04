@@ -1,3 +1,4 @@
+using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Overlays;
@@ -15,10 +16,17 @@ public sealed partial class NightVisionComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    /// Whether this entity grants night vision when worn.
+    /// Whether this night vision is prioritized.
+    /// Causes it to overwrite all other sources of night vision, even if their noise is smaller.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Wearable = false;
+    public bool Prioritized = true;
+
+    /// <summary>
+    /// The slots this entity needs to be equipped in to grant night vision.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SlotFlags Slots = SlotFlags.WITHOUT_POCKET;
 
     /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.
