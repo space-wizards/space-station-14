@@ -22,11 +22,14 @@
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
-  id: GasVentPump
+  id: !type:CreateVariants
+    values: [ GasVentPump, GasVentPumpAlt1, GasVentPumpAlt2 ]
   name: air vent
   description: Has a valve and a pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -43,11 +46,15 @@
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -61,7 +68,8 @@
             Lockout: { state: vent_lockout }
     - type: GasVentPump
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: ventpump
     - type: VentCritterSpawnLocation
     - type: AmbientSound
@@ -80,11 +88,14 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasPassiveVent
+  id: !type:CreateVariants
+    values: [ GasPassiveVent, GasPassiveVentAlt1, GasPassiveVentAlt2 ]
   name: passive vent
   description: It's an open vent.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: SubFloorHide
       visibleLayers:
@@ -93,16 +104,21 @@
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_passive
           map: [ "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveVent
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: passivevent
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: GasVentOpening
@@ -112,11 +128,14 @@
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
-  id: GasVentScrubber
+  id: !type:CreateVariants
+    values: [ GasVentScrubber, GasVentScrubberAlt1, GasVentScrubberAlt2 ]
   name: air scrubber
   description: Has a valve and pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
@@ -133,11 +152,15 @@
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: scrub_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: PipeColorVisuals
     - type: GenericVisualizer
@@ -152,7 +175,8 @@
     - type: AtmosDevice
     - type: GasVentScrubber
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: ventscrubber
     - type: AmbientSound
       enabled: true
@@ -170,18 +194,22 @@
 
 - type: entity
   parent: GasUnaryBase
-  id: GasOutletInjector
+  id: !type:CreateVariants
+    values: [ GasOutletInjector, GasOutletInjectorAlt1, GasOutletInjectorAlt2 ]
   name: air injector
   description: Has a valve and pump attached to it.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/outletinjector.rsi
       layers:
         - state: pipeUnaryConnectors
-          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          sprite: !type:CreateVariants
+            values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: injector
           map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -189,6 +217,9 @@
           shader: unshaded
           map: [ "enum.LightLayers.Unshaded" ]
           color: "#990000"
+    - type: AtmosPipeLayers
+      pipeLayer: !type:CreateVariants
+        values: [ 0, 1, 2 ]
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -200,7 +231,8 @@
     - type: PipeColorVisuals
     - type: GasOutletInjector
     - type: Construction
-      graph: GasUnary
+      graph: !type:CreateVariants
+        values: [ GasUnary, GasUnaryAlt1, GasUnaryAlt2 ]
       node: outletinjector
     - type: SubFloorHide
       visibleLayers:
