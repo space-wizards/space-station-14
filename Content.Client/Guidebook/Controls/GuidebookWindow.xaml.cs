@@ -20,7 +20,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     [Dependency] private DocumentParsingManager _parsingMan = default!;
     [Dependency] private IResourceManager _resourceManager = default!;
 
-    private Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> _entries = new();
+    private Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> _entries = [];
 
     private readonly ISawmill _sawmill;
 
@@ -137,7 +137,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
         var (linkableControls, linkControls) = GetLinkableControlsAndLinks(EntryContainer);
 
-        HashSet<IPrototype> availablePrototypeLinks = new();
+        HashSet<IPrototype> availablePrototypeLinks = [];
         foreach (var linkableControl in linkableControls)
         {
             var prototype = linkableControl.RepresentedPrototype;
@@ -164,8 +164,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         ProtoId<GuideEntryPrototype>? selected = null)
     {
         // check if old and new entries are equal
-        var differentFromLastUpdate = entries.Count != _entries.Count || !entries.All(_entries.Contains);
-        if (!differentFromLastUpdate)
+        var sameAsLastUpdate = entries.Count != _entries.Count || !entries.All(_entries.Contains);
+        if (sameAsLastUpdate)
         {
             _entries = entries;
             RepopulateTree(rootEntries, forceRoot);
@@ -191,20 +191,20 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
             Tree.SetSelectedIndex(item?.Index);
         }
 
-        return !differentFromLastUpdate;
+        return sameAsLastUpdate;
     }
 
     private IEnumerable<GuideEntry> GetSortedEntries(List<ProtoId<GuideEntryPrototype>>? rootEntries)
     {
         if (rootEntries == null)
         {
-            HashSet<ProtoId<GuideEntryPrototype>> entries = new(_entries.Keys);
+            HashSet<ProtoId<GuideEntryPrototype>> entries = [.. _entries.Keys];
             foreach (var entry in _entries.Values)
             {
                 entries.ExceptWith(entry.Children);
             }
 
-            rootEntries = entries.ToList();
+            rootEntries = [.. entries];
         }
 
         // Only roots need to be sorted.
@@ -221,7 +221,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     {
         Tree.Clear();
 
-        HashSet<ProtoId<GuideEntryPrototype>> addedEntries = new();
+        HashSet<ProtoId<GuideEntryPrototype>> addedEntries = [];
 
         var parent = forcedRoot == null ? null : AddEntry(forcedRoot.Value, null, addedEntries);
         foreach (var entry in GetSortedEntries(roots))
@@ -266,8 +266,6 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
     private void HandleFilter()
     {
-        var emptySearch = SearchBar.Text.Trim().Length == 0;
-
         if (Tree.SelectedItem != null && Tree.SelectedItem.Metadata is GuideEntry entry && entry.FilterEnabled)
         {
             var foundElements = EntryContainer.GetSearchableControls();
@@ -281,8 +279,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
     private static (List<IPrototypeRepresentationControl>, List<IPrototypeLinkControl>) GetLinkableControlsAndLinks(Control parent)
     {
-        List<IPrototypeRepresentationControl> linkableList = new();
-        List<IPrototypeLinkControl> linkList = new();
+        List<IPrototypeRepresentationControl> linkableList = [];
+        List<IPrototypeLinkControl> linkList = [];
 
         foreach (var child in parent.Children)
         {
