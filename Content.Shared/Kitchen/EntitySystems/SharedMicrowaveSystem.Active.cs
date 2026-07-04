@@ -21,30 +21,11 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
-    ///     Set the end time of this microwave's cooking operation.
-    /// </summary>
-    private void InitializeTimer(Entity<ActiveMicrowaveComponent> ent)
-    {
-        if (!TryComp<MicrowaveComponent>(ent.Owner, out var microwave))
-            return;
-
-        var curTime = _timing.CurTime;
-        var cookTime = microwave.CurrentCookTimerTime * microwave.CookTimeMultiplier;
-        ent.Comp.TotalTime = microwave.CurrentCookTimerTime;
-        ent.Comp.CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime);
-        DirtyFields(ent.Owner, ent.Comp, null,
-            nameof(ActiveMicrowaveComponent.TotalTime),
-            nameof(ActiveMicrowaveComponent.CookTimeEnd));
-    }
-
-    /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
-        InitializeTimer(ent);
-
         if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
             return;
 
@@ -54,7 +35,7 @@ public abstract partial class SharedMicrowaveSystem
         if (microwaveComponent.PlayingStream == null)
         {
             var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
-            var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, null, audioParams);
+            var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
             microwaveComponent.PlayingStream = pvs?.Entity;
         }
     }

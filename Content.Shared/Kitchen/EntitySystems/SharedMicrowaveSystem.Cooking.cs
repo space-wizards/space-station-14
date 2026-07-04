@@ -82,23 +82,23 @@ public abstract partial class SharedMicrowaveSystem
         var uid = microwave.Owner;
         var component = microwave.Comp;
         var curTime = _timing.CurTime;
+        var cookTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
 
         AudioSys.PlayPredicted(component.StartCookingSound, uid, user);
 
-        var activeComp = AddComp<ActiveMicrowaveComponent>(uid);
-        activeComp.User = user;
-        activeComp.PortionedRecipe = recipe;
-        activeComp.Malfunctioning = malfunctioning;
-        DirtyFields(uid, activeComp, null,
-            nameof(ActiveMicrowaveComponent.PortionedRecipe),
-            nameof(ActiveMicrowaveComponent.Malfunctioning));
-
-        if (malfunctioning)
+        var activeComp = new ActiveMicrowaveComponent
         {
-            activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
-            DirtyField(uid, activeComp, nameof(ActiveMicrowaveComponent.NextMalfunction));
-        }
+            User = user,
+            PortionedRecipe = recipe,
+            TotalTime = component.CurrentCookTimerTime,
+            CookTimeEnd = curTime + TimeSpan.FromSeconds(cookTime),
+            Malfunctioning = malfunctioning,
+            NextMalfunction = malfunctioning
+                ? curTime + component.MalfunctionInterval
+                : TimeSpan.Zero,
+        };
 
+        AddComp(uid, activeComp);
         UpdateUserInterfaceState(microwave.AsNullable());
     }
 

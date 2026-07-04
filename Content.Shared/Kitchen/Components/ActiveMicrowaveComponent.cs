@@ -29,7 +29,7 @@ public sealed partial class ActiveMicrowaveComponent : Component
     /// <summary>
     ///     The user who activated this microwave.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? User = null;
 
     /// <summary>
