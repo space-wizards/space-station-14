@@ -23,6 +23,7 @@ public sealed partial class TreeItem : PanelContainer
     public event Action<TreeItem>? OnDeselected;
 
     public bool Expanded { get; private set; } = false;
+    public TreeItem? ParentItem;
 
     public TreeItem()
     {
