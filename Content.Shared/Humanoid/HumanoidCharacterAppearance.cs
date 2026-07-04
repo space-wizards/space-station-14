@@ -85,6 +85,39 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     };
 
     /// <summary>
+    /// Picks a random eye color.
+    /// </summary>
+    public static Color RandomEyes()
+    {
+        var random = IoCManager.Resolve<IRobustRandom>();
+
+        var eyes = random.Pick(_realisticEyeColors);
+        return eyes;
+    }
+
+    /// <summary>
+    /// Picks a random skin color using species.
+    /// </summary>
+    public static Color RandomSkin(ProtoId<SpeciesPrototype> species)
+    {
+        var random = IoCManager.Resolve<IRobustRandom>();
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+
+        var speciesProto = protoMan.Index(species);
+        var skinType = speciesProto.SkinColoration;
+        var strategy = protoMan.Index(skinType).Strategy;
+
+        var skinColor = strategy.InputType switch
+        {
+            SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
+            SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
+            _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
+        };
+
+        return skinColor;
+    }
+
+    /// <summary>
     ///     Generates a randomized character appearance.
     /// </summary>
     /// <remarks>

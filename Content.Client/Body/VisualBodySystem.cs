@@ -212,8 +212,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     proto.Shaders.TryGetValue(rsi.RsiState, out var shader))
                 {
                     // TODO: fix this when LayerSetShader is moved out of component
-                    EnsureComp<SpriteComponent>(target, out var spriteComp);
-                    spriteComp.LayerSetShader(index + i + 1, shader);
+                    target.Comp.LayerSetShader(index + i + 1, shader);
                 }
             }
 
