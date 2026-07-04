@@ -144,15 +144,6 @@ public sealed partial class ApcSystem : EntitySystem
                 args.Cancelled = true;
     }
 
-    private void OnApcToggleMainBreakerAttempt(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
-    {
-        var query = AllEntityQuery<PowerGridCheckRuleComponent>();
-
-        while (query.MoveNext(out var ruleUid, out var ruleComp))
-            if (_powerGridCheckRule.ContainsUnpoweredApc((ruleUid, ruleComp), ent))
-                args.Cancelled = true;
-    }
-
     /// <summary>Toggles the enabled state of the APC's main breaker.</summary>
     public void ApcToggleBreaker(
         EntityUid uid,
