@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Numerics;
+﻿using System.Numerics;
+using Content.Shared.APC;
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Shared.Humanoid;
 
@@ -57,7 +58,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     public static HumanoidCharacterAppearance DefaultWithSpecies(ProtoId<SpeciesPrototype> species, Sex sex)
     {
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var speciesPrototype = protoMan.Index<SpeciesPrototype>(species);
+        var speciesPrototype = protoMan.Index(species);
         var skinColoration = protoMan.Index(speciesPrototype.SkinColoration).Strategy;
         var skinColor = skinColoration.InputType switch
         {
@@ -83,44 +84,62 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         Color.Black
     };
 
-    public static HumanoidCharacterAppearance Random(string species, Sex sex)
+    /// <summary>
+    ///     Generates a randomized character appearance.
+    /// </summary>
+    /// <remarks>
+    ///     When <see cref="RandomizeCfg"/> and an existing <see cref="HumanoidCharacterAppearance"> are passed in,
+    ///     values will be selectively randomized with the option to maintain existing values.
+    /// </remarks>
+    /// <param name="charEditorRandomizeConfig">Which values to randomize.</param>
+    /// <param name="baseAppearance">Appearance to base the new appearance on. Values that are not randomized will be taken from this appearance.</param>
+    /// <param name="species">Species prototype ID.</param>
+    /// <param name="sex">Sex.</param>
+    public static HumanoidCharacterAppearance Random(SpeciesPrototype species, Sex sex, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
         var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
-        var strategy = protoMan.Index(skinType).Strategy;
 
         var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
         var colorPalette = GetPaletteFromBase(baseColor, random.Next(3));
 
-        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType), random);
+        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType), random, charEditorRandomizeConfig, baseAppearance);
 
         var markingData = markingManager.GetMarkingData(species);
         Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings = [];
 
-        foreach (var (organ, organData) in markingData)
+        if ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
         {
-            // if this is an organ with no markings (heart, stomach, etc)
-            if (!protoMan.TryIndex(organData.Group, out var groupProto))
-                continue;
-
-            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
-            foreach (var layer in organData.Layers)
+            foreach (var (organ, organData) in markingData)
             {
-                var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
-
-                if (allMarkings.Count == 0)
+                // if this is an organ with no markings (heart, stomach, etc)
+                if (!protoMan.TryIndex(organData.Group, out var groupProto))
                     continue;
 
-                var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
-                if (layerLimits is null || layerLimits.Limit <= 0)
-                    continue;
+                Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
+                foreach (var layer in organData.Layers)
+                {
+                    var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
 
-                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict, random));
+                    if (allMarkings.Count == 0)
+                        continue;
+
+                    var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
+                    if (layerLimits is null || layerLimits.Limit <= 0)
+                        continue;
+
+                    layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict, random));
+                }
+                newMarkings.Add(organ, layerMarkings);
             }
-            newMarkings.Add(organ, layerMarkings);
+        }
+        else // just use old markings.
+        // TODO if someone really cares they can probably regenerate the old markings with new colors but im too tired to figure that out
+        {
+            newMarkings = baseAppearance.Markings;
         }
 
         HumanoidCharacterAppearance appearance = new(

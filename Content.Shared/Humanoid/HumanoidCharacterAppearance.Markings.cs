@@ -4,6 +4,7 @@ using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Shared.Humanoid;
 
@@ -35,22 +36,25 @@ public sealed partial class HumanoidCharacterAppearance
     }
 
     /// <summary>
-    ///     Clamps a 3-toned color palette (skin, hair, eyes) to the desired ISkinColorationStrategy.
+    ///     Clamps a 3-toned color palette (in the order of skin, hair, eyes) to the desired ISkinColorationStrategy.
     /// </summary>
+    /// <remarks>
+    ///     Optionally accepts <see cref="RandomizeCfg"/> and a base <see cref="HumanoidCharacterAppearance"/>
+    ///     to retain values of an existing appearance.
+    /// </remarks>
     /// <returns>
-    ///     A 3-toned color palette where:
-    ///     0 = Skin colour,
-    ///     1 = Hair colour,
-    ///     2 = Eye colour.
+    ///     A 3-toned color palette with keys skinColor, hairColor, and eyeColor.
     /// </returns>
-    private static Dictionary<string, Color> ClampPaletteToStrategy(List<Color> colorPalette, SkinColorationPrototype skinType, IRobustRandom random)
+    private static Dictionary<string, Color> ClampPaletteToStrategy(List<Color> colorPalette, SkinColorationPrototype skinType, IRobustRandom random, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
     {
         if (colorPalette.Count != 3)
             throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {colorPalette.Count} colours");
 
-        var newSkinColor = colorPalette[0];
+        var newSkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
+            ? colorPalette[0] : baseAppearance.SkinColor;
         var newHairColor = colorPalette[1];
-        var newEyeColor = colorPalette[2];
+        var newEyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
+            ? colorPalette[2] : baseAppearance.EyeColor;
 
         newSkinColor = skinType.Strategy.ClosestSkinColor(newSkinColor);
 
@@ -119,7 +123,6 @@ public sealed partial class HumanoidCharacterAppearance
     /// <returns>A list of markings for the desired layer.</returns>
     private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Dictionary<string, Color> palette, IRobustRandom random)
     {
-
         if (layerLimits is null)
             return [];
 
