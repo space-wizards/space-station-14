@@ -14,7 +14,6 @@ using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Events;
 using Content.Shared.Power.Monitoring;
-using Content.Shared.Power.NodeGroups;
 using Content.Shared.Power.Systems;
 
 namespace Content.Server.Power.EntitySystems;
@@ -525,7 +524,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     {
         sources = new List<PowerMonitoringConsoleEntry>();
 
-        if (node.NodeGroup is not PowerNet netQ)
+        if (!TryComp(node.NodeGroup, out PowerNetComponent? netQ))
             return;
 
         var indexedSources = new Dictionary<EntityUid, PowerMonitoringConsoleEntry>();
@@ -643,7 +642,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
     {
         loads = new List<PowerMonitoringConsoleEntry>();
 
-        if (node.NodeGroup is not PowerNet netQ)
+        if (!TryComp(node.NodeGroup, out PowerNetComponent? netQ))
             return;
 
         var indexedLoads = new Dictionary<EntityUid, PowerMonitoringConsoleEntry>();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Content.Shared.Collections;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Collections;

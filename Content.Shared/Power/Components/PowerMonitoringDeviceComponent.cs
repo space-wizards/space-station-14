@@ -1,5 +1,4 @@
-using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.Power.Monitoring;
 using Robust.Shared.GameStates;
 
@@ -36,7 +35,7 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     public string CollectionName = string.Empty;
 
     [ViewVariables]
-    public BaseNodeGroup? NodeGroup = null;
+    public Entity<NodeGroupComponent>? NodeGroup = null;
 
     /// <summary>
     ///     Indicates whether the entity is/should be part of a collection

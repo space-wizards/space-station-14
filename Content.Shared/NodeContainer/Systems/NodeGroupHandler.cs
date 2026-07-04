@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.NodeContainer.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NodeContainer.Systems;
 
@@ -113,11 +114,11 @@ public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHand
 /// <typeparam name="T">Type of the handled node group.</typeparam>
 public abstract partial class SingleNodeGroupHandler<T> : NodeGroupHandler<T> where T : class, IComponent
 {
-    protected abstract NodeGroupID NodeGroupID { get; }
+    protected abstract ProtoId<NodeGroupPrototype> NodeGroupID { get; }
 
     public override void RegisterHandler()
     {
-        NodeGroupSys.NodeGroupTypes.Add(NodeGroupID, NodeGroupCompType);
+        NodeGroupSys.NodeGroupTypes[ProtoMan.Index(NodeGroupID).GroupId] = NodeGroupCompType;
         NodeGroupSys.NodeGroupHandlers.Add(NodeGroupCompType, this);
     }
 }

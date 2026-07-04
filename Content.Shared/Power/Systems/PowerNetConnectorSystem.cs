@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.Power.Components;
 
@@ -54,11 +53,11 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         {
             foreach (var node in container.Nodes.Values)
             {
-                if ((ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name)
-                    && node.NodeGroupID == (NodeGroupID) ent.Comp.Voltage!)
+                if (ent.Comp.NodeId == null || ent.Comp.NodeId == node.Name)
                     continue;
 
-                if (!TryComp(node.NodeGroup, out PowerNetComponent? net))
+                if (!TryComp(node.NodeGroup, out PowerNetComponent? net)
+                    || net.Voltage != ent.Comp.Voltage)
                     continue;
 
                 foundNet = (node.NodeGroup.Value.Owner, net);
@@ -78,8 +77,8 @@ public sealed partial class PowerNetConnectorSystem : EntitySystem
         foreach (var net in container.Nodes.Values)
         {
             if (!ent.Comp.Voltages.TryGetValue(net.Name, out var voltage)
-                || net.NodeGroupID != (NodeGroupID) voltage
-                || !TryComp(net.NodeGroup, out PowerNetComponent? netGroup))
+                || !TryComp(net.NodeGroup, out PowerNetComponent? netGroup)
+                || netGroup.Voltage != voltage)
                 continue;
 
             ent.Comp.Nets ??= new();

@@ -1,0 +1,15 @@
+- type: NodeGroup
+  id: AMEngine
+  color: Purple
+
+- type: NodeGroup
+  id: Teg
+  color: Red
+
+- type: NodeGroup
+  id: ExCable
+  color: Pink
+
+- type: NodeGroup
+  id: WireNet
+  color: DarkMagenta

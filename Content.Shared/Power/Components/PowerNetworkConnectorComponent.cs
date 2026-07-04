@@ -1,6 +1,12 @@
-﻿namespace Content.Shared.Power.Components;
+﻿using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Power.Components;
+
+/// <summary>
+/// Automatically connects the device's nodes to a power network.
+/// Can handle either a single node, or multiple nodes at once.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
 public sealed partial class PowerNetworkConnectorComponent : Component
 {
     /// <summary>

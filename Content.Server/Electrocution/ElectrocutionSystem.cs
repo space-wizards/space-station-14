@@ -16,8 +16,8 @@ using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.NodeGroups;
 using Content.Shared.Power.Systems;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -254,13 +254,13 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         var node = PoweredNode(uid, electrified, nodeContainer);
 
-        if (!HasComp<PowerNetComponent>(node?.NodeGroup))
+        if (!TryComp<PowerNetComponent>(node?.NodeGroup, out var net))
             return false;
 
-        var (damageScalar, timeScalar) = node.NodeGroupID switch
+        var (damageScalar, timeScalar) = net.Voltage switch
         {
-            NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
+            Voltage.High => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
+            Voltage.Medium => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
             _ => (1f, 1f)
         };
 
@@ -294,7 +294,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
             if (id != null
                 && _nodeContainer.TryGetNode<Node>((uid, nodeContainer), id, out var tryNode)
                 && TryComp(tryNode.NodeGroup, out PowerNetComponent? powerNet)
-                && powerNet.LastCombinedMaxSupply > 0)
+                && powerNet.Network.LastCombinedMaxSupply > 0)
             {
                 return tryNode;
             }
@@ -343,7 +343,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 
         var nodeContainer = Comp<NodeContainerComponent>(electrocutionEntity);
 
-        if (!_nodeContainer.TryGetNode<ElectrocutionNode>(nodeContainer, "electrocution", out var electrocutionNode))
+        if (!_nodeContainer.TryGetNode<ElectrocutionNode>((electrocutionEntity, nodeContainer), "electrocution", out var electrocutionNode))
             return false;
 
         var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);

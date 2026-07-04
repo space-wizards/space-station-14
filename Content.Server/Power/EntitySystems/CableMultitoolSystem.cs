@@ -73,7 +73,7 @@ public sealed partial class CableMultitoolSystem : EntitySystem
             if (!TryComp(node.Value.NodeGroup, out PowerNetComponent? p))
                 continue;
 
-            var ps = _pnSystem.GetNetworkStatistics(p);
+            var ps = _pnSystem.GetNetworkStatistics(p.Network);
 
             float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
             float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);

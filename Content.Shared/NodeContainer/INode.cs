@@ -1,15 +1,21 @@
 ﻿using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NodeContainer;
 
 public interface INode
 {
     /// <summary>
+    /// Prototype ID of the node group.
+    /// </summary>
+    ProtoId<NodeGroupPrototype> NodeGroupProto { get; set; }
+
+    /// <summary>
     ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroupHandler"/>
     ///     implementation is used as a group.
     /// </summary>
-    NodeGroupID NodeGroupID { get; set; }
+    ushort NodeGroupID { get; set; }
 
     /// <summary>
     ///     The node group this node is a part of.

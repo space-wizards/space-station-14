@@ -1,7 +1,12 @@
-﻿namespace Content.Shared.Power.Pow3r.Nodes;
+﻿using Content.Shared.Collections;
+
+namespace Content.Shared.Power.Pow3r.Nodes;
 
 public struct PowerBattery : IPowerBattery
 {
+    public NodeId Id { get; set; }
+    public NodeId LinkedNetworkCharging { get; set; }
+    public NodeId LinkedNetworkDischarging { get; set; }
     public bool Enabled { get; set; }
     public bool Paused { get; set; }
     public bool CanDischarge { get; set; }

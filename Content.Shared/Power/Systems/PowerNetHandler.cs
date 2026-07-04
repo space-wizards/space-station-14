@@ -3,6 +3,7 @@ using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Power.Systems;
@@ -20,18 +21,36 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
     [Dependency] private EntityQuery<PowerReceiverComponent> _receiverQuery = default!;
     [Dependency] private EntityQuery<PowerProviderComponent> _providerQuery = default!;
 
+    private static readonly ProtoId<NodeGroupPrototype> HighPowerId = "HVPower";
+    private static readonly ProtoId<NodeGroupPrototype> MediumPowerId = "MVPower";
+    private static readonly ProtoId<NodeGroupPrototype> ApcPowerId = "Apc";
+
+    public Dictionary<ushort, Voltage> Voltages { get; } = new();
+
     public override void RegisterHandler()
     {
-        NodeGroupSys.NodeGroupTypes.Add(NodeGroupID.HVPower, NodeGroupCompType);
-        NodeGroupSys.NodeGroupTypes.Add(NodeGroupID.MVPower, NodeGroupCompType);
-        NodeGroupSys.NodeGroupTypes.Add(NodeGroupID.Apc, NodeGroupCompType);
+        var highId = ProtoMan.Index(HighPowerId).GroupId;
+        var midId =  ProtoMan.Index(MediumPowerId).GroupId;
+        var apcId = ProtoMan.Index(ApcPowerId).GroupId;
+
+        NodeGroupSys.NodeGroupTypes[highId] = NodeGroupCompType;
+        NodeGroupSys.NodeGroupTypes[midId] = NodeGroupCompType;
+        NodeGroupSys.NodeGroupTypes[apcId] = NodeGroupCompType;
+
         NodeGroupSys.NodeGroupHandlers.Add(NodeGroupCompType, this);
+
+        // TODO POWER un-hardcode this somehow
+        // Maybe by turning voltage into a prototype, but I don't feel like dealing with this after refactoring damn 30k lines of code
+        Voltages.Add(highId, Voltage.High);
+        Voltages.Add(midId, Voltage.Medium);
+        Voltages.Add(apcId, Voltage.Apc);
     }
 
     protected override void InitializeGroup(Entity<NodeGroupComponent, PowerNetComponent> group, Node sourceNode)
     {
         base.InitializeGroup(group, sourceNode);
         _powerNetSystem.InitPowerNet((group.Owner, group.Comp2));
+        group.Comp2.Voltage = Voltages[sourceNode.NodeGroupID];
     }
 
     protected override void LoadNodes(Entity<NodeGroupComponent, PowerNetComponent> group, List<Node> groupNodes)
@@ -44,7 +63,7 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
 
             if (comp.Voltage != null
                 && (comp.NodeId == null || comp.NodeId == node.Name)
-                && (NodeGroupID) comp.Voltage == node.NodeGroupID)
+                && comp.Voltage == Voltages[node.NodeGroupID])
             {
                 comp.Net = (group.Owner, group.Comp2);
             }
@@ -52,7 +71,7 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             {
                 foreach (var (nodeId, voltage) in comp.Voltages)
                 {
-                    if (nodeId == node.Name && (NodeGroupID) voltage == node.NodeGroupID)
+                    if (nodeId == node.Name && voltage == Voltages[node.NodeGroupID])
                     {
                         comp.Net = (group.Owner, group.Comp2);
                     }
@@ -73,21 +92,22 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             || !_batteryQuery.Resolve(discharger.Owner, ref discharger.Comp2, false))
             return;
 
-        DebugTools.Assert(discharger.Comp2.LinkedNetworkDischarging == default);
-        discharger.Comp2.LinkedNetworkDischarging = default;
-        group.Comp.Dischargers.Add(discharger!);
+        DebugTools.Assert(discharger.Comp2.Battery.LinkedNetworkDischarging == default);
+        discharger.Comp2.Battery.LinkedNetworkDischarging = default;
+        group.Comp.Dischargers.Add(discharger);
         QueueNetworkReconnect(group);
     }
 
     public void RemoveDischarger(Entity<PowerNetComponent> group, Entity<BatteryDischargerComponent?, PowerNetworkBatteryComponent?> discharger)
     {
         // Can be missing if the entity is being deleted, not a big deal.
-        if (TryComp(discharger.Owner, out PowerNetworkBatteryComponent? battery))
+        if (Resolve(discharger.Owner, ref discharger.Comp2, false))
         {
+            var battery = discharger.Comp2;
             // Linked network can be default if it was re-connected twice in one tick.
-            DebugTools.Assert(battery.LinkedNetworkDischarging == default ||
-                              battery.LinkedNetworkDischarging == group.Id);
-            battery.LinkedNetworkDischarging = default;
+            DebugTools.Assert(battery.Battery.LinkedNetworkDischarging == default ||
+                              battery.Battery.LinkedNetworkDischarging == group.Comp.Network.Id);
+            battery.Battery.LinkedNetworkDischarging = default;
         }
 
         group.Comp.Dischargers.Remove(discharger);
@@ -100,8 +120,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             || !_batteryQuery.Resolve(charger.Owner, ref charger.Comp2, false))
             return;
 
-        DebugTools.Assert(charger.Comp2.LinkedNetworkCharging == default);
-        charger.Comp2.LinkedNetworkCharging = default;
+        DebugTools.Assert(charger.Comp2.Battery.LinkedNetworkCharging == default);
+        charger.Comp2.Battery.LinkedNetworkCharging = default;
         group.Comp.Chargers.Add(charger);
         QueueNetworkReconnect(group);
     }
@@ -112,9 +132,9 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         if (TryComp(charger.Owner, out PowerNetworkBatteryComponent? battery))
         {
             // Linked network can be default if it was re-connected twice in one tick.
-            DebugTools.Assert(battery.LinkedNetworkCharging == default ||
-                              battery.LinkedNetworkCharging == group.Id);
-            battery.LinkedNetworkCharging = default;
+            DebugTools.Assert(battery.Battery.LinkedNetworkCharging == default ||
+                              battery.Battery.LinkedNetworkCharging == group.Comp.Network.Id);
+            battery.Battery.LinkedNetworkCharging = default;
         }
 
         group.Comp.Chargers.Remove(charger);
@@ -126,8 +146,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         if (!_consumerQuery.Resolve(ref consumer, false) || consumer.Comp == null)
             return;
 
-        DebugTools.Assert(consumer.Comp.LinkedNetwork == default);
-        consumer.Comp.LinkedNetwork = default;
+        DebugTools.Assert(consumer.Comp.Load.LinkedNetwork == default);
+        consumer.Comp.Load.LinkedNetwork = default;
         group.Comp.Consumers.Add(consumer!);
         QueueNetworkReconnect(group);
     }
@@ -138,8 +158,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             return;
 
         // Linked network can be default if it was re-connected twice in one tick.
-        DebugTools.Assert(consumer.Comp.LinkedNetwork == default || consumer.Comp.LinkedNetwork == group.Id);
-        consumer.Comp.LinkedNetwork = default;
+        DebugTools.Assert(consumer.Comp.Load.LinkedNetwork == default || consumer.Comp.Load.LinkedNetwork == group.Comp.Network.Id);
+        consumer.Comp.Load.LinkedNetwork = default;
         group.Comp.Consumers.Remove(consumer!);
         QueueNetworkReconnect(group);
     }
@@ -149,8 +169,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         if (!_supplierQuery.Resolve(ref supplier, false) || supplier.Comp == null)
             return;
 
-        DebugTools.Assert(supplier.Comp.LinkedNetwork == default);
-        supplier.Comp.LinkedNetwork = default;
+        DebugTools.Assert(supplier.Comp.Supply.LinkedNetwork == default);
+        supplier.Comp.Supply.LinkedNetwork = default;
         group.Comp.Suppliers.Add(supplier);
         QueueNetworkReconnect(group);
     }
@@ -161,8 +181,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             return;
 
         // Linked network can be default if it was re-connected twice in one tick.
-        DebugTools.Assert(supplier.Comp.LinkedNetwork == default || supplier.Comp.LinkedNetwork == group.Id);
-        supplier.Comp.LinkedNetwork = default;
+        DebugTools.Assert(supplier.Comp.Supply.LinkedNetwork == default || supplier.Comp.Supply.LinkedNetwork == group.Comp.Network.Id);
+        supplier.Comp.Supply.LinkedNetwork = default;
         group.Comp.Suppliers.Remove(supplier);
         QueueNetworkReconnect(group);
     }
@@ -181,7 +201,7 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             return;
 
         provider.Comp.LinkedReceivers.Add(receiver);
-        receiver.Comp.LinkedNetwork = default;
+        receiver.Comp.Load.LinkedNetwork = default;
 
         QueueNetworkReconnect(group);
     }
@@ -195,7 +215,7 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
             return;
 
         provider.Comp.LinkedReceivers.Remove(receiver);
-        receiver.Comp.LinkedNetwork = default;
+        receiver.Comp.Load.LinkedNetwork = default;
 
         QueueNetworkReconnect(group);
     }

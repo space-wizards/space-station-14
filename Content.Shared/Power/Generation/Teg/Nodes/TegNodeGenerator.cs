@@ -5,6 +5,6 @@ namespace Content.Shared.Power.Generation.Teg.Nodes;
 /// <summary>
 /// Node used by the central TEG generator component.
 /// </summary>
-/// <seealso cref="TegNodeGroup"/>
+/// <seealso cref="TegNodeGroupComponent"/>
 /// <seealso cref="TegGeneratorComponent"/>
 public sealed partial class TegNodeGenerator : Node;

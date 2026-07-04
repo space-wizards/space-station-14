@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.Generator;
 using Content.Shared.Power.Nodes;
 using Content.Shared.Timing;
@@ -95,11 +96,11 @@ public sealed partial class PowerSensorSystem : EntitySystem
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
-        if (deviceNode.NodeGroup == null)
+        if (deviceNode.NodeGroup == null
+            || !TryComp(deviceNode.NodeGroup, out PowerNetComponent? net))
             return;
 
-        var group = (PowerNet) deviceNode.NodeGroup;
-        var stats = _powerNet.GetNetworkStatistics(group);
+        var stats = _powerNet.GetNetworkStatistics(net.Network);
         var charge = comp.Output ? stats.OutStorageCurrent : stats.InStorageCurrent;
         var chargingState = charge > comp.LastCharge;
         var dischargingState = charge < comp.LastCharge;

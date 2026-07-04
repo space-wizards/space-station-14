@@ -14,11 +14,12 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private IComponentFactory _compFactory = default!;
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
+    [Dependency] private INodeGroupManager _nodeGroupManager = default!;
 
     /// <summary>
-    /// A dictionary that associates each <see cref="NodeGroupID"/> with a node group ID specific component type.
+    /// A dictionary that associates each <see cref="NodeGroupPrototype"/> numeric ID with a node group specific component type.
     /// </summary>
-    public Dictionary<NodeGroupID, Type> NodeGroupTypes = new();
+    public List<Type> NodeGroupTypes = new();
 
     /// <summary>
     /// A dictionary <see cref="INodeGroupHandler"/>s that handle <see cref="NodeGroupComponent"/>s with a specific Node group component Type.
@@ -30,16 +31,16 @@ public sealed partial class NodeGroupSystem : EntitySystem
     /// </summary>
     public Dictionary<Type, INodeHandler> NodeHandlers = new();
 
-    // TODO figure what the hell is going on here
+    // TODO remove this
     private readonly List<int> _visDeletes = new();
     private readonly List<Entity<NodeGroupComponent>> _visSends = new();
-
     private readonly HashSet<ICommonSession> _visPlayers = new();
+
+    // TODO move to a singleton
     private readonly HashSet<Entity<NodeGroupComponent>> _toRemake = new();
     private readonly HashSet<Entity<NodeGroupComponent>> _nodeGroups = new();
     private readonly HashSet<Node> _toRemove = new();
     private readonly List<Node> _toReflood = new();
-
 
     private const float VisDataUpdateInterval = 1;
     private float _accumulatedFrameTime;
@@ -384,6 +385,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         }
     }
 
+    // TODO remove this
     private void VisDoUpdate(float frametime)
     {
         if (_visPlayers.Count == 0)
@@ -442,7 +444,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         {
             NetId = group.Comp.NetId,
             GroupId = group.Comp.GroupId.ToString(),
-            Color = CalcNodeGroupColor(group.Comp.GroupId),
+            Color = _nodeGroupManager[group.Comp.GroupId].Color,
             Nodes = group.Comp.Nodes.Select(n => new NodeVis.NodeDatum
             {
                 Name = n.Name,
@@ -453,22 +455,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
             })
                 .ToArray(),
             DebugData = handler.GetDebugData(group),
-        };
-    }
-
-    private static Color CalcNodeGroupColor(NodeGroupID groupId)
-    {
-        return groupId switch
-        {
-            NodeGroupID.HVPower => Color.Orange,
-            NodeGroupID.MVPower => Color.Yellow,
-            NodeGroupID.Apc => Color.LimeGreen,
-            NodeGroupID.AMEngine => Color.Purple,
-            NodeGroupID.Pipe => Color.Blue,
-            NodeGroupID.WireNet => Color.DarkMagenta,
-            NodeGroupID.Teg => Color.Red,
-            NodeGroupID.ExCable => Color.Pink,
-            _ => Color.White
         };
     }
 }

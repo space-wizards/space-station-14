@@ -7,7 +7,6 @@ using Content.Shared.Emp;
 using Content.Shared.Popups;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.Events;
-using Content.Shared.Power.Pow3r.Nodes;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -216,7 +215,7 @@ public sealed partial class ApcSystem : EntitySystem
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
 
-    private ApcChargeState CalcChargeState(EntityUid uid, IPowerBattery battery)
+    private ApcChargeState CalcChargeState(EntityUid uid, PowerNetworkBatteryComponent battery)
     {
         if (_emag.CheckFlag(uid, EmagType.Interaction))
             return ApcChargeState.Emag;
@@ -230,7 +229,7 @@ public sealed partial class ApcSystem : EntitySystem
         return delta < 0 ? ApcChargeState.Charging : ApcChargeState.Lack;
     }
 
-    private ApcExternalPowerState CalcExtPowerState(EntityUid uid, IPowerBattery battery)
+    private ApcExternalPowerState CalcExtPowerState(EntityUid uid, PowerNetworkBatteryComponent battery)
     {
         if (battery.CurrentReceiving == 0 && !MathHelper.CloseTo(battery.CurrentStorage / battery.Capacity, 1))
         {

@@ -1,4 +1,5 @@
 using Content.Shared.NodeContainer.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NodeContainer;
 
@@ -9,13 +10,16 @@ namespace Content.Shared.NodeContainer;
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class Node : INode
 {
-    [DataField]
-    public NodeGroupID NodeGroupID { get; set; } = NodeGroupID.Default;
+    [DataField("nodeGroupID")]
+    public ProtoId<NodeGroupPrototype> NodeGroupProto { get; set; }
+
+    [ViewVariables]
+    public ushort NodeGroupID { get; set; }
 
     [ViewVariables]
     public Entity<NodeGroupComponent>? NodeGroup { get; set; }
 
-    [ViewVariables]
+    [DataField]
     public EntityUid Owner { get; set; }
 
     /// <summary>

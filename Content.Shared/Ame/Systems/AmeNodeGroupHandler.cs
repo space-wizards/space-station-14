@@ -6,6 +6,7 @@ using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Ame.Systems;
@@ -22,7 +23,7 @@ public sealed partial class AmeNodeGroupHandler : SingleNodeGroupHandler<AmeNode
     [Dependency] private EntityQuery<AmeControllerComponent> _controllerQuery = default!;
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
 
-    protected override NodeGroupID NodeGroupID => NodeGroupID.AMEngine;
+    protected override ProtoId<NodeGroupPrototype> NodeGroupID => "AMEngine";
 
     protected override void LoadNodes(Entity<NodeGroupComponent, AmeNodeGroupComponent> group, List<Node> groupNodes)
     {

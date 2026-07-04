@@ -1,7 +1,13 @@
-﻿namespace Content.Shared.Power.Pow3r.Nodes;
+﻿using Content.Shared.Collections;
+
+namespace Content.Shared.Power.Pow3r.Nodes;
 
 public interface IPowerBattery : IPowerNode
 {
+    NodeId LinkedNetworkCharging { get; set; }
+
+    NodeId LinkedNetworkDischarging { get; set; }
+
     bool CanDischarge { get; set; }
 
     bool CanCharge { get; set; }

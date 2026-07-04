@@ -2,8 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Collections;
-using Content.Server.Power.Pow3r.Nodes;
+using Content.Shared.Collections;
+using Content.Shared.Power.Pow3r;
 using JetBrains.Annotations;
 using Robust.Shared.Threading;
 
@@ -23,11 +23,11 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         };
     }
 
-    private sealed class HeightComparer : Comparer<SolverPowerNetwork>
+    private sealed class HeightComparer : Comparer<PowerNetwork>
     {
         public static HeightComparer Instance { get; } = new();
 
-        public override int Compare(SolverPowerNetwork x, SolverPowerNetwork y)
+        public override int Compare(PowerNetwork x, PowerNetwork y)
         {
             if (x.Height == y.Height) return 0;
             if (x.Height > y.Height) return 1;
@@ -94,7 +94,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private void UpdateNetwork(SolverPowerNetwork network, PowerState state, float frameTime)
+    private void UpdateNetwork(PowerNetwork network, PowerState state, float frameTime)
     {
         // TODO Look at SIMD.
         // a lot of this is performing very basic math on arrays of data objects like batteries
@@ -319,9 +319,9 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private List<List<SolverPowerNetwork>> GroupByNetworkDepth(PowerState state)
+    private List<List<PowerNetwork>> GroupByNetworkDepth(PowerState state)
     {
-        List<List<SolverPowerNetwork>> groupedNetworks = new();
+        List<List<PowerNetwork>> groupedNetworks = new();
         foreach (ref var network in state.Networks.Values)
         {
             network.Height = -1;
@@ -349,9 +349,9 @@ public sealed class BatteryRampPegSolver : IPowerSolver
     /// group in parallel. This assumes that batteries are the only device that connects to multiple networks, and
     /// is thus the only obstacle to solving everything in parallel.
     /// </summary>
-    private void ValidateNetworkGroups(PowerState state, List<List<SolverPowerNetwork>> groupedNetworks)
+    private void ValidateNetworkGroups(PowerState state, List<List<PowerNetwork>> groupedNetworks)
     {
-        HashSet<SolverPowerNetwork> nets = new();
+        HashSet<PowerNetwork> nets = new();
         HashSet<NodeId> netIds = new();
         foreach (var layer in groupedNetworks)
         {
@@ -419,7 +419,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private static void RecursivelyEstimateNetworkDepth(PowerState state, SolverPowerNetwork network, List<List<SolverPowerNetwork>> groupedNetworks)
+    private static void RecursivelyEstimateNetworkDepth(PowerState state, PowerNetwork network, List<List<PowerNetwork>> groupedNetworks)
     {
         network.Height = -2;
         var height = -1;
@@ -460,7 +460,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         public BatteryRampPegSolver Solver;
         public PowerState State;
         public float FrameTime;
-        public List<SolverPowerNetwork> Networks;
+        public List<PowerNetwork> Networks;
 
         public void Execute(int index)
         {

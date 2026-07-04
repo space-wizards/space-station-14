@@ -50,6 +50,7 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
 
     [Dependency] protected SharedMapSystem MapSystem = default!;
     [Dependency] protected NodeGroupSystem NodeGroupSys = default!;
+    [Dependency] protected NodeGroupManager NodeGroupManager = default!;
     [Dependency] protected EntityQuery<NodeContainerComponent> NodeQuery = default!;
     [Dependency] protected EntityQuery<MapGridComponent> MapGridQuery = default!;
 
@@ -174,7 +175,8 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
 
     protected virtual string? GetExamineText(T node)
     {
-        return null;
+        var proto = NodeGroupManager[node.NodeGroupID];
+        return proto.NodeDescription == null ? null : Loc.GetString(proto.NodeDescription);
     }
 
     public IEnumerable<INode> GetReachableNodes(INode node)

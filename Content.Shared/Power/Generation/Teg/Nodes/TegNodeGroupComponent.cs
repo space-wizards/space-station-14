@@ -1,4 +1,4 @@
-﻿using Content.Shared.NodeContainer.NodeGroups;
+﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Generation.Teg.Nodes;
 
@@ -8,7 +8,8 @@ namespace Content.Shared.Power.Generation.Teg.Nodes;
 /// <seealso cref="TegNodeGenerator"/>
 /// <seealso cref="TegNodeCirculator"/>
 /// <seealso cref="TegSystem"/>
-public sealed class TegNodeGroup : BaseNodeGroup
+[RegisterComponent, NetworkedComponent]
+public sealed partial class TegNodeGroupComponent : Component
 {
     /// <summary>
     /// If true, this TEG is fully built and has all its parts properly connected.

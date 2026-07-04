@@ -172,5 +172,5 @@ public sealed partial class PowerNetworkBatteryComponent : Component
     }
 
     [ViewVariables]
-    public IPowerBattery Battery;
+    public IPowerBattery Battery = default!;
 }

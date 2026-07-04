@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Maps;
+using Content.Shared.NodeContainer;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
@@ -39,6 +40,7 @@ namespace Content.Shared.Entry
         public override void Init()
         {
             IgnorePrototypes();
+            InitNodeGroupPrototypes();
         }
 
         public override void PostInit()
@@ -87,6 +89,21 @@ namespace Content.Shared.Entry
             _tileDefinitionManager.Initialize();
         }
 
+        private void InitNodeGroupPrototypes()
+        {
+            var manager = Dependencies.Resolve<NodeGroupManager>();
+
+            var prototypes = _prototypeManager.EnumeratePrototypes<NodeGroupPrototype>().ToList();
+            // Sort ordinal to ensure it's consistent client and server.
+            // So that numeric IDs match up.
+            prototypes.Sort((a, b) => string.Compare(a.ID, b.ID, StringComparison.Ordinal));
+
+            foreach (var tileDef in prototypes)
+            {
+                manager.Register(tileDef);
+            }
+        }
+
         private void PrototypeReload(PrototypesReloadedEventArgs obj)
         {
             /* I am leaving this here commented out to re-iterate
@@ -100,6 +117,12 @@ namespace Content.Shared.Entry
             foreach (var def in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
             {
                 def.AssignTileId(_tileDefinitionManager[def.ID].TileId);
+            }
+
+            var nodeManager = Dependencies.Resolve<NodeGroupManager>();
+            foreach (var node in _prototypeManager.EnumeratePrototypes<NodeGroupPrototype>())
+            {
+                node.AssignGroupId(nodeManager[node.ID].GroupId);
             }
         }
 

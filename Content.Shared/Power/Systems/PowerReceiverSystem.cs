@@ -210,11 +210,11 @@ public sealed partial class PowerReceiverSystem : EntitySystem
                 || !_connectorQuery.TryComp(receiver, out var connector))
                 continue;
 
-            load.LinkedNetwork = default;
+            load.Load.LinkedNetwork = default;
             if (connector.Net == null)
                 continue;
 
-            _handler.QueueNetworkReconnect(connector.Net);
+            _handler.QueueNetworkReconnect(connector.Net.Value);
         }
 
         ent.Comp.LinkedReceivers.Clear();
@@ -238,7 +238,7 @@ public sealed partial class PowerReceiverSystem : EntitySystem
             && _connectorQuery.TryComp(args.Receiver, out var connector)
             && connector.Net != null)
         {
-            _handler.AddReceiver(connector.Net, (args.Receiver, receiver), provider.AsNullable());
+            _handler.AddReceiver(connector.Net.Value, (args.Receiver, receiver), provider.AsNullable());
         }
     }
 
@@ -248,7 +248,7 @@ public sealed partial class PowerReceiverSystem : EntitySystem
             && _connectorQuery.TryComp(args.Receiver, out var connector)
             && connector.Net != null)
         {
-            _handler.RemoveReceiver(connector.Net, (args.Receiver, receiver), provider.AsNullable());
+            _handler.RemoveReceiver(connector.Net.Value, (args.Receiver, receiver), provider.AsNullable());
         }
     }
 
@@ -280,7 +280,7 @@ public sealed partial class PowerReceiverSystem : EntitySystem
     private void ProviderChanged(Entity<PowerReceiverComponent> receiver)
     {
         var comp = receiver.Comp;
-        comp.LinkedNetwork = default;
+        comp.Load.LinkedNetwork = default;
     }
 
     /// <summary>

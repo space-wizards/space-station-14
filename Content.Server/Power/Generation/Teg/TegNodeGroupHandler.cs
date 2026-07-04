@@ -1,21 +1,23 @@
 ﻿using System.Linq;
 using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Generation.Teg.Nodes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.Generation.Teg;
 
-public sealed partial class TegNodeGroupHandler : SingleNodeGroupHandler<TegNodeGroup>
+public sealed partial class TegNodeGroupHandler : SingleNodeGroupHandler<TegNodeGroupComponent>
 {
     [Dependency] private TegSystem _tegSystem = default!;
 
-    protected override NodeGroupID NodeGroupID => NodeGroupID.Teg;
+    protected override ProtoId<NodeGroupPrototype> NodeGroupID => "Teg";
 
-    protected override void LoadNodes(TegNodeGroup group, List<Node> groupNodes)
+    protected override void LoadNodes(Entity<NodeGroupComponent, TegNodeGroupComponent> ent, List<Node> groupNodes)
     {
-        base.LoadNodes(group, groupNodes);
+        base.LoadNodes(ent, groupNodes);
 
+        var group = ent.Comp2;
         if (groupNodes.Count > 3)
         {
             // Somehow got more TEG parts. Probably shenanigans. Bail.

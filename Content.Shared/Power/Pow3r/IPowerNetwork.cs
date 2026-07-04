@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Power.Pow3r;
+﻿using Content.Shared.Collections;
+
+namespace Content.Shared.Power.Pow3r;
 
 public interface IPowerNetwork
 {
@@ -26,4 +28,23 @@ public interface IPowerNetwork
     float LastCombinedMaxSupply { get; set; }
 
     int Height { get; set; }
+
+    NodeId Id { get; set; }
+
+    List<NodeId> Supplies { get; set; }
+
+    /// <summary>
+    ///     Power consumers.
+    /// </summary>
+    List<NodeId> Loads { get; set; }
+
+    /// <summary>
+    ///     Batteries that are draining power from this network (connected to the INPUT port of the battery).
+    /// </summary>
+    List<NodeId> BatteryLoads { get; set; }
+
+    /// <summary>
+    ///     Batteries that are supplying power to this network (connected to the OUTPUT port of the battery).
+    /// </summary>
+    List<NodeId> BatterySupplies { get; set; }
 }

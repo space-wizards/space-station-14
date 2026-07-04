@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Power.Pow3r;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Power.Components;
 
@@ -9,6 +10,9 @@ namespace Content.Shared.Power.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PowerNetComponent : Component
 {
+    [DataField]
+    public Voltage Voltage;
+
     [ViewVariables]
     public readonly HashSet<EntityUid> Apcs = new();
 

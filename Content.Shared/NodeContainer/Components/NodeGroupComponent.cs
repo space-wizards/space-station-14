@@ -9,8 +9,8 @@ namespace Content.Shared.NodeContainer.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class NodeGroupComponent : Component
 {
-    [DataField]
-    public NodeGroupID GroupId { get; set; }
+    [ViewVariables]
+    public ushort GroupId { get; set; }
 
     /// <summary>
     ///     The list of nodes in this group.

@@ -5,6 +5,7 @@ using Content.Shared.Atmos.Nodes;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -12,7 +13,7 @@ public sealed partial class AtmosPipeNetHandler : SingleNodeGroupHandler<PipeNet
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
-    protected override NodeGroupID NodeGroupID => NodeGroupID.Pipe;
+    protected override ProtoId<NodeGroupPrototype> NodeGroupID => "Pipe";
 
     protected override void InitializeGroup(Entity<NodeGroupComponent, PipeNetComponent> group, Node sourceNode)
     {

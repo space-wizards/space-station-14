@@ -7,7 +7,7 @@ using Content.Shared.Atmos.Nodes;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
-using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.Events;
 using Content.Shared.Power.Generation.Teg;
@@ -27,7 +27,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// The gas flows through a "circulator" entity on each side, which have both an inlet and an outlet port.
 /// </para>
 /// <remarks>
-/// Connecting the TEG core to its circulators is implemented via a node group. See <see cref="TegNodeGroup"/>.
+/// Connecting the TEG core to its circulators is implemented via a node group. See <see cref="TegNodeGroupComponent"/>.
 /// </remarks>
 /// <para>
 /// The TEG center does HV power output, and must also be connected to an LV wire for the TEG to function.
@@ -43,12 +43,12 @@ namespace Content.Server.Power.Generation.Teg;
 /// </remarks>
 /// <seealso cref="TegGeneratorComponent"/>
 /// <seealso cref="TegCirculatorComponent"/>
-/// <seealso cref="TegNodeGroup"/>
+/// <seealso cref="TegNodeGroupComponent"/>
 /// <seealso cref="TegSensorData"/>
 public sealed partial class TegSystem : EntitySystem
 {
     /// <summary>
-    /// Node name for the TEG part connection nodes (<see cref="TegNodeGroup"/>).
+    /// Node name for the TEG part connection nodes (<see cref="TegNodeGroupComponent"/>).
     /// </summary>
     private const string NodeNameTeg = "teg";
 
@@ -74,6 +74,7 @@ public sealed partial class TegSystem : EntitySystem
     [Dependency] private PointLightSystem _pointLight = default!;
     [Dependency] private PowerReceiverSystem _receiver = default!;
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
+    [Dependency] private EntityQuery<TegNodeGroupComponent> _tegGroupQuery = default!;
 
     public override void Initialize()
     {
@@ -124,8 +125,11 @@ public sealed partial class TegSystem : EntitySystem
         var (inletA, outletA) = GetPipes(circA);
         var (inletB, outletB) = GetPipes(circB);
 
-        var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
-        var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
+        if (inletA.PipeNet == null || outletA.PipeNet == null || inletB.PipeNet == null || outletB.PipeNet == null)
+            return;
+
+        var (airA, δpA) = GetCirculatorAirTransfer(inletA.PipeNet.Value.Comp.Air, outletA.PipeNet.Value.Comp.Air);
+        var (airB, δpB) = GetCirculatorAirTransfer(inletB.PipeNet.Value.Comp.Air, outletB.PipeNet.Value.Comp.Air);
 
         var cA = _atmosphere.GetHeatCapacity(airA, true);
         var cB = _atmosphere.GetHeatCapacity(airB, true);
@@ -200,8 +204,8 @@ public sealed partial class TegSystem : EntitySystem
         circBComp.LastPressureDelta = δpB;
         circBComp.LastMolesTransferred = airB.TotalMoles;
 
-        _atmosphere.Merge(outletA.Air, airA);
-        _atmosphere.Merge(outletB.Air, airB);
+        _atmosphere.Merge(outletA.PipeNet.Value.Comp.Air, airA);
+        _atmosphere.Merge(outletB.PipeNet.Value.Comp.Air, airB);
 
         UpdateAppearance(uid, component, powerReceiver, tegGroup);
     }
@@ -210,7 +214,7 @@ public sealed partial class TegSystem : EntitySystem
         EntityUid uid,
         TegGeneratorComponent component,
         PowerReceiverComponent powerReceiver,
-        TegNodeGroup nodeGroup)
+        TegNodeGroupComponent nodeGroup)
     {
         int powerLevel;
         if (powerReceiver.Powered)
@@ -241,7 +245,7 @@ public sealed partial class TegSystem : EntitySystem
     [Access(typeof(TegNodeGroupHandler))]
     public void UpdateGeneratorConnectivity(
         EntityUid uid,
-        TegNodeGroup group,
+        TegNodeGroupComponent group,
         TegGeneratorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -256,7 +260,7 @@ public sealed partial class TegSystem : EntitySystem
     [Access(typeof(TegNodeGroupHandler))]
     public void UpdateCirculatorConnectivity(
         EntityUid uid,
-        TegNodeGroup group,
+        TegNodeGroupComponent group,
         TegCirculatorComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -314,7 +318,7 @@ public sealed partial class TegSystem : EntitySystem
     }
 
     /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
-    private TegNodeGroup? GetNodeGroup(EntityUid uidGenerator)
+    private TegNodeGroupComponent? GetNodeGroup(EntityUid uidGenerator)
     {
         NodeContainerComponent? nodeContainer = null;
         if (!_nodeContainerQuery.Resolve(uidGenerator, ref nodeContainer))
@@ -323,7 +327,7 @@ public sealed partial class TegSystem : EntitySystem
         if (!nodeContainer.Nodes.TryGetValue(NodeNameTeg, out var tegNode))
             return null;
 
-        if (tegNode.NodeGroup is not TegNodeGroup tegGroup)
+        if (!_tegGroupQuery.TryComp(tegNode.NodeGroup, out var tegGroup))
             return null;
 
         return tegGroup;
@@ -402,9 +406,9 @@ public sealed partial class TegSystem : EntitySystem
         var (inlet, outlet) = GetPipes(circulator);
 
         return new TegSensorData.Circulator(
-            inlet.Air.Pressure,
-            outlet.Air.Pressure,
-            inlet.Air.Temperature,
-            outlet.Air.Temperature);
+            inlet.PipeNet!.Value.Comp.Air.Pressure,
+            outlet.PipeNet!.Value.Comp.Air.Pressure,
+            inlet.PipeNet!.Value.Comp.Air.Temperature,
+            outlet.PipeNet!.Value.Comp.Air.Temperature);
     }
 }

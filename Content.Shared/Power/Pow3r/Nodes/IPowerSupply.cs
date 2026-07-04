@@ -1,7 +1,11 @@
-﻿namespace Content.Shared.Power.Pow3r.Nodes;
+﻿using Content.Shared.Collections;
+
+namespace Content.Shared.Power.Pow3r.Nodes;
 
 public interface IPowerSupply : IPowerNode
 {
+    NodeId LinkedNetwork { get; set; }
+
     float MaxSupply { get; set; }
 
     float SupplyRampRate { get; set; }
