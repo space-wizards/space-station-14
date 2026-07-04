@@ -65,9 +65,6 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
-        if (_mind.TryGetMind(ent, out var mind, out _))
-            EnsureComp<ChangelingMindIdentityTrackerComponent>(mind); // We gotta track future gained identities for objective purposes.
-
         // Make a backup of our current identity so we can transform back.
         GrantIdentity(ent, ent.Owner);
 
