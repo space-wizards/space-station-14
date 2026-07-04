@@ -29,9 +29,9 @@ public sealed partial class HumanoidCharacterAppearance
     {
         return strategy switch
         {
-            0 => GetSplitComplementaries(baseColor),
-            1 => GetTriadicComplementaries(baseColor),
-            _ => GetOneComplementary(baseColor),
+            0 => Color.GetSplitComplementaries(baseColor),
+            1 => Color.GetTriadicComplementaries(baseColor),
+            _ => Color.GetOneComplementary(baseColor),
         };
     }
 
@@ -84,6 +84,11 @@ public sealed partial class HumanoidCharacterAppearance
             { HairColorKey, newHairColor },
             { EyeColorKey, newEyeColor }
         };
+    }
+
+    private static float RandomizeColor(float channel, IRobustRandom random)
+    {
+        return MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
     }
 
     /// <summary>
@@ -207,77 +212,4 @@ public sealed partial class HumanoidCharacterAppearance
 
         return random.Pick(weights).Key;
     }
-
-    #region Color Helpers
-    // TODO: These are probably better off in Robust.Shared.Maths.Color
-
-    private static float RandomizeColor(float channel, IRobustRandom random)
-    {
-        return MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
-    }
-
-    /// <summary>
-    ///    Generates a complementary colour palette for a provided
-    ///    colour by rotating a set amount of degrees around the
-    ///    colour wheel, and then varying the value and saturation
-    ///    slightly.
-    /// </summary>
-    /// <returns>
-    ///     A list of 3 colors.
-    /// </returns>
-    private static List<Color> GetComplementaryColors(Color color, float angle)
-    {
-        var random = IoCManager.Resolve<IRobustRandom>(); // resolving random here so we don't need to pass it into every previous colour method
-        var hsl = Color.ToHsl(color);
-
-        // sorry about how messy these are, but to get all random values we need to reroll for positive and negative HSL.
-        // since we want to rotate x degrees around the colour wheel, we need to do so in both directions- doing x + x degrees will give us the wrong hue!
-
-        var hVal = hsl.X + angle;
-        hVal -= MathF.Floor(hVal);
-        var positiveHSL = new Vector4(
-            hVal,
-            MathHelper.Clamp01(hsl.Y + random.NextFloat(-0.2f, 0f)),
-            MathHelper.Clamp01(hsl.Z + random.NextFloat(-0.15f, 0.16f)),
-            hsl.W);
-
-        var hVal1 = hsl.X - angle;
-        hVal1 += hVal1 <= 0f ? hVal1 + 0.360f : hVal1;
-        var negativeHSL = new Vector4(
-            hVal1,
-            MathHelper.Clamp01(hsl.Y + random.NextFloat(-0.2f, 0f)),
-            MathHelper.Clamp01(hsl.Z + random.NextFloat(-0.15f, 0.16f)),
-            hsl.W);
-
-        var c0 = Color.FromHsl(positiveHSL);
-        var c1 = Color.FromHsl(negativeHSL);
-
-        var palette = new List<Color> { color, c0, c1 };
-        return palette;
-    }
-
-    /// <summary>
-    ///     Generates a list of triadic complementary colors
-    /// </summary>
-    private static List<Color> GetTriadicComplementaries(Color color)
-    {
-        return GetComplementaryColors(color, 0.120f);
-    }
-
-    /// <summary>
-    ///     Generates a list of split complementary colors
-    /// </summary>
-    private static List<Color> GetSplitComplementaries(Color color)
-    {
-        return GetComplementaryColors(color, 0.150f);
-    }
-
-    /// <summary>
-    ///     Generates a list containing the base color and two copies of a single complementary color
-    /// </summary>
-    private static List<Color> GetOneComplementary(Color color)
-    {
-        return GetComplementaryColors(color, 0.180f);
-    }
-    #endregion
 }
