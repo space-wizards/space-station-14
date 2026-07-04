@@ -6,6 +6,7 @@
     "x": 32,
     "y": 32
   },
+  "rsic": false,
   "states": [
     {
       "name": "dirt"

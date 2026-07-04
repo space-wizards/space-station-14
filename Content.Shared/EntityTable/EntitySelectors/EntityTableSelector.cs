@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
@@ -25,7 +26,7 @@ public abstract partial class EntityTableSelector
     /// A simple chance that the selector will run.
     /// </summary>
     [DataField]
-    public double Prob = 1;
+    public float Prob = 1;
 
     /// <summary>
     /// A list of conditions that must evaluate to 'true' for the selector to apply.
@@ -40,7 +41,10 @@ public abstract partial class EntityTableSelector
     [DataField]
     public bool RequireAll = true;
 
-    public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
+    /// <summary>
+    /// Samples an output for this selector.
+    /// </summary>
+    public IEnumerable<EntProtoId> GetSpawns(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
@@ -61,6 +65,9 @@ public abstract partial class EntityTableSelector
         }
     }
 
+    /// <summary>
+    /// Check if the condition for this selector are met.
+    /// </summary>
     public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         if (Conditions.Count == 0)
@@ -83,8 +90,44 @@ public abstract partial class EntityTableSelector
         return success;
     }
 
-    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    /// <summary>
+    /// Gets a list of every spawn in the table, and the odds of that spawn occuring, ignoring conditions.
+    /// </summary>
+    public IEnumerable<(EntProtoId spawn, double prob)> ListSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx,
+        float mod = 1f)
+    {
+        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob * Rolls.Odds() * mod);
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of every spawn in the table, and the average number of occurrences, ignoring conditions.
+    /// </summary>
+    public IEnumerable<(EntProtoId spawn, double prob)> AverageSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx,
+        float mod = 1f)
+    {
+        foreach (var (spawn, prob) in AverageSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob * Rolls.Average() * mod);
+        }
+    }
+
+    protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> AverageSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
 }

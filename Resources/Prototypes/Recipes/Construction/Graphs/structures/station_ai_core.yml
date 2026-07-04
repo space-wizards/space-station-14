@@ -1,0 +1,144 @@
+﻿- type: constructionGraph
+  id: StationAiCore
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: frame
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 4
+
+  - node: frame
+    entity: PlayerStationAiAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithElectronics
+      steps:
+      - tag: StationAiCoreElectronics
+        name: construction-graph-tag-station-ai-core-electronics
+        store: board
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "mainboard"
+    - to: start       
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 4
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 8
+
+  - node: frameWithElectronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithSecuredElectronics
+      steps:
+      - tool: Screwing
+        doAfter: 2
+    - to: frame
+      completed:
+      - !type:EmptyContainer
+        container: board
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: frameWithSecuredElectronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithWires
+      steps:
+      - material: Cable
+        amount: 1
+        doAfter: 1
+    - to: frameWithElectronics
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: frameWithWires
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithBrain
+      steps:
+      - component: BorgBrain
+        name: construction-graph-component-borg-brain
+        store: station_ai_brain_slot
+        icon:
+          sprite: "Objects/Specific/Robotics/mmi.rsi"
+          state: "mmi_icon"
+    - to: frameWithoutBrainFinished
+      steps:
+      - material: ReinforcedGlass
+        amount: 2
+        doAfter: 2
+    - to: frameWithSecuredElectronics
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 1
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: frameWithBrain
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: frameWithBrainFinished
+      steps:
+      - material: ReinforcedGlass
+        amount: 2
+        doAfter: 2
+    - to: frameWithWires
+      completed:
+      - !type:EmptyContainer
+        container: station_ai_brain_slot    
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+  - node: frameWithBrainFinished
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: stationAiCore
+      steps:
+      - tool: Screwing
+        doAfter: 2
+    - to: frameWithBrain
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 4
+        
+  - node: frameWithoutBrainFinished
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: stationAiCore
+      steps:
+      - tool: Screwing
+        doAfter: 2
+    - to: frameWithWires
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+  - node: stationAiCore
+    entity: PlayerStationAiEmpty

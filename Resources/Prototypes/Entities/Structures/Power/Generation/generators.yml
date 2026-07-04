@@ -2,6 +2,7 @@
 
 - type: entity
   abstract: true
+  parent: BaseMachine
   id: BaseGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
@@ -12,10 +13,6 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/engine_hum.ogg
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
   - type: Fixtures
     fixtures:
       fix1:
@@ -27,9 +24,6 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: Transform
-    anchored: true
-    noRot: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
@@ -49,20 +43,14 @@
     supplyRate: 3000
     supplyRampRate: 500
     supplyRampTolerance: 500
-  - type: Anchorable
-  - type: Pullable
+  - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -108,7 +96,7 @@
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
     castShadows: false
     netsync: false
@@ -217,6 +205,24 @@
     guides:
     - ShuttleCraft
 
+- type: entity
+  parent: BaseGeneratorWallmount
+  id: GeneratorWallmountAPULV
+  name: shuttle LV APU
+  description: An advanced auxiliary power unit for a shuttle.
+  components:
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: PowerSupplier
+    voltage: Apc
+    supplyRate: 20000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+
 # RTG - no fuel requirement
 
 - type: entity
@@ -244,26 +250,20 @@
     - Power
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 300
-        behaviors:
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              GeneratorRTGDamaged:
-                min: 1
-                max: 1
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GeneratorRTGDamaged:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 # TODO: need radioactive fallout when destroyed
 
@@ -279,8 +279,8 @@
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
-      - state: rtg_damaged
-      - state: rtg_glow
+    - state: rtg_damaged
+    - state: rtg_glow
   - type: PowerMonitoringDevice
     sprite: Structures/Power/Generation/rtg.rsi
     state: rtg_damaged
@@ -288,12 +288,6 @@
     intensity: 2
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

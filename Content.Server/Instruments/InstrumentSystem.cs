@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
-using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Administration;
@@ -10,7 +9,6 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
-using Content.Shared.Physics;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -19,24 +17,25 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
 [UsedImplicitly]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly StunSystem _stuns = default!;
-    [Dependency] private readonly UserInterfaceSystem _bui = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
-    [Dependency] private readonly IAdminLogManager _admingLogSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private StunSystem _stuns = default!;
+    [Dependency] private UserInterfaceSystem _bui = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private ExamineSystemShared _examineSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogSystem = default!;
+
+    [Dependency] private EntityQuery<InstrumentComponent> _instrumentQuery = default!;
+    [Dependency] private EntityQuery<ActiveInstrumentComponent> _activeInstrumentQuery = default!;
 
     private const float MaxInstrumentBandRange = 10f;
 
@@ -170,7 +169,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             .Where(t => t != null)
             .Select(t => t!.ToString()));
 
-        _admingLogSystem.Add(
+        _adminLogSystem.Add(
             LogType.Instrument,
             LogImpact.Low,
             $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
@@ -271,13 +270,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     public (NetEntity, string)[] GetBands(EntityUid uid)
     {
-        var metadataQuery = GetEntityQuery<MetaDataComponent>();
-
         if (Deleted(uid))
             return Array.Empty<(NetEntity, string)>();
 
         var list = new ValueList<(NetEntity, string)>();
-        var instrumentQuery = GetEntityQuery<InstrumentComponent>();
 
         if (!TryComp(uid, out InstrumentComponent? originInstrument)
             || originInstrument.InstrumentPlayer is not {} originPlayer)
@@ -291,7 +287,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 continue;
 
             // Don't grab puppet instruments.
-            if (!instrumentQuery.TryGetComponent(entity, out var instrument) || instrument.Master != null)
+            if (!_instrumentQuery.TryGetComponent(entity, out var instrument) || instrument.Master != null)
                 continue;
 
             // We want to use the instrument player's name.
@@ -303,8 +299,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             if (!_examineSystem.InRangeUnOccluded(uid, entity, MaxInstrumentBandRange, e => e == playerUid || e == originPlayer))
                 continue;
 
-            if (!metadataQuery.TryGetComponent(playerUid, out var playerMetadata)
-                || !metadataQuery.TryGetComponent(entity, out var metadata))
+            if (!TryComp(playerUid, out MetaDataComponent? playerMetadata)
+                || !TryComp(entity, out MetaDataComponent? metadata))
                 continue;
 
             list.Add((GetNetEntity(entity), $"{playerMetadata.EntityName} - {metadata.EntityName}"));
@@ -427,9 +423,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             _bandRequestQueue.Clear();
         }
 
-        var activeQuery = GetEntityQuery<ActiveInstrumentComponent>();
-        var transformQuery = GetEntityQuery<TransformComponent>();
-
         var query = AllEntityQuery<ActiveInstrumentComponent, InstrumentComponent>();
         while (query.MoveNext(out var uid, out _, out var instrument))
         {
@@ -438,20 +431,22 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 if (Deleted(master))
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
 
-                var masterActive = activeQuery.CompOrNull(master);
+                _activeInstrumentQuery.TryComp(master, out var masterActive);
                 if (masterActive == null)
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
 
-                var trans = transformQuery.GetComponent(uid);
-                var masterTrans = transformQuery.GetComponent(master);
-                if (!_transform.InRange(masterTrans.Coordinates, trans.Coordinates, 10f)
-)
+                var trans = Transform(uid);
+                var masterTrans = Transform(master);
+                if (!_transform.InRange(masterTrans.Coordinates, trans.Coordinates, 10f))
                 {
                     Clean(uid, instrument);
+                    continue;
                 }
             }
 
