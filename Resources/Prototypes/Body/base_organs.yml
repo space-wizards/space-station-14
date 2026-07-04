@@ -309,6 +309,7 @@
     markingData:
       layers:
       - Eyes
+      - EyesGauze
 
 - type: entity
   parent: OrganBase

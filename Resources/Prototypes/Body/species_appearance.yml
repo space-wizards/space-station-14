@@ -12,6 +12,7 @@
     - map: [ "enum.HumanoidVisualLayers.Snout" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
     - map: [ "enum.HumanoidVisualLayers.Eyelids" ]
+    - map: [ "enum.HumanoidVisualLayers.EyesGauze" ]
 
     # Limbs
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
