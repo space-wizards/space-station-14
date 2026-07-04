@@ -9,8 +9,6 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed class SecretStartsTest : GameTest
 {
-    public override PoolSettings PoolSettings => new();
-
     private static readonly EntProtoId SecretGameRule = "Secret";
 
     /// <summary>

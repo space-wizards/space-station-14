@@ -42,9 +42,7 @@ public sealed class LoadoutTests : GameTest
     {
         ["jumpsuit"] = "ClothingUniformJumpsuitColorGrey"
     };
-
-    public override PoolSettings PoolSettings => new();
-
+    
     /// <summary>
     /// Checks that an empty loadout still spawns with default gear and not naked.
     /// </summary>
