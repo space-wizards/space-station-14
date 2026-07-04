@@ -5,8 +5,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Destructible;
 
 /// <summary>
-/// This entity will spawn things at its location while getting *destroyed*.
+/// This entity will spawn things at its location when getting *destroyed* through <see cref="SharedDestructibleSystem"/>.
 /// </summary>
+/// <remarks>
+/// This component recreates the spawning functionality from <see cref="DestructibleComponent"/> thresholds,
+/// specifically <c>SpawnEntitiesBehavior</c> and <c>WeightedSpawnEntityBehavior</c>.
+/// </remarks>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDestructibleSystem))]
 public sealed partial class SpawnOnDestroyedComponent : Component
@@ -33,7 +37,7 @@ public sealed partial class SpawnOnDestroyedComponent : Component
     /// How far from the destroyed entity to spawn.
     /// </summary>
     [DataField]
-    public float? Offset = 0.5f;
+    public float Offset = 0.5f;
 
     /// <summary>
     /// Spawned items will try to copy the forensics of the destroyed entity.

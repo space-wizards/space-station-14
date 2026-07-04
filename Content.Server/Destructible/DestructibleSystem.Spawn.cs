@@ -11,7 +11,7 @@ namespace Content.Server.Destructible;
 public sealed partial class DestructibleSystem
 {
     [SubscribeLocalEvent]
-    private void OnSpawnDestroy(Entity<SpawnOnDestroyedComponent> ent, ref DestructionEventArgs _)
+    private void OnDestroySpawnEntities(Entity<SpawnOnDestroyedComponent> ent, ref DestructionEventArgs _)
     {
         var xform = Transform(ent);
         var totalSpawned = new HashSet<EntityUid>();
@@ -20,9 +20,7 @@ public sealed partial class DestructibleSystem
         {
             foreach (var spawn in _entityTableSystem.GetSpawns(ent.Comp.Spawn))
             {
-                var position = xform.Coordinates;
-                if (ent.Comp.Offset is not null)
-                    position = position.Offset(Random.NextVector2(ent.Comp.Offset.Value));
+                var position = xform.Coordinates.Offset(Random.NextVector2(ent.Comp.Offset));
 
                 if (ent.Comp.SpawnAfter is not null)
                 {
@@ -31,7 +29,7 @@ public sealed partial class DestructibleSystem
                 }
                 else
                 {
-                    var spawned = SpawnNow(spawn, position, (ent.Owner, ent.Comp, xform));
+                    var spawned = SpawnNow(spawn, position, (ent.Owner, xform));
                     CopyForensics(ent, spawned);
                     totalSpawned.Add(spawned);
                 }
@@ -57,10 +55,10 @@ public sealed partial class DestructibleSystem
         return spawner;
     }
 
-    private EntityUid SpawnNow(EntProtoId toSpawn, EntityCoordinates position, Entity<SpawnOnDestroyedComponent, TransformComponent> source)
+    private EntityUid SpawnNow(EntProtoId toSpawn, EntityCoordinates position, Entity<TransformComponent> source)
     {
         if (ContainerSystem.IsEntityInContainer(source))
-            return SpawnNextToOrDrop(toSpawn, source, source.Comp2);
+            return SpawnNextToOrDrop(toSpawn, source, source.Comp);
 
         // If spawned isn't in a container, give it a random rotation so that everything doesn't have the same angle.
         var spawned = SpawnAtPosition(toSpawn, position);
