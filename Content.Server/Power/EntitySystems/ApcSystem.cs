@@ -9,6 +9,7 @@ using Content.Shared.APC;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Rounding;
@@ -101,9 +102,9 @@ public sealed partial class ApcSystem : EntitySystem
         // Defer until the next tick.
         component.NeedStateUpdate = true;
 
-        var query = AllEntityQuery<PowerGridCheckRuleComponent>();
+        var query = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
 
-        while (query.MoveNext(out var ruleUid, out var ruleComp))
+        while (query.MoveNext(out var ruleUid, out var ruleComp, out var _activeGameRule))
             if (_powerGridCheckRule.TryAddUnpoweredApc((ruleUid, ruleComp), (uid, component)))
                 component.MainBreakerEnabled = false;
     }
@@ -137,9 +138,9 @@ public sealed partial class ApcSystem : EntitySystem
 
     private void OnApcToggleMainBreakerAttempt(Entity<ApcComponent> ent, ref ApcToggleMainBreakerAttemptEvent args)
     {
-        var query = AllEntityQuery<PowerGridCheckRuleComponent>();
+        var query = AllEntityQuery<PowerGridCheckRuleComponent, ActiveGameRuleComponent>();
 
-        while (query.MoveNext(out var ruleUid, out var ruleComp))
+        while (query.MoveNext(out var ruleUid, out var ruleComp, out var _activeGameRule))
             if (_powerGridCheckRule.ContainsUnpoweredApc((ruleUid, ruleComp), ent))
                 args.Cancelled = true;
     }
