@@ -26,7 +26,7 @@ public sealed partial class NightVisionComponent : Component
     /// Whether wearing this entity should grant night vision to the entity wearing it.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Wearable = true;
+    public bool RelayOverlay;
 
     /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.

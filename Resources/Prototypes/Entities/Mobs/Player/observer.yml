@@ -105,7 +105,7 @@
     netsync: false
     enabled: false
     prioritized: false
-    wearable: false
+    relayOverlay: false # In case default values change
     lightingColor: '#FFFFFF20'
     overlayColor: '#FFFFFF00'
     noiseAmount: 0 # In case default values change
