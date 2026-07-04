@@ -61,7 +61,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             if (!TryComp(ghostEnt, out TransformComponent? xform))
                 break;
 
-            _xform.SetLocalRotation(ghostEnt, part.Rotation, xform);
+            _xform.SetLocalRotationNoLerp(ghostEnt, part.Rotation, xform);
 
             Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
 

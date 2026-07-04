@@ -170,7 +170,7 @@ public abstract partial class SharedDisposalHolderSystem : EntitySystem
         ent.Comp.NextTube = _disposalTube.GetTubeInDirection((tube, tube.Comp), ent.Comp.CurrentDirection);
 
         // Update rotation
-        _xform.SetLocalRotation(ent, ent.Comp.CurrentDirection.ToAngle(), xform);
+        _xform.SetLocalRotationNoLerp(ent, ent.Comp.CurrentDirection.ToAngle(), xform);
 
         Dirty(ent);
         return true;
