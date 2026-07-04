@@ -95,18 +95,37 @@ public sealed partial class DisposalHolderComponent : Component, IGasMixtureHold
     };
 
     /// <summary>
-    /// Tracks the number of times the holder changes direction.
+    /// The overall directional bias in the holder's movement. A directional bias greater than
+    /// <see cref="DirectionBiasThreshold"/> indicates the entity may be stuck in a loop.
     /// </summary>
     [DataField]
-    public int DirectionChangeCount;
+    public float DirectionBias;
 
     /// <summary>
-    /// After <see cref="DirectionChangeCount"/> exceeds this value, the holder
-    /// has a chance to escape the disposals system each time it changes direction
-    /// (as set by <see cref="EscapeChance"/>).
+    /// If the absolute value of <see cref="DirectionBias"/> exceeds this threshold,
+    /// the last disposal pipe the travelling entity entered is added to <see cref="SuspectPipes"/>.
+    /// </summary>
+    /// <remarks>
+    /// For every multiple of four, the holder can make one theroretical loop of the disposal system
+    /// before the threshold is exceeded. For example, if the threshold is 8, and the holder
+    /// is inside a true loop, it will be able to escape once a third full loop is made.
+    /// Do not set this value less than 4, it will result in more checks than are necessary.
+    /// </remarks>
+    [DataField]
+    public float DirectionBiasThreshold = 8;
+
+    /// <summary>
+    /// The disposal pipes in this set are suspected as being part of a loop. If the holder
+    /// enters any of these pipes again, it will potentially escape on subsequent turns.
     /// </summary>
     [DataField]
-    public int DirectionChangeThreshold = 20;
+    public HashSet<EntityUid> SuspectPipes = new();
+
+    /// <summary>
+    /// Indicates whether the conditions have been met for the holder to potentially escape the disposals system.
+    /// </summary>
+    [DataField]
+    public bool CanEscape;
 
     /// <summary>
     /// When given the opportunity, the holder has this chance of escaping the disposals system.
