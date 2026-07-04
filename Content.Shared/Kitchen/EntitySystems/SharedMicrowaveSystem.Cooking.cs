@@ -86,16 +86,18 @@ public abstract partial class SharedMicrowaveSystem
         AudioSys.PlayPredicted(component.StartCookingSound, uid, user);
 
         var activeComp = AddComp<ActiveMicrowaveComponent>(uid);
+        activeComp.User = user;
         activeComp.PortionedRecipe = recipe;
         activeComp.Malfunctioning = malfunctioning;
-
-        if (malfunctioning)
-            activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
-
         DirtyFields(uid, activeComp, null,
             nameof(ActiveMicrowaveComponent.PortionedRecipe),
-            nameof(ActiveMicrowaveComponent.Malfunctioning),
-            nameof(ActiveMicrowaveComponent.NextMalfunction));
+            nameof(ActiveMicrowaveComponent.Malfunctioning));
+
+        if (malfunctioning)
+        {
+            activeComp.NextMalfunction = curTime + component.MalfunctionInterval;
+            DirtyField(uid, activeComp, nameof(ActiveMicrowaveComponent.NextMalfunction));
+        }
 
         UpdateUserInterfaceState(microwave.AsNullable());
     }
@@ -247,7 +249,7 @@ public abstract partial class SharedMicrowaveSystem
         if (active.PortionedRecipe != null)
             SpawnFinishedRecipe(microwaveEnt, active.PortionedRecipe.Value);
 
-        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, null); // beep... beep... beep
+        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, active.User, null); // beep... beep... beep
 
         // Clean up the microwave.
         ContainerSys.EmptyContainer(microwave.Storage);
@@ -266,6 +268,7 @@ public abstract partial class SharedMicrowaveSystem
         // TODO: There's a RemCompDeferred mispredict
         // https://github.com/space-wizards/RobustToolbox/issues/6404
         RemComp<ActiveMicrowaveComponent>(ent);
+        DeactivateMicrowaveCycle(ent);
 
         foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
             RemComp<ActivelyMicrowavedComponent>(solid);

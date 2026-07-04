@@ -27,6 +27,12 @@ public sealed partial class ActiveMicrowaveComponent : Component
     public PortionedRecipe? PortionedRecipe;
 
     /// <summary>
+    ///     The user who activated this microwave.
+    /// </summary>
+    [DataField]
+    public EntityUid? User = null;
+
+    /// <summary>
     ///     The total cooking time of this operation.
     /// </summary>
     [DataField, AutoNetworkedField]

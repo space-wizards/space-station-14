@@ -14,7 +14,6 @@ public abstract partial class SharedMicrowaveSystem
     private void InitializeActive()
     {
         SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookStop);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
 
@@ -50,26 +49,27 @@ public abstract partial class SharedMicrowaveSystem
             return;
 
         SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
-        var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
-        var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, null, audioParams);
-        microwaveComponent.PlayingStream = pvs?.Entity;
-
         _powerState.SetWorkingState(ent.Owner, true);
+
+        if (microwaveComponent.PlayingStream == null)
+        {
+            var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
+            var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, null, audioParams);
+            microwaveComponent.PlayingStream = pvs?.Entity;
+        }
     }
 
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
     /// </summary>
     /// <param name="ent">The microwave entity.</param>
-    private void OnCookStop(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
+    private void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
     {
-        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
-            return;
-
-        SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Idle);
-        microwaveComponent.PlayingStream = AudioSys.Stop(microwaveComponent.PlayingStream);
-
+        SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
         _powerState.SetWorkingState(ent.Owner, false);
+
+        AudioSys.Stop(ent.Comp.PlayingStream);
+        ent.Comp.PlayingStream = null;
     }
 
     /// <summary>
