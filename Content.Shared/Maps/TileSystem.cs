@@ -25,6 +25,7 @@ public sealed partial class TileSystem : EntitySystem
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private SharedDecalSystem _decal = default!;
     [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
 
@@ -200,7 +201,7 @@ public sealed partial class TileSystem : EntitySystem
             return false;
 
         var key = tileref.GridIndices;
-        var currentTileDef = (ContentTileDefinition) _tileDefinitionManager[tileref.Tile.TypeId];
+        var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
 
         // If the tile we're placing has a baseTurf that matches the tile we're replacing, we don't need to create a history
         // unless the tile already has a history.
@@ -309,7 +310,7 @@ public sealed partial class TileSystem : EntitySystem
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-            Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
+            _xform.SetLocalRotationNoLerp(tileItem, _robustRandom.NextAngle());
         }
 
         //Destroy any decals on the tile

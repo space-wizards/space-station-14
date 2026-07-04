@@ -9,6 +9,7 @@ namespace Content.Shared.Holosign;
 public sealed partial class HolosignSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
@@ -50,7 +51,7 @@ public sealed partial class HolosignSystem : EntitySystem
         if (ent.Comp.PredictedSpawn || _net.IsServer)
         {
             var holosign = PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
-            Transform(holosign).LocalRotation = Angle.Zero;
+            _xform.SetLocalRotationNoLerp(holosign, Angle.Zero);
         }
 
         args.Handled = true;

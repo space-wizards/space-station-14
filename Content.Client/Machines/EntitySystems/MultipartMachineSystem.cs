@@ -23,6 +23,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private TransformSystem _xform = default!;
 
     public override void Initialize()
     {
@@ -60,7 +61,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             if (!TryComp(ghostEnt, out TransformComponent? xform))
                 break;
 
-            xform.LocalRotation = part.Rotation;
+            _xform.SetLocalRotation(ghostEnt, part.Rotation, xform);
 
             Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
 
