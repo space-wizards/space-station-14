@@ -41,7 +41,8 @@ public sealed partial class ActiveMicrowaveComponent : Component
     /// <summary>
     ///     The time that this microwave will finish cooking.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan CookTimeEnd = TimeSpan.Zero;
 
     /// <summary>
