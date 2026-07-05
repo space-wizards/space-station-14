@@ -9,7 +9,7 @@ public sealed partial class CartridgeLoaderSystem
     {
         SubscribeLocalEvent<CartridgeLoaderComponent, AfterInteractEvent>(RelayEvent);
         SubscribeLocalEvent<CartridgeLoaderComponent, InteractUsingEvent>(RelayEvent);
-        SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(RelayEvent);
+        SubscribeLocalEvent<CartridgeLoaderComponent, DeviceNetworkPacketEvent>(RefRelayEvent);
     }
 
     private void RefRelayEvent<T>(EntityUid uid, CartridgeLoaderComponent component, ref T args) where T : struct
