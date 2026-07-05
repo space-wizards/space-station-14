@@ -69,8 +69,8 @@ public sealed class MicrowaveRecipeTest
         EntityManager entMan)
     {
         var ingredients = prototype.Ingredients * portions;
-        var cookTIme = prototype.CookTime * portions;
-        var portionedRecipe = microwaveSystem.GetRecipe(microwave, ingredients, cookTIme);
+        var cookTime = prototype.CookTime * portions;
+        var portionedRecipe = microwaveSystem.GetRecipe(microwave, ingredients, cookTime);
         var microwaveString = entMan.ToPrettyString(microwave);
         var recipeDebugString = $"Ingredients for {nameof(FoodRecipePrototype)} {prototype.ID}";
 

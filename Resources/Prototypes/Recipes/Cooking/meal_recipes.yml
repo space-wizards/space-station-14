@@ -1577,7 +1577,7 @@
   group: Cake
   solids:
     FoodCakePlain: 1
-    FoodLemoon: 1
+    FoodLemoon: 2
     FoodBerries: 1 #dark colouring
 
 - type: microwaveMealRecipe
