@@ -43,7 +43,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
 {
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IEntityManager _ent = default!;
     [Dependency] private EuiManager _euiManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -532,9 +531,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
         foreach (var proto in roleEnt.Comp.MindRoles)
         {
             if (!ProtoMan.TryIndex(proto, out var indexed)
-                || !indexed.TryComp<MindRoleComponent>(out var comp, _ent.ComponentFactory))
+                || !indexed.TryComp<MindRoleComponent>(out var roleComp, Factory))
                 continue;
-            var roleComp = (MindRoleComponent)comp;
 
             if (roleComp.JobPrototype is not null)
                 jobs.Add(roleComp.JobPrototype.Value);
