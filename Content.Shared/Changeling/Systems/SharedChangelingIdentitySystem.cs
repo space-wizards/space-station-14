@@ -415,4 +415,24 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         return identityData != null;
     }
+
+    /// <summary>
+    /// Fetches the <see cref="ChangelingIdentityData"/> from an entity's <see cref="ChangelingIdentityComponent"/> based on the identity they are currently using.
+    /// </summary>
+    /// <param name="ent">The changeling entity.</param>
+    /// <param name="identityData">The returned <see cref="ChangelingIdentityData"/> for the current identity if one is found.</param>
+    /// <returns>True if identity data is found, otherwise False.</returns>
+    public bool TryGetCurrentIdentityData(Entity<ChangelingIdentityComponent?> ent, [NotNullWhen(true)] out ChangelingIdentityData? identityData)
+    {
+        identityData = null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        if (ent.Comp.CurrentIdentity == null)
+            return false;
+
+        identityData = ent.Comp.ConsumedIdentities.FirstOrDefault(data => data.Identity == ent.Comp.CurrentIdentity);
+
+        return identityData != null;
+    }
 }
