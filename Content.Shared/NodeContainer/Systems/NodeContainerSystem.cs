@@ -158,7 +158,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
             if (!TryComp<T>(n.NodeGroup, out var comp))
                 continue;
 
-            node = (ent.Owner, comp);
+            node = (n.NodeGroup.Value.Owner, comp);
             return true;
         }
 

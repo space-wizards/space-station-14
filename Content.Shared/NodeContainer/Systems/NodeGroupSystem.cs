@@ -297,6 +297,8 @@ public sealed partial class NodeGroupSystem : EntitySystem
         AddComp(uid, comp);
         var groupEnt = (uid, group);
 
+        group.GroupId = node.NodeGroupID;
+
         handler.InitializeGroup(groupEnt, node);
         group.NetId = _groupNetIdCounter++;
 

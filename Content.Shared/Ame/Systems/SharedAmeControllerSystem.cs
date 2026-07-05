@@ -245,7 +245,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         if (!_nodeContainer.TryGetFirstNodeGroup<AmeNodeGroupComponent>(ent.Owner, out var group))
             return 0;
 
-        return  group.Value.Comp.Cores.Count * 8;
+        return group.Value.Comp.Cores.Count * 8;
     }
 
     private void UpdateDisplay(Entity<AmeControllerComponent?, AppearanceComponent?> ent, int stability)
@@ -298,7 +298,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         var ent = control.AsNullable();
         var user = msg.Actor;
 
-        if (!PlayerCanUseController(ent, user, false))
+        if (!PlayerCanUseController(ent, user))
             return;
 
         ToggleInjecting(ent, user);
@@ -314,7 +314,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         var ent = control.AsNullable();
         var user = msg.Actor;
 
-        if (!PlayerCanUseController(ent, user, false))
+        if (!PlayerCanUseController(ent, user))
             return;
 
         AdjustInjectionAmount(ent, +2, user);
@@ -330,7 +330,7 @@ public abstract partial class SharedAmeControllerSystem : EntitySystem
         var ent = control.AsNullable();
         var user = msg.Actor;
 
-        if (!PlayerCanUseController(ent, user, false))
+        if (!PlayerCanUseController(ent, user))
             return;
 
         AdjustInjectionAmount(ent, -2, user);

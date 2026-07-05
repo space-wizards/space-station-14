@@ -11,13 +11,15 @@ namespace Content.Client.Ame.UI;
 [UsedImplicitly]
 public sealed partial class AmeControllerBoundUserInterface : BoundUserInterface
 {
-    [UISystemDependency] private AmeNodeGroupHandler _ameHandler = default!;
-    [UISystemDependency] private NodeContainerSystem _nodeContainer = default!;
+    private readonly AmeNodeGroupHandler _ameHandler = default!;
+    private readonly NodeContainerSystem _nodeContainer = default!;
 
     private AmeWindow? _window;
 
     public AmeControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _ameHandler = EntMan.System<AmeNodeGroupHandler>();
+        _nodeContainer = EntMan.System<NodeContainerSystem>();
     }
 
     protected override void Open()
