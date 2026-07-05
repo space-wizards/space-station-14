@@ -22,28 +22,10 @@ public sealed partial class NinjaConditionsSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DoorjackConditionComponent, ObjectiveGetProgressEvent>(OnDoorjackGetProgress);
-
         SubscribeLocalEvent<SpiderChargeConditionComponent, RequirementCheckEvent>(OnSpiderChargeRequirementCheck);
         SubscribeLocalEvent<SpiderChargeConditionComponent, ObjectiveAfterAssignEvent>(OnSpiderChargeAfterAssign);
 
         SubscribeLocalEvent<StealResearchConditionComponent, ObjectiveGetProgressEvent>(OnStealResearchGetProgress);
-    }
-
-    // doorjack
-
-    private void OnDoorjackGetProgress(EntityUid uid, DoorjackConditionComponent comp, ref ObjectiveGetProgressEvent args)
-    {
-        args.Progress = DoorjackProgress(comp, _number.GetTarget(uid));
-    }
-
-    private float DoorjackProgress(DoorjackConditionComponent comp, int target)
-    {
-        // prevent divide-by-zero
-        if (target == 0)
-            return 1f;
-
-        return MathF.Min(comp.DoorsJacked / (float) target, 1f);
     }
 
     // spider charge
@@ -55,15 +37,19 @@ public sealed partial class NinjaConditionsSystem : EntitySystem
         // choose spider charge detonation point
         var warps = new List<EntityUid>();
         var allEnts = EntityQueryEnumerator<WarpPointComponent>();
+        var bombingWhitelist = comp.Whitelist;
         var bombingBlacklist = comp.Blacklist;
 
         while (allEnts.MoveNext(out var warpUid, out var warp))
         {
-            if (_whitelist.IsWhitelistFail(bombingBlacklist, warpUid)
-                && !string.IsNullOrWhiteSpace(warp.Location))
-            {
-                warps.Add(warpUid);
-            }
+
+            if (string.IsNullOrWhiteSpace(warp.Location))
+                continue;
+
+            if (!_whitelist.CheckBoth(warpUid, bombingBlacklist, bombingWhitelist))
+                continue;
+
+            warps.Add(warpUid);
         }
 
         if (warps.Count <= 0)
