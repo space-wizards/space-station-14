@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Stacks;
@@ -66,11 +66,11 @@ public sealed partial class FoodRecipePrototype : IPrototype
 public partial record struct CookingIngredients
 {
     public CookingIngredients(Dictionary<EntProtoId, int> solids,
-        Dictionary<ProtoId<StackPrototype>, int> materials,
+        Dictionary<ProtoId<StackPrototype>, int> stacks,
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> reagents)
     {
         Solids = solids;
-        Materials = materials;
+        Stacks = stacks;
         Reagents = reagents;
     }
 
@@ -82,10 +82,10 @@ public partial record struct CookingIngredients
     public Dictionary<EntProtoId, int> Solids { get; private set; } = new();
 
     /// <summary>
-    ///     A dictionary of stack material quantities, such as plastic sheets or cloth rolls.
+    ///     A dictionary of stack quantities, such as plastic sheets or cloth rolls.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<StackPrototype>, int> Materials { get; private set; } = new();
+    public Dictionary<ProtoId<StackPrototype>, int> Stacks { get; private set; } = new();
 
     /// <summary>
     ///     A dictionary of reagent quantities.
@@ -112,20 +112,20 @@ public partial record struct CookingIngredients
     }
 
     /// <summary>
-    ///     Adds a quantity of a material stack to this ingredients list.
+    ///     Adds a quantity of a stack to this ingredients list.
     /// </summary>
-    /// <param name="materialId">The ID of the material stack to add.</param>
+    /// <param name="stackId">The ID of the stack to add.</param>
     /// <param name="count">How many stacks to add.</param>
-    public readonly void AddMaterial(ProtoId<StackPrototype> materialId, int count)
+    public readonly void AddStack(ProtoId<StackPrototype> stackId, int count)
     {
         if (count == 0)
             return;
 
-        var newCount = Materials.GetValueOrDefault(materialId) + count;
+        var newCount = Stacks.GetValueOrDefault(stackId) + count;
         if (newCount > 0)
-            Materials[materialId] = newCount;
+            Stacks[stackId] = newCount;
         else
-            Materials.Remove(materialId);
+            Stacks.Remove(stackId);
     }
 
     /// <summary>
@@ -154,9 +154,9 @@ public partial record struct CookingIngredients
     {
         var solidCount = Solids.Sum(s => s.Value);
         var reagentCount = Reagents.Count;
-        var materialCount = Materials.Sum(s => s.Value);
+        var stackCount = Stacks.Sum(s => s.Value);
 
-        return solidCount + reagentCount + materialCount;
+        return solidCount + reagentCount + stackCount;
     }
 
     /// <summary>
@@ -171,9 +171,9 @@ public partial record struct CookingIngredients
         if (solidPortions == 0)
             return 0;
 
-        var materialPortions = GetTimesFulfilled(Materials, recipe.Materials,
+        var stackPortions = GetTimesFulfilled(Stacks, recipe.Stacks,
             (available, count) => (uint)(available / count));
-        if (materialPortions == 0)
+        if (stackPortions == 0)
             return 0;
 
         var reagentPortions = GetTimesFulfilled(Reagents, recipe.Reagents,
@@ -181,7 +181,7 @@ public partial record struct CookingIngredients
         if (reagentPortions == 0)
             return 0;
 
-        return new[] { solidPortions, materialPortions, reagentPortions }.Min();
+        return new[] { solidPortions, stackPortions, reagentPortions }.Min();
     }
 
     /// <summary>
@@ -220,8 +220,8 @@ public partial record struct CookingIngredients
         foreach (var (key, count) in c2.Solids)
             newIngredients.AddSolid(key, count);
 
-        foreach (var (key, count) in c2.Materials)
-            newIngredients.AddMaterial(key, count);
+        foreach (var (key, count) in c2.Stacks)
+            newIngredients.AddStack(key, count);
 
         foreach (var (key, quantity) in c2.Reagents)
             newIngredients.AddReagent(key, quantity);
@@ -233,12 +233,12 @@ public partial record struct CookingIngredients
     {
         var scaledSolids = c1.Solids.ToDictionary(kvp => kvp.Key,
             kvp => kvp.Value * scalar);
-        var scaledMaterials = c1.Materials.ToDictionary(kvp => kvp.Key,
+        var scaledStacks = c1.Stacks.ToDictionary(kvp => kvp.Key,
             kvp => kvp.Value * scalar);
         var scaledReagents = c1.Reagents.ToDictionary(kvp => kvp.Key,
             kvp => kvp.Value * scalar);
 
-        return new(scaledSolids, scaledMaterials, scaledReagents);
+        return new(scaledSolids, scaledStacks, scaledReagents);
     }
 
     public static CookingIngredients operator *(CookingIngredients c1, uint scalar)

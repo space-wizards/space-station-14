@@ -211,7 +211,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-  materials:
+  stacks:
     Plasma: 2
 
 - type: microwaveMealRecipe
@@ -547,7 +547,7 @@
   reagents:
     TableSalt: 5
     Blackpepper: 5
-  materials:
+  stacks:
     MetalRod: 1
   solids:
     FoodDough: 1
@@ -717,7 +717,7 @@
     FoodDoughFlat: 1
     FoodChiliPepper: 2
     FoodTomato: 2
-  materials:
+  stacks:
     Uranium: 2
 
 - type: microwaveMealRecipe
@@ -1064,7 +1064,7 @@
     FoodBowlBig: 1
     FoodBanana: 1
     ShardGlass: 1
-  materials:
+  stacks:
     Bananium: 1
 
 - type: microwaveMealRecipe

@@ -89,8 +89,8 @@ public abstract partial class SharedMicrowaveSystem
             return 0;
 
         // TODO: there's actually a kind of nasty edge case microwave economics issue here,
-        // all reagents / materials / solids will be included, but when the recipe is actually made,
-        // solids are used first, then materials, then reagents.
+        // all reagents / stacks / solids will be included, but when the recipe is actually made,
+        // solids are used first, then stacks, then reagents.
         // thus, recipe detection might thing you have "more" ingredients than you actually do.
         //
         // moral of the story: I hate microwaves
@@ -132,7 +132,7 @@ public abstract partial class SharedMicrowaveSystem
 
     /// <summary>
     ///     Gets a complete list of recipe-usable ingredients from a list of items, including solids,
-    ///     materials, and reagents.
+    ///     stacks, and reagents.
     /// </summary>
     /// <param name="items">The list of items to use as ingredients.</param>
     /// <returns>Cooking ingredient quantities representing the total usable ingredient list.</returns>

@@ -15,7 +15,7 @@
   group: Medicinal
   solids:
     FoodPoppy: 1
-  materials:
+  stacks:
     Brutepack: 10
     Cloth: 1
   reagents:
@@ -30,7 +30,7 @@
   group: Medicinal
   solids:
     FoodAloe: 1
-  materials:
+  stacks:
     Ointment: 10
     Cloth: 1
   reagents:
