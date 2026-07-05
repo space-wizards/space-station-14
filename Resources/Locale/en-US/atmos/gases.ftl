@@ -16,3 +16,5 @@ gas-nitrous-oxide = Nitrous Oxide
 gas-nitrous-oxide-abbreviation = N₂O
 gas-frezon = Frezon
 gas-frezon-abbreviation = F
+gas-fungalin = Fungalin
+gas-fungalin-abbreviation = Fungalin

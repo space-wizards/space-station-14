@@ -1,5 +1,6 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
@@ -8,6 +9,7 @@ public sealed partial class PassiveDamageSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -34,6 +36,10 @@ public sealed partial class PassiveDamageSystem : EntitySystem
             // Make sure they're up for a damage tick
             if (comp.NextDamage > curTime)
                 continue;
+
+            // Check and prevent damage if PauseWhenContained bool is true, and entity is inside a container
+            if (comp.PauseWhenStored && _container.TryGetContainingContainer(uid, out _))
+                return;
 
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);

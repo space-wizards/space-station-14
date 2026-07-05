@@ -508,3 +508,29 @@
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 5
+
+- type: reagent
+  id: Fungalin
+  name: reagent-name-fungalin
+  group: Narcotics
+  desc: reagent-desc-fungalin
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: tingly
+  color: "#EE35FF"
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: GiantSporeSpawner
+    usage: 2
+    maxOnTile: 2
+    randomOffsetMax: 0.3
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        conditions:
+        - !type:ReagentCondition
+          reagent: Fungalin
+          min: 10
+        probability: 0.2

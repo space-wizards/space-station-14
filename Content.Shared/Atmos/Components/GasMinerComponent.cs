@@ -49,6 +49,12 @@ public sealed partial class GasMinerComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float SpawnAmount = Atmospherics.MolesCellStandard * 20f;
+
+    /// <summary>
+    ///     Prevents the gas miner from adding extra examine text
+    /// </summary>
+    [DataField]
+    public bool ShowStateOnExamine = true;
 }
 
 [Serializable, NetSerializable]

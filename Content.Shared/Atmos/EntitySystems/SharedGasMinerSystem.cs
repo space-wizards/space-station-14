@@ -16,6 +16,9 @@ public abstract partial class SharedGasMinerSystem : EntitySystem
 
     private void OnExamine(Entity<GasMinerComponent> ent, ref ExaminedEvent args)
     {
+        if(!ent.Comp.ShowStateOnExamine) // Prevents the system from adding extra examine text
+            return;
+
         var component = ent.Comp;
 
         using (args.PushGroup(nameof(GasMinerComponent)))

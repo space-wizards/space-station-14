@@ -1,0 +1,177 @@
+- type: entity
+  abstract: true
+  id: BaseGiantSpore
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Plants/Mushrooms/giant_spore.rsi
+    state: icon
+  - type: PointLight
+    enabled: true
+    color: "#000000"
+    radius: 2
+    energy: 2
+  - type: Item
+    size: Normal
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: PassiveDamage
+    pauseWhenStored: true
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Cellular: 0.25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GiantMushroomSpawner:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+## Colors
+- type: entity
+  id: RedGiantSpore
+  parent: BaseGiantSpore
+  name: red giant spore
+  components:
+  - type: Sprite
+    color: "#ff001e"
+  - type: PointLight
+    color: "#ff001e"
+
+- type: entity
+  id: OrangeGiantSpore
+  parent: BaseGiantSpore
+  name: orange giant spore
+  components:
+  - type: Sprite
+    color: "#f77800"
+  - type: PointLight
+    color: "#f77800"
+
+- type: entity
+  id: YellowGiantSpore
+  parent: BaseGiantSpore
+  name: yellow giant spore
+  components:
+  - type: Sprite
+    color: "#fffb00"
+  - type: PointLight
+    color: "#fffb00"
+
+- type: entity
+  id: PurpleGiantSpore
+  parent: BaseGiantSpore
+  name: purple giant spore
+  components:
+  - type: Sprite
+    color: "#6a00ff"
+  - type: PointLight
+    color: "#6a00ff"
+
+- type: entity
+  id: GreenGiantSpore
+  parent: BaseGiantSpore
+  name: green giant spore
+  components:
+  - type: Sprite
+    color: "#22ff00"
+  - type: PointLight
+    color: "#22ff00"
+
+- type: entity
+  id: PinkGiantSpore
+  parent: BaseGiantSpore
+  name: pink giant spore
+  components:
+  - type: Sprite
+    color: "#ff00ea"
+  - type: PointLight
+    color: "#ff00ea"
+
+## Spawners
+
+- type: entity
+  id: GiantSporeSpawner
+  name: giant spore spawner
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: GiantSporeSpawnerTable
+
+- type: entityTable
+  id: GiantSporeSpawnerTable
+  offset: 0.5
+  table: !type:GroupSelector
+    children:
+    - id: RedGiantSpore
+    - id: OrangeGiantSpore
+    - id: YellowGiantSpore
+    - id: GreenGiantSpore
+    - id: PurpleGiantSpore
+    - id: PinkGiantSpore
+
+- type: entity
+  id: GiantMushroomSpawner
+  name: giant mushroom spawner
+  components:
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: GiantSporeSpawnTable
+
+- type: entityTable
+  id: GiantSporeSpawnTable
+  offset: 0.5
+  table: !type:GroupSelector
+    children:
+    - id: RedMushroom
+    - id: OrangeMushroom
+    - id: YellowMushroom
+    - id: GreenMushroom
+    - id: BlueMushroom
+    - id: PurpleMushroom
+    - id: PinkMushroom
+
+# Rember to delete this
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkieFungalCan
+  name: fungal can
+  description: wawa
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fungalin
+        Quantity: 40
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/beer_can.rsi
+  - type: Tag
+    tags:
+    - Beer
+    - DrinkCan

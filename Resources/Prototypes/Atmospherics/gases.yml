@@ -117,3 +117,18 @@
   color: '#3a758c'
   reagent: Frezon
   pricePerMole: 1
+
+- type: gas
+  id: Fungalin
+  name: gas-fungalin
+  abbreviation: gas-fungalin-abbreviation
+  molarHeatCapacity: 20
+  heatCapacityRatio: 1
+  molarMass: 32
+  gasOverlaySprite:
+    sprite: /Textures/Effects/atmospherics.rsi
+    state: miasma_old
+  gasMolesVisible: 0.6
+  color: '#ff0084'
+  reagent: Fungalin
+  pricePerMole: 0

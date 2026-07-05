@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "replace this",
+    "copyright": "replace this",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

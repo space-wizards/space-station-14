@@ -31,4 +31,7 @@ public sealed partial class PassiveDamageComponent : Component
 
     [DataField("nextDamage", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextDamage = TimeSpan.Zero;
+
+    [DataField]
+    public bool PauseWhenStored = false;
 }
