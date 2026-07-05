@@ -16,9 +16,6 @@ public sealed partial class SnapToGrid : IGraphAction
         var xformSystem = entityManager.System<SharedTransformSystem>();
 
         if (!transform.Anchored)
-            xformSystem.SetCoordinates(uid, transform, transform.Coordinates.SnapToGrid(entityManager));
-
-        if (SouthRotation)
-            xformSystem.SetLocalRotationNoLerp(uid, Angle.Zero, transform);
+            xformSystem.SetCoordinates(uid, transform, transform.Coordinates.SnapToGrid(entityManager), rotation: SouthRotation ? Angle.Zero : null);
     }
 }

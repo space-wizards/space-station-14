@@ -42,17 +42,13 @@ public sealed partial class DumpRestockInventory : IThresholdBehavior
 
             if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
             {
-                var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
+                var spawned = system.EntityManager.SpawnAttachedTo(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)), rotation: system.Random.NextAngle());
                 system.StackSystem.SetCount((spawned, null), toSpawn);
-                system.TransformSystem.SetLocalRotationNoLerp(spawned, system.Random.NextAngle());
             }
             else
             {
                 for (var i = 0; i < toSpawn; i++)
-                {
-                    var spawned = system.EntityManager.SpawnEntity(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)));
-                    system.TransformSystem.SetLocalRotationNoLerp(spawned, system.Random.NextAngle());
-                }
+                    system.EntityManager.SpawnAttachedTo(entityId, xform.Coordinates.Offset(system.Random.NextVector2(-Offset, Offset)), rotation: system.Random.NextAngle());
             }
         }
     }
