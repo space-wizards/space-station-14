@@ -326,6 +326,9 @@ namespace Content.Server.Ghost
             GhostWarpRequest(args.SenderSession, msg.Target);
         }
 
+        /// <summary>
+        /// Request to warp to the entity with the msot follower ghosts.
+        /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
@@ -341,6 +344,9 @@ namespace Content.Server.Ghost
             _followerSystem.StartFollowingEntity(uid, target);
         }
 
+        /// <summary>
+        /// Request to warp to a random entity with at least one ghost follower.
+        /// </summary>
         private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
@@ -356,6 +362,9 @@ namespace Content.Server.Ghost
             _followerSystem.StartFollowingEntity(uid, target);
         }
 
+        /// <summary>
+        /// Request to warp to a random entity that can be normally followed..
+        /// </summary>
         private void OnWarpToRandomFollowableRequest(WarpToRandomFollowableRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
@@ -365,7 +374,7 @@ namespace Content.Server.Ghost
             }
 
             var following = _followerQuery.CompOrNull(uid)?.Following;
-            // select player warps cuz no one wants to warp to places
+            // select player warps cuz no one wants to warp to places.
             if (GetPlayerWarps(following).ToArray() is not {} warps)
                 return;
             if (warps.Length == 0)
