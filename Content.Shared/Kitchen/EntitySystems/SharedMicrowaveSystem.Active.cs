@@ -14,6 +14,7 @@ public abstract partial class SharedMicrowaveSystem
     private void InitializeActive()
     {
         SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
+        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookEnd);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
         SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
 
@@ -23,21 +24,35 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp<MicrowaveComponent>(ent, out var microwaveComponent))
+        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
             return;
 
         SetAppearance((ent, microwaveComponent), MicrowaveVisualState.Cooking);
         _powerState.SetWorkingState(ent.Owner, true);
 
-        if (microwaveComponent.PlayingStream == null)
-        {
-            var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
-            var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
-            microwaveComponent.PlayingStream = pvs?.Entity;
-        }
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
+        if (microwaveComponent.PlayingStream != null && microwaveComponent.PlayingStream != EntityUid.Invalid)
+            return;
+
+        var audioParams = AudioParams.Default.WithLoop(true).WithMaxDistance(5);
+        var pvs = AudioSys.PlayPredicted(microwaveComponent.LoopingSound, ent, ent.Comp.User, audioParams);
+        microwaveComponent.PlayingStream = pvs?.Entity;
+        Dirty(ent, microwaveComponent);
+    }
+
+    /// <summary>
+    ///     Adjusts a microwave's visuals, audio, and power draw when activated.
+    /// </summary>
+    private void OnCookEnd(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
+    {
+        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent) || _timing.ApplyingState)
+            return;
+
+        DeactivateMicrowaveCycle((ent, microwaveComponent));
     }
 
     /// <summary>
@@ -49,8 +64,16 @@ public abstract partial class SharedMicrowaveSystem
         SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
         _powerState.SetWorkingState(ent.Owner, false);
 
-        AudioSys.Stop(ent.Comp.PlayingStream);
+        // TODO: Completely redo our Audio API and prediction because it doesn't work for VARIOUS reasons
+        // TODO: See e#6722 for some details
+        PredictedQueueDel(ent.Comp.PlayingStream);
         ent.Comp.PlayingStream = null;
+        Dirty(ent);
+
+        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
+        {
+            RemComp<ActivelyMicrowavedComponent>(solid);
+        }
     }
 
     /// <summary>

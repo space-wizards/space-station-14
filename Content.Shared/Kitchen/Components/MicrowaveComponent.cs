@@ -94,6 +94,7 @@ public sealed partial class MicrowaveComponent : Component
     /// <summary>
     ///     An audio stream for the microwave's "cooking" hum.
     /// </summary>
+    [DataField]
     public EntityUid? PlayingStream;
 
     /// <summary>

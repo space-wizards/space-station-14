@@ -38,6 +38,8 @@ public abstract partial class SharedMicrowaveSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
+    [Dependency] private EntityQuery<MicrowaveComponent> _microwaveQuery = default!;
+
     public override void Initialize()
     {
         base.Initialize();

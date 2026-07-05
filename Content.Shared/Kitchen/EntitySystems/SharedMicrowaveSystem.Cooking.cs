@@ -268,9 +268,6 @@ public abstract partial class SharedMicrowaveSystem
         // TODO: There's a RemCompDeferred mispredict
         // https://github.com/space-wizards/RobustToolbox/issues/6404
         RemComp<ActiveMicrowaveComponent>(ent);
-        DeactivateMicrowaveCycle(ent);
-
-        foreach (var solid in GetMicrowaveContents(ent.AsNullable()))
-            RemComp<ActivelyMicrowavedComponent>(solid);
+        //DeactivateMicrowaveCycle(ent);
     }
 }
