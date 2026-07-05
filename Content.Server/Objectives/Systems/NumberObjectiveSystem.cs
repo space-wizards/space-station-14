@@ -23,7 +23,7 @@ public sealed partial class NumberObjectiveSystem : EntitySystem
 
     private void OnAssigned(EntityUid uid, NumberObjectiveComponent comp, ref ObjectiveAssignedEvent args)
     {
-        comp.Target = _random.Next(comp.Min, comp.Max);
+        comp.Target = _random.Next(comp.Min, comp.Max + 1);
     }
 
     private void OnAfterAssign(EntityUid uid, NumberObjectiveComponent comp, ref ObjectiveAfterAssignEvent args)

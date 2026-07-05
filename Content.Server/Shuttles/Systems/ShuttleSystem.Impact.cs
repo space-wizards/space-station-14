@@ -77,7 +77,7 @@ public sealed partial class ShuttleSystem
         Subs.CVar(_cfg, CCVars.ImpactMassBias, value => _massBias = value, true);
         Subs.CVar(_cfg, CCVars.ImpactInertiaScaling, value => _inertiaScaling = value, true);
 
-        _platingMass = _protoManager.Index(_platingId).Mass;
+        _platingMass = ProtoMan.Index(_platingId).Mass;
     }
 
     /// <summary>

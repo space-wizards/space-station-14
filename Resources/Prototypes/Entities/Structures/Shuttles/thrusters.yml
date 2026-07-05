@@ -4,62 +4,62 @@
   name: thruster
   description: A thruster that allows a shuttle to move.
   abstract: true
-  components:
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          density: 60
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-    - type: AmbientSound
-      enabled: false
-      range: 4
-      volume: -4
-      sound:
-        path: /Audio/Effects/shuttle_thruster.ogg
-    - type: Transform
-      anchored: true
-    - type: Physics
-      bodyType: Static
-    - type: Rotatable
-      rotateWhileAnchored: true
-    - type: Thruster
-      damage:
-        types:
-          Heat: 40
-    - type: InteractionOutline
-    - type: Sprite
-    - type: Appearance
-    - type: ApcPowerReceiver
-      powerLoad: 1500
-    - type: ExtensionCableReceiver
-    - type: Damageable
-      damageModifierSet: Electronic
-    - type: Injurable
-      damageContainer: StructuralInorganic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 300  # Changed 100->300 because impact damage is real
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-    - type: StaticPrice
-      price: 300
-    - type: GuideHelp
-      guides:
-      - ShuttleCraft
   placement:
     mode: SnapgridCenter
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: AmbientSound
+    enabled: false
+    range: 4
+    volume: -4
+    sound:
+      path: /Audio/Effects/shuttle_thruster.ogg
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Thruster
+    damage:
+      types:
+        Heat: 40
+  - type: InteractionOutline
+  - type: Sprite
+  - type: Appearance
+  - type: ApcPowerReceiver
+    powerLoad: 1500
+  - type: ExtensionCableReceiver
+  - type: Damageable
+    damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300  # Changed 100->300 because impact damage is real
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 300
+  - type: GuideHelp
+    guides:
+    - ShuttleCraft
 
 - type: entity
   id: Thruster
@@ -72,21 +72,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 300
       behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -128,19 +122,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1800
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 900
       behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Fixtures
     fixtures:
       fix1:
@@ -258,21 +246,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
   - type: Damageable
     damageModifierSet: Electronic
   - type: Injurable
@@ -323,41 +305,41 @@
   name: rusted thruster
   description: An unrepairable thruster, broken down from wear and tear. Only useful for scrapping.
   components:
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          density: 60
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-    - type: Transform
-      anchored: true
-    - type: Physics
-      bodyType: Static
-    - type: Rotatable
-      rotateWhileAnchored: true
-    - type: Sprite
-      sprite: Structures/Shuttles/old_thruster.rsi
-      state: base
-    - type: Damageable
-      damageModifierSet: Electronic
-    - type: Injurable
-      damageContainer: Inorganic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-    - type: PhysicalComposition
-      materialComposition:
-        Steel: 1200 # 12 sheets
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Sprite
+    sprite: Structures/Shuttles/old_thruster.rsi
+    state: base
+  - type: Damageable
+    damageModifierSet: Electronic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 1200 # 12 sheets

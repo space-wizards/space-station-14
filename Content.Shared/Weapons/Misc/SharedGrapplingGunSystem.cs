@@ -25,7 +25,6 @@ namespace Content.Shared.Weapons.Misc;
 public abstract partial class SharedGrapplingGunSystem : VirtualController
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] private IEntityManager _entities = default!;
     [Dependency] private INetManager _netManager = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -87,7 +86,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue || !_entities.TryGetComponent<GrapplingGunComponent>(args.Weapon, out var grapple))
+        if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue || !TryComp<GrapplingGunComponent>(args.Weapon, out var grapple))
             return;
 
         var grapplePos = _transform.GetWorldPosition(args.Weapon.Value);
@@ -107,7 +106,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         joint.MinLength = grapple.RopeMinLength; // Length of a tile to prevent pulling yourself into / through walls
         joint.Breakpoint = grapple.RopeBreakPoint;
 
-        var jointCompGrapple = _entities.GetComponent<JointComponent>(args.Weapon.Value);
+        var jointCompGrapple = Comp<JointComponent>(args.Weapon.Value);
 
         // Since the grappling hook is offset from the grid, we need to update the local anchor so that the relay correctly uses the correct anchor for the grid.
         RefreshJointRelay((args.Embedded, embedComp));
@@ -271,7 +270,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         {
             if (!jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) ||
                 joint is not DistanceJoint distance ||
-                !_entities.TryGetComponent<JointComponent>(joint.BodyAUid, out var hookJointComp))
+                !TryComp<JointComponent>(joint.BodyAUid, out var hookJointComp))
             {
                 if (_netManager.IsServer) // Client might not receive the joint due to PVS culling, so lets not spam them with 23895739 mispredicted ungrapples
                     Ungrapple((uid, grappling), true);
