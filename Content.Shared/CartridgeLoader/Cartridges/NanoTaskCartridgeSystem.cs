@@ -28,9 +28,8 @@ public sealed partial class NanoTaskCartridgeSystem : EntitySystem
     private void OnInteractUsing(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeRelayedEvent<InteractUsingEvent> args)
     {
         if (!TryComp<NanoTaskPrintedComponent>(args.Args.Used, out var printed))
-        {
             return;
-        }
+
         if (printed.Task is NanoTaskItem item)
         {
             ent.Comp.Tasks.Add(new(ent.Comp.Counter++, printed.Task));
@@ -86,12 +85,14 @@ public sealed partial class NanoTaskCartridgeSystem : EntitySystem
         switch (message.Payload)
         {
             case NanoTaskAddTask task:
+            {
                 if (!task.Item.Validate())
                     return;
 
                 ent.Comp.Tasks.Add(new(ent.Comp.Counter++, task.Item));
                 Dirty(ent);
                 break;
+            }
             case NanoTaskUpdateTask task:
             {
                 if (!task.Item.Data.Validate())
@@ -100,17 +101,21 @@ public sealed partial class NanoTaskCartridgeSystem : EntitySystem
                 var idx = ent.Comp.Tasks.FindIndex(t => t.Id == task.Item.Id);
                 if (idx != -1)
                     ent.Comp.Tasks[idx] = task.Item;
+
                 Dirty(ent);
                 break;
             }
             case NanoTaskDeleteTask task:
+            {
                 ent.Comp.Tasks.RemoveAll(t => t.Id == task.Id);
                 Dirty(ent);
                 break;
+            }
             case NanoTaskPrintTask task:
             {
                 if (!task.Item.Validate())
                     return;
+
                 if (_timing.CurTime < ent.Comp.NextPrintAllowedAfter)
                     return;
 

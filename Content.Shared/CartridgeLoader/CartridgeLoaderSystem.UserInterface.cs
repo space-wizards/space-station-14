@@ -35,7 +35,7 @@ public sealed partial class CartridgeLoaderSystem
     }
 
     /// <summary>
-    /// Relays ui messages meant for cartridges to the currently active cartridge
+    /// Relays ui messages meant for cartridges to the currently active cartridge.
     /// </summary>
     private void OnUiMessage(Entity<CartridgeLoaderComponent> ent, ref CartridgeUiMessage args)
     {
@@ -49,11 +49,11 @@ public sealed partial class CartridgeLoaderSystem
     }
 
     /// <summary>
-    /// Updates the programs ui state
+    /// Updates the programs ui state.
     /// </summary>
-    /// <param name="loaderUid">The cartridge loaders entity uid</param>
-    /// <param name="state">The programs ui state. Programs should use their own ui state class inheriting from <see cref="BoundUserInterfaceState"/></param>
-    /// <param name="loader">The cartridge loader component</param>
+    /// <param name="loaderUid">The cartridge loaders entity uid.</param>
+    /// <param name="state">The programs ui state. Programs should use their own ui state class inheriting from <see cref="BoundUserInterfaceState"/>.</param>
+    /// <param name="loader">The cartridge loader component.</param>
     /// <remarks>
     /// This method is called "UpdateCartridgeUiState" but cartridges and a programs are the same. A cartridge is just a program as a visible item.
     /// </remarks>

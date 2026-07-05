@@ -101,12 +101,12 @@ public sealed partial class CartridgeLoaderSystem
     }
 
     /// <summary>
-    /// Installs a program by its prototype
+    /// Installs a program by its prototype.
     /// </summary>
-    /// <param name="ent">The cartridge loader</param>
-    /// <param name="prototype">The prototype</param>
-    /// <param name="deinstallable">Whether the program can be deinstalled or not</param>
-    /// <returns>Whether installing the cartridge was successful</returns>
+    /// <param name="ent">The cartridge loader.</param>
+    /// <param name="prototype">The prototype.</param>
+    /// <param name="deinstallable">Whether the program can be deinstalled or not.</param>
+    /// <returns>Whether installing the cartridge was successful.</returns>
     public bool InstallProgram(Entity<CartridgeLoaderComponent> ent, EntProtoId prototype, bool deinstallable = true)
     {
         if (UsedDiskSpace(ent) >= ent.Comp.DiskSpace)
@@ -118,21 +118,18 @@ public sealed partial class CartridgeLoaderSystem
         if (ev.Cancelled)
             return false;
 
-        if (!PredictedTrySpawnInContainer(prototype,
-                ent,
-                deinstallable ? CartridgeLoaderComponent.RemovableContainerId : CartridgeLoaderComponent.UnremovableContainerId,
-                out var cartridge))
-            return false;
-
-        return true;
+        return PredictedTrySpawnInContainer(prototype,
+            ent,
+            deinstallable ? CartridgeLoaderComponent.RemovableContainerId : CartridgeLoaderComponent.UnremovableContainerId,
+            out _);
     }
 
     /// <summary>
-    /// Uninstalls a program using its uid
+    /// Uninstalls a program using its uid.
     /// </summary>
-    /// <param name="ent">The cartridge loader uid</param>
-    /// <param name="program">The uid of the program to be uninstalled</param>
-    /// <returns>Whether uninstalling the program was successful</returns>
+    /// <param name="ent">The cartridge loader uid.</param>
+    /// <param name="program">The uid of the program to be uninstalled.</param>
+    /// <returns>Whether uninstalling the program was successful.</returns>
     public bool UninstallProgram(Entity<CartridgeLoaderComponent> ent, EntityUid program)
     {
         if (!GetDiskPrograms(ent).Contains(program))
@@ -144,11 +141,11 @@ public sealed partial class CartridgeLoaderSystem
     }
 
     /// <summary>
-    /// Installs a cartridge by spawning an invisible version of the cartridges prototype into the cartridge loaders program container program container
+    /// Installs a cartridge by spawning an invisible version of the cartridges prototype into the cartridge loaders program container.
     /// </summary>
-    /// <param name="ent">The cartridge loader</param>
-    /// <param name="cartridge">The uid of the cartridge to be installed</param>
-    /// <returns>Whether installing the cartridge was successful</returns>
+    /// <param name="ent">The cartridge loader.</param>
+    /// <param name="cartridge">The uid of the cartridge to be installed.</param>
+    /// <returns>Whether installing the cartridge was successful.</returns>
     public bool InstallCartridge(Entity<CartridgeLoaderComponent> ent, EntityUid cartridge)
     {
         if (!HasComp<CartridgeComponent>(cartridge))

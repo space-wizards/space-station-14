@@ -1,4 +1,4 @@
-﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -54,8 +54,10 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
-            return;
+        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId
+            && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId
+            && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId
+        ) return;
 
         if (TryComp<CartridgeComponent>(args.Entity, out var cartridge))
         {
@@ -81,8 +83,10 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId)
-            return;
+        if (args.Container.ID != CartridgeLoaderComponent.RemovableContainerId
+            && args.Container.ID != CartridgeLoaderComponent.UnremovableContainerId
+            && args.Container.ID != CartridgeLoaderComponent.CartridgeSlotId
+        ) return;
 
         if (ent.Comp.ActiveProgram == args.Entity)
         {
@@ -109,7 +113,7 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
         _appearanceSystem.SetData(ent.Owner, CartridgeLoaderVisuals.CartridgeInserted, ent.Comp.CartridgeSlot.HasItem);
     }
 
-    public void SendNotification(EntityUid loaderUid, string header, string message, CartridgeLoaderComponent? loader = default!)
+    public void SendNotification(EntityUid loaderUid, string header, string message, CartridgeLoaderComponent? loader = default)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
@@ -131,28 +135,28 @@ public sealed partial class CartridgeLoaderSystem : EntitySystem
 }
 
 /// <summary>
-/// Gets sent to program / cartridge entities when they get inserted or installed
+/// Gets sent to program / cartridge entities when they get inserted or installed.
 /// </summary>
 [ByRefEvent]
 public record struct CartridgeAddedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
-/// Gets sent to cartridge entities when they get ejected
+/// Gets sent to cartridge entities when they get ejected.
 /// </summary>
 [ByRefEvent]
 public record struct CartridgeRemovedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
-/// Gets sent to program / cartridge entities when they get activated
+/// Gets sent to program / cartridge entities when they get activated.
 /// </summary>
 /// <remarks>
-/// Don't update the programs ui state in this events listener
+/// Don't update the programs ui state in this events listener.
 /// </remarks>
 [ByRefEvent]
 public record struct CartridgeActivatedEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
-/// Gets sent to program / cartridge entities when they get deactivated
+/// Gets sent to program / cartridge entities when they get deactivated.
 /// </summary>
 [ByRefEvent]
 public record struct CartridgeDeactivatedEvent(Entity<CartridgeLoaderComponent> Loader);
@@ -161,16 +165,16 @@ public record struct CartridgeDeactivatedEvent(Entity<CartridgeLoaderComponent> 
 /// Gets sent to program / cartridge entities when the ui is ready to be updated by the cartridge.
 /// </summary>
 /// <remarks>
-/// This is used for the initial ui state update because updating the ui in the activate event doesn't work
+/// This is used for the initial ui state update because updating the ui in the activate event doesn't work.
 /// </remarks>
 [ByRefEvent]
 public record struct CartridgeUiReadyEvent(Entity<CartridgeLoaderComponent> Loader);
 
 /// <summary>
-/// Gets sent by the cartridge loader system to the cartridge loader entity so another system
+/// Gets sent by the cartridge loader system to the cartridge loader entity so another system.
 /// can handle displaying the notification
 /// </summary>
-/// <param name="Message">The message to be displayed</param>
+/// <param name="Message">The message to be displayed.</param>
 [ByRefEvent]
 public record struct CartridgeLoaderNotificationSentEvent(string Header, string Message);
 

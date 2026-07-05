@@ -5,7 +5,6 @@ using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.CartridgeLoader.Cartridges;

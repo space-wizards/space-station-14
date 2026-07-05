@@ -70,7 +70,6 @@ public sealed partial class PdaProgramItem : ContainerButton
 
         if (TryGetStyleProperty<Color>(StylePropertyBgColor, out var bgColor))
             BackgroundColor = bgColor;
-
     }
 
     public void SetCartridge(Entity<CartridgeComponent> program)
