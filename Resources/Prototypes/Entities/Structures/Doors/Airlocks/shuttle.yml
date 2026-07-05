@@ -14,20 +14,14 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape:
+        shape: &shape
           !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
         density: 100
         mask:
-          - FullTileMask
+        - FullTileMask
         layer:
-          - AirlockLayer
-      docking:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.2
-          position: "0,-0.5"
-        hard: false
+        - AirlockLayer
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle.rsi
     snapCardinals: false
@@ -75,10 +69,10 @@
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
-      - South
+    - South
   - type: Tag
     tags:
-      - ForceNoFixRotations
+    - ForceNoFixRotations
   - type: Construction
     graph: AirlockShuttle
     node: airlock
@@ -101,6 +95,10 @@
   - type: Fixtures
     fixtures:
       fix1:
+        shape: *shape
+        density: 100
+        mask:
+        - FullTileMask
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
 
