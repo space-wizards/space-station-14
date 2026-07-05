@@ -6,9 +6,9 @@ using Robust.Shared.Map;
 namespace Content.Server.Mapping;
 
 [AdminCommand(AdminFlags.Server | AdminFlags.Mapping)]
-public sealed class ToggleAutosaveCommand : LocalizedEntityCommands
+public sealed partial class ToggleAutosaveCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly MappingSystem _mappingSystem = default!;
+    [Dependency] private MappingSystem _mappingSystem = default!;
 
     public override string Command => "toggleautosave";
 
