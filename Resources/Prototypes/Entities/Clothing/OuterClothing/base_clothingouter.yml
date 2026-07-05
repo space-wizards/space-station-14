@@ -211,7 +211,7 @@
     action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
 
 - type: entity
   parent: ClothingOuterBase
