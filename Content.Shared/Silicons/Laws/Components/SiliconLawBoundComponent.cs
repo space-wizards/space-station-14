@@ -17,10 +17,12 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? LastLawProvider;
+
     /// <summary>
     /// Version to display on the law panel. Increments whenever the laws are changed
     /// </summary>
-    public int Version = 0;
+    [DataField]
+    public int Version = 1;
 }
 
 /// <summary>

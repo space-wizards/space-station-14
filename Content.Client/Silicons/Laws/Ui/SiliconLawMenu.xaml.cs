@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Client.Chat.Managers;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
@@ -51,6 +52,8 @@ public sealed partial class SiliconLawMenu : FancyWindow
         LawSelectNoneButton.OnPressed += _ => OnMassSelectPressed(false);
         LawAnnounceButton.OnPressed += OnLawAnnounceButtonPressed;
     }
+
+    public void Initialize() {}
 
     public void Update(EntityUid uid, SiliconLawBuiState state)
     {
@@ -141,8 +144,8 @@ public sealed partial class SiliconLawMenu : FancyWindow
     private void OnLawAnnounceButtonPressed(BaseButton.ButtonEventArgs obj)
     {
         // If you have no laws selected, or you can't talk, you can't state your laws...
-        var cannotSpeak = !_entityManager.TryGetComponent<SpeechComponent>(_owner, out var speech)
-                          || speech.SpeechSounds is null;
+        var cannotSpeak = !_entityManager.TryGetComponent<SpeechComponent>(_owner, out _)
+                          || !_entityManager.System<ActionBlockerSystem>().CanSpeak(_owner);
         if (_selectedLaws.Count < 1 || cannotSpeak)
             return;
 
