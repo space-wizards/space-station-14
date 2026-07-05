@@ -8,27 +8,70 @@
     snap:
     - Disposal
   components:
+  - type: DisposalUnit
+    container:
+      occludes: true
+      showEnts: false
+      ents: []
+    whitelist:
+      components:
+      - Item
+      - Body
   - type: Climbable
     vaultable: false
   - type: Sprite
     sprite: Structures/Piping/disposal.rsi
     layers:
-    - state: condisposal
-      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-    - state: disposal
-      map: [ "enum.DisposalUnitVisualLayers.Base" ]
-    - state: disposal-charging
-      map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-    - state: disposal-flush
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-    - state: dispover-charge
-      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-    - state: dispover-ready
-      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-    - state: dispover-full
-      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-    - state: dispover-handle
-      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: disposal
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: disposal
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      state: dispover-ready
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+      state: dispover-full
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+      state: dispover-handle
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalUnitVisuals.IsReady:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: disposal-charging }
+      enum.DisposalUnitVisuals.IsFlushing:
+        enum.DisposalUnitVisualLayers.OverlayFlushing:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DisposalUnitVisuals.IsEngaged:
+        enum.DisposalUnitVisualLayers.OverlayEngaged:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DisposalUnitVisuals.IsCharging:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          True: { state: dispover-charge, visible: true }
+          False: { state: dispover-ready, visible: true }
+      enum.DisposalUnitVisuals.IsFull:
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          False: { visible: false }
+      enum.AnchorVisuals.Anchored:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: disposal }
+          False: { state: condisposal }
+        enum.DisposalUnitVisualLayers.OverlayEngaged:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          False: { visible: false }
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -44,12 +87,6 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -73,7 +110,7 @@
         type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      disposals: !type:Container
+      DisposalUnitComponent: !type:Container
   - type: StaticPrice
     price: 70
   - type: PowerSwitch
@@ -89,9 +126,8 @@
   - type: Construction
     graph: DisposalMachine
     node: disposal_unit
-  - type: DisposalUnit
   - type: ThrowInsertContainer
-    containerId: disposals
+    containerId: DisposalUnitComponent
     probability: 0.67
   - type: UserInterface
     interfaces:
@@ -110,28 +146,62 @@
   components:
   - type: Sprite
     sprite: Structures/Piping/disposal.rsi
-    snapCardinals: true
     layers:
-      - state: conmailing
-        map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
-      - state: mailing
-        map: [ "enum.DisposalUnitVisualLayers.Base" ]
-      - state: mailing-charging
-        map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
-      - state: mailing-flush
-        map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-      - state: dispover-charge
-        map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      - state: dispover-ready
-        map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
-      - state: dispover-full
-        map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-      - state: mailover-handle
-        map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+    - map: [ "enum.DisposalUnitVisualLayers.Base" ]
+      state: mailing
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+      state: mailing-charging
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+      state: mailing-full
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayFlushing" ]
+      state: mailing-flush
+      visible: false
+    - map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+      state: mailover-handle
+  - type: GenericVisualizer
+    visuals:
+      enum.DisposalUnitVisuals.IsFlushing:
+        enum.DisposalUnitVisualLayers.OverlayFlushing:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DisposalUnitVisuals.IsReady:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: mailing }
+          False: { state: mailing-charging }
+      enum.DisposalUnitVisuals.IsEngaged:
+        enum.DisposalUnitVisualLayers.OverlayEngaged:
+          True: { state: mailover-handle }
+          False: { state: mailover-handle-off }
+      enum.DisposalUnitVisuals.IsCharging:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          True: { visible: true }
+          False: { visible: false }
+      enum.DisposalUnitVisuals.IsFull:
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          False: { visible: false }
+      enum.AnchorVisuals.Anchored:
+        enum.DisposalUnitVisualLayers.Base:
+          True: { state: mailing }
+          False: { state: conmailing }
+        enum.DisposalUnitVisualLayers.OverlayEngaged:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayCharging:
+          False: { visible: false }
+        enum.DisposalUnitVisualLayers.OverlayFull:
+          False: { visible: false }
   - type: Construction
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
+    flushingState: mailing-flush
     whitelist:
       components:
       - Item

@@ -19,7 +19,6 @@ namespace Content.Shared.Paper;
 public sealed partial class PaperSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
@@ -240,7 +239,7 @@ public sealed partial class PaperSystem : EntitySystem
             RemCompDeferred(ent, ent.Comp);
             return;
         }
-        var dataset = _protoMan.Index(ent.Comp.Dataset);
+        var dataset = ProtoMan.Index(ent.Comp.Dataset);
         // Intentionally not using the Pick overload that directly takes a LocalizedDataset,
         // because we want to get multiple attributes from the same pick.
         var pick = _random.Pick(dataset.Values);

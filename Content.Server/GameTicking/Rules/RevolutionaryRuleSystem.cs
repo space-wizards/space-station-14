@@ -17,16 +17,15 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind.Components;
-using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles.Components;
 using Content.Shared.Stunnable;
-using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
@@ -142,16 +141,19 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         if (!_mind.TryGetMind(ev.Target, out var mindId, out var mind) && !alwaysConvertible)
             return;
 
-        if (HasComp<RevolutionaryComponent>(ev.Target) ||
-            HasComp<MindShieldComponent>(ev.Target) ||
-            !HasComp<HumanoidProfileComponent>(ev.Target) &&
+        if (!HasComp<HumanoidProfileComponent>(ev.Target) &&
             !alwaysConvertible ||
             !_mobState.IsAlive(ev.Target) ||
-            HasComp<ZombieComponent>(ev.Target) ||
             !HasComp<RevolutionaryConverterComponent>(ev.Used))
         {
             return;
         }
+
+        var attemptConvertEv = new AttemptConvertRevolutionaryEvent();
+        RaiseLocalEvent(ev.Target, ref attemptConvertEv);
+
+        if (attemptConvertEv.Cancelled)
+            return;
 
         _npcFaction.AddFaction(ev.Target, RevolutionaryNpcFaction);
         var revComp = EnsureComp<RevolutionaryComponent>(ev.Target);
