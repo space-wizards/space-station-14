@@ -377,6 +377,9 @@
     - 6,4,7,5
     - 9,2,10,3
     - 9,5,9,5
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpack
@@ -388,6 +391,9 @@
   - type: Storage
     grid:
     - 0,0,39,24
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
   parent: ClothingBackpack

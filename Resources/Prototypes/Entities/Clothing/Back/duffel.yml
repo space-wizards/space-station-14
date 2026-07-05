@@ -274,3 +274,6 @@
     walkModifier: 1
     sprintModifier: 1
   - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - Backpack # ignore "WhitelistChameleon" tag. Maybe make a unique CBURN duffel sprite?
