@@ -49,6 +49,9 @@ public sealed partial class HasJobEntityConditionSystem : EntityConditionSystem<
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class JobCondition : EntityConditionBase<JobCondition>
 {
+    /// <summary>
+    /// Jobs required to fulfill this condition (only needs single match).
+    /// </summary>
     [DataField(required: true)] public List<ProtoId<JobPrototype>> Jobs = [];
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype)

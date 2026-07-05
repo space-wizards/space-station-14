@@ -176,7 +176,7 @@ public sealed partial class AnomalySystem
         Audio.PlayPvs(component.GeneratingFinishedSound, uid);
 
         var message = Loc.GetString("anomaly-generator-announcement");
-        _radio.SendRadioMessage(uid, message, _prototype.Index<RadioChannelPrototype>(component.ScienceChannel), uid);
+        _radio.SendRadioMessage(uid, message, ProtoMan.Index<RadioChannelPrototype>(component.ScienceChannel), uid);
     }
 
     private void UpdateGenerator()
