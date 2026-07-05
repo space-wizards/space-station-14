@@ -1,0 +1,1 @@
+cmd-setchat-desc = Toggles the specified chat on/off. 

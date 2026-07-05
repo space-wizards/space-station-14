@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
@@ -9,6 +9,12 @@ namespace Content.Server.Chat.Commands;
 [AdminCommand(AdminFlags.Server)]
 public sealed partial class SetChatCommand : LocalizedCommands
 {
+    [Dependency] private IConfigurationManager _configManager = default!;
+
+    private const string DeadChat = "dead";
+    private const string LoocChat = "looc";
+    private const string OocChat = "ooc";
+
     // Makes look-up easier, and in general the code is more readable.
     private static readonly Dictionary<string, (CVarDef<bool> CVar, string LocPrefix)> ChatMap = new()
     {
@@ -17,15 +23,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         [OocChat] = (CCVars.OocEnabled, "cmd-setooc-ooc"),
     };
 
-    private const string DeadChat = "dead";
-    private const string LoocChat = "looc";
-    private const string OocChat = "ooc";
-
-    [Dependency] private IConfigurationManager _configManager = default!;
-
     public override string Command => "setchat";
-
-    public override string Description => "Toggles the specified chat on/off.";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -38,7 +36,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         // If we can't find the chat name in the look-up, send an error.
         if (!ChatMap.TryGetValue(args[0], out var entry))
         {
-            shell.WriteError(Loc.GetString("shell-unknown-error")); // Needs to be its own separate error message, I think
+            shell.WriteError(Loc.GetString("shell-argument-chat-invalid", ("index", 1)));
             return;
         }
 
@@ -47,13 +45,10 @@ public sealed partial class SetChatCommand : LocalizedCommands
         {
             enabled = !_configManager.GetCVar(entry.CVar);
         }
-        else
+        else if (!bool.TryParse(args[1], out enabled))
         {
-            if (!bool.TryParse(args[1], out enabled))
-            {
-                shell.WriteError(Loc.GetString("shell-invalid-bool"));
-                return;
-            }
+            shell.WriteError("shell-invalid-bool");
+            return;
         }
 
         _configManager.SetCVar(entry.CVar, enabled);
