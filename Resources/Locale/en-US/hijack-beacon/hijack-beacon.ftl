@@ -1,7 +1,7 @@
 hijack-beacon-announcement-sender = Automated Trade Station
 hijack-beacon-announcement-activated = Attention! An Attempted Breach of the Automated Trade Station's firewall has been detected! Estimated {$time} seconds until firewall breach!
 hijack-beacon-announcement-deactivated = Firewall breach failed. Firewall integrity partially restored. Have a nice day!
-hijack-beacon-announcement-success = Successfully disengaged Automated Trade Station firewall. {$fine} spessos has been transferred from station funds to [%ERROR%]. Your trade station warranty is now void. This incident has been reported.
+hijack-beacon-announcement-success = Successfully disengaged Automated Trade Station firewall. {$fine} spesos has been transferred from station funds to [%ERROR%]. Your trade station warranty is now void. This incident has been reported.
 
 hijack-beacon-examine-await-activate = The beacon is [color=green]ready to activate[/color].
 hijack-beacon-examine-await-cooldown = The beacon is [color=red]on cooldown[/color].

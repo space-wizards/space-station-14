@@ -16,10 +16,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Lock;
 using Content.Shared.Materials;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
@@ -39,7 +37,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
 using Robust.Shared.Collections;
@@ -50,7 +47,6 @@ namespace Content.Shared.Storage.EntitySystems;
 public abstract partial class SharedStorageSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private ISharedAdminLogManager _adminLog = default!;
 
@@ -84,6 +80,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     public bool NestedStorage = true;
 
     public static readonly ProtoId<ItemSizePrototype> DefaultStorageMaxItemSize = "Normal";
+    public static readonly ProtoId<TagPrototype> BypassOpenStorageLimitTag = "BypassOpenStorageLimit";
 
     public const float AreaInsertDelayPerItem = 0.075f;
     private static AudioParams _audioParams = AudioParams.Default
@@ -124,7 +121,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         base.Initialize();
 
-        _prototype.PrototypesReloaded += OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded += OnPrototypesReloaded;
 
         Subs.CVar(_cfg, CCVars.StorageLimit, OnStorageLimitChanged, true);
 
@@ -241,7 +238,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     public override void Shutdown()
     {
-        _prototype.PrototypesReloaded -= OnPrototypesReloaded;
+        ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
@@ -256,9 +253,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
     private void UpdatePrototypeCache()
     {
-        _defaultStorageMaxItemSize = _prototype.Index(DefaultStorageMaxItemSize);
+        _defaultStorageMaxItemSize = ProtoMan.Index(DefaultStorageMaxItemSize);
         _sortedSizes.Clear();
-        _sortedSizes.AddRange(_prototype.EnumeratePrototypes<ItemSizePrototype>());
+        _sortedSizes.AddRange(ProtoMan.EnumeratePrototypes<ItemSizePrototype>());
         _sortedSizes.Sort();
 
         var nextSmallest = new KeyValuePair<string, ItemSizePrototype>[_sortedSizes.Count];
@@ -424,7 +421,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         {
             // If you need something more sophisticated for multi-UI you'll need to code some smarter
             // interactions.
-            if (_openStorageLimit == 1)
+            if (_openStorageLimit == 1 && !_tag.HasTag(actor, BypassOpenStorageLimitTag))
                 UI.CloseUserUis<StorageComponent.StorageUiKey>(actor);
 
             OpenStorageUIInternal(uid, actor, storageComp, silent: silent);
@@ -575,7 +572,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
             {
                 if (entity == args.User
                     || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
-                    || !_prototype.Resolve(itemComp.Size, out var itemSize)
+                    || !ProtoMan.Resolve(itemComp.Size, out var itemSize)
                     || !CanInsert(uid, entity, out _, storageComp, item: itemComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -862,6 +859,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     {
         if (args.UiKey is not StorageComponent.StorageUiKey.Key ||
             _openStorageLimit == -1 ||
+            _tag.HasTag(args.Actor, BypassOpenStorageLimitTag) ||
             _nestedCheck ||
             args.Message is not OpenBoundInterfaceMessage)
             return;
@@ -1818,7 +1816,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         // If we specify a max item size, use that
         if (uid.Comp.MaxItemSize != null)
         {
-            if (_prototype.Resolve(uid.Comp.MaxItemSize.Value, out var proto))
+            if (ProtoMan.Resolve(uid.Comp.MaxItemSize.Value, out var proto))
                 return proto;
 
             Log.Error($"{ToPrettyString(uid.Owner)} tried to get invalid item size prototype: {uid.Comp.MaxItemSize.Value}. Stack trace:\\n{Environment.StackTrace}");

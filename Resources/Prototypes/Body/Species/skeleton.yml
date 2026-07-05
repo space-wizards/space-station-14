@@ -106,10 +106,7 @@
     speechVerb: Skeleton
   - type: ZombieImmune
   - type: Vocal
-    sounds:
-      Male: Skeleton
-      Female: Skeleton
-      Unsexed: Skeleton
+    emoteSounds: Skeleton
   - type: SkeletonAccent
   - type: Fixtures
     fixtures:
@@ -185,7 +182,7 @@
     messagePerceivedByOthers: hugging-success-generic-others
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganSkeletonPerson
   abstract: true
   suffix: SkeletonPerson
