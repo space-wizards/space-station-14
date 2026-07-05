@@ -32,7 +32,6 @@ namespace Content.IntegrationTests.Tests.Interaction
             var server = pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var conSystem = sEntities.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
             var tSystem = sEntities.EntitySysManager.GetEntitySystem<TransformSystem>();
 
