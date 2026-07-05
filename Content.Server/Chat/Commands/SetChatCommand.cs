@@ -27,23 +27,23 @@ public sealed partial class SetChatCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length > 2 || args.Length == 0)
+        if (args.Length is > 2 or 0)
         {
             shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 1), ("upper", 2)));
             return;
         }
 
         // If we can't find the chat name in the look-up, send an error.
-        if (!ChatMap.TryGetValue(args[0], out var entry))
+        if (!ChatMap.TryGetValue(args[0], out var chat))
         {
-            shell.WriteError(Loc.GetString("shell-argument-chat-invalid", ("index", 1)));
+            shell.WriteError(Loc.GetString("shell-argument-chat-invalid", ("index", 0)));
             return;
         }
 
         bool enabled;
         if (args.Length == 1)
         {
-            enabled = !_configManager.GetCVar(entry.CVar);
+            enabled = !_configManager.GetCVar(chat.CVar);
         }
         else if (!bool.TryParse(args[1], out enabled))
         {
@@ -51,8 +51,8 @@ public sealed partial class SetChatCommand : LocalizedCommands
             return;
         }
 
-        _configManager.SetCVar(entry.CVar, enabled);
-        shell.WriteLine(Loc.GetString(enabled ? $"{entry.LocPrefix}-enabled" : $"{entry.LocPrefix}-disabled"));
+        _configManager.SetCVar(chat.CVar, enabled);
+        shell.WriteLine(Loc.GetString(enabled ? $"{chat.LocPrefix}-enabled" : $"{chat.LocPrefix}-disabled"));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
