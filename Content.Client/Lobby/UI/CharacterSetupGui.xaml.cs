@@ -65,7 +65,7 @@ namespace Content.Client.Lobby.UI
             StatsButton.OnPressed += _ => new PlaytimeStatsWindow().OpenCentered();
 
             _cfg.OnValueChanged(CCVars.SeeOwnNotes, p => AdminRemarksButton.Visible = p, true);
-            _cfg.OnValueChanged(CCVars.GameMaxCharacterSlots, _ => ReloadCharacterPickers(), true);
+            _cfg.OnValueChanged(CCVars.GameMaxCharacterSlots, _ => ReloadCharacterPickers());
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Content.Client.Lobby.UI
                 return;
             }
 
-            var maxCharactersSlots = _preferencesManager.Settings!.MaxCharacterSlots;
+            var maxCharactersSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
 
             _createNewCharacterButton.ToolTip =
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
@@ -103,9 +103,9 @@ namespace Content.Client.Lobby.UI
 
                 if (slot >= maxCharactersSlots)
                 {
-                    characterPickerButton.Disabled = true;
+                    characterPickerButton.SetOnlyStyleClass(ContainerButton.StylePseudoClassDisabled);
                     characterPickerButton.ToolTip =
-                        Loc.GetString("character-setup-gui-character-picker-select-limited-tooltip",
+                        Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
                                       ("maxCharacters", maxCharactersSlots));
                 }
 
@@ -122,7 +122,7 @@ namespace Content.Client.Lobby.UI
                 };
             }
 
-            _createNewCharacterButton.Disabled = numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
+            _createNewCharacterButton.Disabled = numberOfFullSlots >= maxCharactersSlots;
             Characters.AddChild(_createNewCharacterButton);
         }
     }
