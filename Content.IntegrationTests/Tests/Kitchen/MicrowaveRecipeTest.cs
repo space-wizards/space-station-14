@@ -42,7 +42,7 @@ public sealed class MicrowaveRecipeTest
 
             // Get the parameters we need to make this recipe.
             var proto = protoMan.Index<FoodRecipePrototype>(protoKey);
-            var maxPortions = Math.Floor(MaxSeconds / proto.CookTime);
+            var maxPortions = MaxSeconds / proto.CookTime;
 
             // Ensure this recipe is provided to the microwave if this is a secret recipe.
             if (proto.SecretRecipe)
@@ -56,7 +56,7 @@ public sealed class MicrowaveRecipeTest
 
             // Then, test that making multiple portions of the same recipe works.
             if (maxPortions > 1)
-                ValidateRecipePortions(proto, multiplePortionCount, microwave, microwaveSystem, entMan);
+                ValidateRecipePortions(proto, maxPortions, microwave, microwaveSystem, entMan);
         });
 
         await pair.CleanReturnAsync();
