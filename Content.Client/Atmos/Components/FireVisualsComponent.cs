@@ -44,8 +44,8 @@ public sealed partial class FireVisualsComponent : Component
     public EntityUid? LightEntity;
 
     /// <summary>
-    /// If set, applies a displacement map to the fire visuals effect.
+    /// Tracks the currently applied displacement, so that only new changes update the layer.
     /// </summary>
     [DataField]
-    public ProtoId<DisplacementDataPrototype>? Displacement;
+    public ProtoId<DisplacementDataPrototype>? CurrentDisplacement;
 }
