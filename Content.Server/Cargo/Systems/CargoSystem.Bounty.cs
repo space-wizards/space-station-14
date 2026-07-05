@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.NameIdentifier;
+using Content.Server.Paper;
 using Content.Shared.Access.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
@@ -39,6 +40,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountyPrintLabelMessage>(OnPrintLabelMessage);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountySkipMessage>(OnSkipBountyMessage);
         SubscribeLocalEvent<CargoBountyLabelComponent, PriceCalculationEvent>(OnGetBountyPrice);
+        SubscribeLocalEvent<CargoBountyLabelComponent, PaperCopiedEvent>(OnBountyCopied);
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<StationCargoBountyDatabaseComponent, MapInitEvent>(OnMapInit);
     }
@@ -160,6 +162,13 @@ public sealed partial class CargoSystem
         component.Calculating = true;
         args.Price = bountyPrototype.Reward - _pricing.GetPrice(container.Owner);
         component.Calculating = false;
+    }
+
+    private void OnBountyCopied(EntityUid uid, CargoBountyLabelComponent component, PaperCopiedEvent evt)
+    {
+        var newLabel = EnsureComp<CargoBountyLabelComponent>(evt.Copy);
+        newLabel.Id = component.Id;
+        newLabel.AssociatedStationId = component.AssociatedStationId;
     }
 
     private void OnSold(ref EntitySoldEvent args)
