@@ -22,7 +22,7 @@ public sealed partial class SiliconLawBoundComponent : Component
     /// Version to display on the law panel. Increments whenever the laws are changed
     /// </summary>
     [DataField]
-    public int Version = 1;
+    public int Version;
 }
 
 /// <summary>
