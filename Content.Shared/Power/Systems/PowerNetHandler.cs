@@ -80,8 +80,8 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
 
     protected override void AfterRemake(Entity<NodeGroupComponent, PowerNetComponent> group, IEnumerable<IGrouping<Entity<NodeGroupComponent>?, Node>> newGroups)
     {
-        base.AfterRemake(group, newGroups);
         _powerNetSystem.DestroyPowerNet((group.Owner, group.Comp2));
+        base.AfterRemake(group, newGroups);
     }
 
     public void AddDischarger(Entity<PowerNetComponent> group, Entity<BatteryDischargerComponent?, PowerNetworkBatteryComponent?> discharger)

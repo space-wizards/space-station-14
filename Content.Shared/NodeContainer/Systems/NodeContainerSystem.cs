@@ -170,6 +170,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
         foreach (var (key, node) in ent.Comp.Nodes)
         {
             node.Name = key;
+            node.NodeGroupID = ProtoMan.Index(node.NodeGroupProto).GroupId;
             var handler = _nodeGroupManager.GetNodeHandler(node);
             handler.InitializeNode(node, ent.Owner);
         }

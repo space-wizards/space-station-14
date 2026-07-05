@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.NodeContainer.Components;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -15,6 +16,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private ISharedPlayerManager _playerManager = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private INodeGroupManager _nodeGroupManager = default!;
+    [Dependency] private INetManager _net = default!;
 
     // TODO remove this
     private readonly List<int> _visDeletes = new();
@@ -130,7 +132,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        if (PauseUpdating)
+        if (_net.IsClient || PauseUpdating)
             return;
 
         DoGroupUpdates();
@@ -289,7 +291,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         var type = _nodeGroupManager.GetNodeGroupComponentType(node.NodeGroupID);
         var handler = _nodeGroupManager.GetNodeGroupHandler(type);
 
-        var uid = Spawn();
+        var uid = EntityManager.PredictedSpawn();
         var group = EnsureComp<NodeGroupComponent>(uid);
         var comp = _compFactory.GetComponent(type);
         AddComp(uid, comp);

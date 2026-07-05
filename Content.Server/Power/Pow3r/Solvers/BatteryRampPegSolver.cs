@@ -94,7 +94,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private void UpdateNetwork(PowerNetwork network, PowerState state, float frameTime)
+    private void UpdateNetwork(ref PowerNetwork network, PowerState state, float frameTime)
     {
         // TODO Look at SIMD.
         // a lot of this is performing very basic math on arrays of data objects like batteries
@@ -319,18 +319,18 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private List<List<PowerNetwork>> GroupByNetworkDepth(PowerState state)
+    private List<RefList<PowerNetwork>> GroupByNetworkDepth(PowerState state)
     {
-        List<List<PowerNetwork>> groupedNetworks = new();
+        List<RefList<PowerNetwork>> groupedNetworks = new();
         foreach (ref var network in state.Networks.Values)
         {
             network.Height = -1;
         }
 
-        foreach (var network in state.Networks.Values)
+        foreach (ref var network in state.Networks.Values)
         {
             if (network.Height == -1)
-                RecursivelyEstimateNetworkDepth(state, network, groupedNetworks);
+                RecursivelyEstimateNetworkDepth(state, ref network, groupedNetworks);
         }
 
         return groupedNetworks;
@@ -349,7 +349,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
     /// group in parallel. This assumes that batteries are the only device that connects to multiple networks, and
     /// is thus the only obstacle to solving everything in parallel.
     /// </summary>
-    private void ValidateNetworkGroups(PowerState state, List<List<PowerNetwork>> groupedNetworks)
+    private void ValidateNetworkGroups(PowerState state, List<RefList<PowerNetwork>> groupedNetworks)
     {
         HashSet<PowerNetwork> nets = new();
         HashSet<NodeId> netIds = new();
@@ -358,7 +358,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
             nets.Clear();
             netIds.Clear();
 
-            foreach (var net in layer)
+            foreach (ref var net in layer)
             {
                 foreach (var batteryId in net.BatteryLoads)
                 {
@@ -419,7 +419,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         }
     }
 
-    private static void RecursivelyEstimateNetworkDepth(PowerState state, PowerNetwork network, List<List<PowerNetwork>> groupedNetworks)
+    private static void RecursivelyEstimateNetworkDepth(PowerState state, ref PowerNetwork network, List<RefList<PowerNetwork>> groupedNetworks)
     {
         network.Height = -2;
         var height = -1;
@@ -433,7 +433,7 @@ public sealed class BatteryRampPegSolver : IPowerSolver
 
             var subNet = state.Networks[battery.LinkedNetworkDischarging];
             if (subNet.Height == -1)
-                RecursivelyEstimateNetworkDepth(state, subNet, groupedNetworks);
+                RecursivelyEstimateNetworkDepth(state, ref subNet, groupedNetworks);
             else if (subNet.Height == -2)
             {
                 // this network is currently computing its own height (we encountered a loop).
@@ -460,11 +460,11 @@ public sealed class BatteryRampPegSolver : IPowerSolver
         public BatteryRampPegSolver Solver;
         public PowerState State;
         public float FrameTime;
-        public List<PowerNetwork> Networks;
+        public RefList<PowerNetwork> Networks;
 
         public void Execute(int index)
         {
-            Solver.UpdateNetwork(Networks[index], State, FrameTime);
+            Solver.UpdateNetwork(ref Networks[index], State, FrameTime);
         }
     }
 

@@ -25,6 +25,7 @@ using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Localizations;
+using Content.Shared.NodeContainer;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -34,6 +35,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
@@ -76,6 +78,8 @@ namespace Content.Client.Entry
         [Dependency] private IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
         [Dependency] private ClientFeedbackManager _feedbackManager = null!;
+        [Dependency] private ISharedPlayerManager _playerManager = default!;
+        [Dependency] private INodeGroupManager _nodeGroupManager = default!;
 
         public override void PreInit()
         {
@@ -174,6 +178,11 @@ namespace Content.Client.Entry
                     SwitchToDefaultState(args.OldLevel == ClientRunLevel.Connected ||
                                          args.OldLevel == ClientRunLevel.InGame);
                 }
+            };
+
+            _playerManager.PlayerStatusChanged += (_, _) =>
+            {
+                _nodeGroupManager.Initialize();
             };
 
             // Disable engine-default viewport since we use our own custom viewport control.

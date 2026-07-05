@@ -55,7 +55,6 @@ public sealed partial class AtmosPipeNetHandler : SingleNodeGroupHandler<PipeNet
 
     protected override void AfterRemake(Entity<NodeGroupComponent, PipeNetComponent> group, IEnumerable<IGrouping<Entity<NodeGroupComponent>?, Node>> newGroups)
     {
-        base.AfterRemake(group, newGroups);
         RemoveFromGridAtmos(group);
         var newAir = new List<GasMixture>(newGroups.Count());
         foreach (var newGroup in newGroups)
@@ -65,6 +64,7 @@ public sealed partial class AtmosPipeNetHandler : SingleNodeGroupHandler<PipeNet
         }
 
         _atmosphereSystem.DivideInto(group.Comp2.Air, newAir);
+        base.AfterRemake(group, newGroups);
     }
 
     public void UpdateGroup(Entity<PipeNetComponent> group)
