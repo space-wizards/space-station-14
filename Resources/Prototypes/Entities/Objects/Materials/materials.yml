@@ -458,7 +458,7 @@
     count: 1
 
 - type: entity
-  parent: [MaterialBase, FoodBase]
+  parent: [ MaterialBase, FoodBase ]
   id: MaterialBananium
   name: bananium
   suffix: Full
@@ -467,20 +467,21 @@
     materialComposition:
       Bananium: 150
   - type: Sprite
-    state: bananium_1
+    state: bananium_3
     layers:
-    - state: bananium_1
-      map: ["base"]
+    - state: bananium_3
+      map: [ "base" ]
   - type: Stack
     stackType: Bananium
     count: 10
     baseLayer: base
     layerStates:
-      - bananium
-      - bananium_1
+    - bananium
+    - bananium_2
+    - bananium_3
   - type: FlavorProfile
     flavors:
-      - banana
+    - banana
   - type: Edible
     solution: composite
     trash:
