@@ -300,7 +300,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            if (slot < 0)
+            if (slot < 0 || slot >= MaxCharacterSlots)
             {
                 return;
             }
