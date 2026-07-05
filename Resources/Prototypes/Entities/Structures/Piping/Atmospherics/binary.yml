@@ -543,18 +543,22 @@
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
-  id: GasRecycler
+  id: !type:CreateVariants
+    values: [ GasRecycler, GasRecyclerAlt1, GasRecyclerAlt2 ]
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
+  categories: !type:CreateVariants
+    sequences: [ [ ], [ HideSpawnMenu ], [ HideSpawnMenu ] ]
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
     sprite: Structures/Machines/gasrecycler.rsi
     snapCardinals: true
     granularLayersRendering: true
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: !type:CreateVariants
+        values: [ Structures/Piping/Atmospherics/pipe.rsi, Structures/Piping/Atmospherics/pipe_alt1.rsi, Structures/Piping/Atmospherics/pipe_alt2.rsi ]
       state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
       renderingStrategy: Default
@@ -562,6 +566,8 @@
     - state: unlit
       shader: unshaded
   - type: AtmosPipeLayers
+    pipeLayer: !type:CreateVariants
+      values: [ 0, 1, 2 ] 
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
         Primary: Structures/Piping/Atmospherics/pipe.rsi
