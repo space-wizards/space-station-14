@@ -97,7 +97,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
             if (entity != null)
                 _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, Timing.CurTick, GetNetEntity(entity.Value)));
             else
-                _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates)));
+                _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, Timing.CurTick, GetNetCoordinates(coordinates), 0));
         }
 
         var popupData = new WorldPopupData(message, type, coordinates, entity);
@@ -181,31 +181,31 @@ public sealed partial class PopupSystem : SharedPopupSystem
             PopupCursor(message, type);
     }
 
-    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
+    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small, int predictionKey = 0)
     {
         if (!Timing.IsFirstTimePredicted || message is null)
             return;
 
-        _predictionInstances.Add(new PopupCoordinatesEvent.PredictionInstance(message, type, Timing.CurTick, GetNetCoordinates(coordinates)));
+        _predictionInstances.Add(new PopupCoordinatesEvent.PredictionInstance(message, type, Timing.CurTick, predictionKey));
         PopupInternal(message, type, coordinates, null, true);
     }
 
-    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
+    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small, int predictionKey = 0)
     {
         if (_playerManager.LocalSession == recipient)
-            PopupCoordinates(message, coordinates, type);
+            PopupCoordinates(message, coordinates, type, predictionKey);
     }
 
-    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small, int predictionKey = 0)
     {
         if (_playerManager.LocalEntity == recipient)
-            PopupCoordinates(message, coordinates, type);
+            PopupCoordinates(message, coordinates, type, predictionKey);
     }
 
-    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
+    public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small, int predictionKey = 0)
     {
         if (filter.Recipients.Contains(_playerManager.LocalSession))
-            PopupCoordinates(message, coordinates, type);
+            PopupCoordinates(message, coordinates, type, predictionKey);
     }
 
     public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
@@ -253,7 +253,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     private void OnPopupCoordinatesEvent(PopupCoordinatesEvent ev)
     {
-        var instance = new PopupCoordinatesEvent.PredictionInstance(ev.Message, ev.Type, ev.Tick, ev.Coordinates);
+        var instance = new PopupCoordinatesEvent.PredictionInstance(ev.Message, ev.Type, ev.Tick, ev.PredictionKey);
         if (_predictionInstances.Remove(instance))
             return;
 

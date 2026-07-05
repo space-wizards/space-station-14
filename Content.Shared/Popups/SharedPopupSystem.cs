@@ -43,7 +43,15 @@ public abstract partial class SharedPopupSystem : EntitySystem
     /// <param name="message">The message to display.</param>
     /// <param name="coordinates">The coordinates where to display the message.</param>
     /// <param name="type">Used to customize how this popup should appear visually.</param>
-    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small);
+    /// <param name="predictionKey">Additional key used to uniquely identify this popup event for prediction purposes.</param>
+    /// <remarks>
+    /// In case your popup is predicted and may show up multiple times at different locations in a single tick, for each popup you should use a different prediction key,
+    /// which server and client have to agree on. Otherwise, the client may ignore some of the popups.
+    /// This is needed because the coordinates themselves cannot be part of the PredictionInstance, since they slightly differ between server and client due to
+    /// floating point precision issues and predictive movement, so two popups at different locations with the same message in the same tick would be considered identical.
+    /// The most common use case for this is when you delete an entity and spawn a popup at its location. For this you can use the NetEntity ID of the deleted entity as the prediction key.
+    /// </remarks>
+    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small, int predictionKey = 0);
 
     /// <summary>
     /// Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> that sends a popup to the player attached to some entity.
@@ -52,7 +60,8 @@ public abstract partial class SharedPopupSystem : EntitySystem
     /// <param name="coordinates">The coordinates where to display the message.</param>
     /// <param name="recipient">The entity whose attached player will see the popup.</param>
     /// <param name="type">Used to customize how this popup should appear visually.</param>
-    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small);
+    /// <param name="predictionKey">Additional key used to uniquely identify this popup event for prediction purposes.</param>
+    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small, int predictionKey = 0);
 
     /// <summary>
     /// Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> that sends a popup to a specific player.
@@ -61,7 +70,8 @@ public abstract partial class SharedPopupSystem : EntitySystem
     /// <param name="coordinates">The coordinates where to display the message.</param>
     /// <param name="recipient">The player session that will see the popup.</param>
     /// <param name="type">Used to customize how this popup should appear visually.</param>
-    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small);
+    /// <param name="predictionKey">Additional key used to uniquely identify this popup event for prediction purposes.</param>
+    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small, int predictionKey = 0);
 
     /// <summary>
     /// Filtered variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/>, which should only be used
@@ -71,8 +81,9 @@ public abstract partial class SharedPopupSystem : EntitySystem
     /// <param name="coordinates">The coordinates where to display the message.</param>
     /// <param name="filter">Filter for the clients that will see this popup.</param>
     /// <param name="recordReplay">If true, this pop-up will be considered as a globally visible pop-up that gets shown during replays.</param>
-    /// <param name="type">Used to customize how this popup should appear visually.</param
-    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
+    /// <param name="type">Used to customize how this popup should appear visually.</param>
+    /// <param name="predictionKey">Additional key used to uniquely identify this popup event for prediction purposes.</param>
+    public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool recordReplay, PopupType type = PopupType.Small, int predictionKey = 0);
 
     /// <summary>
     /// Shows a popup above an entity for every player in PVS range.
@@ -245,7 +256,7 @@ public sealed class PopupCursorEvent(string message, PopupType type, GameTick ti
 /// Network event for displaying a popup at a world location.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PopupCoordinatesEvent(string message, PopupType type, GameTick tick, NetCoordinates coordinates) : PopupEvent(message, type, tick)
+public sealed class PopupCoordinatesEvent(string message, PopupType type, GameTick tick, NetCoordinates coordinates, int predictionKey) : PopupEvent(message, type, tick)
 {
     /// <summary>
     /// The coordinates where the popup should be displayed.
@@ -253,12 +264,17 @@ public sealed class PopupCoordinatesEvent(string message, PopupType type, GameTi
     public NetCoordinates Coordinates = coordinates;
 
     /// <summary>
+    /// The key used to identify this popup event for prediction purposes.
+    /// </summary>
+    public int PredictionKey = predictionKey;
+
+    /// <summary>
     /// Creates a new prediction instance for this popup event.
     /// </summary>
     /// <remarks>
     /// TODO: remove coords, as they are not used for prediction.
     /// </remarks>
-    public readonly record struct PredictionInstance(string Message, PopupType Type, GameTick Tick, NetCoordinates Coordinates) : IPopupPredictionInstance;
+    public readonly record struct PredictionInstance(string Message, PopupType Type, GameTick Tick, int PredictionKey) : IPopupPredictionInstance;
 }
 
 /// <summary>
