@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -35,6 +36,7 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<CargoSlipComponent, PaperCopiedEvent>(OnCargoSlipCopied);
         }
 
         private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
@@ -119,6 +121,16 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             args.Handled = true;
+        }
+
+        private void OnCargoSlipCopied(EntityUid uid, CargoSlipComponent component, PaperCopiedEvent evt)
+        {
+            var slip = EnsureComp<CargoSlipComponent>(evt.Copy);
+            slip.Product = component.Product;
+            slip.Requester = component.Requester;
+            slip.Reason = component.Reason;
+            slip.OrderQuantity = component.OrderQuantity;
+            slip.Account = component.Account;
         }
 
         private void UpdateConsole()
