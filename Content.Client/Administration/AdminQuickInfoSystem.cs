@@ -39,7 +39,6 @@ internal sealed partial class AdminQuickInfoCommand : LocalizedEntityCommands
 internal sealed partial class AdminQuickInfoSystem : EntitySystem
 {
     [Dependency] private AdminSystem _adminSystem = null!;
-    [Dependency] private IPrototypeManager _prototypeManager = null!;
 
     public event Action<QuickInfoShared.SingleEntityInfo>? EntityResponseReceived;
 
@@ -152,7 +151,7 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
 
                 sb.AppendMarkupLine(Loc.GetString("admin-quick-info-job", ("job", _playerInfo.StartingJob)));
 
-                if (_playerInfo.RoleProto is { } roleId && _system._prototypeManager.Resolve(roleId, out var role))
+                if (_playerInfo.RoleProto is { } roleId && _system.ProtoMan.Resolve(roleId, out var role))
                 {
                     var roleColor = role.Color.ToHex();
                     var symbol = _playerInfo.Antag ? role.Symbol : "";

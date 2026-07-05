@@ -30,7 +30,6 @@ namespace Content.Server.Access.Systems;
 public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
     [Dependency] private IConfigurationManager _cfgManager = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private StationRecordsSystem _record = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private AccessReaderSystem _accessReader = default!;
@@ -158,8 +157,8 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
-        if (_prototype.TryIndex(newJobProto, out var job)
-            && _prototype.Resolve(job.Icon, out var jobIcon))
+        if (ProtoMan.TryIndex(newJobProto, out var job)
+            && ProtoMan.Resolve(job.Icon, out var jobIcon))
         {
             _idCard.TryChangeJobIcon(targetId, jobIcon, player: player);
             _idCard.TryChangeJobDepartment(targetId, job);
