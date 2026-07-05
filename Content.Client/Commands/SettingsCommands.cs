@@ -8,9 +8,9 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [AnyCommand]
-public sealed class OptionsCommand : LocalizedCommands
+public sealed partial class OptionsCommand : LocalizedCommands
 {
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
 
     public override string Command => "options";
 
@@ -37,10 +37,10 @@ public sealed class OptionsCommand : LocalizedCommands
 }
 
 [AnyCommand]
-public sealed class AdvancedSettingsCommand : LocalizedCommands
+public sealed partial class AdvancedSettingsCommand : LocalizedCommands
 {
-    [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
 
     public override string Command => "advancedsettings";
 
