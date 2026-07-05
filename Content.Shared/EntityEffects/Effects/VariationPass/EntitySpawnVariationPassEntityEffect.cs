@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using Content.Shared.EntityTable;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Physics;
-using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -17,6 +18,7 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private EntityTableSystem _tables = default!;
 
     protected override void Effect(Entity<MapGridComponent> entity, ref EntityEffectEvent<EntitySpawnVariationPass> args)
     {
@@ -30,7 +32,7 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
         {
             if (TryFindRandomTile(entity, tiles, out var coords))
             {
-                var ents = EntitySpawnCollection.GetSpawns(args.Effect.Entities, _random);
+                var ents = _tables.GetSpawns(args.Effect.Table, _random);
                 foreach (var spawn in ents)
                 {
                     SpawnAtPosition(spawn, coords);
@@ -46,45 +48,43 @@ public sealed partial class EntitySpawnVariationPassEntityEffectSystem : EntityE
     {
         targetCoords = EntityCoordinates.Invalid;
 
-        var found = false;
-
         for (var i = 0; i < 10; i++)
         {
             var tile = _random.Pick(tiles);
             var tileCoords = tile.GridIndices;
 
-            var intersectingEntities = new HashSet<EntityUid>();
-            _lookup.GetLocalEntitiesIntersecting(grid, tileCoords, intersectingEntities, -0.05f, LookupFlags.Uncontained);
-
-            var blocker = false;
-            foreach (var ent in intersectingEntities)
+            if (CheckTileEntities(grid, tileCoords))
             {
-                if (TryComp<FixturesComponent>(ent, out var fixtures))
-                {
-                    foreach (var fixture in fixtures.Fixtures.Values)
-                    {
-                        // Continue if no collision is possible
-                        if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
-                            continue;
-
-                        blocker = true;
-                        break;
-                    }
-                }
-
-                if (blocker)
-                    break;
-            }
-
-            if (!blocker)
-            {
-                found = true;
                 targetCoords = _map.GridTileToLocal(grid, grid.Comp, tileCoords);
-                return found;
+                return true;
             }
         }
 
-        return found;
+        return false;
+    }
+
+    /// Returns false if the tile is occupied.
+    private bool CheckTileEntities(Entity<MapGridComponent> grid, Vector2i tileCoords)
+    {
+        var intersectingEntities = new HashSet<EntityUid>();
+        _lookup.GetLocalEntitiesIntersecting(grid, tileCoords, intersectingEntities, -0.05f, LookupFlags.Uncontained);
+
+        foreach (var ent in intersectingEntities)
+        {
+            if (TryComp<FixturesComponent>(ent, out var fixtures))
+            {
+                foreach (var fixture in fixtures.Fixtures.Values)
+                {
+                    // Continue if no collision is possible
+                    if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                        continue;
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
 
@@ -104,8 +104,8 @@ public sealed partial class EntitySpawnVariationPass : EntityEffectBase<EntitySp
     public float TilesPerEntityStdDev = 7f;
 
     /// <summary>
-    /// Spawn entries for each chosen location.
+    /// Spawn table for each chosen location.
     /// </summary>
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Entities = default!;
+    public EntityTableSelector Table = default!;
 }
