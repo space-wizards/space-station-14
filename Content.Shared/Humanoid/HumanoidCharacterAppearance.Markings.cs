@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Humanoid.Markings;
-using Robust.Shared.ColorExtensions;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -29,9 +28,9 @@ public sealed partial class HumanoidCharacterAppearance
     {
         return strategy switch
         {
-            0 => ColorExtensions.GetSplitComplementaries(baseColor),
-            1 => ColorExtensions.GetTriadicComplementaries(baseColor),
-            _ => ColorExtensions.GetOneComplementary(baseColor),
+            0 => baseColor.GetSplitComplementaries(),
+            1 => baseColor.GetTriadicComplementaries(),
+            _ => baseColor.GetOneComplementary(),
         };
     }
 
