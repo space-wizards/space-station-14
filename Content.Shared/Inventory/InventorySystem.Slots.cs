@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -10,8 +11,7 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IViewVariablesManager _vvm = default!;
+    [Dependency] private IViewVariablesManager _vvm = default!;
 
     private void InitializeSlots()
     {
@@ -55,7 +55,25 @@ public partial class InventorySystem : EntitySystem
         return false;
     }
 
-    private void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
+    /// <summary>
+    /// Copy this component's datafields from one entity to another.
+    /// This can't use CopyComp because the template needs to be applied using the API method.
+    /// <summary>
+    public void CopyComponent(Entity<InventoryComponent?> source, EntityUid target)
+    {
+        if (!Resolve(source, ref source.Comp))
+            return;
+
+        var targetComp = EnsureComp<InventoryComponent>(target);
+        targetComp.SpeciesId = source.Comp.SpeciesId;
+        targetComp.Displacements = new Dictionary<string, DisplacementData>(source.Comp.Displacements);
+        targetComp.FemaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.FemaleDisplacements);
+        targetComp.MaleDisplacements = new Dictionary<string, DisplacementData>(source.Comp.MaleDisplacements);
+        SetTemplateId((target, targetComp), source.Comp.TemplateId);
+        Dirty(target, targetComp);
+    }
+
+    protected virtual void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
     {
         UpdateInventoryTemplate(ent);
     }
@@ -67,7 +85,7 @@ public partial class InventorySystem : EntitySystem
 
     protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
     {
-        if (!_prototypeManager.Resolve(ent.Comp.TemplateId, out var invTemplate))
+        if (!ProtoMan.Resolve(ent.Comp.TemplateId, out var invTemplate))
             return;
 
         // Remove any containers that aren't in the new template.
@@ -92,6 +110,9 @@ public partial class InventorySystem : EntitySystem
             container.OccludesLight = false;
             ent.Comp.Containers[i] = container;
         }
+
+        var ev = new InventoryTemplateUpdated();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
@@ -241,6 +262,10 @@ public partial class InventorySystem : EntitySystem
             _containers = containers;
         }
 
+        /// <summary>
+        /// Get the next ContainerSlot in this inventory.
+        /// The slot may not contain an item.
+        /// </summary>
         public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container)
         {
             while (_nextIdx < _slots.Length)
@@ -256,6 +281,30 @@ public partial class InventorySystem : EntitySystem
             }
 
             container = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Get the next ContainerSlot in this inventory, along with the corresponding SlotDefinition.
+        /// The slot may not contain an item.
+        /// </summary>
+        public bool MoveNext([NotNullWhen(true)] out ContainerSlot? container, [NotNullWhen(true)] out SlotDefinition? slot)
+        {
+            while (_nextIdx < _slots.Length)
+            {
+                var i = _nextIdx++;
+                var slotCandidate = _slots[i];
+
+                if ((slotCandidate.SlotFlags & _flags) == 0)
+                    continue;
+
+                container = _containers[i];
+                slot = slotCandidate;
+                return true;
+            }
+
+            container = null;
+            slot = null;
             return false;
         }
 

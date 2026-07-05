@@ -11,9 +11,8 @@ namespace Content.Shared.NPC.Systems;
 /// </summary>
 public sealed partial class NpcFactionSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     /// <summary>
     /// To avoid prototype mutability we store an intermediary data class that gets used instead.
@@ -104,7 +103,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// </summary>
     public void AddFaction(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] string faction, bool dirty = true)
     {
-        if (!_proto.HasIndex<NpcFactionPrototype>(faction))
+        if (!ProtoMan.HasIndex<NpcFactionPrototype>(faction))
         {
             Log.Error($"Unable to find faction {faction}");
             return;
@@ -127,7 +126,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
         foreach (var faction in factions)
         {
-            if (!_proto.HasIndex(faction))
+            if (!ProtoMan.HasIndex(faction))
             {
                 Log.Error($"Unable to find faction {faction}");
                 continue;
@@ -145,7 +144,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// </summary>
     public void RemoveFaction(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] string faction, bool dirty = true)
     {
-        if (!_proto.HasIndex<NpcFactionPrototype>(faction))
+        if (!ProtoMan.HasIndex<NpcFactionPrototype>(faction))
         {
             Log.Error($"Unable to find faction {faction}");
             return;
@@ -307,7 +306,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
     private void RefreshFactions()
     {
-        _factions = _proto.EnumeratePrototypes<NpcFactionPrototype>().ToFrozenDictionary(
+        _factions = ProtoMan.EnumeratePrototypes<NpcFactionPrototype>().ToFrozenDictionary(
             faction => faction.ID,
             faction =>  new FactionData
             {

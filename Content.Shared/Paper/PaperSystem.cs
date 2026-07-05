@@ -15,23 +15,23 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Paper;
 
-public sealed class PaperSystem : EntitySystem
+public sealed partial class PaperSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private MetaDataSystem _metaSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+
+    [Dependency] private EntityQuery<PaperComponent> _paperQuery = default!;
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
 
-    private EntityQuery<PaperComponent> _paperQuery;
 
     public override void Initialize()
     {
@@ -47,8 +47,6 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
 
         SubscribeLocalEvent<ActivateOnPaperOpenedComponent, PaperWriteEvent>(OnPaperWrite);
-
-        _paperQuery = GetEntityQuery<PaperComponent>();
     }
 
     private void OnMapInit(Entity<PaperComponent> entity, ref MapInitEvent args)
@@ -187,7 +185,6 @@ public sealed class PaperSystem : EntitySystem
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
         RaiseLocalEvent(args.Actor, ref ev);
-
         if (ev.Cancelled)
             return;
 
@@ -212,9 +209,6 @@ public sealed class PaperSystem : EntitySystem
 
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
-
-        var writeAfterEv = new PaperAfterWriteEvent(args.Actor);
-        RaiseLocalEvent(entity.Owner, ref writeAfterEv);
     }
 
     private void OnRandomPaperContentMapInit(Entity<RandomPaperContentComponent> ent, ref MapInitEvent args)
@@ -225,7 +219,7 @@ public sealed class PaperSystem : EntitySystem
             RemCompDeferred(ent, ent.Comp);
             return;
         }
-        var dataset = _protoMan.Index(ent.Comp.Dataset);
+        var dataset = ProtoMan.Index(ent.Comp.Dataset);
         // Intentionally not using the Pick overload that directly takes a LocalizedDataset,
         // because we want to get multiple attributes from the same pick.
         var pick = _random.Pick(dataset.Values);
@@ -323,14 +317,6 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 /// <summary>
 /// Cancellable event for attempting to write on a piece of paper.
 /// </summary>
-/// <param name="Paper">The paper that the writing will take place on.</param>
+/// <param name="paper">The paper that the writing will take place on.</param>
 [ByRefEvent]
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
-
-/// <summary>
-/// Event raised on paper after it was written on by someone.
-/// </summary>
-/// <param name="Actor">Entity that wrote something on the paper.</param>
-[ByRefEvent]
-public readonly record struct PaperAfterWriteEvent(EntityUid Actor);
-
