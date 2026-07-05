@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Components;
 
+/// <summary>
+/// Represents a device connected to the APC power network.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PowerReceiverComponent : Component
 {
@@ -26,7 +29,7 @@ public sealed partial class PowerReceiverComponent : Component
     ///     When false, causes this to appear powered even if not receiving power from an Apc.
     /// </summary>
     [DataField]
-    public bool NeedsPower;
+    public bool NeedsPower = true;
 
     /// <summary>
     ///     When false, causes this to never appear powered.
@@ -39,10 +42,18 @@ public sealed partial class PowerReceiverComponent : Component
     }
 
     [DataField]
-    public bool Paused { get; set; }
+    public bool Paused
+    {
+        get => Load.Paused;
+        set => Load.Paused = value;
+    }
 
     [ViewVariables]
-    public float ReceivingPower { get; set; }
+    public float ReceivingPower
+    {
+        get => Load.ReceivingPower;
+        set => Load.ReceivingPower = value;
+    }
 
     [ViewVariables]
     public IPowerLoad Load { get; set; } = new PowerLoad();

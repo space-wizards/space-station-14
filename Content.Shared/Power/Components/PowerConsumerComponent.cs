@@ -9,6 +9,9 @@ namespace Content.Shared.Power.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PowerConsumerComponent : Component
 {
+    [DataField]
+    public string NodeId = "input";
+
     /// <summary>
     ///     How much power this needs to be fully powered.
     /// </summary>

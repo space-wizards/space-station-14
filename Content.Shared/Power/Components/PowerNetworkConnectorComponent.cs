@@ -40,5 +40,5 @@ public sealed partial class PowerNetworkConnectorComponent : Component
     /// A set of nets this device is a part of.
     /// </summary>
     [ViewVariables]
-    public Dictionary<string, Entity<PowerNetComponent>?>? Nets;
+    public Dictionary<string, Entity<PowerNetComponent>> Nets = new();
 }

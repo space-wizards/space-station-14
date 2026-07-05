@@ -227,7 +227,6 @@
     voltage: Apc
     node: output
   - type: PowerSupplier
-    voltage: Apc
     supplyRate: 20000
     supplyRampRate: 500
     supplyRampTolerance: 500

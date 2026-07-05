@@ -6,7 +6,7 @@ namespace Content.Shared.Power.Systems;
 public abstract partial class SharedPowerNetSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private PowerNetHandler _handler = default!;
+    [Dependency] private PowerNetworkHandler _handler = default!;
     [Dependency] private EntityQuery<PowerNetworkConnectorComponent> _connectorQuery = default!;
 
     public abstract bool IsPoweredCalculate(PowerReceiverComponent comp);

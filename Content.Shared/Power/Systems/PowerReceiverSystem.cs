@@ -20,7 +20,7 @@ public sealed partial class PowerReceiverSystem : EntitySystem
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private ISharedAdminManager _adminManager = default!;
-    [Dependency] private PowerNetHandler _handler = default!;
+    [Dependency] private PowerNetworkHandler _handler = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPowerNetSystem _net = default!;
     [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;

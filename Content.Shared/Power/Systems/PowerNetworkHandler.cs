@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Power.Systems;
 
-public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent>
+public sealed partial class PowerNetworkHandler : NodeGroupHandler<PowerNetComponent>
 {
     [Dependency] private SharedPowerNetSystem _powerNetSystem = default!;
     // the wall of queries of doom and despair
@@ -84,10 +84,11 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         base.AfterRemake(group, newGroups);
     }
 
-    public void AddDischarger(Entity<PowerNetComponent> group, Entity<BatteryDischargerComponent?, PowerNetworkBatteryComponent?> discharger)
+    public void AddDischarger(Entity<PowerNetComponent> group, Entity<BatteryDischargerComponent?, PowerNetworkBatteryComponent?> discharger, Node node)
     {
         if (!_dischargerQuery.Resolve(discharger.Owner, ref discharger.Comp1, false)
-            || !_batteryQuery.Resolve(discharger.Owner, ref discharger.Comp2, false))
+            || !_batteryQuery.Resolve(discharger.Owner, ref discharger.Comp2, false)
+            || node.Name != discharger.Comp1.NodeId)
             return;
 
         DebugTools.Assert(discharger.Comp2.Battery.LinkedNetworkDischarging == default);
@@ -112,10 +113,11 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         QueueNetworkReconnect(group);
     }
 
-    public void AddCharger(Entity<PowerNetComponent> group, Entity<BatteryChargerComponent?, PowerNetworkBatteryComponent?> charger)
+    public void AddCharger(Entity<PowerNetComponent> group, Entity<BatteryChargerComponent?, PowerNetworkBatteryComponent?> charger, Node node)
     {
         if (!_chargerQuery.Resolve(charger.Owner, ref charger.Comp1, false)
-            || !_batteryQuery.Resolve(charger.Owner, ref charger.Comp2, false))
+            || !_batteryQuery.Resolve(charger.Owner, ref charger.Comp2, false)
+            || node.Name != charger.Comp1.NodeId)
             return;
 
         DebugTools.Assert(charger.Comp2.Battery.LinkedNetworkCharging == default);
@@ -139,14 +141,16 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         QueueNetworkReconnect(group);
     }
 
-    public void AddConsumer(Entity<PowerNetComponent> group, Entity<PowerConsumerComponent?> consumer)
+    public void AddConsumer(Entity<PowerNetComponent> group, Entity<PowerConsumerComponent?> consumer, Node node)
     {
-        if (!_consumerQuery.Resolve(ref consumer, false) || consumer.Comp == null)
+        if (!_consumerQuery.Resolve(ref consumer, false)
+            || consumer.Comp == null
+            || node.Name != consumer.Comp.NodeId)
             return;
 
         DebugTools.Assert(consumer.Comp.Load.LinkedNetwork == default);
         consumer.Comp.Load.LinkedNetwork = default;
-        group.Comp.Consumers.Add(consumer!);
+        group.Comp.Consumers.Add(consumer);
         QueueNetworkReconnect(group);
     }
 
@@ -158,13 +162,15 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         // Linked network can be default if it was re-connected twice in one tick.
         DebugTools.Assert(consumer.Comp.Load.LinkedNetwork == default || consumer.Comp.Load.LinkedNetwork == group.Comp.Network.Id);
         consumer.Comp.Load.LinkedNetwork = default;
-        group.Comp.Consumers.Remove(consumer!);
+        group.Comp.Consumers.Remove(consumer);
         QueueNetworkReconnect(group);
     }
 
-    public void AddSupplier(Entity<PowerNetComponent> group, Entity<PowerSupplierComponent?> supplier)
+    public void AddSupplier(Entity<PowerNetComponent> group, Entity<PowerSupplierComponent?> supplier, Node node)
     {
-        if (!_supplierQuery.Resolve(ref supplier, false) || supplier.Comp == null)
+        if (!_supplierQuery.Resolve(ref supplier, false)
+            || supplier.Comp == null
+            || node.Name != supplier.Comp.NodeId)
             return;
 
         DebugTools.Assert(supplier.Comp.Supply.LinkedNetwork == default);
@@ -218,12 +224,12 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
         QueueNetworkReconnect(group);
     }
 
-    public void AddConnector(Entity<PowerNetComponent> group, Entity<PowerNetworkConnectorComponent> ent)
+    public void AddConnector(Entity<PowerNetComponent> group, Entity<PowerNetworkConnectorComponent> ent, Node node)
     {
-        AddCharger(group, ent.Owner);
-        AddDischarger(group, ent.Owner);
-        AddSupplier(group, ent.Owner);
-        AddConsumer(group, ent.Owner);
+        AddCharger(group, ent.Owner, node);
+        AddDischarger(group, ent.Owner, node);
+        AddSupplier(group, ent.Owner, node);
+        AddConsumer(group, ent.Owner, node);
     }
 
     public void RemoveConnector(Entity<PowerNetComponent> group, Entity<PowerNetworkConnectorComponent> ent)

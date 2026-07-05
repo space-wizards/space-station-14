@@ -4,12 +4,23 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Power.Components;
 
+/// <summary>
+///
+/// </summary>
+/// <seealso cref="PowerNetworkConnectorComponent"/>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PowerSupplierComponent : Component
 {
+    /// <summary>
+    /// Node ID for a node that supplies power to the connected network.
+    /// Its voltage must be specified in <see cref="PowerNetworkConnectorComponent"/>.
+    /// </summary>
     [DataField]
-    public Voltage Voltage;
+    public string NodeId = "output";
 
+    /// <summary>
+    /// Max amount of energy that can be supplied to the network.
+    /// </summary>
     [DataField("supplyRate")]
     [GuidebookData]
     public float MaxSupply

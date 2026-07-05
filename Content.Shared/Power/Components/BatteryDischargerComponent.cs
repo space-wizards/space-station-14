@@ -3,4 +3,8 @@
 namespace Content.Shared.Power.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class BatteryDischargerComponent : Component;
+public sealed partial class BatteryDischargerComponent : Component
+{
+    [DataField]
+    public string NodeId = "output";
+}

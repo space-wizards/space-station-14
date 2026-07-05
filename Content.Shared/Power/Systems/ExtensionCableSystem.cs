@@ -53,8 +53,7 @@ public sealed partial class ExtensionCableSystem : EntitySystem
         var xform = Transform(provider);
 
         // If grid deleting no need to update power.
-        if (HasComp<MapGridComponent>(xform.GridUid) &&
-            MetaData(xform.GridUid.Value).EntityLifeStage > EntityLifeStage.MapInitialized)
+        if (xform.GridUid != null && MetaData(xform.GridUid.Value).EntityLifeStage > EntityLifeStage.MapInitialized)
         {
             return;
         }

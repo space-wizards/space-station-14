@@ -216,8 +216,8 @@ public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSys
         var clogged = _generator.GetIsClogged(uid);
 
         (float, float)? networkStats = null;
-        if (connector.Net != null)
-            networkStats = (connector.Net.Value.Comp.LastCombinedLoad, connector.Net.Value.Comp.LastCombinedSupply);
+        if (connector.Nets.TryGetValue(powerSupplier.NodeId, out var net))
+            networkStats = (net.Comp.LastCombinedLoad, net.Comp.LastCombinedSupply);
 
         _uiSystem.SetUiState(
             uid,

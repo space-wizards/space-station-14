@@ -6,4 +6,8 @@ namespace Content.Shared.Power.Components;
 ///     Connects the loading side of a <see cref="BatteryComponent"/> to a non-APC power network.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class BatteryChargerComponent : Component;
+public sealed partial class BatteryChargerComponent : Component
+{
+    [DataField]
+    public string NodeId = "input";
+}

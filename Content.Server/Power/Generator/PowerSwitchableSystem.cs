@@ -39,21 +39,15 @@ public sealed partial class PowerSwitchableSystem : SharedPowerSwitchableSystem
 
         var voltage = GetVoltage(uid, comp);
 
-        if (TryComp<PowerSupplierComponent>(uid, out var supplier))
+        if (TryComp<PowerNetworkConnectorComponent>(uid, out var connector))
         {
-            // convert to nodegroupid (goofy server Voltage enum is just alias for it)
-            switch (voltage)
+            connector.Voltage = voltage switch
             {
-                case SwitchableVoltage.HV:
-                    supplier.Voltage = Voltage.High;
-                    break;
-                case SwitchableVoltage.MV:
-                    supplier.Voltage = Voltage.Medium;
-                    break;
-                case SwitchableVoltage.LV:
-                    supplier.Voltage = Voltage.Apc;
-                    break;
-            }
+                SwitchableVoltage.HV => Voltage.High,
+                SwitchableVoltage.MV => Voltage.Medium,
+                SwitchableVoltage.LV => Voltage.Apc,
+                _ => connector.Voltage
+            };
         }
 
         // Switching around the voltage on the power supplier is "enough",

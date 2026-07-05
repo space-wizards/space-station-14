@@ -6,6 +6,9 @@ public interface IPowerSupply : IPowerNode
 {
     NodeId LinkedNetwork { get; set; }
 
+    /// <summary>
+    /// Max amount of energy that can be supplied to the network.
+    /// </summary>
     float MaxSupply { get; set; }
 
     float SupplyRampRate { get; set; }

@@ -323,7 +323,6 @@
     state: portgen3
   - type: PowerSupplier
     # No ramping needed on this bugger.
-    voltage: Apc
     supplyRampTolerance: 2000
   - type: GeneratorExhaustGas
     gasType: CarbonDioxide
