@@ -39,15 +39,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
-    - trigger:
-        !type:DamageTrigger
         damage: 300
        # TODO: Construction graph
       behaviors:

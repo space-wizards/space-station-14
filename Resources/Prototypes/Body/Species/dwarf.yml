@@ -59,17 +59,14 @@
         layer:
         - MobLayer
   - type: Vocal
-    sounds:
-      Male: UnisexDwarf
-      Female: FemaleDwarf
-      Unsexed: UnisexDwarf
+    emoteSounds: UnisexDwarf
   - type: ReplacementAccent
     accent: scottish
   - type: Speech
     speechSounds: Bass
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganDwarf
   abstract: true
   suffix: Dwarf
