@@ -114,11 +114,11 @@ public abstract partial class SharedHandsSystem
 
         TryDrop(ent, handName, null, false);
 
-        if (!ent.Comp.Hands.Remove(handName))
-            return;
-
         if (ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
 
         ent.Comp.SortedHands.Remove(handName);
         if (ent.Comp.ActiveHandId == handName)
