@@ -1,14 +1,14 @@
-- type: NodeGroup
+- type: nodeGroup
   id: Apc
   color: LimeGreen
   nodeDescription: node-container-component-on-examine-details-apc
 
-- type: NodeGroup
+- type: nodeGroup
   id: MVPower
   color: Yellow
   nodeDescription: node-container-component-on-examine-details-mvpower
 
-- type: NodeGroup
+- type: nodeGroup
   id: HVPower
   color: Orange
   nodeDescription: node-container-component-on-examine-details-hvpower

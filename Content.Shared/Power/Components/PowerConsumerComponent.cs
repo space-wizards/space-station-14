@@ -46,5 +46,5 @@ public sealed partial class PowerConsumerComponent : Component
     }
 
     [ViewVariables]
-    public IPowerLoad Load = default!;
+    public IPowerLoad Load = new PowerLoad();
 }

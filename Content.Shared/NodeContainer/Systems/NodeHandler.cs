@@ -50,7 +50,7 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
 
     [Dependency] protected SharedMapSystem MapSystem = default!;
     [Dependency] protected NodeGroupSystem NodeGroupSys = default!;
-    [Dependency] protected NodeGroupManager NodeGroupManager = default!;
+    [Dependency] protected INodeGroupManager NodeGroupMan = default!;
     [Dependency] protected EntityQuery<NodeContainerComponent> NodeQuery = default!;
     [Dependency] protected EntityQuery<MapGridComponent> MapGridQuery = default!;
 
@@ -62,7 +62,7 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
 
     public virtual void Register()
     {
-        NodeGroupSys.NodeHandlers.Add(NodeType, this);
+        NodeGroupMan.RegisterNodeHandler(NodeType, this);
     }
 
     public IEnumerable<Node> GetNodesInTile(Entity<MapGridComponent> grid, Vector2i coords)
@@ -175,7 +175,7 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
 
     protected virtual string? GetExamineText(T node)
     {
-        var proto = NodeGroupManager[node.NodeGroupID];
+        var proto = NodeGroupMan[node.NodeGroupID];
         return proto.NodeDescription == null ? null : Loc.GetString(proto.NodeDescription);
     }
 

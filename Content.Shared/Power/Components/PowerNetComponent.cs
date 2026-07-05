@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Power.Pow3r;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Power.Components;
 
@@ -20,32 +19,16 @@ public sealed partial class PowerNetComponent : Component
     public readonly HashSet<EntityUid> Providers = new();
 
     [ViewVariables]
-    public HashSet<EntityUid> Chargers
-    {
-        get => Network.Chargers;
-        set => Network.Chargers = value;
-    }
+    public HashSet<EntityUid> Chargers = new();
 
     [ViewVariables]
-    public HashSet<EntityUid> Dischargers
-    {
-        get => Network.Dischargers;
-        set => Network.Dischargers = value;
-    }
+    public HashSet<EntityUid> Dischargers = new();
 
     [ViewVariables]
-    public HashSet<EntityUid> Consumers
-    {
-        get => Network.Consumers;
-        set => Network.Consumers = value;
-    }
+    public HashSet<EntityUid> Consumers = new();
 
     [ViewVariables]
-    public HashSet<EntityUid> Suppliers
-    {
-        get => Network.Suppliers;
-        set => Network.Suppliers = value;
-    }
+    public HashSet<EntityUid> Suppliers = new();
 
     [ViewVariables]
     public float LastCombinedLoad => Network.LastCombinedLoad;
@@ -54,5 +37,5 @@ public sealed partial class PowerNetComponent : Component
     public float LastCombinedSupply => Network.LastCombinedSupply;
 
     [ViewVariables]
-    public IPowerNetwork Network = default!;
+    public IPowerNetwork Network = new PowerNetwork();
 }

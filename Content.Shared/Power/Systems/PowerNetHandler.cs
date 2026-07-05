@@ -27,20 +27,18 @@ public sealed partial class PowerNetHandler : NodeGroupHandler<PowerNetComponent
 
     public Dictionary<ushort, Voltage> Voltages { get; } = new();
 
-    public override void RegisterHandler()
+    public override void RegisterGroups()
     {
         var highId = ProtoMan.Index(HighPowerId).GroupId;
         var midId =  ProtoMan.Index(MediumPowerId).GroupId;
         var apcId = ProtoMan.Index(ApcPowerId).GroupId;
-
-        NodeGroupSys.NodeGroupTypes[highId] = NodeGroupCompType;
-        NodeGroupSys.NodeGroupTypes[midId] = NodeGroupCompType;
-        NodeGroupSys.NodeGroupTypes[apcId] = NodeGroupCompType;
-
-        NodeGroupSys.NodeGroupHandlers.Add(NodeGroupCompType, this);
+        NodeGroupMan.RegisterGroup(highId, NodeGroupCompType);
+        NodeGroupMan.RegisterGroup(midId, NodeGroupCompType);
+        NodeGroupMan.RegisterGroup(apcId, NodeGroupCompType);
 
         // TODO POWER un-hardcode this somehow
-        // Maybe by turning voltage into a prototype, but I don't feel like dealing with this after refactoring damn 30k lines of code
+        // Maybe by turning voltage into a prototype
+        // but I don't feel like dealing with this after refactoring damn 30k lines of code
         Voltages.Add(highId, Voltage.High);
         Voltages.Add(midId, Voltage.Medium);
         Voltages.Add(apcId, Voltage.Apc);

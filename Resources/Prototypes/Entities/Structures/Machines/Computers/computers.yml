@@ -319,11 +319,11 @@
   - type: PowerMonitoringConsole
   - type: PowerMonitoringCableNetworks
   - type: NodeContainer
-    examinable: true
     nodes:
       hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerNetworkConnector
     voltage: High
     node: hv

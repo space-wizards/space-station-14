@@ -43,11 +43,11 @@
     - type: Anchorable
     - type: Pullable
     - type: NodeContainer
-      examinable: true
       nodes:
         output:
           !type:CableDeviceNode
           nodeGroupID: HVPower
+          examinable: true
         teg:
           !type:TegNodeGenerator
           nodeGroupID: Teg

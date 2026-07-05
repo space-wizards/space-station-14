@@ -65,14 +65,15 @@
     startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
-    examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+        examinable: true
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+        examinable: true
   - type: PowerMonitoringDevice
     group: APC
     sourceNode: input

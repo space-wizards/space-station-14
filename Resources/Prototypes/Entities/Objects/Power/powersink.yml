@@ -11,11 +11,11 @@
       walkModifier: 0.6
       sprintModifier: 0.6
     - type: NodeContainer
-      examinable: true
       nodes:
         input:
           !type:CableDeviceNode
           nodeGroupID: HVPower
+          examinable: true
     - type: Transform
       anchored: true
     - type: Physics

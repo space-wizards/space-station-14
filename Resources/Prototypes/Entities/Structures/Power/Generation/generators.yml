@@ -29,11 +29,11 @@
     state: generator
     snapCardinals: true
   - type: NodeContainer
-    examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerNetworkConnector
     voltage: High
     node: output
@@ -111,11 +111,11 @@
     - state: on
       shader: unshaded
   - type: NodeContainer
-    examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerNetworkConnector
     voltage: High
     node: output
@@ -218,11 +218,11 @@
   description: An advanced auxiliary power unit for a shuttle.
   components:
   - type: NodeContainer
-    examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+        examinable: true
   - type: PowerNetworkConnector
     voltage: Apc
     node: output

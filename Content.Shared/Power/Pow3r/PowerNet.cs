@@ -9,18 +9,6 @@ public struct PowerNetwork : IPowerNetwork, IEquatable<PowerNetwork>
     }
 
     [ViewVariables]
-    public HashSet<EntityUid> Chargers { get; set; } = new();
-
-    [ViewVariables]
-    public HashSet<EntityUid> Dischargers { get; set; } = new();
-
-    [ViewVariables]
-    public HashSet<EntityUid> Consumers { get; set; } = new();
-
-    [ViewVariables]
-    public HashSet<EntityUid> Suppliers { get; set; } = new();
-
-    [ViewVariables]
     public float LastCombinedLoad { get; set; } = 0;
 
     [ViewVariables]

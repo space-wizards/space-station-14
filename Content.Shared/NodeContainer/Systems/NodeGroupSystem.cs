@@ -16,21 +16,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private INodeGroupManager _nodeGroupManager = default!;
 
-    /// <summary>
-    /// A dictionary that associates each <see cref="NodeGroupPrototype"/> numeric ID with a node group specific component type.
-    /// </summary>
-    public List<Type> NodeGroupTypes = new();
-
-    /// <summary>
-    /// A dictionary <see cref="INodeGroupHandler"/>s that handle <see cref="NodeGroupComponent"/>s with a specific Node group component Type.
-    /// </summary>
-    public Dictionary<Type, INodeGroupHandler> NodeGroupHandlers = new();
-
-    /// <summary>
-    /// A dictionary of <see cref="INode"/> Types and <see cref="INodeHandler"/>s.
-    /// </summary>
-    public Dictionary<Type, INodeHandler> NodeHandlers = new();
-
     // TODO remove this
     private readonly List<int> _visDeletes = new();
     private readonly List<Entity<NodeGroupComponent>> _visSends = new();
@@ -66,16 +51,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         SubscribeNetworkEvent<NodeVis.MsgEnable>(HandleEnableMsg);
-    }
-
-    public INodeHandler GetNodeHandler(Type nodeType)
-    {
-        return NodeHandlers[nodeType];
-    }
-
-    public INodeHandler GetNodeHandler(Node node)
-    {
-        return GetNodeHandler(node.GetType());
     }
 
     public override void Shutdown()
@@ -188,7 +163,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
                 continue;
 
             var group = toRemove.NodeGroup.Value.Comp;
-            var groupHandler = NodeGroupHandlers[group.GetType()];
+            var groupHandler = _nodeGroupManager.GetNodeGroupHandler(group.GroupId);
             groupHandler.RemoveNode(toRemove.NodeGroup.Value, toRemove);
             QueueRemakeGroup(toRemove.NodeGroup.Value);
             toRemove.NodeGroup = null;
@@ -268,7 +243,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
             var newGrouped = oldGroup.Comp.Nodes.GroupBy(n => n.NodeGroup);
 
             oldGroup.Comp.Removed = true;
-            var handler = NodeGroupHandlers[oldGroup.GetType()];
+            var handler = _nodeGroupManager.GetNodeGroupHandler(oldGroup.Comp.GroupId);
             handler.AfterRemake(oldGroup, newGrouped);
             _nodeGroups.Remove(oldGroup);
             if (VisEnabled)
@@ -311,8 +286,8 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private Entity<NodeGroupComponent> InitGroup(Node node, List<Node> groupNodes)
     {
-        var type = NodeGroupTypes[node.NodeGroupID];
-        var handler = NodeGroupHandlers[type];
+        var type = _nodeGroupManager.GetNodeGroupComponentType(node.NodeGroupID);
+        var handler = _nodeGroupManager.GetNodeGroupHandler(type);
 
         var uid = Spawn();
         var group = EnsureComp<NodeGroupComponent>(uid);
@@ -368,7 +343,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private IEnumerable<INode> GetCompatibleNodes(Node node)
     {
-        var nodeHandler = NodeHandlers[node.GetType()];
+        var nodeHandler = _nodeGroupManager.GetNodeHandler(node.GetType());
         if (!nodeHandler.Connectable(node))
             yield break;
 
@@ -376,7 +351,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         {
             DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
-            var reachableNodeHandler = NodeHandlers[reachable.GetType()];
+            var reachableNodeHandler = _nodeGroupManager.GetNodeHandler(reachable.GetType());
             if (reachable.NodeGroupID == node.NodeGroupID
                 && reachableNodeHandler.Connectable(reachable))
             {
@@ -411,7 +386,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
                 if (_visSends.Contains(group))
                     continue;
 
-                var handler = NodeGroupHandlers[group.GetType()];
+                var handler = _nodeGroupManager.GetNodeGroupHandler(group.Comp.GroupId);
                 msg.GroupDataUpdates.Add(group.Comp.NetId, handler.GetDebugData(group));
             }
         }
@@ -439,7 +414,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private NodeVis.GroupData VisMakeGroupState(Entity<NodeGroupComponent> group)
     {
-        var handler = NodeGroupHandlers[group.GetType()];
+        var handler = _nodeGroupManager.GetNodeGroupHandler(group.Comp.GroupId);
         return new()
         {
             NetId = group.Comp.NetId,

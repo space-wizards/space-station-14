@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Humanoid.Markings;
 using Content.Shared.Localizations;
+using Content.Shared.NodeContainer;
 
 namespace Content.Shared.IoC
 {
@@ -9,6 +10,7 @@ namespace Content.Shared.IoC
         {
             deps.Register<MarkingManager, MarkingManager>();
             deps.Register<ContentLocalizationManager, ContentLocalizationManager>();
+            deps.Register<INodeGroupManager, NodeGroupManager>();
         }
     }
 }

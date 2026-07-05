@@ -34,11 +34,11 @@
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_panel_glass
   - type: NodeContainer
-    examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerNetworkConnector
     voltage: High
     node: output

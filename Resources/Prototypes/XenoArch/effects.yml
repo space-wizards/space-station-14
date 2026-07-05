@@ -312,10 +312,10 @@
     - type: PowerSupplier
       supplyRate: 20000
     - type: NodeContainer
-      examinable: true
       nodes:
         output_hv:
           !type:CableDeviceNode
+          examinable: true
           nodeGroupID: HVPower
     - type: PowerNetworkConnector
       voltage: High

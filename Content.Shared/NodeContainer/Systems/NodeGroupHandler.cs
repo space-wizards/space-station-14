@@ -7,6 +7,13 @@ namespace Content.Shared.NodeContainer.Systems;
 public interface INodeGroupHandler
 {
     /// <summary>
+    /// Registers this handler in the <see cref="NodeGroupManager"/>.
+    /// </summary>
+    void RegisterHandler();
+
+    void RegisterGroups();
+
+    /// <summary>
     /// Initializes a node group.
     /// </summary>
     /// <param name="group">The node group.</param>
@@ -51,6 +58,7 @@ public interface INodeGroupHandler
 public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHandler where T : class, IComponent
 {
     [Dependency] protected NodeGroupSystem NodeGroupSys = default!;
+    [Dependency] protected INodeGroupManager NodeGroupMan = default!;
     [Dependency] protected EntityQuery<T> Query = default!;
 
     protected Type NodeGroupCompType => typeof(T);
@@ -59,12 +67,15 @@ public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHand
     {
         base.Initialize();
         RegisterHandler();
+        // Group IDs are registered in NodeGroupManager on post init
     }
 
-    /// <summary>
-    /// Registers this handler in the <see cref="NodeGroupSystem"/> by filling in <see cref="NodeGroupSystem.NodeGroupHandlers"/>.
-    /// </summary>
-    public abstract void RegisterHandler();
+    public virtual void RegisterHandler()
+    {
+        NodeGroupMan.RegisterGroupHandler(NodeGroupCompType, this);
+    }
+
+    public abstract void RegisterGroups();
 
     protected virtual void InitializeGroup(Entity<NodeGroupComponent, T> group, Node sourceNode) { }
 
@@ -109,16 +120,15 @@ public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHand
 }
 
 /// <summary>
-/// A variant of <see cref="NodeGroupHandler{T}"/> that automatically registers the handler and the node group.
+/// A variant of <see cref="NodeGroupHandler{T}"/> that automatically registers a single node group.
 /// </summary>
 /// <typeparam name="T">Type of the handled node group.</typeparam>
 public abstract partial class SingleNodeGroupHandler<T> : NodeGroupHandler<T> where T : class, IComponent
 {
     protected abstract ProtoId<NodeGroupPrototype> NodeGroupID { get; }
 
-    public override void RegisterHandler()
+    public override void RegisterGroups()
     {
-        NodeGroupSys.NodeGroupTypes[ProtoMan.Index(NodeGroupID).GroupId] = NodeGroupCompType;
-        NodeGroupSys.NodeGroupHandlers.Add(NodeGroupCompType, this);
+        NodeGroupMan.RegisterGroup(ProtoMan.Index(NodeGroupID).GroupId, NodeGroupCompType);
     }
 }

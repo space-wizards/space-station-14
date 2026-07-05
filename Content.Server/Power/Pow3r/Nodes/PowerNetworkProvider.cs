@@ -15,30 +15,6 @@ public sealed class PowerNetworkProvider : IPowerNetwork
 
     public GenIdStorage<PowerNetwork> Storage;
 
-    public HashSet<EntityUid> Chargers
-    {
-        get => Storage[Id].Chargers;
-        set => Storage[Id].Chargers = value;
-    }
-
-    public HashSet<EntityUid> Dischargers
-    {
-        get => Storage[Id].Dischargers;
-        set => Storage[Id].Dischargers = value;
-    }
-
-    public HashSet<EntityUid> Consumers
-    {
-        get => Storage[Id].Consumers;
-        set => Storage[Id].Consumers = value;
-    }
-
-    public HashSet<EntityUid> Suppliers
-    {
-        get => Storage[Id].Suppliers;
-        set => Storage[Id].Suppliers = value;
-    }
-
     public float LastCombinedLoad
     {
         get => Storage[Id].LastCombinedLoad;

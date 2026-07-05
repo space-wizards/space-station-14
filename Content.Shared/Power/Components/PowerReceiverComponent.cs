@@ -45,5 +45,5 @@ public sealed partial class PowerReceiverComponent : Component
     public float ReceivingPower { get; set; }
 
     [ViewVariables]
-    public IPowerLoad Load { get; set; }
+    public IPowerLoad Load { get; set; } = new PowerLoad();
 }

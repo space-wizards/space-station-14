@@ -44,11 +44,11 @@
   - type: LightningSparking
   - type: AnimationPlayer
   - type: NodeContainer
-    examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerMonitoringDevice
     group: Generator
     loadNode: input

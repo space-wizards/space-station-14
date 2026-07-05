@@ -25,12 +25,10 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IParallelManager _parMan = default!;
     [Dependency] private BatterySystem _battery = default!;
-    [Dependency] private PowerNetHandler _handler = default!;
 
     [Dependency] private EntityQuery<PowerReceiverBatteryComponent> _apcBatteryQuery = default!;
     [Dependency] private EntityQuery<PowerNetworkBatteryComponent> _powerNetworkBatteryQuery = default!;
     [Dependency] private EntityQuery<BatteryComponent> _batteryQuery = default!;
-    [Dependency] private EntityQuery<PowerNetworkConnectorComponent> _connectorQuery = default!;
     [Dependency] private EntityQuery<PowerConsumerComponent> _consumerQuery = default!;
     [Dependency] private EntityQuery<PowerSupplierComponent> _supplierQuery = default!;
 
@@ -46,27 +44,10 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         UpdatesAfter.Add(typeof(NodeGroupSystem));
         _solver = new(_cfg.GetCVar(CCVars.DebugPow3rDisableParallel));
 
-        SubscribeLocalEvent<PowerReceiverComponent, MapInitEvent>(PowerReceiverMapInit);
-        SubscribeLocalEvent<PowerReceiverComponent, ComponentInit>(PowerReceiverInit);
         SubscribeLocalEvent<PowerReceiverComponent, ComponentShutdown>(PowerReceiverShutdown);
-        SubscribeLocalEvent<PowerReceiverComponent, ComponentRemove>(PowerReceiverRemove);
-        SubscribeLocalEvent<PowerReceiverComponent, EntityPausedEvent>(PowerReceiverPaused);
-        SubscribeLocalEvent<PowerReceiverComponent, EntityUnpausedEvent>(PowerReceiverUnpaused);
-
-        SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentInit>(BatteryInit);
         SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
-        SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
-        SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
-
-        SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
         SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
-        SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
-        SubscribeLocalEvent<PowerConsumerComponent, EntityUnpausedEvent>(PowerConsumerUnpaused);
-
-        SubscribeLocalEvent<PowerSupplierComponent, ComponentInit>(PowerSupplierInit);
         SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
-        SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
-        SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
 
         Subs.CVar(_cfg, CCVars.DebugPow3rDisableParallel, DebugPow3rDisableParallelChanged);
     }
@@ -76,42 +57,9 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         _solver = new(val);
     }
 
-    private void PowerReceiverMapInit(Entity<PowerReceiverComponent> ent, ref MapInitEvent args)
-    {
-        _appearance.SetData(ent, PowerDeviceVisuals.Powered, ent.Comp.Powered);
-    }
-
-    private void PowerReceiverInit(Entity<PowerReceiverComponent> ent, ref ComponentInit args)
-    {
-        AllocLoad(ent);
-    }
-
     private void PowerReceiverShutdown(Entity<PowerReceiverComponent> ent, ref ComponentShutdown args)
     {
         _powerState.Loads.Free(ent.Comp.Load.Id);
-    }
-
-    private void PowerReceiverRemove(Entity<PowerReceiverComponent> ent, ref ComponentRemove args)
-    {
-        if (ent.Comp.Provider != null
-            && _connectorQuery.TryComp(ent.Owner, out var connector)
-            && connector.Net != null)
-            _handler.RemoveReceiver(connector.Net.Value, ent.AsNullable(), ent.Comp.Provider.Value);
-    }
-
-    private void PowerReceiverPaused(Entity<PowerReceiverComponent> ent, ref EntityPausedEvent args)
-    {
-        ent.Comp.Paused = true;
-    }
-
-    private void PowerReceiverUnpaused(Entity<PowerReceiverComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.Paused = false;
-    }
-
-    private void BatteryInit(Entity<PowerNetworkBatteryComponent> ent, ref ComponentInit args)
-    {
-        AllocBattery(ent);
     }
 
     private void BatteryShutdown(Entity<PowerNetworkBatteryComponent> ent, ref ComponentShutdown args)
@@ -119,39 +67,9 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         _powerState.Batteries.Free(ent.Comp.Battery.Id);
     }
 
-    private void BatteryPaused(Entity<PowerNetworkBatteryComponent> ent, ref EntityPausedEvent args)
-    {
-        ent.Comp.Paused = true;
-    }
-
-    private void BatteryUnpaused(Entity<PowerNetworkBatteryComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.Paused = false;
-    }
-
-    private void PowerConsumerInit(Entity<PowerConsumerComponent> ent, ref ComponentInit args)
-    {
-        AllocLoad(ent);
-    }
-
     private void PowerConsumerShutdown(Entity<PowerConsumerComponent> ent, ref ComponentShutdown args)
     {
         _powerState.Loads.Free(ent.Comp.Load.Id);
-    }
-
-    private void PowerConsumerPaused(Entity<PowerConsumerComponent> ent, ref EntityPausedEvent args)
-    {
-        ent.Comp.Paused = true;
-    }
-
-    private void PowerConsumerUnpaused(Entity<PowerConsumerComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.Paused = false;
-    }
-
-    private void PowerSupplierInit(Entity<PowerSupplierComponent> ent, ref ComponentInit args)
-    {
-        AllocSupply(ent);
     }
 
     private void PowerSupplierShutdown(Entity<PowerSupplierComponent> ent, ref ComponentShutdown args)
@@ -159,19 +77,9 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         _powerState.Supplies.Free(ent.Comp.Supply.Id);
     }
 
-    private void PowerSupplierPaused(Entity<PowerSupplierComponent> ent, ref EntityPausedEvent args)
-    {
-        ent.Comp.Paused = true;
-    }
-
-    private void PowerSupplierUnpaused(Entity<PowerSupplierComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.Paused = false;
-    }
-
     public override void InitPowerNet(Entity<PowerNetComponent> powerNet)
     {
-        AllocNetwork(powerNet);
+        base.InitPowerNet(powerNet);
         _powerState.GroupedNets = null;
     }
 
@@ -409,7 +317,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         }
     }
 
-    private void AllocLoad(Entity<PowerConsumerComponent> load)
+    protected override void AllocLoad(Entity<PowerConsumerComponent> load)
     {
         var solverData = new PowerLoad();
         var solverProvider = new PowerLoadProvider(_powerState.Loads);
@@ -419,7 +327,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         load.Comp.Load = solverProvider;
     }
 
-    private void AllocLoad(Entity<PowerReceiverComponent> load)
+    protected override void AllocLoad(Entity<PowerReceiverComponent> load)
     {
         var solverData = new PowerLoad();
         var solverProvider = new PowerLoadProvider(_powerState.Loads);
@@ -429,7 +337,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         load.Comp.Load = solverProvider;
     }
 
-    private void AllocSupply(Entity<PowerSupplierComponent> supply)
+    protected override void AllocSupply(Entity<PowerSupplierComponent> supply)
     {
         var solverData = new PowerSupply();
         var solverProvider = new PowerSupplyProvider(_powerState.Supplies);
@@ -439,7 +347,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         supply.Comp.Supply = solverProvider;
     }
 
-    private void AllocBattery(Entity<PowerNetworkBatteryComponent> battery)
+    protected override void AllocBattery(Entity<PowerNetworkBatteryComponent> battery)
     {
         var solverData = new PowerBattery();
         var solverProvider = new PowerBatteryProvider(_powerState.Batteries);
@@ -449,14 +357,13 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         battery.Comp.Battery = solverProvider;
     }
 
-    private void AllocNetwork(Entity<PowerNetComponent> network)
+    protected override void AllocNetwork(Entity<PowerNetComponent> network)
     {
         var solverData = new PowerNetwork();
         var solverProvider = new PowerNetworkProvider(_powerState.Networks);
         _powerState.Networks.Allocate(out var loadId) = solverData;
         solverData.Id = loadId;
         solverProvider.Id = loadId;
-        network.Comp.Network = solverProvider;
         network.Comp.Network = solverProvider;
     }
 
@@ -468,7 +375,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
         net.BatteryLoads.Clear();
         net.BatterySupplies.Clear();
 
-        foreach (var consumer in net.Consumers)
+        foreach (var consumer in network.Comp.Consumers)
         {
             if (!_consumerQuery.TryComp(consumer, out var consumerComp))
                 continue;
@@ -477,7 +384,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
             consumerComp.Load.LinkedNetwork = net.Id;
         }
 
-        foreach (var supplier in net.Suppliers)
+        foreach (var supplier in network.Comp.Suppliers)
         {
             if (!_supplierQuery.TryComp(supplier, out var supplierComp))
                 continue;
@@ -486,7 +393,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
             supplierComp.Supply.LinkedNetwork = net.Id;
         }
 
-        foreach (var charger in net.Chargers)
+        foreach (var charger in network.Comp.Chargers)
         {
             if (!_powerNetworkBatteryQuery.TryComp(charger, out var battery))
                 continue;
@@ -495,7 +402,7 @@ public sealed partial class PowerNetSystem : SharedPowerNetSystem
             battery.Battery.LinkedNetworkCharging = net.Id;
         }
 
-        foreach (var discharger in net.Dischargers)
+        foreach (var discharger in network.Comp.Dischargers)
         {
             if (!_powerNetworkBatteryQuery.TryComp(discharger, out var battery))
                 continue;

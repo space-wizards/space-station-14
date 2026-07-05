@@ -42,14 +42,15 @@
       maxCharge: 8000000
     - type: ExaminableBattery
     - type: NodeContainer
-      examinable: true
       nodes:
         input:
           !type:CableTerminalPortNode
           nodeGroupID: HVPower
+          examinable: true
         output:
           !type:CableDeviceNode
           nodeGroupID: HVPower
+          examinable: true
     - type: PowerMonitoringDevice
       group: SMES
       sourceNode: input

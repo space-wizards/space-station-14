@@ -111,15 +111,16 @@
   - type: UseDelay
     delay: 1
   - type: NodeContainer
-    examinable: true
     nodes:
       output_hv:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
       output_mv:
         !type:CableDeviceNode
         nodeGroupID: MVPower
         enabled: false
+        examinable: true
   - type: PowerNetworkConnector
     voltages:
       output_hv: High
@@ -307,11 +308,11 @@
     # Unreliable bugger
     startChance: 0.5
   - type: NodeContainer
-    examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+        examinable: true
   - type: PowerNetworkConnector
     voltage: Apc
     node: output

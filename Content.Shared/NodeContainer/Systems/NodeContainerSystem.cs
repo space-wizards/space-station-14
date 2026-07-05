@@ -9,6 +9,7 @@ namespace Content.Shared.NodeContainer.Systems;
 public sealed partial class NodeContainerSystem : EntitySystem
 {
     [Dependency] private NodeGroupSystem _nodeGroupSystem = default!;
+    [Dependency] private INodeGroupManager _nodeGroupManager = default!;
     [Dependency] private EntityQuery<NodeContainerComponent> _nodeContainerQuery = default!;
 
     public override void Initialize()
@@ -169,7 +170,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
         foreach (var (key, node) in ent.Comp.Nodes)
         {
             node.Name = key;
-            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            var handler = _nodeGroupManager.GetNodeHandler(node);
             handler.InitializeNode(node, ent.Owner);
         }
     }
@@ -191,17 +192,14 @@ public sealed partial class NodeContainerSystem : EntitySystem
         }
     }
 
-    private void OnAnchorStateChanged(
-        EntityUid uid,
-        NodeContainerComponent component,
-        ref AnchorStateChangedEvent args)
+    private void OnAnchorStateChanged(Entity<NodeContainerComponent> ent, ref AnchorStateChangedEvent args)
     {
-        foreach (var node in component.Nodes.Values)
+        foreach (var node in ent.Comp.Nodes.Values)
         {
             if (!node.NeedAnchored)
                 continue;
 
-            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            var handler = _nodeGroupManager.GetNodeHandler(node);
             handler.OnAnchorStateChanged(node, args.Anchored);
 
             if (args.Anchored)
@@ -220,19 +218,19 @@ public sealed partial class NodeContainerSystem : EntitySystem
         }
     }
 
-    private void OnMoveEvent(EntityUid uid, NodeContainerComponent container, ref MoveEvent ev)
+    private void OnMoveEvent(Entity<NodeContainerComponent> ent, ref MoveEvent ev)
     {
         if (ev.NewRotation == ev.OldRotation)
         {
             return;
         }
 
-        foreach (var node in container.Nodes.Values)
+        foreach (var node in ent.Comp.Nodes.Values)
         {
             if (node is not IRotatableNode rotatableNode)
                 continue;
 
-            var handler = (IRotatableNodeHandler) _nodeGroupSystem.GetNodeHandler(node);
+            var handler = (IRotatableNodeHandler) _nodeGroupManager.GetNodeHandler(node);
             // Don't bother updating nodes that can't even be connected to anything atm.
             if (!handler.Connectable(node))
                 continue;
@@ -252,7 +250,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
             if (!node.Examinable)
                 return;
 
-            var handler = _nodeGroupSystem.GetNodeHandler(node);
+            var handler = _nodeGroupManager.GetNodeHandler(node);
             var text = handler.GetExamineText(node);
             if (!string.IsNullOrEmpty(text))
                 args.PushMarkup(text);

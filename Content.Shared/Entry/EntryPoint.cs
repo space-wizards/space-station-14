@@ -40,7 +40,6 @@ namespace Content.Shared.Entry
         public override void Init()
         {
             IgnorePrototypes();
-            InitNodeGroupPrototypes();
         }
 
         public override void PostInit()
@@ -48,7 +47,9 @@ namespace Content.Shared.Entry
             base.PostInit();
 
             InitTileDefinitions();
+            InitNodeGroupPrototypes();
             Dependencies.Resolve<MarkingManager>().Initialize();
+            Dependencies.Resolve<INodeGroupManager>().Initialize();
 
 #if DEBUG
             _configurationManager.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
@@ -91,7 +92,7 @@ namespace Content.Shared.Entry
 
         private void InitNodeGroupPrototypes()
         {
-            var manager = Dependencies.Resolve<NodeGroupManager>();
+            var manager = Dependencies.Resolve<INodeGroupManager>();
 
             var prototypes = _prototypeManager.EnumeratePrototypes<NodeGroupPrototype>().ToList();
             // Sort ordinal to ensure it's consistent client and server.
@@ -119,7 +120,7 @@ namespace Content.Shared.Entry
                 def.AssignTileId(_tileDefinitionManager[def.ID].TileId);
             }
 
-            var nodeManager = Dependencies.Resolve<NodeGroupManager>();
+            var nodeManager = Dependencies.Resolve<INodeGroupManager>();
             foreach (var node in _prototypeManager.EnumeratePrototypes<NodeGroupPrototype>())
             {
                 node.AssignGroupId(nodeManager[node.ID].GroupId);

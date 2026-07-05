@@ -79,7 +79,6 @@
           Critical: { state: control_critical, visible: true }
           Fuck: { state: control_fuck, visible: true }
   - type: NodeContainer
-    examinable: true
     nodes:
       ame:
         !type:AdjacentNode
@@ -87,6 +86,7 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+        examinable: true
   - type: PowerNetworkConnector
     voltage: High
     node: input

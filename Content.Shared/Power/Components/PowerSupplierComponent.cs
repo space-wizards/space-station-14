@@ -59,5 +59,5 @@ public sealed partial class PowerSupplierComponent : Component
     public float AvailableSupply => Supply.AvailableSupply;
 
     [ViewVariables]
-    public IPowerSupply Supply = default!;
+    public IPowerSupply Supply = new PowerSupply();
 }

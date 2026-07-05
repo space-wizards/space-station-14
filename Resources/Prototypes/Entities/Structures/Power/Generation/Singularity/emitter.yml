@@ -50,11 +50,11 @@
     voltage: Medium
     node: input
   - type: NodeContainer
-    examinable: true
     nodes:
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
+        examinable: true
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
   - type: Injurable
