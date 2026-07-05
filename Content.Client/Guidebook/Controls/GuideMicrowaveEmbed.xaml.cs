@@ -165,9 +165,45 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
         }
     }
 
+    private void GenerateStackIngredients(FoodRecipePrototype recipe)
+    {
+        foreach (var (product, amount) in recipe.Ingredients.Stacks.OrderByDescending(p => p.Value))
+        {
+            var stack = _prototype.Index(product);
+
+            // stack icon
+
+            IngredientsGrid.AddChild(new GuideEntityEmbed(stack.Spawn, false, false));
+
+            // stack name
+
+            var stackName = Loc.GetString(stack.Name);
+            var stackNameMsg = new FormattedMessage();
+            stackNameMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-stack-name-display", ("stack", stackName)));
+            stackNameMsg.Pop();
+
+            var stackNameLabel = new RichTextLabel();
+            stackNameLabel.SetMessage(stackNameMsg);
+
+            IngredientsGrid.AddChild(stackNameLabel);
+
+            // stack quantity
+
+            var stackQuantityMsg = new FormattedMessage();
+            stackQuantityMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-stack-quantity-display", ("amount", amount)));
+            stackQuantityMsg.Pop();
+
+            var stackQuantityLabel = new RichTextLabel();
+            stackQuantityLabel.SetMessage(stackQuantityMsg);
+
+            IngredientsGrid.AddChild(stackQuantityLabel);
+        }
+    }
+
     private void GenerateIngredients(FoodRecipePrototype recipe)
     {
         GenerateLiquidIngredients(recipe);
+        GenerateStackIngredients(recipe);
         GenerateSolidIngredients(recipe);
     }
 
