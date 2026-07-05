@@ -47,7 +47,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         }
         else if (!bool.TryParse(args[1], out enabled))
         {
-            shell.WriteError(Loc.GetString("shell-invalid-bool"));
+            shell.WriteError("shell-invalid-bool");
             return;
         }
 
