@@ -47414,13 +47414,15 @@ entities:
     - type: Transform
       pos: 80.5,-19.5
       parent: 2
-- proto: CratePrivateSecure
+- proto: MailCart
   entities:
   - uid: 5349
     components:
     - type: Transform
       pos: 17.5,-98.5
       parent: 2
+- proto: CratePrivateSecure
+  entities:
   - uid: 19408
     components:
     - type: Transform
