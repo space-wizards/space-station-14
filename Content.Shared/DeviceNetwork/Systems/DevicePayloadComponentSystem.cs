@@ -11,10 +11,10 @@ public delegate void DeviceNetworkPayloadComponentWrapper(
 
 /// <summary>
 /// System that handles <see cref="NetworkPayload"/>s for entities with various components.
-/// Use this if you want the same payload to be handled by entities with different components, for whatever reason.
+/// Use this if you want the same payload to be handled by entities with different components.
 /// </summary>
 /// <remarks>
-/// Generally you should use <see cref="DevicePayloadSystem{T}"/>.
+/// Generally you should use <see cref="DevicePayloadSystem{T}"/>, since this system is less performant.
 /// </remarks>
 public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandler, IEntityDeviceNetworkHandler
 {

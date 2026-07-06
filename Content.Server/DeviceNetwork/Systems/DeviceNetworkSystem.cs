@@ -6,17 +6,12 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.GameTicking;
-using JetBrains.Annotations;
 using Robust.Server.GameStates;
 using Robust.Shared.Random;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
-/// <summary>
-///     Entity system that handles everything device network related.
-///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
-/// </summary>
-[UsedImplicitly]
+/// <inheritdoc/>
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
     [Dependency] private IRobustRandom _random = default!;

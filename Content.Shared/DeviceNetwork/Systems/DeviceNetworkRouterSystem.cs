@@ -4,6 +4,10 @@ using Content.Shared.DeviceNetwork.Payloads;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
+/// <summary>
+/// A system for re-routing <see cref="RoutableNetworkPayload"/>s
+/// through an entity with <see cref="DeviceNetworkRouterComponent"/>.
+/// </summary>
 public sealed partial class DeviceNetworkRouterSystem : DevicePayloadSystem<DeviceNetworkRouterComponent>
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
@@ -34,6 +38,31 @@ public sealed partial class DeviceNetworkRouterSystem : DevicePayloadSystem<Devi
             frequency);
     }
 
+    /// <summary>
+    /// Sends the given <see cref="RoutableNetworkPayload"/> as a device network packet to the Relay entity with the given address and frequency.
+    /// After the payload is received by an entity with <see cref="DeviceNetworkRouterComponent"/>,
+    /// it gets re-routed to the actual <see cref="targetAddress"/>.
+    /// </summary>
+    /// <remarks>
+    /// This is useful for routing server setups where the packet must be sent in both directions through a server.
+    /// </remarks>
+    /// <param name="ent">The sending entity.</param>
+    /// <param name="address">
+    /// The address of the entity with <see cref="DeviceNetworkRouterComponent"/> that the packet gets sent to.
+    /// If null, the message is broadcast to all devices on that frequency (except the sender).
+    /// Remember that this is the address of the Relay, not the actual target!
+    /// </param>
+    /// <param name="data">The data to be sent.</param>
+    /// <param name="targetAddress">
+    /// The Actual address to which the payload will be relayed
+    /// to after it was received by a <see cref="DeviceNetworkRouterComponent"/>
+    /// </param>
+    /// <param name="overrideFrequency">
+    /// If true, when relaying the payload instead of using a default transmit frequency,
+    /// <see cref="DeviceNetworkRouterComponent.TransmitFrequency"/> will be used instead.</param>
+    /// <param name="frequency">The frequency to send on.</param>
+    /// <param name="network">The network to send on.</param>
+    /// <returns>Returns true when the packet was successfully enqueued.</returns>
     public void QueuePacketRouted(
         Entity<DeviceNetworkComponent?> ent,
         string? address,

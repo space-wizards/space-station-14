@@ -8,14 +8,6 @@ namespace Content.Shared.DeviceNetwork;
 public static class DeviceNetworkConstants
 {
     /// <summary>
-    /// The key for command names
-    /// E.g. [DeviceNetworkConstants.Command] = "ping"
-    /// </summary>
-    public const string Command = "command";
-
-    #region DisplayHelpers
-
-    /// <summary>
     /// Converts the unsigned int to string and inserts a number before the last digit
     /// </summary>
     public static string FrequencyToString(this uint frequency)
@@ -41,6 +33,4 @@ public static class DeviceNetworkConstants
 
         return !Loc.TryGetString(resultKebab, out var name) ? result : name;
     }
-
-    #endregion
 }

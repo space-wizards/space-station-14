@@ -82,6 +82,12 @@ public sealed partial class DeviceNetworkSystem
     /// <summary>
     /// Disconnect an entity with a DeviceNetworkComponent.
     /// </summary>
+    /// <param name="ent">The entity to disconnect from its network.</param>
+    /// <param name="preventAutoConnect">
+    /// If true, sets <see cref="DeviceNetworkComponent.AutoConnect"/> to false.
+    /// That way the device doesn't auto reconnect when a game state is loaded.
+    /// </param>
+    /// <returns>True if the device was removed from the network successfully.</returns>
     [PublicAPI]
     public bool DisconnectDevice(Entity<DeviceNetworkComponent?> ent, bool preventAutoConnect = true)
     {
@@ -91,7 +97,6 @@ public sealed partial class DeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return false;
 
-        // If manually disconnected, don't auto reconnect when a game state is loaded.
         if (preventAutoConnect)
             ent.Comp.AutoConnect = false;
 
@@ -101,9 +106,9 @@ public sealed partial class DeviceNetworkSystem
     }
 
     /// <summary>
-    /// Checks if a device is already connected to its network
+    /// Checks if a device is already connected to its network.
     /// </summary>
-    /// <returns>True if the device was found in the network with its corresponding network id</returns>
+    /// <returns>True if the device was found in the network with its corresponding network id.</returns>
     [PublicAPI]
     public bool IsDeviceConnected(Entity<DeviceNetworkComponent?> ent)
     {
@@ -120,7 +125,7 @@ public sealed partial class DeviceNetworkSystem
     }
 
     /// <summary>
-    /// Checks if an address exists in the network with the given netId
+    /// Checks if an address exists in the network with the given netId.
     /// </summary>
     [PublicAPI]
     public bool IsAddressPresent(int netId, string? address)
@@ -133,6 +138,11 @@ public sealed partial class DeviceNetworkSystem
         return network.Devices.ContainsKey(address);
     }
 
+    /// <summary>
+    /// Sets the receive frequency of an entity.
+    /// </summary>
+    /// <param name="ent">The target device.</param>
+    /// <param name="frequency">The new frequency.</param>
     [PublicAPI]
     public void SetReceiveFrequency(Entity<DeviceNetworkComponent?> ent, uint? frequency)
     {
@@ -145,19 +155,38 @@ public sealed partial class DeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
+        var oldFrequency = ent.Comp.ReceiveFrequency;
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveFrequency = frequency;
         deviceNet.Add(ent!);
+
+        var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
+        RaiseLocalEvent(ent, ref ev);
+
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Sets the transmit frequency of an entity.
+    /// </summary>
+    /// <param name="ent">The target device.</param>
+    /// <param name="frequency">The new frequency.</param>
     [PublicAPI]
     public void SetTransmitFrequency(Entity<DeviceNetworkComponent?> ent, uint? frequency)
     {
-        if (Resolve(ent.Owner, ref ent.Comp, false))
-            ent.Comp.TransmitFrequency = frequency;
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        var oldFrequency = ent.Comp.TransmitFrequency;
+        ent.Comp.TransmitFrequency = frequency;
+
+        var ev = new DeviceReceiveFrequencyChangedEvent(oldFrequency, frequency);
+        RaiseLocalEvent(ent, ref ev);
     }
 
+    /// <summary>
+    /// Sets the target device's ability to receive all network packets, regardless of the address.
+    /// </summary>
     [PublicAPI]
     public void SetReceiveAll(Entity<DeviceNetworkComponent?> ent, bool receiveAll)
     {
@@ -173,9 +202,16 @@ public sealed partial class DeviceNetworkSystem
         deviceNet.Remove(ent!);
         ent.Comp.ReceiveAll = receiveAll;
         deviceNet.Add(ent!);
+
+        var ev = new DeviceReceiveAllChangedEvent(receiveAll);
+        RaiseLocalEvent(ent, ref ev);
+
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Sets the address of the target device.
+    /// </summary>
     [PublicAPI]
     public void SetAddress(Entity<DeviceNetworkComponent?> ent, string address)
     {
@@ -188,13 +224,21 @@ public sealed partial class DeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
+        var oldAddress = ent.Comp.Address;
         deviceNet.Remove(ent!);
         ent.Comp.CustomAddress = true;
         ent.Comp.Address = address;
         deviceNet.Add(ent!);
+
+        var ev = new DeviceAddressChangedEvent(oldAddress, address, ent.Comp.CustomAddress);
+        RaiseLocalEvent(ent, ref ev);
+
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Randomizes the address of the target device.
+    /// </summary>
     [PublicAPI]
     public void RandomizeAddress(Entity<DeviceNetworkComponent?> ent)
     {
@@ -204,10 +248,15 @@ public sealed partial class DeviceNetworkSystem
         if (!TryGetNetwork(ent.Comp.DeviceNetId, out var deviceNet))
             return;
 
+        var oldAddress = ent.Comp.Address;
         deviceNet.Remove(ent!);
         ent.Comp.CustomAddress = false;
         ent.Comp.Address = "";
         deviceNet.Add(ent!);
+
+        var ev = new DeviceAddressChangedEvent(oldAddress, ent.Comp.Address, ent.Comp.CustomAddress);
+        RaiseLocalEvent(ent, ref ev);
+
         Dirty(ent);
     }
 }
