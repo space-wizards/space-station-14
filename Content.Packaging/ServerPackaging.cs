@@ -67,82 +67,120 @@ public static class ServerPackaging
             platforms ??= PlatformRidsDefault;
         }
 
+        var selectedPlatforms = Platforms
+            .Where(o => platforms.Contains(o.Rid))
+            .ToList();
+
         if (hybridAcz)
         {
             // Hybrid ACZ involves a file "Content.Client.zip" in the server executable directory.
             // Rather than hosting the client ZIP on the watchdog or on a separate server,
             //  Hybrid ACZ uses the ACZ hosting functionality to host it as part of the status host,
             //  which means that features such as automatic UPnP forwarding still work properly.
+            logger.Info("Hybrid ACZ enabled; server packages will include release/SS14.Client.zip for client delivery.");
             await ClientPackaging.PackageClient(skipBuild, logBuild, configuration, logger);
         }
 
-        // Good variable naming right here.
-        foreach (var platform in Platforms)
+        Dictionary<string, string> contentBinDirs;
+        if (skipBuild)
         {
-            if (!platforms.Contains(platform.Rid))
-                continue;
-
-            await BuildPlatform(platform, skipBuild, hybridAcz, logBuild, configuration, logger);
+            contentBinDirs = selectedPlatforms
+                .Select(o => o.TargetOs)
+                .Distinct()
+                .ToDictionary(o => o, _ => "Content.Server");
         }
+        else
+        {
+            var targetOperatingSystems = selectedPlatforms
+                .Select(o => o.TargetOs)
+                .Distinct()
+                .ToList();
+
+            foreach (var targetOs in targetOperatingSystems)
+            {
+                await BuildContentServer(targetOs, logBuild, configuration, logger);
+            }
+
+            foreach (var platform in selectedPlatforms)
+            {
+                await PublishClientServer(platform.Rid, platform.TargetOs, configuration, logger);
+            }
+
+            contentBinDirs = targetOperatingSystems
+                .ToDictionary(o => o, GetContentServerBinDir);
+        }
+
+        await Task.WhenAll(selectedPlatforms.Select(platform =>
+            PackagePlatform(platform, contentBinDirs[platform.TargetOs], hybridAcz, logger)));
     }
 
-    private static async Task BuildPlatform(PlatformReg platform,
-        bool skipBuild,
-        bool hybridAcz,
+    private static async Task BuildContentServer(
+        string targetOs,
         bool logBuild,
         string configuration,
         IPackageLogger logger)
     {
-        logger.Info($"Building project for {platform.TargetOs}...");
+        logger.Info($"Building content server for {targetOs}...");
+        logger.Info($"Content server build output for {targetOs}: {GetContentServerOutputPath(targetOs)}");
 
-        if (!skipBuild)
+        var startInfo = new ProcessStartInfo
         {
-            var startInfo = new ProcessStartInfo
+            FileName = "dotnet",
+            ArgumentList =
             {
-                FileName = "dotnet",
-                ArgumentList =
-                {
-                    "build",
-                    Path.Combine("Content.Server", "Content.Server.csproj"),
-                    "-c", configuration,
-                    "--nologo",
-                    "/v:m",
-                    $"/p:TargetOs={platform.TargetOs}",
-                    "/t:Rebuild",
-                    "/p:FullRelease=true",
-                    "/m"
-                }
-            };
-
-            if (logBuild)
-            {
-                startInfo.ArgumentList.Add($"/bl:{Path.Combine("release", $"server-{platform.Rid}.binlog")}");
-                startInfo.ArgumentList.Add("/p:ReportAnalyzer=true");
+                "build",
+                Path.Combine("Content.Server", "Content.Server.csproj"),
+                "-c", configuration,
+                "--nologo",
+                "/v:m",
+                $"/p:TargetOs={targetOs}",
+                $"/p:OutputPath={GetContentServerOutputPath(targetOs)}",
+                "/p:FullRelease=true",
+                "/m"
             }
+        };
 
-            await ProcessHelpers.RunCheck(startInfo);
-
-            await PublishClientServer(platform.Rid, platform.TargetOs, configuration);
+        if (logBuild)
+        {
+            var binlogPath = Path.GetFullPath(Path.Combine("release", $"server-content-{targetOs}.binlog"));
+            logger.Info($"Content server build log for {targetOs}: {binlogPath}");
+            startInfo.ArgumentList.Add($"/bl:{binlogPath}");
+            startInfo.ArgumentList.Add("/p:ReportAnalyzer=true");
         }
 
+        await ProcessHelpers.RunCheck(startInfo);
+    }
+
+    private static async Task PackagePlatform(
+        PlatformReg platform,
+        string contentBinDir,
+        bool hybridAcz,
+        IPackageLogger logger)
+    {
+        var packagePath = Path.GetFullPath(Path.Combine("release", $"SS14.Server_{platform.Rid}.zip"));
+
         logger.Info($"Packaging {platform.Rid} server...");
+        logger.Info($"Server package output for {platform.Rid}: {packagePath}");
 
         var sw = RStopwatch.StartNew();
         {
             await using var zipFile =
-                File.Open(Path.Combine("release", $"SS14.Server_{platform.Rid}.zip"), FileMode.Create, FileAccess.ReadWrite);
-            using var zip = new ZipArchive(zipFile, ZipArchiveMode.Update);
+                File.Open(packagePath, FileMode.Create, FileAccess.ReadWrite);
+            await using var zip = new ZipArchive(zipFile, ZipArchiveMode.Create);
             var writer = new AssetPassZipWriter(zip);
 
-            await WriteServerResources(platform, "", writer, logger, hybridAcz, default);
+            await WriteServerResources(platform, "", contentBinDir, writer, logger, hybridAcz, default);
             await writer.FinishedTask;
         }
 
-        logger.Info($"Finished packaging server in {sw.Elapsed}");
+        logger.Info($"Finished packaging {platform.Rid} server in {sw.Elapsed}: {packagePath}");
     }
 
-    private static async Task PublishClientServer(string runtime, string targetOs, string configuration)
+    private static async Task PublishClientServer(string runtime, string targetOs, string configuration, IPackageLogger logger)
     {
+        var publishPath = Path.GetFullPath(Path.Combine("RobustToolbox", "bin", "Server", runtime, "publish"));
+        logger.Info($"Robust.Server publish output for {runtime}: {publishPath}");
+
         await ProcessHelpers.RunCheck(new ProcessStartInfo
         {
             FileName = "dotnet",
@@ -163,6 +201,7 @@ public static class ServerPackaging
     private static async Task WriteServerResources(
         PlatformReg platform,
         string contentDir,
+        string contentBinDir,
         AssetPass pass,
         IPackageLogger logger,
         bool hybridAcz,
@@ -180,7 +219,7 @@ public static class ServerPackaging
         var inputPassResources = graph.InputResources;
 
         // Additional assemblies that need to be copied such as EFCore.
-        var sourcePath = Path.Combine(contentDir, "bin", "Content.Server");
+        var sourcePath = Path.Combine(contentDir, "bin", contentBinDir);
 
         var deps = DepsHandler.Load(Path.Combine(sourcePath, "Content.Server.deps.json"));
 
@@ -197,7 +236,7 @@ public static class ServerPackaging
         await RobustSharedPackaging.WriteContentAssemblies(
             inputPassResources,
             contentDir,
-            "Content.Server",
+            contentBinDir,
             contentAssemblies,
             cancel: cancel);
 
@@ -230,6 +269,23 @@ public static class ServerPackaging
         return names;
 
         IEnumerable<string> GetLibraryNames(string library) => deps.Libraries[library].GetDllNames();
+    }
+
+    private static string GetContentServerBinDir(string targetOs)
+    {
+        return Path.Combine("Packaging", "Content.Server", targetOs);
+    }
+
+    private static string GetContentServerOutputPath(string targetOs)
+    {
+        return EnsureTrailingDirectorySeparator(Path.GetFullPath(Path.Combine("bin", GetContentServerBinDir(targetOs))));
+    }
+
+    private static string EnsureTrailingDirectorySeparator(string path)
+    {
+        return Path.EndsInDirectorySeparator(path)
+            ? path
+            : path + Path.DirectorySeparatorChar;
     }
 
     private readonly record struct PlatformReg(string Rid, string TargetOs, bool BuildByDefault);
