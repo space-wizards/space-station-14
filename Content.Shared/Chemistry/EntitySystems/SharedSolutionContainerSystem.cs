@@ -915,7 +915,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
-                                        ("colorName", ColorNaming.Describe(solution.GetColor(PrototypeManager), _localization)),
+                                        ("colorName", ColorNaming.Describe(solution.GetColor(ProtoMan), _localization)),
                                         ("desc", primary.LocalizedPhysicalDescription),
                                         ("chemCount", solution.Contents.Count)));
 
