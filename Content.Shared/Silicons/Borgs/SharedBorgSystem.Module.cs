@@ -106,8 +106,7 @@ public abstract partial class SharedBorgSystem
                 var hand = itemModuleComp.Hands[i];
                 var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
 
-                // Only remove items from hands that have a whitelist or blacklist set, this is how we check if those items are dropable
-                if (hand.Hand.Whitelist == null && hand.Hand.Blacklist == null)
+                if (IsItemInUnremovable(hand))
                     continue;
 
                 if (itemModuleComp.StoredItems.TryGetValue(handId, out var item))
@@ -238,7 +237,7 @@ public abstract partial class SharedBorgSystem
             if (item is { } pickUp)
             {
                 _hands.DoPickup(chassis, handId, pickUp, hands);
-                if (!hand.ForceRemovable && hand.Hand.Whitelist == null && hand.Hand.Blacklist == null)
+                if (IsItemInUnremovable(hand))
                 {
                     EnsureComp<UnremoveableComponent>(pickUp);
                 }
@@ -247,6 +246,11 @@ public abstract partial class SharedBorgSystem
 
         module.Comp.Spawned = true;
         Dirty(module);
+    }
+
+    private static bool IsItemInUnremovable(BorgHand hand)
+    {
+        return !hand.ForceRemovable && hand.Hand.Whitelist == null && hand.Hand.Blacklist == null;
     }
 
     private void RemoveProvidedItems(Entity<BorgChassisComponent?> chassis, Entity<ItemBorgModuleComponent?> module)
