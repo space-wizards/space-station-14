@@ -1,13 +1,13 @@
 ﻿using Content.Server.Anomaly;
-using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
-﻿using Content.Shared.GameTicking.Components;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.Station.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleComponent>
+public sealed partial class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleComponent>
 {
-    [Dependency] private readonly AnomalySystem _anomaly = default!;
+    [Dependency] private AnomalySystem _anomaly = default!;
 
     protected override void Added(EntityUid uid, AnomalySpawnRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -31,7 +31,7 @@ public sealed class AnomalySpawnRule : StationEventSystem<AnomalySpawnRuleCompon
         if (!TryComp<StationDataComponent>(chosenStation, out var stationData))
             return;
 
-        var grid = StationSystem.GetLargestGrid(stationData);
+        var grid = StationSystem.GetLargestGrid((chosenStation.Value, stationData));
 
         if (grid is null)
             return;

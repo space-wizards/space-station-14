@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken and modified from cev-eris at https://github.com/discordia-space/CEV-Eris/tree/7ff8f28ea4de734f3cc3cb70f2d4e4b4263a988d",
+  "copyright": "Taken and modified from cev-eris at https://github.com/discordia-space/CEV-Eris/tree/7ff8f28ea4de734f3cc3cb70f2d4e4b4263a988d, debug sprites by slarticodefast(GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,15 @@
   "states": [
     {
       "name": "bolt"
+    },
+    {
+      "name": "muzzle_debug"
+    },
+    {
+      "name": "debug"
+    },
+    {
+      "name": "impact_debug"
     },
     {
       "name": "muzzle_bullet"

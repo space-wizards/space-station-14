@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Spawners.Components;
 using Content.Server.Stack;
@@ -94,109 +93,84 @@ public sealed class ConditionalSpawnerSystem : EntitySystem
             return;
         }
 
-        if (!Deleted(uid))
-            Spawn(_robustRandom.Pick(component.Prototypes), Transform(uid).Coordinates);
-    }
+            if (Deleted(uid))
+                return;
 
-    private void Spawn(EntityUid uid, RandomSpawnerComponent component)
-    {
-        if (component.RarePrototypes.Count > 0 && (component.RareChance == 1.0f || _robustRandom.Prob(component.RareChance)))
-        {
-            Spawn(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
-            return;
+            var xform = Transform(uid);
+            var coords = _xform.GetMapCoordinates(uid, xform);
+            var rotation = _xform.GetWorldRotation(xform);
+
+            Spawn(_robustRandom.Pick(component.Prototypes), coords, rotation: rotation);
         }
 
-        if (component.Chance != 1.0f && !_robustRandom.Prob(component.Chance))
-            return;
-
-        if (component.Prototypes.Count == 0)
+        private void Spawn(EntityUid uid, RandomSpawnerComponent component)
         {
-            Log.Warning($"Prototype list in RandomSpawnerComponent is empty! Entity: {ToPrettyString(uid)}");
-            return;
+            if (Deleted(uid))
+                return;
+
+            if (GetPrototype((uid, component)) is not { } proto)
+                return;
+
+            var offset = component.Offset;
+            var vOffset = _robustRandom.NextVector2Box(-offset, offset);
+
+            var xform = Transform(uid);
+            var coords = _xform.GetMapCoordinates(uid, xform).Offset(vOffset);
+            var rotation = _xform.GetWorldRotation(xform);
+
+            Spawn(proto, coords, rotation: rotation);
         }
 
-        if (Deleted(uid))
-            return;
+        private EntProtoId? GetPrototype(Entity<RandomSpawnerComponent> spawner)
+        {
+            if (GetPrototypes(spawner) is not { } list)
+                return null;
 
-        var offset = component.Offset;
-        var xOffset = _robustRandom.NextFloat(-offset, offset);
-        var yOffset = _robustRandom.NextFloat(-offset, offset);
+            return _robustRandom.Pick(list);
+        }
 
-        var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
+        private List<EntProtoId>? GetPrototypes(Entity<RandomSpawnerComponent> spawner)
+        {
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (spawner.Comp.RarePrototypes.Count > 0 &&
+                (spawner.Comp.RareChance == 1.0f || _robustRandom.Prob(spawner.Comp.RareChance)))
+            {
+                return spawner.Comp.RarePrototypes;
+            }
 
-        Spawn(_robustRandom.Pick(component.Prototypes), coordinates);
-    }
+            if (spawner.Comp.Prototypes.Count == 0)
+            {
+                Log.Warning($"Prototype list in RandomSpawnerComponent is empty! Entity: {ToPrettyString(spawner)}");
+                return null;
+            }
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (spawner.Comp.Chance == 1.0f || !_robustRandom.Prob(spawner.Comp.Chance))
+            {
+                return spawner.Comp.Prototypes;
+            }
+
+            return null;
+        }
 
     private void Spawn(Entity<EntityTableSpawnerComponent> ent)
     {
         if (TerminatingOrDeleted(ent) || !Exists(ent))
             return;
 
-        var coords = Transform(ent).Coordinates;
+            var xform = Transform(ent);
+            var coords = _xform.GetMapCoordinates(ent, xform);
+            var rotation = _xform.GetWorldRotation(xform);
+            var offset = ent.Comp.Offset;
 
-        EntityTableSpawnerComponent comp = ent;
-        var spawns = _entityTable.GetSpawns(comp.Table);
-        if (comp.AutoStack)
-        {
-            SpawnStackedWhenPossible(spawns, coords, comp.Offset);
-        }
-        else
-        {
-            SpawnAtRandomOffset(spawns, coords, comp.Offset);
-        }
-    }
-
-    private void SpawnStackedWhenPossible(
-        IEnumerable<EntProtoId> spawns,
-        EntityCoordinates coords,
-        float offset
-    )
-    {
-        Dictionary<ProtoId<StackPrototype>, (EntProtoId Proto, int Count)> prototypeStacks = new();
-        ValueList<EntProtoId> nonStackable = [];
-        foreach (var protoId in spawns)
-        {
-            var prototype = _prototypeManager.Index(protoId);
-            if (!prototype.Components.TryGetComponent<StackComponent>(Factory, out var stack))
+            var spawns = _entityTable.GetSpawns(ent.Comp.Table);
+            foreach (var proto in spawns)
             {
-                nonStackable.Add(protoId);
-                continue;
+                var vOffset = _robustRandom.NextVector2(-offset, offset);
+                var trueCoords = coords.Offset(vOffset);
+
+                Spawn(proto, trueCoords, rotation: rotation);
             }
-
-            prototypeStacks[stack.StackTypeId] = prototypeStacks.TryGetValue(stack.StackTypeId, out var found)
-                ? (protoId, found.Count + 1)
-                : (protoId, 1);
         }
-
-        SpawnAtRandomOffset(nonStackable, coords, offset);
-        
-        foreach (var (protoId, count) in prototypeStacks.Values)
-        {
-            var trueCoords = GetRandomOffset(coords, offset);
-            _stack.SpawnMultiple(protoId, count, trueCoords);
-        }
-    }
-
-    private void SpawnAtRandomOffset(IEnumerable<EntProtoId> spawns, EntityCoordinates coords, float offset)
-    {
-        foreach (var proto in spawns)
-        {
-            SpawnAtRandomOffset(proto, coords, offset);
-        }
-    }
-
-    private EntityUid SpawnAtRandomOffset(EntProtoId proto, EntityCoordinates coords, float offset)
-    {
-        var trueCoords = GetRandomOffset(coords, offset);
-
-        return SpawnAtPosition(proto, trueCoords);
-    }
-
-    private EntityCoordinates GetRandomOffset(EntityCoordinates coords, float offset)
-    {
-        var xOffset = _robustRandom.NextFloat(-offset, offset);
-        var yOffset = _robustRandom.NextFloat(-offset, offset);
-        var trueCoords = coords.Offset(new Vector2(xOffset, yOffset));
-        return trueCoords;
     }
 }

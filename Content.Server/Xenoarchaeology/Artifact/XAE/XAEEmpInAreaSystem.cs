@@ -8,9 +8,9 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 /// <summary>
 /// System for xeno artifact effect that creates EMP on use.
 /// </summary>
-public sealed class XAEEmpInAreaSystem : BaseXAESystem<XAEEmpInAreaComponent>
+public sealed partial class XAEEmpInAreaSystem : BaseXAESystem<XAEEmpInAreaComponent>
 {
-    [Dependency] private readonly EmpSystem _emp = default!;
+    [Dependency] private EmpSystem _emp = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEEmpInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)

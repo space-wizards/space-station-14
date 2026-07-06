@@ -7,9 +7,9 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class VariantizeCommand : IConsoleCommand
+public sealed partial class VariantizeCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public string Command => "variantize";
 
@@ -44,7 +44,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
             var def = turfSystem.GetContentTileDefinition(tile);
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
             mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }

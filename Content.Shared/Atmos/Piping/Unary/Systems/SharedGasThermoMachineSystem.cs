@@ -6,10 +6,10 @@ using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
-public abstract class SharedGasThermoMachineSystem : EntitySystem
+public abstract partial class SharedGasThermoMachineSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
 
     public override void Initialize()
     {

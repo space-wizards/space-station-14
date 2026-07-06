@@ -363,7 +363,6 @@ entities:
       parent: 1
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
-      autoRecharge: True
 - proto: AtmosFixFreezerMarker
   entities:
   - uid: 348

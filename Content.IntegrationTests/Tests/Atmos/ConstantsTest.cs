@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Prototypes;
@@ -6,12 +7,12 @@ using Content.Shared.Atmos.Prototypes;
 namespace Content.IntegrationTests.Tests.Atmos;
 
 [TestOf(typeof(Atmospherics))]
-public sealed class ConstantsTest
+public sealed class ConstantsTest : GameTest
 {
     [Test]
     public async Task TotalGasesTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
+        var pair = Pair;
         var server = pair.Server;
         var entityManager = server.EntMan;
         var protoManager = server.ProtoMan;
@@ -34,20 +35,14 @@ public sealed class ConstantsTest
                 // enum mapping gases to their Id
                 Assert.That(Enum.GetValues<Gas>(), Has.Length.EqualTo(Atmospherics.TotalNumberOfGases),
                      $"Gas enum size is not equal to TotalNumberOfGases.");
-                // localized abbreviations for UI purposes
-                Assert.That(Atmospherics.GasAbbreviations, Has.Count.EqualTo(Atmospherics.TotalNumberOfGases),
-                     $"GasAbbreviations size is not equal to TotalNumberOfGases.");
 
-                // the ID for each gas has to be a number from 0 to TotalNumberOfGases-1
+                // the ID for each gas has to correspond to a value in the Gas enum (converted to a string)
                 foreach (var gas in gasProtos)
                 {
-                    var validInteger = int.TryParse(gas.ID, out var number);
-                    Assert.That(validInteger, Is.True, $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
-                    Assert.That(number, Is.InRange(0, Atmospherics.TotalNumberOfGases - 1), $"GasPrototype {gas.ID} has an invalid ID. It has to be an integer between 0 and TotalNumberOfGases - 1.");
+                    Assert.That(Enum.TryParse<Gas>(gas.ID, out _), $"GasPrototype {gas.ID} has an invalid ID. It must correspond to a value in the {nameof(Gas)} enum.");
                 }
             });
         });
-        await pair.CleanReturnAsync();
     }
 }
 

@@ -4,54 +4,56 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Stacks;
 
+/// <summary>
+/// Component on an entity that represents a stack of identical things, usually materials.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedStackSystem))]
 public sealed partial class StackComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// What stack type we are.
+    /// </summary>
     [DataField("stackType", required: true)]
-    public ProtoId<StackPrototype> StackTypeId { get; private set; } = default!;
+    public ProtoId<StackPrototype> StackTypeId = default!;
 
     /// <summary>
     /// Current stack count.
     /// Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
     /// </summary>
-    [DataField("count")]
-    public int Count { get; set; } = 30;
+    [DataField]
+    public int Count = 30;
 
     /// <summary>
     /// Max amount of things that can be in the stack.
     /// Overrides the max defined on the stack prototype.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("maxCountOverride")]
-    public int? MaxCountOverride  { get; set; }
+    [DataField]
+    public int? MaxCountOverride;
 
     /// <summary>
     /// Set to true to not reduce the count when used.
-    /// Note that <see cref="Count"/> still limits the amount that can be used at any one time.
     /// </summary>
-    [DataField("unlimited")]
-    [ViewVariables(VVAccess.ReadOnly)]
-    public bool Unlimited { get; set; }
+    [DataField]
+    public bool Unlimited;
 
     /// <summary>
-    /// Lingering stacks will remain present even when there are no items.
-    /// Instead, they will become transparent.
+    /// When throwing this item, do we want to only throw one part of the stack or the whole stack at once?
     /// </summary>
-    [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
-    public bool Lingering;
+    [DataField]
+    public bool ThrowIndividually;
 
-    [DataField("throwIndividually"), ViewVariables(VVAccess.ReadWrite)]
-    public bool ThrowIndividually { get; set; } = false;
-
+    /// <summary>
+    /// Used by StackStatusControl in client to update UI.
+    /// </summary>
     [ViewVariables]
+    [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)] // Set by StackStatusControl
     public bool UiUpdateNeeded { get; set; }
 
     /// <summary>
-    /// Default IconLayer stack.
+    ///     Default IconLayer stack.
     /// </summary>
-    [DataField("baseLayer")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string BaseLayer = "";
 
     /// <summary>
@@ -68,15 +70,13 @@ public sealed partial class StackComponent : Component
     ///
     /// </summary>
     [DataField("composite")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public bool IsComposite;
 
     /// <summary>
     /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
     /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
     /// </summary>
-    [DataField("layerStates")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public List<string> LayerStates = new();
 
     /// <summary>
@@ -91,15 +91,14 @@ public sealed partial class StackComponent : Component
 public sealed class StackComponentState : ComponentState
 {
     public int Count { get; }
-    public int? MaxCount { get; }
+    public int? MaxCountOverride { get; }
+    public bool Unlimited { get; }
 
-    public bool Lingering;
-
-    public StackComponentState(int count, int? maxCount, bool lingering)
+    public StackComponentState(int count, int? maxCountOverride, bool unlimited)
     {
         Count = count;
-        MaxCount = maxCount;
-        Lingering = lingering;
+        MaxCountOverride = maxCountOverride;
+        Unlimited = unlimited;
     }
 }
 

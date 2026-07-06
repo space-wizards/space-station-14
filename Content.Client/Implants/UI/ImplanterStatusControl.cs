@@ -9,9 +9,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Implants.UI;
 
-public sealed class ImplanterStatusControl : Control
+public sealed partial class ImplanterStatusControl : Control
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
     private readonly ImplanterComponent _parent;
     private readonly RichTextLabel _label;
 
@@ -19,7 +19,7 @@ public sealed class ImplanterStatusControl : Control
     {
         IoCManager.InjectDependencies(this);
         _parent = parent;
-        _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+        _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         _label.MaxWidth = 350;
         AddChild(new ClipControl { Children = { _label } });
 
@@ -49,7 +49,7 @@ public sealed class ImplanterStatusControl : Control
         if (_parent.CurrentMode == ImplanterToggleMode.Draw)
         {
             string implantName = _parent.DeimplantChosen != null
-                ? (_prototype.TryIndex(_parent.DeimplantChosen.Value, out EntityPrototype? implantProto) ? implantProto.Name : Loc.GetString("implanter-empty-text"))
+                ? (_prototype.Resolve(_parent.DeimplantChosen.Value, out EntityPrototype? implantProto) ? implantProto.Name : Loc.GetString("implanter-empty-text"))
                 : Loc.GetString("implanter-empty-text");
 
             _label.SetMarkup(Loc.GetString("implanter-label-draw",
