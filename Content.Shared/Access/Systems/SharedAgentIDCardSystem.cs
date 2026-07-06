@@ -1,10 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.StatusIcon;
 using Content.Shared.VoiceMask;
 using Robust.Shared.Prototypes;
@@ -20,6 +19,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedIdCardSystem _card = default!;
+    [Dependency] private SharedJobSystem _job = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
 
     /// <inheritdoc />
@@ -35,7 +35,6 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
         SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
     }
 
-    // TODO this should be its own component
     /// <summary>
     /// Steals access from interacted ids.
     /// </summary>
@@ -94,31 +93,11 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
             !_card.TryChangeJobIcon(ent, jobIcon))
             return;
 
-        if (TryFindJobProtoFromIcon(jobIcon, out var job))
+        if (_job.TryGetJobFromIcon(jobIcon.ID, out var job))
             _card.TryChangeJobDepartment(ent, job);
 
         _jobStatus.UpdateStatus(Transform(ent).ParentUid);
         UpdateUi(ent);
-    }
-
-    /// <summary>
-    /// Attempts to find a matching job to a job icon. TODO move this somewhere else
-    /// </summary>
-    /// <returns> True if a JobPrototype is found. </returns>
-    private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
-    {
-        job = null;
-
-        foreach (var jobPrototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
-        {
-            if (jobPrototype.Icon != jobIcon.ID)
-                continue;
-
-            job = jobPrototype;
-            return true;
-        }
-
-        return false;
     }
 
     /// <summary>
@@ -131,7 +110,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
 }
 
 /// <summary>
-/// Key representing which <see cref="PlayerBoundUserInterface"/> is currently open.
+/// Key representing which bound user interface is currently open.
 /// Useful when there are multiple UI for an object. Here it's future-proofing only.
 /// </summary>
 [Serializable, NetSerializable]

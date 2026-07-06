@@ -3,10 +3,10 @@
                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                     Title="{Loc agent-id-ui-menu-title}"
                     MinSize="765 398" Resizable="False">
-    <BoxContainer Orientation="Vertical" Margin="12 0" VerticalExpand="False" >
+    <BoxContainer Orientation="Vertical" Margin="12" VerticalExpand="False" >
 
         <!-- Upper area: ID status -->
-        <BoxContainer Margin="0 12 0 4" MinHeight="80" >
+        <BoxContainer Margin="0 0 0 8" MinHeight="80" >
             <PanelContainer StyleClasses="PanelInsetDark" >
                 <TextureRect Name="CurrentJobIcon" Margin="8 0" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
@@ -16,7 +16,6 @@
                 <Label Name="CurrentJob" StyleClasses="LabelSubHeading" Margin="16 4 0 0" />
             </BoxContainer>
         </BoxContainer>
-        <PanelContainer StyleClasses="LowDivider" Margin="0 4" />
 
         <!-- Center area: Tabs -->
         <PanelContainer StyleClasses="PanelInsetDark" MinHeight="230" VerticalExpand="True" >
@@ -34,18 +33,15 @@
                     </ScrollContainer>
 
                     <!-- Job icon tab -->
-                    <BoxContainer Name="TabJobIcons" Margin="4 8 4 4" Align="Center" >
-                        <BoxContainer Align="Center">
-                            <GridContainer Name="JobGroupGrid" Columns="6" />
-                                    <!-- Group buttons are generated in code -->
+                    <BoxContainer Name="TabJobIcons" Margin="8" SeparationOverride="8" >
+                        <BoxContainer VerticalExpand="True">
+                            <GridContainer Name="JobGroupGrid" Columns="3" />
+                            <!-- Group buttons are generated in code -->
                         </BoxContainer>
-                        <PanelContainer StyleClasses="LowDivider" Margin="4 0" VerticalExpand="True" />
-                        <PanelContainer StyleClasses="PanelInsetDark">
-                            <BoxContainer Margin="4 8 4 4" Align="Center" SetWidth="112">
-                                <GridContainer Name="IconGrid" Columns="3" HorizontalAlignment="Center" />
-                                    <!-- Job icon buttons are generated in code -->
-                            </BoxContainer>
-                        </PanelContainer>
+                        <BoxContainer VerticalExpand="True" SetWidth="112">
+                            <GridContainer Name="IconGrid" Columns="3" HorizontalAlignment="Center" />
+                            <!-- Job icon buttons are generated in code -->
+                        </BoxContainer>
                     </BoxContainer>
 
                     <!-- TODO chameleon clothing tab -->
@@ -61,15 +57,12 @@
         </PanelContainer>
 
         <!-- Footer -->
-        <BoxContainer Orientation="Vertical" >
-            <PanelContainer StyleClasses="LowDivider" />
-            <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom" >
-                <Label Text="{Loc 'agent-id-ui-footer-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'agent-id-ui-footer-flavor-right'}" StyleClasses="WindowFooterText"
-                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
-            </BoxContainer>
+        <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom" >
+            <Label Text="{Loc 'agent-id-ui-footer-flavor-left'}" StyleClasses="WindowFooterText" />
+            <Label Text="{Loc 'agent-id-ui-footer-flavor-right'}" StyleClasses="WindowFooterText"
+                    HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+            <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                    VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

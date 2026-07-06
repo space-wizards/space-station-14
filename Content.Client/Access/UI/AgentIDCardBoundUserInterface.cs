@@ -40,9 +40,7 @@ public sealed class AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) :
         if (!EntMan.TryGetComponent(Owner, out IdCardComponent? card))
             return;
 
-        _window.SetCurrentName(card.FullName ?? string.Empty);
-        _window.SetCurrentJob(card.LocalizedJobTitle ?? string.Empty);
-        _window.SetCurrentJobIcon(card.JobIcon);
+        _window.Update(card);
     }
 
     private void OnNameChanged(string newName)

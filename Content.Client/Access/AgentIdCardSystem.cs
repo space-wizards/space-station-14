@@ -15,7 +15,7 @@ public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
         base.Initialize();
 
         // Not AgentIDCardComponent as the IdCardComponent is the one with the changing state
-        SubscribeLocalEvent<IdCardComponent, AfterAutoHandleStateEvent>(OnIdState);
+        SubscribeLocalEvent<AgentIDCardComponent, IdCardAutoStateHandledEvent>(OnIdState);
     }
 
     protected override void UpdateUi(EntityUid entity)
@@ -26,7 +26,7 @@ public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
         }
     }
 
-    private void OnIdState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnIdState(Entity<AgentIDCardComponent> ent, ref IdCardAutoStateHandledEvent args)
     {
         UpdateUi(ent);
     }
