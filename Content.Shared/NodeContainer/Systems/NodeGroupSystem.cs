@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
@@ -6,6 +6,7 @@ using Content.Shared.NodeContainer.Components;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.NodeContainer.Systems;
@@ -23,18 +24,11 @@ public sealed partial class NodeGroupSystem : EntitySystem
     private readonly List<Entity<NodeGroupComponent>> _visSends = new();
     private readonly HashSet<ICommonSession> _visPlayers = new();
 
-    // TODO move to a singleton
-    private readonly HashSet<Entity<NodeGroupComponent>> _toRemake = new();
-    private readonly HashSet<Entity<NodeGroupComponent>> _nodeGroups = new();
-    private readonly HashSet<Node> _toRemove = new();
-    private readonly List<Node> _toReflood = new();
-
     private const float VisDataUpdateInterval = 1;
     private float _accumulatedFrameTime;
 
     public bool VisEnabled => _visPlayers.Count != 0;
 
-    private int _gen = 1;
     private int _groupNetIdCounter = 1;
 
     /// <summary>
@@ -62,6 +56,11 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
+    private bool TryGetManager([NotNullWhen(true)] out Entity<NodeGroupManagerComponent>? manager)
+    {
+        return TrySingle(out manager);
+    }
+
     private void HandleEnableMsg(NodeVis.MsgEnable msg, EntitySessionEventArgs args)
     {
         var session = args.SenderSession;
@@ -87,10 +86,13 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     public void QueueRemakeGroup(Entity<NodeGroupComponent> group)
     {
+        if (!TryGetManager(out var manager))
+            return;
+
         if (group.Comp.Remaking)
             return;
 
-        _toRemake.Add(group);
+        manager.Value.Comp.ToRemake.Add(group);
         group.Comp.Remaking = true;
 
         foreach (var node in group.Comp.Nodes)
@@ -100,22 +102,28 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
         if (group.Comp.NodeCount == 0)
         {
-            _nodeGroups.Remove(group);
+            QueueDel(group);
         }
     }
 
     public void QueueReflood(Node node)
     {
+        if (!TryGetManager(out var manager))
+            return;
+
         if (node.FlaggedForFlood)
             return;
 
-        _toReflood.Add(node);
+        manager.Value.Comp.ToReflood.Add(node);
         node.FlaggedForFlood = true;
     }
 
     public void QueueNodeRemove(Node node)
     {
-        _toRemove.Add(node);
+        if (!TryGetManager(out var manager))
+            return;
+
+        manager.Value.Comp.ToRemove.Add(node);
     }
 
     public void CreateSingleNetImmediate(Node node)
@@ -151,15 +159,19 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private void DoGroupUpdates()
     {
+        if (!TryGetManager(out var managerEnt))
+            return;
+
+        var manager = managerEnt.Value.Comp;
         // "Why is there a separate queue for group remakes and node refloods when they both cause eachother"
         // Future planning for the potential ability to do more intelligent group updating.
 
-        if (_toRemake.Count == 0 && _toReflood.Count == 0 && _toRemove.Count == 0)
+        if (manager.ToRemake.Count == 0 && manager.ToReflood.Count == 0 && manager.ToRemove.Count == 0)
             return;
 
-        var sw = Stopwatch.StartNew();
+        var sw = RStopwatch.StartNew();
 
-        foreach (var toRemove in _toRemove)
+        foreach (var toRemove in manager.ToRemove)
         {
             if (toRemove.NodeGroup == null)
                 continue;
@@ -173,21 +185,21 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
         // Break up all remaking groups.
         // Don't clear the list yet, we'll come back to these later.
-        foreach (var toRemake in _toRemake)
+        foreach (var toRemake in manager.ToRemake)
         {
             QueueRemakeGroup(toRemake);
         }
 
-        _gen += 1;
+        manager.Generation += 1;
 
         // Go over all nodes to calculate reachable nodes and make an undirected graph out of them.
         // Node.GetReachableNodes() may return results asymmetrically,
         // i.e. node A may return B, but B may not return A.
         //
         // Must be for loop to allow concurrent modification from RemakeGroupImmediate.
-        for (var i = 0; i < _toReflood.Count; i++)
+        for (var i = 0; i < manager.ToReflood.Count; i++)
         {
-            var node = _toReflood[i];
+            var node = manager.ToReflood[i];
 
             if (node.Deleting)
                 continue;
@@ -222,12 +234,12 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _newGroups.Clear();
 
         // Flood fill over nodes. Every node will only be flood filled once.
-        foreach (var node in _toReflood)
+        foreach (var node in manager.ToReflood)
         {
             node.FlaggedForFlood = false;
 
             // Check if already flood filled.
-            if (node.FloodGen == _gen || node.Deleting)
+            if (node.FloodGen == manager.Generation || node.Deleting)
                 continue;
 
             // Flood fill
@@ -239,7 +251,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
         // Go over dead groups that need to be cleaned up.
         // Tell them to push their data to new groups too.
-        foreach (var oldGroup in _toRemake)
+        foreach (var oldGroup in manager.ToRemake)
         {
             // Group by the NEW group.
             var newGrouped = oldGroup.Comp.Nodes.GroupBy(n => n.NodeGroup);
@@ -247,16 +259,16 @@ public sealed partial class NodeGroupSystem : EntitySystem
             oldGroup.Comp.Removed = true;
             var handler = _nodeGroupManager.GetNodeGroupHandler(oldGroup.Comp.GroupId);
             handler.AfterRemake(oldGroup, newGrouped);
-            _nodeGroups.Remove(oldGroup);
+            QueueDel(oldGroup);
             if (VisEnabled)
                 _visDeletes.Add(oldGroup.Comp.NetId);
         }
 
-        var refloodCount = _toReflood.Count;
+        var refloodCount = manager.ToReflood.Count;
 
-        _toReflood.Clear();
-        _toRemake.Clear();
-        _toRemove.Clear();
+        manager.ToReflood.Clear();
+        manager.ToRemake.Clear();
+        manager.ToRemove.Clear();
 
         // notify entities that node groups have been updated, so they can do things like update their visuals.
         _updateEnts.Clear();
@@ -279,11 +291,14 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     private void ClearReachableIfNecessary(Node node)
     {
-        if (node.UndirectGen != _gen)
-        {
-            node.ReachableNodes.Clear();
-            node.UndirectGen = _gen;
-        }
+        if (!TryGetManager(out var manager))
+            return;
+
+        if (node.UndirectGen == manager.Value.Comp.Generation)
+            return;
+
+        node.ReachableNodes.Clear();
+        node.UndirectGen = manager.Value.Comp.Generation;
     }
 
     private Entity<NodeGroupComponent> InitGroup(Node node, List<Node> groupNodes)
@@ -311,8 +326,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
         handler.LoadNodes(groupEnt, groupNodes);
 
-        _nodeGroups.Add(groupEnt);
-
         if (VisEnabled)
             _visSends.Add(groupEnt);
 
@@ -324,9 +337,12 @@ public sealed partial class NodeGroupSystem : EntitySystem
         // All nodes we're filling into that currently have NO network.
         var allNodes = new List<Node>();
 
+        if (!TryGetManager(out var manager))
+            return allNodes;
+
         var stack = new Stack<Node>();
         stack.Push(rootNode);
-        rootNode.FloodGen = _gen;
+        rootNode.FloodGen = manager.Value.Comp.Generation;
 
         while (stack.TryPop(out var node))
         {
@@ -334,10 +350,10 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
             foreach (var reachable in node.ReachableNodes)
             {
-                if (reachable.FloodGen == _gen)
+                if (reachable.FloodGen == manager.Value.Comp.Generation)
                     continue;
 
-                reachable.FloodGen = _gen;
+                reachable.FloodGen = manager.Value.Comp.Generation;
                 stack.Push(reachable);
             }
         }
@@ -385,13 +401,14 @@ public sealed partial class NodeGroupSystem : EntitySystem
         if (_accumulatedFrameTime > VisDataUpdateInterval)
         {
             _accumulatedFrameTime -= VisDataUpdateInterval;
-            foreach (var group in _nodeGroups)
+            var query = EntityQueryEnumerator<NodeGroupComponent>();
+            while (query.MoveNext(out var uid, out var group))
             {
-                if (_visSends.Contains(group))
+                if (_visSends.Contains((uid, group)))
                     continue;
 
-                var handler = _nodeGroupManager.GetNodeGroupHandler(group.Comp.GroupId);
-                msg.GroupDataUpdates.Add(group.Comp.NetId, handler.GetDebugData(group));
+                var handler = _nodeGroupManager.GetNodeGroupHandler(group.GroupId);
+                msg.GroupDataUpdates.Add(group.NetId, handler.GetDebugData((uid, group)));
             }
         }
 
@@ -408,9 +425,10 @@ public sealed partial class NodeGroupSystem : EntitySystem
     {
         var msg = new NodeVis.MsgData();
 
-        foreach (var network in _nodeGroups)
+        var query = EntityQueryEnumerator<NodeGroupComponent>();
+        while (query.MoveNext(out var uid, out var group))
         {
-            msg.Groups.Add(VisMakeGroupState(network));
+            msg.Groups.Add(VisMakeGroupState((uid, group)));
         }
 
         RaiseNetworkEvent(msg, player.Channel);
