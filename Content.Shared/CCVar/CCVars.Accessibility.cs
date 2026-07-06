@@ -27,9 +27,9 @@ public sealed partial class CCVars
         CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
     
     /// <summary>
-    /// Removes the noise from the night vision overlay
+    /// Makes the noise from the night vision overlay static (that is, it doesn't move)
     /// </summary>
-    public static readonly CVarDef<bool> DisableNightVisionNoise =
+    public static readonly CVarDef<bool> StaticNightVisionNoise =
         CVarDef.Create("accessibility.disable_nv_noise", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     public static readonly CVarDef<bool> ChatEnableColorName =
