@@ -2,12 +2,18 @@ name: No submodule update checker
 
 on:
   pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
     paths:
       - 'RobustToolbox'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
   this_aint_right:
     name: Submodule update in pr found
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Fail
