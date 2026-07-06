@@ -14,9 +14,6 @@
         - id: Cautery
         - id: Retractor
         - id: Scalpel
-  - type: Tag
-    tags:
-    - Backpack # ignore "WhitelistChameleon" tag, duplicate sprite.
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
