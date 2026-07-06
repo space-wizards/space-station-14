@@ -106,7 +106,7 @@ public abstract partial class SharedBorgSystem
                 var hand = itemModuleComp.Hands[i];
                 var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
 
-                if (IsItemInUnremovable(hand))
+                if (IsItemInHandUnremovable(hand))
                     continue;
 
                 if (itemModuleComp.StoredItems.TryGetValue(handId, out var item))
@@ -237,7 +237,7 @@ public abstract partial class SharedBorgSystem
             if (item is { } pickUp)
             {
                 _hands.DoPickup(chassis, handId, pickUp, hands);
-                if (IsItemInUnremovable(hand))
+                if (IsItemInHandUnremovable(hand))
                 {
                     EnsureComp<UnremoveableComponent>(pickUp);
                 }
@@ -248,7 +248,10 @@ public abstract partial class SharedBorgSystem
         Dirty(module);
     }
 
-    private static bool IsItemInUnremovable(BorgHand hand)
+    /// <summary>
+    /// Determines if the item in the hand is unremovable (permament part of the hand).
+    /// </summary>
+    private static bool IsItemInHandUnremovable(BorgHand hand)
     {
         return !hand.ForceRemovable && hand.Hand.Whitelist == null && hand.Hand.Blacklist == null;
     }
