@@ -130,8 +130,3 @@
   id: NightVision
   kind: source
   path: "/Textures/Shaders/nightvision.swsl"
-
-- type: shader
-  id: NightVisionAccessible
-  kind: source
-  path: "/Textures/Shaders/nightvisionaccessible.swsl"

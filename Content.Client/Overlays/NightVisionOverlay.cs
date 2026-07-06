@@ -15,15 +15,14 @@ public sealed partial class NightVisionOverlay : Overlay
     [Dependency] private IConfigurationManager _cfg = default!;
 
     private static readonly ProtoId<ShaderPrototype> Shader = "NightVision";
-    private static readonly ProtoId<ShaderPrototype> AccessibleShader = "NightVisionAccessible";
     private readonly ShaderInstance _nightVisionShader;
-    private readonly ShaderInstance _nightVisionAccessibleShader;
-    private ShaderInstance _activeShader;
 
     public Color OverlayColor { get; private set; } = Color.White;
     public Color LightingColor { get; private set; } = Color.White;
     public float NoiseAmount { get; private set; }
     public float NoiseMultiplier { get; private set; }
+
+    public bool DisableNoise = false;
 
     public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -32,16 +31,12 @@ public sealed partial class NightVisionOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _nightVisionShader = _prototypeManager.Index(Shader).InstanceUnique();
-        _nightVisionAccessibleShader = _prototypeManager.Index(AccessibleShader).InstanceUnique();
-        _activeShader = _nightVisionShader;
-        _cfg.OnValueChanged(CCVars.StaticNightVisionNoise, OnNightVisionNoiseChanged, invokeImmediately: true);
+        _cfg.OnValueChanged(CCVars.DisableNightVisionNoise, OnNightVisionNoiseChanged, invokeImmediately: true);
     }
 
     private void OnNightVisionNoiseChanged(bool toggle)
     {
-        _activeShader = toggle
-            ? _nightVisionAccessibleShader
-            : _nightVisionShader;
+        DisableNoise = toggle;
     }
 
     public void SetParameters(Color overlayColor, Color lightingColor, float noiseAmount, float noiseMultiplier)
@@ -62,10 +57,10 @@ public sealed partial class NightVisionOverlay : Overlay
 
         if (isSpace)
         {
-            _activeShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _activeShader.SetParameter("noise_amount", NoiseAmount);
-            _activeShader.SetParameter("noise_multiplier", NoiseMultiplier);
-            handle.UseShader(_activeShader);
+            _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _nightVisionShader.SetParameter("noise_amount", !DisableNoise ? NoiseAmount : 0);
+            _nightVisionShader.SetParameter("noise_multiplier", !DisableNoise ? NoiseMultiplier : 0);
+            handle.UseShader(_nightVisionShader);
         }
 
         var drawingColor = isSpace ? OverlayColor : LightingColor;
