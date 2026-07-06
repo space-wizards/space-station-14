@@ -12,7 +12,7 @@ namespace Content.Client.Overlays;
 public sealed partial class NightVisionOverlay : Overlay
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
 
     private static readonly ProtoId<ShaderPrototype> Shader = "NightVision";
     private readonly ShaderInstance _nightVisionShader;
@@ -31,7 +31,7 @@ public sealed partial class NightVisionOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _nightVisionShader = _prototypeManager.Index(Shader).InstanceUnique();
-        _cfg.OnValueChanged(CCVars.DisableNightVisionNoise, OnNightVisionNoiseChanged, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.DisableNightVisionNoise, OnNightVisionNoiseChanged, invokeImmediately: true);
     }
 
     private void OnNightVisionNoiseChanged(bool toggle)
