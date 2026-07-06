@@ -67,8 +67,6 @@ public sealed partial class CargoSystem
         UpdatePalletConsoleInterface(uid);
     }
 
-    #endregion
-
     private void OnTradeSplit(EntityUid uid, TradeStationComponent component, ref GridSplitEvent args)
     {
         // If the trade station gets bombed it's still a trade station.
@@ -78,7 +76,6 @@ public sealed partial class CargoSystem
         }
     }
 
-    #region Shuttle
     /// GetCargoPallets(gridUid, BuySellType.Sell) to return only Sell pads
     /// GetCargoPallets(gridUid, BuySellType.Buy) to return only Buy pads
     private List<(EntityUid Entity, CargoPalletComponent Component, TransformComponent PalletXform)> GetCargoPallets(EntityUid gridUid, BuySellType requestType = BuySellType.All)

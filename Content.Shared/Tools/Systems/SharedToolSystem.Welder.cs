@@ -117,13 +117,13 @@ public abstract partial class SharedToolSystem
         if (TryComp(target, out ReagentTankComponent? tank)
             && tank.TankType == ReagentTankType.Fuel
             && SolutionContainerSystem.TryGetDrainableSolution(target, out var targetSoln, out var targetSolution)
-            && SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solutionComp, out var welderSolution))
+            && SolutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.FuelSolutionName, out var solution, out var welderSolution))
         {
             var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
             if (trans > 0)
             {
                 var drained = SolutionContainerSystem.Drain(target, targetSoln.Value, trans);
-                SolutionContainerSystem.TryAddSolution(solutionComp.Value, drained);
+                SolutionContainerSystem.TryAddSolution(solution.Value, drained);
                 _audioSystem.PlayPredicted(entity.Comp.WelderRefill, entity, user: args.User);
                 _popup.PopupClient(Loc.GetString("welder-component-after-interact-refueled-message"), entity, args.User);
             }
@@ -210,9 +210,10 @@ public abstract partial class SharedToolSystem
     private void UpdateWelders()
     {
         // TODO: Same as the other EntityQueryEnumerators...
-        var query = EntityQueryEnumerator<WelderComponent, SolutionManagerComponent>();
+        // TODO: ActiveWelderComponent
+        var query = EntityQueryEnumerator<WelderComponent>();
         var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var welder, out var solutionContainer))
+        while (query.MoveNext(out var uid, out var welder))
         {
             if (curTime < welder.NextUpdate)
                 continue;
@@ -223,7 +224,8 @@ public abstract partial class SharedToolSystem
             if (!welder.Enabled)
                 continue;
 
-            if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
+            // TODO: Relations
+            if (!SolutionContainerSystem.TryGetSolution(uid, welder.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
             SolutionContainerSystem.RemoveReagent(solutionComp.Value, welder.FuelReagent, welder.FuelConsumption * welder.WelderUpdateTimer.TotalSeconds);

@@ -311,6 +311,17 @@
 
 - type: entity
   abstract: true
+  parent: FoodBakingBase
+  id: FoodBakingMixableBase
+  description: Mixed into various recipes.
+  components:
+  - type: SolutionSpiker
+    sourceSolution: food
+    ignoreEmpty: true
+    popup: spike-solution-mix
+
+- type: entity
+  abstract: true
   parent: [SolutionNormal, FoodBakingBase]
   id: FoodDoughBase
   components:
@@ -634,7 +645,7 @@
     state: cakebatter
 
 - type: entity
-  parent: [SolutionSmall, FoodBakingBase]
+  parent: [SolutionSmall, FoodBakingMixableBase]
   id: FoodButter
   name: stick of butter
   description: A stick of delicious, golden, fatty goodness.
@@ -677,7 +688,7 @@
     slice: FoodButterSlice
 
 - type: entity
-  parent: [SolutionVeryTiny, FoodBakingBase]
+  parent: [SolutionVeryTiny, FoodBakingMixableBase]
   id: FoodButterSlice
   name: butter slice
   description: A pat of delicious, golden, fatty goodness.

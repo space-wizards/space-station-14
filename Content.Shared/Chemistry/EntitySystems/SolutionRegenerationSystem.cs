@@ -16,7 +16,6 @@ public sealed class SolutionRegenerationSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SolutionRegenerationComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SolutionRegenerationComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
     private void OnMapInit(Entity<SolutionRegenerationComponent> ent, ref MapInitEvent args)
@@ -26,21 +25,13 @@ public sealed class SolutionRegenerationSystem : EntitySystem
         Dirty(ent);
     }
 
-    // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
-    private void OnEntRemoved(Entity<SolutionRegenerationComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        // Make sure the removed entity was our contained solution and clear our cached reference
-        if (args.Entity == ent.Comp.SolutionRef?.Owner)
-            ent.Comp.SolutionRef = null;
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         // TODO: SolutionRegenerationComponent on Solution Entities!
-        var query = EntityQueryEnumerator<SolutionRegenerationComponent, SolutionManagerComponent>();
-        while (query.MoveNext(out var uid, out var regen, out var manager))
+        var query = EntityQueryEnumerator<SolutionRegenerationComponent, SolutionComponent>();
+        while (query.MoveNext(out var uid, out var regen, out var solution))
         {
             if (_timing.CurTime < regen.NextRegenTime)
                 continue;
@@ -49,13 +40,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
             regen.NextRegenTime += regen.Duration;
             // Needs to be networked and dirtied so that the client can reroll it during prediction
             Dirty(uid, regen);
-            if (!_solutionContainer.ResolveSolution((uid, manager),
-                    regen.SolutionName,
-                    ref regen.SolutionRef,
-                    out var solution))
-                continue;
-
-            var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
+            var amount = FixedPoint2.Min(solution.Solution.AvailableVolume, regen.Generated.Volume);
             if (amount <= FixedPoint2.Zero)
                 continue;
 
@@ -64,7 +49,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                 ? regen.Generated
                 : regen.Generated.Clone().SplitSolution(amount);
 
-            _solutionContainer.TryAddSolution(regen.SolutionRef.Value, generated);
+            _solutionContainer.TryAddSolution((uid, solution), generated);
         }
     }
 }

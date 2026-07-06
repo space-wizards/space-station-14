@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components.SolutionManager;
+﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
@@ -13,6 +14,12 @@ namespace Content.Shared.EntityEffects.Effects.Solution;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<SolutionManagerComponent, AddReagentToSolution>
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<SolutionComponent, EntityEffectEvent<AddReagentToSolution>>(Effect);
+    }
+
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     protected override void Effect(Entity<SolutionManagerComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
@@ -24,6 +31,14 @@ public sealed class AddReagentToSolutionEntityEffectSystem : EntityEffectSystem<
             return;
 
         _solutionContainer.TryAddReagent(solutionContainer.Value, reagent, args.Scale * args.Effect.StrengthModifier);
+    }
+
+    private void Effect(Entity<SolutionComponent> entity, ref EntityEffectEvent<AddReagentToSolution> args)
+    {
+        if (entity.Comp.Id != args.Effect.Solution)
+            return;
+
+        _solutionContainer.TryAddReagent(entity, args.Effect.Reagent, args.Scale * args.Effect.StrengthModifier);
     }
 }
 

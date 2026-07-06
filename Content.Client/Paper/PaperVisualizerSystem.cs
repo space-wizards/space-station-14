@@ -1,12 +1,13 @@
+using Content.Shared.Paper;
 using Robust.Client.GameObjects;
 
 using static Content.Shared.Paper.PaperComponent;
 
-namespace Content.Client.Paper.UI;
+namespace Content.Client.Paper;
 
-public sealed class PaperVisualizerSystem : VisualizerSystem<PaperVisualsComponent>
+public sealed class PaperVisualizerSystem : VisualizerSystem<PaperVisualizerComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, PaperVisualsComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, PaperVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -30,8 +31,11 @@ public sealed class PaperVisualizerSystem : VisualizerSystem<PaperVisualsCompone
     }
 }
 
+/// <summary>
+/// Sprite mapping enum.
+/// </summary>
 public enum PaperVisualLayers
 {
     Stamp,
-    Writing
+    Writing,
 }
