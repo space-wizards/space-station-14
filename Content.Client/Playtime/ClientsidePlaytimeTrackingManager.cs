@@ -15,13 +15,13 @@ namespace Content.Client.Playtime;
 ///     This notably excludes scenarios like the lobby.
 /// </para>
 /// </remarks>
-public sealed class ClientsidePlaytimeTrackingManager
+public sealed partial class ClientsidePlaytimeTrackingManager
 {
-    [Dependency] private readonly IClientNetManager _clientNetManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IClientNetManager _clientNetManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     private ISawmill _sawmill = default!;
 

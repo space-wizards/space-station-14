@@ -21,11 +21,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";
 
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -135,6 +135,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (component.EmbeddedIntoUid == null)
             return; // the entity is not embedded, so do nothing
 
+        var embeddedInto = component.EmbeddedIntoUid;
+
         if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
         {
             embeddedContainer.EmbeddedObjects.Remove(uid);
@@ -167,6 +169,9 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
             Dirty(uid, projectile);
         }
+
+        var ev = new EmbedDetachEvent(user, embeddedInto.Value);
+        RaiseLocalEvent(uid, ref ev);
 
         if (user != null)
         {

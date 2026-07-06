@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Containers;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
@@ -12,24 +11,22 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Popups
 {
-    public sealed class PopupSystem : SharedPopupSystem
+    public sealed partial class PopupSystem : SharedPopupSystem
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IOverlayManager _overlay = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-        [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
-        [Dependency] private readonly ExamineSystemShared _examine = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IOverlayManager _overlay = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IUserInterfaceManager _uiManager = default!;
+        [Dependency] private IReplayRecordingManager _replayRecording = default!;
+        [Dependency] private ExamineSystemShared _examine = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
 
         public IReadOnlyCollection<WorldPopupLabel> WorldLabels => _aliveWorldLabels.Values;
         public IReadOnlyCollection<CursorPopupLabel> CursorLabels => _aliveCursorLabels.Values;
@@ -52,7 +49,7 @@ namespace Content.Client.Popups
                     _configManager,
                     EntityManager,
                     _playerManager,
-                    _prototype,
+                    ProtoMan,
                     _uiManager,
                     _uiManager.GetUIController<PopupUIController>(),
                     _examine,
