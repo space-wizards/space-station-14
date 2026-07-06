@@ -1,6 +1,6 @@
 - type: entity
   id: StorageTank
-  parent: BaseStructureDynamic
+  parent: [SolutionTank, SolutionGinormous, BaseStructureDynamic]
   name: storage tank
   description: A liquids storage tank.
   abstract: true
@@ -23,16 +23,11 @@
         - MachineLayer
         - InteractImpassable
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
@@ -58,10 +53,6 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        maxVol: 1500
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
@@ -70,9 +61,9 @@
 
 # For highcap tanks
 - type: entity
-  id: StorageTankBig
-  parent: StorageTank
   abstract: true
+  parent: [SolutionTank, Solution3840, StorageTank]
+  id: StorageTankBig
   components:
   - type: Fixtures
     fixtures:

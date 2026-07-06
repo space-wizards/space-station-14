@@ -14,7 +14,6 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20241122174236_IPIntel")]
     partial class IPIntel
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2025,6 +2024,5 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

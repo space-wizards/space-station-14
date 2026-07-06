@@ -1,26 +1,58 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 
 namespace Content.Shared.FingerprintReader;
 
 // TODO: This has a lot of overlap with the AccessReaderSystem, maybe merge them in the future?
-public sealed class FingerprintReaderSystem : EntitySystem
+public sealed partial class FingerprintReaderSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<FingerprintReaderComponent, FindAvailableLocksEvent>(OnFindAvailableLocks);
+        SubscribeLocalEvent<FingerprintReaderComponent, CheckUserHasLockAccessEvent>(OnCheckLockAccess);
+    }
+
+    private void OnFindAvailableLocks(Entity<FingerprintReaderComponent> ent, ref FindAvailableLocksEvent args)
+    {
+        args.FoundReaders |= LockTypes.Fingerprint;
+    }
+
+    private void OnCheckLockAccess(Entity<FingerprintReaderComponent> ent, ref CheckUserHasLockAccessEvent args)
+    {
+        // Are we looking for a fingerprint lock?
+        if (!args.FoundReaders.HasFlag(LockTypes.Fingerprint))
+            return;
+
+        // If the user has access to this lock, we pass it into the event.
+        if (IsAllowed(ent.Owner, args.User, out var denyReason))
+            args.HasAccess |= LockTypes.Fingerprint;
+        else
+            args.DenyReason = denyReason;
+    }
 
     /// <summary>
     /// Checks if the given user has fingerprint access to the target entity.
     /// </summary>
     /// <param name="target">The target entity.</param>
     /// <param name="user">User trying to gain access.</param>
+    /// <param name="showPopup">Whether to display a popup with the reason you are not allowed to access this.</param>
+    /// <param name="denyReason">The reason why access was denied.</param>
+    /// <param name="checkGloves">Allows bypassing glove check regardless of the component's IgnoreGloves param.</param>
     /// <returns>True if access was granted, otherwise false.</returns>
+    // TODO: Remove showPopup, just keeping it here for backwards compatibility while I refactor mail
     [PublicAPI]
-    public bool IsAllowed(Entity<FingerprintReaderComponent?> target, EntityUid user, bool showPopup = true)
+    public bool IsAllowed(Entity<FingerprintReaderComponent?> target, EntityUid user, [NotNullWhen(false)] out string? denyReason, bool showPopup = true, bool checkGloves = true)
     {
+        denyReason = null;
         if (!Resolve(target, ref target.Comp, false))
             return true;
 
@@ -28,10 +60,13 @@ public sealed class FingerprintReaderSystem : EntitySystem
             return true;
 
         // Check for gloves first
-        if (!target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
+        if (checkGloves && !target.Comp.IgnoreGloves && TryGetBlockingGloves(user, out var gloves))
         {
-            if (target.Comp.FailGlovesPopup != null && showPopup)
-                _popup.PopupClient(Loc.GetString(target.Comp.FailGlovesPopup, ("blocker", gloves)), target, user);
+            denyReason = Loc.GetString("fingerprint-reader-fail-gloves", ("blocker", gloves));
+
+            if (showPopup)
+                _popup.PopupClient(denyReason, target, user);
+
             return false;
         }
 
@@ -39,8 +74,10 @@ public sealed class FingerprintReaderSystem : EntitySystem
         if (!TryComp<FingerprintComponent>(user, out var fingerprint) || fingerprint.Fingerprint == null ||
             !target.Comp.AllowedFingerprints.Contains(fingerprint.Fingerprint))
         {
-            if (target.Comp.FailPopup != null && showPopup)
-                _popup.PopupClient(Loc.GetString(target.Comp.FailPopup), target, user);
+            denyReason = Loc.GetString("fingerprint-reader-fail");
+
+            if (showPopup)
+                _popup.PopupClient(denyReason, target, user);
 
             return false;
         }

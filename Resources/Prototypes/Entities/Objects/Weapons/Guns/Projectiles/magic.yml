@@ -93,7 +93,7 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - Body
+        - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
@@ -106,8 +106,7 @@
     deleteOnCollide: false
     onlyCollideWhenShot: true
     damage:
-      types:
-        Brute: 0
+      types: {}
   - type: Sprite
     noRot: true
     sprite: Structures/Storage/closet.rsi
@@ -161,6 +160,7 @@
 
 - type: entity
   id: ProjectilePolyboltBase
+  abstract: true
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
@@ -175,6 +175,11 @@
         Poison: 5
   - type: TriggerOnCollide
     fixtureID: projectile
+    # Projectile.DeleteOnCollide is true, but allow this to hit multiple entities if they're
+    # stacked up (they will all trigger a collide), so this isn't frustrating to use
+    maxTriggers: null
+  - type: PolymorphOnTrigger
+    targetUser: true
 
 - type: entity
   id: ProjectilePolyboltCarp
@@ -185,10 +190,10 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCarp
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltMonkey
@@ -199,10 +204,10 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedMonkey
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltDoor
@@ -218,8 +223,8 @@
       color: brown
   - type: PolymorphOnTrigger
     polymorph: WizardWallDoor
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
       - Airlock
       - Firelock
@@ -240,11 +245,18 @@
       color: white
   - type: Projectile
     damage:
-      groups: # good enough. Maybe make it call the rejuvenate command later.
-        Brute: -900
-        Burn: -900
-        Airloss: -600
-        Toxin: -600
+      types: # good enough. Maybe make it call the rejuvenate command later.
+        Asphyxiation: -200
+        Bloodloss: -200
+        Blunt: -200
+        Caustic: -200
+        Cold: -200
+        Heat: -200
+        Piercing: -200
+        Poison: -200
+        Radiation: -200
+        Shock: -200
+        Slash: -200
     ignoreResistances: true
 
 - type: entity
@@ -269,10 +281,10 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: WizardForcedCluwne
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectileIcicle
@@ -299,7 +311,7 @@
   components:
   - type: PolymorphOnTrigger
     polymorph: BreadMorph
-  - type: TriggerWhitelist
-    whitelist:
+  - type: WhitelistTriggerCondition
+    userWhitelist:
       components:
-      - Body
+      - MobState

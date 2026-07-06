@@ -14,7 +14,6 @@ namespace Content.Server.Database.Migrations.Sqlite
     [Migration("20240403072258_Loadouts")]
     partial class Loadouts
     {
-#if EF_DESIGNER
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1806,6 +1805,5 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 #pragma warning restore 612, 618
         }
-#endif
     }
 }

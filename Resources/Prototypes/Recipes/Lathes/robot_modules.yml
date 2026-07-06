@@ -37,6 +37,16 @@
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
 
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleInflatable
+  result: BorgModuleInflatable
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleArtistry
+  result: BorgModuleArtistry
+
 # Cargo Modules
 
 - type: latheRecipe
@@ -62,9 +72,19 @@
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleAdvancedChemical
-  result: BorgModuleAdvancedChemical
+  id: BorgModuleAdvancedTopical
+  result: BorgModuleAdvancedTopical
 
 # Science Modules
 
 # Service Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedClowning
+  result: BorgModuleAdvancedClowning
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Bananium: 375

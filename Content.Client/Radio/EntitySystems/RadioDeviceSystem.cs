@@ -1,13 +1,14 @@
 using Content.Client.Radio.Ui;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Radio.EntitySystems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Radio.EntitySystems;
 
-public sealed class RadioDeviceSystem : EntitySystem
+public sealed partial class RadioDeviceSystem : SharedRadioDeviceSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

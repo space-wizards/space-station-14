@@ -5,10 +5,14 @@
 shell-command-success = Command successful
 shell-invalid-command = Invalid command.
 shell-invalid-command-specific = Invalid {$commandName} command.
+shell-can-only-run-from-pre-round-lobby = You can only run this command while the game is in the pre-round lobby.
+shell-can-only-run-while-round-is-active = You can only run this command while the game is in a round.
 shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 shell-must-have-body = You must have a body to run this command.
+
+shell-unknown-error = An unknown error has occured.
 
 ## Arguments
 
@@ -33,6 +37,7 @@ shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
 shell-invalid-bool = Invalid boolean.
+shell-invalid-bool-value = Invalid boolean: '{$value}'
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
 shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}

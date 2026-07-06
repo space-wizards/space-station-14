@@ -18,7 +18,7 @@
     </LayoutContainer>
     <BoxContainer Name="TopLeft" Access="Protected" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <menuBar:GameTopMenuBar Name="TopBar" Access="Protected" />
+            <menuBar:GameTopMenuBar Name="TopBar" Access="Public" />
             <!-- Buffer so big votes don't skew it -->
             <Control/>
         </BoxContainer>

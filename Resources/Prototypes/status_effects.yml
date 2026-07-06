@@ -9,10 +9,6 @@
   alert: Stun
 
 - type: statusEffect
-  id: KnockedDown
-  alert: Stun
-
-- type: statusEffect
   id: SlowedDown
 
 - type: statusEffect
@@ -21,9 +17,6 @@
 
 - type: statusEffect
   id: Stutter
-
-- type: statusEffect
-  id: AllCaps
 
 - type: statusEffect
   id: Electrocution
@@ -46,22 +39,13 @@
   alert: Corporeal
 
 - type: statusEffect
-  id: TemporaryBlindness
-
-- type: statusEffect
   id: Pacified #cannot attack
 
 - type: statusEffect
   id: RatvarianLanguage #Praise him
 
 - type: statusEffect
-  id: StaminaModifier
-
-- type: statusEffect
   id: Flashed
-
-- type: statusEffect
-  id: RadiationProtection
 
 - type: statusEffect
   id: Adrenaline

@@ -7,6 +7,14 @@
   components:
   - type: Action
 
+# base proto for an action that requires a DoAfter
+- type: entity
+  abstract: true
+  parent: BaseAction
+  id: BaseDoAfterAction
+  components:
+  - type: DoAfterArgs
+
 # an action that is done all in le head and cant be prevented by any means
 - type: entity
   abstract: true
@@ -54,7 +62,8 @@
     icon: Interface/Actions/scream.png
     checkCanInteract: false
   - type: InstantAction
-    event: !type:ScreamActionEvent
+    event: !type:EmoteActionEvent
+      emote: Scream
 
 - type: entity
   parent: BaseMentalAction
@@ -121,7 +130,7 @@
       state: gib
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateFreedomImplant
   name: Break Free
   description: Activating your freedom implant will free you from any hand restraints
@@ -135,8 +144,6 @@
     icon:
       sprite: Actions/Implants/implants.rsi
       state: freedom
-  - type: InstantAction
-    event: !type:UseFreedomImplantEvent
 
 - type: entity
   parent: BaseAction
@@ -171,7 +178,7 @@
       state: icon
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateScramImplant
   name: SCRAM!
   description: Randomly teleports you within a large distance.
@@ -186,11 +193,9 @@
     icon:
       sprite: Structures/Specific/anomaly.rsi
       state: anom4
-  - type: InstantAction
-    event: !type:UseScramImplantEvent
 
 - type: entity
-  parent: BaseAction
+  parent: BaseImplantAction
   id: ActionActivateDnaScramblerImplant
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
@@ -205,8 +210,6 @@
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
-  - type: InstantAction
-    event: !type:UseDnaScramblerImplantEvent
 
 - type: entity
   parent: BaseAction
@@ -251,6 +254,17 @@
     icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
   - type: InstantAction
     event: !type:VoiceMaskSetNameEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionShootWater
+  name: Spray water!
+  description: Spray water towards your enemies.
+  components:
+  - type: Action
+    icon: { sprite: Clothing/Neck/Misc/pins.rsi, state: flower }
+  - type: InstantAction
+    event: !type:SprayLiquidEvent
 
 - type: entity
   parent: BaseAction
@@ -382,6 +396,7 @@
     iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
+    raiseOnUser: true
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
   - type: Tag
@@ -402,6 +417,16 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: ActionToggleWagging
+  id: ActionToggleWaggingVulpkanin
+  components:
+  - type: Action
+    icon: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+    iconOn: { sprite: Mobs/Customization/Vulpkanin/tail_markings.rsi, state: tail-wag-icon }
+    itemIconStyle: NoItem
+    useDelay: 1 # Prevents Emote Spam
+
+- type: entity
   parent: BaseAction
   id: ActionGravityJump
   name: Jump
@@ -409,12 +434,37 @@
   components:
   - type: Action
     useDelay: 8
-    icon: 
+    icon:
       sprite: Interface/Actions/jump.rsi
       state: icon
   - type: InstantAction
     event: !type:GravityJumpEvent {}
-    
+
+- type: entity
+  parent: ActionGravityJump
+  id: ActionJumpBoost
+  name: Jump boost
+  components:
+  - type: Action
+    useDelay: 16
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: xenoborg-jump-module
+
+- type: entity
+  parent: BaseAction
+  id: ActionVulpkaninGravityJump
+  name: Leap
+  description: Use your agile legs to leap a short distance. Be careful not to bump into anything!
+  components:
+  - type: Action
+    useDelay: 12
+    icon:
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+
 - type: entity
   parent: BaseToggleAction
   id: ActionToggleRootable
@@ -438,3 +488,22 @@
     itemIconStyle: BigAction
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionIntrinsicStore
+  name: Store
+  description: Opens the store
+  components:
+  - type: Action
+    icon: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: ActionChangeVoiceMask
+  id: ActionChangeVoiceMaskImplant
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
+    itemIconStyle: BigAction
