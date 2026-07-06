@@ -21,3 +21,12 @@
   ignoreActionBlocker: true
   force: true
   hiddenFromChatWindow: true
+
+
+# Scream while scared
+- type: autoEmote
+  id: ScaredScream
+  emote: Scream
+  interval: 5.0
+  chance: 0.5
+  withChat: true

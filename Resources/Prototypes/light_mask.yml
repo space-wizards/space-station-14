@@ -1,0 +1,18 @@
+# The direction refers to the angle a cone points at from the center of the mask
+# Note that while the default single cone image points NORTH, an angle of 0 is actually SOUTH. As such:
+# North(Pointing up) = 180,
+# East(Pointing right) = 90,
+# South(Pointing down) = 0,
+# West(Pointing left) = 270
+- type: lightMask
+  id: ConeSingle
+  maskPath: /Textures/Effects/LightMasks/cone.png
+  lightCones:
+    - { direction: 0,  innerWidth: 30, outerWidth: 60 }
+
+- type: lightMask
+  id: ConeDouble
+  maskPath: /Textures/Effects/LightMasks/double_cone.png
+  lightCones:
+    - { direction: 0,  innerWidth: 30, outerWidth: 60 }
+    - { direction: 180, innerWidth: 30, outerWidth: 60 }
