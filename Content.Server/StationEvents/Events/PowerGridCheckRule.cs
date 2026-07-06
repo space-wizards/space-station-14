@@ -59,7 +59,7 @@ namespace Content.Server.StationEvents.Events
             PowerGridCheckRuleComponent? rule = GetRuleAffectingEntity(apcUid);
             if (rule != null && apcComp.MainBreakerEnabled)
             {
-                _apcSystem.ApcToggleBreaker(apcUid, apcComp);
+                _apcSystem.ApcToggleBreaker((apcUid, apcComp));
                 rule.Unpowered.Add(apcUid);
             }
         }
@@ -108,7 +108,7 @@ namespace Content.Server.StationEvents.Events
                 if (TryComp(entity, out ApcComponent? apcComponent))
                 {
                     if(!apcComponent.MainBreakerEnabled)
-                        _apcSystem.ApcToggleBreaker(entity, apcComponent);
+                        _apcSystem.ApcToggleBreaker((entity, apcComponent));
                 }
             }
 
@@ -145,7 +145,7 @@ namespace Content.Server.StationEvents.Events
                 if (TryComp<ApcComponent>(selected, out var apcComponent))
                 {
                     if (apcComponent.MainBreakerEnabled)
-                        _apcSystem.ApcToggleBreaker(selected, apcComponent);
+                        _apcSystem.ApcToggleBreaker((selected, apcComponent));
                 }
                 component.Unpowered.Add(selected);
             }

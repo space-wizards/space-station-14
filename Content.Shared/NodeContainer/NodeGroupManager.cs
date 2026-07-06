@@ -77,7 +77,7 @@ public sealed class NodeGroupManager : INodeGroupManager
 
     public void Register(NodeGroupPrototype groupProto)
     {
-        var id = checked((ushort) (_groupDefs.Count + 1));
+        var id = checked((ushort) _groupDefs.Count);
         groupProto.AssignGroupId(id);
         _groupDefs.Add(groupProto);
         _groupNames.Add(groupProto.ID, groupProto);

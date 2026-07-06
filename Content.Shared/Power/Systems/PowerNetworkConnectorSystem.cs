@@ -1,4 +1,5 @@
 using Content.Shared.NodeContainer.Components;
+using Content.Shared.NodeContainer.Systems;
 using Content.Shared.Power.Components;
 
 namespace Content.Shared.Power.Systems;
@@ -12,7 +13,7 @@ public sealed partial class PowerNetworkConnectorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PowerNetworkConnectorComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<PowerNetworkConnectorComponent, NodeGroupsRebuilt>(OnInit);
         SubscribeLocalEvent<PowerNetworkConnectorComponent, ComponentShutdown>(OnRemove);
     }
 
@@ -21,7 +22,7 @@ public sealed partial class PowerNetworkConnectorSystem : EntitySystem
         Disconnect(ent);
     }
 
-    private void OnInit(Entity<PowerNetworkConnectorComponent> ent, ref MapInitEvent args)
+    private void OnInit(Entity<PowerNetworkConnectorComponent> ent, ref NodeGroupsRebuilt args)
     {
         Connect(ent);
     }

@@ -8,8 +8,8 @@ namespace Content.Shared.Power.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class ApcComponent : Component
 {
-    [DataField("onReceiveMessageSound")]
-    public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    [DataField]
+    public SoundSpecifier? OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
     public ApcChargeState LastChargeState;
     public TimeSpan? LastChargeStateTime;

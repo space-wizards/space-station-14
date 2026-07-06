@@ -249,7 +249,7 @@ public sealed partial class NodeContainerSystem : EntitySystem
         foreach (var node in ent.Comp.Nodes.Values)
         {
             if (!node.Examinable)
-                return;
+                continue;
 
             var handler = _nodeGroupManager.GetNodeHandler(node);
             var text = handler.GetExamineText(node);

@@ -49,7 +49,7 @@ public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRule
 
         for (var i = 0; i < toDisable; i++)
         {
-            _apcSystem.ApcToggleBreaker(stationApcs[i], stationApcs[i]);
+            _apcSystem.ApcToggleBreaker(stationApcs[i].AsNullable());
         }
     }
 }
