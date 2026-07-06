@@ -4,7 +4,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Client.GameStates;
 
 namespace Content.Client.Options.UI.Tabs;
 
@@ -12,24 +11,11 @@ namespace Content.Client.Options.UI.Tabs;
 public sealed partial class NetworkTab : Control
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IClientGameStateManager _stateMan = default!;
 
     public NetworkTab()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-
-        Control.AddOptionSlider(
-            CVars.NetBufferSize,
-            NetInterpRatioSlider,
-            _stateMan.MinBufferSize,
-            _cfg.GetCVar(CCVars.MaxNetBufferSizeConfigured));
-
-        Control.AddOptionSlider(
-            CVars.NetPredictTickBias,
-            NetPredictTickBiasSlider,
-            _cfg.GetCVar(CCVars.MinNetPredictTickBiasConfigured),
-            _cfg.GetCVar(CCVars.MaxNetPredictTickBiasConfigured));
 
         Control.AddOptionSlider(
             CVars.NetPVSEntityBudget,

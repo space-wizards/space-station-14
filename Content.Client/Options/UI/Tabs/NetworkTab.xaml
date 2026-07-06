@@ -4,12 +4,19 @@
     <BoxContainer Orientation="Vertical" >
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <Label Text="{Loc 'ui-options-net-warning'}" FontColorOverride="#fbf236" />
+            <Control MinHeight="20" />
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
-                <ui:OptionSlider Name="NetInterpRatioSlider" Title="{Loc 'ui-options-net-interp-ratio'}"/>
-                <ui:OptionSlider Name="NetPredictTickBiasSlider" Title="{Loc 'ui-options-net-predict-tick-bias'}"/>
                 <ui:OptionSlider Name="NetPvsSpawnSlider" Title="{Loc 'ui-options-net-pvs-spawn'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-spawn-tooltip'}" />
+                <Control MinHeight="10" />
+
                 <ui:OptionSlider Name="NetPvsEntrySlider" Title="{Loc 'ui-options-net-pvs-entry'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-entry-tooltip'}" />
+                <Control MinHeight="10" />
+
                 <ui:OptionSlider Name="NetPvsLeaveSlider" Title="{Loc 'ui-options-net-pvs-leave'}"/>
+                <RichTextLabel Text="{Loc 'ui-options-net-pvs-leave-tooltip'}" />
+                <Control MinHeight="10" />
             </BoxContainer>
         </BoxContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
