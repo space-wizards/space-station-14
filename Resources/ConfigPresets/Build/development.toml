@@ -18,6 +18,9 @@ quick_lottery = true
 [gateway]
 generator_enabled = false
 
+[lookup]
+enable_server_light_tree = true
+
 [movement]
 mob_pushing = true
 
