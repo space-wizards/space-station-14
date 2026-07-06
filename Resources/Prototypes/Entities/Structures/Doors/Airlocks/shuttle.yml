@@ -99,7 +99,7 @@
         density: 100
         mask:
         - FullTileMask
-        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        layer: #removed opaque from the layer, allowing lasers to pass through glass airlocks
         - GlassAirlockLayer
 
 - type: entity
