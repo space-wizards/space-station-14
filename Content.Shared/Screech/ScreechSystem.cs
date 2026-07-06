@@ -90,7 +90,7 @@ public sealed partial class ScreechSystem : EntitySystem
             EntityHeardIt(entity, source, knockdownChances, effects);
         }
 
-        _audio.PlayPredicted(screechSound, source, null, AudioParams.Default.WithVolume(1f).WithMaxDistance(soundRange));
+        _audio.PlayPredicted(screechSound, source, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(soundRange));
     }
 
     /// <summary>
