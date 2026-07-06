@@ -26,6 +26,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private SharedJointSystem _jointSystem = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
 
         [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -224,11 +225,25 @@ namespace Content.Server.Shuttles.Systems
             if (HasComp<PhysicsComponent>(gridA) &&
                 HasComp<PhysicsComponent>(gridB))
             {
+                var bodyA = _physicsQuery.Comp(gridA);
+                var bodyB = _physicsQuery.Comp(gridB);
+                var followerUid = gridA;
+                var followerBody = bodyA;
+                var referenceBody = bodyB;
+                if (followerBody.Mass > referenceBody.Mass)
+                {
+                    (referenceBody, followerBody) = (followerBody, referenceBody);
+                    followerUid = gridB;
+                }
+
+                // Prevent shuttle annihilating cargo (any leftover relative momentum becomes a swing around the dock joint)
+                _physics.SetLinearVelocity(followerUid, referenceBody.LinearVelocity, body: followerBody);
+                _physics.SetAngularVelocity(followerUid, referenceBody.AngularVelocity, body: followerBody);
                 SharedJointSystem.LinearStiffness(
                     2f,
                     0.7f,
-                    _physicsQuery.Comp(gridA).Mass,
-                    _physicsQuery.Comp(gridB).Mass,
+                    bodyA.Mass,
+                    bodyB.Mass,
                     out var stiffness,
                     out var damping);
 
