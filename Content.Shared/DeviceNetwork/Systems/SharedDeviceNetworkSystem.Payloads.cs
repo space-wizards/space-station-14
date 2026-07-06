@@ -1,28 +1,11 @@
-﻿using System.Collections.Frozen;
-using Content.Shared.DeviceNetwork.Events;
+﻿using Content.Shared.DeviceNetwork.Events;
 
 namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract partial class SharedDeviceNetworkSystem
 {
-    private FrozenDictionary<Type, IEntityDeviceNetworkHandler> _handlers = default!;
-    private FrozenDictionary<Type, IBeforeDeviceNetworkHandler> _beforeHandlers = default!;
-    private FrozenDictionary<Type, IParallelDeviceNetworkHandler> _parallelHandlers = default!;
-
-    public readonly Dictionary<Type, IEntityDeviceNetworkHandler> HandlersCache = new();
-    public readonly Dictionary<Type, IBeforeDeviceNetworkHandler> BeforeHandlersCache = new();
-    public readonly Dictionary<Type, IParallelDeviceNetworkHandler> ParallelHandlersCache = new();
-
-    /// <summary>
-    /// Must be called after all systems were initialized.
-    /// TODO ENGINE implement EntitySystem.PostInit()
-    /// </summary>
-    public void PostInit()
-    {
-        _handlers = HandlersCache.ToFrozenDictionary();
-        _beforeHandlers = BeforeHandlersCache.ToFrozenDictionary();
-        _parallelHandlers = ParallelHandlersCache.ToFrozenDictionary();
-    }
+    public readonly Dictionary<Type, IEntityDeviceNetworkHandler> Handlers = new();
+    public readonly Dictionary<Type, IBeforeDeviceNetworkHandler> BeforeHandlers = new();
 
     /// <summary>
     /// Raises a <see cref="NetworkPayload"/> to all subscribed <see cref="DeviceNetworkHandler"/>s.
@@ -32,7 +15,7 @@ public abstract partial class SharedDeviceNetworkSystem
     /// <param name="args"></param>
     public void RaisePayload(EntityUid uid, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
     {
-        if (!_handlers.TryGetValue(payload.GetType(), out var handler))
+        if (!Handlers.TryGetValue(payload.GetType(), out var handler))
             return;
 
         handler.RaisePayload(uid, ref payload, ref args);
@@ -45,27 +28,13 @@ public abstract partial class SharedDeviceNetworkSystem
     /// <param name="args">Info about how the payload have been received.</param>
     public void RaiseBeforePayload(EntityUid uid, ref BeforePacketSentEvent args)
     {
-        foreach (var (compType, handler) in _beforeHandlers)
+        foreach (var (compType, handler) in BeforeHandlers)
         {
             if (!EntityManager.TryGetComponent(uid, compType, out var comp))
                 continue;
 
             handler.RaiseBeforePayload(uid, comp, ref args);
         }
-    }
-
-    /// <summary>
-    /// Raises a network payload on a span of devices in parallel.
-    /// </summary>
-    /// <param name="devices">Target entities to send the payload to.</param>
-    /// <param name="payload">Payload to send.</param>
-    /// <param name="args">Other info about how the payload have been received.</param>
-    public void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args)
-    {
-        if (!_parallelHandlers.TryGetValue(payload.GetType(), out var handler))
-            return;
-
-        handler.RaisePayloadParallel(devices, ref payload, ref args);
     }
 }
 
@@ -127,20 +96,6 @@ public interface IBeforeDeviceNetworkHandler
     /// <param name="component">Component of the target entity.</param>
     /// <param name="args">Other information about how the payload have been received.</param>
     void RaiseBeforePayload(EntityUid uid, IComponent component, ref BeforePacketSentEvent args);
-}
-
-/// <summary>
-/// Handler that supports sending <see cref="HandledNetworkPayload"/> to multiple entities in parallel.
-/// </summary>
-public interface IParallelDeviceNetworkHandler
-{
-    /// <summary>
-    /// Raises a network payload on a span of devices in parallel.
-    /// </summary>
-    /// <param name="devices">Target entities to send the payload to.</param>
-    /// <param name="payload">Payload to send.</param>
-    /// <param name="args">Other information about how the payload have been received.</param>
-    void RaisePayloadParallel(ReadOnlySpan<EntityUid?> devices, ref HandledNetworkPayload payload, ref DeviceNetworkPacketData args);
 }
 
 /// <summary>

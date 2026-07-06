@@ -35,7 +35,7 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
 }
 
 [Reflect(false)]
-public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadParallelSystem<DeviceNetworkComponent>
+public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadSystem<DeviceNetworkComponent>
 {
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
 
@@ -46,11 +46,9 @@ public sealed partial class DeviceNetworkTestHandlerSystem : DevicePayloadParall
     {
         base.InitializeDevice();
         SubscribePayload<TestPayloadStatic>(OnStaticPacketReceived);
-        SubscribePayloadParallel<TestPayloadStatic>(OnStaticPacketReceived);
 
         SubscribePayload<TestPayloadPing>(OnPingPacketReceived);
         SubscribePayload<TestPayloadPong>(OnPongPacketReceived);
-        SubscribePayloadParallel<TestPayloadPing>(OnPingPacketReceived);
     }
 
     private void OnStaticPacketReceived(Entity<DeviceNetworkComponent> ent, ref TestPayloadStatic payload, ref DeviceNetworkPacketData args)

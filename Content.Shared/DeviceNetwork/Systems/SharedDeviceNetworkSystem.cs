@@ -48,15 +48,4 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     {
         return false;
     }
-
-    [PublicAPI]
-    public virtual bool QueuePacketParallel(
-        Entity<DeviceNetworkComponent?> ent,
-        string? address,
-        HandledNetworkPayload data,
-        uint? frequency = null,
-        int? network = null)
-    {
-        return false;
-    }
 }

@@ -33,7 +33,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
-public sealed partial class FaxSystem : DevicePayloadParallelSystem<FaxMachineComponent>
+public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
 {
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private IAdminManager _adminManager = default!;

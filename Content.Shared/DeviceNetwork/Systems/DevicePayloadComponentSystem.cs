@@ -25,7 +25,7 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
     {
         foreach (var payload in PayloadSubs.Keys)
         {
-            if (DeviceSystem.HandlersCache.TryAdd(payload, this))
+            if (DeviceSystem.Handlers.TryAdd(payload, this))
                 continue;
 
             Log.Error($"Duplicate payload subscription for payload {payload.Name}");

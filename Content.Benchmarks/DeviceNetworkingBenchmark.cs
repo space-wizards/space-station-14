@@ -26,7 +26,6 @@ public class DeviceNetworkingBenchmark
     private readonly List<EntityUid> _targetEntities = new();
     private readonly List<EntityUid> _targetWirelessEntities = new();
 
-
     private NetworkPayload _payload = default!;
     private HandledNetworkPayload _handledPayload = default!;
 
@@ -167,20 +166,6 @@ public class DeviceNetworkingBenchmark
         await server.WaitIdleAsync();
     }
 
-    [Benchmark(Description = "Device Net Broadcast Parallel Payload")]
-    public async Task DeviceNetworkBroadcastParallelPayload()
-    {
-        var server = _pair.Server;
-
-        _pair.Server.Post(() =>
-        {
-            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _handledPayload, 100);
-        });
-
-        await server.WaitRunTicks(1);
-        await server.WaitIdleAsync();
-    }
-
     [Benchmark(Description = "Device Net Broadcast Ping Pong Handled")]
     public async Task DeviceNetworkPingPongHandled()
     {
@@ -189,20 +174,6 @@ public class DeviceNetworkingBenchmark
         _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceEntity, null, _pingPayload, 100);
-        });
-
-        await server.WaitRunTicks(2);
-        await server.WaitIdleAsync();
-    }
-
-    [Benchmark(Description = "Device Net Broadcast Ping Pong Parallel")]
-    public async Task DeviceNetworkPingPongParallel()
-    {
-        var server = _pair.Server;
-
-        _pair.Server.Post(() =>
-        {
-            _deviceNetworkSystem.QueuePacketParallel(_sourceEntity, null, _pingPayload, 100);
         });
 
         await server.WaitRunTicks(2);

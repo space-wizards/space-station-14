@@ -10,7 +10,7 @@ public abstract partial class BeforeDevicePayloadSystem<T> : DevicePayloadSystem
     protected override void Register()
     {
         base.Register();
-        if (!DeviceSystem.BeforeHandlersCache.TryAdd(typeof(T), this))
+        if (!DeviceSystem.BeforeHandlers.TryAdd(typeof(T), this))
             Log.Error($"Duplicate before payload subscription for component {typeof(T).Name}");
     }
 

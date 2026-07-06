@@ -35,13 +35,4 @@ public sealed partial class DeviceNetworkManagerComponent : Component
 
     [ViewVariables]
     public ConcurrentQueue<DeviceNetworkPacketHandledEvent> HandledNextQueue = null!;
-
-    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueE = new();
-    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueF = new();
-
-    [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> ParallelActiveQueue = null!;
-
-    [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> ParallelNextQueue = null!;
 }
