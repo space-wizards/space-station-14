@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnosers;
 using Content.Server.Power.Pow3r;
 using Content.Server.Power.Pow3r.Solvers;
 using Content.Shared.Collections;
@@ -13,6 +15,7 @@ namespace Content.Benchmarks;
 
 [Virtual]
 [SimpleJob]
+[HardwareCounters(HardwareCounter.CacheMisses, HardwareCounter.BranchMispredictions)]
 public class Pow3rBenchmark
 {
     private BatteryRampPegSolver _solver = new();
@@ -21,6 +24,8 @@ public class Pow3rBenchmark
     private PowerNetwork _chargeNetwork = new();
     private PowerNetwork _dischargeNetwork = new();
     private List<NodeId> _loads = new();
+
+    private List<List<object>> _randomJunk = new();
 
     public int SupplyCount { get; set; } = 100;
     public int LoadCount { get; set; } = 2000;
@@ -35,8 +40,11 @@ public class Pow3rBenchmark
     [GlobalSetup]
     public void Setup()
     {
+        var random = new System.Random();
         _state.Networks.Allocate(out var chargeNetId) = _chargeNetwork;
         _state.Networks.Allocate(out var dischargeNetId) = _dischargeNetwork;
+        AllocateJunk(random);
+        AllocateJunk(random);
 
         for (int i = 0; i < SupplyCount; i++)
         {
@@ -46,6 +54,7 @@ public class Pow3rBenchmark
             _dischargeNetwork.Supplies.Add(supplyId);
             supply.AvailableSupply = 5000;
             supply.LinkedNetwork = dischargeNetId;
+            AllocateJunk(random);
         }
 
         for (int i = 0; i < LoadCount; i++)
@@ -57,6 +66,7 @@ public class Pow3rBenchmark
             load.DesiredPower = ChargeDischarge ? 0 : 500;
             load.LinkedNetwork = chargeNetId;
             _loads.Add(loadId);
+            AllocateJunk(random);
         }
 
         for (int i = 0; i < BatteryCount; i++)
@@ -69,7 +79,16 @@ public class Pow3rBenchmark
             _dischargeNetwork.BatteryLoads.Add(batteryId);
             battery.LinkedNetworkCharging = chargeNetId;
             battery.LinkedNetworkDischarging = dischargeNetId;
+            AllocateJunk(random);
         }
+    }
+
+    private void AllocateJunk(System.Random random)
+    {
+        Parallel.For(0, random.Next(1, 50), ((_, _) =>
+        {
+            _randomJunk.Add(new List<object>(random.Next(50)));
+        }));
     }
 
     [Benchmark(Description = "Run Pow3r Idle")]
