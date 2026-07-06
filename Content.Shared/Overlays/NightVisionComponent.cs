@@ -1,9 +1,10 @@
+using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Overlays;
 
 /// <summary>
-/// Enables the night-vision fullscreen overlay for the entity it is attached to.
+/// Enables the night-vision fullscreen overlay for the entity it is attached to or the wearer.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class NightVisionComponent : Component
@@ -13,6 +14,19 @@ public sealed partial class NightVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    /// <summary>
+    /// Whether this night vision is prioritized.
+    /// Causes it to overwrite all other sources of night vision, even if their noise is smaller.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Prioritized = true;
+
+    /// <summary>
+    /// Whether wearing this entity should grant night vision to the entity wearing it.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RelayOverlay;
 
     /// <summary>
     /// Overall color modulation applied on top of the night-vision screen shader.

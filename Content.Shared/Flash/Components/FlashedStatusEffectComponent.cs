@@ -6,4 +6,4 @@ namespace Content.Shared.Flash.Components;
 /// Exists for use as a status effect. Adds a shader to the client that obstructs vision.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class FlashedComponent : Component;
+public sealed partial class FlashedStatusEffectComponent : Component;
