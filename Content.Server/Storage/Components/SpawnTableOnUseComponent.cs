@@ -17,13 +17,13 @@ public sealed partial class SpawnTableOnUseComponent : Component
     public EntityTableSelector Table = default!;
 
     /// <summary>
-    ///     A sound to play when the items are spawned. For example, gift boxes being unwrapped.
+    /// A sound to play when the items are spawned. For example, gift boxes being unwrapped.
     /// </summary>
     [DataField]
     public SoundSpecifier? Sound;
 
     /// <summary>
-    ///     How many uses before the item should delete itself.
+    /// How many uses before the item should delete itself.
     /// </summary>
     [DataField]
     public int Uses = 1;

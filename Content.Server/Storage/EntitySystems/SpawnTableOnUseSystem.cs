@@ -55,7 +55,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
 
         if (ent.Comp.Sound != null)
         {
-            _audio.PlayPvs(ent.Comp.Sound, xform.Coordinates); // Entity itself is often being deleted, put it on the parent
+            _audio.PlayPvs(ent.Comp.Sound, xform.Coordinates); // Entity itself is often being deleted, put it on the parent.
         }
 
         if (ent.Comp.Uses <= 0)
@@ -68,7 +68,7 @@ public sealed partial class SpawnTableOnUseSystem : EntitySystem
 
         foreach (var id in spawns)
         {
-            var spawned = SpawnNextToOrDrop(id, args.User); // Entity is in nullspace.
+            var spawned = SpawnNextToOrDrop(id, args.User); // Entity may be in nullspace, so base it off the user.
             _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User):user} used {ToPrettyString(ent):spawner} which spawned {ToPrettyString(spawned)}");
             _hands.TryPickupAnyHand(args.User, spawned);
         }
