@@ -70,7 +70,7 @@ public sealed class StationPowerTests : GameTest
         {
             if (!nodeContainer.Nodes.TryGetValue("output", out var node))
                 continue;
-            if (!entMan.TryGetComponent(node.NodeGroup, out PowerNetComponent? group))
+            if (!entMan.TryGetComponent(node.NodeGroup, out PowerNetComponent group))
                 continue;
             networks.TryGetValue(group, out var charge);
             var currentCharge = batterySys.GetCharge((uid, battery));

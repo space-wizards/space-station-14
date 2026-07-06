@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Content.Server.Power.Pow3r;
+using Content.Server.Power.Pow3r.Solvers;
+using Content.Shared.Collections;
+using Content.Shared.Power.Pow3r;
+using Content.Shared.Power.Pow3r.Nodes;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Threading;
 using Robust.UnitTesting;
@@ -14,9 +18,9 @@ public class Pow3rBenchmark
     private BatteryRampPegSolver _solver = new();
     private PowerState _state = new();
     private IParallelManager _parallel = new TestingParallelManager();
-    private PowerState.Network _chargeNetwork = new();
-    private PowerState.Network _dischargeNetwork = new();
-    private List<PowerState.NodeId> _loads = new();
+    private PowerNetwork _chargeNetwork = new();
+    private PowerNetwork _dischargeNetwork = new();
+    private List<NodeId> _loads = new();
 
     public int SupplyCount { get; set; } = 100;
     public int LoadCount { get; set; } = 2000;
@@ -31,14 +35,12 @@ public class Pow3rBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        _chargeNetwork = new PowerState.Network();
-        _dischargeNetwork = new PowerState.Network();
         _state.Networks.Allocate(out var chargeNetId) = _chargeNetwork;
         _state.Networks.Allocate(out var dischargeNetId) = _dischargeNetwork;
 
         for (int i = 0; i < SupplyCount; i++)
         {
-            var supply = new PowerState.Supply();
+            var supply = new PowerSupply();
             _state.Supplies.Allocate(out var supplyId) = supply;
             supply.Id = supplyId;
             _dischargeNetwork.Supplies.Add(supplyId);
@@ -48,7 +50,7 @@ public class Pow3rBenchmark
 
         for (int i = 0; i < LoadCount; i++)
         {
-            var load = new PowerState.Load();
+            var load = new PowerLoad();
             _state.Loads.Allocate(out var loadId) = load;
             load.Id = loadId;
             _chargeNetwork.Loads.Add(load.Id);
@@ -59,7 +61,7 @@ public class Pow3rBenchmark
 
         for (int i = 0; i < BatteryCount; i++)
         {
-            var battery = new PowerState.Battery();
+            var battery = new PowerBattery();
             _state.Batteries.Allocate(out var batteryId) = battery;
             battery.Id = batteryId;
             battery.Capacity = 500000;
