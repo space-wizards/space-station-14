@@ -26,7 +26,11 @@ public sealed class AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) :
         _window.OnJobChanged += OnJobChanged;
         _window.OnJobIconChanged += OnJobIconChanged;
 
-        _window.SetAllowedIcons(agent.IconGroups);
+        ProtoId<JobIconPrototype> currentIcon = default;
+        if (EntMan.TryGetComponent<IdCardComponent>(Owner, out var card))
+            currentIcon = card.JobIcon;
+
+        _window.SetAllowedIcons(agent.IconGroups, currentIcon);
         Update();
     }
 

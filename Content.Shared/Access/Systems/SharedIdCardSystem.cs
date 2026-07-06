@@ -76,10 +76,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     private void OnHandleState(Entity<IdCardComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         // Try to update the job status icon of the player owning the ID, if any.
-        if (HasComp<PdaComponent>(Transform(ent).ParentUid))
-            _jobStatus.UpdateStatus(Transform(Transform(ent).ParentUid).ParentUid); // ID is inside a PDA
-        else
-            _jobStatus.UpdateStatus(Transform(ent).ParentUid); // ID is held/directly in the ID slot
+        _jobStatus.UpdateIdHolderStatus(ent);
 
         var ev = new IdCardAutoStateHandledEvent();
         RaiseLocalEvent(ent, ref ev);

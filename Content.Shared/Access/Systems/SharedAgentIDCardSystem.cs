@@ -96,7 +96,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
         if (_job.TryGetJobFromIcon(jobIcon.ID, out var job))
             _card.TryChangeJobDepartment(ent, job);
 
-        _jobStatus.UpdateStatus(Transform(ent).ParentUid);
+        _jobStatus.UpdateIdHolderStatus(ent);
         UpdateUi(ent);
     }
 

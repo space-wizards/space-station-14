@@ -49,14 +49,16 @@ public sealed partial class AgentIDCardWindow : FancyWindow
     /// <summary>
     /// Creates the job icons tab.
     /// </summary>
-    public void SetAllowedIcons(List<ProtoId<JobIconGroupPrototype>> jobGroups)
+    public void SetAllowedIcons(IReadOnlyList<ProtoId<JobIconGroupPrototype>> jobGroups, ProtoId<JobIconPrototype> currentIcon)
     {
         JobGroupGrid.DisposeAllChildren();
         IconGrid.DisposeAllChildren();
 
         var jobGroupButtonGroup = new ButtonGroup();
         ContainerButton? firstGroupButton = null;
-        List<ProtoId<JobIconPrototype>>? firstGroupIcons = null;
+        IReadOnlyList<ProtoId<JobIconPrototype>>? firstGroupIcons = null;
+        ContainerButton? matchingGroupButton = null;
+        IReadOnlyList<ProtoId<JobIconPrototype>>? matchingGroupIcons = null;
 
         foreach (var group in jobGroups)
         {
@@ -67,21 +69,33 @@ public sealed partial class AgentIDCardWindow : FancyWindow
             groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
 
             JobGroupGrid.AddChild(groupButton);
+
             firstGroupButton ??= groupButton;
             firstGroupIcons ??= groupProto.Icons;
+
+            // Prefer the group that actually contains the card's current icon so
+            // the opened window shows the relevant set rather than always the first.
+            if (matchingGroupButton == null && groupProto.Icons.Contains(currentIcon))
+            {
+                matchingGroupButton = groupButton;
+                matchingGroupIcons = groupProto.Icons;
+            }
         }
 
-        if (firstGroupButton == null || firstGroupIcons == null)
+        var selectedButton = matchingGroupButton ?? firstGroupButton;
+        var selectedIcons = matchingGroupIcons ?? firstGroupIcons;
+
+        if (selectedButton == null || selectedIcons == null)
             return;
 
-        firstGroupButton.Pressed = true;
-        SetJobIcons(firstGroupIcons);
+        selectedButton.Pressed = true;
+        SetJobIcons(selectedIcons);
     }
 
     /// <summary>
     /// Creates the job icon subgroup within the job icons tab.
     /// </summary>
-    private void SetJobIcons(List<ProtoId<JobIconPrototype>> jobIcons)
+    private void SetJobIcons(IReadOnlyList<ProtoId<JobIconPrototype>> jobIcons)
     {
         IconGrid.DisposeAllChildren();
 
