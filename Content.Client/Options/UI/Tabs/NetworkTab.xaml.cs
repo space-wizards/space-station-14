@@ -19,8 +19,6 @@ public sealed partial class NetworkTab : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Control.AddOptionCheckBox(CVars.NetPredict, NetPredictCheckBox);
-
         Control.AddOptionSlider(
             CVars.NetBufferSize,
             NetInterpRatioSlider,
