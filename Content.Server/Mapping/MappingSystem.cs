@@ -46,14 +46,14 @@ public sealed partial class MappingSystem : EntitySystem
             if (LifeStage(uid) >= EntityLifeStage.MapInitialized) // Saving post-init maps or grids has a high chance of throwing errors.
             {
                 Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not paused. Removing component.");
-                RemCompDeferred<AutoSaveComponent>(uid);
+                RemCompDeferred(uid, autoSave);
                 continue;
             }
 
 			if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 			{
 				Log.Warning($"Can't autosave entity {ToPrettyString(uid)}; it is not a map or grid. Removing component.");
-				RemCompDeferred<AutoSaveComponent>(uid);
+				RemCompDeferred(uid, autoSave);
 				continue;
 			}
 
@@ -76,8 +76,6 @@ public sealed partial class MappingSystem : EntitySystem
     {
 		return Math.Round(ent.Comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
 	}
-
-    #region Public API
 
     public void ToggleAutosave(MapId map, string? path = null)
     {
@@ -111,6 +109,4 @@ public sealed partial class MappingSystem : EntitySystem
 
         Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft((uid, comp))} seconds.");
     }
-
-    #endregion
 }
