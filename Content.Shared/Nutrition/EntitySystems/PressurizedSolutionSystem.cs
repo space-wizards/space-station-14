@@ -7,7 +7,6 @@ using Content.Shared.IdentityManagement;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Network;
 using Content.Shared.Fluids;
 using Content.Shared.Popups;
@@ -16,16 +15,15 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class PressurizedSolutionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private OpenableSystem _openable = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPuddleSystem _puddle = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -62,7 +60,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
         // Check each reagent in the solution
         foreach (var reagent in solution.Contents)
         {
-            if (_prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) && reagentProto != null)
+            if (ProtoMan.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? reagentProto) && reagentProto != null)
             {
                 // What portion of the solution is this reagent?
                 var proportion = (float) (reagent.Quantity / solution.Volume);
@@ -179,7 +177,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
 
         // Spray the solution onto the ground and anyone nearby
         var coordinates = Transform(entity).Coordinates;
-        _puddle.TrySplashSpillAt(entity.Owner, coordinates, out _, out _, sound: false);
+        _puddle.TrySplashSpillAt(entity.Owner, coordinates, solution, out _, sound: false);
 
         var drinkName = Identity.Entity(entity, EntityManager);
 

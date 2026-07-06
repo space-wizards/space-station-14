@@ -10,12 +10,6 @@ public abstract partial class SharedStunSystem
     {
         SubscribeLocalEvent<StunVisualsComponent, MobStateChangedEvent>(OnStunMobStateChanged);
         SubscribeLocalEvent<StunVisualsComponent, SleepStateChangedEvent>(OnSleepStateChanged);
-        SubscribeLocalEvent<StunVisualsComponent, StunnedEvent>(OnStunned);
-    }
-
-    private void OnStunned(Entity<StunVisualsComponent> ent, ref StunnedEvent args)
-    {
-        TrySeeingStars(ent.Owner);
     }
 
     private bool GetStarsData(Entity<StunVisualsComponent, StunnedComponent?> entity)
@@ -43,7 +37,7 @@ public abstract partial class SharedStunSystem
 
         // Here so server can tell the client to do things
         // Don't dirty the component if we don't need to
-        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
+        if (Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
             return;
 
         if (!Blocker.CanConsciouslyPerformAction(entity))
