@@ -16,7 +16,7 @@
   strategy: !type:ClampedHslColoration
     saturation: [0, 0.1]
     lightness: [0.85, 1]
-  squashAllColors: true
+  squashEyeHairColors: true
 
 - type: skinColoration
   id: VoxFeathers
