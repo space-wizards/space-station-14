@@ -227,14 +227,9 @@ namespace Content.Server.Shuttles.Systems
             {
                 var bodyA = _physicsQuery.Comp(gridA);
                 var bodyB = _physicsQuery.Comp(gridB);
-                var followerUid = gridA;
-                var followerBody = bodyA;
-                var referenceBody = bodyB;
-                if (followerBody.Mass > referenceBody.Mass)
-                {
-                    (referenceBody, followerBody) = (followerBody, referenceBody);
-                    followerUid = gridB;
-                }
+                var isASmall = bodyA.Mass < bodyB.Mass;
+                var followerUid = isASmall ? gridA : gridB;
+                var followerBody = isASmall ? bodyA : bodyB;
 
                 // Prevent shuttle annihilating cargo (any leftover relative momentum becomes a swing around the dock joint)
                 _physics.SetLinearVelocity(followerUid, referenceBody.LinearVelocity, body: followerBody);
