@@ -22,13 +22,23 @@ void fragment()
         // useful so that a non-square rect wont result in ellipses instead of circles
         highp float ratio = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x * 0.5;
         WaveCentre.y *= ratio;
+
         // calculate the distortion itself
         highp float dist = distance(vec2(st.x, st.y * ratio), WaveCentre) * downScales[i];
         highp vec2 delta = vec2(st.x, st.y * ratio) - WaveCentre;
         highp float angle = atan(delta.y/delta.x);
-        highp float val = dist + sin(angle*40.0)/40.0 * clamp(dist, 0.0, 1.0);
+        highp float sinf = sin(angle*60.0)/80.0;
+
+        highp float val = dist + sinf;
         highp float a = 3.0;
         highp float cosFuns = cos(val * 20.0 - times[i] * waveSpeeds[i]);
+
+        // ensure waves don't spawn at the opposite end of the map
+        if (val * 20.0 > 3.1415 / 2.0 + times[i] * waveSpeeds[i])
+        {
+            cosFuns = 0.0;
+        }
+
         highp float powFuns = pow(val * 2.5, a);
         highp float limtedPowFuns = 0.5 * pow(a / (a + powFuns), 2.0);
         highp float finalRes = smoothstep(0.0, 1.0, limtedPowFuns * cosFuns) * waveStrengths[i];
@@ -40,7 +50,7 @@ void fragment()
         // do blending
         st = st * (1.0 - fades[i]) + baseSt * fades[i];
         // we accumulate brightness and it is calculated via the displacement from finalRes
-        brightness += pow(finalRes, 1.5) * fades[i] * 1.5 * abs(sin(angle*40.0)) * 8.0;
+        brightness += pow(finalRes, 1.5) * fades[i] * 1.5 * abs(sin(angle*60.0)) * 8.0 * clamp(dist, 0.0, 1.0) * 4.0;
     }
     // in the end, we sample the screen texture using the sum screen texture
     highp vec4 texCol = zTextureSpec(SCREEN_TEXTURE, st);
