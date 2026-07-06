@@ -1,17 +1,44 @@
 using System.Linq;
+using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using static Content.Shared.Preferences.HumanoidCharacterProfile;
 
 namespace Content.Shared.Humanoid;
 
 public sealed partial class HumanoidCharacterAppearance
 {
-    private static readonly string SkinColorKey = "skinColor";
-    private static readonly string HairColorKey = "hairColor";
-    private static readonly string EyeColorKey = "eyeColor";
+    /// <summary>
+    ///     Stores 3 colours as character skin tone, hair tone, and eye tone.
+    /// </summary>
+    private struct CharacterPalette(Color skinColor, Color hairColor, Color eyeColor)
+    {
+        public Color SkinColor = skinColor;
+        public Color HairColor = hairColor;
+        public Color EyeColor = eyeColor;
+    }
+
+    # region Palettes
+
+    /// <summary>
+    ///     Generates a new random <see cref="CharacterPalette"/>.
+    /// </summary>
+    private static CharacterPalette GetRandomPalette(IRobustRandom random)
+    {
+        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
+        return GetPaletteFromBase(baseColor, random.Next(3));
+    }
+
+    /// <summary>
+    ///     Generates a new random <see cref="CharacterPalette"/>, clamped to a <see cref="SkinColorationPrototype"/> strategy.
+    /// </summary>
+    private static CharacterPalette GetRandomClampedPalette(SkinColorationPrototype skinColoration, IRobustRandom random)
+    {
+        var palette = GetRandomPalette(random);
+        return ClampPaletteToStrategy(palette, skinColoration, random);
+    }
 
     /// <summary>
     ///     Creates a new color palette from BaseColor.
@@ -24,70 +51,116 @@ public sealed partial class HumanoidCharacterAppearance
     ///     Personally I think this should be weighted, but I can't
     ///     be bothered to implement that. -widgetbeck (and mq)
     /// </remarks>
-    private static Color[] GetPaletteFromBase(Color baseColor, int strategy)
+    private static CharacterPalette GetPaletteFromBase(Color baseColor, int strategy)
     {
-        return strategy switch
+        var list = strategy switch
         {
             0 => baseColor.GetSplitComplementaries(),
             1 => baseColor.GetTriadicComplementaries(),
             _ => baseColor.GetOneComplementary(),
         };
-    }
 
-    /// <summary>
-    ///     Clamps a 3-toned color palette (in the order of skin, hair, eyes) to the desired ISkinColorationStrategy.
-    /// </summary>
-    /// <remarks>
-    ///     Optionally accepts <see cref="RandomizeCfg"/> and a base <see cref="HumanoidCharacterAppearance"/>
-    ///     to retain values of an existing appearance.
-    /// </remarks>
-    /// <returns>
-    ///     A 3-toned color palette with keys skinColor, hairColor, and eyeColor.
-    /// </returns>
-    private static Dictionary<string, Color> ClampPaletteToStrategy(Color[] colorPalette, SkinColorationPrototype skinType, IRobustRandom random, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
-    {
-        if (colorPalette.Length != 3)
-            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {colorPalette.Length} colours");
-
-        var newSkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
-            ? colorPalette[0] : baseAppearance.SkinColor;
-        var newHairColor = colorPalette[1];
-        var newEyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
-            ? colorPalette[2] : baseAppearance.EyeColor;
-
-        newSkinColor = skinType.Strategy.ClosestSkinColor(newSkinColor);
-
-        if (skinType.RealisticColors)
-        {
-            // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
-            newHairColor = random.Pick(HairStyles.RealisticHairColors);
-            newHairColor = newHairColor
-                .WithRed(RandomizeColor(newHairColor.R, random))
-                .WithGreen(RandomizeColor(newHairColor.G, random))
-                .WithBlue(RandomizeColor(newHairColor.B, random));
-
-            // and pick a random realistic eye color from the list.
-            newEyeColor = random.Pick(_realisticEyeColors);
-        }
-
-        if (skinType.SquashAllColors)
-        {
-            // crush the other colors down to valid skin colors.
-            newHairColor = skinType.Strategy.ClosestSkinColor(newHairColor);
-            newEyeColor = skinType.Strategy.ClosestSkinColor(newEyeColor);
-        }
-
-        return new Dictionary<string, Color>
-        {
-            { SkinColorKey, newSkinColor },
-            { HairColorKey, newHairColor },
-            { EyeColorKey, newEyeColor }
-        };
+        if (list.Length != 3) // this should never happen
+            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {list.Length} colours");
+        return new(list[0], list[1], list[2]);
     }
 
     private static float RandomizeColor(float channel, IRobustRandom random)
     {
         return MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
+    }
+
+    /// <summary>
+    ///     Clamps a <see cref="CharacterPalette"/> to the desired ISkinColorationStrategy.
+    /// </summary>
+    private static CharacterPalette ClampPaletteToStrategy(CharacterPalette palette, SkinColorationPrototype skinType, IRobustRandom random)
+    {
+        palette.SkinColor = skinType.Strategy.ClosestSkinColor(palette.SkinColor);
+        palette.HairColor = ClampHairColorToStrategy(palette.HairColor, skinType, random);
+        palette.EyeColor = ClampEyeColorToStrategy(palette.EyeColor, skinType, random);
+
+        return palette;
+    }
+
+    /// <summary>
+    ///     Clamps a hair color to a <see cref="SkinColorationPrototype"/> strategy.
+    /// </summary>
+    private static Color ClampHairColorToStrategy(Color color, SkinColorationPrototype skinType, IRobustRandom random)
+
+    {
+        if (skinType.RealisticColors)
+        {
+            // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
+            color = random.Pick(HairStyles.RealisticHairColors);
+            color = color
+                .WithRed(RandomizeColor(color.R, random))
+                .WithGreen(RandomizeColor(color.G, random))
+                .WithBlue(RandomizeColor(color.B, random));
+        }
+
+        if (skinType.SquashAllColors)
+        {
+            color = skinType.Strategy.ClosestSkinColor(color);
+        }
+
+        return color;
+    }
+
+    /// <summary>
+    ///     Clamps an eye color to a <see cref="SkinColorationPrototype"/> strategy.
+    /// </summary>
+
+    private static Color ClampEyeColorToStrategy(Color color, SkinColorationPrototype skinType, IRobustRandom random)
+    {
+        if (skinType.RealisticColors)
+            color = random.Pick(_realisticEyeColors);
+
+        if (skinType.SquashAllColors)
+            color = skinType.Strategy.ClosestSkinColor(color);
+
+        return color;
+    }
+
+    #endregion
+    #region Markings
+
+    /// <summary>
+    ///     Generates random colored markings for a specified character, respecting species and sex.
+    /// </summary>
+    /// <param name="species">Species of the character.</param>
+    /// <param name="sex">Sex of the character.</param>
+    /// <param name="palette">Palette used to color markings.</param>
+    /// <returns>A dictionary of organs to their corresponding visual layers, and the markings corresponding to those visual layers.</returns>
+    private static Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> RandomizeMarkings(SpeciesPrototype species, Sex sex, CharacterPalette palette, IPrototypeManager protoMan, IRobustRandom random)
+    {
+        var markingManager = IoCManager.Resolve<MarkingManager>();
+        var markingData = markingManager.GetMarkingData(species);
+
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings = [];
+
+        foreach (var (organ, organData) in markingData)
+        {
+            // if this is an organ with no markings (heart, stomach, etc)
+            if (!protoMan.TryIndex(organData.Group, out var groupProto))
+                continue;
+
+            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
+            foreach (var layer in organData.Layers)
+            {
+                var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
+
+                if (allMarkings.Count == 0)
+                    continue;
+
+                var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
+                if (layerLimits is null || layerLimits.Limit <= 0)
+                    continue;
+
+                layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, palette, random));
+            }
+            markings.Add(organ, layerMarkings);
+        }
+        return markings;
     }
 
     /// <summary>
@@ -125,7 +198,7 @@ public sealed partial class HumanoidCharacterAppearance
     /// <param name="allMarkings">A list of all markings for the layer.</param>
     /// <param name="palette">A list of colors to choose from for the markings.</param>
     /// <returns>A list of markings for the desired layer.</returns>
-    private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Dictionary<string, Color> palette, IRobustRandom random)
+    private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, CharacterPalette palette, IRobustRandom random)
     {
         if (layerLimits is null)
             return [];
@@ -138,7 +211,7 @@ public sealed partial class HumanoidCharacterAppearance
                 sawmill.Error($"Palette for {layer} contains no HairColorKey, using default colour");
             */
 
-            return PickHairsRandomMarking(layer, layerLimits, allMarkings, palette.GetValueOrDefault(HairColorKey), random);
+            return PickHairsRandomMarking(layer, layerLimits, allMarkings, palette.HairColor, random);
         }
 
         var layerWeight = layerLimits.Weight;
@@ -181,13 +254,13 @@ public sealed partial class HumanoidCharacterAppearance
 
                 var color = coloringType.Type is not null
                     ? coloringType.GetColor(
-                    palette.GetValueOrDefault(SkinColorKey),
-                    palette.GetValueOrDefault(EyeColorKey),
+                    palette.SkinColor,
+                    palette.EyeColor,
                     outMarkings)
                     : random.Pick(new List<Color>
                     {
-                        palette.GetValueOrDefault(HairColorKey),
-                        palette.GetValueOrDefault(EyeColorKey)
+                        palette.HairColor,
+                        palette.EyeColor
                     });
 
                 colors.Add(color);
@@ -211,4 +284,5 @@ public sealed partial class HumanoidCharacterAppearance
 
         return random.Pick(weights).Key;
     }
+    #endregion
 }

@@ -127,57 +127,29 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     /// <param name="baseAppearance">Appearance to base the new appearance on. Values that are not randomized will be taken from this appearance.</param>
     /// <param name="species">Species prototype ID.</param>
     /// <param name="sex">Sex.</param>
-    public static HumanoidCharacterAppearance Random(SpeciesPrototype species, Sex sex, RandomizeCfg? charEditorRandomizeConfig, HumanoidCharacterAppearance? baseAppearance)
+    public static HumanoidCharacterAppearance Random(SpeciesPrototype species, Sex sex, RandomizeCfg? charEditorRandomizeConfig = null, HumanoidCharacterAppearance? baseAppearance = null)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
-        var markingManager = IoCManager.Resolve<MarkingManager>();
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-        var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
+        var skinType = protoMan.Index(species.SkinColoration);
+        var palette = GetRandomClampedPalette(skinType, random);
 
-        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
-        var colorPalette = GetPaletteFromBase(baseColor, random.Next(3));
+        // squash Cfg as necessary
+        palette.SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
+            ? palette.SkinColor : skinType.Strategy.ClosestSkinColor(baseAppearance.SkinColor);
+        palette.EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
+            ? palette.EyeColor : ClampEyeColorToStrategy(baseAppearance.EyeColor, skinType, random);
 
-        var colorDict = ClampPaletteToStrategy(colorPalette, protoMan.Index(skinType), random, charEditorRandomizeConfig, baseAppearance);
-
-        var markingData = markingManager.GetMarkingData(species);
-        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> newMarkings = [];
-
-        if ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
-        {
-            foreach (var (organ, organData) in markingData)
-            {
-                // if this is an organ with no markings (heart, stomach, etc)
-                if (!protoMan.TryIndex(organData.Group, out var groupProto))
-                    continue;
-
-                Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
-                foreach (var layer in organData.Layers)
-                {
-                    var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
-
-                    if (allMarkings.Count == 0)
-                        continue;
-
-                    var layerLimits = groupProto.Limits.GetValueOrDefault(layer);
-                    if (layerLimits is null || layerLimits.Limit <= 0)
-                        continue;
-
-                    layerMarkings.Add(layer, PickLayerRandomMarkings(layer, layerLimits, allMarkings, colorDict, random));
-                }
-                newMarkings.Add(organ, layerMarkings);
-            }
-        }
-        else // just use old markings.
+        var markings = ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
+            ? RandomizeMarkings(species, sex, palette, protoMan, random)
+            : baseAppearance.Markings;
         // TODO if someone really cares they can probably regenerate the old markings with new colors but im too tired to figure that out
-        {
-            newMarkings = baseAppearance.Markings;
-        }
 
         HumanoidCharacterAppearance appearance = new(
-            colorDict.GetValueOrDefault(EyeColorKey),
-            colorDict.GetValueOrDefault(SkinColorKey),
-            newMarkings);
+            palette.EyeColor,
+            palette.SkinColor,
+            markings);
 
         // Safety step. Most systems which called Random() also called this, and not doing so caused issues with markings.
         // In the future it could *maybe* be removed, but it's probably worth the extra CPU cycles to validate this info.
