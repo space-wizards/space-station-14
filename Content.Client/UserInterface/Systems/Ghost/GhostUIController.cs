@@ -123,9 +123,9 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         _net.SendSystemNetworkMessage(msg);
     }
 
-    private void OnWarpToRandomFollowableClicked()
+    private void OnWarpToRandomClicked()
     {
-        var msg = new WarpToRandomFollowableRequestEvent();
+        var msg = new WarpToRandomRequestEvent();
         _net.SendSystemNetworkMessage(msg);
     }
 
@@ -140,7 +140,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
         Gui.TargetWindow.OnGhostnadoClicked += OnGhostnadoClicked;
         Gui.TargetWindow.OnWarpToRandomFollowedClicked += OnWarpToRandomFollowedClicked;
-        Gui.TargetWindow.OnWarpToRandomFollowableClicked += OnWarpToRandomFollowableClicked;
+        Gui.TargetWindow.OnWarpToRandomClicked += OnWarpToRandomClicked;
 
         UpdateGui();
     }

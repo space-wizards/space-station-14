@@ -11,8 +11,8 @@
                 <Button Name="WarpToRandomFollowedButton" Text="{Loc 'ghost-target-window-warp-to-random-followed'}"
                         ToolTip="{Loc 'ghost-target-window-warp-to-random-followed-tooltip'}"
                         HorizontalAlignment="Center" StyleClasses="OpenBoth" />
-                <Button Name="WarpToRandomFollowableButton" Text="{Loc 'ghost-target-window-warp-to-random-followable'}"
-                        ToolTip="{Loc 'ghost-target-window-warp-to-random-followable-tooltip'}" HorizontalAlignment="Center"
+                <Button Name="WarpToRandomButton" Text="{Loc 'ghost-target-window-warp-to-random'}"
+                        ToolTip="{Loc 'ghost-target-window-warp-to-random-tooltip'}" HorizontalAlignment="Center"
                         StyleClasses="OpenLeft" />
             </BoxContainer>
         </BoxContainer>

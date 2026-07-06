@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
         public event Action<NetEntity>? WarpClicked;
         public event Action? OnGhostnadoClicked;
         public event Action? OnWarpToRandomFollowedClicked;
-        public event Action? OnWarpToRandomFollowableClicked;
+        public event Action? OnWarpToRandomClicked;
 
         public GhostTargetWindow()
         {
@@ -26,7 +26,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
 
             GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke();
             WarpToRandomFollowedButton.OnPressed += _ => OnWarpToRandomFollowedClicked?.Invoke();
-            WarpToRandomFollowableButton.OnPressed += _ => OnWarpToRandomFollowableClicked?.Invoke();
+            WarpToRandomButton.OnPressed += _ => OnWarpToRandomClicked?.Invoke();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)

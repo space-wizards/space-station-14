@@ -319,8 +319,8 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the entity with the most non-admin ghosts following it.
-    /// If there are multiple entities with the same top amount of followers, pick a random one from those.
+    /// Gets the player with the most non-admin ghosts following it.
+    /// If there are multiple players with the same top amount of followers, picks one at random.
     /// </summary>
     public EntityUid? GetMostGhostFollowed(EntityUid? except = null)
     {
@@ -346,7 +346,7 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets a random entity that is being followed by at least one non-admin ghost.
+    /// Gets a random player that is being followed by at least one non-admin ghost.
     /// </summary>
     public EntityUid? GetRandomGhostFollowed(EntityUid? except = null)
     {
@@ -361,7 +361,7 @@ public sealed partial class FollowerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets all entities that are being followed by non-admin ghosts with a follower count for each.
+    /// Gets all players that are being followed by non-admin ghosts with a follower count for each.
     /// <remarks>Admin ghosts are excluded from the list of entities so that players can't spy on them.</remarks>
     /// </summary>
     private Dictionary<EntityUid, int> GetAllFollowed(EntityUid? except = null)

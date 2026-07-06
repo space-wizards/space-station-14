@@ -94,7 +94,7 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
             SubscribeNetworkEvent<GhostnadoRequestEvent>(OnGhostnadoRequest);
             SubscribeNetworkEvent<WarpToRandomFollowedRequestEvent>(OnWarpToRandomFollowedRequest);
-            SubscribeNetworkEvent<WarpToRandomFollowableRequestEvent>(OnWarpToRandomFollowableRequest);
+            SubscribeNetworkEvent<WarpToRandomRequestEvent>(OnWarpToRandomRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
@@ -327,7 +327,7 @@ namespace Content.Server.Ghost
         }
 
         /// <summary>
-        /// Request to warp to the entity with the msot follower ghosts.
+        /// Request to warp to the player with the most ghost followers.
         /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
@@ -345,13 +345,13 @@ namespace Content.Server.Ghost
         }
 
         /// <summary>
-        /// Request to warp to a random entity with at least one ghost follower.
+        /// Request to warp to a random player with at least one ghost follower.
         /// </summary>
         private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
             {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random followed entity without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player with at least one ghost follower without being a ghost.");
                 return;
             }
 
@@ -363,13 +363,13 @@ namespace Content.Server.Ghost
         }
 
         /// <summary>
-        /// Request to warp to a random entity that can be normally followed..
+        /// Request to warp to a random player.
         /// </summary>
-        private void OnWarpToRandomFollowableRequest(WarpToRandomFollowableRequestEvent msg, EntitySessionEventArgs args)
+        private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
         {
             if (!CanGhostWarp(args.SenderSession, out var uid))
             {
-                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random followable entity without being a ghost.");
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player without being a ghost.");
                 return;
             }
 
