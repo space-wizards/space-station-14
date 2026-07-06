@@ -24,6 +24,7 @@ public sealed partial class ScreechSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _containers = default!;
     [Dependency] private SharedStunSystem _stuns = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
     [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery;
 
