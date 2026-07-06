@@ -56,7 +56,7 @@ public sealed partial class ScreechSystem : EntitySystem
 
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
     {
-        args.Heard = false;
+        args.Cancelled = true;
     }
 
     private void OnComponentInit(Entity<ScreechShockWaveComponent> ent, ref ComponentInit args)
@@ -100,11 +100,11 @@ public sealed partial class ScreechSystem : EntitySystem
         var ev = new ScreechEffectAttemptEvent()
         {
             Source = source,
-            Heard = true
+            Cancelled = false
         };
         RaiseLocalEvent(ent, ref ev);
 
-        if (!ev.Heard)
+        if (ev.Cancelled)
             return; // if we return here, the entity had screech protection
 
         // does the disarming
@@ -138,9 +138,9 @@ public struct ScreechEffectAttemptEvent : IInventoryRelayEvent
     public EntityUid Source;
 
     /// <summary>
-    /// Wether it was heard.
+    /// If set to true, the screech won't have any effect on the entity.
     /// </summary>
-    public bool Heard;
+    public bool Cancelled;
 
     public SlotFlags TargetSlots => SlotFlags.HEAD | SlotFlags.EARS | SlotFlags.EYES;
 }
