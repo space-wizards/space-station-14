@@ -25,9 +25,9 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> DisableAiStatic =
         CVarDef.Create("accessibility.disable_ai_static", false, CVar.CLIENTONLY | CVar.ARCHIVE);
-    
+
     /// <summary>
-    /// Removes the noise from the night vision overlay
+    /// Removes the noise from the night vision overlay.
     /// </summary>
     public static readonly CVarDef<bool> DisableNightVisionNoise =
         CVarDef.Create("accessibility.disable_nv_noise", false, CVar.CLIENTONLY | CVar.ARCHIVE);
