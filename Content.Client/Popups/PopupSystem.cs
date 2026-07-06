@@ -48,11 +48,6 @@ public sealed partial class PopupSystem : SharedPopupSystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<PopupCursorEvent>(OnPopupCursorEvent);
-        SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
-        SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
-        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
         _overlay.AddOverlay(new PopupOverlay(
             _configManager,
             EntityManager,
@@ -242,6 +237,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
 
     #region Network Event Handlers
 
+    [SubscribeNetworkEvent]
     private void OnPopupCursorEvent(PopupCursorEvent ev)
     {
         var instance = new PopupCursorEvent.PredictionInstance(ev.Message, ev.Type, ev.Tick);
@@ -251,6 +247,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         PopupCursorInternal(ev.Message, ev.Type, false);
     }
 
+    [SubscribeNetworkEvent]
     private void OnPopupCoordinatesEvent(PopupCoordinatesEvent ev)
     {
         var instance = new PopupCoordinatesEvent.PredictionInstance(ev.Message, ev.Type, ev.Tick, ev.PredictionKey);
@@ -260,6 +257,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
         PopupInternal(ev.Message, ev.Type, GetCoordinates(ev.Coordinates), null, false);
     }
 
+    [SubscribeNetworkEvent]
     private void OnPopupEntityEvent(PopupEntityEvent ev)
     {
         var instance = new PopupEntityEvent.PredictionInstance(ev.Message, ev.Type, ev.Tick, ev.Uid);
@@ -272,6 +270,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
             PopupInternal(ev.Message, ev.Type, transform.Coordinates, entity, false);
     }
 
+    [SubscribeNetworkEvent]
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _aliveCursorLabels.Clear();
@@ -291,15 +290,25 @@ public sealed partial class PopupSystem : SharedPopupSystem
             MaximumPopupLifetime);
     }
 
-    public override void FrameUpdate(float frameTime)
+    public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
+        if (!Timing.IsFirstTimePredicted)
+            return; // We only need to clean up once per tick.
+
+
         // We only keep track of prediction instances for a short amount of time to prevent memory leaks.
-        // We can safely assume that if a popup hasn't been received from the server within a few seconds, it will never be received.
+        // We can safely assume that if a popup hasn't been received from the server within a 10 seconds, it will never be received.
+        var deleteTickCount = Timing.TickRate * 10;
         if (_predictionInstances.Count != 0)
         {
-            _predictionInstances.RemoveAll(p => (int)Timing.CurTick.Value - (int)p.Tick.Value > 5000);
+            _predictionInstances.RemoveAll(p => (int)Timing.CurTick.Value - (int)p.Tick.Value > deleteTickCount);
         }
+    }
 
+    public override void FrameUpdate(float frameTime)
+    {
         if (_aliveWorldLabels.Count == 0 && _aliveCursorLabels.Count == 0)
             return;
 
