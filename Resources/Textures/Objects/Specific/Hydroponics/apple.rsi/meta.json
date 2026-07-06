@@ -11,19 +11,31 @@
             "name": "dead"
         },
         {
-            "name": "harvest"
+            "name": "harvest_green"
+        },
+        {
+            "name": "harvest_yellow"
+        },
+        {
+            "name": "harvest_red"
         },
         {
             "name": "produce_green"
         },
         {
-            "name": "produce_red"
-        },
-        {
             "name": "produce_yellow"
         },
         {
-            "name": "seed"
+            "name": "produce_red"
+        },
+        {
+            "name": "seed_green"
+        },
+        {
+            "name": "seed_yellow"
+        },
+        {
+            "name": "seed_red"
         },
         {
             "name": "stage-1"
@@ -44,11 +56,27 @@
             "name": "stage-6"
         },
         {
-            "name": "produce-inhand-left",
+            "name": "produce-green-inhand-left",
             "directions": 4
         },
         {
-            "name": "produce-inhand-right",
+            "name": "produce-green-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "produce-yellow-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-yellow-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "produce-red-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-red-inhand-right",
             "directions": 4
         }
     ]
