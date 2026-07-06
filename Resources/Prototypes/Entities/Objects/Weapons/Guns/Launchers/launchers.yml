@@ -6,8 +6,6 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-  - type: Item
-    size: Ginormous
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
