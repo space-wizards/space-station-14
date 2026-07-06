@@ -5,9 +5,9 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Access;
 
 /// <inheritdoc />
-public sealed class AgentIdCardSystem : SharedAgentIdCardSystem
+public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
 {
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc />
     public override void Initialize()

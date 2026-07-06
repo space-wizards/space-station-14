@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Access.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
+using Content.Shared.VoiceMask;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -13,12 +15,12 @@ namespace Content.Shared.Access.Systems;
 /// <summary>
 /// Handles things related to the agent ID, such as copying access and the UI.
 /// </summary>
-public abstract class SharedAgentIdCardSystem : EntitySystem
+public abstract partial class SharedAgentIdCardSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedIdCardSystem _card = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedIdCardSystem _card = default!;
+    [Dependency] private SharedJobStatusSystem _jobStatus = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -26,6 +28,7 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<VoiceMaskNameUpdatedEvent>>(OnVoiceMaskNameChanged);
         // BUI
         SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
         SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
@@ -50,9 +53,23 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
         access.Tags.UnionWith(targetAccess.Tags);
         var addedLength = access.Tags.Count - beforeLength;
 
-        _popup.PopupPredicted(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
+        _popup.PopupPredicted(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)),
+            args.Target.Value,
+            args.User);
         if (addedLength > 0)
             Dirty(ent, access);
+    }
+
+    private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent,
+        ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
+    {
+        if (!TryComp<IdCardComponent>(ent, out var idCard))
+            return;
+
+        if (!args.Args.VoiceMask.Comp.ChangeIDName)
+            return;
+
+        _card.TryChangeFullName(ent, args.Args.NewName, idCard);
     }
 
     private void OnNameChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardNameChangedMessage args)
@@ -73,13 +90,14 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
 
     private void OnJobIconChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobIconChangedMessage args)
     {
-        if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon) ||
+        if (!ProtoMan.Resolve(args.JobIconId, out var jobIcon) ||
             !_card.TryChangeJobIcon(ent, jobIcon))
             return;
 
         if (TryFindJobProtoFromIcon(jobIcon, out var job))
             _card.TryChangeJobDepartment(ent, job);
 
+        _jobStatus.UpdateStatus(Transform(ent).ParentUid);
         UpdateUi(ent);
     }
 
@@ -91,7 +109,7 @@ public abstract class SharedAgentIdCardSystem : EntitySystem
     {
         job = null;
 
-        foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+        foreach (var jobPrototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
             if (jobPrototype.Icon != jobIcon.ID)
                 continue;

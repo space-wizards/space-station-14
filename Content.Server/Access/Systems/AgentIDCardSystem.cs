@@ -1,26 +1,20 @@
-using Content.Shared.Access.Components;
-using Content.Shared.Access.Systems;
-using Robust.Shared.Prototypes;
 using Content.Server.Clothing.Systems;
 using Content.Server.Implants;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
-using Content.Shared.Roles;
-using Content.Shared.StatusIcon;
-using Content.Shared.UserInterface;
-using Content.Shared.VoiceMask;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Access.Systems;
 
 /// <inheritdoc />
-public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
+public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
 {
-    [Dependency] private readonly SharedIdCardSystem _cardSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChameleonClothingSystem _chameleon = default!;
-    [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
+    [Dependency] private SharedIdCardSystem _card = default!;
+    [Dependency] private ChameleonClothingSystem _chameleon = default!;
+    [Dependency] private ChameleonControllerSystem _chamController = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -35,22 +29,22 @@ public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
         if (!TryComp<IdCardComponent>(ent, out var idCardComp))
             return;
 
-        _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
+        ProtoMan.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
         var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
         var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
 
         if (jobIcon != null)
-            _cardSystem.TryChangeJobIcon(ent, _prototypeManager.Index(jobIcon.Value), idCardComp);
+            _card.TryChangeJobIcon(ent, ProtoMan.Index(jobIcon.Value), idCardComp);
 
         if (jobName != "")
-            _cardSystem.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
+            _card.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
 
         // If you have forced departments use those over the jobs actual departments.
-        if (args.Args.ChameleonOutfit?.Departments?.Count > 0)
-            _cardSystem.TryChangeJobDepartment(ent, args.Args.ChameleonOutfit.Departments, idCardComp);
+        if (args.Args.ChameleonOutfit.Departments?.Count > 0)
+            _card.TryChangeJobDepartment(ent, args.Args.ChameleonOutfit.Departments, idCardComp);
         else if (jobProto != null)
-            _cardSystem.TryChangeJobDepartment(ent, jobProto, idCardComp);
+            _card.TryChangeJobDepartment(ent, jobProto, idCardComp);
 
         // Ensure that you chameleon IDs in PDAs correctly. Yes this is sus...
 
@@ -62,10 +56,11 @@ public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
         if (idSlotGear == null)
             return;
 
-        var proto = _prototypeManager.Index(idSlotGear);
-        if (!proto.TryGetComponent<PdaComponent>(out var comp, EntityManager.ComponentFactory))
+        var proto = ProtoMan.Index(idSlotGear);
+        if (!proto.TryComp<PdaComponent>(out var comp, EntityManager.ComponentFactory))
             return;
 
-        _chameleon.SetSelectedPrototype(ent, comp.IdCard);
+        if (TryComp<ChameleonClothingComponent>(ent, out var chameleonComp) && chameleonComp.CanBeSetByController)
+            _chameleon.SetSelectedPrototype(ent, comp.IdCard, component: chameleonComp);
     }
 }
