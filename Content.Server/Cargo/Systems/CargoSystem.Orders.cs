@@ -123,14 +123,14 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
-        private void OnCargoSlipCopied(EntityUid uid, CargoSlipComponent component, PaperCopiedEvent evt)
+        private void OnCargoSlipCopied(Entity<CargoSlipComponent> original, ref PaperCopiedEvent evt)
         {
             var slip = EnsureComp<CargoSlipComponent>(evt.Copy);
-            slip.Product = component.Product;
-            slip.Requester = component.Requester;
-            slip.Reason = component.Reason;
-            slip.OrderQuantity = component.OrderQuantity;
-            slip.Account = component.Account;
+            slip.Product = original.Comp.Product;
+            slip.Requester = original.Comp.Requester;
+            slip.Reason = original.Comp.Reason;
+            slip.OrderQuantity = original.Comp.OrderQuantity;
+            slip.Account = original.Comp.Account;
         }
 
         private void UpdateConsole()

@@ -164,11 +164,11 @@ public sealed partial class CargoSystem
         component.Calculating = false;
     }
 
-    private void OnBountyCopied(EntityUid uid, CargoBountyLabelComponent component, PaperCopiedEvent evt)
+    private void OnBountyCopied(Entity<CargoBountyLabelComponent> original, ref PaperCopiedEvent evt)
     {
         var newLabel = EnsureComp<CargoBountyLabelComponent>(evt.Copy);
-        newLabel.Id = component.Id;
-        newLabel.AssociatedStationId = component.AssociatedStationId;
+        newLabel.Id = original.Comp.Id;
+        newLabel.AssociatedStationId = original.Comp.AssociatedStationId;
     }
 
     private void OnSold(ref EntitySoldEvent args)

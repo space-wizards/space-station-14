@@ -11,10 +11,10 @@ public sealed partial class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSys
         SubscribeLocalEvent<NanoTaskPrintedComponent, PaperCopiedEvent>(OnNanoTaskCopied);
     }
 
-    private void OnNanoTaskCopied(EntityUid uid, NanoTaskPrintedComponent comp, PaperCopiedEvent evt)
+    private void OnNanoTaskCopied(Entity<NanoTaskPrintedComponent> original, ref PaperCopiedEvent evt)
     {
         var newTask = EnsureComp<NanoTaskPrintedComponent>(evt.Copy);
-        newTask.Task = comp.Task;
+        newTask.Task = original.Comp.Task;
     }
 }
 
