@@ -77,12 +77,22 @@ public sealed partial class MappingSystem : EntitySystem
 		return Math.Round(ent.Comp.NextSaveTime.TotalSeconds - _timing.RealTime.TotalSeconds);
 	}
 
+    /// <summary>
+    /// Toggles autosaving of a map.
+    /// </summary>
+    /// <param name="map">Map ID of the map to autosave.</param>
+    /// <param name="path">Relative path inside the user data folder to save into.</param>
     public void ToggleAutosave(MapId map, string? path = null)
     {
         if (_map.TryGetMap(map, out var uid))
             ToggleAutosave(uid.Value, path);
     }
 
+    /// <summary>
+    /// Toggles autosaving of a map or a grid.
+    /// </summary>
+    /// <param name="uid">UID of the map or the grid to autosave.</param>
+    /// <param name="path">Relative path inside the user data folder to save into.</param>
     public void ToggleAutosave(EntityUid uid, string? path = null)
     {
         if (!_autosaveEnabled)
