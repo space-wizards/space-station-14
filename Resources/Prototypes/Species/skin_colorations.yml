@@ -3,8 +3,8 @@
 # realisticColors: If true, will randomly generate realistic hair and eye colors.
 #                  Will also crush randomly generated colors down to the skin's luminosity
 #                  so markings don't appear too bright on darker skin.
-# squashAllColors: If true, will also squash hair and eye colors to the coloration strategy.
-#                  By default, only skin colors are affected!
+# squashEyeHairColors: If true, will also squash hair and eye colors to the coloration strategy.
+#                      By default, only skin colors are affected!
 
 - type: skinColoration
   id: Hues
@@ -65,4 +65,4 @@
     - hue: 1 # Red
       saturation: [ 0, 0.75 ]
       value: [ 0.2, 0.9 ]
-  squashAllColors: true
+  squashEyeHairColors: true

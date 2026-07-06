@@ -33,7 +33,7 @@ public sealed partial class SkinColorationPrototype : IPrototype
     ///     If true, will also squash hair and eye colors to the coloration strategy.
     /// </summary>
     [DataField]
-    public bool SquashAllColors;
+    public bool SquashEyeHairColors;
 }
 
 /// <summary>

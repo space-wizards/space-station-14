@@ -98,7 +98,7 @@ public sealed partial class HumanoidCharacterAppearance
                 .WithBlue(RandomizeColor(color.B, random));
         }
 
-        if (skinType.SquashAllColors)
+        if (skinType.SquashEyeHairColors)
         {
             color = skinType.Strategy.ClosestSkinColor(color);
         }
@@ -115,7 +115,7 @@ public sealed partial class HumanoidCharacterAppearance
         if (skinType.RealisticColors)
             color = random.Pick(_realisticEyeColors);
 
-        if (skinType.SquashAllColors)
+        if (skinType.SquashEyeHairColors)
             color = skinType.Strategy.ClosestSkinColor(color);
 
         return color;
