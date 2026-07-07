@@ -37,8 +37,8 @@
     steps: 6
     zeroVisible: true
   - type: CustomSpriteAmmoCounter
-    loadedAmmoSprite: Interface/ItemStatus/Crystals/crystal.png
-    spentAmmoSprite: Interface/ItemStatus/Crystals/crystal_empty.png
+    loadedAmmoSprite: Interface/ItemStatus/Crystals/not_spent.png
+    spentAmmoSprite: Interface/ItemStatus/Crystals/spent.png
     numberOfRows: 1
   - type: Appearance
   - type: ContainerContainer
