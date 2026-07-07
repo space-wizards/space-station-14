@@ -11,7 +11,6 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 
 namespace Content.Client.Popups;
@@ -22,7 +21,6 @@ public sealed partial class PopupSystem : SharedPopupSystem
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IOverlayManager _overlay = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IUserInterfaceManager _uiManager = default!;
     [Dependency] private IReplayRecordingManager _replayRecording = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
@@ -52,7 +50,7 @@ public sealed partial class PopupSystem : SharedPopupSystem
             _configManager,
             EntityManager,
             _playerManager,
-            _prototype,
+            ProtoMan,
             _uiManager,
             _uiManager.GetUIController<PopupUIController>(),
             _examine,
