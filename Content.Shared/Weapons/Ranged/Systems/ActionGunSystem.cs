@@ -37,8 +37,27 @@ public sealed partial class ActionGunSystem : EntitySystem
         if (!TryComp<GunComponent>(ent.Comp.Gun, out var gun))
             return;
 
-        _gun.AttemptShoot(ent, (ent.Comp.Gun.Value, gun), args.Target);
-        args.Handled = true;
+        args.Handled = _gun.AttemptShoot(ent, (ent.Comp.Gun.Value, gun), args.Target);
+    }
+
+    /// <summary>
+    /// Grants or revokes the shoot action at runtime, for abilities that are locked behind
+    /// some condition (e.g. an upgrade) while keeping the component itself on the entity.
+    /// </summary>
+    public void SetActionGranted(Entity<ActionGunComponent> ent, bool granted)
+    {
+        if (granted == (ent.Comp.ActionEntity != null))
+            return;
+
+        if (granted)
+        {
+            _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
+        }
+        else
+        {
+            _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
+            ent.Comp.ActionEntity = null;
+        }
     }
 }
 

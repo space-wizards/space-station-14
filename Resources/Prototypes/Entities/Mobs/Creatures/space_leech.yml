@@ -112,8 +112,6 @@
 
   # ── Space Leech state ─────────────────────────────────────────────────────
   - type: SpaceLeech
-    bloodPool: 0
-    maxBloodPool: 400
 
   # ── Upgrade menu BUI ──────────────────────────────────────────────────────
   - type: UserInterface
@@ -126,7 +124,8 @@
     actions:
     - ActionSpaceLeechUpgradeMenu
 
-  # ── Sting ability (gated by sting upgrade rank) ───────────────────────────
+  # ── Sting ability ──────────────────────────────────────────────────────────
+  # The action is revoked by SpaceLeechSystem until Venom rank 1 is purchased.
   - type: ActionGun
     action: ActionSpaceLeechSting
     gunProto: SpaceLeechStingGun

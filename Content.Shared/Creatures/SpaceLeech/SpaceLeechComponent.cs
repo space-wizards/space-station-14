@@ -1,27 +1,37 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Creatures.SpaceLeech;
 
 /// <summary>
 ///     Tracks blood pool and evolution state for the Space Leech antag.
+///     Server-authoritative; networked so the client can drive the upgrade menu
+///     and predict movement/melee modifiers from the purchased ranks.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SpaceLeechComponent : Component
 {
-    /// <summary>Spendable blood right now. Stored as float to preserve fractional units from impure blood.</summary>
+    /// <summary>Spendable blood right now.</summary>
     [DataField, AutoNetworkedField]
-    public float BloodPool = 0f;
+    public FixedPoint2 BloodPool = FixedPoint2.Zero;
 
     /// <summary>Current blood pool ceiling.</summary>
     [DataField, AutoNetworkedField]
-    public int MaxBloodPool = 400;
+    public FixedPoint2 MaxBloodPool = 400;
 
-    /// <summary>Lifetime blood consumed this round (for objective tracking).</summary>
+    /// <summary>Lifetime blood consumed this round (for objective tracking). Not capped by the pool.</summary>
     [DataField, AutoNetworkedField]
-    public float BloodConsumedTotal = 0f;
+    public FixedPoint2 BloodConsumedTotal = FixedPoint2.Zero;
 
-    /// <summary>Upgrade ID → current rank (0 = unpurchased, max 3).</summary>
+    /// <summary>Upgrade ID → current rank (absent/0 = unpurchased).</summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, int> UpgradeRanks = new();
+    public Dictionary<ProtoId<SpaceLeechUpgradePrototype>, int> UpgradeRanks = new();
 
+    /// <summary>
+    /// Fraction of consumed blood that restores the leech's own bloodstream directly,
+    /// bypassing metabolism so its own blood reagent is never injected.
+    /// </summary>
+    [DataField]
+    public float BloodRestoreFraction = 0.2f;
 }

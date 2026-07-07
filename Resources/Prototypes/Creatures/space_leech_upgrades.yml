@@ -1,85 +1,92 @@
-# magnitudes[rank] interpretation per upgrade:
+# magnitudes[rank] interpretation per upgrade (index 0 = base/unpurchased):
 #   Predator  - damage multiplier
 #   Quickness - speed multiplier
 #   Shadow    - passiveVisibilityRate (more negative = faster fade)
-#   Venom     - knockdown duration in seconds
+#   Venom     - knockdown duration in seconds (rank 0 unused; sting is locked until rank 1)
 #   Ravenous  - eat-time multiplier (lower = faster)
-#   Pry       - pry speed modifier (lower = faster)
+#   Pry       - pry time fraction (lower = faster)
 #   Ironhide  - incoming damage coefficient (lower = less damage taken)
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradePredator
-  name: Strike
-  stat: ATTACK
+  order: 0
+  name: space-leech-upgrade-predator-name
+  stat: space-leech-upgrade-predator-stat
   costs: [100, 185, 215]
   effects:
-  - "Bite damage +5."
-  - "Bite damage +10."
-  - "Bite damage +15."
+  - space-leech-upgrade-predator-effect-1
+  - space-leech-upgrade-predator-effect-2
+  - space-leech-upgrade-predator-effect-3
   magnitudes: [1.0, 1.5, 2.0, 2.5]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradeQuickness
-  name: Quickness
-  stat: MOVE
+  order: 1
+  name: space-leech-upgrade-quickness-name
+  stat: space-leech-upgrade-quickness-stat
   costs: [100, 145, 185]
   effects:
-  - "Move speed +8%."
-  - "Move speed +16%."
-  - "Move speed +25%."
+  - space-leech-upgrade-quickness-effect-1
+  - space-leech-upgrade-quickness-effect-2
+  - space-leech-upgrade-quickness-effect-3
   magnitudes: [1.0, 1.08, 1.16, 1.25]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradeShadow
-  name: Shadow
-  stat: STEALTH
+  order: 2
+  name: space-leech-upgrade-shadow-name
+  stat: space-leech-upgrade-shadow-stat
   costs: [100, 145, 185]
   effects:
-  - "Passive fade speed +33%."
-  - "Passive fade speed +80%."
-  - "Passive fade speed +153%."
+  - space-leech-upgrade-shadow-effect-1
+  - space-leech-upgrade-shadow-effect-2
+  - space-leech-upgrade-shadow-effect-3
   magnitudes: [-0.15, -0.20, -0.27, -0.38]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradeVenom
-  name: Venom
-  stat: STING
+  order: 3
+  name: space-leech-upgrade-venom-name
+  stat: space-leech-upgrade-venom-stat
   costs: [100, 145, 185]
   effects:
-  - "Sting stun 8 seconds."
-  - "Sting stun 11 seconds."
-  - "Sting stun 14 seconds."
-  magnitudes: [5.0, 8.0, 11.0, 14.0]
+  - space-leech-upgrade-venom-effect-1
+  - space-leech-upgrade-venom-effect-2
+  - space-leech-upgrade-venom-effect-3
+  magnitudes: [0.0, 1.0, 3.0, 5.0]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradeRavenous
-  name: Ravenous
-  stat: FEED
+  order: 4
+  name: space-leech-upgrade-ravenous-name
+  stat: space-leech-upgrade-ravenous-stat
   costs: [100, 145, 185]
   effects:
-  - "Drink blood 20% faster."
-  - "Drink blood 35% faster."
-  - "Drink blood 50% faster."
+  - space-leech-upgrade-ravenous-effect-1
+  - space-leech-upgrade-ravenous-effect-2
+  - space-leech-upgrade-ravenous-effect-3
   magnitudes: [1.0, 0.80, 0.65, 0.50]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradePry
-  name: Pry Mastery
-  stat: PRY
+  order: 5
+  name: space-leech-upgrade-pry-name
+  stat: space-leech-upgrade-pry-stat
   costs: [100, 145, 185]
   effects:
-  - "Door pry 25% faster."
-  - "Door pry 60% faster."
-  - "Near-instant pry."
+  - space-leech-upgrade-pry-effect-1
+  - space-leech-upgrade-pry-effect-2
+  - space-leech-upgrade-pry-effect-3
   magnitudes: [1.0, 0.75, 0.40, 0.05]
 
-- type: SpaceLeechUpgrade
+- type: spaceLeechUpgrade
   id: SpaceLeechUpgradeIronhide
-  name: Iron Hide
-  stat: ARMOR
+  order: 6
+  name: space-leech-upgrade-ironhide-name
+  stat: space-leech-upgrade-ironhide-stat
   costs: [100, 145, 185]
   effects:
-  - "All damage taken -10%."
-  - "All damage taken -20%."
-  - "All damage taken -30%."
+  - space-leech-upgrade-ironhide-effect-1
+  - space-leech-upgrade-ironhide-effect-2
+  - space-leech-upgrade-ironhide-effect-3
   magnitudes: [1.0, 0.90, 0.80, 0.70]

@@ -2,32 +2,44 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Creatures.SpaceLeech;
 
-[Prototype("SpaceLeechUpgrade")]
+/// <summary>
+/// A single purchasable upgrade in the space leech's evolution menu, with a blood cost
+/// and effect magnitude per rank.
+/// </summary>
+[Prototype]
 public sealed partial class SpaceLeechUpgradePrototype : IPrototype
 {
-    public const int MaxRank = 3;
-
     [IdDataField]
     public string ID { get; private set; } = string.Empty;
 
-    [DataField(required: true)]
-    public string Name = string.Empty;
+    /// <summary>Sort order in the upgrade menu, ascending. Ties are broken by ID.</summary>
+    [DataField]
+    public int Order;
 
+    /// <summary>Display name of the upgrade.</summary>
     [DataField(required: true)]
-    public string Stat = string.Empty;
+    public LocId Name;
 
-    /// <summary>Blood cost for rank 1, 2, 3 (index 0 = rank 1).</summary>
+    /// <summary>Short category tag shown on the upgrade row (e.g. ATTACK, MOVE).</summary>
     [DataField(required: true)]
-    public int[] Costs = Array.Empty<int>();
+    public LocId Stat;
 
-    /// <summary>UI description shown per rank (index 0 = rank 1).</summary>
+    /// <summary>Blood cost per rank (index 0 = rank 1). The list length is the max rank.</summary>
     [DataField(required: true)]
-    public string[] Effects = Array.Empty<string>();
+    public List<int> Costs = new();
+
+    /// <summary>UI description shown per rank (index 0 = rank 1). Must match <see cref="Costs"/> in length.</summary>
+    [DataField(required: true)]
+    public List<LocId> Effects = new();
 
     /// <summary>
-    /// Numeric magnitudes indexed by rank (0 = base/unpurchased, 1-3 = purchased).
+    /// Numeric magnitudes indexed by rank (0 = base/unpurchased, 1+ = purchased),
+    /// so it must have one more entry than <see cref="Costs"/>.
     /// Interpretation is upgrade-specific - see SpaceLeechSystem for usage.
     /// </summary>
     [DataField]
-    public float[] Magnitudes = { 0f, 0f, 0f, 0f };
+    public List<float> Magnitudes = new();
+
+    /// <summary>Highest purchasable rank, derived from the cost list.</summary>
+    public int MaxRank => Costs.Count;
 }

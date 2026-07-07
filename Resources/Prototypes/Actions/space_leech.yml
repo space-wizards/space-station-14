@@ -14,7 +14,7 @@
   parent: BaseAction
   id: ActionSpaceLeechSting
   name: Venom Spit
-  description: Spit a paralyzing bolt that knocks the target down. Stun duration scales with Venom upgrade rank.
+  description: Spit a paralyzing bolt that knocks the target down. Knockdown duration scales with Venom evolution rank.
   components:
   - type: Action
     icon: { sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi, state: crossbowbolt }

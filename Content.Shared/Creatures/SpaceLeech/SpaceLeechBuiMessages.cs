@@ -4,27 +4,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Creatures.SpaceLeech;
 
-[Serializable, NetSerializable]
-public sealed class SpaceLeechUpgradeMenuBuiState : BoundUserInterfaceState
-{
-    public readonly float BloodPool;
-    public readonly int MaxBloodPool;
-    public readonly float BloodConsumedTotal;
-    public readonly Dictionary<string, int> UpgradeRanks;
-
-    public SpaceLeechUpgradeMenuBuiState(
-        float bloodPool,
-        int maxBloodPool,
-        float bloodConsumedTotal,
-        Dictionary<string, int> upgradeRanks)
-    {
-        BloodPool = bloodPool;
-        MaxBloodPool = maxBloodPool;
-        BloodConsumedTotal = bloodConsumedTotal;
-        UpgradeRanks = upgradeRanks;
-    }
-}
-
 /// <summary>Fired when the player activates the "Open Upgrade Menu" action.</summary>
 public sealed partial class SpaceLeechUpgradeMenuActionEvent : InstantActionEvent { }
 
@@ -32,9 +11,9 @@ public sealed partial class SpaceLeechUpgradeMenuActionEvent : InstantActionEven
 [Serializable, NetSerializable]
 public sealed class SpaceLeechEvolveMessage : BoundUserInterfaceMessage
 {
-    public readonly string UpgradeId;
+    public readonly ProtoId<SpaceLeechUpgradePrototype> UpgradeId;
 
-    public SpaceLeechEvolveMessage(string upgradeId)
+    public SpaceLeechEvolveMessage(ProtoId<SpaceLeechUpgradePrototype> upgradeId)
     {
         UpgradeId = upgradeId;
     }

@@ -23,7 +23,7 @@
                         <Label Text="{Loc 'space-leech-upgrade-blood-section'}"
                                StyleClasses="LabelHeading" />
                         <Control HorizontalExpand="True" />
-                        <Label Text="ml" StyleClasses="LabelSubText" VAlign="Bottom" />
+                        <Label Text="{Loc 'space-leech-upgrade-unit'}" StyleClasses="LabelSubText" VAlign="Bottom" />
                     </BoxContainer>
 
                     <!-- Big blood value -->

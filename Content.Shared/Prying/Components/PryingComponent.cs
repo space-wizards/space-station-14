@@ -5,27 +5,27 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Prying.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PryingComponent : Component
 {
     /// <summary>
     /// Whether the entity can pry open powered doors
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool PryPowered;
 
     /// <summary>
     /// Whether the tool can bypass certain restrictions when prying.
     /// For example door bolts.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Force;
 
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SpeedModifier = 1.0f;
 
     /// <summary>

@@ -8,6 +8,7 @@ namespace Content.Client.Creatures.SpaceLeech;
 [UsedImplicitly]
 public sealed class SpaceLeechUpgradeMenuBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private SpaceLeechUpgradeMenuWindow? _window;
 
     public SpaceLeechUpgradeMenuBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
@@ -19,21 +20,16 @@ public sealed class SpaceLeechUpgradeMenuBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<SpaceLeechUpgradeMenuWindow>();
         _window.OnEvolve += upgradeId => SendMessage(new SpaceLeechEvolveMessage(upgradeId));
 
-        if (EntMan.TryGetComponent<SpaceLeechComponent>(Owner, out var comp))
-        {
-            _window.UpdateState(new SpaceLeechUpgradeMenuBuiState(
-                comp.BloodPool,
-                comp.MaxBloodPool,
-                comp.BloodConsumedTotal,
-                new Dictionary<string, int>(comp.UpgradeRanks)));
-        }
+        Refresh();
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    /// <summary>
+    /// Re-reads the networked <see cref="SpaceLeechComponent"/> into the window.
+    /// Called on open and by <see cref="SpaceLeechUiSystem"/> whenever new state arrives.
+    /// </summary>
+    public void Refresh()
     {
-        base.UpdateState(state);
-
-        if (state is SpaceLeechUpgradeMenuBuiState buiState)
-            _window?.UpdateState(buiState);
+        if (EntMan.TryGetComponent(Owner, out SpaceLeechComponent? comp))
+            _window?.Update(comp);
     }
 }

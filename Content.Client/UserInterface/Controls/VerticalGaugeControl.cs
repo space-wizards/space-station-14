@@ -3,43 +3,44 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 
-namespace Content.Client.Creatures.SpaceLeech.UI;
+namespace Content.Client.UserInterface.Controls;
 
 /// <summary>
-///     Vertical blood gauge with a red fill level and tick-mark scale.
+///     Vertical gauge with a colored fill level and centered percentage label.
 ///     Drop this into a VerticalExpand container; it fills available height.
 /// </summary>
-public sealed class BloodVialControl : Control
+public sealed class VerticalGaugeControl : Control
 {
-    private static readonly Color BorderColor = Color.FromHex("#b62124");
-    private static readonly Color BgColor     = Color.FromHex("#0a0607");
-    private static readonly Color FillColor   = Color.FromHex("#d8303a");
-
-    private readonly PanelContainer _outer;
-    private readonly LayoutContainer _inner;
     private readonly PanelContainer _fill;
     private readonly Label _pctLabel;
 
     private float _fillFraction;
 
-    public BloodVialControl()
+    /// <summary>Whether the centered percentage label is shown.</summary>
+    public bool ShowPercent
+    {
+        get => _pctLabel.Visible;
+        set => _pctLabel.Visible = value;
+    }
+
+    public VerticalGaugeControl(Color fillColor, Color backgroundColor, Color borderColor)
     {
         VerticalExpand = true;
         HorizontalExpand = true;
 
-        _outer = new PanelContainer
+        var outer = new PanelContainer
         {
             VerticalExpand = true,
             HorizontalExpand = true,
             PanelOverride = new StyleBoxFlat
             {
-                BackgroundColor = BgColor,
-                BorderColor = BorderColor,
+                BackgroundColor = backgroundColor,
+                BorderColor = borderColor,
                 BorderThickness = new Thickness(2),
             },
         };
 
-        _inner = new LayoutContainer
+        var inner = new LayoutContainer
         {
             VerticalExpand = true,
             HorizontalExpand = true,
@@ -49,7 +50,7 @@ public sealed class BloodVialControl : Control
         {
             PanelOverride = new StyleBoxFlat
             {
-                BackgroundColor = FillColor,
+                BackgroundColor = fillColor,
             },
         };
 
@@ -64,11 +65,11 @@ public sealed class BloodVialControl : Control
         LayoutContainer.SetAnchorPreset(_fill, LayoutContainer.LayoutPreset.Wide);
         LayoutContainer.SetAnchorPreset(_pctLabel, LayoutContainer.LayoutPreset.Wide);
 
-        _inner.AddChild(_fill);
-        _inner.AddChild(_pctLabel);
+        inner.AddChild(_fill);
+        inner.AddChild(_pctLabel);
 
-        _outer.AddChild(_inner);
-        AddChild(_outer);
+        outer.AddChild(inner);
+        AddChild(outer);
 
         SetFill(0f);
     }
@@ -82,6 +83,6 @@ public sealed class BloodVialControl : Control
         LayoutContainer.SetAnchorLeft(_fill, 0f);
         LayoutContainer.SetAnchorRight(_fill, 1f);
 
-        _pctLabel.Text = $"{(int)(_fillFraction * 100)}%";
+        _pctLabel.Text = Loc.GetString("vertical-gauge-percent", ("percent", (int) (_fillFraction * 100)));
     }
 }

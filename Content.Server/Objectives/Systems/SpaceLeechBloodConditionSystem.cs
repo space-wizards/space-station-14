@@ -16,9 +16,9 @@ public sealed class SpaceLeechBloodConditionSystem : EntitySystem
         SubscribeLocalEvent<SpaceLeechBloodConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetProgress(EntityUid uid, SpaceLeechBloodConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(Entity<SpaceLeechBloodConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        args.Progress = GetProgress(args.Mind, _number.GetTarget(uid));
+        args.Progress = GetProgress(args.Mind, _number.GetTarget(ent));
     }
 
     private float GetProgress(MindComponent mind, int target)
@@ -26,9 +26,9 @@ public sealed class SpaceLeechBloodConditionSystem : EntitySystem
         if (target <= 0)
             return 1f;
 
-        if (mind.OwnedEntity is not { } ent || !TryComp<SpaceLeechComponent>(ent, out var leech))
+        if (mind.OwnedEntity is not { } owned || !TryComp<SpaceLeechComponent>(owned, out var leech))
             return 0f;
 
-        return Math.Min(1f, leech.BloodConsumedTotal / target);
+        return Math.Min(1f, leech.BloodConsumedTotal.Float() / target);
     }
 }
