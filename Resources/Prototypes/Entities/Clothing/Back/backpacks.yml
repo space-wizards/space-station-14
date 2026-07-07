@@ -8,7 +8,7 @@
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
   - type: Item
-    size: Huge
+    size: Colossal
   - type: Clothing
     quickEquip: false
     slots:
@@ -279,7 +279,7 @@
   description: Holds the kit of CentComm's most feared agents.
   components:
   - type: Item
-    size: Ginormous
+    size: Colossal
   - type: Storage
     maxItemSize: Ginormous
     grid:
