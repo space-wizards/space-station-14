@@ -31,6 +31,7 @@ public sealed partial class NightVisionComponent : Component
     public bool RelayOverlay;
 
     /// <summary>
+<<<<<<< Updated upstream
     /// The action proto that toggles the night vision.
     /// </summary>
     /// <remarks>
@@ -55,6 +56,8 @@ public sealed partial class NightVisionComponent : Component
     public Color OverlayColor = Color.Transparent; // Transparent by default, no overlay.
 
     /// <summary>
+=======
+>>>>>>> Stashed changes
     /// Color modification added on top of lighting during rendering.
     /// This is the part responsible for making things bright.
     /// </summary>
@@ -62,17 +65,41 @@ public sealed partial class NightVisionComponent : Component
     public Color LightingColor = new(1f, 1f, 1f, 0.15f);
 
     /// <summary>
-    /// How much animated noise to add to the image (0..1).
+    /// The color of the night vision phosphor that will be displayed as a monochromatic color to the user.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float NoiseAmount;
+    public Color PhosphorColor = new(0f, 1f, 0f, 1f);
 
     /// <summary>
-    /// Multiplier that scales the intensity of the noise added on top of the image.
-    /// Higher values make the noise more pronounced.
+    /// If the night vision circular goggle effect should be shown.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float NoiseMultiplier;
+    public bool GoggleEffect;
+
+    /// <summary>
+    /// How large the goggle radius should be, per circle.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ViewCircleRadius;
+
+    /// <summary>
+    /// The spacing between goggle view circle centers.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ViewCircleSpacing;
+
+    /// <summary>
+    /// The number of circles to render. Odd numbers of circles will start from the center.
+    /// Recommended values between one and four.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int ViewCircleCount;
+
+    /// <summary>
+    /// The amount of light multiplication the night vision system should apply.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float Amplification = 32f;
 }
 
 public sealed partial class ToggleNightVisionEvent : InstantActionEvent;
