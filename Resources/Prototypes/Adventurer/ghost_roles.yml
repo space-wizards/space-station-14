@@ -47,7 +47,6 @@
     nameFormat: name-format-adventurer
   - type: AutoObjectives
     objectives:
-    - AdventurerClearDungeonObjective
     - AdventurerLootObjective
     - AdventurerSurviveObjective
   - type: Loadout
@@ -95,7 +94,6 @@
     nameFormat: name-format-adventurer
   - type: AutoObjectives
     objectives:
-    - AdventurerClearDungeonObjective
     - AdventurerLootObjective
     - AdventurerSurviveObjective
   - type: Loadout
@@ -143,39 +141,38 @@
     nameFormat: name-format-adventurer
   - type: AutoObjectives
     objectives:
-    - AdventurerClearDungeonObjective
     - AdventurerLootObjective
     - AdventurerSurviveObjective
   - type: Loadout
     prototypes: [ AdventurerClericGear ]
     roleLoadout: [ RoleSurvivalAdventurer ]
 
-# -------------------------------- Wizard --------------------------------
+# --------------------------------- Mage ---------------------------------
 
 - type: entity
-  id: RandomHumanoidSpawnerAdventurerWizard
-  name: Adventurer - Wizard
+  id: RandomHumanoidSpawnerAdventurerMage
+  name: Adventurer - Mage
   suffix: AdventurerRole
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/wizardhat.rsi
     state: icon
   - type: RandomHumanoidSpawner
-    settings: AdventurerWizard
+    settings: AdventurerMage
 
 - type: randomHumanoidSettings
-  id: AdventurerWizard
+  id: AdventurerMage
   parent: EventHumanoid
   randomizeName: false
   components:
   - type: GhostRole
-    name: roles-antag-adventurer-wizard-name
-    description: ghost-role-information-adventurer-wizard-description
+    name: roles-antag-adventurer-mage-name
+    description: ghost-role-information-adventurer-mage-description
     rules: ghost-role-information-adventurer-rules
     raffle:
       settings: short
     mindRoles:
-    - MindRoleAdventurerWizard
+    - MindRoleAdventurerMage
   - type: Adventurer
     armorClass: 10
     critThreshold: 100
@@ -191,9 +188,8 @@
     nameFormat: name-format-adventurer
   - type: AutoObjectives
     objectives:
-    - AdventurerClearDungeonObjective
     - AdventurerLootObjective
     - AdventurerSurviveObjective
   - type: Loadout
-    prototypes: [ AdventurerWizardGear ]
+    prototypes: [ AdventurerMageGear ]
     roleLoadout: [ RoleSurvivalAdventurer ]

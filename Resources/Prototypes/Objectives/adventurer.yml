@@ -1,5 +1,5 @@
-# Adventuring party objectives. Every party member always gets all three
-# (assigned via AntagObjectives on the Adventurers game rule).
+# Adventuring party objectives. Every party member always gets both,
+# granted by the AutoObjectives component on the adventurer humanoid settings.
 
 # No RoleRequirement here: objectives are granted the moment a mind enters an
 # adventurer body (AutoObjectives), which happens before mind roles are added.
@@ -12,19 +12,6 @@
     # required but not used, adventurers always get a fixed set
     difficulty: 1
     issuer: AdventurersGuild
-
-# Kill every head of staff. The station is the dungeon; command are the bosses.
-- type: entity
-  parent: BaseAdventurerObjective
-  id: AdventurerClearDungeonObjective
-  name: Clear the dungeon bosses
-  description: The heads of this "dungeon" hoard experience and loot. Slay them all.
-  components:
-  - type: Objective
-    icon:
-      sprite: Objects/Weapons/Melee/claymore.rsi
-      state: icon
-  - type: KillAllHeadsCondition
 
 # Free greentext: the party always finds *something* worth taking.
 - type: entity

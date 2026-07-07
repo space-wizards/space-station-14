@@ -1,8 +1,8 @@
-# Spells unique to the adventuring wizard's grimoire.
+# Spells unique to the mage's grimoire.
 # Their listings live in Catalog/spellbook_catalog.yml tagged with only the
 # AdventurerGrimoire category (see the tagging note at the top of that file).
 
-# Firebolt: functions identically to the wizard's fireball, just smaller and weaker.
+# Firebolt: functions identically to the real wizard's fireball, just smaller and weaker.
 - type: entity
   parent: BaseAction
   id: ActionFireBolt

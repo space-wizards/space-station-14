@@ -21,13 +21,13 @@ namespace Content.Server.Ghost.Roles;
 /// releases the slot and respawns a fresh marker, which re-registers the ghost
 /// role with its default raffle settings.
 /// </summary>
-public sealed class GhostRolePartySystem : EntitySystem
+public sealed partial class GhostRolePartySystem : EntitySystem
 {
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private RandomHumanoidSystem _randomHumanoid = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private SharedRoleSystem _role = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -110,7 +110,10 @@ public sealed class GhostRolePartySystem : EntitySystem
         slot.Spawner = marker;
         slot.Settings = spawner.Settings;
         slot.MindRoles = spawner.MindRoles;
-        slot.FallbackName = spawner.FallbackName;
+        // Only used if the humanoid settings don't rename the spawned mob.
+        slot.FallbackName = TryComp<GhostRoleComponent>(marker, out var ghostRole)
+            ? ghostRole.RoleName
+            : Name(marker);
     }
 
     private void OnTakeRole(Entity<GhostRolePartySpawnerComponent> ent, ref TakeGhostRoleEvent args)
@@ -240,7 +243,7 @@ public sealed class GhostRolePartySystem : EntitySystem
             if (slot.Session is not { } session || !IsValidWaiter(session))
                 continue;
 
-            var mob = _randomHumanoid.SpawnRandomHumanoid(slot.Settings, slot.Coordinates, Loc.GetString(slot.FallbackName));
+            var mob = _randomHumanoid.SpawnRandomHumanoid(slot.Settings, slot.Coordinates, slot.FallbackName);
             _transform.AttachToGridOrMap(mob);
 
             // Mirrors GhostRoleSystem.GhostRoleInternalCreateMindAndTransfer,

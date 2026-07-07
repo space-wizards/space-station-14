@@ -1,6 +1,8 @@
 # Bespoke adventuring party clothing.
 # All outer armor parents AllowSuitStorageClothingGasTanks so every adventurer can
 # slot an air tank into suit storage for internals.
+# Every piece is syndicate-grade contraband: it exists only on antagonists, so
+# the explicit Contraband component overrides whatever the parent chains carry.
 # Sprites are placeholders borrowed from existing assets.
 
 # ------------------------------- Shared --------------------------------
@@ -12,6 +14,23 @@
   id: ClothingUniformJumpsuitAdventurer
   name: adventurer's garb
   description: Sturdy travelling clothes that have seen many campaigns.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
+
+# Shared by the warrior and the cleric.
+- type: entity
+  parent: ClothingHeadHelmetTemplar
+  id: ClothingHeadHelmetAdventurer
+  name: adventurer's helm
+  description: A battered greathelm that has outlived several owners. The dents are load-bearing.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # ------------------------------- Warrior -------------------------------
 
@@ -20,12 +39,11 @@
   id: ClothingOuterArmorAdventurerWarrior
   name: warrior's scrap plate
   description: A hulking suit of scavenged plate. Ugly, heavy, and utterly dependable.
-
-- type: entity
-  parent: ClothingHeadHelmetTemplar
-  id: ClothingHeadHelmetAdventurerWarrior
-  name: warrior's helm
-  description: A battered greathelm. The dents are load-bearing.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # ------------------------------- Ranger --------------------------------
 
@@ -34,6 +52,11 @@
   id: ClothingOuterArmorAdventurerRanger
   name: ranger's leathers
   description: Supple leather armor built for moving quietly through hostile territory.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # ------------------------------- Cleric --------------------------------
 
@@ -41,24 +64,45 @@
   parent: [ ClothingOuterHoodieChaplain, AllowSuitStorageClothingGasTanks ]
   id: ClothingOuterArmorAdventurerCleric
   name: cleric's vestments
-  description: Consecrated robes woven with prayers of protection.
+  description: Consecrated robes woven with prayers of protection. They turn blades as well as any armored vest.
+  components:
+  # Same protection as the standard armor vest (ClothingOuterArmorBasic).
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
-- type: entity
-  parent: ClothingHeadHelmetTemplar
-  id: ClothingHeadHelmetAdventurerCleric
-  name: cleric's helm
-  description: A polished helm bearing the sigils of a wandering faith.
-
-# ------------------------------- Wizard --------------------------------
+# -------------------------------- Mage ---------------------------------
+# Robes and hat are borrowed from the real wizard's wardrobe (ClothingOuterWizard,
+# ClothingHeadHatWizard) but the mage is a distinct, weaker class.
 
 - type: entity
   parent: [ ClothingOuterWizard, AllowSuitStorageClothingGasTanks ]
-  id: ClothingOuterRobesAdventurerWizard
-  name: apprentice wizard robes
+  id: ClothingOuterRobesAdventurerMage
+  name: apprentice mage robes
   description: Robes of an apprentice of the arcane. The stars stitched into the hem are slightly crooked.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: ClothingHeadHatWizard
-  id: ClothingHeadHatAdventurerWizard
-  name: apprentice wizard hat
+  id: ClothingHeadHatAdventurerMage
+  name: apprentice mage hat
   description: Pointy, as regulations demand. The brim droops with inexperience.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []

@@ -1,6 +1,8 @@
 # Bespoke adventuring party weapons.
 # Guns an adventurer is allowed to fire must carry the AdventurerWeapon tag —
 # AdventurerComponent.GunWhitelist blocks everything else.
+# Every weapon is syndicate-grade contraband: it exists only on antagonists, so
+# the explicit Contraband component overrides whatever the parent chains carry.
 # Sprites are placeholders borrowed from existing assets.
 
 # ------------------------------- Warrior -------------------------------
@@ -16,18 +18,32 @@
     damage:
       types:
         Slash: 25
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: Machete
   id: WeaponHandaxeAdventurer
   name: adventurer's war axe
   description: A trusty backup blade for when the greatsword is just too much ceremony.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: SurvivalKnife
   id: WeaponDaggerAdventurer
   name: adventurer's dagger
   description: Every adventurer carries a dagger. It's tradition.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # ------------------------------- Cleric --------------------------------
 
@@ -36,8 +52,14 @@
   id: WeaponMaceAdventurer
   name: cleric's mace
   description: For administering blunt-force blessings to the unrepentant.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # The staff of mending: a weaker, auto-recharging version of the staff of healing.
+# Many small heals over time rather than a few big ones.
 - type: entity
   parent: WeaponStaffHealing
   id: WeaponStaffHealingAdventurer
@@ -49,12 +71,16 @@
     - AdventurerWeapon
   - type: BasicEntityAmmoProvider
     proto: ProjectileHealingBoltAdventurer
-    capacity: 3
-    count: 3
+    capacity: 6
+    count: 6
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 10
+    rechargeCooldown: 6
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
-# Medium-strength healing bolt for the staff of mending.
+# Light healing bolt for the staff of mending.
 # Deliberately not parented to ProjectileHealingBolt so its -200 values can't leak in via inheritance.
 - type: entity
   parent: BaseBullet
@@ -71,16 +97,16 @@
   - type: Projectile
     damage:
       types:
-        Blunt: -20
-        Slash: -20
-        Piercing: -20
-        Heat: -20
-        Cold: -20
-        Shock: -20
-        Caustic: -10
-        Poison: -10
-        Asphyxiation: -20
-        Bloodloss: -20
+        Blunt: -10
+        Slash: -10
+        Piercing: -10
+        Heat: -10
+        Cold: -10
+        Shock: -10
+        Caustic: -5
+        Poison: -5
+        Asphyxiation: -10
+        Bloodloss: -10
     ignoreResistances: true
 
 # ------------------------------- Ranger --------------------------------
@@ -88,7 +114,7 @@
 # A bow with infinite conjured arrows. Not parented to BaseBow because that uses a
 # container-based ammo provider; this one conjures arrows from thin air instead.
 - type: entity
-  parent: [ BaseItem, BaseMinorContraband ]
+  parent: BaseItem
   id: WeaponBowAdventurer
   name: ranger's longbow
   description: An elegantly carved longbow. Arrows of pale light form on the string as it is drawn.
@@ -134,6 +160,10 @@
         base:
           True: { state: wielded }
           False: { state: unwielded }
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 # Conjured arrow. Fades away after a while so infinite ammo doesn't litter the station.
 - type: entity

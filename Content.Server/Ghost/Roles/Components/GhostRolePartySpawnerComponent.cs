@@ -31,10 +31,4 @@ public sealed partial class GhostRolePartySpawnerComponent : Component
     /// </summary>
     [DataField]
     public List<EntProtoId> MindRoles = new();
-
-    /// <summary>
-    /// Fallback entity name, used only if the settings don't rename the mob.
-    /// </summary>
-    [DataField]
-    public LocId FallbackName = "ghost-role-party-member-fallback-name";
 }

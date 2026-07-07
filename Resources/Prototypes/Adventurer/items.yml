@@ -1,12 +1,14 @@
 # Bespoke adventuring party items and the adventurer's grimoire.
+# Every item is syndicate-grade contraband: it exists only on antagonists, so
+# the explicit Contraband component overrides whatever the parent chains carry.
 # Sprites are placeholders borrowed from existing assets.
 
 # ------------------------------ Supplies -------------------------------
 # Common consumables (air tanks, backpack, shoes, mask, torches, rations...)
 # deliberately use regular station prototypes; only signature gear is bespoke.
 
-# Pries powered doors like the jaws of life: the party has no PDA or access,
-# so the prybar is how they get through the "dungeon's" locked doors.
+# Pries powered doors like the jaws of life: the party's visitor IDs open
+# nothing, so the prybar is how they get through the "dungeon's" locked doors.
 - type: entity
   parent: Crowbar
   id: AdventurerCrowbar
@@ -16,33 +18,52 @@
   - type: Prying
     speedModifier: 1.2
     pryPowered: true
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: EmergencyMedipen
   id: AdventurerHealingPotion
   name: healing potion
   description: A single dose of distilled vigor. Jab and feel better.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: Brutepack
   id: AdventurerBandages
   name: enchanted bandages
   description: Linen wrappings blessed against bruise and blade.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
 - type: entity
   parent: Ointment
   id: AdventurerSalve
   name: blessed salve
   description: A soothing balm for burns earned in dragonfire. Or laser fire.
+  components:
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []
 
-# --------------------------- Wizard grimoire ---------------------------
-# The adventuring wizard's grimoire is a WizCoin store, just like the full wizard's
-# grimoire. Which spells it can learn is controlled by tagging listings in
+# ---------------------------- Mage grimoire ----------------------------
+# The mage's grimoire is a WizCoin store, just like the real wizard's grimoire.
+# Which spells it can learn is controlled by tagging listings in
 # Catalog/spellbook_catalog.yml with the AdventurerGrimoire store category:
-#   - listings with only Spellbook* categories  -> full wizard only
-#   - listings with only AdventurerGrimoire     -> adventuring wizard only
+#   - listings with only Spellbook* categories  -> real wizard only
+#   - listings with only AdventurerGrimoire     -> mage only
 #   - listings with both                        -> available to both
-# The WizCoin balance below is deliberately small to keep this wizard weaker.
+# The WizCoin balance below is deliberately small to keep the mage weaker.
 
 - type: storeCategory
   id: AdventurerGrimoire
@@ -50,7 +71,7 @@
   priority: 0
 
 - type: entity
-  parent: [ BaseItem, BaseMagicalContraband ]
+  parent: BaseItem
   id: AdventurersGrimoire
   name: apprentice's grimoire
   description: A slim, dog-eared spellbook holding the modest repertoire of a travelling apprentice.
@@ -81,3 +102,7 @@
     - WizCoin
     balance:
       WizCoin: 4
+  - type: Contraband
+    severity: Syndicate
+    allowedDepartments: []
+    allowedJobs: []

@@ -18,19 +18,22 @@
       state: d20_20
   - type: GhostRolePartyController
     members:
-    - AdventurerPartySpawnPointWarrior
-    - AdventurerPartySpawnPointRanger
-    - AdventurerPartySpawnPointCleric
-    - AdventurerPartySpawnPointWizard
+    - SpawnPointGhostAdventurerWarrior
+    - SpawnPointGhostAdventurerRanger
+    - SpawnPointGhostAdventurerCleric
+    - SpawnPointGhostAdventurerMage
 
 # ---------------------------- Party slot markers ----------------------------
+# Placed by the party controller above; they don't work when placed by hand
+# (nothing links them to a controller), so each one carries HideSpawnMenu to
+# keep it out of the entity spawn panel. HideSpawnMenu is not inheritable,
+# which is why it sits on every concrete marker instead of the base.
 
 - type: entity
   abstract: true
   parent: MarkerBase
-  id: BaseAdventurerPartySpawnPoint
-  name: adventurer party slot
-  categories: [ HideSpawnMenu, Spawner ]
+  id: BaseSpawnPointGhostAdventurer
+  categories: [ Spawner ]
   components:
   - type: GhostRole
     rules: ghost-role-information-adventurer-rules
@@ -38,8 +41,10 @@
       settings: default
 
 - type: entity
-  parent: BaseAdventurerPartySpawnPoint
-  id: AdventurerPartySpawnPointWarrior
+  parent: BaseSpawnPointGhostAdventurer
+  id: SpawnPointGhostAdventurerWarrior
+  name: Adventurer - Warrior spawn point
+  categories: [ HideSpawnMenu ]
   components:
   - type: GhostRole
     name: roles-antag-adventurer-warrior-name
@@ -55,8 +60,10 @@
       state: icon
 
 - type: entity
-  parent: BaseAdventurerPartySpawnPoint
-  id: AdventurerPartySpawnPointRanger
+  parent: BaseSpawnPointGhostAdventurer
+  id: SpawnPointGhostAdventurerRanger
+  name: Adventurer - Ranger spawn point
+  categories: [ HideSpawnMenu ]
   components:
   - type: GhostRole
     name: roles-antag-adventurer-ranger-name
@@ -72,8 +79,10 @@
       state: unwielded
 
 - type: entity
-  parent: BaseAdventurerPartySpawnPoint
-  id: AdventurerPartySpawnPointCleric
+  parent: BaseSpawnPointGhostAdventurer
+  id: SpawnPointGhostAdventurerCleric
+  name: Adventurer - Cleric spawn point
+  categories: [ HideSpawnMenu ]
   components:
   - type: GhostRole
     name: roles-antag-adventurer-cleric-name
@@ -89,16 +98,18 @@
       state: healing
 
 - type: entity
-  parent: BaseAdventurerPartySpawnPoint
-  id: AdventurerPartySpawnPointWizard
+  parent: BaseSpawnPointGhostAdventurer
+  id: SpawnPointGhostAdventurerMage
+  name: Adventurer - Mage spawn point
+  categories: [ HideSpawnMenu ]
   components:
   - type: GhostRole
-    name: roles-antag-adventurer-wizard-name
-    description: ghost-role-information-adventurer-wizard-description
+    name: roles-antag-adventurer-mage-name
+    description: ghost-role-information-adventurer-mage-description
   - type: GhostRolePartySpawner
-    settings: AdventurerWizard
+    settings: AdventurerMage
     mindRoles:
-    - MindRoleAdventurerWizard
+    - MindRoleAdventurerMage
   - type: Sprite
     layers:
     - state: green

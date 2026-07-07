@@ -10,9 +10,9 @@ namespace Content.Server.Objectives.Systems;
 /// enters the entity. Minds that already hold an objective of the same prototype
 /// (e.g. after being transferred back into the body) don't get duplicates.
 /// </summary>
-public sealed class AutoObjectivesSystem : EntitySystem
+public sealed partial class AutoObjectivesSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {

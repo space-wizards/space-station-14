@@ -49,8 +49,11 @@ public sealed class GhostRolePartySlot
     /// <summary>Mind roles added to the member's mind on spawn.</summary>
     public List<EntProtoId> MindRoles = new();
 
-    /// <summary>Fallback entity name, used only if the settings don't rename the mob.</summary>
-    public LocId FallbackName = string.Empty;
+    /// <summary>
+    /// Name given to the spawned mob if the humanoid settings don't rename it.
+    /// Taken from the marker's ghost role name.
+    /// </summary>
+    public string FallbackName = string.Empty;
 
     /// <summary>Where the marker sits and the member will spawn.</summary>
     public EntityCoordinates Coordinates;

@@ -393,8 +393,8 @@
 
 - type: entity
   parent: BaseMindRoleAdventurer
-  id: MindRoleAdventurerWizard
+  id: MindRoleAdventurerMage
   name: Adventurer Wizard Role
   components:
   - type: MindRole
-    antagPrototype: AdventurerWizard
+    antagPrototype: AdventurerMage

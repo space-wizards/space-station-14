@@ -1,8 +1,8 @@
 # Spell tagging:
 # A listing's `categories` control which grimoires can learn it.
-# - Spellbook* categories        -> the full wizard's grimoire (WizardsGrimoire)
-# - AdventurerGrimoire category  -> the adventuring wizard's grimoire (AdventurersGrimoire)
-# A listing may carry both to be available to both wizards.
+# - Spellbook* categories        -> the real wizard's grimoire (WizardsGrimoire)
+# - AdventurerGrimoire category  -> the adventurer mage's grimoire (AdventurersGrimoire)
+# A listing may carry both to be available to both.
 
 # Offensive
 - type: listing
@@ -19,7 +19,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-# Adventuring wizard only: a smaller, weaker fireball.
+# Adventurer mage only: a smaller, weaker fireball.
 - type: listing
   id: SpellbookFireBolt
   name: spellbook-firebolt-name

@@ -1,4 +1,4 @@
-# The Adventuring Party: a four-player team antag in the style of a TTRPG party.
+# The Adventuring Party: a four-player team of free agents in the style of a TTRPG party.
 # Spawned via admin tools only: the AdventurerPartySpawn entity (group spawn) or
 # the RandomHumanoidSpawnerAdventurer* markers (one-off), both under
 # Prototypes/Adventurer/. See Content.Shared/Adventurer for the armor class /
@@ -27,10 +27,10 @@
   guides: [ MinorAntagonists ]
 
 - type: antag
-  id: AdventurerWizard
-  name: roles-antag-adventurer-wizard-name
+  id: AdventurerMage
+  name: roles-antag-adventurer-mage-name
   antagonist: true
-  objective: roles-antag-adventurer-wizard-objective
+  objective: roles-antag-adventurer-mage-objective
   guides: [ MinorAntagonists ]
 
 # ----------------------------- Starting gear ------------------------------
@@ -45,13 +45,14 @@
     jumpsuit: ClothingUniformJumpsuitAdventurer
     shoes: ClothingShoesLeather
     back: ClothingBackpack
+    id: VisitorPDA
 
 - type: startingGear
   id: AdventurerWarriorGear
   parent: AdventurerBaseGear
   equipment:
     outerClothing: ClothingOuterArmorAdventurerWarrior
-    head: ClothingHeadHelmetAdventurerWarrior
+    head: ClothingHeadHelmetAdventurer
   inhand:
   - WeaponGreatswordAdventurer
   storage:
@@ -86,7 +87,7 @@
   parent: AdventurerBaseGear
   equipment:
     outerClothing: ClothingOuterArmorAdventurerCleric
-    head: ClothingHeadHelmetAdventurerCleric
+    head: ClothingHeadHelmetAdventurer
     eyes: ClothingEyesEyepatchHudMedical
   inhand:
   - WeaponStaffHealingAdventurer
@@ -102,11 +103,11 @@
     - FoodTinMRE
 
 - type: startingGear
-  id: AdventurerWizardGear
+  id: AdventurerMageGear
   parent: AdventurerBaseGear
   equipment:
-    outerClothing: ClothingOuterRobesAdventurerWizard
-    head: ClothingHeadHatAdventurerWizard
+    outerClothing: ClothingOuterRobesAdventurerMage
+    head: ClothingHeadHatAdventurerMage
     pocket1: AdventurersGrimoire
   storage:
     back:
