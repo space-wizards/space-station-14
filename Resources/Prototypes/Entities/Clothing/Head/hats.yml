@@ -733,6 +733,52 @@
         color: "#a60b0b"
 
 - type: entity
+  parent: ClothingHeadHatCanadaBeanie
+  id: ClothingHeadNVGBeanie
+  name: NVG Beanie
+  components:
+  - type: NightVision
+    relayOverlay: true
+    goggleEffect: true
+    viewCircleRadius: 350
+    viewCircleCount: 1
+    lightingColor: "#FFFFFF04"
+    phosphorColor: "#00A600"
+
+- type: entity
+  parent: ClothingHeadNVGBeanie
+  id: ClothingHeadNVGBeanieBetter
+  name: Better NVG Beanie
+  components:
+  - type: NightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+
+- type: entity
+  parent: ClothingHeadNVGBeanie
+  id: ClothingHeadNVGBeanieMoreBetter
+  name: More Better NVG Beanie
+  components:
+  - type: NightVision
+    viewCircleRadius: 350
+    viewCircleCount: 3
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+
+- type: entity
+  parent: ClothingHeadNVGBeanie
+  id: ClothingHeadNVGBeanieBest
+  name: Best NVG Beanie
+  components:
+  - type: NightVision
+    viewCircleRadius: 400
+    viewCircleCount: 4
+    viewCircleSpacing: 260
+    phosphorColor: "#41D7D9"
+
+- type: entity
   parent: ClothingHeadHatWizardBase
   id: ClothingHeadHatVioletwizard
   name: violet wizard hat
