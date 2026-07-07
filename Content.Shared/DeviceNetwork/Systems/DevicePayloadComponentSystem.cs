@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using Content.Shared.DeviceNetwork.Events;
+﻿using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 
 namespace Content.Shared.DeviceNetwork.Systems;
@@ -16,10 +15,9 @@ public delegate void DeviceNetworkPayloadComponentWrapper(
 /// <remarks>
 /// Generally you should use <see cref="DevicePayloadSystem{T}"/>, since this system is less performant.
 /// </remarks>
-public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandler, IEntityDeviceNetworkHandler
+public abstract class DevicePayloadComponentSystem : DeviceNetworkHandler, IEntityDeviceNetworkHandler
 {
-    public FrozenDictionary<Type, FrozenDictionary<Type, Delegate>> PayloadSubs { get; protected set; } = default!;
-    private readonly Dictionary<Type, Dictionary<Type, Delegate>> _payloadSubsCache = new();
+    public readonly Dictionary<Type, Dictionary<Type, Delegate>> PayloadSubs = new();
 
     protected override void Register()
     {
@@ -31,17 +29,6 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
             Log.Error($"Duplicate payload subscription for payload {payload.Name}");
             return;
         }
-    }
-
-    protected override void LockSubscriptions()
-    {
-        // Cast a snowgrave spell onto this nested dictionary
-        var dict = new Dictionary<Type, FrozenDictionary<Type, Delegate>>();
-        foreach (var (payload, compDict) in _payloadSubsCache)
-        {
-            dict.Add(payload, compDict.ToFrozenDictionary());
-        }
-        PayloadSubs = dict.ToFrozenDictionary();
     }
 
     [UsedImplicitly]
@@ -63,8 +50,8 @@ public abstract partial class DevicePayloadComponentSystem : DeviceNetworkHandle
             basePayload = specificPayload;
         };
 
-        _payloadSubsCache.TryAdd(typeof(TN), new Dictionary<Type, Delegate>());
-        if (_payloadSubsCache[typeof(TN)].TryAdd(typeof(TC), wrapper))
+        PayloadSubs.TryAdd(typeof(TN), new Dictionary<Type, Delegate>());
+        if (PayloadSubs[typeof(TN)].TryAdd(typeof(TC), wrapper))
             return;
 
         Log.Error($"Duplicate payload subscription for payload {typeof(TN).Name}, component {typeof(TC).Name}");

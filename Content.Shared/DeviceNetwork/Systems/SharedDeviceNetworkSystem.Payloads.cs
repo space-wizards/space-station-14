@@ -48,7 +48,6 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     {
         base.Initialize();
         InitializeDevice();
-        LockSubscriptions();
         Register();
         DeviceInitialized = true;
     }
@@ -58,11 +57,6 @@ public abstract partial class DeviceNetworkHandler : EntitySystem
     /// </summary>
     [MustCallBase]
     protected virtual void InitializeDevice() { }
-
-    /// <summary>
-    /// Locks the subscriptions before registering the handler.
-    /// </summary>
-    protected abstract void LockSubscriptions();
 
     /// <summary>
     /// Registers the handler in <see cref="SharedDeviceNetworkSystem"/>.

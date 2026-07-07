@@ -1,5 +1,4 @@
-﻿using System.Collections.Frozen;
-using Content.Shared.DeviceNetwork.Events;
+﻿using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 
 namespace Content.Shared.DeviceNetwork.Systems;
@@ -22,9 +21,7 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
 {
     [Dependency] protected EntityQuery<T> Query = default!;
 
-    public FrozenDictionary<Type, Delegate> PayloadSubs { get; protected set; } = default!;
-
-    protected readonly Dictionary<Type, Delegate> PayloadSubsCache = new();
+    public Dictionary<Type, Delegate> PayloadSubs = new();
 
     protected override void Register()
     {
@@ -36,11 +33,6 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
             Log.Error($"Duplicate payload subscription for payload {payload.Name}");
             return;
         }
-    }
-
-    protected override void LockSubscriptions()
-    {
-        PayloadSubs = PayloadSubsCache.ToFrozenDictionary();
     }
 
     [UsedImplicitly]
@@ -60,7 +52,7 @@ public abstract partial class DevicePayloadSystem<T> : DeviceNetworkHandler, IEn
             basePayload = specificPayload;
         };
 
-        PayloadSubsCache.Add(typeof(TN), wrapper);
+        PayloadSubs.Add(typeof(TN), wrapper);
     }
 
     /// <summary>
