@@ -57,6 +57,18 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public bool CopyStatusEffects = true;
 
     /// <summary>
+    /// Whitelist for status effect entities allowed to be copied.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? StatusEffectWhitelist;
+
+    /// <summary>
+    /// Blacklist for status effect entities allowed to be copied.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? StatusEffectBlacklist;
+
+    /// <summary>
     /// Should the event for renaming the clone be raised?
     /// This will also set the clone's id card and PDA name if they have one equipped.
     /// </summary>
@@ -67,20 +79,20 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     /// Whitelist for the equipment allowed to be copied.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Whitelist;
+    public EntityWhitelist? EquipmentWhitelist;
 
     /// <summary>
     /// Blacklist for the equipment allowed to be copied.
     /// </summary>
     [DataField]
-    public EntityWhitelist? Blacklist;
+    public EntityWhitelist? EquipmentBlacklist;
 
     /// TODO: Make this not a string https://github.com/space-wizards/RobustToolbox/issues/5709
     /// <summary>
     /// Components to copy from the original to the clone using CopyComp.
     /// This makes a deepcopy of all datafields, including information the clone might not own!
     /// If you need to exclude data or do additional component initialization, then subscribe to CloningEvent instead!
-    /// Components in this list that the orginal does not have will be removed from the clone.
+    /// Components in this list that the original does not have will be removed from the clone.
     /// </summary>
     [DataField]
     [AlwaysPushInheritance]
