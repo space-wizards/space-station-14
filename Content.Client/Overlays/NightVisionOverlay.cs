@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
-using Content.Shared.CCVar;
-=======
+
 using System.Numerics;
->>>>>>> Stashed changes
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -31,10 +28,6 @@ public sealed partial class NightVisionOverlay : Overlay
     /// </remarks>
     public Color LightingColor { get; private set; }
 
-<<<<<<< Updated upstream
-    public bool DisableNoise = false;
-
-=======
     /// <summary>
     /// Sets the phosphor color of the night vision. This will be the color seen by the user.
     /// </summary>
@@ -76,7 +69,6 @@ public sealed partial class NightVisionOverlay : Overlay
     /// lighting engine runs.
     /// <see cref="OverlaySpace.BeforeLighting"/> is where the overlay with color and other visual effects are run.
     /// </remarks>
->>>>>>> Stashed changes
     public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
 
@@ -84,12 +76,6 @@ public sealed partial class NightVisionOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _nightVisionShader = _prototypeManager.Index(Shader).InstanceUnique();
-        _configManager.OnValueChanged(CCVars.DisableNightVisionNoise, OnNightVisionNoiseChanged, invokeImmediately: true);
-    }
-
-    private void OnNightVisionNoiseChanged(bool toggle)
-    {
-        DisableNoise = toggle;
     }
 
     public void SetParameters(
@@ -119,12 +105,6 @@ public sealed partial class NightVisionOverlay : Overlay
 
         switch (args.Space)
         {
-<<<<<<< Updated upstream
-            _nightVisionShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _nightVisionShader.SetParameter("noise_amount", !DisableNoise ? NoiseAmount : 0);
-            _nightVisionShader.SetParameter("noise_multiplier", !DisableNoise ? NoiseMultiplier : 0);
-            handle.UseShader(_nightVisionShader);
-=======
             // Add light to the scene even if it's completely dark
             case OverlaySpace.BeforeLighting:
                 handle.DrawRect(args.WorldBounds, LightingColor);
@@ -146,7 +126,6 @@ public sealed partial class NightVisionOverlay : Overlay
                 handle.DrawRect(args.WorldBounds, Color.White);
                 handle.UseShader(null);
                 break;
->>>>>>> Stashed changes
         }
     }
 }

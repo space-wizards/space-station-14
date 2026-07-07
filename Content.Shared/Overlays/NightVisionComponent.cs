@@ -31,7 +31,6 @@ public sealed partial class NightVisionComponent : Component
     public bool RelayOverlay;
 
     /// <summary>
-<<<<<<< Updated upstream
     /// The action proto that toggles the night vision.
     /// </summary>
     /// <remarks>
@@ -56,8 +55,6 @@ public sealed partial class NightVisionComponent : Component
     public Color OverlayColor = Color.Transparent; // Transparent by default, no overlay.
 
     /// <summary>
-=======
->>>>>>> Stashed changes
     /// Color modification added on top of lighting during rendering.
     /// This is the part responsible for making things bright.
     /// </summary>
