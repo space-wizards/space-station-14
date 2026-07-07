@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: NamesAdventurerFirst
+  values:
+    prefix: names-adventurer-first-dataset-
+    count: 40
+
+- type: localizedDataset
+  id: NamesAdventurerEpithet
+  values:
+    prefix: names-adventurer-epithet-dataset-
+    count: 40

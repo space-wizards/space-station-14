@@ -1,139 +1,50 @@
 # The Adventuring Party: a four-player team antag in the style of a TTRPG party.
-# See Content.Shared/Adventurer for the armor class / d20 mechanics.
+# Spawned via admin tools only: the AdventurerPartySpawn entity (group spawn) or
+# the RandomHumanoidSpawnerAdventurer* markers (one-off), both under
+# Prototypes/Adventurer/. See Content.Shared/Adventurer for the armor class /
+# d20 mechanics.
 
+# Antag identities, referenced by the adventurer mind roles.
 - type: antag
   id: AdventurerWarrior
   name: roles-antag-adventurer-warrior-name
   antagonist: true
-  setPreference: true
   objective: roles-antag-adventurer-warrior-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 5h
   guides: [ MinorAntagonists ]
 
 - type: antag
   id: AdventurerRanger
   name: roles-antag-adventurer-ranger-name
   antagonist: true
-  setPreference: true
   objective: roles-antag-adventurer-ranger-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 5h
   guides: [ MinorAntagonists ]
 
 - type: antag
   id: AdventurerCleric
   name: roles-antag-adventurer-cleric-name
   antagonist: true
-  setPreference: true
   objective: roles-antag-adventurer-cleric-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 5h
   guides: [ MinorAntagonists ]
 
 - type: antag
   id: AdventurerWizard
   name: roles-antag-adventurer-wizard-name
   antagonist: true
-  setPreference: true
   objective: roles-antag-adventurer-wizard-objective
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 5h
   guides: [ MinorAntagonists ]
-
-# ---------------------------- Antag specifiers ----------------------------
-
-- type: antagSpecifier
-  abstract: true
-  parent: RestrictedAntag
-  id: BaseAdventurer
-  prefRoles:
-  - GenericTeamAntagonist # For antag ban purposes
-  briefing:
-    text: adventurer-role-greeting
-    color: Gold
-  components:
-  - type: NoSlip
-  - type: NpcFactionMember
-    factions:
-    - Adventurer
-
-- type: antagSpecifier
-  parent: BaseAdventurer
-  id: AdventurerWarrior
-  prefRoles:
-  - AdventurerWarrior
-  spawnerPrototype: SpawnPointNukeopsCommander # PLACEHOLDER: replace with a bespoke spawn point on a party map
-  startingGear: AdventurerWarriorGear
-  components:
-  - type: Adventurer
-    armorClass: 16
-    critThreshold: 250
-    deadThreshold: 350
-  mindRoles:
-  - MindRoleAdventurerWarrior
-
-- type: antagSpecifier
-  parent: BaseAdventurer
-  id: AdventurerRanger
-  prefRoles:
-  - AdventurerRanger
-  spawnerPrototype: SpawnPointNukeopsOperative # PLACEHOLDER: replace with a bespoke spawn point on a party map
-  startingGear: AdventurerRangerGear
-  components:
-  - type: Adventurer
-    armorClass: 12
-    critThreshold: 120
-    deadThreshold: 220
-  mindRoles:
-  - MindRoleAdventurerRanger
-
-- type: antagSpecifier
-  parent: BaseAdventurer
-  id: AdventurerCleric
-  prefRoles:
-  - AdventurerCleric
-  spawnerPrototype: SpawnPointNukeopsMedic # PLACEHOLDER: replace with a bespoke spawn point on a party map
-  startingGear: AdventurerClericGear
-  components:
-  - type: Adventurer
-    armorClass: 14
-    critThreshold: 150
-    deadThreshold: 250
-  mindRoles:
-  - MindRoleAdventurerCleric
-
-- type: antagSpecifier
-  parent: BaseAdventurer
-  id: AdventurerWizard
-  prefRoles:
-  - AdventurerWizard
-  spawnerPrototype: SpawnPointNukeopsOperative # PLACEHOLDER: replace with a bespoke spawn point on a party map
-  startingGear: AdventurerWizardGear
-  components:
-  - type: Adventurer
-    armorClass: 10
-    critThreshold: 100
-    deadThreshold: 200
-  mindRoles:
-  - MindRoleAdventurerWizard
 
 # ----------------------------- Starting gear ------------------------------
 
-# Common items (shoes, mask, backpack, air tanks, rations...) are regular
-# prototypes on purpose; only signature gear is bespoke.
+# Common items (shoes, backpack, air tanks, rations...) are regular prototypes
+# on purpose; only signature gear is bespoke.
+# Masks and air tanks come from RoleSurvivalAdventurer (Adventurer/loadouts.yml)
+# so vox get nitrogen and a mask on their face instead of oxygen gear.
 - type: startingGear
   id: AdventurerBaseGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitAdventurer
     shoes: ClothingShoesLeather
-    mask: ClothingMaskBreath
     back: ClothingBackpack
-    suitstorage: DoubleEmergencyOxygenTankFilled
 
 - type: startingGear
   id: AdventurerWarriorGear
@@ -145,7 +56,6 @@
   - WeaponGreatswordAdventurer
   storage:
     back:
-    - DoubleEmergencyOxygenTankFilled
     - AdventurerCrowbar
     - WeaponHandaxeAdventurer
     - WeaponDaggerAdventurer
@@ -158,11 +68,11 @@
   parent: AdventurerBaseGear
   equipment:
     outerClothing: ClothingOuterArmorAdventurerRanger
+    head: ClothingHeadHatBeret
   inhand:
   - WeaponBowAdventurer
   storage:
     back:
-    - DoubleEmergencyOxygenTankFilled
     - AdventurerCrowbar
     - WeaponDaggerAdventurer
     - Torch
@@ -177,11 +87,11 @@
   equipment:
     outerClothing: ClothingOuterArmorAdventurerCleric
     head: ClothingHeadHelmetAdventurerCleric
+    eyes: ClothingEyesEyepatchHudMedical
   inhand:
   - WeaponStaffHealingAdventurer
   storage:
     back:
-    - DoubleEmergencyOxygenTankFilled
     - AdventurerCrowbar
     - WeaponMaceAdventurer
     - AdventurerHealingPotion
@@ -200,7 +110,6 @@
     pocket1: AdventurersGrimoire
   storage:
     back:
-    - DoubleEmergencyOxygenTankFilled
     - AdventurerCrowbar
     - WeaponDaggerAdventurer
     - Candle

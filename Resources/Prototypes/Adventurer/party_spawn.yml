@@ -1,0 +1,106 @@
+# The Adventurer Party Spawn: an admin-menu entity that places four linked ghost
+# role markers, one per class (see GhostRolePartySystem for the group mechanics).
+# Claimed players wait in a dialog until all four slots are filled, then the
+# whole party spawns simultaneously; cancelling re-offers that role.
+# Members reuse the standalone AdventurerWarrior/... humanoid settings, so party
+# members and one-off admin-spawned adventurers stay identical.
+
+- type: entity
+  parent: MarkerBase
+  id: AdventurerPartySpawn
+  name: Adventurer Party Spawn
+  description: Spawns a linked set of four adventurer ghost roles that enter the world together once every role is claimed.
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Fun/dice.rsi
+      state: d20_20
+  - type: GhostRolePartyController
+    members:
+    - AdventurerPartySpawnPointWarrior
+    - AdventurerPartySpawnPointRanger
+    - AdventurerPartySpawnPointCleric
+    - AdventurerPartySpawnPointWizard
+
+# ---------------------------- Party slot markers ----------------------------
+
+- type: entity
+  abstract: true
+  parent: MarkerBase
+  id: BaseAdventurerPartySpawnPoint
+  name: adventurer party slot
+  categories: [ HideSpawnMenu, Spawner ]
+  components:
+  - type: GhostRole
+    rules: ghost-role-information-rules-team-antagonist
+    raffle:
+      settings: default
+
+- type: entity
+  parent: BaseAdventurerPartySpawnPoint
+  id: AdventurerPartySpawnPointWarrior
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-warrior-name
+    description: ghost-role-information-adventurer-warrior-description
+  - type: GhostRolePartySpawner
+    settings: AdventurerWarrior
+    mindRoles:
+    - MindRoleAdventurerWarrior
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Melee/claymore.rsi
+      state: icon
+
+- type: entity
+  parent: BaseAdventurerPartySpawnPoint
+  id: AdventurerPartySpawnPointRanger
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-ranger-name
+    description: ghost-role-information-adventurer-ranger-description
+  - type: GhostRolePartySpawner
+    settings: AdventurerRanger
+    mindRoles:
+    - MindRoleAdventurerRanger
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/Bow/bow.rsi
+      state: unwielded
+
+- type: entity
+  parent: BaseAdventurerPartySpawnPoint
+  id: AdventurerPartySpawnPointCleric
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-cleric-name
+    description: ghost-role-information-adventurer-cleric-description
+  - type: GhostRolePartySpawner
+    settings: AdventurerCleric
+    mindRoles:
+    - MindRoleAdventurerCleric
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/Basic/staves.rsi
+      state: healing
+
+- type: entity
+  parent: BaseAdventurerPartySpawnPoint
+  id: AdventurerPartySpawnPointWizard
+  components:
+  - type: GhostRole
+    name: roles-antag-adventurer-wizard-name
+    description: ghost-role-information-adventurer-wizard-description
+  - type: GhostRolePartySpawner
+    settings: AdventurerWizard
+    mindRoles:
+    - MindRoleAdventurerWizard
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Clothing/Head/Hats/wizardhat.rsi
+      state: icon

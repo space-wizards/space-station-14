@@ -1,8 +1,7 @@
-# Admin-spawnable adventurer ghost roles, following the ERT pattern:
-# spawn the RandomHumanoidSpawnerAdventurer* marker from the entity spawn menu
-# and it offers itself to ghosts as that party member, fully geared.
-# Note: ghost-role adventurers get no objectives (those come from the Adventurers
-# game rule); they're reinforcements for the party or an admeme.
+# Admin-spawnable adventurer ghost roles, following the ERT pattern: spawn the
+# RandomHumanoidSpawnerAdventurer* marker from the entity spawn menu and it
+# offers itself to ghosts as that class, fully geared. The AdventurerPartySpawn
+# entity (party_spawn.yml) spawns bodies from these same humanoid settings.
 #
 # Parented to EventHumanoid (NOT EventHumanoidMindShielded) since adventurers
 # are antagonists and must not receive AntagImmune or a mindshield.
@@ -23,6 +22,7 @@
 - type: randomHumanoidSettings
   id: AdventurerWarrior
   parent: EventHumanoid
+  randomizeName: false
   components:
   - type: GhostRole
     name: roles-antag-adventurer-warrior-name
@@ -40,8 +40,19 @@
   - type: NpcFactionMember
     factions:
     - Adventurer
+  - type: RandomMetadata
+    nameSegments:
+    - NamesAdventurerFirst
+    - NamesAdventurerEpithet
+    nameFormat: name-format-adventurer
+  - type: AutoObjectives
+    objectives:
+    - AdventurerClearDungeonObjective
+    - AdventurerLootObjective
+    - AdventurerSurviveObjective
   - type: Loadout
     prototypes: [ AdventurerWarriorGear ]
+    roleLoadout: [ RoleSurvivalAdventurer ]
 
 # -------------------------------- Ranger --------------------------------
 
@@ -59,6 +70,7 @@
 - type: randomHumanoidSettings
   id: AdventurerRanger
   parent: EventHumanoid
+  randomizeName: false
   components:
   - type: GhostRole
     name: roles-antag-adventurer-ranger-name
@@ -76,8 +88,19 @@
   - type: NpcFactionMember
     factions:
     - Adventurer
+  - type: RandomMetadata
+    nameSegments:
+    - NamesAdventurerFirst
+    - NamesAdventurerEpithet
+    nameFormat: name-format-adventurer
+  - type: AutoObjectives
+    objectives:
+    - AdventurerClearDungeonObjective
+    - AdventurerLootObjective
+    - AdventurerSurviveObjective
   - type: Loadout
     prototypes: [ AdventurerRangerGear ]
+    roleLoadout: [ RoleSurvivalAdventurer ]
 
 # -------------------------------- Cleric --------------------------------
 
@@ -95,6 +118,7 @@
 - type: randomHumanoidSettings
   id: AdventurerCleric
   parent: EventHumanoid
+  randomizeName: false
   components:
   - type: GhostRole
     name: roles-antag-adventurer-cleric-name
@@ -112,8 +136,19 @@
   - type: NpcFactionMember
     factions:
     - Adventurer
+  - type: RandomMetadata
+    nameSegments:
+    - NamesAdventurerFirst
+    - NamesAdventurerEpithet
+    nameFormat: name-format-adventurer
+  - type: AutoObjectives
+    objectives:
+    - AdventurerClearDungeonObjective
+    - AdventurerLootObjective
+    - AdventurerSurviveObjective
   - type: Loadout
     prototypes: [ AdventurerClericGear ]
+    roleLoadout: [ RoleSurvivalAdventurer ]
 
 # -------------------------------- Wizard --------------------------------
 
@@ -131,6 +166,7 @@
 - type: randomHumanoidSettings
   id: AdventurerWizard
   parent: EventHumanoid
+  randomizeName: false
   components:
   - type: GhostRole
     name: roles-antag-adventurer-wizard-name
@@ -148,5 +184,16 @@
   - type: NpcFactionMember
     factions:
     - Adventurer
+  - type: RandomMetadata
+    nameSegments:
+    - NamesAdventurerFirst
+    - NamesAdventurerEpithet
+    nameFormat: name-format-adventurer
+  - type: AutoObjectives
+    objectives:
+    - AdventurerClearDungeonObjective
+    - AdventurerLootObjective
+    - AdventurerSurviveObjective
   - type: Loadout
     prototypes: [ AdventurerWizardGear ]
+    roleLoadout: [ RoleSurvivalAdventurer ]

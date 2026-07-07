@@ -83,7 +83,7 @@ public sealed partial class AdventurerComponent : Component
     /// Magnitude of the random impulse applied to the cosmetic die so it skitters a little.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DieImpulseStrength = 1.5f;
+    public float DieImpulseStrength = 8f;
 
     /// <summary>
     /// Minimum time between cosmetic die spawns. Rolls still happen for every attack;

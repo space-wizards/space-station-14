@@ -10,6 +10,9 @@ name-format-ninja = {$part0} {$part1}
 name-format-wizard = {$part0} {$part1}
 name-format-dragon = {$part0} {$part1}
 
+# "<firstName> <epithet>", e.g. "Aldric the Bold"
+name-format-adventurer = {$part0} {$part1}
+
 # "<title> <name>"
 name-format-nukie-generic = {$part0} {$part1}
 name-format-nukie-agent = Corpsman {$part0}

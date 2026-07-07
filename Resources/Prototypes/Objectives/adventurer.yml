@@ -1,6 +1,8 @@
 # Adventuring party objectives. Every party member always gets all three
 # (assigned via AntagObjectives on the Adventurers game rule).
 
+# No RoleRequirement here: objectives are granted the moment a mind enters an
+# adventurer body (AutoObjectives), which happens before mind roles are added.
 - type: entity
   abstract: true
   parent: BaseObjective
@@ -10,9 +12,6 @@
     # required but not used, adventurers always get a fixed set
     difficulty: 1
     issuer: AdventurersGuild
-  - type: RoleRequirement
-    roles:
-    - AdventurerRole
 
 # Kill every head of staff. The station is the dungeon; command are the bosses.
 - type: entity

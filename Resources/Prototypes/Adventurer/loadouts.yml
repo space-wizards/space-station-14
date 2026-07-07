@@ -1,0 +1,42 @@
+# Species-aware survival gear for adventurers, applied on top of the class
+# starting gear via RoleSurvivalAdventurer (same mechanism as RoleSurvivalNukie).
+# Oxygen breathers get a gas mask stowed in their pack; nitrogen breathers (vox)
+# spawn with the mask on their face and nitrogen tanks instead, since they can't
+# breathe station air at all.
+
+- type: loadout
+  id: LoadoutAdventurerSurvivalOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    suitstorage: DoubleEmergencyOxygenTankFilled
+  storage:
+    back:
+    - ClothingMaskGas
+    - DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: LoadoutAdventurerSurvivalNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    mask: ClothingMaskGas
+    suitstorage: DoubleEmergencyNitrogenTankFilled
+  storage:
+    back:
+    - DoubleEmergencyNitrogenTankFilled
+
+- type: loadoutGroup
+  id: GroupAdventurerSurvival
+  name: loadout-group-adventurer-survival
+  hidden: true
+  loadouts:
+  - LoadoutAdventurerSurvivalNitrogen
+  - LoadoutAdventurerSurvivalOxygen
+
+- type: roleLoadout
+  id: RoleSurvivalAdventurer
+  groups:
+  - GroupAdventurerSurvival
