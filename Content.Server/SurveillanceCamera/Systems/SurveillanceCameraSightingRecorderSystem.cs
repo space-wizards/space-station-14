@@ -1,4 +1,7 @@
 ﻿using Content.Server.Power.Components;
+using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs.Components;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -9,6 +12,10 @@ public sealed class SurveillanceCameraSightingRecorderSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+
+    private HashSet<Entity<MobStateComponent>> _inRange = new();
 
     public override void Initialize()
     {
@@ -39,7 +46,18 @@ public sealed class SurveillanceCameraSightingRecorderSystem : EntitySystem
             if (!camera.Active || CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered != true)
                 continue;
 
-            Log.Info($"{camera.CameraId} @ {Transform(uid).Coordinates}");
+            var coords = Transform(uid).Coordinates;
+
+            _inRange.Clear();
+            _lookup.GetEntitiesInRange(coords, recorder.DetectionRange, _inRange);
+
+            foreach (var mob in _inRange)
+            {
+                if (_examine.InRangeUnOccluded(mob, coords, recorder.DetectionRange))
+                {
+                    Log.Info($"{camera.CameraId} saw {Identity.Name(mob, EntityManager)}");
+                }
+            }
         }
     }
 }
