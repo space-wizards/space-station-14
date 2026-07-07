@@ -13,7 +13,7 @@ public delegate void DeviceNetworkPayloadComponentWrapper(
 /// Use this if you want the same payload to be handled by entities with different components.
 /// </summary>
 /// <remarks>
-/// Generally you should use <see cref="DevicePayloadSystem{T}"/>, since this system is less performant.
+/// Generally you should use <see cref="DevicePayloadSystem{T}"/>, this system is less performant.
 /// </remarks>
 public abstract class DevicePayloadComponentSystem : DeviceNetworkHandler, IEntityDeviceNetworkHandler
 {
