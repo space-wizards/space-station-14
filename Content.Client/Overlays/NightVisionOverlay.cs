@@ -68,13 +68,14 @@ public sealed partial class NightVisionOverlay : Overlay
     /// lighting engine runs.
     /// <see cref="OverlaySpace.BeforeLighting"/> is where the overlay with color and other visual effects are run.
     /// </remarks>
-    public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpace;
+    public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpaceBelowFOV;
     public override bool RequestScreenTexture => true;
 
     public NightVisionOverlay()
     {
         IoCManager.InjectDependencies(this);
         _nightVisionShader = _prototypeManager.Index(Shader).InstanceUnique();
+        ZIndex = -1;
     }
 
     public void SetParameters(
@@ -110,7 +111,7 @@ public sealed partial class NightVisionOverlay : Overlay
                 break;
 
             // Draw the goggle overlays (if enabled)
-            case OverlaySpace.WorldSpace:
+            case OverlaySpace.WorldSpaceBelowFOV:
                 if (!GogglesEnabled)
                     break;
 
