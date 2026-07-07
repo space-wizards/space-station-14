@@ -19,7 +19,11 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private INodeGroupManager _nodeGroupManager = default!;
     [Dependency] private INetManager _net = default!;
 
-    // TODO remove this
+    // Temporary caches
+    private readonly List<Entity<NodeGroupComponent>> _newGroups = new();
+    private readonly HashSet<EntityUid> _updateEnts = new();
+
+    // TODO replace everything below with ECS networking of node groups
     private readonly List<int> _visDeletes = new();
     private readonly List<Entity<NodeGroupComponent>> _visSends = new();
     private readonly HashSet<ICommonSession> _visPlayers = new();
@@ -154,9 +158,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
         DoGroupUpdates();
     }
 
-    private readonly List<Entity<NodeGroupComponent>> _newGroups = new();
-    private readonly HashSet<EntityUid> _updateEnts = new();
-
     private void DoGroupUpdates()
     {
         if (!TryGetManager(out var managerEnt))
@@ -256,7 +257,6 @@ public sealed partial class NodeGroupSystem : EntitySystem
             // Group by the NEW group.
             var newGrouped = oldGroup.Comp.Nodes.GroupBy(n => n.NodeGroup);
 
-            oldGroup.Comp.Removed = true;
             var handler = _nodeGroupManager.GetNodeGroupHandler(oldGroup.Comp.GroupId);
             handler.AfterRemake(oldGroup, newGrouped);
             QueueDel(oldGroup);

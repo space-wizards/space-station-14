@@ -22,12 +22,6 @@ public sealed partial class NodeGroupComponent : Component
     public int NodeCount => Nodes.Count;
 
     /// <summary>
-    ///     Debug variable to indicate that this NodeGroup should not be being used by anything.
-    /// </summary>
-    [ViewVariables]
-    public bool Removed { get; set; } = false;
-
-    /// <summary>
     ///     Network ID of this group for client-side debug visualization of nodes.
     /// </summary>
     [ViewVariables]
