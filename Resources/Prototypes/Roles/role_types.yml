@@ -30,6 +30,14 @@
   color: '#ffff00'
   symbol: "☯"
 
+# Purely a visual distinction from FreeAgent: members share a team, but working
+# out who their teammates are is left to players and admins.
+- type: roleType
+  id: TeamFreeAgent
+  name: role-type-team-free-agent-name
+  color: '#ffff00'
+  symbol: "⚔"
+
 - type: roleType
   id: Familiar
   name: role-type-familiar-name
