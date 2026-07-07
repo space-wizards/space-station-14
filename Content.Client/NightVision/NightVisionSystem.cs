@@ -49,55 +49,30 @@ public sealed partial class NightVisionSystem : SharedNightVisionSystem
             Deactivate(localPlayer.Value);
     }
 
-<<<<<<< Updated upstream
-    private void Update(EntityUid entity, List<Entity<NightVisionComponent>> entities)
-=======
     /// <summary>
     /// Update the state of the overlay. Add/remove/modify based on <see cref="NightVisionComponent"/>s if any.
     /// </summary>
     /// <param name="entity">The entity to have an overlay added/removed from.</param>
-    /// <param name="components">A list of <see cref="NightVisionComponent"/>s if any.</param>
-    private void Update(EntityUid entity, List<NightVisionComponent> components)
->>>>>>> Stashed changes
+    /// <param name="entities">A list of entities with a <see cref="NightVisionComponent"/>.</param>
+    private void Update(EntityUid entity, List<Entity<NightVisionComponent>> entities)
     {
         if (entity != _player.LocalSession?.AttachedEntity)
             return;
 
-        // Find any prioritized components
         NightVisionComponent? nvision = null;
-<<<<<<< Updated upstream
-        var bestNoise = float.MaxValue;
         foreach (var ent in entities)
-=======
-        foreach (var comp in components)
->>>>>>> Stashed changes
         {
             if (!ent.Comp.Enabled)
                 continue;
 
-<<<<<<< Updated upstream
             if (ent.Comp.RelayOverlay == (ent.Owner == entity))
                 continue;
 
-            if (ent.Comp.Prioritized)
-            {
-                nvision = ent.Comp;
-                break;
-            }
-
-            var noise = ent.Comp.NoiseAmount * ent.Comp.NoiseMultiplier;
-            if (noise < bestNoise)
-            {
-                nvision = ent.Comp;
-                bestNoise = noise;
-            }
-=======
-            nvision = comp;
+            nvision = ent.Comp;
 
             // Take the first priority component
-            if (comp.Prioritized)
+            if (ent.Comp.Prioritized)
                 break;
->>>>>>> Stashed changes
         }
 
         // There is no active night vision components, so we disable the overlay.
