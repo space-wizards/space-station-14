@@ -33,12 +33,24 @@ public sealed partial class LubedSystem : EntitySystem
 
     private void OnHandPickUp(Entity<LubedComponent> ent, ref BeforeGettingEquippedHandEvent args)
     {
-        var user = args.User;
+        PerformLubedEffect(ent, args.User, out var cancelHandPickup);
+        args.Cancelled = cancelHandPickup;
+    }
+
+    private void OnRefreshNameModifiers(Entity<LubedComponent> ent, ref RefreshNameModifiersEvent args)
+    {
+        if (ent.Comp.SlipsLeft > 0) // The component is removed deferred, so it might still exist when we refresh.
+            args.AddModifier("lubed-name-prefix");
+    }
+
+    public void PerformLubedEffect(Entity<LubedComponent> ent, EntityUid user, out bool cancelHandPickup)
+    {
+        cancelHandPickup = false;
 
         // Throwing is not predicted yet, so we don't want to predict setting the coordinates either, or it will look weird.
         if (_net.IsServer)
         {
-            args.Cancelled = true;
+            cancelHandPickup = true;
             _transform.SetCoordinates(ent, Transform(user).Coordinates);
             _transform.AttachToGridOrMap(ent);
             _throwing.TryThrow(ent, _random.NextVector2(), baseThrowSpeed: ent.Comp.SlipStrength);
@@ -52,11 +64,5 @@ public sealed partial class LubedSystem : EntitySystem
             RemCompDeferred<LubedComponent>(ent);
             _nameMod.RefreshNameModifiers(ent.Owner);
         }
-    }
-
-    private void OnRefreshNameModifiers(Entity<LubedComponent> ent, ref RefreshNameModifiersEvent args)
-    {
-        if (ent.Comp.SlipsLeft > 0) // The component is removed deferred, so it might still exist when we refresh.
-            args.AddModifier("lubed-name-prefix");
     }
 }

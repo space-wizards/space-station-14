@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Hands;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Item;
@@ -10,6 +11,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Glue;
@@ -23,6 +25,8 @@ public sealed partial class GlueSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -88,6 +92,9 @@ public sealed partial class GlueSystem : EntitySystem
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
                 var gluedComp = EnsureComp<GluedComponent>(target);
                 gluedComp.Duration = quantity.Double() * entity.Comp.DurationPerUnit;
+                if (_container.TryGetContainingContainer((target, null, null), out var container) && _hands.IsHolding(container.Owner, target))
+                    PerformGluedEffect((target, gluedComp));
+
                 Dirty(target, gluedComp);
                 return true;
             }
@@ -121,6 +128,16 @@ public sealed partial class GlueSystem : EntitySystem
 
     private void OnHandPickUp(Entity<GluedComponent> entity, ref GotEquippedHandEvent args)
     {
+        PerformGluedEffect(entity);
+    }
+
+    private void OnRefreshNameModifiers(Entity<GluedComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        args.AddModifier("glued-name-prefix");
+    }
+
+    private void PerformGluedEffect(Entity<GluedComponent> entity)
+    {
         // When predicting dropping a glued item prediction will reinsert the item into the hand when rerolling the state to a previous one.
         // So dropping the item would add UnRemoveableComponent on the client without this guard statement.
         if (_timing.ApplyingState)
@@ -131,10 +148,5 @@ public sealed partial class GlueSystem : EntitySystem
         entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
         Dirty(entity.Owner, comp);
         Dirty(entity);
-    }
-
-    private void OnRefreshNameModifiers(Entity<GluedComponent> entity, ref RefreshNameModifiersEvent args)
-    {
-        args.AddModifier("glued-name-prefix");
     }
 }
