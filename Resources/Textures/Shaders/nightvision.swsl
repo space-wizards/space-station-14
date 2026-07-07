@@ -6,8 +6,8 @@ uniform highp int CIRCLE_COUNT;
 uniform highp vec3 BASE_COLOR;
 uniform highp float AMPLIFICATION;
 uniform highp float SPACING;
-uniform highp float[3] BLUR_OFFSET = float[](0.0, 1.3846153846, 3.2307692308);
-uniform highp float[3] BLUR_WEIGHT = float[](0.2270270270, 0.3162162162, 0.0702702703);
+uniform highp float[3] BLUR_OFFSET;
+uniform highp float[3] BLUR_WEIGHT;
 
 void fragment()
 {
