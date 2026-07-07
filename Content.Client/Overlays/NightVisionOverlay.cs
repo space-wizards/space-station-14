@@ -1,6 +1,5 @@
 using System.Numerics;
 using Robust.Client.Graphics;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +11,6 @@ namespace Content.Client.Overlays;
 public sealed partial class NightVisionOverlay : Overlay
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private IConfigurationManager _configManager = default!;
 
     private static readonly ProtoId<ShaderPrototype> Shader = "NightVision";
 
@@ -61,14 +59,19 @@ public sealed partial class NightVisionOverlay : Overlay
     public float Amplification { get; private set; }
 
     /// <summary>
+    /// The space where the night vision fake light is added.
+    /// </summary>
+    public const OverlaySpace LightSpace = OverlaySpace.BeforeLighting;
+
+    /// <summary>
+    /// The space where the goggle shader is applied.
+    /// </summary>
+    public const OverlaySpace ShaderSpace = OverlaySpace.WorldSpaceBelowFOV;
+
+    /// <summary>
     /// Overlay spaces used by the shader.
     /// </summary>
-    /// <remarks>
-    /// <see cref="OverlaySpace.BeforeLighting"/> is used to apply a small amount of light to the scene before the
-    /// lighting engine runs.
-    /// <see cref="OverlaySpace.BeforeLighting"/> is where the overlay with color and other visual effects are run.
-    /// </remarks>
-    public override OverlaySpace Space => OverlaySpace.BeforeLighting | OverlaySpace.WorldSpaceBelowFOV;
+    public override OverlaySpace Space => LightSpace | ShaderSpace;
     public override bool RequestScreenTexture => true;
 
     public NightVisionOverlay()
@@ -87,13 +90,13 @@ public sealed partial class NightVisionOverlay : Overlay
         int viewCircleCount,
         float amplification)
     {
-        LightingColor =  lightingColor;
-        PhosphorColor =  phosphorColor;
-        GogglesEnabled = gogglesEnabled;
-        ViewCircleRadius = viewCircleRadius;
+        LightingColor     = lightingColor;
+        PhosphorColor     = phosphorColor;
+        GogglesEnabled    = gogglesEnabled;
+        ViewCircleRadius  = viewCircleRadius;
         ViewCircleSpacing = viewCircleSpacing;
-        ViewCircleCount = viewCircleCount;
-        Amplification = amplification;
+        ViewCircleCount   = viewCircleCount;
+        Amplification     = amplification;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -106,12 +109,12 @@ public sealed partial class NightVisionOverlay : Overlay
         switch (args.Space)
         {
             // Add light to the scene even if it's completely dark
-            case OverlaySpace.BeforeLighting:
+            case LightSpace:
                 handle.DrawRect(args.WorldBounds, LightingColor);
                 break;
 
             // Draw the goggle overlays (if enabled)
-            case OverlaySpace.WorldSpaceBelowFOV:
+            case ShaderSpace:
                 if (!GogglesEnabled)
                     break;
 
