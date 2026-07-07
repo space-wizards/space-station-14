@@ -64,7 +64,6 @@ public sealed partial class AtmosPipeNetHandler : SingleNodeGroupHandler<PipeNet
         }
 
         _atmosphereSystem.DivideInto(group.Comp2.Air, newAir);
-        base.AfterRemake(group, newGroups);
     }
 
     public void UpdateGroup(Entity<PipeNetComponent> group)

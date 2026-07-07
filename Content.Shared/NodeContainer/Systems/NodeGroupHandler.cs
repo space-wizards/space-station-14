@@ -91,10 +91,7 @@ public abstract partial class NodeGroupHandler<T> : EntitySystem, INodeGroupHand
         return null;
     }
 
-    protected virtual void AfterRemake(Entity<NodeGroupComponent, T> group, IEnumerable<IGrouping<Entity<NodeGroupComponent>?, Node>> newGroups)
-    {
-        PredictedQueueDel(group.Owner);
-    }
+    protected virtual void AfterRemake(Entity<NodeGroupComponent, T> group, IEnumerable<IGrouping<Entity<NodeGroupComponent>?, Node>> newGroups) { }
 
     public void InitializeGroup(Entity<NodeGroupComponent> group, Node sourceNode)
     {

@@ -4,8 +4,10 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.NodeContainer.Components;
 using Robust.Shared.Enums;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -18,6 +20,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
     [Dependency] private ISharedAdminManager _adminManager = default!;
     [Dependency] private INodeGroupManager _nodeGroupManager = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedPvsOverrideSystem _pvs = default!;
 
     // Temporary caches
     private readonly List<Entity<NodeGroupComponent>> _newGroups = new();
@@ -51,6 +54,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         SubscribeNetworkEvent<NodeVis.MsgEnable>(HandleEnableMsg);
+        SubscribeLocalEvent<NodeGroupManagerComponent, MapInitEvent>(OnManagerInit);
     }
 
     public override void Shutdown()
@@ -60,7 +64,33 @@ public sealed partial class NodeGroupSystem : EntitySystem
         _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
-    private bool TryGetManager([NotNullWhen(true)] out Entity<NodeGroupManagerComponent>? manager)
+    private void OnManagerInit(Entity<NodeGroupManagerComponent> ent, ref MapInitEvent args)
+    {
+        _pvs.AddGlobalOverride(ent);
+    }
+
+    private static readonly EntProtoId SingletonProtoId = "NodeGroupSingleton";
+
+    public Entity<NodeGroupManagerComponent> CreateManager()
+    {
+        var uid = Spawn(SingletonProtoId);
+        return (uid, Comp<NodeGroupManagerComponent>(uid));
+    }
+
+    public bool TryEnsureManager([NotNullWhen(true)] out Entity<NodeGroupManagerComponent>? manager)
+    {
+        manager = null;
+        if (TryGetManager(out manager))
+            return true;
+
+        if (_net.IsClient)
+            return false;
+
+        manager = CreateManager();
+        return true;
+    }
+
+    public bool TryGetManager([NotNullWhen(true)] out Entity<NodeGroupManagerComponent>? manager)
     {
         return TrySingle(out manager);
     }
@@ -90,7 +120,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     public void QueueRemakeGroup(Entity<NodeGroupComponent> group)
     {
-        if (!TryGetManager(out var manager))
+        if (!TryEnsureManager(out var manager))
             return;
 
         if (group.Comp.Remaking)
@@ -112,7 +142,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
     public void QueueReflood(Node node)
     {
-        if (!TryGetManager(out var manager))
+        if (!TryEnsureManager(out var manager))
             return;
 
         if (node.FlaggedForFlood)

@@ -1,0 +1,7 @@
+- type: entity
+  id: NodeGroupSingleton
+  categories: [ HideSpawnMenu ]
+  name: Node group manager
+  description: Stores important information about nodes and node groups.
+  components:
+  - type: NodeGroupManager
