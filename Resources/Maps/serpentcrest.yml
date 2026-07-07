@@ -133602,7 +133602,7 @@ entities:
       parent: 2
     - type: Paper
       content: >-
-        Captain, this is yet another reminder to keep your men in line, let me remind you that our contract can be revoked at any time, and you are allowed both on this station and in this sector at our behest. 
+        Captain, this is yet another reminder to keep your men in line, let me remind you that our contract can be revoked at any time, and you are allowed both on this station and in this sector at our behest.
 
 
         also, have your ship ready to deploy at any time, we expect the enemy will arrive any day now.
@@ -183252,32 +183252,6 @@ entities:
     components:
     - type: Transform
       pos: 3.4193826,-19.583563
-      parent: 2
-- proto: WehMedipen
-  entities:
-  - uid: 839
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -43.5202,-49.26273
-      parent: 2
-  - uid: 914
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -42.67645,-48.41898
-      parent: 2
-  - uid: 917
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -43.344418,-47.75101
-      parent: 2
-  - uid: 9797
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -42.46551,-49.579136
       parent: 2
 - proto: WelderIndustrial
   entities:
