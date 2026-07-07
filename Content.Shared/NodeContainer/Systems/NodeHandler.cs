@@ -22,29 +22,29 @@ public interface INodeHandler
     /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
     /// </para>
     /// </remarks>
-    IEnumerable<INode> GetReachableNodes(INode node);
+    IEnumerable<Node> GetReachableNodes(Node node);
 
-    void OnAnchorStateChanged(INode node, bool anchored);
+    void OnAnchorStateChanged(Node node, bool anchored);
 
     /// <summary>
     ///     Invoked when the owning <see cref="NodeContainerComponent"/> is initialized.
     /// </summary>
     /// <param name="node"></param>
     /// <param name="owner">The owning entity.</param>
-    void InitializeNode(INode node, EntityUid owner);
+    void InitializeNode(Node node, EntityUid owner);
 
     /// <summary>
     ///     If this node should be considered for connection by other nodes.
     /// </summary>
-    bool Connectable(INode node);
+    bool Connectable(Node node);
 
     /// <summary>
-    /// Text that the players see when examining this <see cref="INode"/>.
+    /// Text that the players see when examining this <see cref="Node"/>.
     /// </summary>
-    string? GetExamineText(INode node);
+    string? GetExamineText(Node node);
 }
 
-public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where T : INode
+public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where T : Node
 {
     protected Type NodeType => typeof(T);
 
@@ -179,7 +179,7 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
         return proto.NodeDescription == null ? null : Loc.GetString(proto.NodeDescription);
     }
 
-    public IEnumerable<INode> GetReachableNodes(INode node)
+    public IEnumerable<Node> GetReachableNodes(Node node)
     {
         var xform = Transform(node.Owner);
         Entity<TransformComponent> ent = (node.Owner, xform);
@@ -191,11 +191,11 @@ public abstract partial class NodeHandler<T> : EntitySystem, INodeHandler where 
         return GetReachableNodes((T) node, ent, grid);
     }
 
-    public void OnAnchorStateChanged(INode node, bool anchored) => OnAnchorStateChanged((T) node, anchored);
+    public void OnAnchorStateChanged(Node node, bool anchored) => OnAnchorStateChanged((T) node, anchored);
 
-    public void InitializeNode(INode node, EntityUid owner) => Initialize((T) node, owner);
+    public void InitializeNode(Node node, EntityUid owner) => Initialize((T) node, owner);
 
-    public bool Connectable(INode node) => Connectable((T) node);
+    public bool Connectable(Node node) => Connectable((T) node);
 
-    public string? GetExamineText(INode node) => GetExamineText((T) node);
+    public string? GetExamineText(Node node) => GetExamineText((T) node);
 }

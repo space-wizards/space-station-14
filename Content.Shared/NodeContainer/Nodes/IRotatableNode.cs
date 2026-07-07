@@ -1,3 +1,4 @@
+using Content.Shared.NodeContainer.Components;
 using Content.Shared.NodeContainer.Nodes.Handlers;
 
 namespace Content.Shared.NodeContainer.Nodes;
@@ -6,4 +7,4 @@ namespace Content.Shared.NodeContainer.Nodes;
 ///     A <see cref="Node"/> that implements this will have its <see cref="IRotatableNodeHandler.RotateNode"/> called when its
 ///     <see cref="NodeContainerComponent"/> is rotated.
 /// </summary>
-public interface IRotatableNode : INode;
+public interface IRotatableNode;

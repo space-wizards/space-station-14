@@ -56,7 +56,7 @@ public sealed class NodeGroupManager : INodeGroupManager
     private FrozenDictionary<Type, INodeGroupHandler> _frozenNodeGroupHandlers = default!;
 
     /// <summary>
-    /// A dictionary of <see cref="INode"/> Types and <see cref="INodeHandler"/>s.
+    /// A dictionary of <see cref="Node"/> Types and <see cref="INodeHandler"/>s.
     /// </summary>
     private readonly Dictionary<Type, INodeHandler> _nodeHandlers = new();
 

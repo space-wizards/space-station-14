@@ -8,7 +8,7 @@ namespace Content.Shared.NodeContainer;
 ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class Node : INode
+public abstract partial class Node
 {
     [DataField("nodeGroupID")]
     public ProtoId<NodeGroupPrototype> NodeGroupProto { get; set; }

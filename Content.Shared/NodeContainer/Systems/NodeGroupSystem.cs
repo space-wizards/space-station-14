@@ -217,7 +217,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
 
             foreach (var compatible in GetCompatibleNodes(node))
             {
-                ClearReachableIfNecessary((Node) compatible);
+                ClearReachableIfNecessary(compatible);
 
                 if (compatible.NodeGroup is { Comp.Remaking: false })
                 {
@@ -226,7 +226,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
                     QueueRemakeGroup(compatible.NodeGroup.Value);
                 }
 
-                node.ReachableNodes.Add((Node) compatible);
+                node.ReachableNodes.Add(compatible);
                 compatible.ReachableNodes.Add(node);
             }
         }
@@ -361,7 +361,7 @@ public sealed partial class NodeGroupSystem : EntitySystem
         return allNodes;
     }
 
-    private IEnumerable<INode> GetCompatibleNodes(Node node)
+    private IEnumerable<Node> GetCompatibleNodes(Node node)
     {
         var nodeHandler = _nodeGroupManager.GetNodeHandler(node.GetType());
         if (!nodeHandler.Connectable(node))
