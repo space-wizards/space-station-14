@@ -363,7 +363,7 @@
   id: BaseMindRoleAdventurer
   components:
   - type: MindRole
-    roleType: TeamAntagonist
+    roleType: FreeAgent
     exclusiveAntag: true
   - type: AdventurerRole
 

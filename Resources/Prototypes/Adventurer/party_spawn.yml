@@ -33,7 +33,7 @@
   categories: [ HideSpawnMenu, Spawner ]
   components:
   - type: GhostRole
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-adventurer-rules
     raffle:
       settings: default
 

@@ -27,7 +27,7 @@
   - type: GhostRole
     name: roles-antag-adventurer-warrior-name
     description: ghost-role-information-adventurer-warrior-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-adventurer-rules
     raffle:
       settings: short
     mindRoles:
@@ -75,7 +75,7 @@
   - type: GhostRole
     name: roles-antag-adventurer-ranger-name
     description: ghost-role-information-adventurer-ranger-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-adventurer-rules
     raffle:
       settings: short
     mindRoles:
@@ -123,7 +123,7 @@
   - type: GhostRole
     name: roles-antag-adventurer-cleric-name
     description: ghost-role-information-adventurer-cleric-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-adventurer-rules
     raffle:
       settings: short
     mindRoles:
@@ -171,7 +171,7 @@
   - type: GhostRole
     name: roles-antag-adventurer-wizard-name
     description: ghost-role-information-adventurer-wizard-description
-    rules: ghost-role-information-rules-team-antagonist
+    rules: ghost-role-information-adventurer-rules
     raffle:
       settings: short
     mindRoles:

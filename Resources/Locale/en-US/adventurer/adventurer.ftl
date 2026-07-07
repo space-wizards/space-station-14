@@ -12,6 +12,7 @@ roles-antag-adventurer-wizard-objective = The party's arcane spark. Clear the du
 objective-issuer-adventurers-guild = [color=gold]The Adventurers' Guild[/color]
 
 # Ghost roles
+ghost-role-information-adventurer-rules = You are a [color={role-type-free-agent-color}][bold]{role-type-free-agent-name}[/bold][/color] alongside the rest of your adventuring party. Your objectives are your own; how much havoc the quest requires is up to you.
 ghost-role-information-adventurer-warrior-description = The party's wall of iron. Guard your companions, cleave the dungeon's bosses in twain, and claim your share of the loot.
 ghost-role-information-adventurer-ranger-description = The party's keen eye. Scout ahead, rain conjured arrows on the dungeon's bosses, and claim your share of the loot.
 ghost-role-information-adventurer-cleric-description = The party's shield of faith. Keep your companions standing, smite the dungeon's bosses, and claim your share of the loot.
