@@ -1,19 +1,58 @@
 // Night vision fullscreen shader.
-light_mode unshaded;
 
 uniform sampler2D SCREEN_TEXTURE;
-uniform highp float noise_amount; // How much animated noise/static to add (0..1).
-uniform highp float noise_multiplier; // Scales the intensity of the added noise.
+uniform highp float VIEW_RADIUS;
+uniform highp int CIRCLE_COUNT;
+uniform highp vec3 BASE_COLOR;
+uniform highp float AMPLIFICATION;
+uniform highp float SPACING;
 
 void fragment()
 {
-    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, UV);
+    // Blur config - This could be made adjustable.
+    highp float offset[3] = float[](0.0, 1.3846153846, 3.2307692308);
+    highp float weight[3] = float[](0.2270270270, 0.3162162162, 0.0702702703);
 
-    // Add some noise for realism.
-    lowp float noise = zRandom(UV + sin(TIME / 10.0)).x * noise_amount;
+    // Bilinear blur in x and y
+    highp vec4 blurred = texture(SCREEN_TEXTURE, UV) * weight[0];
+    for (int i=1; i<3; i++) {
+        blurred += texture(SCREEN_TEXTURE, (UV + vec2(0.0, offset[i] * SCREEN_PIXEL_SIZE.y))) * weight[i];
+        blurred += texture(SCREEN_TEXTURE, (UV - vec2(0.0, offset[i] * SCREEN_PIXEL_SIZE.y))) * weight[i];
+        blurred += texture(SCREEN_TEXTURE, (UV + vec2(offset[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * weight[i];
+        blurred += texture(SCREEN_TEXTURE, (UV - vec2(offset[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * weight[i];
+    }
 
-    // Blend the generated noise into the image.
-    color.rgb += mix(color.rgb, color.rgb * noise, noise) * noise_multiplier;
+    // Monochrome the view
+    highp float gray = zGrayscale(blurred.rgb);
 
-    COLOR = color;
+    // Shade it to the phosphor color
+    highp vec3 colorized = gray * BASE_COLOR * AMPLIFICATION;
+
+    // Re-expand and add the original alpha back
+    highp vec4 walpha = vec4(vec3(colorized), blurred.a);
+
+    // Screen aspect ratio, needed by the circle generation
+    highp vec2 aspect = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+
+    // Set to a high value to ensure it's overwritten in the next step
+    highp float circle = 10.0;
+
+    // Create the view circles
+    // If we're even, space offset. Otherwise, center.
+    if (mod(CIRCLE_COUNT, 2) == 0) {
+        for (int i=0; i<CIRCLE_COUNT; i+=2) {
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(SPACING/2 + i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(SPACING/2 + i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+        }
+    }
+    else {
+        circle = zCircleGradient(aspect, FRAGCOORD.xy, 1.0, VIEW_RADIUS, 0.0, 1);
+        for (int i=1; i<CIRCLE_COUNT; i+=2) {
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+        }
+    }
+
+    // Mix the mask over top of the rendered view
+    COLOR = mix(walpha, vec4(vec3(0.0), 1.0), circle);
 }
