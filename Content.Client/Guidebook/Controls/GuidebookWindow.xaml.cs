@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Linq;
 using Content.Client.Guidebook.RichText;
 using Content.Client.UserInterface.ControlExtensions;
@@ -77,7 +76,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
             UserInterfaceManager.DeferAction(() =>
             {
-                if (control.GetControlScrollPosition() is not {} position)
+                if (control.GetControlScrollPosition() is not { } position)
                     return;
 
                 Scroll.HScrollTarget = position.X;
@@ -109,7 +108,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
         UserInterfaceManager.DeferAction(() =>
         {
-            if (entry.GetControlScrollPosition() is not {} position)
+            if (entry.GetControlScrollPosition() is not { } position)
                 return;
 
             Scroll.HScrollTarget = position.X;
@@ -167,13 +166,13 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
     private int? HeadingDepth(Label control)
     {
-        if (control.StyleClasses.Contains("LabelHeadingBigger")) {
+        if (control.StyleClasses.Contains("LabelHeadingBigger"))
             return 1;
-        } else if (control.StyleClasses.Contains("LabelHeading")) {
+        else if (control.StyleClasses.Contains("LabelHeading"))
             return 2;
-        } else if (control.StyleClasses.Contains("LabelKeyText")) {
+        else if (control.StyleClasses.Contains("LabelKeyText"))
             return 3;
-        }
+
         return null;
     }
 
@@ -181,12 +180,15 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
     {
         TableOfContents.Clear();
 
+        var firstEntry = TableOfContents.AddItem(null);
+        firstEntry.Label.Text = Loc.GetString("guidebook-toc-header");
+
         var labels = EntryContainer.GetControlOfType<Label>(true);
         var stack = new Stack<(TreeItem Item, int Depth)>();
 
         foreach (var label in labels)
         {
-            if (HeadingDepth(label) is not {} depth)
+            if (HeadingDepth(label) is not { } depth)
                 continue;
 
             while (stack.TryPeek(out var previous) && previous.Depth >= depth)
@@ -194,14 +196,18 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
                 stack.Pop();
             }
 
-            var item = stack.TryPeek(out var parent) ? TableOfContents.AddItem(parent.Item) : TableOfContents.AddItem(null);
+            var item = stack.TryPeek(out var parent)
+                ? TableOfContents.AddItem(parent.Item)
+                : TableOfContents.AddItem(firstEntry);
             item.Label.Text = label.Text;
             item.Metadata = label;
 
             stack.Push((item, depth));
         }
 
+        // Expand all entries, but collapse the first one
         TableOfContents.SetAllExpanded(true);
+        firstEntry.SetExpanded(false);
     }
 
     public void UpdateGuides(
