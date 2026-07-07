@@ -50,6 +50,7 @@
     noWindowInTile: true
     highVoltageNode: high
     mediumVoltageNode: medium
+    onActivateInWorld: true
     lowVoltageNode: low
   - type: NodeContainer
     nodes:
