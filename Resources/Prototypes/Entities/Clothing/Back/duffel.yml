@@ -237,7 +237,7 @@
     - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: ClothingBackpackDuffel
+  parent: ClothingBackpackHolding #Standardized Bluespace Bags
   id: ClothingBackpackDuffelHolding
   name: duffel bag of holding
   description: A duffel bag that opens into a localized pocket of bluespace.
@@ -249,18 +249,6 @@
     - state: icon
     - state: icon-unlit
       shader: unshaded
-  - type: Item
-    size: Ginormous
-  - type: Storage
-    maxItemSize: Ginormous
-    grid:
-    - 0,0,15,7 # Same with all bags of holding
-    blacklist:
-      tags:
-        - Backpack
-  - type: ClothingSpeedModifier #Nullifies duffel bag movespeed stat
-    walkModifier: 1
-    sprintModifier: 1
 
 - type: entity
   parent: [ ClothingBackpackDuffel, BaseCentcommContraband ]

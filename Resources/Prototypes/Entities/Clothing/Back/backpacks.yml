@@ -278,9 +278,15 @@
   name: death squad backpack
   description: Holds the kit of CentComm's most feared agents.
   components:
-    - type: Storage
-      grid:
-      - 0,0,7,6
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,11,7 # Matches bag of holding
+    blacklist:
+      tags:
+      - Backpack
 
 #Syndicate
 - type: entity
@@ -321,7 +327,7 @@
   - type: Storage
     maxItemSize: Ginormous
     grid:
-    - 0,0,15,7 # Same with all bags of holding
+    - 0,0,11,7 # Same with all bags of holding
     blacklist:
       tags:
       - Backpack
