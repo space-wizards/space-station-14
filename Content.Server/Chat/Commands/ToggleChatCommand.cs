@@ -7,13 +7,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed partial class SetChatCommand : LocalizedCommands
+public sealed partial class ToggleChatCommand : LocalizedCommands
 {
     [Dependency] private IConfigurationManager _configManager = default!;
 
-    private const string DeadChat = "dead";
-    private const string LoocChat = "looc";
-    private const string OocChat = "ooc";
+    private const string DeadChat = "Dead";
+    private const string LoocChat = "LOOC";
+    private const string OocChat = "OOC";
 
     // Makes look-up easier, and in general the code is more readable.
     private static readonly Dictionary<string, (CVarDef<bool> CVar, string LocPrefix)> ChatMap = new()
@@ -23,7 +23,7 @@ public sealed partial class SetChatCommand : LocalizedCommands
         [OocChat] = (CCVars.OocEnabled, "cmd-setooc-ooc"),
     };
 
-    public override string Command => "setchat";
+    public override string Command => "togglechat";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
