@@ -224,3 +224,6 @@
         walkSpeedModifier: 0.5
         sprintSpeedModifier: 0.5
         time: 5
+      - !type:Disarm
+      - !type:ModifyKnockdown
+        probability: 0.5

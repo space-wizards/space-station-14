@@ -52,7 +52,7 @@ public sealed partial class ScreechSystem : EntitySystem
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
         args.Handled = true;
-        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.KnockdownChances, args.Effects);
+        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.Effects);
     }
 
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
@@ -67,9 +67,9 @@ public sealed partial class ScreechSystem : EntitySystem
     }
 
     /// <summary>
-    /// Makes the entity "source" screech.
+    /// Makes the entity "source" screech, applying the "effects" to every entity in "range" that does not have screech protection.
     /// </summary>
-    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, float knockdownChances = 0.5f, List<EntityEffect>? effects = null)
+    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, List<EntityEffect>? effects = null)
     {
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
@@ -77,9 +77,11 @@ public sealed partial class ScreechSystem : EntitySystem
 
         // then, we do the screech per-se
         var transform = Transform(source);
-        // clean entset cache
+
+        // reset entset cache
         _entSet.Clear();
         _entityLookup.GetEntitiesInRange(transform.Coordinates, range, _entSet);
+
         foreach (var entity in _entSet)
         {
             // Is the entity affected by the screech via status effects? (It would be a good idea to check for ears instead but IDK how to do that in a way that's performant :P)
@@ -87,16 +89,16 @@ public sealed partial class ScreechSystem : EntitySystem
             if (!_statusEffectsQuery.HasComponent(entity) || entity == source)
                 continue;
 
-            EntityHeardIt(entity, source, knockdownChances, effects);
+            EntityHeardIt(entity, source, effects);
         }
 
         _audio.PlayPredicted(screechSound, source, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(soundRange));
     }
 
     /// <summary>
-    /// Tests if that singular entity heard it (it may have screech protection) and if it did it will disarm it.
+    /// Tests if that singular entity heard it (it may have screech protection) and if it did it will receive the entity effects.
     /// </summary>
-    private void EntityHeardIt(EntityUid ent, EntityUid source, float knockdownChances, List<EntityEffect>? effects)
+    private void EntityHeardIt(EntityUid ent, EntityUid source, List<EntityEffect>? effects)
     {
         var ev = new ScreechEffectAttemptEvent()
         {
@@ -108,10 +110,6 @@ public sealed partial class ScreechSystem : EntitySystem
         if (ev.Cancelled)
             return; // if we return here, the entity had screech protection
 
-        // does the disarming
-        var dis = new DisarmedEvent(ent, source, knockdownChances);
-        RaiseLocalEvent(ent, ref dis);
-
         // apply entity effects to the target
         if (effects != null)
         {
@@ -120,10 +118,6 @@ public sealed partial class ScreechSystem : EntitySystem
                 _effects.TryApplyEffect(ent, effect, user: source);
             }
         }
-
-        // maybe knock it down
-        if (!SharedRandomExtensions.PredictedProb(_timing, knockdownChances, GetNetEntity(ent)))
-            _stuns.TryKnockdown(ent, null);
     }
 }
 
@@ -174,12 +168,6 @@ public sealed partial class ScreechActionEvent : InstantActionEvent
     /// </summary>
     [DataField]
     public float SoundRange = 20f;
-
-    /// <summary>
-    /// Chances of the screech knocking down the victim.
-    /// </summary>
-    [DataField]
-    public float KnockdownChances = 0.5f;
 
     /// <summary>
     /// Entity effects applied to entities that heard the screech.
