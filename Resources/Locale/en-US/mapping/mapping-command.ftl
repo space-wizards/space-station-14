@@ -10,6 +10,8 @@ cmd-mapping-warning = WARNING: The server is using a debug build. You are riskin
 
 cmd-toggleautosave-desc = Toggles autosaving for a map.
 cmd-toggleautosave-help = Usage: toggleautosave [MapId] [Path]
+cmd-toggleautosave-enabled = Enabled auto saving for map {$mapId}. See server console for details.
+cmd-toggleautosave-disabled = Disabled auto saving for map {$mapId}. See server console for details.
 
 # duplicate text from engine load/save map commands.
 # I CBF making this PR depend on that one.

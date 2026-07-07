@@ -30,11 +30,11 @@ public sealed partial class MappingSystem : EntitySystem
     }
 
     public override void Update(float frameTime)
-	{
-		base.Update(frameTime);
+    {
+        base.Update(frameTime);
 
-		if (!_autosaveEnabled)
-			return;
+        if (!_autosaveEnabled)
+            return;
 
         // Maps are paused while in mapping, so we have to use AllEntityQuery to get them.
 		var query = AllEntityQuery<AutoSaveComponent>();
@@ -65,10 +65,10 @@ public sealed partial class MappingSystem : EntitySystem
             var path = saveDir / new ResPath($"{DateTime.Now:yyyy-M-dd_HH.mm.ss}-AUTO.yml");
             Log.Info($"Autosaving map {autoSave.FileName} ({uid}) to {path}. Next save in {ReadableTimeLeft((uid, autoSave))} seconds.");
 
-			if (HasComp<MapComponent>(uid))
-				_loader.TrySaveMap(uid, path);
-			else
-				_loader.TrySaveGrid(uid, path);
+            if (HasComp<MapComponent>(uid))
+                _loader.TrySaveMap(uid, path);
+            else
+                _loader.TrySaveGrid(uid, path);
 		}
 	}
 
@@ -82,10 +82,13 @@ public sealed partial class MappingSystem : EntitySystem
     /// </summary>
     /// <param name="map">Map ID of the map to autosave.</param>
     /// <param name="path">Relative path inside the user data folder to save into.</param>
-    public void ToggleAutosave(MapId map, string? path = null)
+    public bool ToggleAutosave(MapId map, string? path = null)
     {
         if (_map.TryGetMap(map, out var uid))
-            ToggleAutosave(uid.Value, path);
+            return ToggleAutosave(uid.Value, path);
+
+        Log.Error($"Tried to toggle autosave for an invalid MapID {map}!");
+        return false;
     }
 
     /// <summary>
@@ -93,30 +96,29 @@ public sealed partial class MappingSystem : EntitySystem
     /// </summary>
     /// <param name="uid">UID of the map or the grid to autosave.</param>
     /// <param name="path">Relative path inside the user data folder to save into.</param>
-    public void ToggleAutosave(EntityUid uid, string? path = null)
+    public bool ToggleAutosave(EntityUid uid, string? path = null)
     {
         if (!_autosaveEnabled)
-            return;
+            return false;
 
 		if (HasComp<AutoSaveComponent>(uid))
 		{
-			RemCompDeferred<AutoSaveComponent>(uid);
-			return;
+            Log.Info($"Disabled autosaving for map (or grid) ({ToPrettyString(uid)}).");
+			RemComp<AutoSaveComponent>(uid);
+			return false;
 		}
-
-		if (string.IsNullOrWhiteSpace(path))
-			return;
 
 		if (!HasComp<MapComponent>(uid) && !HasComp<MapGridComponent>(uid))
 		{
 			Log.Error($"Tried to toggle autosave for {ToPrettyString(uid)}, but it is neither a grid or map!");
-			return;
+			return false;
 		}
 
 		var comp = EnsureComp<AutoSaveComponent>(uid);
-		comp.FileName = Path.GetFileName(path);
+		comp.FileName = Path.GetFileName(path ?? string.Empty);
 		comp.NextSaveTime = _timing.RealTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.AutosaveInterval));
 
-        Log.Info($"Enabled autosaving for map (or grid) {path} ({ToPrettyString(uid)}). Next save in {ReadableTimeLeft((uid, comp))} seconds.");
+        Log.Info($"Enabled autosaving for map (or grid) {ToPrettyString(uid)} into path {path}. Next save in {ReadableTimeLeft((uid, comp))} seconds.");
+        return true;
     }
 }
