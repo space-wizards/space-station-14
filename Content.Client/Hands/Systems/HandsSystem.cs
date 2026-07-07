@@ -77,22 +77,19 @@ namespace Content.Client.Hands.Systems
             }
         }
 
-        private bool ApplyFullState(Entity<HandsComponent> ent, HandsComponentState state)
+        private void ApplyFullState(Entity<HandsComponent> ent, HandsComponentState state)
         {
-            var changed = false;
             var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys).ToList();
             var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys).ToList();
 
             foreach (var handId in oldHands)
             {
                 RemoveHand(ent.AsNullable(), handId);
-                changed = true;
             }
 
             foreach (var handId in state.SortedHands.Intersect(newHands))
             {
                 AddHand(ent.AsNullable(), handId, state.Hands[handId]);
-                changed = true;
             }
 
             foreach (var (handId, hand) in state.Hands)
@@ -101,32 +98,24 @@ namespace Content.Client.Hands.Systems
                     continue;
 
                 ent.Comp.Hands[handId] = hand;
-                changed = true;
             }
 
             if (!ent.Comp.SortedHands.SequenceEqual(state.SortedHands))
             {
                 ent.Comp.SortedHands = new(state.SortedHands);
-                changed = true;
             }
 
-            if (SetActiveHand(ent.AsNullable(), state.ActiveHandId))
-                changed = true;
-
-            return changed;
+            SetActiveHand(ent.AsNullable(), state.ActiveHandId);
         }
 
-        private bool ApplyDeltaState(Entity<HandsComponent> ent, HandsComponentDeltaState state)
+        private void ApplyDeltaState(Entity<HandsComponent> ent, HandsComponentDeltaState state)
         {
-            var changed = false;
-
             if ((state.DirtyFields & HandsComponent.HandsField) != 0 && state.Hands != null)
             {
                 var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys).ToList();
                 foreach (var handId in oldHands)
                 {
                     RemoveHand(ent.AsNullable(), handId);
-                    changed = true;
                 }
 
                 IEnumerable<string> sortedHands = state.SortedHands != null ? state.SortedHands : state.Hands.Keys;
@@ -137,7 +126,6 @@ namespace Content.Client.Hands.Systems
                         continue;
 
                     AddHand(ent.AsNullable(), handId, state.Hands[handId]);
-                    changed = true;
                 }
 
                 foreach (var (handId, hand) in state.Hands)
@@ -146,7 +134,6 @@ namespace Content.Client.Hands.Systems
                         continue;
 
                     ent.Comp.Hands[handId] = hand;
-                    changed = true;
                 }
             }
 
@@ -155,16 +142,12 @@ namespace Content.Client.Hands.Systems
                 && !ent.Comp.SortedHands.SequenceEqual(state.SortedHands))
             {
                 ent.Comp.SortedHands = new(state.SortedHands);
-                changed = true;
             }
 
-            if ((state.DirtyFields & HandsComponent.ActiveHandIdField) != 0
-                && SetActiveHand(ent.AsNullable(), state.ActiveHandId))
+            if ((state.DirtyFields & HandsComponent.ActiveHandIdField) != 0)
             {
-                changed = true;
+                SetActiveHand(ent.AsNullable(), state.ActiveHandId);
             }
-
-            return changed;
         }
         #endregion
 
