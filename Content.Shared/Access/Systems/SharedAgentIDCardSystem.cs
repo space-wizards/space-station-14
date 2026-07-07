@@ -22,22 +22,10 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
     [Dependency] private SharedJobSystem _job = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
 
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AgentIDCardComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<VoiceMaskNameUpdatedEvent>>(OnVoiceMaskNameChanged);
-        // BUI
-        SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardNameChangedMessage>(OnNameChanged);
-        SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobChangedMessage>(OnJobChanged);
-        SubscribeLocalEvent<AgentIDCardComponent, AgentIDCardJobIconChangedMessage>(OnJobIconChanged);
-    }
-
     /// <summary>
     /// Steals access from interacted ids.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<AgentIDCardComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || !args.CanReach || _lock.IsLocked(ent.Owner) ||
@@ -59,6 +47,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
             Dirty(ent, access);
     }
 
+    [SubscribeLocalEvent]
     private void OnVoiceMaskNameChanged(Entity<AgentIDCardComponent> ent,
         ref InventoryRelayedEvent<VoiceMaskNameUpdatedEvent> args)
     {
@@ -71,6 +60,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
         _card.TryChangeFullName(ent, args.Args.NewName, idCard);
     }
 
+    [SubscribeLocalEvent]
     private void OnNameChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardNameChangedMessage args)
     {
         if (!_card.TryChangeFullName(ent, args.Name))
@@ -79,6 +69,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnJobChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobChangedMessage args)
     {
         if (!_card.TryChangeJobTitle(ent, args.Job))
@@ -87,6 +78,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnJobIconChanged(Entity<AgentIDCardComponent> ent, ref AgentIDCardJobIconChangedMessage args)
     {
         if (!ProtoMan.Resolve(args.JobIconId, out var jobIcon) ||
@@ -103,7 +95,7 @@ public abstract partial class SharedAgentIdCardSystem : EntitySystem
     /// <summary>
     /// Update the agent id UI with new component info.
     /// </summary>
-    protected virtual void UpdateUi(EntityUid entity)
+    public virtual void UpdateUi(EntityUid entity)
     {
         // Overridden on client
     }

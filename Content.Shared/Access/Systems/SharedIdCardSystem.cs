@@ -25,6 +25,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
+    [Dependency] private SharedAgentIdCardSystem _agentIdCard = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -77,9 +78,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     {
         // Try to update the job status icon of the player owning the ID, if any.
         _jobStatus.UpdateIdHolderStatus(ent);
-
-        var ev = new IdCardAutoStateHandledEvent();
-        RaiseLocalEvent(ent, ref ev);
+        _agentIdCard.UpdateUi(ent);
     }
 
     /// <summary>
@@ -340,10 +339,3 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         }
     }
 }
-
-/// <summary>
-/// Raised on an ID card after its <see cref="IdCardComponent"/> state is auto-handled,
-/// so other systems can react to the new name, job title or icon.
-/// </summary>
-[ByRefEvent]
-public record struct IdCardAutoStateHandledEvent;

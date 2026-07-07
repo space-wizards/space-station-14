@@ -16,14 +16,7 @@ public sealed partial class AgentIdCardSystem : SharedAgentIdCardSystem
     [Dependency] private ChameleonClothingSystem _chameleon = default!;
     [Dependency] private ChameleonControllerSystem _chamController = default!;
 
-    /// <inheritdoc />
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<AgentIDCardComponent, InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent>>(OnChameleonControllerOutfitChangedItem);
-    }
-
+    [SubscribeLocalEvent]
     private void OnChameleonControllerOutfitChangedItem(Entity<AgentIDCardComponent> ent, ref InventoryRelayedEvent<ChameleonControllerOutfitSelectedEvent> args)
     {
         if (!TryComp<IdCardComponent>(ent, out var idCardComp))
