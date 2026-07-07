@@ -33,7 +33,6 @@ namespace Content.Server.Pointing.EntitySystems
     {
         [Dependency] private IConfigurationManager _config = default!;
         [Dependency] private IReplayRecordingManager _replay = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
@@ -284,7 +283,7 @@ namespace Content.Server.Pointing.EntitySystems
                 TileRef? tileRef = null;
                 string? position = null;
 
-                if (_mapManager.TryFindGridAt(mapCoordsPointed, out var gridUid, out var grid))
+                if (_map.TryFindGridAt(mapCoordsPointed, out var gridUid, out var grid))
                 {
                     position = $"EntId={gridUid} {_map.WorldToTile(gridUid, grid, mapCoordsPointed.Position)}";
                     tileRef = _map.GetTileRef(gridUid, grid, _map.WorldToTile(gridUid, grid, mapCoordsPointed.Position));
