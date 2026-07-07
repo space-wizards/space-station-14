@@ -125,6 +125,16 @@ public sealed partial class NightVisionOverlay : Overlay
                 _nightVisionShader.SetParameter("AMPLIFICATION", Amplification);
                 _nightVisionShader.SetParameter("SPACING", ViewCircleSpacing);
 
+                // Adjusting these weights is somewhat tricky.
+                // The offset controls the amount of spacing (in px) of the sample - going further out will result in more blur
+                // but also artifacting as you're losing information.
+                _nightVisionShader.SetParameter("BLUR_OFFSET", [0.0f, 1.3846153846f, 3.2307692308f]);
+
+                // Adjusting the weights towards the outside will increase the blurring effect, but will also cause artifacts.
+                // weight[0] + 2*weight[1] + 2*weight[2] must equal one.
+                // Set weight[0] to 1 and others to zero to remove the blur entirely.
+                _nightVisionShader.SetParameter("BLUR_WEIGHT", [0.2270270270f, 0.3162162162f, 0.0702702703f]);
+
                 handle.UseShader(_nightVisionShader);
                 handle.DrawRect(args.WorldBounds, Color.White);
                 handle.UseShader(null);

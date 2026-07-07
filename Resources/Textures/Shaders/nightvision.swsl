@@ -6,20 +6,19 @@ uniform highp int CIRCLE_COUNT;
 uniform highp vec3 BASE_COLOR;
 uniform highp float AMPLIFICATION;
 uniform highp float SPACING;
+uniform highp float[3] BLUR_OFFSET = float[](0.0, 1.3846153846, 3.2307692308);
+uniform highp float[3] BLUR_WEIGHT = float[](0.2270270270, 0.3162162162, 0.0702702703);
 
 void fragment()
 {
-    // Blur config - This could be made adjustable.
-    highp float offset[3] = float[](0.0, 1.3846153846, 3.2307692308);
-    highp float weight[3] = float[](0.2270270270, 0.3162162162, 0.0702702703);
-
     // Bilinear blur in x and y
-    highp vec4 blurred = zTextureSpec(SCREEN_TEXTURE, UV) * weight[0];
+    // This should probably be implemented in the z-library with a bit more configurability.
+    highp vec4 blurred = zTextureSpec(SCREEN_TEXTURE, UV) * BLUR_WEIGHT[0];
     for (int i=1; i<3; i++) {
-        blurred += zTextureSpec(SCREEN_TEXTURE, (UV + vec2(0.0, offset[i] * SCREEN_PIXEL_SIZE.y))) * weight[i];
-        blurred += zTextureSpec(SCREEN_TEXTURE, (UV - vec2(0.0, offset[i] * SCREEN_PIXEL_SIZE.y))) * weight[i];
-        blurred += zTextureSpec(SCREEN_TEXTURE, (UV + vec2(offset[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * weight[i];
-        blurred += zTextureSpec(SCREEN_TEXTURE, (UV - vec2(offset[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * weight[i];
+        blurred += zTextureSpec(SCREEN_TEXTURE, (UV + vec2(0.0, BLUR_OFFSET[i] * SCREEN_PIXEL_SIZE.y))) * BLUR_WEIGHT[i];
+        blurred += zTextureSpec(SCREEN_TEXTURE, (UV - vec2(0.0, BLUR_OFFSET[i] * SCREEN_PIXEL_SIZE.y))) * BLUR_WEIGHT[i];
+        blurred += zTextureSpec(SCREEN_TEXTURE, (UV + vec2(BLUR_OFFSET[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * BLUR_WEIGHT[i];
+        blurred += zTextureSpec(SCREEN_TEXTURE, (UV - vec2(BLUR_OFFSET[i] * SCREEN_PIXEL_SIZE.x, 0.0))) * BLUR_WEIGHT[i];
     }
 
     // Monochrome the view
