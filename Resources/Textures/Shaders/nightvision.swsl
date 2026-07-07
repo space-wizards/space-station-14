@@ -26,7 +26,7 @@ void fragment()
     highp float gray = zGrayscale(blurred.rgb);
 
     // Shade it to the phosphor color
-    highp vec3 colorized = gray * BASE_COLOR * AMPLIFICATION;
+    highp vec3 colorized = gray * BASE_COLOR;// * AMPLIFICATION;
 
     // Re-expand and add the original alpha back
     highp vec4 walpha = vec4(vec3(colorized), blurred.a);
@@ -39,20 +39,20 @@ void fragment()
 
     // Create the view circles
     // If we're even, space offset. Otherwise, center.
-    if (mod(CIRCLE_COUNT, 2) == 0) {
+    if (CIRCLE_COUNT % 2 == 0) {
         for (int i=0; i<CIRCLE_COUNT; i+=2) {
-            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(SPACING/2 + i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
-            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(SPACING/2 + i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(SPACING / 2.0 + float(i) * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1.0));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(SPACING / 2.0 + float(i) * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1.0));
         }
     }
     else {
-        circle = zCircleGradient(aspect, FRAGCOORD.xy, 1.0, VIEW_RADIUS, 0.0, 1);
+        circle = zCircleGradient(aspect, FRAGCOORD.xy, 1.0, VIEW_RADIUS, 0.0, 1.0);
         for (int i=1; i<CIRCLE_COUNT; i+=2) {
-            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
-            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(i * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy + vec2(float(i) * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1.0));
+            circle = min(circle, zCircleGradient(aspect, FRAGCOORD.xy - vec2(float(i) * SPACING, 0.0), 1.0, VIEW_RADIUS, 0.0, 1.0));
         }
     }
 
     // Mix the mask over top of the rendered view
-    COLOR = mix(walpha, vec4(vec3(0.0), 1.0), circle);
+    COLOR = texture(SCREEN_TEXTURE, UV); //mix(walpha, vec4(vec3(0.0), 1.0), circle);
 }
