@@ -742,7 +742,7 @@
     goggleEffect: true
     viewCircleRadius: 350
     viewCircleCount: 1
-    lightingColor: "#FFFFFF04"
+    lightingColor: "#FFFFFF32"
     phosphorColor: "#00A600"
 
 - type: entity
