@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Map;
 
 namespace Content.Client.NodeContainer;
 
@@ -13,7 +12,6 @@ public sealed partial class NodeGroupVisualsSystem : EntitySystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private IInputManager _inputManager = default!;
     [Dependency] private IResourceCache _resourceCache = default!;
 
@@ -85,7 +83,6 @@ public sealed partial class NodeGroupVisualsSystem : EntitySystem
             var overlay = new NodeVisualizationOverlay(
                 this,
                 _entityLookup,
-                _mapManager,
                 _inputManager,
                 _resourceCache,
                 EntityManager);
