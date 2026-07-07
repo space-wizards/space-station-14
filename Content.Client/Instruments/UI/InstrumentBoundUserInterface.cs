@@ -30,6 +30,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     private readonly InputMidiSource _inputSource = new();
 
     private readonly ChannelsControl _channelsControl = new();
+    private readonly MidiCollectionUtilsControl _midiCollectionUtilsControl = new();
 
     private InstrumentMenu? _instrumentMenu;
 
@@ -83,6 +84,9 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-menu-channels-label"),
             _channelsControl);
+        _instrumentMenu.AddConfigurationControl(
+            _loc.GetString("instruments-component-midi-file-collection-label"),
+            _midiCollectionUtilsControl);
 
         // Append additional configuration controls here
     }

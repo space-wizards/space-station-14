@@ -40,6 +40,11 @@ instruments-component-channels-clear-button = Clear
 instruments-component-channels-track-names-toggle = Show Track Names
 instruments-component-channels-single = {$channel} {$name}
 instruments-component-channels-multi = {$channel} {$name} ({$other})
+instruments-component-midi-file-collection-label = MIDI Collection
+instruments-component-midi-file-collection-size-label = {$count} MIDI files loaded
+instruments-component-midi-file-collection-open-dir-button = Open Folder
+instruments-component-midi-file-collection-reload-button = Reload Collection
+instruments-component-midi-file-collection-delete-all-button = Clear Collection
 
 
 # SwappableInstrumentComponent
