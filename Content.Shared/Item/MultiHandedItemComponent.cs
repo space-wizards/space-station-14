@@ -9,6 +9,9 @@ namespace Content.Shared.Item;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class MultiHandedItemComponent : Component
 {
-    [DataField("handsNeeded"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Number of free hands required to hold the item.
+    /// </summary>
+    [DataField]
     public int HandsNeeded = 2;
 }

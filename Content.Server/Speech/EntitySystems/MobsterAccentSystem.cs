@@ -1,11 +1,12 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MobsterAccentSystem : EntitySystem
+public sealed partial class MobsterAccentSystem : EntitySystem
 {
     private static readonly Regex RegexIng = new(@"(?<=\w\w)(in)g(?!\w)", RegexOptions.IgnoreCase);
     private static readonly Regex RegexLowerOr = new(@"(?<=\w)o[Rr](?=\w)");
@@ -14,9 +15,9 @@ public sealed class MobsterAccentSystem : EntitySystem
     private static readonly Regex RegexUpperAr = new(@"(?<=\w)A[Rr](?=\w)");
     private static readonly Regex RegexFirstWord = new(@"^(\S+)");
     private static readonly Regex RegexLastWord = new(@"(\S+)$");
-
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
+    private static readonly Regex RegexLastPunctuation = new(@"([.!?]+$)(?!.*[.!?])|(?<![.!?])$");
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ReplacementAccentSystem _replacement = default!;
 
     public override void Initialize()
     {
@@ -84,7 +85,7 @@ public sealed class MobsterAccentSystem : EntitySystem
             }
             if (lastWordAllCaps)
                 suffix = suffix.ToUpper();
-            msg += suffix;
+            msg = RegexLastPunctuation.Replace(msg, suffix);
         }
 
         return msg;

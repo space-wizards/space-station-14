@@ -1,0 +1,52 @@
+- type: entity
+  parent: SolutionMopNormal
+  id: SolutionMopMoproach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionRegeneration
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    preserve:
+      - Water
+    quantity: 10
+
+- type: entity
+  name: moproach
+  parent: MobMothroach
+  id: MobMoproach
+  description: This little mothroach has mopshoes on its feet! How adorable!
+  components:
+  - type: GhostRole
+    name: ghost-role-information-moproach-name
+    description: ghost-role-information-moproach-description
+  - type: Sprite
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Critical
+      65: Dead
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 5 # extra speed for that moppin'!
+  - type: HTN
+    rootTask:
+      task: MoproachCompound
+  - type: Absorbent
+    pickupAmount: 2 # small feet
+  - type: UseDelay
+    delay: 0.5 # quick feet
+  - type: SolutionManager
+    solutions:
+    - SolutionMopMoproach
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot

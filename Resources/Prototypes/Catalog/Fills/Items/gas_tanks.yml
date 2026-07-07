@@ -26,12 +26,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 31 minutes
       volume: 5
       moles:
-        - 2.051379050 # oxygen
+        Oxygen: 2.051379050 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -40,12 +40,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 4 minutes
       volume: 0.66
       moles:
-        - 0.270782035 # oxygen
+        Oxygen: 0.270782035 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -54,13 +54,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 4 minutes
       volume: 0.66
       moles:
-        - 0 # oxygen
-        - 0.270782035 # nitrogen
+        Nitrogen: 0.270782035 # nitrogen
       temperature: 293.15
 
 
@@ -70,12 +69,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 9 minutes
       volume: 1.5
       moles:
-        - 0.615413715 # oxygen
+        Oxygen: 0.615413715 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -84,13 +83,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 9 minutes
       volume: 1.5
       moles:
-        - 0 # oxygen
-        - 0.615413715 # nitrogen
+        Nitrogen: 0.615413715 # nitrogen
       temperature: 293.15
 
 
@@ -100,12 +98,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 15 minutes
       volume: 2.5
       moles:
-        - 1.025689525 # oxygen
+        Oxygen: 1.025689525 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -114,13 +112,12 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 21.3
+    releasePressure: 21.3
     air:
       # 15 minutes
       volume: 2.5
       moles:
-        - 0 # oxygen
-        - 1.025689525 # nitrogen
+        Nitrogen: 1.025689525 # nitrogen
       temperature: 293.15
 
 - type: entity
@@ -129,20 +126,14 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 22.4
+    releasePressure: 22.4
     air:
       # 4 minutes
       volume: 0.66
       moles:
-        - 0.270782035 # 95% oxygen
-        - 0 # nitrogen
-        - 0 # CO2
-        - 0 # plasma
-        - 0 # tritium
-        - 0 # water vapor
-        - 0 # ammonia
-        - 0.014251686 # 5% N2O
-        # 0.285033721       total 
+        Oxygen: 0.270782035 # 95% oxygen
+        NitrousOxide: 0.014251686 # 5% N2O
+        # 0.285033721       total
       temperature: 293.15
 
 - type: entity
@@ -151,13 +142,13 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 101.3
+    releasePressure: 101.3
     air:
       # 6 minutes due to output pressure
       volume: 5
       moles:
-        - 0.451303391 # 22% oxygen
-        - 1.600075659 # 78% nitrogen
+        Oxygen: 0.451303391 # 22% oxygen
+        Nitrogen: 1.600075659 # 78% nitrogen
         # 2.051379050       total
       temperature: 293.15
 
@@ -172,8 +163,7 @@
       # 31 minutes
       volume: 5
       moles:
-        - 0           # oxygen not included
-        - 2.051379050 # nitrogen
+        Nitrogen: 2.051379050 # nitrogen
       temperature: 293.15
 
 - type: entity
@@ -188,19 +178,13 @@
     #  * 101.325 | one atmosphere
     # __________
     #    30.3975   optimal output pressure
-    outputPressure: 30.4
+    releasePressure: 30.4
     air:
       # only 22 minutes due to pressure
       volume: 5
       moles:
-        - 1.435965335 # 70% oxygen
-        - 0 # nitrogen
-        - 0 # CO2
-        - 0 # plasma
-        - 0 # tritium
-        - 0 # water vapor
-        - 0 # ammonia
-        - 0.615413715 # 30% N2O
+        Oxygen: 1.435965335 # 70% oxygen
+        NitrousOxide: 0.615413715 # 30% N2O
         # 2.051379050       total
       temperature: 293.15
 
@@ -211,13 +195,101 @@
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 101.3
+    releasePressure: 101.3
     air:
       # 6 minutes of agony
       volume: 5
       moles:
-        - 0           # oxygen
-        - 0           # nitrogen
-        - 0           # CO2
-        - 2.051379050 # plasma
+        Plasma: 2.051379050
       temperature: 293.15
+
+- type: entity
+  parent: AirTank
+  id: MaxCap # As of currently writing, tanks have an explosion intensity of about 125, which is about as powerful as an explosive grenade.
+  categories: [ Debug ]
+  suffix: Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 5
+      moles:
+        Oxygen: 1.0 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
+        Tritium: 0.5
+      temperature: 373.149
+
+- type: entity
+  parent: EmergencyOxygenTank
+  id: MaxCapSmall # As of currently writing, mini tanks have an explosion intensity of about 40.
+  categories: [ Debug ]
+  suffix: Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 0.66
+      moles:
+        Oxygen: 0.1 # If trit fire burn ratio is ever changed, this value will need to be adjusted.
+        Tritium: 0.05
+        Plasma: 0.06 # High mass to slow flow rate
+      temperature: 373.149
+
+- type: entity
+  parent: ExtendedEmergencyOxygenTank
+  id: MaxCapSmallEx # As of currently writing, extended tanks currently have an explosive intensity of about 65
+  categories: [ Debug ]
+  suffix: Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 1.5
+      moles:
+        Oxygen: 0.41027581
+        Tritium: 0.205137905
+      temperature: 373.149
+
+- type: entity
+  parent: DoubleEmergencyOxygenTank
+  id: MaxCapSmallDouble # As of currently writing, extended tanks currently have an explosive intensity of about 85
+  categories: [ Debug ]
+  suffix: Max Cap
+  components:
+  - type: GasTank
+    air:
+      volume: 2.5
+      moles:
+        Oxygen:  0.68379301666
+        Tritium: 0.34189650833
+      temperature: 373.149
+
+- type: entity
+  parent: AirTank
+  id: MaxCapSilly
+  categories: [ Debug ]
+  name: max cap
+  suffix: Max Cap, Impossible
+  components:
+  - type: GasTank
+    air:
+      volume: 5
+      moles:
+        Oxygen: 6
+        Tritium: 3
+      temperature: 373.149
+
+- type: entity
+  parent: AirTank
+  id: MaxCapBluespace
+  categories: [ Debug ]
+  name: max cap
+  suffix: Max Cap, Canister
+  components:
+  - type: Explosive
+    maxIntensity: 200
+  - type: GasTank
+    safetyPressure: 5066.25
+    overpressure: 15198.75
+    air:
+      volume: 1500
+      moles:
+        Oxygen: 1400
+        Tritium: 700
+      temperature: 373.149

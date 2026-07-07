@@ -8,9 +8,9 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// This handles <see cref="MeleeSoundComponent"/>
 /// </summary>
-public sealed class MeleeSoundSystem : EntitySystem
+public sealed partial class MeleeSoundSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public const float DamagePitchVariation = 0.05f;
 
@@ -48,23 +48,17 @@ public sealed class MeleeSoundSystem : EntitySystem
         {
             if (damageType == null && damageSoundComp.NoDamageSound != null)
             {
-                var audioParams = damageSoundComp.NoDamageSound?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(damageSoundComp.NoDamageSound, coords, userUid, audioParams);
+                _audio.PlayPredicted(damageSoundComp.NoDamageSound, coords, userUid, damageSoundComp.NoDamageSound.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (damageType != null && damageSoundComp.SoundTypes?.TryGetValue(damageType, out var damageSoundType) == true)
             {
-                var audioParams = damageSoundType?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(damageSoundType, coords, userUid,audioParams);
+                _audio.PlayPredicted(damageSoundType, coords, userUid, damageSoundType.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (damageType != null && damageSoundComp.SoundGroups?.TryGetValue(damageType, out var damageSoundGroup) == true)
             {
-                var audioParams = damageSoundGroup?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(damageSoundGroup, coords, userUid, audioParams);
+                _audio.PlayPredicted(damageSoundGroup, coords, userUid, damageSoundGroup.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }
@@ -74,23 +68,17 @@ public sealed class MeleeSoundSystem : EntitySystem
         {
             if (hitSoundOverride != null)
             {
-                var audioParams = hitSoundOverride?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(hitSoundOverride, coords, userUid, audioParams);
+                _audio.PlayPredicted(hitSoundOverride, coords, userUid, hitSoundOverride.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else if (hitSound != null)
             {
-                var audioParams = hitSound?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(hitSound, coords, userUid, audioParams);
+                _audio.PlayPredicted(hitSound, coords, userUid, hitSound.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
             else
             {
-                var audioParams = noDamageSound?.Params ?? AudioParams.Default;
-                audioParams = audioParams.WithVariation(DamagePitchVariation);
-                _audio.PlayPredicted(noDamageSound, coords, userUid, audioParams);
+                _audio.PlayPredicted(noDamageSound, coords, userUid, noDamageSound.Params.WithVariation(DamagePitchVariation));
                 playedSound = true;
             }
         }

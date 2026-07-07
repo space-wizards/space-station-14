@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Physics.Controllers;
+using Content.Client.PhysicsSystem.Controllers;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
@@ -8,9 +9,9 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.NPC;
 
-public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
+public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 {
-    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
 
     public bool DebugEnabled
     {

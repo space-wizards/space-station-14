@@ -22,14 +22,13 @@ namespace Content.Client.Administration.UI.Bwoink
     [GenerateTypedNameReferences]
     public sealed partial class BwoinkControl : Control
     {
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IClientConsoleHost _console = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
         public AdminAHelpUIHandler AHelpHelper = default!;
 
         private PlayerInfo? _currentPlayer;
-        private readonly Dictionary<Button, ConfirmationData> _confirmations = new();
 
         public BwoinkControl()
         {
@@ -178,11 +177,6 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Kick.OnPressed += _ =>
             {
-                if (!AdminUIHelpers.TryConfirm(Kick, _confirmations))
-                {
-                    return;
-                }
-
                 // TODO: Reason field
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"kick \"{_currentPlayer.Username}\"");
@@ -196,11 +190,6 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Respawn.OnPressed += _ =>
             {
-                if (!AdminUIHelpers.TryConfirm(Respawn, _confirmations))
-                {
-                    return;
-                }
-
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };

@@ -1,28 +1,60 @@
 ﻿- type: entity
-  parent: BaseSign
+  parent: MarkerBase
   id: PlaqueAtmos
-  name: atmos plaque
+  name: atmos plaque spawner
+  suffix: Spawner
   components:
-  - type: WallMount
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        layer:
-        - MidImpassable
   - type: Sprite
-    drawdepth: WallMountedItems
     layers:
-      - state: atmosplaque
-        map: ["plaque"]
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.AtmosPlaqueVisuals.State:
-        plaque:
-          zumosplaque: { state: zumosplaque }
-          atmosplaque: { state: atmosplaque }
-  - type: AtmosPlaque
+    - state: green
+    - sprite: Structures/Wallmounts/signs.rsi
+      state: atmosplaque
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: PlaqueAtmosZUM
+        weight: 1
+      - id: PlaqueAtmosFEA
+        weight: 9
+      - id: PlaqueAtmosZAS
+        weight: 45
+      - id: PlaqueAtmosLINDA
+        weight: 45
+    offset: 0.0
+
+# individual plaques aren't placeable. you will not defy the randomness.
+
+- type: entity
+  parent: BaseSign
+  id: PlaqueAtmosFEA
+  name: FEA Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: atmosplaque
+
+- type: entity
+  parent: PlaqueAtmosFEA
+  id: PlaqueAtmosLINDA
+  name: LINDA Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: PlaqueAtmosFEA
+  id: PlaqueAtmosZAS
+  name: ZAS Atmospherics Division plaque
+  description: This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.
+  categories: [ HideSpawnMenu ]
+
+# If you get the ZUM plaque it means your round will be blessed with good engineering luck.
+- type: entity
+  parent: PlaqueAtmosFEA
+  id: PlaqueAtmosZUM
+  name: ZUM Atmospherics Division plaque
+  description: This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: zumosplaque

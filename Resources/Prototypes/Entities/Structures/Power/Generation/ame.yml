@@ -29,8 +29,9 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -108,6 +109,7 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: ame
+  - type: AmbientMusicMarkerEngineering
 
 - type: entity
   categories: [ HideSpawnMenu ]
@@ -155,8 +157,9 @@
         layer:
         - WallLayer
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
