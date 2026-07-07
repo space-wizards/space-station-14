@@ -17,7 +17,7 @@ public sealed partial class JobIconGroupPrototype : IPrototype
     /// Set of ids that make up the group.
     /// </summary>
     [DataField(required: true)]
-    public List<ProtoId<JobIconPrototype>> Icons = new();
+    public List<ProtoId<JobIconPrototype>> Icons = [];
 
     /// <summary>
     /// Name of the group used for menu tooltips.

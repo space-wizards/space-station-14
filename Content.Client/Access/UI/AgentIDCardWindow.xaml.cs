@@ -112,7 +112,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 Access = AccessLevel.Public,
                 ToolTip = Loc.GetString(iconProto.JobName),
                 TextureNormal = texture,
-                SetSize = new Vector2(32, 32),
+                SetSize = new Vector2(30, 30),
             };
 
             // Finish button and add to UI
@@ -138,14 +138,11 @@ public sealed partial class AgentIDCardWindow : FancyWindow
 
     private ContainerButton CreateGroupButton(JobIconGroupPrototype groupProto, ButtonGroup buttonGroup)
     {
-        var groupName = Loc.GetString(groupProto.GroupName);
-
         var button = new ContainerButton
         {
             Access = AccessLevel.Public,
             Group = buttonGroup,
             ToggleMode = true,
-            ToolTip = groupName,
             StyleClasses = { StyleClass.ButtonOpenBoth },
             SetSize = new Vector2(172, 32),
         };
@@ -159,12 +156,12 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 {
                     Texture = _spriteSystem.Frame0(groupProto.Sprite),
                     Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                    SetSize = new Vector2(24, 24),
+                    SetSize = new Vector2(30, 30),
                     VerticalAlignment = VAlignment.Center,
                 },
                 new Label
                 {
-                    Text = groupName,
+                    Text = Loc.GetString(groupProto.GroupName),
                     HorizontalExpand = true,
                     VerticalAlignment = VAlignment.Center,
                 },

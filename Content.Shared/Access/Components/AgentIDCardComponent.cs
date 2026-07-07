@@ -13,5 +13,5 @@ public sealed partial class AgentIDCardComponent : Component
     /// Groups of job icons this ID can use.
     /// </summary>
     [DataField]
-    public List<ProtoId<JobIconGroupPrototype>> IconGroups = new();
+    public List<ProtoId<JobIconGroupPrototype>> IconGroups = [];
 }

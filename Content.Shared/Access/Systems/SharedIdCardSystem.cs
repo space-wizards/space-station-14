@@ -341,5 +341,9 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Raised on an ID card after its <see cref="IdCardComponent"/> state is auto-handled,
+/// so other systems can react to the new name, job title or icon.
+/// </summary>
 [ByRefEvent]
 public record struct IdCardAutoStateHandledEvent;

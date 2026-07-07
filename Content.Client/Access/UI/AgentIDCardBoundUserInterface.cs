@@ -41,7 +41,7 @@ public sealed class AgentIDCardBoundUserInterface(EntityUid owner, Enum uiKey) :
         if (_window == null)
             return;
 
-        if (!EntMan.TryGetComponent(Owner, out IdCardComponent? card))
+        if (!EntMan.TryGetComponent<IdCardComponent>(Owner, out var card))
             return;
 
         _window.Update(card);

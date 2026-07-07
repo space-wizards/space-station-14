@@ -119,18 +119,27 @@ public enum AgentIDCardUiKey : byte
     Key,
 }
 
+/// <summary>
+/// Sent from the agent ID UI to change the card name.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class AgentIDCardNameChangedMessage(string name) : BoundUserInterfaceMessage
 {
     public string Name { get; } = name;
 }
 
+/// <summary>
+/// Sent from the agent ID UI to change the job title.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class AgentIDCardJobChangedMessage(string job) : BoundUserInterfaceMessage
 {
     public string Job { get; } = job;
 }
 
+/// <summary>
+/// Sent from the agent ID UI to change the job icon.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class AgentIDCardJobIconChangedMessage(ProtoId<JobIconPrototype> icon) : BoundUserInterfaceMessage
 {
