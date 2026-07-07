@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Client.Examine;
-using Content.Client.Strip;
 using Content.Client.Verbs.UI;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -27,7 +26,6 @@ namespace Content.Client.Hands.Systems
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private IUserInterfaceManager _ui = default!;
 
-        [Dependency] private StrippableSystem _stripSys = default!;
         [Dependency] private SpriteSystem _sprite = default!;
         [Dependency] private ExamineSystem _examine = default!;
         [Dependency] private DisplacementMapSystem _displacement = default!;
@@ -48,6 +46,7 @@ namespace Content.Client.Hands.Systems
             SubscribeLocalEvent<HandsComponent, LocalPlayerDetachedEvent>(HandlePlayerDetached);
             SubscribeLocalEvent<HandsComponent, ComponentStartup>(OnHandsStartup);
             SubscribeLocalEvent<HandsComponent, ComponentShutdown>(OnHandsShutdown);
+            SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
             SubscribeLocalEvent<HandsComponent, ComponentHandleState>(HandleComponentState);
             SubscribeLocalEvent<HandsComponent, VisualsChangedEvent>(OnVisualsChanged);
 
@@ -55,28 +54,117 @@ namespace Content.Client.Hands.Systems
         }
 
         #region StateHandling
+        private void GetComponentState(EntityUid uid, HandsComponent hands, ref ComponentGetState args)
+        {
+            args.State = new HandsComponentState
+            {
+                Hands = new(hands.Hands),
+                SortedHands = new(hands.SortedHands),
+                ActiveHandId = hands.ActiveHandId,
+            };
+        }
+
         private void HandleComponentState(Entity<HandsComponent> ent, ref ComponentHandleState args)
         {
-            if (args.Current is not HandsComponentState state)
-                return;
+            switch (args.Current)
+            {
+                case HandsComponentState state:
+                    ApplyFullState(ent, state);
+                    break;
+                case HandsComponentDeltaState delta:
+                    ApplyDeltaState(ent, delta);
+                    break;
+            }
+        }
 
-            var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys); // hands that were added between states
-            var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys); // hands that were removed between states
+        private bool ApplyFullState(Entity<HandsComponent> ent, HandsComponentState state)
+        {
+            var changed = false;
+            var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys).ToList();
+            var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys).ToList();
 
             foreach (var handId in oldHands)
             {
                 RemoveHand(ent.AsNullable(), handId);
+                changed = true;
             }
 
             foreach (var handId in state.SortedHands.Intersect(newHands))
             {
                 AddHand(ent.AsNullable(), handId, state.Hands[handId]);
+                changed = true;
             }
-            ent.Comp.SortedHands = new (state.SortedHands);
 
-            SetActiveHand(ent.AsNullable(), state.ActiveHandId);
+            foreach (var (handId, hand) in state.Hands)
+            {
+                if (!ent.Comp.Hands.TryGetValue(handId, out var oldHand) || oldHand.Equals(hand))
+                    continue;
 
-            _stripSys.UpdateUi(ent);
+                ent.Comp.Hands[handId] = hand;
+                changed = true;
+            }
+
+            if (!ent.Comp.SortedHands.SequenceEqual(state.SortedHands))
+            {
+                ent.Comp.SortedHands = new(state.SortedHands);
+                changed = true;
+            }
+
+            if (SetActiveHand(ent.AsNullable(), state.ActiveHandId))
+                changed = true;
+
+            return changed;
+        }
+
+        private bool ApplyDeltaState(Entity<HandsComponent> ent, HandsComponentDeltaState state)
+        {
+            var changed = false;
+
+            if ((state.DirtyFields & HandsComponent.HandsField) != 0 && state.Hands != null)
+            {
+                var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys).ToList();
+                foreach (var handId in oldHands)
+                {
+                    RemoveHand(ent.AsNullable(), handId);
+                    changed = true;
+                }
+
+                IEnumerable<string> sortedHands = state.SortedHands != null ? state.SortedHands : state.Hands.Keys;
+                var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys).ToHashSet();
+                foreach (var handId in sortedHands)
+                {
+                    if (!newHands.Contains(handId))
+                        continue;
+
+                    AddHand(ent.AsNullable(), handId, state.Hands[handId]);
+                    changed = true;
+                }
+
+                foreach (var (handId, hand) in state.Hands)
+                {
+                    if (!ent.Comp.Hands.TryGetValue(handId, out var oldHand) || oldHand.Equals(hand))
+                        continue;
+
+                    ent.Comp.Hands[handId] = hand;
+                    changed = true;
+                }
+            }
+
+            if ((state.DirtyFields & HandsComponent.SortedHandsField) != 0
+                && state.SortedHands != null
+                && !ent.Comp.SortedHands.SequenceEqual(state.SortedHands))
+            {
+                ent.Comp.SortedHands = new(state.SortedHands);
+                changed = true;
+            }
+
+            if ((state.DirtyFields & HandsComponent.ActiveHandIdField) != 0
+                && SetActiveHand(ent.AsNullable(), state.ActiveHandId))
+            {
+                changed = true;
+            }
+
+            return changed;
         }
         #endregion
 
@@ -213,7 +301,6 @@ namespace Content.Client.Hands.Systems
                 return;
 
             UpdateHandVisuals(uid, args.Entity, args.Container.ID);
-            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalEntity)
                 return;
@@ -232,7 +319,6 @@ namespace Content.Client.Hands.Systems
                 return;
 
             UpdateHandVisuals(uid, args.Entity, args.Container.ID);
-            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalEntity)
                 return;

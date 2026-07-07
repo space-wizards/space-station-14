@@ -22,6 +22,7 @@ public sealed class StrippableSystem : SharedStrippableSystem
         SubscribeLocalEvent<StrippableComponent, DidUnequipEvent>(UpdateUi);
         SubscribeLocalEvent<StrippableComponent, DidEquipHandEvent>(UpdateUi);
         SubscribeLocalEvent<StrippableComponent, DidUnequipHandEvent>(UpdateUi);
+        SubscribeLocalEvent<StrippableComponent, HandCountChangedEvent>(UpdateUi);
         SubscribeLocalEvent<StrippableComponent, EnsnaredChangedEvent>(UpdateUi);
     }
 
