@@ -93,7 +93,7 @@ public sealed partial class DeviceNetworkSystem
             || !manager.Value.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
             return false;
 
-        var device = new Device((uid, deviceComp));
+        var device = new Device(uid, deviceComp.Data);
         return deviceNet.Devices.ContainsValue(device);
     }
 

@@ -24,7 +24,7 @@ public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase
 public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayloadBase<AtmosMonitorSetAllThresholdsPayload>
 {
     [DataField]
-    public AtmosMonitorDataPayload Data;
+    public AtmosMonitorData Data;
 }
 
 /// <summary>

@@ -1,20 +1,16 @@
-using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
-[Serializable, NetSerializable]
-public sealed partial class GasThermoMachineDataPayload : AtmosDeviceDataPayload<GasThermoMachineDataPayload>
+public sealed partial class GasThermoMachineDataPayload : NetworkPayloadBase<GasThermoMachineDataPayload>
 {
     [DataField]
     public float EnergyDelta;
 }
 
-[Serializable, NetSerializable]
 public sealed partial class GasThermoMachineSyncDataPayload : NetworkPayloadBase<GasThermoMachineSyncDataPayload>;
 
-[Serializable, NetSerializable]
 public sealed partial class GasThermoMachineSetDataPayload : NetworkPayloadBase<GasThermoMachineSetDataPayload>
 {
     [DataField]

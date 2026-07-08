@@ -17,16 +17,19 @@ public sealed class DeviceNet
     ///     This dictionary contains all devices connected to this network, though they may not be listening to any
     ///     specific frequency.
     /// </summary>
+    [ViewVariables]
     public readonly Dictionary<string, Device> Devices = new();
 
     /// <summary>
     ///     Devices listening on a given frequency.
     /// </summary>
+    [ViewVariables]
     public readonly Dictionary<uint, HashSet<Device>> ListeningDevices = new();
 
     /// <summary>
     ///     Devices listening to all packets on a given frequency, regardless of the intended recipient.
     /// </summary>
+    [ViewVariables]
     public readonly Dictionary<uint, HashSet<Device>> ReceiveAllDevices = new();
 
     private readonly IRobustRandom _random;

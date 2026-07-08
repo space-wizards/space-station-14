@@ -1,9 +1,7 @@
 ﻿using Content.Shared.DeviceNetwork;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.SensorMonitoring;
 
-[Serializable, NetSerializable]
 public sealed partial class BatterySensorDataPayload : NetworkPayloadBase<BatterySensorDataPayload>
 {
     [DataField]
@@ -13,7 +11,6 @@ public sealed partial class BatterySensorDataPayload : NetworkPayloadBase<Batter
 /// <summary>
 /// A request for <see cref="BatterySensorDataPayload"/>.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed partial class BatterySensorSyncPayload : NetworkPayloadBase<BatterySensorSyncPayload>;
 
 /// <summary>
@@ -26,7 +23,6 @@ public sealed partial class BatterySensorSyncPayload : NetworkPayloadBase<Batter
 /// <param name="Supplying">The current amount of power being supplied by the battery, in watts (W).</param>
 /// <param name="MaxSupplying">The maximum amount of power that can be received by the battery, in watts (W).</param>
 [DataRecord]
-[Serializable, NetSerializable]
 public partial record struct BatterySensorData(
     float Charge,
     float MaxCharge,

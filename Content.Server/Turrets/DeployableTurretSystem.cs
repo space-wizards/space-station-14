@@ -28,6 +28,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
     [Dependency] private BatteryWeaponFireModesSystem _fireModes = default!;
     [Dependency] private TurretTargetSettingsSystem _turretTargetingSettings = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceQuery = default!;
 
     public override void Initialize()
     {
@@ -104,10 +105,10 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         // Only broadcast to connected devices
         foreach (var recipient in deviceNetwork.DeviceLists)
         {
-            if (!TryComp<DeviceNetworkComponent>(recipient, out var recipientDeviceNetwork))
+            if (!_deviceQuery.TryComp(recipient, out var recipientDeviceNetwork))
                 continue;
 
-            recipientDeviceNetworks.Add(new Device((recipient, recipientDeviceNetwork)));
+            recipientDeviceNetworks.Add(new Device(recipient, recipientDeviceNetwork.Data));
         }
 
         if (recipientDeviceNetworks.Count > 0)

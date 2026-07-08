@@ -1,12 +1,9 @@
 ﻿using Content.Shared.DeviceNetwork.Components;
-using Robust.Shared.Serialization;
-
 namespace Content.Shared.DeviceNetwork.Payloads;
 
 /// <summary>
 /// Represents a payload that can be re-routed by a <see cref="DeviceNetworkRouterComponent"/>.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetworkPayload>
 {
     [DataField]
@@ -26,7 +23,6 @@ public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetw
 }
 
 [ImplicitDataDefinitionForInheritors]
-[Serializable, NetSerializable]
 public abstract partial class RoutableNetworkPayload<T> : NetworkPayloadBase<T>, IRoutableNetworkPayload where T : NetworkPayloadBase<T>
 {
     /// <summary>

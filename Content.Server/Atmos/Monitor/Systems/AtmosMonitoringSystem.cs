@@ -140,7 +140,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorSyncDataPayload> args)
     {
-        var dataPayload = new AtmosMonitorDataPayload();
+        var dataPayload = new AtmosMonitorData();
         if (ent.Comp.TileGas != null)
         {
             var gases = new Dictionary<Gas, float>();
@@ -149,7 +149,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
                 gases.Add(gas, ent.Comp.TileGas.GetMoles(gas));
             }
 
-            dataPayload = new AtmosMonitorDataPayload(
+            dataPayload = new AtmosMonitorData(
                 ent.Comp.TileGas.Pressure,
                 ent.Comp.TileGas.Temperature,
                 ent.Comp.TileGas.TotalMoles,
@@ -166,7 +166,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
         };
 
         _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
-        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, dataPayload);
+        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, dataPayload.GetPayload());
         Alert(ent, ent.Comp.LastAlarmState);
     }
 
@@ -463,7 +463,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity's uid</param>
     /// <param name="allThresholdDataPayload">An AtmosSensorData object from which the thresholds will be loaded.</param>
-    public void SetAllThresholds(EntityUid uid, AtmosMonitorDataPayload allThresholdDataPayload)
+    public void SetAllThresholds(EntityUid uid, AtmosMonitorData allThresholdDataPayload)
     {
         SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdDataPayload.TemperatureThreshold);
         SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdDataPayload.PressureThreshold);

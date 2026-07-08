@@ -13,5 +13,5 @@ public sealed partial class AirAlarmSetModePayload : NetworkPayloadBase<AirAlarm
 public sealed partial class AirAlarmSetDataPayload : NetworkPayloadBase<AirAlarmSetDataPayload>
 {
     [DataField]
-    public IAtmosDeviceDataPayload Payload;
+    public IAtmosDeviceData Payload;
 }

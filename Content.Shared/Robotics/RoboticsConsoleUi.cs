@@ -136,13 +136,10 @@ public partial record struct CyborgControlData
     }
 }
 
-[Serializable, NetSerializable]
 public sealed partial class RoboticsCyborgDisablePayload : NetworkPayloadBase<RoboticsCyborgDisablePayload>;
 
-[Serializable, NetSerializable]
 public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayloadBase<RoboticsCyborgDestroyPayload>;
 
-[Serializable, NetSerializable]
 public sealed partial class RoboticsCyborgDataPayload : NetworkPayloadBase<RoboticsCyborgDataPayload>
 {
     [DataField]

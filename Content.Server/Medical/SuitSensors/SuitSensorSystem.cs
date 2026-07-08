@@ -53,7 +53,11 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
                 continue;
             }
 
-            _deviceNetworkSystem.QueuePacket((uid, device), sensor.ConnectedServer, status);
+            var payload = new SuitSensorStatusPayload
+            {
+                Data = status.Value,
+            };
+            _deviceNetworkSystem.QueuePacket((uid, device), sensor.ConnectedServer, payload);
         }
     }
 }

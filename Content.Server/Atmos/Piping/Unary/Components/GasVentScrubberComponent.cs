@@ -23,7 +23,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [DataField]
-        public HashSet<Gas> FilterGases = new(GasVentScrubberDataPayload.DefaultFilterGases);
+        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
 
         [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -53,9 +53,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool WideNet { get; set; } = false;
 
-        public GasVentScrubberDataPayload ToAirAlarmData()
+        public GasVentScrubberData ToAirAlarmData()
         {
-            return new GasVentScrubberDataPayload
+            return new GasVentScrubberData
             {
                 Enabled = Enabled,
                 Dirty = IsDirty,
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             };
         }
 
-        public void FromAirAlarmData(GasVentScrubberDataPayload dataPayload)
+        public void FromAirAlarmData(GasVentScrubberData dataPayload)
         {
             Enabled = dataPayload.Enabled;
             IsDirty = dataPayload.Dirty;

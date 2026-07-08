@@ -170,7 +170,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAtmosSensorReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorDataPayload> args)
     {
-        var payload = args.Data;
+        var payload = args.Data.Data;
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 

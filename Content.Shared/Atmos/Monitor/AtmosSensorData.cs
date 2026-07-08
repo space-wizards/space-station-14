@@ -3,10 +3,27 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
-[Serializable, NetSerializable]
-public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload<AtmosMonitorDataPayload>
+public sealed partial class AtmosMonitorDataPayload : NetworkPayloadBase<AtmosMonitorDataPayload>
 {
-    public AtmosMonitorDataPayload(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
+    [DataField]
+    public AtmosMonitorData Data;
+}
+
+public sealed partial class AtmosMonitorSyncDataPayload : NetworkPayloadBase<AtmosMonitorSyncDataPayload>;
+
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class AtmosMonitorData : IAtmosDeviceData
+{
+    public NetworkPayload GetPayload()
+    {
+        return new AtmosMonitorDataPayload { Data = this };
+    }
+
+    public bool Enabled { get; set; }
+    public bool Dirty { get; set; }
+    public bool IgnoreAlarms { get; set; }
+
+    public AtmosMonitorData(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
         Pressure = pressure;
         Temperature = temperature;
@@ -45,6 +62,3 @@ public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload<Atm
     public AtmosAlarmThreshold TemperatureThreshold { get; }
     public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; }
 }
-
-[Serializable, NetSerializable]
-public sealed partial class AtmosMonitorSyncDataPayload : NetworkPayloadBase<AtmosMonitorSyncDataPayload>;

@@ -9,11 +9,11 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class PumpControl : BoxContainer
 {
-    private GasVentPumpDataPayload _dataPayload;
+    private GasVentPumpData _dataPayload;
     private string _address;
 
-    public event Action<string, IAtmosDeviceDataPayload>? PumpDataChanged;
-	public event Action<IAtmosDeviceDataPayload>? PumpDataCopied;
+    public event Action<string, IAtmosDeviceData>? PumpDataChanged;
+	public event Action<IAtmosDeviceData>? PumpDataCopied;
 
     private CheckBox _enabled => CEnableDevice;
     private CollapsibleHeading _addressLabel => CAddress;
@@ -23,7 +23,7 @@ public sealed partial class PumpControl : BoxContainer
     private FloatSpinBox _internalBound => CInternalBound;
     private Button _copySettings => CCopySettings;
 
-    public PumpControl(GasVentPumpDataPayload dataPayload, string address)
+    public PumpControl(GasVentPumpData dataPayload, string address)
     {
         RobustXamlLoader.Load(this);
 
@@ -89,7 +89,7 @@ public sealed partial class PumpControl : BoxContainer
         };
     }
 
-    public void ChangeData(GasVentPumpDataPayload dataPayload)
+    public void ChangeData(GasVentPumpData dataPayload)
     {
         _dataPayload.Enabled = dataPayload.Enabled;
         _enabled.Pressed = _dataPayload.Enabled;
