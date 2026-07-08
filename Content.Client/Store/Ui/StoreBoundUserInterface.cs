@@ -31,8 +31,6 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
-        if (_storeSystem.TryGetStore(Owner, out var store))
-            _menu.Title = Loc.GetString(store.Value.Comp.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
@@ -75,6 +73,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 UpdateListingsWithSearchFilter();
                 _menu?.SetFooterVisibility(msg.ShowFooter);
                 _menu?.UpdateRefund(msg.AllowRefund);
+
+                if (_menu != null)
+                    _menu.Title = Loc.GetString(msg.Name);
                 break;
         }
     }

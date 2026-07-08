@@ -9,6 +9,10 @@ using Content.Shared.Revolutionary;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles.Components;
 using Robust.Shared.Containers;
+using Content.Shared.Antag;
+using Content.Shared.Overlays;
+using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Mindshield;
 
@@ -30,6 +34,9 @@ public sealed partial class MindShieldSystem : EntitySystem
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantImplantedEvent>(OnImplantImplanted);
         SubscribeLocalEvent<MindShieldImplantComponent, ImplantRemovedEvent>(OnImplantRemoved);
         SubscribeLocalEvent<MindShieldComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
+        SubscribeLocalEvent<MindShieldComponent, ComponentGetStateAttemptEvent>(OnMindShieldGetStateAttempt);
+        SubscribeLocalEvent<ShowMindShieldIconsComponent, ComponentStartup>(DirtyMindShieldComps);
+        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyMindShieldComps);
     }
 
     private void OnImplantImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent ev)
@@ -65,6 +72,37 @@ public sealed partial class MindShieldSystem : EntitySystem
     private void OnAttemptConvert(Entity<MindShieldComponent> ent, ref AttemptConvertRevolutionaryEvent args)
     {
         args.Cancelled = true;
+    }
+
+    private void OnMindShieldGetStateAttempt(EntityUid uid, MindShieldComponent comp, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, args.Player);
+    }
+
+    private bool CanGetState(EntityUid target, ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not {} user)
+            return true;
+
+        if (user == target)
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(user))
+            return true;
+
+        if (HasComp<ShowMindShieldIconsComponent>(user))
+            return true;
+
+        return false;
+    }
+
+    private void DirtyMindShieldComps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
+    {
+        var query = EntityQueryEnumerator<MindShieldComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
     }
 }
 

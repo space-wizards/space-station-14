@@ -39,6 +39,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Content.Shared.Antag;
+using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -94,6 +97,10 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
 
         SubscribeLocalEvent<NukeopsRuleComponent, AfterAntagEntitySelectedEvent>(OnAfterAntagEntSelected);
         SubscribeLocalEvent<NukeopsRuleComponent, RuleLoadedGridsEvent>(OnRuleLoadedGrids);
+
+        SubscribeLocalEvent<NukeOperativeComponent, ComponentGetStateAttemptEvent>(OnNukeOpsGetStateAttempt);
+        SubscribeLocalEvent<NukeOperativeComponent, ComponentStartup>(DirtyNukeOps);
+        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyNukeOps);
     }
 
     protected override void Started(EntityUid uid,
@@ -703,6 +710,34 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
         // Fallback to ID
         if (_idCard.TryFindIdCard(carrier, out var idCard))
             job = idCard.Comp.LocalizedJobTitle ?? job;
+    }
+
+    private void OnNukeOpsGetStateAttempt(EntityUid uid, NukeOperativeComponent comp, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(args.Player);
+    }
+
+    private bool CanGetState(ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not {} user)
+            return true;
+
+        if (HasComp<NukeOperativeComponent>(user))
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(user))
+            return true;
+
+        return false;
+    }
+
+    private void DirtyNukeOps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
+    {
+        var query = EntityQueryEnumerator<NukeOperativeComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
     }
 }
 

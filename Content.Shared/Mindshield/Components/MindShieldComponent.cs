@@ -13,4 +13,6 @@ public sealed partial class MindShieldComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
+
+    public override bool SessionSpecific => true;
 }
