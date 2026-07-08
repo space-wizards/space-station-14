@@ -190,7 +190,7 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField]
         [Access(typeof(ItemSlotsSystem), Other = AccessPermissions.ReadWriteExecute)]
         [NonSerialized]
-        public bool EjectOnBreak = true;
+        public bool EjectOnBreak = false;
 
         /// <summary>
         ///     When specified, a popup will be generated whenever someone attempts to insert a bad item into this slot.
