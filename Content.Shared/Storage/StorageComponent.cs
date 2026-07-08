@@ -17,10 +17,7 @@ namespace Content.Shared.Storage
     [RegisterComponent, NetworkedComponent]
     public sealed partial class StorageComponent : Component
     {
-        public override bool SessionSpecific => true;
-
         public static string ContainerId = "storagebase";
-
 
         public const byte ChunkSize = 8;
 
