@@ -311,39 +311,21 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
                 var grapplerOffsetB = _transform.GetRelativePosition(Transform(joint.BodyBUid), grapplerUidB);
                 var grapplerBodyB = Comp<PhysicsComponent>(grapplerUidB);
 
-                // Handle edge-cases where the mass is zero (e.g. station anchor). Treat that as infinite weight.
-                float massFactor;
-                if (grapplerBodyA.Mass == 0f && grapplerBodyB.Mass != 0f)
-                {
-                    massFactor = 1f;
-                }
-                else if (grapplerBodyA.Mass != 0f && grapplerBodyB.Mass == 0f)
-                {
-                    massFactor = 0f;
-                }
-                else if (grapplerBodyA.Mass == 0f && grapplerBodyB.Mass == 0f)
-                {
-                    massFactor = 0.5f;
-                }
-                else
-                {
-                    // This assumes the bodies can move freely.
-                    // It would be nice if any resisting force applied to the grid (e.g. if stuck on something and can't move closer) would transfer to the main entity.
-                    massFactor = grapplerBodyA.Mass / (grapplerBodyA.Mass + grapplerBodyB.Mass);
-                }
-
                 // Note that this way of calculating the impulse does not take into account objects being stuck on things, e.g. a movable grapple point stuck behind a wall.
                 // Ideally the contraction of the joint itself should take this into account, but alas, this works for now.
 
-                var massFactorA = (1 - massFactor);
-                if (grapplerBodyA.Mass < BaseWeightMass) // To prevent small things go zoomies
+                var massFactorA = 1f;
+                var massFactorB = 1f;
+
+                // To prevent small things go zoomies
+                // Technically doesn't preserve momentum but it's either this or things start being yeeted at light speed.
+                if (grapplerBodyA.Mass < BaseWeightMass)
                     massFactorA *= grapplerBodyA.Mass / BaseWeightMass;
 
-                _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
-
-                var massFactorB = massFactor;
-                if (grapplerBodyB.Mass < BaseWeightMass) // To prevent small things go zoomies
+                if (grapplerBodyB.Mass < BaseWeightMass)
                     massFactorB *= grapplerBodyB.Mass / BaseWeightMass;
+
+                _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
 
                 _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * massFactorB * grappling.ReelForce * frameTime, grapplerOffsetB, body: grapplerBodyB);
             }
