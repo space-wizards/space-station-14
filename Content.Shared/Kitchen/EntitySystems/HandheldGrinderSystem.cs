@@ -68,7 +68,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
         };
 
         if (_doAfter.TryStartDoAfter(doAfter))
-            ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.Sound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
+            ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.Sound, ent)?.Entity ?? ent.Comp.AudioStream;
     }
 
     [SubscribeLocalEvent]
