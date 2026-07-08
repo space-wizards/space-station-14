@@ -25,10 +25,10 @@ public sealed partial class GlueSystem : EntitySystem
     [Dependency] private NameModifierSystem _nameMod = default!;
     [Dependency] private OpenableSystem _openable = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private SharedHandsSystem _hands = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
