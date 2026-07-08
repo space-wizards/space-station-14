@@ -101,7 +101,6 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
 
         SubscribeLocalEvent<NukeOperativeComponent, ComponentGetStateAttemptEvent>(OnNukeOpsGetStateAttempt);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentStartup>(DirtyNukeOps);
-        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyNukeOps);
     }
 
     protected override void Started(EntityUid uid,
@@ -736,13 +735,6 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
     {
         var nukeQuery = EntityQueryEnumerator<NukeOperativeComponent>();
         while (nukeQuery.MoveNext(out var uid, out var comp))
-        {
-            Dirty(uid, comp);
-        }
-
-        // also re-sync mindshield state since ShowAntagIconsComponent affects its visibility too
-        var mindshieldQuery = EntityQueryEnumerator<MindShieldComponent>();
-        while (mindshieldQuery.MoveNext(out var uid, out var comp))
         {
             Dirty(uid, comp);
         }

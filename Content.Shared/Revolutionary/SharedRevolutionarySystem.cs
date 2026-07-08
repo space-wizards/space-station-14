@@ -1,5 +1,6 @@
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mindshield.Components;
+using Content.Shared.NukeOps;
 using Content.Shared.Popups;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Stunnable;
@@ -97,6 +98,18 @@ public abstract partial class SharedRevolutionarySystem : EntitySystem
 
         var headRevComps = AllEntityQuery<HeadRevolutionaryComponent>();
         while (headRevComps.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
+
+        var nukeOpsComps = AllEntityQuery<NukeOperativeComponent>();
+        while (nukeOpsComps.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
+
+        var mindShieldComps = AllEntityQuery<MindShieldComponent>();
+        while (mindShieldComps.MoveNext(out var uid, out var comp))
         {
             Dirty(uid, comp);
         }
