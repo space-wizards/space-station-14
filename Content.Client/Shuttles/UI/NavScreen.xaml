@@ -1,16 +1,16 @@
 <controls:BoxContainer Visible="False"
               HorizontalExpand="True"
-              xmlns:controls="https://spacestation14.io"
-              xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-              xmlns:controls1="clr-namespace:Content.Client.UserInterface.Controls">
-                <ui:ShuttleNavControl Name="NavRadar"
+	xmlns:controls="https://spacestation14.io"
+	xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
+	xmlns:controls1="clr-namespace:Content.Client.UserInterface.Controls">
+    <ui:ShuttleNavControl Name="NavRadar"
                                  MouseFilter="Stop"
                                  VerticalAlignment="Stretch"
                                  VerticalExpand="True"
                                  HorizontalExpand="True"
                                  Margin="5 4 10 5"/>
-                <!-- Nav controls -->
-                <controls:BoxContainer Name="RightDisplayNav"
+    <!-- Nav controls -->
+    <controls:BoxContainer Name="RightDisplayNav"
                       VerticalAlignment="Top"
                       HorizontalAlignment="Right"
                       VerticalExpand="True"
@@ -18,52 +18,91 @@
                       MaxWidth="256"
                       Margin="5 0 5 5"
                       Orientation="Vertical">
-                    <controls1:StripeBack
+        <controls1:StripeBack
                         MinSize="48 48">
-                        <controls:Label Name="NavDisplayLabel" Text="{controls:Loc 'shuttle-console-display-label'}"
+            <controls:Label Name="NavDisplayLabel" Text="{controls:Loc 'shuttle-console-display-label'}"
                                VerticalExpand="True"
                                HorizontalAlignment="Center"/>
-                    </controls1:StripeBack>
-                    <controls:GridContainer Columns="2"
+        </controls1:StripeBack>
+        <controls:GridContainer Columns="2"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Top"
                                    HorizontalExpand="True"
                                    Margin="3"
                                    Name="ReadonlyDisplay">
-                        <controls:Label Text="{controls:Loc 'shuttle-console-position'}"/>
-                        <controls:Label Name="GridPosition"
+            <controls:Label Text="{controls:Loc 'shuttle-console-position'}"/>
+            <controls:Label Name="GridPosition"
                                Text="0.0, 0.0"
                                HorizontalExpand="True"
                                Align="Right"/>
-                        <controls:Label Text="{controls:Loc 'shuttle-console-orientation'}"/>
-                        <controls:Label Name="GridOrientation"
+            <controls:Label Text="{controls:Loc 'shuttle-console-orientation'}"/>
+            <controls:Label Name="GridOrientation"
                                Text="0.0"
                                HorizontalExpand="True"
                                Align="Right"/>
-                        <controls:Label Text="{controls:Loc 'shuttle-console-linear-velocity'}"/>
-                        <controls:Label Name="GridLinearVelocity"
+            <controls:Label Text="{controls:Loc 'shuttle-console-linear-velocity'}"/>
+            <controls:Label Name="GridLinearVelocity"
                                Text="0.0, 0.0"
                                HorizontalExpand="True"
                                Align="Right"/>
-                        <controls:Label Text="{controls:Loc 'shuttle-console-angular-velocity'}"/>
-                        <controls:Label Name="GridAngularVelocity"
+            <controls:Label Text="{controls:Loc 'shuttle-console-angular-velocity'}"/>
+            <controls:Label Name="GridAngularVelocity"
                                Text="0.0"
                                HorizontalExpand="True"
                                Align="Right"/>
-                    </controls:GridContainer>
-                    <controls1:StripeBack
+        </controls:GridContainer>
+        <controls1:StripeBack
                         MinSize="48 48">
-                        <controls:Label Name="NavSettingsLabel" Text="{controls:Loc 'shuttle-console-nav-settings'}"
+            <controls:Label Name="NavSettingsLabel" Text="{controls:Loc 'shuttle-console-nav-settings'}"
                                VerticalExpand="True"
                                HorizontalAlignment="Center"/>
-                    </controls1:StripeBack>
-                    <controls:Button Name="IFFToggle"
+        </controls1:StripeBack>
+        <controls:Button Name="IFFToggle"
                             Text="{controls:Loc 'shuttle-console-iff-toggle'}"
                             TextAlign="Center"
                             ToggleMode="True"/>
-                    <controls:Button Name="DockToggle"
-                            Text="{controls:Loc 'shuttle-console-dock-toggle'}"
-                            TextAlign="Center"
-                            ToggleMode="True"/>
-                </controls:BoxContainer>
+
+        <!-- Legend -->
+        <controls1:StripeBack MinSize="48 48">
+            <controls:Label Text="{controls:Loc 'shuttle-console-nav-legend'}"
+                VerticalExpand="True"
+                HorizontalAlignment="Center" />
+        </controls1:StripeBack>
+
+        <!-- Cargo Dock Toggle -->
+        <controls:Button Name="CargoDockToggle"
+            HorizontalAlignment="Stretch"
+            ToggleMode="True">
+            <controls:BoxContainer Orientation="Horizontal" Margin="0 2">
+                <controls:TextureRect
+                    Stretch="KeepAspectCentered"
+                    TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                    Modulate="LightYellow"
+                    SetSize="20 20"
+                    Margin="10 0 5 0"/>
+                <controls:Label
+                    Text="{controls:Loc 'shuttle-console-nav-cargo-dock'}"
+                    VerticalExpand="True"
+                    HorizontalAlignment="Center" />
             </controls:BoxContainer>
+        </controls:Button>
+
+        <!-- Other Dock Toggle -->
+        <controls:Button Name="DockToggle"
+            HorizontalAlignment="Stretch"
+            ToggleMode="True">  
+            <controls:BoxContainer Orientation="Horizontal" Margin="0 2">
+                <controls:TextureRect
+                    Stretch="KeepAspectCentered"
+                    TexturePath="/Textures/Interface/NavMap/beveled_square.png"
+                    Modulate="Magenta"
+                    SetSize="20 20"
+                    Margin="10 0 5 0"/>
+                <controls:Label
+                    VerticalAlignment="Center"
+                    Text="{controls:Loc 'shuttle-console-nav-other-dock'}"/>
+            </controls:BoxContainer>
+        </controls:Button>
+
+    </controls:BoxContainer>
+</controls:BoxContainer>

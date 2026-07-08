@@ -23,6 +23,9 @@ shuttle-console-iff-label = {$name} ({$distance}m)
 shuttle-console-exclusion = Exclusion area
 
 shuttle-console-nav-settings = Settings
+shuttle-console-nav-legend = Legend
+shuttle-console-nav-other-dock = External Docks
+shuttle-console-nav-cargo-dock = Cargo Docks
 shuttle-console-iff-toggle = Show IFF
 shuttle-console-dock-toggle = Show docks
 
