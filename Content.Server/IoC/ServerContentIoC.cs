@@ -10,6 +10,7 @@ using Content.Server.Discord;
 using Content.Server.Discord.DiscordLink;
 using Content.Server.Discord.WebhookMessages;
 using Content.Server.EUI;
+using Content.Server.FeedbackSystem;
 using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Mapping;
@@ -22,12 +23,11 @@ using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
-using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
+using Content.Shared.FeedbackSystem;
 using Content.Shared.IoC;
-using Content.Shared.Kitchen;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
 
@@ -43,7 +43,6 @@ internal static class ServerContentIoC
         deps.Register<IChatSanitizationManager, ChatSanitizationManager>();
         deps.Register<IServerPreferencesManager, ServerPreferencesManager>();
         deps.Register<IServerDbManager, ServerDbManager>();
-        deps.Register<RecipeManager, RecipeManager>();
         deps.Register<INodeGroupFactory, NodeGroupFactory>();
         deps.Register<IConnectionManager, ConnectionManager>();
         deps.Register<ServerUpdateManager>();
@@ -64,7 +63,6 @@ internal static class ServerContentIoC
         deps.Register<PlayTimeTrackingManager>();
         deps.Register<UserDbDataManager>();
         deps.Register<ServerInfoManager>();
-        deps.Register<PoissonDiskSampler>();
         deps.Register<DiscordWebhook>();
         deps.Register<VoteWebhooks>();
         deps.Register<ServerDbEntryManager>();
@@ -80,5 +78,7 @@ internal static class ServerContentIoC
         deps.Register<CVarControlManager>();
         deps.Register<DiscordLink>();
         deps.Register<DiscordChatLink>();
+        deps.Register<ServerFeedbackManager>();
+        deps.Register<ISharedFeedbackManager, ServerFeedbackManager>();
     }
 }

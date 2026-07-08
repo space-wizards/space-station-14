@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityConditions;
 
@@ -118,6 +118,9 @@ public abstract partial class EntityConditionBase<T> : EntityCondition where T :
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityCondition
 {
+    /// <summary>
+    /// Check this condition on a target.
+    /// </summary>
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
     /// <summary>

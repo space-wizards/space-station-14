@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.FixedPoint;
@@ -216,11 +215,11 @@ public sealed partial class IngestionSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
+            var reagent = ProtoMan.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
@@ -267,11 +266,11 @@ public sealed partial class IngestionSystem
         var total = 0f;
         foreach (var quantity in solution.Contents)
         {
-            var reagent = _proto.Index<ReagentPrototype>(quantity.Reagent.Prototype);
+            var reagent = ProtoMan.Index<ReagentPrototype>(quantity.Reagent.Prototype);
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
@@ -298,7 +297,7 @@ public sealed partial class IngestionSystem
     /// <param name="user">The entity trying to make the ingestion happening, not necessarily the one eating</param>
     /// <param name="solution">Solution we're returning</param>
     /// <param name="time">The time it takes us to eat this entity</param>
-    public bool CanAccessSolution(Entity<SolutionContainerManagerComponent?> ingested,
+    public bool CanAccessSolution(EntityUid ingested,
         EntityUid user,
         [NotNullWhen(true)] out Entity<SolutionComponent>? solution,
         out TimeSpan? time)
@@ -306,19 +305,20 @@ public sealed partial class IngestionSystem
         solution = null;
         time = null;
 
-        if (!Resolve(ingested, ref ingested.Comp))
-        {
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
-            return false;
-        }
-
+        // TODO: Relay this event to solutions using solution relay
         var ev = new EdibleEvent(user);
         RaiseLocalEvent(ingested, ref ev);
 
         solution = ev.Solution;
         time = ev.Time;
 
-        return !ev.Cancelled && solution != null;
+        if (solution == null)
+        {
+            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", ingested)), ingested, user);
+            return false;
+        }
+
+        return !ev.Cancelled;
     }
 
     /// <summary>
@@ -352,7 +352,7 @@ public sealed partial class IngestionSystem
         if (!CanIngest(user, ingested))
             return false;
 
-        var proto = _proto.Index(type);
+        var proto = ProtoMan.Index(type);
 
         verb = new()
         {
@@ -400,7 +400,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoNoun([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
-        var prototype = _proto.Index(proto);
+        var prototype = ProtoMan.Index(proto);
 
         return GetProtoNoun(prototype);
     }
@@ -426,7 +426,7 @@ public sealed partial class IngestionSystem
 
     public string GetProtoVerb([ForbidLiteral] ProtoId<EdiblePrototype> proto)
     {
-        var prototype = _proto.Index(proto);
+        var prototype = ProtoMan.Index(proto);
 
         return GetProtoVerb(prototype);
     }

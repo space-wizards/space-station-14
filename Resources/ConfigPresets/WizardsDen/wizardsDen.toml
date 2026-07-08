@@ -52,9 +52,12 @@ alert.min_players_sharing_connection = 2
 allow_multi_server_play = false
 
 [atmos]
-max_explosion_range = 10
+max_explosion_range = 0
 
 [status]
 privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
 privacy_policy_identifier = "wizden"
 privacy_policy_version = "2025-01-19"
+
+[feedback]
+valid_origins = "wizden"

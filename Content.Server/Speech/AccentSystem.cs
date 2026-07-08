@@ -15,6 +15,9 @@ public sealed class AccentSystem : EntitySystem
 
     private void AccentHandler(TransformSpeechEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
         RaiseLocalEvent(args.Sender, accentEvent, true);

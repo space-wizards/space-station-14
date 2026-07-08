@@ -11,7 +11,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -19,6 +18,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -31,18 +31,17 @@ namespace Content.Server.Zombies
 {
     public sealed partial class ZombieSystem : SharedZombieSystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-        [Dependency] private readonly EmoteOnDamageSystem _emoteOnDamage = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly SharedRoleSystem _role = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private BloodstreamSystem _bloodstream = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private ChatSystem _chat = default!;
+        [Dependency] private ActionsSystem _actions = default!;
+        [Dependency] private AutoEmoteSystem _autoEmote = default!;
+        [Dependency] private EmoteOnDamageSystem _emoteOnDamage = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedRoleSystem _role = default!;
 
         public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
@@ -71,6 +70,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, GetCharacterUnrevivableIcEvent>(OnGetCharacterUnrevivableIC);
             SubscribeLocalEvent<ZombieComponent, MindAddedMessage>(OnMindAdded);
             SubscribeLocalEvent<ZombieComponent, MindRemovedMessage>(OnMindRemoved);
+            SubscribeLocalEvent<ZombieComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
@@ -183,7 +183,7 @@ namespace Content.Server.Zombies
             if (args.Handled)
                 return;
 
-            _protoManager.Resolve(component.EmoteSoundsId, out var sounds);
+            ProtoMan.Resolve(component.EmoteSoundsId, out var sounds);
 
             args.Handled = _chat.TryPlayEmoteSound(uid, sounds, args.Emote);
         }
@@ -262,7 +262,7 @@ namespace Content.Server.Zombies
                     _damageable.TryChangeDamage(args.User, entity.Comp.HealingOnBite, true, false);
 
                     // If we cannot infect the living target, the zed will just heal itself.
-                    if (HasComp<ZombieImmuneComponent>(uid) || cannotSpread || _random.Prob(GetZombieInfectionChance(uid, entity.Comp)))
+                    if (HasComp<ZombieImmuneComponent>(uid) || cannotSpread || !_random.Prob(GetZombieInfectionChance(uid, entity.Comp)))
                         continue;
 
                     EnsureComp<PendingZombieComponent>(uid);
@@ -295,16 +295,9 @@ namespace Content.Server.Zombies
             if (!Resolve(source, ref zombiecomp))
                 return false;
 
-            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
-            {
-                _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
-                _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
-            }
-            if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
-            {
-                appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
-            }
-            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
+            _visualBody.ApplyProfiles(target, zombiecomp.BeforeZombifiedProfiles);
+            _visualBody.ApplyMarkings(target, zombiecomp.BeforeZombifiedMarkings);
+
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
 
             return true;
@@ -326,6 +319,11 @@ namespace Content.Server.Zombies
         private void OnMindRemoved(Entity<ZombieComponent> ent, ref MindRemovedMessage args)
         {
             _role.MindRemoveRole<ZombieRoleComponent>((args.Mind.Owner,  args.Mind.Comp));
+        }
+
+        private void OnAttemptConvert(Entity<ZombieComponent> ent, ref AttemptConvertRevolutionaryEvent args)
+        {
+            args.Cancelled = true;
         }
     }
 }

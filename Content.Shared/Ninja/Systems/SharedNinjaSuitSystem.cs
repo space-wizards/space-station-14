@@ -15,14 +15,14 @@ namespace Content.Shared.Ninja.Systems;
 /// <summary>
 /// Handles (un)equipping and provides some API functions.
 /// </summary>
-public abstract class SharedNinjaSuitSystem : EntitySystem
+public abstract partial class SharedNinjaSuitSystem : EntitySystem
 {
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
+    [Dependency] private SharedSpaceNinjaSystem _ninja = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -36,7 +36,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         SubscribeLocalEvent<NinjaSuitComponent, CreateItemAttemptEvent>(OnCreateStarAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, ItemToggleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, GotUnequippedEvent>(OnUnequipped);
-        SubscribeLocalEvent<NinjaSuitComponent, EmpAttemptEvent>(OnEmpAttempt);
     }
 
     private void OnEquipped(Entity<NinjaSuitComponent> ent, ref ClothingGotEquippedEvent args)
@@ -99,7 +98,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// </summary>
     private void OnUnequipped(Entity<NinjaSuitComponent> ent, ref GotUnequippedEvent args)
     {
-        var user = args.Equipee;
+        var user = args.EquipTarget;
         if (_ninja.NinjaQuery.TryComp(user, out var ninja))
             UserUnequippedSuit(ent, (user, ninja));
     }
@@ -171,12 +170,5 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         // disable glove abilities
         if (user.Comp.Gloves is { } uid)
             _toggle.TryDeactivate(uid, user: user);
-    }
-
-    private void OnEmpAttempt(Entity<NinjaSuitComponent> ent, ref EmpAttemptEvent args)
-    {
-        // ninja suit (battery) is immune to emp
-        // powercell relays the event to suit
-        args.Cancelled = true;
     }
 }

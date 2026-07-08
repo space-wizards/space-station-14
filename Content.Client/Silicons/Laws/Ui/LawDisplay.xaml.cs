@@ -1,5 +1,5 @@
 using Content.Client.Chat.Managers;
-using Content.Client.Message;
+using Content.Client.RichText;
 using Content.Shared.Chat;
 using Content.Shared.Radio;
 using Content.Shared.Silicons.Laws;
@@ -17,10 +17,10 @@ namespace Content.Client.Silicons.Laws.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class LawDisplay : Control
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private EntityManager _entityManager = default!;
 
     private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
 
@@ -37,8 +37,8 @@ public sealed partial class LawDisplay : Control
         var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
         var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
 
-        LawNumberLabel.SetMarkup(lawIdentifier);
-        LawLabel.SetMessage(lawDescription);
+        LawNumberLabel.SetMessage(FormattedMessage.FromMarkupPermissive(lawIdentifier), UserFormattableTags.SiliconAllowedTags);
+        LawLabel.SetMessage(FormattedMessage.FromMarkupPermissive(lawDescription), UserFormattableTags.SiliconAllowedTags);
 
         // If you can't talk, you can't state your laws...
         if (!_entityManager.TryGetComponent<SpeechComponent>(uid, out var speech) || speech.SpeechSounds is null)

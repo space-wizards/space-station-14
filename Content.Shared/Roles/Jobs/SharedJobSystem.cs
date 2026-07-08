@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -12,11 +10,9 @@ namespace Content.Shared.Roles.Jobs;
 /// <summary>
 ///     Handles the job data on mind entities.
 /// </summary>
-public abstract class SharedJobSystem : EntitySystem
+public abstract partial class SharedJobSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPlayerSystem _playerSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private SharedRoleSystem _roles = default!;
 
     private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
@@ -38,7 +34,7 @@ public abstract class SharedJobSystem : EntitySystem
         _inverseTrackerLookup.Clear();
 
         // This breaks if you have N trackers to 1 JobId but future concern.
-        foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
+        foreach (var job in ProtoMan.EnumeratePrototypes<JobPrototype>())
         {
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
@@ -51,7 +47,7 @@ public abstract class SharedJobSystem : EntitySystem
     /// <returns></returns>
     public string GetJobPrototype(string trackerProto)
     {
-        DebugTools.Assert(_prototypes.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
+        DebugTools.Assert(ProtoMan.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
         return _inverseTrackerLookup[trackerProto];
     }
 
@@ -61,7 +57,7 @@ public abstract class SharedJobSystem : EntitySystem
     public bool TryGetDepartment(string jobProto, [NotNullWhen(true)] out DepartmentPrototype? departmentPrototype)
     {
         // Not that many departments so we can just eat the cost instead of storing the inverse lookup.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>().ToList();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>().ToList();
         departmentProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
 
         foreach (var department in departmentProtos)
@@ -86,7 +82,7 @@ public abstract class SharedJobSystem : EntitySystem
     {
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
 
         foreach (var department in departmentProtos)
         {
@@ -108,7 +104,7 @@ public abstract class SharedJobSystem : EntitySystem
     {
         // not sorting it since there should only be 1 primary department for a job.
         // this is enforced by the job tests.
-        var departmentProtos = _prototypes.EnumeratePrototypes<DepartmentPrototype>();
+        var departmentProtos = ProtoMan.EnumeratePrototypes<DepartmentPrototype>();
         departmentPrototypes = new List<DepartmentPrototype>();
         var found = false;
 
@@ -161,7 +157,7 @@ public abstract class SharedJobSystem : EntitySystem
         prototype = null;
         MindTryGetJobId(mindId, out var protoId);
 
-        return _prototypes.Resolve(protoId, out prototype) || prototype is not null;
+        return ProtoMan.Resolve(protoId, out prototype) || prototype is not null;
     }
 
     public bool MindTryGetJobId(
@@ -203,18 +199,5 @@ public abstract class SharedJobSystem : EntitySystem
     {
         MindTryGetJobName(mindId, out var name);
         return name;
-    }
-
-    public bool CanBeAntag(ICommonSession player)
-    {
-        // If the player does not have any mind associated with them (e.g., has not spawned in or is in the lobby), then
-        // they are eligible to be given an antag role/entity.
-        if (_playerSystem.ContentData(player) is not { Mind: { } mindId })
-            return true;
-
-        if (!MindTryGetJob(mindId, out var prototype))
-            return true;
-
-        return prototype.CanBeAntag;
     }
 }

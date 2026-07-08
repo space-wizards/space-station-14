@@ -242,7 +242,7 @@ namespace Content.Shared.Wires
                 WireLetter.γ => "wire-letter-name-gamma",
                 WireLetter.δ => "wire-letter-name-delta",
                 WireLetter.ε => "wire-letter-name-epsilon",
-                WireLetter.ζ => "wire-letter-name-zeta ",
+                WireLetter.ζ => "wire-letter-name-zeta",
                 WireLetter.η => "wire-letter-name-eta",
                 WireLetter.θ => "wire-letter-name-theta",
                 WireLetter.ι => "wire-letter-name-iota",
