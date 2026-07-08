@@ -92,3 +92,13 @@
     # this is set to false as to not mess with a changeling's ability to disguise.
     accentHide: false
     titleText: changeling-voice-mimic-window-title
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingNightVisionDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: NightVision
+    lightingColor: "#af0909aa"
+    noiseAmount: 0.5
+    noiseMultiplier: 5
+    overlayColor: "#59080815"
