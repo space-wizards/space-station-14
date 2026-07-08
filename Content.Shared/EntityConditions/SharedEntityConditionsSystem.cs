@@ -118,6 +118,9 @@ public abstract partial class EntityConditionBase<T> : EntityCondition where T :
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class EntityCondition
 {
+    /// <summary>
+    /// Check this condition on a target.
+    /// </summary>
     public abstract bool RaiseEvent(EntityUid target, IEntityConditionRaiser raiser);
 
     /// <summary>
@@ -137,7 +140,8 @@ public abstract partial class EntityCondition
 /// </summary>
 /// <param name="Condition">The Condition we're checking</param>
 [ByRefEvent]
-public record struct EntityConditionEvent<T>(T Condition) where T : EntityConditionBase<T>
+[DataRecord]
+public partial record struct EntityConditionEvent<T>(T Condition) where T : EntityConditionBase<T>
 {
     /// <summary>
     /// The result of our check, defaults to false if nothing handles it.

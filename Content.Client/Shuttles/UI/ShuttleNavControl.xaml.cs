@@ -20,7 +20,7 @@ namespace Content.Client.Shuttles.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ShuttleNavControl : BaseShuttleControl
 {
-    [Dependency] private IMapManager _mapManager = default!;
+    private readonly SharedMapSystem _maps;
     private readonly SharedShuttleSystem _shuttles;
     private readonly SharedTransformSystem _transform;
 
@@ -52,6 +52,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     public ShuttleNavControl() : base(64f, 256f, 256f)
     {
         RobustXamlLoader.Load(this);
+        _maps = EntManager.System<SharedMapSystem>();
         _shuttles = EntManager.System<SharedShuttleSystem>();
         _transform = EntManager.System<SharedTransformSystem>();
     }
@@ -187,7 +188,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var viewAABB = viewBounds.CalcBoundingBox();
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
+        _maps.FindGridsIntersecting(xform.MapID, new Box2(mapPos.Position - MaxRadarRangeVector, mapPos.Position + MaxRadarRangeVector), ref _grids, approx: true, includeMap: false);
 
         // Draw other grids... differently
         foreach (var grid in _grids)
@@ -218,14 +219,14 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
             {
                 var gridBounds = grid.Comp.LocalAABB;
 
+                // Display the coordinates of the center of the grid and its distance from the console.
                 var gridCentre = Vector2.Transform(gridBody.LocalCenter, curGridToView);
+                var gridCenterMapPos = _transform.ToWorldPosition(new EntityCoordinates(gUid, gridBody.LocalCenter));
 
-                var gridDistance = (gridBody.LocalCenter - xform.LocalPosition).Length();
+                var gridDistance = (gridCenterMapPos - mapPos.Position).Length();
                 var labelText = Loc.GetString("shuttle-console-iff-label", ("name", labelName),
                     ("distance", $"{gridDistance:0.0}"));
-
-                var mapCoords = _transform.GetWorldPosition(gUid);
-                var coordsText = $"({mapCoords.X:0.0}, {mapCoords.Y:0.0})";
+                var coordsText = $"({gridCenterMapPos.X:0.0}, {gridCenterMapPos.Y:0.0})";
 
                 // yes 1.0 scale is intended here.
                 var labelDimensions = handle.GetDimensions(Font, labelText, 1f);
