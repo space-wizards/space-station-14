@@ -16,20 +16,18 @@ using Content.Shared.StatusIcon;
 using Content.Shared.UserInterface;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
 {
-    public sealed class AgentIDCardSystem : SharedAgentIdCardSystem
+    public sealed partial class AgentIDCardSystem : SharedAgentIdCardSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IdCardSystem _cardSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ChameleonClothingSystem _chameleon = default!;
-        [Dependency] private readonly ChameleonControllerSystem _chamController = default!;
-        [Dependency] private readonly LockSystem _lock = default!;
-        [Dependency] private readonly SharedJobStatusSystem _jobStatus = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private IdCardSystem _cardSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private ChameleonClothingSystem _chameleon = default!;
+        [Dependency] private ChameleonControllerSystem _chamController = default!;
+        [Dependency] private LockSystem _lock = default!;
+        [Dependency] private SharedJobStatusSystem _jobStatus = default!;
 
         public override void Initialize()
         {
@@ -49,13 +47,13 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(ent, out var idCardComp))
                 return;
 
-            _prototypeManager.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
+            ProtoMan.Resolve(args.Args.ChameleonOutfit.Job, out var jobProto);
 
             var jobIcon = args.Args.ChameleonOutfit.Icon ?? jobProto?.Icon;
             var jobName = args.Args.ChameleonOutfit.Name ?? jobProto?.Name ?? "";
 
             if (jobIcon != null)
-                _cardSystem.TryChangeJobIcon(ent, _prototypeManager.Index(jobIcon.Value), idCardComp);
+                _cardSystem.TryChangeJobIcon(ent, ProtoMan.Index(jobIcon.Value), idCardComp);
 
             if (jobName != "")
                 _cardSystem.TryChangeJobTitle(ent, Loc.GetString(jobName), idCardComp);
@@ -76,8 +74,8 @@ namespace Content.Server.Access.Systems
             if (idSlotGear == null)
                 return;
 
-            var proto = _prototypeManager.Index(idSlotGear);
-            if (!proto.TryGetComponent<PdaComponent>(out var comp, EntityManager.ComponentFactory))
+            var proto = ProtoMan.Index(idSlotGear);
+            if (!proto.TryComp<PdaComponent>(out var comp, EntityManager.ComponentFactory))
                 return;
 
             if (TryComp<ChameleonClothingComponent>(ent, out var chameleonComp) && chameleonComp.CanBeSetByController)
@@ -146,7 +144,7 @@ namespace Content.Server.Access.Systems
             if (!TryComp<IdCardComponent>(uid, out var idCard))
                 return;
 
-            if (!_prototypeManager.Resolve(args.JobIconId, out var jobIcon))
+            if (!ProtoMan.Resolve(args.JobIconId, out var jobIcon))
                 return;
 
             _cardSystem.TryChangeJobIcon(uid, jobIcon, idCard);
@@ -159,7 +157,7 @@ namespace Content.Server.Access.Systems
 
         private bool TryFindJobProtoFromIcon(JobIconPrototype jobIcon, [NotNullWhen(true)] out JobPrototype? job)
         {
-            foreach (var jobPrototype in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+            foreach (var jobPrototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
             {
                 if (jobPrototype.Icon == jobIcon.ID)
                 {

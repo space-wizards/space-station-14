@@ -3,9 +3,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Weapons.Ranged.Commands;
 
-public sealed class ShowSpreadCommand : LocalizedEntityCommands
+public sealed partial class ShowSpreadCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private GunSystem _gunSystem = default!;
 
     public override string Command => "showgunspread";
 

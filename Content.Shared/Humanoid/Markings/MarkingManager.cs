@@ -10,10 +10,10 @@ namespace Content.Shared.Humanoid.Markings;
 /// <summary>
 /// Manager responsible for sharing the logic of markings between in-simulation bodies and out-of-simulation profile editing
 /// </summary>
-public sealed class MarkingManager
+public sealed partial class MarkingManager
 {
-    [Dependency] private readonly IComponentFactory _component = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _component = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private FrozenDictionary<HumanoidVisualLayers, FrozenDictionary<string, MarkingPrototype>> _categorizedMarkings = default!;
     private FrozenDictionary<string, MarkingPrototype> _markings = default!;
@@ -251,7 +251,7 @@ public sealed class MarkingManager
         var speciesPrototype = _prototype.Index(species);
         var appearancePrototype = _prototype.Index(speciesPrototype.DollPrototype);
 
-        if (!appearancePrototype.TryGetComponent<InitialBodyComponent>(out var initialBody, _component))
+        if (!appearancePrototype.TryComp<InitialBodyComponent>(out var initialBody, _component))
             return new();
 
         return initialBody.Organs;
@@ -319,7 +319,7 @@ public sealed class MarkingManager
         if (!_prototype.TryIndex(organ, out var organProto))
             return false;
 
-        if (!organProto.TryGetComponent<VisualOrganMarkingsComponent>(out var comp, _component))
+        if (!organProto.TryComp<VisualOrganMarkingsComponent>(out var comp, _component))
             return false;
 
         organData = comp.MarkingData;
