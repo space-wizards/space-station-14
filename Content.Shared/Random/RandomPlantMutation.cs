@@ -4,23 +4,23 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Random;
 
 /// <summary>
-///     Data that specifies the odds and effects of possible random plant mutations.
+/// Data that specifies the odds and effects of possible random plant mutations.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
 public sealed partial class RandomPlantMutation
 {
     /// <summary>
-    ///     Odds of this mutation occurring with 1 point of mutation severity on a plant.
+    /// Odds of this mutation occurring with 1 point of mutation severity on a plant.
     /// </summary>
     [DataField]
-    public float BaseOdds = 0;
+    public float BaseOdds;
 
     /// <summary>
-    ///     The name of this mutation.
+    /// The name of this mutation.
     /// </summary>
-    [DataField]
-    public string Name = "";
+    [DataField(required: true)]
+    public string Name;
 
     /// <summary>
     /// The text to display to players when examining something with this mutation.
@@ -31,8 +31,8 @@ public sealed partial class RandomPlantMutation
     /// <summary>
     /// The actual EntityEffect to apply to the target
     /// </summary>
-    [DataField]
-    public EntityEffect Effect = default!;
+    [DataField(required: true)]
+    public EntityEffect Effect;
 
     /// <summary>
     /// This mutation will target the harvested produce

@@ -4,9 +4,6 @@
   id: Haycutters
   description: This kills the wire. Moo!
   components:
-  - type: Tag
-    tags:
-    - PlantSampleTaker
   - type: Sprite
     sprite: Objects/Tools/Cowtools/haycutters.rsi
     state: haycutters
@@ -24,6 +21,7 @@
     speedModifier: 0.05
   - type: Item
     sprite: Objects/Tools/Cowtools/haycutters.rsi
+  - type: BotanySampleTaker
 
 - type: entity
   name: moodriver

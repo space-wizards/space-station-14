@@ -5,3 +5,5 @@ mutation-plant-scream = This plant seems nervous somehow.
 mutation-plant-sentient = It seems to be examining its surroundings.
 mutation-plant-slippery = It is slick to the touch.
 mutation-plant-unviable = It is wilting and sickly.
+mutation-plant-seedless = Its harvested produce is seedless.
+mutation-plant-sampled = It has already been sampled.
