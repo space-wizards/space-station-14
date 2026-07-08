@@ -1,11 +1,11 @@
 # Command
-highlights-captain = Captain, "Cap", Bridge, Command
-highlights-headofpersonnel = Head Of Personnel, "HoP", Service, Bridge, Command
-highlights-chiefengineer = Chief Engineer, "CE", Engineering, Engineer, "Engi", Bridge, Command
-highlights-chiefmedicalofficer = Chief Medical Officer, "CMO", Medbay, Medical, "Med", Bridge, Command
-highlights-headofsecurity = Head of Security, "HoS", Armory, Security, "Sec", Bridge, Command
-highlights-quartermaster = Quartermaster, "QM", Cargo, Supply, Bridge, Command
-highlights-researchdirector = Research Director, "RD", Science, "Sci", "RND", "R&D", Bridge, Command
+highlights-captain = Captain, "Cap", "Bridge", "Command"
+highlights-headofpersonnel = Head Of Personnel, "HoP", Service, "Bridge", "Command"
+highlights-chiefengineer = Chief Engineer, "CE", Engineering, Engineer, "Engi", "Bridge", "Command"
+highlights-chiefmedicalofficer = Chief Medical Officer, "CMO", Medbay, Medical, "Med", "Bridge", "Command"
+highlights-headofsecurity = Head of Security, "HoS", Armory, Security, "Sec", "Bridge", "Command"
+highlights-quartermaster = Quartermaster, "QM", Cargo, Supply, "Bridge", "Command"
+highlights-researchdirector = Research Director, "RD", Science, "Sci", "RND", "R&D", "Bridge", "Command"
 
 # Security
 highlights-detective = Detective, "Det", Armory, Security, "Sec"

@@ -1,0 +1,125 @@
+using Content.Shared.Access.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
+using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Paper;
+using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
+using System.Text;
+
+namespace Content.Shared.CartridgeLoader.Cartridges;
+
+public sealed partial class LogProbeCartridgeSystem : EntitySystem
+{
+    [Dependency] private CartridgeLoaderSystem _cartridge = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private PaperSystem _paper = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<LogProbeCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
+        SubscribeLocalEvent<LogProbeCartridgeComponent, CartridgeRelayedEvent<AfterInteractEvent>>(AfterInteract);
+        SubscribeLocalEvent<LogProbeCartridgeComponent, CartridgeMessageEvent>(OnMessage);
+    }
+
+    /// <summary>
+    /// Updates the program's list of logs with those from the device.
+    /// </summary>
+    private void AfterInteract(Entity<LogProbeCartridgeComponent> ent, ref CartridgeRelayedEvent<AfterInteractEvent> args)
+    {
+        if (args.Args.Handled || !args.Args.CanReach || args.Args.Target is not { } target)
+            return;
+
+        if (!TryComp(target, out AccessReaderComponent? accessReaderComponent))
+            return;
+
+        //Play scanning sound with slightly randomized pitch
+        _audio.PlayPredicted(ent.Comp.SoundScan, target, args.Args.User);
+        _popup.PopupPredictedCursor(Loc.GetString("log-probe-scan", ("device", target)), args.Args.User);
+
+        ent.Comp.EntityName = Name(target);
+        ent.Comp.PulledAccessLogs.Clear();
+
+        foreach (var accessRecord in accessReaderComponent.AccessLog)
+        {
+            var log = new PulledAccessLog(
+                accessRecord.AccessTime,
+                accessRecord.Accessor
+            );
+
+            ent.Comp.PulledAccessLogs.Add(log);
+        }
+
+        // Reverse the list so the oldest is at the bottom
+        ent.Comp.PulledAccessLogs.Reverse();
+
+        Dirty(ent);
+        UpdateUiState(ent, args.Loader);
+    }
+
+    /// <summary>
+    /// This gets called when the ui fragment needs to be updated for the first time after activating
+    /// </summary>
+    private void OnUiReady(Entity<LogProbeCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
+    {
+        UpdateUiState(ent, args.Loader);
+    }
+
+    private void OnMessage(Entity<LogProbeCartridgeComponent> ent, ref CartridgeMessageEvent args)
+    {
+        if (args is LogProbePrintMessage cast)
+            PrintLogs(ent, cast.User);
+    }
+
+    private void PrintLogs(Entity<LogProbeCartridgeComponent> ent, EntityUid user)
+    {
+        if (string.IsNullOrEmpty(ent.Comp.EntityName))
+            return;
+
+        if (_timing.CurTime < ent.Comp.NextPrintAllowed)
+            return;
+
+        ent.Comp.NextPrintAllowed = _timing.CurTime + ent.Comp.PrintCooldown;
+
+        var paper = EntityManager.PredictedSpawn(ent.Comp.PaperPrototype, _transform.GetMapCoordinates(user));
+        _label.Label(paper, ent.Comp.EntityName); // label it for easy identification
+
+        _audio.PlayEntity(ent.Comp.PrintSound, user, paper);
+        _hands.PickupOrDrop(user, paper, checkActionBlocker: false);
+
+        // generate the actual printout text
+        var builder = new StringBuilder();
+        builder.AppendLine(Loc.GetString("log-probe-printout-device", ("name", ent.Comp.EntityName)));
+        builder.AppendLine(Loc.GetString("log-probe-printout-header"));
+        var number = 1;
+        foreach (var log in ent.Comp.PulledAccessLogs)
+        {
+            var time = TimeSpan.FromSeconds(Math.Truncate(log.Time.TotalSeconds)).ToString();
+            builder.AppendLine(Loc.GetString("log-probe-printout-entry", ("number", number), ("time", time), ("accessor", log.Accessor)));
+            number++;
+        }
+
+        var paperComp = Comp<PaperComponent>(paper);
+        _paper.SetContent((paper, paperComp), builder.ToString());
+
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(user):user} printed out LogProbe logs ({paper}) of {ent.Comp.EntityName}");
+        Dirty(ent);
+    }
+
+    private void UpdateUiState(Entity<LogProbeCartridgeComponent> ent, EntityUid loaderUid)
+    {
+        var state = new LogProbeUiState(ent.Comp.EntityName, ent.Comp.PulledAccessLogs);
+        _cartridge.UpdateCartridgeUiState(loaderUid, state);
+    }
+}
