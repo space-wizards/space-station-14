@@ -202,3 +202,21 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionChangelingNightVision
+  name: Toggle Night Vision
+  description: Turn our night vision on/off.
+  components:
+  - type: Action
+    useDelay: 90 # TODO: Chemical cost
+    raiseOnAction: true
+    toggled: false
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: nv_off
+    iconOn:
+      sprite: Interface/Actions/changeling2.rsi
+      state: nv_on
