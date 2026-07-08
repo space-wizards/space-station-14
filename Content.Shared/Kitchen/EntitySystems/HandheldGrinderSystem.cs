@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.EntitySystems;
@@ -23,6 +24,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPuddleSystem _puddle = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private INetManager _net = default!;
 
     // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
     // TODO: find a better solution than copy pasting this into every shared system that caches solution entities
@@ -58,6 +60,11 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
         if (!_solution.ResolveSolution(ent.Owner, ent.Comp.SolutionName, ref ent.Comp.GrinderSolution))
             return;
 
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
+
+        if (_net.IsServer) // Cannot correctly cancel predicted audio.
+            ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.Sound, ent)?.Entity;
+
         var doAfter = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDuration, new HandheldGrinderDoAfterEvent(), ent, ent, item)
         {
             NeedHand = true,
@@ -67,8 +74,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
             BreakOnMove = true
         };
 
-        if (_doAfter.TryStartDoAfter(doAfter))
-            ent.Comp.AudioStream = _audio.PlayPvs(ent.Comp.Sound, ent)?.Entity ?? ent.Comp.AudioStream;
+        _doAfter.TryStartDoAfter(doAfter);
     }
 
     [SubscribeLocalEvent]
