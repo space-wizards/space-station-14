@@ -7,6 +7,9 @@ using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Player;
+using Content.Shared.Antag;
+
 
 namespace Content.Shared.Damage.Systems;
 
@@ -22,6 +25,7 @@ public sealed partial class DamageableSystem
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
         SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+        SubscribeLocalEvent<DamageableComponent, ComponentGetStateAttemptEvent>(OnDamageableGetStateAttempt);
         SubscribeLocalEvent<InjurableComponent, DamageDealtEvent>(OnDamageDealt);
 
         // Damage modifier CVars are updated and stored here to be queried in other systems.
@@ -239,6 +243,25 @@ public sealed partial class DamageableSystem
 
         if (!damageDone.Empty)
             OnEntityDamageChanged((ent, damageable), damageDone, args.InterruptsDoAfters, args.Origin);
+    }
+
+    private void OnDamageableGetStateAttempt(EntityUid uid, DamageableComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, args.Player);
+    }
+
+    private bool CanGetState(EntityUid uid, ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not { } attachedUid)
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(attachedUid))
+            return true;
+
+        if (uid == attachedUid)
+            return true;
+
+        return false;
     }
 }
 
