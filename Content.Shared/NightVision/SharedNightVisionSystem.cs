@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
@@ -10,28 +11,44 @@ namespace Content.Shared.NightVision;
 /// </summary>
 public abstract partial class SharedNightVisionSystem : EntitySystem
 {
+    [Dependency] private SharedActionsSystem _actions = default!;
+
     [SubscribeLocalEvent]
     private void OnStartup(Entity<NightVisionComponent> ent, ref ComponentStartup args)
     {
+        if (ent.Comp.RelayOverlay)
+            return;
+
         RefreshOverlay(ent);
+        _actions.AddAction(ent, ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
     [SubscribeLocalEvent]
     private void OnRemove(Entity<NightVisionComponent> ent, ref ComponentRemove args)
     {
+        if (ent.Comp.RelayOverlay)
+            return;
+
         RefreshOverlay(ent);
+        _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
     }
 
     [SubscribeLocalEvent]
     private void OnCompEquip(Entity<NightVisionComponent> ent, ref GotEquippedEvent args)
     {
-        if (ent.Comp.RelayOverlay)
-            RefreshOverlay(args.EquipTarget);
+        if (!ent.Comp.RelayOverlay)
+            return;
+
+        RefreshOverlay(args.EquipTarget);
+        _actions.AddAction(args.EquipTarget, ref ent.Comp.ActionEntity, ent.Comp.Action, ent);
     }
 
     [SubscribeLocalEvent]
     private void OnCompUnequip(Entity<NightVisionComponent> ent, ref GotUnequippedEvent args)
     {
+        if (!ent.Comp.RelayOverlay)
+            return;
+
         RefreshOverlay(args.EquipTarget);
     }
 
@@ -47,13 +64,28 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
         if (!ent.Comp.Enabled)
             return;
 
-        args.Components.Add(ent.Comp);
+        args.Entities.Add(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnToggleNightVisionEvent(ToggleNightVisionEvent args)
+    {
+        var ent = args.Action.Comp.Container;
+
+        if (!TryComp<NightVisionComponent>(ent, out var nightVisionComp))
+            return;
+
+        SetEnabled(ent.Value, !nightVisionComp.Enabled, args.Performer);
+        args.Handled = true;
     }
 
     /// <summary>
     /// Enables or disables the component.
     /// </summary>
-    public void SetEnabled(Entity<NightVisionComponent?> ent, bool enabled)
+    /// <param name="ent">The night vision to toggle.</param>
+    /// <param name="enabled">Whether to enable or disable.</param>
+    /// <param name="viewer">Viewer of the night vision, used to refresh their overlay. If null, assumes the night vision entity is the viewer.</param>
+    public void SetEnabled(Entity<NightVisionComponent?> ent, bool enabled, EntityUid? viewer = null)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -63,8 +95,7 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
 
         ent.Comp.Enabled = enabled;
         Dirty(ent);
-
-        RefreshOverlay(ent);
+        RefreshOverlay(viewer ?? ent);
     }
 
     protected virtual void RefreshOverlay(EntityUid entity) { }
@@ -74,5 +105,5 @@ public abstract partial class SharedNightVisionSystem : EntitySystem
 public record struct RefreshNightVisionEvent() : IInventoryRelayEvent
 {
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
-    public List<NightVisionComponent> Components = new();
+    public List<Entity<NightVisionComponent>> Entities = new();
 }
