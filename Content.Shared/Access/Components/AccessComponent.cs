@@ -13,9 +13,12 @@ namespace Content.Shared.Access.Components;
 [AutoGenerateComponentState]
 public sealed partial class AccessComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     /// <summary>
     /// True if the access provider is enabled and can grant access.
     /// </summary>
+
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool Enabled = true;

@@ -1,18 +1,53 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Content.Shared.Antag;
+
 
 namespace Content.Shared.Access.Systems
 {
     public abstract partial class SharedAccessSystem : EntitySystem
     {
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<AccessComponent, MapInitEvent>(OnAccessInit);
             SubscribeLocalEvent<AccessComponent, GetAccessTagsEvent>(OnGetAccessTags);
+            SubscribeLocalEvent<AccessComponent, ComponentGetStateAttemptEvent>(OnAccessGetStateAttempt);
         }
+
+        private void OnAccessGetStateAttempt(EntityUid uid, AccessComponent component, ref ComponentGetStateAttemptEvent args)
+        {
+            args.Cancelled = !CanGetState(uid, args.Player);
+        }
+
+        private bool CanGetState(EntityUid uid, ICommonSession? player)
+        {
+            if (player?.AttachedEntity is not { } attachedUid)
+                return true;
+
+            if (HasComp<ShowAntagIconsComponent>(attachedUid))
+                return true;
+
+            if (uid == attachedUid)
+                return true;
+
+            if (_containerSystem.IsEntityInContainer(uid) &&
+                _containerSystem.TryGetOuterContainer(uid, Transform(uid), out var outerContainer) &&
+                outerContainer.Owner == attachedUid)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         private void OnAccessInit(EntityUid uid, AccessComponent component, MapInitEvent args)
         {
