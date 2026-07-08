@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Server.SensorMonitoring;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Binary.Systems;
@@ -30,12 +29,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceUpdateEvent>(OnVolumePumpUpdated);
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceDisabledEvent>(OnVolumePumpLeaveAtmosphere);
-        }
-
-        protected override void InitializeDevice()
-        {
-            base.InitializeDevice();
-            SubscribePayload<GasVolumePumpSyncDataPayload>(OnSyncPayload);
         }
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
@@ -109,18 +102,15 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
 
-        private void OnSyncPayload(Entity<GasVolumePumpComponent> ent, ref GasVolumePumpSyncDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasVolumePumpComponent> ent, ref DeviceNetworkPacketEvent<GasVolumePumpSyncDataPayload> args)
         {
             var data = new GasVolumePumpDataPayload
             {
                 LastMolesTransferred = ent.Comp.LastMolesTransferred,
             };
-            var sensor = new SensorMonitoringAtmosDataPayload
-            {
-                Payload = data,
-            };
 
-            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, sensor);
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, data);
         }
     }
 }

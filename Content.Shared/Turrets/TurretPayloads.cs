@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Turrets;
 
 [Serializable, NetSerializable]
-public sealed partial class TurretStatePayload : HandledNetworkPayload
+public sealed partial class TurretStatePayload : NetworkPayloadBase<TurretStatePayload>
 {
     [DataField]
     public DeployableTurretState State;

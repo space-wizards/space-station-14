@@ -6,7 +6,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.NodeContainer;
 using Content.Shared.Power;
@@ -44,7 +43,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegCirculatorComponent"/>
 /// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegSensorPayload"/>
-public sealed partial class TegSystem : DevicePayloadSystem<TegGeneratorComponent>
+public sealed partial class TegSystem : EntitySystem
 {
     /// <summary>
     /// Node name for the TEG part connection nodes (<see cref="TegNodeGroup"/>).
@@ -77,12 +76,6 @@ public sealed partial class TegSystem : DevicePayloadSystem<TegGeneratorComponen
         SubscribeLocalEvent<TegGeneratorComponent, PowerChangedEvent>(GeneratorPowerChange);
 
         SubscribeLocalEvent<TegGeneratorComponent, ExaminedEvent>(GeneratorExamined);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<TegSensorSyncPayload>(OnSyncPayload);
     }
 
     private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ExaminedEvent args)
@@ -361,7 +354,8 @@ public sealed partial class TegSystem : DevicePayloadSystem<TegGeneratorComponen
         return (inlet, outlet);
     }
 
-    private void OnSyncPayload(Entity<TegGeneratorComponent> ent, ref TegSensorSyncPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSyncPayload(Entity<TegGeneratorComponent> ent, ref DeviceNetworkPacketEvent<TegSensorSyncPayload> args)
     {
         var group = GetNodeGroup(ent.Owner);
         if (group is not { IsFullyBuilt: true })

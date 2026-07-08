@@ -12,8 +12,8 @@ public sealed partial class PumpControl : BoxContainer
     private GasVentPumpDataPayload _dataPayload;
     private string _address;
 
-    public event Action<string, AtmosDeviceDataPayload>? PumpDataChanged;
-	public event Action<AtmosDeviceDataPayload>? PumpDataCopied;
+    public event Action<string, IAtmosDeviceDataPayload>? PumpDataChanged;
+	public event Action<IAtmosDeviceDataPayload>? PumpDataCopied;
 
     private CheckBox _enabled => CEnableDevice;
     private CollapsibleHeading _addressLabel => CAddress;

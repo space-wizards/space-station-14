@@ -4,14 +4,14 @@ using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Atmos.Monitor.Payloads;
 
-public sealed partial class AirAlarmSetModePayload : HandledNetworkPayload
+public sealed partial class AirAlarmSetModePayload : NetworkPayloadBase<AirAlarmSetModePayload>
 {
     [DataField]
     public AirAlarmMode Mode;
 }
 
-public sealed partial class AirAlarmSetDataPayload : HandledNetworkPayload
+public sealed partial class AirAlarmSetDataPayload : NetworkPayloadBase<AirAlarmSetDataPayload>
 {
     [DataField]
-    public AtmosDeviceDataPayload Payload;
+    public IAtmosDeviceDataPayload Payload;
 }

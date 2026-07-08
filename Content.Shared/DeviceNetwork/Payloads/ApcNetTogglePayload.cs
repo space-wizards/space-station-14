@@ -3,7 +3,7 @@
 namespace Content.Shared.DeviceNetwork.Payloads;
 
 [Serializable, NetSerializable]
-public sealed partial class ApcNetTogglePayload : NetworkPayload
+public sealed partial class ApcNetTogglePayload : NetworkPayloadBase<ApcNetTogglePayload>
 {
     [DataField]
     public bool Enabled;

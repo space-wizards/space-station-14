@@ -1,25 +1,19 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.SensorMonitoring;
 
 namespace Content.Server.SensorMonitoring;
 
-public sealed partial class BatterySensorSystem : DevicePayloadSystem<BatterySensorComponent>
+public sealed partial class BatterySensorSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<BatterySensorSyncPayload>(OnSensorRequest);
-    }
-
-    private void OnSensorRequest(Entity<BatterySensorComponent> ent, ref BatterySensorSyncPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSensorRequest(Entity<BatterySensorComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorSyncPayload> args)
     {
         var battery = Comp<BatteryComponent>(ent);
         var currentCharge = _battery.GetCharge((ent.Owner, battery));

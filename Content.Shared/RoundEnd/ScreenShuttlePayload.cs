@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.RoundEnd;
 
 [Serializable, NetSerializable]
-public sealed partial class ScreenShuttlePayload : HandledNetworkPayload
+public sealed partial class ScreenShuttlePayload : NetworkPayloadBase<ScreenShuttlePayload>
 {
     [DataField]
     public NetEntity? Shuttle;

@@ -7,7 +7,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
-using Content.Server.SensorMonitoring;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Unary.Systems;
 using Content.Shared.DeviceNetwork.Events;
@@ -26,12 +25,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-        }
-
-        protected override void InitializeDevice()
-        {
-            base.InitializeDevice();
-            SubscribePayload<GasThermoMachineSyncDataPayload>(OnSyncPayload);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
@@ -117,18 +110,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
         }
 
-        private void OnSyncPayload(Entity<GasThermoMachineComponent> ent, ref GasThermoMachineSyncDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasThermoMachineComponent> ent, ref DeviceNetworkPacketEvent<GasThermoMachineSyncDataPayload> args)
         {
             var data = new GasThermoMachineDataPayload
             {
                 EnergyDelta = ent.Comp.LastEnergyDelta,
             };
-            var sensor = new SensorMonitoringAtmosDataPayload
-            {
-                Payload = data,
-            };
 
-            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, sensor);
+            _deviceNetwork.QueuePacket(ent.Owner, args.SenderAddress, data);
         }
     }
 }

@@ -17,14 +17,8 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
         SubscribeLocalEvent<DeviceLinkSourceComponent, NewLinkEvent>(OnNewLink);
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<SignalPayload>(OnSignalReceived);
-    }
-
     #region Sending & Receiving
-    public override void InvokePort(EntityUid uid, string port, INetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
+    public override void InvokePort(EntityUid uid, string port, NetworkPayload? data = null, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(uid, ref sourceComponent) || !sourceComponent.Outputs.TryGetValue(port, out var sinks))
             return;
@@ -48,7 +42,7 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     /// <summary>
     /// Raises an event on or sends a network packet directly to a sink from a source.
     /// </summary>
-    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, INetworkPayload? data)
+    private void InvokeDirect(Entity<DeviceLinkSourceComponent> source, Entity<DeviceLinkSinkComponent?> sink, string sourcePort, string sinkPort, NetworkPayload? data)
     {
         if (!Resolve(sink, ref sink.Comp))
             return;
@@ -118,13 +112,14 @@ public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
     /// Checks if the payload has a port defined and if the port is present on the sink.
     /// Raises a <see cref="SignalReceivedEvent"/> containing the payload when the check passes
     /// </summary>
-    private void OnSignalReceived(Entity<DeviceLinkSinkComponent> ent, ref SignalPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSignalReceived(Entity<DeviceLinkSinkComponent> ent, ref DeviceNetworkPacketEvent<SignalPayload> args)
     {
         var (uid, component) = ent;
-        if (!component.Ports.Contains(payload.InvokedPort))
+        if (!component.Ports.Contains(args.Data.InvokedPort))
             return;
 
-        var eventArgs = new SignalReceivedEvent(payload.InvokedPort, args.Sender, payload.Payload);
+        var eventArgs = new SignalReceivedEvent(args.Data.InvokedPort, args.Sender, args.Data.Payload);
         RaiseLocalEvent(uid,  ref eventArgs);
     }
 

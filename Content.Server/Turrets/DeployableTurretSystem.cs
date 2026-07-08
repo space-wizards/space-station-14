@@ -41,14 +41,6 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         SubscribeLocalEvent<DeployableTurretComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<TurretControllerSetArmamentPayload>(OnSetArmament);
-        SubscribePayload<TurretControllerSetAccessPayload>(OnSetAccess);
-        SubscribePayload<TurretControllerRequestPayload>(OnRequest);
-    }
-
     private void OnAmmoShot(Entity<DeployableTurretComponent> ent, ref AmmoShotEvent args)
     {
         UpdateAmmoStatus(ent);
@@ -78,23 +70,26 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, false, appearance);
     }
 
-    private void OnSetArmament(Entity<DeployableTurretComponent> ent, ref TurretControllerSetArmamentPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetArmament(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerSetArmamentPayload> args)
     {
         if (TryComp<BatteryWeaponFireModesComponent>(ent, out var batteryWeaponFireModes))
-            _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), payload.ArmamentState);
+            _fireModes.TrySetFireMode((ent.Owner, batteryWeaponFireModes), args.Data.ArmamentState);
 
-        TrySetState(ent, payload.ArmamentState >= 0);
+        TrySetState(ent, args.Data.ArmamentState >= 0);
     }
 
-    private void OnSetAccess(Entity<DeployableTurretComponent> ent, ref TurretControllerSetAccessPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetAccess(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerSetAccessPayload> args)
     {
         if (!TryComp<TurretTargetSettingsComponent>(ent, out var targetSettings))
             return;
 
-        _turretTargetingSettings.SyncAccessLevelExemptions((ent, targetSettings), payload.AccessExemptions);
+        _turretTargetingSettings.SyncAccessLevelExemptions((ent, targetSettings), args.Data.AccessExemptions);
     }
 
-    private void OnRequest(Entity<DeployableTurretComponent> ent, ref TurretControllerRequestPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnRequest(Entity<DeployableTurretComponent> ent, ref DeviceNetworkPacketEvent<TurretControllerRequestPayload> args)
     {
         SendStateUpdateToDeviceNetwork(ent);
     }

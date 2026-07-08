@@ -1,22 +1,21 @@
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components
 {
     [Serializable, NetSerializable]
-    public sealed partial class GasVolumePumpDataPayload : AtmosDeviceDataPayload
+    public sealed partial class GasVolumePumpDataPayload : AtmosDeviceDataPayload<GasVolumePumpDataPayload>
     {
         [DataField]
         public float LastMolesTransferred;
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVolumePumpSyncDataPayload : HandledNetworkPayload;
+    public sealed partial class GasVolumePumpSyncDataPayload : NetworkPayloadBase<GasVolumePumpSyncDataPayload>;
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVolumePumpSetDataPayload : HandledNetworkPayload
+    public sealed partial class GasVolumePumpSetDataPayload : NetworkPayloadBase<GasVolumePumpSetDataPayload>
     {
         [DataField]
         public GasVolumePumpDataPayload Payload;

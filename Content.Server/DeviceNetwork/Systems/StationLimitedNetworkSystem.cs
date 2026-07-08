@@ -1,9 +1,7 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -11,7 +9,7 @@ namespace Content.Server.DeviceNetwork.Systems
     /// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class StationLimitedNetworkSystem : BeforeDevicePayloadSystem<StationLimitedNetworkComponent>
+    public sealed partial class StationLimitedNetworkSystem : EntitySystem
     {
         [Dependency] private StationSystem _stationSystem = default!;
         public override void Initialize()
@@ -84,11 +82,6 @@ namespace Content.Server.DeviceNetwork.Systems
                 TrySetStationId(senderUid, sender);
 
             return sender.StationId == receiverStationId;
-        }
-
-        protected override void OnBeforePayload(Entity<StationLimitedNetworkComponent> ent, ref BeforePacketSentEvent args)
-        {
-            OnBeforePacketSent(ent, ref args);
         }
     }
 }

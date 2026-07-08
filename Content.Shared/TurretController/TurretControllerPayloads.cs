@@ -6,18 +6,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.TurretController;
 
 [Serializable, NetSerializable]
-public sealed partial class TurretControllerSetArmamentPayload : HandledNetworkPayload
+public sealed partial class TurretControllerSetArmamentPayload : NetworkPayloadBase<TurretControllerSetArmamentPayload>
 {
     [DataField]
     public int ArmamentState;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class TurretControllerSetAccessPayload : HandledNetworkPayload
+public sealed partial class TurretControllerSetAccessPayload : NetworkPayloadBase<TurretControllerSetAccessPayload>
 {
     [DataField]
     public HashSet<ProtoId<AccessLevelPrototype>> AccessExemptions = new();
 }
 
 [Serializable, NetSerializable]
-public sealed partial class TurretControllerRequestPayload : HandledNetworkPayload;
+public sealed partial class TurretControllerRequestPayload : NetworkPayloadBase<TurretControllerRequestPayload>;

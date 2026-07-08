@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Medical.CrewMonitoring;
 
 [Serializable, NetSerializable]
-public sealed partial class BroadcastSuitSensorStatePayload : HandledNetworkPayload
+public sealed partial class BroadcastSuitSensorStatePayload : NetworkPayloadBase<BroadcastSuitSensorStatePayload>
 {
     [DataField]
     public Dictionary<string, SuitSensorStatus> SensorStatus = new();

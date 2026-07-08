@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public sealed partial class GasVentScrubberDataPayload : AtmosDeviceDataPayload
+    public sealed partial class GasVentScrubberDataPayload : AtmosDeviceDataPayload<GasVentScrubberDataPayload>
     {
         public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -78,10 +78,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVentScrubberSyncDataPayload : HandledNetworkPayload;
+    public sealed partial class GasVentScrubberSyncDataPayload : NetworkPayloadBase<GasVentScrubberSyncDataPayload>;
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVentScrubberSetDataPayload : HandledNetworkPayload
+    public sealed partial class GasVentScrubberSetDataPayload : NetworkPayloadBase<GasVentScrubberSetDataPayload>
     {
         [DataField]
         public GasVentScrubberDataPayload Payload;

@@ -1,7 +1,6 @@
 using Content.Shared.TextScreen;
 using Content.Server.Screens.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.RoundEnd;
 using Content.Shared.Screens;
 using Robust.Shared.Timing;
@@ -11,23 +10,18 @@ namespace Content.Server.Screens.Systems;
 /// <summary>
 /// Controls the wallmounted screens on stations and shuttles displaying e.g. FTL duration, ETA
 /// </summary>
-public sealed partial class ScreenSystem : DevicePayloadSystem<ScreenComponent>
+public sealed partial class ScreenSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<ScreenShuttlePayload>(OnShuttleTimer);
-        SubscribePayload<ScreenTextPayload>(OnScreenText);
-    }
-
     /// <summary>
     ///     Send a text update to every screen on the same MapUid as the originating comms console.
     /// </summary>
-    private void OnScreenText(Entity<ScreenComponent> ent, ref ScreenTextPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnScreenText(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenTextPayload> args)
     {
+        var text = args.Data.Text;
         // don't allow text updates if there's an active timer
         // (and just check here so the server doesn't have to track them)
         if (_appearanceSystem.TryGetData(ent, TextScreenVisuals.TargetTime, out TimeSpan target)
@@ -40,11 +34,11 @@ public sealed partial class ScreenSystem : DevicePayloadSystem<ScreenComponent>
         if (screenMap == null
             || argsMap == null
             || screenMap != argsMap
-            || payload.Text == null)
+            || text == null)
             return;
 
-        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, payload.Text);
-        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, payload.Text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.DefaultText, text);
+        _appearanceSystem.SetData(ent, TextScreenVisuals.ScreenText, text);
     }
 
     /// <summary>
@@ -55,8 +49,10 @@ public sealed partial class ScreenSystem : DevicePayloadSystem<ScreenComponent>
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
     /// </summary>
-    private void OnShuttleTimer(Entity<ScreenComponent> ent, ref ScreenShuttlePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnShuttleTimer(Entity<ScreenComponent> ent, ref DeviceNetworkPacketEvent<ScreenShuttlePayload> args)
     {
+        var payload = args.Data;
         var timerXform = Transform(ent);
 
         // no false positives.

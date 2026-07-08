@@ -5,17 +5,17 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
 [Serializable, NetSerializable]
-public sealed partial class GasThermoMachineDataPayload : AtmosDeviceDataPayload
+public sealed partial class GasThermoMachineDataPayload : AtmosDeviceDataPayload<GasThermoMachineDataPayload>
 {
     [DataField]
     public float EnergyDelta;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class GasThermoMachineSyncDataPayload : HandledNetworkPayload;
+public sealed partial class GasThermoMachineSyncDataPayload : NetworkPayloadBase<GasThermoMachineSyncDataPayload>;
 
 [Serializable, NetSerializable]
-public sealed partial class GasThermoMachineSetDataPayload : HandledNetworkPayload
+public sealed partial class GasThermoMachineSetDataPayload : NetworkPayloadBase<GasThermoMachineSetDataPayload>
 {
     [DataField]
     public GasThermoMachineDataPayload Payload;

@@ -16,13 +16,8 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             base.Initialize();
 
             SubscribeLocalEvent<ApcNetSwitchComponent, InteractHandEvent>(OnInteracted);
-            SubscribeLocalEvent<ApcNetSwitchComponent, DeviceNetworkPacketEvent>(OnPackedReceived);
         }
 
-        /// <summary>
-        /// Toggles the state of the switch and sents a <see cref="DeviceNetworkConstants.CmdSetState"/> command with the
-        /// <see cref="DeviceNetworkConstants"/> value set to state.
-        /// </summary>
         private void OnInteracted(Entity<ApcNetSwitchComponent> ent, ref InteractHandEvent args)
         {
             var (uid, component) = ent;
@@ -44,17 +39,15 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             args.Handled = true;
         }
 
-        /// <summary>
-        /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
-        /// </summary>
-        private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent args)
+        [SubscribeLocalEvent]
+        private void OnPackedReceived(Entity<ApcNetSwitchComponent> ent, ref DeviceNetworkPacketEvent<ApcNetTogglePayload> args)
         {
             var (uid, component) = ent;
-            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
-            if (args.Data is not ApcNetTogglePayload toggle)
+            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)
+                || args.SenderAddress == networkComponent.Address)
                 return;
 
-            component.State = toggle.Enabled;
+            component.State = args.Data.Enabled;
         }
     }
 }

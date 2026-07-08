@@ -20,7 +20,6 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
@@ -32,7 +31,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class GasVentPumpSystem : DevicePayloadSystem<GasVentPumpComponent>
+    public sealed partial class GasVentPumpSystem : EntitySystem
     {
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
@@ -62,13 +61,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
             SubscribeLocalEvent<GasVentPumpComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<GasVentPumpComponent, VentScrewedDoAfterEvent>(OnVentScrewed);
-        }
-
-        protected override void InitializeDevice()
-        {
-            base.InitializeDevice();
-            SubscribePayload<GasVentPumpSyncDataPayload>(OnSyncPayload);
-            SubscribePayload<GasVentPumpSetDataPayload>(OnSetPayload);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, ref AtmosDeviceUpdateEvent args)
@@ -223,7 +215,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        private void OnSyncPayload(Entity<GasVentPumpComponent> ent, ref GasVentPumpSyncDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<GasVentPumpSyncDataPayload> args)
         {
             var data = ent.Comp.ToAirAlarmData();
             var airAlarm = new AirAlarmSetDataPayload
@@ -233,9 +226,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
         }
 
-        private void OnSetPayload(Entity<GasVentPumpComponent> ent, ref GasVentPumpSetDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSetPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<GasVentPumpSetDataPayload> args)
         {
-            var setData = payload.Payload;
+            var setData = args.Data.Payload;
             var previous = ent.Comp.ToAirAlarmData();
 
             if (previous.Enabled != setData.Enabled)

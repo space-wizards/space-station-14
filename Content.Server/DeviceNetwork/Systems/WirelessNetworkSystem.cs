@@ -1,12 +1,11 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
-    public sealed partial class WirelessNetworkSystem : BeforeDevicePayloadSystem<WirelessNetworkComponent>
+    public sealed partial class WirelessNetworkSystem : EntitySystem
     {
         [Dependency] private SharedTransformSystem _transformSystem = default!;
 
@@ -33,11 +32,6 @@ namespace Content.Server.DeviceNetwork.Systems
             {
                 args.Cancelled = true;
             }
-        }
-
-        protected override void OnBeforePayload(Entity<WirelessNetworkComponent> ent, ref BeforePacketSentEvent args)
-        {
-            OnBeforePacketSent(ent, ref args);
         }
     }
 }

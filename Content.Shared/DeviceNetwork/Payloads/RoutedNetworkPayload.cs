@@ -7,10 +7,10 @@ namespace Content.Shared.DeviceNetwork.Payloads;
 /// Represents a payload that can be re-routed by a <see cref="DeviceNetworkRouterComponent"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RoutedNetworkPayload : HandledNetworkPayload
+public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetworkPayload>
 {
     [DataField]
-    public RoutableNetworkPayload Payload;
+    public IRoutableNetworkPayload Payload;
 
     /// <summary>
     /// If true, the device router will try to use a different frequency for transmitting this packet.
@@ -27,14 +27,21 @@ public sealed partial class RoutedNetworkPayload : HandledNetworkPayload
 
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
-public abstract partial class RoutableNetworkPayload : HandledNetworkPayload
+public abstract partial class RoutableNetworkPayload<T> : NetworkPayloadBase<T>, IRoutableNetworkPayload where T : NetworkPayloadBase<T>
 {
     /// <summary>
     /// Original sender address, before the packet was re-routed.
     /// </summary>
     [DataField]
-    public string? SenderAddress;
+    public string? SenderAddress { get; set; }
 
     [DataField]
-    public NetEntity Sender;
+    public NetEntity Sender { get; set; }
+}
+
+public interface IRoutableNetworkPayload : INetworkPayload
+{
+    string? SenderAddress { get; set; }
+
+    NetEntity Sender { get; set; }
 }

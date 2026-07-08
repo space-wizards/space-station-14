@@ -12,11 +12,10 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlarmableComponent>
+public sealed partial class AtmosAlarmableSystem : EntitySystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private AudioSystem _audioSystem = default!;
@@ -28,14 +27,6 @@ public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlar
         base.Initialize();
         SubscribeLocalEvent<AtmosAlarmableComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AtmosAlarmableComponent, PowerChangedEvent>(OnPowerChange);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<AtmosAlarmPayload>(OnAlarmPayload);
-        SubscribePayload<AtmosAlarmableResetAllPayload>(OnResetAllPayload);
-        SubscribePayload<AtmosAlarmableSyncAlertsPayload>(OnSyncAlertsPayload);
     }
 
     private void OnMapInit(EntityUid uid, AtmosAlarmableComponent component, MapInitEvent args)
@@ -67,9 +58,11 @@ public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlar
         }
     }
 
-    private void OnAlarmPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnAlarmPayload(Entity<AtmosAlarmableComponent> ent, ref DeviceNetworkPacketEvent<AtmosAlarmPayload> args)
     {
-        if (!CheckTags(ent, ref payload))
+        var payload = args.Data;
+        if (!CheckTags(ent, payload))
             return;
 
         var (uid, component) = ent;
@@ -99,20 +92,22 @@ public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlar
         TryUpdateAlert(uid, netMax.Value, component);
     }
 
-    private void OnResetAllPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmableResetAllPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnResetAllPayload(Entity<AtmosAlarmableComponent> ent, ref DeviceNetworkPacketEvent<AtmosAlarmableResetAllPayload> args)
     {
-        if (!CheckTags(ent, ref payload))
+        if (!CheckTags(ent, args.Data))
             return;
 
         Reset(ent.Owner, ent.Comp);
     }
 
-    private void OnSyncAlertsPayload(Entity<AtmosAlarmableComponent> ent, ref AtmosAlarmableSyncAlertsPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSyncAlertsPayload(Entity<AtmosAlarmableComponent> ent, ref DeviceNetworkPacketEvent<AtmosAlarmableSyncAlertsPayload> args)
     {
-        if (!CheckTags(ent, ref payload))
+        if (!CheckTags(ent, args.Data))
             return;
 
-        foreach (var (key, alarm) in payload.AlarmStates)
+        foreach (var (key, alarm) in args.Data.AlarmStates)
         {
             ent.Comp.NetworkAlarmStates.TryAdd(key, alarm);
             ent.Comp.NetworkAlarmStates[key] = alarm;
@@ -124,12 +119,12 @@ public sealed partial class AtmosAlarmableSystem : DevicePayloadSystem<AtmosAlar
         }
     }
 
-    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, ref T payload) where T : HandledNetworkPayload
+    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : NetworkPayloadBase<T>
     {
         if (ent.Comp.IgnoreAlarms)
             return false;
 
-        if (payload is not AtmosAlarmableSourcePayload sourcePayload)
+        if (payload is not IAtmosAlarmableSourcePayload sourcePayload)
             return false;
 
         return sourcePayload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));

@@ -39,7 +39,7 @@ namespace Content.Shared.Silicons.Borgs;
 /// <summary>
 /// This handles logic, interactions, and UI related to <see cref="BorgChassisComponent"/> and other related components.
 /// </summary>
-public abstract partial class SharedBorgSystem : DevicePayloadSystem<BorgTransponderComponent>
+public abstract partial class SharedBorgSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;

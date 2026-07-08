@@ -28,12 +28,6 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
         SubscribeLocalEvent<DeployableTurretControllerComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<TurretStatePayload>(OnPacketReceived);
-    }
-
     private void OnBUIOpened(Entity<DeployableTurretControllerComponent> ent, ref BoundUIOpenedEvent args)
     {
         UpdateUIState(ent);
@@ -78,14 +72,15 @@ public sealed partial class DeployableTurretControllerSystem : SharedDeployableT
             UpdateUIState(ent);
     }
 
-    private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref TurretStatePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<DeployableTurretControllerComponent> ent, ref DeviceNetworkPacketEvent<TurretStatePayload> args)
     {
         if (!TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork) || deviceNetwork.ReceiveFrequency != args.Frequency)
             return;
 
         // If an update was received from a turret, connect to it and update the UI
 
-        ent.Comp.LinkedTurrets[args.SenderAddress] = payload.State;
+        ent.Comp.LinkedTurrets[args.SenderAddress] = args.Data.State;
         UpdateUIState(ent);
     }
 

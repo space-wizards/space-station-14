@@ -22,7 +22,7 @@ public partial record struct Circulator(
 /// Sensor data reported by the <see cref="TegGeneratorComponent"/> when queried over the device network.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TegSensorPayload : HandledNetworkPayload
+public sealed partial class TegSensorPayload : NetworkPayloadBase<TegSensorPayload>
 {
     /// <summary>
     /// Information for the A-side circulator.
@@ -62,4 +62,4 @@ public sealed partial class TegSensorPayload : HandledNetworkPayload
 /// Request to get <see cref="TegSensorPayload"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TegSensorSyncPayload : HandledNetworkPayload;
+public sealed partial class TegSensorSyncPayload : NetworkPayloadBase<TegSensorSyncPayload>;

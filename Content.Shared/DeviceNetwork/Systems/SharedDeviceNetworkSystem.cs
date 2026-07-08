@@ -10,7 +10,7 @@ namespace Content.Shared.DeviceNetwork.Systems;
 ///     Device networking allows machines and devices to communicate with each other
 ///     while adhering to restrictions like range or being connected to the same power network.
 /// </summary>
-public abstract partial class SharedDeviceNetworkSystem : EntitySystem
+public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDevicePayloadRaiser
 {
     public override void Initialize()
     {
@@ -46,7 +46,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     public virtual bool QueuePacket(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
-        NetworkPayload data,
+        INetworkPayload data,
         uint? frequency = null,
         int? network = null)
     {
@@ -54,33 +54,25 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sends the given <see cref="HandledNetworkPayload"/> as a device network packet to the entity with the given address and frequency.
-    /// Addresses are given to the <see cref="DeviceNetworkComponent"/> of an entity when connecting.
+    /// Raises an effect to an entity. You should not be calling this unless you know what you're doing.
     /// </summary>
-    /// <remarks>
-    /// This overload of the method uses <see cref="BeforeDevicePayloadSystem{T}"/> to cancel the sending
-    /// and <see cref="DevicePayloadSystem{T}"/> to handle the payload.
-    /// Remember that this is incompatible with systems that use <see cref="DeviceNetworkPacketEvent"/>,
-    /// and systems that subscribe to <see cref="BeforePacketSentEvent"/> must also implement <see cref="BeforeDevicePayloadSystem{T}"/>
-    /// to properly cancel the sending of the payload.
-    /// </remarks>
-    /// <param name="ent">The sending entity.</param>
-    /// <param name="address">
-    /// The address of the entity that the packet gets sent to.
-    /// If null, the message is broadcast to all devices on that frequency (except the sender)
-    /// </param>
-    /// <param name="frequency">The frequency to send on.</param>
-    /// <param name="data">The data to be sent.</param>
-    /// <param name="network">The network to send on.</param>
-    /// <returns>Returns true when the packet was successfully enqueued.</returns>
-    [PublicAPI]
-    public virtual bool QueuePacket(
-        Entity<DeviceNetworkComponent?> ent,
-        string? address,
-        HandledNetworkPayload data,
-        uint? frequency = null,
-        int? network = null)
+    public void RaisePayloadEvent<T>(EntityUid target, T payload, ref DeviceNetworkPacketData packet) where T : NetworkPayloadBase<T>
     {
-        return false;
+        var ev = new DeviceNetworkPacketEvent<T>(
+            packet.NetId,
+            packet.Address,
+            packet.Frequency,
+            packet.SenderAddress,
+            packet.Sender,
+            payload);
+        RaiseLocalEvent(target, ref ev);
     }
+}
+
+/// <summary>
+/// Used to raise an EntityEffect without losing the type of effect.
+/// </summary>
+public interface IDevicePayloadRaiser
+{
+    void RaisePayloadEvent<T>(EntityUid target, T payload, ref DeviceNetworkPacketData packet) where T : NetworkPayloadBase<T>;
 }

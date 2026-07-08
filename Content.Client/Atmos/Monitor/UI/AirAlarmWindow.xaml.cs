@@ -16,8 +16,8 @@ namespace Content.Client.Atmos.Monitor.UI;
 [GenerateTypedNameReferences]
 public sealed partial class AirAlarmWindow : FancyWindow
 {
-    public event Action<string, AtmosDeviceDataPayload>? AtmosDeviceDataChanged;
-	public event Action<AtmosDeviceDataPayload>? AtmosDeviceDataCopied;
+    public event Action<string, IAtmosDeviceDataPayload>? AtmosDeviceDataChanged;
+	public event Action<IAtmosDeviceDataPayload>? AtmosDeviceDataCopied;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
     public event Action<bool>? AutoModeChanged;
@@ -124,7 +124,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
         _autoMode.Pressed = enabled;
     }
 
-    public void UpdateDeviceData(string addr, AtmosDeviceDataPayload device)
+    public void UpdateDeviceData(string addr, IAtmosDeviceDataPayload device)
     {
         switch (device)
         {

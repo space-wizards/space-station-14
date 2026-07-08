@@ -6,11 +6,10 @@ using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.DeviceNetwork.Systems;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem<SurveillanceCameraRouterComponent>
+public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
@@ -24,14 +23,6 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, SurveillanceCameraSetupSetNetwork>(OnSetNetwork);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraRouterComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<SurveillanceCameraSubnetConnectPayload>(OnSubnetConnect);
-        SubscribePayload<SurveillanceCameraSubnetDisconnectPayload>(OnSubnetDisconnect);
-        SubscribePayload<SurveillanceCameraPingSubnetPayload>(OnSubnetPing);
     }
 
     private void OnMapInit(Entity<SurveillanceCameraRouterComponent> ent, ref MapInitEvent args)
@@ -50,27 +41,21 @@ public sealed partial class SurveillanceCameraRouterSystem : DevicePayloadSystem
             ent.Comp.SubnetName = Loc.GetString(subnetFrequency.Name);
     }
 
-    private void OnSubnetConnect(
-        Entity<SurveillanceCameraRouterComponent> ent,
-        ref SurveillanceCameraSubnetConnectPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSubnetConnect(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetConnectPayload> args)
     {
         AddMonitorToRoute(ent.AsNullable(), args.SenderAddress);
         PingSubnet(ent.AsNullable());
     }
 
-    private void OnSubnetDisconnect(
-        Entity<SurveillanceCameraRouterComponent> ent,
-        ref SurveillanceCameraSubnetDisconnectPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSubnetDisconnect(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetDisconnectPayload> args)
     {
         RemoveMonitorFromRoute(ent.AsNullable(), args.SenderAddress);
     }
 
-    private void OnSubnetPing(
-        Entity<SurveillanceCameraRouterComponent> ent,
-        ref SurveillanceCameraPingSubnetPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSubnetPing(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingSubnetPayload> args)
     {
         var response = new SurveillanceCameraSubnetDataPayload
         {

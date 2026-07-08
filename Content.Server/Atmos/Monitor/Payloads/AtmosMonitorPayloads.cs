@@ -2,15 +2,14 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Monitor.Payloads;
 
-public sealed partial class AtmosMonitorRegisterDevicePayload : HandledNetworkPayload;
+public sealed partial class AtmosMonitorRegisterDevicePayload : NetworkPayloadBase<AtmosMonitorRegisterDevicePayload>;
 
-public sealed partial class AtmosMonitorDeregisterDevicePayload : HandledNetworkPayload;
+public sealed partial class AtmosMonitorDeregisterDevicePayload : NetworkPayloadBase<AtmosMonitorDeregisterDevicePayload>;
 
-public sealed partial class AtmosMonitorSetThresholdPayload : HandledNetworkPayload
+public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase<AtmosMonitorSetThresholdPayload>
 {
     [DataField]
     public AtmosMonitorThresholdType Type;
@@ -22,7 +21,7 @@ public sealed partial class AtmosMonitorSetThresholdPayload : HandledNetworkPayl
     public Gas? Gas;
 }
 
-public sealed partial class AtmosMonitorSetAllThresholdsPayload : HandledNetworkPayload
+public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayloadBase<AtmosMonitorSetAllThresholdsPayload>
 {
     [DataField]
     public AtmosMonitorDataPayload Data;
@@ -32,4 +31,4 @@ public sealed partial class AtmosMonitorSetAllThresholdsPayload : HandledNetwork
 /// Sets the alarm state of a <see cref="AtmosMonitorComponent"/> to Normal
 /// and broadcasts it to all listening <see cref="AtmosAlarmableComponent"/>.
 /// </summary>
-public sealed partial class AtmosMonitorResetPayload : HandledNetworkPayload;
+public sealed partial class AtmosMonitorResetPayload : NetworkPayloadBase<AtmosMonitorResetPayload>;

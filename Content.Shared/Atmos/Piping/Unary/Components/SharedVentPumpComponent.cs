@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Piping.Unary.Components
 {
     [Serializable, NetSerializable]
-    public sealed partial class GasVentPumpDataPayload : AtmosDeviceDataPayload
+    public sealed partial class GasVentPumpDataPayload : AtmosDeviceDataPayload<GasVentPumpDataPayload>
     {
         public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
@@ -61,10 +61,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVentPumpSyncDataPayload : HandledNetworkPayload;
+    public sealed partial class GasVentPumpSyncDataPayload : NetworkPayloadBase<GasVentPumpSyncDataPayload>;
 
     [Serializable, NetSerializable]
-    public sealed partial class GasVentPumpSetDataPayload : HandledNetworkPayload
+    public sealed partial class GasVentPumpSetDataPayload : NetworkPayloadBase<GasVentPumpSetDataPayload>
     {
         [DataField]
         public GasVentPumpDataPayload Payload;

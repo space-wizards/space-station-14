@@ -1,4 +1,3 @@
-using Content.Shared.DeviceNetwork;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor.Components;
@@ -31,7 +30,7 @@ public enum AirAlarmWireStatus
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, AtmosDeviceDataPayload)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceDataPayload)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -55,7 +54,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
     ///     data. The same address may appear multiple times, if
     ///     that device provides multiple functions.
     /// </summary>
-    public List<(string, AtmosDeviceDataPayload)> DeviceData { get; }
+    public List<(string, IAtmosDeviceDataPayload)> DeviceData { get; }
     public AirAlarmMode Mode { get; }
     public AtmosAlarmType AlarmType { get; }
     public bool AutoMode { get; }
@@ -92,9 +91,9 @@ public sealed class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
 public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 {
     public string Address { get; }
-    public AtmosDeviceDataPayload Data { get; }
+    public IAtmosDeviceDataPayload Data { get; }
 
-    public AirAlarmUpdateDeviceDataMessage(string addr, AtmosDeviceDataPayload data)
+    public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceDataPayload data)
     {
         Address = addr;
         Data = data;
@@ -104,9 +103,9 @@ public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
 {
-    public AtmosDeviceDataPayload Data { get; }
+    public IAtmosDeviceDataPayload Data { get; }
 
-    public AirAlarmCopyDeviceDataMessage(AtmosDeviceDataPayload data)
+    public AirAlarmCopyDeviceDataMessage(IAtmosDeviceDataPayload data)
     {
         Data = data;
     }

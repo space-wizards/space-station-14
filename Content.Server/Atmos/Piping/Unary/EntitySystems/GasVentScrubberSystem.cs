@@ -16,7 +16,6 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
@@ -25,7 +24,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class GasVentScrubberSystem : DevicePayloadSystem<GasVentScrubberComponent>
+    public sealed partial class GasVentScrubberSystem : EntitySystem
     {
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
@@ -145,14 +144,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             UpdateState(uid, component);
         }
 
-        protected override void InitializeDevice()
-        {
-            base.InitializeDevice();
-            SubscribePayload<GasVentScrubberSyncDataPayload>(OnSyncPayload);
-            SubscribePayload<GasVentScrubberSetDataPayload>(OnSetPayload);
-        }
-
-        private void OnSyncPayload(Entity<GasVentScrubberComponent> ent, ref GasVentScrubberSyncDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSyncPayload(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent<GasVentScrubberSyncDataPayload> args)
         {
             var data = ent.Comp.ToAirAlarmData();
             var airAlarm = new AirAlarmSetDataPayload
@@ -162,9 +155,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
         }
 
-        private void OnSetPayload(Entity<GasVentScrubberComponent> ent, ref GasVentScrubberSetDataPayload payload, ref DeviceNetworkPacketData args)
+        [SubscribeLocalEvent]
+        private void OnSetPayload(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent<GasVentScrubberSetDataPayload> args)
         {
-            var setData = payload.Payload;
+            var setData = args.Data.Payload;
             var previous = ent.Comp.ToAirAlarmData();
 
             if (previous.Enabled != setData.Enabled)

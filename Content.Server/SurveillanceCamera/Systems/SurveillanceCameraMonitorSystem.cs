@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed partial class SurveillanceCameraMonitorSystem : DevicePayloadSystem<SurveillanceCameraMonitorComponent>
+public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
 {
     [Dependency] private SurveillanceCameraSystem _surveillanceCameras = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
@@ -34,15 +34,6 @@ public sealed partial class SurveillanceCameraMonitorSystem : DevicePayloadSyste
             subs.Event<SurveillanceCameraMonitorSwitchMessage>(OnSwitchMessage);
             subs.Event<BoundUIClosedEvent>(OnBoundUiClose);
         });
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<SurveillanceCameraConnectPayload>(OnCameraConnect);
-        SubscribePayload<SurveillanceCameraHeartbeatPayload>(OnCameraHeartbeat);
-        SubscribePayload<SurveillanceCameraDataPayload>(OnCameraData);
-        SubscribePayload<SurveillanceCameraSubnetDataPayload>(OnSubnetData);
     }
 
     private const float _maxHeartbeatTime = 300f;
@@ -102,11 +93,10 @@ public sealed partial class SurveillanceCameraMonitorSystem : DevicePayloadSyste
         }
     }
 
-    private void OnCameraConnect(
-        Entity<SurveillanceCameraMonitorComponent> ent,
-        ref SurveillanceCameraConnectPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnCameraConnect(Entity<SurveillanceCameraMonitorComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraConnectPayload> args)
     {
+        var payload = args.Data;
         if (ent.Comp.NextCameraAddress == payload.SenderAddress)
         {
             if (payload.SenderAddress != null)
@@ -117,22 +107,19 @@ public sealed partial class SurveillanceCameraMonitorSystem : DevicePayloadSyste
         ent.Comp.NextCameraAddress = null;
     }
 
-    private void OnCameraHeartbeat(
-        Entity<SurveillanceCameraMonitorComponent> ent,
-        ref SurveillanceCameraHeartbeatPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnCameraHeartbeat(Entity<SurveillanceCameraMonitorComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraHeartbeatPayload> args)
     {
-        if (payload.SenderAddress == ent.Comp.ActiveCameraAddress)
+        if (args.Data.SenderAddress == ent.Comp.ActiveCameraAddress)
         {
             ent.Comp.LastHeartbeat = 0;
         }
     }
 
-    private void OnCameraData(
-        Entity<SurveillanceCameraMonitorComponent> ent,
-        ref SurveillanceCameraDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnCameraData(Entity<SurveillanceCameraMonitorComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraDataPayload> args)
     {
+        var payload = args.Data;
         var subnetData = payload.Subnet;
 
         if (ent.Comp.ActiveSubnet != subnetData)
@@ -145,12 +132,10 @@ public sealed partial class SurveillanceCameraMonitorSystem : DevicePayloadSyste
         UpdateUserInterface(ent, ent.Comp);
     }
 
-    private void OnSubnetData(
-        Entity<SurveillanceCameraMonitorComponent> ent,
-        ref SurveillanceCameraSubnetDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSubnetData(Entity<SurveillanceCameraMonitorComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetDataPayload> args)
     {
-        ent.Comp.KnownSubnets.TryAdd(payload.Subnet, args.SenderAddress);
+        ent.Comp.KnownSubnets.TryAdd(args.Data.Subnet, args.SenderAddress);
         UpdateUserInterface(ent, ent.Comp);
     }
 

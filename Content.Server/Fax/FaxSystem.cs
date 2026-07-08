@@ -9,7 +9,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Fax.Components;
@@ -33,7 +32,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Fax;
 
-public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
+public sealed partial class FaxSystem : EntitySystem
 {
     [Dependency] private IChatManager _chat = default!;
     [Dependency] private IAdminManager _adminManager = default!;
@@ -81,14 +80,6 @@ public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
         SubscribeLocalEvent<FaxMachineComponent, FaxSendMessage>(OnSendButtonPressed);
         SubscribeLocalEvent<FaxMachineComponent, FaxRefreshMessage>(OnRefreshButtonPressed);
         SubscribeLocalEvent<FaxMachineComponent, FaxDestinationMessage>(OnDestinationSelected);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<FaxPingPayload>(OnPingPayload);
-        SubscribePayload<FaxPongPayload>(OnPongPayload);
-        SubscribePayload<FaxPrintPayload>(OnPrintPayload);
     }
 
     public override void Update(float frameTime)
@@ -266,9 +257,10 @@ public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
         args.Handled = true;
     }
 
-    private void OnPingPayload(Entity<FaxMachineComponent> ent, ref FaxPingPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPingPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPingPayload> args)
     {
-        var isForSyndie = _emag.CheckFlag(ent.Owner, EmagType.Interaction) && payload.IsSyndicate;
+        var isForSyndie = _emag.CheckFlag(ent.Owner, EmagType.Interaction) && args.Data.IsSyndicate;
         if (!isForSyndie && !ent.Comp.ResponsePings)
             return;
 
@@ -280,15 +272,17 @@ public sealed partial class FaxSystem : DevicePayloadSystem<FaxMachineComponent>
         _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, pong);
     }
 
-    private void OnPongPayload(Entity<FaxMachineComponent> ent, ref FaxPongPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPongPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPongPayload> args)
     {
-        ent.Comp.KnownFaxes[args.SenderAddress] = payload.FaxName;
+        ent.Comp.KnownFaxes[args.SenderAddress] = args.Data.FaxName;
         UpdateUserInterface(ent.Owner, ent.Comp);
     }
 
-    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref FaxPrintPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPrintPayload(Entity<FaxMachineComponent> ent, ref DeviceNetworkPacketEvent<FaxPrintPayload> args)
     {
-        Receive(ent, payload.Data, args.SenderAddress);
+        Receive(ent, args.Data.Data, args.SenderAddress);
     }
 
     private void OnToggleInterface(EntityUid uid, FaxMachineComponent component, AfterActivatableUIOpenEvent args)

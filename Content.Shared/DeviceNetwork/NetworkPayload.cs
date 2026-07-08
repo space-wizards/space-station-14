@@ -1,22 +1,30 @@
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeviceNetwork;
-
-[ImplicitDataDefinitionForInheritors]
-public partial interface INetworkPayload;
 
 /// <summary>
 /// A data class for information passing through a Device Network.
 /// </summary>
-[ImplicitDataDefinitionForInheritors]
-[Serializable, NetSerializable]
-public abstract partial class NetworkPayload : INetworkPayload;
 
-/// <summary>
-/// A <see cref="NetworkPayload"/> that can be handled by systems that inherit <see cref="DeviceNetworkHandler"/>,
-/// which have better functionality and performance.
-/// </summary>
+public interface INetworkPayload
+{
+    void RaiseEvent(EntityUid target, IDevicePayloadRaiser raiser, ref DeviceNetworkPacketData packet);
+}
+
 [ImplicitDataDefinitionForInheritors]
-[Serializable, NetSerializable]
-public abstract partial class HandledNetworkPayload : INetworkPayload;
+public abstract partial class NetworkPayload : INetworkPayload
+{
+    public abstract void RaiseEvent(EntityUid target, IDevicePayloadRaiser raiser, ref DeviceNetworkPacketData packet);
+}
+
+public abstract partial class NetworkPayloadBase<T> : NetworkPayload where T : NetworkPayloadBase<T>
+{
+    public override void RaiseEvent(EntityUid target, IDevicePayloadRaiser raiser, ref DeviceNetworkPacketData packet)
+    {
+        if (this is not T type)
+            return;
+
+        raiser.RaisePayloadEvent(target, type, ref packet);
+    }
+}

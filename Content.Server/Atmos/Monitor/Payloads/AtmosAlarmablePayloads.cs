@@ -2,18 +2,22 @@
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Monitor.Payloads;
 
-[ImplicitDataDefinitionForInheritors]
-public abstract partial class AtmosAlarmableSourcePayload : HandledNetworkPayload
+public interface IAtmosAlarmableSourcePayload
 {
-    [DataField]
-    public HashSet<ProtoId<TagPrototype>> Source = new();
+    HashSet<ProtoId<TagPrototype>> Source { get; set; }
 }
 
-public sealed partial class AtmosAlarmPayload : AtmosAlarmableSourcePayload
+[ImplicitDataDefinitionForInheritors]
+public abstract partial class AtmosAlarmableSourcePayload<T> : NetworkPayloadBase<T>, IAtmosAlarmableSourcePayload where T : NetworkPayloadBase<T>
+{
+    [DataField]
+    public HashSet<ProtoId<TagPrototype>> Source { get; set; } = new();
+}
+
+public sealed partial class AtmosAlarmPayload : AtmosAlarmableSourcePayload<AtmosAlarmPayload>
 {
     [DataField]
     public AtmosAlarmType Type;
@@ -22,10 +26,10 @@ public sealed partial class AtmosAlarmPayload : AtmosAlarmableSourcePayload
     public AtmosMonitorThresholdTypeFlags TrippedThresholds;
 }
 
-public sealed partial class AtmosAlarmableSyncAlertsPayload : AtmosAlarmableSourcePayload
+public sealed partial class AtmosAlarmableSyncAlertsPayload : AtmosAlarmableSourcePayload<AtmosAlarmableSyncAlertsPayload>
 {
     [DataField]
     public Dictionary<string, AtmosAlarmType> AlarmStates = new();
 }
 
-public sealed partial class AtmosAlarmableResetAllPayload : AtmosAlarmableSourcePayload;
+public sealed partial class AtmosAlarmableResetAllPayload : AtmosAlarmableSourcePayload<AtmosAlarmableResetAllPayload>;

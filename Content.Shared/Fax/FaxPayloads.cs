@@ -8,9 +8,8 @@ namespace Content.Shared.Fax;
 /// Broadcasted from one fax to all other available faxes.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class FaxPingPayload : HandledNetworkPayload
+public sealed partial class FaxPingPayload : NetworkPayloadBase<FaxPingPayload>
 {
-    // I!!!!! AM!!!!! SYNDICATE!!!!!!!!
     // TODO this should probably be made a more general system in the future
     [DataField]
     public bool IsSyndicate;
@@ -20,7 +19,7 @@ public sealed partial class FaxPingPayload : HandledNetworkPayload
 /// Sent as a response to <see cref="FaxPingPayload"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class FaxPongPayload : HandledNetworkPayload
+public sealed partial class FaxPongPayload : NetworkPayloadBase<FaxPongPayload>
 {
     [DataField]
     public string FaxName;
@@ -30,7 +29,7 @@ public sealed partial class FaxPongPayload : HandledNetworkPayload
 /// Payload to print a paper on the receiver fax.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class FaxPrintPayload : HandledNetworkPayload
+public sealed partial class FaxPrintPayload : NetworkPayloadBase<FaxPrintPayload>
 {
     [DataField]
     public FaxPrintout Data;

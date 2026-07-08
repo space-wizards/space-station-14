@@ -19,8 +19,8 @@ public sealed partial class ScrubberControl : BoxContainer
     private GasVentScrubberDataPayload _dataPayload;
     private string _address;
 
-    public event Action<string, AtmosDeviceDataPayload>? ScrubberDataChanged;
-	public event Action<AtmosDeviceDataPayload>? ScrubberDataCopied;
+    public event Action<string, IAtmosDeviceDataPayload>? ScrubberDataChanged;
+	public event Action<IAtmosDeviceDataPayload>? ScrubberDataCopied;
 
     private CheckBox _enabled => CEnableDevice;
     private CollapsibleHeading _addressLabel => CAddress;

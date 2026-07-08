@@ -37,19 +37,10 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         InitializeCollide();
     }
 
-    protected override void InitializeDevice()
+    [SubscribeLocalEvent]
+    private void OnConnectRequest(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraConnectRequestPayload> args)
     {
-        base.InitializeDevice();
-        SubscribePayload<SurveillanceCameraConnectRequestPayload>(OnConnectRequest);
-        SubscribePayload<SurveillanceCameraHeartbeatRequestPayload>(OnHeartbeatRequest);
-        SubscribePayload<SurveillanceCameraPingPayload>(OnPing);
-    }
-
-    private void OnConnectRequest(
-        Entity<SurveillanceCameraComponent> ent,
-        ref SurveillanceCameraConnectRequestPayload payload,
-        ref DeviceNetworkPacketData args)
-    {
+        var payload = args.Data;
         if (!ent.Comp.Active)
             return;
 
@@ -57,11 +48,10 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         _deviceNetworkRouter.QueuePacketRouted(ent.Owner, args.SenderAddress, responsePayload, payload.SenderAddress);
     }
 
-    private void OnHeartbeatRequest(
-        Entity<SurveillanceCameraComponent> ent,
-        ref SurveillanceCameraHeartbeatRequestPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnHeartbeatRequest(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraHeartbeatRequestPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Active)
             return;
 
@@ -69,11 +59,10 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         _deviceNetworkRouter.QueuePacketRouted(ent.Owner, args.SenderAddress, responsePayload, payload.SenderAddress);
     }
 
-    private void OnPing(
-        Entity<SurveillanceCameraComponent> ent,
-        ref SurveillanceCameraPingPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPing(Entity<SurveillanceCameraComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraPingPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Active)
             return;
 

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SurveillanceCamera;
 
-public abstract partial class SharedSurveillanceCameraSystem : DevicePayloadSystem<SurveillanceCameraComponent>
+public abstract partial class SharedSurveillanceCameraSystem : EntitySystem
 {
     public override void Initialize()
     {

@@ -41,12 +41,6 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         });
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<RoboticsCyborgDataPayload>(OnPacketReceived);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -74,9 +68,10 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         }
     }
 
-    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref RoboticsCyborgDataPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent<RoboticsCyborgDataPayload> args)
     {
-        var data = payload.Data;
+        var data = args.Data.Data;
         data.Timeout = _timing.CurTime + ent.Comp.Timeout;
         ent.Comp.Cyborgs[args.SenderAddress] = data;
 

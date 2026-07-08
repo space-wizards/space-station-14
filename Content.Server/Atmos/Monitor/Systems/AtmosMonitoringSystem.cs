@@ -7,7 +7,6 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.SensorMonitoring;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -15,7 +14,6 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Power;
 using Content.Shared.Tag;
 
@@ -25,7 +23,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // to it via local APC net, and starts sending updates of the
 // current atmosphere. Monitors fire (which always triggers as
 // a danger), and atmos (which triggers based on set thresholds).
-public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<AtmosMonitorComponent>
+public sealed partial class AtmosMonitorSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
@@ -45,17 +43,6 @@ public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<Atmos
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceDisabledEvent>(OnAtmosDeviceLeaveAtmosphere);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceEnabledEvent>(OnAtmosDeviceEnterAtmosphere);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceTileChangedEvent>(OnAtmosDeviceTileChangedEvent);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<AtmosMonitorRegisterDevicePayload>(OnRegisterDevice);
-        SubscribePayload<AtmosMonitorDeregisterDevicePayload>(OnDeregisterDevice);
-        SubscribePayload<AtmosMonitorResetPayload>(OnReset);
-        SubscribePayload<AtmosMonitorSetThresholdPayload>(OnSetThreshold);
-        SubscribePayload<AtmosMonitorSetAllThresholdsPayload>(OnSetAllThresholds);
-        SubscribePayload<AtmosMonitorSyncDataPayload>(OnSyncPayload);
     }
 
     private void OnAtmosDeviceTileChangedEvent(Entity<AtmosMonitorComponent> ent, ref AtmosDeviceTileChangedEvent args)
@@ -120,32 +107,38 @@ public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<Atmos
             args.Cancelled = true;
     }
 
-    private void OnRegisterDevice(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorRegisterDevicePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnRegisterDevice(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorRegisterDevicePayload> args)
     {
         ent.Comp.RegisteredDevices.Add(args.SenderAddress);
     }
 
-    private void OnDeregisterDevice(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorDeregisterDevicePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnDeregisterDevice(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorDeregisterDevicePayload> args)
     {
         ent.Comp.RegisteredDevices.Remove(args.SenderAddress);
     }
 
-    private void OnReset(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorResetPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnReset(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorResetPayload> args)
     {
         Reset(ent);
     }
 
-    private void OnSetThreshold(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSetThresholdPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetThreshold(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorSetThresholdPayload> args)
     {
-        SetThreshold(ent, payload.Type, payload.Threshold, payload.Gas);
+        SetThreshold(ent, args.Data.Type, args.Data.Threshold, args.Data.Gas);
     }
 
-    private void OnSetAllThresholds(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSetAllThresholdsPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetAllThresholds(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorSetAllThresholdsPayload> args)
     {
-        SetAllThresholds(ent, payload.Data);
+        SetAllThresholds(ent, args.Data.Data);
     }
 
-    private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref AtmosMonitorSyncDataPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorSyncDataPayload> args)
     {
         var dataPayload = new AtmosMonitorDataPayload();
         if (ent.Comp.TileGas != null)
@@ -167,18 +160,13 @@ public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<Atmos
                 ent.Comp.GasThresholds ?? new());
         }
 
-        // TODO consider reworking sensor monitor so it relays the info from Air Alarms
         var airAlarm = new AirAlarmSetDataPayload
-        {
-            Payload = dataPayload,
-        };
-        var sensor = new SensorMonitoringAtmosDataPayload
         {
             Payload = dataPayload,
         };
 
         _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, airAlarm);
-        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, sensor);
+        _deviceNetSystem.QueuePacket(ent.Owner, args.SenderAddress, dataPayload);
         Alert(ent, ent.Comp.LastAlarmState);
     }
 
@@ -483,10 +471,5 @@ public sealed partial class AtmosMonitorSystem : BeforeDevicePayloadSystem<Atmos
         {
             SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdDataPayload.GasThresholds[gas], gas);
         }
-    }
-
-    protected override void OnBeforePayload(Entity<AtmosMonitorComponent> ent, ref BeforePacketSentEvent args)
-    {
-        BeforePacketRecv(ent, ref args);
     }
 }

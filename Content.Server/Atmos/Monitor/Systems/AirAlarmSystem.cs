@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 
 // AirAlarm system - specific for atmos devices, rather than
 // atmos monitors.
-public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmComponent>
+public sealed partial class AirAlarmSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -56,7 +56,7 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
         AirAlarmSetData(uid, address, payload);
     }
 
-    private void AirAlarmSetData(EntityUid uid, string address, AtmosDeviceDataPayload payload)
+    private void AirAlarmSetData(EntityUid uid, string address, IAtmosDeviceDataPayload payload)
     {
         var setPayload = new AirAlarmSetDataPayload
         {
@@ -181,13 +181,6 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
             subs.Event<AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
             subs.Event<AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
         });
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<AirAlarmSetDataPayload>(OnSetData);
-        SubscribePayload<AirAlarmSetModePayload>(OnSetMode);
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
@@ -519,7 +512,7 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
     /// </summary>
     /// <param name="address">The address to send the new data to.</param>
     /// <param name="devDataPayload">The device data to be sent.</param>
-    private void SetDeviceData(EntityUid uid, string address, AtmosDeviceDataPayload devDataPayload, AirAlarmComponent? controller = null)
+    private void SetDeviceData(EntityUid uid, string address, IAtmosDeviceDataPayload devDataPayload, AirAlarmComponent? controller = null)
     {
         if (!Resolve(uid, ref controller))
         {
@@ -530,7 +523,8 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
         _deviceNet.QueuePacket(uid, address, devDataPayload);
     }
 
-    private void OnSetData(Entity<AirAlarmComponent> ent, ref AirAlarmSetDataPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetData(Entity<AirAlarmComponent> ent, ref DeviceNetworkPacketEvent<AirAlarmSetDataPayload> args)
     {
         var (uid, controller) = ent;
         if (!controller.CanSync)
@@ -538,7 +532,7 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
 
         // Save into component.
         // Sync data to interface.
-        switch (payload.Payload)
+        switch (args.Data.Payload)
         {
             case GasVentPumpDataPayload ventData:
                 if (!controller.VentData.TryAdd(args.SenderAddress, ventData))
@@ -558,9 +552,10 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
         UpdateUI(uid, controller);
     }
 
-    private void OnSetMode(Entity<AirAlarmComponent> ent, ref AirAlarmSetModePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSetMode(Entity<AirAlarmComponent> ent, ref DeviceNetworkPacketEvent<AirAlarmSetModePayload> args)
     {
-        SetMode(ent, args.SenderAddress, payload.Mode, uiOnly: false);
+        SetMode(ent, args.SenderAddress, args.Data.Mode, uiOnly: false);
     }
 
     #endregion
@@ -636,7 +631,7 @@ public sealed partial class AirAlarmSystem : DevicePayloadSystem<AirAlarmCompone
 
         var pressure = CalculatePressureAverage(alarm);
         var temperature = CalculateTemperatureAverage(alarm);
-        var dataToSend = new List<(string, AtmosDeviceDataPayload)>();
+        var dataToSend = new List<(string, IAtmosDeviceDataPayload)>();
 
         foreach (var (addr, data) in alarm.VentData)
         {

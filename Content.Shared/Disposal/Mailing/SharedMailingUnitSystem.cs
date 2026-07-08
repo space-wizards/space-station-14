@@ -5,15 +5,13 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Interaction;
-using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Player;
 
 namespace Content.Shared.Disposal.Mailing;
 
-public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<MailingUnitComponent>
+public abstract partial class SharedMailingUnitSystem : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     private const string MailTag = "mail";
@@ -30,19 +28,13 @@ public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<Mail
         SubscribeLocalEvent<MailingUnitComponent, TargetSelectedMessage>(OnTargetSelected);
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<MailRequestTagPayload>(OnRequestTag);
-        SubscribePayload<MailTagPayload>(OnTag);
-    }
-
     private void OnComponentInit(Entity<MailingUnitComponent> ent, ref ComponentInit args)
     {
         UpdateTargetList(ent);
     }
 
-    private void OnRequestTag(Entity<MailingUnitComponent> ent, ref MailRequestTagPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnRequestTag(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent<MailRequestTagPayload> args)
     {
         if (ent.Comp.Tag == null)
             return;
@@ -55,9 +47,10 @@ public abstract partial class SharedMailingUnitSystem : DevicePayloadSystem<Mail
         _deviceNetwork.QueuePacket(ent.Owner, args.Address, tagPayload, args.Frequency);
     }
 
-    private void OnTag(Entity<MailingUnitComponent> ent, ref MailTagPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnTag(Entity<MailingUnitComponent> ent, ref DeviceNetworkPacketEvent<MailTagPayload> args)
     {
-        ent.Comp.TargetList.Add(payload.Tag);
+        ent.Comp.TargetList.Add(args.Data.Tag);
         Dirty(ent);
     }
 

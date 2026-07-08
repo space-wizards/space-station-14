@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Monitor;
 
 [Serializable, NetSerializable]
-public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload
+public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload<AtmosMonitorDataPayload>
 {
     public AtmosMonitorDataPayload(float pressure, float temperature, float totalMoles, AtmosAlarmType alarmState, Dictionary<Gas, float> gases, AtmosAlarmThreshold pressureThreshold, AtmosAlarmThreshold temperatureThreshold, Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
     {
@@ -47,4 +47,4 @@ public sealed partial class AtmosMonitorDataPayload : AtmosDeviceDataPayload
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AtmosMonitorSyncDataPayload : HandledNetworkPayload;
+public sealed partial class AtmosMonitorSyncDataPayload : NetworkPayloadBase<AtmosMonitorSyncDataPayload>;

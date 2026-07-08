@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Pinpointer;
 using Content.Shared.PowerCell;
@@ -8,7 +7,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
-public sealed partial class CrewMonitoringConsoleSystem : DevicePayloadSystem<CrewMonitoringConsoleComponent>
+public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private UserInterfaceSystem _uiSystem = default!;
@@ -20,20 +19,15 @@ public sealed partial class CrewMonitoringConsoleSystem : DevicePayloadSystem<Cr
         SubscribeLocalEvent<CrewMonitoringConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
     }
 
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<BroadcastSuitSensorStatePayload>(OnSuitSensorBroadcast);
-    }
-
     private void OnRemove(EntityUid uid, CrewMonitoringConsoleComponent component, ComponentRemove args)
     {
         component.ConnectedSensors.Clear();
     }
 
-    private void OnSuitSensorBroadcast(Entity<CrewMonitoringConsoleComponent> ent, ref BroadcastSuitSensorStatePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnSuitSensorBroadcast(Entity<CrewMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BroadcastSuitSensorStatePayload> args)
     {
-        ent.Comp.ConnectedSensors = payload.SensorStatus;
+        ent.Comp.ConnectedSensors = args.Data.SensorStatus;
         UpdateUserInterface(ent, ent.Comp);
     }
 

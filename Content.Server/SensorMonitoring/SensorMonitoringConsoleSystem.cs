@@ -17,7 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.SensorMonitoring;
 
-public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<SensorMonitoringConsoleComponent>
+public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 {
     // TODO: THIS THING IS HEAVILY WIP AND NOT READY FOR GENERAL USE BY PLAYERS.
     // Some of the issues, off the top of my head:
@@ -42,14 +42,6 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceListUpdateEvent>(DeviceListUpdated);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
-    }
-
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<TegSensorPayload>(OnTegReceived);
-        SubscribePayload<BatterySensorDataPayload>(OnBatteryReceived);
-        SubscribePayload<SensorMonitoringAtmosDataPayload>(OnAtmosDataReceived);
     }
 
     public override void Update(float frameTime)
@@ -150,29 +142,10 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         return SensorDeviceType.Unknown;
     }
 
-    private void OnAtmosDataReceived(
-        Entity<SensorMonitoringConsoleComponent> ent,
-        ref SensorMonitoringAtmosDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnTegReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<TegSensorPayload> args)
     {
-        switch (payload.Payload)
-        {
-            case AtmosMonitorDataPayload sensor:
-                OnAtmosSensorReceived(ent, ref sensor, ref args);
-                break;
-            case GasThermoMachineDataPayload thermo:
-                OnThermoMachineReceived(ent, ref thermo, ref args);
-                break;
-            case GasVolumePumpDataPayload volPump:
-                OnVolumePipeReceived(ent, ref volPump, ref args);
-                break;
-        }
-    }
-
-    private void OnTegReceived(Entity<SensorMonitoringConsoleComponent> ent,
-        ref TegSensorPayload payload,
-        ref DeviceNetworkPacketData args)
-    {
+        var payload = args.Data;
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
@@ -194,10 +167,10 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         // @formatter:on
     }
 
-    private void OnAtmosSensorReceived(Entity<SensorMonitoringConsoleComponent> ent,
-        ref AtmosMonitorDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnAtmosSensorReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorDataPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
@@ -207,10 +180,10 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         // @formatter:on
     }
 
-    private void OnThermoMachineReceived(Entity<SensorMonitoringConsoleComponent> ent,
-        ref GasThermoMachineDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnThermoMachineReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasThermoMachineDataPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
@@ -219,10 +192,10 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         // @formatter:on
     }
 
-    private void OnVolumePipeReceived(Entity<SensorMonitoringConsoleComponent> ent,
-        ref GasVolumePumpDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnVolumePipeReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<GasVolumePumpDataPayload> args)
     {
+        var payload = args.Data;
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
@@ -231,14 +204,13 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         // @formatter:on
     }
 
-    private void OnBatteryReceived(Entity<SensorMonitoringConsoleComponent> ent,
-        ref BatterySensorDataPayload payload,
-        ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnBatteryReceived(Entity<SensorMonitoringConsoleComponent> ent, ref DeviceNetworkPacketEvent<BatterySensorDataPayload> args)
     {
         if (!ent.Comp.Sensors.TryGetValue(args.Sender, out var sensorData))
             return;
 
-        var batteryData = payload.Data;
+        var batteryData = args.Data.Data;
 
         // @formatter:off
         WriteSample(ent, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
@@ -281,7 +253,7 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            HandledNetworkPayload payload;
+            NetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Teg:
@@ -311,7 +283,7 @@ public sealed partial class SensorMonitoringConsoleSystem : DevicePayloadSystem<
         foreach (var (ent, data) in comp.Sensors)
         {
             // Send network requests for new data!
-            HandledNetworkPayload payload;
+            NetworkPayload payload;
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Battery:

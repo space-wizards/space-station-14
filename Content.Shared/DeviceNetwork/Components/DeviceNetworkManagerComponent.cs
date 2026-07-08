@@ -12,27 +12,18 @@ public sealed partial class DeviceNetworkManagerComponent : Component
 {
     public readonly Dictionary<int, DeviceNet> Networks = new(4);
 
-    public readonly ConcurrentQueue<DeviceNetworkPacketEvent> QueueA = new();
-    public readonly ConcurrentQueue<DeviceNetworkPacketEvent> QueueB = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketData> QueueA = new();
+    public readonly ConcurrentQueue<DeviceNetworkPacketData> QueueB = new();
 
     /// <summary>
     /// The queue being processed in the current tick
     /// </summary>
     [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketEvent> ActiveQueue = null!;
+    public ConcurrentQueue<DeviceNetworkPacketData> ActiveQueue = null!;
 
     /// <summary>
     /// The queue that will be processed in the next tick
     /// </summary>
     [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketEvent> NextQueue = null!;
-
-    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueC = new();
-    public readonly ConcurrentQueue<DeviceNetworkPacketHandledEvent> QueueD = new();
-
-    [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> HandledActiveQueue = null!;
-
-    [ViewVariables]
-    public ConcurrentQueue<DeviceNetworkPacketHandledEvent> HandledNextQueue = null!;
+    public ConcurrentQueue<DeviceNetworkPacketData> NextQueue = null!;
 }

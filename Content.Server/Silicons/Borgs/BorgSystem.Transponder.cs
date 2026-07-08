@@ -15,13 +15,6 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-    protected override void InitializeDevice()
-    {
-        base.InitializeDevice();
-        SubscribePayload<RoboticsCyborgDisablePayload>(OnDisable);
-        SubscribePayload<RoboticsCyborgDestroyPayload>(OnDestroy);
-    }
-
     public void UpdateTransponder(float frameTime)
     {
         var now = _timing.CurTime;
@@ -81,12 +74,14 @@ public sealed partial class BorgSystem
         _container.Remove(brain, ent.Comp2.BrainContainer);
     }
 
-    private void OnDisable(Entity<BorgTransponderComponent> ent, ref RoboticsCyborgDisablePayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnDisable(Entity<BorgTransponderComponent> ent, ref DeviceNetworkPacketEvent<RoboticsCyborgDisablePayload> args)
     {
         Disable(ent);
     }
 
-    private void OnDestroy(Entity<BorgTransponderComponent> ent, ref RoboticsCyborgDestroyPayload payload, ref DeviceNetworkPacketData args)
+    [SubscribeLocalEvent]
+    private void OnDestroy(Entity<BorgTransponderComponent> ent, ref DeviceNetworkPacketEvent<RoboticsCyborgDestroyPayload> args)
     {
         Destroy(ent.AsNullable());
     }

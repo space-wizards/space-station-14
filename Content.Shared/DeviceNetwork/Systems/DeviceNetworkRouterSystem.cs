@@ -5,25 +5,18 @@ using Content.Shared.DeviceNetwork.Payloads;
 namespace Content.Shared.DeviceNetwork.Systems;
 
 /// <summary>
-/// A system for re-routing <see cref="RoutableNetworkPayload"/>s
+/// A system for re-routing <see cref="RoutableNetworkPayload{T}"/>
 /// through an entity with <see cref="DeviceNetworkRouterComponent"/>.
 /// </summary>
-public sealed partial class DeviceNetworkRouterSystem : DevicePayloadSystem<DeviceNetworkRouterComponent>
+public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 {
     [Dependency] private SharedDeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private EntityQuery<DeviceNetworkComponent> _query = default!;
 
-    protected override void InitializeDevice()
+    [SubscribeLocalEvent]
+    private void OnRoutePayload(Entity<DeviceNetworkRouterComponent> ent, ref DeviceNetworkPacketEvent<RoutedNetworkPayload> args)
     {
-        base.InitializeDevice();
-        SubscribePayload<RoutedNetworkPayload>(OnRoutePayload);
-    }
-
-    private void OnRoutePayload(
-        Entity<DeviceNetworkRouterComponent> ent,
-        ref RoutedNetworkPayload payload,
-        ref DeviceNetworkPacketData args)
-    {
+        var payload = args.Data;
         if (!_query.TryComp(ent, out var deviceComp))
             return;
 
@@ -66,7 +59,7 @@ public sealed partial class DeviceNetworkRouterSystem : DevicePayloadSystem<Devi
     public void QueuePacketRouted(
         Entity<DeviceNetworkComponent?> ent,
         string? address,
-        RoutableNetworkPayload data,
+        IRoutableNetworkPayload data,
         string? targetAddress,
         bool overrideFrequency = false,
         uint? frequency = null,
