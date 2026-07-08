@@ -22,11 +22,8 @@ namespace Content.Shared.Damage.Components;
 [Access(typeof(DamageableSystem), Other = AccessPermissions.ReadExecute)]
 public sealed partial class DamageableComponent : Component
 {
-    public override bool SessionSpecific => true;
-
     /// <summary>
     ///     This <see cref="DamageModifierSetPrototype"/> will be applied to any damage that is dealt to this container,
-
     ///     unless the damage explicitly ignores resistances.
     /// </summary>
     /// <remarks>
