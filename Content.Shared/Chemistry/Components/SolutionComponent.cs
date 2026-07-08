@@ -17,7 +17,10 @@ namespace Content.Shared.Chemistry.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SolutionComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     public const string DefaultSolutionId = "solution";
+
 
     /// <summary>
     /// The name of this solution. This value should *never* change once the solution is initialized.

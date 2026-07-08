@@ -2,7 +2,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Content.Shared.Antag;
 using Content.Shared.Chemistry.Components;
+
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -90,6 +92,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
         SubscribeLocalEvent<SolutionComponent, ComponentGetState>(OnSolutionGetState);
         SubscribeLocalEvent<SolutionComponent, ComponentHandleState>(OnSolutionHandleState);
+        SubscribeLocalEvent<SolutionComponent, ComponentGetStateAttemptEvent>(OnSolutionGetStateAttempt);
         SubscribeLocalEvent<SolutionComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SolutionComponent, MapInitEvent>(OnSolutionInit);
         SubscribeLocalEvent<SolutionComponent, ComponentShutdown>(OnSolutionShutdown);
@@ -98,6 +101,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
 
         SubscribeLocalEvent<SolutionManagerComponent, MapInitEvent>(OnManagerInit);
+
         SubscribeLocalEvent<SolutionManagerComponent, ComponentShutdown>(OnManagerShutdown);
         SubscribeLocalEvent<SolutionManagerComponent, EntInsertedIntoContainerMessage>(OnSolutionAdded);
         SubscribeLocalEvent<SolutionManagerComponent, EntRemovedFromContainerMessage>(OnSolutionRemoved);
@@ -107,6 +111,45 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     {
         args.State = new SolutionComponentState(ent.Comp.Id, ent.Comp.Solution);
     }
+
+    private void OnSolutionGetStateAttempt(EntityUid uid, SolutionComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, args.Player);
+    }
+
+    private bool CanGetState(EntityUid uid, Robust.Shared.Player.ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not { } attachedUid)
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(attachedUid))
+            return true;
+
+        if (uid == attachedUid)
+            return true;
+
+        if (ContainerSystem.IsEntityInContainer(uid) &&
+            ContainerSystem.TryGetOuterContainer(uid, Transform(uid), out var outerContainer) &&
+            outerContainer.Owner == attachedUid)
+        {
+            return true;
+        }
+
+
+        var playerXform = Transform(attachedUid);
+        var targetXform = Transform(uid);
+        if (playerXform.MapID == targetXform.MapID)
+        {
+            var diff = playerXform.WorldPosition - targetXform.WorldPosition;
+            if (diff.LengthSquared() <= 6.25f) // 2.5 meters interaction range squared
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     private void OnSolutionHandleState(Entity<SolutionComponent> ent, ref ComponentHandleState args)
     {
