@@ -2,6 +2,10 @@ using Content.Shared.Gibbing;
 using Content.Shared.Implants.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Content.Shared.Antag;
+
 
 namespace Content.Shared.Implants;
 
@@ -12,7 +16,28 @@ public abstract partial class SharedImplanterSystem
         SubscribeLocalEvent<ImplantedComponent, ComponentInit>(OnImplantedInit);
         SubscribeLocalEvent<ImplantedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ImplantedComponent, GibbedBeforeDeletionEvent>(OnGibbed);
+        SubscribeLocalEvent<ImplantedComponent, ComponentGetStateAttemptEvent>(OnImplantedGetStateAttempt);
     }
+
+    private void OnImplantedGetStateAttempt(EntityUid uid, ImplantedComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, args.Player);
+    }
+
+    private bool CanGetState(EntityUid uid, ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not { } attachedUid)
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(attachedUid))
+            return true;
+
+        if (uid == attachedUid)
+            return true;
+
+        return false;
+    }
+
 
     private void OnImplantedInit(Entity<ImplantedComponent> ent, ref ComponentInit args)
     {

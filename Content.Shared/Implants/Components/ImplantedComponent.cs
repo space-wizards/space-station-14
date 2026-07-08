@@ -10,6 +10,9 @@ namespace Content.Shared.Implants.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ImplantedComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public Container ImplantContainer = default!;
 }
+
