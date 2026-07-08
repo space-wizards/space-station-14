@@ -48,31 +48,23 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<GrapplingProjectileComponent, JointRemovedEvent>(OnGrappleJointRemoved);
-        SubscribeLocalEvent<GrapplingProjectileComponent, ComponentShutdown>(OnGrappleProjectileShutdown);
-        SubscribeLocalEvent<GrapplingProjectileComponent, ProjectileEmbedEvent>(OnGrappleCollide);
-
-        SubscribeLocalEvent<GrapplingGunComponent, GunShotEvent>(OnGrapplingShot);
-        SubscribeLocalEvent<GrapplingGunComponent, ActivateInWorldEvent>(OnGunActivate);
-        SubscribeLocalEvent<GrapplingGunComponent, HandDeselectedEvent>(OnGrapplingDeselected);
+        base.Initialize();
 
         SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
-        SubscribeLocalEvent<CanWeightlessMoveEvent>(OnWeightlessMove);
 
         // TODO: After step trigger refactor, dropping a grappling gun should manually try and activate step triggers it's suppressing.
-
-        SubscribeLocalEvent<GrapplingProjectileEmbedComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
-
         UpdatesBefore.Add(typeof(SharedJointSystem)); // We want to run before joints are solved
-        base.Initialize();
+
     }
 
-    private void OnGrappleJointRemoved(EntityUid uid, GrapplingProjectileComponent component, JointRemovedEvent args)
+    [SubscribeLocalEvent]
+    private void OnGrappleJointRemoved(Entity<GrapplingProjectileComponent> entity, ref JointRemovedEvent args)
     {
         if (_netManager.IsServer)
-            QueueDel(uid);
+            QueueDel(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnGrappleProjectileShutdown(Entity<GrapplingProjectileComponent> ent, ref ComponentShutdown args)
     {
         if (!TryComp<EmbeddableProjectileComponent>(ent, out var embedComp) || embedComp.EmbeddedIntoUid == null)
@@ -84,9 +76,10 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         grapplingEmbedComp.GrapplingProjectiles.Remove(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnGrappleCollide(EntityUid uid, GrapplingProjectileComponent component, ref ProjectileEmbedEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || !args.Weapon.HasValue || !TryComp<GrapplingGunComponent>(args.Weapon, out var grapple))
+        if (!args.Weapon.HasValue || !TryComp<GrapplingGunComponent>(args.Weapon, out var grapple))
             return;
 
         var grapplePos = _transform.GetWorldPosition(args.Weapon.Value);
@@ -114,7 +107,8 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         _joints.RefreshRelay(args.Weapon.Value, jointCompGrapple);
     }
 
-    private void OnGrapplingShot(EntityUid uid, GrapplingGunComponent component, ref GunShotEvent args)
+    [SubscribeLocalEvent]
+    private void OnGrapplingShot(Entity<GrapplingGunComponent> entity, ref GunShotEvent args)
     {
         foreach (var (shotUid, _) in args.Ammo)
         {
@@ -123,32 +117,36 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
             //todo: this doesn't actually support multigrapple
             // At least show the visuals.
-            component.Projectile = shotUid.Value;
-            DirtyField(uid, component, nameof(GrapplingGunComponent.Projectile));
+            entity.Comp.Projectile = shotUid.Value;
+            DirtyField(entity.AsNullable(), nameof(GrapplingGunComponent.Projectile));
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
-            visuals.Sprite = component.RopeSprite;
-            visuals.Target = uid;
+            visuals.Sprite = entity.Comp.RopeSprite;
+            visuals.Target = entity.Owner;
             Dirty(shotUid.Value, visuals);
         }
 
-        TryComp<AppearanceComponent>(uid, out var appearance);
-        _appearance.SetData(uid, SharedTetherGunSystem.TetherVisualsStatus.Key, false, appearance);
+        if (TryComp<AppearanceComponent>(entity.Owner, out var appearance))
+            _appearance.SetData(entity.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, false, appearance);
     }
 
-    private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
+    [SubscribeLocalEvent]
+    private void OnGunActivate(Entity<GrapplingGunComponent> entity, ref ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || args.Handled || !args.Complex)
+        if (args.Handled || !args.Complex)
             return;
 
-        _audio.PlayPredicted(component.CycleSound, uid, args.User);
-        Ungrapple((uid, component), false, args.User);
+        if (Timing.IsFirstTimePredicted)
+            _audio.PlayPredicted(entity.Comp.CycleSound, entity.Owner, args.User);
+
+        Ungrapple((entity), false, args.User);
 
         args.Handled = true;
     }
 
-    private void OnGrapplingDeselected(EntityUid uid, GrapplingGunComponent component, HandDeselectedEvent args)
+    [SubscribeLocalEvent]
+    private void OnGrapplingDeselected(Entity<GrapplingGunComponent> entity, ref HandDeselectedEvent args)
     {
-        SetReeling(uid, component, false, args.User);
+        SetReeling(entity, false, args.User);
     }
 
     private void OnGrapplingReel(RequestGrapplingReelMessage msg, EntitySessionEventArgs args)
@@ -169,9 +167,10 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
             return;
         }
 
-        SetReeling(activeItem.Value, grappling, msg.Reeling, player);
+        SetReeling((activeItem.Value, grappling), msg.Reeling, player);
     }
 
+    [SubscribeLocalEvent]
     private void OnWeightlessMove(ref CanWeightlessMoveEvent ev)
     {
         if (ev.CanMove || !TryComp<JointRelayTargetComponent>(ev.Uid, out var relayComp))
@@ -187,6 +186,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnAnchorStateChanged(Entity<GrapplingProjectileEmbedComponent> entity, ref AnchorStateChangedEvent args)
     {
         foreach (var hook in entity.Comp.GrapplingProjectiles)
@@ -199,65 +199,6 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
             RefreshJointRelay(entity);
         }
-    }
-
-    /// <summary>
-    /// Ungrapples the grappling hook, destroying the hook and severing the joint
-    /// </summary>
-    /// <param name="grapple">Entity for the grappling gun</param>
-    /// <param name="isBreak">Whether to play the sound for the rope breaking</param>
-    /// <param name="user">The user responsible for the ungrapple. Optional</param>
-    public void Ungrapple(Entity<GrapplingGunComponent> grapple, bool isBreak, EntityUid? user = null)
-    {
-        if (!Timing.IsFirstTimePredicted || grapple.Comp.Projectile is not { } projectile)
-            return;
-
-        if (isBreak)
-        {
-            if (user != null)
-                _audio.PlayPredicted(grapple.Comp.BreakSound, grapple.Owner, user);
-            else if (_netManager.IsServer) // This feels... hacky.
-                _audio.PlayPvs(grapple.Comp.BreakSound, grapple.Owner);
-        }
-
-        _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
-
-        if (_netManager.IsServer)
-            QueueDel(projectile);
-
-        SetReeling(grapple.Owner, grapple.Comp, false, user);
-        grapple.Comp.Projectile = null;
-        DirtyField(grapple.Owner, grapple.Comp, nameof(GrapplingGunComponent.Projectile));
-        _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
-    }
-
-    private void SetReeling(EntityUid uid, GrapplingGunComponent component, bool value, EntityUid? user)
-    {
-        if (TryComp<JointComponent>(uid, out var jointComp) &&
-            jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) &&
-            joint is DistanceJoint distance)
-        {
-            if (distance.MaxLength <= distance.MinLength + component.RopeFullyReeledMargin)
-                value = false;
-        }
-
-        if (component.Reeling == value)
-            return;
-
-        if (value)
-        {
-            // We null-coalesce here because playing the sound again will cause it to become eternally stuck playing
-            component.Stream ??= _audio.PlayPredicted(component.ReelSound, uid, user)?.Entity;
-        }
-        else if (!value && component.Stream.HasValue && Timing.IsFirstTimePredicted)
-        {
-            // The IsFirstTimePredicted check is important here because otherwise component.Stream will be set to null from an early cancellation if this isn't FirstTimePredicted
-            component.Stream = _audio.Stop(component.Stream);
-        }
-
-        component.Reeling = value;
-
-        DirtyField(uid, component, nameof(GrapplingGunComponent.Reeling));
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -330,7 +271,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
             if (ropeLength <= distance.MinLength + grappling.RopeFullyReeledMargin)
             {
-                SetReeling(uid, grappling, false, null);
+                SetReeling((uid, grappling), false, null);
             }
             else if (ropeLength >= distance.MaxLength - grappling.RopeMargin)
             {
@@ -398,7 +339,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
                 if (grapplerBodyA.Mass < BaseWeightMass) // To prevent small things go zoomies
                     massFactorA *= grapplerBodyA.Mass / BaseWeightMass;
 
-                _physics.ApplyLinearImpulse(grapplerUidA, targetDirection * massFactorA * grappling.ReelForce * frameTime * -1, grapplerOffsetA, body: grapplerBodyA);
+                _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
 
                 var massFactorB = massFactor;
                 if (grapplerBodyB.Mass < BaseWeightMass) // To prevent small things go zoomies
@@ -409,6 +350,65 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
             Dirty(uid, jointComp);
         }
+    }
+
+    /// <summary>
+    /// Ungrapples the grappling hook, destroying the hook and severing the joint
+    /// </summary>
+    /// <param name="grapple">Entity for the grappling gun</param>
+    /// <param name="isBreak">Whether to play the sound for the rope breaking</param>
+    /// <param name="user">The user responsible for the ungrapple. Optional</param>
+    public void Ungrapple(Entity<GrapplingGunComponent> grapple, bool isBreak, EntityUid? user = null)
+    {
+        if (grapple.Comp.Projectile is not { } projectile)
+            return;
+
+        if (isBreak && Timing.IsFirstTimePredicted)
+        {
+            if (user != null)
+                _audio.PlayPredicted(grapple.Comp.BreakSound, grapple.Owner, user);
+            else if (_netManager.IsServer) // This feels... hacky.
+                _audio.PlayPvs(grapple.Comp.BreakSound, grapple.Owner);
+        }
+
+        _appearance.SetData(grapple.Owner, SharedTetherGunSystem.TetherVisualsStatus.Key, true);
+
+        if (_netManager.IsServer)
+            QueueDel(projectile);
+
+        SetReeling(grapple, false, user);
+        grapple.Comp.Projectile = null;
+        DirtyField(grapple.Owner, grapple.Comp, nameof(GrapplingGunComponent.Projectile));
+        _gun.ChangeBasicEntityAmmoCount(grapple.Owner, 1);
+    }
+
+    private void SetReeling(Entity<GrapplingGunComponent> entity, bool value, EntityUid? user)
+    {
+        if (TryComp<JointComponent>(entity.Owner, out var jointComp) &&
+            jointComp.GetJoints.TryGetValue(GrapplingJoint, out var joint) &&
+            joint is DistanceJoint distance)
+        {
+            if (distance.MaxLength <= distance.MinLength + entity.Comp.RopeFullyReeledMargin)
+                value = false;
+        }
+
+        if (entity.Comp.Reeling == value)
+            return;
+
+        if (value)
+        {
+            // We null-coalesce here because playing the sound again will cause it to become eternally stuck playing
+            entity.Comp.Stream ??= _audio.PlayPredicted(entity.Comp.ReelSound, entity.Owner, user)?.Entity;
+        }
+        else if (!value && entity.Comp.Stream.HasValue && Timing.IsFirstTimePredicted)
+        {
+            // The IsFirstTimePredicted check is important here because otherwise component.Stream will be set to null from an early cancellation if this isn't FirstTimePredicted
+            entity.Comp.Stream = _audio.Stop(entity.Comp.Stream);
+        }
+
+        entity.Comp.Reeling = value;
+
+        DirtyField(entity.AsNullable(), nameof(GrapplingGunComponent.Reeling));
     }
 
     /// <summary>
@@ -457,10 +457,15 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         }
     }
 
-
+    /// <summary>
+    /// Client to server message to begin/end reeling in the grapplign hook.
+    /// </summary>
     [Serializable, NetSerializable]
     protected sealed class RequestGrapplingReelMessage : EntityEventArgs
     {
+        /// <summary>
+        /// Whether the client wants to reel in or stop reeling.
+        /// </summary>
         public bool Reeling;
 
         public RequestGrapplingReelMessage(bool reeling)
