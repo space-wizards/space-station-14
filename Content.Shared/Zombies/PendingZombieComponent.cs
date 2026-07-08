@@ -10,6 +10,8 @@ namespace Content.Shared.Zombies;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PendingZombieComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     /// <summary>
     /// Damage dealt every second to infected individuals.
     /// </summary>

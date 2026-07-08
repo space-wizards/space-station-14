@@ -7,6 +7,9 @@ namespace Content.Shared.Zombies;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class InitialInfectedComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     [DataField]
     public ProtoId<FactionIconPrototype> StatusIcon = "InitialInfectedFaction";
 }
+
