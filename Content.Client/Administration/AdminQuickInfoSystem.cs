@@ -79,12 +79,15 @@ internal sealed partial class AdminQuickInfoSystem : EntitySystem
         foreach (var entity in entities)
         {
             if (!first)
+            {
                 vBox.AddChild(new PanelContainer
                 {
                     StyleClasses = { StyleClass.LowDivider },
                     HorizontalExpand = true,
                 });
-            first = false;
+                first = false;
+            }
+
             var playerInfo = _adminSystem.PlayerList.FirstOrDefault(p => p.NetEntity == entity);
             var control = new InfoControl(this, entity, playerInfo);
             popup.OnPopupHide += () => control.Unsubscribe();
