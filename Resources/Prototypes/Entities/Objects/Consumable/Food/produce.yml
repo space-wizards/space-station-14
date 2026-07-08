@@ -1068,7 +1068,7 @@
     - Vegetable
 
 - type: entity
-  name: apple
+  name: green apple
   parent: FoodProduceBase
   id: FoodApple
   description: It's a little piece of Eden.
@@ -1087,13 +1087,6 @@
         Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
-    state: produce_green
-  - type: RandomSprite
-    available:
-      - 0:
-          produce_green: ""
-          produce_red: ""
-          produce_yellow: ""
   - type: Item
     heldPrefix: produce
   - type: Produce
@@ -1110,6 +1103,22 @@
     entries:
       Burger: Apple
       Taco: Apple
+
+- type: entity
+  name: yellow apple
+  parent: FoodApple
+  id: FoodAppleYellow
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
+
+- type: entity
+  name: red apple
+  parent: FoodApple
+  id: FoodAppleRed
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple_red.rsi
 
 - type: entity
   name: golden apple

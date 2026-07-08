@@ -744,6 +744,68 @@
     - FoodApple
   mutationPrototypes:
     - goldenApple
+    - appleYellow
+    - appleRed
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: appleYellow
+  name: seeds-apple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-apple-display-name
+  plantRsi: Objects/Specific/Hydroponics/apple_yellow.rsi
+  packetPrototype: AppleYellowSeeds
+  productPrototypes:
+    - FoodApple
+  mutationPrototypes:
+    - goldenApple
+    - appleRed
+    - apple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: appleRed
+  name: seeds-apple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-apple-display-name
+  plantRsi: Objects/Specific/Hydroponics/apple_red.rsi
+  packetPrototype: AppleRedSeeds
+  productPrototypes:
+    - FoodApple
+  mutationPrototypes:
+    - goldenApple
+    - appleYellow
+    - apple
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
