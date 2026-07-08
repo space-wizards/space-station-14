@@ -54,7 +54,6 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
 
         // TODO: After step trigger refactor, dropping a grappling gun should manually try and activate step triggers it's suppressing.
         UpdatesBefore.Add(typeof(SharedJointSystem)); // We want to run before joints are solved
-
     }
 
     [SubscribeLocalEvent]
