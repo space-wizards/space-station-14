@@ -4,11 +4,44 @@ using Content.Shared.Security;
 using Content.Shared.Security.Components;
 using Content.Shared.StationRecords;
 using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Content.Shared.Antag;
+using Content.Shared.Overlays;
+
 
 namespace Content.Shared.CriminalRecords.Systems;
 
 public abstract class SharedCriminalRecordsSystem : EntitySystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<CriminalRecordComponent, ComponentGetStateAttemptEvent>(OnCriminalGetStateAttempt);
+    }
+
+    private void OnCriminalGetStateAttempt(EntityUid uid, CriminalRecordComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, args.Player);
+    }
+
+    private bool CanGetState(EntityUid uid, ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not { } attachedUid)
+            return true;
+
+        if (HasComp<ShowCriminalRecordIconsComponent>(attachedUid))
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(attachedUid))
+            return true;
+
+        if (uid == attachedUid)
+            return true;
+
+        return false;
+    }
+
     /// <summary>
     /// Any entity that has a the name of the record that was just changed as their visible name will get their icon
     /// updated with the new status, if the record got removed their icon will be removed too.

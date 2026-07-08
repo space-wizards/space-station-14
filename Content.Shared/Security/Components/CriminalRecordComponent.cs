@@ -7,6 +7,8 @@ namespace Content.Shared.Security.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CriminalRecordComponent : Component
 {
+    public override bool SessionSpecific => true;
+
     /// <summary>
     ///     The icon that should be displayed based on the criminal status of the entity.
     /// </summary>
