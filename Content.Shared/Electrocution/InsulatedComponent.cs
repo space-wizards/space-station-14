@@ -9,7 +9,10 @@ namespace Content.Shared.Electrocution
     [Access(typeof(SharedElectrocutionSystem))]
     public sealed partial class InsulatedComponent : Component
     {
+        public override bool SessionSpecific => true;
+
         // Technically, people could cheat and figure out which budget insulated gloves are gud and which ones are bad.
+
         // We might want to rethink this a little bit.
         /// <summary>
         ///     Siemens coefficient. Zero means completely insulated.

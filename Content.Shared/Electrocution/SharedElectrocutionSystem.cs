@@ -1,11 +1,16 @@
 using Content.Shared.Inventory;
 using Content.Shared.StatusEffect;
+using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Content.Shared.Antag;
 
 namespace Content.Shared.Electrocution
 {
     public abstract partial class SharedElectrocutionSystem : EntitySystem
     {
         [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -14,7 +19,35 @@ namespace Content.Shared.Electrocution
             SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
             // as long as legally distinct electric-mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
             SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>((e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
+            SubscribeLocalEvent<InsulatedComponent, ComponentGetStateAttemptEvent>(OnInsulatedGetStateAttempt);
         }
+
+        private void OnInsulatedGetStateAttempt(EntityUid uid, InsulatedComponent component, ref ComponentGetStateAttemptEvent args)
+        {
+            args.Cancelled = !CanGetState(uid, args.Player);
+        }
+
+        private bool CanGetState(EntityUid uid, ICommonSession? player)
+        {
+            if (player?.AttachedEntity is not { } attachedUid)
+                return true;
+
+            if (HasComp<ShowAntagIconsComponent>(attachedUid))
+                return true;
+
+            if (uid == attachedUid)
+                return true;
+
+            if (_containerSystem.IsEntityInContainer(uid) &&
+                _containerSystem.TryGetOuterContainer(uid, Transform(uid), out var outerContainer) &&
+                outerContainer.Owner == attachedUid)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Tries to set Siemens Coefficient on an entity's insulated component.
