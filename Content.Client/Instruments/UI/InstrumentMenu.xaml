@@ -6,7 +6,13 @@
         <Collapsible Name="ConfigurationCollapsible">
             <CollapsibleHeading MinHeight="25" Name="ConfigurationCollapsibleHeading" />
             <CollapsibleBody Name="ConfigurationCollapsibleBody" VerticalExpand="True">
-                    <BoxContainer Name="ConfigurationItemsContainer" Orientation="Vertical" HorizontalExpand="True" />
+                <ScrollContainer HScrollEnabled="False">
+                    <BoxContainer
+                        Name="ConfigurationItemsContainer"
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        HorizontalExpand="True" />
+                </ScrollContainer>
             </CollapsibleBody>
         </Collapsible>
         <BoxContainer Name="InstrumentContainer" Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
