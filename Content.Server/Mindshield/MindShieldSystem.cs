@@ -36,7 +36,6 @@ public sealed partial class MindShieldSystem : EntitySystem
         SubscribeLocalEvent<MindShieldComponent, AttemptConvertRevolutionaryEvent>(OnAttemptConvert);
         SubscribeLocalEvent<MindShieldComponent, ComponentGetStateAttemptEvent>(OnMindShieldGetStateAttempt);
         SubscribeLocalEvent<ShowMindShieldIconsComponent, ComponentStartup>(DirtyMindShieldComps);
-        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>(DirtyMindShieldComps);
     }
 
     private void OnImplantImplanted(Entity<MindShieldImplantComponent> ent, ref ImplantImplantedEvent ev)

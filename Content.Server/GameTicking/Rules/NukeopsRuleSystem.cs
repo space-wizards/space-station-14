@@ -42,6 +42,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Antag;
 using Robust.Shared.Player;
 using Robust.Shared.GameStates;
+using Content.Shared.Mindshield.Components;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -733,8 +734,15 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
 
     private void DirtyNukeOps<T>(EntityUid someUid, T someComp, ComponentStartup ev)
     {
-        var query = EntityQueryEnumerator<NukeOperativeComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var nukeQuery = EntityQueryEnumerator<NukeOperativeComponent>();
+        while (nukeQuery.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
+
+        // also re-sync mindshield state since ShowAntagIconsComponent affects its visibility too
+        var mindshieldQuery = EntityQueryEnumerator<MindShieldComponent>();
+        while (mindshieldQuery.MoveNext(out var uid, out var comp))
         {
             Dirty(uid, comp);
         }
