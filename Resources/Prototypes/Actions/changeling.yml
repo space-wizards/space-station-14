@@ -202,3 +202,39 @@
     - !type:AddReagentToBloodstream
       reagent: Cryptobiolin
       quantity: 10 # About 20s of your speech being scrambled
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingLastResort
+  name: "[color=red]Last Resort[/color]"
+  description: We sacrifice our current body in a moment of need, violently expanding to break through obstacles and reforming as a headslug.
+  components:
+  - type: ConfirmableAction
+    popup: suicide-action-popup
+  - type: Action
+    raiseOnAction: true
+    checkCanInteract: false # You can transform if you are killed
+    checkConsciousness: false
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: last_resort
+  - type: InstantAction
+    event: !type:ChangelingLastResortActionEvent
+  - type: ChangelingLastResortAbility
+
+- type: entity
+  parent: BaseAction
+  id: ActionChangelingTakeOverCorpse
+  name: Take Over Corpse
+  description: Infest a corpse to return to your true form.
+  components:
+  - type: Action
+    useDelay: 10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: take_over_corpse
+  - type: EntityTargetAction
+    event: !type:ChangelingTakeOverCorpseActionEvent
+  - type: TargetAction

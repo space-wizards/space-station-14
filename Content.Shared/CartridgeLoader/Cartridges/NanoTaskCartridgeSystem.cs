@@ -122,7 +122,7 @@ public sealed partial class NanoTaskCartridgeSystem : EntitySystem
                 ent.Comp.NextPrintAllowedAfter = _timing.CurTime + ent.Comp.PrintDelay;
                 var printed = PredictedSpawnAtPosition("PaperNanoTaskItem", Transform(message.Actor).Coordinates);
                 _hands.PickupOrDrop(message.Actor, printed);
-                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/printer.ogg"), ent.Owner);
+                _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/printer.ogg"), ent.Owner, args.User);
                 SetupPrintedTask(printed, task.Item);
                 Dirty(ent);
                 break;
