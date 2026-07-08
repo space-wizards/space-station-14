@@ -41,6 +41,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Rounding;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Enumerators;
+using Content.Shared.Antag;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -134,6 +135,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, ComponentGetState>(OnStorageGetState);
+        SubscribeLocalEvent<StorageComponent, ComponentGetStateAttemptEvent>(OnStorageGetStateAttempt);
         SubscribeLocalEvent<StorageComponent, ComponentInit>(OnComponentInit, before: new[] { typeof(SharedContainerSystem) });
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
@@ -234,6 +236,35 @@ public abstract partial class SharedStorageSystem : EntitySystem
             StorageCloseSound = component.StorageCloseSound,
             DefaultStorageOrientation = component.DefaultStorageOrientation,
         };
+    }
+
+    private void OnStorageGetStateAttempt(EntityUid uid, StorageComponent component, ref ComponentGetStateAttemptEvent args)
+    {
+        args.Cancelled = !CanGetState(uid, component, args.Player);
+    }
+
+    private bool CanGetState(EntityUid uid, StorageComponent component, ICommonSession? player)
+    {
+        if (player?.AttachedEntity is not { } attachedUid)
+            return true;
+
+        if (HasComp<ShowAntagIconsComponent>(attachedUid))
+            return true;
+
+        if (uid == attachedUid)
+            return true;
+
+        if (ContainerSystem.IsEntityInContainer(uid) &&
+            ContainerSystem.TryGetOuterContainer(uid, Transform(uid), out var outerContainer) &&
+            outerContainer.Owner == attachedUid)
+        {
+            return true;
+        }
+
+        if (UI.IsUiOpen(uid, StorageComponent.StorageUiKey.Key, attachedUid))
+            return true;
+
+        return false;
     }
 
     public override void Shutdown()
