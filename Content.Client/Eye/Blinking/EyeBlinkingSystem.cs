@@ -309,9 +309,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var curTime = _timing.CurTime;
 
         var query = EntityQueryEnumerator<EyeBlinkingComponent, EyeBlinkingClientComponent>();
-
-        while (query.MoveNext(out var uid, out var comp, out var clientComp) && comp.Enabled)
+        while (query.MoveNext(out var uid, out var comp, out var clientComp))
         {
+            if (!comp.Enabled)
+                continue;
+
             // If a blink is currently in progress, check the scheduled times for each eyelid and update their states accordingly.
             if (comp.BlinkInProgress)
             {
