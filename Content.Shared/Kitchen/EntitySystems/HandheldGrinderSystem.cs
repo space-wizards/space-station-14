@@ -24,17 +24,9 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
     [Dependency] private SharedPuddleSystem _puddle = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<HandheldGrinderComponent, EntRemovedFromContainerMessage>(OnGrinderRemoved);
-        SubscribeLocalEvent<HandheldGrinderComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<HandheldGrinderComponent, HandheldGrinderDoAfterEvent>(OnHandheldDoAfter);
-    }
-
     // prevent the infamous UdderSystem debug assert, see https://github.com/space-wizards/space-station-14/pull/35314
     // TODO: find a better solution than copy pasting this into every shared system that caches solution entities
+    [SubscribeLocalEvent]
     private void OnGrinderRemoved(Entity<HandheldGrinderComponent> entity, ref EntRemovedFromContainerMessage args)
     {
         // Make sure the removed entity was our contained solution and set it to null
@@ -44,6 +36,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
         entity.Comp.GrinderSolution = null;
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -55,7 +48,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
 
         if (!CanGrinderBeUsed(ent, item, out var reason))
         {
-            _popup.PopupClient(reason, ent, args.User);
+            _popup.PopupEntity(reason, ent, args.User);
             return;
         }
 
@@ -78,6 +71,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
             ent.Comp.AudioStream = _audio.PlayPredicted(ent.Comp.Sound, ent, args.User)?.Entity ?? ent.Comp.AudioStream;
     }
 
+    [SubscribeLocalEvent]
     private void OnHandheldDoAfter(Entity<HandheldGrinderComponent> ent, ref HandheldGrinderDoAfterEvent args)
     {
         ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
@@ -90,7 +84,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
 
         if (!CanGrinderBeUsed(ent, item, out var reason))
         {
-            _popup.PopupClient(reason, ent, args.User);
+            _popup.PopupEntity(reason, ent, args.User);
             return;
         }
 
@@ -110,7 +104,7 @@ public sealed partial class HandheldGrinderSystem : EntitySystem
         else
             _destructibleSystem.DestroyEntity(item);
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.FinishedPopup, ("item", item)), ent, args.User);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.FinishedPopup, ("item", item)), ent, args.User);
     }
 
     /// <summary>
