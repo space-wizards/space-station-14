@@ -204,7 +204,6 @@
   - type: ExplosionResistance
     damageCoefficient: 0
   - type: Storage
-    maxItemSize: Ginormous
+    maxItemSize: Colossal # Can hold ANYTHING
     grid:
     - 0,0,19,9
-    blacklist: #Nullifies blacklist; Can store anything

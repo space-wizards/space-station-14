@@ -280,13 +280,10 @@
   components:
   - type: Item
     size: Colossal
-  - type: Storage
+  - type: Storage # Matches bag of holding
     maxItemSize: Ginormous
     grid:
-    - 0,0,11,7 # Matches bag of holding
-    blacklist:
-      tags:
-      - Backpack
+    - 0,0,11,7
 
 #Syndicate
 - type: entity
@@ -323,14 +320,11 @@
   - type: Clothing
     equippedPrefix: holding
   - type: Item
-    size: Ginormous
+    size: Colossal
   - type: Storage
     maxItemSize: Ginormous
     grid:
     - 0,0,11,7 # Same with all bags of holding
-    blacklist:
-      tags:
-      - Backpack
 
 - type: entity
   parent: ClothingBackpackClown
