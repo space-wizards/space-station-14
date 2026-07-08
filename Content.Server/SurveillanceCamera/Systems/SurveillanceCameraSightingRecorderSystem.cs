@@ -1,19 +1,24 @@
-﻿using Content.Server.Power.Components;
+﻿using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Power.Components;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Components;
+using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.SurveillanceCamera;
 
-public sealed class SurveillanceCameraSightingRecorderSystem : EntitySystem
+public sealed partial class SurveillanceCameraSightingRecorderSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
 
     private HashSet<Entity<MobStateComponent>> _inRange = new();
 
@@ -34,14 +39,17 @@ public sealed class SurveillanceCameraSightingRecorderSystem : EntitySystem
         base.Update(frameTime);
 
         var curTime = _gameTiming.CurTime;
-        var cameras = EntityQueryEnumerator<SurveillanceCameraSightingRecorderComponent, SurveillanceCameraComponent>();
+        var cameras = EntityQueryEnumerator<SurveillanceCameraSightingRecorderComponent, SurveillanceCameraComponent, DeviceNetworkComponent>();
 
-        while (cameras.MoveNext(out var uid, out var recorder, out var camera))
+        while (cameras.MoveNext(out var uid, out var recorder, out var camera, out var device))
         {
             if (curTime < recorder.NextUpdate)
                 continue;
 
             recorder.NextUpdate = curTime + recorder.UpdateInterval;
+
+            if (device.TransmitFrequency == null)
+                continue;
 
             if (!camera.Active || CompOrNull<ApcPowerReceiverComponent>(uid)?.Powered != true)
                 continue;
@@ -51,12 +59,25 @@ public sealed class SurveillanceCameraSightingRecorderSystem : EntitySystem
             _inRange.Clear();
             _lookup.GetEntitiesInRange(coords, recorder.DetectionRange, _inRange);
 
+            var sightings = new List<CameraSightingRecord>();
+
             foreach (var mob in _inRange)
             {
                 if (_examine.InRangeUnOccluded(mob, coords, recorder.DetectionRange))
                 {
-                    Log.Info($"{camera.CameraId} saw {Identity.Name(mob, EntityManager)}");
+                    sightings.Add(new CameraSightingRecord(curTime, camera.CameraId, GetNetCoordinates(Transform(mob).Coordinates), Identity.Name(mob, EntityManager)));
                 }
+            }
+
+            if (sightings.Count > 0)
+            {
+                var payload = new NetworkPayload()
+                {
+                    [DeviceNetworkConstants.Command] = CameraSightingConstants.NET_COMMAND_STRING,
+                    [CameraSightingConstants.NET_SIGHTINGS] = sightings,
+                };
+
+                _deviceNetwork.QueuePacket(uid, null, payload, device: device);
             }
         }
     }
