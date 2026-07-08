@@ -1,8 +1,9 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
-using Robust.Shared.Network;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -12,24 +13,20 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantDiethylamine>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantSystem _plant = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
     {
-        // No predict random.
-        if (_net.IsClient)
-            return;
-
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (_random.Prob(0.1f))
+        var random = SharedRandomExtensions.PredictedRandom(_gameTiming, GetNetEntity(entity));
+        if (random.Prob(0.1f))
             _plant.AdjustLifespan(entity.AsNullable(), 1);
 
-        if (_random.Prob(0.1f))
+        if (random.Prob(0.1f))
             _plant.AdjustEndurance(entity.AsNullable(), 1);
     }
 }

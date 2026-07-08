@@ -12,17 +12,13 @@ namespace Content.Shared.Botany.Systems;
 /// Consumes and emits configured gases around plants each growth tick, then merges
 /// the adjusted gas mixture back into the environment.
 /// </summary>
-public abstract class SharedPlantConsumeExudeGasSystem : EntitySystem
+public abstract partial class SharedPlantConsumeExudeGasSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MutationSystem _mutation = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantConsumeExudeGasComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantConsumeExudeGasComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantConsumeExudeGasComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
@@ -42,13 +38,10 @@ public abstract class SharedPlantConsumeExudeGasSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        var gas = random.Pick(Enum.GetValues<Gas>());
 
         var gasses = ent.Comp.ExudeGasses;
-        var gas = rand.Pick(Enum.GetValues<Gas>());
-
         if (!gasses.TryAdd(gas, amount))
             gasses[gas] += amount;
 
@@ -64,12 +57,9 @@ public abstract class SharedPlantConsumeExudeGasSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
         var gasses = ent.Comp.ConsumeGasses;
-        var gas = rand.Pick(Enum.GetValues<Gas>());
+        var gas = random.Pick(Enum.GetValues<Gas>());
 
         if (!gasses.TryAdd(gas, amount))
             gasses[gas] += amount;

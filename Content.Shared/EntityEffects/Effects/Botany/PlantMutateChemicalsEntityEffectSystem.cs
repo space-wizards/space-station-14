@@ -12,12 +12,11 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateChemicals>
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PlantChemicalsSystem _plantChemicals = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
+        var randomChems = ProtoMan.Index(args.Effect.RandomPickBotanyReagent);
         _plantChemicals.MutateRandomChemical(entity.Owner, randomChems);
     }
 }

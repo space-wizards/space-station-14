@@ -8,16 +8,10 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class PlantAtmosphericSystem : SharedPlantAtmosphericSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PlantAtmosphericComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantAtmosphericComponent> ent, ref OnPlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))

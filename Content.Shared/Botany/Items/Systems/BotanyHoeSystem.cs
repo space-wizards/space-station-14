@@ -14,8 +14,8 @@ namespace Content.Shared.Botany.Items.Systems;
 /// </summary>
 public sealed class BotanyHoeSystem : EntitySystem
 {
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

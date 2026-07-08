@@ -6,31 +6,27 @@ using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Botany.Systems;
 
-public sealed class MutationSystem : EntitySystem
+public sealed partial class MutationSystem : EntitySystem
 {
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
-        _randomMutations = _prototypeManager.Index(RandomPlantMutations);
+        _randomMutations = ProtoMan.Index(RandomPlantMutations);
     }
 
     /// <summary>
@@ -224,7 +220,7 @@ public sealed class MutationSystem : EntitySystem
     [PublicAPI]
     public void CrossTrait(EntityUid val, EntityUid pollenData)
     {
-        foreach (var component in EntityManager.GetComponents(pollenData))
+        foreach (var component in AllComps(pollenData))
         {
             if (component is not PlantTraitsComponent)
                 continue;
@@ -239,9 +235,6 @@ public sealed class MutationSystem : EntitySystem
 
     private bool Random(float p)
     {
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, 1);
-        var rand = new System.Random(seed);
-        return rand.Prob(p);
+        return _random.Prob(p);
     }
 }

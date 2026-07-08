@@ -1,8 +1,9 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -13,9 +14,9 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantComponent, RobustHarvest>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantSystem _plant = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
@@ -34,7 +35,7 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
             if (plant.Potency > args.Effect.PotencySeedlessThreshold)
                 EnsureComp<PlantTraitSeedlessComponent>(entity.Owner);
         }
-        else if (plant.Yield > 1 && _random.Prob(0.1f))
+        else if (plant.Yield > 1 && SharedRandomExtensions.PredictedProb(_timing, 0.1f, GetNetEntity(entity)))
         {
             // Too much of a good thing reduces yield.
             _plant.AdjustYield(entity.AsNullable(), -1);

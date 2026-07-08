@@ -1,4 +1,6 @@
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Botany.Traits.Components;
 
@@ -8,6 +10,12 @@ namespace Content.Shared.Botany.Traits.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PlantTraitLigneousComponent : PlantTraitsComponent
 {
+    /// <summary>
+    /// Tool quality that required if plant should be harvested with specified tool.
+    /// </summary>
+    [DataField]
+    public ProtoId<ToolQualityPrototype>? HarvestToolQuality = "Sawing";
+
     public override IEnumerable<string> GetTraitStateMarkup()
     {
         yield return Loc.GetString("mutation-plant-ligneous");

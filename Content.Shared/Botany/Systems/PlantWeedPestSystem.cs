@@ -9,19 +9,14 @@ namespace Content.Shared.Botany.Systems;
 /// Manages weed growth and pest damage per growth tick, and handles tray-level
 /// weed spawning.
 /// </summary>
-public sealed class PlantWeedPestSystem : EntitySystem
+public sealed partial class PlantWeedPestSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantWeedPestComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-        SubscribeLocalEvent<PlantWeedPestComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantWeedPestComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantWeedPestComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
@@ -32,6 +27,7 @@ public sealed class PlantWeedPestSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref OnPlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))

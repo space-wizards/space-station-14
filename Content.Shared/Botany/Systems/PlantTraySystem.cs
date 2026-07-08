@@ -10,29 +10,26 @@ using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
-public sealed class PlantTraySystem : EntitySystem
+/// <summary>
+/// Handles plant tray state, including plant management, resource consumption,
+/// reagent processing, and periodic tray updates.
+/// </summary>
+public sealed partial class PlantTraySystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTrayComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<PlantTrayComponent, SolutionTransferredEvent>(OnSolutionTransferred);
-        SubscribeLocalEvent<PlantTrayComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<PlantTrayComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -61,12 +58,14 @@ public sealed class PlantTraySystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnSolutionTransferred(Entity<PlantTrayComponent> ent, ref SolutionTransferredEvent args)
     {
         _audio.PlayPredicted(ent.Comp.WateringSound, ent, args.User);
     }
 
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
+    [SubscribeLocalEvent]
     private void OnEntRemoved(Entity<PlantTrayComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         // Make sure the removed entity was our contained solution and clear our cached reference
@@ -143,12 +142,7 @@ public sealed class PlantTraySystem : EntitySystem
                 _plantHolder.AdjustsHealth(plantUid.Value, -weedPestGrowth.WeedDamageAmount);
         }
 
-
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
-        if (rand.Prob(ent.Comp.WeedGrowthChance))
+        if (SharedRandomExtensions.PredictedProb(_timing, ent.Comp.WeedGrowthChance, GetNetEntity(ent)))
             AdjustWeed(ent, ent.Comp.WeedGrowthAmount);
     }
 

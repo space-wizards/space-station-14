@@ -1,7 +1,7 @@
+using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Events;
 using Content.Shared.Random.Helpers;
-using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -11,21 +11,16 @@ namespace Content.Shared.Botany.Systems;
 /// Handles baseline plant progression each growth tick: aging, resource consumption,
 /// simple viability checks.
 /// </summary>
-public sealed class PlantGrowthSystem : EntitySystem
+public sealed partial class PlantGrowthSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantGrowthComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-        SubscribeLocalEvent<PlantGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantGrowthComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
@@ -36,6 +31,7 @@ public sealed class PlantGrowthSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, plantComp) = ent;
@@ -47,34 +43,32 @@ public sealed class PlantGrowthSystem : EntitySystem
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(plantUid).Id);
-        var rand = new System.Random(seed);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(plantUid));
 
         // TODO: There are too many magic numbers that don't really make sense to add to the component. Balance needs to be reworked
         // Advance plant age here.
         if (holder.SkipAging > 0)
             _plantHolder.AdjustsSkipAging(plantUid, -1);
-        else if (rand.Prob(0.8f))
+        else if (random.Prob(0.8f))
             _plantHolder.AdjustsAge(plantUid, 1);
 
-        if (plantComp.WaterConsumption > 0 && trayComp.WaterLevel > 0 && rand.Prob(0.75f))
+        if (plantComp.WaterConsumption > 0 && trayComp.WaterLevel > 0 && random.Prob(0.75f))
         {
             _plantTray.AdjustWater(trayUid,-MathF.Max(0f, plantComp.WaterConsumption * trayComp.TrayConsumptionMultiplier));
         }
 
-        if (plantComp.NutrientConsumption > 0 && trayComp.NutritionLevel > 0 && rand.Prob(0.75f))
+        if (plantComp.NutrientConsumption > 0 && trayComp.NutritionLevel > 0 && random.Prob(0.75f))
         {
             _plantTray.AdjustNutrient(trayUid,  -MathF.Max(0f, plantComp.NutrientConsumption * trayComp.TrayConsumptionMultiplier));
         }
 
-        var healthMod = rand.Next(1, 3);
+        var healthMod = random.Next(1, 3);
         if (holder.SkipAging < 10)
         {
             // Make sure the plant is not thirsty.
             if (trayComp.WaterLevel > 10)
             {
-                _plantHolder.AdjustsHealth(plantUid, (rand.Prob(0.35f) ? 1 : 0) * healthMod);
+                _plantHolder.AdjustsHealth(plantUid, (random.Prob(0.35f) ? 1 : 0) * healthMod);
             }
             else
             {
@@ -84,7 +78,7 @@ public sealed class PlantGrowthSystem : EntitySystem
 
             if (trayComp.NutritionLevel > 5)
             {
-                _plantHolder.AdjustsHealth(plantUid, (rand.Prob(0.35f) ? 1 : 0) * healthMod);
+                _plantHolder.AdjustsHealth(plantUid, (random.Prob(0.35f) ? 1 : 0) * healthMod);
             }
             else
             {

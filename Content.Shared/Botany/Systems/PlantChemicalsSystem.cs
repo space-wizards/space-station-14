@@ -4,7 +4,6 @@ using Content.Shared.Botany.Events;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
@@ -12,11 +11,11 @@ namespace Content.Shared.Botany.Systems;
 /// <summary>
 /// Handles the chemicals of a plant.
 /// </summary>
-public sealed class PlantChemicalsSystem : EntitySystem
+public sealed partial class PlantChemicalsSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -36,18 +35,14 @@ public sealed class PlantChemicalsSystem : EntitySystem
     /// Adds a random chemical to the plant chemicals.
     /// </summary>
     [PublicAPI]
-    public void MutateRandomChemical(Entity<PlantChemicalsComponent?> ent, List<RandomFillSolution> randomChems)
+    public void MutateRandomChemical(Entity<PlantChemicalsComponent?> ent, WeightedRandomFillSolutionPrototype randomChems)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
-        var pick = rand.Pick(randomChems);
-        var chemicalId = rand.Pick(pick.Reagents);
-        var amount = rand.NextFloat(0.1f, (float)pick.Quantity);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        var (chemicalId, quantity) = randomChems.Pick(random);
+        var amount = FixedPoint2.Max(random.NextFloat(0f, 1f) * quantity, FixedPoint2.Epsilon);
         var seedChemQuantity = new PlantChemQuantity();
         if (ent.Comp.Chemicals.TryGetValue(chemicalId, out var value))
         {
@@ -56,8 +51,9 @@ public sealed class PlantChemicalsSystem : EntitySystem
         }
         else
         {
-            seedChemQuantity.Min = FixedPoint2.Epsilon;
-            seedChemQuantity.Max = FixedPoint2.Zero + amount;
+            //Set the minimum to a fifth of the quantity to give some level of bad luck protection
+            seedChemQuantity.Min = FixedPoint2.Clamp(quantity / 5f, FixedPoint2.Epsilon, 1f);
+            seedChemQuantity.Max = seedChemQuantity.Min + amount;
             seedChemQuantity.Inherent = false;
         }
 

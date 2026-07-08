@@ -1,12 +1,12 @@
-using JetBrains.Annotations;
 using Content.Shared.Botany.Components;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Botany.Systems;
 
 /// <summary>
 /// API for runtime plant lifecycle state.
 /// </summary>
-public sealed class PlantHolderSystem : EntitySystem
+public sealed partial class PlantHolderSystem : EntitySystem
 {
     /// <summary>
     /// Adjusts the health of the plant.

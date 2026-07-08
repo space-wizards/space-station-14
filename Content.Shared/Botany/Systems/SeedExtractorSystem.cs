@@ -5,25 +5,18 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Random.Helpers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
-public sealed class SeedExtractorSystem : EntitySystem
+public sealed partial class SeedExtractorSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SeedExtractorComponent, InteractUsingEvent>(OnInteractUsing);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<SeedExtractorComponent> ent, ref InteractUsingEvent args)
     {
         if (!_powerReceiver.IsPowered(ent.Owner))
@@ -54,11 +47,9 @@ public sealed class SeedExtractorSystem : EntitySystem
         PredictedQueueDel(args.Used);
         args.Handled = true;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
 
-        var amount = rand.Next(ent.Comp.BaseMinSeeds, ent.Comp.BaseMaxSeeds + 1);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        var amount = random.Next(ent.Comp.BaseMinSeeds, ent.Comp.BaseMaxSeeds + 1);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)

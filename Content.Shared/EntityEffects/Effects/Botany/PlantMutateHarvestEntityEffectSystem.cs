@@ -9,7 +9,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateHarvest>
 {
-    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
+    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateHarvest> args)
     {

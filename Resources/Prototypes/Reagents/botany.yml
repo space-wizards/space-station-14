@@ -89,7 +89,9 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
-    - !type:PlantRemoveKudzu
+    - !type:PlantChangeTraits
+      trait: PlantTraitKudzu
+      remove: true
   metabolisms:
     Bloodstream:
       effects:

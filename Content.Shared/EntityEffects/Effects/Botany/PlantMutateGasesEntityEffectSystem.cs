@@ -1,8 +1,9 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
-using Robust.Shared.Network;
-using Robust.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.Botany;
 
@@ -12,17 +13,13 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateExudeGases>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPlantConsumeExudeGasSystem _plantConsumeExudeGas = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedPlantConsumeExudeGasSystem _plantConsumeExudeGas = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
     {
-        // No predict random.
-        if (_net.IsClient)
-            return;
-
-        var amount = _random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        var amount = random.NextFloat(args.Effect.MinValue, args.Effect.MaxValue);
         _plantConsumeExudeGas.MutateRandomExudeGasses(entity.Owner, amount);
     }
 }
@@ -58,8 +55,8 @@ public sealed partial class PlantMutateExudeGases : EntityEffectBase<PlantMutate
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateConsumeGases>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPlantConsumeExudeGasSystem _plantConsumeExudeGas = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPlantConsumeExudeGasSystem _plantConsumeExudeGas = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
     {

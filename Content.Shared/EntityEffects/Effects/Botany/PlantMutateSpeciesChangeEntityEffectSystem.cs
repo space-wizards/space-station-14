@@ -1,7 +1,8 @@
 using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Systems;
-using Robust.Shared.Network;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.Botany;
 
@@ -12,21 +13,17 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateSpeciesChange>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MutationSystem _mutation = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
     {
-        // No predict random.
-        if (_net.IsClient)
-            return;
-
         if (!TryComp<PlantDataComponent>(entity, out var oldPlantData)
             || oldPlantData.MutationPrototypes.Count == 0)
             return;
 
-        var newPlantEnt = _random.Pick(oldPlantData.MutationPrototypes);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
+        var newPlantEnt = random.Pick(oldPlantData.MutationPrototypes);
         _mutation.SpeciesChange(entity.Owner, newPlantEnt);
     }
 }

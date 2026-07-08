@@ -10,41 +10,27 @@ using Content.Shared.Random;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedCloningSystem _cloning = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedPvsOverrideSystem _pvs = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
+    [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private RandomHelperSystem _randomHelper = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedCloningSystem _cloning = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedPvsOverrideSystem _pvs = default!;
 
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "PlantClone";
     public readonly ProtoId<CloningSettingsPrototype> LifecycleSettingsId = "PlantLifecycleClone";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SeedComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<ProduceComponent, ExaminedEvent>(OnProduceExamined);
-
-        SubscribeLocalEvent<SeedComponent, ComponentShutdown>(OnSeedShutdown);
-        SubscribeLocalEvent<ProduceComponent, ComponentShutdown>(OnProduceShutdown);
-        SubscribeLocalEvent<BotanySwabComponent, ComponentShutdown>(OnSwabShutdown);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<SeedComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -81,10 +67,10 @@ public sealed partial class BotanySystem : EntitySystem
         if (plantProtoId == null)
             return false;
 
-        if (!_prototypeManager.TryIndex(plantProtoId.Value, out var proto))
+        if (!ProtoMan.TryIndex(plantProtoId.Value, out var proto))
             return false;
 
-        return proto.TryGetComponent(out plant, _componentFactory);
+        return proto.TryComp(out plant, _componentFactory);
     }
 
     /// <summary>
@@ -96,7 +82,7 @@ public sealed partial class BotanySystem : EntitySystem
     public EntityUid ClonePlantSnapshotData(EntityUid source, bool cloneLifecycle = false)
     {
         var settingsId = cloneLifecycle ? LifecycleSettingsId : SettingsId;
-        if (!_prototypeManager.TryIndex(settingsId, out var settings))
+        if (!ProtoMan.TryIndex(settingsId, out var settings))
             return EntityUid.Invalid;
 
         var snapshot = EntityManager.CreateEntityUninitialized(null);
@@ -131,7 +117,7 @@ public sealed partial class BotanySystem : EntitySystem
             return;
 
         var settingsId = cloneLifecycle ? LifecycleSettingsId : SettingsId;
-        if (!_prototypeManager.TryIndex(settingsId, out var settings))
+        if (!ProtoMan.TryIndex(settingsId, out var settings))
             return;
 
         _cloning.CloneComponents(snapshot.Value, target, settings);
@@ -173,16 +159,19 @@ public sealed partial class BotanySystem : EntitySystem
         return seedItem;
     }
 
+    [SubscribeLocalEvent]
     private void OnSeedShutdown(Entity<SeedComponent> ent, ref ComponentShutdown args)
     {
         DeletePlantSnapshot(ent.Comp.PlantData);
     }
 
+    [SubscribeLocalEvent]
     private void OnProduceShutdown(Entity<ProduceComponent> ent, ref ComponentShutdown args)
     {
         DeletePlantSnapshot(ent.Comp.PlantData);
     }
 
+    [SubscribeLocalEvent]
     private void OnSwabShutdown(Entity<BotanySwabComponent> ent, ref ComponentShutdown args)
     {
         DeletePlantSnapshot(ent.Comp.PlantData);

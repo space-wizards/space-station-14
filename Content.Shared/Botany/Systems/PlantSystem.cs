@@ -10,28 +10,22 @@ namespace Content.Shared.Botany.Systems;
 /// <summary>
 /// Handles plant behavior and growth processing.
 /// </summary>
-public sealed class PlantSystem : EntitySystem
+public sealed partial class PlantSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantWeedPestSystem _plantWeedPest = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<PlantComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-        SubscribeLocalEvent<PlantComponent, OnPlantGrowEvent>(OnPlantGrow);
-        SubscribeLocalEvent<PlantComponent, ExaminedEvent>(OnExamined);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<PlantComponent> ent, ref MapInitEvent args)
     {
         PlantingPlant(ent.AsNullable());
     }
 
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
@@ -47,6 +41,7 @@ public sealed class PlantSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantComponent> ent, ref OnPlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
@@ -57,6 +52,7 @@ public sealed class PlantSystem : EntitySystem
             _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.OldAgeDamage);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<PlantComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -82,7 +78,7 @@ public sealed class PlantSystem : EntitySystem
                             : "plant-component-plant-unhealthy-adjective"))));
             }
 
-            foreach (var trait in EntityManager.GetComponents<PlantTraitsComponent>(ent.Owner))
+            foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner))
             {
                 foreach (var markup in trait.GetTraitStateMarkup())
                 {

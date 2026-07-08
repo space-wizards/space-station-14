@@ -16,11 +16,11 @@ namespace Content.Shared.Botany.Items.Systems;
 /// </summary>
 public sealed class BotanySampleTakerSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantSystem _plant = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -65,12 +65,10 @@ public sealed class BotanySampleTakerSystem : EntitySystem
             return;
         }
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
         // Damage the plant.
-        _plantHolder.AdjustsHealth(ent.Owner, -rand.Next(args.Sample.Comp.MinSampleDamage, args.Sample.Comp.MaxSampleDamage));
+        _plantHolder.AdjustsHealth(ent.Owner, -random.Next(args.Sample.Comp.MinSampleDamage, args.Sample.Comp.MaxSampleDamage));
 
         // Produce a seed packet snapshot.
         float? healthOverride = harvest.ReadyForHarvest ? null : holder.Health;
@@ -81,7 +79,7 @@ public sealed class BotanySampleTakerSystem : EntitySystem
         var name = Loc.GetString(plantData.Name);
         _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-take-sample-popup", ("seedName", name)), args.User);
 
-        if (rand.Prob(args.Sample.Comp.SampleProbability))
+        if (random.Prob(args.Sample.Comp.SampleProbability))
             EnsureComp<PlantTraitSampledComponent>(ent.Owner);
     }
 }

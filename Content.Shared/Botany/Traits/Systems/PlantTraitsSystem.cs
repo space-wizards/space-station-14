@@ -7,9 +7,9 @@ namespace Content.Shared.Botany.Traits.Systems;
 /// <summary>
 /// Base system for managing plant traits.
 /// </summary>
-public sealed class PlantTraitsSystem : EntitySystem
+public sealed partial class PlantTraitsSystem : EntitySystem
 {
-    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private MutationSystem _mutation = default!;
 
     public override void Initialize()
     {

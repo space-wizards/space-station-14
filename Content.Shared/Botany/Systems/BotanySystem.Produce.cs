@@ -12,8 +12,9 @@ namespace Content.Shared.Botany.Systems;
 
 public sealed partial class BotanySystem
 {
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
+    [SubscribeLocalEvent]
     private void OnProduceExamined(Entity<ProduceComponent> ent, ref ExaminedEvent args)
     {
         if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant))
@@ -45,15 +46,8 @@ public sealed partial class BotanySystem
                 _entityEffects.TryApplyEffect(ent.Owner, mutation.Effect);
         }
 
-        if (!_solutionContainer.EnsureSolution(ent.Owner,
-                ent.Comp.SolutionName,
-                out var solutionContainer,
-                FixedPoint2.Zero))
-        {
-            return;
-        }
-
-        solutionContainer.RemoveAllSolution();
+        _solutionContainer.EnsureSolution(ent.Owner, ent.Comp.SolutionName, out var solution);
+        solution.Comp.Solution.RemoveAllSolution();
 
         foreach (var (chem, quantity) in chems.Chemicals)
         {
@@ -61,8 +55,8 @@ public sealed partial class BotanySystem
             if (quantity.PotencyDivisor > 0 && plant.Potency > 0)
                 amount += plant.Potency / quantity.PotencyDivisor;
             amount = FixedPoint2.Clamp(amount, quantity.Min, quantity.Max);
-            solutionContainer.MaxVolume += amount;
-            solutionContainer.AddReagent(chem, amount);
+            solution.Comp.Solution.MaxVolume += amount;
+            solution.Comp.Solution.AddReagent(chem, amount);
         }
     }
 
@@ -75,12 +69,10 @@ public sealed partial class BotanySystem
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, false))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-        var product = rand.Pick(ent.Comp1.ProductPrototypes);
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
+        var product = random.Pick(ent.Comp1.ProductPrototypes);
         var entity = PredictedSpawnAtPosition(product, position);
-        _randomHelper.RandomOffset(entity, 0.25f);
+        _randomHelper.RandomOffset(entity, 0.25f, random);
 
         var produce = EnsureComp<ProduceComponent>(entity);
         produce.PlantProtoId = MetaData(ent.Owner).EntityPrototype!.ID;

@@ -8,16 +8,12 @@ namespace Content.Shared.Botany.Systems;
 /// Applies atmospheric temperature and pressure effects to plants during growth ticks.
 /// Uses current tile gas mixture to penalize or clear warnings based on tolerances.
 /// </summary>
-public abstract class SharedPlantAtmosphericSystem : EntitySystem
+public abstract partial class SharedPlantAtmosphericSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private MutationSystem _mutation = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantAtmosphericComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantAtmosphericComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantAtmosphericComponent>(args.PollenData, args.PollenProtoId, out var pollenData))

@@ -9,8 +9,8 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantAdjustNutrientConsumptionEntityEffectSystem : EntityEffectSystem<PlantGrowthComponent, PlantAdjustNutrientConsumption>
 {
-    [Dependency] private readonly PlantGrowthSystem _plantGrowth = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantGrowthSystem _plantGrowth = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     protected override void Effect(Entity<PlantGrowthComponent> entity, ref EntityEffectEvent<PlantAdjustNutrientConsumption> args)
     {

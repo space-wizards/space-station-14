@@ -12,10 +12,10 @@ namespace Content.Shared.Botany.Items.Systems;
 
 public sealed class BotanySwabSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

@@ -11,8 +11,8 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantChangeTraits>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantChangeTraits> args)
     {
@@ -49,4 +49,3 @@ public sealed partial class PlantChangeTraits : EntityEffectBase<PlantChangeTrai
     [DataField]
     public bool Remove;
 }
-

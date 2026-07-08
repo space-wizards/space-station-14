@@ -3,17 +3,18 @@ using Content.Shared.Botany.Events;
 using Content.Shared.Botany.Systems;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Systems;
 
 namespace Content.Shared.Botany.Traits.Systems;
 
 /// <inheritdoc cref="PlantTraitLigneousComponent"/>
 public sealed partial class PlantTraitLigneousSystem : EntitySystem
 {
-    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private PlantHarvestSystem _plantHarvest = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
@@ -40,7 +41,8 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
         }
 
         // Ligneous requires sharp tool.
-        if (!HasComp<SharpComponent>(args.Used))
+        var harvestToolQuality = ent.Comp.HarvestToolQuality;
+        if (harvestToolQuality.HasValue && _tool.HasQuality(args.Used, harvestToolQuality.Value))
         {
             _popup.PopupPredictedCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);
             return;

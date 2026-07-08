@@ -8,18 +8,13 @@ namespace Content.Shared.Botany.Systems;
 /// Handles toxin accumulation and tolerance for plants, applying health damage
 /// and decrementing toxins based on per-tick uptake.
 /// </summary>
-public sealed class PlantToxinsSystem : EntitySystem
+public sealed partial class PlantToxinsSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private BotanySystem _botany = default!;
+    [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantToxinsComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-        SubscribeLocalEvent<PlantToxinsComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantToxinsComponent> ent, ref PlantCrossPollinateEvent args)
     {
         if (!_botany.TryGetPlantComponent<PlantToxinsComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
@@ -30,6 +25,7 @@ public sealed class PlantToxinsSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref OnPlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
