@@ -7,7 +7,7 @@
 [DataDefinition]
 public partial record struct DeviceData
 {
-    [DataField]
+    [DataField("deviceNetId")]
     public DeviceNetIdDefaults NetIdEnum { get; set; }
 
     public int DeviceNetId => (int) NetIdEnum;
