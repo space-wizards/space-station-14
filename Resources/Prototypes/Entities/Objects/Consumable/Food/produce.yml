@@ -1086,7 +1086,7 @@
       - ReagentId: JuiceApple
         Quantity: 5
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/apple.rsi
+    sprite: Objects/Specific/Hydroponics/apple_green.rsi
   - type: Item
     heldPrefix: produce
   - type: Produce

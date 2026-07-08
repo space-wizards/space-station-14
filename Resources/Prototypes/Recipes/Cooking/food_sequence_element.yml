@@ -696,7 +696,7 @@
   id: Apple
   name: food-sequence-content-apple
   sprites:
-  - sprite: Objects/Specific/Hydroponics/apple.rsi
+  - sprite: Objects/Specific/Hydroponics/apple_green.rsi
     state: produce
   - sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
     state: produce

@@ -295,7 +295,7 @@
     - type: Seed
       seedId: apple
     - type: Sprite
-      sprite: Objects/Specific/Hydroponics/apple.rsi
+      sprite: Objects/Specific/Hydroponics/apple_green.rsi
 
 - type: entity
   parent: SeedBase

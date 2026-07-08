@@ -738,7 +738,7 @@
   name: seeds-apple-name
   noun: seeds-noun-seeds
   displayName: seeds-apple-display-name
-  plantRsi: Objects/Specific/Hydroponics/apple.rsi
+  plantRsi: Objects/Specific/Hydroponics/apple_green.rsi
   packetPrototype: AppleSeeds
   productPrototypes:
     - FoodApple
