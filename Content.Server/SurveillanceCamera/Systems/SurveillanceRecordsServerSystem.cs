@@ -45,7 +45,5 @@ public sealed partial class SurveillanceRecordsServerSystem : EntitySystem
         {
             component.Records.Dequeue();
         }
-
-        Log.Info($"Stored {sightings.Count} sightings from {args.SenderAddress}; total {component.Records.Count}");
     }
 }

@@ -9,6 +9,8 @@ using Content.Shared.SurveillanceCamera;
 using Content.Shared.SurveillanceCamera.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Numerics;
+using Robust.Shared.Map;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -19,6 +21,7 @@ public sealed partial class SurveillanceCameraSightingRecorderSystem : EntitySys
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     private HashSet<Entity<MobStateComponent>> _inRange = new();
 
@@ -65,7 +68,16 @@ public sealed partial class SurveillanceCameraSightingRecorderSystem : EntitySys
             {
                 if (_examine.InRangeUnOccluded(mob, coords, recorder.DetectionRange))
                 {
-                    sightings.Add(new CameraSightingRecord(curTime, camera.CameraId, GetNetCoordinates(Transform(mob).Coordinates), Identity.Name(mob, EntityManager)));
+                    var mobXform = Transform(mob);
+                    if (mobXform.GridUid == null)
+                        continue;
+
+                    var gridCoords = new EntityCoordinates(mobXform.GridUid.Value,
+                        Vector2.Transform(_transform.GetWorldPosition(mobXform),
+                            _transform.GetInvWorldMatrix(mobXform.GridUid.Value)));
+
+                    sightings.Add(new CameraSightingRecord(curTime, camera.CameraId,
+                        GetNetCoordinates(gridCoords), Identity.Name(mob, EntityManager)));
                 }
             }
 
