@@ -28,11 +28,6 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
     /// Sends the given <see cref="NetworkPayload"/> as a device network packet to the entity with the given address and frequency.
     /// Addresses are given to the <see cref="DeviceNetworkComponent"/> of an entity when connecting.
     /// </summary>
-    /// <remarks>
-    /// This overload of the method raises a <see cref="DeviceNetworkPacketEvent"/> on the receiving entities,
-    /// which is slower compared to the overload that accepts <see cref="HandledNetworkPayload"/>.
-    /// Use this variation for cases when the packet must be handled by many different types of receivers in different places.
-    /// </remarks>
     /// <param name="ent">The sending entity.</param>
     /// <param name="address">
     /// The address of the entity that the packet gets sent to.
@@ -54,7 +49,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
     }
 
     /// <summary>
-    /// Raises an effect to an entity. You should not be calling this unless you know what you're doing.
+    /// Raises a device network packet to an entity. You should not be calling this unless you know what you're doing.
     /// </summary>
     public void RaisePayloadEvent<T>(EntityUid target, T payload, ref DeviceNetworkPacketData packet) where T : NetworkPayloadBase<T>
     {
@@ -70,7 +65,7 @@ public abstract partial class SharedDeviceNetworkSystem : EntitySystem, IDeviceP
 }
 
 /// <summary>
-/// Used to raise an EntityEffect without losing the type of effect.
+/// Used to raise an <see cref="NetworkPayload"/> without losing the type of effect.
 /// </summary>
 public interface IDevicePayloadRaiser
 {

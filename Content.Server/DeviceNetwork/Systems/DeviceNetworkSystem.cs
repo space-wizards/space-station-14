@@ -257,8 +257,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
             if (!TryGetDevice(packet.NetId, packet.Address, out var device))
                 return;
 
-            if (!device.Value.ReceiveAll &&
-                device.Value.ReceiveFrequency == packet.Frequency)
+            if (!device.Value.DeviceData.ReceiveAll &&
+                device.Value.DeviceData.ReceiveFrequency == packet.Frequency)
             {
                 totalDevices += 1;
                 hasTargetedDevice = true;
@@ -288,8 +288,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         if (!manager.Comp.Networks.ContainsKey(packet.NetId) || !manager.Comp.Networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
             return false;
 
-        var sender = manager.Comp.Networks[packet.NetId].Devices[packet.SenderAddress];
-        if (!sender.SendBroadcastAttemptEvent)
+        var senderData = manager.Comp.Networks[packet.NetId].Devices[packet.SenderAddress].DeviceData;
+        if (!senderData.SendBroadcastAttemptEvent)
             return true;
 
         var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
@@ -315,7 +315,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
         foreach (var connection in connections)
         {
-            if (connection.DeviceOwner == packet.Sender)
+            if (connection.Owner == packet.Sender)
                 continue;
 
             var beforeEv = new BeforePacketSentEvent(packet.NetId,
@@ -325,12 +325,12 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
                 packet.Sender,
                 xform,
                 senderPos);
-            RaiseLocalEvent(connection.DeviceOwner, ref beforeEv);
+            RaiseLocalEvent(connection.Owner, ref beforeEv);
 
             if (beforeEv.Cancelled)
                 continue;
 
-            packet.Data.RaiseEvent(connection.DeviceOwner, this, ref packet);
+            packet.Data.RaiseEvent(connection.Owner, this, ref packet);
         }
     }
 }

@@ -13,19 +13,13 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
 {
     public INetworkPayload LastPayload = default;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketData>(OnBaselinePacketReceived);
-    }
-
     public void SendBaselineTestEvent(EntityUid uid)
     {
         var ev = new DeviceNetworkPacketData(0, "", 0, "", uid, new TestPayload());
         RaiseLocalEvent(uid, ref ev);
     }
 
+    [SubscribeLocalEvent]
     private void OnBaselinePacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketData args)
     {
         LastPayload = args.Data;
