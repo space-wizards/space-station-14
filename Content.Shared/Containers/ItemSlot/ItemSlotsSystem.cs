@@ -56,7 +56,6 @@ namespace Content.Shared.Containers.ItemSlots
 
             SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
             SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
-            SubscribeLocalEvent<ItemSlotsComponent, GotReclaimedEvent>(OnReclaimed);
 
             SubscribeLocalEvent<ItemSlotsComponent, ItemSlotButtonPressedEvent>(HandleButtonPressed);
         }
@@ -929,11 +928,6 @@ namespace Content.Shared.Containers.ItemSlots
         private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
         {
             args.State = new ItemSlotsComponentState(component.Slots);
-        }
-
-        private void OnReclaimed(EntityUid uid, ItemSlotsComponent component, GotReclaimedEvent args)
-        {
-            EjectFromAllSlots((uid, component), slot => slot.EjectOnReclaim);
         }
     }
 }
