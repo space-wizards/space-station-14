@@ -14,6 +14,8 @@ using Robust.Shared.Containers;
 using Content.Shared.Labels.Components;
 using Content.Shared.Storage;
 using Content.Server.Hands.Systems;
+using Robust.Shared.Timing;
+
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -31,6 +33,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private OpenableSystem _openable = default!;
         [Dependency] private HandsSystem _handsSystem = default!;
+        [Dependency] private IGameTiming _timing = default!;
+
 
         public override void Initialize()
         {
@@ -114,8 +118,21 @@ namespace Content.Server.Chemistry.EntitySystems
             return inventory;
         }
 
+        private bool TryUse(Entity<ReagentDispenserComponent> reagentDispenser)
+        {
+            var curTime = _timing.CurTime;
+            if (curTime < reagentDispenser.Comp.LastInteractionTime + TimeSpan.FromSeconds(0.15))
+                return false;
+
+            reagentDispenser.Comp.LastInteractionTime = curTime;
+            return true;
+        }
+
         private void OnSetDispenseAmountMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSetDispenseAmountMessage message)
         {
+            if (!TryUse(reagentDispenser))
+                return;
+
             reagentDispenser.Comp.DispenseAmount = message.ReagentDispenserDispenseAmount;
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
@@ -123,6 +140,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnDispenseReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDispenseReagentMessage message)
         {
+            if (!TryUse(reagentDispenser))
+                return;
+
             if (!TryComp<StorageComponent>(reagentDispenser.Owner, out var storage))
             {
                 return;
@@ -155,6 +175,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnEjectReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserEjectContainerMessage message)
         {
+            if (!TryUse(reagentDispenser))
+                return;
+
             if (!TryComp<StorageComponent>(reagentDispenser.Owner, out var storage))
             {
                 return;
@@ -170,6 +193,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
+            if (!TryUse(reagentDispenser))
+                return;
+
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not { Valid: true } || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution, out _))
                 return;
@@ -178,6 +204,7 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
         }
+
 
         private void ClickSound(Entity<ReagentDispenserComponent> reagentDispenser)
         {
