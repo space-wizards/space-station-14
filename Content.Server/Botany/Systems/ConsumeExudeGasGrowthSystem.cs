@@ -6,7 +6,7 @@ using Content.Shared.Botany.Systems;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class PlantConsumeExudeGasSystem : SharedPlantConsumeExudeGasSystem
+public sealed partial class PlantConsumeExudeGasSystem : SharedPlantConsumeExudeGasSystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
