@@ -61,4 +61,4 @@ pg_username = "postgres"
 pg_password = "postgres"
 
 [net]
-max_rapid_connections = 12
+max_rapid_connections = 13
