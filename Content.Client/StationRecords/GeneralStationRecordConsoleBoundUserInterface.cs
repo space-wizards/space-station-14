@@ -18,10 +18,10 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
 
         _window = this.CreateWindow<GeneralStationRecordConsoleWindow>();
         _window.OnKeySelected += key =>
-            SendMessage(new SelectStationRecord(key));
+            SendPredictedMessage(new SelectStationRecord(key));
         _window.OnFiltersChanged += (type, filterValue) =>
-            SendMessage(new SetStationRecordFilter(type, filterValue));
-        _window.OnDeleted += id => SendMessage(new DeleteStationRecord(id));
+            SendPredictedMessage(new SetStationRecordFilter(type, filterValue));
+        _window.OnDeleted += id => SendPredictedMessage(new DeleteStationRecord(id));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -32,5 +32,10 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
             return;
 
         _window?.UpdateState(cast);
+    }
+
+    public void SetState(GeneralStationRecordConsoleState state)
+    {
+        _window?.UpdateState(state);
     }
 }

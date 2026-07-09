@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.StationRecords;
@@ -10,7 +11,7 @@ namespace Content.Shared.StationRecords;
 ///     an entity that stores a reference to it.
 ///     A StationRecordKey has both the station entity (use to get the record set) and id (use for this).
 /// </summary>
-[DataDefinition]
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class StationRecordSet
 {
     [DataField("currentRecordId")]

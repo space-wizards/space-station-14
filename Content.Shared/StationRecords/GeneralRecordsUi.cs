@@ -75,7 +75,6 @@ public sealed class SelectStationRecord : BoundUserInterfaceMessage
     }
 }
 
-
 [Serializable, NetSerializable]
 public sealed class DeleteStationRecord : BoundUserInterfaceMessage
 {

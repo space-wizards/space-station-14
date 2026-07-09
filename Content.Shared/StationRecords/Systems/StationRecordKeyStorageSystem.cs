@@ -1,10 +1,12 @@
+using Content.Shared.StationRecords.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.StationRecords;
+namespace Content.Shared.StationRecords.Systems;
 
 public sealed partial class StationRecordKeyStorageSystem : EntitySystem
 {
-    [Dependency] private SharedStationRecordsSystem _records = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _storageQuery = default!;
 
     public override void Initialize()
     {
@@ -23,42 +25,34 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     {
         if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
+
         component.Key = _records.Convert(state.Key);
     }
 
     /// <summary>
     ///     Assigns a station record key to an entity.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="key"></param>
-    /// <param name="keyStorage"></param>
-    public void AssignKey(EntityUid uid, StationRecordKey key, StationRecordKeyStorageComponent? keyStorage = null)
+    public void AssignKey(Entity<StationRecordKeyStorageComponent?> ent, StationRecordKey key)
     {
-        if (!Resolve(uid, ref keyStorage))
-        {
+        if (!_storageQuery.Resolve(ent, ref ent.Comp))
             return;
-        }
 
-        keyStorage.Key = key;
-        Dirty(uid, keyStorage);
+        ent.Comp.Key = key;
+        Dirty(ent);
     }
 
     /// <summary>
     ///     Removes a station record key from an entity.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="keyStorage"></param>
-    /// <returns></returns>
-    public StationRecordKey? RemoveKey(EntityUid uid, StationRecordKeyStorageComponent? keyStorage = null)
+    public StationRecordKey? RemoveKey(Entity<StationRecordKeyStorageComponent?> ent)
     {
-        if (!Resolve(uid, ref keyStorage) || keyStorage.Key == null)
-        {
+        if (!_storageQuery.Resolve(ent, ref ent.Comp)
+            || ent.Comp.Key == null)
             return null;
-        }
 
-        var key = keyStorage.Key;
-        keyStorage.Key = null;
-        Dirty(uid, keyStorage);
+        var key = ent.Comp.Key;
+        ent.Comp.Key = null;
+        Dirty(ent);
 
         return key;
     }
@@ -66,16 +60,11 @@ public sealed partial class StationRecordKeyStorageSystem : EntitySystem
     /// <summary>
     ///     Checks if an entity currently contains a station record key.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="keyStorage"></param>
-    /// <returns></returns>
-    public bool CheckKey(EntityUid uid, StationRecordKeyStorageComponent? keyStorage = null)
+    public bool CheckKey(Entity<StationRecordKeyStorageComponent?> ent)
     {
-        if (!Resolve(uid, ref keyStorage))
-        {
+        if (!_storageQuery.Resolve(ent, ref ent.Comp))
             return false;
-        }
 
-        return keyStorage.Key != null;
+        return ent.Comp.Key != null;
     }
 }
