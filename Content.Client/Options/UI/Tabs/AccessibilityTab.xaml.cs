@@ -15,6 +15,7 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionCheckBox(CCVars.ChatEnableColorName, EnableColorNameCheckBox);
         Control.AddOptionCheckBox(CCVars.AccessibilityColorblindFriendly, ColorblindFriendlyCheckBox);
 
+        Control.AddOptionCheckBox(CCVars.ReducedMotion, ReducedMotionCheckBox);
         Control.AddOptionCheckBox(CCVars.DisableAiStatic, DisableAiStaticCheckBox);
         Control.AddOptionCheckBox(CCVars.DisableBlurryVision, DisableBlurryVisionCheckBox);
         Control.AddOptionCheckBox(CCVars.DisableDrunkOverlay, DisableDrunkOverlayCheckBox);
