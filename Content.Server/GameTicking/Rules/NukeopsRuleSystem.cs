@@ -260,7 +260,7 @@ public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleCompon
                 var handled = false;
                 foreach (var cond in nukeops.WinConditions)
                 {
-                    if (cond.ToString().ToLower() == "NukeExplodedOnCorrectStation") // If this is true, then the nuke destroyed the station! It's likely everyone is very dead so keeping the round going is pointless.
+                    if (cond == WinCondition.NukeExplodedOnCorrectStation) // If this is true, then the nuke destroyed the station! It's likely everyone is very dead so keeping the round going is pointless.
                     {
                         _roundEndSystem.EndRound(); // end the round!
                         handled = true;

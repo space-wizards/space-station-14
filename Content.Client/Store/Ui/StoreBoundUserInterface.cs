@@ -24,6 +24,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _storeSystem = EntMan.System<StoreSystem>();
+        _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
     }
 
     protected override void Open()
