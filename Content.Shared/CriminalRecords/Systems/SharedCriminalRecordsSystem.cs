@@ -18,6 +18,17 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<CriminalRecordComponent, ComponentGetStateAttemptEvent>(OnCriminalGetStateAttempt);
+        // When a player equips a Sec HUD or gains ShowAntagIconsComponent mid-round,
+        // re-dirty all criminal record components so the new observer sees existing icons.
+        SubscribeLocalEvent<ShowCriminalRecordIconsComponent, ComponentStartup>((_, _, _) => DirtyAllCriminalRecords());
+        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>((_, _, _) => DirtyAllCriminalRecords());
+    }
+
+    private void DirtyAllCriminalRecords()
+    {
+        var query = AllEntityQuery<CriminalRecordComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+            Dirty(uid, comp);
     }
 
     private void OnCriminalGetStateAttempt(EntityUid uid, CriminalRecordComponent component, ref ComponentGetStateAttemptEvent args)

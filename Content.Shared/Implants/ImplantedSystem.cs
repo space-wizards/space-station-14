@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Content.Shared.Antag;
+using System.Linq;
 
 
 namespace Content.Shared.Implants;
@@ -17,6 +18,9 @@ public abstract partial class SharedImplanterSystem
         SubscribeLocalEvent<ImplantedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ImplantedComponent, GibbedBeforeDeletionEvent>(OnGibbed);
         SubscribeLocalEvent<ImplantedComponent, ComponentGetStateAttemptEvent>(OnImplantedGetStateAttempt);
+        // When someone gains ShowAntagIconsComponent mid-round, re-dirty all implanted components
+        // so the new observer (admin/ghost) receives the previously hidden states.
+        SubscribeLocalEvent<ShowAntagIconsComponent, ComponentStartup>((_, _, _) => DirtyAllImplanted());
     }
 
     private void OnImplantedGetStateAttempt(EntityUid uid, ImplantedComponent component, ref ComponentGetStateAttemptEvent args)
@@ -38,6 +42,13 @@ public abstract partial class SharedImplanterSystem
         return false;
     }
 
+    private void DirtyAllImplanted()
+    {
+        var query = AllEntityQuery<ImplantedComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+            Dirty(uid, comp);
+    }
+
 
     private void OnImplantedInit(Entity<ImplantedComponent> ent, ref ComponentInit args)
     {
@@ -53,8 +64,9 @@ public abstract partial class SharedImplanterSystem
 
     private void OnGibbed(Entity<ImplantedComponent> ent, ref GibbedBeforeDeletionEvent args)
     {
-        // Drop the storage implant contents before the implants are deleted by the body being gibbed.
-        foreach (var implant in ent.Comp.ImplantContainer.ContainedEntities)
+        // Iterate over a snapshot to avoid InvalidOperationException if EmptyContainer
+        // modifies the ContainedEntities collection via container events.
+        foreach (var implant in ent.Comp.ImplantContainer.ContainedEntities.ToList())
         {
             if (TryComp<StorageComponent>(implant, out var storage))
                 _container.EmptyContainer(storage.Container, destination: Transform(ent).Coordinates);

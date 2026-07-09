@@ -23,7 +23,11 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentDispenserDispenseAmount DispenseAmount = ReagentDispenserDispenseAmount.U10;
 
-        public TimeSpan LastInteractionTime = TimeSpan.Zero;
+        /// <summary>
+        /// Per-player cooldown tracking to prevent macro spam while not blocking other players
+        /// using the same dispenser simultaneously.
+        /// </summary>
+        public Dictionary<EntityUid, TimeSpan> LastInteractionTimes = new();
     }
 }
 

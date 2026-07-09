@@ -118,21 +118,20 @@ namespace Content.Server.Chemistry.EntitySystems
             return inventory;
         }
 
-        private bool TryUse(Entity<ReagentDispenserComponent> reagentDispenser)
+        private bool TryUse(Entity<ReagentDispenserComponent> reagentDispenser, EntityUid actor)
         {
             var curTime = _timing.CurTime;
-            if (curTime < reagentDispenser.Comp.LastInteractionTime + TimeSpan.FromSeconds(0.15))
+            if (reagentDispenser.Comp.LastInteractionTimes.TryGetValue(actor, out var lastTime)
+                && curTime < lastTime + TimeSpan.FromSeconds(0.15))
                 return false;
 
-            reagentDispenser.Comp.LastInteractionTime = curTime;
+            reagentDispenser.Comp.LastInteractionTimes[actor] = curTime;
             return true;
         }
 
         private void OnSetDispenseAmountMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserSetDispenseAmountMessage message)
         {
-            if (!TryUse(reagentDispenser))
-                return;
-
+            // Amount selection is a UI-only action, not gated by chemistry cooldown.
             reagentDispenser.Comp.DispenseAmount = message.ReagentDispenserDispenseAmount;
             UpdateUiState(reagentDispenser);
             ClickSound(reagentDispenser);
@@ -140,7 +139,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnDispenseReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserDispenseReagentMessage message)
         {
-            if (!TryUse(reagentDispenser))
+            if (!TryUse(reagentDispenser, message.Actor))
                 return;
 
             if (!TryComp<StorageComponent>(reagentDispenser.Owner, out var storage))
@@ -175,7 +174,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnEjectReagentMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserEjectContainerMessage message)
         {
-            if (!TryUse(reagentDispenser))
+            if (!TryUse(reagentDispenser, message.Actor))
                 return;
 
             if (!TryComp<StorageComponent>(reagentDispenser.Owner, out var storage))
@@ -193,7 +192,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnClearContainerSolutionMessage(Entity<ReagentDispenserComponent> reagentDispenser, ref ReagentDispenserClearContainerSolutionMessage message)
         {
-            if (!TryUse(reagentDispenser))
+            if (!TryUse(reagentDispenser, message.Actor))
                 return;
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser, SharedReagentDispenser.OutputSlotName);
