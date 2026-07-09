@@ -16,6 +16,7 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionCheckBox(CCVars.AccessibilityColorblindFriendly, ColorblindFriendlyCheckBox);
         Control.AddOptionCheckBox(CCVars.ReducedMotion, ReducedMotionCheckBox);
         Control.AddOptionCheckBox(CCVars.DisableAiStatic, DisableAiStaticCheckBox);
+        Control.AddOptionCheckBox(CCVars.DisableNightVisionNoise, DisableNightVisionNoiseCheckBox);
         Control.AddOptionPercentSlider(CCVars.ScreenShakeIntensity, ScreenShakeIntensitySlider);
         Control.AddOptionPercentSlider(CCVars.ChatWindowOpacity, ChatWindowOpacitySlider);
         Control.AddOptionPercentSlider(CCVars.SpeechBubbleTextOpacity, SpeechBubbleTextOpacitySlider);
