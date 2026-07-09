@@ -28,7 +28,7 @@ public sealed partial class HumanoidCharacterAppearance
     private static CharacterPalette GetRandomPalette(IRobustRandom random)
     {
         var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
-        return GetPaletteFromBase(baseColor, random.Next(3));
+        return GetPaletteFromBase(baseColor, random.Next(4));
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ public sealed partial class HumanoidCharacterAppearance
     ///     Uses integer provided to choose what kind of palette is generated.
     /// </summary>
     /// <param name="baseColor">The base color to generate a palette from.</param>
-    /// <param name="strategy">0 for split complementary, 1 for triadic complementary, any other value for a single complement.</param>
+    /// <param name="strategy">0 for split complementary, 1 for triadic complementary, 2 for analogous, any other value for a single complement.</param>
     /// <returns>A list of colours in the chosen palette.</returns>
     /// <remarks>
     ///     Personally I think this should be weighted, but I can't
@@ -57,6 +57,7 @@ public sealed partial class HumanoidCharacterAppearance
         {
             0 => baseColor.GetSplitComplementaries(),
             1 => baseColor.GetTriadicComplementaries(),
+            2 => baseColor.GetAnalogousComplementaries(),
             _ => baseColor.GetOneComplementary(),
         };
 
