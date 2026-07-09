@@ -50,8 +50,6 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
     {
         base.Initialize();
 
-        SubscribeAllEvent<RequestGrapplingReelMessage>(OnGrapplingReel);
-
         // TODO: After step trigger refactor, dropping a grappling gun should manually try and activate step triggers it's suppressing.
         UpdatesBefore.Add(typeof(SharedJointSystem)); // We want to run before joints are solved
     }
@@ -134,11 +132,8 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         if (args.Handled || !args.Complex)
             return;
 
-        if (Timing.IsFirstTimePredicted)
-            _audio.PlayPredicted(entity.Comp.CycleSound, entity.Owner, args.User);
-
+        _audio.PlayPredicted(entity.Comp.CycleSound, entity.Owner, args.User);
         Ungrapple((entity), false, args.User);
-
         args.Handled = true;
     }
 
@@ -148,6 +143,7 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
         SetReeling(entity, false, args.User);
     }
 
+    [EventSubscription]
     private void OnGrapplingReel(RequestGrapplingReelMessage msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } player)
@@ -277,9 +273,13 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
                 // Checks if the entity is "tied" to the grid it is on via extra-gravity technology (e.g. magboots). If so, for the purposes of reeling it counts as if you're weighing the same as the grid.
                 bool attachedToGrid;
 
+                // If the entities being targetted are on the same grid. If they are, the grid itself should not be affected with any pushing, to avoid becoming a "grappling hook-powered shuttle".
+                var sameGrid = false;
+
                 if (_transform.GetGrid(joint.BodyAUid) == _transform.GetGrid(joint.BodyBUid))
                 {
                     attachedToGrid = false;
+                    sameGrid = true;
                 }
                 else
                 {
@@ -324,7 +324,8 @@ public abstract partial class SharedGrapplingGunSystem : VirtualController
                 if (grapplerBodyB.Mass < BaseWeightMass)
                     massFactorB *= grapplerBodyB.Mass / BaseWeightMass;
 
-                _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
+                if (sameGrid && physicalHook != _transform.GetGrid(joint.BodyAUid))
+                    _physics.ApplyLinearImpulse(grapplerUidA, -targetDirection * massFactorA * grappling.ReelForce * frameTime, grapplerOffsetA, body: grapplerBodyA);
 
                 _physics.ApplyLinearImpulse(grapplerUidB, targetDirection * massFactorB * grappling.ReelForce * frameTime, grapplerOffsetB, body: grapplerBodyB);
             }
