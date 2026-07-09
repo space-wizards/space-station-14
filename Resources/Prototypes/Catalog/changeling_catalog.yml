@@ -158,4 +158,4 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingNightVision
-  productComponents: ChangelingNighVisionDummy
+  productComponents: ChangelingNightVisionDummy

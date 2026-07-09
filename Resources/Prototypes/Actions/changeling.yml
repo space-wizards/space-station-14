@@ -240,19 +240,15 @@
   - type: TargetAction
 
 - type: entity
-  parent: ActionToggleNighVision
+  parent: ActionToggleNightVision
   id: ActionChangelingNightVision
   name: Toggle Night Vision
-  description: Turn our night vision on/off.
+  description: Turns our night vision on/off.
   components:
   - type: Action
-    useDelay: 90 # TODO: Chemical cost
+    useDelay: 3
     raiseOnAction: true
-    toggled: false
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Actions/changeling2.rsi
-      state: nv_off
-    iconOn:
       sprite: Interface/Actions/changeling2.rsi
       state: nv_on
