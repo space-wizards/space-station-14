@@ -1,0 +1,6 @@
+- type: entity
+  id: DeviceNetworkSingleton
+  name: device network manager
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: DeviceNetworkManager

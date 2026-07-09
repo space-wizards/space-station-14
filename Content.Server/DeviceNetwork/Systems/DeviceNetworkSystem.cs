@@ -7,6 +7,7 @@ using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.GameTicking;
 using Robust.Server.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.DeviceNetwork.Systems;
@@ -19,6 +20,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
     [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+
+    private static readonly EntProtoId SingletonId = "DeviceNetworkSingleton";
 
     public override void Initialize()
     {
@@ -79,22 +82,14 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         if (TryGetManager(out var found))
             return found.Value;
 
-        var manager = Spawn();
-        var managerComp = AddComp<DeviceNetworkManagerComponent>(manager);
+        var manager = Spawn(SingletonId);
+        var managerComp = EnsureComp<DeviceNetworkManagerComponent>(manager);
         return (manager, managerComp);
     }
 
     private bool TryGetManager([NotNullWhen(true)] out Entity<DeviceNetworkManagerComponent>? ent)
     {
-        ent = null;
-        var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            ent = (uid, comp);
-            return true;
-        }
-
-        return false;
+        return TrySingle(out ent);
     }
 
     private void ClearManager()
@@ -285,10 +280,11 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     private bool CheckRecipientsList(DeviceNetworkPacketData packet, ref HashSet<Device> recipients)
     {
         var manager = EnsureManager();
-        if (!manager.Comp.Networks.ContainsKey(packet.NetId) || !manager.Comp.Networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
+        if (!manager.Comp.Networks.TryGetValue(packet.NetId, out var net)
+            || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
             return false;
 
-        var senderData = manager.Comp.Networks[packet.NetId].Devices[packet.SenderAddress].DeviceData;
+        var senderData = device.DeviceData;
         if (!senderData.SendBroadcastAttemptEvent)
             return true;
 
