@@ -4,8 +4,7 @@ namespace Content.Shared.CCVar;
 
 public sealed partial class CCVars
 {
-    // CVars in this file should exclusively handle shader overlays and associated visual effects.
-    // They exist to make visual effects less harmful for players with motion sensitivity or photosensitivity.
+    // CVars in this file should exist to make visual effects less harmful for players with motion sensitivity or photosensitivity.
     // These CVars are deliberately modular to allow users more agency over their experience in game.
     // Please do not use CVars as a bandaid for effects that could otherwise be made accessible without issue.
 
