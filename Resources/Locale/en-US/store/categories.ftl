@@ -1,6 +1,7 @@
 # Uplink
 store-category-debug = debug category
 store-category-debug2 = debug category 2
+store-category-free = Free
 store-category-weapons = Weaponry
 store-category-ammo = Ammo
 store-category-explosives = Explosives
