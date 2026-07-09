@@ -431,7 +431,7 @@ public sealed partial class GunSystem : SharedGunSystem
         foreach (var entity in entities)
         {
             // Don't add the target if we can't shoot the target!
-            if (!CheckFixtures(entity.Uid, coordinates))
+            if (!CheckFixtures(entity.Uid))
                 continue;
 
             var entry = CheckTarget((entity.Uid, entity.Component, entity.Transform), eye, coordinates);
@@ -527,11 +527,12 @@ public sealed partial class GunSystem : SharedGunSystem
         }
     }
 
-    private bool CheckFixtures(Entity<FixturesComponent?> entity, MapCoordinates coordinates)
+    private bool CheckFixtures(Entity<FixturesComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
+        // TODO: Maybe also check that our cursor is intersecting a valid fixture?
         foreach (var fix in entity.Comp.Fixtures)
         {
             if (!fix.Value.Hard || (fix.Value.CollisionLayer & (int)CollisionGroup.BulletImpassable) == 0)
