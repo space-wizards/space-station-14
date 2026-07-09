@@ -267,27 +267,22 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
+        // The NeedFreeHand arg requires us to have our active hand empty, and to stay on that same hand.
         if (args.NeedHand && (args.BreakOnHandChange || args.BreakOnDropItem))
         {
+            var activeHandIsEmpty =  _hands.ActiveHandIsEmpty(args.User);
+
             if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
+
+            if (args.NeedFreeHand && args.BreakOnHandChange)
+            {
+                if (activeHandIsEmpty == false)
+                    return false;
+            }
 
             doAfter.InitialHand = handsComponent.ActiveHandId;
             doAfter.InitialItem = _hands.GetActiveItem((args.User, handsComponent));
-        }
-
-        // This arg requires us to have our active hand empty, and to stay on that same hand.
-
-        var activehandisempty =  _hands.ActiveHandIsEmpty(args.User);
-
-        if (args.NeedFreeHand && args.BreakOnHandChange)
-        {
-            if (!TryComp(args.User, out HandsComponent? handsComponent))
-                return false;
-
-            doAfter.InitialHand = handsComponent.ActiveHandId;
-            if (activehandisempty == false)
-                return false;
         }
 
         doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
