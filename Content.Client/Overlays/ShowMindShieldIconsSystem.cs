@@ -6,8 +6,7 @@ namespace Content.Client.Overlays;
 
 public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowMindShieldIconsComponent>
 {
-    [Dependency] private IPrototypeManager _prototype = default!;
-    [Dependency] private SharedMindShieldSystem _mindShieldSystem = default!;
+    [Dependency] private SharedMindShieldSystem _mindShield = default!;
 
     public override void Initialize()
     {
@@ -22,8 +21,8 @@ public sealed partial class ShowMindShieldIconsSystem : EquipmentHudSystem<ShowM
         if (!IsActive)
             return;
 
-        _mindShieldSystem.GetMindshieldStatus(ent.Owner, out var _, out var isVisible);
-        if (isVisible && _prototype.Resolve(SharedMindShieldSystem.StatusIcon, out var statusIconPrototype))
+        _mindShield.GetMindshieldStatus(ent.Owner, out _, out var isVisible);
+        if (isVisible && ProtoMan.Resolve(SharedMindShieldSystem.StatusIcon, out var statusIconPrototype))
             args.StatusIcons.Add(statusIconPrototype);
     }
 }

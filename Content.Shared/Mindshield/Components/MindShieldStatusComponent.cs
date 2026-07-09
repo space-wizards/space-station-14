@@ -13,11 +13,11 @@ public sealed partial class MindShieldStatusComponent : Component
     /// Whether the entity is protected from mind control & co.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsMindshielded = false;
+    public bool IsMindshielded;
 
     /// <summary>
     /// Whether the sec HUD will show a mindshield icon
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsVisible = false;
+    public bool IsVisible;
 }

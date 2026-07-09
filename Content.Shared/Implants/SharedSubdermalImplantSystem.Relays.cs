@@ -25,6 +25,7 @@ public abstract partial class SharedSubdermalImplantSystem
         SubscribeLocalEvent<ImplantedComponent, CurrencyInsertAttemptEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetStoreEvent>(RefRelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, GetMindShieldStatusEvent>(RefRelayToImplantEvent, after: [typeof(SharedMindShieldSystem)]);
+        SubscribeLocalEvent<ImplantedComponent, ChameleonControllerOutfitSelectedEvent>(RefRelayToImplantEvent);
     }
 
     /// <summary>

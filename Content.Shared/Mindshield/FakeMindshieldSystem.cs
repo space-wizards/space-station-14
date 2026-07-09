@@ -23,6 +23,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
         // Other events
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
+        SubscribeLocalEvent<FakeMindShieldComponent, ImplantRelayEvent<ChameleonControllerOutfitSelectedEvent>>((ent, ref relay) => OnChameleonControllerOutfitSelectedImplant(ent, ref relay.Args, relay.ImplantedEntity));
 
         // Toggle events
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
@@ -59,6 +60,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     {
         if (!ent.Comp.IsInnate)
             return;
+
         _mindShields.RefreshMindshieldStatus(ent.Owner);
     }
 
@@ -98,7 +100,17 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _mindShields.RefreshMindshieldStatus(args.Performer);
     }
 
-    private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
+    private void OnChameleonControllerOutfitSelected(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args)
+    {
+        HandleChameleonOutfit(ent, ent.Comp, ent.Owner, ent.Owner, ref args);
+    }
+
+    private void OnChameleonControllerOutfitSelectedImplant(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args, EntityUid implantedEntity)
+    {
+        HandleChameleonOutfit(ent, ent.Comp, implantedEntity, implantedEntity, ref args);
+    }
+
+    private void HandleChameleonOutfit(EntityUid fakeMindshieldUid, FakeMindShieldComponent component, EntityUid actionOwner, EntityUid statusOwner, ref ChameleonControllerOutfitSelectedEvent args)
     {
         if (!component.ChameleonControllable)
             return;
@@ -107,7 +119,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
             return;
 
         // This assumes there is only one fake mindshield action per entity (This is currently enforced)
-        if (!TryComp<ActionsComponent>(uid, out var actionsComp))
+        if (!TryComp<ActionsComponent>(actionOwner, out var actionsComp))
             return;
 
         // In case the fake mindshield ever doesn't have an action.
@@ -128,11 +140,12 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
-            Dirty(uid, component);
+            Dirty(fakeMindshieldUid, component);
 
             if (actionComp.UseDelay != null)
                 _actions.SetCooldown(action, actionComp.UseDelay.Value);
 
+            _mindShields.RefreshMindshieldStatus(statusOwner);
             return;
         }
 
@@ -140,7 +153,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         if (!actionFound)
         {
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
-            Dirty(uid, component);
+            Dirty(fakeMindshieldUid, component);
+            _mindShields.RefreshMindshieldStatus(statusOwner);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Content.Shared.Mindshield.Components;
 [Access(typeof(SharedMindShieldSystem), typeof(FakeMindShieldSystem))]
 public sealed partial class FakeMindShieldComponent : Component
 {
-
     /// <summary>
     /// The state of the Fake mindshield, if true the owning entity will display a mindshield effect on their job icon
     /// </summary>
@@ -31,15 +30,15 @@ public sealed partial class FakeMindShieldComponent : Component
     public bool ChameleonControllable = true;
 
     /// <summary>
-    ///     Whether the fake mind shield is innate to the entity.
-    ///     When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to change its voice.
-    ///     When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the voice masking abilities for another entity.
+    /// Whether the fake mindshield is innate to the entity.
+    /// When added to an entity while this field is set to true, the entity itself will gain the action & UI necessary to toggle its fake mindshield.
+    /// When this field is set to false, then the entity with this component will be a provider (either through implanting or through wearing) of the fake mindshield abilities for another entity.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsInnate;
 
     /// <summary>
-    ///     Action linked to the fake mindshield, used for innate components
+    /// Action linked to the fake mindshield, used for innate components
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntProtoId Action = "FakeMindShieldToggleAction";

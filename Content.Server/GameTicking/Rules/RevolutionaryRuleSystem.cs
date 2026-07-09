@@ -53,8 +53,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
     [Dependency] private RoundEndSystem _roundEnd = default!;
     [Dependency] private SharedStunSystem _stun = default!;
     [Dependency] private StationSystem _stationSystem = default!;
-
-    [Dependency] private MindShieldSystem _mindShieldSystem = default!;
+    [Dependency] private MindShieldSystem _mindShield = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -156,7 +155,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         var attemptConvertEv = new AttemptConvertRevolutionaryEvent();
         RaiseLocalEvent(ev.Target, ref attemptConvertEv);
 
-        _mindShieldSystem.GetMindshieldStatus(ev.Target, out var isMindshielded, out _);
+        _mindShield.GetMindshieldStatus(ev.Target, out var isMindshielded, out _);
         if (attemptConvertEv.Cancelled || isMindshielded)
             return;
 
