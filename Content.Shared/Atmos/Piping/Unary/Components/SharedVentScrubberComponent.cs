@@ -4,18 +4,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
-public sealed partial class GasVentScrubberDataPayload : NetworkPayloadBase<GasVentScrubberDataPayload>
-{
-    [DataField]
-    public GasVentScrubberData Data;
-}
-
 [DataDefinition, Serializable, NetSerializable]
 public sealed partial class GasVentScrubberData : IAtmosDeviceData
 {
     public NetworkPayload GetPayload()
     {
-        return new GasVentScrubberDataPayload { Data = this };
+        return new GasVentScrubberSetDataPayload { Data = this };
     }
 
     public bool Enabled { get; set; }
@@ -96,7 +90,7 @@ public sealed partial class GasVentScrubberSyncDataPayload : NetworkPayloadBase<
 public sealed partial class GasVentScrubberSetDataPayload : NetworkPayloadBase<GasVentScrubberSetDataPayload>
 {
     [DataField]
-    public GasVentScrubberData Payload;
+    public GasVentScrubberData Data;
 }
 
 [Serializable, NetSerializable]

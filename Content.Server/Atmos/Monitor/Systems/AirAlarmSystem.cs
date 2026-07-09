@@ -46,13 +46,13 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
     public void SetData(EntityUid uid, string address, GasVentPumpData payload)
     {
-        _deviceNet.QueuePacket(uid, address, new GasVentPumpSetDataPayload { Payload = payload });
+        _deviceNet.QueuePacket(uid, address, new GasVentPumpSetDataPayload { Data = payload });
         AirAlarmSetData(uid, address, payload);
     }
 
     public void SetData(EntityUid uid, string address, GasVentScrubberData payload)
     {
-        _deviceNet.QueuePacket(uid, address, new GasVentScrubberSetDataPayload { Payload = payload });
+        _deviceNet.QueuePacket(uid, address, new GasVentScrubberSetDataPayload { Data = payload });
         AirAlarmSetData(uid, address, payload);
     }
 
@@ -508,7 +508,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Sets device data. Practically a wrapper around the packet sending function, SetData.
+    ///     Sets device data.
     /// </summary>
     /// <param name="address">The address to send the new data to.</param>
     /// <param name="devData">The device data to be sent.</param>
@@ -520,7 +520,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
         }
 
         devData.Dirty = true;
+
         _deviceNet.QueuePacket(uid, address, devData.GetPayload());
+        AirAlarmSetData(uid, address, devData);
     }
 
     [SubscribeLocalEvent]

@@ -158,7 +158,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [SubscribeLocalEvent]
         private void OnSetPayload(Entity<GasVentScrubberComponent> ent, ref DeviceNetworkPacketEvent<GasVentScrubberSetDataPayload> args)
         {
-            var setData = args.Data.Payload;
+            var setData = args.Data.Data;
             var previous = ent.Comp.ToAirAlarmData();
 
             if (previous.Enabled != setData.Enabled)
