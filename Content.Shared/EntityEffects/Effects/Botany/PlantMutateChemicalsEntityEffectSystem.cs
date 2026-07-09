@@ -12,7 +12,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateChemicals>
 {
-    [Dependency] private readonly PlantChemicalsSystem _plantChemicals = default!;
+    [Dependency] private PlantChemicalsSystem _plantChemicals = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {

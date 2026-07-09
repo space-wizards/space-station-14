@@ -6,12 +6,12 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;
 
-public sealed class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisualsComponent>
+public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTrayVisualsComponent>
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
-    [Dependency] private readonly PlantWeedPestSystem _plantWeedPest = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
+    [Dependency] private PlantWeedPestSystem _plantWeedPest = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     public override void FrameUpdate(float frameTime)
     {

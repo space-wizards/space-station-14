@@ -12,20 +12,13 @@ namespace Content.Shared.Botany.Items.Systems;
 /// <summary>
 /// System for using a shovel on a plant.
 /// </summary>
-public sealed class BotanyShovelSystem : EntitySystem
+public sealed partial class BotanyShovelSystem : EntitySystem
 {
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ShovelComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PlantTrayComponent, TrayShovelAttemptEvent>(OnTrayShovelAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ShovelComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
@@ -37,6 +30,7 @@ public sealed class BotanyShovelSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnTrayShovelAttempt(Entity<PlantTrayComponent> ent, ref TrayShovelAttemptEvent args)
     {
         if (args.Cancelled)

@@ -10,11 +10,7 @@ public sealed partial class PlantTraitUnviableSystem : EntitySystem
     [Dependency] private PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTraitUnviableComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitUnviableComponent> ent, ref OnPlantGrowEvent args)
     {
         _plantHarvest.AffectGrowth(ent.Owner, -1);

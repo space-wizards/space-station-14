@@ -9,11 +9,7 @@ public sealed partial class PlantTraitScreamSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTraitScreamComponent, AfterDoHarvestEvent>(OnAfterDoHarvest);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterDoHarvest(Entity<PlantTraitScreamComponent> ent, ref AfterDoHarvestEvent args)
     {
         _audio.PlayPredicted(ent.Comp.ScreamSound, ent, args.User);

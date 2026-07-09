@@ -16,12 +16,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTraitLigneousComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<PlantTraitLigneousComponent, DoHarvestEvent>(OnDoHarvest);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<PlantTraitLigneousComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -52,6 +47,7 @@ public sealed partial class PlantTraitLigneousSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDoHarvest(Entity<PlantTraitLigneousComponent> ent, ref DoHarvestEvent args)
     {
         _popup.PopupPredictedCursor(Loc.GetString("plant-component-ligneous-cant-harvest-message"), args.User);

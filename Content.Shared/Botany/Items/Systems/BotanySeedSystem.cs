@@ -14,7 +14,7 @@ namespace Content.Shared.Botany.Items.Systems;
 /// <summary>
 /// System for taking a sample of a plant.
 /// </summary>
-public sealed class BotanySeedSystem : EntitySystem
+public sealed partial class BotanySeedSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private BotanySystem _botany = default!;
@@ -22,14 +22,7 @@ public sealed class BotanySeedSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SeedComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PlantTrayComponent, PlantingSeedAttemptEvent>(OnPlantingSeedAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<SeedComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
@@ -41,6 +34,7 @@ public sealed class BotanySeedSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantingSeedAttempt(Entity<PlantTrayComponent> ent, ref PlantingSeedAttemptEvent args)
     {
         if (args.Cancelled)

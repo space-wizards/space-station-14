@@ -11,11 +11,7 @@ public sealed partial class PlantTraitsSystem : EntitySystem
 {
     [Dependency] private MutationSystem _mutation = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTraitsComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantTraitsComponent> ent, ref PlantCrossPollinateEvent args)
     {
         _mutation.CrossTrait(ent.Owner, args.PollenData);

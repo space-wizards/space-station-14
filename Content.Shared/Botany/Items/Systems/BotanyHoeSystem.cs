@@ -12,19 +12,12 @@ namespace Content.Shared.Botany.Items.Systems;
 /// <summary>
 /// System for taking a sample of a plant.
 /// </summary>
-public sealed class BotanyHoeSystem : EntitySystem
+public sealed partial class BotanyHoeSystem : EntitySystem
 {
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<BotanyHoeComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PlantTrayComponent, TrayHoeAttemptEvent>(OnTrayHoeAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<BotanyHoeComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
@@ -36,6 +29,7 @@ public sealed class BotanyHoeSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnTrayHoeAttempt(Entity<PlantTrayComponent> ent, ref TrayHoeAttemptEvent args)
     {
         if (args.Cancelled)

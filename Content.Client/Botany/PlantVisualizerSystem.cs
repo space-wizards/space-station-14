@@ -6,22 +6,12 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;
 
-public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsComponent>
+public sealed partial class PlantVisualizerSystem : VisualizerSystem<PlantVisualsComponent>
 {
-    [Dependency] private readonly PlantSystem _plantSystem = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantSystem _plantSystem = default!;
+    [Dependency] private PlantHolderSystem _plantHolder = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PlantVisualsComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<PlantVisualsComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<PlantComponent, AfterAutoHandleStateEvent>(OnPlantState);
-        SubscribeLocalEvent<PlantHarvestComponent, AfterAutoHandleStateEvent>(OnHarvestState);
-        SubscribeLocalEvent<PlantHolderComponent, AfterAutoHandleStateEvent>(OnHolderState);
-    }
-
+    [SubscribeLocalEvent]
     private void OnComponentInit(EntityUid uid, PlantVisualsComponent component, ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
@@ -33,26 +23,31 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentStartup(Entity<PlantVisualsComponent> ent, ref ComponentStartup args)
     {
         UpdateSprite(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlantState(Entity<PlantComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnHarvestState(Entity<PlantHarvestComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnHolderState(Entity<PlantHolderComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateSprite(ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void UpdateSprite(EntityUid plantUid)
     {
         if (!HasComp<PlantVisualsComponent>(plantUid)

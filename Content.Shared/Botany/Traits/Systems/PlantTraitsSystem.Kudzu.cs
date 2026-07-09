@@ -12,11 +12,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<PlantTraitKudzuComponent, OnPlantGrowEvent>(OnPlantGrow);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref OnPlantGrowEvent args)
     {
         var trayUid = GetEntity(args.Tray);
