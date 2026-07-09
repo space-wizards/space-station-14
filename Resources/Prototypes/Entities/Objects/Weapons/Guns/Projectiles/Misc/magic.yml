@@ -132,7 +132,8 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape: !type:PhysShapeAabb
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
         density: 75
         mask:
@@ -140,13 +141,14 @@
         layer:
         - MachineLayer
       projectile:
-        shape: !type:PhysShapeAabb
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.15,-0.45,0.15,0.15"
         hard: false
         mask:
         - Impassable
         - BulletImpassable
-      fly-by: &flybyfixture
+      fly-by:
         shape: !type:PhysShapeCircle
           radius: 0.6
         layer:

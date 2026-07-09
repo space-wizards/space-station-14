@@ -106,7 +106,8 @@
     totalIntensity: 50
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:DoActsBehavior
@@ -145,7 +146,8 @@
     totalIntensity: 100
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:DoActsBehavior
@@ -172,7 +174,8 @@
     totalIntensity: 150
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 1200
       behaviors:
       - !type:DoActsBehavior
@@ -211,7 +214,8 @@
     totalIntensity: 25
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -249,7 +253,8 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -288,7 +293,8 @@
         Quantity: 480
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
@@ -330,7 +336,8 @@
         Quantity: 120
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
+    - trigger:
+        !type:DamageTrigger
         damage: 3000
       behaviors:
       - !type:DoActsBehavior
