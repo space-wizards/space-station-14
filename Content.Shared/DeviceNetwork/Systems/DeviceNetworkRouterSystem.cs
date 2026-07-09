@@ -22,7 +22,11 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
 
         var frequency = deviceComp.TransmitFrequency;
         if (payload.OverrideFrequency)
-            frequency = ent.Comp.TransmitFrequency ?? deviceComp.TransmitFrequency;
+        {
+            var ev = new DeviceRouterFrequencyOverrideEvent();
+            RaiseLocalEvent(ent, ref ev);
+            frequency = ev.OverrideTransmit ?? deviceComp.TransmitFrequency;
+        }
 
         _deviceNetworkSystem.QueuePacket(
             ent.Owner,

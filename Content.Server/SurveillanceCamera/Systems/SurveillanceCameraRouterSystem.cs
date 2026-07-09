@@ -27,9 +27,6 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
 
     private void OnMapInit(Entity<SurveillanceCameraRouterComponent> ent, ref MapInitEvent args)
     {
-        if (TryComp(ent, out DeviceNetworkRouterComponent? router))
-            router.TransmitFrequency = ent.Comp.SubnetFrequency;
-
         if (ent.Comp.SubnetFrequencyId == null
             || !ProtoMan.TryIndex(ent.Comp.SubnetFrequencyId, out var subnetFrequency))
             return;
@@ -39,6 +36,13 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
 
         if (string.IsNullOrEmpty(ent.Comp.SubnetName) && subnetFrequency.Name != null)
             ent.Comp.SubnetName = Loc.GetString(subnetFrequency.Name);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnFrequencyOverride(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceRouterFrequencyOverrideEvent args)
+    {
+        args.OverrideTransmit = ent.Comp.SubnetFrequency;
+        args.Handled = true;
     }
 
     [SubscribeLocalEvent]
