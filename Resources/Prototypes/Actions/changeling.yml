@@ -246,8 +246,6 @@
   description: Turns our night vision on/off.
   components:
   - type: Action
-    useDelay: 3
-    raiseOnAction: true
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/changeling2.rsi

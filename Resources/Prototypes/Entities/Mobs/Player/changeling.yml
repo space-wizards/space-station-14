@@ -98,7 +98,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: NightVision
+    enabled: false # Disabled by default
+    action: ActionChangelingNightVision
     lightingColor: "#af0909aa"
-    noiseAmount: 0.5
-    noiseMultiplier: 5
-    overlayColor: "#59080815"
+    noiseAmount: 1
+    noiseMultiplier: 2
+    overlayColor: "#AB0808AA"
+    prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
