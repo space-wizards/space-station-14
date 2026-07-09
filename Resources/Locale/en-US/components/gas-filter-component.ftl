@@ -7,3 +7,5 @@ comp-gas-filter-ui-filter-gas-confirm = Set Gas
 comp-gas-filter-ui-filter-gas-none = None
 
 comp-gas-filter-ui-needs-anchor = Anchor it first!
+
+comp-gas-filter-filtered-gas-examine = It is filtering [color={$statusColor}]{$filteredGas}[/color].

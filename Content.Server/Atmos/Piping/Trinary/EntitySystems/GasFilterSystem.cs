@@ -10,6 +10,7 @@ using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Audio;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -38,11 +39,39 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, ActivateInWorldEvent>(OnFilterActivate);
             SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnFilterAnalyzed);
+            SubscribeLocalEvent<GasFilterComponent, ExaminedEvent>(OnExamined);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
+        }
 
+        private void OnExamined(Entity<GasFilterComponent> ent, ref ExaminedEvent args)
+        {
+            if (Loc.TryGetString("gas-volume-pump-system-examined",
+                    out var transferRateStr,
+                    ("statusColor", "lightblue"),
+                    ("rate", ent.Comp.TransferRate.ToString("G"))
+                ))
+            {
+                args.PushMarkup(transferRateStr);
+            }
+
+            var gasName = Loc.GetString("comp-gas-filter-ui-filter-gas-none");
+            if (ent.Comp.FilteredGas.HasValue)
+            {
+                var gas = _atmosphereSystem.GetGas((Gas)ent.Comp.FilteredGas);
+                gasName = Loc.GetString(gas.Name);
+            }
+
+            if (Loc.TryGetString("comp-gas-filter-filtered-gas-examine",
+                    out var filteredGasStr,
+                    ("statusColor", "lightblue"),
+                    ("filteredGas", gasName)
+                ))
+            {
+                args.PushMarkup(filteredGasStr);
+            }
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
