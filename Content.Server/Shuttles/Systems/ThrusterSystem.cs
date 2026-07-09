@@ -627,7 +627,7 @@ public sealed partial class ThrusterSystem : EntitySystem
             return 1f;
 
         // Throttles linearly up to the threshold
-        return physComp.Inertia / MathF.Max(physComp.Inertia, ent.Comp.inertiaThreshold);
+        return physComp.Inertia / MathF.Max(physComp.Inertia, ent.Comp.InertiaThreshold);
     }
 
     private int GetFlagIndex(DirectionFlag flag)

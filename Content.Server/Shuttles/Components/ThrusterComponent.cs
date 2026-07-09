@@ -41,7 +41,7 @@ namespace Content.Server.Shuttles.Components
         /// Throttles the influence of gyroscopes on small shuttles. The default value is roughly half the inertia of the standard 4-door cargo shuttle.
         /// </summary>
         [DataField]
-        public float inertiaThreshold = 850000f;
+        public float InertiaThreshold = 850000f;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
