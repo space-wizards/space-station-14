@@ -7,7 +7,8 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              If on Linux, you may need to install
                                              FluidSynth or a development package
                                              for FluidSynth.
-instruments-component-menu-configuration-collapsible-header = Configuration
+instruments-component-menu-play-tab-title = Play
+instruments-component-menu-config-tab-title = Configuration
 instruments-component-menu-midi-source-button = MIDI Source
 instruments-component-menu-unknown-midi-source-button = Unknown
 instruments-component-menu-input-midi-source-button = Input
@@ -26,7 +27,6 @@ instruments-component-menu-files-remove-button = Remove
 instruments-component-menu-files-rename-button = Rename
 instruments-component-menu-files-rename-dialog-title = Rename file
 instruments-component-menu-files-rename-dialog-prompt = New name
-instruments-component-menu-files-list-label = Files
 instruments-component-menu-files-filter = Filter...
 instruments-component-menu-files-error = Operation failed due to an unexpected error.
 instruments-component-menu-input-notice-label = Connect a MIDI device to your PC

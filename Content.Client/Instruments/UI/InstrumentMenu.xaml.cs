@@ -17,24 +17,19 @@ namespace Content.Client.Instruments.UI
         {
             RobustXamlLoader.Load(this);
 
-            ConfigurationCollapsibleHeading.AddStyleClass(ContainerButton.StyleClassButton);
-            ConfigurationCollapsibleHeading.Label.Text = Loc.GetString("instruments-component-menu-configuration-collapsible-header");
-            ConfigurationCollapsibleHeading.StyleClasses.Add("OpenRight");
-            ConfigurationCollapsibleBody.OnVisibilityChanged += OnConfigurationContainerBodyVisibilityChanged;
+            var styleBox = new StyleBoxFlat();
+            styleBox.BorderThickness = new Thickness(0);
+            styleBox.Padding = new Thickness(10);
+            MainTabContainer.PanelStyleBoxOverride = styleBox;
+
+            MainTabContainer.SetTabTitle(0, Loc.GetString("instruments-component-menu-play-tab-title"));
+            MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-config-tab-title"));
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
             _currentMode?.Disable();
-        }
-
-        private void OnConfigurationContainerBodyVisibilityChanged(Control obj)
-        {
-            // Setting VerticalExpand in XAML appears to reserve a lot of space even with the body closed, thus
-            // changing it here. If there is a better way, I couldn't find it.
-            ConfigurationCollapsible.VerticalExpand = obj.Visible;
-            InstrumentContainer.Visible = !obj.Visible;
         }
 
         /// <summary>
@@ -89,11 +84,12 @@ namespace Content.Client.Instruments.UI
             ctrl.VerticalExpand = true;
             ctrl.Margin = new Thickness(5);
             header.Text = name;
-            header.StyleClasses.Add(StyleClass.Italic);
-            header.Margin = new Thickness(10,10,0,0);
+            header.StyleClasses.Add(StyleClass.LabelKeyText);
+            header.Margin = new Thickness(10,0,0,0);
             styleBox.BorderColor = Color.FromHex("#3D4059");
             styleBox.BorderThickness = new Thickness(2);
             panel.PanelOverride = styleBox;
+            panel.Margin = new Thickness(0, 0, 0, 10);
 
             panel.AddChild(ctrl);
 

@@ -6,8 +6,7 @@
     <!-- Track list -->
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 20">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc 'instruments-component-menu-files-list-label'}" HorizontalAlignment="Left"/>
-            <LineEdit Name="FilterBar" PlaceHolder="{Loc 'instruments-component-menu-files-filter'}" HorizontalExpand="True" Margin="20 0 0 0"/>
+            <LineEdit Name="FilterBar" PlaceHolder="{Loc 'instruments-component-menu-files-filter'}" HorizontalExpand="True" />
         </BoxContainer>
         <ItemList Name="TrackList" SelectMode="Single" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
