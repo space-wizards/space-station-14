@@ -179,18 +179,17 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, activeInstrument);
     }
 
-    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    /// <summary>
+    /// Set an instrument's master to another instrument to start playing along as a band member.
+    /// </summary>
+    /// <param name="instrument">The instrument that will join or leave a band.</param>
+    /// <param name="master">The target instrument to follow. If null, leaves all bands.</param>
+    public void SetMaster(EntityUid uid, InstrumentComponent instrument, EntityUid? master)
     {
-        var uid = GetEntity(msg.Uid);
-        var master = GetEntity(msg.Master);
-
         if (!HasComp<ActiveInstrumentComponent>(uid))
             return;
 
-        if (!TryComp(uid, out InstrumentComponent? instrument))
-            return;
-
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (instrument.Master == master)
             return;
 
         if (master != null)
@@ -213,6 +212,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         {
             Clean(uid, instrument);
         }
+    }
+
+    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    {
+        var uid = GetEntity(msg.Uid);
+        var master = GetEntity(msg.Master);
+
+        if (!TryComp<InstrumentComponent>(uid, out var instrument))
+            return;
+
+        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+            return;
+
+        SetMaster(uid, instrument, master);
     }
 
     private void OnMidiSetFilteredChannel(InstrumentSetFilteredChannelEvent msg, EntitySessionEventArgs args)
@@ -239,20 +252,36 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, instrument);
     }
 
+    /// <summary>
+    /// Make an instrument stop playing music by removing its active instrument component.
+    /// </summary>
+    /// <param name="uid">The instrument to deactivate.</param>
+    public void DeactivateInstrument(EntityUid uid, ActiveInstrumentComponent? instrument = null)
+    {
+        if (Resolve(uid, ref instrument))
+            RemComp<ActiveInstrumentComponent>(uid);
+    }
+
+    /// <summary>
+    /// Prepare an instrument to start playing music by ensuring its active instrument component exists.
+    /// </summary>
+    /// <param name="uid">The instrument to prepare.</param>
+    public void PrepareInstrument(EntityUid uid)
+    {
+        EnsureComp<ActiveInstrumentComponent>(uid);
+    }
+
     private void OnBoundUIClosed(EntityUid uid, InstrumentComponent component, BoundUIClosedEvent args)
     {
-        if (HasComp<ActiveInstrumentComponent>(uid)
-            && !_bui.IsUiOpen(uid, args.UiKey))
-        {
-            RemComp<ActiveInstrumentComponent>(uid);
-        }
+        if (!_bui.IsUiOpen(uid, args.UiKey))
+            DeactivateInstrument(uid);
 
         Clean(uid, component);
     }
 
     private void OnBoundUIOpened(EntityUid uid, InstrumentComponent component, BoundUIOpenedEvent args)
     {
-        EnsureComp<ActiveInstrumentComponent>(uid);
+        PrepareInstrument(uid);
         Clean(uid, component);
     }
 

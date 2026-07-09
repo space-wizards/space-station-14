@@ -1,0 +1,40 @@
+- type: constructionGraph
+  id: BoomBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: BoxCardboard
+        icon:
+          sprite: Objects/Storage/boxes.rsi
+          state: box
+        name: construction-graph-tag-cardboardbox
+        doAfter: 2
+      - tag: SynthesizerInstrument
+        icon:
+          sprite: /Textures/Objects/Fun/Instruments/h_synthesizer.rsi
+          state: icon
+        name: construction-graph-tag-synthesizer
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+      - tag: BorgLeg
+        icon:
+          sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+          state: borg_l_leg
+        name: construction-graph-tag-borg-leg
+        doAfter: 2
+      - tag: BorgLeg
+        icon:
+          sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+          state: borg_l_leg
+        name: construction-graph-tag-borg-leg
+        doAfter: 2
+  - node: bot
+    entity: MobBoomBot

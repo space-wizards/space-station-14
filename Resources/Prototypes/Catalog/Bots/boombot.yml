@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: BoombotStart
+  values:
+    prefix: boombot-start-music-
+    count: 7
+
+- type: localizedDataset
+  id: BoombotStop
+  values:
+    prefix: boombot-stop-music-
+    count: 4

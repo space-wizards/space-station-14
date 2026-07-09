@@ -22,6 +22,10 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
   - type: StaticPrice
     price: 90
+  - type: Tag
+    tags:
+    - KeyedInstrument
+    - SynthesizerInstrument
 
 - type: entity
   parent: BaseKeyedInstrument

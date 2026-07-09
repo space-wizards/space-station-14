@@ -67,3 +67,17 @@
   - type: ConditionalSpawner
     prototypes:
     - MobHonkBot
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobBoomBot
+  name: boombot spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/Bots/boombot.rsi
+      state: boombot
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBoomBot

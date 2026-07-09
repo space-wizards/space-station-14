@@ -475,3 +475,67 @@
     interactSuccessString: hugging-success-generic
     interactSuccessSound: /Audio/Effects/thudswoosh.ogg
     messagePerceivedByOthers: hugging-success-generic-others
+
+- type: entity
+  parent: ActionPAIPlayMidi
+  id: ActionBoombotPlayMidi
+  name: Play MIDI
+  description: Open your portable MIDI interface to make music!
+  components:
+    - type: Action
+      itemIconStyle: NoItem
+      icon:
+        sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+        state: icon
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobBoomBot
+  name: boombot
+  description: A little bot with a big voice. Seems inadvisably peppy.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/boombot.rsi
+    layers:
+    - state: boombot
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: boombot-dancing}
+          False: {state: boombot}
+  - type: InstrumentToggleVisuals
+  - type: Construction
+    graph: BoomBot
+    node: bot
+  - type: HTN
+    rootTask:
+      task: BoombotCompound
+  - type: Anchorable
+  - type: Instrument
+    program: 62
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+  - type: ActionGrant
+    actions:
+    - ActionBoombotPlayMidi
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-boombot-name
+    description: ghost-role-information-boombot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-boombot
+    interactFailureString: petting-failure-boombot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg

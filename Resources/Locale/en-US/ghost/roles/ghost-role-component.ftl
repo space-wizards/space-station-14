@@ -119,6 +119,9 @@ ghost-role-information-mimebot-description = A Mimebot, act like a mime but don'
 ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.
 
+ghost-role-information-boombot-name = Boombot
+ghost-role-information-boombot-description = Fill the station with music!
+
 ghost-role-information-space-bear-name = Space Bear
 ghost-role-information-space-bear-description = Your tummy rumbles, and these people look really yummy... What a feast!
 
