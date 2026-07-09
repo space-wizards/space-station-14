@@ -312,6 +312,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         if (_docks.TryGetValue(nent, out var docks))
         {
+            Span<Vector2> verts = stackalloc Vector2[4];
             foreach (var state in docks)
             {
                 var position = state.Coordinates.Position;
@@ -324,13 +325,10 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
                 var color = Color.ToSrgb(state.HighlightedColor);
 
-                var verts = new[]
-                {
-                    Vector2.Transform(position + new Vector2(-DockScale, -DockScale), gridToView),
-                    Vector2.Transform(position + new Vector2(DockScale, -DockScale), gridToView),
-                    Vector2.Transform(position + new Vector2(DockScale, DockScale), gridToView),
-                    Vector2.Transform(position + new Vector2(-DockScale, DockScale), gridToView),
-                };
+                verts[0] = Vector2.Transform(position + new Vector2(-DockScale, -DockScale), gridToView);
+                verts[1] = Vector2.Transform(position + new Vector2(DockScale, -DockScale), gridToView);
+                verts[2] = Vector2.Transform(position + new Vector2(DockScale, DockScale), gridToView);
+                verts[3] = Vector2.Transform(position + new Vector2(-DockScale, DockScale), gridToView);
 
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color.WithAlpha(0.8f));
                 handle.DrawPrimitives(DrawPrimitiveTopology.LineStrip, verts, color);

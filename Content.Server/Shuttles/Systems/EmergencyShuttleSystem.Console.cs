@@ -69,7 +69,7 @@ public sealed partial class EmergencyShuttleSystem
 
     private static readonly ProtoId<AccessLevelPrototype> EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
     private static readonly Color DangerColor = Color.Red;
-    private static readonly SoundPathSpecifier AnnounceStartSound = new("/Audio/Misc/notice1.ogg");
+    private static readonly SoundPathSpecifier AnnounceStartSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
 
     /// <summary>
     /// Have the emergency shuttles been authorised to launch at CentCom?
