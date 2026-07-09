@@ -67,6 +67,9 @@
   id: SecurityBola
   description: A bola, comprised of steel anchors linked together with a wire cable. Reliable and reusable.
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Throwable/securitybola.rsi
+    state: icon
   - type: DamageOnLand
     damage:
       types:
