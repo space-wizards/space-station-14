@@ -698,8 +698,22 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/apple_green.rsi
     state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: AppleYellow
+  name: food-sequence-content-apple
+  sprites:
   - sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
     state: produce
+  tags:
+  - Fruit
+
+- type: foodSequenceElement
+  id: AppleRed
+  name: food-sequence-content-apple
+  sprites:
   - sprite: Objects/Specific/Hydroponics/apple_red.rsi
     state: produce
   tags:

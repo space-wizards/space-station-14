@@ -1111,6 +1111,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple_yellow.rsi
+  - type: Produce
+    seedId: appleYellow
+  - type: FoodSequenceElement
+    entries:
+      Burger: AppleYellow
+      Taco: AppleYellow
 
 - type: entity
   name: red apple
@@ -1119,6 +1125,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple_red.rsi
+  - type: Produce
+    seedId: appleRed
+  - type: FoodSequenceElement
+    entries:
+      Burger: AppleRed
+      Taco: AppleRed
 
 - type: entity
   name: golden apple
