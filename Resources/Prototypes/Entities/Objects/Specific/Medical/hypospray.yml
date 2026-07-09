@@ -698,9 +698,9 @@
 
 - type: entity
   parent: ChemicalMedipen
-  id: WehMedipen
+  id: WehMedipenTiny
   name: weh auto-injector
-  description: A non-refillable medipen containing multiple doses of weh.
+  description: A non-refillable medipen containing a dose of weh.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
@@ -711,6 +711,21 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: medipen_empty
+  - type: Solution
+    solution:
+      maxVol: 10
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 10
+
+- type: entity
+  parent: WehMedipenTiny
+  id: WehMedipen
+  name: weh auto-injector
+  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
+  description: A non-refillable medipen containing multiple doses of weh.
+  components:
   - type: Solution
     solution:
       maxVol: 60

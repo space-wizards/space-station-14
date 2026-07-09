@@ -181589,6 +181589,32 @@ entities:
     - type: Transform
       pos: 3.4193826,-19.583563
       parent: 2
+- proto: WehMedipenTiny
+  entities:
+  - uid: 839
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -43.5202,-49.26273
+      parent: 2
+  - uid: 914
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -42.67645,-48.41898
+      parent: 2
+  - uid: 917
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -43.344418,-47.75101
+      parent: 2
+  - uid: 9797
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -42.46551,-49.579136
+      parent: 2
 - proto: WelderIndustrial
   entities:
   - uid: 24079
