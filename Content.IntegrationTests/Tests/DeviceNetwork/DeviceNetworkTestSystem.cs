@@ -11,6 +11,13 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork;
 [Reflect(false)]
 public sealed class DeviceNetworkTestSystem : EntitySystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketData>(OnBaselinePacketReceived);
+        SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent<TestPayload>>(OnTypedPacketReceived);
+    }
+
     public INetworkPayload LastPayload = default;
 
     public void SendBaselineTestEvent(EntityUid uid)
@@ -19,7 +26,6 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
     }
 
-    [SubscribeLocalEvent]
     private void OnBaselinePacketReceived(Entity<DeviceNetworkComponent> ent, ref DeviceNetworkPacketData args)
     {
         LastPayload = args.Data;
