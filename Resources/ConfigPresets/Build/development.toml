@@ -62,3 +62,4 @@ pg_password = "postgres"
 
 [net]
 max_rapid_connections = 13
+max_ip_connections = 13
