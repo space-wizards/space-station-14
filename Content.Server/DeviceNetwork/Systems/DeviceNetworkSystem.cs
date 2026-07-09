@@ -89,7 +89,15 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
     private bool TryGetManager([NotNullWhen(true)] out Entity<DeviceNetworkManagerComponent>? ent)
     {
-        return TrySingle(out ent);
+        ent = null;
+        var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            ent = (uid, comp);
+            return true;
+        }
+
+        return false;
     }
 
     private void ClearManager()
