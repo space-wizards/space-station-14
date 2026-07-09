@@ -39,13 +39,6 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnFrequencyOverride(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceRouterFrequencyOverrideEvent args)
-    {
-        args.OverrideTransmit = ent.Comp.SubnetFrequency;
-        args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
     private void OnSubnetConnect(Entity<SurveillanceCameraRouterComponent> ent, ref DeviceNetworkPacketEvent<SurveillanceCameraSubnetConnectPayload> args)
     {
         AddMonitorToRoute(ent.AsNullable(), args.SenderAddress);
@@ -64,6 +57,7 @@ public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
         var response = new SurveillanceCameraSubnetDataPayload
         {
             Subnet = ent.Comp.SubnetName,
+            TransmitFrequency = ent.Comp.SubnetFrequency,
         };
         _deviceNetworkSystem.QueuePacket(ent.Owner, args.SenderAddress, response);
     }

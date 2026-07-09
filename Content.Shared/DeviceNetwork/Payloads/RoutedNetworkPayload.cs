@@ -10,10 +10,16 @@ public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetw
     public IRoutableNetworkPayload Payload;
 
     /// <summary>
-    /// If true, the device router will try to use a different frequency for transmitting this packet.
+    /// If specified, the device router will use this frequency for transmitting the <see cref="Payload"/>.
     /// </summary>
     [DataField]
-    public bool OverrideFrequency;
+    public uint? OverrideFrequency;
+
+    /// <summary>
+    /// If specified, the device router will use this network ID for transmitting the <see cref="Payload"/>.
+    /// </summary>
+    [DataField]
+    public int? OverrideNetwork;
 
     /// <summary>
     /// Address to re-route to when the <see cref="RoutedNetworkPayload"/> is being handled.

@@ -61,4 +61,7 @@ public sealed partial class SurveillanceCameraSubnetDataPayload : NetworkPayload
 {
     [DataField]
     public string Subnet;
+
+    [DataField]
+    public uint TransmitFrequency;
 }
