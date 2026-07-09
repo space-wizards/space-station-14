@@ -100,7 +100,7 @@
   - type: NightVision
     enabled: false # Disabled by default
     action: ActionChangelingNightVision
-    lightingColor: "#af0909aa"
+    lightingColor: "#AF0909AA"
     noiseAmount: 1
     noiseMultiplier: 2
     overlayColor: "#AB0808AA"
