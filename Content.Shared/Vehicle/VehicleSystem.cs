@@ -84,6 +84,9 @@ public sealed partial class VehicleSystem : EntitySystem
 
     private void OnVehicleShutdown(Entity<VehicleComponent> ent, ref ComponentShutdown args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         TryRemoveOperator(ent);
     }
 
@@ -96,6 +99,9 @@ public sealed partial class VehicleSystem : EntitySystem
 
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         TryRemoveOperator((ent, ent));
     }
 
@@ -215,10 +221,17 @@ public sealed partial class VehicleSystem : EntitySystem
         if (!Resolve(operatorEntity, ref operatorEntity.Comp, false))
             return true;
 
-        if (!_vehicleQuery.TryComp(operatorEntity.Comp.Vehicle, out var vehicle))
+        var vehicleUid = operatorEntity.Comp.Vehicle;
+        if (vehicleUid is null)
             return true;
 
-        return TryRemoveOperator((operatorEntity.Comp.Vehicle.Value, vehicle));
+        if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
+            return TryRemoveOperator((vehicleUid.Value, vehicle));
+
+        ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
+        operatorEntity.Comp.Vehicle = null;
+        RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
+        return true;
     }
 
     /// <summary>
