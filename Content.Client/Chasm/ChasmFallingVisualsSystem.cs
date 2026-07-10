@@ -7,25 +7,28 @@ using Robust.Shared.Animations;
 namespace Content.Client.Chasm;
 
 /// <summary>
-///     Handles the falling animation for entities that fall into a chasm.
+/// Handles the falling animation for entities that fall into an entity with <see cref="ChasmComponent"/>.
 /// </summary>
 public sealed partial class ChasmFallingVisualsSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _anim = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
-    private readonly string _chasmFallAnimationKey = "chasm_fall";
+    [Dependency] private EntityQuery<AnimationPlayerComponent> _animationPlayerQuery;
+    [Dependency] private EntityQuery<SpriteComponent> _spriteQuery;
+
+    private const string ChasmFallAnimationKey = "chasm_fall";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ChasmFallingComponent, ComponentInit>(OnStartup);
+        SubscribeLocalEvent<ChasmFallingComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<ChasmFallingVisualsComponent, StartChasmFallingEvent>(OnStartFalling);
         SubscribeLocalEvent<ChasmFallingVisualsComponent, ResetChasmVisualsEvent>(OnResetVisuals);
     }
 
-    private void OnStartup(Entity<ChasmFallingComponent> ent, ref ComponentInit args)
+    private void OnComponentInit(Entity<ChasmFallingComponent> ent, ref ComponentInit args)
     {
         var visuals = EnsureComp<ChasmFallingVisualsComponent>(ent.Owner);
         visuals.AnimationTime = ent.Comp.AnimationTime;
@@ -33,14 +36,11 @@ public sealed partial class ChasmFallingVisualsSystem : EntitySystem
 
     private void OnStartFalling(Entity<ChasmFallingVisualsComponent> ent, ref StartChasmFallingEvent args)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
-            return;
+        if (!_spriteQuery.TryComp(entity, out var sprite))
+        entity.Comp.OriginalScale = sprite.Scale;
 
-        ent.Comp.OriginalScale ??= sprite.Scale;
-        var animationPlayer = EnsureComp<AnimationPlayerComponent>(ent.Owner);
-
-        if (_anim.HasRunningAnimation(animationPlayer, _chasmFallAnimationKey))
-            return;
+        if (!_animationPlayerQuery.TryComp(entity, out var player) ||
+            _anim.HasRunningAnimation(player, ChasmFallAnimationKey))
 
         _anim.Play((ent.Owner, animationPlayer), GetFallingAnimation(ent.Comp), _chasmFallAnimationKey);
     }
@@ -66,22 +66,49 @@ public sealed partial class ChasmFallingVisualsSystem : EntitySystem
 
         return new Animation()
         {
-            Length = length,
+            return;
+        }
+
+        _anim.Play((entity, player), GetFallingAnimation(entity.Comp), ChasmFallAnimationKey);
+    }
+
+    private void OnComponentRemove(Entity<ChasmFallingComponent> entity, ref ComponentRemove args)
+    {
+        if (!_spriteQuery.TryComp(entity, out var sprite))
+        {
+            return;
+        }
+
+        _sprite.SetScale((entity, sprite), entity.Comp.OriginalScale);
+
+        if (!_animationPlayerQuery.TryComp(entity, out var player) ||
+            !_anim.HasRunningAnimation(player, ChasmFallAnimationKey))
+        {
+            return;
+        }
+
+        _anim.Stop((entity, player), ChasmFallAnimationKey);
+    }
+
+    private static Animation GetFallingAnimation(ChasmFallingComponent component)
+    {
+        return new Animation
+        {
+            Length = component.AnimationTime,
             AnimationTracks =
             {
-                new AnimationTrackComponentProperty()
+                new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(SpriteComponent),
                     Property = nameof(SpriteComponent.Scale),
                     KeyFrames =
                     {
-                        // Supress null because the method is only used in a place that 100% assigns the scale
-                        new AnimationTrackProperty.KeyFrame(component.OriginalScale!, 0.0f),
-                        new AnimationTrackProperty.KeyFrame(component.AnimationScale, length.Seconds),
+                        new AnimationTrackProperty.KeyFrame(component.OriginalScale, 0.0f),
+                        new AnimationTrackProperty.KeyFrame(component.AnimationScale, component.AnimationTime.Seconds),
                     },
-                    InterpolationMode = AnimationInterpolationMode.Cubic
-                }
-            }
+                    InterpolationMode = AnimationInterpolationMode.Cubic,
+                },
+            },
         };
     }
 }

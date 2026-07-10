@@ -8,20 +8,29 @@ using Content.Shared.Weapons.Misc;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Content.Shared.Whitelist;
+using JetBrains.Annotations;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chasm;
 
 /// <summary>
-///     Handles making entities fall into chasms when stepped on.
+/// Handles making entities fall into chasms when stepped on.
 /// </summary>
 public sealed partial class ChasmSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedGrapplingGunSystem _grapple = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+
+    [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
+    [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
 
     public override void Initialize()
     {
@@ -30,6 +39,7 @@ public sealed partial class ChasmSystem : EntitySystem
         SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
         SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ChasmComponent, EntityTerminatingEvent>(OnChasmDelete);
+        SubscribeLocalEvent<ChasmComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<ChasmFallingComponent, EntityTerminatingEvent>(OnFallingDelete);
@@ -102,23 +112,84 @@ public sealed partial class ChasmSystem : EntitySystem
         if (beforeEv.Cancelled)
             return;
 
-        var ev = new ChasmFallEffectsEvent(tripper.Owner);
-        RaiseLocalEvent(tripper.Comp.FallChasm.Value, ref ev);
+        var chasmEvent = new EntityCompletedFallingIntoChasmEvent((uid, chasm));
+        RaiseLocalEvent(chasm.FallingInto, ref chasmEvent);
+        if (_chasmQuery.TryComp(chasm.FallingInto, out var chasmComp))
+        {
+            var tripperEvent = new CompletedFallingIntoChasmEvent((chasm.FallingInto, chasmComp));
+            RaiseLocalEvent(uid, ref tripperEvent);
+        }
+        else
+        {
+            DebugTools.Assert($"{ToPrettyString(chasm.FallingInto)} is missing {nameof(ChasmComponent)}");
+        }
 
         RemComp(tripper.Owner, tripper.Comp);
         _blocker.UpdateCanMove(tripper);
     }
 
-    private void OnStepTriggered(Entity<ChasmComponent> ent, ref StepTriggeredOffEvent args)
+    private void OnStepTriggered(Entity<ChasmComponent> entity, ref StepTriggeredOffEvent args)
     {
         // already doomed
-        if (HasComp<ChasmFallingComponent>(args.Tripper))
+        if (_chasmFallingQuery.HasComp(args.Tripper))
             return;
 
-        StartFalling(ent, args.Tripper);
+        // Check the white-/blacklists and inform on rejection.
+        if (!(entity.Comp.Whitelist == null && entity.Comp.Blacklist == null ||
+              _whitelist.CheckBoth(args.Tripper, entity.Comp.Blacklist, entity.Comp.Whitelist)))
+        {
+            var rejected = new FallerRejectedByChasmEvent(args.Tripper);
+            RaiseLocalEvent(entity, ref rejected);
+            return;
+        }
+
+        // Give an opportunity to cancel the fall for whatever reason.
+        var checkEvent = new EntityStartFallingAttemptEvent(args.Tripper);
+        RaiseLocalEvent(entity, ref checkEvent);
+        if (checkEvent.Cancelled)
+            return;
+
+        StartFalling(entity.AsNullable(), args.Tripper);
     }
 
-    private void OnStepTriggerAttempt(Entity<ChasmComponent> ent, ref StepTriggerAttemptEvent args)
+    /// <summary>
+    /// Causes <paramref name="tripper"/> to fall into <paramref name="chasm"/>: starts a falling animation, optionally
+    /// plays a sound, and eventually deletes <paramref name="tripper"/>.
+    /// If <paramref name="chasm"/> does not have a <see cref="ChasmComponent"/> component, does nothing and returns null.
+    /// </summary>
+    /// <returns>
+    /// <paramref name="tripper"/> with its new <see cref="ChasmFallingComponent"/>, if the entity did start falling. Null otherwise.
+    /// </returns>
+    [PublicAPI]
+    public Entity<ChasmFallingComponent>? StartFalling(
+        Entity<ChasmComponent?> chasm,
+        EntityUid tripper,
+        bool playSound = true
+    )
+    {
+        if (!_chasmQuery.Resolve(chasm, ref chasm.Comp, logMissing: false))
+            return null;
+
+        var falling = AddComp<ChasmFallingComponent>(tripper);
+        falling.FallingInto = chasm;
+
+        falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
+        _blocker.UpdateCanMove(tripper);
+
+        if (playSound)
+            _audio.PlayPredicted(chasm.Comp.FallingSound, chasm, tripper);
+
+        var chasmEvent = new EntityStartedFallingIntoChasmEvent((tripper, falling));
+        RaiseLocalEvent(chasm, ref chasmEvent);
+        var tripperEvent = new StartedFallingIntoChasmEvent((chasm, chasm.Comp));
+        RaiseLocalEvent(tripper, ref tripperEvent);
+
+        Entity<ChasmFallingComponent> ret = (tripper, falling);
+        Dirty(ret);
+        return ret;
+    }
+
+    private void OnStepTriggerAttempt(Entity<ChasmComponent> entity, ref StepTriggerAttemptEvent args)
     {
         if (_grapple.IsEntityHooked(args.Tripper))
         {
@@ -129,21 +200,7 @@ public sealed partial class ChasmSystem : EntitySystem
         args.Continue = true;
     }
 
-    private void OnChasmDelete(Entity<ChasmComponent> ent, ref EntityTerminatingEvent args)
-    {
-        foreach (var uid in ent.Comp.FallingEntities)
-        {
-            if (TerminatingOrDeleted(uid) || !Exists(uid))
-                continue;
-
-            var resetVisualsEv = new ResetChasmVisualsEvent();
-            RaiseLocalEvent(uid, ref resetVisualsEv);
-
-            RemCompDeferred<ChasmFallingComponent>(uid);
-        }
-    }
-
-    private void OnUpdateCanMove(Entity<ChasmFallingComponent> ent, ref UpdateCanMoveEvent args)
+    private static void OnUpdateCanMove(Entity<ChasmFallingComponent> entity, ref UpdateCanMoveEvent args)
     {
         args.Cancel();
     }
@@ -170,5 +227,19 @@ public sealed partial class ChasmSystem : EntitySystem
             return;
 
         _container.Insert(args.Entity, container);
+    }
+    
+    private void OnShutdown(Entity<ChasmComponent> entity, ref ComponentShutdown args)
+    {
+        foreach (var uid in ent.Comp.FallingEntities)
+        {
+            if (TerminatingOrDeleted(uid) || !Exists(uid))
+                continue;
+
+            var resetVisualsEv = new ResetChasmVisualsEvent();
+            RaiseLocalEvent(uid, ref resetVisualsEv);
+
+            RemCompDeferred<ChasmFallingComponent>(uid);
+        }
     }
 }
