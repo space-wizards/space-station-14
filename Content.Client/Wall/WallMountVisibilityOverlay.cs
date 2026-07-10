@@ -97,6 +97,7 @@ public sealed partial class WallMountVisibilityOverlay(
             viewportState.WasFovEnabled = false;
         }
 
+        // Restore alpha modified by other viewports.
         foreach (var entity in _tree.QueryAabb(args.MapId, args.WorldBounds))
         {
             var uid = entity.Uid;
