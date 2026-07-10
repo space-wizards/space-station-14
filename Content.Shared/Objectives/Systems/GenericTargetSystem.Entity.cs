@@ -19,7 +19,7 @@ public abstract partial class EntityTargetSystem : GenericTargetSystem
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
-public abstract partial class EntityTargetSystem<T> : EntityTargetSystem where T : Component
+public abstract partial class EntityTargetSystem<T> : EntityTargetSystem where T : IComponent
 {
     public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
@@ -37,13 +37,13 @@ public abstract partial class EntityTargetSystem<T> : EntityTargetSystem where T
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
-public abstract partial class EntityTargetSystem<T1,T2> : EntityTargetSystem
-    where T1 : Component
-    where T2 : Component
+public abstract partial class EntityTargetSystem<T1, T2> : EntityTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
 {
     public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2>();
+        var query = EntityQueryEnumerator<T1, T2>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2))
         {
             if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2)))
@@ -53,18 +53,18 @@ public abstract partial class EntityTargetSystem<T1,T2> : EntityTargetSystem
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2> entity);
+    protected abstract bool ValidateEntity(Entity<T1, T2> entity);
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
-public abstract partial class EntityTargetSystem<T1,T2,T3> : EntityTargetSystem
-    where T1 : Component
-    where T2 : Component
-    where T3 : Component
+public abstract partial class EntityTargetSystem<T1, T2, T3> : EntityTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
+    where T3 : IComponent
 {
     public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2,T3>();
+        var query = EntityQueryEnumerator<T1, T2, T3>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3))
         {
             if (!ValidEntity(uid, exclude, conditions)|| !ValidateEntity((uid, comp1, comp2, comp3)))
@@ -74,19 +74,19 @@ public abstract partial class EntityTargetSystem<T1,T2,T3> : EntityTargetSystem
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2,T3> entity);
+    protected abstract bool ValidateEntity(Entity<T1, T2, T3> entity);
 }
 
 /// <inheritdoc cref="EntityTargetSystem"/>
-public abstract partial class EntityTargetSystem<T1,T2,T3,T4> : EntityTargetSystem
-    where T1 : Component
-    where T2 : Component
-    where T3 : Component
-    where T4 : Component
+public abstract partial class EntityTargetSystem<T1, T2, T3, T4> : EntityTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
+    where T3 : IComponent
+    where T4 : IComponent
 {
     public override void AddEntities(HashSet<EntityUid> entities, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2,T3,T4>();
+        var query = EntityQueryEnumerator<T1, T2, T3, T4>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3, out var comp4))
         {
             if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3, comp4)))
@@ -96,5 +96,5 @@ public abstract partial class EntityTargetSystem<T1,T2,T3,T4> : EntityTargetSyst
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2,T3,T4> entity);
+    protected abstract bool ValidateEntity(Entity<T1, T2, T3, T4> entity);
 }

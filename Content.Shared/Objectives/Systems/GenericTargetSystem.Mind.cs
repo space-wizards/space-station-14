@@ -6,7 +6,7 @@ namespace Content.Shared.Objectives.Systems;
 
 /// <summary>
 /// This is an abstract system which is intended to query a list of entities, and acquire a hashset of valid minds from them.
-/// It uses EntityQueries to limit the amount of entities which need to be checked, by component.
+/// It uses EntityQueries to limit the amount of entities which need to be checked, by IComponent.
 /// </summary>
 public abstract partial class MindTargetSystem : GenericTargetSystem
 {
@@ -23,7 +23,7 @@ public abstract partial class MindTargetSystem : GenericTargetSystem
 }
 
 /// <inheritdoc cref="MindTargetSystem"/>
-public abstract partial class MindTargetSystem<T> : MindTargetSystem where T : Component
+public abstract partial class MindTargetSystem<T> : MindTargetSystem where T : IComponent
 {
     public override void AddMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
@@ -41,13 +41,13 @@ public abstract partial class MindTargetSystem<T> : MindTargetSystem where T : C
 }
 
 /// <inheritdoc cref="MindTargetSystem"/>
-public abstract partial class MindTargetSystem<T1,T2> : MindTargetSystem
-    where T1 : Component
-    where T2 : Component
+public abstract partial class MindTargetSystem<T1, T2> : MindTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
 {
     public override void AddMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2>();
+        var query = EntityQueryEnumerator<T1, T2>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2))
         {
             if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2), out var mind))
@@ -57,18 +57,18 @@ public abstract partial class MindTargetSystem<T1,T2> : MindTargetSystem
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
+    protected abstract bool ValidateEntity(Entity<T1, T2> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
 }
 
 /// <inheritdoc cref="MindTargetSystem"/>
-public abstract partial class MindTargetSystem<T1,T2,T3> : MindTargetSystem
-    where T1 : Component
-    where T2 : Component
-    where T3 : Component
+public abstract partial class MindTargetSystem<T1, T2, T3> : MindTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
+    where T3 : IComponent
 {
     public override void AddMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2,T3>();
+        var query = EntityQueryEnumerator<T1, T2, T3>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3))
         {
             if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3), out var mind))
@@ -78,19 +78,19 @@ public abstract partial class MindTargetSystem<T1,T2,T3> : MindTargetSystem
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2,T3> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
+    protected abstract bool ValidateEntity(Entity<T1, T2, T3> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
 }
 
 /// <inheritdoc cref="MindTargetSystem"/>
-public abstract partial class MindTargetSystem<T1,T2,T3,T4> : MindTargetSystem
-    where T1 : Component
-    where T2 : Component
-    where T3 : Component
-    where T4 : Component
+public abstract partial class MindTargetSystem<T1, T2, T3, T4> : MindTargetSystem
+    where T1 : IComponent
+    where T2 : IComponent
+    where T3 : IComponent
+    where T4 : IComponent
 {
     public override void AddMinds(HashSet<Entity<MindComponent>> minds, EntityUid? exclude = null, params EntityCondition[] conditions)
     {
-        var query = EntityQueryEnumerator<T1,T2,T3,T4>();
+        var query = EntityQueryEnumerator<T1, T2, T3, T4>();
         while (query.MoveNext(out var uid, out var comp1, out var comp2, out var comp3, out var comp4))
         {
             if (!ValidEntity(uid, exclude, conditions) || !ValidateEntity((uid, comp1, comp2, comp3, comp4), out var mind))
@@ -100,7 +100,7 @@ public abstract partial class MindTargetSystem<T1,T2,T3,T4> : MindTargetSystem
         }
     }
 
-    protected abstract bool ValidateEntity(Entity<T1,T2,T3,T4> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
+    protected abstract bool ValidateEntity(Entity<T1, T2, T3, T4> entity, [NotNullWhen(true)] out Entity<MindComponent>? mind);
 }
 
 /// <summary>

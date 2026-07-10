@@ -47,7 +47,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
-    private HashSet<Entity<MindComponent>> _pickingMinds = new();
+    private readonly HashSet<Entity<MindComponent>> _pickingMinds = new();
 
     private readonly EntProtoId _mindProto = "MindBase";
 
