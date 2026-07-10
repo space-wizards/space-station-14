@@ -22,6 +22,7 @@ public sealed partial class ConfirmButton : Button
 
     private TimeSpan? _nextReset;
     private TimeSpan? _nextCooldown;
+    private bool _isConfirming;
     private string? _confirmationText;
     private string? _text;
 
@@ -29,6 +30,11 @@ public sealed partial class ConfirmButton : Button
     /// Fired when the button was pressed and confirmed
     /// </summary>
     public new event Action<ButtonEventArgs>? OnPressed;
+
+    /// <summary>
+    /// Fired when the button has started to confirm and is awaiting a second button press.
+    /// </summary>
+    public event Action<ButtonEventArgs>? OnConfirming;
 
     /// <inheritdoc cref="Button.Text"/>
     /// <remarks>
@@ -42,6 +48,20 @@ public sealed partial class ConfirmButton : Button
         {
             _text = value;
             base.Text = IsConfirming ? _confirmationText : value;
+        }
+    }
+
+    /// <inheritdoc cref="Button.Disabled"/>
+    /// <remarks>
+    /// Overrides the confirming state of the button when set.
+    /// </remarks>
+    public new bool Disabled
+    {
+        get => base.Disabled;
+        set
+        {
+            IsConfirming = false;
+            base.Disabled = value;
         }
     }
 
@@ -67,8 +87,36 @@ public sealed partial class ConfirmButton : Button
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan CooldownTime { get; set; } = TimeSpan.FromSeconds(.5);
 
+    /// <summary>
+    /// A property to get or change whether the button is confirming (awaiting a second press within a time limit) or not
+    /// </summary>
     [ViewVariables]
-    public bool IsConfirming = false;
+    public bool IsConfirming
+    {
+        get => _isConfirming;
+        set
+        {
+            // If we have a change in state, update the text and redraw the controls.
+            if (_isConfirming != value)
+            {
+                _isConfirming = value;
+                base.Text = IsConfirming ? Text : ConfirmationText;
+                DrawModeChanged();
+
+                // Set the timer when changing the confirmation status.
+                if (!value)
+                {
+                    _nextReset = null;
+                    _nextCooldown = null;
+                }
+                else
+                {
+                    _nextCooldown = _gameTiming.CurTime + CooldownTime;
+                    _nextReset = _gameTiming.CurTime + ResetTime;
+                }
+            }
+        }
+    }
 
     public ConfirmButton()
     {
@@ -82,8 +130,6 @@ public sealed partial class ConfirmButton : Button
         if (IsConfirming && _gameTiming.CurTime > _nextReset)
         {
             IsConfirming = false;
-            base.Text = Text;
-            DrawModeChanged();
         }
 
         if (Disabled && _gameTiming.CurTime > _nextCooldown)
@@ -126,17 +172,15 @@ public sealed partial class ConfirmButton : Button
         switch (IsConfirming)
         {
             case false:
-                _nextCooldown  = _gameTiming.CurTime + CooldownTime;
-                _nextReset = _gameTiming.CurTime + ResetTime;
                 Disabled = true;
+                OnConfirming?.Invoke(buttonEvent);
                 break;
             case true:
                 OnPressed?.Invoke(buttonEvent);
                 break;
         }
 
-        base.Text = IsConfirming ? Text : ConfirmationText;
-
+        // NOTE: this handles setting the text and timers.
         IsConfirming = !IsConfirming;
     }
 }
