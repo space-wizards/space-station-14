@@ -3,7 +3,6 @@ using Content.Shared.Localizations;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Components;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 
