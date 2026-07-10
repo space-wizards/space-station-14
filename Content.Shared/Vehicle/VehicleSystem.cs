@@ -109,12 +109,10 @@ public sealed partial class VehicleSystem : EntitySystem
     public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid? uid, bool removeExisting = true)
     {
         // Early exit if no change needed
-        if (entity.Comp.Operator == null && uid is null)
-            return false;
-
         // Early exit if setting the same operator that's already present
+        // Return true if operator exists
         if (entity.Comp.Operator == uid)
-            return true;
+            return uid != null;
 
         // Do not run logic if the entity is already operating a vehicle.
         // However, if they are operating *this* vehicle, return true (they are indeed the operator)
