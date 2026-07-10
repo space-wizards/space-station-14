@@ -1,7 +1,7 @@
 - type: entity
-  name: bola
   parent: [BaseItem, BaseSecurityContraband]
   id: BaseBola
+  name: bola
   components:
   - type: Item
     size: Normal
@@ -52,9 +52,9 @@
         friction: 0.2
 
 - type: entity
-  name: makeshift bola
-  parent: [BaseBola, BaseSecurityContraband]
+  parent: BaseBola
   id: Bola
+  name: makeshift bola
   description: A makeshift bola, cobbled together with some spare cuffs and metal. It doesn't look like it's going to stay together for very long.
   components:
   - type: Construction
@@ -62,9 +62,9 @@
     node: bola
 
 - type: entity
-  name: tactical bola
-  parent: [ BaseBola, BaseSecurityContraband ]
+  parent: BaseBola
   id: SecurityBola
+  name: tactical bola
   description: A bola, comprised of steel anchors linked together with a wire cable. Reliable and reusable.
   components:
   - type: Sprite
