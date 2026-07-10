@@ -417,6 +417,20 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseAction
+  id: ActionToggleNightVision
+  name: Toggle night vision
+  description: Toggles the night vision on and off.
+  components:
+  - type: Action
+    useDelay: 2
+    icon:
+      sprite: Interface/Actions/night_vision.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ToggleNightVisionEvent {}
+
+- type: entity
   parent: ActionToggleWagging
   id: ActionToggleWaggingVulpkanin
   components:
