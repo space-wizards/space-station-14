@@ -261,6 +261,14 @@ public sealed partial class MindSystem : SharedMindSystem
 
         if (entity != null)
         {
+            if (
+                component!.Mind != null
+                && TryComp(component!.Mind.Value, out MindComponent? newMind)
+                && newMind.VisitingEntity != null
+            )
+            {
+                TransferTo(component!.Mind.Value, newMind.VisitingEntity);
+            }
             component!.Mind = mindId;
             component.LastMind = mindId;
             component.HasMind = true;
