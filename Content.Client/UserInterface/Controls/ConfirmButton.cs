@@ -72,7 +72,12 @@ public sealed partial class ConfirmButton : Button
     public string ConfirmationText
     {
         get => _confirmationText ?? Loc.GetString("generic-confirm");
-        set => _confirmationText = value;
+        set
+        {
+            _confirmationText = value;
+            if (_isConfirming)
+                base.Text = _confirmationText;
+        }
     }
 
     /// <summary>
@@ -100,7 +105,7 @@ public sealed partial class ConfirmButton : Button
             if (_isConfirming != value)
             {
                 _isConfirming = value;
-                base.Text = IsConfirming ? Text : ConfirmationText;
+                base.Text = IsConfirming ? ConfirmationText : Text;
                 DrawModeChanged();
 
                 // Set the timer when changing the confirmation status.
@@ -111,6 +116,7 @@ public sealed partial class ConfirmButton : Button
                 }
                 else
                 {
+                    base.Disabled = true; // Must set the base, leave IsConfirming intact
                     _nextCooldown = _gameTiming.CurTime + CooldownTime;
                     _nextReset = _gameTiming.CurTime + ResetTime;
                 }
@@ -133,7 +139,7 @@ public sealed partial class ConfirmButton : Button
         }
 
         if (Disabled && _gameTiming.CurTime > _nextCooldown)
-            Disabled = false;
+            base.Disabled = false; // Must set the base, leave IsConfirming intact
     }
 
     protected override void DrawModeChanged()
@@ -169,18 +175,18 @@ public sealed partial class ConfirmButton : Button
         if (IsConfirming && _nextCooldown > _gameTiming.CurTime)
             return;
 
+        // Update state before invoking our events.
+        // NOTE: this sets the text, timers, and disables the button appropriately
+        IsConfirming = !IsConfirming;
+
         switch (IsConfirming)
         {
-            case false:
-                Disabled = true;
+            case true:
                 OnConfirming?.Invoke(buttonEvent);
                 break;
-            case true:
+            case false:
                 OnPressed?.Invoke(buttonEvent);
                 break;
         }
-
-        // NOTE: this handles setting the text and timers.
-        IsConfirming = !IsConfirming;
     }
 }
