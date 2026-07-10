@@ -20,7 +20,6 @@ using Content.Shared.PDA;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
-using Content.Shared.Roles.Components;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.StationRecords;
 using Content.Shared.Throwing;
@@ -32,7 +31,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Systems;
 
@@ -49,7 +47,6 @@ public sealed partial class AdminSystem : EntitySystem
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private PhysicsSystem _physics = default!;
     [Dependency] private PlayTimeTrackingManager _playTime = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedRoleSystem _role = default!;
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -238,7 +235,7 @@ public sealed partial class AdminSystem : EntitySystem
         {
             sortWeight = _role.GetRoleCompByTime(mindComp)?.Comp.SortWeight ?? 0;
 
-            if (_proto.TryIndex(mindComp.RoleType, out var role))
+            if (ProtoMan.TryIndex(mindComp.RoleType, out var role))
             {
                 roleType = role;
                 subtype = mindComp.Subtype;
