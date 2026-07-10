@@ -78,7 +78,9 @@ public sealed partial class WallMountVisibilityOverlay(
 
         // Remove entities that left the viewport this frame.
         foreach (var uid in viewportState.FadeStates.Keys.Except(viewportState.SeenThisFrame).ToList())
+        {
             RemoveTrackedEntity(uid, viewportState);
+        }
 
         ApplyFadeToVisibleEntities(viewportState);
     }

@@ -138,7 +138,9 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     private void OnGridRemoval(GridRemovalEvent ev)
     {
         foreach (var key in _tileCache.Keys.Where(k => k.Grid == ev.EntityUid).ToList())
+        {
             _tileCache.Remove(key);
+        }
     }
 
     /// <summary>
