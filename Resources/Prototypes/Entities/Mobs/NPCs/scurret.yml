@@ -43,16 +43,12 @@
     coldDamageThreshold: 285
   # Good eatin', you monster.
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 4
   # They wawa!
   - type: Vocal
-    sounds:
-      Male: Scurret
-      Female: Scurret
-      Unsexed: Scurret
+    emoteSounds: Scurret
     wilhelmProbability: 0.01 # the scug, it screams like a man
   - type: Speech
     speechVerb: Wawa
