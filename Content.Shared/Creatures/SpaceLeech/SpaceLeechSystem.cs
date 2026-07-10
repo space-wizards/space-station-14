@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -15,8 +16,6 @@ using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Creatures.SpaceLeech;
@@ -34,7 +33,7 @@ public sealed class SpaceLeechSystem : EntitySystem
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ActionGunSystem _actionGun = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     private static readonly ProtoId<SpaceLeechUpgradePrototype> PredatorUpgrade = "SpaceLeechUpgradePredator";
@@ -51,8 +50,7 @@ public sealed class SpaceLeechSystem : EntitySystem
     {
         base.Initialize();
 
-        // Runs after ActionGunSystem's map init so the sting action can be revoked until Venom rank 1.
-        SubscribeLocalEvent<SpaceLeechComponent, MapInitEvent>(OnMapInit, after: [typeof(ActionGunSystem)]);
+        SubscribeLocalEvent<SpaceLeechComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpaceLeechComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         // Action → open upgrade menu
@@ -162,10 +160,19 @@ public sealed class SpaceLeechSystem : EntitySystem
 
     private void ApplyStingUpgrade(Entity<SpaceLeechComponent> ent)
     {
-        if (!TryComp<ActionGunComponent>(ent, out var actionGun))
+        var granted = GetRank(ent.Comp, VenomUpgrade) > 0;
+        if (granted == (ent.Comp.StingActionEntity != null))
             return;
 
-        _actionGun.SetActionGranted((ent, actionGun), GetRank(ent.Comp, VenomUpgrade) > 0);
+        if (granted)
+        {
+            _actions.AddAction(ent, ref ent.Comp.StingActionEntity, ent.Comp.StingAction);
+        }
+        else
+        {
+            _actions.RemoveAction(ent.Owner, ent.Comp.StingActionEntity);
+            ent.Comp.StingActionEntity = null;
+        }
     }
 
     // ── Event handlers for runtime upgrade effects ────────────────────────────

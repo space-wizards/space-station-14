@@ -21,8 +21,11 @@
     useDelay: 45
     checkCanInteract: false
     itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
   - type: TargetAction
     checkCanAccess: false
     range: 8
   - type: WorldTargetAction
-    event: !type:ActionGunShootEvent
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileSpaceLeechSting

@@ -124,11 +124,8 @@
     actions:
     - ActionSpaceLeechUpgradeMenu
 
-  # ── Sting ability ──────────────────────────────────────────────────────────
-  # The action is revoked by SpaceLeechSystem until Venom rank 1 is purchased.
-  - type: ActionGun
-    action: ActionSpaceLeechSting
-    gunProto: SpaceLeechStingGun
+  # The sting ability (ActionSpaceLeechSting on the SpaceLeech component) is
+  # granted by SpaceLeechSystem once Venom rank 1 is purchased.
 
   # ── Ghost role ────────────────────────────────────────────────────────────
   - type: GhostRole
@@ -143,22 +140,6 @@
   - type: GhostTakeoverAvailable
 
 # ── Sting supporting entities ──────────────────────────────────────────────
-
-- type: entity
-  id: SpaceLeechStingGun
-  categories: [ HideSpawnMenu ]
-  name: space leech sting gland
-  components:
-  - type: BasicEntityAmmoProvider
-    proto: ProjectileSpaceLeechSting
-    capacity: 1
-    count: 1
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 1
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
-    soundEmpty: null
 
 - type: entity
   parent: BaseBullet

@@ -34,4 +34,12 @@ public sealed partial class SpaceLeechComponent : Component
     /// </summary>
     [DataField]
     public float BloodRestoreFraction = 0.2f;
+
+    /// <summary>Sting action granted once the Venom upgrade reaches rank 1.</summary>
+    [DataField]
+    public EntProtoId StingAction = "ActionSpaceLeechSting";
+
+    /// <summary>The granted sting action entity, if any.</summary>
+    [DataField]
+    public EntityUid? StingActionEntity;
 }
