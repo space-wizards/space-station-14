@@ -189,6 +189,7 @@ public sealed partial class ChasmSystem : EntitySystem
     private void OnDeleteFall(Entity<ChasmDeleteComponent> ent, ref ChasmFallEffectsEvent args)
     {
         PredictedQueueDel(args.Faller);
+        args.Handled = true;
     }
 
     private void OnContainerFall(Entity<ChasmContainerComponent> ent, ref ChasmFallEffectsEvent args)
@@ -197,6 +198,7 @@ public sealed partial class ChasmSystem : EntitySystem
             return;
 
         _container.Insert(args.Faller, container);
+        args.Handled = true;
     }
 
     private void OnShutdown(Entity<ChasmComponent> entity, ref ComponentShutdown args)
