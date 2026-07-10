@@ -26,7 +26,11 @@ public sealed partial class VehicleSystem
     {
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
-        TrySetOperator((ent, vehicle), null);
+
+        if (vehicle.Operator != args.Buckle)
+            return;
+
+        TryRemoveOperator((ent, vehicle));
     }
 
     private void OnContainerEntInserted(Entity<ContainerVehicleComponent> ent, ref EntInsertedIntoContainerMessage args)

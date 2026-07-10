@@ -59,7 +59,7 @@ public sealed partial class VehicleSystem
         }
 
         var hasKey = container.ContainedEntities.Any(contained =>
-            !_entityWhitelist.IsWhitelistFail(ent.Comp.KeyWhitelist, contained));
+            _entityWhitelist.IsWhitelistPass(ent.Comp.KeyWhitelist, contained));
 
         if (!hasKey)
             args = args with { CanRun = false };
