@@ -20,7 +20,6 @@ public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimation
     public override void Initialize(EntityManager entityManager)
     {
         _entities = entityManager;
-        RestartOnTrigger = true;
     }
 
     protected override Animation? GetNextAnimation(AppearanceSystem appearanceSystem, EntityUid entity, bool restarting)

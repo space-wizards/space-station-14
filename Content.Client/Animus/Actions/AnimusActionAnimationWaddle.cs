@@ -46,7 +46,6 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
     public override void Initialize(EntityManager entityManager)
     {
         _entities = entityManager;
-        RestartOnTrigger = true;
     }
 
     private float CalculateAnimationLength()
