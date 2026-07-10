@@ -47,7 +47,8 @@ public sealed partial class ConfirmButton : Button
         set
         {
             _text = value;
-            base.Text = IsConfirming ? _confirmationText : value;
+            if (!IsConfirming)
+                base.Text = value;
         }
     }
 
@@ -75,8 +76,8 @@ public sealed partial class ConfirmButton : Button
         set
         {
             _confirmationText = value;
-            if (_isConfirming)
-                base.Text = _confirmationText;
+            if (IsConfirming)
+                base.Text = value;
         }
     }
 
@@ -105,7 +106,7 @@ public sealed partial class ConfirmButton : Button
             if (_isConfirming != value)
             {
                 _isConfirming = value;
-                base.Text = IsConfirming ? ConfirmationText : Text;
+                base.Text = value ? ConfirmationText : Text;
                 DrawModeChanged();
 
                 // Set the timer when changing the confirmation status.
