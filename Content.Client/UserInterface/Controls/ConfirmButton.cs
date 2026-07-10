@@ -20,7 +20,13 @@ public sealed partial class ConfirmButton : Button
 
     public const string ConfirmPrefix = "confirm-";
 
+    /// <summary>
+    /// The time when the button will revert from confirming if left unpressed.
+    /// </summary>
     private TimeSpan? _nextReset;
+    /// <summary>
+    /// The time when the button should re-enable itself (to avoid debouncing).
+    /// </summary>
     private TimeSpan? _nextCooldown;
     private bool _isConfirming;
     private string? _confirmationText;
@@ -112,6 +118,7 @@ public sealed partial class ConfirmButton : Button
                 // Set the timer when changing the confirmation status.
                 if (!value)
                 {
+                    base.Disabled = _nextReset != null;
                     _nextReset = null;
                     _nextCooldown = null;
                 }
@@ -134,12 +141,12 @@ public sealed partial class ConfirmButton : Button
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        if (IsConfirming && _gameTiming.CurTime > _nextReset)
-        {
-            IsConfirming = false;
-        }
+        if (!IsConfirming)
+            return;
 
-        if (Disabled && _gameTiming.CurTime > _nextCooldown)
+        if (_gameTiming.CurTime > _nextReset)
+            IsConfirming = false;
+        else if (Disabled && _gameTiming.CurTime > _nextCooldown)
             base.Disabled = false; // Must set the base, leave IsConfirming intact
     }
 
