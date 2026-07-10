@@ -118,7 +118,8 @@ public sealed partial class ConfirmButton : Button
                 // Set the timer when changing the confirmation status.
                 if (!value)
                 {
-                    if (base.Disabled && _nextReset != null)
+                    // Revert disabled state if left to transition back.
+                    if (Disabled && _nextReset != null)
                         base.Disabled = false; // Must set the base, leave IsConfirming intact
                     _nextReset = null;
                     _nextCooldown = null;
