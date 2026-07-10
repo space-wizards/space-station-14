@@ -103,79 +103,46 @@ public sealed partial class VehicleSystem : EntitySystem
     /// Set the operator for a given vehicle
     /// </summary>
     /// <param name="entity">The vehicle</param>
-    /// <param name="uid">The new operator. If null, it will only remove the operator.</param>
-    /// <param name="removeExisting">If true, will remove the current operator when setting the new one.</param>
+    /// <param name="operatorUid">The new operator.</param>
     /// <returns>If the new operator was successfully able to be set</returns>
-    public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid? uid, bool removeExisting = true)
+    public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid operatorUid)
     {
-        // Early exit if no change needed
-        // Early exit if setting the same operator that's already present
-        // Return true if operator exists
-        if (entity.Comp.Operator == uid)
-            return uid != null;
+        // Early exit if setting the same operator that's already present.
+        if (entity.Comp.Operator == operatorUid)
+            return _operatorQuery.TryComp(operatorUid, out var existingOperator) && existingOperator.Vehicle == entity.Owner;
 
-        // Do not run logic if the entity is already operating a vehicle.
-        // However, if they are operating *this* vehicle, return true (they are indeed the operator)
-        if (uid is not null && _operatorQuery.TryComp(uid, out var eOperator))
-        {
-            if (eOperator.Vehicle == entity.Owner)
-                return true;
-
-            // If trying to operate another vehicle, fail unless removeExisting is true
-            if (!removeExisting)
-                return false;
-        }
-
-        if (!removeExisting && entity.Comp.Operator is not null)
+        if (entity.Comp.Operator is not null)
             return false;
 
-        if (uid != null && !CanOperate(entity.AsNullable(), uid.Value))
+        if (_operatorQuery.TryComp(operatorUid, out var eOperator) && eOperator.Vehicle is not null)
             return false;
 
-        var oldOperator = entity.Comp.Operator;
+        if (!CanOperate(entity.AsNullable(), operatorUid))
+            return false;
 
-        if (oldOperator is { } currentOperator &&
-            _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
+        entity.Comp.Operator = operatorUid;
+
+        if (_operatorQuery.HasComp(operatorUid))
         {
-            var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
-            RaiseLocalEvent(currentOperator, ref exitEvent);
-
-            currentOperatorComponent.Vehicle = null;
-            RemCompDeferred<VehicleOperatorComponent>(currentOperator);
-            RemCompDeferred<RelayInputMoverComponent>(currentOperator);
-            RemCompDeferred<InteractionRelayComponent>(currentOperator);
-        }
-
-        entity.Comp.Operator = uid;
-
-        if (uid != null)
-        {
-            if (_operatorQuery.HasComp(uid.Value))
-            {
-                var vehicleOperator = Comp<VehicleOperatorComponent>(uid.Value);
-                vehicleOperator.Vehicle = entity.Owner;
-                Dirty(uid.Value, vehicleOperator);
-            }
-            else
-            {
-                var vehicleOperator = AddComp<VehicleOperatorComponent>(uid.Value);
-                vehicleOperator.Vehicle = entity.Owner;
-                Dirty(uid.Value, vehicleOperator);
-            }
-
-            _mover.SetRelay(uid.Value, entity);
-
-            var enterEvent = new OnVehicleEnteredEvent(entity, uid.Value);
-            RaiseLocalEvent(uid.Value, ref enterEvent);
+            var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
+            vehicleOperator.Vehicle = entity.Owner;
+            Dirty(operatorUid, vehicleOperator);
         }
         else
         {
-            RemCompDeferred<MovementRelayTargetComponent>(entity);
+            var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
+            vehicleOperator.Vehicle = entity.Owner;
+            Dirty(operatorUid, vehicleOperator);
         }
+
+        _mover.SetRelay(operatorUid, entity);
+
+        var enterEvent = new OnVehicleEnteredEvent(entity, operatorUid);
+        RaiseLocalEvent(operatorUid, ref enterEvent);
 
         RefreshCanRun((entity, entity.Comp));
 
-        var setEvent = new VehicleOperatorSetEvent(uid, oldOperator);
+        var setEvent = new VehicleOperatorSetEvent(operatorUid, null);
         RaiseLocalEvent(entity, ref setEvent);
 
         Dirty(entity);
@@ -190,7 +157,32 @@ public sealed partial class VehicleSystem : EntitySystem
     [PublicAPI]
     public bool TryRemoveOperator(Entity<VehicleComponent> entity)
     {
-        return TrySetOperator(entity, null, removeExisting: true);
+        if (entity.Comp.Operator is not { } currentOperator)
+            return false;
+
+        _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
+
+        if (currentOperatorComponent != null)
+        {
+            var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
+            RaiseLocalEvent(currentOperator, ref exitEvent);
+
+            currentOperatorComponent.Vehicle = null;
+            RemCompDeferred<VehicleOperatorComponent>(currentOperator);
+            RemCompDeferred<RelayInputMoverComponent>(currentOperator);
+            RemCompDeferred<InteractionRelayComponent>(currentOperator);
+        }
+
+        entity.Comp.Operator = null;
+        RemCompDeferred<MovementRelayTargetComponent>(entity);
+
+        RefreshCanRun((entity, entity.Comp));
+
+        var setEvent = new VehicleOperatorSetEvent(null, currentOperator);
+        RaiseLocalEvent(entity, ref setEvent);
+
+        Dirty(entity);
+        return true;
     }
 
     /// <summary>
@@ -207,7 +199,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (!_vehicleQuery.TryComp(operatorEntity.Comp.Vehicle, out var vehicle))
             return true;
 
-        return TrySetOperator((operatorEntity.Comp.Vehicle.Value, vehicle), null, removeExisting: true);
+        return TryRemoveOperator((operatorEntity.Comp.Vehicle.Value, vehicle));
     }
 
     /// <summary>

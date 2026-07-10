@@ -41,7 +41,7 @@ public sealed partial class VehicleSystem
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
 
-        TrySetOperator((ent, vehicle), args.Entity, removeExisting: false);
+        TrySetOperator((ent, vehicle), args.Entity);
     }
 
     private void OnContainerEntRemoved(Entity<ContainerVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
