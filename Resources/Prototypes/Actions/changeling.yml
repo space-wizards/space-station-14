@@ -238,3 +238,15 @@
   - type: EntityTargetAction
     event: !type:ChangelingTakeOverCorpseActionEvent
   - type: TargetAction
+
+- type: entity
+  parent: ActionToggleNightVision
+  id: ActionChangelingNightVision
+  name: Toggle Night Vision
+  description: Turns our night vision on/off.
+  components:
+  - type: Action
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/changeling2.rsi
+      state: nv_on
