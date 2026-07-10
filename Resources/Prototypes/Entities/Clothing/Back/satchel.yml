@@ -181,7 +181,7 @@
     storageInsertSound: null
 
 - type: entity
-  parent: ClothingBackpackHolding #Standardized Bluespace Bags
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.

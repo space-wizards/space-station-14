@@ -273,17 +273,13 @@
     sprite: Clothing/Back/Backpacks/ertchaplain.rsi
 
 - type: entity
-  parent: ClothingBackpackERTSecurity
+  parent: [ ClothingBackpackHoldingBase, ClothingBackpackERTSecurity ]
   id: ClothingBackpackDeathSquad
   name: death squad backpack
   description: Holds the kit of CentComm's most feared agents.
   components:
-  - type: Item
-    size: Colossal
-  - type: Storage # Matches bag of holding
-    maxItemSize: Ginormous
-    grid:
-    - 0,0,11,7
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/ertsec.rsi
 
 #Syndicate
 - type: entity
@@ -305,7 +301,19 @@
 
 #Special
 - type: entity
+  abstract: true
   parent: ClothingBackpack
+  id: ClothingBackpackHoldingBase
+  components:
+  - type: Item
+    size: Colossal
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,11,7 # Same with all bags of holding
+
+- type: entity
+  parent: ClothingBackpackHoldingBase
   id: ClothingBackpackHolding
   name: backpack of holding
   description: A backpack that opens into a localized pocket of bluespace.
@@ -317,14 +325,6 @@
     - state: holding
     - state: holding-unlit
       shader: unshaded
-  - type: Clothing
-    equippedPrefix: holding
-  - type: Item
-    size: Colossal
-  - type: Storage
-    maxItemSize: Ginormous
-    grid:
-    - 0,0,11,7 # Same with all bags of holding
 
 - type: entity
   parent: ClothingBackpackClown

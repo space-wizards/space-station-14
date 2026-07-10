@@ -237,7 +237,7 @@
     - Backpack # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: ClothingBackpackHolding #Standardized Bluespace Bags
+  parent: ClothingBackpackHoldingBase #Standardized Bluespace Bags
   id: ClothingBackpackDuffelHolding
   name: duffel bag of holding
   description: A duffel bag that opens into a localized pocket of bluespace.
