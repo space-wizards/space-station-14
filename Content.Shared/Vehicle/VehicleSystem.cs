@@ -169,12 +169,10 @@ public sealed partial class VehicleSystem : EntitySystem
 
             currentOperatorComponent.Vehicle = null;
             RemCompDeferred<VehicleOperatorComponent>(currentOperator);
-            RemCompDeferred<RelayInputMoverComponent>(currentOperator);
-            RemCompDeferred<InteractionRelayComponent>(currentOperator);
         }
 
         entity.Comp.Operator = null;
-        RemCompDeferred<MovementRelayTargetComponent>(entity);
+        ClearOperatorRelays(currentOperator, entity);
 
         RefreshCanRun((entity, entity.Comp));
 
@@ -183,6 +181,27 @@ public sealed partial class VehicleSystem : EntitySystem
 
         Dirty(entity);
         return true;
+    }
+
+    private void ClearOperatorRelays(EntityUid operatorUid, EntityUid vehicleUid)
+    {
+        if (TryComp<RelayInputMoverComponent>(operatorUid, out var relayMover) &&
+            relayMover.RelayEntity == vehicleUid)
+        {
+            RemCompDeferred<RelayInputMoverComponent>(operatorUid);
+        }
+
+        if (TryComp<InteractionRelayComponent>(operatorUid, out var interactionRelay) &&
+            interactionRelay.RelayEntity == vehicleUid)
+        {
+            RemCompDeferred<InteractionRelayComponent>(operatorUid);
+        }
+
+        if (TryComp<MovementRelayTargetComponent>(vehicleUid, out var relayTarget) &&
+            relayTarget.Source == operatorUid)
+        {
+            RemCompDeferred<MovementRelayTargetComponent>(vehicleUid);
+        }
     }
 
     /// <summary>
