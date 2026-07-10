@@ -8,31 +8,14 @@
   },
   "states": [
     {
-      "name": "fireplace",
-      "directions": 1
+      "name": "fireplace"
     },
     {
       "name": "fireplacefestive"
     },
     {
       "name": "fireplace_fire4",
-      "directions": 4,
       "delays": [
-        [
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1,
-          0.1
-        ],
         [
           0.1,
           0.1,
@@ -42,20 +25,7 @@
     },
     {
       "name": "fireplace_glow",
-      "directions": 4,
       "delays": [
-        [
-          0.4,
-          0.1
-        ],
-        [
-          0.4,
-          0.1
-        ],
-        [
-          0.4,
-          0.1
-        ],
         [
           0.4,
           0.1
