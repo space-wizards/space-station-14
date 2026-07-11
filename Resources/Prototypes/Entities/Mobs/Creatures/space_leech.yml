@@ -98,6 +98,10 @@
       types:
         Slash: 10
 
+  # ── Speech ────────────────────────────────────────────────────────────────
+  - type: ReplacementAccent
+    accent: xeno
+
   # ── Stealth ───────────────────────────────────────────────────────────────
   - type: Stealth
     enabledOnDeath: false  # drop cloak on death so the corpse is visible
