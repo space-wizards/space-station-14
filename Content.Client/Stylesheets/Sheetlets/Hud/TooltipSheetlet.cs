@@ -10,18 +10,17 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet]
-public sealed class TooltipSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, ITooltipConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class TooltipSheetlet<T> : ISheetlet<T>
+    where T: ITooltipConfig, IFontConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        ITooltipConfig tooltipCfg = sheet;
-
-        var tooltipBox = sheet.GetTextureOr(tooltipCfg.TooltipBoxPath, NanotrasenStylesheetFactory.TextureRoot)
+        var tooltipBox = factory.GetTexture(config.TooltipBoxPath)
             .IntoPatch(StyleBox.Margin.All, 2);
         tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-        var whisperBox = sheet.GetTextureOr(tooltipCfg.WhisperBoxPath, NanotrasenStylesheetFactory.TextureRoot)
+        var whisperBox = factory.GetTexture(config.WhisperBoxPath)
             .IntoPatch(StyleBox.Margin.All, 2);
         whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
@@ -33,10 +32,10 @@ public sealed class TooltipSheetlet<T> : ISheetlet<T> where T: PalettedStyleshee
                 .Panel(tooltipBox),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipTitle)
-                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
+                .Font(config.BaseFont.GetFont(14, FontKind.Bold)),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipDesc)
-                .Font(sheet.BaseFont.GetFont(12)),
+                .Font(config.BaseFont.GetFont(12)),
 
             E<Tooltip>()
                 // ReSharper disable once AccessToStaticMemberViaDerivedType
@@ -54,11 +53,11 @@ public sealed class TooltipSheetlet<T> : ISheetlet<T> where T: PalettedStyleshee
             E<PanelContainer>()
                 .Class("speechBox", "whisperBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, config.BaseFont.GetFont(12, FontKind.Italic)),
             E<PanelContainer>()
                 .Class("speechBox", "emoteBox")
                 .ParentOf(E<RichTextLabel>().Class("bubbleContent"))
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(12, FontKind.Italic)),
+                .Prop(Label.StylePropertyFont, config.BaseFont.GetFont(12, FontKind.Italic)),
         ];
     }
 }
