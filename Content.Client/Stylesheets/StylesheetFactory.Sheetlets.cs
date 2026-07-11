@@ -2,7 +2,7 @@
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class StyleResolver
+public abstract partial class StylesheetFactory
 {
     public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy, StylesheetManager man)
     {
@@ -27,7 +27,7 @@ public abstract partial class StyleResolver
         if (sheetlet is not null)
         {
             man.UnusedSheetlets.Remove(sheetletTy);
-            return sheetlet.GetRules((TSheetTy)(object)this, _config);
+            return sheetlet.GetRules(TODO, (TSheetTy)(object)this);
         }
         else
             return [];

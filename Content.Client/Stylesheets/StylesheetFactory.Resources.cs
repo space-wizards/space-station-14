@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class StyleResolver
+public abstract partial class StylesheetFactory
 {
     /// <summary>
     ///     The file roots of the stylesheet, dictates where assets get read from for the given type of resource.
@@ -81,11 +82,11 @@ public abstract partial class StyleResolver
 }
 
 /// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="PalettedStylesheet"/> fail to locate a resource.
+///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> fail to locate a resource.
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed class MissingStyleResourceException(StyleResolver sheet, string target) : Exception
+public sealed class MissingStyleResourceException(StylesheetFactory sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
@@ -94,12 +95,12 @@ public sealed class MissingStyleResourceException(StyleResolver sheet, string ta
 }
 
 /// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="PalettedStylesheet"/> expect a resource at a location
+///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> expect a resource at a location
 ///     but do not find it.
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
 /// <param name="target"></param>
-public sealed class ExpectedResourceException(StyleResolver sheet, string target) : Exception
+public sealed class ExpectedResourceException(StylesheetFactory sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";

@@ -47,8 +47,8 @@ namespace Content.Client.Stylesheets
             UnusedSheetlets = [..tys];
 
             Stylesheets = new Dictionary<string, Stylesheet>();
-            SheetNanotrasen = Init(new NanotrasenStylesheetFactory(new StyleResolver.NoConfig(), this));
-            SheetSystem = Init(new SystemStylesheetFactory(new StyleResolver.NoConfig(), this));
+            SheetNanotrasen = Init(new NanotrasenStylesheetFactory(new StylesheetFactory.NoConfig(), this));
+            SheetSystem = Init(new SystemStylesheetFactory(new StylesheetFactory.NoConfig(), this));
             SheetNano = new StyleNano(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
             SheetSpace = new StyleSpace(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
 
@@ -69,7 +69,7 @@ namespace Content.Client.Stylesheets
 
         private int _styleRuleCount;
 
-        private Stylesheet Init(StyleResolver baseSheet)
+        private Stylesheet Init(StylesheetFactory baseSheet)
         {
             Stylesheets.Add(baseSheet.StylesheetName, baseSheet.Stylesheet);
             _styleRuleCount += baseSheet.Stylesheet.Rules.Count;
