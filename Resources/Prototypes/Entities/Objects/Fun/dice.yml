@@ -138,8 +138,19 @@
   parent: BaseCoin
   id: d2Dice
   name: Heads or Tails Coin
-  description: Some sort of two-sided die. Truly revolutionary technology.
+  description: Some sort of two-sided die. Designed to represent the struggle between Nanotrasen and the Syndicate.
   components:
+  - type: Sprite
+    state: d2_1
+
+- type: entity
+  parent: BaseCoin
+  id: d2DiceTricked
+  name: Heads or Tails Coin
+  description: Some sort of two-sided die. Designed to represent the struggle between Nanotrasen and the Syndicate.
+  components:
+  - type: Dice
+    trickedCoin: true
   - type: Sprite
     state: d2_1
 

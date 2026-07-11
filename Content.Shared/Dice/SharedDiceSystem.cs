@@ -41,7 +41,6 @@ public abstract partial class SharedDiceSystem : EntitySystem
     {
         if (entity.Comp.isCoin)
         {
-            
             using (args.PushGroup(nameof(DiceComponent)))
             {   
                 args.PushMarkup(Loc.GetString("dice-component-on-examine-message-coin",
@@ -86,7 +85,10 @@ public abstract partial class SharedDiceSystem : EntitySystem
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
 
         var roll = rand.Next(1, entity.Comp.Sides + 1);
-        SetCurrentSide(entity, roll);
+        if(entity.Comp.trickedCoin)
+            SetCurrentSide(entity, 2);
+        else
+            SetCurrentSide(entity, roll);
         var popupString = string.Empty;
 
         if (!entity.Comp.isCoin)

@@ -2299,3 +2299,13 @@
     blacklist:
       components:
       - SurplusBundle
+
+- type: listing
+  id: uplinkd2DiceTricked
+  name: uplink-weighted-coin-name
+  description: uplink-weighted-coin-desc
+  productEntity: d2DiceTricked
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkDeception

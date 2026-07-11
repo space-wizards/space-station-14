@@ -33,6 +33,12 @@ public sealed partial class DiceComponent : Component
     public bool isCoin { get; private set; } = false;
 
     /// <summary>
+    ///     If its a weighted coin
+    /// </summary>
+    [DataField]
+    public bool trickedCoin { get; private set; } = false;
+
+    /// <summary>
     ///     The currently displayed value.
     /// </summary>
     [DataField]
