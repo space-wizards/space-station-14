@@ -44,46 +44,38 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
         // This will hold all waypointers that need their overrides to be refreshed because this trackable spawned.
         var waypointersToOverride = new HashSet<ProtoId<WaypointerPrototype>>();
 
-        // Now, we iterate through each waypointer
         foreach (var waypointer in waypointers.Values)
         {
-            // And then we iterate through each component that the waypointer tracks
+            // We iterate through each component that the waypointer tracks
             foreach (var trackedComponent in waypointer.TrackedComponents.Values)
             {
-                // And then check if the trackable has that tracked component
-                if (!EntityManager.HasComponent(trackable, trackedComponent.Component.GetType())
-                    // And of course, check if it passes the whitelist & blacklist.
+                // And then check if the trackable has that tracked component & passes whitelist
+                if (!HasComp(trackable, trackedComponent.Component.GetType())
                     || !_whitelist.CheckBoth(trackable, blacklist: waypointer.Blacklist, whitelist: waypointer.Whitelist))
                     continue;
 
                 // THEN we add that WAYPOINTER to the list above.
                 waypointersToOverride.Add(new ProtoId<WaypointerPrototype>(waypointer.ID));
-                // If it didn't have that component, then we don't need to refresh the overrides for that one.
             }
         }
 
-        // We get this for a check later.
-        var trackXform = Transform(trackable);
+        // Map for the trackable entity, used for mapchecks later.
+        var trackableMap = Transform(trackable).MapID;
 
-        // Now we get every entity that has an active waypointer
         var waypointerQuery = AllEntityQuery<ActiveWaypointerComponent, ActorComponent>();
-        // We iterate through them
         while (waypointerQuery.MoveNext(out var player, out var waypointerComp, out var actorComp))
         {
             // No need to override if they don't have any waypointers.
             if (waypointerComp.WaypointerProtoIds == null)
                 continue;
 
-            // Then we iterate through every waypointer they have access to
             foreach (var waypointer in waypointerComp.WaypointerProtoIds.Keys)
             {
                 // We check if they have any waypointer that can track the new trackable entity.
                 if (!waypointersToOverride.Contains(waypointer))
                     continue;
 
-                var playerXform = Transform(player);
-                // Now we check if that player is on the same map as the tracked entity.
-                if (trackXform.MapID != playerXform.MapID)
+                if (trackableMap != Transform(player).MapID)
                     continue;
 
                 // Then we finally override that entity for said player.
@@ -137,7 +129,7 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
         if (!_player.TryGetSessionByEntity(player, out var session))
             return;
 
-        var playerXform = Transform(player);
+        var playerMap = Transform(player).MapID;
 
         foreach (var waypointerProtoId in waypointers)
         {
@@ -155,10 +147,7 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
                     || _whitelist.CheckBoth(target, whitelist: prototype.Whitelist, blacklist: prototype.Blacklist))
                     continue;
 
-                var targetXform = Transform(target);
-
-                // Check if they're in the same Map. If not, don't override.
-                if (targetXform.MapID == playerXform.MapID)
+                if (playerMap == Transform(target).MapID)
                     _pvsOverride.AddSessionOverride(target, session);
             }
         }

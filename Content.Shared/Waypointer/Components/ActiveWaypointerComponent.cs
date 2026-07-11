@@ -6,7 +6,7 @@ namespace Content.Shared.Waypointer.Components;
 
 /// <summary>
 /// This signifies an entity with an active waypointer trying to track something.
-/// This is NOT a pinpointer.
+/// Gets given to an entity a player inhabits. This is NOT a pinpointer.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ActiveWaypointerComponent : Component

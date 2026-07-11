@@ -49,7 +49,7 @@
   trackedComponents:
   - type: DragonRift
   workOnGrid: true
-  color: Red
+  color: Orange
   maxRange: 50
   radialMenuIconPath: Markers/Waypointers/rift_waypointer.rsi
   hideBeyondMaxRange: false

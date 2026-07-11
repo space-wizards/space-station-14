@@ -117,7 +117,7 @@ public abstract partial class SharedWaypointerSystem : EntitySystem
             RemoveOverrides(player, overridesToRemove);
         }
 
-        if (ev.Waypointers.Count == 0) // Self-Explanatory - If there are no waypointers left, remove the component.
+        if (ev.Waypointers.Count == 0)
         {
             RemComp<ActiveWaypointerComponent>(player);
             return;

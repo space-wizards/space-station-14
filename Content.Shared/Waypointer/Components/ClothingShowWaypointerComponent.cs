@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Waypointer.Components;
 
 /// <summary>
-///  This is used for clothing that enables waypointers for the equipee.
+/// This is used for clothing that enables waypointers for the equipee.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ClothingShowWaypointerComponent: Component

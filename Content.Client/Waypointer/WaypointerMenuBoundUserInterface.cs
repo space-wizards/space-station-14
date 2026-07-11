@@ -11,9 +11,9 @@ using Robust.Shared.Utility;
 namespace Content.Client.Waypointer;
 
 [UsedImplicitly]
-public sealed class WaypointerMenuBoundUserinterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class WaypointerMenuBoundUserinterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
     private SimpleRadialMenu? _menu;
 
@@ -43,8 +43,8 @@ public sealed class WaypointerMenuBoundUserinterface(EntityUid owner, Enum uiKey
             return null;
 
         var options = new List<RadialMenuOptionBase>();
-        // We cannot use sprite specifier as we aren't using entities nor do we only need one image.
-        // We need one for disabling and one for enabling - So we have this Frankenstein Monster.
+
+        // The main disable-enable all waypointer button.
         var state = waypointer.Active ? "action_icon_off"  : "action_icon_on";
         var sprite = new SpriteSpecifier.Rsi(waypointer.RadialMenuIconPath, state);
         var toggleWaypointers = new RadialMenuActionOption<bool>(HandleRadialMenuClick, !waypointer.Active)
@@ -53,6 +53,7 @@ public sealed class WaypointerMenuBoundUserinterface(EntityUid owner, Enum uiKey
             ToolTip = Loc.GetString(waypointer.Active ? "waypointer-disable-all" : "waypointer-enable-all"),
         };
         options.Add(toggleWaypointers);
+
         // This iterates through every waypointer to add them as options.
         foreach (var pair in waypointer.WaypointerProtoIds)
         {

@@ -21,27 +21,28 @@ namespace Content.Client.Waypointer;
 /// <summary>
 /// This Overlay draws the waypointers on the screen.
 /// </summary>
-public sealed class WaypointerOverlay : Overlay
+public sealed partial class WaypointerOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> UnshadedShader = "unshaded";
 
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPlayerManager  _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPlayerManager  _player = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
 
-    private readonly SharedCombatModeSystem _combatMode = default!;
+    private readonly SharedCombatModeSystem _combatMode;
     private readonly SharedPhysicsSystem _physics;
     private readonly SpriteSystem _sprite;
     private readonly StationSystem _station;
     private readonly TransformSystem _transform;
-    private readonly ShaderInstance _unshadedShader;
     private readonly ShuttleSystem _shuttle;
     private readonly EntityWhitelistSystem _whitelist;
 
+    private readonly ShaderInstance _unshadedShader;
     // This is used to check if a prototype is tracking the station grid.
     private readonly string _stationCompName = "StationData";
     // Caching the Uid for the station grid.
     private EntityUid? _mainStationGrid;
+
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     internal WaypointerOverlay()
@@ -71,7 +72,6 @@ public sealed class WaypointerOverlay : Overlay
 
         if (_player.LocalEntity == null
             || !_entity.TryGetComponent<ActiveWaypointerComponent>(_player.LocalEntity, out var waypointer)
-            // Check if the Waypointer hashset is null
             || waypointer.WaypointerProtoIds == null
             || !_entity.TryGetComponent<TransformComponent>(_player.LocalEntity, out var playerXform)
             || playerXform.MapID != args.MapId)
@@ -86,7 +86,6 @@ public sealed class WaypointerOverlay : Overlay
                 continue;
 
             if (!_prototype.Resolve(waypointerPair.Key, out var prototype)
-                // Check if the waypointer works on grid and combat
                 || !prototype.WorkOnGrid && playerXform.GridUid != null
                 || !prototype.WorkInCombat && _combatMode.IsInCombatMode(player))
                 continue;
@@ -127,7 +126,6 @@ public sealed class WaypointerOverlay : Overlay
 
                 // The NTStationWaypointer has 5 stages and a range of 200. With calculations, it'll check if it's either in:
                 // 0-39, 40-89, 80-119, 120-159, 160-200 range and use the respective waypointer sprite for it.
-                // We cap the distance to MaxRange in the event HideBeyondMaxRange is false.
                 var increments = prototype.MaxRange / prototype.WaypointerStates;
                 var waypointerState = Math.Min(Math.Truncate(distance / increments) + 1, prototype.WaypointerStates);
                 var stateName = "marker" + waypointerState;
@@ -135,10 +133,7 @@ public sealed class WaypointerOverlay : Overlay
                 var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);
                 var texture = _sprite.Frame0(rsi);
 
-                // This is to draw the Waypointer sprites directly ontop of the entity sprite.
                 var offset = new Vector2(texture.Height * 0.5f, texture.Width * 0.5f) / EyeManager.PixelsPerMeter;
-
-                // This calculates the angle to rotate the waypointer sprite towards the tracked entity.
                 var direction = positionA - positionB;
                 var angle = direction.ToWorldAngle();
 
@@ -150,10 +145,6 @@ public sealed class WaypointerOverlay : Overlay
 
     /// <summary>
     /// This checks if the target is the station grid and if it should be tracking that.
-    /// The station grid is a weird exception - Tracking it directly with StationDataComponent does not work.
-    /// It'll result in tracking an Entity in nullspace. The grid itself does NOT have StationDataComponent.
-    /// That also carries the issue of blacklists not working against the station grid, because it doesn't have the components.
-    /// So, we need to check if the station grid is being tracked, or if we wrongly tracked the station grid when we were just tracking ordinary grids.
     /// </summary>
     /// <param name="target">The target being tracked</param>
     /// <param name="prototype">The waypointer prototype</param>
@@ -161,6 +152,12 @@ public sealed class WaypointerOverlay : Overlay
     /// Returns true if the target is the station grid, otherwise false.
     /// The parameter target will be changed to the station grid Uid if the prototype is tracking the station grid.
     /// </returns>
+    /// <remarks>
+    /// The station grid is a weird exception - Tracking it directly with StationDataComponent does not work.
+    /// It'll result in tracking an Entity in nullspace. The grid itself does NOT have StationDataComponent.
+    /// That also carries the issue of blacklists not working against the station grid, because it doesn't have the components.
+    /// So, we need to check if the station grid is being tracked, or if we wrongly tracked the station grid when we were just tracking ordinary grids.
+    /// </remarks>
     private bool CheckForStation(ref EntityUid target, WaypointerPrototype prototype)
     {
         // If we are tracking the station via StationDataComponent, we will NEVER get the mainStationGrid.

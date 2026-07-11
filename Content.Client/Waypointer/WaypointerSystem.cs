@@ -47,16 +47,6 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
         _overlay.RemoveOverlay(_waypointerOverlay);
     }
 
-    protected override void OnWaypointersToggled(Entity<ActionComponent> action, ref WaypointersToggledMessage args)
-    {
-        base.OnWaypointersToggled(action, ref args);
-
-        if (args.IsActive)
-            _overlay.AddOverlay(_waypointerOverlay);
-        else
-            _overlay.RemoveOverlay(_waypointerOverlay);
-    }
-
     [SubscribeLocalEvent]
     private void OnPlayerAttached(Entity<ActiveWaypointerComponent> player, ref LocalPlayerAttachedEvent args)
     {
@@ -73,5 +63,15 @@ public sealed partial class WaypointerSystem : SharedWaypointerSystem
             return;
 
         _overlay.RemoveOverlay(_waypointerOverlay);
+    }
+
+    protected override void OnWaypointersToggled(Entity<ActionComponent> action, ref WaypointersToggledMessage args)
+    {
+        base.OnWaypointersToggled(action, ref args);
+
+        if (args.IsActive)
+            _overlay.AddOverlay(_waypointerOverlay);
+        else
+            _overlay.RemoveOverlay(_waypointerOverlay);
     }
 }
