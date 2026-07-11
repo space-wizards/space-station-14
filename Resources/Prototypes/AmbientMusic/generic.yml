@@ -1,0 +1,35 @@
+## Fallback if nothing else found
+- type: ambientMusic
+  id: General
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceGeneral
+  rules: AlwaysTrue
+
+- type: ambientMusic
+  id: SpookyFog
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpookyFog
+  rules: NearSpookyFog
+  priority: 5
+
+- type: ambientMusic
+  id: Holy
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceHoly
+  rules: NearPrayable
+  priority: 4
+
+- type: ambientMusic
+  id: Train
+  sound:
+    params:
+      volume: -8
+    collection: AmbienceTrain
+  rules: NearTrain
+  priority: 4

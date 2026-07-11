@@ -1,13 +1,11 @@
 # A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
-  parent: DrinkBase
+  parent: [SolutionTiny, DrinkBase]
   id: DrinkBaseCup
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 20
+  - type: Item
+    size: Tiny
   - type: FitsInDispenser
     solution: drink
   - type: SolutionTransfer
@@ -49,6 +47,9 @@
   name: teacup
   description: A plain white porcelain teacup.
   components:
+  - type: Solution
+    solution:
+      maxVol: 17 # About 5 imperial fluid ounces which is the english measurement for a teacup. Also I think fucked up volume sizes are funny. HAHAHAHAHAHAHA
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
   - type: SolutionContainerVisuals
@@ -60,6 +61,8 @@
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
   components:
+  - type: Item
+    size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
   - type: SolutionContainerVisuals
@@ -71,12 +74,9 @@
   name: water cup
   description: A paper water cup.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 5 # One sip at a time. No rushing at the water cooler
-  - type: Item
-    size: Tiny
+  - type: Solution
+    solution:
+      maxVol: 10 # Miserably small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water_cup.rsi
   - type: SolutionContainerVisuals
@@ -203,12 +203,11 @@
   suffix: Full
   description: A heated drink consisting melted chocolate and heated milk.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: HotCocoa
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: HotCocoa
+        Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-vend-brown
@@ -227,12 +226,11 @@
   suffix: Full
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Coffee
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Coffee
+        Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-vend-brown
@@ -251,12 +249,11 @@
   suffix: Full
   description: A nice, strong and tasty beverage while you are reading.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: CafeLatte
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: CafeLatte
+        Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
     state: icon-vend
@@ -277,12 +274,11 @@
   id: DrinkTeacup
   name: tea
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Tea
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Tea
+        Quantity: 17
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-tea
@@ -294,12 +290,11 @@
   id: DrinkGreenTea
   name: green tea
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: GreenTea
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: GreenTea
+        Quantity: 17
   - type: Icon
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-green-tea
@@ -308,21 +303,21 @@
 
 # TODO this needs fill levels
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkBaseCup]
+  parent: [DrinkBaseMaterialPlastic, SolutionSmall, DrinkBaseCup]
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: JuiceGrape
-          Quantity: 20
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: JuiceGrape
+        Quantity: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
+    size: Small
   - type: TrashOnSolutionEmpty
     solution: drink
 

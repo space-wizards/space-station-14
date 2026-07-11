@@ -15,8 +15,8 @@ namespace Content.Shared.Body;
 
 public abstract partial class SharedVisualBodySystem
 {
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private ISharedAdminManager _admin = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     private void InitializeModifiers()
     {
@@ -82,7 +82,7 @@ public abstract partial class SharedVisualBodySystem
         [NotNullWhen(true)] out Dictionary<ProtoId<OrganCategoryPrototype>, OrganMarkingData>? markings,
         [NotNullWhen(true)] out Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>>? applied)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
         {
             profiles = null;
             markings = null;

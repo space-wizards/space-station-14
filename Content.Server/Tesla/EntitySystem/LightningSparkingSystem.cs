@@ -8,10 +8,10 @@ namespace Content.Server.Tesla.EntitySystems;
 /// <summary>
 /// The component changes the visual of an object after it is struck by lightning
 /// </summary>
-public sealed class LightningSparkingSystem : EntitySystem
+public sealed partial class LightningSparkingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
