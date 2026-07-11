@@ -629,18 +629,18 @@
   - type: ToolRefinable
     refineResult:
     - id: FoodBreadBaguetteSlice
-      amount: 12
+      amount: 10
   - type: Solution
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 78
+        Quantity: 80
       - ReagentId: Vitamin
-        Quantity: 3
+        Quantity: 4
       - ReagentId: TableSalt
-        Quantity: 3
+        Quantity: 1
       - ReagentId: Blackpepper
-        Quantity: 3
+        Quantity: 1
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -694,15 +694,15 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 39
+        Quantity: 40
       - ReagentId: Fiber
-        Quantity: 39
+        Quantity: 40
       - ReagentId: Vitamin
-        Quantity: 0.6
+        Quantity: 4
       - ReagentId: TableSalt
-        Quantity: 0.6
+        Quantity: 1
       - ReagentId: Blackpepper
-        Quantity: 0.6
+        Quantity: 1
 
 - type: entity
   name: crostini
@@ -716,13 +716,13 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 6.5
+        Quantity: 8
       - ReagentId: Vitamin
-        Quantity: 0.05
+        Quantity: 0.4
       - ReagentId: TableSalt
-        Quantity: 0.05
+        Quantity: 0.1
       - ReagentId: Blackpepper
-        Quantity: 0.05
+        Quantity: 0.1
 
 - type: entity
   parent: FoodBreadBaguetteSlice
@@ -743,15 +743,15 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 3.25
+        Quantity: 4
       - ReagentId: Fiber
-        Quantity: 3.25
+        Quantity: 4
       - ReagentId: Vitamin
-        Quantity: 0.05
+        Quantity: 0.4
       - ReagentId: TableSalt
-        Quantity: 0.05
+        Quantity: 0.1
       - ReagentId: Blackpepper
-        Quantity: 0.05
+        Quantity: 0.1
 
 - type: entity
   name: buttered toast

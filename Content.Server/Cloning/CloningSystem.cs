@@ -88,6 +88,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         // Set the clone's name. The raised events will also adjust their PDA and ID card names.
         _metaData.SetEntityName(clone.Value, originalName, raiseEvents: settings.RaiseEntityRenamedEvent);
+        _metaData.SetEntityDescription(clone.Value, Description(original));
         _identity.QueueIdentityUpdate(clone.Value); // We have to manually refresh the identity in case we did not raise events.
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");
