@@ -568,7 +568,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
             _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, _entSet, LookupFlags.Dynamic | LookupFlags.Sundries);
             var delay = 0f;
 
-            foreach (var entity in _entSet.OrderBy(e => GetNetEntity(e).Id))
+            foreach (var entity in _entSet.OrderBy(e => GetNetEntity(e)))
             {
                 if (entity == args.User
                     || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
@@ -1009,7 +1009,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
             || Resolve(target, ref targetLock, false) && targetLock.Locked)
             return;
 
-        foreach (var entity in entities.ToArray().OrderBy(e => GetNetEntity(e).Id))
+        foreach (var entity in entities.ToArray().OrderBy(e => GetNetEntity(e)))
         {
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
@@ -1208,7 +1208,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         var toInsertCount = insertStack.Count;
 
-        foreach (var ent in storageComp.Container.ContainedEntities.OrderBy(e => GetNetEntity(e).Id))
+        foreach (var ent in storageComp.Container.ContainedEntities.OrderBy(e => GetNetEntity(e)))
         {
             if (!_stackQuery.TryGetComponent(ent, out var containedStack))
                 continue;

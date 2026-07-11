@@ -128,7 +128,7 @@ public sealed partial class DumpableSystem : EntitySystem
         if (args.Handled || args.Cancelled || !TryComp<StorageComponent>(uid, out var storage) || storage.Container.ContainedEntities.Count == 0 || args.Args.Target is not { } target)
             return;
 
-        var dumpQueue = new Queue<EntityUid>(storage.Container.ContainedEntities.OrderBy(e => GetNetEntity(e).Id));
+        var dumpQueue = new Queue<EntityUid>(storage.Container.ContainedEntities.OrderBy(e => GetNetEntity(e)));
 
         var evt = new DumpEvent(dumpQueue, args.Args.User, false, false);
         RaiseLocalEvent(target, ref evt);
