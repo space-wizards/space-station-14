@@ -1,18 +1,21 @@
+using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets.Stylesheets;
 
-public abstract class CommonStylesheetFactory : StyleResolver, IButtonConfig, IWindowConfig, IIconConfig,
+public abstract class CommonStylesheetFactory : StylesheetFactory, IButtonConfig, IWindowConfig, IIconConfig,
     ITabContainerConfig,
     ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig, INanoHeadingConfig,
-    ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig, IPaletteConfig
+    ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig, IPaletteConfig, IFontConfig
 {
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
     /// </remarks>
-    protected CommonStylesheetFactory(object config) : base(config) { }
+    protected CommonStylesheetFactory()
+    {
+    }
 
     ResPath ICheckboxConfig.CheckboxUncheckedPath => new("checkbox_unchecked.svg.96dpi.png");
     ResPath ICheckboxConfig.CheckboxCheckedPath => new("checkbox_checked.svg.96dpi.png");
@@ -87,4 +90,13 @@ public abstract class CommonStylesheetFactory : StyleResolver, IButtonConfig, IW
     public abstract ColorPalette PositivePalette { get; }
     public abstract ColorPalette NegativePalette { get; }
     public abstract ColorPalette HighlightPalette { get; }
+
+    List<(string?, int)> IFontConfig.CommonFontSizes =>
+    [
+        (null, 12),
+        (StyleClass.FontSmall, 10),
+        (StyleClass.FontLarge, 14),
+    ];
+
+    NotoFontFamilyStack IFontConfig.BaseFont => new(ResCache);
 }
