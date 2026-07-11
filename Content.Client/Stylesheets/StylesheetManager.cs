@@ -14,9 +14,8 @@ namespace Content.Client.Stylesheets
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private IReflectionManager _reflection = default!;
 
-        [Dependency]
-        private IResourceCache
-            _resCache = default!; // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
+        // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
+        [Dependency] private IResourceCache _resCache = default!;
 
         public Stylesheet SheetNanotrasen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
@@ -27,14 +26,7 @@ namespace Content.Client.Stylesheets
         [Obsolete("Update to use SheetSystem instead")]
         public Stylesheet SheetSpace { get; private set; } = default!;
 
-        private Dictionary<string, Stylesheet> Stylesheets { get; set; } = default!;
-
-        public bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet)
-        {
-            return Stylesheets.TryGetValue(name, out stylesheet);
-        }
-
-        public HashSet<Type> UnusedSheetlets { get; private set; } = [];
+        private Dictionary<string, Stylesheet> Stylesheets { get; set; } = [];
 
         public void Initialize()
         {
@@ -42,38 +34,29 @@ namespace Content.Client.Stylesheets
             sawmill.Debug("Initializing Stylesheets...");
             var sw = Stopwatch.StartNew();
 
-            // add all sheetlets to the hashset
-            var tys = _reflection.FindTypesWithAttribute<SheetletAttribute>();
-            UnusedSheetlets = [..tys];
-
             Stylesheets = new Dictionary<string, Stylesheet>();
-            SheetNanotrasen = Init(new NanotrasenStylesheetFactory(new StylesheetFactory.NoConfig(), this));
-            SheetSystem = Init(new SystemStylesheetFactory(new StylesheetFactory.NoConfig(), this));
-            SheetNano = new StyleNano(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
-            SheetSpace = new StyleSpace(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
 
+            SheetNanotrasen = new NanotrasenStylesheetFactory().Build();
+            Stylesheets.Add("Nanotrasen", SheetNanotrasen);
+
+            SheetSystem = new SystemStylesheetFactory().Build();
+            Stylesheets.Add("System", SheetSystem);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            // NOTE: Please delete.
+            SheetNano = new StyleNano(_resCache).Stylesheet;
+            SheetSpace = new StyleSpace(_resCache).Stylesheet;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            // Set the default stylesheet
             _userInterfaceManager.Stylesheet = SheetNanotrasen;
 
-            // warn about unused sheetlets
-            if (UnusedSheetlets.Count > 0)
-            {
-                var sheetlets = UnusedSheetlets.AsEnumerable()
-                    .Take(5)
-                    .Select(t => t.FullName ?? "<could not get FullName>")
-                    .ToArray();
-                sawmill.Error($"There are unloaded sheetlets: {string.Join(", ", sheetlets)}");
-            }
-
-            sawmill.Debug($"Initialized {_styleRuleCount} style rules in {sw.Elapsed}");
+            sawmill.Debug($"Initialized {Stylesheets.Values.Sum(s => s.Rules.Count)} style rules in {sw.Elapsed}");
         }
 
-        private int _styleRuleCount;
-
-        private Stylesheet Init(StylesheetFactory baseSheet)
+        public bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet)
         {
-            Stylesheets.Add(baseSheet.StylesheetName, baseSheet.Stylesheet);
-            _styleRuleCount += baseSheet.Stylesheet.Rules.Count;
-            return baseSheet.Stylesheet;
+            return Stylesheets.TryGetValue(name, out stylesheet);
         }
     }
 }
