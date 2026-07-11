@@ -10,7 +10,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet(typeof(CommonStylesheetFactory))]
 public sealed class ListContainerSheetlet<T> : ISheetlet<T>
-    where T : IButtonConfig, IIconConfig
+    where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
     public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {

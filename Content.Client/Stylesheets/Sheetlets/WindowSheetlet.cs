@@ -46,7 +46,7 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
         borderedBackgroundBox.SetPatchMargin(StyleBox.Margin.All, 2);
         var closeButtonTex = factory.GetTexture(config.CrossIconPath);
 
-        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(config);
+        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(factory, config);
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
 
         // TODO: maybe also change everything here to `NanoWindow` or something
