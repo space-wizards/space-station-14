@@ -4,8 +4,8 @@ meta:
   engineVersion: 282.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/11/2026 21:52:17
-  entityCount: 3620
+  time: 07/11/2026 21:59:50
+  entityCount: 3619
 maps:
 - 23
 grids:
@@ -68,6 +68,7 @@ entities:
     - type: Transform
       parent: 23
       pos: -32,-17
+    - type: TradeStation
     - type: MapGrid
       chunks:
         0,0:
@@ -14884,21 +14885,6 @@ entities:
       parent: 801
     - type: Physics
       canCollide: False
-  - uid: 3483
-    components:
-    - type: Transform
-      parent: 1
-      pos: 60.481636,58.52019
-    - type: Paper
-      content: >2-
-
-        The buying pallete area doesn't work currently.
-
-
-        In the meantime please use the console above which is linked to the cargo teleporters.
-
-
-        Will be fixed soon:tm:
 - proto: PaperBin20
   entities:
   - uid: 3459
