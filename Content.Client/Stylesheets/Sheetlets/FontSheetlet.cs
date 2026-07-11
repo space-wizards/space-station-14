@@ -13,7 +13,11 @@ public sealed class FontSheetlet<T> : ISheetlet<T>
 {
     public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        var rules = new List<StyleRule>();
+        var rules = new List<StyleRule>
+        {
+            // Default font
+            E().Prop(Label.StylePropertyFont, config.BaseFont.GetFont(config.CommonFontSizes[0].Item2))
+        };
 
         foreach (var (name, size) in config.CommonFontSizes)
         {
