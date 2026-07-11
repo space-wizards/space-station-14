@@ -12,19 +12,15 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
+[Sheetlet(typeof(CommonStylesheetFactory))]
 public sealed class WindowSheetlet<T> : ISheetlet<T>
-    where T : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig
+    where T : IButtonConfig, IWindowConfig, IIconConfig, IFontConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig buttonCfg = sheet;
-        IWindowConfig windowCfg = sheet;
-        IIconConfig iconCfg = sheet;
-
         var headerStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(windowCfg.WindowHeaderTexturePath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.WindowHeaderTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
@@ -32,25 +28,25 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(windowCfg.WindowHeaderAlertTexturePath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.WindowHeaderAlertTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
         };
         var backgroundBox = new StyleBoxTexture()
         {
-            Texture = sheet.GetTextureOr(windowCfg.WindowBackgroundPath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.WindowBackgroundPath),
         };
         backgroundBox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         backgroundBox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         var borderedBackgroundBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(windowCfg.WindowBackgroundBorderedPath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.WindowBackgroundBorderedPath),
         };
         borderedBackgroundBox.SetPatchMargin(StyleBox.Margin.All, 2);
-        var closeButtonTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheetFactory.TextureRoot);
+        var closeButtonTex = factory.GetTexture(config.CrossIconPath);
 
-        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(sheet);
+        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(config);
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
 
         // TODO: maybe also change everything here to `NanoWindow` or something
@@ -59,12 +55,12 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
             // TODO: KILL DEFAULT WINDOW (in a bit)
             E<Label>()
                 .Class(DefaultWindow.StyleClassWindowTitle)
-                .FontColor(sheet.HighlightPalette.Text)
-                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
+                .FontColor(config.HighlightPalette.Text)
+                .Font(config.BaseFont.GetFont(14, FontKind.Bold)),
             E<Label>()
                 .Class("windowTitleAlert")
                 .FontColor(Color.White)
-                .Font(sheet.BaseFont.GetFont(14, FontKind.Bold)),
+                .Font(config.BaseFont.GetFont(14, FontKind.Bold)),
             // TODO: maybe also change everything here to `NanoWindow` or something
             E()
                 .Class(DefaultWindow.StyleClassWindowPanel)
@@ -104,28 +100,27 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
             // Title
             E<Label>()
                 .Class("FancyWindowTitle") // TODO: hardcoding class name
-                .Font(ResCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13)) // TODO: hardcoding font
-                .FontColor(sheet.HighlightPalette.Text),
+                .Font(config.DecorativeFont.GetFont(13))
+                .FontColor(config.HighlightPalette.Text),
 
             // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
-                .Prop(TextureButton.StylePropertyTexture,
-                    sheet.GetTextureOr(iconCfg.HelpIconPath, NanotrasenStylesheetFactory.TextureRoot))
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.Element),
+                .Prop(TextureButton.StylePropertyTexture, factory.GetTexture(config.HelpIconPath))
+                .Prop(Control.StylePropertyModulateSelf, config.PrimaryPalette.Element),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassHover)
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.HoveredElement),
+                .Prop(Control.StylePropertyModulateSelf, config.PrimaryPalette.HoveredElement),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
                 .Pseudo(ContainerButton.StylePseudoClassPressed)
-                .Prop(Control.StylePropertyModulateSelf, sheet.PrimaryPalette.PressedElement),
+                .Prop(Control.StylePropertyModulateSelf, config.PrimaryPalette.PressedElement),
 
             // Footer
             E<Label>()
                 .Class("WindowFooterText") // TODO: hardcoding font
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(8))
+                .Prop(Label.StylePropertyFont, config.BaseFont.GetFont(8))
                 .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
         ];
     }

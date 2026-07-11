@@ -15,8 +15,8 @@ public interface ISheetlet<in T>
     /// <summary>
     /// Generates the style rules for the sheetlet.
     /// </summary>
-    /// <param name="resolver">Resolves stylesheet-dependent style properties (e.g. paths, textures, resources)</param>
+    /// <param name="factory"></param>
     /// <param name="config">Sheetlet configs</param>
     /// <returns>Style rules</returns>
-    StyleRule[] GetRules(StylesheetFactory resolver, T config);
+    StyleRule[] GetRules(StylesheetFactory factory, T config);
 }
