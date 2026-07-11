@@ -136,18 +136,18 @@ public abstract partial class SharedJobSystem : EntitySystem
         return true;
     }
 
-    public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
+    public bool MindHasJobWithId(EntityUid? mindId, params ProtoId<JobPrototype>[] prototypes)
     {
-
         if (mindId is null)
             return false;
 
-        _roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role);
-
-        if (role is null)
+        if (!_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
             return false;
 
-        return role.Value.Comp1.JobPrototype == prototypeId;
+        if (role.Value.Comp1.JobPrototype is not { } protoId)
+            return false;
+
+        return prototypes.Contains(protoId);
     }
 
     public bool MindTryGetJob(
