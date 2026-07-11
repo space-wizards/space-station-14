@@ -6,9 +6,9 @@ using ActivatableUISystem = Content.Shared.UserInterface.ActivatableUISystem;
 
 namespace Content.Server.Power.EntitySystems;
 
-public sealed class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequiresPowerSystem
+public sealed partial class ActivatableUIRequiresPowerSystem : SharedActivatableUIRequiresPowerSystem
 {
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
+    [Dependency] private ActivatableUISystem _activatableUI = default!;
 
     public override void Initialize()
     {

@@ -11,6 +11,12 @@ namespace Content.Server.Shuttles.Components
     public sealed partial class ThrusterComponent : Component
     {
         /// <summary>
+        /// If the thruster can be toggled on or off via interaction
+        /// </summary>
+        [DataField]
+        public bool CanToggle = true;
+
+        /// <summary>
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -23,7 +29,7 @@ namespace Content.Server.Shuttles.Components
 
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
-        public float Thrust = 100f;
+        public float Thrust = 160000f;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;

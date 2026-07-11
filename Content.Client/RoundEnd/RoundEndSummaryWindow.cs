@@ -69,7 +69,7 @@ namespace Content.Client.RoundEnd
             roundEndTabs.AddChild(MakeRoundEndSummaryTab(gm, roundEnd, roundTimeSpan, roundId));
             roundEndTabs.AddChild(MakePlayerManifestTab());
 
-            Contents.AddChild(roundEndTabs);
+            ContentsContainer.AddChild(roundEndTabs);
 
             OpenCenteredRight();
             MoveToFront();

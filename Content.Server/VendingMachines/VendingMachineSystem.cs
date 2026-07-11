@@ -1,36 +1,25 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
-using Content.Server.Emp;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
-using Content.Shared.Damage;
-using Content.Shared.Destructible;
-using Content.Shared.DoAfter;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
-using Content.Shared.UserInterface;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wall;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.VendingMachines
 {
-    public sealed class VendingMachineSystem : SharedVendingMachineSystem
+    public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly PricingSystem _pricing = default!;
-        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private PricingSystem _pricing = default!;
+        [Dependency] private ThrowingSystem _throwingSystem = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -39,17 +28,11 @@ namespace Content.Server.VendingMachines
             base.Initialize();
 
             SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<VendingMachineComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamageChanged);
             SubscribeLocalEvent<VendingMachineComponent, PriceCalculationEvent>(OnVendingPrice);
-            SubscribeLocalEvent<VendingMachineComponent, EmpPulseEvent>(OnEmpPulse);
             SubscribeLocalEvent<VendingMachineComponent, TryVocalizeEvent>(OnTryVocalize);
 
-            SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
-
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
-
-            SubscribeLocalEvent<VendingMachineComponent, RestockDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
         }
@@ -60,7 +43,7 @@ namespace Content.Server.VendingMachines
 
             foreach (var entry in component.Inventory.Values)
             {
-                if (!PrototypeManager.TryIndex<EntityPrototype>(entry.ID, out var proto))
+                if (!ProtoMan.TryIndex<EntityPrototype>(entry.ID, out var proto))
                 {
                     Log.Error($"Unable to find entity prototype {entry.ID} on {ToPrettyString(uid)} vending.");
                     continue;
@@ -82,21 +65,9 @@ namespace Content.Server.VendingMachines
             }
         }
 
-        private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
-        {
-            if (component.Broken)
-                args.Cancel();
-        }
-
         private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
         {
             TryUpdateVisualState((uid, component));
-        }
-
-        private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
-        {
-            vendComponent.Broken = true;
-            TryUpdateVisualState((uid, vendComponent));
         }
 
         private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
@@ -104,6 +75,7 @@ namespace Content.Server.VendingMachines
             if (!args.DamageIncreased && component.Broken)
             {
                 component.Broken = false;
+                Dirty(uid, component);
                 TryUpdateVisualState((uid, component));
                 return;
             }
@@ -131,30 +103,6 @@ namespace Content.Server.VendingMachines
 
             args.Handled = true;
             EjectRandom(uid, throwItem: true, forceEject: false, component);
-        }
-
-        private void OnDoAfter(EntityUid uid, VendingMachineComponent component, DoAfterEvent args)
-        {
-            if (args.Handled || args.Cancelled || args.Args.Used == null)
-                return;
-
-            if (!TryComp<VendingMachineRestockComponent>(args.Args.Used, out var restockComponent))
-            {
-                Log.Error($"{ToPrettyString(args.Args.User)} tried to restock {ToPrettyString(uid)} with {ToPrettyString(args.Args.Used.Value)} which did not have a VendingMachineRestockComponent.");
-                return;
-            }
-
-            TryRestockInventory(uid, component);
-
-            Popup.PopupEntity(Loc.GetString("vending-machine-restock-done-self", ("target", uid)), args.Args.User, args.Args.User, PopupType.Medium);
-            var othersFilter = Filter.PvsExcept(args.Args.User);
-            Popup.PopupEntity(Loc.GetString("vending-machine-restock-done-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", uid)), args.Args.User, othersFilter, true, PopupType.Medium);
-
-            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
-
-            Del(args.Args.Used.Value);
-
-            args.Handled = true;
         }
 
         /// <summary>
@@ -259,23 +207,12 @@ namespace Content.Server.VendingMachines
             var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
             while (disabled.MoveNext(out var uid, out _, out var comp))
             {
-                if (comp.NextEmpEject < _timing.CurTime)
+                if (comp.NextEmpEject < Timing.CurTime)
                 {
                     EjectRandom(uid, true, false, comp);
                     comp.NextEmpEject += (5 * comp.EjectDelay);
                 }
             }
-        }
-
-        public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
-        {
-            if (!Resolve(uid, ref vendComponent))
-                return;
-
-            RestockInventoryFromPrototype(uid, vendComponent);
-
-            Dirty(uid, vendComponent);
-            TryUpdateVisualState((uid, vendComponent));
         }
 
         private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)
@@ -287,11 +224,11 @@ namespace Content.Server.VendingMachines
             {
                 double total = 0;
 
-                if (PrototypeManager.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
+                if (ProtoMan.TryIndex(vendingInventory, out VendingMachineInventoryPrototype? inventoryPrototype))
                 {
                     foreach (var (item, amount) in inventoryPrototype.StartingInventory)
                     {
-                        if (PrototypeManager.TryIndex(item, out EntityPrototype? entity))
+                        if (ProtoMan.TryIndex(item, out EntityPrototype? entity))
                             total += _pricing.GetEstimatedPrice(entity) * amount;
                     }
                 }
@@ -300,16 +237,6 @@ namespace Content.Server.VendingMachines
             }
 
             args.Price += priceSets.Max();
-        }
-
-        private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args)
-        {
-            if (!component.Broken && this.IsPowered(uid, EntityManager))
-            {
-                args.Affected = true;
-                args.Disabled = true;
-                component.NextEmpEject = _timing.CurTime;
-            }
         }
 
         private void OnTryVocalize(Entity<VendingMachineComponent> ent, ref TryVocalizeEvent args)
