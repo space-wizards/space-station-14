@@ -19,13 +19,13 @@ public sealed class SheetletAttribute : Attribute
     /// Attribute used to mark a sheetlet class. Stylesheets can use this attribute to locate and load sheetlets.
     /// </summary>
     /// <param name="factories">Stylesheet factories to generate for.</param>
-    /// <exception cref="ArgumentException">If the type provided is not a <see cref="StyleResolver"/> </exception>
+    /// <exception cref="ArgumentException">If the type provided is not a <see cref="StylesheetFactory"/> </exception>
     public SheetletAttribute(params Type[] factories)
     {
         foreach (var factory in factories)
         {
-            if (!typeof(StyleResolver).IsAssignableFrom(factory))
-                throw new ArgumentException($"{factory} is not a {nameof(StyleResolver)}");
+            if (!typeof(StylesheetFactory).IsAssignableFrom(factory))
+                throw new ArgumentException($"{factory} is not a {nameof(StylesheetFactory)}");
         }
 
         Factories = factories;
