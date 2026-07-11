@@ -176,7 +176,7 @@ namespace Content.Shared.GameTicking
 
             public string Role;
 
-            [DataField]
+            [DataField, NonSerialized]
             public string[] JobPrototypes;
 
             [DataField, NonSerialized]
