@@ -6,15 +6,14 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class CheckboxSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, ICheckboxConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class CheckboxSheetlet<T> : ISheetlet<T>
+    where T : ICheckboxConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        ICheckboxConfig checkboxCfg = sheet;
-
-        var uncheckedTex = sheet.GetTextureOr(checkboxCfg.CheckboxUncheckedPath, NanotrasenStylesheetFactory.TextureRoot);
-        var checkedTex = sheet.GetTextureOr(checkboxCfg.CheckboxCheckedPath, NanotrasenStylesheetFactory.TextureRoot);
+        var uncheckedTex = factory.GetTexture(config.CheckboxUncheckedPath);
+        var checkedTex = factory.GetTexture(config.CheckboxCheckedPath);
 
         return
         [
