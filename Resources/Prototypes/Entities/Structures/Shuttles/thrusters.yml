@@ -185,7 +185,7 @@
   description: What is this? A thruster for ants?
   components:
   - type: Thruster
-    thrust: 25 #1/4th regular thruster strength
+    thrust: 40000 #1/4th regular thruster strength
   - type: WallMount
     arc: 360
     direction: 180
@@ -423,7 +423,7 @@
   - type: Thruster
     thrusterType: Angular
     requireSpace: false
-    thrust: 200 #1/10th the strength of a normal gyroscope, because normal gyroscopes are very strong
+    thrust: 320000 #1/10th the strength of a normal gyroscope, because normal gyroscopes are very strong
     machinePartThrust: Manipulator
   - type: Sprite
     sprite: Structures/Shuttles/floor_gyroscope.rsi

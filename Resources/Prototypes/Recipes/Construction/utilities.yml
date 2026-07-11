@@ -1035,4 +1035,5 @@
   canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:ReverseWallmountCondition
+  - !type:WallmountCondition
+    reversed: true
