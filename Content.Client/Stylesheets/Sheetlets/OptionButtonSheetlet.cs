@@ -7,15 +7,15 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class OptionButtonSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IIconConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class OptionButtonSheetlet<T> : ISheetlet<T>
+    where T : IIconConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IIconConfig iconCfg = sheet;
+        IIconConfig iconCfg = config;
 
-        var invertedTriangleTex =
-            sheet.GetTextureOr(iconCfg.InvertedTriangleIconPath, NanotrasenStylesheetFactory.TextureRoot);
+        var invertedTriangleTex = factory.GetTexture(iconCfg.InvertedTriangleIconPath);
 
         return
         [
@@ -25,7 +25,7 @@ public sealed class OptionButtonSheetlet<T> : ISheetlet<T> where T : PalettedSty
             E<Label>().Class(OptionButton.StyleClassOptionButton).AlignMode(Label.AlignMode.Center),
             E<PanelContainer>()
                 .Class(OptionButton.StyleClassOptionsBackground)
-                .Panel(new StyleBoxFlat(sheet.PrimaryPalette.Background)),
+                .Panel(new StyleBoxFlat(config.PrimaryPalette.Background)),
         ];
     }
 }
