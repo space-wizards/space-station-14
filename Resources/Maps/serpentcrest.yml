@@ -4,8 +4,8 @@ meta:
   engineVersion: 282.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/11/2026 13:25:37
-  entityCount: 29621
+  time: 07/11/2026 13:33:07
+  entityCount: 29620
 maps:
 - 1
 grids:
@@ -136806,7 +136806,7 @@ entities:
     components:
     - type: Transform
       parent: 2
-      pos: -43.379574,-48.98148
+      pos: -43.32968,-48.91122
   - uid: 9810
     components:
     - type: Transform
@@ -184343,28 +184343,25 @@ entities:
       pos: 3.4193826,-19.583563
 - proto: WehMedipenTiny
   entities:
-- uid: 839
+  - uid: 29617
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      parent: 2
       pos: -43.5202,-49.26273
-      parent: 2
-  - uid: 914
+  - uid: 29618
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      parent: 2
       pos: -42.67645,-48.41898
-      parent: 2
-  - uid: 917
+  - uid: 29619
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      parent: 2
       pos: -43.344418,-47.75101
-      parent: 2
-  - uid: 9797
+  - uid: 29620
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      parent: 2
       pos: -42.46551,-49.579136
 - proto: WelderIndustrial
   entities:
