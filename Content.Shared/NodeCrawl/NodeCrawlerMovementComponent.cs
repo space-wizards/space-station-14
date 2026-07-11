@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.NodeCrawl;
@@ -32,6 +33,19 @@ public sealed partial class NodeCrawlerMovementComponent : Component
     /// </summary>
     [DataField]
     public double RequiredAngle = Math.PI / 4f;
+
+    /// <summary>
+    /// The contained gas mixture to expose the contained entities' atmos to, if any.
+    /// </summary>
+    [DataField]
+    [Access(typeof(SharedNodeCrawlSystem))]
+    public GasMixture? Air;
+
+    /// <summary>
+    /// The amount of air to draw into the mover, in liters.
+    /// </summary>
+    [DataField]
+    public float AirVolume = 100f;
 }
 
 /// <summary>

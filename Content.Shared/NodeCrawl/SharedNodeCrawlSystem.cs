@@ -70,11 +70,7 @@ public abstract class SharedNodeCrawlSystem : EntitySystem
 
     private void StartEntryDoAfter(Entity<NodeCrawlerComponent> ent, EntityUid target)
     {
-        var doAfterArgs = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.EnterDelay, new NodeCrawlEnterDoAfterEvent(), ent.Owner, target)
-        {
-            BreakOnMove = true,
-            BreakOnDamage = true,
-        };
+        var doAfterArgs = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.EnterDelay, new NodeCrawlEnterDoAfterEvent(), ent.Owner, target);
 
         _doAfter.TryStartDoAfter(doAfterArgs);
     }
@@ -107,10 +103,20 @@ public abstract class SharedNodeCrawlSystem : EntitySystem
         _nodeCrawler.SetNode((mover, crawler), target);
         _nodeCrawler.SetHeldCrawler((mover, crawler), ent);
 
+        SetupAir((mover, crawler));
+
         _mover.SetRelay(ent, mover);
         _physics.SetCanCollide(ent.Owner, false);
         _physics.SetCanCollide(mover, false);
         _eye.RefreshVisibilityMask(ent.Owner);
+    }
+
+    protected virtual void SetupAir(Entity<NodeCrawlerMovementComponent> movement)
+    {
+    }
+
+    protected virtual void EjectAir(Entity<NodeCrawlerMovementComponent> movement)
+    {
     }
 
     /// <summary>
@@ -139,7 +145,12 @@ public abstract class SharedNodeCrawlSystem : EntitySystem
 
         RemComp<RelayInputMoverComponent>(ent);
         if (_net.IsServer && !TerminatingOrDeleted(mover))
+        {
+            if (TryComp<NodeCrawlerMovementComponent>(mover, out var movement))
+                EjectAir((mover, movement));
+
             QueueDel(mover); // deletion isn't predicted because client queued deletion doesn't interact well with container stuff
+        }
 
         _physics.SetCanCollide(ent.Owner, true);
         _eye.RefreshVisibilityMask(ent.Owner);
@@ -225,5 +236,19 @@ public abstract class SharedNodeCrawlSystem : EntitySystem
 
             _container.Insert(servant.Owner, container);
         }
+    }
+
+    /// <summary>
+    /// Sets the enter delay for a node crawler entity.
+    /// </summary>
+    /// <param name="ent">The entity to set the delay for.</param>
+    /// <param name="delay">The delay.</param>
+    public void SetEnterDelay(Entity<NodeCrawlerComponent?> ent, TimeSpan delay)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.EnterDelay = delay;
+        Dirty(ent);
     }
 }
