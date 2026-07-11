@@ -16,11 +16,6 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     [Dependency] private ISandboxHelper _sandboxHelper = default!;
     [Dependency] private IReflectionManager _reflectionManager = default!;
 
-    /// <summary>
-    /// Name of the stylesheet that is generated.
-    /// </summary>
-    public abstract string StylesheetName { get; }
-
     protected StylesheetFactory()
     {
         IoCManager.InjectDependencies(this);
