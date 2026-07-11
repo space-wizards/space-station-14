@@ -99,6 +99,12 @@ public sealed partial class RatKingComponent : Component
         { RatKingOrderType.CheeseEm, "RatKingCommandCheeseEm" },
         { RatKingOrderType.Loose, "RatKingCommandLoose" }
     };
+
+    /// <summary>
+    /// Servants within this radius will join the Rat King when vent crawling
+    /// </summary>
+    [DataField]
+    public float VentCrawlRecruitRadius = 4f;
 }
 
 [Serializable, NetSerializable]

@@ -77,6 +77,7 @@
       guides:
       - AirVent
       - DeviceMonitoringAndControl
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasUnaryBase
@@ -109,6 +110,7 @@
     - type: GuideHelp
       guides:
       - PassiveVent
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -167,6 +169,7 @@
       guides:
       - AirScrubber
       - DeviceMonitoringAndControl
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasUnaryBase
@@ -211,6 +214,7 @@
     - type: GuideHelp
       guides:
       - AirInjector
+    - type: NodeCrawlVentAccess
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]

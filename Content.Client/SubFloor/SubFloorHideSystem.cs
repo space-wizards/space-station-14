@@ -32,6 +32,19 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
         }
     }
 
+    private Type[] _types = new Type[] { };
+
+    [ViewVariables]
+    public Type[] Types
+    {
+        get => _types;
+        set
+        {
+            _types = value;
+            UpdateAll();
+        }
+    }
+
     public override void Initialize()
     {
         base.Initialize();
@@ -64,6 +77,15 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
         var revealed = !covered || ShowAll || scannerRevealed;
+
+        foreach (var type in _types)
+        {
+            if (!HasComp(uid, type))
+                continue;
+
+            revealed = true;
+            break;
+        }
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
