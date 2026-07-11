@@ -32,8 +32,9 @@
     drawdepth: ThinWire
     visible: false
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -81,12 +82,6 @@
     cableType: HighVoltage
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -143,12 +138,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -198,12 +187,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -242,6 +225,7 @@
     sprite: Structures/Power/Cables/ex_cable.rsi
     state: excable_4
   - type: Damageable
+  - type: Injurable
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:

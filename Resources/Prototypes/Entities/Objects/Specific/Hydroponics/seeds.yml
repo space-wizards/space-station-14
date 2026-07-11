@@ -3,7 +3,6 @@
   id: SeedBase
   abstract: true
   components:
-    - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       layers:

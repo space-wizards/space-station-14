@@ -9,11 +9,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Sandbox.Commands
 {
     [AnyCommand]
-    public sealed class ColorNetworkCommand : LocalizedEntityCommands
+    public sealed partial class ColorNetworkCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly AtmosPipeColorSystem _pipeColorSystem = default!;
-        [Dependency] private readonly SandboxSystem _sandboxSystem = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private AtmosPipeColorSystem _pipeColorSystem = default!;
+        [Dependency] private SandboxSystem _sandboxSystem = default!;
 
         public override string Command => "colornetwork";
 

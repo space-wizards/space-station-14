@@ -5,7 +5,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Systems;
@@ -35,30 +34,28 @@ namespace Content.Shared.Medical.Cryogenics;
 
 public abstract partial class SharedCryoPodSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly ClimbSystem _climb = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
-    [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private ClimbSystem _climb = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private ReactiveSystem _reactive = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPointLightSystem _light = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] private StandingStateSystem _standingState = default!;
 
-    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
-    private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
-    private EntityQuery<FitsInDispenserComponent> _dispenserQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
-
+    [Dependency] private EntityQuery<BloodstreamComponent> _bloodstreamQuery = default!;
+    [Dependency] private EntityQuery<ItemSlotsComponent> _itemSlotsQuery = default!;
+    [Dependency] private EntityQuery<FitsInDispenserComponent> _dispenserQuery = default!;
 
     public override void Initialize()
     {
@@ -77,11 +74,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
-
-        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
-        _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
-        _dispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
-        _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         InitializeInsideCryoPod();
 
@@ -116,9 +108,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         var patient = entity.Comp.BodyContainer.ContainedEntity;
 
         if (patient == null
-            || !_solutionContainerQuery.TryComp(entity, out var podSolutionManager)
             || !_solutionContainer.TryGetSolution(
-                    (entity.Owner, podSolutionManager),
+                    entity.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _)
@@ -357,14 +348,12 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (beaker == null
             || !beaker.Value.Valid
             || !_dispenserQuery.TryComp(beaker, out var fitsInDispenserComponent)
-            || !_solutionContainerQuery.TryComp(beaker, out var beakerSolutionManager)
-            || !_solutionContainerQuery.TryComp(cryoPod, out var podSolutionManager)
             || !_solutionContainer.TryGetFitsInDispenser(
-                    (beaker.Value, fitsInDispenserComponent, beakerSolutionManager),
+                    (beaker.Value, fitsInDispenserComponent),
                     out var beakerSolution,
                     out _)
             || !_solutionContainer.TryGetSolution(
-                    (cryoPod.Owner, podSolutionManager),
+                    cryoPod.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectionSolutionComp,
                     out var injectionSolution))
@@ -382,9 +371,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
     public void ClearInjectionBuffer(Entity<CryoPodComponent> cryoPod)
     {
-        if (_solutionContainerQuery.TryComp(cryoPod, out var podSolutionManager)
-            && _solutionContainer.TryGetSolution(
-                    (cryoPod.Owner, podSolutionManager),
+        if (_solutionContainer.TryGetSolution(
+                    cryoPod.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _))
@@ -407,9 +395,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (beaker == null
             || !beaker.Value.Valid
             || !_dispenserQuery.TryComp(beaker, out var fitsInDispenserComponent)
-            || !_solutionContainerQuery.TryComp(beaker, out var solutionContainerManagerComponent)
             || !_solutionContainer.TryGetFitsInDispenser(
-                    (beaker.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
+                    (beaker.Value, fitsInDispenserComponent),
                     out var containerSolution,
                     out _))
             return (null, null);
@@ -424,9 +411,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
     protected List<ReagentQuantity>? GetInjectingReagents(Entity<CryoPodComponent> entity)
     {
-        if (!_solutionContainerQuery.TryComp(entity, out var solutionManager)
-            || !_solutionContainer.TryGetSolution(
-                    (entity.Owner, solutionManager),
+        if (!_solutionContainer.TryGetSolution(
+                    entity.Owner,
                     CryoPodComponent.InjectionBufferSolutionName,
                     out var injectingSolution,
                     out _))

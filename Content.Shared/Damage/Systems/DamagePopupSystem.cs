@@ -4,9 +4,10 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class DamagePopupSystem : EntitySystem
+public sealed partial class DamagePopupSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -19,7 +20,7 @@ public sealed class DamagePopupSystem : EntitySystem
     {
         if (args.DamageDelta != null)
         {
-            var damageTotal = args.Damageable.TotalDamage;
+            var damageTotal = _damageable.GetTotalDamage((ent, args.Damageable));
             var damageDelta = args.DamageDelta.GetTotal();
 
             var msg = ent.Comp.Type switch
