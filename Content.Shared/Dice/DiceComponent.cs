@@ -27,6 +27,12 @@ public sealed partial class DiceComponent : Component
     public int Sides { get; private set; } = 20;
 
     /// <summary>
+    ///     If the item is a coin, for coin flips
+    /// </summary>
+    [DataField]
+    public bool isCoin { get; private set; } = false;
+
+    /// <summary>
     ///     The currently displayed value.
     /// </summary>
     [DataField]

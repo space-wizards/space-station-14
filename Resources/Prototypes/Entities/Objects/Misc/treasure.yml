@@ -140,52 +140,69 @@
       weight: 5
 
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: TreasureCoinIron
+  id: BaseCoin
   name: coin
   description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
   components:
+  - type: Dice
+    sides: 2
+    currentValue: 1
+    isCoin: true
+    sound: !type:SoundCollectionSpecifier
+      collection: Coin
+  - type: Tag
+    tags:
+    - Dice
+  - type: UseDelay
   - type: Sprite
     sprite: Objects/Misc/coins.rsi
-    state: coin_iron
   - type: Item
     size: Tiny
+
+- type: entity
+  parent: BaseCoin
+  id: TreasureCoinIron
+  components:
+  - type: Sprite
+    state: coinIron_1
   - type: StaticPrice
     price: 75
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinSilver
   components:
   - type: Sprite
-    state: coin_silver
+    state: coinSilver_1
   - type: StaticPrice
     price: 125
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinGold
   components:
   - type: Sprite
-    state: coin_gold
+    state: coinGold_1
   - type: StaticPrice
     price: 175
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinAdamantine
   components:
   - type: Sprite
-    state: coin_adamantine
+    state: coinAdamantine_1
   - type: StaticPrice
     price: 250
 
 - type: entity
-  parent: TreasureCoinIron
+  parent: BaseCoin
   id: TreasureCoinDiamond
   components:
   - type: Sprite
-    state: coin_diamond
+    state: coinDiamond_1
   - type: StaticPrice
     price: 500
 

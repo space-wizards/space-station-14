@@ -39,6 +39,16 @@ public abstract partial class SharedDiceSystem : EntitySystem
 
     private void OnExamined(Entity<DiceComponent> entity, ref ExaminedEvent args)
     {
+        if (entity.Comp.isCoin)
+        {
+            
+            using (args.PushGroup(nameof(DiceComponent)))
+            {   
+                args.PushMarkup(Loc.GetString("dice-component-on-examine-message-coin",
+                ("currentSide", CheckCoinSide(entity))));
+            }
+            return;
+        }
         //No details check, since the sprite updates to show the side.
         using (args.PushGroup(nameof(DiceComponent)))
         {
@@ -77,11 +87,34 @@ public abstract partial class SharedDiceSystem : EntitySystem
 
         var roll = rand.Next(1, entity.Comp.Sides + 1);
         SetCurrentSide(entity, roll);
+        var popupString = string.Empty;
 
-        var popupString = Loc.GetString("dice-component-on-roll-land",
-            ("die", entity),
-            ("currentSide", entity.Comp.CurrentValue));
+        if (!entity.Comp.isCoin)
+        {
+            popupString = Loc.GetString("dice-component-on-roll-land",
+                ("die", entity),
+                ("currentSide", entity.Comp.CurrentValue));
+        }
+        else
+        {
+            popupString = Loc.GetString("dice-component-on-roll-land-coin",
+                ("die", entity),
+                ("currentSide", CheckCoinSide(entity)));
+        }
         _popup.PopupPredicted(popupString, entity, user);
         _audio.PlayPredicted(entity.Comp.Sound, entity, user);
+        
+    
+    }
+
+    private string CheckCoinSide(Entity<DiceComponent> entity)
+    {
+        if (!entity.Comp.isCoin || (entity.Comp.CurrentValue != 1 && entity.Comp.CurrentValue != 2))
+        {
+            Log.Error($"Attempted to check coin side of die {ToPrettyString(entity)} with invalid value ({entity.Comp.CurrentValue}).");
+            return "its rim";
+        }
+
+        return entity.Comp.CurrentValue == 1 ? "heads" : "tails";
     }
 }

@@ -134,6 +134,16 @@
         Piercing: 5
     # I love this
 
+- type: entity
+  parent: BaseCoin
+  id: d2Dice
+  name: Heads or Tails Coin
+  description: Some sort of two-sided die. Truly revolutionary technology.
+  components:
+  - type: Sprite
+    state: d2_1
+
+
 # bags
 
 - type: entity
@@ -153,6 +163,7 @@
         - id: d12Dice
         - id: d20Dice
         - id: PercentileDie
+        - id: d2Dice
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: dicebag
