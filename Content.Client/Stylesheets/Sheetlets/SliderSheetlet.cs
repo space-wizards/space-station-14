@@ -7,36 +7,35 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class SliderSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, ISliderConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class SliderSheetlet<T> : ISheetlet<T>
+    where T : ISliderConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        ISliderConfig sliderCfg = sheet;
-
-        var sliderFillTex = sheet.GetTextureOr(sliderCfg.SliderFillPath, NanotrasenStylesheetFactory.TextureRoot);
+        var sliderFillTex = factory.GetTexture(config.SliderFillPath);
 
         var sliderFillBox = new StyleBoxTexture
         {
             Texture = sliderFillTex,
-            Modulate = sheet.PositivePalette.TextDark,
+            Modulate = config.PositivePalette.TextDark,
         };
 
         var sliderBackBox = new StyleBoxTexture
         {
             Texture = sliderFillTex,
-            Modulate = sheet.SecondaryPalette.BackgroundDark,
+            Modulate = config.SecondaryPalette.BackgroundDark,
         };
 
         var sliderForeBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sliderCfg.SliderOutlinePath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.SliderOutlinePath),
             Modulate = Color.FromHex("#494949") // TODO: Unhardcode.
         };
 
         var sliderGrabBox = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sliderCfg.SliderGrabber, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.SliderGrabber),
         };
 
         sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
@@ -49,8 +48,8 @@ public sealed class SliderSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet
         // var sliderFillBlue = new StyleBoxTexture(sliderFillBox) { Modulate = Color.Blue };
         // var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
-        return new StyleRule[]
-        {
+        return
+        [
             E<Slider>()
                 .Prop(Slider.StylePropertyBackground, sliderBackBox)
                 .Prop(Slider.StylePropertyForeground, sliderForeBox)
@@ -69,6 +68,6 @@ public sealed class SliderSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet
             //     .Prop(Slider.StylePropertyFill, sliderFillGreen),
             // E<Slider>().Class(StyleClass.StyleClassSliderWhite)
             //     .Prop(Slider.StylePropertyFill, sliderFillWhite),
-        };
+        ];
     }
 }
