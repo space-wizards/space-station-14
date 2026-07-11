@@ -36,6 +36,7 @@ public sealed partial class ShuttleSystem
     [Dependency] private EntityQuery<FTLSmashImmuneComponent> _immuneQuery = default!;
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<MapComponent> _mapQuery = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     private readonly SoundSpecifier _startupSound = new SoundPathSpecifier("/Audio/Effects/Shuttle/hyperspace_begin.ogg")
     {
@@ -344,7 +345,7 @@ public sealed partial class ShuttleSystem
 
         _thruster.DisableLinearThrusters(shuttle);
         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
-        _thruster.SetAngularThrust(shuttle, false);
+        _thruster.SetAngularThrustVisualState(shuttle, false);
         _dockSystem.UndockDocks(uid);
 
         component = AddComp<FTLComponent>(uid);
@@ -473,12 +474,15 @@ public sealed partial class ShuttleSystem
 
         if (!Exists(entity.Comp1.TargetCoordinates.EntityId))
         {
-            // Uhh good luck
-            // Pick earliest map?
-            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
-            var map = maps.Min(o => o.GetHashCode());
+            // Get a list of maps
+            var maps = EntityQuery<MapComponent, FTLDestinationComponent>()
+                .OrderBy(o => o.Item1.MapId.GetHashCode());
 
-            mapId = new MapId(map);
+            // Get the first map that passes the FTL whitelist
+            mapId = maps.First(o =>
+                _whitelistSystem.IsWhitelistPassOrNull(o.Item2.Whitelist, entity))
+                .Item1.MapId;
+
             TryFTLProximity(uid, _mapSystem.GetMap(mapId));
         }
         // Docking FTL
@@ -803,7 +807,7 @@ public sealed partial class ShuttleSystem
             // We don't include this in the actual targetAABB because then we would be double-expanding it.
             // Once in this loop, then again when placing the shuttle later.
             // Note that targetAABB already has expansionAmount factored in already.
-            _mapManager.FindGridsIntersecting(mapId, targetAABB.Enlarged(maxOffset), ref grids);
+            Maps.FindGridsIntersecting(mapId, targetAABB.Enlarged(maxOffset), ref grids);
 
             foreach (var grid in grids)
             {
