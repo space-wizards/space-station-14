@@ -261,11 +261,8 @@ public abstract partial class SharedStackSystem : EntitySystem
             if (split == null)
                 return;
             Hands.PickupOrDrop(user.Owner, split.Value, animate: stack.Comp.AnimatePickup);
-            // TODO: When popup prediction is better these should be combined
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
-            return;
         }
-        Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split"), user.Owner);
+        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
 
     /// <summary>
