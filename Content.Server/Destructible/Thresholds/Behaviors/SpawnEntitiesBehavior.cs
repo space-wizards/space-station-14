@@ -51,7 +51,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 executions = stack.Count;
             }
 
-            if (SpawnAfter != 0)
+            if (SpawnAfter > 0)
                 ExecuteDelayedSpawn(system, position, executions);
             else
                 ExecuteImmediateSpawn(system, owner, position, executions);
