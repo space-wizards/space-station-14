@@ -1,6 +1,6 @@
 ﻿namespace Content.Client.Stylesheets;
 
-public abstract partial class BaseStylesheet
+public abstract partial class StyleResolver
 {
     /// <summary>
     ///     The type used to describe a configuration for this stylesheet.
@@ -24,7 +24,7 @@ public abstract partial class BaseStylesheet
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
     /// </remarks>
-    protected BaseStylesheet(object config)
+    protected StyleResolver(object config)
     {
         IoCManager.InjectDependencies(this);
         _config = config;

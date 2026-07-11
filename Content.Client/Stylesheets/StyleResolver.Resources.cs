@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class BaseStylesheet
+public abstract partial class StyleResolver
 {
     /// <summary>
     ///     The file roots of the stylesheet, dictates where assets get read from for the given type of resource.
@@ -85,7 +85,7 @@ public abstract partial class BaseStylesheet
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed class MissingStyleResourceException(BaseStylesheet sheet, string target) : Exception
+public sealed class MissingStyleResourceException(StyleResolver sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
@@ -99,7 +99,7 @@ public sealed class MissingStyleResourceException(BaseStylesheet sheet, string t
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
 /// <param name="target"></param>
-public sealed class ExpectedResourceException(BaseStylesheet sheet, string target) : Exception
+public sealed class ExpectedResourceException(StyleResolver sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";

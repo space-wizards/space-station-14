@@ -8,7 +8,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class BaseStylesheet : IStyleResources
+public abstract partial class StyleResolver : IStyleResources
 {
     [Dependency] protected ISandboxHelper SandboxHelper = default!;
     [Dependency] protected IReflectionManager ReflectionManager = default!;

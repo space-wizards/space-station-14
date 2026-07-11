@@ -6,7 +6,7 @@ namespace Content.Client.Stylesheets;
 ///     The base class for all stylesheets, providing core functionality and helpers.
 /// </summary>
 [PublicAPI]
-public abstract partial class PalettedStylesheet : BaseStylesheet
+public abstract partial class PalettedStylesheet : StyleResolver
 {
     protected PalettedStylesheet(object config) : base(config)
     {

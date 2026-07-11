@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class BaseStylesheet
+public abstract partial class StyleResolver
 {
     #region Texture helpers
 

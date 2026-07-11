@@ -2,7 +2,7 @@
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class BaseStylesheet
+public abstract partial class StyleResolver
 {
     public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy, StylesheetManager man)
     {
