@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -7,13 +8,12 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class ListContainerSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class ListContainerSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig, IIconConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig buttonCfg = sheet;
-
         var box = new StyleBoxFlat() { BackgroundColor = Color.White };
 
         var rules = new List<StyleRule>(
@@ -23,7 +23,7 @@ public sealed class ListContainerSheetlet<T> : ISheetlet<T> where T : PalettedSt
                 .Box(box),
         ]);
         ButtonSheetlet<T>.MakeButtonRules<ContainerButton>(rules,
-            buttonCfg.ButtonPalette,
+            config.ButtonPalette,
             ListContainer.StyleClassListContainerButton);
 
         return rules.ToArray();
