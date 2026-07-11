@@ -8,16 +8,16 @@ namespace Content.Client.Stylesheets;
 public abstract partial class StylesheetFactory
 {
     /// <summary>
-    ///     The file roots of the stylesheet, dictates where assets get read from for the given type of resource.
-    ///     Roots will be checked in order for assets, avoid having a significant number of them.
+    /// The file roots of the stylesheet, dictates where assets get read from for the given type of resource.
+    /// Roots will be checked in order for assets, avoid having a significant number of them.
     /// </summary>
     /// <remarks>
-    ///     Must be a constant, changes to this after construction will not be reflected.
+    /// Must be a constant, changes to this after construction will not be reflected.
     /// </remarks>
     public abstract Dictionary<Type, ResPath[]> Roots { get; }
 
     /// <summary>
-    ///     Attempts to locate a resource within the stylesheet's roots.
+    /// Attempts to locate a resource within the stylesheet's roots.
     /// </summary>
     /// <param name="target">The relative path of the target resource.</param>
     /// <param name="resource">The discovered/cached resource, if any.</param>
@@ -26,12 +26,11 @@ public abstract partial class StylesheetFactory
     public bool TryGetResource<T>(ResPath target, [NotNullWhen(true)] out T? resource)
         where T : BaseResource, new()
     {
-        DebugTools.Assert(target.IsRelative,
-            "Target path must be relative. Use ResCache directly if you need an absolute file location.");
+        DebugTools.Assert(target.IsRelative, "Target path must be relative.");
 
         foreach (var root in Roots[typeof(T)])
         {
-            if (ResCache.TryGetResource(root / target, out resource))
+            if (_resourceCache.TryGetResource(root / target, out resource))
                 return true;
         }
 
@@ -40,7 +39,7 @@ public abstract partial class StylesheetFactory
     }
 
     /// <summary>
-    ///     Retrieves a resource, or throws.
+    /// Retrieves a resource, or throws.
     /// </summary>
     /// <param name="target">The relative path of the target resource.</param>
     /// <typeparam name="T">Type of the resource to read.</typeparam>
@@ -49,35 +48,9 @@ public abstract partial class StylesheetFactory
     public T GetResource<T>(ResPath target)
         where T : BaseResource, new()
     {
-        if (TryGetResource(target, out T? res))
-            return res;
-
-        throw new MissingStyleResourceException(this, target.ToString());
-    }
-
-    /// <summary>
-    ///     Retrieves a resource, or falls back to the specified root. The resource should be present at the fallback
-    ///     root, or else it throws
-    /// </summary>
-    /// <remarks>
-    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
-    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
-    /// </remarks>
-    /// <param name="target">The relative path of the target resource.</param>
-    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
-    /// <typeparam name="T">Type of the resource to read.</typeparam>
-    /// <returns>The retrieved resource</returns>
-    /// <exception cref="ExpectedResourceException">Thrown if the resource does not exist in the fallback root.</exception>
-    public T GetResourceOr<T>(ResPath target, ResPath fallbackRoot)
-        where T : BaseResource, new()
-    {
-        DebugTools.Assert(fallbackRoot.IsRooted,
-            "Fallback root must be absolute. Roots can be retrieved from the stylesheets.");
-
-        if (!ResCache.TryGetResource(fallbackRoot / target, out T? fallback))
-            throw new ExpectedResourceException(this, target.ToString());
-
-        return TryGetResource(target, out T? res) ? res : fallback;
+        return TryGetResource(target, out T? res)
+            ? res
+            : throw new MissingStyleResourceException(this, target.ToString());
     }
 }
 
