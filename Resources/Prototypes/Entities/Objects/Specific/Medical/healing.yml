@@ -405,7 +405,7 @@
   - type: Sprite
     state: pill16
   - type: Label
-    localizedLabel: dexalin 20u
+    localizedLabel: pill-label-dexalin-20u
   - type: Solution
     solution:
       reagents:
@@ -419,7 +419,7 @@
   suffix: Dexalin 20u, 7
   components:
   - type: Label
-    localizedLabel: dexalin 20u
+    localizedLabel: pill-label-dexalin-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -437,7 +437,7 @@
   - type: Sprite
     state: pill10
   - type: Label
-    localizedLabel: dylovene 20u
+    localizedLabel: pill-label-dylovene-20u
   - type: Solution
     solution:
       reagents:
@@ -451,7 +451,7 @@
   suffix: Dylovene 20u, 5
   components:
   - type: Label
-    localizedLabel: dylovene 20u
+    localizedLabel: pill-label-dylovene-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -469,7 +469,7 @@
   - type: Sprite
     state: pill17
   - type: Label
-    localizedLabel: hyronalin 20u
+    localizedLabel: pill-label-hyronalin-20u
   - type: Solution
     solution:
       reagents:
@@ -483,7 +483,7 @@
   suffix: Hyronalin 20u, 5
   components:
   - type: Label
-    localizedLabel: hyronalin 20u
+    localizedLabel: pill-label-hyronalin-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -501,7 +501,7 @@
   - type: Sprite
     state: pill9
   - type: Label
-    localizedLabel: potassium iodide 20u
+    localizedLabel: pill-label-potassium-iodide-20u
   - type: Solution
     solution:
       reagents:
@@ -515,7 +515,7 @@
   suffix: Potassium iodide 20u, 5
   components:
   - type: Label
-    localizedLabel: potassium iodide 20u
+    localizedLabel: pill-label-potassium-iodide-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -533,7 +533,7 @@
   - type: Sprite
     state: pill14
   - type: Label
-    localizedLabel: iron 20u
+    localizedLabel: pill-label-iron-20u
   - type: Solution
     solution:
       reagents:
@@ -551,7 +551,7 @@
   - type: Sprite
     state: pill13
   - type: Label
-    localizedLabel: copper 20u
+    localizedLabel: pill-label-copper-20u
   - type: Solution
     solution:
       reagents:
@@ -565,7 +565,7 @@
   suffix: Iron 20u, 5
   components:
   - type: Label
-    localizedLabel: iron 20u
+    localizedLabel: pill-label-iron-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -579,7 +579,7 @@
   suffix: Copper 20u, 5
   components:
   - type: Label
-    localizedLabel: copper 20u
+    localizedLabel: pill-label-copper-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -597,7 +597,7 @@
   - type: Sprite
     state: pill4
   - type: Label
-    localizedLabel: kelotane 20u
+    localizedLabel: pill-label-kelotane-20u
   - type: Solution
     solution:
       reagents:
@@ -611,7 +611,7 @@
   suffix: Kelotane 20u, 5
   components:
   - type: Label
-    localizedLabel: kelotane 20u
+    localizedLabel: pill-label-kelotane-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -629,7 +629,7 @@
   - type: Sprite
     state: pill8
   - type: Label
-    localizedLabel: dermaline 20u
+    localizedLabel: pill-label-dermaline-20u
   - type: Solution
     solution:
       reagents:
@@ -643,7 +643,7 @@
   suffix: Dermaline 20u, 5
   components:
   - type: Label
-    localizedLabel: dermaline 20u
+    localizedLabel: pill-label-dermaline-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -672,7 +672,7 @@
   - type: Sprite
     state: pill3
   - type: Label
-    localizedLabel: tricordrazine 20u
+    localizedLabel: pill-label-tricordrazine-20u
   - type: Solution
     solution:
       reagents:
@@ -686,7 +686,7 @@
   suffix: Tricordrazine 20u, 5
   components:
   - type: Label
-    localizedLabel: tricordrazine 20u
+    localizedLabel: pill-label-tricordrazine-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -704,7 +704,7 @@
   - type: Sprite
     state: pill5
   - type: Label
-    localizedLabel: bicaridine 20u
+    localizedLabel: pill-label-bicaridine-20u
   - type: Solution
     solution:
       reagents:
@@ -718,7 +718,7 @@
   suffix: Bicaridine 20u, 5
   components:
   - type: Label
-    localizedLabel: bicaridine 20u
+    localizedLabel: pill-label-bicaridine-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
@@ -736,7 +736,7 @@
   - type: Sprite
     state: pill21
   - type: Label
-    localizedLabel: charcoal 20u
+    localizedLabel: pill-label-charcoal-20u
   - type: Solution
     solution:
       reagents:
@@ -750,7 +750,7 @@
   suffix: Charcoal 20u, 3
   components:
   - type: Label
-    localizedLabel: charcoal 20u
+    localizedLabel: pill-label-charcoal-20u
   - type: EntityTableContainerFill
     containers:
       storagebase:
