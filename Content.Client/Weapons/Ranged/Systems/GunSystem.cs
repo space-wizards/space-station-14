@@ -296,14 +296,6 @@ public sealed partial class GunSystem : SharedGunSystem
         _recoil.KickCamera(user.Value, recoil.Normalized() * 0.5f * recoilScalar);
     }
 
-    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
-    {
-        if (uid == null || user == null || !Timing.IsFirstTimePredicted)
-            return;
-
-        PopupSystem.PopupEntity(message, uid.Value, user.Value);
-    }
-
     protected override void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? tracked = null)
     {
         if (!Timing.IsFirstTimePredicted)
