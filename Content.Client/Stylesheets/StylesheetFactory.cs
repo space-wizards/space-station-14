@@ -47,7 +47,7 @@ public abstract partial class StylesheetFactory : ISheetletConfig
             throw new MissingSheetletConstraintsException(this, sheetletType, e);
         }
 
-        return _sandboxHelper.CreateInstance(sheetletClosedType) is not ISheetlet<ISheetletConfig> sheetlet
+        return _sandboxHelper.CreateInstance(sheetletClosedType) is not ISheetlet sheetlet
             ? throw new Exception($"Failed to create instance of sheetlet type {sheetletClosedType}.")
             : sheetlet.GetRules(this, this);
     }
