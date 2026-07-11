@@ -11,14 +11,14 @@ namespace Content.Client.Stylesheets.NTSheetlets;
 public sealed class NanoLogoSheetlet<T> : ISheetlet<T>
     where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory resolver, T config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         return
         [
             E<TextureRect>()
                 .Class("NTLogoDark")
                 .Prop(TextureRect.StylePropertyTexture,
-                    resolver.GetResource<TextureResource>(new ResPath("ntlogo.svg.png")))
+                    factory.GetResource<TextureResource>(new ResPath("ntlogo.svg.png")))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#757575")),
         ];
     }
