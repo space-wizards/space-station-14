@@ -5,8 +5,8 @@ namespace Content.Server.Objectives.Components;
 /// <summary>
 /// Objective condition that tracks how many of the station's named pets have been killed.
 /// </summary>
-[RegisterComponent, Access(typeof(DrainStationPetsConditionSystem))]
-public sealed partial class DrainStationPetsConditionComponent : Component
+[RegisterComponent, Access(typeof(KillStationPetsConditionSystem))]
+public sealed partial class KillStationPetsConditionComponent : Component
 {
     /// <summary>
     /// The pets that existed when the objective was assigned.

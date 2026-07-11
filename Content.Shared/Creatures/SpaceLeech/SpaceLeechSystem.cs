@@ -6,13 +6,11 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Projectiles;
 using Content.Shared.Prying.Components;
-using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Melee.Events;
@@ -30,7 +28,6 @@ public sealed class SpaceLeechSystem : EntitySystem
 {
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -51,7 +48,6 @@ public sealed class SpaceLeechSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SpaceLeechComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SpaceLeechComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         // Action → open upgrade menu
         SubscribeLocalEvent<SpaceLeechComponent, SpaceLeechUpgradeMenuActionEvent>(OnMenuAction);
@@ -83,12 +79,6 @@ public sealed class SpaceLeechSystem : EntitySystem
     private void OnMapInit(Entity<SpaceLeechComponent> ent, ref MapInitEvent args)
     {
         ApplyUpgrades(ent);
-    }
-
-    private void OnMobStateChanged(Entity<SpaceLeechComponent> ent, ref MobStateChangedEvent args)
-    {
-        // No hiding while downed or dead.
-        _stealth.SetEnabled(ent, args.NewMobState == MobState.Alive);
     }
 
     // ── Upgrade menu ──────────────────────────────────────────────────────────

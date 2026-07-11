@@ -11,7 +11,11 @@
     context: "human"
   - type: Eye
     drawFov: true
-    drawLight: false
+  # Half-bright view
+  - type: NightVision
+    enabled: true
+    lightingColor: '#FFFFFF20'
+    overlayColor: '#FFFFFF00'
   - type: CombatMode
 
   # ── Visuals ───────────────────────────────────────────────────────────────
@@ -62,8 +66,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      400: Critical
-      500: Dead
+      200: Critical
+      300: Dead
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
@@ -95,6 +99,7 @@
 
   # ── Stealth ───────────────────────────────────────────────────────────────
   - type: Stealth
+    enabledOnDeath: false  # drop cloak on death so the corpse is visible
   - type: StealthOnMove
     passiveVisibilityRate: -0.15  # rank-0 value; overwritten by SpaceLeechSystem on MapInit
     movementVisibilityRate: 0.15
@@ -109,6 +114,13 @@
     speedModifier: 1.0  # rank-0 value; overwritten by SpaceLeechSystem on MapInit
     pryPowered: true
     force: true
+
+  # ── Innate butchering ─────────────────────────────────────────────────────
+  - type: Tool
+    qualities:
+    - Slicing
+    useSound:
+      path: /Audio/Effects/bite.ogg
 
   # ── Space Leech state ─────────────────────────────────────────────────────
   - type: SpaceLeech

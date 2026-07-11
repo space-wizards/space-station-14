@@ -9,7 +9,7 @@ namespace Content.Shared.Creatures.SpaceLeech;
 ///     Server-authoritative; networked so the client can drive the upgrade menu
 ///     and predict movement/melee modifiers from the purchased ranks.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class SpaceLeechComponent : Component
 {
     /// <summary>Spendable blood right now.</summary>

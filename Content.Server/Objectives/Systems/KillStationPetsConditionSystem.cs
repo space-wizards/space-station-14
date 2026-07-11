@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class DrainStationPetsConditionSystem : EntitySystem
+public sealed class KillStationPetsConditionSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -18,11 +18,11 @@ public sealed class DrainStationPetsConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrainStationPetsConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
-        SubscribeLocalEvent<DrainStationPetsConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<KillStationPetsConditionComponent, ObjectiveAssignedEvent>(OnAssigned);
+        SubscribeLocalEvent<KillStationPetsConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnAssigned(Entity<DrainStationPetsConditionComponent> ent, ref ObjectiveAssignedEvent args)
+    private void OnAssigned(Entity<KillStationPetsConditionComponent> ent, ref ObjectiveAssignedEvent args)
     {
         // Snapshot the pets that exist right now so ones that later get deleted
         // outright (e.g. gibbed) still count towards the objective.
@@ -40,16 +40,16 @@ public sealed class DrainStationPetsConditionSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private void OnGetProgress(Entity<DrainStationPetsConditionComponent> ent, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(Entity<KillStationPetsConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        var drained = 0;
+        var killed = 0;
 
         foreach (var pet in ent.Comp.Pets)
         {
             if (Deleted(pet) || _mobState.IsDead(pet))
-                drained++;
+                killed++;
         }
 
-        args.Progress = ent.Comp.Pets.Count == 0 ? 1f : (float) drained / ent.Comp.Pets.Count;
+        args.Progress = ent.Comp.Pets.Count == 0 ? 1f : (float) killed / ent.Comp.Pets.Count;
     }
 }

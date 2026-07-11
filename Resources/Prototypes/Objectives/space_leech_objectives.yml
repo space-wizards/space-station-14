@@ -32,7 +32,7 @@
 
 - type: entity
   parent: BaseObjective
-  id: SpaceLeechPetBloodObjective
+  id: SpaceLeechKillPetsObjective
   name: Hunt the station's pets.
   description: Find and kill all named pets aboard the station.
   components:
@@ -43,4 +43,4 @@
     issuer: objective-issuer-space-leech
     difficulty: 2.0
     unique: true
-  - type: DrainStationPetsCondition
+  - type: KillStationPetsCondition

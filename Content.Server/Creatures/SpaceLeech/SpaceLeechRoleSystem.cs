@@ -16,7 +16,7 @@ public sealed class SpaceLeechRoleSystem : EntitySystem
     [
         "SpaceLeechSurviveObjective",
         "SpaceLeechBloodObjective",
-        "SpaceLeechPetBloodObjective",
+        "SpaceLeechKillPetsObjective",
     ];
 
     public override void Initialize()
