@@ -54,7 +54,7 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     /// The NTStationWaypointer has 5 states: marker1, marker2, marker3, marker4, marker5.
     /// </example>
     [DataField]
-    public float WaypointerStates = 1f;
+    public int WaypointerStates = 1;
 
     /// <summary>
     /// The color of the waypointer.
@@ -76,10 +76,18 @@ public sealed partial class WaypointerPrototype : IPrototype, IInheritingPrototy
     public bool WorkInCombat;
 
     /// <summary>
-    /// The maximum range to where the pinpointer can track something.
+    /// The range which the waypointer scales through.
+    /// If <see cref="HideBeyondMaxRange"/> is set to false, the waypointer disappears beyond this range.
     /// </summary>
     [DataField]
-    public int MaxRange = 200;
+    public float MaxRange = 200;
+
+    /// <summary>
+    /// If true, the waypointer is hidden beyond its <see cref="MaxRange"/>.
+    /// If false, the waypointer will remain at its smallest size.
+    /// </summary>
+    [DataField]
+    public bool HideBeyondMaxRange = true;
 
     /// <summary>
     /// The whitelist that the entity needs to fulfill to be tracked.

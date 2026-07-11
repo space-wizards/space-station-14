@@ -122,13 +122,14 @@ public sealed class WaypointerOverlay : Overlay
                     // Else we simply get the distance through this.
                     distance = (positionA - positionB).Length();
 
-                if (distance > prototype.MaxRange)
+                if (prototype.HideBeyondMaxRange && distance > prototype.MaxRange)
                     continue;
 
                 // The NTStationWaypointer has 5 stages and a range of 200. With calculations, it'll check if it's either in:
                 // 0-39, 40-89, 80-119, 120-159, 160-200 range and use the respective waypointer sprite for it.
+                // We cap the distance to MaxRange in the event HideBeyondMaxRange is false.
                 var increments = prototype.MaxRange / prototype.WaypointerStates;
-                var waypointerState = Math.Truncate(distance / increments) + 1;
+                var waypointerState = Math.Min(Math.Truncate(distance / increments) + 1, prototype.WaypointerStates);
                 var stateName = "marker" + waypointerState;
 
                 var rsi = new SpriteSpecifier.Rsi(prototype.RsiPath, stateName);

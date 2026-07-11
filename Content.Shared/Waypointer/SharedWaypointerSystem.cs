@@ -14,32 +14,19 @@ namespace Content.Shared.Waypointer;
 /// <summary>
 /// This solely handles giving the Waypoint component to equipees. This cannot be done on client, or else it would.
 /// </summary>
-public abstract class SharedWaypointerSystem : EntitySystem
+public abstract partial class SharedWaypointerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] protected readonly SharedActionsSystem  _actions = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] protected SharedActionsSystem Actions = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<InnateWaypointerComponent, MapInitEvent>(OnMapInit);
-
-        SubscribeLocalEvent<ActiveWaypointerComponent, ActionManageWaypointersEvent>(OnActionPressed);
-        SubscribeLocalEvent<ActionComponent, WaypointersToggledMessage>(OnWaypointersToggled);
-        SubscribeLocalEvent<ActionComponent, WaypointerStatusChangedMessage>(OnWaypointersStatusChanged);
-
-        SubscribeLocalEvent<ClothingShowWaypointerComponent, ClothingGotEquippedEvent>(OnEquip);
-        SubscribeLocalEvent<ClothingShowWaypointerComponent, ClothingGotUnequippedEvent>(OnUnequip);
-
-        SubscribeLocalEvent<InnateWaypointerComponent, WaypointerChangedEvent>(OnWaypointerChanged);
-        SubscribeLocalEvent<ClothingShowWaypointerComponent, InventoryRelayedEvent<WaypointerChangedEvent>>(OnWaypointerChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<InnateWaypointerComponent> player, ref MapInitEvent args)
     {
         SetWaypointerComponent(player);
     }
 
+    [SubscribeLocalEvent]
     private void OnActionPressed(Entity<ActiveWaypointerComponent> player, ref ActionManageWaypointersEvent args)
     {
         if (args.Handled)
@@ -49,6 +36,7 @@ public abstract class SharedWaypointerSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     protected virtual void OnWaypointersToggled(Entity<ActionComponent> action, ref WaypointersToggledMessage args)
     {
         // Messages are sent to the action entity - So we need to get the player from the component.
@@ -57,11 +45,12 @@ public abstract class SharedWaypointerSystem : EntitySystem
             return;
 
         waypointer.Active = args.IsActive;
-        _actions.SetToggled(action.AsNullable(), args.IsActive);
+        Actions.SetToggled(action.AsNullable(), args.IsActive);
 
         Dirty(action.Comp.Container.Value, waypointer);
     }
 
+    [SubscribeLocalEvent]
     private void OnWaypointersStatusChanged(Entity<ActionComponent> action, ref WaypointerStatusChangedMessage args)
     {
         // Messages are sent to the action entity - So we need to get the player from the component.
@@ -74,21 +63,25 @@ public abstract class SharedWaypointerSystem : EntitySystem
         Dirty(action.Comp.Container.Value, waypointer);
     }
 
+    [SubscribeLocalEvent]
     private void OnEquip(Entity<ClothingShowWaypointerComponent> clothing, ref ClothingGotEquippedEvent args)
     {
         SetWaypointerComponent(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnUnequip(Entity<ClothingShowWaypointerComponent> clothing, ref ClothingGotUnequippedEvent args)
     {
         SetWaypointerComponent(args.Wearer);
     }
 
+    [SubscribeLocalEvent]
     private void OnWaypointerChanged(Entity<InnateWaypointerComponent> clothing, ref WaypointerChangedEvent args)
     {
         args.Waypointers.UnionWith(clothing.Comp.WaypointerProtoIds);
     }
 
+    [SubscribeLocalEvent]
     private void OnWaypointerChanged(Entity<ClothingShowWaypointerComponent> clothing, ref InventoryRelayedEvent<WaypointerChangedEvent> args)
     {
         args.Args.Waypointers.UnionWith(clothing.Comp.WaypointerProtoIds);

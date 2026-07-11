@@ -16,6 +16,7 @@
   - type: StationData
   color: Blue
   radialMenuIconPath: Markers/Waypointers/station_waypointer.rsi
+  hideBeyondMaxRange: false
 
 - type: waypointer
   parent: BaseWaypointer
@@ -51,3 +52,4 @@
   color: Red
   maxRange: 50
   radialMenuIconPath: Markers/Waypointers/rift_waypointer.rsi
+  hideBeyondMaxRange: false

@@ -14,39 +14,27 @@ namespace Content.Server.Waypointer;
 /// <summary>
 /// This handles the PVSOverrides for the Waypointer System.
 /// </summary>
-public sealed class WaypointerSystem : SharedWaypointerSystem
+public sealed partial class WaypointerSystem : SharedWaypointerSystem
 {
-    [Dependency] private readonly IEntityManager _entity = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IEntityManager _entity = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentInit>(OnAddition);
-        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentRemove>(OnRemoval);
-
-        SubscribeLocalEvent<WaypointerTrackableComponent, ComponentInit>(OnTrackableInit);
-
-        SubscribeLocalEvent<ActiveWaypointerComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<ActiveWaypointerComponent, PlayerDetachedEvent>(OnPlayerDetached);
-
-        SubscribeLocalEvent<ActiveWaypointerComponent, MapUidChangedEvent>(OnMapChanged);
-    }
-
+    [SubscribeLocalEvent]
     private void OnAddition(Entity<ActiveWaypointerComponent> player, ref ComponentInit args)
     {
-        _actions.AddAction(player, ref player.Comp.ActionEntity, player.Comp.ActionProtoId);
+        Actions.AddAction(player, ref player.Comp.ActionEntity, player.Comp.ActionProtoId);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoval(Entity<ActiveWaypointerComponent> player, ref ComponentRemove args)
     {
-        _actions.RemoveAction(player.Owner, player.Comp.ActionEntity);
+        Actions.RemoveAction(player.Owner, player.Comp.ActionEntity);
     }
 
+    [SubscribeLocalEvent]
     private void OnTrackableInit(Entity<WaypointerTrackableComponent> trackable, ref ComponentInit args)
     {
         // This might be a bit confusing, but I think this is the cheapest way to refresh overrides for new trackables.
@@ -105,6 +93,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerAttached(Entity<ActiveWaypointerComponent> player, ref PlayerAttachedEvent args)
     {
         if (player.Comp.WaypointerProtoIds == null)
@@ -113,6 +102,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         AddOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerDetached(Entity<ActiveWaypointerComponent> player, ref PlayerDetachedEvent args)
     {
         if (player.Comp.WaypointerProtoIds == null)
@@ -121,6 +111,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         RemoveOverrides(player, player.Comp.WaypointerProtoIds.Keys.ToHashSet());
     }
 
+    [SubscribeLocalEvent]
     private void OnMapChanged(Entity<ActiveWaypointerComponent> player, ref MapUidChangedEvent args)
     {
         // Since we only override PVS on entities on the same map, if the person switches maps, they'll need new overrides.

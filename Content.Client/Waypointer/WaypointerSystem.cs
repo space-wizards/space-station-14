@@ -12,11 +12,11 @@ namespace Content.Client.Waypointer;
 /// <summary>
 /// The client-side system handles initializing the overlay, as well as removing and adding it depending on game actions.
 /// </summary>
-public sealed class WaypointerSystem : SharedWaypointerSystem
+public sealed partial class WaypointerSystem : SharedWaypointerSystem
 {
-    [Dependency] private readonly IPlayerManager  _player = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IClientGameTiming _timing = default!;
+    [Dependency] private IPlayerManager  _player = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private IClientGameTiming _timing = default!;
 
     private WaypointerOverlay _waypointerOverlay = default!;
 
@@ -24,15 +24,10 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentInit>(OnAddition);
-        SubscribeLocalEvent<ActiveWaypointerComponent, ComponentRemove>(OnRemoval);
-
-        SubscribeLocalEvent<ActiveWaypointerComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<ActiveWaypointerComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-
         _waypointerOverlay = new WaypointerOverlay();
     }
 
+    [SubscribeLocalEvent]
     private void OnAddition(Entity<ActiveWaypointerComponent> player, ref ComponentInit args)
     {
         if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value
@@ -42,6 +37,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         _overlay.AddOverlay(_waypointerOverlay);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoval(Entity<ActiveWaypointerComponent> player, ref ComponentRemove args)
     {
         if (_player.LocalEntity == null || player.Owner != _player.LocalEntity.Value
@@ -61,6 +57,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
             _overlay.RemoveOverlay(_waypointerOverlay);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerAttached(Entity<ActiveWaypointerComponent> player, ref LocalPlayerAttachedEvent args)
     {
         if (args.Entity != _player.LocalEntity)
@@ -69,6 +66,7 @@ public sealed class WaypointerSystem : SharedWaypointerSystem
         _overlay.AddOverlay(_waypointerOverlay);
     }
 
+    [SubscribeLocalEvent]
     private void OnPlayerDetached(Entity<ActiveWaypointerComponent> player, ref LocalPlayerDetachedEvent args)
     {
         if (args.Entity != _player.LocalEntity)
