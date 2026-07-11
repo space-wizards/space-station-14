@@ -53,22 +53,23 @@ public sealed partial class ConfirmButton : Button
         set
         {
             _text = value;
-            if (!IsConfirming)
-                base.Text = value;
+            UpdateText();
         }
     }
 
-    /// <inheritdoc cref="Button.Disabled"/>
+    /// <inheritdoc cref="BaseButton.Disabled"/>
     /// <remarks>
     /// Overrides the confirming state of the button when set.
+    /// Intended for public use, should not be used inside the class due to IsConfirming side-effects.
     /// </remarks>
     public new bool Disabled
     {
         get => base.Disabled;
         set
         {
-            IsConfirming = false;
-            base.Disabled = value;
+            // Force out of confirming status (may change base.Disabled), then write your new disabled value.
+            SetIsConfirming(false);
+            SetDisabled(value);
         }
     }
 
@@ -82,8 +83,7 @@ public sealed partial class ConfirmButton : Button
         set
         {
             _confirmationText = value;
-            if (IsConfirming)
-                base.Text = value;
+            UpdateText();
         }
     }
 
@@ -108,29 +108,8 @@ public sealed partial class ConfirmButton : Button
         get => _isConfirming;
         set
         {
-            // If we have a change in state, update the text and redraw the controls.
             if (_isConfirming != value)
-            {
-                _isConfirming = value;
-                base.Text = value ? ConfirmationText : Text;
-                DrawModeChanged();
-
-                // Set the timer when changing the confirmation status.
-                if (!value)
-                {
-                    // Revert disabled state if left to transition back.
-                    if (Disabled && _nextReset != null)
-                        base.Disabled = false; // Must set the base, leave IsConfirming intact
-                    _nextReset = null;
-                    _nextCooldown = null;
-                }
-                else
-                {
-                    base.Disabled = true; // Must set the base, leave IsConfirming intact
-                    _nextCooldown = _gameTiming.CurTime + CooldownTime;
-                    _nextReset = _gameTiming.CurTime + ResetTime;
-                }
-            }
+                SetIsConfirming(value);
         }
     }
 
@@ -147,9 +126,9 @@ public sealed partial class ConfirmButton : Button
             return;
 
         if (_gameTiming.CurTime > _nextReset)
-            IsConfirming = false;
+            SetIsConfirming(false);
         else if (Disabled && _gameTiming.CurTime > _nextCooldown)
-            base.Disabled = false; // Must set the base, leave IsConfirming intact
+            SetDisabled(false);
     }
 
     protected override void DrawModeChanged()
@@ -173,10 +152,11 @@ public sealed partial class ConfirmButton : Button
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return;
         }
-
-        base.DrawModeChanged();
+        else
+        {
+            base.DrawModeChanged();
+        }
     }
 
     private void HandleOnPressed(ButtonEventArgs buttonEvent)
@@ -185,9 +165,8 @@ public sealed partial class ConfirmButton : Button
         if (IsConfirming && _nextCooldown > _gameTiming.CurTime)
             return;
 
-        // Update state before invoking our events.
-        // NOTE: this sets the text, timers, and disables the button appropriately
-        IsConfirming = !IsConfirming;
+        // Update the state machine before invoking our events.
+        SetIsConfirming(!IsConfirming);
 
         switch (IsConfirming)
         {
@@ -197,6 +176,51 @@ public sealed partial class ConfirmButton : Button
             case false:
                 OnPressed?.Invoke(buttonEvent);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Updates the text shown on the button depending on whether the button is confirming or not.
+    /// </summary>
+    private void UpdateText()
+    {
+        base.Text = IsConfirming ? ConfirmationText : Text;
+    }
+
+    /// <summary>
+    /// Internal setter logi
+    /// </summary>
+    private void SetDisabled(bool value)
+    {
+        base.Disabled = value;
+    }
+
+    /// <summary>
+    /// Internal setter logic for <see cref="IsConfirming"/>
+    /// Sets the text, the timers, and the disabled state.
+    /// </summary>
+    private void SetIsConfirming(bool value)
+    {
+        _isConfirming = value;
+
+        // Update button visuals.
+        UpdateText();
+        DrawModeChanged();
+
+        if (value)
+        {
+            // Start our timers, disable button until cooldown.
+            SetDisabled(true);
+            _nextCooldown = _gameTiming.CurTime + CooldownTime;
+            _nextReset = _gameTiming.CurTime + ResetTime;
+        }
+        else
+        {
+            // Clear timers, ensure button is enabled if it was disabled before (previous SetIsConfirming(true) call => valid reset timer)
+            if (Disabled && _nextReset != null)
+                SetDisabled(false);
+            _nextReset = null;
+            _nextCooldown = null;
         }
     }
 }
