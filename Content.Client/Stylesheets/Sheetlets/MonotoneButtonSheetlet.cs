@@ -9,15 +9,16 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T> where T : IButtonConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         // Monotone (unfilled)
         var monotoneButton = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneBaseButtonPath, NanotrasenStylesheetFactory.TextureRoot)
+            Texture = factory.GetTexture(config.MonotoneBaseButtonPath)
         };
         monotoneButton.SetPatchMargin(StyleBox.Margin.All, 11);
         monotoneButton.SetPadding(StyleBox.Margin.All, 1);
@@ -26,21 +27,21 @@ public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T> where T : IButtonCo
 
         var monotoneButtonOpenLeft = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenLeftButtonPath, NanotrasenStylesheetFactory.TextureRoot)
+            Texture = factory.GetTexture(config.MonotoneOpenLeftButtonPath)
         };
 
         var monotoneButtonOpenRight = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenRightButtonPath, NanotrasenStylesheetFactory.TextureRoot)
+            Texture = factory.GetTexture(config.MonotoneOpenRightButtonPath)
         };
 
         var monotoneButtonOpenBoth = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenBothButtonPath, NanotrasenStylesheetFactory.TextureRoot)
+            Texture = factory.GetTexture(config.MonotoneOpenBothButtonPath)
         };
 
         // Monotone (filled)
-        var buttonTex = sheet.GetTextureOr(sheet.OpenLeftButtonPath, NanotrasenStylesheetFactory.TextureRoot);
+        var buttonTex = factory.GetTexture(config.OpenLeftButtonPath);
         var monotoneFilledButton = new StyleBoxTexture(monotoneButton)
         {
             Texture = buttonTex
