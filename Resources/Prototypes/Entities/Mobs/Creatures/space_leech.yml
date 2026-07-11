@@ -69,6 +69,7 @@
       200: Critical
       300: Dead
   - type: Damageable
+  - type: Injurable
     damageContainer: Biological
   - type: Destructible
     thresholds:
