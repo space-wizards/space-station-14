@@ -32,10 +32,11 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     }
 
     private SortField _currentSortField = SortField.PlayerType;
-    private bool _sortDescending = false;
+    private bool _sortDescending;
 
     public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, int roundId, RoundEndPlayerInfo[] info)
     {
+        IoCManager.InjectDependencies(this);
         _playersInfo = info;
 
         MinSize = SetSize = new Vector2(720, 580);
@@ -46,7 +47,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         // and the other is a list of RoundEndPlayerInfo for each player.
         // This tab would be a good place for things like: "x many people died.",
         // "clown slipped the crew x times.", "x shots were fired this round.", etc.
-        // Also good for serious info.
+        // Also, good for serious info.
 
         RoundId = roundId;
         var roundEndTabs = new TabContainer();
@@ -252,48 +253,6 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         }
     }
 
-    private IEnumerable<RoundEndPlayerInfo> GetSortedPlayers()
-    {
-        // First filter players based on search text
-        var filteredPlayers = string.IsNullOrEmpty(_searchText)
-            ? _playersInfo
-            : _playersInfo.Where(PlayerMatchesSearch);
-
-        static string GetIcKey(RoundEndPlayerInfo p) =>
-                (p.PlayerICName ?? p.PlayerOOCName ?? string.Empty).ToLowerInvariant();
-
-        static string GetOocKey(RoundEndPlayerInfo p) =>
-            (p.PlayerOOCName ?? string.Empty).ToLowerInvariant();
-
-        static string GetRoleKey(RoundEndPlayerInfo p) =>
-            (p.Observer ? "zzz_observer" : p.Role ?? string.Empty).ToLowerInvariant();
-
-        static int GetPlayerTypeSortKey(RoundEndPlayerInfo p) =>
-            p.Antag ? 1 : p.Observer ? 3 : 2;
-
-        return _currentSortField switch
-        {
-            SortField.ICName => ApplySort(filteredPlayers, GetIcKey, _sortDescending),
-            SortField.OOCName => ApplySort(filteredPlayers, GetOocKey, _sortDescending),
-            SortField.Role => ApplySort(filteredPlayers, GetRoleKey, _sortDescending),
-            SortField.PlayerType => ApplySort(filteredPlayers, GetPlayerTypeSortKey, _sortDescending),
-            _ => filteredPlayers
-        };
-    }
-
-    private static IEnumerable<RoundEndPlayerInfo> ApplySort<TKey>(
-        IEnumerable<RoundEndPlayerInfo> players,
-        Func<RoundEndPlayerInfo, TKey> primaryKey,
-        bool descending)
-    {
-        static string SecondaryKey(RoundEndPlayerInfo p) =>
-            (p.PlayerICName ?? p.PlayerOOCName ?? string.Empty).ToLowerInvariant();
-
-        return descending
-            ? players.OrderByDescending(primaryKey).ThenByDescending(SecondaryKey)
-            : players.OrderBy(primaryKey).ThenBy(SecondaryKey);
-    }
-
     /// <summary>
     /// Adds a single player row to the grid with all columns (sprite, IC name, role, player type, OOC name)
     /// </summary>
@@ -395,6 +354,48 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
         return Loc.GetString("round-end-summary-window-player-manifest-tab-sort-player-type-crew");
     }
 
+    private IEnumerable<RoundEndPlayerInfo> GetSortedPlayers()
+    {
+        // First filter players based on search text
+        var filteredPlayers = string.IsNullOrEmpty(_searchText)
+            ? _playersInfo
+            : _playersInfo.Where(PlayerMatchesSearch);
+
+        static string GetIcKey(RoundEndPlayerInfo p) =>
+                (p.PlayerICName ?? p.PlayerOOCName).ToLowerInvariant();
+
+        static string GetOocKey(RoundEndPlayerInfo p) =>
+            p.PlayerOOCName.ToLowerInvariant();
+
+        static string GetRoleKey(RoundEndPlayerInfo p) =>
+            (p.Observer ? "zzz_observer" : p.Role).ToLowerInvariant();
+
+        static int GetPlayerTypeSortKey(RoundEndPlayerInfo p) =>
+            p.Antag ? 1 : p.Observer ? 3 : 2;
+
+        return _currentSortField switch
+        {
+            SortField.ICName => ApplySort(filteredPlayers, GetIcKey, _sortDescending),
+            SortField.OOCName => ApplySort(filteredPlayers, GetOocKey, _sortDescending),
+            SortField.Role => ApplySort(filteredPlayers, GetRoleKey, _sortDescending),
+            SortField.PlayerType => ApplySort(filteredPlayers, GetPlayerTypeSortKey, _sortDescending),
+            _ => filteredPlayers
+        };
+    }
+
+    private static IEnumerable<RoundEndPlayerInfo> ApplySort<TKey>(
+        IEnumerable<RoundEndPlayerInfo> players,
+        Func<RoundEndPlayerInfo, TKey> primaryKey,
+        bool descending)
+    {
+        static string SecondaryKey(RoundEndPlayerInfo p) =>
+            (p.PlayerICName ?? p.PlayerOOCName).ToLowerInvariant();
+
+        return descending
+            ? players.OrderByDescending(primaryKey).ThenByDescending(SecondaryKey)
+            : players.OrderBy(primaryKey).ThenBy(SecondaryKey);
+    }
+
     /// <summary>
     /// Gets a sort key for player type to ensure consistent ordering: Antagonist -> Crew -> Observer
     /// </summary>
@@ -449,7 +450,6 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
     private sealed class SortButton : Button
     {
         public SortField Field { get; }
-        private readonly Label _label;
         private readonly Label _sortIndicator;
 
         public SortButton(string text, SortField field)
@@ -463,7 +463,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
                 HorizontalExpand = true
             };
 
-            _label = new Label
+            var label = new Label
             {
                 Text = text,
                 HorizontalExpand = true
@@ -476,7 +476,7 @@ public sealed partial class RoundEndSummaryWindow : DefaultWindow
                 MinSize = new Vector2(15, 1)
             };
 
-            container.AddChild(_label);
+            container.AddChild(label);
             container.AddChild(_sortIndicator);
 
             AddChild(container);
