@@ -1,22 +1,25 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Lobby.UI;
 
-[Sheetlet]
-public sealed class HumanoidProfileEditorSheetlet : ISheetlet<PalettedStylesheet>
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class HumanoidProfileEditorSheetlet<T> : ISheetlet<T>
+    where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         return
         [
             E<TextureButton>()
                 .Identifier("SpeciesInfoDefault")
                 .Prop(TextureButton.StylePropertyTexture,
-                    ResCache.GetTexture("/Textures/Interface/VerbIcons/information.svg.192dpi.png")),
+                    factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/information.svg.192dpi.png"))),
             // copied from `StyleNano`, but this is unused
             // E<TextureButton>()
             //     .Identifier("SpeciesInfoWarning")
