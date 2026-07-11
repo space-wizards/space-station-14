@@ -243,7 +243,9 @@ public sealed partial class MindSystem : SharedMindSystem
             RemComp<VisitingMindComponent>(entity!.Value);
             // If you are transferring to your own ghost then you can no longer return to body
             if (TryComp(entity.Value, out GhostComponent? ghostComponent))
+            {
                 _ghosts.SetCanReturnToBody((entity.Value, ghostComponent), false);
+            }
         }
         else if (mind.VisitingEntity != null
               && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
