@@ -87,3 +87,6 @@ reagent-desc-toxintrash = An awful-smelling slurry efficiently refined from disc
 
 reagent-name-hemorrhinol = hemorrhinol
 reagent-desc-hemorrhinol = A toxin that causes severe damage to blood vessels, causing rapid bleeding.
+
+reagent-name-hivarol = Hivarol
+reagent-desc-hivarol = A toxin that obscures hivemind communication within a body, causing severe pain and distress if one is present.

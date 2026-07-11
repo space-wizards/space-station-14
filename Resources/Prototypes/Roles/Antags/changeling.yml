@@ -21,6 +21,7 @@
     replacementOrgans:
       Lungs: OrganChangelingLungs
       Stomach: OrganChangelingStomach
+      Heart: OrganChangelingHeart
   - type: ZombieImmune
   - type: ActionGrant
     actions:

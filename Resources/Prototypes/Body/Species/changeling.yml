@@ -27,3 +27,7 @@
       - Pill
       - Crayon
       - Paper
+
+- type: entity
+  parent: [ OrganBaseHeart, OrganHumanInternal, OrganChangelingMetabolizer ]
+  id: OrganChangelingHeart

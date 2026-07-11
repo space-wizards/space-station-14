@@ -58,3 +58,15 @@
       amount: 1
   products:
     Holywater: 1
+
+- type: reaction
+  id: Hivarol
+  reactants:
+    LivingBlood:
+      amount: 1
+    Omnizine:
+      amount: 1
+    Sulfur:
+      amount: 1
+  products:
+    Hivarol: 1
