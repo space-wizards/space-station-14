@@ -54,7 +54,7 @@ public abstract partial class StylesheetFactory
             : throw new MissingStyleResourceException(this, target.ToString());
     }
 
-        /// <summary>
+    /// <summary>
     ///     Attempts to locate a texture within the stylesheet's roots.
     /// </summary>
     /// <param name="target">The relative path of the target resource.</param>

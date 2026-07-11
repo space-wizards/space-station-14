@@ -1,12 +1,7 @@
-﻿using System.Linq;
-using Content.Client.Stylesheets.Fonts;
-using Content.Client.Stylesheets.Palette;
+﻿using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Robust.Client.ResourceManagement;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Stylesheets;
 

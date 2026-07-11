@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Stylesheets.Stylesheets;
 
 [Virtual]
-public partial class SystemStylesheetFactory : CommonStylesheetFactory, IPaletteConfig
+public class SystemStylesheetFactory : CommonStylesheetFactory, IPaletteConfig
 {
     public override Dictionary<Type, ResPath[]> Roots => new()
     {

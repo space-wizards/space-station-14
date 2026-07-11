@@ -5,14 +5,15 @@ namespace Content.Client.Stylesheets;
 
 public interface IStylesheetManager
 {
-    /// Nanotrasen styles: the default style! Use this for most UIs
+    /// <summary>
+    /// Default UI style, used for in-game/in-context UIs, but used basically everywhere anyways.
+    /// </summary>
     Stylesheet SheetNanotrasen { get; }
 
-    ///
-    /// System styles: use this for any admin / debug menus, and any odds and ends (like the changelog for some reason)
-    ///
+    /// <summary>
+    /// For heavily out-of-context UIs, such as admin UIs/debug UIs/changelog.
+    /// </summary>
     Stylesheet SheetSystem { get; }
-
 
     [Obsolete("Update to use SheetNanotrasen instead")]
     Stylesheet SheetNano { get; }
@@ -20,13 +21,10 @@ public interface IStylesheetManager
     [Obsolete("Update to use SheetSystem instead")]
     Stylesheet SheetSpace { get; }
 
-    /// get a stylesheet by name
-    public bool TryGetStylesheet(string name, [MaybeNullWhen(false)]  out Stylesheet stylesheet);
+    /// <summary>
+    /// Resolve a stylesheet by name
+    /// </summary>
+    bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet);
 
     void Initialize();
-
-    ///
-    /// Sheetlets marked with CommonSheetlet that have not satisfied the type constraints of any stylesheet
-    ///
-    public HashSet<Type> UnusedSheetlets { get; }
 }
