@@ -37,7 +37,7 @@ public sealed partial class ScreechSystem : EntitySystem
         SubscribeLocalEvent<ScreechShockWaveComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NoiseProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
         SubscribeLocalEvent<NoiseProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
-        SubscribeLocalEvent<ActionsComponent, ScreechActionEvent>(OnScreechAction);
+        SubscribeLocalEvent<ScreechActionComponent, ScreechActionEvent>(OnScreechAction);
         SubscribeLocalEvent<NoiseProtectionComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -49,11 +49,11 @@ public sealed partial class ScreechSystem : EntitySystem
         }
     }
 
-    private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
+    private void OnScreechAction(Entity<ScreechActionComponent> ent, ref ScreechActionEvent args)
     {
         args.Handled = true;
-        if (TryComp<ScreechActionComponent>(args.Action, out var param))
-            Screech(ent.Owner, param.Range, param.Vfx, param.ScreechSound, param.SoundRange, param.Effects);
+        var param = ent.Comp; // shorthand
+        Screech(args.Performer, param.Range, param.Vfx, param.ScreechSound, param.SoundRange, param.Effects);
     }
 
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
