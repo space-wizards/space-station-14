@@ -8,15 +8,15 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class PlaceholderSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IPlaceholderConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class PlaceholderSheetlet<T> : ISheetlet<T>
+    where T : IPlaceholderConfig, IFontConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IPlaceholderConfig placeholderCfg = sheet;
+        IPlaceholderConfig placeholderCfg = config;
 
-        var placeholderBox = sheet.GetTextureOr(placeholderCfg.PlaceholderPath, NanotrasenStylesheetFactory.TextureRoot)
-            .IntoPatch(StyleBox.Margin.All, 19);
+        var placeholderBox = factory.GetTexture(placeholderCfg.PlaceholderPath).IntoPatch(StyleBox.Margin.All, 19);
         placeholderBox.SetExpandMargin(StyleBox.Margin.All, -5);
         placeholderBox.Mode = StyleBoxTexture.StretchMode.Tile;
 
@@ -27,7 +27,7 @@ public sealed class PlaceholderSheetlet<T> : ISheetlet<T> where T: PalettedStyle
                 .Prop(Placeholder.StylePropertyPanel, placeholderBox),
             E<Label>()
                 .Class(Placeholder.StyleClassPlaceholderText)
-                .Font(sheet.BaseFont.GetFont(16))
+                .Font(config.BaseFont.GetFont(16))
                 .FontColor(new Color(103, 103, 103, 128)), // TODO: fix hardcoded color
         ];
     }
