@@ -49,6 +49,7 @@
       item:
         name: clothing-boots-sidearm
         priority: 4
+        ejectOnBreak: true
         whitelist:
           tags:
           - Knife

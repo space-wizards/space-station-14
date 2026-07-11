@@ -47,7 +47,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
     /// <summary> Normal interactions. </summary>
     private void OnInteractUsing(Entity<ToolRefinableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, ent.Comp.QualityNeeded))
             return;
 
         var component = ent.Comp;
@@ -86,14 +86,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
                 ? null
                 : Loc.GetString(ent.Comp.ToolMissingQualityTooltip, ("target", ent.Owner));
         }
-        // make an attempt to ensure refinement is not blocked.
-        var attemptEvent = new AttemptToolRefineEvent(tool);
-        RaiseLocalEvent(args.Target, ref attemptEvent);
-
-        if (attemptEvent.IsCancelled)
+        else
         {
-            verbDisabled = true;
-            verbMessage = attemptEvent.BlockCause;
+            // We have the necessary tool, make an attempt to ensure refinement is not blocked.
+            var attemptEvent = new AttemptToolRefineEvent(tool);
+            RaiseLocalEvent(args.Target, ref attemptEvent);
+
+            if (attemptEvent.IsCancelled)
+            {
+                verbDisabled = true;
+                verbMessage = attemptEvent.BlockCause;
+            }
         }
 
         verbMessage ??= component.VerbDefaultTooltip == null
@@ -181,19 +184,17 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         if (!TryComp<ToolRefinableSolutionComponent>(source, out var comp))
             return;
 
-        TryGetSourceSolutionForTransfer(source, comp.SolutionToSplit, out var solutionInfo);
+        if (!TryGetSourceSolutionForTransfer(source, comp.SolutionToSplit, out var solutionInfo))
+            return;
 
-        foreach (var spawnedUid in spawned)
+        var (sourceSoln, sourceSolution) = solutionInfo.Value;
+
+        for (var i = spawned.Count; i > 0; i--)
         {
-            // Fills refine result if original entity allows.
-            if (solutionInfo.HasValue && comp.SolutionToSet != null)
-            {
-                var (sourceSoln, sourceSolution) = solutionInfo.Value;
-                var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(spawns.Count);
-
-                var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
-                FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
-            }
+            var spawnedUid = spawned[i - 1];
+            var refineResultVolume = sourceSolution.Volume / FixedPoint2.New(i);
+            var lostSolution = _solutionContainer.SplitSolution(sourceSoln, refineResultVolume);
+            FillResult(spawnedUid, comp.SolutionToSet, lostSolution);
         }
     }
 

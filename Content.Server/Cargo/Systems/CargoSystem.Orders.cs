@@ -183,7 +183,7 @@ namespace Content.Server.Cargo.Systems
 
             if (!_accessReaderSystem.IsAllowed(player, uid))
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-order-not-allowed"));
+                _popup.PopupCursor(Loc.GetString("cargo-console-order-not-allowed"), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -197,7 +197,7 @@ namespace Content.Server.Cargo.Systems
                 || !TryGetOrderDatabase(station, out var orderDatabase)
             )
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-station-not-found"));
+                _popup.PopupCursor(Loc.GetString("cargo-console-station-not-found"), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -212,7 +212,7 @@ namespace Content.Server.Cargo.Systems
             // Invalid order
             if (!ProtoMan.Resolve(order.Product, out var product))
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-invalid-product"));
+                _popup.PopupCursor(Loc.GetString("cargo-console-invalid-product"), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -222,7 +222,7 @@ namespace Content.Server.Cargo.Systems
 
             if (amount > capacity)
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-too-many"));
+                _popup.PopupCursor(Loc.GetString("cargo-console-too-many"), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -233,7 +233,7 @@ namespace Content.Server.Cargo.Systems
             // Not enough balance
             if (cost > accountBalance)
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)));
+                _popup.PopupCursor(Loc.GetString("cargo-console-insufficient-funds", ("cost", cost)), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -422,7 +422,7 @@ namespace Content.Server.Cargo.Systems
 
             if (amount + args.Amount > orderDatabase.Capacity)
             {
-                ConsolePopup(args.Actor, Loc.GetString("cargo-console-too-many"));
+                _popup.PopupCursor(Loc.GetString("cargo-console-too-many"), args.Actor);
                 PlayDenySound(uid, component);
                 return;
             }
@@ -558,11 +558,6 @@ namespace Content.Server.Cargo.Systems
             if (account == bank.PrimaryAccount)
                 orders = allOrders;
             return [.. orders.Where(order => order.Visible && (approved == null || order.Approved == approved))];
-        }
-
-        private void ConsolePopup(EntityUid actor, string text)
-        {
-            _popup.PopupCursor(text, actor);
         }
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
