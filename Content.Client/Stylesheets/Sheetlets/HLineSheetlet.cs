@@ -1,3 +1,5 @@
+using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -5,22 +7,23 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class HLineSheetlet : ISheetlet<PalettedStylesheet>
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class HLineSheetlet<T> : ISheetlet<T>
+    where T : IPaletteConfig
 {
-    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         return
         [
             E<HLine>()
                 .Class(StyleClass.Positive)
-                .Panel(new StyleBoxFlat(sheet.PositivePalette.Text)),
+                .Panel(new StyleBoxFlat(config.PositivePalette.Text)),
             E<HLine>()
                 .Class(StyleClass.Highlight)
-                .Panel(new StyleBoxFlat(sheet.HighlightPalette.Text)),
+                .Panel(new StyleBoxFlat(config.HighlightPalette.Text)),
             E<HLine>()
                 .Class(StyleClass.Negative)
-                .Panel(new StyleBoxFlat(sheet.NegativePalette.Text)),
+                .Panel(new StyleBoxFlat(config.NegativePalette.Text)),
         ];
     }
 }
