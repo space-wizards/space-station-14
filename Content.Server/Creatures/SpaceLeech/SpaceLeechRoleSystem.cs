@@ -8,9 +8,9 @@ namespace Content.Server.Creatures.SpaceLeech;
 /// <summary>
 /// Hands out the space leech's objectives when a player takes over the ghost role.
 /// </summary>
-public sealed class SpaceLeechRoleSystem : EntitySystem
+public sealed partial class SpaceLeechRoleSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
 
     private static readonly EntProtoId[] Objectives =
     [

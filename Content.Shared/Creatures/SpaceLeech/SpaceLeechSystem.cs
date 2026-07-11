@@ -24,14 +24,14 @@ namespace Content.Shared.Creatures.SpaceLeech;
 /// resolve identically on client and server; all state changes are server-authoritative
 /// through the networked <see cref="SpaceLeechComponent"/>.
 /// </summary>
-public sealed class SpaceLeechSystem : EntitySystem
+public sealed partial class SpaceLeechSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     private static readonly ProtoId<SpaceLeechUpgradePrototype> PredatorUpgrade = "SpaceLeechUpgradePredator";
     private static readonly ProtoId<SpaceLeechUpgradePrototype> QuicknessUpgrade = "SpaceLeechUpgradeQuickness";

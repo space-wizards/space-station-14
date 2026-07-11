@@ -7,9 +7,9 @@ namespace Content.Client.Creatures.SpaceLeech;
 /// Refreshes the open upgrade menu whenever new <see cref="SpaceLeechComponent"/> state arrives.
 /// The menu is driven entirely by the networked component; there is no separate BUI state.
 /// </summary>
-public sealed class SpaceLeechUiSystem : EntitySystem
+public sealed partial class SpaceLeechUiSystem : EntitySystem
 {
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {

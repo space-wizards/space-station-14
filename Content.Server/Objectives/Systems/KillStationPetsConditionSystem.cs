@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class KillStationPetsConditionSystem : EntitySystem
+public sealed partial class KillStationPetsConditionSystem : EntitySystem
 {
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     private static readonly ProtoId<TagPrototype> StationPetTag = "StationPet";
 
