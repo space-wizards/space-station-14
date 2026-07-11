@@ -34,13 +34,13 @@ public sealed partial class SeedExtractorSystem : EntitySystem
 
         if (_botany.TryGetPlantComponent<PlantTraitSeedlessComponent>(snapshot, produce.PlantProtoId, out _))
         {
-            _popup.PopupPredictedCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
+            _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User,
                 PopupType.MediumCaution);
             return;
         }
 
-        _popup.PopupPredictedCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
+        _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User,
             PopupType.Medium);
 
@@ -49,7 +49,7 @@ public sealed partial class SeedExtractorSystem : EntitySystem
 
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var amount = random.Next(ent.Comp.BaseMinSeeds, ent.Comp.BaseMaxSeeds + 1);
+        var amount = random.NextFloat(ent.Comp.BaseSeeds.Min, ent.Comp.BaseSeeds.Max + 1);
         var coords = Transform(ent).Coordinates;
 
         for (var i = 0; i < amount; i++)

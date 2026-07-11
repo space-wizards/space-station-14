@@ -29,8 +29,8 @@ public sealed partial class PlantTraitKudzuComponent : PlantTraitsComponent
     [DataField, AutoNetworkedField]
     public float WeedGrowthAmount = 1f;
 
-    public override IEnumerable<string> GetTraitStateMarkup()
+    public PlantTraitKudzuComponent()
     {
-        yield return Loc.GetString("mutation-plant-kudzu");
+        TraitState = "mutation-plant-kudzu";
     }
 }

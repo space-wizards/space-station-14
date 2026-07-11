@@ -15,8 +15,8 @@ public sealed partial class PlantTraitUnviableComponent : PlantTraitsComponent
     [DataField, AutoNetworkedField]
     public float UnviableDamage = 6f;
 
-    public override IEnumerable<string> GetTraitStateMarkup()
+    public PlantTraitUnviableComponent()
     {
-        yield return Loc.GetString("mutation-plant-unviable");
+        TraitState = "mutation-plant-unviable";
     }
 }

@@ -27,7 +27,7 @@ public sealed partial class PlantChemicalsSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantChemicalsComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossChemicals(ref ent.Comp.Chemicals, pollenData.Chemicals);
+        _mutation.CrossChemicals(ent, ref ent.Comp.Chemicals, pollenData.Chemicals);
         Dirty(ent);
     }
 

@@ -1,5 +1,4 @@
 using Content.Shared.Botany.Systems;
-using Content.Shared.Random;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Botany.Components;

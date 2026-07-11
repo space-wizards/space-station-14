@@ -31,18 +31,18 @@ public sealed partial class PlantSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossInt(ref ent.Comp.Yield, pollenData.Yield);
-        _mutation.CrossInt(ref ent.Comp.GrowthStages, pollenData.GrowthStages);
-        _mutation.CrossFloat(ref ent.Comp.Endurance, pollenData.Endurance);
-        _mutation.CrossFloat(ref ent.Comp.Lifespan, pollenData.Lifespan);
-        _mutation.CrossFloat(ref ent.Comp.Maturation, pollenData.Maturation);
-        _mutation.CrossFloat(ref ent.Comp.Production, pollenData.Production);
-        _mutation.CrossFloat(ref ent.Comp.Potency, pollenData.Potency);
+        _mutation.CrossInt(ent, ref ent.Comp.Yield, pollenData.Yield);
+        _mutation.CrossInt(ent, ref ent.Comp.GrowthStages, pollenData.GrowthStages);
+        _mutation.CrossFloat(ent, ref ent.Comp.Endurance, pollenData.Endurance);
+        _mutation.CrossFloat(ent, ref ent.Comp.Lifespan, pollenData.Lifespan);
+        _mutation.CrossFloat(ent, ref ent.Comp.Maturation, pollenData.Maturation);
+        _mutation.CrossFloat(ent, ref ent.Comp.Production, pollenData.Production);
+        _mutation.CrossFloat(ent, ref ent.Comp.Potency, pollenData.Potency);
         Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantComponent> ent, ref PlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
@@ -80,10 +80,8 @@ public sealed partial class PlantSystem : EntitySystem
 
             foreach (var trait in AllComps<PlantTraitsComponent>(ent.Owner))
             {
-                foreach (var markup in trait.GetTraitStateMarkup())
-                {
-                    args.PushMarkup(markup);
-                }
+                if (trait.TraitState != null)
+                    args.PushMarkup(Loc.GetString(trait.TraitState.Value));
             }
         }
     }
@@ -107,11 +105,11 @@ public sealed partial class PlantSystem : EntitySystem
 
         foreach (var uid in toUpdate)
         {
-            Update(uid);
+            UpdatePlant(uid);
         }
     }
 
-    public void Update(Entity<PlantComponent?> ent)
+    public void UpdatePlant(Entity<PlantComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
@@ -139,7 +137,7 @@ public sealed partial class PlantSystem : EntitySystem
             return;
 
         TryGetTray(ent, out var trayEnt);
-        var plantGrow = new OnPlantGrowEvent(GetNetEntity(trayEnt.Owner));
+        var plantGrow = new PlantGrowEvent(GetNetEntity(trayEnt.Owner));
         RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
@@ -151,7 +149,7 @@ public sealed partial class PlantSystem : EntitySystem
         }
 
         if (plantHolder.Health <= 0)
-            _plantHolder.Die(ent.Owner);
+            _plantHolder.KillPlant(ent.Owner);
     }
 
     /// <summary>
@@ -170,7 +168,7 @@ public sealed partial class PlantSystem : EntitySystem
         DirtyField(ent.Owner, plantHolder, nameof(plantHolder.ForceUpdate));
 
         _plantHolder.AdjustsSkipAging(ent.Owner, 1);
-        Update(ent);
+        UpdatePlant(ent);
     }
 
     /// <summary>

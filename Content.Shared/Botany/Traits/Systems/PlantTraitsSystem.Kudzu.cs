@@ -13,7 +13,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantTraitKudzuComponent> ent, ref PlantGrowEvent args)
     {
         var trayUid = GetEntity(args.Tray);
         if (!TryComp<PlantTrayComponent>(trayUid, out var trayComp))
@@ -27,7 +27,7 @@ public sealed partial class PlantTraitKudzuSystem : EntitySystem
         {
             EntityManager.PredictedSpawn(ent.Comp.KudzuPrototype, _transform.GetMapCoordinates(ent.Owner));
             RemComp<PlantTraitKudzuComponent>(ent.Owner);
-            _plantHolder.Die(ent.Owner);
+            _plantHolder.KillPlant(ent.Owner);
         }
     }
 }

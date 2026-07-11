@@ -22,7 +22,7 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        var targetValue = args.Effect.TargetValue;
+        var targetDataField = args.Effect.TargetDataField;
         var targetComponent = args.Effect.TargetComponent;
 
         if (!_componentFactory.TryGetRegistration(targetComponent, out var registration))
@@ -34,11 +34,11 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         if (!EntityManager.TryGetComponent(entity.Owner, registration.Type, out var plantComp))
             return;
 
-        var field = registration.Type.GetField(targetValue);
+        var field = registration.Type.GetField(targetDataField);
         if (field == null)
         {
             Log.Error(
-                $"{nameof(PlantChangeStat)} Error: Field '{targetValue}' not found on component '{targetComponent}'. Did you misspell it?");
+                $"{nameof(PlantChangeStat)} Error: Field '{targetDataField}' not found on component '{targetComponent}'. Did you misspell it?");
             return;
         }
 
@@ -57,12 +57,12 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
                 break;
             default:
                 Log.Error(
-                    $"{nameof(PlantChangeStat)} Error: Field '{targetValue}' on component '{targetComponent}' has unsupported type '{currentValue.GetType().Name}'.");
+                    $"{nameof(PlantChangeStat)} Error: Field '{targetDataField}' on component '{targetComponent}' has unsupported type '{currentValue.GetType().Name}'.");
                 return;
         }
 
-        var min = args.Effect.MinValue;
-        var max = args.Effect.MaxValue;
+        var min = args.Effect.ApplyRange.Min;
+        var max = args.Effect.ApplyRange.Max;
 
         // If the range is degenerate, only move toward that value.
         if (MathHelper.CloseTo(min, max))

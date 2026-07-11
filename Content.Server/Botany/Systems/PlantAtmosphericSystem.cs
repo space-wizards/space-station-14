@@ -12,7 +12,7 @@ public sealed partial class PlantAtmosphericSystem : SharedPlantAtmosphericSyste
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantAtmosphericComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantAtmosphericComponent> ent, ref PlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;

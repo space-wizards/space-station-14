@@ -26,13 +26,13 @@ public sealed partial class PlantGrowthSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ref ent.Comp.WaterConsumption, pollenData.WaterConsumption);
-        _mutation.CrossFloat(ref ent.Comp.NutrientConsumption, pollenData.NutrientConsumption);
+        _mutation.CrossFloat(ent, ref ent.Comp.WaterConsumption, pollenData.WaterConsumption);
+        _mutation.CrossFloat(ent, ref ent.Comp.NutrientConsumption, pollenData.NutrientConsumption);
         Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantGrowthComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantGrowthComponent> ent, ref PlantGrowEvent args)
     {
         var (plantUid, plantComp) = ent;
         var trayUid = GetEntity(args.Tray);

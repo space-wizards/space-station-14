@@ -67,7 +67,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
             ent.Comp.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
             ent.Comp.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
 
-            _popup.PopupClient(Loc.GetString("botany-swab-from"), targetPlant, args.Args.User);
+            _popup.PopupEntity(Loc.GetString("botany-swab-from"), targetPlant, args.Args.User);
         }
         else
         {
@@ -82,7 +82,7 @@ public sealed partial class BotanySwabSystem : EntitySystem
             ent.Comp.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
             ent.Comp.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
 
-            _popup.PopupClient(Loc.GetString("botany-swab-to"), targetPlant, args.Args.User);
+            _popup.PopupEntity(Loc.GetString("botany-swab-to"), targetPlant, args.Args.User);
         }
 
         Dirty(ent);

@@ -1,4 +1,5 @@
 using Content.Shared.Botany.Items.Systems;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Botany.Items.Components;
@@ -11,16 +12,10 @@ namespace Content.Shared.Botany.Items.Components;
 public sealed partial class BotanySampleTakerComponent : Component
 {
     /// <summary>
-    /// Minimum damage dealt to the plant when taking a sample.
+    /// Damage range to deal to the plant when taking a sample.
     /// </summary>
     [DataField]
-    public int MinSampleDamage = 30;
-
-    /// <summary>
-    /// Maximum damage dealt to the plant when taking a sample.
-    /// </summary>
-    [DataField]
-    public int MaxSampleDamage = 50;
+    public MinMax SampleDamage = new(30, 50);
 
     /// <summary>
     /// Minimum growth stage of the plant to take a sample.

@@ -12,7 +12,7 @@ public sealed partial class PlantConsumeExudeGasSystem : SharedPlantConsumeExude
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantConsumeExudeGasComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantConsumeExudeGasComponent> ent, ref PlantGrowEvent args)
     {
         if (!TryComp<PlantComponent>(ent.Owner, out var plant)
             || !TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))

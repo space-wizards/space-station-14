@@ -8,8 +8,8 @@ namespace Content.Shared.Botany.Traits.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PlantTraitSeedlessComponent : PlantTraitsComponent
 {
-    public override IEnumerable<string> GetTraitStateMarkup()
+    public PlantTraitSeedlessComponent()
     {
-        yield return Loc.GetString("mutation-plant-seedless");
+        TraitState = "mutation-plant-seedless";
     }
 }

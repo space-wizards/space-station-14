@@ -26,10 +26,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: WaterConsumption
         targetComponent: PlantGrowth
-        minValue: 0.3
-        maxValue: 0.9
+        targetDataField: WaterConsumption
+        applyRange:
+          min: 0.3
+          max: 0.9
         up: !type:PlantAdjustWaterConsumption
           amount: 5
         down: !type:PlantAdjustWaterConsumption
@@ -38,10 +39,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: NutrientConsumption
         targetComponent: PlantGrowth
-        minValue: 0.05
-        maxValue: 1.2
+        targetDataField: NutrientConsumption
+        applyRange:
+          min: 0.05
+          max: 1.2
         up: !type:PlantAdjustNutrientConsumption
           amount: 5
         down: !type:PlantAdjustNutrientConsumption
@@ -50,10 +52,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: ToxinsTolerance
         targetComponent: PlantToxins
-        minValue: 1
-        maxValue: 10
+        targetDataField: ToxinsTolerance
+        applyRange:
+          min: 1
+          max: 10
         up: !type:PlantAdjustToxinsTolerance
           amount: 5
         down: !type:PlantAdjustToxinsTolerance
@@ -62,10 +65,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: LowPressureTolerance
         targetComponent: PlantAtmospheric
-        minValue: 60
-        maxValue: 100
+        targetDataField: LowPressureTolerance
+        applyRange:
+          min: 60
+          max: 100
         up: !type:PlantAdjustLowPressureTolerance
           amount: 5
         down: !type:PlantAdjustLowPressureTolerance
@@ -74,10 +78,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: HighPressureTolerance
         targetComponent: PlantAtmospheric
-        minValue: 100
-        maxValue: 140
+        targetDataField: HighPressureTolerance
+        applyRange:
+          min: 100
+          max: 140
         up: !type:PlantAdjustHighPressureTolerance
           amount: 5
         down: !type:PlantAdjustHighPressureTolerance
@@ -86,10 +91,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: LowHeatTolerance
         targetComponent: PlantAtmospheric
-        minValue: 2
-        maxValue: 25
+        targetDataField: LowHeatTolerance
+        applyRange:
+          min: 2
+          max: 25
         up: !type:PlantAdjustLowHeatTolerance
           amount: 5
         down: !type:PlantAdjustLowHeatTolerance
@@ -98,10 +104,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: HighHeatTolerance
         targetComponent: PlantAtmospheric
-        minValue: 2
-        maxValue: 25
+        targetDataField: HighHeatTolerance
+        applyRange:
+          min: 2
+          max: 25
         up: !type:PlantAdjustHighHeatTolerance
           amount: 5
         down: !type:PlantAdjustHighHeatTolerance
@@ -110,10 +117,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: PestTolerance
         targetComponent: PlantWeedPest
-        minValue: 0
-        maxValue: 15
+        targetDataField: PestTolerance
+        applyRange:
+          min: 0
+          max: 15
         up: !type:PlantAdjustPestTolerance
           amount: 5
         down: !type:PlantAdjustPestTolerance
@@ -122,10 +130,11 @@
       baseOdds: 0.018
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: WeedTolerance
         targetComponent: PlantWeedPest
-        minValue: 0
-        maxValue: 15
+        targetDataField: WeedTolerance
+        applyRange:
+          min: 0
+          max: 15
         up: !type:PlantAdjustWeedTolerance
           amount: 5
         down: !type:PlantAdjustWeedTolerance
@@ -134,10 +143,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Endurance
         targetComponent: Plant
-        minValue: 50
-        maxValue: 150
+        targetDataField: Endurance
+        applyRange:
+          min: 50
+          max: 150
         up: !type:PlantAdjustEndurance
           amount: 5
         down: !type:PlantAdjustEndurance
@@ -146,10 +156,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Yield
         targetComponent: Plant
-        minValue: 3
-        maxValue: 10
+        targetDataField: Yield
+        applyRange:
+          min: 3
+          max: 10
         up: !type:PlantAdjustYield
           amount: 5
         down: !type:PlantAdjustYield
@@ -158,10 +169,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Lifespan
         targetComponent: Plant
-        minValue: 10
-        maxValue: 80
+        targetDataField: Lifespan
+        applyRange:
+          min: 10
+          max: 80
         up: !type:PlantAdjustLifespan
           amount: 5
         down: !type:PlantAdjustLifespan
@@ -170,10 +182,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Maturation
         targetComponent: Plant
-        minValue: 3
-        maxValue: 8
+        targetDataField: Maturation
+        applyRange:
+          min: 3
+          max: 8
         up: !type:PlantAdjustMaturation
           amount: 5
         down: !type:PlantAdjustMaturation
@@ -182,10 +195,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Production
         targetComponent: Plant
-        minValue: 1
-        maxValue: 10
+        targetDataField: Production
+        applyRange:
+          min: 1
+          max: 10
         up: !type:PlantAdjustProduction
           amount: 5
         down: !type:PlantAdjustProduction
@@ -194,10 +208,11 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeStat
-        targetValue: Potency
         targetComponent: Plant
-        minValue: 30
-        maxValue: 100
+        targetDataField: Potency
+        applyRange:
+          min: 30
+          max: 100
         up: !type:PlantAdjustPotency
           amount: 5
         down: !type:PlantAdjustPotency

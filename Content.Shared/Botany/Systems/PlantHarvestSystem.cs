@@ -21,7 +21,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
     [Dependency] private PlantHolderSystem _plantHolder = default!;
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref PlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
             || !TryComp<PlantComponent>(ent.Owner, out var plant))
@@ -113,7 +113,7 @@ public sealed partial class PlantHarvestSystem : EntitySystem
             return;
 
         var name = Loc.GetString(plantData.Name);
-        _popup.PopupPredictedCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
+        _popup.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
 
         var totalYield = 0;
         if (plant.Yield >= 0)

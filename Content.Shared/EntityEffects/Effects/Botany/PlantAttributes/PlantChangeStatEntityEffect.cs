@@ -1,3 +1,6 @@
+using Content.Shared.Destructible.Thresholds;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 /// <summary>
@@ -6,26 +9,21 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffect"/>
 public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
 {
-    [DataField(required: true)]
-    public string TargetValue;
-
     /// <summary>
-    /// The plant component that contains <see cref="TargetValue"/>.
+    /// The plant component that contains <see cref="TargetDataField"/>.
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true, customTypeSerializer: typeof(ComponentNameSerializer))]
     public string TargetComponent;
 
-    /// <summary>
-    /// The minimum allowed value for the stat.
-    /// </summary>
     [DataField(required: true)]
-    public float MinValue;
+    public string TargetDataField;
 
     /// <summary>
-    /// The maximum allowed value for the stat.
+    /// Current values below the range apply <see cref="Up"/>, values above the range apply <see cref="Down"/>.
+    /// Values inside the range are weighted toward either effect based on their position in the range.
     /// </summary>
     [DataField(required: true)]
-    public float MaxValue;
+    public MinMax ApplyRange;
 
     /// <summary>
     /// Effect to apply when the stat should go up.

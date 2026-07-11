@@ -5,10 +5,10 @@ using Content.Shared.Botany.Components;
 using Content.Shared.Botany.Traits.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
-using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Botany.Systems;
 
@@ -17,12 +17,12 @@ public sealed partial class MutationSystem : EntitySystem
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private ISerializationManager _serialization = default!;
     [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantTraySystem _plantTray = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
-    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -40,7 +40,7 @@ public sealed partial class MutationSystem : EntitySystem
 
         foreach (var mutation in _randomMutations.Mutations)
         {
-            if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
+            if (Random(ent, Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
                 if (mutation.AppliesToPlant)
                     _entityEffects.TryApplyEffect(ent, mutation.Effect);
@@ -115,20 +115,20 @@ public sealed partial class MutationSystem : EntitySystem
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(0.5f)).Union(pollenCore.Mutations.Where(_ => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+        targetCore.Mutations = targetCore.Mutations.Where(_ => Random(pollenPlant, 0.5f)).Union(pollenCore.Mutations.Where(_ => Random(pollenPlant, 0.5f))).DistinctBy(m => m.Name).ToList();
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
         if (pollenProtoId != null
             && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
-            && Random(0.7f))
+            && Random(pollenPlant, 0.7f))
         {
             EnsureComp<PlantTraitSeedlessComponent>(targetPlant);
         }
     }
 
     [PublicAPI]
-    public void CrossChemicals(ref Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> val, Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> other)
+    public void CrossChemicals(EntityUid uid, ref Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> val, Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab
         foreach (var otherChem in other)
@@ -136,12 +136,12 @@ public sealed partial class MutationSystem : EntitySystem
             // if both have same chemical, randomly pick potency ratio from the two.
             if (val.TryGetValue(otherChem.Key, out var value))
             {
-                val[otherChem.Key] = Random(0.5f) ? otherChem.Value : value;
+                val[otherChem.Key] = Random(uid, 0.5f) ? otherChem.Value : value;
             }
             // if target plant doesn't have this chemical, has 50% chance to add it.
             else
             {
-                if (Random(0.5f))
+                if (Random(uid, 0.5f))
                 {
                     var fixedChem = otherChem.Value;
                     fixedChem.Inherent = false;
@@ -155,7 +155,7 @@ public sealed partial class MutationSystem : EntitySystem
         {
             if (!other.ContainsKey(thisChem.Key))
             {
-                if (Random(0.5f))
+                if (Random(uid, 0.5f))
                 {
                     if (val.Count > 1)
                     {
@@ -167,7 +167,7 @@ public sealed partial class MutationSystem : EntitySystem
     }
 
     [PublicAPI]
-    public void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
+    public void CrossGasses(EntityUid uid, ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
     {
         // Go through gasses from the pollen in swab
         foreach (var otherGas in other)
@@ -175,12 +175,12 @@ public sealed partial class MutationSystem : EntitySystem
             // if both have same gas, randomly pick ammount from the two.
             if (val.TryGetValue(otherGas.Key, out var value))
             {
-                val[otherGas.Key] = Random(0.5f) ? otherGas.Value : value;
+                val[otherGas.Key] = Random(uid, 0.5f) ? otherGas.Value : value;
             }
             // if target plant doesn't have this gas, has 50% chance to add it.
             else
             {
-                if (Random(0.5f))
+                if (Random(uid, 0.5f))
                 {
                     val.Add(otherGas.Key, otherGas.Value);
                 }
@@ -191,7 +191,7 @@ public sealed partial class MutationSystem : EntitySystem
         {
             if (!other.ContainsKey(thisGas.Key))
             {
-                if (Random(0.5f))
+                if (Random(uid, 0.5f))
                 {
                     val.Remove(thisGas.Key);
                 }
@@ -200,21 +200,21 @@ public sealed partial class MutationSystem : EntitySystem
     }
 
     [PublicAPI]
-    public void CrossFloat(ref float val, float other)
+    public void CrossFloat(EntityUid uid, ref float val, float other)
     {
-        val = Random(0.5f) ? val : other;
+        val = Random(uid, 0.5f) ? val : other;
     }
 
     [PublicAPI]
-    public void CrossInt(ref int val, int other)
+    public void CrossInt(EntityUid uid, ref int val, int other)
     {
-        val = Random(0.5f) ? val : other;
+        val = Random(uid, 0.5f) ? val : other;
     }
 
     [PublicAPI]
-    public void CrossBool(ref bool val, bool other)
+    public void CrossBool(EntityUid uid, ref bool val, bool other)
     {
-        val = Random(0.5f) ? val : other;
+        val = Random(uid, 0.5f) ? val : other;
     }
 
     [PublicAPI]
@@ -228,13 +228,13 @@ public sealed partial class MutationSystem : EntitySystem
             if (HasComp(val, component.GetType()))
                 continue;
 
-            if (Random(0.5f))
+            if (Random(val, 0.5f))
                 AddComp(val, _serialization.CreateCopy(component, notNullableOverride: true));
         }
     }
 
-    private bool Random(float p)
+    private bool Random(EntityUid uid, float p)
     {
-        return _random.Prob(p);
+        return SharedRandomExtensions.PredictedProb(_timing, p, GetNetEntity(uid));
     }
 }

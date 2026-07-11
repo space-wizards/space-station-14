@@ -22,13 +22,13 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantWeedPestComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossFloat(ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
-        _mutation.CrossFloat(ref ent.Comp.PestTolerance, pollenData.PestTolerance);
+        _mutation.CrossFloat(ent, ref ent.Comp.WeedTolerance, pollenData.WeedTolerance);
+        _mutation.CrossFloat(ent, ref ent.Comp.PestTolerance, pollenData.PestTolerance);
         Dirty(ent);
     }
 
     [SubscribeLocalEvent]
-    private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref PlantGrowEvent args)
     {
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;

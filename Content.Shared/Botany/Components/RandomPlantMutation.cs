@@ -1,7 +1,7 @@
 using Content.Shared.EntityEffects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Random;
+namespace Content.Shared.Botany.Components;
 
 /// <summary>
 /// Data that specifies the odds and effects of possible random plant mutations.

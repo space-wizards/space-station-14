@@ -145,14 +145,14 @@ public sealed partial class PlantHolderSystem : EntitySystem
             return;
 
         if (ent.Comp.Health <= 0)
-            Die(ent);
+            KillPlant(ent);
     }
 
     /// <summary>
     /// Kills the plant.
     /// </summary>
     [PublicAPI]
-    public void Die(Entity<PlantHolderComponent?> ent)
+    public void KillPlant(Entity<PlantHolderComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;

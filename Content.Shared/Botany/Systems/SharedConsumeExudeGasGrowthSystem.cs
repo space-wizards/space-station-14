@@ -24,8 +24,8 @@ public abstract partial class SharedPlantConsumeExudeGasSystem : EntitySystem
         if (!_botany.TryGetPlantComponent<PlantConsumeExudeGasComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        _mutation.CrossGasses(ref ent.Comp.ConsumeGasses, pollenData.ConsumeGasses);
-        _mutation.CrossGasses(ref ent.Comp.ExudeGasses, pollenData.ExudeGasses);
+        _mutation.CrossGasses(ent, ref ent.Comp.ConsumeGasses, pollenData.ConsumeGasses);
+        _mutation.CrossGasses(ent, ref ent.Comp.ExudeGasses, pollenData.ExudeGasses);
         Dirty(ent);
     }
 

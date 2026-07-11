@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Random;
+namespace Content.Shared.Botany.Components;
 
 /// <summary>
 /// Random weighting dataset for solutions, able to specify reagents quantity.
@@ -15,5 +15,5 @@ public sealed partial class RandomPlantMutationListPrototype : IPrototype
     /// List of RandomFills that can be picked from.
     /// </summary>
     [DataField(required: true)]
-    public List<RandomPlantMutation> Mutations = new();
+    public List<RandomPlantMutation> Mutations = [];
 }

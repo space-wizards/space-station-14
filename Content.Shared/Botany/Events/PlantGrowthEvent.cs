@@ -1,4 +1,3 @@
-using Content.Shared.Botany.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Botany.Events;
@@ -8,7 +7,7 @@ namespace Content.Shared.Botany.Events;
 /// </summary>
 [ByRefEvent]
 [Serializable, NetSerializable]
-public readonly record struct OnPlantGrowEvent(NetEntity Tray);
+public readonly record struct PlantGrowEvent(NetEntity Tray);
 
 /// <summary>
 /// Event raised when a harvest is attempted.

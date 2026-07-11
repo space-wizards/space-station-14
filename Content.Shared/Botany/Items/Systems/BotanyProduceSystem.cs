@@ -40,7 +40,7 @@ public sealed partial class BotanyProduceSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        _popup.PopupPredictedCursor(Loc.GetString("plant-produce-component-compost-popup",
+        _popup.PopupCursor(Loc.GetString("plant-produce-component-compost-popup",
                 ("owner", ent.Owner),
                 ("usingItem", args.Produce.Owner)),
             args.User,

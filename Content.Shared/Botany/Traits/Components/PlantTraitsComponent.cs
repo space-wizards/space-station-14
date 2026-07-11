@@ -9,8 +9,6 @@ namespace Content.Shared.Botany.Traits.Components;
 [Virtual]
 public partial class PlantTraitsComponent : Component
 {
-    public virtual IEnumerable<string> GetTraitStateMarkup()
-    {
-        yield break;
-    }
+    [DataField]
+    public LocId? TraitState;
 }

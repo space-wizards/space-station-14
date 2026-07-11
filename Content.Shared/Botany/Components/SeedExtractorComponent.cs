@@ -1,4 +1,6 @@
 using Content.Shared.Botany.Systems;
+using Content.Shared.Destructible.Thresholds;
+
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Botany.Components;
@@ -11,14 +13,8 @@ namespace Content.Shared.Botany.Components;
 public sealed partial class SeedExtractorComponent : Component
 {
     /// <summary>
-    /// The minimum amount of seed packets dropped.
+    /// The base amount of seed packets dropped.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int BaseMinSeeds = 1;
-
-    /// <summary>
-    /// The maximum amount of seed packets dropped.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int BaseMaxSeeds = 3;
+    public MinMax BaseSeeds = new(1, 3);
 }

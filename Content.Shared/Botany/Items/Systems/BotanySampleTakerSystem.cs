@@ -47,7 +47,7 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
 
         if (_plantHolder.IsDead(ent.Owner))
         {
-            _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-dead-plant-popup"), args.User);
+            _popup.PopupCursor(Loc.GetString("plant-sample-component-dead-plant-popup"), args.User);
             return;
         }
 
@@ -55,14 +55,14 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         var growthStage = _plant.GetGrowthStageValue(ent.AsNullable());
         if (growthStage <= args.Sample.Comp.MinSampleStage)
         {
-            _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-early-sample-popup"), args.User);
+            _popup.PopupCursor(Loc.GetString("plant-sample-component-early-sample-popup"), args.User);
             return;
         }
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
         // Damage the plant.
-        _plantHolder.AdjustsHealth(ent.Owner, -random.Next(args.Sample.Comp.MinSampleDamage, args.Sample.Comp.MaxSampleDamage));
+        _plantHolder.AdjustsHealth(ent.Owner, -random.NextFloat(args.Sample.Comp.SampleDamage.Min, args.Sample.Comp.SampleDamage.Max));
 
         // Produce a seed packet snapshot.
         float? healthOverride = harvest.ReadyForHarvest ? null : holder.Health;
@@ -71,7 +71,7 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         _botany.SpawnSeedPacket(plantData, protoId, snapshot, Transform(args.User).Coordinates, args.User, healthOverride);
 
         var name = Loc.GetString(plantData.Name);
-        _popup.PopupPredictedCursor(Loc.GetString("plant-sample-component-take-sample-popup", ("seedName", name)), args.User);
+        _popup.PopupCursor(Loc.GetString("plant-sample-component-take-sample-popup", ("seedName", name)), args.User);
 
         if (random.Prob(args.Sample.Comp.SampleProbability))
             EnsureComp<PlantTraitSampledComponent>(ent.Owner);
