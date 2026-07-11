@@ -7,16 +7,15 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class StripebackSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IStripebackConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class StripebackSheetlet<T> : ISheetlet<T>
+    where T : IStripebackConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IStripebackConfig stripebackCfg = sheet;
-
         var stripeBack = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(stripebackCfg.StripebackPath, NanotrasenStylesheetFactory.TextureRoot),
+            Texture = factory.GetTexture(config.StripebackPath),
             Mode = StyleBoxTexture.StretchMode.Tile,
         };
 
