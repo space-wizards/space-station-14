@@ -215,15 +215,17 @@
     icon:
       sprite: Interface/Actions/changeling2.rsi
       state: screech
-  - type: InstantAction
-    event: !type:ScreechActionEvent # very much a placeholder until someone gives us nice audio for changelings
-      screechSound:
+  - type: ScreechAction
+    screechSound:
         path: /Audio/Effects/Screech/changeling_screech_strong.ogg
-      effects:
-      - !type:MovementSpeedModifier
-        walkSpeedModifier: 0.5
-        sprintSpeedModifier: 0.5
-        time: 5
-      - !type:Disarm
-      - !type:ModifyKnockdown
-        probability: 0.5
+    effects:
+    - !type:MovementSpeedModifier
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      time: 5
+    - !type:Disarm
+    - !type:ModifyKnockdown
+      probability: 0.5
+  - type: InstantAction
+    event: !type:ScreechActionEvent
+

@@ -52,7 +52,8 @@ public sealed partial class ScreechSystem : EntitySystem
     private void OnScreechAction(Entity<ActionsComponent> ent, ref ScreechActionEvent args)
     {
         args.Handled = true;
-        Screech(ent.Owner, args.Range, args.Vfx, args.ScreechSound, args.SoundRange, args.Effects);
+        if (TryComp<ScreechActionComponent>(args.Action, out var param))
+            Screech(ent.Owner, param.Range, param.Vfx, param.ScreechSound, param.SoundRange, param.Effects);
     }
 
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
@@ -145,33 +146,4 @@ public struct ScreechEffectAttemptEvent : IInventoryRelayEvent
 /// </summary>
 public sealed partial class ScreechActionEvent : InstantActionEvent
 {
-    /// <summary>
-    /// The range of the screech's effects.
-    /// </summary>
-    [DataField]
-    public float Range = 6f;
-
-    /// <summary>
-    /// Entity that will be spawned in a container on the screecher to display effects.
-    /// </summary>
-    [DataField]
-    public EntProtoId? Vfx = "EffectScreech";
-
-    /// <summary>
-    /// Sound that will be played by the screech.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? ScreechSound;
-
-    /// <summary>
-    /// Range at which the sound will be heard.
-    /// </summary>
-    [DataField]
-    public float SoundRange = 20f;
-
-    /// <summary>
-    /// Entity effects applied to entities that heard the screech.
-    /// </summary>
-    [DataField]
-    public List<EntityEffect> Effects = [];
 }
