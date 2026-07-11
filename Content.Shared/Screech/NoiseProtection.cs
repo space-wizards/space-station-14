@@ -13,5 +13,5 @@ public sealed partial class NoiseProtectionComponent : Component
     /// A quip that will be added to the description detailing its "protection from loud noises" or whatever you choose to write here.
     /// </summary>
     [DataField]
-    public LocId? ExamineQuip = "screech-protection-examine-text";
+    public LocId? ExamineText = "screech-protection-examine-text";
 }
