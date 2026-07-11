@@ -104,14 +104,15 @@ public abstract partial class SharedBorgSystem
             for (var i = 0; i < itemModuleComp.Hands.Count; i++)
             {
                 var hand = itemModuleComp.Hands[i];
-                var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
 
                 if (IsItemInHandUnremovable(hand))
                     continue;
 
+                var handId = $"{GetNetEntity(module.Owner)}-hand-{i}";
                 if (itemModuleComp.StoredItems.TryGetValue(handId, out var item))
                     _container.Remove(item, container, destination: coordinates);
             }
+
             itemModuleComp.StoredItems.Clear();
         }
 
