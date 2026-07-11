@@ -1,23 +1,29 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class MonotoneCheckBoxSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class MonotoneCheckBoxSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig buttonCfg = sheet;
+        var monotoneCheckBoxTextureChecked =
+            factory.GetTexture(
+                new ResPath("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png"));
+        var monotoneCheckBoxTextureUnchecked =
+            factory.GetTexture(
+                new ResPath("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png"));
 
-        var monotoneCheckBoxTextureChecked = ResCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png");
-        var monotoneCheckBoxTextureUnchecked = ResCache.GetTexture("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png");
-
-        return [
+        return
+        [
             E<TextureRect>()
                 .Class(MonotoneCheckBox.StyleClassMonotoneCheckBox)
                 .Prop(TextureRect.StylePropertyTexture, monotoneCheckBoxTextureUnchecked),
