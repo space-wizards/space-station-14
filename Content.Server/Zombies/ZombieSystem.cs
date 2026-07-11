@@ -17,6 +17,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NodeCrawl;
 using Content.Shared.Popups;
 using Content.Shared.Revolutionary;
 using Content.Shared.Roles;
@@ -42,6 +43,7 @@ namespace Content.Server.Zombies
         [Dependency] private MobStateSystem _mobState = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedRoleSystem _role = default!;
+        [Dependency] private SharedNodeCrawlSystem _nodeCrawl = default!;
 
         public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
@@ -78,6 +80,8 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
+
+            SubscribeLocalEvent<NodeCrawlerComponent, EntityZombifiedEvent>(OnZombify);
         }
 
         private void OnBeforeRemoveAnomalyOnDeath(Entity<PendingZombieComponent> ent, ref BeforeRemoveAnomalyOnDeathEvent args)
@@ -301,6 +305,18 @@ namespace Content.Server.Zombies
             _bloodstream.ChangeBloodReagents(target, zombiecomp.BeforeZombifiedBloodReagents);
 
             return true;
+        }
+
+        /// <summary>
+        /// Lengthens the amount of time that it takes a zombified vent crawling mob to get back into the vent.
+        /// They are really hard to kill otherwise.
+        /// </summary>
+        private void OnZombify(Entity<NodeCrawlerComponent> ent, ref EntityZombifiedEvent args)
+        {
+            if (!TryComp<ZombieComponent>(ent.Owner, out var zombieComp))
+                return;
+
+            _nodeCrawl.SetEnterDelay(ent.AsNullable(), zombieComp.ZombieVentcrawlDelay);
         }
 
         private void OnZombieCloning(Entity<ZombieComponent> ent, ref CloningEvent args)

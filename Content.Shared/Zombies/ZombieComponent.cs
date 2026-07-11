@@ -158,4 +158,10 @@ public sealed partial class ZombieComponent : Component
     /// </summary>
     [DataField("newBloodReagents")]
     public Solution NewBloodReagents = new([new("ZombieBlood", 1)]);
+
+    /// <summary>
+    /// How long it takes to enter a ventcrawl node if entity is zombified.
+    /// </summary>
+    [DataField]
+    public TimeSpan ZombieVentcrawlDelay = TimeSpan.FromSeconds(2.0f);
 }
