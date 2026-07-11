@@ -6,9 +6,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [Sheetlet]
-public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ItemStatusSheetlet : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         return
         [

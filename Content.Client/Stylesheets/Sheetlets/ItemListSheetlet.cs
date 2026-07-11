@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ItemListSheetlet : ISheetlet<PalettedStylesheet>
 {
     private static StyleBoxFlat Box(Color c)
     {
@@ -20,7 +20,7 @@ public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
             };
     }
 
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var boxBackground = new StyleBoxFlat { BackgroundColor = sheet.PrimaryPalette.Background };
         var boxItemBackground = Box(sheet.PrimaryPalette.Background);

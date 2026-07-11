@@ -5,9 +5,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Construction.UI;
 [Sheetlet]
-public sealed class ConstructionMenuSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class ConstructionMenuSheetlet : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         return
         [

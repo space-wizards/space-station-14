@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Lobby.UI;
 
 [Sheetlet]
-public sealed class HumanoidProfileEditorSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class HumanoidProfileEditorSheetlet : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         return
         [

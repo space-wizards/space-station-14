@@ -14,7 +14,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [Sheetlet]
-public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
+public sealed class ContextMenuSheetlet<T> : ISheetlet<T>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {
     // TODO: make this not hardcoded (I am too scared to change the context menu colors)
@@ -25,7 +25,7 @@ public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
         PressedElement = Color.LightSlateGray,
     };
 
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IWindowConfig windowCfg = sheet;
 

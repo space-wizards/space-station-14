@@ -13,10 +13,10 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class WindowSheetlet<T> : Sheetlet<T>
+public sealed class WindowSheetlet<T> : ISheetlet<T>
     where T : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IButtonConfig buttonCfg = sheet;
         IWindowConfig windowCfg = sheet;

@@ -10,9 +10,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IButtonConfig
+public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T> where T : IButtonConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         // Monotone (unfilled)
         var monotoneButton = new StyleBoxTexture

@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.FeedbackPopup;
 
 [Sheetlet]
-public sealed class FeedbackPopupSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class FeedbackPopupSheetlet : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var borderTop = new StyleBoxFlat()
         {

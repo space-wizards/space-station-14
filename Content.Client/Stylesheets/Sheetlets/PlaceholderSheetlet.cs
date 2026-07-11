@@ -9,9 +9,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class PlaceholderSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPlaceholderConfig
+public sealed class PlaceholderSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IPlaceholderConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IPlaceholderConfig placeholderCfg = sheet;
 

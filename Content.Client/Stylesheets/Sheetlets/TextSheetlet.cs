@@ -7,9 +7,9 @@ namespace Content.Client.Stylesheets.Sheetlets;
 
 /// These are not in `LabelSheetlet` because a label is not the only thing you might want to be monospaced.
 [Sheetlet]
-public sealed class TextSheetlet : Sheetlet<PalettedStylesheet>
+public sealed class TextSheetlet : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         // TODO: once fonts are reworked, change this!
         var mono = ResCache.GetFont("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf", 12);

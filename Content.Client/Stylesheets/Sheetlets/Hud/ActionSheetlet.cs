@@ -11,9 +11,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [Sheetlet]
-public sealed class ActionSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IPanelConfig
+public sealed class ActionSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IPanelConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IPanelConfig panelCfg = sheet;
 

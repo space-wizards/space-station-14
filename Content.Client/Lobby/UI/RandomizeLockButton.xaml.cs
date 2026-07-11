@@ -60,9 +60,9 @@ public sealed partial class RandomizeLockButton : BoxContainer
 }
 
 [Sheetlet]
-public sealed class RandomizeLockButtonStyles : Sheetlet<PalettedStylesheet>
+public sealed class RandomizeLockButtonStyles : ISheetlet<PalettedStylesheet>
 {
-    public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)
+    public StyleRule[] GetRules(PalettedStylesheet sheet, object config)
     {
         var textureLocked = ResCache.GetTexture("/Textures/Interface/VerbIcons/lock.svg.192dpi.png");
         var textureUnlocked = ResCache.GetTexture("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png");

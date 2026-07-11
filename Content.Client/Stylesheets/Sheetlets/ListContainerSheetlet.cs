@@ -8,9 +8,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class ListContainerSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+public sealed class ListContainerSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IButtonConfig buttonCfg = sheet;
 

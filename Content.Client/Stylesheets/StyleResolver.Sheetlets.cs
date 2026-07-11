@@ -6,16 +6,16 @@ public abstract partial class StyleResolver
 {
     public StyleRule[] GetSheetletRules<TSheetTy>(Type sheetletTy, StylesheetManager man)
     {
-        Sheetlet<TSheetTy>? sheetlet = null;
+        ISheetlet<TSheetTy>? sheetlet = null;
         try
         {
             if (sheetletTy.ContainsGenericParameters)
             {
-                if (SandboxHelper.CreateInstance(sheetletTy.MakeGenericType(typeof(TSheetTy))) is Sheetlet<TSheetTy>
+                if (SandboxHelper.CreateInstance(sheetletTy.MakeGenericType(typeof(TSheetTy))) is ISheetlet<TSheetTy>
                     sheetlet1)
                     sheetlet = sheetlet1;
             }
-            else if (SandboxHelper.CreateInstance(sheetletTy) is Sheetlet<TSheetTy> sheetlet2)
+            else if (SandboxHelper.CreateInstance(sheetletTy) is ISheetlet<TSheetTy> sheetlet2)
             {
                 sheetlet = sheetlet2;
             }

@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class RadialMenuSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, IRadialMenuConfig
+public sealed class RadialMenuSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IRadialMenuConfig
 {
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IRadialMenuConfig radialCfg = sheet;
 

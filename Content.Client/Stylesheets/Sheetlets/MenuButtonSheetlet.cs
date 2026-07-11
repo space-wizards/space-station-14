@@ -11,14 +11,14 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [Sheetlet]
-public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+public sealed class MenuButtonSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
     private static MutableSelectorElement CButton()
     {
         return E<MenuButton>();
     }
 
-    public override StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(T sheet, object config)
     {
         IButtonConfig cfg = sheet;
 

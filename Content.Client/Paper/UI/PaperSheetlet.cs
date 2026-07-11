@@ -10,9 +10,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Paper.UI;
 
 [Sheetlet]
-public sealed class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed class PaperSheetlet : ISheetlet<NanotrasenStylesheet>
 {
-    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
     {
         var windowCfg = (IWindowConfig)sheet;
 
