@@ -35,9 +35,9 @@ public sealed class ContextMenuSheetlet<T> : ISheetlet<T>
         borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
         var contextMenuExpansionTexture =
-            factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/group.svg.192dpi.png"));
+            factory.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
         var verbMenuConfirmationTexture =
-            factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/group.svg.192dpi.png"));
+            factory.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
 
         var rules = new List<StyleRule>
         {

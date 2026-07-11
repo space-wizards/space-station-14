@@ -20,7 +20,7 @@ public sealed class ActionSheetlet<T> : ISheetlet<T>
         IPanelConfig panelCfg = config;
 
         // TODO: absolute texture access
-        var handSlotHighlightTex = factory.GetTexture(new ResPath("/Textures/Interface/Inventory/hand_slot_highlight.png"));
+        var handSlotHighlightTex = factory.GetTexture(new ResPath("Inventory/hand_slot_highlight.png"));
         var handSlotHighlight = new StyleBoxTexture
         {
             Texture = handSlotHighlightTex,

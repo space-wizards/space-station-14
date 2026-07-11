@@ -67,8 +67,8 @@ where T : ISheetletConfig
 {
     public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        var textureLocked = factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/lock.svg.192dpi.png"));
-        var textureUnlocked = factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/unlock.svg.192dpi.png"));
+        var textureLocked = factory.GetTexture(new ResPath("VerbIcons/lock.svg.192dpi.png"));
+        var textureUnlocked = factory.GetTexture(new ResPath("VerbIcons/unlock.svg.192dpi.png"));
 
         return
         [

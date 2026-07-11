@@ -17,10 +17,10 @@ public sealed class MonotoneCheckBoxSheetlet<T> : ISheetlet<T>
     {
         var monotoneCheckBoxTextureChecked =
             factory.GetTexture(
-                new ResPath("/Textures/Interface/Nano/Monotone/monotone_checkbox_checked.svg.96dpi.png"));
+                new ResPath("Monotone/monotone_checkbox_checked.svg.96dpi.png"));
         var monotoneCheckBoxTextureUnchecked =
             factory.GetTexture(
-                new ResPath("/Textures/Interface/Nano/Monotone/monotone_checkbox_unchecked.svg.96dpi.png"));
+                new ResPath("Monotone/monotone_checkbox_unchecked.svg.96dpi.png"));
 
         return
         [

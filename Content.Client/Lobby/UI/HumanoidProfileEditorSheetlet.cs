@@ -19,7 +19,7 @@ public sealed class HumanoidProfileEditorSheetlet<T> : ISheetlet<T>
             E<TextureButton>()
                 .Identifier("SpeciesInfoDefault")
                 .Prop(TextureButton.StylePropertyTexture,
-                    factory.GetTexture(new ResPath("/Textures/Interface/VerbIcons/information.svg.192dpi.png"))),
+                    factory.GetTexture(new ResPath("VerbIcons/information.svg.192dpi.png"))),
             // copied from `StyleNano`, but this is unused
             // E<TextureButton>()
             //     .Identifier("SpeciesInfoWarning")
