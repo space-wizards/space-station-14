@@ -42,14 +42,9 @@ public abstract partial class StylesheetFactory : ISheetletConfig
         {
             sheetletClosedType = sheetletType.MakeGenericType(GetType());
         }
-        catch (ArgumentException)
+        catch (ArgumentException e)
         {
-            var diff = sheetletType.GetGenericArguments()
-                .Single()
-                .GetGenericParameterConstraints()
-                .Where(t => !t.IsInstanceOfType(this))
-                .ToArray();
-            throw new MissingSheetletConstraintsException(this, sheetletType, diff);
+            throw new MissingSheetletConstraintsException(this, sheetletType, e);
         }
 
         return _sandboxHelper.CreateInstance(sheetletClosedType) is not ISheetlet<ISheetletConfig> sheetlet
@@ -80,10 +75,7 @@ public abstract partial class StylesheetFactory : ISheetletConfig
 public sealed class MissingSheetletConstraintsException(
     StylesheetFactory factory,
     Type sheetlet,
-    Type[] configs) : Exception
+    Exception innerException)
+    : Exception($"Stylesheet factory {factory} cannot satisfy the generic constraints for sheetlet {sheetlet}.", innerException)
 {
-    public override string Message =>
-        $"Stylesheet factory {factory} is marked as a factory for sheetlet {sheetlet}, yet is missing sheetlet configs {string.Join(", ", configs)}";
-
-    public override string? Source => factory.ToString();
 }
