@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.FeedbackPopup;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class FeedbackPopupSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

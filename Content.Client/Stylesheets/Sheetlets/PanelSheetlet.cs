@@ -6,7 +6,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)

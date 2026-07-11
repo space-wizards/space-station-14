@@ -9,7 +9,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.NTSheetlets;
 
 /// Not NTHeading because NanoHeading is the name of the element
-[CommonSheetlet]
+[Sheetlet]
 public sealed class NanoHeadingSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)

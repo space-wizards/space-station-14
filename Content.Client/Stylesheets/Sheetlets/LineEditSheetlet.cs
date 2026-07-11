@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class LineEditSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ILineEditConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)

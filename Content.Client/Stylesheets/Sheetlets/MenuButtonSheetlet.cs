@@ -10,7 +10,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class MenuButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
     private static MutableSelectorElement CButton()

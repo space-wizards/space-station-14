@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Construction.UI;
-[CommonSheetlet]
+[Sheetlet]
 public sealed class ConstructionMenuSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

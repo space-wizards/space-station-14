@@ -59,7 +59,7 @@ public sealed partial class RandomizeLockButton : BoxContainer
     }
 }
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class RandomizeLockButtonStyles : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

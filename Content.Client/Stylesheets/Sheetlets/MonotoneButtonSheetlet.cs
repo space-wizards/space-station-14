@@ -9,7 +9,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class MonotoneButtonSheetlet<T> : Sheetlet<T> where T : IButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)

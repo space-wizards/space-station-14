@@ -12,7 +12,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class WindowSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig
 {

@@ -13,7 +13,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class ContextMenuSheetlet<T> : Sheetlet<T>
     where T : PalettedStylesheet, IWindowConfig, IButtonConfig, IIconConfig
 {

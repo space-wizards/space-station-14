@@ -9,7 +9,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Paper.UI;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class PaperSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)

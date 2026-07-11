@@ -5,7 +5,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class ItemStatusSheetlet : Sheetlet<PalettedStylesheet>
 {
     public override StyleRule[] GetRules(PalettedStylesheet sheet, object config)

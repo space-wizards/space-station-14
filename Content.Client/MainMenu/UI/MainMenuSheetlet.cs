@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.MainMenu.UI;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class MainMenuSheetlet : Sheetlet<NanotrasenStylesheet>
 {
     public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)

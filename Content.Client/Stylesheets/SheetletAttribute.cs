@@ -7,7 +7,5 @@ namespace Content.Client.Stylesheets;
 /// </summary>
 [PublicAPI]
 [MeansImplicitUse]
-public sealed class CommonSheetletAttribute : Attribute
-{
-
-}
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class SheetletAttribute : Attribute;

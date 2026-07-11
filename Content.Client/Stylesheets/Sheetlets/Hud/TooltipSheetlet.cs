@@ -10,7 +10,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITooltipConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)

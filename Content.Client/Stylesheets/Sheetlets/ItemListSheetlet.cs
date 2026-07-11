@@ -5,7 +5,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[CommonSheetlet]
+[Sheetlet]
 public sealed class ItemListSheetlet : Sheetlet<PalettedStylesheet>
 {
     private static StyleBoxFlat Box(Color c)

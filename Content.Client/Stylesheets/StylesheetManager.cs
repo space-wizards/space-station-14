@@ -43,7 +43,7 @@ namespace Content.Client.Stylesheets
             var sw = Stopwatch.StartNew();
 
             // add all sheetlets to the hashset
-            var tys = _reflection.FindTypesWithAttribute<CommonSheetletAttribute>();
+            var tys = _reflection.FindTypesWithAttribute<SheetletAttribute>();
             UnusedSheetlets = [..tys];
 
             Stylesheets = new Dictionary<string, Stylesheet>();
