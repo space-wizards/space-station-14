@@ -1,8 +1,9 @@
 ﻿using Content.Client.Stylesheets.Palette;
+using Content.Client.Stylesheets.SheetletConfigs;
 
 namespace Content.Client.Stylesheets.Stylesheets;
 
-public partial class NanotrasenStylesheetFactory
+public partial class NanotrasenStylesheetFactory : IPaletteConfig
 {
     public override ColorPalette PrimaryPalette => Palettes.Navy;
     public override ColorPalette SecondaryPalette => Palettes.Slate;

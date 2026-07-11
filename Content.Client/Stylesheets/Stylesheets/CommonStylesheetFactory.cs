@@ -2,11 +2,12 @@ using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets;
+namespace Content.Client.Stylesheets.Stylesheets;
 
-public abstract class CommonStylesheetFactory : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
+public abstract class CommonStylesheetFactory : StyleResolver, IButtonConfig, IWindowConfig, IIconConfig,
+    ITabContainerConfig,
     ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig, INanoHeadingConfig,
-    ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig
+    ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig, IPaletteConfig
 {
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
@@ -80,4 +81,10 @@ public abstract class CommonStylesheetFactory : PalettedStylesheet, IButtonConfi
     ResPath ISwitchButtonConfig.SwitchButtonThumbOutlinePath => new("switchbutton_thumb_outline.svg.96dpi.png");
     ResPath ISwitchButtonConfig.SwitchButtonSymbolOffPath => new("switchbutton_symbol_off.svg.96dpi.png");
     ResPath ISwitchButtonConfig.SwitchButtonSymbolOnPath => new("switchbutton_symbol_on.svg.96dpi.png");
+
+    public abstract ColorPalette PrimaryPalette { get; }
+    public abstract ColorPalette SecondaryPalette { get; }
+    public abstract ColorPalette PositivePalette { get; }
+    public abstract ColorPalette NegativePalette { get; }
+    public abstract ColorPalette HighlightPalette { get; }
 }
