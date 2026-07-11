@@ -91,12 +91,12 @@ public abstract class CommonStylesheetFactory : StylesheetFactory, IButtonConfig
     public abstract ColorPalette NegativePalette { get; }
     public abstract ColorPalette HighlightPalette { get; }
 
-    List<(string?, int)> IFontConfig.CommonFontSizes =>
-    [
+    List<(string?, int)> IFontConfig.CommonFontSizes => new()
+    {
         (null, 12),
         (StyleClass.FontSmall, 10),
         (StyleClass.FontLarge, 14),
-    ];
+    };
 
     public FontFamilyStack BaseFont => FontFamilyStack.New()
         .AddKind(FontKind.Regular, new ResPath("/Fonts/NotoSans/NotoSans-Regular.ttf"))
