@@ -23,9 +23,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         ///     Entities spawned on reaching this threshold, from a min to a max.
         /// </summary>
         [DataField]
-        public Dictionary<EntProtoId, MinMax> Spawn = new();
+        public Dictionary<EntProtoId, MinMax> Spawn = [];
 
-        [DataField("offset")]
+        [DataField]
         public float Offset { get; set; } = 0.5f;
 
         [DataField("transferForensics")]
@@ -37,6 +37,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <summary>
         /// Time in seconds to wait before spawning entities.
         /// </summary>
+        /// <remarks>
+        /// If positive, <see cref="DoTransferForensics"/> and <see cref="SpawnInContainer"/> are ignored.
+        /// </remarks>
         [DataField]
         public float SpawnAfter;
 
@@ -59,9 +62,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         private void ExecuteDelayedSpawn(DestructibleSystem system, MapCoordinates position, int executions)
         {
-            if (!system.PrototypeManager.Resolve(TempEntityProtoId, out var tempSpawnerProto))
-                return;
-
             foreach (var (entityId, minMax) in Spawn)
             {
                 for (var execution = 0; execution < executions; execution++)
@@ -70,13 +70,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                         ? minMax.Min
                         : system.Random.Next(minMax.Min, minMax.Max + 1);
 
-                    if (count == 0)
-                        continue;
-
                     for (var i = 0; i < count; i++)
                     {
                         var offset = GetRandomOffset(system);
-                        var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(offset));
+                        var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(offset));
                         system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
                         timedDespawnComponent.Lifetime = SpawnAfter;
                         system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
@@ -125,7 +122,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         private Vector2 GetRandomOffset(DestructibleSystem system)
         {
-            return new(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+            return system.Random.NextVector2(Offset);
         }
 
         public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
