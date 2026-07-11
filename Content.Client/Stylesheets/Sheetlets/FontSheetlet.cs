@@ -11,13 +11,13 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class FontSheetlet<T> : ISheetlet<T>
     where T : IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory resolver, T config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         var rules = new List<StyleRule>();
 
         foreach (var (name, size) in config.CommonFontSizes)
         {
-            foreach (var kind in config.BaseFont.AvailableKinds)
+            foreach (var kind in Enum.GetValues<FontKind>())
             {
                 // TODO: it's always null prefix by default
                 var builder = E().Class(GetFontClass(kind));
