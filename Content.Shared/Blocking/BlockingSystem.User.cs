@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Blocking.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;

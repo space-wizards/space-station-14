@@ -3,9 +3,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Blocking;
+namespace Content.Shared.Blocking.Components;
 
 /// <summary>
 /// This component goes on an item that you want to use to block
