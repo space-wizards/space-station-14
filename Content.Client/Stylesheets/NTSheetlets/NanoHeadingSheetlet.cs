@@ -9,14 +9,13 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.NTSheetlets;
 
 /// Not NTHeading because NanoHeading is the name of the element
-[Sheetlet]
-public sealed class NanoHeadingSheetlet : ISheetlet<NanotrasenStylesheetFactory>
+[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+public sealed class NanoHeadingSheetlet<T> : ISheetlet<T>
+    where T : INanoHeadingConfig
 {
-    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        INanoHeadingConfig nanoHeadingCfg = sheet;
-
-        var nanoHeadingTex = sheet.GetTexture(nanoHeadingCfg.NanoHeadingPath);
+        var nanoHeadingTex = factory.GetTexture(config.NanoHeadingPath);
         var nanoHeadingBox = new StyleBoxTexture
         {
             Texture = nanoHeadingTex,
