@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -6,20 +7,19 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class PanelSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class PanelSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig buttonCfg = sheet;
-
         var boxLight = new StyleBoxFlat()
         {
-            BackgroundColor = sheet.SecondaryPalette.BackgroundLight,
+            BackgroundColor = config.SecondaryPalette.BackgroundLight,
         };
         var boxDark = new StyleBoxFlat()
         {
-            BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
+            BackgroundColor = config.SecondaryPalette.BackgroundDark,
         };
         var boxInsetDark = new StyleBoxFlat()
         {
@@ -33,8 +33,8 @@ public sealed class PanelSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet
         var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
         var boxDropTarget = new StyleBoxFlat
         {
-            BackgroundColor = sheet.ButtonPalette.BackgroundDark.WithAlpha(0.5f),
-            BorderColor = sheet.ButtonPalette.Base,
+            BackgroundColor = config.ButtonPalette.BackgroundDark.WithAlpha(0.5f),
+            BorderColor = config.ButtonPalette.Base,
             BorderThickness = new(2)
         };
 
@@ -57,20 +57,20 @@ public sealed class PanelSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet
             // panels that have the same corner bezels as buttons
             E()
                 .Class(StyleClass.BackgroundPanel)
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
-                .Modulate(sheet.SecondaryPalette.Background),
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(config))
+                .Modulate(config.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelDark)
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
-                .Modulate(sheet.SecondaryPalette.BackgroundDark),
-             E()
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(config))
+                .Modulate(config.SecondaryPalette.BackgroundDark),
+            E()
                 .Class(StyleClass.BackgroundPanelOpenLeft)
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(sheet))
-                .Modulate(sheet.SecondaryPalette.Background),
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(config))
+                .Modulate(config.SecondaryPalette.Background),
             E()
                 .Class(StyleClass.BackgroundPanelOpenRight)
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
-                .Modulate(sheet.SecondaryPalette.Background),
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(config))
+                .Modulate(config.SecondaryPalette.Background),
         ];
     }
 }
