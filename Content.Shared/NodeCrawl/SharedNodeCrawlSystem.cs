@@ -15,17 +15,17 @@ namespace Content.Shared.NodeCrawl;
 /// <summary>
 /// Manages entry & exit of node crawlers into node networks
 /// </summary>
-public abstract class SharedNodeCrawlSystem : EntitySystem
+public abstract partial class SharedNodeCrawlSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedEyeSystem _eye = default!;
-    [Dependency] private readonly NodeCrawlerMovementSystem _nodeCrawler = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private NodeCrawlerMovementSystem _nodeCrawler = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
 
     private const string MoverContainer = "mover-container";
     private static readonly EntProtoId MoverProto = "NodeCrawlMover";
