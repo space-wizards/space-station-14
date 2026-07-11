@@ -8,18 +8,17 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet]
-public sealed class ChatSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IButtonConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class ChatSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig btnCfg = sheet;
-
-        var chatColor = sheet.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
+        var chatColor = config.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);
 
         var chatChannelButtonTex =
-            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheetFactory.TextureRoot);
+            factory.GetTexture(config.RoundedButtonBorderedPath);
         var chatChannelButton = new StyleBoxTexture
         {
             Texture = chatChannelButtonTex,
@@ -28,7 +27,7 @@ public sealed class ChatSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, 
         chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
         var chatFilterButtonTex =
-            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheetFactory.TextureRoot);
+            factory.GetTexture(config.RoundedButtonBorderedPath);
         var chatFilterButton = new StyleBoxTexture
         {
             Texture = chatFilterButtonTex,
