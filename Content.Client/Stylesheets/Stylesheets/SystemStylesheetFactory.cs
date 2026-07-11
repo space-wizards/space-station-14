@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Stylesheets;
 
 [Virtual]
-public partial class SystemStylesheet : CommonStylesheet
+public partial class SystemStylesheetFactory : CommonStylesheetFactory
 {
     public override string StylesheetName => "System";
 
@@ -34,7 +34,7 @@ public partial class SystemStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public SystemStylesheet(object config, StylesheetManager man) : base(config)
+    public SystemStylesheetFactory(object config, StylesheetManager man) : base(config)
     {
         BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
@@ -48,7 +48,7 @@ public partial class SystemStylesheet : CommonStylesheet
             ],
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<PalettedStylesheet, SheetletAttribute>(man),
-            GetAllSheetletRules<SystemStylesheet, SheetletAttribute>(man),
+            GetAllSheetletRules<SystemStylesheetFactory, SheetletAttribute>(man),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

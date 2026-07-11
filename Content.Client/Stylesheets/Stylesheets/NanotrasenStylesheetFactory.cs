@@ -9,7 +9,7 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Stylesheets;
 
 [Virtual]
-public partial class NanotrasenStylesheet : CommonStylesheet
+public partial class NanotrasenStylesheetFactory : CommonStylesheetFactory
 {
     public override string StylesheetName => "Nanotrasen";
 
@@ -35,7 +35,7 @@ public partial class NanotrasenStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public NanotrasenStylesheet(object config, StylesheetManager man) : base(config)
+    public NanotrasenStylesheetFactory(object config, StylesheetManager man) : base(config)
     {
         BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
@@ -54,7 +54,7 @@ public partial class NanotrasenStylesheet : CommonStylesheet
             ],
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<PalettedStylesheet, SheetletAttribute>(man),
-            GetAllSheetletRules<NanotrasenStylesheet, SheetletAttribute>(man),
+            GetAllSheetletRules<NanotrasenStylesheetFactory, SheetletAttribute>(man),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

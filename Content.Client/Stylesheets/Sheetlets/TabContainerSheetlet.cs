@@ -14,7 +14,7 @@ public sealed class TabContainerSheetlet<T> : ISheetlet<T> where T: PalettedStyl
     {
         ITabContainerConfig tabCfg = sheet;
 
-        var tabContainerPanel = sheet.GetTextureOr(tabCfg.TabContainerPanelPath, NanotrasenStylesheet.TextureRoot)
+        var tabContainerPanel = sheet.GetTextureOr(tabCfg.TabContainerPanelPath, NanotrasenStylesheetFactory.TextureRoot)
             .IntoPatch(StyleBox.Margin.All, 2);
 
         var tabContainerBoxActive = new StyleBoxFlat(sheet.SecondaryPalette.Element);

@@ -19,7 +19,7 @@ public sealed class ChatSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, 
         var chatBg = new StyleBoxFlat(chatColor);
 
         var chatChannelButtonTex =
-            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheet.TextureRoot);
+            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheetFactory.TextureRoot);
         var chatChannelButton = new StyleBoxTexture
         {
             Texture = chatChannelButtonTex,
@@ -28,7 +28,7 @@ public sealed class ChatSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, 
         chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
         var chatFilterButtonTex =
-            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheet.TextureRoot);
+            sheet.GetTextureOr(btnCfg.RoundedButtonBorderedPath, NanotrasenStylesheetFactory.TextureRoot);
         var chatFilterButton = new StyleBoxTexture
         {
             Texture = chatFilterButtonTex,

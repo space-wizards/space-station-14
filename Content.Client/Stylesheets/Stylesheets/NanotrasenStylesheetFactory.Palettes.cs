@@ -2,7 +2,7 @@
 
 namespace Content.Client.Stylesheets.Stylesheets;
 
-public partial class NanotrasenStylesheet
+public partial class NanotrasenStylesheetFactory
 {
     public override ColorPalette PrimaryPalette => Palettes.Navy;
     public override ColorPalette SecondaryPalette => Palettes.Slate;

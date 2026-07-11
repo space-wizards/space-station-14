@@ -17,7 +17,7 @@ public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T> where T : IButtonCo
         // Monotone (unfilled)
         var monotoneButton = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneBaseButtonPath, NanotrasenStylesheet.TextureRoot)
+            Texture = sheet.GetTextureOr(sheet.MonotoneBaseButtonPath, NanotrasenStylesheetFactory.TextureRoot)
         };
         monotoneButton.SetPatchMargin(StyleBox.Margin.All, 11);
         monotoneButton.SetPadding(StyleBox.Margin.All, 1);
@@ -26,21 +26,21 @@ public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T> where T : IButtonCo
 
         var monotoneButtonOpenLeft = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenLeftButtonPath, NanotrasenStylesheet.TextureRoot)
+            Texture = sheet.GetTextureOr(sheet.MonotoneOpenLeftButtonPath, NanotrasenStylesheetFactory.TextureRoot)
         };
 
         var monotoneButtonOpenRight = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenRightButtonPath, NanotrasenStylesheet.TextureRoot)
+            Texture = sheet.GetTextureOr(sheet.MonotoneOpenRightButtonPath, NanotrasenStylesheetFactory.TextureRoot)
         };
 
         var monotoneButtonOpenBoth = new StyleBoxTexture(monotoneButton)
         {
-            Texture = sheet.GetTextureOr(sheet.MonotoneOpenBothButtonPath, NanotrasenStylesheet.TextureRoot)
+            Texture = sheet.GetTextureOr(sheet.MonotoneOpenBothButtonPath, NanotrasenStylesheetFactory.TextureRoot)
         };
 
         // Monotone (filled)
-        var buttonTex = sheet.GetTextureOr(sheet.OpenLeftButtonPath, NanotrasenStylesheet.TextureRoot);
+        var buttonTex = sheet.GetTextureOr(sheet.OpenLeftButtonPath, NanotrasenStylesheetFactory.TextureRoot);
         var monotoneFilledButton = new StyleBoxTexture(monotoneButton)
         {
             Texture = buttonTex

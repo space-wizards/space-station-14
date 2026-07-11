@@ -11,9 +11,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.PDA;
 
 [Sheetlet]
-public sealed class PdaSheetlet : ISheetlet<NanotrasenStylesheet>
+public sealed class PdaSheetlet : ISheetlet<NanotrasenStylesheetFactory>
 {
-    public StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
     {
         IPanelConfig panelCfg = sheet;
         IButtonConfig btnCfg = sheet;

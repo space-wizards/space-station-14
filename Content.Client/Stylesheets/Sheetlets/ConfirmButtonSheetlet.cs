@@ -7,9 +7,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.UserInterface.Controls;
 
 [Sheetlet]
-public sealed class ConfirmButtonSheetlet : ISheetlet<NanotrasenStylesheet>
+public sealed class ConfirmButtonSheetlet : ISheetlet<NanotrasenStylesheetFactory>
 {
-    public StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
     {
         return [
             E<ConfirmButton>()

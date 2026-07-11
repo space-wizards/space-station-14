@@ -8,9 +8,9 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.MainMenu.UI;
 
 [Sheetlet]
-public sealed class MainMenuSheetlet : ISheetlet<NanotrasenStylesheet>
+public sealed class MainMenuSheetlet : ISheetlet<NanotrasenStylesheetFactory>
 {
-    public StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
     {
         return
         [

@@ -4,14 +4,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
-public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
+public abstract class CommonStylesheetFactory : PalettedStylesheet, IButtonConfig, IWindowConfig, IIconConfig, ITabContainerConfig,
     ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig, INanoHeadingConfig,
     ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig
 {
     /// <remarks>
     ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
     /// </remarks>
-    protected CommonStylesheet(object config) : base(config) { }
+    protected CommonStylesheetFactory(object config) : base(config) { }
 
     ResPath ICheckboxConfig.CheckboxUncheckedPath => new("checkbox_unchecked.svg.96dpi.png");
     ResPath ICheckboxConfig.CheckboxCheckedPath => new("checkbox_checked.svg.96dpi.png");

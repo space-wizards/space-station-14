@@ -26,7 +26,7 @@ public sealed class ActionSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
         var actionSearchBoxTex =
-            sheet.GetTextureOr(panelCfg.BlackPanelDarkThinBorderPath, NanotrasenStylesheet.TextureRoot);
+            sheet.GetTextureOr(panelCfg.BlackPanelDarkThinBorderPath, NanotrasenStylesheetFactory.TextureRoot);
         var actionSearchBox = new StyleBoxTexture
         {
             Texture = actionSearchBoxTex,

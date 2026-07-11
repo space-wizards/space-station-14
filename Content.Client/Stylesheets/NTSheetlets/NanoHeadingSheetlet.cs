@@ -10,9 +10,9 @@ namespace Content.Client.Stylesheets.NTSheetlets;
 
 /// Not NTHeading because NanoHeading is the name of the element
 [Sheetlet]
-public sealed class NanoHeadingSheetlet : ISheetlet<NanotrasenStylesheet>
+public sealed class NanoHeadingSheetlet : ISheetlet<NanotrasenStylesheetFactory>
 {
-    public StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
     {
         INanoHeadingConfig nanoHeadingCfg = sheet;
 

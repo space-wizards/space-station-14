@@ -14,12 +14,12 @@ public sealed class SwitchButtonSheetlet<T> : ISheetlet<T> where T : PalettedSty
     {
         ISwitchButtonConfig switchButtonCfg = sheet;
 
-        var trackFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackFillPath, NanotrasenStylesheet.TextureRoot);
-        var trackOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackOutlinePath, NanotrasenStylesheet.TextureRoot);
-        var thumbFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbFillPath, NanotrasenStylesheet.TextureRoot);
-        var thumbOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbOutlinePath, NanotrasenStylesheet.TextureRoot);
-        var symbolOffTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOffPath, NanotrasenStylesheet.TextureRoot);
-        var symbolOnTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOnPath, NanotrasenStylesheet.TextureRoot);
+        var trackFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackFillPath, NanotrasenStylesheetFactory.TextureRoot);
+        var trackOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackOutlinePath, NanotrasenStylesheetFactory.TextureRoot);
+        var thumbFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbFillPath, NanotrasenStylesheetFactory.TextureRoot);
+        var thumbOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbOutlinePath, NanotrasenStylesheetFactory.TextureRoot);
+        var symbolOffTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOffPath, NanotrasenStylesheetFactory.TextureRoot);
+        var symbolOnTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOnPath, NanotrasenStylesheetFactory.TextureRoot);
 
         return
         [
