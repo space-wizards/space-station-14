@@ -65,8 +65,8 @@ public enum CollisionGroup
     TabletopMachineLayer = Opaque | BulletImpassable,
 
     // Airlocks, windoors, firelocks
-    GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
-    AirlockLayer = Opaque | GlassAirlockLayer,
+    GlassAirlockLayer = HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+    AirlockLayer = Opaque | LowImpassable | GlassAirlockLayer,
 
     // Airlock assembly
     HumanoidBlockLayer = HighImpassable | MidImpassable,
