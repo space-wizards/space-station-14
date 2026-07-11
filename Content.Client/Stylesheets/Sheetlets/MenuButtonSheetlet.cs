@@ -10,19 +10,18 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class MenuButtonSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class MenuButtonSheetlet<T> : ISheetlet<T>
+    where T : IButtonConfig, IIconConfig, IFontConfig, IPaletteConfig
 {
     private static MutableSelectorElement CButton()
     {
         return E<MenuButton>();
     }
 
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IButtonConfig cfg = sheet;
-
-        var buttonTex = sheet.GetTextureOr(cfg.BaseButtonPath, NanotrasenStylesheetFactory.TextureRoot);
+        var buttonTex = factory.GetTexture(config.BaseButtonPath);
         var topButtonBase = new StyleBoxTexture
         {
             Texture = buttonTex,
@@ -54,28 +53,28 @@ public sealed class MenuButtonSheetlet<T> : ISheetlet<T> where T : PalettedStyle
             CButton().Class(StyleClass.ButtonSquare).Box(topButtonSquare),
             CButton().Class(StyleClass.ButtonOpenLeft).Box(topButtonOpenLeft),
             CButton().Class(StyleClass.ButtonOpenRight).Box(topButtonOpenRight),
-            CButton().Box(StyleBoxHelpers.BaseStyleBox(sheet)),
+            CButton().Box(StyleBoxHelpers.BaseStyleBox(config)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenLeftStyleBox(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenLeftStyleBox(config)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenRightStyleBox(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenRightStyleBox(config)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(config)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(config)),
             E<Label>()
                 .Class(MenuButton.StyleClassLabelTopButton)
-                .Prop(Label.StylePropertyFont, sheet.BaseFont.GetFont(14, FontKind.Bold)),
+                .Prop(Label.StylePropertyFont, config.BaseFont.GetFont(14, FontKind.Bold)),
             // new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
         };
 
-        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.ButtonPalette, null);
-        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.PositiveButtonPalette, StyleClass.Positive);
-        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, cfg.NegativeButtonPalette, StyleClass.Negative);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, config.ButtonPalette, null);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, config.PositiveButtonPalette, StyleClass.Positive);
+        ButtonSheetlet<T>.MakeButtonRules<MenuButton>(rules, config.NegativeButtonPalette, StyleClass.Negative);
 
         return rules.ToArray();
     }
