@@ -485,7 +485,7 @@
     emoteSounds: SheepSpace
 
 - type: entity
-  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision]
+  parent: [SimpleSpaceMobBase, BaseMobAnimal, SolutionVermin, MobNightVision, MobNodeCrawler]
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
