@@ -1,4 +1,5 @@
-﻿using Robust.Client.UserInterface;
+﻿using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets;
 
@@ -7,6 +8,7 @@ namespace Content.Client.Stylesheets;
 /// to form a stylesheet.
 /// </summary>
 /// <typeparam name="T">Sheetlet configs</typeparam>
+[UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public interface ISheetlet<in T>
     where T : ISheetletConfig
 {
@@ -16,5 +18,5 @@ public interface ISheetlet<in T>
     /// <param name="resolver">Resolves stylesheet-dependent style properties (e.g. paths, textures, resources)</param>
     /// <param name="config">Sheetlet configs</param>
     /// <returns>Style rules</returns>
-    StyleRule[] GetRules(StyleResolver resolver, T config);
+    StyleRule[] GetRules(StylesheetFactory resolver, T config);
 }
