@@ -1,5 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Fonts;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,10 +8,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.MainMenu.UI;
 
-[Sheetlet]
-public sealed class MainMenuSheetlet : ISheetlet<NanotrasenStylesheetFactory>
+[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+public sealed class MainMenuSheetlet<T> : ISheetlet<T>
+    where T : IFontConfig
 {
-    public StyleRule[] GetRules(NanotrasenStylesheetFactory sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
         return
         [
@@ -18,7 +20,7 @@ public sealed class MainMenuSheetlet : ISheetlet<NanotrasenStylesheetFactory>
             E<Button>()
                 .Identifier(MainMenuControl.StyleIdentifierMainMenu)
                 .ParentOf(E<Label>())
-                .Font(sheet.BaseFont.GetFont(16, FontKind.Bold)),
+                .Font(config.BaseFont.GetFont(16, FontKind.Bold)),
             E<BoxContainer>()
                 .Identifier(MainMenuControl.StyleIdentifierMainMenuVBox)
                 .Prop(BoxContainer.StylePropertySeparation, 2),
