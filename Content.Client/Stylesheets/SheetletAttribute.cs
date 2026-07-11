@@ -35,6 +35,6 @@ public sealed class SheetletAttribute : Attribute
                 throw new ArgumentException($"{factory} is not a {nameof(StylesheetFactory)}");
         }
 
-        Factories = factories;
+        Factories = fs.ToArray();
     }
 }
