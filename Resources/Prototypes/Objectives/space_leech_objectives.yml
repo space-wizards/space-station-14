@@ -1,3 +1,7 @@
+- type: objectiveIssuer
+  id: SpaceLeech
+  name: objective-issuer-space-leech
+
 - type: entity
   parent: BaseObjective
   id: SpaceLeechSurviveObjective
@@ -8,7 +12,7 @@
     icon:
       sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
       state: enforcer
-    issuer: objective-issuer-space-leech
+    issuer: SpaceLeech
     difficulty: 1.0
     unique: true
   - type: SurviveCondition
@@ -21,12 +25,12 @@
     icon:
       sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
       state: harvester
-    issuer: objective-issuer-space-leech
+    issuer: SpaceLeech
     difficulty: 1.5
     unique: true
   - type: NumberObjective
     min: 1000
-    max: 2000
+    max: 3000
     title: objective-space-leech-blood-title
   - type: SpaceLeechBloodCondition
 
@@ -40,7 +44,7 @@
     icon:
       sprite: Mobs/Pets/corgi.rsi
       state: ian
-    issuer: objective-issuer-space-leech
+    issuer: SpaceLeech
     difficulty: 2.0
     unique: true
   - type: KillStationPetsCondition
