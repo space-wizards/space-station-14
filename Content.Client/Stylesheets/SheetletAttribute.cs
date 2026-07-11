@@ -1,4 +1,6 @@
-﻿namespace Content.Client.Stylesheets;
+﻿using System.Linq;
+
+namespace Content.Client.Stylesheets;
 
 /// <summary>
 /// Attribute used to mark a sheetlet class, used to locate, verify constraints, and then generate stylesheets via reflection.
@@ -18,13 +20,18 @@ public sealed class SheetletAttribute : Attribute
     /// <summary>
     /// Attribute used to mark a sheetlet class. Stylesheets can use this attribute to locate and load sheetlets.
     /// </summary>
+    /// <param name="factory">First factory to match</param>
     /// <param name="factories">Stylesheet factories to generate for.</param>
     /// <exception cref="ArgumentException">If the type provided is not a <see cref="StylesheetFactory"/> </exception>
-    public SheetletAttribute(params Type[] factories)
+    public SheetletAttribute(Type factory, params Type[] factories)
     {
-        foreach (var factory in factories)
+        var fs = factories.ToList();
+        // Used to stop people from providing 0 factories w/o requiring custom Roslyn analyzers.
+        fs.Add(factory);
+
+        foreach (var f in fs)
         {
-            if (!typeof(StylesheetFactory).IsAssignableFrom(factory))
+            if (!typeof(StylesheetFactory).IsAssignableFrom(f))
                 throw new ArgumentException($"{factory} is not a {nameof(StylesheetFactory)}");
         }
 
