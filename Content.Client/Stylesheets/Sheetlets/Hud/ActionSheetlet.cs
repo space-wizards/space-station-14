@@ -6,19 +6,21 @@ using Content.Client.UserInterface.Systems.Actions.Windows;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Utility;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet]
-public sealed class ActionSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet, IPanelConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class ActionSheetlet<T> : ISheetlet<T>
+    where T : IPanelConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        IPanelConfig panelCfg = sheet;
+        IPanelConfig panelCfg = config;
 
         // TODO: absolute texture access
-        var handSlotHighlightTex = ResCache.GetTexture("/Textures/Interface/Inventory/hand_slot_highlight.png");
+        var handSlotHighlightTex = factory.GetTexture(new ResPath("/Textures/Interface/Inventory/hand_slot_highlight.png"));
         var handSlotHighlight = new StyleBoxTexture
         {
             Texture = handSlotHighlightTex,
@@ -26,7 +28,7 @@ public sealed class ActionSheetlet<T> : ISheetlet<T> where T: PalettedStylesheet
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
         var actionSearchBoxTex =
-            sheet.GetTextureOr(panelCfg.BlackPanelDarkThinBorderPath, NanotrasenStylesheetFactory.TextureRoot);
+            factory.GetTexture(panelCfg.BlackPanelDarkThinBorderPath);
         var actionSearchBox = new StyleBoxTexture
         {
             Texture = actionSearchBoxTex,
