@@ -194,6 +194,12 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      configurators: []
+      deviceLists: []
+      transmitFrequencyId: ShuttleTimer
+    - type: NavMap
     - type: ExplosionAirtightGrid
 - proto: AirlockCargoGlassLocked
   entities:
