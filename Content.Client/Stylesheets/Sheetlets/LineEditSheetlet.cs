@@ -7,14 +7,13 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet]
-public sealed class LineEditSheetlet<T> : ISheetlet<T> where T : PalettedStylesheet, ILineEditConfig
+[Sheetlet(typeof(CommonStylesheetFactory))]
+public sealed class LineEditSheetlet<T> : ISheetlet<T>
+    where T : ILineEditConfig
 {
-    public StyleRule[] GetRules(T sheet, object config)
+    public StyleRule[] GetRules(StylesheetFactory factory, T config)
     {
-        ILineEditConfig lineEditCfg = sheet;
-
-        var lineEditStylebox = sheet.GetTextureOr(lineEditCfg.LineEditPath, NanotrasenStylesheetFactory.TextureRoot)
+        var lineEditStylebox = factory.GetTexture(config.LineEditPath)
             .IntoPatch(StyleBox.Margin.All, 3);
         lineEditStylebox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
