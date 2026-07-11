@@ -270,6 +270,8 @@
     - type: GuideHelp
       guides:
       - Thermomachines
+    - type: CrawlableNode
+      reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -476,4 +478,6 @@
   - type: GuideHelp
     guides:
     - GasCondensing
+  - type: CrawlableNode
+    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 

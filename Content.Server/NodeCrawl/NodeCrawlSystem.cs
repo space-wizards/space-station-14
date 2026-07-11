@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Server.Body.Systems;
 using Content.Server.NodeContainer.EntitySystems;
@@ -5,11 +6,15 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeCrawl;
 using Content.Shared.Atmos;
 using Content.Shared.NodeContainer;
+using Robust.Shared.Reflection;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NodeCrawl;
 
 public sealed class NodeCrawlSystem : SharedNodeCrawlSystem
 {
+    [Dependency] private readonly IReflectionManager _reflection = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -78,12 +83,23 @@ public sealed class NodeCrawlSystem : SharedNodeCrawlSystem
         if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
             return;
 
+        // ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
+        // get serialized properly
+        var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
+
         ent.Comp.DeadEnd = false;
         var set = new HashSet<EntityUid>();
         foreach (var node in nodeContainer.Nodes.Values)
         {
             foreach (var reachable in node.ReachableNodes)
             {
+                if (possibleTypes.Count != 0 && !possibleTypes.TrueForAll(type => reachable.GetType() == type))
+                {
+                    continue;
+                }
+
+                DebugTools.Assert(HasComp<CrawlableNodeComponent>(reachable.Owner), $"Node {ToPrettyString(reachable.Owner)} reachable from {ToPrettyString(ent)} should be a crawlable node, but wasn't");
+
                 set.Add(reachable.Owner);
             }
 

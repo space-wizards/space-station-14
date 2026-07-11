@@ -119,6 +119,8 @@
     guides:
     - Cryogenics
   - type: AmbientMusicMarkerMedical
+  - type: CrawlableNode
+    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: SolutionSmall

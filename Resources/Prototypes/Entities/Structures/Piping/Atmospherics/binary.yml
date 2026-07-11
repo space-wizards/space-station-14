@@ -437,6 +437,7 @@
       guides:
       - GasCanisters
     - type: CrawlableNode
+      reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: GasVentPump
@@ -582,6 +583,8 @@
     guides:
     - GasRecycling
   - type: TegCirculator
+  - type: CrawlableNode
+    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: GasBinaryBase

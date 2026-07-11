@@ -185,6 +185,8 @@
     - type: TegCirculator
     - type: StealTarget
       stealGroup: Teg
+    - type: CrawlableNode
+      reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
     - type: DirectionalArrowIndicator
       arrows:
       - offset: 0, -1.5

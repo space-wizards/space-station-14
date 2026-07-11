@@ -183,9 +183,9 @@ public abstract class SharedNodeCrawlSystem : EntitySystem
             Dirty(node, nodeComp);
         }
 
-        if (ent.Comp.HeldCrawler is { } crawler)
+        if (ent.Comp.HeldCrawler is { } crawler && !TerminatingOrDeleted(crawler) && TryComp<NodeCrawlerComponent>(crawler, out var nodeCrawler))
         {
-            ExitNodeCrawl((crawler, Comp<NodeCrawlerComponent>(crawler)));
+            ExitNodeCrawl((crawler, nodeCrawler));
         }
     }
 
