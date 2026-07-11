@@ -529,15 +529,15 @@
     solution:
       reagents:
       - ReagentId: Nutriment
-        Quantity: 7.25
+        Quantity: 8
       - ReagentId: Fiber
-        Quantity: 3.25
+        Quantity: 4
       - ReagentId: Vitamin
-        Quantity: 1.05
+        Quantity: 1.4
       - ReagentId: TableSalt
-        Quantity: 0.05
+        Quantity: 0.1
       - ReagentId: Blackpepper
-        Quantity: 0.05
+        Quantity: 0.1
 
 - type: entity
   parent: [SolutionNormal, FoodBakedBase, BaseSlicingRefinableFood]
