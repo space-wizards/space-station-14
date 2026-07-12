@@ -30,14 +30,6 @@
           - MachineMask
           layer:
           - MachineLayer
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 25
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - type: PowerSink
     - type: Battery
       # Very important:

@@ -29,14 +29,6 @@
     baseRange: 80
   - type: SinguloFood
     energy: 120
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 5000
   - type: StaticPrice

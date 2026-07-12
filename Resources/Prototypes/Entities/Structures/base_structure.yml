@@ -28,6 +28,25 @@
       - Structure
 
 - type: entity
+  abstract: true
+  id: BaseDestructibleStructure # Will be replaced by more variety of bases in the future
+  components:
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
+- type: entity
   # This means that it's not anchored on spawn.
   id: BaseStructureDynamic
   parent: BaseStructure

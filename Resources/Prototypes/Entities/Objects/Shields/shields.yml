@@ -1,9 +1,9 @@
 - type: entity
-  name: base shield
+  abstract: true
   parent: BaseItem
   id: BaseShield
+  name: base shield
   description: A shield!
-  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/shields.rsi
@@ -35,25 +35,6 @@
       damageContainer: Shield
     - type: ExaminableDamage
       messages: ShieldMessages
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100 #This is probably enough damage before it breaks
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel:
-              min: 2
-              max: 2
-            SheetGlass:
-              min: 2
-              max: 2
     - type: StaticPrice
       price: 100
 
@@ -97,6 +78,25 @@
         flatReductions:
           Blunt: 1
           Slash: 1
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
 
 - type: entity
   name: laser shield
@@ -117,6 +117,25 @@
           Heat: 0.5
         flatReductions:
           Heat: 1
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
 
 - type: entity
   name: ballistic shield
@@ -137,6 +156,25 @@
           Piercing: 0.5
         flatReductions:
           Piercing: 1
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
 
 #Craftable shields
 
@@ -360,6 +398,25 @@
           Slash: 1
           Piercing: 1
       #Have it break into brass when clock cult is in
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100 #This is probably enough damage before it breaks
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel:
+              min: 2
+              max: 2
+            SheetGlass:
+              min: 2
+              max: 2
 
 - type: entity
   name: mirror shield
