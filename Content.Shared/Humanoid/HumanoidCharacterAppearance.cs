@@ -223,7 +223,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                 }
             }
 
-            foreach (var organ in validatedMarkings.Keys.ToArray())
+            foreach (var organ in new List<ProtoId<OrganCategoryPrototype>>(validatedMarkings.Keys))
             {
                 if (!organs.ContainsKey(organ))
                     validatedMarkings.Remove(organ);
