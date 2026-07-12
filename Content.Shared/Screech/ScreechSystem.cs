@@ -43,9 +43,9 @@ public sealed partial class ScreechSystem : EntitySystem
 
     private void OnExamine(Entity<NoiseProtectionComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.ExamineQuip.HasValue)
+        if (ent.Comp.ExamineText.HasValue)
         {
-            args.PushMarkup(Loc.GetString(ent.Comp.ExamineQuip.Value));
+            args.PushMarkup(Loc.GetString(ent.Comp.ExamineText.Value));
         }
     }
 
