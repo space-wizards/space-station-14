@@ -318,6 +318,8 @@
   name: backpack of holding
   description: A backpack that opens into a localized pocket of bluespace.
   components:
+  - type: Clothing
+    equippedPrefix: holding
   - type: Sprite
     sprite: Clothing/Back/Backpacks/holding.rsi
     state: holding
