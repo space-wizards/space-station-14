@@ -29,10 +29,10 @@ public sealed partial class NodeCrawlerComponent : Component
     public Type[] RevealedComponents = [typeof(PipeAppearanceComponent)];
 
     /// <summary>
-    /// Whitelist for entities that will be considered as exit nodes.
+    /// Whitelist for entities that will be considered as entrance nodes.
     /// </summary>
     [DataField]
-    public EntityWhitelist? ExitNodes = new ()
+    public EntityWhitelist? EntranceNodes = new ()
     {
         Components =
         [

@@ -51,7 +51,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         if (!TryComp<NodeCrawlerComponent>(user, out var nodeCrawler))
             return;
 
-        if (!_entityWhitelist.IsWhitelistPass(nodeCrawler.ExitNodes, target))
+        if (!_entityWhitelist.IsWhitelistPass(nodeCrawler.EntranceNodes, target))
             return;
 
         if (!args.CanAccess)
@@ -175,7 +175,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
 
     private void OnArrivedAtNode(Entity<NodeCrawlerComponent> ent, ref NodeCrawlerArrivedAtNodeEvent args)
     {
-        if (!_entityWhitelist.IsWhitelistPass(ent.Comp.ExitNodes, args.Node))
+        if (!_entityWhitelist.IsWhitelistPass(ent.Comp.EntranceNodes, args.Node))
             return;
 
         ExitNodeCrawl(ent);
