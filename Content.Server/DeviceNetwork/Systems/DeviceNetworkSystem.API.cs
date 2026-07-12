@@ -88,7 +88,7 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(uid, ref deviceComp, false))
             return false;
 
-        if (!Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
+        if (!_networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
             return false;
 
         var device = new Device(uid, deviceComp.Data);
@@ -102,7 +102,7 @@ public sealed partial class DeviceNetworkSystem
     public bool IsAddressPresent(int netId, string? address)
     {
         if (address == null
-            || !Networks.TryGetValue(netId, out var network))
+            || !_networks.TryGetValue(netId, out var network))
             return false;
 
         return network.Devices.ContainsKey(address);

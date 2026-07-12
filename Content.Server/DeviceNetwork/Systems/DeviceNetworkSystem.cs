@@ -22,7 +22,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// <summary>
     /// Basically a cache of devices to connect them together faster.
     /// </summary>
-    public readonly Dictionary<int, DeviceNet> Networks = new(4);
+    private readonly Dictionary<int, DeviceNet> _networks = new(4);
 
     public override void Initialize()
     {
@@ -131,14 +131,14 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         network = null;
 
-        if (Networks.TryGetValue(netId, out var deviceNet))
+        if (_networks.TryGetValue(netId, out var deviceNet))
         {
             network = deviceNet;
             return true;
         }
 
         var newDeviceNet = new DeviceNet(netId, _random);
-        Networks[netId] = newDeviceNet;
+        _networks[netId] = newDeviceNet;
         network = newDeviceNet;
         return true;
     }
@@ -151,7 +151,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         network = null;
 
-        if (!Networks.TryGetValue(netId, out var deviceNet))
+        if (!_networks.TryGetValue(netId, out var deviceNet))
             return false;
 
         network = deviceNet;
@@ -213,7 +213,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// <returns>false if the broadcast was canceled</returns>
     private bool CheckRecipientsList(DeviceNetworkPacketData packet, ref HashSet<Device> recipients)
     {
-        if (!Networks.TryGetValue(packet.NetId, out var net)
+        if (!_networks.TryGetValue(packet.NetId, out var net)
             || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
             return false;
 
