@@ -263,7 +263,10 @@ public sealed partial class ZombieSystem
         _inventory.TryUnequip(target, "ears", true, true);
 
         //popup
-        _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
+        _popup.PopupEntity(
+            Loc.GetString("zombie-transform", ("target", Identity.Entity(target, EntityManager))),
+            target,
+            PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
         _mind.MakeSentient(target);
@@ -307,7 +310,7 @@ public sealed partial class ZombieSystem
             _npc.WakeNPC(target, htn);
         }
 
-        if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
+        if (!HasComp<GhostRoleMobSpawnerComponent>(target)) //this specific component gives build test trouble so pop off, ig
         {
             //yet more hardcoding. Visit zombie.ftl for more information.
             var ghostRole = EnsureComp<GhostRoleComponent>(target);

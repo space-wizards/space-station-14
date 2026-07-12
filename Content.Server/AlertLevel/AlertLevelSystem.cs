@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -12,7 +11,6 @@ namespace Content.Server.AlertLevel;
 public sealed partial class AlertLevelSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private StationSystem _stationSystem = default!;
@@ -51,7 +49,7 @@ public sealed partial class AlertLevelSystem : EntitySystem
         if (!TryComp<AlertLevelComponent>(args.Station, out var alertLevelComponent))
             return;
 
-        if (!_prototypeManager.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
+        if (!ProtoMan.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
         {
             return;
         }
