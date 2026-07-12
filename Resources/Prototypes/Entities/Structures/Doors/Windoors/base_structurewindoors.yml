@@ -96,12 +96,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -229,12 +223,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 400
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -304,12 +292,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 480
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 240
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -372,12 +354,6 @@
       visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 800
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 530
@@ -451,12 +427,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 240
       behaviors:
       - !type:SpawnEntitiesBehavior
@@ -519,12 +489,6 @@
       visible: false
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 400
