@@ -18,6 +18,8 @@ namespace Content.Client.Launcher
     [GenerateTypedNameReferences]
     public sealed partial class LauncherConnectingGui : Control
     {
+        [Dependency] private IStylesheetManager _stylesheets = default!;
+
         private const float RedialWaitTimeSeconds = 15f;
         private readonly LauncherConnecting _state;
         private float _waitTime;
@@ -43,7 +45,7 @@ namespace Content.Client.Launcher
 
             LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
 
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
+            IoCManager.InjectDependencies(this);
 
             ChangeLoginTip();
             RetryButton.OnPressed += ReconnectButtonPressed;
@@ -68,6 +70,20 @@ namespace Content.Client.Launcher
             var edim = IoCManager.Resolve<ExtendedDisconnectInformationManager>();
             edim.LastNetDisconnectedArgsChanged += LastNetDisconnectedArgsChanged;
             LastNetDisconnectedArgsChanged(edim.LastNetDisconnectedArgs);
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _stylesheets.UseStylesheet(this, accessor => accessor.SheetSystem);
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _stylesheets.StopStylesheet(this);
         }
 
         // Just button, there's only one at once anyways :)

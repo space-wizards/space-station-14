@@ -11,10 +11,12 @@ namespace Content.Client.Actions.UI
     /// </summary>
     public sealed class ActionAlertTooltip : PanelContainer
     {
+        [Dependency] private IStylesheetManager _stylesheets = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         private const float TooltipTextMaxWidth = 350;
 
         private readonly RichTextLabel _cooldownLabel;
-        private readonly IGameTiming _gameTiming;
 
         /// <summary>
         /// Current cooldown displayed in this tooltip. Set to null to show no cooldown.
@@ -23,7 +25,6 @@ namespace Content.Client.Actions.UI
 
         public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
             SetOnlyStyleClass(StyleClass.TooltipPanel);
@@ -75,6 +76,20 @@ namespace Content.Client.Actions.UI
 
                 vbox.AddChild(requiresLabel);
             }
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _stylesheets.UseStylesheet(this, accessor => accessor.SheetSystem);
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _stylesheets.StopStylesheet(this);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
