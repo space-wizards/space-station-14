@@ -52,11 +52,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
     /// <summary>
-    /// Changes the fixture shape AABB to avoid false intersection in <see cref="GetColliding"/> with checkFixtureCollision set to true.
-    /// </summary>
-    public static float DoorFixtureCheckExpansion = -0.02f;
-
-    /// <summary>
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
@@ -527,7 +522,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Crushes everyone colliding with us by more than <see cref="DoorFixtureCheckExpansion"/> percent.
+    /// Crushes everyone colliding with the door.
     /// </summary>
     public void Crush(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
@@ -591,7 +586,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
         else
         {
-            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
+            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, doorIntersecting, gridComp: mapGridComp, flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
         }
 
         // TODO SLOTH fix electro's code.
