@@ -15,10 +15,15 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private ISandboxHelper _sandboxHelper = default!;
     [Dependency] private IReflectionManager _reflectionManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
+
+    private readonly ISawmill _sawmill;
 
     protected StylesheetFactory()
     {
         IoCManager.InjectDependencies(this);
+
+        _sawmill = _logManager.GetSawmill("style");
     }
 
     /// <summary>
@@ -27,24 +32,18 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     /// <param name="sheetletType">Type of the sheetlet to instantiate.</param>
     /// <returns>Sheetlet's style rules, or nothing if the attribute is not set for the factory type.</returns>
     /// <exception cref="ArgumentException">Missing Sheetlet attribute.</exception>
-    /// <exception cref="MissingSheetletConstraintsException">A factory is marked for a sheetlet yet can't meet the constraints.</exception>
     /// <exception cref="Exception">Sandbox instantiation exceptions.</exception>
     private StyleRule[] BuildSheetlet(Type sheetletType)
     {
-        if (!sheetletType.TryGetCustomAttribute<SheetletAttribute>(out var attribute))
-            throw new ArgumentException($"Type '{sheetletType}' does not have Sheetlet attribute.");
-
-        if (!attribute.Factories.Any(f => f.IsInstanceOfType(this)))
-            return [];
-
         Type sheetletClosedType;
         try
         {
             sheetletClosedType = sheetletType.MakeGenericType(GetType());
         }
-        catch (ArgumentException e)
+        catch (ArgumentException)
         {
-            throw new MissingSheetletConstraintsException(this, sheetletType, e);
+            _sawmill.Error($"{this} is marked for yet cannot satisfy the generic constraints for {sheetletType}.");
+            return [];
         }
 
         return _sandboxHelper.CreateInstance(sheetletClosedType) is not ISheetlet sheetlet
@@ -59,9 +58,8 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     /// <returns>Stylesheet constructed from all the sheetlets.</returns>
     public Stylesheet Build()
     {
-        // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
+        // Sorts sheetlets by how "close" their attribute types are to the specific factory, letting us create an ordering
         // so that you can make overriding sheetlets.
-
         var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
             .Where(t =>
             {
@@ -106,16 +104,3 @@ public abstract partial class StylesheetFactory : ISheetletConfig
         return int.MaxValue;
     }
 }
-
-/// <summary>
-/// An exception for when a stylesheet cannot be constructed due to a missing constraint.
-/// </summary>
-/// <param name="factory">The factory that tried to be created.</param>
-/// <param name="sheetlet">The sheetlet that failed to be created.</param>
-/// <param name="innerException">Inner exception from the sandbox.</param>
-public sealed class MissingSheetletConstraintsException(
-    StylesheetFactory factory,
-    Type sheetlet,
-    Exception innerException)
-    : Exception($"Stylesheet factory {factory} cannot satisfy the generic constraints for sheetlet {sheetlet}.",
-        innerException);
