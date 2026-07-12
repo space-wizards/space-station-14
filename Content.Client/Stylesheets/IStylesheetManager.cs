@@ -104,7 +104,12 @@ public interface IStylesheetAccessor
     Stylesheet SheetSystem { get; }
 
     /// <summary>
-    /// Get a stylesheet by name.
+    /// Try get a stylesheet by name.
     /// </summary>
     bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet);
+
+    /// <summary>
+    /// Get a stylesheet, or fallback to a default.
+    /// </summary>
+    Stylesheet GetStylesheetOrDefault(string name, Stylesheet defaultStylesheet);
 }

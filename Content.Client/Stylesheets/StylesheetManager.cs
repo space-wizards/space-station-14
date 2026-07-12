@@ -125,6 +125,18 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
             return owner._stylesheets.TryGetValue(name, out stylesheet);
         }
 
+        /// <inheritdoc/>
+        public Stylesheet GetStylesheetOrDefault(string name, Stylesheet defaultStylesheet)
+        {
+            if (TryGetStylesheet(name, out var stylesheet))
+                return stylesheet;
+            else
+            {
+                owner._sawmill.Warning($"Failed to resolve stylesheet {name}");
+                return defaultStylesheet;
+            }
+        }
+
         private static Stylesheet GetOrThrow(Stylesheet? sheet)
         {
             return sheet ?? ThrowNotInitialized();
