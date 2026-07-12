@@ -9,6 +9,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage.Systems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
@@ -77,13 +78,11 @@ public sealed partial class CluwneSystem : EntitySystem
 
         EnsureComp<ClumsyComponent>(ent.Owner);
 
-        var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", ent.Owner));
-
+        var transformMessage = Loc.GetString(ent.Comp.TransformMessage, ("target", Identity.Entity(ent.Owner, EntityManager)));
         _popupSystem.PopupEntity(transformMessage, ent.Owner, PopupType.LargeCaution);
         _audio.PlayPvs(ent.Comp.SpawnSound, ent.Owner);
 
         _nameMod.RefreshNameModifiers(ent.Owner);
-
 
         _outfitSystem.SetOutfit(ent.Owner, ent.Comp.OutfitId, unremovable: true);
     }

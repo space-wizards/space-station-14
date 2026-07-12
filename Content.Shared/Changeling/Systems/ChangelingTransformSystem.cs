@@ -186,12 +186,16 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
         _visualBody.CopyAppearanceFrom(targetIdentity, args.User);
         _cloning.CloneComponents(targetIdentity, args.User, settings);
 
+        if (settings.CopyStatusEffects)
+            _cloning.CopyStatusEffects(targetIdentity, args.User, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
+
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(ent, Description(targetIdentity));
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
         Dirty(ent);
