@@ -4,6 +4,7 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Dice;
@@ -14,15 +15,7 @@ public abstract partial class SharedDiceSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<DiceComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<DiceComponent, LandEvent>(OnLand);
-        SubscribeLocalEvent<DiceComponent, ExaminedEvent>(OnExamined);
-    }
-
+    [SubscribeLocalEvent]
     private void OnUseInHand(Entity<DiceComponent> entity, ref UseInHandEvent args)
     {
         if (args.Handled)
@@ -32,28 +25,25 @@ public abstract partial class SharedDiceSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnLand(Entity<DiceComponent> entity, ref LandEvent args)
     {
         Roll(entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<DiceComponent> entity, ref ExaminedEvent args)
     {
-        if (entity.Comp.isCoin)
-        {
-            using (args.PushGroup(nameof(DiceComponent)))
-            {   
-                args.PushMarkup(Loc.GetString("dice-component-on-examine-message-coin",
-                ("currentSide", CheckCoinSide(entity))));
-            }
-            return;
-        }
         //No details check, since the sprite updates to show the side.
         using (args.PushGroup(nameof(DiceComponent)))
         {
-            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", entity.Comp.Sides)));
-            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2",
-                ("currentSide", entity.Comp.CurrentValue)));
+            if (entity.Comp.ExamineObjectText != null)
+            {
+                args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", entity.Comp.Sides), ("name", Loc.GetString(entity.Comp.ExamineObjectText))));
+            }
+
+            var valueString = GetRolledValueString(entity);
+            args.PushMarkup(Loc.GetString(entity.Comp.LandedString, ("currentSide", valueString)));
         }
     }
 
@@ -84,39 +74,40 @@ public abstract partial class SharedDiceSystem : EntitySystem
     {
         var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
 
-        var roll = rand.Next(1, entity.Comp.Sides + 1);
-        if(entity.Comp.trickedCoin)
-            SetCurrentSide(entity, 2);
+        // Is the dice weighted?
+        if (entity.Comp.WeightedValue is { } weightedValue && rand.Prob(entity.Comp.WeightedProb))
+        {
+            SetCurrentSide(entity, weightedValue);
+        }
         else
+        {
+            var roll = rand.Next(1, entity.Comp.Sides + 1);
             SetCurrentSide(entity, roll);
-        var popupString = string.Empty;
+        }
 
-        if (!entity.Comp.isCoin)
-        {
-            popupString = Loc.GetString("dice-component-on-roll-land",
+        var popupString = Loc.GetString("dice-component-on-roll-land",
                 ("die", entity),
-                ("currentSide", entity.Comp.CurrentValue));
-        }
+                ("currentSide", GetRolledValueString(entity)));
+
+        if (user == null)
+            _popup.PopupEntity(popupString, entity);
         else
-        {
-            popupString = Loc.GetString("dice-component-on-roll-land-coin",
-                ("die", entity),
-                ("currentSide", CheckCoinSide(entity)));
-        }
-        _popup.PopupPredicted(popupString, entity, user);
+            _popup.PopupEntity(popupString, entity, user);
         _audio.PlayPredicted(entity.Comp.Sound, entity, user);
-        
-    
     }
 
-    private string CheckCoinSide(Entity<DiceComponent> entity)
+    // Returns a readable string of the value of the dice.
+    private string GetRolledValueString(Entity<DiceComponent> entity)
     {
-        if (!entity.Comp.isCoin || (entity.Comp.CurrentValue != 1 && entity.Comp.CurrentValue != 2))
+        if (ProtoMan.TryIndex(entity.Comp.Values, out var valuesPrototype)
+            && valuesPrototype.Values.Count >= entity.Comp.CurrentValue
+            && entity.Comp.CurrentValue >= 1)
         {
-            Log.Error($"Attempted to check coin side of die {ToPrettyString(entity)} with invalid value ({entity.Comp.CurrentValue}).");
-            return "its rim";
+            return Loc.GetString(valuesPrototype.Values[entity.Comp.CurrentValue - 1]);
         }
-
-        return entity.Comp.CurrentValue == 1 ? "heads" : "tails";
+        else
+        {
+            return entity.Comp.CurrentValue.ToString();
+        }
     }
 }

@@ -1,47 +1,47 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "coinSilver_1"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/15121b534f4ef10339d96412e22fe3ce4d15a45d/icons/obj/coins.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "coinSilver_2"
-    },
-    {
-      "name": "coinGold_1"
-    },
-    {
-      "name": "coinGold_2"
-    },
-    {
-      "name": "coinIron_1"
-    },
-    {
-      "name": "coinIron_2"
-    },
-    {
-      "name": "coinDiamond_1"
-    },
-    {
-      "name": "coinDiamond_2"
-    },
-    {
-      "name": "coinAdamantine_1"
-    },
-    {
-      "name": "coinAdamantine_2"
-    },
-    {
-      "name": "d2_1"
-    },
-    {
-      "name": "d2_2"
-    }
-  ]
+    "states": [
+        {
+            "name": "coinSilver_1"
+        },
+        {
+            "name": "coinSilver_2"
+        },
+        {
+            "name": "coinGold_1"
+        },
+        {
+            "name": "coinGold_2"
+        },
+        {
+            "name": "coinIron_1"
+        },
+        {
+            "name": "coinIron_2"
+        },
+        {
+            "name": "coinDiamond_1"
+        },
+        {
+            "name": "coinDiamond_2"
+        },
+        {
+            "name": "coinAdamantine_1"
+        },
+        {
+            "name": "coinAdamantine_2"
+        },
+        {
+            "name": "d2_1"
+        },
+        {
+            "name": "d2_2"
+        }
+    ]
 }

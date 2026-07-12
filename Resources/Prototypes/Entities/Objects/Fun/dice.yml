@@ -90,6 +90,15 @@
     state: d6_6
 
 - type: entity
+  parent: d6Dice
+  id: d6DiceTricked
+  suffix: Tricked
+  components:
+  - type: Dice
+    weightedProb: 0.5
+    weightedValue: 6
+
+- type: entity
   parent: BaseDice
   id: d4Dice
   name: d4
@@ -144,15 +153,12 @@
     state: d2_1
 
 - type: entity
-  parent: BaseCoin
+  parent: d2Dice
   id: d2DiceTricked
-  name: Heads or Tails Coin
-  description: Some sort of two-sided die. Designed to represent the struggle between Nanotrasen and the Syndicate.
+  suffix: Tricked
   components:
   - type: Dice
-    trickedCoin: true
-  - type: Sprite
-    state: d2_1
+    weightedValue: 2
 
 
 # bags
