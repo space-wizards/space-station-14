@@ -66,7 +66,7 @@ public sealed partial class DeviceNetworkRouterSystem : EntitySystem
             return;
 
         data.SenderAddress = ent.Comp.Address;
-        data.Sender = GetNetEntity(ent.Owner);
+        data.Sender = ent.Owner;
         var payload = new RoutedNetworkPayload
         {
             Payload = data,

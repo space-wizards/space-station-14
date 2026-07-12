@@ -1,126 +1,35 @@
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameTicking.Events;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
-using Content.Shared.GameTicking;
-using Robust.Server.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 /// <inheritdoc/>
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private DeviceListSystem _deviceLists = default!;
     [Dependency] private NetworkConfiguratorSystem _configurator = default!;
-    [Dependency] private PvsOverrideSystem _pvsOverride = default!;
 
-    private static readonly EntProtoId SingletonId = "DeviceNetworkSingleton";
+    /// <summary>
+    /// Basically a cache of devices to connect them together faster.
+    /// </summary>
+    public readonly Dictionary<int, DeviceNet> Networks = new(4);
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
-        SubscribeLocalEvent<DeviceNetworkManagerComponent, MapInitEvent>(OnManagerInit);
+        SubscribeLocalEvent<DeviceNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
         SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
-    }
-
-    public override void Update(float frameTime)
-    {
-        if (!TryGetManager(out var manager))
-            return;
-
-        var comp = manager.Value.Comp;
-        while (comp.ActiveQueue.TryDequeue(out var packet))
-        {
-            SendPacket(ref packet);
-        }
-
-        SwapQueues(comp);
-    }
-
-    /// <summary>
-    /// Swaps the active queue.
-    /// Queues are swapped so that packets being sent in the current tick get processed in the next tick.
-    /// </summary>
-    /// <remarks>
-    /// This prevents infinite loops while sending packets
-    /// </remarks>
-    private void SwapQueues(DeviceNetworkManagerComponent manager)
-    {
-        manager.NextQueue = manager.ActiveQueue;
-        manager.ActiveQueue = manager.ActiveQueue == manager.QueueA ? manager.QueueB : manager.QueueA;
-    }
-
-    private void OnRoundStart(RoundStartingEvent ev)
-    {
-        EnsureManager();
-    }
-
-    private void OnCleanup(RoundRestartCleanupEvent ev)
-    {
-        ClearManager();
-    }
-
-    private void OnManagerInit(Entity<DeviceNetworkManagerComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.ActiveQueue = ent.Comp.QueueA;
-        ent.Comp.NextQueue = ent.Comp.QueueB;
-        _pvsOverride.AddGlobalOverride(ent);
-    }
-
-    private Entity<DeviceNetworkManagerComponent> EnsureManager()
-    {
-        if (TryGetManager(out var found))
-            return found.Value;
-
-        var manager = Spawn(SingletonId);
-        var managerComp = EnsureComp<DeviceNetworkManagerComponent>(manager);
-        return (manager, managerComp);
-    }
-
-    private bool TryGetManager([NotNullWhen(true)] out Entity<DeviceNetworkManagerComponent>? ent)
-    {
-        ent = null;
-        var query = EntityQueryEnumerator<DeviceNetworkManagerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            ent = (uid, comp);
-            return true;
-        }
-
-        return false;
-    }
-
-    private void ClearManager()
-    {
-        if (TryGetManager(out var found))
-            Del(found);
-    }
-
-    /// <summary>
-    /// Removes the <see cref="DeviceNetworkManagerComponent"/> if it no longer has any entities in its networks.
-    /// </summary>
-    private void CheckClearManager()
-    {
-        if (!TryGetManager(out var found))
-            return;
-
-        foreach (var network in found.Value.Comp.Networks.Values)
-        {
-            if (network.Devices.Count != 0)
-                return;
-        }
-
-        Del(found);
     }
 
     /// <summary>
@@ -142,9 +51,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
         {
             device.TransmitFrequency = xmit.Frequency;
         }
-
-        // Needed for example for tests, so when there's a device, there's also always a manager that can handle it.
-        EnsureManager();
 
         if (device.AutoConnect)
             ConnectDevice(ent.AsNullable());
@@ -174,8 +80,32 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
         if (TryGetNetwork(component.DeviceNetId, out var network))
             network.Remove(ent);
+    }
 
-        CheckClearManager();
+    private void OnBeforePacketSent(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
+    {
+        if (ent.Comp.OverloadEnd != null
+            && ent.Comp.OverloadEnd.Value > _timing.CurTime)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        if (ent.Comp.LastPacketTick != _timing.CurTick)
+            ent.Comp.PacketReceiveCounter = 0; // First packet on that tick
+
+        ent.Comp.LastPacketTick = _timing.CurTick;
+        ent.Comp.PacketReceiveCounter++;
+
+        if (ent.Comp.PacketReceiveCap > ent.Comp.PacketReceiveCounter)
+            return;
+
+        // Overload!!!
+        // Debug assert here is needed so that debugging new device types is easier.
+        // It still can happen in normal gameplay in case if players make some very specific setup.
+        DebugTools.Assert($"Device {ToPrettyString(ent)} got overloaded! This shouldn't happen under normal conditions.");
+        ent.Comp.OverloadEnd = _timing.CurTime + ent.Comp.OverloadDelay;
+        args.Cancelled = true;
     }
 
     /// <summary>
@@ -200,17 +130,15 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     private bool TryEnsureNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
     {
         network = null;
-        if (!TryGetManager(out var manager))
-            return false;
 
-        if (manager.Value.Comp.Networks.TryGetValue(netId, out var deviceNet))
+        if (Networks.TryGetValue(netId, out var deviceNet))
         {
             network = deviceNet;
             return true;
         }
 
         var newDeviceNet = new DeviceNet(netId, _random);
-        manager.Value.Comp.Networks[netId] = newDeviceNet;
+        Networks[netId] = newDeviceNet;
         network = newDeviceNet;
         return true;
     }
@@ -222,10 +150,8 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     private bool TryGetNetwork(int netId, [NotNullWhen(true)] out DeviceNet? network)
     {
         network = null;
-        if (!TryGetManager(out var manager))
-            return false;
 
-        if (!manager.Value.Comp.Networks.TryGetValue(netId, out var deviceNet))
+        if (!Networks.TryGetValue(netId, out var deviceNet))
             return false;
 
         network = deviceNet;
@@ -287,8 +213,7 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     /// <returns>false if the broadcast was canceled</returns>
     private bool CheckRecipientsList(DeviceNetworkPacketData packet, ref HashSet<Device> recipients)
     {
-        var manager = EnsureManager();
-        if (!manager.Comp.Networks.TryGetValue(packet.NetId, out var net)
+        if (!Networks.TryGetValue(packet.NetId, out var net)
             || !net.Devices.TryGetValue(packet.SenderAddress, out var device))
             return false;
 

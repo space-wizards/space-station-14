@@ -1,6 +1,7 @@
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.DeviceNetwork.Components;
 
@@ -94,6 +95,40 @@ public sealed partial class DeviceNetworkComponent : Component
     /// </summary>
     [DataField]
     public bool SavableAddress = true;
+
+    /// <summary>
+    /// Amount of packets
+    /// </summary>
+    [DataField]
+    public int PacketReceiveCap = 15;
+
+    /// <summary>
+    /// Amount of packets received in the current tick.
+    /// If it gets higher than <see cref="PacketReceiveCap"/>, this device will overload.
+    /// </summary>
+    [ViewVariables]
+    public int PacketReceiveCounter;
+
+    /// <summary>
+    /// Tick when the last packet was received.
+    /// </summary>
+    [ViewVariables]
+    public GameTick LastPacketTick;
+
+    /// <summary>
+    /// Amount of time that device overload lasts.
+    /// </summary>
+    [DataField]
+    public TimeSpan OverloadDelay = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// Time when the overload of the device ends.
+    /// </summary>
+    [DataField]
+    public TimeSpan? OverloadEnd;
+
+    [ViewVariables]
+    public bool IsOverloaded => OverloadEnd.HasValue;
 
     /// <summary>
     ///     A list of device-lists that this device is on.

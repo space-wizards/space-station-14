@@ -101,7 +101,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
         {
             if (payload.SenderAddress != null)
                 ent.Comp.ActiveCameraAddress = payload.SenderAddress;
-            TrySwitchCameraByUid(ent, GetEntity(payload.Sender), ent.Comp);
+            TrySwitchCameraByUid(ent, payload.Sender, ent.Comp);
         }
 
         ent.Comp.NextCameraAddress = null;

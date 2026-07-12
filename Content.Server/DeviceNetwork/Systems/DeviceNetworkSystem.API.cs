@@ -29,8 +29,8 @@ public sealed partial class DeviceNetworkSystem
 
         network ??= device.DeviceNetId;
 
-        var manager = EnsureManager();
-        manager.Comp.NextQueue.Enqueue(new DeviceNetworkPacketData(network.Value, address, frequency.Value, device.Address, ent, data));
+        var packet = new DeviceNetworkPacketData(network.Value, address, frequency.Value, device.Address, ent, data);
+        SendPacket(ref packet);
         return true;
     }
 
@@ -74,7 +74,6 @@ public sealed partial class DeviceNetworkSystem
             ent.Comp.AutoConnect = false;
 
         var result = deviceNet.Remove(ent!);
-        CheckClearManager();
         return result;
     }
 
@@ -89,8 +88,7 @@ public sealed partial class DeviceNetworkSystem
         if (!Resolve(uid, ref deviceComp, false))
             return false;
 
-        if (!TryGetManager(out var manager)
-            || !manager.Value.Comp.Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
+        if (!Networks.TryGetValue(deviceComp.DeviceNetId, out var deviceNet))
             return false;
 
         var device = new Device(uid, deviceComp.Data);
@@ -104,8 +102,7 @@ public sealed partial class DeviceNetworkSystem
     public bool IsAddressPresent(int netId, string? address)
     {
         if (address == null
-            || !TryGetManager(out var manager)
-            || !manager.Value.Comp.Networks.TryGetValue(netId, out var network))
+            || !Networks.TryGetValue(netId, out var network))
             return false;
 
         return network.Devices.ContainsKey(address);
