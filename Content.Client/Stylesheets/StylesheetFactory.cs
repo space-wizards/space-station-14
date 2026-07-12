@@ -52,15 +52,30 @@ public abstract partial class StylesheetFactory : ISheetletConfig
             : sheetlet.GetRules(this, this);
     }
 
+
     /// <summary>
     /// Builds the stylesheet.
     /// </summary>
     /// <returns>Stylesheet constructed from all the sheetlets.</returns>
     public Stylesheet Build()
     {
-        // TODO: sort the sheetlet types so that types closer inheritance/relationally go after ones that are further,
-        // so they can "override"/act as some sort of "ordering".
-        var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>();
+        // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
+        // so that you can make overriding sheetlets.
+
+        var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
+            .Where(t =>
+            {
+                t.TryGetCustomAttribute<SheetletAttribute>(out var attr);
+                return attr!.Definitions.Any(f => f.IsInstanceOfType(this));
+            })
+            .OrderByDescending(t =>
+            {
+                t.TryGetCustomAttribute<SheetletAttribute>(out var attr);
+                return GetSheetletDistance(attr!);
+            })
+            .ThenBy(t => t.Name)
+            .ToList();
+
         var rules = new List<StyleRule>();
 
         foreach (var sheetletType in sheetletTypes)
@@ -70,12 +85,31 @@ public abstract partial class StylesheetFactory : ISheetletConfig
 
         return new Stylesheet(rules.ToArray());
     }
+
+    /// <summary>
+    /// Gets the distance from the attribute's types and the factory type in the inheritance hierarchy.
+    /// </summary>
+    /// <param name="attribute">Sheetlet attribute to measure from.</param>
+    /// <returns>Distance from that sheetlet attribute factory to the actual factory type.</returns>
+    private int GetSheetletDistance(SheetletAttribute attribute)
+    {
+        var dist = 0;
+
+        foreach (var type in GetType().GetClassHierarchy())
+        {
+            if (attribute.Definitions.Contains(type))
+                return dist;
+
+            dist++;
+        }
+
+        return int.MaxValue;
+    }
 }
 
 public sealed class MissingSheetletConstraintsException(
     StylesheetFactory factory,
     Type sheetlet,
     Exception innerException)
-    : Exception($"Stylesheet factory {factory} cannot satisfy the generic constraints for sheetlet {sheetlet}.", innerException)
-{
-}
+    : Exception($"Stylesheet factory {factory} cannot satisfy the generic constraints for sheetlet {sheetlet}.",
+        innerException);
