@@ -48,6 +48,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak

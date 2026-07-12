@@ -1,8 +1,8 @@
 #Normal windoors
 - type: entity
-  id: BaseWindoor
-  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
   abstract: true
+  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
+  id: BaseWindoor
   placement:
     mode: SnapgridCenter
   components:
@@ -16,7 +16,6 @@
         collection: GlassSmash
   - type: InteractionOutline
   - type: StationAiWhitelist
-  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:

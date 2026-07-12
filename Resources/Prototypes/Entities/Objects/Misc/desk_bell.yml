@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseItem, BaseDestructibleItem ]
+  parent: [ BaseItem, BaseItemDestructible ]
   id: BaseDeskBell
   components:
   - type: Sprite

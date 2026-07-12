@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BaseDestructibleItem ]
+  parent: [ BaseItem, BaseItemDestructible ]
   id: BaseHandheldStationMap
   name: station map
   description: Displays a readout of the current station.

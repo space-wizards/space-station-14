@@ -1,6 +1,6 @@
 - type: entity
   name: candle
-  parent: [ BaseItem, BaseDestructibleItem ]
+  parent: [ BaseItem, BaseItemDestructible ]
   id: Candle
   description: A thin wick threaded through fat.
   components:
