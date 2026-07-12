@@ -16,8 +16,6 @@ public sealed partial class BlockingSystem
     private void InitializeUser()
     {
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
-        SubscribeLocalEvent<BlockingComponent, DamageModifyEvent>(OnDamageModified);
-
         SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -42,51 +40,37 @@ public sealed partial class BlockingSystem
         UserStopBlocking(uid, component);
     }
 
-    private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
+    private void OnUserDamageModified(Entity<BlockingUserComponent> entity, ref DamageModifyEvent args)
     {
-        if (component.BlockingItem is not { } item || !TryComp<BlockingComponent>(item, out var blocking))
+        if (entity.Comp.BlockingItem is not { } item || !_blockQuery.TryComp(item, out var blocking))
             return;
 
         if (args.Damage.GetTotal() <= 0)
             return;
 
-        // A shield should only block damage it can itself absorb. To determine that we need the Damageable component on it.
-        if (!TryComp<DamageableComponent>(item, out var dmgComp))
-            return;
-
         var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
-        var modifier = blocking.IsBlocking ? blocking.ActiveBlockDamageModifier : blocking.PassiveBlockDamageModifer;
         blockFraction = Math.Clamp(blockFraction, 0, 1);
-        _damageable.TryChangeDamage((item, dmgComp), blockFraction * args.OriginalDamage);
 
-        var modify = new DamageModifierSet();
-        foreach (var key in modifier.Coefficients.Keys.Concat(modifier.FlatReduction.Keys))
-        {
-            modify.Coefficients.TryAdd(key, 1 - blockFraction);
-        }
-
-        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modify);
-
-        if (blocking.IsBlocking && !args.Damage.Equals(args.OriginalDamage))
-        {
-            _audio.PlayPvs(blocking.BlockSound, uid);
-        }
-    }
-
-    private void OnDamageModified(EntityUid uid, BlockingComponent component, DamageModifyEvent args)
-    {
-        var modifier = component.IsBlocking ? component.ActiveBlockDamageModifier : component.PassiveBlockDamageModifer;
-        if (modifier == null)
-        {
+        // This is how much damage the shield is attempting to block
+        var split = args.OriginalDamage * blockFraction;
+        var damage = _damageable.ChangeDamage(item, split);
+        if (!damage.AnyPositive())
             return;
-        }
 
-        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
+        // Of the damage that went through, reduce by the appropriate blocking modifiers.
+        var modifier = GetBlockingModifier((item, blocking));
+        var blowthrough = DamageSpecifier.ApplyModifierSet(damage, modifier);
+
+        args.Damage *= 1f - blockFraction;
+        args.Damage += blowthrough;
+
+        if (blocking.IsBlocking && damage.AnyPositive())
+            _audio.PlayPvs(blocking.BlockSound, entity);
     }
 
     private void OnEntityTerminating(EntityUid uid, BlockingUserComponent component, ref EntityTerminatingEvent args)
     {
-        if (!TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
+        if (!_blockQuery.TryComp(component.BlockingItem, out var blockingComponent))
             return;
 
         StopBlockingHelper(component.BlockingItem.Value, blockingComponent, uid);
