@@ -312,7 +312,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         if (_docks.TryGetValue(nent, out var docks))
         {
-            Span<Vector2> verts = stackalloc Vector2[4];
+            Span<Vector2> verts = new Vector2[4];
             foreach (var state in docks)
             {
                 var position = state.Coordinates.Position;
