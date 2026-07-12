@@ -1,6 +1,6 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetFactories;
 using Content.Client.UserInterface.Systems.Actions.Controls;
 using Content.Client.UserInterface.Systems.Actions.Windows;
 using Robust.Client.Graphics;

@@ -107,6 +107,12 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     }
 }
 
+/// <summary>
+/// An exception for when a stylesheet cannot be constructed due to a missing constraint.
+/// </summary>
+/// <param name="factory">The factory that tried to be created.</param>
+/// <param name="sheetlet">The sheetlet that failed to be created.</param>
+/// <param name="innerException">Inner exception from the sandbox.</param>
 public sealed class MissingSheetletConstraintsException(
     StylesheetFactory factory,
     Type sheetlet,

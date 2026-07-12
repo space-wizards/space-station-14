@@ -13,7 +13,7 @@ namespace Content.Client.Stylesheets.Fonts;
 /// <seealso cref="FontFamilyStackBuilder"/>
 public sealed partial class FontFamilyStack
 {
-    [Dependency] private IResourceCache _resourceCache = null!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     private readonly FrozenDictionary<FontKind, ResPath[]> _fontPaths;
 

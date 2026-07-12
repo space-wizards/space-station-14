@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetFactories;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
@@ -51,7 +51,7 @@ public abstract partial class StylesheetFactory
     {
         return TryGetResource(target, out T? res)
             ? res
-            : throw new MissingStyleResourceException(this, target.ToString());
+            : throw new MissingStyleResourceException(this, target.ToString(), Roots.ToString());
     }
 
     /// <summary>
@@ -89,24 +89,10 @@ public abstract partial class StylesheetFactory
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed class MissingStyleResourceException(StylesheetFactory sheet, string target) : Exception
+public sealed class MissingStyleResourceException(StylesheetFactory sheet, string target, string? roots) : Exception
 {
     public override string Message =>
-        $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {sheet.Roots}";
-
-    public override string? Source => sheet.ToString();
-}
-
-/// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> expect a resource at a location
-///     but do not find it.
-/// </summary>
-/// <param name="sheet">The stylesheet</param>
-/// <param name="target"></param>
-public sealed class ExpectedResourceException(StylesheetFactory sheet, string target) : Exception
-{
-    public override string Message =>
-        $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";
+        $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {roots}";
 
     public override string? Source => sheet.ToString();
 }

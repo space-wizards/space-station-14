@@ -3,7 +3,7 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.StylesheetFactories;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
