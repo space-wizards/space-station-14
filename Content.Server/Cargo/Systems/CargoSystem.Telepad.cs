@@ -85,6 +85,8 @@ public sealed partial class CargoSystem
                 continue;
             }
 
+            // Not done using += TeleportDelay as this is not guaranteed to run every time.
+            // Need to avoid teleporting many crates at once because NextTeleport lagged behind while unpowered.
             telepad.NextTeleport = Timing.CurTime + telepad.TeleportDelay;
 
             telepad.CurrentOrders.RemoveAll(order => order.NumDispatched >= order.OrderQuantity);
