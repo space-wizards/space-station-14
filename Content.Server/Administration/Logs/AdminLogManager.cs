@@ -27,17 +27,17 @@ namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager
 {
-    [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
-    [Dependency] private readonly IReflectionManager _reflection = default!;
-    [Dependency] private readonly IDependencyCollection _dependencies = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
-    [Dependency] private readonly ISharedPlaytimeManager _playtime = default!;
-    [Dependency] private readonly ISharedChatManager _chat = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private IConfigurationManager _configuration = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IServerDbManager _db = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IDynamicTypeFactory _typeFactory = default!;
+    [Dependency] private IReflectionManager _reflection = default!;
+    [Dependency] private IDependencyCollection _dependencies = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private ISharedPlaytimeManager _playtime = default!;
+    [Dependency] private ISharedChatManager _chat = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
 
     public const string SawmillId = "admin.logs";
 
@@ -251,18 +251,42 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         _sawmill.Debug($"Saving {copy.Count} admin logs.");
 
-        if (_metricsEnabled)
+        try
         {
-            LogsSent.Inc(copy.Count);
+            if (_metricsEnabled)
+            {
+                LogsSent.Inc(copy.Count);
 
-            using (DatabaseUpdateTime.NewTimer())
+                using (DatabaseUpdateTime.NewTimer())
+                {
+                    await task;
+                }
+            }
+            else
             {
                 await task;
-                return;
             }
         }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to save logs: {ex.Message}");
+            _sawmill.Warning("Re-enqueueing logs and retrying at the next update.");
 
-        await task;
+            foreach (var log in copy)
+            {
+                if (log.RoundId == _currentRoundId)
+                {
+                    _logQueue.Enqueue(log);
+                }
+                else
+                {
+                    _preRoundLogQueue.Enqueue(log);
+                }
+            }
+
+            Queue.Set(_logQueue.Count);
+            PreRoundQueue.Set(_preRoundLogQueue.Count);
+        }
     }
 
     public void RoundStarting(int id)
@@ -504,7 +528,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         for (var i = 0; i < players.Count; i++)
         {
             var player = players[i];
-            outString += $"[cmdlink=\"{EscapeText(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
+            outString += $"[cmdlink=\"{FormattedMessage.EscapeStringParameter(player.CharacterName)}\" command=\"tpto {player.NetEnt}\"/]";
 
             if (i < players.Count - 1)
                 outString += ", ";
@@ -535,14 +559,6 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Escape the given text to not allow breakouts of the cmdlink tags.
-    /// </summary>
-    private string EscapeText(string text)
-    {
-        return FormattedMessage.EscapeText(text).Replace("\"", "\\\"").Replace("'", "\\'");
     }
 
     public async Task<List<SharedAdminLog>> All(LogFilter? filter = null, Func<List<SharedAdminLog>>? listProvider = null)

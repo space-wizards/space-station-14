@@ -10,12 +10,12 @@ using GasCanisterComponent = Content.Shared.Atmos.Piping.Unary.Components.GasCan
 
 namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
-public abstract class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
+public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
 {
-    [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
-    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {
@@ -114,7 +114,8 @@ public abstract class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanister
 
         for (var i = 0; i < containedGasArray.Length; i++)
         {
-            containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
+            if (entity.Comp.Air.GetMoles(i) > 0f)
+                containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
         }
 
         AdminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(entity):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");

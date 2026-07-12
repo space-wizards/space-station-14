@@ -36,7 +36,7 @@
 
 #Emergency EVA
 - type: entity
-  parent: [ TemperatureProtectionMinimal, ClothingOuterEVASuitBase]
+  parent: [ TemperatureProtectionMinimal, ClothingOuterEVASuitBaseToggleable ]
   id: ClothingOuterSuitEmergency
   name: emergency EVA suit
   description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
@@ -50,10 +50,6 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetEVALarge
-    slot: head
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
     - CorgiWearable
@@ -99,7 +95,7 @@
 
 #Paramedic Voidsuit
 - type: entity
-  parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
+  parent: [ClothingOuterEVASuitBaseToggleable, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic void suit
   description: A void suit made for paramedics.
@@ -150,9 +146,6 @@
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 360
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
     - WhitelistChameleon

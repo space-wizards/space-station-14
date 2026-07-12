@@ -184,6 +184,8 @@
         Radiation: 0.25
   - type: ToggleableClothing
     slot: head
+    verbText: toggle-clothing-verb-helmet
+    action: ActionToggleSuitPiece
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
@@ -194,6 +196,19 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterEVASuitBaseToggleable
+  abstract: true
+  components:
+  - type: ToggleableClothing
+    slot: head
+    verbText: toggle-clothing-verb-helmet
+    action: ActionToggleSuitPiece
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
   abstract: true
   parent: ClothingOuterBase
   id: ClothingOuterBaseToggleable
@@ -202,6 +217,7 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterDefault
     slot: head
+    verbText: toggle-clothing-verb-hood
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
