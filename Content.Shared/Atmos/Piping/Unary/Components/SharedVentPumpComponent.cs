@@ -69,8 +69,9 @@ public sealed partial class GasVentPumpData : IAtmosDeviceData
     };
 }
 
-public sealed partial class GasVentPumpSyncDataPayload : NetworkPayloadBase<GasVentPumpSyncDataPayload>;
-
+/// <summary>
+/// Used to set <see cref="GasVentPumpData"/>.
+/// </summary>
 public sealed partial class GasVentPumpSetDataPayload : NetworkPayloadBase<GasVentPumpSetDataPayload>
 {
     [DataField]

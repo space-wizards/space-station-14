@@ -216,7 +216,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         }
 
         [SubscribeLocalEvent]
-        private void OnSyncPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<GasVentPumpSyncDataPayload> args)
+        private void OnSyncPayload(Entity<GasVentPumpComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
         {
             var data = ent.Comp.ToAirAlarmData();
             var airAlarm = new AirAlarmSetDataPayload

@@ -3,13 +3,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor;
 
+/// <summary>
+/// Contains <see cref="AtmosMonitorData"/>.
+/// </summary>
 public sealed partial class AtmosMonitorDataPayload : NetworkPayloadBase<AtmosMonitorDataPayload>
 {
     [DataField]
     public AtmosMonitorData Data;
 }
-
-public sealed partial class AtmosMonitorSyncDataPayload : NetworkPayloadBase<AtmosMonitorSyncDataPayload>;
 
 [DataDefinition, Serializable, NetSerializable]
 public sealed partial class AtmosMonitorData : IAtmosDeviceData

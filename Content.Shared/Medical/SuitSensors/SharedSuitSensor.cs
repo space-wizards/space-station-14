@@ -5,6 +5,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.SuitSensors;
 
+/// <summary>
+/// A network payload that contains <see cref="SuitSensorStatus"/>.
+/// </summary>
 public sealed partial class SuitSensorStatusPayload : NetworkPayloadBase<SuitSensorStatusPayload>
 {
     [DataField]

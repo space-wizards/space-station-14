@@ -4,7 +4,6 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -119,15 +118,12 @@ public sealed partial class AtmosAlarmableSystem : EntitySystem
         }
     }
 
-    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : NetworkPayloadBase<T>
+    private bool CheckTags<T>(Entity<AtmosAlarmableComponent> ent, T payload) where T : IAtmosAlarmableSourcePayload
     {
         if (ent.Comp.IgnoreAlarms)
             return false;
 
-        if (payload is not IAtmosAlarmableSourcePayload sourcePayload)
-            return false;
-
-        return sourcePayload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
+        return payload.Source.Any(source => ent.Comp.SyncWithTags.Contains(source));
     }
 
     private void TryUpdateAlert(EntityUid uid, AtmosAlarmType type, AtmosAlarmableComponent alarmable, bool sync = true)

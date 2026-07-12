@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -103,7 +104,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         }
 
         [SubscribeLocalEvent]
-        private void OnSyncPayload(Entity<GasVolumePumpComponent> ent, ref DeviceNetworkPacketEvent<GasVolumePumpSyncDataPayload> args)
+        private void OnSyncPayload(Entity<GasVolumePumpComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
         {
             var data = new GasVolumePumpDataPayload
             {

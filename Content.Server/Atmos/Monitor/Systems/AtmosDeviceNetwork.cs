@@ -31,16 +31,7 @@ public sealed partial class AtmosDeviceNetworkSystem : EntitySystem
 
     public void Sync(EntityUid uid, string? address)
     {
-        // Not sure if this is a right design choice but whatever.
-        var monitor = new AtmosMonitorSyncDataPayload();
-        var vent = new GasVentPumpSyncDataPayload();
-        var scrubber = new GasVentScrubberSyncDataPayload();
-        var thermo = new GasThermoMachineSyncDataPayload();
-        var volume = new GasVolumePumpSyncDataPayload();
-        _deviceNet.QueuePacket(uid, address, monitor);
-        _deviceNet.QueuePacket(uid, address, vent);
-        _deviceNet.QueuePacket(uid, address, scrubber);
-        _deviceNet.QueuePacket(uid, address, thermo);
-        _deviceNet.QueuePacket(uid, address, volume);
+        var payload = new AtmosSyncPayload();
+        _deviceNet.QueuePacket(uid, address, payload);
     }
 }

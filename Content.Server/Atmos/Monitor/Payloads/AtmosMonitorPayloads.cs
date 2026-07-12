@@ -5,10 +5,19 @@ using Content.Shared.DeviceNetwork;
 
 namespace Content.Server.Atmos.Monitor.Payloads;
 
+/// <summary>
+/// Used for synchronizing the sender device and adding its address to all listeners.
+/// </summary>
 public sealed partial class AtmosMonitorRegisterDevicePayload : NetworkPayloadBase<AtmosMonitorRegisterDevicePayload>;
 
+/// <summary>
+/// Removes the sender device from all listeners of this payload.
+/// </summary>
 public sealed partial class AtmosMonitorDeregisterDevicePayload : NetworkPayloadBase<AtmosMonitorDeregisterDevicePayload>;
 
+/// <summary>
+/// Sets specific threshold on the target atmos device.
+/// </summary>
 public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase<AtmosMonitorSetThresholdPayload>
 {
     [DataField]
@@ -21,6 +30,9 @@ public sealed partial class AtmosMonitorSetThresholdPayload : NetworkPayloadBase
     public Gas? Gas;
 }
 
+/// <summary>
+/// Sets thresholds on all connected devices.
+/// </summary>
 public sealed partial class AtmosMonitorSetAllThresholdsPayload : NetworkPayloadBase<AtmosMonitorSetAllThresholdsPayload>
 {
     [DataField]

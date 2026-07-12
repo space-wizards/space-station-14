@@ -3,18 +3,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
+/// <summary>
+/// Contains data about a <see cref="GasVolumePumpComponent"/>.
+/// </summary>
 public sealed partial class GasVolumePumpDataPayload : NetworkPayloadBase<GasVolumePumpDataPayload>
 {
     [DataField]
     public float LastMolesTransferred;
-}
-
-public sealed partial class GasVolumePumpSyncDataPayload : NetworkPayloadBase<GasVolumePumpSyncDataPayload>;
-
-public sealed partial class GasVolumePumpSetDataPayload : NetworkPayloadBase<GasVolumePumpSetDataPayload>
-{
-    [DataField]
-    public GasVolumePumpDataPayload Payload;
 }
 
 [Serializable, NetSerializable]

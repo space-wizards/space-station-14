@@ -3,18 +3,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Unary.Components;
 
+/// <summary>
+/// Contains data about <see cref="GasThermoMachineComponent"/>.
+/// </summary>
 public sealed partial class GasThermoMachineDataPayload : NetworkPayloadBase<GasThermoMachineDataPayload>
 {
     [DataField]
     public float EnergyDelta;
-}
-
-public sealed partial class GasThermoMachineSyncDataPayload : NetworkPayloadBase<GasThermoMachineSyncDataPayload>;
-
-public sealed partial class GasThermoMachineSetDataPayload : NetworkPayloadBase<GasThermoMachineSetDataPayload>
-{
-    [DataField]
-    public GasThermoMachineDataPayload Payload;
 }
 
 [Serializable]

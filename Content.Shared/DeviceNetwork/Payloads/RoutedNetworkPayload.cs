@@ -4,8 +4,38 @@ namespace Content.Shared.DeviceNetwork.Payloads;
 /// <summary>
 /// Represents a payload that can be re-routed by a <see cref="DeviceNetworkRouterComponent"/>.
 /// </summary>
+public interface IRoutableNetworkPayload : INetworkPayload
+{
+    /// <summary>
+    /// Original sender address of this payload.
+    /// </summary>
+    string? SenderAddress { get; set; }
+
+    /// <summary>
+    /// Original sender entity of this payload.
+    /// </summary>
+    EntityUid Sender { get; set; }
+}
+
+/// <inheritdoc cref="IRoutableNetworkPayload"/>
+[ImplicitDataDefinitionForInheritors]
+public abstract partial class RoutableNetworkPayload<T> : NetworkPayloadBase<T>, IRoutableNetworkPayload where T : NetworkPayloadBase<T>
+{
+    [DataField]
+    public string? SenderAddress { get; set; }
+
+    [DataField]
+    public EntityUid Sender { get; set; }
+}
+
+/// <summary>
+/// A wrapper around the <see cref="IRoutableNetworkPayload"/>, sent to an entity with <see cref="DeviceNetworkRouterComponent"/>.
+/// </summary>
 public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetworkPayload>
 {
+    /// <summary>
+    /// The wrapped payload that is going to be sent when received by <see cref="DeviceNetworkRouterComponent"/>.
+    /// </summary>
     [DataField]
     public IRoutableNetworkPayload Payload;
 
@@ -26,24 +56,4 @@ public sealed partial class RoutedNetworkPayload : NetworkPayloadBase<RoutedNetw
     /// </summary>
     [DataField]
     public string? TargetAddress;
-}
-
-[ImplicitDataDefinitionForInheritors]
-public abstract partial class RoutableNetworkPayload<T> : NetworkPayloadBase<T>, IRoutableNetworkPayload where T : NetworkPayloadBase<T>
-{
-    /// <summary>
-    /// Original sender address, before the packet was re-routed.
-    /// </summary>
-    [DataField]
-    public string? SenderAddress { get; set; }
-
-    [DataField]
-    public NetEntity Sender { get; set; }
-}
-
-public interface IRoutableNetworkPayload : INetworkPayload
-{
-    string? SenderAddress { get; set; }
-
-    NetEntity Sender { get; set; }
 }

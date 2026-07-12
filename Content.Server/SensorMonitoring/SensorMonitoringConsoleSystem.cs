@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Payloads;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Components;
@@ -257,16 +258,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
             switch (data.DeviceType)
             {
                 case SensorDeviceType.Teg:
-                    payload = new TegSensorSyncPayload();
-                    break;
                 case SensorDeviceType.AtmosSensor:
-                    payload = new AtmosMonitorSyncDataPayload();
-                    break;
                 case SensorDeviceType.ThermoMachine:
-                    payload = new GasThermoMachineSyncDataPayload();
-                    break;
                 case SensorDeviceType.VolumePump:
-                    payload = new GasVolumePumpSyncDataPayload();
+                    payload = new AtmosSyncPayload();
                     break;
                 default:
                     // Unknown device type, don't do anything.

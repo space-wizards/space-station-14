@@ -138,7 +138,7 @@ public sealed partial class AtmosMonitorSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosMonitorSyncDataPayload> args)
+    private void OnSyncPayload(Entity<AtmosMonitorComponent> ent, ref DeviceNetworkPacketEvent<AtmosSyncPayload> args)
     {
         var dataPayload = new AtmosMonitorData();
         if (ent.Comp.TileGas != null)
