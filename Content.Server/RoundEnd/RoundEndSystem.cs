@@ -6,12 +6,10 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.GameTicking;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -226,9 +224,9 @@ namespace Content.Server.RoundEnd
             {
                 var payload = new ScreenShuttlePayload
                 {
-                    Shuttle = GetNetEntity(shuttle),
-                    SourceMap = GetNetEntity(GetCentcomm()),
-                    DestinationMap = GetNetEntity(GetStation()),
+                    Shuttle = shuttle,
+                    SourceMap = GetCentcomm(),
+                    DestinationMap = GetStation(),
                     ShuttleTime = countdownTime,
                     SourceTime = countdownTime + TimeSpan.FromSeconds(_shuttle.TransitTime + _cfg.GetCVar(CCVars.EmergencyShuttleDockTime)),
                     DestinationTime = countdownTime,
@@ -274,9 +272,9 @@ namespace Content.Server.RoundEnd
             {
                 var payload = new ScreenShuttlePayload
                 {
-                    Shuttle = GetNetEntity(shuttle),
-                    SourceMap = GetNetEntity(GetCentcomm()),
-                    DestinationMap = GetNetEntity(GetStation()),
+                    Shuttle = shuttle,
+                    SourceMap = GetCentcomm(),
+                    DestinationMap = GetStation(),
                     ShuttleTime = zero,
                     SourceTime = zero,
                     DestinationTime = zero,

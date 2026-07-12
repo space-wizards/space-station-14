@@ -376,9 +376,9 @@ public sealed partial class EmergencyShuttleSystem
         {
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(shuttle),
-                SourceMap = GetNetEntity(_roundEnd.GetStation()),
-                DestinationMap = GetNetEntity(_roundEnd.GetCentcomm()),
+                Shuttle = shuttle,
+                SourceMap = _roundEnd.GetStation(),
+                DestinationMap = _roundEnd.GetCentcomm(),
                 ShuttleTime = time,
                 SourceTime = time,
                 DestinationTime = time + TimeSpan.FromSeconds(TransitTime),

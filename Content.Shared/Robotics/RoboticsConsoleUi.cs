@@ -136,10 +136,19 @@ public partial record struct CyborgControlData
     }
 }
 
+/// <summary>
+/// Disables a borg when received.
+/// </summary>
 public sealed partial class RoboticsCyborgDisablePayload : NetworkPayloadBase<RoboticsCyborgDisablePayload>;
 
+/// <summary>
+/// Destroys a borg when received.
+/// </summary>
 public sealed partial class RoboticsCyborgDestroyPayload : NetworkPayloadBase<RoboticsCyborgDestroyPayload>;
 
+/// <summary>
+/// A wrapper for <see cref="CyborgControlData"/>
+/// </summary>
 public sealed partial class RoboticsCyborgDataPayload : NetworkPayloadBase<RoboticsCyborgDataPayload>
 {
     [DataField]

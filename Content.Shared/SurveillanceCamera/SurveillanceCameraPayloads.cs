@@ -45,8 +45,14 @@ public sealed partial class SurveillanceCameraDataPayload : RoutableNetworkPaylo
     public string Subnet;
 }
 
+/// <summary>
+/// Request to connect to a camera subnet.
+/// </summary>
 public sealed partial class SurveillanceCameraSubnetConnectPayload : NetworkPayloadBase<SurveillanceCameraSubnetConnectPayload>;
 
+/// <summary>
+/// Request to disconnect from a camera subnet.
+/// </summary>
 public sealed partial class SurveillanceCameraSubnetDisconnectPayload : NetworkPayloadBase<SurveillanceCameraSubnetDisconnectPayload>;
 
 /// <summary>

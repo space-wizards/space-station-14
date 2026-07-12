@@ -7,7 +7,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
-using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Spawners.Components;
@@ -17,7 +16,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
-using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Components;
@@ -211,7 +209,7 @@ public sealed partial class ArrivalsSystem : EntitySystem
 
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(shuttleUid),
+                Shuttle = shuttleUid,
                 ShuttleTime = ftlTime,
             };
 
@@ -225,13 +223,13 @@ public sealed partial class ArrivalsSystem : EntitySystem
                 sourceMap = station == null ? null : Transform(station.Value)?.MapUid;
                 arrivalsDelay += RoundStartFTLDuration;
                 component.FirstRun = false;
-                payload.DestinationMap = GetNetEntity(Transform(args.TargetCoordinates.EntityId).MapUid);
+                payload.DestinationMap = Transform(args.TargetCoordinates.EntityId).MapUid;
                 payload.DestinationTime = ftlTime;
             }
             else
                 sourceMap = args.FromMapUid;
 
-            payload.SourceMap = GetNetEntity(sourceMap);
+            payload.SourceMap = sourceMap;
             payload.SourceTime = ftlTime + TimeSpan.FromSeconds(arrivalsDelay);
 
             _deviceNetworkSystem.QueuePacket(shuttleUid, null, payload, netComp.TransmitFrequency);
@@ -285,9 +283,9 @@ public sealed partial class ArrivalsSystem : EntitySystem
         {
             var payload = new ScreenShuttlePayload
             {
-                Shuttle = GetNetEntity(uid),
+                Shuttle = uid,
                 ShuttleTime = dockTime,
-                SourceMap = GetNetEntity(args.MapUid),
+                SourceMap = args.MapUid,
                 SourceTime = dockTime,
                 Docked = true,
             };

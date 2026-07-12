@@ -2,6 +2,9 @@
 
 namespace Content.Shared.SensorMonitoring;
 
+/// <summary>
+/// Data about a battery sent to the power monitoring console.
+/// </summary>
 public sealed partial class BatterySensorDataPayload : NetworkPayloadBase<BatterySensorDataPayload>
 {
     [DataField]

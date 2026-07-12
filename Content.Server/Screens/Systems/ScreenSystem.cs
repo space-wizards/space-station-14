@@ -65,13 +65,13 @@ public sealed partial class ScreenSystem : EntitySystem
         switch (timerXform.MapUid)
         {
             // sometimes the timer transforms on FTL shuttles have a hyperspace mapent, so matching by grid works as a fallback.
-            case var local when local == GetEntity(payload.Shuttle) || timerXform.GridUid == GetEntity(payload.Shuttle):
+            case var local when local == payload.Shuttle || timerXform.GridUid == payload.Shuttle:
                 time = payload.ShuttleTime;
                 break;
-            case var origin when origin == GetEntity(payload.SourceMap):
+            case var origin when origin == payload.SourceMap:
                 time = payload.SourceTime;
                 break;
-            case var remote when remote == GetEntity(payload.DestinationMap):
+            case var remote when remote == payload.DestinationMap:
                 time = payload.DestinationTime;
                 text = ShuttleTimerMasks.ETA;
                 break;

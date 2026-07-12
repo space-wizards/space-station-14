@@ -2,16 +2,19 @@
 
 namespace Content.Shared.RoundEnd;
 
+/// <summary>
+/// A network payload to broadcast data to shuttle screens.
+/// </summary>
 public sealed partial class ScreenShuttlePayload : NetworkPayloadBase<ScreenShuttlePayload>
 {
     [DataField]
-    public NetEntity? Shuttle;
+    public EntityUid? Shuttle;
 
     [DataField]
-    public NetEntity? SourceMap;
+    public EntityUid? SourceMap;
 
     [DataField]
-    public NetEntity? DestinationMap;
+    public EntityUid? DestinationMap;
 
     [DataField]
     public TimeSpan ShuttleTime;

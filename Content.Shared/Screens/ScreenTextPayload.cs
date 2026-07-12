@@ -2,6 +2,9 @@
 
 namespace Content.Shared.Screens;
 
+/// <summary>
+/// Broadcasts text to screens.
+/// </summary>
 public sealed partial class ScreenTextPayload : NetworkPayloadBase<ScreenTextPayload>
 {
     [DataField]
