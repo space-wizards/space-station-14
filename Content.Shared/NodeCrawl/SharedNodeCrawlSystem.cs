@@ -119,10 +119,16 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         _eye.RefreshVisibilityMask(ent.Owner);
     }
 
+    /// <summary>
+    /// Sets air for the <see cref="NodeCrawlerMovementComponent"/> entity, granting the contained entity a "safety bubble" containing air if the atmosphere is otherwise dangerous.
+    /// </summary>
     protected virtual void SetupAir(Entity<NodeCrawlerMovementComponent> movement)
     {
     }
 
+    /// <summary>
+    /// Removes air from the <see cref="NodeCrawlerMovementComponent"/> entity and dumps it into the atmosphere at its location.
+    /// </summary>
     protected virtual void EjectAir(Entity<NodeCrawlerMovementComponent> movement)
     {
     }

@@ -102,7 +102,6 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         velocity.Normalize();
         velocity *= speed;
 
-        _physics.SetCanCollide(mover, false);
         _physics.SetLinearVelocity(mover, velocity, body: mover.Comp2);
         _physics.SetAngularVelocity(mover, 0, body: mover.Comp2);
     }
@@ -125,7 +124,7 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
 
         var nodeXform = Transform(node);
         var nodeWorld = _transform.GetWorldPosition(nodeXform);
-        var smallestTarget = EntityUid.Invalid;
+        var largestTarget = EntityUid.Invalid;
         var largestDot = 0d;
 
         foreach (var reachable in nodeCrawl.ReachableNodes)
@@ -140,14 +139,14 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
             if (deltaTargetDot < largestDot)
                 continue;
 
-            smallestTarget = reachable;
+            largestTarget = reachable;
             largestDot = deltaTargetDot;
         }
 
-        if (!smallestTarget.Valid || largestDot <= Math.Cos(ent.Comp4.RequiredAngle))
+        if (!largestTarget.Valid || largestDot <= Math.Cos(ent.Comp4.RequiredAngle))
             return null;
 
-        return smallestTarget;
+        return largestTarget;
     }
 
     public void SetNode(Entity<NodeCrawlerMovementComponent> ent, EntityUid? node)

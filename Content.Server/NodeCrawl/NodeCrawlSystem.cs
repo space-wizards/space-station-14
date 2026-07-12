@@ -32,6 +32,10 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         SubscribeLocalEvent<NodeCrawlerComponent, AtmosExposedGetAirEvent>(OnGetAir);
     }
 
+    /// <summary>
+    /// Returns a gas mixture contained within a node the <see cref="NodeCrawlerMovementComponent"/> entity is in.
+    /// </summary>
+    /// <returns>The gas mixture.</returns>
     private GasMixture? GetExistingAir(Entity<NodeCrawlerMovementComponent> movement)
     {
         if (movement.Comp.Node is not { } node)
