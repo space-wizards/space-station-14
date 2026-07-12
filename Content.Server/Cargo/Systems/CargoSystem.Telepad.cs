@@ -147,7 +147,7 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void SetEnabled(
+    private void CheckEnabled(
         EntityUid uid,
         CargoTelepadComponent component,
         ApcPowerReceiverComponent? receiver = null,
@@ -172,11 +172,11 @@ public sealed partial class CargoSystem
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
     {
-        SetEnabled(uid, component);
+        CheckEnabled(uid, component);
     }
 
     private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
     {
-        SetEnabled(uid, component);
+        CheckEnabled(uid, component);
     }
 }
