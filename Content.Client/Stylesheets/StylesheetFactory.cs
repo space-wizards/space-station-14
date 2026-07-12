@@ -38,11 +38,16 @@ public abstract partial class StylesheetFactory : ISheetletConfig
         Type sheetletClosedType;
         try
         {
-            sheetletClosedType = sheetletType.MakeGenericType(GetType());
+            // This supports both:
+            // 1) "class ButtonSheetlet<T> : ISheetlet<T> where T : ..." (preferred), and
+            // 2) "class ButtonSheetlet : ISheetlet<IButtonConfig"
+            sheetletClosedType = sheetletType.ContainsGenericParameters
+                ? sheetletType.MakeGenericType(GetType())
+                : sheetletType;
         }
         catch (ArgumentException)
         {
-            _sawmill.Error($"{this} is marked for yet cannot satisfy the generic constraints for {sheetletType}.");
+            _sawmill.Error($"{this} does not satisfy the constraints for {sheetletType}.");
             return [];
         }
 
