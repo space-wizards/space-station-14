@@ -53,9 +53,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (containingContainer == null)
                     return system.EntityManager.SpawnNextToOrDrop(prototype, owner);
 
-                var spawned = system.EntityManager.SpawnEntity(prototype, position.Offset(getRandomVector()));
-                containerSystem.Insert(spawned, containingContainer);
-                return spawned;
+                return system.EntityManager.SpawnInContainerOrDrop(
+                    prototype,
+                    containingContainer.Owner,
+                    containingContainer.ID);
             }
 
             var executions = 1;
