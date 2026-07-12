@@ -14,6 +14,7 @@ using Content.Shared.Localizations;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -74,6 +75,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected SharedHandsSystem Hands = default!;
+    [Dependency] private ILocalizationManager _localization = default!;
 
     [Dependency] protected EntityQuery<ContainedSolutionComponent> ContainedQuery = default!;
     [Dependency] protected EntityQuery<SolutionComponent> SolutionQuery = default!;
@@ -913,6 +915,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
 
             args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
                                         ("color", colorHex),
+                                        ("colorName", ColorNaming.Describe(solution.GetColor(ProtoMan), _localization)),
                                         ("desc", primary.LocalizedPhysicalDescription),
                                         ("chemCount", solution.Contents.Count)));
 
