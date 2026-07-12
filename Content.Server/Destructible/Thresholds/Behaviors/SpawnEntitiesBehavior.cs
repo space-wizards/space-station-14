@@ -4,6 +4,7 @@ using Content.Shared.Forensics.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -35,6 +36,28 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
+            var containerSystem = system.EntityManager.System<SharedContainerSystem>();
+            BaseContainer? containingContainer = null;
+            if (SpawnInContainer &&
+                containerSystem.TryGetContainingContainer((owner, null, null), out var container) &&
+                containerSystem.Remove(owner, container, force: true))
+            {
+                containingContainer = container;
+            }
+
+            EntityUid SpawnEntity(EntProtoId prototype)
+            {
+                if (!SpawnInContainer)
+                    return system.EntityManager.SpawnEntity(prototype, position.Offset(getRandomVector()));
+
+                if (containingContainer == null)
+                    return system.EntityManager.SpawnNextToOrDrop(prototype, owner);
+
+                var spawned = system.EntityManager.SpawnEntity(prototype, position.Offset(getRandomVector()));
+                containerSystem.Insert(spawned, containingContainer);
+                return spawned;
+            }
+
             var executions = 1;
             if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
             {
@@ -54,9 +77,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                     if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
                     {
-                        var spawned = SpawnInContainer
-                            ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                        var spawned = SpawnEntity(entityId);
                         system.StackSystem.SetCount((spawned, null), (int) count);
 
                         TransferForensics(spawned, system, owner);
@@ -65,9 +86,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         for (var i = 0; i < count; i++)
                         {
-                            var spawned = SpawnInContainer
-                                ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                            var spawned = SpawnEntity(entityId);
 
                             TransferForensics(spawned, system, owner);
                         }
