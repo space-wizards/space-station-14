@@ -1030,18 +1030,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: SecureWindoor
-  graph: Windoor
-  startNode: start
-  targetNode: windoorSecure
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   id: ClockworkWindoor
   graph: Windoor
   startNode: start
