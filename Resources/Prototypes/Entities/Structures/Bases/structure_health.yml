@@ -22,11 +22,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
+      behaviors: &DoDestruction
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
@@ -38,13 +36,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 30
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Landmark furniture like statues and trees
 - type: entity
@@ -54,13 +48,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 70
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 #endregion
 #region Barriers / Windows
@@ -74,13 +64,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # full window / reinforced direction window / girder
 - type: entity
@@ -90,13 +76,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 60
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # reinforced full window / deployable security barrier
 - type: entity
@@ -106,13 +88,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 120
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 #endregion
 #region Containers
@@ -125,13 +103,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 25
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Crate / wall closet
 - type: entity
@@ -141,13 +115,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Locker / closet
 - type: entity
@@ -157,13 +127,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Suit storage / gas canister
 - type: entity
@@ -173,13 +139,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 #endregion
 #region Machines
@@ -192,18 +154,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 40
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
         damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
+      behaviors: &DoBreakage
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
 
@@ -215,20 +171,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
         damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+      behaviors: *DoBreakage
 
 # Regular full tile machine
 - type: entity
@@ -238,20 +186,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 175
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
         damage: 75
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+      behaviors: *DoBreakage
 
 # Important game piece like a recycler or server
 - type: entity
@@ -261,20 +201,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 250
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
         damage: 150
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+      behaviors: *DoBreakage
 
 # Multi-tile machine
 - type: entity
@@ -284,20 +216,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 400
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
+      behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
         damage: 275
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
+      behaviors: *DoBreakage
 
 #endregion
 #region Doors
@@ -310,13 +234,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 125
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Airlocks / firelocks
 - type: entity
@@ -326,13 +246,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # High-security airlocks / blast doors
 - type: entity
@@ -342,13 +258,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 275
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 #endregion
 #region Walls
@@ -361,13 +273,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 150
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Basic steel wall
 - type: entity
@@ -377,13 +285,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 300
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 # Heavy walls like plasteel
 - type: entity
@@ -393,12 +297,8 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
+    - trigger: !type:DamageTrigger
         damage: 450
-      behaviors:
-      - !type:PlaySoundBehavior
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *DoDestruction
 
 #endregion
