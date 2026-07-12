@@ -55,6 +55,32 @@ public abstract partial class StylesheetFactory
     }
 
     /// <summary>
+    ///     Retrieves a resource, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target resource.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <typeparam name="T">Type of the resource to read.</typeparam>
+    /// <returns>The retrieved resource</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the resource does not exist in the fallback root.</exception>
+    [Obsolete("Use GetResource/TryGetResource instead and add fallback path to StylesheetFactory.Roots.")]
+    public T GetResourceOr<T>(ResPath target, ResPath fallbackRoot)
+        where T : BaseResource, new()
+    {
+        DebugTools.Assert(fallbackRoot.IsRooted,
+            "Fallback root must be absolute. Roots can be retrieved from the stylesheets.");
+
+        if (!_resourceCache.TryGetResource(fallbackRoot / target, out T? fallback))
+            throw new ExpectedResourceException(this, target.ToString());
+
+        return TryGetResource(target, out T? res) ? res : fallback;
+    }
+
+    /// <summary>
     ///     Attempts to locate a texture within the stylesheet's roots.
     /// </summary>
     /// <param name="target">The relative path of the target resource.</param>
@@ -82,6 +108,24 @@ public abstract partial class StylesheetFactory
     {
         return GetResource<TextureResource>(target).Texture;
     }
+
+    /// <summary>
+    ///     Retrieves a texture, or falls back to the specified root. The resource should be present at the fallback
+    ///     root, or else it throws
+    /// </summary>
+    /// <remarks>
+    ///     This should be used to allow common sheetlets to be generic over multiple stylesheets without forcing other
+    ///     styles to have the resource present, if your sheetlet is stylesheet-specific you should not use this.
+    /// </remarks>
+    /// <param name="target">The relative path of the target texture.</param>
+    /// <param name="fallbackRoot">The root that this resource will always exist at</param>
+    /// <returns>The retrieved texture</returns>
+    /// <exception cref="ExpectedResourceException">Thrown if the texture does not exist in the fallback root.</exception>
+    [Obsolete("Use GetTexture/TryGetTexture instead and add fallback path to StylesheetFactory.Roots.")]
+    public Texture GetTextureOr(ResPath target, ResPath fallbackRoot)
+    {
+        return GetResourceOr<TextureResource>(target, fallbackRoot).Texture;
+    }
 }
 
 /// <summary>
@@ -93,6 +137,20 @@ public sealed class MissingStyleResourceException(StylesheetFactory sheet, strin
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {roots}";
+
+    public override string? Source => sheet.ToString();
+}
+
+/// <summary>
+///     Exception thrown when the never-fail helpers in <see cref="PalettedStylesheet"/> expect a resource at a location
+///     but do not find it.
+/// </summary>
+/// <param name="sheet">The stylesheet</param>
+/// <param name="target"></param>
+public sealed class ExpectedResourceException(StylesheetFactory sheet, string target) : Exception
+{
+    public override string Message =>
+        $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";
 
     public override string? Source => sheet.ToString();
 }
