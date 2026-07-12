@@ -79,18 +79,18 @@ public sealed partial class CargoSystem
         return consoles.Count > 0;
     }
 
-    private void UpdateTelepad(float frameTime)
+    private void UpdateTelepad()
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var telepad, out var xform))
         {
-            // Don't EntityQuery for it as it's not required.
-            TryComp<AppearanceComponent>(uid, out var appearance);
+            if (telepad.CurrentState == CargoTelepadState.Unpowered)
+                continue;
 
             if (Timing.CurTime < telepad.NextTeleport)
             {
                 telepad.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Idle);
                 continue;
             }
 
@@ -112,7 +112,7 @@ public sealed partial class CargoSystem
                     UpdateOrders(station);
 
                 telepad.CurrentState = CargoTelepadState.Teleporting;
-                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
+                _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
             }
         }
     }
@@ -160,13 +160,14 @@ public sealed partial class CargoSystem
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
-        // Setting idle state should be handled by Update();
+        // Turn off is disabled
+        // Only change to Idle is off; don't overwrite teleporting state
         if (disabled)
-            return;
+            component.CurrentState = CargoTelepadState.Unpowered;
+        else if (component.CurrentState == CargoTelepadState.Unpowered)
+            component.CurrentState = CargoTelepadState.Idle;
 
-        TryComp<AppearanceComponent>(uid, out var appearance);
-        component.CurrentState = CargoTelepadState.Unpowered;
-        _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
+        _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
