@@ -157,7 +157,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             Dirty(other, otherCrawler);
         }
 
-        RemComp<RelayInputMoverComponent>(ent);
+        _mover.RemoveRelay(ent.Owner);
         if (_net.IsServer && !TerminatingOrDeleted(mover))
         {
             if (TryComp<NodeCrawlerMovementComponent>(mover, out var movement))

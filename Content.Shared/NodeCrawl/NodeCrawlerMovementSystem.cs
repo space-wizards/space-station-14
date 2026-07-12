@@ -62,7 +62,8 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
     {
         var speed = MoveSpeed(mover);
 
-        if (ReachedDestination(mover, target, speed))
+        var delta = _transform.GetWorldPosition(target) - _transform.GetWorldPosition(mover.Comp3);
+        if (delta.EqualsApprox(Vector2.Zero, speed * 0.01f))
         {
             StopMovement(mover);
             SetNode((mover, mover), target);
@@ -79,22 +80,6 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
             return;
         }
 
-        UpdateMovement(mover, target, speed);
-    }
-
-    private float MoveSpeed(Entity<InputMoverComponent> mover)
-    {
-        var moveSpeed = CompOrNull<MovementSpeedModifierComponent>(mover);
-
-        var walkSpeed = moveSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-        var sprintSpeed = moveSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-        return mover.Comp.Sprinting ? sprintSpeed : walkSpeed;
-    }
-
-    private void UpdateMovement(Entity<InputMoverComponent, PhysicsComponent, TransformComponent, NodeCrawlerMovementComponent> mover, EntityUid target, float speed)
-    {
-        var delta = _transform.GetWorldPosition(target) - _transform.GetWorldPosition(mover.Comp3);
-
         var facing = Angle.FromWorldVec(delta);
         _transform.SetWorldRotation(mover.Comp3, facing);
 
@@ -106,10 +91,13 @@ public sealed partial class NodeCrawlerMovementSystem : EntitySystem
         _physics.SetAngularVelocity(mover, 0, body: mover.Comp2);
     }
 
-    private bool ReachedDestination(Entity<InputMoverComponent, PhysicsComponent, TransformComponent, NodeCrawlerMovementComponent> mover, EntityUid target, float speed)
+    private float MoveSpeed(Entity<InputMoverComponent> mover)
     {
-        var delta = _transform.GetWorldPosition(mover.Comp3) - _transform.GetWorldPosition(target);
-        return delta.EqualsApprox(Vector2.Zero, speed * 0.01f);
+        var moveSpeed = CompOrNull<MovementSpeedModifierComponent>(mover);
+
+        var walkSpeed = moveSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+        var sprintSpeed = moveSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+        return mover.Comp.Sprinting ? sprintSpeed : walkSpeed;
     }
 
     private EntityUid? GetDestination(Entity<InputMoverComponent, PhysicsComponent, TransformComponent, NodeCrawlerMovementComponent> ent, MoveButtons buttons)

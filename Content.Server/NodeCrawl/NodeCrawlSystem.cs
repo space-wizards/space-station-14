@@ -133,6 +133,12 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         return (node, nodeContainer);
     }
 
+    /// <summary>
+    /// Gets the air an entity with <see cref="NodeCrawlerComponent"/> is breathing.
+    /// First it gets the air in the "safety bubble" in the <see cref="NodeCrawlerMovementComponent"/>
+    /// Then the air contained in the node the entity is in.
+    /// </summary>
+    /// <returns>The found gas mixture.</returns>
     private GasMixture? GetAir(Entity<NodeCrawlerComponent> crawler)
     {
         if (GetMovement(crawler)?.Comp.Air is { } air)
@@ -185,7 +191,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
             return;
 
-        // TODO :ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
+        // TODO ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
         // get serialized properly
         var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
 

@@ -89,6 +89,17 @@ public abstract partial class SharedMoverController
     }
 
     /// <summary>
+    /// Stops an entity from relaying its inputs.
+    /// </summary>
+    public void RemoveRelay(Entity<RelayInputMoverComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        RemComp<RelayInputMoverComponent>(ent);
+    }
+
+    /// <summary>
     ///     Returns the entity whose movement should be treated as the effective movement source for <paramref name="mover"/>.
     ///     If the entity is relaying movement to another entity, returns that relay target, otherwise returns the entity itself.
     /// </summary>
