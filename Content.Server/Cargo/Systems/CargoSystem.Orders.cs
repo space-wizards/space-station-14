@@ -234,6 +234,8 @@ namespace Content.Server.Cargo.Systems
                     _popup.PopupCursor(Loc.GetString("cargo-console-unfulfilled"), args.Actor);
                     PlayDenySound(uid, component);
                     order.Approver = null;
+                    order.ApprovingConsole = null;
+                    order.Approved = false;
                     return;
                 }
             }
