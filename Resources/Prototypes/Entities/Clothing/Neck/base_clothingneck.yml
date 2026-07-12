@@ -34,7 +34,7 @@
 - type: entity
   abstract: true
   parent: ClothingNeckBase
-  id: ClothingScarfBase
+  id: [ TemperatureProtectionMinimal, ClothingScarfBase ]
   components:
   - type: Tag
     tags:
@@ -42,6 +42,3 @@
     - ClothMade
     - Recyclable
     - WhitelistChameleon
-  - type: TemperatureProtection
-    heatingCoefficient: 1.025
-    coolingCoefficient: 0.5
