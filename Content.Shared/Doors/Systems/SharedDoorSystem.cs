@@ -61,8 +61,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
 
-    private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -529,7 +527,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Crushes everyone colliding with us by more than <see cref="IntersectPercentage"/>%.
+    /// Crushes everyone colliding with us by more than <see cref="DoorFixtureCheckExpansion"/> percent.
     /// </summary>
     public void Crush(EntityUid uid, DoorComponent? door = null, PhysicsComponent? physics = null)
     {
@@ -539,7 +537,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!door.CanCrush)
             return;
 
-        // Find entities and apply curshing effects
+        // Find entities and apply crushing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
         foreach (var entity in GetColliding(uid, physics, null, door.CheckFixtureCollision, door.AllowMachineLayer))
         {
@@ -579,27 +577,27 @@ public abstract partial class SharedDoorSystem : EntitySystem
             yield break;
         var tileRef = _mapSystem.GetTileRef(xform.GridUid.Value, mapGridComp, xform.Coordinates);
 
-        _doorIntersecting.Clear();
+        var doorIntersecting = new HashSet<Entity<PhysicsComponent>>();
 
         if (checkFixtureCollision && fixtures.Fixtures.TryFirstOrNull(out var fixture))
         {
-            var localTransform = PhysicsSystem.GetLocalPhysicsTransform(uid, xform);
-            var localAABB = fixture.Value.Value.Shape.ComputeAABB(localTransform, 0);
-            localAABB = localAABB.Enlarged(DoorFixtureCheckExpansion); // We have to resize since ComputeAABBs tend to make the box larger than it is.
-            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value,
-                localAABB,
-                _doorIntersecting,
-                flags: (LookupFlags.All & ~LookupFlags.Sensors));
+            var fixtureToWorld = PhysicsSystem.GetPhysicsTransform(uid, xform);
+
+            _entityLookup.GetEntitiesIntersecting(xform.MapID,
+                fixture.Value.Value.Shape,
+                fixtureToWorld,
+                doorIntersecting,
+                flags: LookupFlags.All & ~(LookupFlags.Sensors | LookupFlags.Contained));
         }
         else
         {
-            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, _doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
+            _entityLookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, tileRef.GridIndices, doorIntersecting, gridComp: mapGridComp, flags: (LookupFlags.All & ~LookupFlags.Sensors));
         }
 
         // TODO SLOTH fix electro's code.
         // ReSharper disable once InconsistentNaming
 
-        foreach (var otherPhysics in _doorIntersecting)
+        foreach (var otherPhysics in doorIntersecting)
         {
             if (otherPhysics.Comp == physics)
                 continue;
