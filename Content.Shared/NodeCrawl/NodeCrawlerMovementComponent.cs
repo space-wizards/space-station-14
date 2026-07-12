@@ -5,6 +5,7 @@ namespace Content.Shared.NodeCrawl;
 
 /// <summary>
 /// Handles node-confined movement for an entity.
+/// This is the entity movement is relayed to inside a node.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(NodeCrawlerMovementSystem))]

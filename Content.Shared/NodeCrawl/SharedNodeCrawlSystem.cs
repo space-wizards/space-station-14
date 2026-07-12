@@ -160,6 +160,9 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             QueueDel(mover); // deletion isn't predicted because client queued deletion doesn't interact well with container stuff
         }
 
+        var ev = new NodeCrawlerStoppedCrawlingEvent();
+        RaiseLocalEvent(ent, ref ev);
+
         _physics.SetCanCollide(ent.Owner, true);
         _eye.RefreshVisibilityMask(ent.Owner);
     }
