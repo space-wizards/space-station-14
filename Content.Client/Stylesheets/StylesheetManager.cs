@@ -130,11 +130,9 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         {
             if (TryGetStylesheet(name, out var stylesheet))
                 return stylesheet;
-            else
-            {
-                owner._sawmill.Warning($"Failed to resolve stylesheet {name}");
-                return defaultStylesheet;
-            }
+
+            owner._sawmill.Warning($"Failed to resolve stylesheet {name}");
+            return defaultStylesheet;
         }
 
         private static Stylesheet GetOrThrow(Stylesheet? sheet)

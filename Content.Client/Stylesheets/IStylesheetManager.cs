@@ -11,7 +11,7 @@ public interface IStylesheetManager
     #region Obsolete APIs
 
     /// <summary>
-    /// Default UI style, used for in-game/in-context UIs, but used basically everywhere anyways.
+    /// Default UI style, used for in-game/in-context UIs, but used basically everywhere regardless.
     /// </summary>
     [Obsolete("Access via UseStylesheet/IStylesheetAccessor instead")]
     Stylesheet SheetNanotrasen { get; }
@@ -80,7 +80,7 @@ public interface IStylesheetManager
     void StopStylesheet(Control control);
 
     /// <summary>
-    /// Initalize the stylesheet manager.
+    /// Initialize the stylesheet manager.
     /// </summary>
     void Initialize();
 }
@@ -104,7 +104,7 @@ public interface IStylesheetAccessor
     Stylesheet SheetSystem { get; }
 
     /// <summary>
-    /// Try get a stylesheet by name.
+    /// Try to get a stylesheet by name.
     /// </summary>
     bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet);
 

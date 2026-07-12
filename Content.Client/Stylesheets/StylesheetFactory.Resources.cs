@@ -142,7 +142,7 @@ public sealed class MissingStyleResourceException(StylesheetFactory sheet, strin
 }
 
 /// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="PalettedStylesheet"/> expect a resource at a location
+///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> expect a resource at a location
 ///     but do not find it.
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
