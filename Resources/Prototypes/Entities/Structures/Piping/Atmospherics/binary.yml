@@ -90,6 +90,7 @@
   - type: GuideHelp
     guides:
     - Pumps
+  - type: NodeCrawlVentAccess
 
 - type: entity
   parent: GasBinaryBase
@@ -507,7 +508,7 @@
     - type: NodeCrawlVentAccess
 
 - type: entity
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ BaseMachine, ConstructibleMachine, CrawlablePipeNode ]
   id: GasRecycler
   name: gas recycler
   description: Recycles carbon dioxide and nitrous oxide. Heater and compressor not included.
@@ -583,8 +584,6 @@
     guides:
     - GasRecycling
   - type: TegCirculator
-  - type: CrawlableNode
-    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: GasBinaryBase

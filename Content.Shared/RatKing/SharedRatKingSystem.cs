@@ -1,5 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.NodeCrawl;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
 namespace Content.Shared.RatKing;
@@ -8,6 +10,10 @@ public abstract partial class SharedRatKingSystem : EntitySystem
 {
     [Dependency] protected IRobustRandom Random = default!;
     [Dependency] private SharedActionsSystem _action = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+
+    private HashSet<Entity<RatKingServantComponent>> _crawlingRatServants = new();
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -16,6 +22,7 @@ public abstract partial class SharedRatKingSystem : EntitySystem
         SubscribeLocalEvent<RatKingComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<RatKingComponent, RatKingOrderActionEvent>(OnOrderAction);
         SubscribeLocalEvent<RatKingServantComponent, ComponentShutdown>(OnServantShutdown);
+        SubscribeLocalEvent<RatKingComponent, NodeCrawlerStartedCrawlingEvent>(OnRatKingStartedCrawling);
     }
 
     private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
@@ -71,6 +78,23 @@ public abstract partial class SharedRatKingSystem : EntitySystem
     {
         if (TryComp(component.King, out RatKingComponent? ratKingComponent))
             ratKingComponent.Servants.Remove(uid);
+    }
+
+    private void OnRatKingStartedCrawling(Entity<RatKingComponent> ent, ref NodeCrawlerStartedCrawlingEvent args)
+    {
+        _entityLookup.GetEntitiesInRange(Transform(ent).Coordinates,
+            ent.Comp.VentCrawlRecruitRadius,
+            _crawlingRatServants);
+
+        var container = _container.GetContainer(args.Mover, SharedNodeCrawlSystem.MoverContainer);
+
+        foreach (var servant in _crawlingRatServants)
+        {
+            if (servant.Comp.King != ent)
+                continue;
+
+            _container.Insert(servant.Owner, container);
+        }
     }
 
     private void UpdateActions(EntityUid uid, RatKingComponent? component = null)

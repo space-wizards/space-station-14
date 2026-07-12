@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
+  parent: [ BaseStructure, ConstructibleMachine, CrawlablePipeNode ] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
@@ -119,8 +119,7 @@
     guides:
     - Cryogenics
   - type: AmbientMusicMarkerMedical
-  - type: CrawlableNode
-    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
+  - type: NodeCrawlVentAccess
 
 - type: entity
   parent: SolutionSmall

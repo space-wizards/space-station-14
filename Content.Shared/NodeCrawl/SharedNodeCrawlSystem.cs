@@ -2,7 +2,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Eye;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.RatKing;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -25,10 +24,9 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedEyeSystem _eye = default!;
     [Dependency] private NodeCrawlerMovementSystem _nodeCrawler = default!;
-    [Dependency] private EntityLookupSystem _entityLookup = default!;
 
-    private const string MoverContainer = "mover-container";
-    private static readonly EntProtoId MoverProto = "NodeCrawlMover";
+    public static readonly string MoverContainer = "mover-container";
+    public static readonly EntProtoId MoverProto = "NodeCrawlMover";
 
     public override void Initialize()
     {
@@ -44,8 +42,6 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         SubscribeLocalEvent<NodeCrawlerComponent, ComponentShutdown>(OnCrawlerShutdown);
 
         SubscribeLocalEvent<CrawlableNodeComponent, AnchorStateChangedEvent>(OnCrawlableAnchorChanged);
-
-        SubscribeLocalEvent<RatKingComponent, NodeCrawlerStartedCrawlingEvent>(OnRatKingStartedCrawling);
     }
 
     private void OnGetVerbs(Entity<CrawlableNodeComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -91,7 +87,12 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         NodeCrawl(ent, target);
     }
 
-    private void NodeCrawl(Entity<NodeCrawlerComponent> ent, EntityUid target)
+    /// <summary>
+    /// Causes an entity to begin node crawling at the target entity.
+    /// </summary>
+    /// <param name="ent">The entity to node crawl.</param>
+    /// <param name="target">The target to crawl into.</param>
+    public void NodeCrawl(Entity<NodeCrawlerComponent> ent, EntityUid target)
     {
         if (!_net.IsServer)
             return;
@@ -114,7 +115,6 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         SetupAir((mover, crawler));
 
         _mover.SetRelay(ent, mover);
-        _physics.SetCanCollide(ent.Owner, false);
         _physics.SetCanCollide(mover, false);
         _eye.RefreshVisibilityMask(ent.Owner);
     }
@@ -157,7 +157,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             if (TryComp<NodeCrawlerMovementComponent>(mover, out var movement))
                 EjectAir((mover, movement));
 
-            QueueDel(mover); // deletion isn't predicted because client queued deletion doesn't interact well with container stuff
+            QueueDel(mover); // TODO: deletion isn't predicted because client queued deletion doesn't interact well with container stuff
         }
 
         var ev = new NodeCrawlerStoppedCrawlingEvent();
@@ -228,24 +228,6 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
                 continue;
 
             ExitNodeCrawl((held, Comp<NodeCrawlerComponent>(held)));
-        }
-    }
-
-    private void OnRatKingStartedCrawling(Entity<RatKingComponent> ent, ref NodeCrawlerStartedCrawlingEvent args)
-    {
-        var entities = new HashSet<Entity<RatKingServantComponent>>();
-        _entityLookup.GetEntitiesInRange(Transform(ent).Coordinates,
-            ent.Comp.VentCrawlRecruitRadius,
-            entities);
-
-        var container = _container.GetContainer(args.Mover, MoverContainer);
-
-        foreach (var servant in entities)
-        {
-            if (servant.Comp.King != ent)
-                continue;
-
-            _container.Insert(servant.Owner, container);
         }
     }
 

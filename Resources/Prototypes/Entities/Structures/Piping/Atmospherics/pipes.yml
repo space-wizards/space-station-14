@@ -70,7 +70,7 @@
 
 - type: entity
   abstract: true
-  parent: GasPipeSansLayers
+  parent: [ GasPipeSansLayers, CrawlablePipeNode ]
   id: GasPipeBase
   components:
   - type: AtmosPipeLayers
@@ -79,8 +79,6 @@
         Primary: Structures/Piping/Atmospherics/pipe.rsi
         Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
         Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
-  - type: CrawlableNode
-    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -335,7 +333,7 @@
     - PipeNetworks
 
 - type: entity
-  parent: GasPipeSansLayers
+  parent: [ GasPipeSansLayers, CrawlablePipeNode ]
   id: GasPipeManifold
   name: gas pipe manifold
   description: Allows gas pipes of different configurations to be connected together.
@@ -410,5 +408,3 @@
   - type: Tag
     tags:
     - Unstackable
-  - type: CrawlableNode
-    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]

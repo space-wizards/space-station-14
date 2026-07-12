@@ -3,11 +3,13 @@
   id: MobNodeCrawler
   components:
   - type: NodeCrawler
-    revealedComponents:
-    - Content.Shared.Atmos.Components.PipeAppearanceComponent
-    exitNodes:
-      components:
-      - NodeCrawlVentAccess
+
+- type: entity
+  abstract: true
+  id: CrawlablePipeNode
+  components:
+  - type: CrawlableNode
+    reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   categories: [ HideSpawnMenu ]
