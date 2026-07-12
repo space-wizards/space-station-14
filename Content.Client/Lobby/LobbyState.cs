@@ -15,6 +15,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby
 {
@@ -33,6 +34,8 @@ namespace Content.Client.Lobby
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
+
+        private ResPath? _currentBackgroundPath;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
@@ -91,6 +94,8 @@ namespace Content.Client.Lobby
             Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
+
+            UnloadLobbyBackground();
 
             Lobby = null;
         }
@@ -254,6 +259,12 @@ namespace Content.Client.Lobby
         {
             if (_protoMan.TryIndex(_gameTicker.LobbyBackground, out var proto))
             {
+                if (_currentBackgroundPath == proto.Background)
+                    return;
+
+                UnloadLobbyBackground();
+
+                _currentBackgroundPath = proto.Background;
                 Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(proto.Background);
 
                 var markup = Loc.GetString("lobby-state-background-text",
@@ -264,7 +275,7 @@ namespace Content.Client.Lobby
             }
             else
             {
-                Lobby!.Background.Texture = null;
+                UnloadLobbyBackground();
 
                 Lobby!.LobbyBackground.SetMarkup(Loc.GetString("lobby-state-background-no-background-text"));
             }
@@ -278,6 +289,16 @@ namespace Content.Client.Lobby
             }
 
             _consoleHost.ExecuteCommand($"toggleready {newReady}");
+        }
+
+        private void UnloadLobbyBackground()
+        {
+            if (_currentBackgroundPath is null)
+                return;
+
+            Lobby!.Background.Texture = null;
+            _resourceCache.TryRemoveResource<TextureResource>(_currentBackgroundPath.Value);
+            _currentBackgroundPath = null;
         }
     }
 }
