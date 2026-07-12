@@ -14,6 +14,7 @@
     transmitFrequencyId: AtmosMonitor
     prefix: device-address-prefix-air-alarm
     sendBroadcastAttemptEvent: true
+    packetReceiveCap: 100 # TODO cap amount of devices an air alarm can have & remove this
   - type: WiredNetworkConnection
   # for output status ports
   - type: WirelessNetworkConnection
