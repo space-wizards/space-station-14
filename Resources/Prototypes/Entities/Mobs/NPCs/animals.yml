@@ -1550,7 +1550,7 @@
 - type: entity
   name: genetic ancestor
   id: MobBaseAncestor
-  parent: [BaseMobAnimal, SimpleMobBase, StripableInventoryBase]
+  parent: [ BaseMobAnimal, SimpleMobBase, StripableInventoryBase, MobNodeCrawler ]
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
@@ -2273,7 +2273,7 @@
 
 - type: entity
   name: slug
-  parent: [SimpleMobBase, BaseSlicingRefinable, MobNodeCrawler]
+  parent: [ SimpleMobBase, BaseSlicingRefinable, MobNodeCrawler ]
   id: MobSlug
   description: And they called this a lizard?
   components:
