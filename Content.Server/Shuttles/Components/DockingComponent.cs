@@ -19,13 +19,13 @@ public sealed partial class DockingComponent : SharedDockingComponent
     public override bool Docked => DockedWith != null;
 
     /// <summary>
-    /// Color of the dock on the DOCK screen when dock is unfocused
+    /// Color that gets shown on the radar screen.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public Color RadarColor = Color.DarkViolet;
 
     /// <summary>
-    /// Color that gets shown on NAV and DOCK screen when the dock is focused
+    /// Color that gets shown on the radar screen in DOCK tab when the dock is highlighted
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public Color HighlightedRadarColor = Color.Magenta;
