@@ -217,7 +217,7 @@
     - type: NodeCrawlVentAccess
 
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, CrawlablePipeNode ]
   id: BaseGasThermoMachine
   name: thermomachine
   abstract: true
@@ -270,8 +270,6 @@
     - type: GuideHelp
       guides:
       - Thermomachines
-    - type: CrawlableNode
-      reachableNodeTypes: [ Content.Server.NodeContainer.Nodes.PipeNode ]
 
 - type: entity
   parent: BaseGasThermoMachine
