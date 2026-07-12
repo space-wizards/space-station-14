@@ -1089,10 +1089,12 @@ public sealed partial class AdminVerbSystem
                 gasMiner.SpawnAmount = 20;
                 gasMiner.ShowExamineText = false;
 
+                // Atmos device is not networked, no dirty.
                 var atmosDevice = EnsureComp<AtmosDeviceComponent>(args.Target);
                 atmosDevice.RequireAnchored = false;
 
                 _atmosDevice.JoinAtmosphere((args.Target, atmosDevice));
+                Dirty(args.Target, gasMiner);
             },
             Impact = LogImpact.Extreme,
             Message = string.Join(": ", makeStinkyName, Loc.GetString("admin-smite-make-stinky-description"))
