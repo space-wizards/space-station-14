@@ -5,15 +5,12 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
 /// <inheritdoc/>
 public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private DeviceListSystem _deviceLists = default!;
@@ -27,7 +24,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<DeviceNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
         SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
     }
@@ -80,32 +76,6 @@ public sealed partial class DeviceNetworkSystem : SharedDeviceNetworkSystem
 
         if (TryGetNetwork(component.DeviceNetId, out var network))
             network.Remove(ent);
-    }
-
-    private void OnBeforePacketSent(Entity<DeviceNetworkComponent> ent, ref BeforePacketSentEvent args)
-    {
-        if (ent.Comp.OverloadEnd != null
-            && ent.Comp.OverloadEnd.Value > _timing.CurTime)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        if (ent.Comp.LastPacketTick != _timing.CurTick)
-            ent.Comp.PacketReceiveCounter = 0; // First packet on that tick
-
-        ent.Comp.LastPacketTick = _timing.CurTick;
-        ent.Comp.PacketReceiveCounter++;
-
-        if (ent.Comp.PacketReceiveCap > ent.Comp.PacketReceiveCounter)
-            return;
-
-        // Overload!!!
-        // Debug assert here is needed so that debugging new device types is easier.
-        // It still can happen in normal gameplay in case if players make some very specific setup.
-        DebugTools.Assert($"Device {ToPrettyString(ent)} got overloaded! This shouldn't happen under normal conditions.");
-        ent.Comp.OverloadEnd = _timing.CurTime + ent.Comp.OverloadDelay;
-        args.Cancelled = true;
     }
 
     /// <summary>

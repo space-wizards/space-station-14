@@ -22,9 +22,11 @@
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
-    packetReceiveCap: 10 # To prevent lag machines
+    packetLimit: 10 # Prevents stack overflows caused by infinite loops
   - type: WirelessNetworkConnection
     range: 200
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
 
 - type: entity
   parent: BaseLogicItem
