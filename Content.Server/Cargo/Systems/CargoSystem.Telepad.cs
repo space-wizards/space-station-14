@@ -15,16 +15,7 @@ namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    private void InitializeTelepad()
-    {
-        SubscribeLocalEvent<CargoTelepadComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<CargoTelepadComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<CargoTelepadComponent, PowerChangedEvent>(OnTelepadPowerChange);
-        // Shouldn't need re-anchored event
-        SubscribeLocalEvent<CargoTelepadComponent, AnchorStateChangedEvent>(OnTelepadAnchorChange);
-        SubscribeLocalEvent<FulfillCargoOrderEvent>(OnTelepadFulfillCargoOrder);
-    }
-
+    [SubscribeLocalEvent]
     private void OnTelepadFulfillCargoOrder(ref FulfillCargoOrderEvent args)
     {
         var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
@@ -98,6 +89,7 @@ public sealed partial class CargoSystem
 
             telepad.CurrentOrders.RemoveAll(order => order.NumDispatched >= order.OrderQuantity);
 
+            // Will only run every delay. Can use TryComps here without problem
             if (telepad.CurrentOrders.Count == 0 || !TryGetLinkedConsoles(uid, out var consoles))
                 continue;
 
@@ -117,13 +109,16 @@ public sealed partial class CargoSystem
         }
     }
 
-    private void OnInit(EntityUid uid, CargoTelepadComponent telepad, ComponentInit args)
+    [SubscribeLocalEvent]
+    private void OnInit(Entity<CargoTelepadComponent> ent, ref ComponentInit args)
     {
-        _linker.EnsureSinkPorts(uid, telepad.ReceiverPort);
+        _linker.EnsureSinkPorts(ent.Owner, ent.Comp.ReceiverPort);
     }
 
+    [SubscribeLocalEvent]
     private void OnShutdown(Entity<CargoTelepadComponent> ent, ref ComponentShutdown args)
     {
+        // Orders should not be this fragile
         if (ent.Comp.CurrentOrders.Count == 0)
             return;
 
@@ -136,47 +131,48 @@ public sealed partial class CargoSystem
         }
 
         if (
-            !TryComp<StationCargoOrderDatabaseComponent>(station, out var db)
-            || !TryComp<StationDataComponent>(station, out var data)
+            !TryComp<StationCargoOrderDatabaseComponent>(station, out var orderDatabase)
+            || !TryComp<StationDataComponent>(station, out var stationData)
         )
             return;
 
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order.Account, order, db);
+            TryFulfillOrder((station, stationData), order.Account, order, orderDatabase);
         }
     }
 
     private void CheckEnabled(
-        EntityUid uid,
-        CargoTelepadComponent component,
+        Entity<CargoTelepadComponent> ent,
         ApcPowerReceiverComponent? receiver = null,
         TransformComponent? xform = null
     )
     {
         // False due to AllCompsOneEntity test where they may not have the powerreceiver.
-        if (!Resolve(uid, ref receiver, ref xform, false))
+        if (!Resolve(ent.Owner, ref receiver, ref xform, false))
             return;
 
         var disabled = !receiver.Powered || !xform.Anchored;
 
-        // Turn off is disabled
-        // Only change to Idle is off; don't overwrite teleporting state
+        // Turn off if disabled
+        // Only change to Idle if off; don't overwrite teleporting state
         if (disabled)
-            component.CurrentState = CargoTelepadState.Unpowered;
-        else if (component.CurrentState == CargoTelepadState.Unpowered)
-            component.CurrentState = CargoTelepadState.Idle;
+            ent.Comp.CurrentState = CargoTelepadState.Unpowered;
+        else if (ent.Comp.CurrentState == CargoTelepadState.Unpowered)
+            ent.Comp.CurrentState = CargoTelepadState.Idle;
 
-        _appearance.SetData(uid, CargoTelepadVisuals.State, component.CurrentState);
+        _appearance.SetData(ent.Owner, CargoTelepadVisuals.State, ent.Comp.CurrentState);
     }
 
-    private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnTelepadPowerChange(Entity<CargoTelepadComponent> ent, ref PowerChangedEvent args)
     {
-        CheckEnabled(uid, component);
+        CheckEnabled(ent);
     }
 
-    private void OnTelepadAnchorChange(EntityUid uid, CargoTelepadComponent component, ref AnchorStateChangedEvent args)
+    [SubscribeLocalEvent]
+    private void OnTelepadAnchorChange(Entity<CargoTelepadComponent> ent, ref AnchorStateChangedEvent args)
     {
-        CheckEnabled(uid, component);
+        CheckEnabled(ent);
     }
 }

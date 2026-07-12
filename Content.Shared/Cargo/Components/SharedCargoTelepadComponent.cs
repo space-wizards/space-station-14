@@ -19,7 +19,7 @@ public sealed partial class CargoTelepadComponent : Component
     /// <summary>
     /// The delay between each teleport in seconds
     /// </summary>
-    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("delay")]
     public TimeSpan TeleportDelay = TimeSpan.FromSeconds(5);
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -34,9 +34,9 @@ public sealed partial class CargoTelepadComponent : Component
     /// <summary>
     ///     The paper-type prototype to spawn with the order information.
     /// </summary>
-    [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PrinterOutput = "PaperCargoInvoice";
 
-    [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("receiverPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string ReceiverPort = "OrderReceiver";
 }
