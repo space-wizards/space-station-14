@@ -7,6 +7,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeCrawl;
 using Content.Shared.Atmos;
+using Content.Shared.Body.Components;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
@@ -26,7 +27,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
 
         SubscribeLocalEvent<CrawlableNodeComponent, NodeGroupsRebuilt>(OnNodeGroupsRebuilt);
 
-        SubscribeLocalEvent<NodeCrawlerComponent, InhaleLocationEvent>(OnInhaleLocation);
+        SubscribeLocalEvent<NodeCrawlerComponent, InhaleLocationEvent>(OnInhaleLocation, after: [typeof(InternalsSystem)]);
         SubscribeLocalEvent<NodeCrawlerComponent, ExhaleLocationEvent>(OnExhaleLocation);
         SubscribeLocalEvent<NodeCrawlerComponent, AtmosExposedGetAirEvent>(OnGetAir);
     }
@@ -152,6 +153,9 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (GetAir(ent) is not { } air)
             return;
 
+        if (TryComp<InternalsComponent>(ent, out var internals) && internals.GasTankEntity != null)
+            return;
+
         args.Gas = air;
     }
 
@@ -177,7 +181,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
         if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
             return;
 
-        // ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
+        // TODO :ugly workaround for https://github.com/space-wizards/RobustToolbox/issues/6694 not letting List<Type>
         // get serialized properly
         var possibleTypes = ent.Comp.ReachableNodeTypes.Select(it => _reflection.GetType(it)).ToList();
 
