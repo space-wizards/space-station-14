@@ -1,17 +1,17 @@
 {
-  "version": 1,
-  "license": "CC-BY-3.0",
-  "copyright": "By ketufaispikinut",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-        "name": "deck"
+    "version": 1,
+    "license": "CC-BY-3.0",
+    "copyright": "By ketufaispikinut",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-        "name": "card"
-    }
-  ]
+    "states": [
+        {
+              "name": "deck"
+        },
+        {
+              "name": "card"
+        }
+    ]
 }
