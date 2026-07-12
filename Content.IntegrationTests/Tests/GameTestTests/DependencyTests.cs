@@ -14,6 +14,11 @@ namespace Content.IntegrationTests.Tests.GameTestTests;
 [TestOf(typeof(SidedDependencyAttribute))]
 public sealed class DependencyTests : GameTest
 {
+    public override PoolSettings PoolSettings => new()
+    {
+        Connected = true,
+    };
+
     [SidedDependency(Side.Server)] private readonly SharedGameTicker _sGameTicker = null!;
     [SidedDependency(Side.Client)] private readonly SharedGameTicker _cGameTicker = null!;
     [SidedDependency(Side.Server)] private readonly EntityQuery<TransformComponent> _sXformQuery = default!;

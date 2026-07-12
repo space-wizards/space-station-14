@@ -8,6 +8,8 @@ namespace Content.IntegrationTests.Tests.Atmos
     [TestOf(typeof(AtmosAlarmThreshold))]
     public sealed class AlarmThresholdTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         private const string AlarmThresholdTestDummyId = "AlarmThresholdTestDummy";
 
         [TestPrototypes]

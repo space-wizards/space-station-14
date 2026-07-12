@@ -8,6 +8,8 @@ namespace Content.IntegrationTests.Tests.Damageable;
 
 public sealed class StaminaComponentTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private static string[] _entitiesWithStamina = GameDataScrounger.EntitiesWithComponent("Stamina");
 
     [Test]

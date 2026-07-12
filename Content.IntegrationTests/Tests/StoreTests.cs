@@ -16,6 +16,8 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class StoreTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
 
     [TestPrototypes]
     private const string Prototypes = @"

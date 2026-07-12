@@ -10,6 +10,8 @@ namespace Content.IntegrationTests.Tests.Construction
     [TestFixture]
     public sealed class ConstructionActionValid : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         private bool IsValid(IGraphAction action, IPrototypeManager protoMan, out string prototype)
         {
             switch (action)

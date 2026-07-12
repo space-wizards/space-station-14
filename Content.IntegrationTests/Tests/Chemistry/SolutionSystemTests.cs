@@ -17,6 +17,8 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(SharedSolutionContainerSystem))]
 public sealed class SolutionSystemTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity

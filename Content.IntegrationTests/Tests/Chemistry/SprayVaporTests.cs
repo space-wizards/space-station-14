@@ -21,6 +21,8 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(VaporSystem))]
 public sealed class SprayVaporTests : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private static readonly ProtoId<ReagentPrototype> Blood = "Blood";
     private static readonly EntProtoId SprayBottleSpaceCleaner = "SprayBottleSpaceCleaner";
     private const string BloodPuddle = "SprayVaporTestBloodPuddle";

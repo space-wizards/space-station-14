@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Serialization;
 [TestFixture]
 public sealed partial class SerializationTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// Check that serializing generic enums works as intended. This should really be in engine, but engine
     /// integrations tests block reflection and I am lazy..

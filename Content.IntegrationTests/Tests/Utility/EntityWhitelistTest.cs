@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Utility
     [TestOf(typeof(EntityWhitelist))]
     public sealed class EntityWhitelistTest : GameTest
     {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
         private const string InvalidComponent = "Sprite";
         private const string ValidComponent = "Physics";
 

@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(ReagentData))]
 public sealed class ReagentDataTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task ReagentDataIsSerializable()
     {

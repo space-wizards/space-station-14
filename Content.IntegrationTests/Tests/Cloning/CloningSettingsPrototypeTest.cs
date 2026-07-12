@@ -5,6 +5,8 @@ namespace Content.IntegrationTests.Tests.Cloning;
 
 public sealed class CloningSettingsPrototypeTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// Checks that the components named in every <see cref="CloningSettingsPrototype"/> are valid components known to the server.
     /// This is used instead of <see cref="ComponentNameSerializer"/> because we only care if the components are registered with the server,

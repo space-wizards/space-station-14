@@ -22,6 +22,8 @@ namespace Content.IntegrationTests.Tests.Destructible
     [TestOf(typeof(DamageThreshold))]
     public sealed class DestructibleThresholdActivationTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         [Test]
         public async Task Test()
         {

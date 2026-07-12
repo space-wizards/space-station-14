@@ -8,6 +8,8 @@ namespace Content.IntegrationTests.Tests.WizdenContentFreeze;
 /// </summary>
 public sealed class WizdenContentFreeze : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     /// <summary>
     /// This freeze prohibits the addition of new microwave recipes.
     /// The maintainers decided that the mechanics of cooking food in the microwave should be removed,

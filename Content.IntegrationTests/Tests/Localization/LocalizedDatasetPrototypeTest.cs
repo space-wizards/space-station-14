@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Localization;
 [TestFixture]
 public sealed class LocalizedDatasetPrototypeTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task ValidProtoIdsTest()
     {

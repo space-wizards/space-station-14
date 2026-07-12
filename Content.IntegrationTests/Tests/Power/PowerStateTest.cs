@@ -11,6 +11,8 @@ namespace Content.IntegrationTests.Tests.Power;
 [TestFixture]
 public sealed class PowerStateTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity

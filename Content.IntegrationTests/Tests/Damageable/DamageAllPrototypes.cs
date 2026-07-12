@@ -14,6 +14,8 @@ namespace Content.IntegrationTests.Tests.Damageable;
 [TestOf(typeof(DamageableSystem))]
 public sealed class DamageAllPrototypesTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageableSystem = default!;
 
     [Test]

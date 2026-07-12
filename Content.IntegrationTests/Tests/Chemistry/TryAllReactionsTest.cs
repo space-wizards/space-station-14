@@ -15,6 +15,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [TestOf(typeof(ReactionPrototype))]
     public sealed class TryAllReactionsTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         [TestPrototypes]
         private const string Prototypes = @"
 - type: entity

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.IntegrationTests.Fixtures;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
@@ -9,6 +9,8 @@ namespace Content.IntegrationTests.Tests.Atmos;
 [TestOf(typeof(Atmospherics))]
 public sealed class ConstantsTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     [Test]
     public async Task TotalGasesTest()
     {

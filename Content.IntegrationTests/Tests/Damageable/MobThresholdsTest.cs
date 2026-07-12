@@ -7,6 +7,8 @@ namespace Content.IntegrationTests.Tests.Damageable;
 
 public sealed class MobThresholdsTest : GameTest
 {
+    public override PoolSettings PoolSettings => PsDisconnected;
+
     private static string[] _entitiesWithThresholds = GameDataScrounger.EntitiesWithComponent("MobThresholds");
 
     [Test]

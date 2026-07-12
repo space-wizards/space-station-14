@@ -13,6 +13,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 {
     public sealed class DestructibleDestructionTest : GameTest
     {
+        public override PoolSettings PoolSettings => PsDisconnected;
+
         [Test]
         public async Task Test()
         {
