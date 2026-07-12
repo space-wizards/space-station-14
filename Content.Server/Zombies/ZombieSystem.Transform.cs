@@ -6,7 +6,6 @@ using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.NPC;
@@ -37,8 +36,8 @@ using Content.Shared.Prying.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Humanoid.Markings;
 using Content.Shared.IdentityManagement;
+using Content.Shared.NodeCrawl;
 using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -73,6 +72,7 @@ public sealed partial class ZombieSystem
     [Dependency] private NPCSystem _npc = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private SharedNodeCrawlSystem _nodeCrawl = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -331,6 +331,9 @@ public sealed partial class ZombieSystem
         // No longer waiting to become a zombie:
         // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
         RemCompDeferred<PendingZombieComponent>(target);
+
+        if (TryComp<NodeCrawlerComponent>(target, out var node))
+            _nodeCrawl.SetEnterDelay((target, node), zombiecomp.ZombieVentcrawlDelay);
 
         //zombie gamemode stuff
         var ev = new EntityZombifiedEvent(target);
