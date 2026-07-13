@@ -19,27 +19,18 @@ public sealed partial class RiggableSystem : EntitySystem
     [Dependency] private SharedExplosionSystem _explosionSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<RiggableComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<RiggableComponent, BeingMicrowavedEvent>(OnMicrowaved);
-        SubscribeLocalEvent<RiggableComponent, SolutionChangedEvent>(OnSolutionChanged);
-        SubscribeLocalEvent<RiggableComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<RiggableComponent, ItemToggledEvent>(OnToggled);
-    }
-
+    [SubscribeLocalEvent]
     private void OnRejuvenate(Entity<RiggableComponent> entity, ref RejuvenateEvent args)
     {
-        if (_solution.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution, true))
-        {
-            _solution.RemoveAllSolution(solution.Value);
-            entity.Comp.IsRigged = false;
-            Dirty(entity);
-        }
+        if (!_solution.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution, true))
+            return;
+
+        _solution.RemoveAllSolution(solution.Value);
+        entity.Comp.IsRigged = false;
+        DirtyField(entity, entity.Comp, nameof(RiggableComponent.IsRigged));
     }
 
+    [SubscribeLocalEvent]
     private void OnMicrowaved(Entity<RiggableComponent> entity, ref BeingMicrowavedEvent args)
     {
         if (!entity.Comp.IsRigged)
@@ -50,6 +41,7 @@ public sealed partial class RiggableSystem : EntitySystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnSolutionChanged(Entity<RiggableComponent> entity, ref SolutionChangedEvent args)
     {
         if (args.Solution.Comp.Id != entity.Comp.Solution)
@@ -57,8 +49,8 @@ public sealed partial class RiggableSystem : EntitySystem
 
         var wasRigged = entity.Comp.IsRigged;
         var solution = args.Solution.Comp.Solution;
-        var quantity = solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
-        entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
+        var quantity = solution.GetReagentQuantity(entity.Comp.Reagent.Reagent);
+        entity.Comp.IsRigged = quantity >= entity.Comp.Reagent.Quantity;
 
         if (entity.Comp.IsRigged && !wasRigged)
         {
@@ -71,20 +63,7 @@ public sealed partial class RiggableSystem : EntitySystem
         }
     }
 
-    public void Explode(Entity<RiggableComponent> entity, float charge, EntityUid? cause = null)
-    {
-        if (entity.Comp.Exploded || charge == 0f)
-            return;
-
-        var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
-
-        // Explosion system also queues entity deletion
-        _explosionSystem.TriggerExplosive(entity, radius: radius, user: cause);
-
-        entity.Comp.Exploded = true;
-        Dirty(entity);
-    }
-
+    [SubscribeLocalEvent]
     private void OnChargeChanged(Entity<RiggableComponent> entity, ref ChargeChangedEvent args)
     {
         if (!entity.Comp.IsRigged)
@@ -100,11 +79,26 @@ public sealed partial class RiggableSystem : EntitySystem
         Explode(entity, args.CurrentCharge);
     }
 
+    [SubscribeLocalEvent]
     private void OnToggled(Entity<RiggableComponent> entity, ref ItemToggledEvent args)
     {
         if (args.Activated && entity.Comp.IsRigged)
         {
             Explode(entity, _battery.GetCharge(entity.Owner), args.User);
         }
+    }
+
+    public void Explode(Entity<RiggableComponent> entity, float charge, EntityUid? cause = null)
+    {
+        if (entity.Comp.Exploded || charge == 0f)
+            return;
+
+        var radius = MathF.Min(5, MathF.Sqrt(charge) / 9);
+
+        // Explosion system also queues entity deletion
+        _explosionSystem.TriggerExplosive(entity, radius: radius, user: cause);
+
+        entity.Comp.Exploded = true;
+        DirtyField(entity, entity.Comp, nameof(RiggableComponent.Exploded));
     }
 }

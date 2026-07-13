@@ -8,7 +8,7 @@ namespace Content.Shared.Chemistry.Components;
 /// Allows to sabotage an entity by injecting a certain reagent.
 /// Makes it explode when activated or used.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class RiggableComponent : Component
 {
     /// <summary>
@@ -34,6 +34,6 @@ public sealed partial class RiggableComponent : Component
     /// <summary>
     /// The reagent and amount needed for rigging.
     /// </summary>
-    [DataField("reagent"), AutoNetworkedField]
-    public ReagentQuantity RequiredQuantity = new("Plasma", FixedPoint2.New(5), null);
+    [DataField, AutoNetworkedField]
+    public ReagentQuantity Reagent = new("Plasma", FixedPoint2.New(5), null);
 }

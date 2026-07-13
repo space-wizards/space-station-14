@@ -25,10 +25,8 @@ public sealed class StunBatonTests : InteractionTest
     [SidedDependency(Side.Server)] private readonly SharedBatterySystem _battery = default!;
     [SidedDependency(Side.Server)] private readonly DamageableSystem _damageable = default!;
 
-    /// <summary>
-    /// Checks that an activated stun baton stuns the target.
-    /// </summary>
     [Test]
+    [Description("Checks that an activated stun baton stuns the target")]
     public async Task StunBatonTest()
     {
         // Prevent the test mob from suffocating.
@@ -101,10 +99,8 @@ public sealed class StunBatonTests : InteractionTest
         }
     }
 
-    /// <summary>
-    /// Checks that a deactivated stun baton does not stun the target.
-    /// </summary>
     [Test]
+    [Description("Checks that a deactivated stun baton does not stun the target")]
     public async Task HarmBatonTest()
     {
         // Prevent the test mob from suffocating.
@@ -157,10 +153,8 @@ public sealed class StunBatonTests : InteractionTest
         }
     }
 
-    /// <summary>
-    /// Checks that missing attack with a stun baton does not cost any charge.
-    /// </summary>
     [Test]
+    [Description("Checks that missing attack with a stun baton does not cost any charge")]
     public async Task StunBatonMissTest()
     {
         // Spawn a stun baton in the player's hands and turn it on.

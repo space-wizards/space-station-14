@@ -150,7 +150,7 @@ public sealed partial class ItemToggleSystem : EntitySystem
     /// <param name="predicted">Whether to predict feedback (sounds/popups) on the client.</param>
     /// <param name="showPopup">Whether to show a popup with the action outcome.</param>
     /// <param name="consciousAction">Whether this is a deliberate action, or a trigger activation. See <see cref="ItemToggleOnTriggerComponent.ConsciousAction"/>.</param>
-    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true, bool consciousAction = true)
+    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user, bool predicted, bool showPopup, bool consciousAction = true)
     {
         if (!_itemToggleQuery.Resolve(ent, ref ent.Comp, false))
             return false;
@@ -197,6 +197,12 @@ public sealed partial class ItemToggleSystem : EntitySystem
 
         Activate((uid, comp), predicted, user, showPopup);
         return true;
+    }
+
+    /// <inheritdoc cref="ItemToggleSystem.TryActivate"/>
+    public bool TryActivate(Entity<ItemToggleComponent?> ent, EntityUid? user = null, bool predicted = true, bool showPopup = true)
+    {
+        return TryActivate(ent, user, predicted, showPopup, consciousAction: true);
     }
 
     /// <summary>

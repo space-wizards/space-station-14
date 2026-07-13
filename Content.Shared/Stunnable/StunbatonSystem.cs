@@ -15,20 +15,11 @@ public sealed partial class StunbatonSystem : EntitySystem
     [Dependency] private ItemToggleSystem _itemToggle = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-        SubscribeLocalEvent<StunbatonComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<StunbatonComponent, ItemToggleActivateAttemptEvent>(TryTurnOn);
-    }
-
     /// <summary>
     /// Handle stamina damage application.
     /// Make sure the stunbaton is active and there's enough battery juice.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
         if (!_itemToggle.IsActivated(entity.Owner) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse))
@@ -40,6 +31,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     /// <summary>
     /// Communicate the stunbaton's status and number of remaining uses.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<StunbatonComponent> entity, ref ExaminedEvent args)
     {
         var onMsg = _itemToggle.IsActivated(entity.Owner)
@@ -58,6 +50,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     /// Handle activation attempt.
     /// Make sure there's at least <see cref="StunbatonComponent.EnergyPerUse"/> left in the battery.
     /// </summary>
+    [SubscribeLocalEvent]
     private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
         if (_battery.GetCharge(entity.Owner) < entity.Comp.EnergyPerUse)
@@ -65,7 +58,7 @@ public sealed partial class StunbatonSystem : EntitySystem
             args.Cancelled = true;
             if (args.User != null)
             {
-                _popup.PopupPredicted(Loc.GetString("stunbaton-component-low-charge"), args.User.Value, args.User);
+                _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), args.User.Value);
             }
         }
     }
@@ -73,6 +66,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     /// <summary>
     /// Turns off the stunbaton when battery level drops below <see cref="StunbatonComponent.EnergyPerUse"/>.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
     {
         if (_battery.GetCharge(entity.Owner) < entity.Comp.EnergyPerUse)

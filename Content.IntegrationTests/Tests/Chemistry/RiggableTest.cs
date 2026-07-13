@@ -43,12 +43,10 @@ public sealed class RiggableTest : InteractionTest
         Quantity: 15
 ";
 
-    /// <summary>
-    /// Gives the player a power cell, injects it with different solutions and tests the rigged cell in a flashlight
-    /// </summary>
     [Test]
     [TestCase("TestPlasmaSyringe", ExpectedResult = true)]
     [TestCase("TestMilkSyringe", ExpectedResult = false)]
+    [Description("Gives the player a power cell, injects it with different solutions and tests the rigged cell in a flashlight")]
     public async Task<bool> RigBatteryTest(string syringe)
     {
         await AddAtmosphere();
@@ -95,10 +93,8 @@ public sealed class RiggableTest : InteractionTest
         }
     }
 
-    /// <summary>
-    /// Gives the player an activated stunbaton and tests that it explodes immediately on plasma injection
-    /// </summary>
     [Test]
+    [Description("Gives the player an activated stunbaton and tests that it explodes immediately on plasma injection")]
     public async Task RigActivatedTest()
     {
         await AddAtmosphere();
