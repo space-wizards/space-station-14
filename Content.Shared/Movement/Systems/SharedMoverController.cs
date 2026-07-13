@@ -303,6 +303,11 @@ public abstract partial class SharedMoverController : VirtualController
         // If you want to slow down an entity with "friction" you shouldn't be using this system.
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
+
+        var wishEv = new MovementWishDirectionEvent(wishDir);
+        RaiseLocalEvent(entity, ref wishEv);
+        wishDir = wishEv.WishDir;
+
         friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
@@ -657,3 +662,11 @@ public abstract partial class SharedMoverController : VirtualController
             args.Cancel();
     }
 }
+
+/// <summary>
+/// Event raised when determining the direction a user wishes to move in.
+/// </summary>
+/// <param name="WishDir">The normalized wished direction.</param>
+/// <remarks>Applied before friction/acceleration, making it ideal for "modifying user input".</remarks>
+[ByRefEvent]
+public record struct MovementWishDirectionEvent(Vector2 WishDir);
