@@ -29,35 +29,16 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedMoverController _mover = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private EntityQuery<VehicleComponent> _vehicleQuery;
-    private EntityQuery<VehicleOperatorComponent> _operatorQuery;
-    private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<InputMoverComponent> _inputMoverQuery;
-    private EntityQuery<HandsComponent> _handsQuery;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        _vehicleQuery = GetEntityQuery<VehicleComponent>();
-        _operatorQuery = GetEntityQuery<VehicleOperatorComponent>();
-        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        _inputMoverQuery = GetEntityQuery<InputMoverComponent>();
-        _handsQuery = GetEntityQuery<HandsComponent>();
-
-        InitializeOperator();
-        InitializeKey();
-
-        SubscribeLocalEvent<VehicleComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
-        SubscribeLocalEvent<VehicleComponent, UpdateCanMoveEvent>(OnVehicleUpdateCanMove);
-        SubscribeLocalEvent<VehicleComponent, ComponentShutdown>(OnVehicleShutdown);
-        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnVehicleGetAdditionalAccess);
-
-        SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
-    }
+    [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
+    [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
     /// </remarks>
+    [SubscribeLocalEvent]
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
     {
         if (!ent.Comp.TransferDamage || !args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
@@ -74,6 +55,7 @@ public sealed partial class VehicleSystem : EntitySystem
         _damageable.TryChangeDamage(operatorUid, damage, origin: args.Origin);
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleUpdateCanMove(Entity<VehicleComponent> ent, ref UpdateCanMoveEvent args)
     {
         var ev = new VehicleCanRunEvent(ent);
@@ -82,6 +64,7 @@ public sealed partial class VehicleSystem : EntitySystem
             args.Cancel();
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleShutdown(Entity<VehicleComponent> ent, ref ComponentShutdown args)
     {
         if (_timing.ApplyingState)
@@ -90,6 +73,7 @@ public sealed partial class VehicleSystem : EntitySystem
         TryRemoveOperator(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleGetAdditionalAccess(Entity<VehicleComponent> ent, ref GetAdditionalAccessEvent args)
     {
         // Vehicles inherit access from whoever is driving them
@@ -97,6 +81,7 @@ public sealed partial class VehicleSystem : EntitySystem
             args.Entities.Add(operatorUid);
     }
 
+    [SubscribeLocalEvent]
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
         if (_timing.ApplyingState)
@@ -318,9 +303,7 @@ public sealed partial class VehicleSystem : EntitySystem
             return;
 
         if (_inputMoverQuery.TryComp(entity, out var inputMover))
-        {
             _appearance.SetData(entity, VehicleVisuals.CanRun, inputMover.CanMove, appearance);
-        }
 
         _appearance.SetData(entity, VehicleVisuals.HasOperator, entity.Comp.Operator is not null, appearance);
     }
