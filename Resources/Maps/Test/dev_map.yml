@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 266.0.0
+  engineVersion: 273.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/31/2025 05:06:28
-  entityCount: 3156
+  time: 03/15/2026 20:01:24
+  entityCount: 3155
 maps:
 - 23
 grids:
@@ -1580,143 +1580,49 @@ entities:
         uniqueMixes:
         - volume: 2500
           immutable: True
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+          moles: {}
         - volume: 2500
           temperature: 293.15
           moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
         - volume: 2500
           temperature: 235
           moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
         - volume: 2500
           temperature: 293.14975
           moles:
-          - 20.078888
-          - 75.53487
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 20.078888
+            Nitrogen: 75.53487
+        - volume: 2500
+          temperature: 293.15
+          moles: {}
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Nitrogen: 6666.982
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 6666.982
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Plasma: 6666.982
         - volume: 2500
           temperature: 5000
           moles:
-          - 6666.982
-          - 0
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 6666.982
+            Plasma: 6666.982
         chunkSize: 4
     - type: BecomesStation
       id: Dev
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 23
     components:
     - type: MetaData
@@ -1809,37 +1715,18 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
         - volume: 2500
           immutable: True
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+          moles: {}
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 2869
     components:
     - type: MetaData
@@ -1882,6 +1769,8 @@ entities:
     - type: IFF
       flags: HideLabel
     - type: ImplicitRoof
+    - type: TileHistory
+      chunkHistory: {}
 - proto: AirAlarm
   entities:
   - uid: 1270
@@ -2103,14 +1992,6 @@ entities:
     components:
     - type: Transform
       pos: 33.5,48.5
-      parent: 1
-    - type: Fixtures
-      fixtures: {}
-  - uid: 1220
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 51.5,37.5
       parent: 1
     - type: Fixtures
       fixtures: {}
@@ -3062,6 +2943,15 @@ entities:
     - type: Transform
       pos: 37.5,42.5
       parent: 1
+    - type: Fixtures
+      fixtures: {}
+- proto: BaseAPC
+  entities:
+  - uid: 2753
+    components:
+    - type: Transform
+      pos: -0.5,1.5
+      parent: 2709
     - type: Fixtures
       fixtures: {}
 - proto: BaseBallBat
@@ -6403,6 +6293,11 @@ entities:
     components:
     - type: Transform
       pos: 77.5,11.5
+      parent: 1
+  - uid: 3158
+    components:
+    - type: Transform
+      pos: 52.5,37.5
       parent: 1
 - proto: CableApcStack
   entities:
@@ -9831,18 +9726,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
@@ -9923,13 +9808,25 @@ entities:
     - type: Transform
       pos: 70.5,15.5
       parent: 1
-- proto: DebugAPC
+- proto: DebugAPCRecharging
   entities:
-  - uid: 2753
+  - uid: 1220
     components:
     - type: Transform
-      pos: -0.5,1.5
-      parent: 2709
+      rot: 3.141592653589793 rad
+      pos: 51.5,37.5
+      parent: 1
+    - type: AccessReader
+      accessListsOriginal:
+      - - Engineering
+    - type: Fixtures
+      fixtures: {}
+  - uid: 2115
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,37.5
+      parent: 1
     - type: Fixtures
       fixtures: {}
 - proto: DebugGenerator
@@ -9943,15 +9840,6 @@ entities:
       supplyRampRate: 500000
       supplyRampTolerance: 5000
       supplyRate: 3000000
-- proto: DebugSubstation
-  entities:
-  - uid: 2296
-    components:
-    - type: Transform
-      pos: 43.5,32.5
-      parent: 1
-    - type: Battery
-      maxCharge: 25000000
 - proto: DefaultStationBeaconMedical
   entities:
   - uid: 2882
@@ -11725,77 +11613,23 @@ entities:
     - type: Transform
       pos: 28.5,41.5
       parent: 1
-- proto: KitchenReagentGrinder
+- proto: KitchenReagentGrinderBeakerLarge
   entities:
   - uid: 979
     components:
     - type: Transform
       pos: 31.5,41.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        beakerSlot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 980
-        inputContainer: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-  - uid: 1044
+  - uid: 980
     components:
     - type: Transform
       pos: 30.5,44.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        beakerSlot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 1045
-        inputContainer: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-  - uid: 1125
+  - uid: 1044
     components:
     - type: Transform
       pos: 52.5,42.5
       parent: 1
-    - type: ContainerContainer
-      containers:
-        beakerSlot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 1126
-        inputContainer: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
 - proto: KitchenSpike
   entities:
   - uid: 963
@@ -11803,26 +11637,6 @@ entities:
     - type: Transform
       pos: 25.5,40.5
       parent: 1
-- proto: LargeBeaker
-  entities:
-  - uid: 980
-    components:
-    - type: Transform
-      parent: 979
-    - type: Physics
-      canCollide: False
-  - uid: 1045
-    components:
-    - type: Transform
-      parent: 1044
-    - type: Physics
-      canCollide: False
-  - uid: 1126
-    components:
-    - type: Transform
-      parent: 1125
-    - type: Physics
-      canCollide: False
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 453
@@ -11884,18 +11698,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
+          Oxygen: 1.7459903
+          Nitrogen: 6.568249
 - proto: LockerChiefEngineerFilledHardsuit
   entities:
   - uid: 1332
@@ -12544,8 +12348,8 @@ entities:
       text: Other
     - type: PointLight
       energy: 2
-      radius: 2
       offset: 0,1
+      radius: 2
   - uid: 610
     components:
     - type: Transform
@@ -12556,9 +12360,9 @@ entities:
       text: Weapons
     - type: PointLight
       energy: 5
+      offset: 0,1
       color: '#FF0000FF'
       radius: 2
-      offset: 0,1
   - uid: 611
     components:
     - type: Transform
@@ -12569,9 +12373,9 @@ entities:
       text: Service
     - type: PointLight
       energy: 5
+      offset: 0,1
       color: '#87EB87FF'
       radius: 2
-      offset: 0,1
   - uid: 612
     components:
     - type: Transform
@@ -12582,9 +12386,9 @@ entities:
       text: Medical
     - type: PointLight
       energy: 5
+      offset: 0,1
       color: '#87D1EBFF'
       radius: 2
-      offset: 0,1
   - uid: 613
     components:
     - type: Transform
@@ -12595,9 +12399,9 @@ entities:
       text: Engi & Atmos
     - type: PointLight
       energy: 5
+      offset: 0,1
       color: '#FFA500FF'
       radius: 2
-      offset: 0,1
   - uid: 614
     components:
     - type: Transform
@@ -12608,9 +12412,9 @@ entities:
       text: R&D
     - type: PointLight
       energy: 5
+      offset: 0,1
       color: '#EB87EBFF'
       radius: 2
-      offset: 0,1
 - proto: MaterialBiomass
   entities:
   - uid: 1186
@@ -15902,6 +15706,15 @@ entities:
     - type: Transform
       pos: 77.5,6.5
       parent: 1
+- proto: SubstationBasicEmpty
+  entities:
+  - uid: 2296
+    components:
+    - type: Transform
+      pos: 43.5,32.5
+      parent: 1
+    - type: Battery
+      maxCharge: 25000000
 - proto: SubstationWallBasic
   entities:
   - uid: 2800
@@ -16986,9 +16799,9 @@ entities:
       parent: 1
     - type: PointLight
       energy: 5
+      offset: 0,2
       color: '#EB87EBFF'
       radius: 2
-      offset: 0,2
   - uid: 101
     components:
     - type: Transform
@@ -17354,9 +17167,9 @@ entities:
       parent: 1
     - type: PointLight
       energy: 5
+      offset: 0,2
       color: '#87EB87FF'
       radius: 2
-      offset: 0,2
   - uid: 891
     components:
     - type: Transform
@@ -17708,9 +17521,9 @@ entities:
       parent: 1
     - type: PointLight
       energy: 5
+      offset: 0,2
       color: '#87D1EBFF'
       radius: 2
-      offset: 0,2
   - uid: 1095
     components:
     - type: Transform
@@ -18169,9 +17982,9 @@ entities:
       parent: 1
     - type: PointLight
       energy: 5
+      offset: 0,2
       color: '#FFA500FF'
       radius: 2
-      offset: 0,2
   - uid: 1315
     components:
     - type: Transform
@@ -18771,9 +18584,9 @@ entities:
       parent: 1
     - type: PointLight
       energy: 5
+      offset: -2,0
       color: '#FF0000FF'
       radius: 2
-      offset: -2,0
   - uid: 1942
     components:
     - type: Transform
@@ -19643,8 +19456,8 @@ entities:
       parent: 1
     - type: PointLight
       energy: 2
-      radius: 2
       offset: 0,-2
+      radius: 2
   - uid: 2522
     components:
     - type: Transform

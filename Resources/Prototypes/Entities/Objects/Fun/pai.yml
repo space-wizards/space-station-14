@@ -97,8 +97,7 @@
         - SecretStash
         - WrappedParcel
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
+    emoteSounds: UnisexSilicon
   - type: Tag
     tags:
     - SiliconEmotes
@@ -139,8 +138,7 @@
   - type: StaticPrice
     price: 500
   - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
+    emoteSounds: UnisexSiliconSyndicate
 
 - type: entity
   parent: PersonalAI
@@ -156,8 +154,6 @@
       shader: unshaded
       map: ["screen"]
   - type: Appearance
-  - type: StaticPrice
-    price: 5000
 
 - type: entity
   parent: PersonalAI
@@ -189,6 +185,8 @@
   - type: Construction
     graph: PotatoAI
     node: potatoai
+
+# PAI Actions
 
 - type: entity
   parent: ActionIntrinsicStore

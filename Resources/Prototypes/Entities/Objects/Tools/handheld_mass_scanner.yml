@@ -19,7 +19,7 @@
     maxRange: 256
     followEntity: true
   - type: Appearance
-  - type: PredictedBatteryVisuals
+  - type: BatteryVisuals
   - type: GenericVisualizer
     visuals:
       enum.BatteryVisuals.State:

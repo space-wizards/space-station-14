@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems;
@@ -20,10 +21,11 @@ namespace Content.Server.Power.EntitySystems;
 /// it merely reconfigures parameters on <see cref="PowerNetworkBatteryComponent"/> from the UI.
 /// </para>
 /// </remarks>
-public sealed class BatteryInterfaceSystem : EntitySystem
+public sealed partial class BatteryInterfaceSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = null!;
+    [Dependency] private SharedBatterySystem _battery = null!;
 
     public override void Initialize()
     {
@@ -48,7 +50,7 @@ public sealed class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanCharge = args.On;
 
-        _adminLog.Add(LogType.Action,$"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
+        _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set input breaker to {args.On} on {ToPrettyString(ent):target}");
     }
 
     private void HandleSetOutputBreaker(Entity<BatteryInterfaceComponent> ent, ref BatterySetOutputBreakerMessage args)
@@ -56,7 +58,7 @@ public sealed class BatteryInterfaceSystem : EntitySystem
         var netBattery = Comp<PowerNetworkBatteryComponent>(ent);
         netBattery.CanDischarge = args.On;
 
-        _adminLog.Add(LogType.Action,$"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
+        _adminLog.Add(LogType.Action, $"{ToPrettyString(args.Actor):actor} set output breaker to {args.On} on {ToPrettyString(ent):target}");
     }
 
     private void HandleSetChargeRate(Entity<BatteryInterfaceComponent> ent, ref BatterySetChargeRateMessage args)
@@ -90,13 +92,14 @@ public sealed class BatteryInterfaceSystem : EntitySystem
         if (!_uiSystem.IsUiOpen(uid, BatteryUiKey.Key))
             return;
 
+        var currentCharge = _battery.GetCharge((uid, battery));
         _uiSystem.SetUiState(
             uid,
             BatteryUiKey.Key,
             new BatteryBuiState
             {
                 Capacity = battery.MaxCharge,
-                Charge = battery.CurrentCharge,
+                Charge = currentCharge,
                 CanCharge = netBattery.CanCharge,
                 CanDischarge = netBattery.CanDischarge,
                 CurrentReceiving = netBattery.CurrentReceiving,

@@ -9,11 +9,11 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MindInfoCommand : LocalizedEntityCommands
+    public sealed partial class MindInfoCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedRoleSystem _roles = default!;
-        [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private SharedRoleSystem _roles = default!;
+        [Dependency] private SharedMindSystem _minds = default!;
 
         public override string Command => "mindinfo";
 

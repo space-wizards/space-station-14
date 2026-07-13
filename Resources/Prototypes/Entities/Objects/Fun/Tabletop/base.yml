@@ -1,38 +1,39 @@
+# When adding a new board game, also add it to id: AllBoardGamesTable
+
+# The actual item that players can pick up, or throw when they lose
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseBoardEntity # Board item
   name: board
-  abstract: true
   description: A blank board.
   components:
-    - type: TabletopGame
-      size: 256, 256
-      setup:
-        !type:TabletopEmptySetup
-        boardPrototype: Crowbar
-    - type: Tag
-      tags:
-        - TabletopBoard
+  - type: TabletopGame
+    size: 256, 256
+    setup:
+      !type:TabletopEmptySetup
+      boardPrototype: Crowbar
+  - type: Tag
+    tags:
+    - TabletopBoard
 
 - type: entity
-  id: BaseTabletopPiece # Board piece
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseTabletopPiece # Board piece
   components:
   - type: TabletopDraggable
   - type: Sprite
     noRot: true
   - type: Appearance
 
+# Entity which acts as the background sprite in the tabletop game
 - type: entity
+  abstract: true
   id: BaseBoardTabletop
   name: baseboard
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
-  - type: Tag
-    tags:
-      - TabletopBoard
   - type: Sprite
     noRot: false
     drawdepth: FloorTiles

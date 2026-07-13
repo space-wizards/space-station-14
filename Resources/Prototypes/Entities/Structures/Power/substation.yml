@@ -5,6 +5,11 @@
   components:
   # Core power behavior
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: ExaminableBattery
   - type: NodeContainer
     examinable: true
@@ -47,8 +52,9 @@
 
   # Damage
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
 
   # Guidebook
@@ -96,12 +102,6 @@
     state: substation_static
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -189,12 +189,6 @@
     state: substation_wall_static
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100

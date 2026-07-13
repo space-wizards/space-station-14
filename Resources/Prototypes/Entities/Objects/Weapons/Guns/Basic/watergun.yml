@@ -1,7 +1,7 @@
 - type: entity
-  id: WeaponWaterGunBase
   abstract: true
-  parent: BaseItem
+  parent: [SolutionGun, SolutionSmall, BaseItem] # 12 shots
+  id: WeaponWaterGunBase
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
@@ -20,10 +20,6 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
-    solutions:
-      chamber:
-        maxVol: 50 #10 shots
   - type: SolutionAmmoProvider
     solutionId: chamber
     proto: BulletWaterShot
@@ -51,8 +47,8 @@
       Plastic: 150
 
 - type: entity
-  id: WeaponWaterPistol
   parent: WeaponWaterGunBase
+  id: WeaponWaterPistol
   name: water pistol
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
@@ -73,8 +69,8 @@
           icon: Rainbow
 
 - type: entity
+  parent: [SolutionNormal, WeaponWaterGunBase] # 24 shots
   id: WeaponWaterBlaster
-  parent: WeaponWaterGunBase
   name: water blaster
   description: With this bad boy, you'll be the coolest kid at the summer barbecue.
   components:
@@ -86,10 +82,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
-    solutions:
-      chamber:
-        maxVol: 100 #20 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:
@@ -100,7 +92,7 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
-    size: Large
+    size: Normal
     shape:
     - 0,0,2,1
   - type: RandomSprite
@@ -112,8 +104,8 @@
           detail2: Sixteen
 
 - type: entity
+  parent: [SolutionHuge, WeaponWaterGunBase] # 96 shots
   id: WeaponWaterBlasterSuper
-  parent: WeaponWaterGunBase
   name: super water blaster
   description: No! No! Not in the eyes!
   components:
@@ -125,10 +117,6 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
-  - type: SolutionContainerManager
-    solutions:
-      chamber:
-        maxVol: 500 #100 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:
@@ -140,8 +128,8 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
-    shape: # SMG size.
-    - 0,0,2,1
+    shape: # Rifle Size.
+    - 0,0,2,2
   - type: RandomSprite
     getAllGroups: true
     available:
