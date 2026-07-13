@@ -19,13 +19,11 @@
     slots:
       item:
         name: clothing-boots-sidearm
+        ejectOnBreak: true
         whitelist:
           tags:
-          - Knife
+          - ToyKnife
           - ToySidearm
-        blacklist:
-          components:
-          - Sharp
 
 - type: entity
   parent: ClothingShoesClownBase
