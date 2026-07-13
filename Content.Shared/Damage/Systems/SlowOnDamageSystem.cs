@@ -78,7 +78,7 @@ public sealed partial class SlowOnDamageSystem : EntitySystem
 
     private void OnExamined(Entity<ClothingSlowOnDamageModifierComponent> ent, ref ExaminedEvent args)
     {
-        var msg = Loc.GetString("slow-on-damage-modifier-examine", ("mod", (1 - ent.Comp.Modifier) * 100));
+        var msg = Loc.GetString("slow-on-damage-modifier-examine", ("mod", ent.Comp.Modifier * 100));
         args.PushMarkup(msg);
     }
 
