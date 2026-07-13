@@ -27,9 +27,3 @@ public sealed partial class SolutionAppearanceComponent : Component
     /// </summary>
     public BaseContainer? CachedContainer;
 }
-
-[Serializable, NetSerializable]
-public enum SolutionAppearanceRelayedVisuals : byte
-{
-    HasRelay
-}

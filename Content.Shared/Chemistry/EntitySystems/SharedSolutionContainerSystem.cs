@@ -341,7 +341,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Updates the appearance of the Entity with <see cref="AppearanceComponent" /> using data from Solution  <see cref="SolutionComponent" />.
+    /// Updates the appearance of the Entity with <see cref="AppearanceComponent" /> using data from Solution <see cref="SolutionComponent" />.
     /// </summary>
     public void UpdateAppearance(Entity<AppearanceComponent?> container, Entity<SolutionComponent> soln)
     {
