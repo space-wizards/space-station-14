@@ -1,9 +1,9 @@
-<controls:BoxContainer
+<BoxContainer
     Visible="False"
     HorizontalExpand="True"
-    xmlns:controls="https://spacestation14.io"
+    xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.Shuttles.UI"
-    xmlns:controls1="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <ui:ShuttleNavControl
         Name="NavRadar"
         MouseFilter="Stop"
@@ -12,7 +12,7 @@
         HorizontalExpand="True"
         Margin="5 4 10 5"/>
     <!-- Nav controls -->
-    <controls:BoxContainer
+    <BoxContainer
         Name="RightDisplayNav"
         VerticalAlignment="Top"
         HorizontalAlignment="Right"
@@ -21,45 +21,45 @@
         MaxWidth="256"
         Margin="5 0 5 5"
         Orientation="Vertical">
-        <controls1:StripeBack MinSize="48 48">
-            <controls:Label
+        <controls:StripeBack MinSize="48 48">
+            <Label
                 Name="NavDisplayLabel"
-                Text="{controls:Loc 'shuttle-console-display-label'}"
+                Text="{Loc 'shuttle-console-display-label'}"
                 VerticalExpand="True"
                 HorizontalAlignment="Center"/>
-        </controls1:StripeBack>
-        <controls:GridContainer
+        </controls:StripeBack>
+        <GridContainer
             Columns="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             HorizontalExpand="True"
             Margin="3"
             Name="ReadonlyDisplay">
-            <controls:Label Text="{controls:Loc 'shuttle-console-position'}" />
-            <controls:Label Name="GridPosition" Text="0.0, 0.0" HorizontalExpand="True" Align="Right" />
-            <controls:Label Text="{controls:Loc 'shuttle-console-orientation'}" />
-            <controls:Label Name="GridOrientation" Text="0.0" HorizontalExpand="True" Align="Right" />
-            <controls:Label Text="{controls:Loc 'shuttle-console-linear-velocity'}" />
-            <controls:Label Name="GridLinearVelocity" Text="0.0, 0.0" HorizontalExpand="True" Align="Right" />
-            <controls:Label Text="{controls:Loc 'shuttle-console-angular-velocity'}" />
-            <controls:Label Name="GridAngularVelocity" Text="0.0" HorizontalExpand="True" Align="Right" />
-        </controls:GridContainer>
-        <controls1:StripeBack MinSize="48 48">
-            <controls:Label
+            <Label Text="{Loc 'shuttle-console-position'}" />
+            <Label Name="GridPosition" Text="0.0, 0.0" HorizontalExpand="True" Align="Right" />
+            <Label Text="{Loc 'shuttle-console-orientation'}" />
+            <Label Name="GridOrientation" Text="0.0" HorizontalExpand="True" Align="Right" />
+            <Label Text="{Loc 'shuttle-console-linear-velocity'}" />
+            <Label Name="GridLinearVelocity" Text="0.0, 0.0" HorizontalExpand="True" Align="Right" />
+            <Label Text="{Loc 'shuttle-console-angular-velocity'}" />
+            <Label Name="GridAngularVelocity" Text="0.0" HorizontalExpand="True" Align="Right" />
+        </GridContainer>
+        <controls:StripeBack MinSize="48 48">
+            <Label
                 Name="NavSettingsLabel"
-                Text="{controls:Loc 'shuttle-console-nav-settings'}"
+                Text="{Loc 'shuttle-console-nav-settings'}"
                 VerticalExpand="True"
                 HorizontalAlignment="Center"/>
-        </controls1:StripeBack>
-        <controls:Button
+        </controls:StripeBack>
+        <Button
             Name="IFFToggle"
-            Text="{controls:Loc 'shuttle-console-iff-toggle'}"
+            Text="{Loc 'shuttle-console-iff-toggle'}"
             TextAlign="Center"
             ToggleMode="True"/>
-        <controls:Button
+        <Button
             Name="DockToggle"
-            Text="{controls:Loc 'shuttle-console-dock-toggle'}"
+            Text="{Loc 'shuttle-console-dock-toggle'}"
             TextAlign="Center"
             ToggleMode="True"/>
-    </controls:BoxContainer>
-</controls:BoxContainer>
+    </BoxContainer>
+</BoxContainer>
