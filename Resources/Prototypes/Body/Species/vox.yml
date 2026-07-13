@@ -176,10 +176,7 @@
       sprite: Effects/creampie.rsi
       state: creampie_vox
   - type: Vocal
-    sounds:
-      Male: UnisexVox
-      Female: UnisexVox
-      Unsexed: UnisexVox
+    emoteSounds: UnisexVox
   - type: Butcherable
     spawned:
     - id: FoodMeatChicken
@@ -258,7 +255,7 @@
   - type: Wagging
 
 - type: entity
-  parent: OrganBase
+  parent: OrganBaseOrganic
   id: OrganVox
   abstract: true
   suffix: Vox
