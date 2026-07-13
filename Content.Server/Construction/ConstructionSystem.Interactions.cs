@@ -140,6 +140,7 @@ namespace Content.Server.Construction
                 {
                     construction.EdgeIndex = edgeIndex;
                 }
+
                 return;
             }
 
