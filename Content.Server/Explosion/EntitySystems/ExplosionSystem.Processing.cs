@@ -562,6 +562,10 @@ public sealed partial class ExplosionSystem
         return stack[0]; // If the stack is somehow empty, this will throw, but we will have at least removed it from dict first!
     }
 
+/// <summary>
+/// Attempts to dirty the <see cref="TileHistoryComponent"/> of a given entity.
+/// </summary>
+/// <param name="grid"></param>
     public void DirtyHistory(EntityUid grid)
     {
         if (!_tileHistoryQuery.TryComp(grid, out var history))

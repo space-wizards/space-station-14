@@ -76,6 +76,8 @@
     filters:
     - !type:HasRoleMindFilter
       inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
+    - !type:ObjectiveTargetCondition
+      inverted: true
       whitelist:
         components:
         - ChangelingRole
@@ -96,10 +98,11 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    filters:
+    conditions:
     # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - KillPersonCondition
   - type: KillPersonCondition
