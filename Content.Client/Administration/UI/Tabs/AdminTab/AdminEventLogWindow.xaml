@@ -1,0 +1,14 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'admin-event-log-title'}"
+               MinWidth="800">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" MinWidth="400">
+            <Label Text="{Loc admin-event-round}"/>
+            <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150"></SpinBox>
+            <Control HorizontalExpand="True"/>
+            <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}" HorizontalAlignment="Right"
+                    StyleClasses="OpenRight"/>
+        </BoxContainer>
+
+    </BoxContainer>
+</DefaultWindow>
