@@ -2,7 +2,6 @@ using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
 using System.Numerics;
@@ -12,7 +11,6 @@ namespace Content.Client.Holopad;
 
 public sealed partial class HolopadSystem : SharedHolopadSystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -120,7 +118,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         // Find the texture height of the largest layer
         float texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
 
-        var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
+        var instance = ProtoMan.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
         instance.SetParameter("color2", new Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
         instance.SetParameter("alpha", holopadHologram.Alpha);

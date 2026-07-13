@@ -15,7 +15,6 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageableSystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private INetManager _netMan = default!;
     [Dependency] private MobThresholdSystem _mobThreshold = default!;
@@ -55,7 +54,7 @@ public sealed partial class DamageableSystem : EntitySystem
         EntityUid? origin = null
     )
     {
-        ent.Comp.Damage.GetDamagePerGroup(_prototypeManager, ent.Comp.DamagePerGroup);
+        ent.Comp.Damage.GetDamagePerGroup(ProtoMan, ent.Comp.DamagePerGroup);
         ent.Comp.TotalDamage = ent.Comp.Damage.GetTotal();
         Dirty(ent);
 
@@ -67,6 +66,20 @@ public sealed partial class DamageableSystem : EntitySystem
                 new DamageVisualizerGroupData(ent.Comp.DamagePerGroup.Keys.ToList()),
                 appearance
             );
+
+            if (ent.Comp.Displacement != null)
+            {
+                _appearance.SetData(
+                    ent,
+                    DamageVisualizerKeys.Displacement,
+                    ent.Comp.Displacement.Value.Id,
+                    appearance
+                );
+            }
+            else
+            {
+                _appearance.RemoveData(ent, DamageVisualizerKeys.Displacement);
+            }
         }
 
         // TODO DAMAGE
@@ -84,7 +97,7 @@ public sealed partial class DamageableSystem : EntitySystem
 
         foreach (var (damageGroupId, _) in damagePerGroup)  //go through each group
         {
-            var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
+            var group = ProtoMan.Index<DamageGroupPrototype>(damageGroupId);  //get group
             foreach (var type in group.DamageTypes) //go through each type inside that group
             {
                 if (!damage.DamageDict.TryGetValue(type, out var damageValue) || damageValue == 0) //get value and make sure it isn't 0

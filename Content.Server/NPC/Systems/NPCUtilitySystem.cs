@@ -42,7 +42,6 @@ namespace Content.Server.NPC.Systems;
 /// </summary>
 public sealed partial class NPCUtilitySystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private HandsSystem _hands = default!;
@@ -60,9 +59,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     [Dependency] private TurretTargetSettingsSystem _turretTargetSettings = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedStealthSystem _stealth = default!;
-
-    private EntityQuery<PuddleComponent> _puddleQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<PuddleComponent> _puddleQuery = default!;
 
     private ObjectPool<HashSet<EntityUid>> _entPool =
         new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
@@ -71,13 +68,6 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private List<EntityUid> _entityList = new();
     private HashSet<Entity<IComponent>> _entitySet = new();
     private List<EntityPrototype.ComponentRegistryEntry> _compTypes = new();
-
-    public override void Initialize()
-    {
-        base.Initialize();
-        _puddleQuery = GetEntityQuery<PuddleComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
-    }
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -90,7 +80,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     {
         // TODO: PickHostilesop or whatever needs to juse be UtilityQueryOperator
 
-        var weh = _proto.Index<UtilityQueryPrototype>(proto);
+        var weh = ProtoMan.Index<UtilityQueryPrototype>(proto);
         var ents = _entPool.Get();
 
         foreach (var query in weh.Query)
@@ -161,7 +151,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             case InverseBoolCurve:
                 return conScore.Equals(0f) ? 1f : 0f;
             case PresetCurve presetCurve:
-                return GetScore(_proto.Index<UtilityCurvePresetPrototype>(presetCurve.Preset).Curve, conScore);
+                return GetScore(ProtoMan.Index<UtilityCurvePresetPrototype>(presetCurve.Preset).Curve, conScore);
             case QuadraticCurve quadraticCurve:
                 return Math.Clamp(quadraticCurve.Slope * MathF.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
             default:
@@ -429,7 +419,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
                 if (compQuery.Components.Count == 0)
                     return;
 
-                var mapPos = _transform.GetMapCoordinates(owner, xform: _xformQuery.GetComponent(owner));
+                var mapPos = _transform.GetMapCoordinates(owner, xform: Transform(owner));
                 _compTypes.Clear();
                 var i = -1;
                 EntityPrototype.ComponentRegistryEntry compZero = default!;
@@ -507,7 +497,7 @@ public sealed partial class NPCUtilitySystem : EntitySystem
     private void RecursiveAdd(EntityUid uid, HashSet<EntityUid> entities)
     {
         // TODO: Probably need a recursive struct enumerator on engine.
-        var xform = _xformQuery.GetComponent(uid);
+        var xform = Transform(uid);
         var enumerator = xform.ChildEnumerator;
         entities.Add(uid);
 

@@ -45,6 +45,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     [Dependency] private DeviceListSystem _deviceList = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     #region Device Network API
 
@@ -193,10 +194,9 @@ public sealed partial class AirAlarmSystem : EntitySystem
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
     {
-        var query = GetEntityQuery<DeviceNetworkComponent>();
         foreach (var device in args.OldDevices)
         {
-            if (!query.TryGetComponent(device, out var deviceNet))
+            if (!_deviceNetworkQuery.TryGetComponent(device, out var deviceNet))
             {
                 continue;
             }
