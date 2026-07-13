@@ -41,8 +41,8 @@
   - type: RequireProjectileTarget
 
 - type: entity
-  parent: BaseCrate
-  id: [ CrateGeneric, StructureHealthContainerWeak ]
+  parent: [ BaseCrate, StructureHealthContainerWeak ]
+  id: CrateGeneric
   categories: [ HideSpawnMenu ]
   components:
   - type: Icon

@@ -61,7 +61,7 @@
   - type: PlacementReplacement
     key: lights
 
-- type: entityBaseWallLight
+- type: entity
   parent: BaseWallLight
   id: AlwaysPoweredWallLight
   name: light

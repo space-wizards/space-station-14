@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  id: [ SeatBase, StructureHealthFurniture ]
+  parent: StructureHealthFurniture
+  id: SeatBase
   name: chair
   description: You sit in this. Either by will or force.
   placement:
