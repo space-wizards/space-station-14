@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Light.Components;
 using Content.Shared.Materials;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Shuttles.Systems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -58,7 +59,7 @@ namespace Content.Shared.Maps
         /// Effective mass of this tile for grid impacts.
         /// </summary>
         [DataField]
-        public float Mass = 800f;
+        public float Mass = SharedShuttleSystem.TileDensityMultiplier;
 
         /// <remarks>
         /// Legacy AF but nice to have.

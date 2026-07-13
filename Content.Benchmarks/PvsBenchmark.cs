@@ -97,7 +97,8 @@ public class PvsBenchmark
 
         // Repeatedly move players around so that they "explore" the map and see lots of entities.
         // This will populate their PVS data with out-of-view entities.
-        var rng = new Random(42);
+        var rng = new RobustRandom();
+        rng.SetSeed(42);
         ShufflePlayers(rng, 100);
 
         _pair.Server.PvsTick(_players);
@@ -107,7 +108,7 @@ public class PvsBenchmark
         _locations = ents.Select(x => _entMan.GetComponent<TransformComponent>(x).Coordinates).ToArray();
     }
 
-    private void ShufflePlayers(Random rng, int count)
+    private void ShufflePlayers(IRobustRandom rng, int count)
     {
         while (count > 0)
         {
@@ -116,7 +117,7 @@ public class PvsBenchmark
         }
     }
 
-    private void ShufflePlayers(Random rng)
+    private void ShufflePlayers(IRobustRandom rng)
     {
         _pair.Server.PvsTick(_players);
 

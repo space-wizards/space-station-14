@@ -50,7 +50,7 @@ public sealed partial class GasTankSystem : SharedGasTankSystem
             entity.Comp.CheckUser = false;
             if (Transform(entity).ParentUid != entity.Comp.User)
             {
-                DisconnectFromInternals(entity);
+                DisconnectFromInternals(entity, forced: true);
             }
         }
 

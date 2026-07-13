@@ -1,0 +1,31 @@
+- type: objectiveIssuer
+  id: Unknown
+  name: objective-issuer-unknown
+
+- type: objectiveIssuer
+  id: SpaceWizardsFederation
+  name: objective-issuer-swf
+
+- type: objectiveIssuer
+  id: TheSyndicate
+  name: objective-issuer-syndicate
+
+- type: objectiveIssuer
+  id: SpiderClan
+  name: objective-issuer-spiderclan
+
+- type: objectiveIssuer
+  id: Changeling
+  name: objective-issuer-changeling
+
+- type: objectiveIssuer
+  id: Paradox
+  name: objective-issuer-paradox
+
+- type: objectiveIssuer
+  id: SpaceDragon
+  name: objective-issuer-dragon
+
+- type: objectiveIssuer
+  id: Thief
+  name: objective-issuer-thief
