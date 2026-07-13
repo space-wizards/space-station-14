@@ -18,19 +18,12 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<TileReclaimerComponent, MapInitEvent>(OnMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnMapInit(Entity<TileReclaimerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextRecycle = _timing.CurTime;
@@ -68,7 +61,7 @@ public abstract partial class SharedTileReclaimerSystem : EntitySystem
         var entMatrix = _transform.GetWorldMatrix(ent.Owner);
         var box = entMatrix.TransformBox(ent.Comp1.RecyclingBox);
 
-        _mapManager.FindGridsIntersecting(mapPos.MapId, box, ref grids);
+        _mapSystem.FindGridsIntersecting(mapPos.MapId, box, ref grids);
 
         var shredded = false;
 
