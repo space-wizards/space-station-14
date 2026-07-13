@@ -157,7 +157,7 @@
   id: ChangelingObjectiveGroupEscape
   weights:
     ChangelingSurviveObjective: 0.5
-    ChangelingEscapeDepartmentObjective: 1
+    ChangelingEscapeDepartmentObjective: 1000000
     ChangelingEscapeIdentityObjective: 1.5
 
 - type: weightedRandom

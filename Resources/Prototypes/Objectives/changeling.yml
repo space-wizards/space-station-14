@@ -53,7 +53,7 @@
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
     filters:
-    - !type:HasRoleMindFilter
+    - !type:RoleCondition
       inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
       whitelist:
         components:
@@ -73,19 +73,17 @@
     title: objective-escape-department-title
   - type: ChangelingEscapeDepartmentCondition
   - type: PickRandomPerson
-    filters:
-    - !type:HasRoleMindFilter
-      inverted: true # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
-    - !type:ObjectiveTargetCondition
+    conditions:
+    - !type:RoleCondition # Do not roll changelings here. It will cause problems with weird job mindroles as they transform n stuff.
       inverted: true
       whitelist:
         components:
         - ChangelingRole
-    - !type:HasRoleMindFilter
+    - !type:RoleCondition
       whitelist:
         components:
         - JobRole # Our target has to be employed, obviously.
-    - !type:DifferentDepartmentMindFilter # I love spawning as a scientist and having to escape as a scientist
+    - !type:DifferentDepartmentCondition # I love spawning as a scientist and having to escape as a scientist
 
 - type: entity
   parent: [BaseChangelingObjective, BaseKillObjective]
