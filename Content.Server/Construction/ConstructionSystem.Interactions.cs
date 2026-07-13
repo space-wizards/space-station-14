@@ -129,28 +129,23 @@ namespace Content.Server.Construction
         /// <summary>
         /// Handling a successful edge traversal. Ensures the entity's node index, edge index, and pathfinding information are correct.
         /// </summary>
+        /// <remarks>
+        /// Only a True result may modify the state.
+        /// In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
+        /// In the case of validated, it should NEVER modify the state at all.
+        /// </remarks>
         private void ProcessSuccessfulEdgeResult(HandleResult result, int edgeIndex, ConstructionGraphNode node, EntityUid uid, ConstructionComponent construction)
         {
-            // Only a True result may modify the state.
-            // In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
-            // In the case of validated, it should NEVER modify the state at all.
-            if (result is not HandleResult.True)
+            if (result == HandleResult.DoAfter)
             {
-                if (result is HandleResult.DoAfter)
-                {
-                    construction.EdgeIndex = edgeIndex;
-                }
-
-                return;
+                construction.EdgeIndex = edgeIndex;
             }
-
-            // If we're not on the same edge as we were before, that means handling that edge changed the node.
-            if (construction.Node != node.Name)
-                return;
-
-            // If we're still in the same node, that means we entered the edge and it's still not done.
-            construction.EdgeIndex = edgeIndex;
-            UpdatePathfinding(uid, construction);
+            else if (result == HandleResult.True && construction.Node == node.Name)
+            {
+                // If we're still in the same node, that means we entered the edge and it's still not done.
+                construction.EdgeIndex = edgeIndex;
+                UpdatePathfinding(uid, construction);
+            }
         }
 
         /// <summary>
