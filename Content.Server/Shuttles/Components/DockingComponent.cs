@@ -21,13 +21,13 @@ public sealed partial class DockingComponent : SharedDockingComponent
     /// <summary>
     /// Color that gets shown on the radar screen.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Color RadarColor = Color.DarkViolet;
 
     /// <summary>
     /// Color that gets shown on the radar screen in DOCK tab when the dock is highlighted
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public Color HighlightedRadarColor = Color.Magenta;
 
     [ViewVariables]
