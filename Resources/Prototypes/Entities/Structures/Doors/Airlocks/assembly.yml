@@ -330,6 +330,9 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
     state: "assembly"
+  - type: Construction
+    graph: MiningAirlock
+    node: glassElectronics
 
 #Syndicate
 - type: entity
