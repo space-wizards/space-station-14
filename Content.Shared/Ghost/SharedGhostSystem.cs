@@ -13,10 +13,10 @@ namespace Content.Shared.Ghost
     /// System for the <see cref="GhostComponent"/>.
     /// Prevents ghosts from interacting when <see cref="GhostComponent.CanGhostInteract"/> is false.
     /// </summary>
-    public abstract class SharedGhostSystem : EntitySystem
+    public abstract partial class SharedGhostSystem : EntitySystem
     {
-        [Dependency] protected readonly SharedPopupSystem Popup = default!;
-        [Dependency] protected readonly IGameTiming _gameTiming = default!;
+        [Dependency] protected SharedPopupSystem Popup = default!;
+        [Dependency] protected IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {

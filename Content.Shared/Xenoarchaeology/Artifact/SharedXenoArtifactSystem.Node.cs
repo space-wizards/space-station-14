@@ -10,10 +10,10 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
-    [Dependency] private readonly EntityTableSystem _entityTable =  default!;
+    [Dependency] private EntityTableSystem _entityTable =  default!;
 
-    [Dependency] private readonly EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
-    [Dependency] private readonly EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
+    [Dependency] private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery = default!;
+    [Dependency] private EntityQuery<XenoArtifactNodeComponent> _nodeQuery = default!;
 
     private void InitializeNode()
     {
@@ -83,7 +83,7 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
     {
-        var triggerProto = PrototypeManager.Index(trigger);
+        var triggerProto = ProtoMan.Index(trigger);
         return CreateNode(ent, triggerProto, depth);
     }
 

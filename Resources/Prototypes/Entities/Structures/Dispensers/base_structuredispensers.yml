@@ -44,12 +44,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
@@ -61,6 +55,8 @@
     maxItemSize: Large
     grid:
     - 0,0,15,11
+  - type: UseDelay
+    delay: 0
   - type: ReagentDispenser
     beakerSlot:
       whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message

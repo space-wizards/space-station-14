@@ -15,15 +15,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.TechnologyDisk.Systems;
 
-public sealed class TechnologyDiskSystem : EntitySystem
+public sealed partial class TechnologyDiskSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedResearchSystem _research = default!;
-    [Dependency] private readonly SharedLatheSystem _lathe = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedResearchSystem _research = default!;
+    [Dependency] private SharedLatheSystem _lathe = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private NameModifierSystem _nameModifier = default!;
 
     public override void Initialize()
     {
@@ -58,14 +57,14 @@ public sealed class TechnologyDiskSystem : EntitySystem
         }
         else
         {
-            var weightedRandom = _protoMan.Index(ent.Comp.TierWeightPrototype);
+            var weightedRandom = ProtoMan.Index(ent.Comp.TierWeightPrototype);
             tier = int.Parse(weightedRandom.Pick(_random));
             ent.Comp.Tier = tier;
         }
 
         // get a list of every distinct recipe in all the technologies.
         var bundles = new HashSet<(ProtoId<LatheRecipePrototype> recipe, ProtoId<TechDisciplinePrototype> discipline)>();
-        foreach (var tech in _protoMan.EnumeratePrototypes<TechnologyPrototype>())
+        foreach (var tech in ProtoMan.EnumeratePrototypes<TechnologyPrototype>())
         {
             if (tech.Tier != tier)
                 continue;
@@ -118,7 +117,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     /// </summary>
     private void TrySetDisciplineVisuals(Entity<TechnologyDiskComponent> ent)
     {
-        if (!_protoMan.Resolve(ent.Comp.Discipline, out var discipline))
+        if (!ProtoMan.Resolve(ent.Comp.Discipline, out var discipline))
             return;
 
         _appearance.SetData(ent.Owner, TechDiskVisuals.Discipline, discipline.ID);
@@ -147,7 +146,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
     private void OnExamine(Entity<TechnologyDiskComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp is { Tier: not null, Discipline: not null }
-            && _protoMan.Resolve(ent.Comp.Discipline, out var disciplineProto))
+            && ProtoMan.Resolve(ent.Comp.Discipline, out var disciplineProto))
         {
             var desc = Loc.GetString("tech-disk-examine-desc",
                 ("tier", ent.Comp.Tier),
@@ -164,7 +163,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var message = Loc.GetString("tech-disk-examine-none");
         if (ent.Comp.Recipes != null && ent.Comp.Recipes.Count > 0)
         {
-            var prototype = _protoMan.Index(ent.Comp.Recipes[0]);
+            var prototype = ProtoMan.Index(ent.Comp.Recipes[0]);
             message = Loc.GetString("tech-disk-examine", ("result", _lathe.GetRecipeName(prototype)));
 
             if (ent.Comp.Recipes.Count > 1) //idk how to do this well. sue me.
@@ -191,7 +190,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             foreach (var recipe in entity.Comp.Recipes)
             {
-                var proto = _protoMan.Index(recipe);
+                var proto = ProtoMan.Index(recipe);
                 args.AddModifier("tech-disk-name-format", extraArgs: ("technology", _lathe.GetRecipeName(proto)));
             }
         }
