@@ -14,16 +14,16 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MagicMirror;
 
-public sealed class MagicMirrorSystem : EntitySystem
+public sealed partial class MagicMirrorSystem : EntitySystem
 {
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
     private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
 
@@ -59,7 +59,7 @@ public sealed class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(
                 ent.Comp.Target == args.Actor
                     ? Loc.GetString("magic-mirror-blocked-by-hat-self")
-                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(args.Actor, EntityManager))),
+                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(target, EntityManager))),
                 args.Actor,
                 args.Actor,
                 PopupType.Medium);
@@ -68,7 +68,7 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         if (ent.Comp.DoAfter.HasValue)
         {
-            _doAfter.Cancel(target, ent.Comp.DoAfter.Value);
+            _doAfter.Cancel(args.Actor, ent.Comp.DoAfter.Value);
             ent.Comp.DoAfter = null;
         }
 
@@ -99,8 +99,8 @@ public sealed class MagicMirrorSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(args.Actor, EntityManager))), target, target, PopupType.Medium);
         }
 
-        ent.Comp.DoAfter = doAfterId?.Index;
         _audio.PlayPredicted(ent.Comp.ChangeHairSound, ent, args.Actor);
+        ent.Comp.DoAfter = doAfterId?.Index;
     }
 
     private void OnSelectSlotDoAfter(Entity<MagicMirrorComponent> ent, ref MagicMirrorSelectDoAfterEvent args)
@@ -112,6 +112,9 @@ public sealed class MagicMirrorSystem : EntitySystem
 
         if (ent.Comp.Target != args.Target)
             return;
+
+        // what plays the audio
+        _audio.PlayPredicted(ent.Comp.ChangeHairSound, args.Target.Value, args.User);
 
         foreach (var (organ, markings) in args.Markings)
         {

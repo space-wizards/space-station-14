@@ -13,8 +13,9 @@
     anchored: true
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_stopped_cw
+    state: conveyor_stopped
     drawdepth: HighFloorObjects
+  - type: SyncSprite
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Physics
@@ -39,23 +40,24 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Reverse
-      - Forward
-      - Off
+    - Reverse
+    - Forward
+    - Off
   - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.ConveyorVisuals.State:
         enum.ConveyorState.Off:
-          Off: { state: conveyor_stopped_cw }
-          Forward: { state: conveyor_started_cw }
-          Reverse: { state: conveyor_started_cw_r }
+          Off: { state: conveyor_stopped }
+          Forward: { state: conveyor_started }
+          Reverse: { state: conveyor_started_r }
   - type: Construction
     graph: ConveyorGraph
     node: entity
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -69,19 +71,28 @@
 - type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
-  name: conveyor belt
-  suffix: assembly
+  name: conveyor belt assembly
   description: A conveyor belt assembly. Used to construct a conveyor belt.
   components:
-  - type: Tag
-    tags:
-    - ConveyorAssembly
   - type: Sprite
     sprite: Structures/conveyor.rsi
-    state: conveyor_loose
+    layers:
+    - state: conveyor_loose
+      map: [ "base" ]
+  - type: Item
+    size: Normal
   - type: Construction
     graph: ConveyorGraph
     node: item
-  - type: StaticPrice
+  - type: StackPrice
     price: 40
-
+  - type: Stack
+    stackType: ConveyorBeltStack
+    count: 1
+    baseLayer: base
+    layerStates:
+    - conveyor_loose # 0-item state
+    - conveyor_loose
+    - conveyor_loose_2
+    - conveyor_loose_3
+  - type: Appearance

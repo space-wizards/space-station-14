@@ -20,10 +20,10 @@ public sealed class MarkingTestAttribute : TestAttribute, IWrapTestMethod
     {
         public override TestResult Execute(TestExecutionContext context)
         {
-            var fixture = inner.Test.Fixture as MarkingsViewModelTests;
+            var fixture = innerCommand.Test.Fixture as MarkingsViewModelTests;
             fixture!.Client.WaitAssertion(() =>
                 {
-                    context.CurrentResult = inner.Execute(context);
+                    context.CurrentResult = innerCommand.Execute(context);
                 })
                 .Wait();
             return context.CurrentResult;
@@ -59,7 +59,7 @@ public sealed class MarkingsViewModelTests
     [SetUp]
     public async Task SetUp()
     {
-        Pair = await PoolManager.GetServerClient();
+        Pair = await PoolManager.GetServerClient(testContext: new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
         await Client.WaitPost(() =>
         {
             Model = new MarkingsViewModel();
