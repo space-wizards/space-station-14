@@ -30,9 +30,8 @@ job-description-scientist = Research alien artifacts and supernatural anomalies 
 # Security
 job-description-cadet = Learn the basics of investigating crime and arresting criminals.
 job-description-detective = Investigate crime scenes using forensic tools and ensure that the guilty party is found.
-job-description-security = Uphold the law, protect the station's crew, arrest criminals, and ensure that the station does not fall into disarray.
+job-description-security = Uphold the law, arrest criminals, and ensure that the station does not fall into disarray.
 job-description-warden = Guard the Security department, manage the armory, and ensure that all prisoners are properly charged and serve their sentence without incident.
-
 
 # Service
 job-description-bartender = Serve drinks and keep the bar lively.
@@ -50,16 +49,15 @@ job-description-reporter = Inform and entertain the station's crew with wireless
 job-description-serviceworker = Assist the bar and kitchen with providing sustenance to the crew.
 
 # Silicon
-job-description-borg = Use your robotic chassis to fulfill the terms of your installed lawset.
-job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices to fulfill the terms of your installed lawset.
+job-description-borg = Use your robotic chassis to perform a wide variety of specialized tasks.
+job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
 
 # Misc.
-job-description-brigmedic = Fight in the rear of the security service, for the lives of your comrades!
 job-description-centcommoff = Act as liason to the newest state-of-the-art space station in Nanotrasen's fleet.
-job-description-ertchaplain = Ensure that the station's crew have their last rites attended to.
+job-description-ertchaplain = Ensure that the station's crew have their last rites performed.
 job-description-ertengineer = Ensure that the station has power and clean air.
 job-description-ertjanitor = Ensure that the station is thoroughly cleaned and sterilized.
 job-description-ertleader = Lead the Emergency Response Team to protect and preserve Nanotrasen assets.
 job-description-ertmedic = Ensure that the station's crew have their injuries tended to.
 job-description-ertsecurity = Ensure that any threats to the station are eliminated.
-job-description-visitor = Enjoy your visit to the station.
+job-description-visitor = Enjoy your visit to the station!
