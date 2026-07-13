@@ -311,7 +311,10 @@ public sealed partial class ZombieSystem
         {
             //yet more hardcoding. Visit zombie.ftl for more information.
             var ghostRole = EnsureComp<GhostRoleComponent>(target);
-            EnsureComp<GhostTakeoverAvailableComponent>(target);
+            // doing these makes it so that player ghost roles wont be visible in the ghost role menu until they /ghost
+            if (!hasMind)
+                EnsureComp<GhostTakeoverAvailableComponent>(target);
+
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
