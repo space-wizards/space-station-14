@@ -6,6 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Overlays;
+
 /// <summary>
 /// Creates overlay image placed over user screen
 /// </summary>
