@@ -842,7 +842,6 @@ CratePartsT3T4: null
 CratePartsT4: null
 
 # 2026-07-12
-#Structures rebalance part 1
 WindoorSecure: Windoor
 WindoorSecurePlasma: WindoorPlasma
 WindoorSecureUranium: WindoorUranium
@@ -885,3 +884,6 @@ UraniumWindoorSecureSyndicateLocked: UraniumWindoorSyndicateLocked
 WindoorSecureNukeopLocked: WindoorNukeopLocked
 PlasmaWindoorSecureNukeopLocked: PlasmaWindoorNukeopLocked
 UraniumWindoorSecureNukeopLocked: UraniumWindoorNukeopLocked
+WindoorAssemblySecure: WindoorAssembly
+WindoorAssemblySecurePlasma: WindoorAssemblyPlasma
+WindoorAssemblySecureUranium: WindoorAssemblyUranium
