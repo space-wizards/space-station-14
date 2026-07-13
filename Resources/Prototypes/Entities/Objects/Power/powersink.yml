@@ -1,6 +1,6 @@
 - type: entity
   id: PowerSink
-  parent: [BaseMachine, BaseSyndicateContraband]
+  parent: [BaseMachine, BaseSyndicateContraband, BaseMachineDestructible]
   name: power sink
   description: Drains immense amounts of electricity from the grid.
   components:
@@ -50,3 +50,11 @@
       location: powersink
     - type: StaticPrice
       price: 3000
+    - type: Destructible
+      thresholds:
+      - trigger: !type:DamageTrigger
+          damage: 175
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak

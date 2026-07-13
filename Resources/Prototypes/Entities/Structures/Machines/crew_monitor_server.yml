@@ -1,6 +1,6 @@
 - type: entity
   id: CrewMonitoringServer
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
   name: crew monitoring server
   description: Receives and relays the status of all active suit sensors on the station.
   components:
@@ -46,18 +46,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 250
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 2
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
   - type: Appearance
   - type: GenericVisualizer
     visuals:

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
   id: SalvageMagnet
   name: salvage magnet
   description: Pulls in salvage.
@@ -23,6 +23,16 @@
     - state: salvage-magnet-o4
       map: ["chargeState"]
       shader: unshaded
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
   - type: ActivatableUI
     key: enum.SalvageMagnetUiKey.Key
   - type: ActivatableUIRequiresPower

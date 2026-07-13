@@ -22,20 +22,23 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible # todo
+
+- type: entity
+  abstract: true
+  parent: StructureHealthMachine
+  id: BaseMachineDestructible
+  components:
+  - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: !type:DamageTrigger
+        damage: 175
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        offset: 0
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
 
 - type: entity
   abstract: true
@@ -69,7 +72,33 @@
 
 - type: entity
   abstract: true
+  parent: StructureHealthMachine
+  id: BaseConstructibleMachineDestructible
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+
+- type: entity
+  abstract: true
   parent: ConstructibleMachine
   id: SmallConstructibleMachine
   components:
     - type: RequireProjectileTarget
+
+- type: entity
+  abstract: true
+  parent: StructureHealthMachineWeak
+  id: BaseSmallConstructibleMachineDestructible
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
