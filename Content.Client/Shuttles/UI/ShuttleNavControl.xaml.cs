@@ -294,11 +294,16 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
     private void DrawDocks(DrawingHandleScreen handle, EntityUid uid, Matrix3x2 gridToView)
     {
-        const float DockScale = 0.6f;
+        const float dockScale = 0.6f;
+        var topLeft = new Vector2(-dockScale, -dockScale);
+        var topRight = new Vector2(dockScale, -dockScale);
+        var bottomRight = new Vector2(dockScale, dockScale);
+        var bottomLeft = new Vector2(-dockScale, dockScale);
+
         var nent = EntManager.GetNetEntity(uid);
 
         const float sqrt2 = 1.41421356f;
-        const float dockRadius = DockScale * sqrt2;
+        const float dockRadius = dockScale * sqrt2;
         // Worst-case bounds used to cull a dock:
         Box2 viewBounds = new Box2(
             -dockRadius * UIScale,
@@ -308,6 +313,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         if (_docks.TryGetValue(nent, out var docks))
         {
+            Span<Vector2> verts = new Vector2[4];
             foreach (var state in docks)
             {
                 var position = state.Coordinates.Position;
@@ -319,6 +325,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 }
 
                 var color = Color.ToSrgb(state.HighlightedColor);
+
+                verts[0] = Vector2.Transform(position + topLeft, gridToView);
+                verts[1] = Vector2.Transform(position + topRight, gridToView);
+                verts[2] = Vector2.Transform(position + bottomRight, gridToView);
+                verts[3] = Vector2.Transform(position + bottomLeft, gridToView);
 
                 if (state.HighlightedColor == Color.LightYellow && !ShowCargoDocks)
                 {
