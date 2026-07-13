@@ -9,6 +9,11 @@
             <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}" HorizontalAlignment="Right"
                     StyleClasses="OpenRight"/>
         </BoxContainer>
-
+        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True"/>
+        <BoxContainer Orientation="Horizontal">
+            <Control HorizontalExpand="True"/>
+            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Right"
+                    StyleClasses="OpenRight"/>
+        </BoxContainer>
     </BoxContainer>
 </DefaultWindow>
