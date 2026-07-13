@@ -22,8 +22,10 @@ public sealed partial class StunbatonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
-        if (!_itemToggle.IsActivated(entity.Owner) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse))
-            args.Cancelled = true;
+        if (_itemToggle.IsActivated(entity.Owner) && _battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse))
+            return;
+
+        args.Cancelled = true;
     }
 
     /// <summary>
@@ -54,10 +56,10 @@ public sealed partial class StunbatonSystem : EntitySystem
         if (_battery.GetCharge(entity.Owner) >= entity.Comp.EnergyPerUse)
             return;
 
+        args.Cancelled = true;
+
         if (args.User != null)
             _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), args.User.Value);
-
-        args.Cancelled = true;
     }
 
     /// <summary>
@@ -66,7 +68,9 @@ public sealed partial class StunbatonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
     {
-        if (_battery.GetCharge(entity.Owner) < entity.Comp.EnergyPerUse)
-            _itemToggle.TryDeactivate(entity.Owner);
+        if (_battery.GetCharge(entity.Owner) >= entity.Comp.EnergyPerUse)
+            return;
+
+        _itemToggle.TryDeactivate(entity.Owner);
     }
 }
