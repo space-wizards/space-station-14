@@ -52,15 +52,15 @@ public sealed partial class RiggableSystem : EntitySystem
         var quantity = solution.GetReagentQuantity(entity.Comp.Reagent.Reagent);
         entity.Comp.IsRigged = quantity >= entity.Comp.Reagent.Quantity;
 
-        if (entity.Comp.IsRigged && !wasRigged)
-        {
-            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity)} has been rigged up to explode when used.");
+        if (wasRigged || !entity.Comp.IsRigged)
+            return;
 
-            if (TryComp<ItemToggleComponent>(entity, out var toggleComp) && toggleComp.Activated)
-            {
-                Explode(entity, _battery.GetCharge(entity.Owner));
-            }
-        }
+        _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity)} has been rigged up to explode when used.");
+
+        if (!TryComp<ItemToggleComponent>(entity, out var toggleComp) || !toggleComp.Activated)
+            return;
+
+        Explode(entity, _battery.GetCharge(entity.Owner));
     }
 
     [SubscribeLocalEvent]
@@ -82,10 +82,10 @@ public sealed partial class RiggableSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnToggled(Entity<RiggableComponent> entity, ref ItemToggledEvent args)
     {
-        if (args.Activated && entity.Comp.IsRigged)
-        {
-            Explode(entity, _battery.GetCharge(entity.Owner), args.User);
-        }
+        if (!args.Activated || !entity.Comp.IsRigged)
+            return;
+
+        Explode(entity, _battery.GetCharge(entity.Owner), args.User);
     }
 
     public void Explode(Entity<RiggableComponent> entity, float charge, EntityUid? cause = null)

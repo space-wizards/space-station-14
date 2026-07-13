@@ -23,9 +23,7 @@ public sealed partial class StunbatonSystem : EntitySystem
     private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
     {
         if (!_itemToggle.IsActivated(entity.Owner) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse))
-        {
             args.Cancelled = true;
-        }
     }
 
     /// <summary>
@@ -39,11 +37,11 @@ public sealed partial class StunbatonSystem : EntitySystem
         : Loc.GetString("comp-stunbaton-examined-off");
         args.PushMarkup(onMsg);
 
-        if (TryComp<BatteryComponent>(entity, out var battery))
-        {
-            var count = _battery.GetRemainingUses((entity, battery), entity.Comp.EnergyPerUse);
-            args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
-        }
+        if (!TryComp<BatteryComponent>(entity, out var battery))
+            return;
+
+        var count = _battery.GetRemainingUses((entity, battery), entity.Comp.EnergyPerUse);
+        args.PushMarkup(Loc.GetString("melee-battery-examine", ("color", "yellow"), ("count", count)));
     }
 
     /// <summary>
@@ -53,14 +51,13 @@ public sealed partial class StunbatonSystem : EntitySystem
     [SubscribeLocalEvent]
     private void TryTurnOn(Entity<StunbatonComponent> entity, ref ItemToggleActivateAttemptEvent args)
     {
-        if (_battery.GetCharge(entity.Owner) < entity.Comp.EnergyPerUse)
-        {
-            args.Cancelled = true;
-            if (args.User != null)
-            {
-                _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), args.User.Value);
-            }
-        }
+        if (_battery.GetCharge(entity.Owner) >= entity.Comp.EnergyPerUse)
+            return;
+
+        if (args.User != null)
+            _popup.PopupEntity(Loc.GetString("stunbaton-component-low-charge"), args.User.Value);
+
+        args.Cancelled = true;
     }
 
     /// <summary>
@@ -70,8 +67,6 @@ public sealed partial class StunbatonSystem : EntitySystem
     private void OnChargeChanged(Entity<StunbatonComponent> entity, ref ChargeChangedEvent args)
     {
         if (_battery.GetCharge(entity.Owner) < entity.Comp.EnergyPerUse)
-        {
             _itemToggle.TryDeactivate(entity.Owner);
-        }
     }
 }
