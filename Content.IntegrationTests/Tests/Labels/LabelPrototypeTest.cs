@@ -4,7 +4,6 @@ using Content.Shared.Labels.Components;
 
 namespace Content.IntegrationTests.Tests.Labels;
 
-[TestFixture]
 public sealed class LabelPrototypeTest : GameTest
 {
     private static string[] _entitiesWithLabel = GameDataScrounger.EntitiesWithComponent("Label");
