@@ -76,3 +76,9 @@ humanoid-profile-editor-voice-masculine = Masculine
 humanoid-profile-editor-voice-feminine = Feminine
 humanoid-profile-editor-voice-neutral = Neutral
 humanoid-profile-editor-voice-none = Unnamed Voice
+
+# Signature
+humanoid-profile-signature-saved-label = Saved signature:
+humanoid-profile-signature-brush-write = Pen brush
+humanoid-profile-signature-brush-erase = Eraser
+humanoid-profile-editor-other-tab = Other

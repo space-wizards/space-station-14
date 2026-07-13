@@ -24,4 +24,5 @@ public interface IAdminLogManager : ISharedAdminLogManager
     IAsyncEnumerable<JsonDocument> CurrentRoundJson(LogFilter? filter = null);
     Task<Round> CurrentRound();
     Task<int> CountLogs(int round);
+    Task<JsonDocument?> GetJsonByLogId(int logId, DateTime time);
 }

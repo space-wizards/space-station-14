@@ -1,0 +1,8 @@
+<controls:SignatureWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Signature"
+    MinSize="300 300">
+
+    <controls:SignatureControl Name="Signature" Access="Public" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+</controls:SignatureWindow>

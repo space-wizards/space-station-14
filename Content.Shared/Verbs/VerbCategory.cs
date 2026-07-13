@@ -88,5 +88,8 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Adjust =
             new("verb-categories-adjust", "/Textures/Interface/VerbIcons/screwdriver.png");
+
+        public static readonly VerbCategory PenWriteSize = new("verb-categories-pen-write-size", null);
+        public static readonly VerbCategory PenEraseSize = new("verb-categories-pen-erase-size", null);
     }
 }

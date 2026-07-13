@@ -4,6 +4,7 @@
   id: Pen
   description: A dark ink pen.
   components:
+  - type: Pen
   - type: Sprite
     sprite: Objects/Misc/pens.rsi
     state: pen

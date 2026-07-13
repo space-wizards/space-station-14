@@ -29,6 +29,8 @@ verb-categories-select-type = Select Type
 verb-categories-fax = Set Destination
 verb-categories-power-level = Power Level
 verb-categories-adjust = Adjust
+verb-categories-pen-write-size = Draw size
+verb-categories-pen-erase-size = Erase size
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

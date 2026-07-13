@@ -3,6 +3,7 @@
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+         xmlns:signature="clr-namespace:Content.Client.Signature"
          xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
          HorizontalExpand="True">
         <!-- Left side -->
@@ -148,6 +149,34 @@
                 <BoxContainer Name="MarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->
                     <humanoid:MarkingPicker Name="Markings" HorizontalExpand="True" VerticalExpand="True" />
+                </BoxContainer>
+                <BoxContainer Name="OtherContainer" Orientation="Vertical" Margin="10">
+                    <BoxContainer Name="SavedSignatureContainer" Orientation="Horizontal" Margin="10">
+                        <RichTextLabel Text="{Loc 'humanoid-profile-signature-saved-label'}" Margin="0 0 20 0"/>
+                        <BoxContainer>
+                            <BoxContainer Orientation="Horizontal">
+                                <BoxContainer Orientation="Vertical" Margin="0 0 20 0">
+                                    <Label Text="{Loc 'humanoid-profile-signature-brush-write'}" HorizontalAlignment="Center"/>
+                                    <ItemList Name="BrushWriteSizesList" SetSize="140 80" Margin="0 0 0 20"/>
+                                </BoxContainer>
+                                <BoxContainer Orientation="Vertical">
+                                    <Label Text="{Loc 'humanoid-profile-signature-brush-erase'}" HorizontalAlignment="Center"/>
+                                    <ItemList Name="BrushEraseSizesList" SetSize="140 80"/>
+                                </BoxContainer>
+
+                            </BoxContainer>
+                            <signature:SignatureControl Name="Signature"
+                                                        SetSize="250 100"
+                                                        CanvasSize="250 100"
+                                                        Access="Public"
+                                                        MouseFilter="Stop"
+                                                        HorizontalExpand="True"
+                                                        VerticalExpand="True"
+                                                        Margin="20 0 0 0"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Right"/>
+                        </BoxContainer>
+                    </BoxContainer>
                 </BoxContainer>
             </TabContainer>
         </BoxContainer>

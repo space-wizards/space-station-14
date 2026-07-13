@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
+using Content.Server.Signature;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
@@ -240,6 +241,9 @@ namespace Content.Server.Database
 
             profile.Slot = slot;
             profile.PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable;
+
+            if (humanoid.SignatureData != null)
+                profile.SignatureData = SignatureSerializer.Serialize(humanoid.SignatureData);
 
             profile.Jobs.Clear();
             profile.Jobs.AddRange(
@@ -1001,6 +1005,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return await db.DbContext.AdminLog.CountAsync(log => log.RoundId == round);
         }
 
+        public async Task<JsonDocument?> GetJsonByLogId(int logId, DateTime time)
+        {
+            await using var db = await GetDb();
+            var log = await db.DbContext.AdminLog.Where(log => log.Date == time).FirstOrDefaultAsync(x => x.Id == logId);
+
+            return log?.Json;
+        }
         #endregion
 
         #region Whitelist

@@ -1173,6 +1173,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("sex");
 
+                    b.Property<string>("SignatureData")
+                        .HasColumnType("text")
+                        .HasColumnName("signature_data");
+
                     b.Property<string>("SkinColor")
                         .IsRequired()
                         .HasColumnType("text")

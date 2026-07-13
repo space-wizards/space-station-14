@@ -21,3 +21,8 @@ admin-logs-include-non-player = Include Non-players
 admin-logs-search-logs-placeholder = Search Logs
 admin-logs-refresh = Refresh
 admin-logs-next = Next
+
+# Signature
+admin-logs-signature-show-button-label = Show signature
+admin-logs-signature-popup-no-record-in-db = No record in the database, or it is still being added!
+admin-logs-signature-popup-cant-find-signature = This signature does not exist!

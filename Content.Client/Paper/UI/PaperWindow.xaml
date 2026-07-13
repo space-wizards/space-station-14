@@ -1,7 +1,8 @@
 <paper:PaperWindow xmlns="https://spacestation14.io"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI"
+    xmlns:signature="clr-namespace:Content.Client.Signature"
     MouseFilter="Stop" Resizable="True" MinSize="150 150"
-    SetSize="510 660"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
+    SetSize="560 660"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
 
     <BoxContainer Name="ContentsRoot" Orientation="Vertical">
         <PanelContainer StyleClasses="BackgroundPanel" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
@@ -23,6 +24,21 @@
                             <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
                         </BoxContainer>
                         <TextureButton Name="FooterImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
+                        <BoxContainer Name="SignatureContainer" Margin="0 0 10 10" Access="Public" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label Text="{Loc 'paper-ui-signature-label'}" Modulate="Black" HorizontalAlignment="Left"/>
+                            <signature:SignatureControl Name="Signature"
+                                                        SetSize="250 100"
+                                                        CanvasSize="250 100"
+                                                        Access="Public"
+                                                        MouseFilter="Stop"
+                                                        HorizontalExpand="True"
+                                                        VerticalExpand="True"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Right"/>
+                            <BoxContainer Orientation="Vertical" Access="Public" Name="SignatureSettingsContainer">
+                                <Button Text="{Loc 'paper-ui-signature-load-from-profile-label'}" StyleClasses="OptionButton" Name="LoadSignatureButton" SetSize="128 32"/>
+                            </BoxContainer>
+                        </BoxContainer>
                     </BoxContainer>
                     <paper:StampCollection Name="StampDisplay" VerticalAlignment="Bottom" Margin="6"/>
 

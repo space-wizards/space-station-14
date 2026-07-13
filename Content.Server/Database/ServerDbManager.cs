@@ -219,6 +219,7 @@ namespace Content.Server.Database
         IAsyncEnumerable<SharedAdminLog> GetAdminLogs(LogFilter? filter = null);
         IAsyncEnumerable<JsonDocument> GetAdminLogsJson(LogFilter? filter = null);
         Task<int> CountAdminLogs(int round);
+        Task<JsonDocument?> GetJsonByLogId(int logId, DateTime time);
 
         #endregion
 
@@ -763,6 +764,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.CountAdminLogs(round));
+        }
+
+        public Task<JsonDocument?> GetJsonByLogId(int logId, DateTime time)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetJsonByLogId(logId, time));
         }
 
         public Task<bool> GetWhitelistStatusAsync(NetUserId player)

@@ -19,3 +19,7 @@ paper-ui-fill-level = {$currentLength}/{$maxLength}
 paper-ui-save-button = Save ({$keybind})
 
 paper-tamper-proof-modified-message = This page was written using tamper-proof ink.
+
+# Signature
+paper-ui-signature-label = Signature:
+paper-ui-signature-load-from-profile-label = From profile

@@ -633,4 +633,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     {
         return _db.CountAdminLogs(round);
     }
+
+    public Task<JsonDocument?> GetJsonByLogId(int logId, DateTime time)
+    {
+        return _db.GetJsonByLogId(logId, time);
+    }
 }

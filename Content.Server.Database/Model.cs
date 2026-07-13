@@ -347,6 +347,7 @@ namespace Content.Server.Database
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
         public List<Trait> Traits { get; } = new();
+        public string? SignatureData { get; set; }
 
         public List<ProfileRoleLoadout> Loadouts { get; } = new();
 

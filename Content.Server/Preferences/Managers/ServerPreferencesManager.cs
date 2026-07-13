@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Afk;
 using Content.Server.Database;
+using Content.Server.Signature;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
@@ -176,6 +177,8 @@ namespace Content.Server.Preferences.Managers
                 loadouts[role.RoleName] = loadout;
             }
 
+            var signatureData = SignatureSerializer.Deserialize(profile.SignatureData);
+
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.FlavorText,
@@ -195,7 +198,8 @@ namespace Content.Server.Preferences.Managers
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
-                loadouts
+                loadouts,
+                signatureData
             );
         }
 

@@ -9,6 +9,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Signature;
 using Content.Shared.Speech.Components;
 using Content.Shared.Traits;
 using Robust.Shared.Collections;
@@ -108,6 +109,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public SpawnPriorityPreference SpawnPriority { get; private set; } = SpawnPriorityPreference.None;
 
+        [DataField]
+        public SignatureData? SignatureData { get; private set; }
+
         /// <summary>
         /// <see cref="_jobPriorities"/>
         /// </summary>
@@ -144,7 +148,8 @@ namespace Content.Shared.Preferences
             PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
-            Dictionary<string, RoleLoadout> loadouts)
+            Dictionary<string, RoleLoadout> loadouts,
+            SignatureData? signatureData = null)
         {
             Name = name;
             FlavorText = flavortext;
@@ -160,6 +165,7 @@ namespace Content.Shared.Preferences
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
+            SignatureData = signatureData;
 
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
@@ -191,7 +197,8 @@ namespace Content.Shared.Preferences
                 other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
-                new Dictionary<string, RoleLoadout>(other.Loadouts))
+                new Dictionary<string, RoleLoadout>(other.Loadouts),
+                other.SignatureData?.Clone())
         {
         }
 
@@ -600,6 +607,11 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile WithSignatureData(SignatureData signatureData)
+        {
+            return new HumanoidCharacterProfile(this) { SignatureData = signatureData };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
@@ -617,6 +629,8 @@ namespace Content.Shared.Preferences
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
+            if (SignatureData != null && !SignatureData.Equals(other.SignatureData)) return false;
+            if (other.SignatureData != null && !other.SignatureData.Equals(SignatureData)) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
@@ -884,6 +898,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add((int)PreferenceUnavailable);
+            hashCode.Add(SignatureData?.GetHashCode() ?? 0);
             return hashCode.ToHashCode();
         }
 
