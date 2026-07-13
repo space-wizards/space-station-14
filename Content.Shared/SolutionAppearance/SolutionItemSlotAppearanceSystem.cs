@@ -17,16 +17,7 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<SolutionAppearanceComponent, SolutionChangedEvent>(OnSolutionContainerChanged);
-        SubscribeLocalEvent<SolutionAppearanceComponent, EntGotInsertedIntoContainerMessage>(OnEntGotInsertedIntoContainer);
-        SubscribeLocalEvent<SolutionAppearanceComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
-        SubscribeLocalEvent<SolutionAppearanceComponent, ComponentStartup>(OnStartup);
-    }
-
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<SolutionAppearanceComponent> ent, ref ComponentStartup args)
     {
         if (_container.TryGetContainingContainer(ent.Owner, out var container))
@@ -36,12 +27,14 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnEntGotInsertedIntoContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         ent.Comp.CachedContainer = args.Container;
         UpdateAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnEntGotRemovedFromContainer(Entity<SolutionAppearanceComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         ent.Comp.CachedContainer = null;
@@ -56,6 +49,7 @@ public sealed partial class SolutionItemSlotAppearanceSystem : EntitySystem
         _appearance.SetData(args.Container.Owner, SolutionAppearanceRelayedVisuals.HasRelay, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnSolutionContainerChanged(Entity<SolutionAppearanceComponent> ent, ref SolutionChangedEvent args)
     {
         UpdateAppearance(ent, args.Solution);
