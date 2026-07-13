@@ -140,6 +140,7 @@ namespace Content.Server.Construction
                 {
                     construction.EdgeIndex = edgeIndex;
                 }
+                return;
             }
 
             // If we're not on the same edge as we were before, that means handling that edge changed the node.
