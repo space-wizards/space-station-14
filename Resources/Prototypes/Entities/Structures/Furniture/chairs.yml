@@ -1,7 +1,7 @@
 - type: entity
-  name: chair
-  id: SeatBase
   abstract: true
+  id: [ SeatBase, StructureHealthFurniture ]
+  name: chair
   description: You sit in this. Either by will or force.
   placement:
     mode: PlaceFree
@@ -29,19 +29,6 @@
   - type: Pullable
   - type: Damageable
     damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: StaticPrice
     price: 50
 
@@ -209,10 +196,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -266,18 +251,11 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Voice/Human/womanlaugh.ogg
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          MaterialWoodPlank:
-            min: 1
-            max: 1
   - type: Construction
     graph: RitualSeat
     node: chairCursed
@@ -302,10 +280,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -382,21 +358,17 @@
     node: stoolCard
   - type: Damageable
     damageModifierSet: Card
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 30
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 - type: entity
   name: wooden bench
@@ -413,10 +385,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy

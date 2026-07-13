@@ -196,10 +196,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

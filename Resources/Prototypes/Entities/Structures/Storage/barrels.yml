@@ -1,5 +1,5 @@
 - type: entity
-  parent: StorageTank
+  parent: [StorageTankIndestructible, StructureHealthContainerFlimsy]
   id: BaseBarrelChem
   abstract: true
   name: chemical barrel
@@ -31,8 +31,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: PhysicalComposition
     materialComposition:
       Steel: 3000 # 30 sheets, 1 stack

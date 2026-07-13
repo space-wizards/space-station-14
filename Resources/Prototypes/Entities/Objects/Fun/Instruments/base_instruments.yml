@@ -24,7 +24,7 @@
 #These are for instruments that are larger, can't be picked up, or have collision
 - type: entity
   abstract: true
-  parent: [ BaseStructureDynamic, BaseDestructibleStructure ]
+  parent: [ BaseStructureDynamic, StructureHealthFurnitureStrong ]
   id: BasePlaceableInstrument
   name: baseinstrument
   components:

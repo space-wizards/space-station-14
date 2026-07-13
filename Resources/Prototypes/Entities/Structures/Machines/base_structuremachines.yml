@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseDestructibleStructure, BaseStructure ]
+  parent: BaseStructure
   id: BaseMachine
   components:
   - type: Animateable
@@ -22,6 +22,20 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible # todo
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
 
 - type: entity
   abstract: true
