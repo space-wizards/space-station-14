@@ -5,8 +5,8 @@
 
 #Asteroid rock
 - type: entity
+  parent: [ BaseWall, StructureHealthBarrierWeak ]
   id: AsteroidRock
-  parent: BaseWall
   name: asteroid rock
   description: A rocky asteroid.
   components:
@@ -34,16 +34,12 @@
   - type: MiningScannerViewable
   - type: Damageable
     damageModifierSet: Rock
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 120
+        damage: 20
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/break_stone.ogg

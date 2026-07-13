@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseDeltaPressureGlass
+  parent: [ BaseDeltaPressureGlass, StructureHealthBarrierWeak ]
   id: InflatableWall
   name: inflatable barricade
   description: An inflated membrane. Activate to deflate. Do not puncture.
@@ -22,16 +22,6 @@
         - WallLayer
   - type: Damageable
     damageModifierSet: Inflatable
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableWallStack1
     disassembleTime: 3
@@ -43,16 +33,18 @@
     mode: SnapgridCenter
 
 - type: entity
+  parent: [ BaseStructure, BaseDeltaPressureGlass, StructureHealthBarrierWeak ]
   id: InflatableDoor
   name: inflatable door
-  parent: [BaseMaterialDoor, BaseDeltaPressureGlass]
   description: An inflated membrane. Activate to deflate. Now with a door. Do not puncture.
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Objects/Misc/inflatable_door.rsi
-    state: closed
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -65,23 +57,24 @@
         layer:
         - WallLayer
   - type: Door
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
     occludes: false
     openSound:
       path: /Audio/Misc/zip.ogg
     closeSound:
       path: /Audio/Misc/zip.ogg
+  - type: Appearance
+  - type: Airtight
   - type: Damageable
     damageModifierSet: Inflatable
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableDoorStack1
     disassembleTime: 3

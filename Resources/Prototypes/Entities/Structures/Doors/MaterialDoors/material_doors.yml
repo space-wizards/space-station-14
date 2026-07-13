@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthDoorWeak ]
   id: BaseMaterialDoor
   name: door
   description: A door, where will it lead?
@@ -45,22 +45,10 @@
   - type: Airtight
   - type: Damageable
     damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 6
     fx: EffectRCDDeconstruct6
-  - type: Destructible
-    thresholds:
-    - trigger: &DamageTrigger125
-        !type:DamageTrigger
-        damage: 125
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Occluder
-  - type: BlockWeather
 
 - type: entity
   abstract: true
@@ -81,7 +69,9 @@
     node: metalDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: &DoorHealthWeak
+        !type:DamageTrigger
+        damage: 125
       behaviors:
       - &SoundMetalBreak !type:PlaySoundBehavior
         sound:
@@ -104,7 +94,7 @@
     node: plasmaDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
@@ -123,7 +113,7 @@
     node: goldDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
@@ -142,7 +132,7 @@
     node: silverDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
@@ -167,7 +157,7 @@
     node: bananiumDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
@@ -195,7 +185,7 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - &SoundWoodDestroy !type:PlaySoundBehavior
         sound:
@@ -223,7 +213,7 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -252,7 +242,7 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
@@ -283,7 +273,7 @@
     damageModifierSet: Card
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
@@ -309,7 +299,7 @@
     damageModifierSet: Rock
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DoorHealthWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:

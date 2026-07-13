@@ -1,9 +1,9 @@
 - type: entity
-  parent: BaseStructure
+  abstract: true
+  parent: [ BaseStructure, StructureHealthBarrier ]
   id: BaseFenceWood
   name: wooden fence
   description: Wooden piece of fencing. I hope there is babushka's garden behind it.
-  abstract: true
   components:
   - type: MeleeSound
     soundGroups:
@@ -20,19 +20,26 @@
     bodyType: Static
   - type: Transform
     anchored: true
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Climbable
+    delay: 5.0
+  - type: Appearance
+
+- type: entity
+  abstract: true
+  parent: [ BaseFenceWood, StructureHealthBarrier ]
+  id: BaseFenceWoodHigh
+  components:
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 125
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -42,24 +49,21 @@
           MaterialWoodPlank:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Climbable
-    delay: 5.0
-  - type: Appearance
 
 - type: entity
-  parent: BaseFenceWood
+  abstract: true
+  parent: [ BaseFenceWood, StructureHealthBarrierWeak ]
   id: BaseFenceWoodSmall
   name: small wooden fence
   description: Wooden piece of small fence. The best protection for the fencing of a private territory!
-  abstract: true
   components:
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 20
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -69,15 +73,13 @@
           MaterialWoodPlank:
             min: 0
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
   - type: RequireProjectileTarget
 
-#High
+#region High
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighStraight
   suffix: Straight
   components:
@@ -106,7 +108,7 @@
     node: straight
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighEnd
   suffix: End
   components:
@@ -135,7 +137,7 @@
     node: end
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighCorner
   suffix: Corner
   components:
@@ -173,7 +175,7 @@
     node: corner
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighTJunction
   suffix: T-Junction
   components:
@@ -211,7 +213,7 @@
     node: tjunction
 
 - type: entity
-  parent: BaseFenceWood
+  parent: BaseFenceWoodHigh
   id: FenceWoodHighGate
   name: wooden fence gate
   description: Do you have any idea what awaits you behind these gates? It can be either a toilet or a luxurious mansion. But you continue to love your emo boys.
@@ -258,7 +260,9 @@
     graph: FenceWood
     node: gate
 
-#Small
+#endregion
+#region Small
+
 - type: entity
   parent: BaseFenceWoodSmall
   id: FenceWoodSmallStraight
@@ -435,3 +439,5 @@
   - type: Construction
     graph: FenceWood
     node: gate_small
+
+#endregion

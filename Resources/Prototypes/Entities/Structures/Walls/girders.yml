@@ -1,6 +1,6 @@
 - type: entity
   id: Girder
-  parent: BaseStructureDynamic
+  parent: [ BaseStructureDynamic, StructureHealthBarrier ]
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
@@ -29,21 +29,17 @@
     state: wall_girder
   - type: Damageable
     damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -51,8 +47,8 @@
     price: 30
 
 - type: entity
-  id: ReinforcedGirder
   parent: Girder
+  id: ReinforcedGirder
   name: reinforced girder
   description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
   components:
@@ -66,27 +62,19 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
           SheetPlasteel1:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: StaticPrice
     price: 130
 
 - type: entity
+  parent: Girder
   id: ClockworkGirder
-  parent: ReinforcedGirder
   name: wall gear
   description: A large gear with mounting brackets for additional plating; This could be made into a wall with more brass plating.
   components:
@@ -102,18 +90,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetBrass1:
             min: 1
             max: 2
-          PartRodMetal1:
-            min: 1
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak

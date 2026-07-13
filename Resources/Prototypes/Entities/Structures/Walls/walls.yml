@@ -112,7 +112,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: &DamageTriggerNormal
+    - trigger: &WallHealthNormal
         !type:DamageTrigger
         damage: 300
       behaviors: &BreakRock
@@ -139,7 +139,7 @@
     node: clockworkWall
   - type: Destructible
     thresholds:
-    - trigger: &DamageTriggerWeak
+    - trigger: &WallHealthWeak
         !type:DamageTrigger
         damage: 150
       behaviors:
@@ -170,7 +170,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: &ChangeNodeGirder
       - !type:PlaySoundBehavior
         sound:
@@ -211,7 +211,7 @@
     node: meatWall
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -228,7 +228,7 @@
     sprite: Structures/Walls/cult.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: &SpawnGirder
       - !type:PlaySoundBehavior
         sound:
@@ -254,7 +254,7 @@
     sprite: Structures/Walls/debug.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *SpawnGirder
   - type: IconSmooth
     key: walls
@@ -275,7 +275,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *SpawnGirder
   - type: IconSmooth
     key: walls
@@ -299,7 +299,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: Fixtures
     fixtures:
@@ -327,7 +327,7 @@
     sprite: Structures/Walls/ice.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *SpawnGirder
   - type: IconSmooth
     key: walls
@@ -351,7 +351,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -377,7 +377,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -420,7 +420,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: &DamageTriggerStrong
+    - trigger: &WallHealthStrong
         !type:DamageTrigger
         damage: 450
       behaviors: *SpawnGirder
@@ -450,7 +450,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *SpawnGirder
 
 - type: entity
@@ -470,7 +470,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: &ChangeNodeReinforcedGirder
       - !type:PlaySoundBehavior
         sound:
@@ -543,7 +543,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *ChangeNodeReinforcedGirder
   - type: RadiationBlocker
     resistance: 5
@@ -562,7 +562,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *SpawnGirder
   - type: IconSmooth
     key: walls
@@ -585,7 +585,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *BreakRock
   - type: IconSmooth
     key: walls
@@ -609,7 +609,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -653,7 +653,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *ChangeNodeReinforcedGirder
   - type: Construction
     graph: Girder
@@ -672,7 +672,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *ChangeNodeReinforcedGirder
   - type: StaticPrice
     price: 300
@@ -734,7 +734,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -753,7 +753,7 @@
     state: state0
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *ChangeNodeGirder
 
 - type: entity
@@ -781,7 +781,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *ChangeNodeGirder
   - type: Sprite
     sprite: Structures/Walls/xeno.rsi
@@ -812,7 +812,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerStrong
+    - trigger: *WallHealthStrong
       behaviors: *ChangeNodeGirder
   - type: Appearance
   - type: GenericVisualizer
@@ -878,7 +878,7 @@
     node: uraniumWall
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *ChangeNodeGirder
   - type: Fixtures
     fixtures:
@@ -912,7 +912,7 @@
     node: woodWall
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -996,7 +996,7 @@
     sprite: Structures/Walls/mining.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *SpawnGirder
   - type: IconSmooth
     key: walls
@@ -1023,7 +1023,7 @@
     damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerNormal
+    - trigger: *WallHealthNormal
       behaviors: *SpawnGirder
 
 
@@ -1144,7 +1144,7 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors: *BreakRock
   - type: IconSmooth
     key: cobblebricks
@@ -1246,7 +1246,7 @@
     deconstructable: false
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerWeak
+    - trigger: *WallHealthWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
