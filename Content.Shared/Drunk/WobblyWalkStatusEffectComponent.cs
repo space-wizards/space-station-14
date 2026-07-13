@@ -14,9 +14,16 @@ public sealed partial class WobblyWalkStatusEffectComponent : Component
 {
     /// <summary>
     /// How long it takes for the effect to scale up to its <see cref="MaxAngle"/> strength.
+    /// Does not include <see cref="DelayBufferTime"/>.
     /// </summary>
     [DataField]
-    public TimeSpan TimeUntilMax = TimeSpan.FromSeconds(30);
+    public TimeSpan TimeUntilMax = TimeSpan.FromSeconds(100);
+
+    /// <summary>
+    /// Buffer time before the effect starts kicking in, and making it end earlier; to prevent the effect to be felt immediately.
+    /// </summary>
+    [DataField]
+    public TimeSpan DelayBufferTime = TimeSpan.FromSeconds(50);
 
     /// <summary>
     /// The max angle in radians that the walk can be changed.
