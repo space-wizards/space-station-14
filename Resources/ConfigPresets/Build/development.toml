@@ -59,3 +59,7 @@ pg_port = 5432
 pg_database = "ss14"
 pg_username = "postgres"
 pg_password = "postgres"
+
+[net]
+max_rapid_connections = 413
+max_ip_connections = 413
