@@ -1,4 +1,4 @@
-﻿using Content.Shared.Movement.Systems;
+﻿using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
@@ -9,18 +9,18 @@ namespace Content.Shared.Drunk;
 /// <summary>
 /// Handles the status effect of causing the player to walk less straight, usually combined with drunkenness/bloodloss.
 /// </summary>
-public sealed partial class SharedWobblyWalkSystem : EntitySystem
+public sealed partial class WobblyMovementSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
 
     [SubscribeLocalEvent]
-    private void OnStatusApplied(Entity<WobblyWalkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+    private void OnStatusApplied(Entity<WobblyMovementStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         entity.Comp.NextUpdate = _timing.CurTime;
     }
 
     [SubscribeLocalEvent]
-    private void OnMovementWish(Entity<WobblyWalkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<MovementWishDirectionEvent> args)
+    private void OnMovementWish(Entity<WobblyMovementStatusEffectComponent> entity, ref StatusEffectRelayedEvent<ModifyMovementTargetDirectionEvent> args)
     {
         if (!TryComp<StatusEffectComponent>(entity, out var statusEffect))
             return;
@@ -47,7 +47,10 @@ public sealed partial class SharedWobblyWalkSystem : EntitySystem
             var newAngle = rand.NextAngle(-effectStrength * entity.Comp.MaxAngle, effectStrength * entity.Comp.MaxAngle);
             entity.Comp.CurrentAngle = newAngle;
 
-            Dirty(entity);
+            DirtyFields(entity.AsNullable(),
+                null,
+                nameof(WobblyMovementStatusEffectComponent.NextUpdate),
+                nameof(WobblyMovementStatusEffectComponent.CurrentAngle));
         }
 
         args.Args = args.Args with

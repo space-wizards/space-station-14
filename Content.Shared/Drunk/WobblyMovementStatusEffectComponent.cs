@@ -9,8 +9,9 @@ namespace Content.Shared.Drunk;
 /// <remarks>The effect scales linearly to its max strength, and then at the end of the status effect scales back down.</remarks>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class WobblyWalkStatusEffectComponent : Component
+[AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+[Access(typeof(WobblyMovementSystem))]
+public sealed partial class WobblyMovementStatusEffectComponent : Component
 {
     /// <summary>
     /// How long it takes for the effect to scale up to its <see cref="MaxAngle"/> strength.

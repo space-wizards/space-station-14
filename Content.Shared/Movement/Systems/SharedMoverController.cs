@@ -304,7 +304,7 @@ public abstract partial class SharedMoverController : VirtualController
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
 
-        var wishEv = new MovementWishDirectionEvent(wishDir);
+        var wishEv = new ModifyMovementTargetDirectionEvent(wishDir);
         RaiseLocalEvent(entity, ref wishEv);
         wishDir = wishEv.WishDir;
 
@@ -662,11 +662,3 @@ public abstract partial class SharedMoverController : VirtualController
             args.Cancel();
     }
 }
-
-/// <summary>
-/// Event raised when determining the direction a user wishes to move in.
-/// </summary>
-/// <param name="WishDir">The normalized wished direction.</param>
-/// <remarks>Applied before friction/acceleration, making it ideal for "modifying user input".</remarks>
-[ByRefEvent]
-public record struct MovementWishDirectionEvent(Vector2 WishDir);
