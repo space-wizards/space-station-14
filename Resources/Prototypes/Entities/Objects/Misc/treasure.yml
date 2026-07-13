@@ -152,7 +152,7 @@
     sound: !type:SoundCollectionSpecifier
       collection: Coin
     values: CoinFaces
-    landedString: dice-component-roll-specific
+    examineLandedOnText: dice-component-roll-specific
     examineObjectText: null # no need to show how many sides it has, it's a coin
   - type: Tag
     tags:
