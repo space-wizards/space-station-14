@@ -47,14 +47,11 @@ public sealed partial class AdminAnnounceWindow
         var isPreviewing = IsStreamPlaying(_previewStream);
 
         if (_previewStream != null && !isPreviewing)
-        {
             _previewStream = null;
-        }
-        
+
         AnnounceButton.Disabled = string.IsNullOrWhiteSpace(Rope.Collapse(Announcement.TextRope));
 
-        var type = (AdminAnnounceType?) AnnounceMethod.SelectedMetadata;
-        PlayAudio.Disabled = type != AdminAnnounceType.Station;
+        PlayAudio.Disabled = GetSelectedAnnounceType() != AdminAnnounceType.Station;
         PlayAudio.Text = isPreviewing ? "⏹" : "▶";
     }
 }

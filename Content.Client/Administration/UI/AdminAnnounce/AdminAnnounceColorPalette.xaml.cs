@@ -9,16 +9,30 @@ namespace Content.Client.Administration.UI.AdminAnnounce;
 [GenerateTypedNameReferences]
 public sealed partial class AdminAnnounceColorPalette : DefaultWindow
 {
-    public event Action<string>? OnHexChanged;
-    public event Action<Color>? OnPickerChanged;
+    public event Action<Color>? OnColorChanged;
+
+    private bool _updating;
 
     public AdminAnnounceColorPalette()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Picker.OnColorChanged += color => OnPickerChanged?.Invoke(color);
-        HexInput.OnTextChanged += args => OnHexChanged?.Invoke(args.Text);
+        Picker.OnColorChanged += color =>
+        {
+            if (_updating)
+                return;
+
+            SetColor(color);
+        };
+
+        HexInput.OnTextChanged += args =>
+        {
+            if (_updating || Color.TryFromHex(args.Text) is not { } color)
+                return;
+
+            SetColor(color);
+        };
 
         SetupPreset(PresetWizard, "#ff00ff");
         SetupPreset(PresetNukeOp, "#ff0000");
@@ -37,19 +51,26 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
 
     private void ApplyPreset(string hex, Color color)
     {
-        Picker.Color = color;
-        SetHexText(hex);
-        OnHexChanged?.Invoke(hex);
+        SetColor(color, hex);
     }
 
-    public void SetHexText(string hex)
+    private void SetColor(Color color, string? hex = null)
     {
-        HexInput.Text = hex;
+        UpdateDisplay(color, hex ?? color.ToHexNoAlpha());
+        OnColorChanged?.Invoke(color);
     }
 
     public void UpdateDisplay(Color color, string hex)
     {
-        Picker.Color = color;
-        SetHexText(hex);
+        _updating = true;
+        try
+        {
+            Picker.Color = color;
+            HexInput.Text = hex;
+        }
+        finally
+        {
+            _updating = false;
+        }
     }
 }

@@ -23,6 +23,12 @@ public enum AdminAnnounceType
     Server
 }
 
+public enum AdminAnnounceScope
+{
+    Global,
+    Map
+}
+
 [Serializable, NetSerializable]
 public sealed class AdminAnnounceEuiState : EuiStateBase;
 
@@ -35,7 +41,7 @@ public static class AdminAnnounceEuiMsg
         public string Announcer = default!;
         public string Announcement = default!;
         public AdminAnnounceType AnnounceType;
-        public bool Global = true;
+        public AdminAnnounceScope Scope = AdminAnnounceScope.Global;
         public string ColorHex = AdminAnnounceDefaults.DefaultColorHex;
         public string SoundPath = AdminAnnounceDefaults.DefaultSoundPath;
         public string Sender = "";
@@ -72,11 +78,5 @@ public static class AdminAnnounceHelpers
         return path.StartsWith('/') && !path.Contains("..") && !path.Contains('\\');
     }
 
-    public static string FormatAnnouncement(string announcement, string? sender)
-    {
-        var trimmedSender = NormalizeText(sender);
-        return string.IsNullOrWhiteSpace(trimmedSender)
-            ? announcement
-            : $"{announcement}\n{Loc.GetString("admin-announce-sent-by")} {trimmedSender}";
-    }
+    public static bool HasSender(string? value) => !string.IsNullOrWhiteSpace(NormalizeText(value));
 }

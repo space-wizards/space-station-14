@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -25,7 +24,6 @@ public sealed partial class AdminAnnounceEui : BaseEui
     [Dependency] private IResourceManager _res = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IEntityManager _entityManager = default!;
-    [Dependency] private ISharedPlayerManager _playerManager = default!;
 
     private readonly ChatSystem _chatSystem;
 
@@ -46,7 +44,7 @@ public sealed partial class AdminAnnounceEui : BaseEui
         if (msg is not AdminAnnounceEuiMsg.DoAnnounce doAnnounce)
             return;
 
-        if (!_adminManager.HasAdminFlag(Player, AdminFlags.Admin))
+        if (!_adminManager.HasAdminFlag(Player, AdminFlags.Moderator))
         {
             Close();
             return;
@@ -54,80 +52,17 @@ public sealed partial class AdminAnnounceEui : BaseEui
 
         var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
         var announcement = SharedChatSystem.SanitizeAnnouncement(doAnnounce.Announcement, maxLength);
-            
+
         if (string.IsNullOrWhiteSpace(announcement))
             return;
-
-        var color = AdminAnnounceHelpers.GetColor(doAnnounce.AnnounceType, doAnnounce.ColorHex);
 
         switch (doAnnounce.AnnounceType)
         {
             case AdminAnnounceType.Server:
-                _chatManager.DispatchServerAnnouncement(announcement, color);
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"{Player.Name} has sent the following server announcement: {announcement}");
+                AnnounceServer(doAnnounce, announcement);
                 break;
-            // TODO: Per-station announcement support
             case AdminAnnounceType.Station:
-                var normalizedAnnouncer = AdminAnnounceHelpers.NormalizeText(doAnnounce.Announcer);
-                var announcer = string.IsNullOrWhiteSpace(normalizedAnnouncer)
-                    ? Loc.GetString("admin-announce-announcer-default")
-                    : normalizedAnnouncer;
-
-                var sound = SharedChatSystem.DefaultAnnouncementSound;
-                var soundPath = AdminAnnounceHelpers.NormalizeSoundPath(doAnnounce.SoundPath);
-
-                if (!string.IsNullOrEmpty(soundPath) && _res.ContentFileExists(soundPath))
-                    sound = new SoundPathSpecifier(soundPath);
-
-                var sender = SharedChatSystem.SanitizeAnnouncement(doAnnounce.Sender, maxLength);
-                var finalContent = AdminAnnounceHelpers.FormatAnnouncement(announcement, sender);
-
-                MapId? adminMapId = null;
-                if (Player.AttachedEntity is { } adminEntity
-                    && _entityManager.TryGetComponent<TransformComponent>(adminEntity, out var adminXform))
-                {
-                    adminMapId = adminXform.MapID;
-                }
-
-                var mapId = adminMapId ?? MapId.Nullspace;
-                var sentPerMap = false;
-
-                if (!doAnnounce.Global)
-                {
-                    if (mapId == MapId.Nullspace)
-                        return;
-
-                    var mapFilter = GetPlayersOnMap(mapId);
-
-                    if (!mapFilter.Recipients.Any())
-                        return;
-
-                    _chatSystem.DispatchFilteredAnnouncement(
-                        mapFilter,
-                        finalContent,
-                        sender: announcer,
-                        playSound: true,
-                        announcementSound: sound,
-                        colorOverride: color
-                    );
-
-                    sentPerMap = true;
-                }
-
-                if (!sentPerMap)
-                {
-                    _chatSystem.DispatchGlobalAnnouncement(
-                        finalContent,
-                        announcer,
-                        colorOverride: color,
-                        playSound: true,
-                        announcementSound: sound
-                    );
-                }
-
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"{Player.Name} has sent the following {(sentPerMap ? "map" : "global")} announcement as {announcer}: {announcement}");
+                AnnounceStation(doAnnounce, announcement, maxLength);
                 break;
         }
 
@@ -135,18 +70,96 @@ public sealed partial class AdminAnnounceEui : BaseEui
             Close();
     }
 
-    private Filter GetPlayersOnMap(MapId mapId)
+    private void AnnounceServer(AdminAnnounceEuiMsg.DoAnnounce msg, string announcement)
     {
-        var filter = Filter.Empty();
-        foreach (var session in _playerManager.Sessions)
+        var color = AdminAnnounceHelpers.GetColor(msg.AnnounceType, msg.ColorHex);
+        _chatManager.DispatchServerAnnouncement(announcement, color);
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"{Player.Name} has sent the following server announcement: {announcement}");
+    }
+
+    private void AnnounceStation(AdminAnnounceEuiMsg.DoAnnounce msg, string announcement, int maxLength)
+    {
+        var announcer = GetAnnouncer(msg.Announcer);
+        var sound = GetSound(msg.SoundPath);
+        var color = AdminAnnounceHelpers.GetColor(msg.AnnounceType, msg.ColorHex);
+        var sender = SharedChatSystem.SanitizeAnnouncement(msg.Sender, maxLength);
+        var finalContent = FormatAnnouncement(announcement, sender);
+
+        switch (msg.Scope)
         {
-            if (session.AttachedEntity is { } entity
-                && _entityManager.TryGetComponent<TransformComponent>(entity, out var xform)
-                && xform.MapID == mapId)
-            {
-                filter.AddPlayer(session);
-            }
+            case AdminAnnounceScope.Global:
+                _chatSystem.DispatchGlobalAnnouncement(
+                    finalContent,
+                    announcer,
+                    colorOverride: color,
+                    playSound: true,
+                    announcementSound: sound);
+
+                LogAnnouncement("global", announcer, announcement);
+                break;
+            case AdminAnnounceScope.Map:
+                if (!TryGetPlayerMap(out var mapId))
+                    return;
+
+                var filter = Filter.BroadcastMap(mapId);
+                if (filter.Count == 0)
+                    return;
+
+                _chatSystem.DispatchFilteredAnnouncement(
+                    filter,
+                    finalContent,
+                    sender: announcer,
+                    playSound: true,
+                    announcementSound: sound,
+                    colorOverride: color);
+
+                LogAnnouncement($"map {mapId}", announcer, announcement);
+                break;
         }
-        return filter;
+    }
+
+    private string GetAnnouncer(string? announcer)
+    {
+        var normalized = AdminAnnounceHelpers.NormalizeText(announcer);
+        return string.IsNullOrWhiteSpace(normalized)
+            ? Loc.GetString("admin-announce-announcer-default")
+            : normalized;
+    }
+
+    private SoundSpecifier GetSound(string? soundPath)
+    {
+        var normalized = AdminAnnounceHelpers.NormalizeSoundPath(soundPath);
+        if (!string.IsNullOrEmpty(normalized) && _res.ContentFileExists(normalized))
+            return new SoundPathSpecifier(normalized);
+
+        return SharedChatSystem.DefaultAnnouncementSound;
+    }
+
+    private bool TryGetPlayerMap(out MapId mapId)
+    {
+        mapId = MapId.Nullspace;
+        if (Player.AttachedEntity is not { } entity ||
+            !_entityManager.TryGetComponent(entity, out TransformComponent? xform) ||
+            xform.MapID == MapId.Nullspace)
+        {
+            return false;
+        }
+
+        mapId = xform.MapID;
+        return true;
+    }
+
+    private string FormatAnnouncement(string announcement, string? sender)
+    {
+        return AdminAnnounceHelpers.HasSender(sender)
+            ? $"{announcement}\n{Loc.GetString("admin-announce-sent-by")} {AdminAnnounceHelpers.NormalizeText(sender)}"
+            : announcement;
+    }
+
+    private void LogAnnouncement(string scope, string announcer, string announcement)
+    {
+        _adminLogger.Add(LogType.Chat, LogImpact.Low,
+            $"{Player.Name} has sent the following {scope} announcement as {announcer}: {announcement}");
     }
 }

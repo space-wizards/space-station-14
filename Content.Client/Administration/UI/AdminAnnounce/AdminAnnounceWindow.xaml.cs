@@ -12,6 +12,9 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
 {
     [Dependency] private ILocalizationManager _localization = default!;
     [Dependency] private IEntitySystemManager _sysMan = default!;
+
+    public event Action<AdminAnnounceEuiMsg.DoAnnounce>? OnAnnounce;
+
     private AdminAnnounceColorPalette? _paletteWindow;
     private SharedAudioSystem? _audio;
 
@@ -29,16 +32,13 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         Announcement.Placeholder = new Rope.Leaf(_localization.GetString("admin-announce-announcement-placeholder"));
 
         InitAnnounceMethods();
+        InitScopeOptions();
 
         EnableSender.OnToggled += _ => UpdateSenderEditable();
         PlayAudio.OnPressed += _ => TogglePreview();
         OpenPaletteButton.OnPressed += _ => OpenPalette();
         Announcement.OnTextChanged += _ => UpdateButtons();
-        AnnounceButton.OnPressed += _ =>
-        {
-            StopPreview();
-            UpdateButtons();
-        };
+        AnnounceButton.OnPressed += _ => Announce();
 
         UpdateSenderEditable();
     }
@@ -64,13 +64,24 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
         UpdateFields(AdminAnnounceType.Station);
     }
 
+    private void InitScopeOptions()
+    {
+        ScopeOption.AddItem(_localization.GetString("admin-announce-scope-global"));
+        ScopeOption.SetItemMetadata(0, AdminAnnounceScope.Global);
+        ScopeOption.AddItem(_localization.GetString("admin-announce-scope-map"));
+        ScopeOption.SetItemMetadata(1, AdminAnnounceScope.Map);
+        ScopeOption.OnItemSelected += args => ScopeOption.SelectId(args.Id);
+
+        ScopeOption.SelectId(0);
+    }
+
     private void UpdateFields(AdminAnnounceType type)
     {
         var isStation = type == AdminAnnounceType.Station;
         Announcer.Editable = SoundPath.Editable = isStation;
         EnableSender.Visible = isStation;
         Sender.Editable = isStation && EnableSender.Pressed;
-        GlobalAnnouncement.Visible = isStation;
+        ScopeOption.Visible = isStation;
 
         _currentHex = AdminAnnounceDefaults.GetDefaultColorHex(type);
 
@@ -80,6 +91,39 @@ public sealed partial class AdminAnnounceWindow : DefaultWindow
             StopPreview();
 
         UpdateButtons();
+    }
+
+    private void Announce()
+    {
+        var announcement = AdminAnnounceHelpers.NormalizeText(Rope.Collapse(Announcement.TextRope));
+        if (string.IsNullOrWhiteSpace(announcement))
+            return;
+
+        StopPreview();
+        UpdateButtons();
+
+        var announceType = GetSelectedAnnounceType();
+        OnAnnounce?.Invoke(new AdminAnnounceEuiMsg.DoAnnounce
+        {
+            Announcement = announcement,
+            Announcer = AdminAnnounceHelpers.NormalizeText(Announcer.Text),
+            AnnounceType = announceType,
+            CloseAfter = !KeepWindowOpen.Pressed,
+            Scope = GetSelectedScope(),
+            ColorHex = AdminAnnounceHelpers.GetValidatedColorHex(announceType, _currentHex),
+            SoundPath = SoundPath.Text,
+            Sender = EnableSender.Pressed ? AdminAnnounceHelpers.NormalizeText(Sender.Text) : string.Empty,
+        });
+    }
+
+    private AdminAnnounceType GetSelectedAnnounceType()
+    {
+        return (AdminAnnounceType?) AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station;
+    }
+
+    private AdminAnnounceScope GetSelectedScope()
+    {
+        return (AdminAnnounceScope?) ScopeOption.SelectedMetadata ?? AdminAnnounceScope.Global;
     }
 
     public override void Close()

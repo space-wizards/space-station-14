@@ -18,22 +18,7 @@ public sealed partial class AdminAnnounceWindow
         {
             _paletteWindow = new AdminAnnounceColorPalette();
 
-            _paletteWindow.OnPickerChanged += color =>
-            {
-                var hex = color.ToHexNoAlpha();
-                if (_currentHex == hex) return;
-                
-                _currentHex = hex;
-                UpdateColorPreview();
-                _paletteWindow.SetHexText(hex);
-            };
-
-            _paletteWindow.OnHexChanged += hex =>
-            {
-                if (string.IsNullOrEmpty(hex) || _currentHex == hex) return;
-                _currentHex = hex;
-                UpdateColorPreview();
-            };
+            _paletteWindow.OnColorChanged += SetColor;
         }
 
         _paletteWindow.UpdateDisplay(GetCurrentColor(), _currentHex);
@@ -42,22 +27,30 @@ public sealed partial class AdminAnnounceWindow
 
     private void SyncPalette()
     {
-        if (_paletteWindow == null || _paletteWindow.Disposed || !_paletteWindow.IsOpen) 
+        if (_paletteWindow == null || _paletteWindow.Disposed || !_paletteWindow.IsOpen)
             return;
 
         _paletteWindow.UpdateDisplay(GetCurrentColor(), _currentHex);
     }
 
+    private void SetColor(Color color)
+    {
+        var hex = color.ToHexNoAlpha();
+        if (_currentHex == hex)
+            return;
+
+        _currentHex = hex;
+        UpdateColorPreview();
+        _paletteWindow?.UpdateDisplay(color, hex);
+    }
+
     private Color GetCurrentColor()
     {
-        var type = (AdminAnnounceType?)AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station;
-        return AdminAnnounceHelpers.GetColor(type, _currentHex);
+        return AdminAnnounceHelpers.GetColor(GetSelectedAnnounceType(), _currentHex);
     }
 
     private void UpdateColorPreview()
     {
         ColorPreview.ModulateSelfOverride = GetCurrentColor();
     }
-
-    public string GetCurrentHex() => _currentHex;
 }
