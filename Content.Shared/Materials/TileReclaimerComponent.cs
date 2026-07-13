@@ -66,7 +66,7 @@ public sealed partial class TileReclaimerComponent : Component
     /// This helps guide the grid further into the reclaimer.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SlurpStrength = 1f;
+    public float SlurpStrength = 1600f;
 
     /// <summary>
     /// Next time a recycling attempt can be made.
