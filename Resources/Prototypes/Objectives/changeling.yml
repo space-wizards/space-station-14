@@ -52,7 +52,7 @@
     title: objective-escape-identity-title
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
-    filters:
+    conditions:
     - !type:RoleCondition
       inverted: true # Do not roll changelings here. Their initial identity will be basically impossible to get after they transform.
       whitelist:
