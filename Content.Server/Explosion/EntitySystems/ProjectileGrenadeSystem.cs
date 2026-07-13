@@ -8,12 +8,12 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class ProjectileGrenadeSystem : EntitySystem
+public sealed partial class ProjectileGrenadeSystem : EntitySystem
 {
-    [Dependency] private readonly GunSystem _gun = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private GunSystem _gun = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
 
 
     public override void Initialize()

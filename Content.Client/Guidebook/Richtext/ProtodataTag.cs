@@ -9,10 +9,10 @@ namespace Content.Client.Guidebook.RichText;
 /// To be accessed by this tag, the desired field/property must
 /// be tagged with <see cref="Shared.Guidebook.GuidebookDataAttribute"/>.
 /// </summary>
-public sealed class ProtodataTag : IMarkupTagHandler
+public sealed partial class ProtodataTag : IMarkupTagHandler
 {
-    [Dependency] private readonly ILogManager _logMan = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private ILogManager _logMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     public string Name => "protodata";
     private ISawmill Log => _log ??= _logMan.GetSawmill("protodata_tag");

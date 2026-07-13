@@ -16,20 +16,20 @@ namespace Content.Shared.PDA;
 /// <summary>
 /// Handles the shared functionality for PDA ringtones.
 /// </summary>
-public abstract class SharedRingerSystem : EntitySystem
+public abstract partial class SharedRingerSystem : EntitySystem
 {
     public const int RingtoneLength = 6;
     public const int NoteTempo = 300;
     public const float NoteDelay = 60f / NoteTempo;
 
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPdaSystem _pda = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] protected readonly SharedStoreSystem Store = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPdaSystem _pda = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] protected SharedStoreSystem Store = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
+    [Dependency] protected SharedUserInterfaceSystem UI = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

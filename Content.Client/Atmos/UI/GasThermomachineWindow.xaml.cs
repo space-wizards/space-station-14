@@ -10,7 +10,7 @@ namespace Content.Client.Atmos.UI;
 [GenerateTypedNameReferences]
 public sealed partial class GasThermomachineWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     public FloatSpinBox TemperatureSpinbox;
 
