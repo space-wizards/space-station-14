@@ -9,11 +9,14 @@ namespace Content.Shared.Dice;
 [AutoGenerateComponentState(true)]
 public sealed partial class DiceComponent : Component
 {
+    /// <summary>
+    /// The sounds to play when rolling the die.
+    /// </summary>
     [DataField]
     public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("Dice");
 
     /// <summary>
-    /// Multiplier for the value  of a die. Applied after the <see cref="Offset"/>.
+    /// Multiplier for the value of a die. Applied after the <see cref="Offset"/>.
     /// </summary>
     [DataField]
     public int Multiplier { get; private set; } = 1;
@@ -25,24 +28,27 @@ public sealed partial class DiceComponent : Component
     [DataField]
     public int Offset { get; private set; } = 0;
 
+    /// <summary>
+    /// The number of sides the dice has.
+    /// </summary>
     [DataField]
     public int Sides { get; private set; } = 20;
 
     /// <summary>
-    /// A localized string of the type of object type this is (a die? a coin? a magic pool ball?)
-    /// If null, the first part of the examine text will be omitted.
+    /// A localized string of the type of object type this is (a die? a coin? a magic pool ball?), with how many sides.
+    /// This gets inserted in <c>$name</c> in <c>dice-component-on-examine-message-part-1</c>. If null, the examine string will be omitted.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public LocId? ExamineObjectText = "dice-component-type-die";
 
     /// <summary>
-    /// A localized string of how to print the value this has landed on.
-    /// Expects its value at currentSide.
+    /// A localized string of how to print the value this has landed on when examining the entity.
+    /// Expects the die's value at <c>$currentSide</c>.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public LocId LandedString = "dice-component-roll-generic";
+    public LocId ExamineLandedOnText = "dice-component-roll-generic";
 
     /// <summary>
     /// A dataset of the values. Expected to contain values from 1 to Sides.
@@ -59,16 +65,15 @@ public sealed partial class DiceComponent : Component
     public int? WeightedValue = null;
 
     /// <summary>
-    /// If <c cref="WeightedValue"/> is not null, the die will roll that value with this probability, otherwise it selects a random value.
+    /// If <see cref="WeightedValue"/> is not null, the die will roll that value with this probability, otherwise it selects a random value.
     /// </summary>
     [DataField]
     public float WeightedProb = 1.0f;
 
     /// <summary>
-    ///     The currently displayed value.
+    /// The currently displayed value.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public int CurrentValue { get; set; } = 20;
-
 }

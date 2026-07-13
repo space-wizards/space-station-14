@@ -43,7 +43,7 @@ public abstract partial class SharedDiceSystem : EntitySystem
             }
 
             var valueString = GetRolledValueString(entity);
-            args.PushMarkup(Loc.GetString(entity.Comp.LandedString, ("currentSide", valueString)));
+            args.PushMarkup(Loc.GetString(entity.Comp.ExamineLandedOnText, ("currentSide", valueString)));
         }
     }
 
