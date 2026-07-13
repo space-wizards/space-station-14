@@ -11,7 +11,7 @@ namespace Content.Shared.Vehicle.Components;
 /// The details of when the vehicle can operate and who the operator is are not defined here.
 /// This simply contains the baseline behavior of the vehicle itself.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(VehicleSystem))]
 public sealed partial class VehicleComponent : Component
 {

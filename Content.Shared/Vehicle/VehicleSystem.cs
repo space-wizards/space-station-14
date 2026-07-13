@@ -117,13 +117,13 @@ public sealed partial class VehicleSystem : EntitySystem
         {
             var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
             vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
+            DirtyFields(operatorUid, vehicleOperator, null, nameof(VehicleOperatorComponent.Vehicle));
         }
         else
         {
             var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
             vehicleOperator.Vehicle = entity.Owner;
-            Dirty(operatorUid, vehicleOperator);
+            DirtyFields(operatorUid, vehicleOperator, null, nameof(VehicleOperatorComponent.Vehicle));
         }
 
         _mover.SetRelay(operatorUid, entity);
@@ -136,7 +136,7 @@ public sealed partial class VehicleSystem : EntitySystem
         var setEvent = new VehicleOperatorSetEvent(operatorUid, null);
         RaiseLocalEvent(entity, ref setEvent);
 
-        Dirty(entity);
+        DirtyFields(entity.Owner, entity.Comp, null, nameof(VehicleComponent.Operator));
         return true;
     }
 
