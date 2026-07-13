@@ -36,30 +36,6 @@ public sealed partial class DockingSystem : SharedDockingSystem
     private readonly HashSet<Entity<DockingComponent>> _dockingSet = new();
     private readonly HashSet<Entity<DockingComponent, DoorBoltComponent>> _dockingBoltSet = new();
 
-    public void UndockDocks(EntityUid gridUid)
-    {
-        _dockingSet.Clear();
-        _lookup.GetChildEntities(gridUid, _dockingSet);
-
-        foreach (var dock in _dockingSet)
-        {
-            Undock(dock);
-        }
-    }
-
-    public void SetDockBolts(EntityUid gridUid, bool enabled)
-    {
-        _dockingBoltSet.Clear();
-        _lookup.GetChildEntities(gridUid, _dockingBoltSet);
-
-        foreach (var entity in _dockingBoltSet)
-        {
-            _doorSystem.TryClose(entity);
-            _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
-        }
-    }
-
-
     [SubscribeLocalEvent]
     private void OnAutoClose(EntityUid uid, DockingComponent component, BeforeDoorAutoCloseEvent args)
     {
@@ -85,50 +61,6 @@ public sealed partial class DockingSystem : SharedDockingSystem
         }
 
         Cleanup(uid, component);
-    }
-
-    private void Cleanup(EntityUid dockAUid, DockingComponent dockA)
-    {
-        _pathfinding.RemovePortal(dockA.PathfindHandle);
-
-        if (dockA.DockJoint != null)
-            _jointSystem.RemoveJoint(dockA.DockJoint);
-
-        var dockBUid = dockA.DockedWith;
-
-        if (dockBUid == null ||
-            !_dockingQuery.TryComp(dockBUid, out var dockB))
-        {
-            DebugTools.Assert(false);
-            Log.Error($"Tried to cleanup {dockAUid} but not docked?");
-
-            dockA.DockedWith = null;
-            return;
-        }
-
-        dockB.DockedWith = null;
-        dockB.DockJoint = null;
-        dockB.DockJointId = null;
-
-        dockA.DockJoint = null;
-        dockA.DockedWith = null;
-        dockA.DockJointId = null;
-
-        // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
-        var gridAUid = Transform(dockAUid).GridUid;
-        var gridBUid = Transform(dockBUid.Value).GridUid;
-
-        var msg = new UndockEvent
-        {
-            DockA = dockA,
-            DockB = dockB,
-            GridAUid = gridAUid!.Value,
-            GridBUid = gridBUid!.Value,
-        };
-
-        RaiseLocalEvent(dockAUid, msg);
-        RaiseLocalEvent(dockBUid.Value, msg);
-        RaiseLocalEvent(msg);
     }
 
     [SubscribeLocalEvent]
@@ -180,6 +112,118 @@ public sealed partial class DockingSystem : SharedDockingSystem
         Undock(entity);
         Dock((uid, component), (otherDock.Value, other));
         _console.RefreshShuttleConsoles();
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
+    {
+        if (!TryGetEntity(args.DockEntity, out var dockEnt) ||
+            !_dockingQuery.TryComp(dockEnt, out var dockComp))
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"), args.Actor);
+            return;
+        }
+
+        var dock = (dockEnt.Value, dockComp);
+
+        if (!CanUndock(dock))
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"), args.Actor);
+            return;
+        }
+
+        Undock(dock);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
+    {
+        var console = _console.GetDroneConsole(uid);
+
+        if (console == null)
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
+            return;
+        }
+
+        var shuttleUid = Transform(console.Value).GridUid;
+
+        if (!CanShuttleDock(shuttleUid))
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
+            return;
+        }
+
+        if (!TryGetEntity(args.DockEntity, out var ourDock) ||
+            !TryGetEntity(args.TargetDockEntity, out var targetDock) ||
+            !_dockingQuery.TryComp(ourDock, out var ourDockComp) ||
+            !_dockingQuery.TryComp(targetDock, out var targetDockComp))
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
+            return;
+        }
+
+        // Cheating?
+        if (!TryComp(ourDock, out TransformComponent? xformA) ||
+            xformA.GridUid != shuttleUid)
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
+            return;
+        }
+
+        // TODO: Move the CanDock stuff to the port state and also validate that stuff
+        // Also need to check preventpilot + enabled / dockedwith
+        if (!CanDock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp)))
+        {
+            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
+            return;
+        }
+
+        Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
+    }
+
+    private void Cleanup(EntityUid dockAUid, DockingComponent dockA)
+    {
+        _pathfinding.RemovePortal(dockA.PathfindHandle);
+
+        if (dockA.DockJoint != null)
+            _jointSystem.RemoveJoint(dockA.DockJoint);
+
+        var dockBUid = dockA.DockedWith;
+
+        if (dockBUid == null ||
+            !_dockingQuery.TryComp(dockBUid, out var dockB))
+        {
+            DebugTools.Assert(false);
+            Log.Error($"Tried to cleanup {dockAUid} but not docked?");
+
+            dockA.DockedWith = null;
+            return;
+        }
+
+        dockB.DockedWith = null;
+        dockB.DockJoint = null;
+        dockB.DockJointId = null;
+
+        dockA.DockJoint = null;
+        dockA.DockedWith = null;
+        dockA.DockJointId = null;
+
+        // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
+        var gridAUid = Transform(dockAUid).GridUid;
+        var gridBUid = Transform(dockBUid.Value).GridUid;
+
+        var msg = new UndockEvent
+        {
+            DockA = dockA,
+            DockB = dockB,
+            GridAUid = gridAUid!.Value,
+            GridBUid = gridBUid!.Value,
+        };
+
+        RaiseLocalEvent(dockAUid, msg);
+        RaiseLocalEvent(dockBUid.Value, msg);
+        RaiseLocalEvent(msg);
     }
 
     /// <summary>
@@ -326,72 +370,27 @@ public sealed partial class DockingSystem : SharedDockingSystem
             door.ChangeAirtight = true;
     }
 
-    [SubscribeLocalEvent]
-    private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
+    public void UndockDocks(EntityUid gridUid)
     {
-        if (!TryGetEntity(args.DockEntity, out var dockEnt) ||
-            !_dockingQuery.TryComp(dockEnt, out var dockComp))
+        _dockingSet.Clear();
+        _lookup.GetChildEntities(gridUid, _dockingSet);
+
+        foreach (var dock in _dockingSet)
         {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"), args.Actor);
-            return;
+            Undock(dock);
         }
-
-        var dock = (dockEnt.Value, dockComp);
-
-        if (!CanUndock(dock))
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"), args.Actor);
-            return;
-        }
-
-        Undock(dock);
     }
 
-    [SubscribeLocalEvent]
-    private void OnRequestDock(EntityUid uid, ShuttleConsoleComponent component, DockRequestMessage args)
+    public void SetDockBolts(EntityUid gridUid, bool enabled)
     {
-        var console = _console.GetDroneConsole(uid);
+        _dockingBoltSet.Clear();
+        _lookup.GetChildEntities(gridUid, _dockingBoltSet);
 
-        if (console == null)
+        foreach (var entity in _dockingBoltSet)
         {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
-            return;
+            _doorSystem.TryClose(entity);
+            _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
         }
-
-        var shuttleUid = Transform(console.Value).GridUid;
-
-        if (!CanShuttleDock(shuttleUid))
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
-            return;
-        }
-
-        if (!TryGetEntity(args.DockEntity, out var ourDock) ||
-            !TryGetEntity(args.TargetDockEntity, out var targetDock) ||
-            !_dockingQuery.TryComp(ourDock, out var ourDockComp) ||
-            !_dockingQuery.TryComp(targetDock, out var targetDockComp))
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
-            return;
-        }
-
-        // Cheating?
-        if (!TryComp(ourDock, out TransformComponent? xformA) ||
-            xformA.GridUid != shuttleUid)
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
-            return;
-        }
-
-        // TODO: Move the CanDock stuff to the port state and also validate that stuff
-        // Also need to check preventpilot + enabled / dockedwith
-        if (!CanDock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp)))
-        {
-            _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
-            return;
-        }
-
-        Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
     }
 
     public bool CanUndock(Entity<DockingComponent?> dock)
