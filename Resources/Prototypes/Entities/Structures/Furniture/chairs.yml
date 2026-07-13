@@ -1,8 +1,7 @@
 - type: entity
-  abstract: true
-  parent: StructureHealthFurniture
-  id: SeatBase
   name: chair
+  id: SeatBase
+  abstract: true
   description: You sit in this. Either by will or force.
   placement:
     mode: PlaceFree
@@ -28,6 +27,21 @@
     position: Stand
     buckleOffset: "0,-0.05"
   - type: Pullable
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: StaticPrice
     price: 50
 
@@ -332,17 +346,6 @@
     graph: Seat
     node: chairFolding
   - type: DamageExaminable
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
 
 - type: entity
   parent: ChairFolding
