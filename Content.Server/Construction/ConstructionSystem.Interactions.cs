@@ -111,6 +111,10 @@ namespace Content.Server.Construction
             // edges' first steps. If any of them accepts the interaction, we stop iterating and enter that edge.
             for (var i = 0; i < node.Edges.Count; i++)
             {
+                // Don't retry the same edge.
+                if (i == construction.TargetEdgeIndex)
+                    continue;
+
                 var edge = node.Edges[i];
                 if (HandleEdge(uid, ev, edge, validation, construction) is var result and not HandleResult.False)
                 {
