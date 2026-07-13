@@ -86,7 +86,7 @@
   name: woozy
   components:
   - type: DrunkStatusEffect
-  - type: WobblyWalkStatusEffect
+  - type: WobblyMovementStatusEffect
 
 # Causes you to get drunk
 - type: entity
