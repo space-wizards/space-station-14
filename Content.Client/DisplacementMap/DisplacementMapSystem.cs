@@ -2,14 +2,18 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.DisplacementMap;
 
-public sealed class DisplacementMapSystem : EntitySystem
+public sealed partial class DisplacementMapSystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private ISerializationManager _serialization = null!;
+    [Dependency] private SpriteSystem _sprite = null!;
+
+    //needs to be replaced later: see comment on line 48
+    private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
 
     private static string? BuildDisplacementLayerKey(object key)
     {
@@ -37,10 +41,20 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (displacementKey is null)
             return false;
 
-        EnsureDisplacementIsNotOnSprite(sprite, key);
+        if (EnsureDisplacementIsNotOnSprite(sprite, key))
+            index--;
 
         if (data.ShaderOverride is not null)
-            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
+        {
+            //TODO : this is a kinda janky workaround for the fact that the current rendering pipeline does not have
+            //proper support for multiple shaders on a given layer (or an ubershader to handle stacking all of the effects well)
+            //should be replaced by an engine-level solution, but this is an adequate temporary solution.
+            //what's that phrase about temporary solutions?
+            sprite.Comp.LayerSetShader(index,
+                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID)
+                    ? data.ShaderOverrideUnshaded
+                    : data.ShaderOverride);
+        }
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
@@ -78,10 +92,21 @@ public sealed class DisplacementMapSystem : EntitySystem
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
 
-        // This previously assigned a string reading "this is impossible" if key.ToString eval'd to false.
-        // However, for the sake of sanity, we've changed this to assert non-null - !.
-        // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
-        displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
+        if (key is Enum)
+        {
+            // We are doing this enum-to-string conversion here because CopyToShaderParameters.LayerKey only takes a string,
+            // but LayerMap keys are stored as objects, and therefore can take enums.
+            // There is a key parser in SpriteComponent but it requires the qualified (i.e. full) enum name.
+            // It feels like CopyToShaderParameters should be able to just take objects, but until then:
+            displacementLayer.CopyToShaderParameters!.LayerKey = $"enum.{key.GetType().Name}.{key}";
+        }
+        else
+        {
+            // This previously assigned a string reading "this is impossible" if key.ToString eval'd to false.
+            // However, for the sake of sanity, we've changed this to assert non-null - !.
+            // If this throws an error, we're not sorry. Nanotrasen thanks you for your service fixing this bug.
+            displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
+        }
 
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
@@ -94,13 +119,13 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="sprite">The sprite to remove the displacement layer from.</param>
     /// <param name="key">The key of the layer that is referenced by the displacement layer we want to remove.</param>
-    /// <param name="logMissing">Whether to report an error if the displacement map isn't on the sprite.</param>
-    public void EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
+    /// <returns>Returns true if the displacement existed and was removed.</returns>
+    public bool EnsureDisplacementIsNotOnSprite(Entity<SpriteComponent> sprite, object key)
     {
         var displacementLayerKey = BuildDisplacementLayerKey(key);
         if (displacementLayerKey is null)
-            return;
+            return false;
 
-        _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+        return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
     }
 }
