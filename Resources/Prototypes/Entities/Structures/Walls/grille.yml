@@ -90,6 +90,7 @@
           True: { visible: True }
           False: { visible: False }
   - type: AnimationPlayer
+  - type: TrayScanReveal
 
 - type: entity
   id: ClockworkGrille
