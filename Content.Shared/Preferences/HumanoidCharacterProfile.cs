@@ -613,6 +613,7 @@ namespace Content.Shared.Preferences
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
+            if (Voice != other.Voice) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
