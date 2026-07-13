@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Movement.Systems;
+using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Random;
@@ -6,43 +7,44 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Drunk;
 
-public abstract partial class SharedWobblyWalkSystem : EntitySystem
+public sealed partial class SharedWobblyWalkSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IRobustRandom _random = default!;
 
     [SubscribeLocalEvent]
     private void OnStatusApplied(Entity<WobblyWalkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
-        Log.Info("FCCCCK");
         entity.Comp.NextUpdate = _timing.CurTime;
     }
 
     [SubscribeLocalEvent]
     private void OnMovementWish(Entity<WobblyWalkStatusEffectComponent> entity, ref StatusEffectRelayedEvent<MovementWishDirectionEvent> args)
     {
-        Log.Info("FCCCCK1");
         if (!TryComp<StatusEffectComponent>(entity, out var statusEffect))
             return;
 
-        Log.Info("FCCCCK2");
+        if (_timing.CurTime >= entity.Comp.NextUpdate)
+        {
+            var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity), GetNetEntity(statusEffect.AppliedTo));
 
-        if (_timing.CurTime < entity.Comp.NextUpdate)
-            return;
+            entity.Comp.NextUpdate += TimeSpan.FromSeconds(rand.NextFloat(entity.Comp.UpdateIntervalIntervals.X, entity.Comp.UpdateIntervalIntervals.Y));
 
-        Log.Info("FCCCCK3");
+            // Effect scales linearly up and down in strength to the max
+            var effectStrength = statusEffect.EndEffectTime == null
+                ? 1f
+                : (float)Math.Min(Math.Min((_timing.CurTime - statusEffect.StartEffectTime).TotalSeconds,
+                        (statusEffect.EndEffectTime - _timing.CurTime).Value.TotalSeconds),
+                    entity.Comp.TimeUntilMax.TotalSeconds) / entity.Comp.TimeUntilMax.TotalSeconds;
 
-        entity.Comp.NextUpdate += entity.Comp.UpdateInterval;
+            var newAngle = rand.NextAngle(-effectStrength * entity.Comp.MaxAngle, effectStrength * entity.Comp.MaxAngle);
+            entity.Comp.CurrentAngle = newAngle;
 
-        // Effect scales linearly up and down in strength to the max
-        var effectStrength = statusEffect.EndEffectTime == null ? 1f : (float)Math.Min(Math.Min((_timing.CurTime - statusEffect.StartEffectTime).TotalSeconds, (statusEffect.EndEffectTime - _timing.CurTime).Value.TotalSeconds), entity.Comp.TimeUntilMax.TotalSeconds) / entity.Comp.TimeUntilMax.TotalSeconds;
-
-        var newAngle = _random.NextAngle(-effectStrength * entity.Comp.MaxAngle, effectStrength * entity.Comp.MaxAngle);
-        entity.Comp.CurrentAngle = newAngle;
+            Dirty(entity);
+        }
 
         args.Args = args.Args with
         {
-            WishDir = newAngle.RotateVec(args.Args.WishDir),
+            WishDir = entity.Comp.CurrentAngle.RotateVec(args.Args.WishDir),
         };
     }
 }
