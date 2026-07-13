@@ -1,728 +1,410 @@
+# Base
+
+- type: construction
+  abstract: true
+  id: BaseAtmos
+  placementMode: SnapgridCenter
+  category: construction-category-atmospherics
+  objectType: Structure
+  canRotate: true
+
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasPipe
+  placementMode: AlignAtmosPipeLayers
+  graph: GasPipe
+  canBuildInImpassable: true # for player convenience
+
+- type: construction
+  abstract: true
+  parent: BaseAtmos
+  id: BaseGasDevice
+  conditions:
+  - !type:NoUnstackableInTile
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasUnary
+  graph: GasUnary
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasBinary
+  graph: GasBinary
+  placementMode: AlignAtmosPipeLayers # most binary devices support layers
+
+- type: construction
+  abstract: true
+  parent: BaseGasDevice
+  id: BaseGasTrinary
+  graph: GasTrinary
+
 # Machines
 - type: construction
+  parent: BaseAtmos
   id: AirAlarmFixture
   graph: AirAlarm
-  startNode: start
   targetNode: air_alarm
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition {}
+  - !type:WallmountCondition
 
 - type: construction
+  parent: BaseAtmos
   id: FireAlarm
   graph: FireAlarm
-  startNode: start
   targetNode: fire_alarm
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canRotate: true
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition {}
+  - !type:WallmountCondition
 
 - type: construction
+  parent: BaseAtmos
   id: AirSensor
   graph: AirSensor
-  startNode: start
   targetNode: sensor
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canRotate: true
 
 - type: construction
+  parent: BaseAtmos
   id: GasPipeSensor
-  graph: GasPipeSensor
-  startNode: start
-  targetNode: sensor
-  category: construction-category-atmospherics
   placementMode: AlignAtmosPipeLayers
-  objectType: Structure
-  canRotate: true
+  graph: GasPipeSensor
+  targetNode: sensor
   alternativePrototypes:
   - GasPipeSensor
   - GasPipeSensorAlt1
   - GasPipeSensorAlt2
 
 - type: construction
+  parent: GasPipeSensor
   id: GasPipeSensorAlt1
   hide: true
-  graph: GasPipeSensor
-  startNode: start
   targetNode: sensorAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  objectType: Structure
-  canRotate: true
-  alternativePrototypes:
-  - GasPipeSensor
-  - GasPipeSensorAlt1
-  - GasPipeSensorAlt2
 
 - type: construction
+  parent: GasPipeSensor
   id: GasPipeSensorAlt2
   hide: true
-  graph: GasPipeSensor
-  startNode: start
   targetNode: sensorAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  objectType: Structure
-  canRotate: true
-  alternativePrototypes:
-  - GasPipeSensor
-  - GasPipeSensorAlt1
-  - GasPipeSensorAlt2
 
 # ATMOS PIPES
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeHalf
   name: construction-recipe-gas-pipe-half
-  graph: GasPipe
-  startNode: start
   targetNode: half
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
   alternativePrototypes:
   - GasPipeHalf
   - GasPipeHalfAlt1
   - GasPipeHalfAlt2
 
 - type: construction
+  parent: GasPipeHalf
   id: GasPipeHalfAlt1
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: halfAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeHalf
-  - GasPipeHalfAlt1
-  - GasPipeHalfAlt2
 
 - type: construction
+  parent: GasPipeHalf
   id: GasPipeHalfAlt2
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: halfAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeHalf
-  - GasPipeHalfAlt1
-  - GasPipeHalfAlt2
 
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeStraight
-  graph: GasPipe
-  startNode: start
   targetNode: straight
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
   alternativePrototypes:
   - GasPipeStraight
   - GasPipeStraightAlt1
   - GasPipeStraightAlt2
 
 - type: construction
+  parent: GasPipeStraight
   id: GasPipeStraightAlt1
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: straightAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeStraight
-  - GasPipeStraightAlt1
-  - GasPipeStraightAlt2
 
 - type: construction
+  parent: GasPipeStraight
   id: GasPipeStraightAlt2
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: straightAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeStraight
-  - GasPipeStraightAlt1
-  - GasPipeStraightAlt2
 
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeBend
   name: construction-recipe-gas-pipe-bend
-  graph: GasPipe
-  startNode: start
   targetNode: bend
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
   alternativePrototypes:
   - GasPipeBend
   - GasPipeBendAlt1
   - GasPipeBendAlt2
 
 - type: construction
+  parent: GasPipeBend
   id: GasPipeBendAlt1
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: bendAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeBend
-  - GasPipeBendAlt1
-  - GasPipeBendAlt2
 
 - type: construction
+  parent: GasPipeBend
   id: GasPipeBendAlt2
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: bendAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeBend
-  - GasPipeBendAlt1
-  - GasPipeBendAlt2
 
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeTJunction
   name: construction-recipe-gas-pipe-t-junction
-  graph: GasPipe
-  startNode: start
   targetNode: tjunction
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
   alternativePrototypes:
   - GasPipeTJunction
   - GasPipeTJunctionAlt1
   - GasPipeTJunctionAlt2
 
 - type: construction
+  parent: GasPipeTJunction
   id: GasPipeTJunctionAlt1
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: tjunctionAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeTJunction
-  - GasPipeTJunctionAlt1
-  - GasPipeTJunctionAlt2
 
 - type: construction
+  parent: GasPipeTJunction
   id: GasPipeTJunctionAlt2
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: tjunctionAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeTJunction
-  - GasPipeTJunctionAlt1
-  - GasPipeTJunctionAlt2
 
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeFourway
   name: construction-recipe-gas-pipe-fourway
-  graph: GasPipe
-  startNode: start
   targetNode: fourway
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
   alternativePrototypes:
   - GasPipeFourway
   - GasPipeFourwayAlt1
   - GasPipeFourwayAlt2
 
 - type: construction
+  parent: GasPipeFourway
   id: GasPipeFourwayAlt1
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: fourwayAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeFourway
-  - GasPipeFourwayAlt1
-  - GasPipeFourwayAlt2
 
 - type: construction
+  parent: GasPipeFourway
   id: GasPipeFourwayAlt2
   hide: true
-  graph: GasPipe
-  startNode: start
   targetNode: fourwayAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: true
-  alternativePrototypes:
-  - GasPipeFourway
-  - GasPipeFourwayAlt1
-  - GasPipeFourwayAlt2
 
 - type: construction
+  parent: BaseGasPipe
   id: GasPipeManifold
-  graph: GasPipe
-  startNode: start
   targetNode: manifold
-  category: construction-category-atmospherics
   placementMode: SnapgridCenter
-  canBuildInImpassable: true
 
 # ATMOS UNARY
 - type: construction
+  parent: BaseGasUnary
   id: GasVentPump
-  graph: GasUnary
-  startNode: start
   targetNode: ventpump
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasUnary
   id: GasPassiveVent
-  graph: GasUnary
-  startNode: start
   targetNode: passivevent
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasUnary
   id: GasVentScrubber
-  graph: GasUnary
-  startNode: start
   targetNode: ventscrubber
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasUnary
   id: GasOutletInjector
-  graph: GasUnary
-  startNode: start
   targetNode: outletinjector
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
 
   # ATMOS BINARY
 - type: construction
+  parent: BaseGasBinary
   id: GasPressurePump
-  graph: GasBinary
-  startNode: start
   targetNode: pressurepump
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPressurePump
   - GasPressurePumpAlt1
   - GasPressurePumpAlt2
 
 - type: construction
+  parent: GasPressurePump
   id: GasPressurePumpAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: pressurepumpAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPressurePump
-  - GasPressurePumpAlt1
-  - GasPressurePumpAlt2
 
 - type: construction
+  parent: GasPressurePump
   id: GasPressurePumpAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: pressurepumpAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPressurePump
-  - GasPressurePumpAlt1
-  - GasPressurePumpAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: GasVolumePump
-  graph: GasBinary
-  startNode: start
   targetNode: volumepump
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasVolumePump
   - GasVolumePumpAlt1
   - GasVolumePumpAlt2
 
 - type: construction
+  parent: GasVolumePump
   id: GasVolumePumpAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: volumepumpAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasVolumePump
-  - GasVolumePumpAlt1
-  - GasVolumePumpAlt2
 
 - type: construction
+  parent: GasVolumePump
   id: GasVolumePumpAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: volumepumpAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasVolumePump
-  - GasVolumePumpAlt1
-  - GasVolumePumpAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: GasPassiveGate
-  graph: GasBinary
-  startNode: start
   targetNode: passivegate
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPassiveGate
   - GasPassiveGateAlt1
   - GasPassiveGateAlt2
 
 - type: construction
+  parent: GasPassiveGate
   id: GasPassiveGateAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: passivegateAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPassiveGate
-  - GasPassiveGateAlt1
-  - GasPassiveGateAlt2
 
 - type: construction
+  parent: GasPassiveGate
   id: GasPassiveGateAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: passivegateAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPassiveGate
-  - GasPassiveGateAlt1
-  - GasPassiveGateAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: GasPressureRegulator
-  graph: GasBinary
-  startNode: start
   targetNode: pressureregulator
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPressureRegulator
   - GasPressureRegulatorAlt1
   - GasPressureRegulatorAlt2
 
 - type: construction
+  parent: GasPressureRegulator
   id: GasPressureRegulatorAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: pressureregulatorAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPressureRegulator
-  - GasPressureRegulatorAlt1
-  - GasPressureRegulatorAlt2
 
 - type: construction
+  parent: GasPressureRegulator
   id: GasPressureRegulatorAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: pressureregulatorAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasPressureRegulator
-  - GasPressureRegulatorAlt1
-  - GasPressureRegulatorAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: GasValve
-  graph: GasBinary
-  startNode: start
   targetNode: valve
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasValve
   - GasValveAlt1
   - GasValveAlt2
 
 - type: construction
+  parent: GasValve
   id: GasValveAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: valveAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasValve
-  - GasValveAlt1
-  - GasValveAlt2
 
 - type: construction
+  parent: GasValve
   id: GasValveAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: valveAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - GasValve
-  - GasValveAlt1
-  - GasValveAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: SignalControlledValve
-  graph: GasBinary
-  startNode: start
   targetNode: signalvalve
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
   alternativePrototypes:
   - SignalControlledValve
   - SignalControlledValveAlt1
   - SignalControlledValveAlt2
 
 - type: construction
+  parent: SignalControlledValve
   id: SignalControlledValveAlt1
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: signalvalveAlt1
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - SignalControlledValve
-  - SignalControlledValveAlt1
-  - SignalControlledValveAlt2
 
 - type: construction
+  parent: SignalControlledValve
   id: SignalControlledValveAlt2
   hide: true
-  graph: GasBinary
-  startNode: start
   targetNode: signalvalveAlt2
-  category: construction-category-atmospherics
-  placementMode: AlignAtmosPipeLayers
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
-  alternativePrototypes:
-  - SignalControlledValve
-  - SignalControlledValveAlt1
-  - SignalControlledValveAlt2
 
 - type: construction
+  parent: BaseGasBinary
   id: GasPort
-  graph: GasBinary
-  startNode: start
   targetNode: port
-  category: construction-category-atmospherics
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasBinary
   id: GasDualPortVentPump
-  graph: GasBinary
-  startNode: start
   targetNode: dualportventpump
-  category: construction-category-atmospherics
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: BaseGasBinary
   id: HeatExchanger
-  graph: GasBinary
-  startNode: start
   targetNode: radiator
-  category: construction-category-atmospherics
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: BaseGasBinary
   id: HeatExchangerBend
   name: construction-recipe-heat-exchanger-bend
-  graph: GasBinary
-  startNode: start
   targetNode: bendradiator
-  category: construction-category-atmospherics
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 # ATMOS TRINARY
 - type: construction
+  parent: BaseGasTrinary
   id: GasFilter
-  graph: GasTrinary
-  startNode: start
   targetNode: filter
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: GasFilterFlipped
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: GasFilter
   id: GasFilterFlipped
   hide: true
-  graph: GasTrinary
-  startNode: start
   targetNode: filterflipped
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  mirror: GasFilter
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasTrinary
   id: GasMixer
-  graph: GasTrinary
-  startNode: start
   targetNode: mixer
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: GasMixerFlipped
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: GasMixer
   id: GasMixerFlipped
   hide: true
-  graph: GasTrinary
-  startNode: start
   targetNode: mixerflipped
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  mirror: GasMixer
-  conditions:
-  - !type:NoUnstackableInTile
 
 - type: construction
+  parent: BaseGasTrinary
   id: PressureControlledValve
-  graph: GasTrinary
-  startNode: start
   targetNode: pneumaticvalve
-  category: construction-category-atmospherics
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:NoUnstackableInTile
