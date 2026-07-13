@@ -112,7 +112,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 Access = AccessLevel.Public,
                 ToolTip = Loc.GetString(iconProto.JobName),
                 TextureNormal = texture,
-                SetSize = new Vector2(30, 30),
+                SetSize = new Vector2(32, 32),
             };
 
             // Finish button and add to UI
@@ -144,7 +144,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
             Group = buttonGroup,
             ToggleMode = true,
             StyleClasses = { StyleClass.ButtonOpenBoth },
-            SetSize = new Vector2(172, 32),
+            Margin = new Thickness(8, 2)
         };
 
         button.AddChild(new BoxContainer
@@ -156,7 +156,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 {
                     Texture = _spriteSystem.Frame0(groupProto.Sprite),
                     Stretch = TextureRect.StretchMode.KeepAspectCentered,
-                    SetSize = new Vector2(30, 30),
+                    SetSize = new Vector2(32, 32),
                     VerticalAlignment = VAlignment.Center,
                 },
                 new Label
