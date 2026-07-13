@@ -21,7 +21,7 @@ public sealed partial class AdminAnnounceWindow
             _paletteWindow.OnColorChanged += SetColor;
         }
 
-        _paletteWindow.UpdateDisplay(GetCurrentColor(), _currentHex);
+        _paletteWindow.UpdateDisplay(GetCurrentColor());
         _paletteWindow.OpenCentered();
     }
 
@@ -30,7 +30,7 @@ public sealed partial class AdminAnnounceWindow
         if (_paletteWindow == null || _paletteWindow.Disposed || !_paletteWindow.IsOpen)
             return;
 
-        _paletteWindow.UpdateDisplay(GetCurrentColor(), _currentHex);
+        _paletteWindow.UpdateDisplay(GetCurrentColor());
     }
 
     private void SetColor(Color color)
@@ -41,7 +41,7 @@ public sealed partial class AdminAnnounceWindow
 
         _currentHex = hex;
         UpdateColorPreview();
-        _paletteWindow?.UpdateDisplay(color, hex);
+        _paletteWindow?.UpdateDisplay(color);
     }
 
     private Color GetCurrentColor()

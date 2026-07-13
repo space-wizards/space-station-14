@@ -7,12 +7,6 @@
                               IsAlphaVisible="False"
                               VerticalExpand="True"
                               HorizontalExpand="True" />
-        <BoxContainer Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0">
-            <Label Text="{Loc admin-announce-hex}" Margin="0,0,8,0" />
-            <LineEdit Name="HexInput"
-                      HorizontalExpand="True"
-                      PlaceHolder="{Loc admin-announce-hex-color}" />
-        </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,4">
             <Label Text="{Loc admin-announce-presets}" HorizontalAlignment="Center" Margin="0,0,0,4" />
         </BoxContainer>

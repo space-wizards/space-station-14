@@ -26,14 +26,6 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
             SetColor(color);
         };
 
-        HexInput.OnTextChanged += args =>
-        {
-            if (_updating || Color.TryFromHex(args.Text) is not { } color)
-                return;
-
-            SetColor(color);
-        };
-
         SetupPreset(PresetWizard, "#ff00ff");
         SetupPreset(PresetNukeOp, "#ff0000");
         SetupPreset(PresetCentComm, AdminAnnounceDefaults.DefaultColorHex);
@@ -46,27 +38,21 @@ public sealed partial class AdminAnnounceColorPalette : DefaultWindow
             return;
 
         button.ModulateSelfOverride = color;
-        button.OnPressed += _ => ApplyPreset(hex, color);
+        button.OnPressed += _ => SetColor(color);
     }
 
-    private void ApplyPreset(string hex, Color color)
+    private void SetColor(Color color)
     {
-        SetColor(color, hex);
-    }
-
-    private void SetColor(Color color, string? hex = null)
-    {
-        UpdateDisplay(color, hex ?? color.ToHexNoAlpha());
+        UpdateDisplay(color);
         OnColorChanged?.Invoke(color);
     }
 
-    public void UpdateDisplay(Color color, string hex)
+    public void UpdateDisplay(Color color)
     {
         _updating = true;
         try
         {
             Picker.Color = color;
-            HexInput.Text = hex;
         }
         finally
         {

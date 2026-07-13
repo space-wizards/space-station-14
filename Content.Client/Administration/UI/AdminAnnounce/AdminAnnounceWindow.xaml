@@ -37,9 +37,9 @@
         <TextEdit Name="Announcement" VerticalExpand="True" MinHeight="150" Margin="0,4" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0,4,0,0">
             <CheckBox Name="KeepWindowOpen" Text="{Loc admin-announce-keep-open}" VerticalAlignment="Center" />
-            <OptionButton Name="ScopeOption" MinWidth="150" Margin="8,0,0,0" />
             <Control HorizontalExpand="True" />
             <Button Name="AnnounceButton" Disabled="True" Text="{Loc admin-announce-button}" MinWidth="150" />
+            <OptionButton Name="ScopeOption" MinWidth="150" Margin="4,0,0,0" />
             <OptionButton Name="AnnounceMethod" MinWidth="150" Margin="4,0,0,0"/>
         </BoxContainer>
     </BoxContainer>
