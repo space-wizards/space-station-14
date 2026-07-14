@@ -136,7 +136,7 @@
   id: Cardwall
   graph: Cardwall
   targetNode: cardwall
-  conditions: &TileNotBlockedSpace
+  conditions:
   - !type:TileNotBlocked
     failIfSpace: false
 # endregion Walls
