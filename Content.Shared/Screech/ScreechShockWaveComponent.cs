@@ -37,6 +37,6 @@ public sealed partial class ScreechShockWaveComponent : Component
     /// <summary>
     /// Used with FadeTime to properly fade out the effect.
     /// </summary>
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TimeSpan InitTime;
 }
