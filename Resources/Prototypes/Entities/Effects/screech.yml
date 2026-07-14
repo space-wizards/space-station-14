@@ -1,6 +1,7 @@
 - type: entity
   # Just fades out with no movement animation
   id: EffectScreech
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 3.2

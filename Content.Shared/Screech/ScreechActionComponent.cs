@@ -27,13 +27,7 @@ public sealed partial class ScreechActionComponent : Component
     /// Sound that will be played by the screech.
     /// </summary>
     [DataField]
-    public SoundSpecifier? ScreechSound;
-
-    /// <summary>
-    /// Range at which the sound will be heard.
-    /// </summary>
-    [DataField]
-    public float SoundRange = 20f;
+    public SoundSpecifier? ScreechSound = new SoundPathSpecifier("/Audio/Effects/Screech/changeling_screech_strong.ogg");
 
     /// <summary>
     /// Entity effects applied to entities that heard the screech.
