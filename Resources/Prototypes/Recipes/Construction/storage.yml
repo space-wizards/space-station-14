@@ -19,7 +19,7 @@
 
 # region Bureaucracy
 - type: construction
-  parent: FilingCabinet
+  parent: BaseStorageStructure
   id: FilingCabinet
   graph: FilingCabinet
   targetNode: filingCabinet
