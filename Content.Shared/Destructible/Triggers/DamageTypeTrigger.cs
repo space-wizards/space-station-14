@@ -31,4 +31,11 @@ public sealed partial class DamageTypeTrigger : IThresholdTrigger
         return system.Damageable.GetAllDamage(damageable.AsNullable()).DamageDict.TryGetValue(DamageType, out var damageReceived) &&
                damageReceived >= Damage;
     }
+
+    public bool Equals(IThresholdTrigger? other)
+    {
+        return other is DamageTypeTrigger o
+               && DamageType.Equals(o.DamageType)
+               && Damage.Equals(o.Damage);
+    }
 }

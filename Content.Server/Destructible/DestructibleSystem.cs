@@ -66,6 +66,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// <param name="args">The event arguments.</param>
     private void OnMapInit(Entity<DestructibleComponent> entity, ref MapInitEvent args)
     {
+        SquishLikeThresholds(ref entity.Comp.Thresholds);
         AddOverkillThreshold(entity);
     }
 
@@ -205,6 +206,49 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         {
             entity.Comp.Thresholds.Add(threshold);
         }
+    }
+
+    /// <summary>
+    /// Takes a list of thresholds and merges together any which have the same trigger.
+    /// </summary>
+    private void SquishLikeThresholds(ref List<DamageThreshold> thresholds)
+    {
+        var newThresholds = new List<DamageThreshold>();
+        foreach (var threshold in thresholds)
+        {
+            if (TryLikeTrigger(newThresholds, threshold.Trigger, out var likeThreshold))
+                likeThreshold.Behaviors.AddRange(threshold.Behaviors);
+
+            else
+                newThresholds.Add(threshold);
+        }
+
+        thresholds = newThresholds;
+    }
+
+    /// <summary>
+    /// Attempts to find a <see cref="DamageThreshold"/> in a list that has the same trigger as <c>trigger</c>.
+    /// </summary>
+    /// <param name="thresholds">Thresholds to search.</param>
+    /// <param name="trigger">Trigger to find inside of <c>thresholds</c>.</param>
+    /// <param name="likeThreshold">A threshold with the same trigger as <c>trigger</c>.</param>
+    /// <returns>True if a like threshold was found.</returns>
+    private bool TryLikeTrigger(List<DamageThreshold> thresholds,
+                                IThresholdTrigger? trigger,
+                                [NotNullWhen(true)] out DamageThreshold? likeThreshold)
+    {
+        foreach (var threshold in thresholds)
+        {
+            if (threshold.Trigger is null && trigger is null
+                || threshold.Trigger is not null && trigger is not null && threshold.Trigger.Equals(trigger))
+            {
+                likeThreshold = threshold;
+                return true;
+            }
+        }
+
+        likeThreshold = null;
+        return false;
     }
 
     /// <summary>

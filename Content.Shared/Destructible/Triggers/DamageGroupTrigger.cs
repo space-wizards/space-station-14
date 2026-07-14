@@ -30,4 +30,11 @@ public sealed partial class DamageGroupTrigger : IThresholdTrigger
     {
         return system.Damageable.GetDamagePerGroup(damageable.Owner).GetValueOrDefault(DamageGroup) >= Damage;
     }
+
+    public bool Equals(IThresholdTrigger? other)
+    {
+        return other is DamageGroupTrigger o
+               && DamageGroup.Equals(o.DamageGroup)
+               && Damage.Equals(o.Damage);
+    }
 }
