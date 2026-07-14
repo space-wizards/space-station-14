@@ -55,5 +55,4 @@ public sealed partial class AdminEventLogWindow : FancyWindow
     {
         ResetRoundButton.Disabled = RoundSpinBox.Value == CurrentRound;
     }
-
 }
