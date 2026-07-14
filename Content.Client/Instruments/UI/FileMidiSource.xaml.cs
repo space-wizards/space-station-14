@@ -186,8 +186,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             var (stream, name) = await _dialogs.GetFileAndName(filters, FileAccess.Read);
             await using (stream)
             {
-                _isMidiFileDialogueWindowOpen = false;
-
                 // did the instrument menu get closed while waiting for the user to select a file?
                 if (Disposed)
                     return;
@@ -195,7 +193,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
                 if (stream == null)
                     return;
 
-                if(name != null)
+                if (name != null)
                     await _midiCollection.AddMidiFile(new ResPath(name), stream);
             }
         }
@@ -203,6 +201,11 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         {
             _userInterfaceManager.Popup(Loc.GetString("instruments-component-menu-files-error"));
         }
+        finally
+        {
+            _isMidiFileDialogueWindowOpen = false;
+        }
+
     }
 
     private void OnRemoveButtonPressed(ButtonEventArgs obj)
