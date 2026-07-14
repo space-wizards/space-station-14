@@ -12,9 +12,8 @@
         </BoxContainer>
         <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">
-            <Control HorizontalExpand="True"/>
-            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Center"
-                    StyleClasses="OpenRight" Access="Public"/>
+            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Left"
+                    StyleClasses="Open" Access="Public"/>
         </BoxContainer>
     </BoxContainer>
 </ui:FancyWindow>
