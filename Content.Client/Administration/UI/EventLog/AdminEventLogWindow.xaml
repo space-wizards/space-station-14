@@ -16,7 +16,7 @@
         <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">
             <Control HorizontalExpand="True"/>
-            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Right"
+            <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Center"
                     StyleClasses="OpenRight" Access="Public"/>
         </BoxContainer>
     </BoxContainer>
