@@ -1,17 +1,11 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
-using Content.Shared.CombatMode;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
-using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffect;
-using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -22,11 +16,9 @@ public sealed partial class ScreechSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityLookupSystem _entityLookup = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedContainerSystem _containers = default!;
-    [Dependency] private SharedStunSystem _stuns = default!;
     [Dependency] private SharedEntityEffectsSystem _effects = default!;
 
-    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery;
+    [Dependency] private EntityQuery<StatusEffectsComponent> _statusEffectsQuery = default!;
 
     private readonly HashSet<EntityUid> _entSet = [];
 
@@ -93,7 +85,7 @@ public sealed partial class ScreechSystem : EntitySystem
             EntityHeardIt(entity, source, effects);
         }
 
-        _audio.PlayPredicted(screechSound, source, source, AudioParams.Default.WithVolume(1f));
+        _audio.PlayPredicted(screechSound, source, source);
     }
 
     /// <summary>

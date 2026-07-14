@@ -3,13 +3,14 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Screech;
+namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// Stores a screech action's parameters. Must be paired with <see cref="ScreechActionEvent"/>
+/// Will cause a screech to happen at a location, similiar to <see cref="ScreechActionComponent"/>
+/// If TargetUser is true then their location will be used.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed partial class ScreechActionComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ScreechOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
     /// The range of the screech's effects.

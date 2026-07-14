@@ -264,10 +264,6 @@
       sprite: Interface/Actions/changeling2.rsi
       state: screech
   - type: ScreechAction
-    screechSound:
-        path: /Audio/Effects/Screech/changeling_screech_strong.ogg
-        params:
-          maxDistance: 20.0
     effects:
     - !type:MovementSpeedModifier
       walkSpeedModifier: 0.5
