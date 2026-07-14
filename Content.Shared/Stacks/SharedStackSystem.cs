@@ -236,10 +236,13 @@ public abstract partial class SharedStackSystem : EntitySystem
             return;
 
         if (amount <= 0)
+        {
+            Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
             return;
+        }
 
         // Tries to merge stack with a stack in hand. If not possible does the split
-        // Not an early return so that they can share visuals i.e. popups. Currently they share nothing due to bad prediction in popups.
+        // Not an early return so that they can share visuals i.e. popups.
         if (
             !Hands.TryGetActiveItem(user.Owner, out var split)
             || !TryComp<StackComponent>(split, out var splitStack)
