@@ -20,37 +20,45 @@ public sealed partial class BlockingComponent : Component
     /// <summary>
     /// The entity that's blocking
     /// </summary>
-    [DataField, AutoNetworkedField] public EntityUid? User;
+    [DataField, AutoNetworkedField]
+    public EntityUid? User;
 
     /// <summary>
     /// Is it currently blocking?
     /// </summary>
-    [DataField, AutoNetworkedField] public bool IsBlocking;
+    [DataField, AutoNetworkedField]
+    public bool IsBlocking;
 
     /// <summary>
     /// The shape of the blocking fixture that will be dynamically spawned
     /// </summary>
-    [DataField] public IPhysShape Shape = new PhysShapeCircle(0.5f);
+    [DataField]
+    public IPhysShape Shape = new PhysShapeCircle(0.5f);
 
     /// <summary>
     /// The damage modifer to use while passively blocking
     /// </summary>
-    [DataField(required: true)] public DamageModifierSet PassiveBlockModifier = default!;
+    [DataField(required: true)]
+    public DamageModifierSet PassiveBlockModifier = default!;
 
     /// <summary>
     /// Optional damage modifier to use while actively blocking.
     /// If this is null, shield will use the PassiveBlockModifier instead.
     /// </summary>
-    [DataField] public DamageModifierSet? ActiveBlockModifier;
+    [DataField]
+    public DamageModifierSet? ActiveBlockModifier;
 
-    [DataField] public EntProtoId BlockingToggleAction = "ActionToggleBlock";
+    [DataField]
+    public EntProtoId BlockingToggleAction = "ActionToggleBlock";
 
-    [DataField, AutoNetworkedField] public EntityUid? BlockingToggleActionEntity;
+    [DataField, AutoNetworkedField]
+    public EntityUid? BlockingToggleActionEntity;
 
     /// <summary>
     /// The sound to be played when you get hit while actively blocking
     /// </summary>
-    [DataField] public SoundSpecifier BlockSound =
+    [DataField]
+    public SoundSpecifier BlockSound =
         new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg")
         {
             Params = AudioParams.Default.WithVariation(0.25f)
@@ -60,11 +68,13 @@ public sealed partial class BlockingComponent : Component
     /// Fraction of original damage shield will take instead of user
     /// when not blocking
     /// </summary>
-    [DataField] public float PassiveBlockFraction = 0.5f;
+    [DataField]
+    public float PassiveBlockFraction = 0.5f;
 
     /// <summary>
     /// Fraction of original damage shield will take instead of user
     /// when blocking
     /// </summary>
-    [DataField] public float ActiveBlockFraction = 1.0f;
+    [DataField]
+    public float ActiveBlockFraction = 1.0f;
 }
