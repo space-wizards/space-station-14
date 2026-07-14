@@ -4,7 +4,7 @@
                Title="{Loc 'admin-event-log-title'}"
                MinWidth="600"
                MinHeight="180">
-    <BoxContainer Orientation="Vertical">
+    <BoxContainer Orientation="Vertical" Margin="10">
         <BoxContainer Orientation="Horizontal" MinWidth="400">
             <Label Text="{Loc admin-event-round}"/>
             <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150" Access="Public"/>
