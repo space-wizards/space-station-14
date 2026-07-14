@@ -1,7 +1,7 @@
 # region Base
 - type: construction
   abstract: true
-  id: BaseWeb
+  id: BaseWebStructure
   graph: WebStructures
   category: construction-category-furniture
   placementMode: SnapgridCenter
@@ -13,7 +13,7 @@
 
 # region Web
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: WallWeb
   targetNode: wall
   category: construction-category-structures
@@ -21,33 +21,33 @@
   - !type:TileNotBlocked
 
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: TableWeb
   targetNode: table
   conditions: *TileNotBlocked
 
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: WebBed
   targetNode: bed
   conditions: *TileNotBlocked
 
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: ChairWeb
   targetNode: chair
   canRotate: true
   conditions: *TileNotBlocked
 
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: CrateWeb
   targetNode: crate
   placementMode: PlaceFree
   category: construction-category-storage
 
 - type: construction
-  parent: BaseWeb
+  parent: BaseWebStructure
   id: WebDoor
   targetNode: door
   category: construction-category-structures
