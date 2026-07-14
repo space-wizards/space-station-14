@@ -109,6 +109,7 @@
   name: Activate Microbomb
   description: Activates your internal microbomb, completely destroying you and your equipment
   components:
+  - type: DangerousAction
   - type: Action
     itemIconStyle: BigAction
     priority: -20
@@ -415,6 +416,20 @@
       state: icon-siren
     useDelay: 1
     itemIconStyle: BigAction
+
+- type: entity
+  parent: BaseAction
+  id: ActionToggleNightVision
+  name: Toggle night vision
+  description: Toggles the night vision on and off.
+  components:
+  - type: Action
+    useDelay: 2
+    icon:
+      sprite: Interface/Actions/night_vision.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ToggleNightVisionEvent {}
 
 - type: entity
   parent: ActionToggleWagging
