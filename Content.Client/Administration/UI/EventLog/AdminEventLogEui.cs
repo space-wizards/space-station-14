@@ -56,6 +56,8 @@ public sealed partial class AdminEventLogEui : BaseEui
             eventText);
 
         SendMessage(message);
+
+        // close window to avoid admin accidentally spamming event logs
         EventLogWindow.Close();
     }
 }
