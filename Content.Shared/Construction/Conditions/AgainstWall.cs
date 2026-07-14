@@ -12,6 +12,7 @@ namespace Content.Shared.Construction.Conditions;
 [DataDefinition]
 public sealed partial class AgainstWall : IConstructionCondition
 {
+    private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
@@ -24,8 +25,22 @@ public sealed partial class AgainstWall : IConstructionCondition
 
         foreach (var entity in lookupSys.GetEntitiesIntersecting(againstLocation, LookupFlags.Approximate | LookupFlags.Static))
         {
-            if (tagSys.HasTag(entity, WallTag))
-                return true;
+            if (!tagSys.HasTag(entity, WallTag))
+                continue;
+
+            if (tagSys.HasTag(entity, DiagonalTag)
+                && entManager.TryGetComponent(entity, out TransformComponent? xform))
+            {
+                // In a south facing, diagonal walls have flat sides to the south and west.
+                // When the entity itself is placed to the south, the diagonal wall must be facing north or east to be valid
+                // (i.e. clockwise 90 deg or opposite of the entity's direction)
+                var wallDir = xform.LocalRotation.GetCardinalDir();
+                if (wallDir != direction.GetClockwise90Degrees()
+                    && wallDir != direction.GetOpposite())
+                    continue;
+            }
+
+            return true;
         }
 
         return false;
