@@ -73,7 +73,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                             var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(getRandomVector()));
                             var timedDespawn = system.EntityManager.GetComponent<TimedDespawnComponent>(spawner);
                             timedDespawn.Lifetime = SpawnAfter;
-                            var spawnOnDespawn = system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner);
+                            var spawnOnDespawn = system.EntityManager.GetComponent<SpawnOnDespawnComponent>(spawner);
                             system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawn), entityId);
                         }
                     }
