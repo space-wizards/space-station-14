@@ -63,21 +63,6 @@
     MobFleshLoverSalvage: 1
     MobFleshJaredSalvage: 1
 
-- type: weightedRandomEntity
-  id: MeteorSpawnFleshTendonsTable
-  weights:
-    FleshKudzuSpace: 1
-
-- type: weightedRandomEntity
-  id: MeteorSpawnFleshFleshBlockerTable
-  weights:
-    FleshBlocker: 1
-
-- type: weightedRandomEntity
-  id: MeteorSpawnKudzuTable
-  weights:
-    Kudzu: 1
-
 # Event Schedulers
 
 - type: entity

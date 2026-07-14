@@ -376,18 +376,20 @@
         maxSpawn: 3
         spawnOffset: 1
         spawnAfter: 0.5
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnFleshTendonsTable"
-        minSpawn: 1
-        maxSpawn: 3
-        spawnOffset: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FleshKudzuSpace:
+            min: 1
+            max: 3
         spawnAfter: 0.5
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnFleshFleshBlockerTable"
-        minSpawn: 0
-        maxSpawn: 2
-        spawnOffset: 2
+        offset: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FleshBlocker:
+            min: 1
+            max: 2
         spawnAfter: 0.5
+        offset: 2
       - !type:ExplodeBehavior
 
 # Kudzu Meteor
@@ -409,10 +411,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-      - !type:WeightedSpawnEntityBehavior
-        weightedEntityTable: "MeteorSpawnKudzuTable"
-        minSpawn: 1
-        maxSpawn: 3
-        spawnOffset: 1
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Kudzu:
+            min: 1
+            max: 3
         spawnAfter: 0.5
+        offset: 1
       - !type:ExplodeBehavior
