@@ -697,7 +697,7 @@
       path: /Audio/Effects/unwrap.ogg
 
 - type: entity
-  parent: ChemicalMedipen
+  parent: [ SolutionHyposprayTiny, ChemicalMedipen ]
   id: WehMedipenTiny
   name: weh auto-injector
   description: A non-refillable medipen containing a dose of weh.
@@ -713,7 +713,6 @@
     emptySpriteName: medipen_empty
   - type: Solution
     solution:
-      maxVol: 10
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 10
@@ -721,14 +720,14 @@
 - type: entity
   parent: WehMedipenTiny
   id: WehMedipen
+  categories: [ DoNotMap ]
   name: weh auto-injector
   suffix: DO NOT MAP
-  categories: [ DoNotMap ]
   description: A non-refillable medipen containing multiple doses of weh.
   components:
   - type: Solution
     solution:
-      maxVol: 60
+      maxVol: 60 # Admeme so it has extra capacity
       reagents:
       - ReagentId: JuiceThatMakesYouWeh
         Quantity: 60 # Need at least 50 to transform

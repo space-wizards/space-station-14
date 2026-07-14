@@ -22,6 +22,7 @@
   components:
   - type: StutteringAccent
   - type: DrunkStatusEffect
+  - type: WobblyMovementStatusEffect
 
 - type: entity
   abstract: true
