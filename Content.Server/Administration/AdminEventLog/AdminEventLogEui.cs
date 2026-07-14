@@ -53,7 +53,7 @@ public sealed partial class AdminEventLogEui : BaseEui
             message.Admin.Name,
             message.RoundId,
             message.EventDescription,
-            _config.GetCVar(CCVars.DiscordVoteWebhook));
+            _config.GetCVar(CCVars.DiscordEventWebhook));
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
