@@ -3,13 +3,13 @@
   abstract: true
   id: BaseCrate
   category: construction-category-storage
-  objectType: Structure
   canRotate: false
 
 - type: construction
   abstract: true
   id: BaseBox
   category: construction-category-storage
+  objectType: Item
 # endregion Base
 
 # region Crates
