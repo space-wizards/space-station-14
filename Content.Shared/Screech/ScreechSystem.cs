@@ -131,6 +131,4 @@ public record struct ScreechEffectAttemptEvent(EntityUid Source, bool Cancelled 
 /// <summary>
 /// Event that is fire when an entity uses a screech action.
 /// </summary>
-public sealed partial class ScreechActionEvent : InstantActionEvent
-{
-}
+public sealed partial class ScreechActionEvent : InstantActionEvent;
