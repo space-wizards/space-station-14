@@ -11,7 +11,7 @@
   targetNode: suit
 
 - type: construction
-  parent: BaseClothing
+  parent: BaseItemMisc
   id: MoproachShoes
   graph: MoproachShoes
   targetNode: shoes
