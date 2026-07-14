@@ -31,6 +31,11 @@ public sealed partial class WobblyMovementSystem : EntitySystem
 
             entity.Comp.NextUpdate += TimeSpan.FromSeconds(rand.NextFloat(entity.Comp.UpdateIntervalIntervals.X, entity.Comp.UpdateIntervalIntervals.Y));
 
+            // We don't scale the effect based on your movement speed because, by virtue of moving slower, the effect becomes easier to control.
+            // If you move slower you end up having more time to adjust manually using movement input before drifting too far,
+            // making you walk in a straighter line even without additional compensation.
+            // You still get the initial deviation, but that makes for a good "stumbling" feeling that this effect is going for.
+
             var effectStrength = 1f;
             if (statusEffect.EndEffectTime != null)
             {
