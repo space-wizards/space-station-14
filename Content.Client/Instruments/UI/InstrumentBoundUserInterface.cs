@@ -60,7 +60,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest += OnStopPlayingRequest;
         _fileSource.LoopingToggled += OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest += OnTrackPositionChangeRequest;
-        _fileSource.SetEntity(Owner);
+        _fileSource.SetEntity((Owner, EntMan.GetComponent<InstrumentComponent>(Owner)));
 
         _bandSource.RefreshBandRequest += OnRefreshBandsRequest;
         _bandSource.JoinBandRequest += OnSetBandMasterRequest;
@@ -115,7 +115,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest -= OnStopPlayingRequest;
         _fileSource.LoopingToggled -= OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest -= OnTrackPositionChangeRequest;
-        _fileSource.SetEntity(Owner);
 
         _bandSource.RefreshBandRequest -= OnRefreshBandsRequest;
         _bandSource.JoinBandRequest -= OnSetBandMasterRequest;
@@ -123,10 +122,11 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _inputSource.OpenInputRequest -= OnOpenInputRequest;
         _inputSource.CloseInputRequest -= OnCloseInputRequest;
 
-        if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-        {
-            instrument.OnMidiPlaybackEnded -= OnMidiPlaybackEnded;
-        }
+        if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
+            return;
+
+        _fileSource.SetEntity((Owner, instrument));
+        instrument.OnMidiPlaybackEnded -= OnMidiPlaybackEnded;
     }
 
     private void OnSwitchFilteredChannel(int channelIndex, bool state)

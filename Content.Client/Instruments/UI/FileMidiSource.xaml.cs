@@ -48,7 +48,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private readonly string _noTrackSelectedText = Loc.GetString("instruments-component-menu-files-no-track-selected");
     private readonly List<ResPath> _loadedTracks = [];
-    private EntityUid? _entity;
+    private Entity<InstrumentComponent> _instrument;
     private bool _isMidiFileDialogueWindowOpen;
     private float _timeSinceLastRecoverAttempt;
 
@@ -94,13 +94,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         base.FrameUpdate(args);
 
-        if (!_entManager.TryGetComponent(_entity, out InstrumentComponent? instrument))
-            return;
-
         if (PlaybackSlider.Grabbed)
             return;
 
-        if (!instrument.IsMidiOpen)
+        if (!_instrument.Comp.IsMidiOpen)
         {
             ResetTrackIndicators();
             PlaybackSlider.Disabled = true;
@@ -116,14 +113,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             _timeSinceLastRecoverAttempt = 0;
             ReplayCurrentTrack();
         }
-        else if (instrument.IsRendererAlive)
+        else if (_instrument.Comp.IsRendererAlive)
         {
             PlaybackSlider.Disabled = false;
-            PlaybackSlider.MaxValue = instrument.PlayerTotalTick;
-            PlaybackSlider.SetValueWithoutEvent(instrument.PlayerTick);
+            PlaybackSlider.MaxValue = _instrument.Comp.PlayerTotalTick;
+            PlaybackSlider.SetValueWithoutEvent(_instrument.Comp.PlayerTick);
             // TODO: SequencerTimeScale does not return the actual ticks/seconds, find solution.
-            var totalTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTotalTick / instrument.Renderer!.SequencerTimeScale));
-            var currentTime = TimeSpan.FromSeconds(Math.Ceiling(instrument.PlayerTick / instrument.Renderer!.SequencerTimeScale));
+            var totalTime = TimeSpan.FromSeconds(Math.Ceiling(_instrument.Comp.PlayerTotalTick / _instrument.Comp.Renderer!.SequencerTimeScale));
+            var currentTime = TimeSpan.FromSeconds(Math.Ceiling(_instrument.Comp.PlayerTick / _instrument.Comp.Renderer!.SequencerTimeScale));
             TimeLabel.Text = totalTime.Hours < 1
                 ? Loc.GetString(
                     "instruments-component-menu-files-track-playtime-seconds-minutes",
@@ -356,10 +353,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     /// Set the instrument entity actually playing the tracks. This is needed for the UI to read out current track time
     /// on <see cref="FrameUpdate"/>.
     /// </summary>
-    /// <param name="ent">The instrument entity playing the tracks.</param>
-    public void SetEntity(EntityUid ent)
+    /// <param name="instrument">The instrument entity playing the tracks.</param>
+    public void SetEntity(Entity<InstrumentComponent> instrument)
     {
-        _entity = ent;
+        _instrument = instrument;
     }
 
     /// <summary>
