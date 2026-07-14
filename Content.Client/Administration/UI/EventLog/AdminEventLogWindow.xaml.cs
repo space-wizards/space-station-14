@@ -5,56 +5,55 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Administration.UI.EventLog
+namespace Content.Client.Administration.UI.EventLog;
+
+[GenerateTypedNameReferences]
+public sealed partial class AdminEventLogWindow : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class AdminEventLogWindow : FancyWindow
+    [Dependency] private ILocalizationManager _localization = default!;
+
+    public AdminEventLogWindow()
     {
-        [Dependency] private ILocalizationManager _localization = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        public AdminEventLogWindow()
-        {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
+        RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
+        RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
+        RoundSpinBox.InitDefaultButtons();
 
-            RoundSpinBox.IsValid = i => i > 0 && i <= CurrentRound;
-            RoundSpinBox.ValueChanged += RoundSpinBoxChanged;
-            RoundSpinBox.InitDefaultButtons();
+        EventTextEdit.Placeholder = new Rope.Leaf(_localization.GetString("admin-event-description-placeholder"));
 
-            EventTextEdit.Placeholder = new Rope.Leaf(_localization.GetString("admin-event-description-placeholder"));
-
-            ResetRoundButton.OnPressed += ResetRoundPressed;
-        }
-
-        private int CurrentRound { get; set; }
-
-        public void SetCurrentRound(int round)
-        {
-            CurrentRound = round;
-            ResetRoundButton.Text = Loc.GetString("admin-event-round-reset-with-id", ("id", round));
-            UpdateResetButton();
-        }
-
-        public void SetRoundSpinBox(int round)
-        {
-            RoundSpinBox.Value = round;
-            UpdateResetButton();
-        }
-
-        private void RoundSpinBoxChanged(ValueChangedEventArgs args)
-        {
-            UpdateResetButton();
-        }
-
-        private void ResetRoundPressed(ButtonEventArgs args)
-        {
-            RoundSpinBox.Value = CurrentRound;
-        }
-
-        private void UpdateResetButton()
-        {
-            ResetRoundButton.Disabled = RoundSpinBox.Value == CurrentRound;
-        }
-
+        ResetRoundButton.OnPressed += ResetRoundPressed;
     }
+
+    private int CurrentRound { get; set; }
+
+    public void SetCurrentRound(int round)
+    {
+        CurrentRound = round;
+        ResetRoundButton.Text = Loc.GetString("admin-event-round-reset-with-id", ("id", round));
+        UpdateResetButton();
+    }
+
+    public void SetRoundSpinBox(int round)
+    {
+        RoundSpinBox.Value = round;
+        UpdateResetButton();
+    }
+
+    private void RoundSpinBoxChanged(ValueChangedEventArgs args)
+    {
+        UpdateResetButton();
+    }
+
+    private void ResetRoundPressed(ButtonEventArgs args)
+    {
+        RoundSpinBox.Value = CurrentRound;
+    }
+
+    private void UpdateResetButton()
+    {
+        ResetRoundButton.Disabled = RoundSpinBox.Value == CurrentRound;
+    }
+
 }
