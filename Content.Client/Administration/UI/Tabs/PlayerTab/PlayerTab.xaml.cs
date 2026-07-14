@@ -161,7 +161,7 @@ public sealed partial class PlayerTab : Control
                 $"{info.CharacterName} " +
                 $"{info.IdentityName} " +
                 $"{info.StartingJob} " +
-                $"{Loc.GetString(info.Subtype ?? string.Empty)} " +
+                $"{(info.Subtype is not null ? Loc.GetString(info.Subtype) : string.Empty)} " +
                 $"{(_proto.TryIndex(info.RoleProto, out var proto) ? Loc.GetString(proto.Name) : string.Empty)}"))
             .ToList());
     }
