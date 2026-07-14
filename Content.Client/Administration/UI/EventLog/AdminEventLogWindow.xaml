@@ -1,5 +1,6 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<ui:FancyWindow xmlns="https://spacestation14.io"
                xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+               xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'admin-event-log-title'}"
                MinWidth="600"
                MinHeight="180">
@@ -19,4 +20,4 @@
                     StyleClasses="OpenRight" Access="Public"/>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</ui:FancyWindow>
