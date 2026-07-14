@@ -136,7 +136,7 @@
   id: Cardwall
   graph: Cardwall
   targetNode: cardwall
-  conditions:
+  conditions: &TileNotBlockedSpace
   - !type:TileNotBlocked
     failIfSpace: false
 # endregion Walls
@@ -147,6 +147,7 @@
   id: Grille
   graph: Grille
   targetNode: grille
+  conditions: *TileNotBlockedSpace
 
 - type: construction
   parent: Grille
