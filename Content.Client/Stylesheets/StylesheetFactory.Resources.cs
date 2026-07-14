@@ -129,7 +129,7 @@ public abstract partial class StylesheetFactory
 }
 
 /// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> fail to locate a resource.
+/// Exception thrown when the never-fail helpers in <see cref="StylesheetFactory"/> fail to locate a resource.
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
@@ -142,8 +142,8 @@ public sealed class MissingStyleResourceException(StylesheetFactory sheet, strin
 }
 
 /// <summary>
-///     Exception thrown when the never-fail helpers in <see cref="CommonStylesheetFactory"/> expect a resource at a location
-///     but do not find it.
+/// Exception thrown when the never-fail helpers in <see cref="StylesheetFactory"/> expect a resource at a location
+/// but do not find it.
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
 /// <param name="target"></param>

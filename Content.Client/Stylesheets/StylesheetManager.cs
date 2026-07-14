@@ -135,11 +135,22 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
             return defaultStylesheet;
         }
 
+        /// <summary>
+        /// Gets the non-null stylesheet, or throws a not-initialized exception.
+        /// </summary>
+        /// <param name="sheet">The stylesheet</param>
+        /// <returns>The stylesheet, or does not return</returns>
+        /// <exception cref="InvalidOperationException">Stylesheets not initialized yet.</exception>
         private static Stylesheet GetOrThrow(Stylesheet? sheet)
         {
             return sheet ?? ThrowNotInitialized();
         }
 
+        /// <summary>
+        /// Throws a not initialized error.
+        /// </summary>
+        /// <returns>Does not return</returns>
+        /// <exception cref="InvalidOperationException">Stylesheets not initialized yet.</exception>
         [DoesNotReturn]
         private static Stylesheet ThrowNotInitialized()
         {

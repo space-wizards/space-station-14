@@ -7,6 +7,8 @@ using static Robust.Shared.Utility.TypeHelpers;
 
 namespace Content.Client.Stylesheets;
 
+// StylesheetFactory inherits from ISheetletConfig due to the GetRules(this, this) call.
+
 /// <summary>
 /// Style factories aggregate sheetlets together, provide resource resolution functionality, and create a stylesheet.
 /// </summary>

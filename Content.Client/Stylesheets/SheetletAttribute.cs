@@ -32,7 +32,7 @@ public sealed class SheetletAttribute : Attribute
         foreach (var f in fs)
         {
             if (!typeof(StylesheetFactory).IsAssignableFrom(f))
-                throw new ArgumentException($"{factory} is not a {nameof(StylesheetFactory)}");
+                throw new ArgumentException($"{f} is not a {nameof(StylesheetFactory)}");
         }
 
         Factories = fs.ToArray();
