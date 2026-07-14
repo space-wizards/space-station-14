@@ -1,5 +1,4 @@
 ﻿<ui:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'admin-event-log-title'}"
                MinWidth="600"
@@ -9,9 +8,8 @@
             <Label Text="{Loc admin-event-round}"/>
             <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150" Access="Public"/>
             <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}"
-                    StyleClasses="OpenBoth"/>
+                    StyleClasses="Open"/>
         </BoxContainer>
-        <cc:HSeparator Margin="5"/>
         <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">
             <Control HorizontalExpand="True"/>
