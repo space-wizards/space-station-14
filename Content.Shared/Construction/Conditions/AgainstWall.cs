@@ -15,13 +15,21 @@ public sealed partial class AgainstWall : IConstructionCondition
     private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
+    /// <summary>
+    /// The angle that the wall must be from the entity's direction, in degrees.
+    /// Defaults to 180 degrees (when placed against a wall to the south, the entity should be facing north)
+    /// </summary>
+    [DataField("offset")] private Angle _offset = Angle.FromDegrees(180);
+
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
         var entManager = IoCManager.Resolve<IEntityManager>();
         var lookupSys = entManager.System<EntityLookupSystem>();
         var tagSys = entManager.System<TagSystem>();
 
-        var againstLocation = new EntityCoordinates(location.EntityId, location.Position - direction.ToVec()); // Subtracting direction: moving backwards relative to placement.
+        var offsetDirection = (direction.ToAngle() + _offset).GetCardinalDir();
+
+        var againstLocation = new EntityCoordinates(location.EntityId, location.Position + offsetDirection.ToVec());
 
         foreach (var entity in lookupSys.GetEntitiesIntersecting(againstLocation, LookupFlags.Approximate | LookupFlags.Static))
         {
@@ -31,12 +39,11 @@ public sealed partial class AgainstWall : IConstructionCondition
             if (tagSys.HasTag(entity, DiagonalTag)
                 && entManager.TryGetComponent(entity, out TransformComponent? xform))
             {
-                // In a south facing, diagonal walls have flat sides to the south and west.
-                // When the entity itself is placed to the south, the diagonal wall must be facing north or east to be valid
-                // (i.e. clockwise 90 deg or opposite of the entity's direction)
+                // In a south facing, diagonal walls have flat sides only to the south and east.
+                // If we're attaching from the north or from the west, we cancel that.
                 var wallDir = xform.LocalRotation.GetCardinalDir();
-                if (wallDir != direction.GetClockwise90Degrees()
-                    && wallDir != direction.GetOpposite())
+                if (wallDir == offsetDirection
+                    || wallDir == offsetDirection.GetClockwise90Degrees())
                     continue;
             }
 
