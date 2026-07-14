@@ -44,7 +44,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         if (args.ObtainedIdentity)
         {
-            GrantIdentity(ent, args.Devoured, true);
+            GrantIdentity(ent.Owner, args.Devoured, true);
         }
 
         if (args.GrantedDna && TryGetDataFromOriginal(ent.AsNullable(), args.Devoured, out var data))
@@ -66,7 +66,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
     {
         // Make a backup of our current identity so we can transform back.
-        GrantIdentity(ent, ent.Owner);
+        GrantIdentity(ent.Owner, ent.Owner);
 
         if (!TryGetDataFromOriginal(ent.AsNullable(), ent, out var data))
             return;
@@ -194,8 +194,11 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// <param name="ent">The Changeling.</param>
     /// <param name="target">The target to clone.</param>
     /// <param name="devoured">Whether this identity was granted via devouring, aka granted DNA to the changeling.</param>
-    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent> ent, EntityUid target, bool devoured = false)
+    public EntityUid? GrantIdentity(Entity<ChangelingIdentityComponent?> ent, EntityUid target, bool devoured = false)
     {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return null;
+
         var clone = CloneToPausedMap(ent.Comp.IdentityCloningSettings, target);
 
         if (clone == null)
@@ -213,7 +216,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         }
 
         UpdateIdentityData(newIdentity, clone.Value, target);
-        AddDevouredReference(ent, target);
+        AddDevouredReference(ent!, target);
 
         newIdentity.GrantedDna = devoured;
 

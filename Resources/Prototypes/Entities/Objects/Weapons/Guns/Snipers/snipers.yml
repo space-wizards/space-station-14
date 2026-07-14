@@ -108,6 +108,9 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: CustomSpriteAmmoCounter
+    loadedAmmoSprite: Interface/ItemStatus/Sniper_Cartriges/not_spent.png
+    spentAmmoSprite: Interface/ItemStatus/Sniper_Cartriges/spent.png
   - type: BallisticAmmoProvider
     whitelist:
       tags:
