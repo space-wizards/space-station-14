@@ -4,6 +4,7 @@
   id: BaseWeapon
   category: construction-category-weapons
   objectType: Item
+# endregion Base
 
 # region Weapons
 - type: construction
@@ -149,3 +150,4 @@
   id: CardSword
   graph: CardSword
   targetNode: cardSword
+# endregion Weapons

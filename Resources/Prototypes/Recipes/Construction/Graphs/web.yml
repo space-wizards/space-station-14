@@ -57,9 +57,6 @@
         doAfter: 3
 
     - to: crate
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: WebSilk
         amount: 10

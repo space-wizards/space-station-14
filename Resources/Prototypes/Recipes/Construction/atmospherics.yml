@@ -40,6 +40,7 @@
   parent: BaseGasDevice
   id: BaseGasTrinary
   graph: GasTrinary
+# endregion Base
 
 # region Machines
 - type: construction
@@ -88,6 +89,7 @@
   id: GasPipeSensorAlt2
   hide: true
   targetNode: sensorAlt2
+# endregion Machines
 
 # region Pipes
 - type: construction
@@ -204,6 +206,7 @@
   id: GasPipeManifold
   targetNode: manifold
   placementMode: SnapgridCenter
+# endregion Pipes
 
 # region Unary
 - type: construction
@@ -225,6 +228,7 @@
   parent: BaseGasUnary
   id: GasOutletInjector
   targetNode: outletinjector
+# endregion Unary
 
 # region Binary
 - type: construction
@@ -377,6 +381,7 @@
   name: construction-recipe-heat-exchanger-bend
   targetNode: bendradiator
   placementMode: SnapgridCenter
+# endregion Binary
 
 # region Trinary
 - type: construction
@@ -409,3 +414,4 @@
   parent: BaseGasTrinary
   id: PressureControlledValve
   targetNode: pneumaticvalve
+# endregion Trinary

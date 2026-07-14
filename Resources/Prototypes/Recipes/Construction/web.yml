@@ -10,6 +10,7 @@
   entityWhitelist:
     tags:
     - SpiderCraft
+# endregion Base
 
 # region Web
 - type: construction
@@ -43,6 +44,7 @@
   parent: BaseWeb
   id: CrateWeb
   targetNode: crate
+  placementMode: PlaceFree
   category: construction-category-storage
 
 - type: construction
@@ -51,3 +53,4 @@
   targetNode: door
   category: construction-category-structures
   conditions: *TileNotBlocked
+# endregion Web

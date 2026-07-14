@@ -36,6 +36,7 @@
   id: BaseCurtains
   graph: Curtains
   canBuildInImpassable: true
+# endregion Base
 
 # region Chairs
 - type: construction
@@ -126,6 +127,7 @@
   id: BlueComfBench
   name: construction-recipe-blue-comf-bench
   targetNode: blueComfBench
+# endregion Chairs
 
 # region Tables
 - type: construction
@@ -242,15 +244,9 @@
   parent: BaseTable
   id: TableCounterWood
   targetNode: CounterWood
+# endregion Tables
 
-# region Bathroom
-- type: construction
-  parent: BaseChair # close enough
-  id: ToiletEmpty
-  graph: Toilet
-  targetNode: toilet
-
-# region bedroom
+# region Bedroom
 - type: construction
   parent: BaseBed
   id: Bed
@@ -271,13 +267,7 @@
   id: Dresser
   graph: Dresser
   targetNode: dresser
-
-# region Racks
-- type: construction
-  parent: BaseTable # close enough
-  id: Rack
-  graph: Rack
-  targetNode: Rack
+# endregion Bedroom
 
 # region Curtains
 - type: construction
@@ -360,6 +350,18 @@
   id: Bookshelf
   graph: Bookshelf
   targetNode: bookshelf
+
+- type: construction
+  parent: BaseTable # close enough
+  id: Rack
+  graph: Rack
+  targetNode: Rack
+
+- type: construction
+  parent: BaseChair # close enough
+  id: ToiletEmpty
+  graph: Toilet
+  targetNode: toilet
 
 - type: construction
   parent: BaseFurniture

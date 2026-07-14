@@ -5,6 +5,7 @@
   targetNode: icon
   category: construction-category-utilities
   objectType: Item
+# endregion Base
 
 # region Lights
 - type: construction
@@ -86,3 +87,4 @@
   parent: BaseLight
   id: GreenLightBulb
   graph: GreenLightBulb
+# endregion Lights

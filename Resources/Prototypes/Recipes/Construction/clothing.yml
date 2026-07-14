@@ -4,6 +4,7 @@
   id: BaseClothing
   category: construction-category-clothing
   objectType: Item
+# endregion Base
 
 # region Clothing
 - type: construction
@@ -95,3 +96,4 @@
   id: ClothingHeadHelmetJustice
   graph: HelmetJustice
   targetNode: helmet
+# endregion Clothing

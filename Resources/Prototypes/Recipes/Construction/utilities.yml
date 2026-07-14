@@ -13,6 +13,7 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
+# endregion Base
 
 # region Surveillance
 - type: construction
@@ -33,6 +34,7 @@
   graph: StationMap
   targetNode: station_map
   category: construction-category-structures
+# endregion Surveillance
 
 # region Power
 - type: construction
@@ -63,6 +65,7 @@
   parent: WallmountGenerator
   id: WallmountGeneratorAPU
   targetNode: APU
+# endregion Power
 
 # region Disposals
 - type: construction
@@ -150,6 +153,7 @@
   parent: DisposalPipe
   id: DisposalBend
   targetNode: bend
+# endregion Disposals
 
 # region Intercom
 - type: construction
@@ -158,6 +162,7 @@
   graph: Intercom
   targetNode: intercom
   category: construction-category-structures
+# endregion Intercom
 
 # region Timers
 - type: construction
@@ -175,6 +180,7 @@
   parent: SignalTimer
   id: BrigTimer
   targetNode: brig
+# endregion Timers
 
 # region Defenses
 - type: construction
@@ -182,3 +188,4 @@
   id: WeaponEnergyTurretControlPanel
   graph: WeaponEnergyTurretControlPanel
   targetNode: finish
+# endregion Defenses
