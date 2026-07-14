@@ -4,11 +4,39 @@
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'ui-options-accessibility-header-reduced-motion'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="ReducedMotionCheckBox"
+                    Text="{Loc 'ui-options-reduced-motion'}"
+                    ToolTip="{Loc 'ui-options-reduced-motion-tooltip'}" />
+                <GridContainer Columns="2" HorizontalExpand="True" Margin="8 8 8 8">
+                    <CheckBox Name="DisableAiStaticCheckBox"
+                        Text="{Loc 'ui-options-disable-ai-static'}"
+                        ToolTip="{Loc 'ui-options-disable-ai-static-tooltip'}" />
+                    <CheckBox Name="DisableBlurryVisionCheckBox"
+                        Text="{Loc 'ui-options-disable-blurry-vision'}"
+                        ToolTip="{Loc 'ui-options-disable-blurry-vision-tooltip'}" />
+                    <CheckBox Name="DisableDrunkOverlayCheckBox"
+                        Text="{Loc 'ui-options-disable-drunk-overlay'}"
+                        ToolTip="{Loc 'ui-options-disable-drunk-overlay-tooltip'}" />
+                    <CheckBox Name="DisableFlashEffectCheckBox"
+                        Text="{Loc 'ui-options-disable-flash-effect'}"
+                        ToolTip="{Loc 'ui-options-disable-flash-effect-tooltip'}" />
+                    <CheckBox Name="DisableHeatDistortionCheckBox"
+                        Text="{Loc 'ui-options-disable-heat-distortion'}"
+                        ToolTip="{Loc 'ui-options-disable-heat-distortion-tooltip'}" />
+                    <CheckBox Name="DisableNightVisionNoiseCheckBox"
+                        Text="{Loc 'ui-options-disable-nv-noise'}"
+                        ToolTip="{Loc 'ui-options-disable-nv-noise-tooltip'}" />
+                    <CheckBox Name="DisableRainbowOverlayCheckBox"
+                        Text="{Loc 'ui-options-disable-rainbow-overlay'}"
+                        ToolTip="{Loc 'ui-options-disable-rainbow-overlay-tooltip'}" />
+                    <CheckBox Name="DisableSinguloWarpCheckBox"
+                        Text="{Loc 'ui-options-disable-singulo-warp'}"
+                        ToolTip="{Loc 'ui-options-disable-singulo-warp-tooltip'}" />
+                </GridContainer>
                 <Label Text="{Loc 'ui-options-accessibility-header-visuals'}"
                        StyleClasses="LabelKeyText"/>
-                <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
-                <CheckBox Name="DisableAiStaticCheckBox" Text="{Loc 'ui-options-disable-ai-static'}" />
-                <CheckBox Name="DisableNightVisionNoiseCheckBox" Text="{Loc 'ui-options-disable-nv-noise'}" />
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />

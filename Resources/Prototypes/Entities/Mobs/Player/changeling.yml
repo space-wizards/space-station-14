@@ -92,3 +92,16 @@
     # this is set to false as to not mess with a changeling's ability to disguise.
     accentHide: false
     titleText: changeling-voice-mimic-window-title
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingNightVisionDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: NightVision
+    enabled: false # Disabled by default
+    action: ActionChangelingNightVision
+    lightingColor: "#AF0909AA"
+    noiseAmount: 1
+    noiseMultiplier: 2
+    overlayColor: "#AB0808AA"
+    prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
