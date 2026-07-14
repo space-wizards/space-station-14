@@ -1,0 +1,17 @@
+- type: ambientMusic
+  id: Medical
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMedical
+  rules: NearMedical
+  priority: 3
+
+- type: ambientMusic
+  id: Engineering
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceEngineering
+  rules: NearEngineering
+  priority: 3
