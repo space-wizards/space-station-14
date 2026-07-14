@@ -1,5 +1,5 @@
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Screens;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,11 +8,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ChatGameScreenSheetlet<T> : ISheetlet<T>
     where T : IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         return
         [

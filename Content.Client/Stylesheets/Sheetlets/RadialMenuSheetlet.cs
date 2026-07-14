@@ -1,16 +1,16 @@
 ﻿using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class RadialMenuSheetlet<T> : ISheetlet<T>
     where T : IRadialMenuConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var btnNormalTex = sheet.GetTexture(config.ButtonNormalPath);
         var btnHoverTex = sheet.GetTexture(config.ButtonHoverPath);

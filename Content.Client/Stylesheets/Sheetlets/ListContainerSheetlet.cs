@@ -1,5 +1,5 @@
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,11 +8,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ListContainerSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var box = new StyleBoxFlat() { BackgroundColor = Color.White };
 

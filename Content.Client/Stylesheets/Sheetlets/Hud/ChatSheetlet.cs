@@ -1,5 +1,5 @@
 ﻿using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -8,11 +8,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ChatSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var chatColor = config.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);

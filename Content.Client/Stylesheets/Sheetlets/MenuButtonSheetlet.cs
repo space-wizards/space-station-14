@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -10,7 +10,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class MenuButtonSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IIconConfig, IFontConfig, IPaletteConfig
 {
@@ -19,7 +19,7 @@ public sealed class MenuButtonSheetlet<T> : ISheetlet<T>
         return E<MenuButton>();
     }
 
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var buttonTex = sheet.GetTexture(config.BaseButtonPath);
         var topButtonBase = new StyleBoxTexture

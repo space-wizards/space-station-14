@@ -1,18 +1,18 @@
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.MainMenu.UI;
 
-[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
 public sealed class MainMenuSheetlet<T> : ISheetlet<T>
     where T : IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         return
         [

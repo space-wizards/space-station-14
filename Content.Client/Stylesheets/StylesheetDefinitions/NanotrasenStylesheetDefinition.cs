@@ -2,13 +2,13 @@
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.StylesheetFactories;
+namespace Content.Client.Stylesheets.StylesheetDefinitions;
 
 /// <summary>
-/// StylesheetFactory that produces the stylesheet used for IC-related UIs like most of the game's user interfaces.
+/// StylesheetDefinition that produces the stylesheet used for IC-related UIs like most of the game's user interfaces.
 /// </summary>
 [Virtual]
-public class NanotrasenStylesheetFactory : CommonStylesheetFactory
+public class NanotrasenStylesheetDefinition : CommonStylesheetDefinition
 {
     public override Dictionary<Type, ResPath[]> Roots => new()
     {

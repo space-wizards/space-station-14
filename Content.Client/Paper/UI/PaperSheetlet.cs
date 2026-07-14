@@ -1,7 +1,7 @@
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,11 +10,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Paper.UI;
 
-[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
 public sealed class PaperSheetlet<T> : ISheetlet<T>
     where T : IWindowConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var paperBackground = sheet
             .GetTexture(new ResPath("Paper/paper_background_default.svg.96dpi.png"))

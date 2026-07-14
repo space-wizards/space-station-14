@@ -7,12 +7,12 @@ using static Robust.Shared.Utility.TypeHelpers;
 
 namespace Content.Client.Stylesheets;
 
-// StylesheetFactory inherits from ISheetletConfig due to the GetRules(this, this) call.
+// StylesheetDefinition inherits from ISheetletConfig due to the GetRules(this, this) call.
 
 /// <summary>
-/// Style factories aggregate sheetlets together, provide resource resolution functionality, and create a stylesheet.
+/// Style definitions aggregate sheetlets together, provide resource resolution functionality, and create a stylesheet.
 /// </summary>
-public abstract partial class StylesheetFactory : ISheetletConfig
+public abstract partial class StylesheetDefinition : ISheetletConfig
 {
     [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private ISandboxHelper _sandboxHelper = default!;
@@ -21,7 +21,7 @@ public abstract partial class StylesheetFactory : ISheetletConfig
 
     private readonly ISawmill _sawmill;
 
-    protected StylesheetFactory()
+    protected StylesheetDefinition()
     {
         IoCManager.InjectDependencies(this);
 
@@ -32,7 +32,7 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     /// Builds the style rules from a specified sheetlet type.
     /// </summary>
     /// <param name="sheetletType">Type of the sheetlet to instantiate.</param>
-    /// <returns>Sheetlet's style rules, or nothing if the attribute is not set for the factory type.</returns>
+    /// <returns>Sheetlet's style rules, or nothing if the attribute is not set for the definition type.</returns>
     /// <exception cref="ArgumentException">Missing Sheetlet attribute.</exception>
     /// <exception cref="Exception">Sandbox instantiation exceptions.</exception>
     private StyleRule[] BuildSheetlet(Type sheetletType)
@@ -65,7 +65,7 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     /// <returns>Stylesheet constructed from all the sheetlets.</returns>
     public Stylesheet Build()
     {
-        // Sorts sheetlets by how "close" their attribute types are to the specific factory, letting us create an ordering
+        // Sorts sheetlets by how "close" their attribute types are to the specific definition, letting us create an ordering
         // so that you can make overriding sheetlets.
         var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
             .Where(t =>
@@ -92,10 +92,10 @@ public abstract partial class StylesheetFactory : ISheetletConfig
     }
 
     /// <summary>
-    /// Gets the distance from the attribute's types and the factory type in the inheritance hierarchy.
+    /// Gets the distance from the attribute's types and the definition type in the inheritance hierarchy.
     /// </summary>
     /// <param name="attribute">Sheetlet attribute to measure from.</param>
-    /// <returns>Distance from that sheetlet attribute factory to the actual factory type.</returns>
+    /// <returns>Distance from that sheetlet attribute definition to the actual definition type.</returns>
     private int GetSheetletDistance(SheetletAttribute attribute)
     {
         var dist = 0;

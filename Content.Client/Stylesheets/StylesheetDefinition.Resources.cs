@@ -1,12 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets.StylesheetFactories;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
-public abstract partial class StylesheetFactory
+public abstract partial class StylesheetDefinition
 {
     /// <summary>
     /// The file roots of the stylesheet, dictates where assets get read from for the given type of resource.
@@ -67,7 +66,7 @@ public abstract partial class StylesheetFactory
     /// <typeparam name="T">Type of the resource to read.</typeparam>
     /// <returns>The retrieved resource</returns>
     /// <exception cref="ExpectedResourceException">Thrown if the resource does not exist in the fallback root.</exception>
-    [Obsolete("Use GetResource/TryGetResource instead and add fallback path to StylesheetFactory.Roots.")]
+    [Obsolete("Use GetResource/TryGetResource instead and add fallback path to StylesheetDefinition.Roots.")]
     public T GetResourceOr<T>(ResPath target, ResPath fallbackRoot)
         where T : BaseResource, new()
     {
@@ -121,7 +120,7 @@ public abstract partial class StylesheetFactory
     /// <param name="fallbackRoot">The root that this resource will always exist at</param>
     /// <returns>The retrieved texture</returns>
     /// <exception cref="ExpectedResourceException">Thrown if the texture does not exist in the fallback root.</exception>
-    [Obsolete("Use GetTexture/TryGetTexture instead and add fallback path to StylesheetFactory.Roots.")]
+    [Obsolete("Use GetTexture/TryGetTexture instead and add fallback path to StylesheetDefinition.Roots.")]
     public Texture GetTextureOr(ResPath target, ResPath fallbackRoot)
     {
         return GetResourceOr<TextureResource>(target, fallbackRoot).Texture;
@@ -129,11 +128,11 @@ public abstract partial class StylesheetFactory
 }
 
 /// <summary>
-/// Exception thrown when the never-fail helpers in <see cref="StylesheetFactory"/> fail to locate a resource.
+/// Exception thrown when the never-fail helpers in <see cref="StylesheetDefinition"/> fail to locate a resource.
 /// </summary>
 /// <param name="sheet">The stylesheet </param>
 /// <param name="target"></param>
-public sealed class MissingStyleResourceException(StylesheetFactory sheet, string target, string? roots) : Exception
+public sealed class MissingStyleResourceException(StylesheetDefinition sheet, string target, string? roots) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}. The roots are: {roots}";
@@ -142,12 +141,12 @@ public sealed class MissingStyleResourceException(StylesheetFactory sheet, strin
 }
 
 /// <summary>
-/// Exception thrown when the never-fail helpers in <see cref="StylesheetFactory"/> expect a resource at a location
+/// Exception thrown when the never-fail helpers in <see cref="StylesheetDefinition"/> expect a resource at a location
 /// but do not find it.
 /// </summary>
 /// <param name="sheet">The stylesheet</param>
 /// <param name="target"></param>
-public sealed class ExpectedResourceException(StylesheetFactory sheet, string target) : Exception
+public sealed class ExpectedResourceException(StylesheetDefinition sheet, string target) : Exception
 {
     public override string Message =>
         $"Failed to find any resource at \"{target}\" for {sheet}, when such a resource was expected.";

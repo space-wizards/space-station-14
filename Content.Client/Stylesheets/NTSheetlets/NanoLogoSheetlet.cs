@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,11 +7,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.NTSheetlets;
 
-[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
 public sealed class NanoLogoSheetlet<T> : ISheetlet<T>
     where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         return
         [

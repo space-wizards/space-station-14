@@ -2,13 +2,13 @@ using Content.Client.Stylesheets.Palette;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.StylesheetFactories;
+namespace Content.Client.Stylesheets.StylesheetDefinitions;
 
 /// <summary>
-/// StylesheetFactory that produces the stylesheet used for OOC UIs like admin/debug UIs.
+/// StylesheetDefinition that produces the stylesheet used for OOC UIs like admin/debug UIs.
 /// </summary>
 [Virtual]
-public class SystemStylesheetFactory : CommonStylesheetFactory
+public class SystemStylesheetDefinition : CommonStylesheetDefinition
 {
     public override Dictionary<Type, ResPath[]> Roots => new()
     {

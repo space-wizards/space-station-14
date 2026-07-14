@@ -9,32 +9,32 @@ namespace Content.Client.Stylesheets;
 public sealed class SheetletAttribute : Attribute
 {
     /// <summary>
-    /// Stylesheet factories to run generate for.
+    /// Stylesheet definitions to run generate for.
     /// </summary>
     /// <remarks>
-    /// This provides the ability to conditionally apply sheetlets on certain factories, even if they implement the
+    /// This provides the ability to conditionally apply sheetlets on certain definitions, even if they implement the
     /// required sheetlet configs.
     /// </remarks>
-    public Type[] Factories { get; }
+    public Type[] Definitions { get; }
 
     /// <summary>
     /// Attribute used to mark a sheetlet class. Stylesheets can use this attribute to locate and load sheetlets.
     /// </summary>
-    /// <param name="factory">First factory to match</param>
-    /// <param name="factories">Stylesheet factories to generate for.</param>
-    /// <exception cref="ArgumentException">If the type provided is not a <see cref="StylesheetFactory"/> </exception>
-    public SheetletAttribute(Type factory, params Type[] factories)
+    /// <param name="definition">First definition to match</param>
+    /// <param name="definitions">Stylesheet definitions to generate for.</param>
+    /// <exception cref="ArgumentException">If the type provided is not a <see cref="StylesheetDefinition"/> </exception>
+    public SheetletAttribute(Type definition, params Type[] definitions)
     {
-        var fs = factories.ToList();
-        // Used to stop people from providing 0 factories w/o requiring custom Roslyn analyzers.
-        fs.Add(factory);
+        var ds = definitions.ToList();
+        // Used to stop people from providing 0 definitions w/o requiring custom Roslyn analyzers.
+        ds.Add(definition);
 
-        foreach (var f in fs)
+        foreach (var d in ds)
         {
-            if (!typeof(StylesheetFactory).IsAssignableFrom(f))
-                throw new ArgumentException($"{f} is not a {nameof(StylesheetFactory)}");
+            if (!typeof(StylesheetDefinition).IsAssignableFrom(d))
+                throw new ArgumentException($"{d} is not a {nameof(StylesheetDefinition)}");
         }
 
-        Factories = fs.ToArray();
+        Definitions = ds.ToArray();
     }
 }

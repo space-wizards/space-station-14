@@ -3,7 +3,7 @@ using Content.Client.Resources;
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
@@ -14,7 +14,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ContextMenuSheetlet<T> : ISheetlet<T>
     where T : IWindowConfig, IButtonConfig, IIconConfig, IFontConfig, IPaletteConfig
 {
@@ -26,7 +26,7 @@ public sealed class ContextMenuSheetlet<T> : ISheetlet<T>
         PressedElement = Color.LightSlateGray,
     };
 
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var borderedWindowBackground = new StyleBoxTexture
         {

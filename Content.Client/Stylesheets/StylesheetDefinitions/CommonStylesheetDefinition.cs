@@ -3,21 +3,16 @@ using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Stylesheets.StylesheetFactories;
+namespace Content.Client.Stylesheets.StylesheetDefinitions;
 
 /// <summary>
-/// Common style definitions used by the content stylesheet factories.
+/// Common style definitions used by the content stylesheet definitions.
 /// </summary>
-public abstract class CommonStylesheetFactory : StylesheetFactory, IButtonConfig, IWindowConfig, IIconConfig,
+public abstract class CommonStylesheetDefinition : StylesheetDefinition, IButtonConfig, IWindowConfig, IIconConfig,
     ITabContainerConfig, ISliderConfig, IRadialMenuConfig, IPlaceholderConfig, ITooltipConfig, IPanelConfig,
     INanoHeadingConfig, ILineEditConfig, IStripebackConfig, ICheckboxConfig, ISwitchButtonConfig, IPaletteConfig,
     IFontConfig
 {
-    /// <remarks>
-    ///     This constructor will not access any virtual or abstract properties, so you can set them from your config.
-    /// </remarks>
-    protected CommonStylesheetFactory() { }
-
     /// <inheritdoc/>
     ResPath ICheckboxConfig.CheckboxUncheckedPath => new("checkbox_unchecked.svg.96dpi.png");
 

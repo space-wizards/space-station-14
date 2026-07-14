@@ -2,7 +2,7 @@ using Content.Client.PDA;
 using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Sheetlets;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,11 +10,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.PDA;
 
-[Sheetlet(typeof(NanotrasenStylesheetFactory))]
+[Sheetlet(typeof(NanotrasenStylesheetDefinition))]
 public sealed class PdaSheetlet<T> : ISheetlet<T>
 where T : IPanelConfig, IButtonConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         // TODO: This should have its own set of images, instead of using button cfg directly.
         var angleBorderRect = sheet.GetTexture(config.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);

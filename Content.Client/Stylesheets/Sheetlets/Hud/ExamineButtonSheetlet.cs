@@ -1,5 +1,5 @@
 using Content.Client.Examine;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,7 +7,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ExamineButtonSheetlet<T> : ISheetlet<T>
     where T : ISheetletConfig
 {
@@ -18,7 +18,7 @@ public sealed class ExamineButtonSheetlet<T> : ISheetlet<T>
     private static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
     private static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
 

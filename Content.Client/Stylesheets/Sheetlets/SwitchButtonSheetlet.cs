@@ -1,5 +1,5 @@
 ﻿using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -7,10 +7,10 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class SwitchButtonSheetlet<T> : ISheetlet<T> where T : ISwitchButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var trackFillTex = sheet.GetTexture(config.SwitchButtonTrackFillPath);
         var trackOutlineTex = sheet.GetTexture(config.SwitchButtonTrackOutlinePath);

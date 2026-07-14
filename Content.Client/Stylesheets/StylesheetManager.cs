@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 
@@ -11,8 +11,6 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
 {
     [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
-
-    // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
     [Dependency] private IResourceCache _resCache = default!;
 
     private readonly Dictionary<Control, Func<IStylesheetAccessor, Stylesheet>> _controlStylesheetSubs = [];
@@ -65,9 +63,9 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
 
         _stylesheets.Clear();
 
-        // TODO: these factories can be saved/cached, but it's so infrequently used that it doesn't feel necessary.
-        _sheetNanotrasen = new NanotrasenStylesheetFactory().Build();
-        _sheetSystem = new SystemStylesheetFactory().Build();
+        // TODO: these definitions can be saved/cached, but it's so infrequently used that it doesn't feel necessary.
+        _sheetNanotrasen = new NanotrasenStylesheetDefinition().Build();
+        _sheetSystem = new SystemStylesheetDefinition().Build();
 
 #pragma warning disable CS0618 // Type or member is obsolete
         _sheetNanoLegacy = new StyleNano(_resCache).Stylesheet;

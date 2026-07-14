@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Client.Stylesheets.Palette;
 using Content.Client.Stylesheets.SheetletConfigs;
-using Content.Client.Stylesheets.StylesheetFactories;
+using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -9,11 +9,11 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets.Sheetlets;
 
-[Sheetlet(typeof(CommonStylesheetFactory))]
+[Sheetlet(typeof(CommonStylesheetDefinition))]
 public sealed class ButtonSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
+    public StyleRule[] GetRules(StylesheetDefinition sheet, T config)
     {
         var crossTex = sheet.GetTexture(config.CrossIconPath);
         var refreshTex = sheet.GetTexture(config.RefreshIconPath);
@@ -130,11 +130,11 @@ public sealed class ButtonSheetlet<T> : ISheetlet<T>
 public static class StyleBoxHelpers
 {
     // TODO: Figure out a nicer way to store/represent these hardcoded margins. This is icky.
-    public static StyleBoxTexture BaseStyleBox<T>(StylesheetFactory factory, T config) where T : IButtonConfig
+    public static StyleBoxTexture BaseStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
         var baseBox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.BaseButtonPath),
+            Texture = definition.GetTexture(config.BaseButtonPath),
         };
         baseBox.SetPatchMargin(StyleBox.Margin.All, 10);
         baseBox.SetPadding(StyleBox.Margin.All, 1);
@@ -143,11 +143,11 @@ public static class StyleBoxHelpers
         return baseBox;
     }
 
-    public static StyleBoxTexture OpenLeftStyleBox<T>(StylesheetFactory factory, T config) where T : IButtonConfig
+    public static StyleBoxTexture OpenLeftStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openLeftBox = new StyleBoxTexture(BaseStyleBox(factory, config))
+        var openLeftBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
-            Texture = new AtlasTexture(factory.GetTexture(config.OpenLeftButtonPath),
+            Texture = new AtlasTexture(definition.GetTexture(config.OpenLeftButtonPath),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(14, 24))),
         };
         openLeftBox.SetPatchMargin(StyleBox.Margin.Left, 0);
@@ -156,12 +156,12 @@ public static class StyleBoxHelpers
         return openLeftBox;
     }
 
-    public static StyleBoxTexture OpenRightStyleBox<T>(StylesheetFactory factory, T config) where T : IButtonConfig
+    public static StyleBoxTexture OpenRightStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openRightBox = new StyleBoxTexture(BaseStyleBox(factory, config))
+        var openRightBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
             Texture = new AtlasTexture(
-                factory.GetTexture(config.OpenRightButtonPath),
+                definition.GetTexture(config.OpenRightButtonPath),
                 UIBox2.FromDimensions(new Vector2(0, 0), new Vector2(14, 24))),
         };
         openRightBox.SetPatchMargin(StyleBox.Margin.Right, 0);
@@ -170,12 +170,12 @@ public static class StyleBoxHelpers
         return openRightBox;
     }
 
-    public static StyleBoxTexture SquareStyleBox<T>(StylesheetFactory factory, T config) where T : IButtonConfig
+    public static StyleBoxTexture SquareStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
-        var openBothBox = new StyleBoxTexture(BaseStyleBox(factory, config))
+        var openBothBox = new StyleBoxTexture(BaseStyleBox(definition, config))
         {
             Texture = new AtlasTexture(
-                factory.GetTexture(config.OpenBothButtonPath),
+                definition.GetTexture(config.OpenBothButtonPath),
                 UIBox2.FromDimensions(new Vector2(10, 0), new Vector2(3, 24))),
         };
         openBothBox.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
@@ -184,11 +184,11 @@ public static class StyleBoxHelpers
         return openBothBox;
     }
 
-    public static StyleBoxTexture SmallStyleBox<T>(StylesheetFactory factory, T config) where T : IButtonConfig
+    public static StyleBoxTexture SmallStyleBox<T>(StylesheetDefinition definition, T config) where T : IButtonConfig
     {
         var smallBox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.SmallButtonPath),
+            Texture = definition.GetTexture(config.SmallButtonPath),
         };
         return smallBox;
     }
