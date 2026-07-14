@@ -9,4 +9,4 @@
     canCollide: false
   - type: TimedDespawn
   - type: SpawnOnDespawn
-    prototype: Ash # placeholder
+    prototype: Ash # placeholder (required by component), overridden at runtime

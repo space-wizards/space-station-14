@@ -68,6 +68,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
                     if (SpawnAfter > 0)
                     {
+                        // TODO: TransferForensics is not supported here because the actual entity UID is not known until the spawner spawns it.
                         for (var i = 0; i < count; i++)
                         {
                             var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(GetRandomVector()));
