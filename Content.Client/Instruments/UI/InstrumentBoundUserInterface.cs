@@ -73,7 +73,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         _instrumentMenu = this.CreateWindow<InstrumentMenu>();
 
-        if(EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
+        if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
             _instrumentMenu.Title = metaData.EntityName;
 
         _instrumentMenu.SetupSources(_fileSource, _bandSource, _inputSource);
@@ -274,7 +274,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             if (instrument.Comp.Master is not { } master)
                 break;
 
-            if(!EntMan.TryGetComponent<InstrumentComponent>(master, out var masterComp))
+            if (!EntMan.TryGetComponent<InstrumentComponent>(master, out var masterComp))
                 break;
 
             instrument = new Entity<InstrumentComponent>(master, masterComp);

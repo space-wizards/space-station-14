@@ -301,7 +301,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         foreach (var track in _loadedTracks)
         {
             var trackName = track.FilenameWithoutExtension.Trim().ToLowerInvariant();
-            if(trackName.Contains(filterString))
+            if (trackName.Contains(filterString))
                 TrackList.AddItem(track.FilenameWithoutExtension, null, true, track);
         }
     }
