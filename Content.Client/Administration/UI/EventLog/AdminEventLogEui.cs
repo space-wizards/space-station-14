@@ -6,7 +6,7 @@ using Robust.Client.Player;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Administration.UI.Tabs.AdminTab;
+namespace Content.Client.Administration.UI.EventLog;
 
 [UsedImplicitly]
 public sealed partial class AdminEventLogEui : BaseEui
