@@ -39,7 +39,7 @@
   parent: ClothingOuterEVASuitBaseToggleable
   id: ClothingOuterSuitEmergency
   name: emergency pressure suit
-  description: These bulky, uninsulated pressure suits were clearly not meant for long-term use in space, despite the claims of NanoTrasen.
+  description: This bulky, uninsulated pressure suit was clearly not meant for extended use in outer space, despite NanoTrasen's claims that it passes corporate regulations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
@@ -66,7 +66,7 @@
   parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner pressure suit
-  description: An emergency pressure suit meant for prisoners. It's not fully rated for use in space, but some wardens say the lack of thermal insulation is a feature.
+  description: An emergency pressure suit meant for prisoners. It's not fully rated for extended use in outer space, but some wardens consider the lack of thermal insulation a feature.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
