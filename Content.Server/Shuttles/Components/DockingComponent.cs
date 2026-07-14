@@ -37,6 +37,6 @@ public sealed partial class DockingComponent : SharedDockingComponent
     /// <summary>
     /// The category of the dock, used to determine what kind of dock it is for the purposes of the radar screen legend
     /// </summary>
-    [ViewVariables]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LegendCategory DockLegendCategory = LegendCategory.General;
 }
