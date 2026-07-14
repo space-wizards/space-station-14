@@ -7,14 +7,13 @@ public sealed partial class EventWebhook : IPostInjectInit
     [Dependency] private DiscordWebhook _discord = default!;
     [Dependency] private IBaseServer _baseServer = default!;
 
+    private const string SawmillDiscordName = "discord";
     private ISawmill _sawmill = default!;
 
     public void TrySendMessage(string adminUsername, int roundId, string eventDescription, string? webhookUrl = null)
     {
         if (string.IsNullOrEmpty(webhookUrl))
             return;
-
-        _sawmill = Logger.GetSawmill("discord");
 
         var serverName = _baseServer.ServerName;
 
@@ -57,5 +56,8 @@ public sealed partial class EventWebhook : IPostInjectInit
         }
     }
 
-    void IPostInjectInit.PostInject() { }
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = Logger.GetSawmill(SawmillDiscordName);
+    }
 }
