@@ -47,7 +47,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             var tSys = system.EntityManager.System<TransformSystem>();
             var position = tSys.GetMapCoordinates(owner);
 
-            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+            Vector2 GetRandomVector() => system.Random.NextVector2(Offset);
 
             var executions = 1;
             if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
@@ -70,7 +70,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         for (var i = 0; i < count; i++)
                         {
-                            var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(getRandomVector()));
+                            var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(GetRandomVector()));
                             var timedDespawn = system.EntityManager.GetComponent<TimedDespawnComponent>(spawner);
                             timedDespawn.Lifetime = SpawnAfter;
                             var spawnOnDespawn = system.EntityManager.GetComponent<SpawnOnDespawnComponent>(spawner);
@@ -81,7 +81,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         var spawned = SpawnInContainer
                             ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                            : system.EntityManager.SpawnEntity(entityId, position.Offset(GetRandomVector()));
                         system.StackSystem.SetCount((spawned, null), count);
 
                         TransferForensics(spawned, system, owner);
@@ -92,7 +92,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                         {
                             var spawned = SpawnInContainer
                                 ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
+                                : system.EntityManager.SpawnEntity(entityId, position.Offset(GetRandomVector()));
 
                             TransferForensics(spawned, system, owner);
                         }
