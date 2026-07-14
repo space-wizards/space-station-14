@@ -16,8 +16,8 @@ public sealed partial class AgainstWall : IConstructionCondition
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
     /// <summary>
-    /// The angle that the wall must be from the entity's direction, in degrees.
-    /// Defaults to 180 degrees (when placed against a wall to the south, the entity should be facing north)
+    /// The angle to add to the direction of the entity to point it towards the wall.
+    /// Defaults to 180 degrees - lights, for example, should face north when attached to a wall to the south.
     /// </summary>
     [DataField("offset")] private Angle _offset = Angle.FromDegrees(180);
 
@@ -27,9 +27,9 @@ public sealed partial class AgainstWall : IConstructionCondition
         var lookupSys = entManager.System<EntityLookupSystem>();
         var tagSys = entManager.System<TagSystem>();
 
-        var offsetDirection = (direction.ToAngle() + _offset).GetCardinalDir();
+        var towardsWall = (direction.ToAngle() + _offset).GetCardinalDir();
 
-        var againstLocation = new EntityCoordinates(location.EntityId, location.Position + offsetDirection.ToVec());
+        var againstLocation = new EntityCoordinates(location.EntityId, location.Position + towardsWall.ToVec());
 
         foreach (var entity in lookupSys.GetEntitiesIntersecting(againstLocation, LookupFlags.Approximate | LookupFlags.Static))
         {
@@ -40,10 +40,10 @@ public sealed partial class AgainstWall : IConstructionCondition
                 && entManager.TryGetComponent(entity, out TransformComponent? xform))
             {
                 // In a south facing, diagonal walls have flat sides only to the south and east.
-                // If we're attaching from the north or from the west, we cancel that.
+                // If we're attaching to the north or west side (so towardsWall points south or east), we cancel that.
                 var wallDir = xform.LocalRotation.GetCardinalDir();
-                if (wallDir == offsetDirection
-                    || wallDir == offsetDirection.GetClockwise90Degrees())
+                if (wallDir == towardsWall // South check
+                    || wallDir == towardsWall.GetClockwise90Degrees()) // East check
                     continue;
             }
 
