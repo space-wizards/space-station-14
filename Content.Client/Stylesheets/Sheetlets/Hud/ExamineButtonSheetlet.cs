@@ -18,7 +18,7 @@ public sealed class ExamineButtonSheetlet<T> : ISheetlet<T>
     private static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
     private static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
 

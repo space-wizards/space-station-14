@@ -14,17 +14,17 @@ namespace Content.Client.Paper.UI;
 public sealed class PaperSheetlet<T> : ISheetlet<T>
     where T : IWindowConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var paperBackground = factory
+        var paperBackground = sheet
             .GetTexture(new ResPath("Paper/paper_background_default.svg.96dpi.png"))
             .IntoPatch(StyleBox.Margin.All, 16);
         var paperBox = new StyleBoxTexture
-            { Texture = factory.GetTexture(config.TransparentWindowBackgroundBorderedPath) };
+            { Texture = sheet.GetTexture(config.TransparentWindowBackgroundBorderedPath) };
         paperBox.SetPatchMargin(StyleBox.Margin.All, 2);
 
         var borderedTransparentTex =
-            factory.GetTexture(new ResPath("transparent_window_background_bordered.png"));
+            sheet.GetTexture(new ResPath("transparent_window_background_bordered.png"));
         var borderedTransparentBackground = new StyleBoxTexture
         {
             Texture = borderedTransparentTex,

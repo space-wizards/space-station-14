@@ -11,7 +11,7 @@ namespace Content.Client.Stylesheets.Sheetlets.Hud;
 public sealed class ItemStatusSheetlet<T> : ISheetlet<T>
     where T : IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         return
         [

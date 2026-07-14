@@ -11,9 +11,9 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class LineEditSheetlet<T> : ISheetlet<T>
     where T : ILineEditConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var lineEditStylebox = factory.GetTexture(config.LineEditPath)
+        var lineEditStylebox = sheet.GetTexture(config.LineEditPath)
             .IntoPatch(StyleBox.Margin.All, 3);
         lineEditStylebox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 

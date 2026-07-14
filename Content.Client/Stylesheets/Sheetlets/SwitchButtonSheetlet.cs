@@ -10,14 +10,14 @@ namespace Content.Client.Stylesheets.Sheetlets;
 [Sheetlet(typeof(CommonStylesheetFactory))]
 public sealed class SwitchButtonSheetlet<T> : ISheetlet<T> where T : ISwitchButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var trackFillTex = factory.GetTexture(config.SwitchButtonTrackFillPath);
-        var trackOutlineTex = factory.GetTexture(config.SwitchButtonTrackOutlinePath);
-        var thumbFillTex = factory.GetTexture(config.SwitchButtonThumbFillPath);
-        var thumbOutlineTex = factory.GetTexture(config.SwitchButtonThumbOutlinePath);
-        var symbolOffTex = factory.GetTexture(config.SwitchButtonSymbolOffPath);
-        var symbolOnTex = factory.GetTexture(config.SwitchButtonSymbolOnPath);
+        var trackFillTex = sheet.GetTexture(config.SwitchButtonTrackFillPath);
+        var trackOutlineTex = sheet.GetTexture(config.SwitchButtonTrackOutlinePath);
+        var thumbFillTex = sheet.GetTexture(config.SwitchButtonThumbFillPath);
+        var thumbOutlineTex = sheet.GetTexture(config.SwitchButtonThumbOutlinePath);
+        var symbolOffTex = sheet.GetTexture(config.SwitchButtonSymbolOffPath);
+        var symbolOnTex = sheet.GetTexture(config.SwitchButtonSymbolOnPath);
 
         return
         [

@@ -10,14 +10,14 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class RadialMenuSheetlet<T> : ISheetlet<T>
     where T : IRadialMenuConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var btnNormalTex = factory.GetTexture(config.ButtonNormalPath);
-        var btnHoverTex = factory.GetTexture(config.ButtonHoverPath);
-        var closeNormalTex = factory.GetTexture(config.CloseNormalPath);
-        var closeHoverTex = factory.GetTexture(config.CloseHoverPath);
-        var backNormalTex = factory.GetTexture(config.BackNormalPath);
-        var backHoverTex = factory.GetTexture(config.BackHoverPath);
+        var btnNormalTex = sheet.GetTexture(config.ButtonNormalPath);
+        var btnHoverTex = sheet.GetTexture(config.ButtonHoverPath);
+        var closeNormalTex = sheet.GetTexture(config.CloseNormalPath);
+        var closeHoverTex = sheet.GetTexture(config.CloseHoverPath);
+        var backNormalTex = sheet.GetTexture(config.BackNormalPath);
+        var backHoverTex = sheet.GetTexture(config.BackHoverPath);
 
         return
         [

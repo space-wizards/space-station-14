@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class TextSheetlet<T> : ISheetlet<T>
     where T : IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var mono = config.MonoFont.GetFont(12);
 

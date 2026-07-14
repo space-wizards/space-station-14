@@ -11,11 +11,11 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class StripebackSheetlet<T> : ISheetlet<T>
     where T : IStripebackConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var stripeBack = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.StripebackPath),
+            Texture = sheet.GetTexture(config.StripebackPath),
             Mode = StyleBoxTexture.StretchMode.Tile,
         };
 

@@ -12,14 +12,14 @@ namespace Content.Client.Lobby.UI;
 public sealed class HumanoidProfileEditorSheetlet<T> : ISheetlet<T>
     where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         return
         [
             E<TextureButton>()
                 .Identifier("SpeciesInfoDefault")
                 .Prop(TextureButton.StylePropertyTexture,
-                    factory.GetTexture(new ResPath("VerbIcons/information.svg.192dpi.png"))),
+                    sheet.GetTexture(new ResPath("VerbIcons/information.svg.192dpi.png"))),
             // copied from `StyleNano`, but this is unused
             // E<TextureButton>()
             //     .Identifier("SpeciesInfoWarning")

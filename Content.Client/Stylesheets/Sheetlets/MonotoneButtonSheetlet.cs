@@ -13,12 +13,12 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         // Monotone (unfilled)
         var monotoneButton = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.MonotoneBaseButtonPath)
+            Texture = sheet.GetTexture(config.MonotoneBaseButtonPath)
         };
         monotoneButton.SetPatchMargin(StyleBox.Margin.All, 11);
         monotoneButton.SetPadding(StyleBox.Margin.All, 1);
@@ -27,21 +27,21 @@ public sealed class MonotoneButtonSheetlet<T> : ISheetlet<T>
 
         var monotoneButtonOpenLeft = new StyleBoxTexture(monotoneButton)
         {
-            Texture = factory.GetTexture(config.MonotoneOpenLeftButtonPath)
+            Texture = sheet.GetTexture(config.MonotoneOpenLeftButtonPath)
         };
 
         var monotoneButtonOpenRight = new StyleBoxTexture(monotoneButton)
         {
-            Texture = factory.GetTexture(config.MonotoneOpenRightButtonPath)
+            Texture = sheet.GetTexture(config.MonotoneOpenRightButtonPath)
         };
 
         var monotoneButtonOpenBoth = new StyleBoxTexture(monotoneButton)
         {
-            Texture = factory.GetTexture(config.MonotoneOpenBothButtonPath)
+            Texture = sheet.GetTexture(config.MonotoneOpenBothButtonPath)
         };
 
         // Monotone (filled)
-        var buttonTex = factory.GetTexture(config.OpenLeftButtonPath);
+        var buttonTex = sheet.GetTexture(config.OpenLeftButtonPath);
         var monotoneFilledButton = new StyleBoxTexture(monotoneButton)
         {
             Texture = buttonTex

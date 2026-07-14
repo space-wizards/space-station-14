@@ -14,13 +14,13 @@ namespace Content.Client.Stylesheets.Sheetlets.Hud;
 public sealed class TooltipSheetlet<T> : ISheetlet<T>
     where T: ITooltipConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var tooltipBox = factory.GetTexture(config.TooltipBoxPath)
+        var tooltipBox = sheet.GetTexture(config.TooltipBoxPath)
             .IntoPatch(StyleBox.Margin.All, 2);
         tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
-        var whisperBox = factory.GetTexture(config.WhisperBoxPath)
+        var whisperBox = sheet.GetTexture(config.WhisperBoxPath)
             .IntoPatch(StyleBox.Margin.All, 2);
         whisperBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 

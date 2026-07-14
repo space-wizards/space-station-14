@@ -12,11 +12,11 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class PlaceholderSheetlet<T> : ISheetlet<T>
     where T : IPlaceholderConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         IPlaceholderConfig placeholderCfg = config;
 
-        var placeholderBox = factory.GetTexture(placeholderCfg.PlaceholderPath).IntoPatch(StyleBox.Margin.All, 19);
+        var placeholderBox = sheet.GetTexture(placeholderCfg.PlaceholderPath).IntoPatch(StyleBox.Margin.All, 19);
         placeholderBox.SetExpandMargin(StyleBox.Margin.All, -5);
         placeholderBox.Mode = StyleBoxTexture.StretchMode.Tile;
 

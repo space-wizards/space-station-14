@@ -65,10 +65,10 @@ public sealed partial class RandomizeLockButton : BoxContainer
 public sealed class RandomizeLockButtonStyles<T> : ISheetlet<T>
 where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var textureLocked = factory.GetTexture(new ResPath("VerbIcons/lock.svg.192dpi.png"));
-        var textureUnlocked = factory.GetTexture(new ResPath("VerbIcons/unlock.svg.192dpi.png"));
+        var textureLocked = sheet.GetTexture(new ResPath("VerbIcons/lock.svg.192dpi.png"));
+        var textureUnlocked = sheet.GetTexture(new ResPath("VerbIcons/unlock.svg.192dpi.png"));
 
         return
         [

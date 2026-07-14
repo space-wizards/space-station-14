@@ -13,32 +13,32 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class ButtonSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var crossTex = factory.GetTexture(config.CrossIconPath);
-        var refreshTex = factory.GetTexture(config.RefreshIconPath);
-        var helpTex = factory.GetTexture(config.HelpIconPath);
+        var crossTex = sheet.GetTexture(config.CrossIconPath);
+        var refreshTex = sheet.GetTexture(config.RefreshIconPath);
+        var helpTex = sheet.GetTexture(config.HelpIconPath);
 
         var rules = new List<StyleRule>
         {
             // Set textures for the kinds of buttons
             CButton()
-                .Box(StyleBoxHelpers.BaseStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.BaseStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Box(StyleBoxHelpers.OpenLeftStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.OpenLeftStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Box(StyleBoxHelpers.OpenRightStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.OpenRightStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Box(StyleBoxHelpers.SquareStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.SquareStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Box(StyleBoxHelpers.SquareStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.SquareStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
-                .Box(StyleBoxHelpers.SmallStyleBox(factory, config)),
+                .Box(StyleBoxHelpers.SmallStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSmall)
                 .ParentOf(E<Label>())

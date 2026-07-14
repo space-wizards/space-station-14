@@ -12,7 +12,7 @@ namespace Content.Client.MainMenu.UI;
 public sealed class MainMenuSheetlet<T> : ISheetlet<T>
     where T : IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         return
         [

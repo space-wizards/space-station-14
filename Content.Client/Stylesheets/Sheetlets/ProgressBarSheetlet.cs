@@ -10,7 +10,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class ProgressBarSheetlet<T> : ISheetlet<T>
     where T : ISheetletConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         // TODO: 1) hardcoded colors, 2) yuck
         var progressBarBackground = new StyleBoxFlat

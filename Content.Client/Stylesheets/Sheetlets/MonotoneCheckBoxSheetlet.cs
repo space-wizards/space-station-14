@@ -13,13 +13,13 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class MonotoneCheckBoxSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var monotoneCheckBoxTextureChecked =
-            factory.GetTexture(
+            sheet.GetTexture(
                 new ResPath("Monotone/monotone_checkbox_checked.svg.96dpi.png"));
         var monotoneCheckBoxTextureUnchecked =
-            factory.GetTexture(
+            sheet.GetTexture(
                 new ResPath("Monotone/monotone_checkbox_unchecked.svg.96dpi.png"));
 
         return

@@ -12,13 +12,13 @@ namespace Content.Client.Stylesheets.Sheetlets.Hud;
 public sealed class ChatSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var chatColor = config.SecondaryPalette.Background.WithAlpha(221.0f / 255.0f);
         var chatBg = new StyleBoxFlat(chatColor);
 
         var chatChannelButtonTex =
-            factory.GetTexture(config.RoundedButtonBorderedPath);
+            sheet.GetTexture(config.RoundedButtonBorderedPath);
         var chatChannelButton = new StyleBoxTexture
         {
             Texture = chatChannelButtonTex,
@@ -27,7 +27,7 @@ public sealed class ChatSheetlet<T> : ISheetlet<T>
         chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
 
         var chatFilterButtonTex =
-            factory.GetTexture(config.RoundedButtonBorderedPath);
+            sheet.GetTexture(config.RoundedButtonBorderedPath);
         var chatFilterButton = new StyleBoxTexture
         {
             Texture = chatFilterButtonTex,

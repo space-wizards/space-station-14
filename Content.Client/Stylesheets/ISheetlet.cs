@@ -15,20 +15,20 @@ public interface ISheetlet<in T> : ISheetlet
     /// <summary>
     /// Generates the style rules for the sheetlet.
     /// </summary>
-    /// <param name="factory">Style factory resolver</param>
+    /// <param name="sheet"></param>
     /// <param name="config">Sheetlet configs</param>
     /// <returns>Style rules</returns>
-    StyleRule[] GetRules(StylesheetFactory factory, T config);
+    StyleRule[] GetRules(StylesheetFactory sheet, T config);
 
     /// <summary>
     /// Generates the style rules for the sheetlet.
     /// </summary>
-    /// <param name="factory">Style factory resolver</param>
+    /// <param name="sheet"></param>
     /// <param name="config">Sheetlet configs</param>
     /// <returns>Style rules</returns>
-    StyleRule[] ISheetlet.GetRules(StylesheetFactory factory, ISheetletConfig config)
+    StyleRule[] ISheetlet.GetRules(StylesheetFactory sheet, ISheetletConfig config)
     {
-        return GetRules(factory, (T)config);
+        return GetRules(sheet, (T)config);
     }
 }
 
@@ -40,8 +40,8 @@ public interface ISheetlet : ISheetletConfig
     /// <summary>
     /// Generates the style rules for the sheetlet.
     /// </summary>
-    /// <param name="factory">Style factory resolver</param>
+    /// <param name="sheet"></param>
     /// <param name="config">Sheetlet configs</param>
     /// <returns>Style rules</returns>
-    StyleRule[] GetRules(StylesheetFactory factory, ISheetletConfig config);
+    StyleRule[] GetRules(StylesheetFactory sheet, ISheetletConfig config);
 }

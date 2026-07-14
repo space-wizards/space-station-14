@@ -19,9 +19,9 @@ public sealed class MenuButtonSheetlet<T> : ISheetlet<T>
         return E<MenuButton>();
     }
 
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var buttonTex = factory.GetTexture(config.BaseButtonPath);
+        var buttonTex = sheet.GetTexture(config.BaseButtonPath);
         var topButtonBase = new StyleBoxTexture
         {
             Texture = buttonTex,
@@ -53,19 +53,19 @@ public sealed class MenuButtonSheetlet<T> : ISheetlet<T>
             CButton().Class(StyleClass.ButtonSquare).Box(topButtonSquare),
             CButton().Class(StyleClass.ButtonOpenLeft).Box(topButtonOpenLeft),
             CButton().Class(StyleClass.ButtonOpenRight).Box(topButtonOpenRight),
-            CButton().Box(StyleBoxHelpers.BaseStyleBox(factory, config)),
+            CButton().Box(StyleBoxHelpers.BaseStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenLeft)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenLeftStyleBox(factory, config)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenLeftStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenRight)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenRightStyleBox(factory, config)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.OpenRightStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonOpenBoth)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(factory, config)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet, config)),
             CButton()
                 .Class(StyleClass.ButtonSquare)
-                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(factory, config)),
+                .Prop(ContainerButton.StylePropertyStyleBox, StyleBoxHelpers.SquareStyleBox(sheet, config)),
             E<Label>()
                 .Class(MenuButton.StyleClassLabelTopButton)
                 .Prop(Label.StylePropertyFont, config.BaseFont.GetFont(14, FontKind.Bold)),

@@ -14,27 +14,27 @@ namespace Content.Client.PDA;
 public sealed class PdaSheetlet<T> : ISheetlet<T>
 where T : IPanelConfig, IButtonConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         // TODO: This should have its own set of images, instead of using button cfg directly.
-        var angleBorderRect = factory.GetTexture(config.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);
+        var angleBorderRect = sheet.GetTexture(config.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);
 
         return
         [
             //PDA - Backgrounds
             E<PanelContainer>()
                 .Class("PdaContentBackground")
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(factory, config))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(sheet, config))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
 
             E<PanelContainer>()
                 .Class("PdaBackground")
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(factory, config))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.SquareStyleBox(sheet, config))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
 
             E<PanelContainer>()
                 .Class("PdaBackgroundRect")
-                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(factory, config))
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet, config))
                 .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
 
             E<PanelContainer>()

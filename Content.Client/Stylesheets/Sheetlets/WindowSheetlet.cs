@@ -16,11 +16,11 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class WindowSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IWindowConfig, IIconConfig, IFontConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var headerStylebox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.WindowHeaderTexturePath),
+            Texture = sheet.GetTexture(config.WindowHeaderTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
@@ -28,25 +28,25 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
         // TODO: This would probably be better palette-based but we can leave it for now.
         var headerAlertStylebox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.WindowHeaderAlertTexturePath),
+            Texture = sheet.GetTexture(config.WindowHeaderAlertTexturePath),
             PatchMarginBottom = 3,
             ExpandMarginBottom = 3,
             ContentMarginBottomOverride = 0,
         };
         var backgroundBox = new StyleBoxTexture()
         {
-            Texture = factory.GetTexture(config.WindowBackgroundPath),
+            Texture = sheet.GetTexture(config.WindowBackgroundPath),
         };
         backgroundBox.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         backgroundBox.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
         var borderedBackgroundBox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.WindowBackgroundBorderedPath),
+            Texture = sheet.GetTexture(config.WindowBackgroundBorderedPath),
         };
         borderedBackgroundBox.SetPatchMargin(StyleBox.Margin.All, 2);
-        var closeButtonTex = factory.GetTexture(config.CrossIconPath);
+        var closeButtonTex = sheet.GetTexture(config.CrossIconPath);
 
-        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(factory, config);
+        var leftPanel = StyleBoxHelpers.OpenLeftStyleBox(sheet, config);
         leftPanel.SetPadding(StyleBox.Margin.All, 0.0f);
 
         // TODO: maybe also change everything here to `NanoWindow` or something
@@ -106,7 +106,7 @@ public sealed class WindowSheetlet<T> : ISheetlet<T>
             // Help Button
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)
-                .Prop(TextureButton.StylePropertyTexture, factory.GetTexture(config.HelpIconPath))
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTexture(config.HelpIconPath))
                 .Prop(Control.StylePropertyModulateSelf, config.PrimaryPalette.Element),
             E<TextureButton>()
                 .Class(FancyWindow.StyleClassWindowHelpButton)

@@ -12,7 +12,7 @@ public sealed class ScrollbarSheetlet<T> : ISheetlet<T>
 {
     public const int DefaultGrabberSize = 10;
 
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         // TODO: hardcoded colors!!!
         var vScrollBarGrabberNormal = new StyleBoxFlat

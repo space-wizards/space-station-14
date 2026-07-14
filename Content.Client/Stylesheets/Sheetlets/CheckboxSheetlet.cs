@@ -10,10 +10,10 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class CheckboxSheetlet<T> : ISheetlet<T>
     where T : ICheckboxConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var uncheckedTex = factory.GetTexture(config.CheckboxUncheckedPath);
-        var checkedTex = factory.GetTexture(config.CheckboxCheckedPath);
+        var uncheckedTex = sheet.GetTexture(config.CheckboxUncheckedPath);
+        var checkedTex = sheet.GetTexture(config.CheckboxCheckedPath);
 
         return
         [

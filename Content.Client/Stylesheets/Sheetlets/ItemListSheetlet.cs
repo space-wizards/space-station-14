@@ -23,7 +23,7 @@ public sealed class ItemListSheetlet<T> : ISheetlet<T>
             };
     }
 
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var boxBackground = new StyleBoxFlat { BackgroundColor = config.PrimaryPalette.Background };
         var boxItemBackground = Box(config.PrimaryPalette.Background);

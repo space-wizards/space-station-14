@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class ListContainerSheetlet<T> : ISheetlet<T>
     where T : IButtonConfig, IIconConfig, IPaletteConfig, IFontConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var box = new StyleBoxFlat() { BackgroundColor = Color.White };
 

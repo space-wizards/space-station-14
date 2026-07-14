@@ -12,7 +12,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class FancyTreeSheetlet<T> : ISheetlet<T>
     where T : IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         return
         [

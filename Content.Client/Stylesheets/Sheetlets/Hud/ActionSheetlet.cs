@@ -15,12 +15,12 @@ namespace Content.Client.Stylesheets.Sheetlets.Hud;
 public sealed class ActionSheetlet<T> : ISheetlet<T>
     where T : IPanelConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         IPanelConfig panelCfg = config;
 
         // TODO: absolute texture access
-        var handSlotHighlightTex = factory.GetTexture(new ResPath("Inventory/hand_slot_highlight.png"));
+        var handSlotHighlightTex = sheet.GetTexture(new ResPath("Inventory/hand_slot_highlight.png"));
         var handSlotHighlight = new StyleBoxTexture
         {
             Texture = handSlotHighlightTex,
@@ -28,7 +28,7 @@ public sealed class ActionSheetlet<T> : ISheetlet<T>
         handSlotHighlight.SetPatchMargin(StyleBox.Margin.All, 2);
 
         var actionSearchBoxTex =
-            factory.GetTexture(panelCfg.BlackPanelDarkThinBorderPath);
+            sheet.GetTexture(panelCfg.BlackPanelDarkThinBorderPath);
         var actionSearchBox = new StyleBoxTexture
         {
             Texture = actionSearchBoxTex,

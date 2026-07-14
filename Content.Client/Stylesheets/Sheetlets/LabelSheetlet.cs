@@ -13,7 +13,7 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class LabelSheetlet<T> : ISheetlet<T>
     where T : IFontConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var robotoMonoBold11 = config.MonoFont.GetFont(11, FontKind.Bold);
         var robotoMonoBold12 = config.MonoFont.GetFont(12, FontKind.Bold);

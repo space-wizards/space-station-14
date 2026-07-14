@@ -11,11 +11,11 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class OptionButtonSheetlet<T> : ISheetlet<T>
     where T : IIconConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         IIconConfig iconCfg = config;
 
-        var invertedTriangleTex = factory.GetTexture(iconCfg.InvertedTriangleIconPath);
+        var invertedTriangleTex = sheet.GetTexture(iconCfg.InvertedTriangleIconPath);
 
         return
         [

@@ -13,9 +13,9 @@ namespace Content.Client.Stylesheets.NTSheetlets;
 public sealed class NanoHeadingSheetlet<T> : ISheetlet<T>
     where T : INanoHeadingConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var nanoHeadingTex = factory.GetTexture(config.NanoHeadingPath);
+        var nanoHeadingTex = sheet.GetTexture(config.NanoHeadingPath);
         var nanoHeadingBox = new StyleBoxTexture
         {
             Texture = nanoHeadingTex,

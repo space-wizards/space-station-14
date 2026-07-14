@@ -26,18 +26,18 @@ public sealed class ContextMenuSheetlet<T> : ISheetlet<T>
         PressedElement = Color.LightSlateGray,
     };
 
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
         var borderedWindowBackground = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.WindowBackgroundBorderedPath),
+            Texture = sheet.GetTexture(config.WindowBackgroundBorderedPath),
         };
         borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
         var buttonContext = new StyleBoxTexture { Texture = Texture.White };
         var contextMenuExpansionTexture =
-            factory.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
+            sheet.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
         var verbMenuConfirmationTexture =
-            factory.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
+            sheet.GetTexture(new ResPath("VerbIcons/group.svg.192dpi.png"));
 
         var rules = new List<StyleRule>
         {

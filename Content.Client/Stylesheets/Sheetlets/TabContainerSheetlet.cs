@@ -11,9 +11,9 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class TabContainerSheetlet<T> : ISheetlet<T>
     where T : ITabContainerConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var tabContainerPanel = factory.GetTexture(config.TabContainerPanelPath)
+        var tabContainerPanel = sheet.GetTexture(config.TabContainerPanelPath)
             .IntoPatch(StyleBox.Margin.All, 2);
 
         var tabContainerBoxActive = new StyleBoxFlat(config.SecondaryPalette.Element);

@@ -11,9 +11,9 @@ namespace Content.Client.Stylesheets.Sheetlets;
 public sealed class SliderSheetlet<T> : ISheetlet<T>
     where T : ISliderConfig, IPaletteConfig
 {
-    public StyleRule[] GetRules(StylesheetFactory factory, T config)
+    public StyleRule[] GetRules(StylesheetFactory sheet, T config)
     {
-        var sliderFillTex = factory.GetTexture(config.SliderFillPath);
+        var sliderFillTex = sheet.GetTexture(config.SliderFillPath);
 
         var sliderFillBox = new StyleBoxTexture
         {
@@ -29,13 +29,13 @@ public sealed class SliderSheetlet<T> : ISheetlet<T>
 
         var sliderForeBox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.SliderOutlinePath),
+            Texture = sheet.GetTexture(config.SliderOutlinePath),
             Modulate = Color.FromHex("#494949") // TODO: Unhardcode.
         };
 
         var sliderGrabBox = new StyleBoxTexture
         {
-            Texture = factory.GetTexture(config.SliderGrabber),
+            Texture = sheet.GetTexture(config.SliderGrabber),
         };
 
         sliderFillBox.SetPatchMargin(StyleBox.Margin.All, 12);
