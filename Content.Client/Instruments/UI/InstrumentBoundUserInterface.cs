@@ -60,7 +60,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest += OnStopPlayingRequest;
         _fileSource.LoopingToggled += OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest += OnTrackPositionChangeRequest;
-        _fileSource.SetEntity((Owner, EntMan.GetComponent<InstrumentComponent>(Owner)));
+        _fileSource.Instrument = (Owner, EntMan.GetComponent<InstrumentComponent>(Owner));
 
         _bandSource.RefreshBandRequest += OnRefreshBandsRequest;
         _bandSource.JoinBandRequest += OnSetBandMasterRequest;
@@ -125,7 +125,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             return;
 
-        _fileSource.SetEntity((Owner, instrument));
+        _fileSource.Instrument = (Owner, instrument);
         instrument.OnMidiPlaybackEnded -= OnMidiPlaybackEnded;
     }
 
