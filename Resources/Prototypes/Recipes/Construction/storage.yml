@@ -1,3 +1,22 @@
+# region Base
+- type: construction
+  abstract: true
+  id: BaseStorageStructure
+  category: construction-category-storage
+  placementMode: SnapgridCenter
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  abstract: true
+  parent: BaseStorageStructure
+  id: BaseShelf
+  graph: Shelf
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+# endregion Base
+
 #bureaucracy
 - type: construction
   id: FilingCabinet

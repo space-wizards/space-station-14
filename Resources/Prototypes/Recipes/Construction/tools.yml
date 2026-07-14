@@ -1,3 +1,11 @@
+# region Base
+- type: construction
+  abstract: true
+  id: BaseTool
+  category: construction-category-tools
+  objectType: Item
+# endregion Base
+
 - type: construction
   id: LightTorch
   graph: LightTorch

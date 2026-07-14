@@ -1,12 +1,4 @@
 - type: construction
   id: DefibrillatorCabinet
-  graph: DefibrillatorCabinet
-  startNode: start
+  graph: BaseShelf
   targetNode: done
-  category: construction-category-storage
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
