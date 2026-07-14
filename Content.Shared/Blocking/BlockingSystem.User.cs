@@ -54,12 +54,10 @@ public sealed partial class BlockingSystem
         // This is how much damage the shield is attempting to block
         var split = args.OriginalDamage * blockFraction;
         var damage = _damageable.ChangeDamage(item, split);
-        if (!damage.AnyPositive())
-            return;
 
         // Of the damage that went through, reduce by the appropriate blocking modifiers.
         var modifier = GetBlockingModifier((item, blocking));
-        var blowthrough = DamageSpecifier.ApplyModifierSet(damage, modifier);
+        var blowthrough = DamageSpecifier.ApplyModifierSet(split, modifier);
 
         args.Damage *= 1f - blockFraction;
         args.Damage += blowthrough;
