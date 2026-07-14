@@ -20,11 +20,13 @@ public sealed partial class EventWebhook : IPostInjectInit
 
         var payload = new WebhookPayload()
         {
-            Username = adminUsername,
+            Username = Loc.GetString("event-log-webhook-title"),
             Embeds = new List<WebhookEmbed>()
             {
                 new()
                 {
+                    Title = adminUsername,
+                    Color = 11993343, // #b700ff
                     Description = eventDescription,
                     Footer = new WebhookEmbedFooter()
                     {
