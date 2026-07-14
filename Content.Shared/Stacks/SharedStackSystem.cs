@@ -240,7 +240,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         if (!Resolve(user.Owner, ref user.Comp, false))
             return;
 
-        if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
+        if (!ProtoMan.TryIndex(stack.Comp.StackTypeId, out var proto))
             return;
 
         if (amount <= 0)
