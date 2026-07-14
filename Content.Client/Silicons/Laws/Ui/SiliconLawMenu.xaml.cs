@@ -53,7 +53,45 @@ public sealed partial class SiliconLawMenu : FancyWindow
         LawAnnounceButton.OnPressed += OnLawAnnounceButtonPressed;
     }
 
-    public void Initialize() {}
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        var curTime = _timing.CurTime;
+        LawAnnounceButton.Disabled = curTime < _nextAllowedAnnouncePress;
+        // Don't want to change the channel while currently announcing laws
+        LawChatChannelOption.Disabled = curTime < _nextAllowedAnnouncePress;
+        
+        // Announce laws
+        // Skip if no queued laws or delay still active
+        if (_queuedLaws.Count < 1 || _queuedLaws.Peek().announceTime > curTime)
+        {
+            return;
+        }
+
+        var law = _queuedLaws.Dequeue().law;
+        var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
+        var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
+        var lawDescription = Loc.GetString(law.LawString);
+        var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
+        var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
+
+        // Local chat and whisper
+        if (_selectedChatChannelIdx < SelectableChatChannels.Count)
+        {
+            _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}",
+                SelectableChatChannels[_selectedChatChannelIdx]);
+        }
+        // Radio
+        else
+        {
+            var radioChannelProto = _selectableRadioChannels[_selectedChatChannelIdx - SelectableChatChannels.Count];
+            var radioMessage = radioChannelProto.ID == SharedChatSystem.CommonChannel
+                ? $"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}"
+                : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
+            _chatManager.SendMessage(radioMessage, ChatSelectChannel.Radio);
+        }
+    }
 
     public void Update(EntityUid uid, SiliconLawBuiState state)
     {
@@ -102,17 +140,6 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
             LawDisplayContainer.AddChild(control);
         }
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        var curTime = _timing.CurTime;
-        LawAnnounceButton.Disabled = curTime < _nextAllowedAnnouncePress;
-        // Don't want to change the channel while currently announcing laws
-        LawChatChannelOption.Disabled = curTime < _nextAllowedAnnouncePress;
-        AnnounceLaws(curTime);
     }
 
     private void OnMassSelectPressed(bool isPositive)
@@ -164,37 +191,5 @@ public sealed partial class SiliconLawMenu : FancyWindow
 
         // Disable button until all laws announced, plus an additional cooldown
         _nextAllowedAnnouncePress = _timing.CurTime + totalChatCooldown + AnnounceBaseCooldown;
-    }
-
-    private void AnnounceLaws(TimeSpan curTime)
-    {
-        // Skip if no queued laws or delay still active
-        if (_queuedLaws.Count < 1 || _queuedLaws.Peek().announceTime > curTime)
-        {
-            return;
-        }
-
-        var law = _queuedLaws.Dequeue().law;
-        var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
-        var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        var lawDescription = Loc.GetString(law.LawString);
-        var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
-        var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
-
-        // Local chat and whisper
-        if (_selectedChatChannelIdx < SelectableChatChannels.Count)
-        {
-            _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}",
-                SelectableChatChannels[_selectedChatChannelIdx]);
-        }
-        // Radio
-        else
-        {
-            var radioChannelProto = _selectableRadioChannels[_selectedChatChannelIdx - SelectableChatChannels.Count];
-            var radioMessage = radioChannelProto.ID == SharedChatSystem.CommonChannel
-                ? $"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}"
-                : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
-            _chatManager.SendMessage(radioMessage, ChatSelectChannel.Radio);
-        }
     }
 }
