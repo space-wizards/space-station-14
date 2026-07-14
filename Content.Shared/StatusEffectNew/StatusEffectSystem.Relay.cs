@@ -29,7 +29,6 @@ public sealed partial class StatusEffectsSystem
         // By Ref Events
         SubscribeLocalEvent<StatusEffectContainerComponent, MobStateChangedEvent>(RefRelayStatusEffectEvent);
 
-        SubscribeLocalEvent<StatusEffectContainerComponent, ModifyMovementTargetDirectionEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, RefreshFrictionModifiersEvent>(RefRelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, TileFrictionEvent>(RefRelayStatusEffectEvent);
 
