@@ -66,6 +66,11 @@
   graph: SpearSharkMinnow
 
 - type: construction
+  parent: Spear
+  id: SpearBone
+  graph: SpearBone
+
+- type: construction
   parent: BaseWeapon
   id: Bola
   graph: Bola
@@ -124,11 +129,6 @@
   id: ImprovisedBow
   graph: ImprovisedBow
   targetNode: ImprovisedBow
-
-- type: construction
-  parent: Spear
-  id: SpearBone
-  graph: SpearBone
 
 - type: construction
   parent: BaseWeapon
