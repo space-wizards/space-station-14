@@ -5,13 +5,13 @@
   targetNode: plushie
 
 - type: construction
-  parent: BaseItemMisc
+  parent: BaseClothing
   id: ClothingOuterSuitIan
   graph: ClothingOuterSuitIan
   targetNode: suit
 
 - type: construction
-  parent: BaseItemMisc
+  parent: BaseClothing
   id: MoproachShoes
   graph: MoproachShoes
   targetNode: shoes
