@@ -1,5 +1,4 @@
-# Base
-
+# region Base
 - type: construction
   abstract: true
   id: BaseAtmos
@@ -42,7 +41,7 @@
   id: BaseGasTrinary
   graph: GasTrinary
 
-# Machines
+# region Machines
 - type: construction
   parent: BaseAtmos
   id: AirAlarmFixture
@@ -90,7 +89,7 @@
   hide: true
   targetNode: sensorAlt2
 
-# ATMOS PIPES
+# region Pipes
 - type: construction
   parent: BaseGasPipe
   id: GasPipeHalf
@@ -206,7 +205,7 @@
   targetNode: manifold
   placementMode: SnapgridCenter
 
-# ATMOS UNARY
+# region Unary
 - type: construction
   parent: BaseGasUnary
   id: GasVentPump
@@ -227,7 +226,7 @@
   id: GasOutletInjector
   targetNode: outletinjector
 
-  # ATMOS BINARY
+# region Binary
 - type: construction
   parent: BaseGasBinary
   id: GasPressurePump
@@ -379,7 +378,7 @@
   targetNode: bendradiator
   placementMode: SnapgridCenter
 
-# ATMOS TRINARY
+# region Trinary
 - type: construction
   parent: BaseGasTrinary
   id: GasFilter
@@ -391,6 +390,7 @@
   id: GasFilterFlipped
   hide: true
   targetNode: filterflipped
+  mirror: GasFilter
 
 - type: construction
   parent: BaseGasTrinary
@@ -403,6 +403,7 @@
   id: GasMixerFlipped
   hide: true
   targetNode: mixerflipped
+  mirror: GasMixer
 
 - type: construction
   parent: BaseGasTrinary

@@ -1,191 +1,151 @@
+# region Base
 - type: construction
+  abstract: true
+  id: BaseWeapon
+  category: construction-category-weapons
+  objectType: Item
+
+# region Weapons
+- type: construction
+  parent: BaseWeapon
   id: BladedFlatcapGrey
   graph: BladedFlatcapGrey
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: BladedFlatcapBrown
   graph: BladedFlatcapBrown
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: Shiv
   graph: Shiv
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ReinforcedShiv
   graph: ReinforcedShiv
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: PlasmaShiv
   graph: PlasmaShiv
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: UraniumShiv
   graph: UraniumShiv
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: Spear
   graph: Spear
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: SpearReinforced
   graph: SpearReinforced
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: SpearPlasma
   graph: SpearPlasma
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: SpearUranium
   graph: SpearUranium
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: SpearSharkMinnow
   graph: SpearSharkMinnow
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: Bola
   graph: Bola
-  startNode: start
   targetNode: bola
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: WoodenBuckler
   graph: WoodenBuckler
-  startNode: start
   targetNode: woodenBuckler
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: CardShield
   graph: CardShield
-  startNode: start
   targetNode: cardShield
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: MakeshiftShield
   graph: MakeshiftShield
-  startNode: start
   targetNode: makeshiftShield
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ImprovisedArrow
   graph: ImprovisedArrow
-  startNode: start
   targetNode: ImprovisedArrow
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ImprovisedArrowCarp
   graph: ImprovisedArrowCarp
-  startNode: start
   targetNode: ImprovisedArrowCarp
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ImprovisedArrowPlasma
   graph: ImprovisedArrowPlasma
-  startNode: start
   targetNode: ImprovisedArrowPlasma
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ImprovisedArrowUranium
   graph: ImprovisedArrowUranium
-  startNode: start
   targetNode: ImprovisedArrowUranium
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: CardArrow
   graph: CardArrow
-  startNode: start
   targetNode: CardArrow
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ImprovisedBow
   graph: ImprovisedBow
-  startNode: start
   targetNode: ImprovisedBow
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: SpearBone
   graph: SpearBone
-  startNode: start
   targetNode: spear
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: ClothingHandsKnuckleDustersBrass
   graph: ClothingHandsKnuckleDustersBrass
-  startNode: start
   targetNode: icon
-  category: construction-category-weapons
-  objectType: Item
 
 - type: construction
+  parent: BaseWeapon
   id: CardSword
   graph: CardSword
-  startNode: start
   targetNode: cardSword
-  category: construction-category-weapons
-  objectType: Item
