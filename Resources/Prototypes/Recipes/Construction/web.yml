@@ -36,12 +36,11 @@
   conditions:
   - !type:TileNotBlocked
 
+# FIXME: inconsistent anchoring vs. other chair construction
 - type: construction
   parent: BaseWeb
   id: ChairWeb
   targetNode: chair
-  conditions:
-  - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWeb
