@@ -1,15 +1,20 @@
 ﻿using Content.Server.Administration.Managers;
+using Content.Server.Discord.WebhookMessages;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Administration.AdminEventLog;
+using Content.Shared.CCVar;
 using Content.Shared.Eui;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Administration.AdminEventLog;
 
 public sealed partial class AdminEventLogEui : BaseEui
 {
     [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private EventWebhook _eventWebhook = default!;
     [Dependency] private IEntityManager _e = default!;
 
     private int CurrentRoundId => _e.System<GameTicker>().RoundId;
@@ -42,6 +47,13 @@ public sealed partial class AdminEventLogEui : BaseEui
 
     public override async void HandleMessage(EuiMessageBase msg)
     {
+        var message = (AdminEventLogEuiMsg)msg;
+
+        _eventWebhook.TrySendMessage(
+            message.Admin.Name,
+            message.RoundId,
+            message.EventDescription,
+            _config.GetCVar(CCVars.DiscordVoteWebhook));
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
