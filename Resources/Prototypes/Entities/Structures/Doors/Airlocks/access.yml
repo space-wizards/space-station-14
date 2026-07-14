@@ -1232,7 +1232,7 @@
     containers:
       board: [ DoorElectronicsExternal ]
   - type: Docking
-    radarColor: Red
+    radarColor: "#B22222"
     highlightedRadarColor: Red
     dockLegendCategory: Arrivals
 
@@ -1245,7 +1245,7 @@
     containers:
       board: [ DoorElectronicsExternal ]
   - type: Docking
-    radarColor: LightGoldenrodYellow
+    radarColor: "#FFFF9F"
     highlightedRadarColor: LightYellow
     dockLegendCategory: Cargo
 
