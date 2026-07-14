@@ -76,7 +76,7 @@ public sealed partial class ChangelingObjectiveSystem : EntitySystem
 
         var query = AllEntityQuery<ChangelingMindIdentityTrackerComponent>();
 
-        int highest = 0;
+        var highest = 0;
 
         while (query.MoveNext(out var uid, out var tracker))
         {
