@@ -32,6 +32,12 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             UpdateResetButton();
         }
 
+        public void SetRoundSpinBox(int round)
+        {
+            RoundSpinBox.Value = round;
+            UpdateResetButton();
+        }
+
         private void RoundSpinBoxChanged(ValueChangedEventArgs args)
         {
             UpdateResetButton();

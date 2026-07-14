@@ -12,6 +12,8 @@ public sealed partial class AdminEventLogEui : BaseEui
     [Dependency] private IAdminManager _adminManager = default!;
     [Dependency] private IEntityManager _e = default!;
 
+    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
+
     public AdminEventLogEui()
     {
         IoCManager.InjectDependencies(this);
@@ -22,9 +24,25 @@ public sealed partial class AdminEventLogEui : BaseEui
         base.Opened();
 
         _adminManager.OnPermsChanged += OnPermsChanged;
+        StateDirty();
     }
 
-    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
+    public override void Closed()
+    {
+        base.Closed();
+
+        _adminManager.OnPermsChanged -= OnPermsChanged;
+    }
+
+    public override EuiStateBase GetNewState()
+    {
+        var state = new AdminEventLogEuiState(CurrentRoundId);
+        return state;
+    }
+
+    public override async void HandleMessage(EuiMessageBase msg)
+    {
+    }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
     {
@@ -32,10 +50,5 @@ public sealed partial class AdminEventLogEui : BaseEui
         {
             Close();
         }
-    }
-
-    public override EuiStateBase GetNewState()
-    {
-        return new AdminEventLogEuiState(CurrentRoundId);
     }
 }
