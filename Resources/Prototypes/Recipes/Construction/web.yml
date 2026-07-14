@@ -4,7 +4,6 @@
   id: BaseWeb
   graph: WebStructures
   category: construction-category-furniture
-  objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
   entityWhitelist:

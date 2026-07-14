@@ -3,7 +3,6 @@
   abstract: true
   id: BaseFurniture
   category: construction-category-furniture
-  objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction

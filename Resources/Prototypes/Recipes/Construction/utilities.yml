@@ -3,7 +3,6 @@
   abstract: true
   id: BaseUtility
   category: construction-category-utilities
-  objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction
