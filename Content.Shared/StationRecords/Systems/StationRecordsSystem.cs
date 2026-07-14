@@ -38,6 +38,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private StationRecordKeyStorageSystem _keyStorage = default!;
     [Dependency] private SharedIdCardSystem _idCard = default!;
+
     [Dependency] private EntityQuery<IdCardComponent> _idCardQuery = default!;
     [Dependency] private EntityQuery<PdaComponent> _pdaQuery = default!;
     [Dependency] private EntityQuery<StationRecordsComponent> _recordsQuery = default!;
@@ -45,14 +46,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
     [Dependency] private EntityQuery<FingerprintComponent> _fingerprintQuery = default!;
     [Dependency] private EntityQuery<DnaComponent> _dnaQuery = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawn);
-        SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlayerSpawn(PlayerSpawnCompleteEvent args)
     {
         if (!_recordsQuery.TryComp(args.Station, out var stationRecords))
@@ -61,6 +55,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
         CreateGeneralRecord((args.Station, stationRecords), args.Mob, args.Profile, args.JobId);
     }
 
+    [SubscribeLocalEvent]
     private void OnRename(ref EntityRenamedEvent ev)
     {
         // When a player gets renamed their card gets changed to match.
@@ -102,7 +97,17 @@ public sealed partial class StationRecordsSystem : EntitySystem
         _fingerprintQuery.TryComp(player, out var fingerprintComponent);
         _dnaQuery.TryComp(player, out var dnaComponent);
 
-        CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, profile.Species, profile.Gender, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile);
+        CreateGeneralRecord(
+            station,
+            idUid.Value,
+            profile.Name,
+            profile.Age,
+            profile.Species,
+            profile.Gender,
+            jobId,
+            fingerprintComponent?.Fingerprint,
+            dnaComponent?.DNA,
+            profile);
     }
 
     /// <summary>
@@ -180,7 +185,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
         var ev = new GeneralRecordCreatedEvent(key, record, profile);
         RaiseLocalEvent(ref ev);
 
-        Dirty(station);
+        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
     }
 
     public StationRecordKey? Convert((NetEntity, uint)? input)

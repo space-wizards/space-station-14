@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Shared.PDA;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
@@ -9,7 +8,6 @@ namespace Content.Shared.StationRecords.Systems;
 
 public sealed partial class StationRecordsSystem
 {
-
     /// <summary>
     /// Set the station records key for an id/pda.
     /// </summary>
@@ -19,7 +17,7 @@ public sealed partial class StationRecordsSystem
             return;
 
         var keyStorageEntity = idUid;
-        if (TryComp<PdaComponent>(idUid, out var pda) && pda.ContainedId is {} id)
+        if (_pdaQuery.TryComp(idUid, out var pda) && pda.ContainedId is {} id)
         {
             keyStorageEntity = id;
         }
@@ -35,7 +33,7 @@ public sealed partial class StationRecordsSystem
     /// <returns>True if the record was removed, false otherwise.</returns>
     public bool RemoveRecord(StationRecordKey key, StationRecordsComponent? records = null)
     {
-        if (!Resolve(key.OriginStation, ref records))
+        if (!_recordsQuery.Resolve(key.OriginStation, ref records))
             return false;
 
         if (!records.Records.RemoveAllRecords(key.Id))
@@ -44,7 +42,7 @@ public sealed partial class StationRecordsSystem
         var ev = new RecordRemovedEvent(key);
         RaiseLocalEvent(ref ev);
 
-        Dirty(key.OriginStation, records);
+        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
         return true;
     }
 
@@ -59,7 +57,7 @@ public sealed partial class StationRecordsSystem
     {
         entry = default;
 
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_recordsQuery.Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         if (ent.Comp.Records.Keys.Count == 0)
@@ -87,11 +85,11 @@ public sealed partial class StationRecordsSystem
     /// <typeparam name="T">The type of record to add.</typeparam>
     public StationRecordKey AddRecordEntry<T>(Entity<StationRecordsComponent?> station, T record) where T : StationRecord
     {
-        if (!Resolve(station, ref station.Comp))
+        if (!_recordsQuery.Resolve(station, ref station.Comp))
             return StationRecordKey.Invalid;
 
         var id = station.Comp.Records.AddRecordEntry(record);
-        Dirty(station);
+        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
         return id == null ? StationRecordKey.Invalid : new StationRecordKey(id.Value, station);
     }
 
@@ -106,11 +104,11 @@ public sealed partial class StationRecordsSystem
         T record,
         StationRecordsComponent? records = null) where T : StationRecord
     {
-        if (!Resolve(key.OriginStation, ref records))
+        if (!_recordsQuery.Resolve(key.OriginStation, ref records))
             return;
 
         records.Records.AddRecordEntry(key.Id, record);
-        Dirty(key.OriginStation, records);
+        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
     }
 
     /// <summary>
@@ -119,7 +117,7 @@ public sealed partial class StationRecordsSystem
     /// <param name="station">The station to synchronize any recently accessed records with.</param>
     public void Synchronize(Entity<StationRecordsComponent?> station)
     {
-        if (!Resolve(station, ref station.Comp))
+        if (!_recordsQuery.Resolve(station, ref station.Comp))
             return;
 
         foreach (var key in station.Comp.Records.GetRecentlyAccessed())
@@ -129,7 +127,7 @@ public sealed partial class StationRecordsSystem
         }
 
         station.Comp.Records.ClearRecentlyAccessed();
-        Dirty(station);
+        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
     }
 
     /// <summary>
@@ -139,14 +137,14 @@ public sealed partial class StationRecordsSystem
     /// <param name="records">Station records component.</param>
     public void Synchronize(StationRecordKey key, StationRecordsComponent? records = null)
     {
-        if (!Resolve(key.OriginStation, ref records))
+        if (!_recordsQuery.Resolve(key.OriginStation, ref records))
             return;
 
         var ev = new RecordModifiedEvent(key);
         RaiseLocalEvent(ref ev);
 
         records.Records.RemoveFromRecentlyAccessed(key.Id);
-        Dirty(key.OriginStation, records);
+        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
     }
 
     /// <summary>
@@ -176,7 +174,7 @@ public sealed partial class StationRecordsSystem
     /// <returns>Enumerable of pairs with a station record key, and the entry in question of type T. Always empty on client.</returns>
     public IEnumerable<(uint, T)> GetRecordsOfType<T>(Entity<StationRecordsComponent?> station)
     {
-        if (!Resolve(station, ref station.Comp))
+        if (!_recordsQuery.Resolve(station, ref station.Comp))
             return Array.Empty<(uint, T)>();
 
         return station.Comp.Records.GetRecordsOfType<T>();

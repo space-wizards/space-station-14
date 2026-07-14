@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.StationRecords.Components;
 
 [Access(typeof(StationRecordsSystem))]
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class StationRecordsComponent : Component
 {
     // Every single record in this station, by key.

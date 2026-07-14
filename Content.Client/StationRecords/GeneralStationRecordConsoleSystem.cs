@@ -8,26 +8,24 @@ namespace Content.Client.StationRecords;
 public sealed partial class GeneralStationRecordConsoleSystem : SharedGeneralStationRecordConsoleSystem
 {
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private EntityQuery<StationRecordsComponent> _recordsQuery = default!;
 
     private static readonly GeneralStationRecordConsoleState EmptyState = new();
 
     protected override void UpdateUserInterface(Entity<GeneralStationRecordConsoleComponent> ent)
     {
-        var (uid, console) = ent;
-        var owningStation = StationSys.GetOwningStation(uid);
+        var owningStation = StationSys.GetOwningStation(ent.Owner);
 
         if (!_ui.TryGetOpenUi(ent.Owner, GeneralStationRecordConsoleKey.Key, out var bui)
             || bui is not GeneralStationRecordConsoleBoundUserInterface recordBui)
             return;
 
-        if (!_recordsQuery.TryComp(owningStation, out var stationRecords))
+        if (!RecordsQuery.TryComp(owningStation, out var stationRecords))
         {
             recordBui.SetState(EmptyState);
             return;
         }
 
-        var listing = StationRecordsSys.BuildListing((owningStation.Value, stationRecords), console.Filter);
+        var listing = StationRecordsSys.BuildListing((owningStation.Value, stationRecords), ent.Comp.Filter);
 
         switch (listing.Count)
         {
@@ -35,17 +33,17 @@ public sealed partial class GeneralStationRecordConsoleSystem : SharedGeneralSta
                 recordBui.SetState(EmptyState);
                 return;
             default:
-                console.ActiveKey ??= listing.Keys.First();
+                ent.Comp.ActiveKey ??= listing.Keys.First();
                 break;
         }
 
-        if (console.ActiveKey is not { } id)
+        if (ent.Comp.ActiveKey is not { } id)
             return;
 
         var key = new StationRecordKey(id, owningStation.Value);
         StationRecordsSys.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
 
-        var newState = new GeneralStationRecordConsoleState(id, record, listing, console.Filter, ent.Comp.CanDeleteEntries);
+        var newState = new GeneralStationRecordConsoleState(id, record, listing, ent.Comp.Filter, ent.Comp.CanDeleteEntries);
         recordBui.SetState(newState);
     }
 }

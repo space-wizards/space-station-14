@@ -6,27 +6,22 @@ namespace Content.Shared.StationRecords.Systems;
 public sealed partial class StationRecordKeyStorageSystem : EntitySystem
 {
     [Dependency] private StationRecordsSystem _records = default!;
+
     [Dependency] private EntityQuery<StationRecordKeyStorageComponent> _storageQuery = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnGetState(Entity<StationRecordKeyStorageComponent> ent, ref ComponentGetState args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<StationRecordKeyStorageComponent, ComponentHandleState>(OnHandleState);
+        args.State = new StationRecordKeyStorageComponentState(_records.Convert(ent.Comp.Key));
     }
 
-    private void OnGetState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new StationRecordKeyStorageComponentState(_records.Convert(component.Key));
-    }
-
-    private void OnHandleState(EntityUid uid, StationRecordKeyStorageComponent component, ref ComponentHandleState args)
+    [SubscribeLocalEvent]
+    private void OnHandleState(Entity<StationRecordKeyStorageComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not StationRecordKeyStorageComponentState state)
             return;
 
-        component.Key = _records.Convert(state.Key);
+        ent.Comp.Key = _records.Convert(state.Key);
     }
 
     /// <summary>

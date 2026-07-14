@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.StationRecords.Events;
 
 /// <summary>
-/// Base event for station record events
+/// Base event for station record events.
 /// </summary>
 public interface IStationRecordEvent
 {

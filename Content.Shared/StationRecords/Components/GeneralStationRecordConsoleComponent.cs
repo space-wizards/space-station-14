@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.StationRecords.Components;
 
 [Access(typeof(SharedGeneralStationRecordConsoleSystem))]
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class GeneralStationRecordConsoleComponent : Component
 {
     /// <summary>
