@@ -99,6 +99,9 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
 
     private void OnItemRemoved(Entity<SmartFridgeComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID != ent.Comp.Container  || _timing.ApplyingState)
+            return;
+
         var key = new SmartFridgeEntry(Identity.Name(args.Entity, EntityManager));
 
         if (ent.Comp.ContainedEntries.TryGetValue(key, out var contained))
@@ -122,9 +125,6 @@ public abstract partial class SharedSmartFridgeSystem : EntitySystem
 
     private void OnDispenseItem(Entity<SmartFridgeComponent> ent, ref SmartFridgeDispenseItemMessage args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (!Allowed(ent, args.Actor))
             return;
 

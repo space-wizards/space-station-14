@@ -21,9 +21,8 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
     private readonly Color _partiallyTransparent = new Color(255, 255, 255, 180);
 
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private ISerializationManager _serialization= default!;
+    [Dependency] private ISerializationManager _serialization = default!;
 
     public override void Initialize()
     {
@@ -70,7 +69,7 @@ public sealed partial class MultipartMachineSystem : SharedMultipartMachineSyste
             if (part.GhostProto == null)
                 continue;
 
-            var entProto = _prototype.Index(part.GhostProto.Value);
+            var entProto = ProtoMan.Index(part.GhostProto.Value);
             if (!entProto.Components.TryGetComponent("Sprite", out var s) || s is not SpriteComponent protoSprite)
                 return;
 

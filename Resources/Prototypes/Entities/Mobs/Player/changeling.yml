@@ -14,6 +14,53 @@
     balance:
       ChangelingDNA: 60
 
+- type: entity
+  parent: [ SimpleSpaceMobBase, MobNightVision ]
+  id: MobHeadSlug
+  name: headslug
+  description: A small, slug-like creature with a large, gaping maw. It's covered in a thick, slimy mucus.
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 15
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: slug
+      sprite: Mobs/Animals/headslug.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: slug
+      Dead:
+        Base: slug_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MovementSpeedModifier # Slightly faster than regular mobs
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+  - type: MeleeWeapon
+    altDisarm: false
+    damage:
+      types:
+        Blunt: 5
+        Structural: 15 # to destroy lockers in which bodies could be hidden
+  - type: ChangelingSlug
+  - type: Tag # Removes DoorBumpOpener
+    tags:
+      []
+
 - type: entity # dummy prototype for the store listing
   id: ChangelingFleshClothingAbilityStoreDummy
   categories: [ HideSpawnMenu ]
@@ -45,3 +92,16 @@
     # this is set to false as to not mess with a changeling's ability to disguise.
     accentHide: false
     titleText: changeling-voice-mimic-window-title
+
+- type: entity # dummy prototype for the store listing
+  id: ChangelingNightVisionDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: NightVision
+    enabled: false # Disabled by default
+    action: ActionChangelingNightVision
+    lightingColor: "#AF0909AA"
+    noiseAmount: 1
+    noiseMultiplier: 2
+    overlayColor: "#AB0808AA"
+    prioritized: false # Technically eye augments, so we want things such as NVGs to take priority if able
