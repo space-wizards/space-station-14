@@ -1231,6 +1231,10 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsExternal ]
+  - type: Docking
+    radarColor: Red
+    highlightedRadarColor: Red
+    dockLegendCategory: Arrivals
 
 - type: entity
   parent: AirlockGlassShuttle
@@ -1243,6 +1247,7 @@
   - type: Docking
     radarColor: LightGoldenrodYellow
     highlightedRadarColor: LightYellow
+    dockLegendCategory: Cargo
 
 - type: entity
   parent: AirlockGlassShuttle

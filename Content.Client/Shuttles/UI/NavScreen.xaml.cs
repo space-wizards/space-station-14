@@ -32,6 +32,9 @@ public sealed partial class NavScreen : BoxContainer
 
         CargoDockToggle.OnToggled += OnCargoDockTogglePressed;
         CargoDockToggle.Pressed = NavRadar.ShowCargoDocks;
+
+        ArrivalDockToggle.OnToggled += OnArrivalDockTogglePressed;
+        ArrivalDockToggle.Pressed = NavRadar.ShowArrivalDocks;
     }
 
     public void SetShuttle(EntityUid? shuttle)
@@ -61,6 +64,12 @@ public sealed partial class NavScreen : BoxContainer
     {
         NavRadar.ShowCargoDocks ^= true;
         args.Button.Pressed = NavRadar.ShowCargoDocks;
+    }
+
+    private void OnArrivalDockTogglePressed(BaseButton.ButtonEventArgs args)
+    {
+        NavRadar.ShowArrivalDocks ^= true;
+        args.Button.Pressed = NavRadar.ShowArrivalDocks;
     }
 
     public void UpdateState(NavInterfaceState scc)

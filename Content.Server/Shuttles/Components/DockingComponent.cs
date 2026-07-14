@@ -1,3 +1,4 @@
+using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Physics.Dynamics.Joints;
 
@@ -32,4 +33,10 @@ public sealed partial class DockingComponent : SharedDockingComponent
 
     [ViewVariables]
     public int PathfindHandle = -1;
+
+    /// <summary>
+    /// The category of the dock, used to determine what kind of dock it is for the purposes of the radar screen legend
+    /// </summary>
+    [ViewVariables]
+    public LegendCategory DockLegendCategory = LegendCategory.General;
 }

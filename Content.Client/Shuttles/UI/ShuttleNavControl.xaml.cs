@@ -39,6 +39,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     public bool ShowIFF { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
     public bool ShowCargoDocks { get; set; } = true;
+    public bool ShowArrivalDocks { get; set; } = true;
     public bool RotateWithEntity { get; set; } = true;
 
     /// <summary>
@@ -331,13 +332,12 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 verts[2] = Vector2.Transform(position + bottomRight, gridToView);
                 verts[3] = Vector2.Transform(position + bottomLeft, gridToView);
 
-                if (state.HighlightedColor == Color.LightYellow && !ShowCargoDocks)
+                switch (state.Category)
                 {
-                    continue;
-                }
-                else if (state.HighlightedColor == Color.Magenta && !ShowDocks)
-                {
-                    continue;
+                    case LegendCategory.Cargo when !ShowCargoDocks:
+                    case LegendCategory.Arrivals when !ShowArrivalDocks:
+                    case LegendCategory.General when !ShowDocks:
+                        continue;
                 }
 
                 handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts, color.WithAlpha(0.8f));
