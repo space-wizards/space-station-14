@@ -141,6 +141,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: Prying
 
 - type: entity
   id: MechRipleyBattery
@@ -179,6 +180,7 @@
     pilotWhitelist:
       components:
       - HumanoidProfile
+  - type: Prying
 
 - type: entity
   parent: MechHonker
