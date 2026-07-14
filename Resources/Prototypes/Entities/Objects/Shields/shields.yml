@@ -243,6 +243,7 @@
       passiveBlockModifier:
         flatReductions:
           Blunt: 5
+          Piercing: 1 # Scar told me to.
     - type: Construction
       graph: WebObjects
       node: shield
