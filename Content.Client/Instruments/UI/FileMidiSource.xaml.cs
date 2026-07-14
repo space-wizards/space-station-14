@@ -250,7 +250,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         TrackPositionChangeRequest?.Invoke((int)Math.Ceiling(PlaybackSlider.Value));
     }
 
-    private Control? SupplyFileManagementTooltip(Control? sender)
+    private Tooltip? SupplyFileManagementTooltip(Control? sender)
     {
         if (sender is not Button { Disabled: true })
             return null;
