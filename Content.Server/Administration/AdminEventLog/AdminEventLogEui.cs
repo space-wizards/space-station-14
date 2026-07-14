@@ -11,7 +11,7 @@ using Robust.Shared.Configuration;
 namespace Content.Server.Administration.AdminEventLog;
 
 /// <summary>
-/// Sends a message to discord after a admin logs a event 
+/// Sends a message to discord after a admin logs a event
 /// </summary>
 public sealed partial class AdminEventLogEui : BaseEui
 {
