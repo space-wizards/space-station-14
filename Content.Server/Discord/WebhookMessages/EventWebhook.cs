@@ -10,6 +10,11 @@ public sealed partial class EventWebhook : IPostInjectInit
     private const string SawmillDiscordName = "discord";
     private ISawmill _sawmill = default!;
 
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = Logger.GetSawmill(SawmillDiscordName);
+    }
+
     public void TrySendMessage(string adminUsername, int roundId, string eventDescription, string? webhookUrl = null)
     {
         if (string.IsNullOrEmpty(webhookUrl))
@@ -54,10 +59,5 @@ public sealed partial class EventWebhook : IPostInjectInit
         {
             _sawmill.Error($"Error while sending vote webhook to Discord: {e}");
         }
-    }
-
-    void IPostInjectInit.PostInject()
-    {
-        _sawmill = Logger.GetSawmill(SawmillDiscordName);
     }
 }
