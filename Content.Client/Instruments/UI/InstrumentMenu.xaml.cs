@@ -6,126 +6,125 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Instruments.UI
+namespace Content.Client.Instruments.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class InstrumentMenu : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class InstrumentMenu : FancyWindow
+    private InstrumentMidiSourceBase? _currentMode;
+
+    public InstrumentMenu()
     {
-        private InstrumentMidiSourceBase? _currentMode;
+        RobustXamlLoader.Load(this);
 
-        public InstrumentMenu()
+        var styleBox = new StyleBoxFlat();
+        styleBox.BorderThickness = new Thickness(0);
+        styleBox.Padding = new Thickness(10);
+        MainTabContainer.PanelStyleBoxOverride = styleBox;
+
+        MainTabContainer.SetTabTitle(0, Loc.GetString("instruments-component-menu-play-tab-title"));
+        MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-config-tab-title"));
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+        _currentMode?.Disable();
+    }
+
+    /// <summary>
+    /// Registers the passed midi source controls as children of this instrument menu and creates a button
+    /// for each one on the left hand side of the menu.
+    /// </summary>
+    /// <param name="sources">The sources to be registered</param>
+    public void SetupSources(params InstrumentMidiSourceBase[] sources)
+    {
+        var group = new ButtonGroup();
+        for (var i = 0; i < sources.Length; i++)
         {
-            RobustXamlLoader.Load(this);
+            var source = sources[i];
+            var button = new Button();
+            button.Text = source.ButtonName;
+            button.Group = group;
+            button.OnPressed += _ => { SwitchMode(source); };
+            MidiSourceButtonsBoxContainer.Children.Add(button);
+            MidiSourcesContainer.Children.Add(source);
+            source.VerticalExpand = true;
+            source.HorizontalExpand = true;
+            source.Visible = false;
 
-            var styleBox = new StyleBoxFlat();
-            styleBox.BorderThickness = new Thickness(0);
-            styleBox.Padding = new Thickness(10);
-            MainTabContainer.PanelStyleBoxOverride = styleBox;
-
-            MainTabContainer.SetTabTitle(0, Loc.GetString("instruments-component-menu-play-tab-title"));
-            MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-config-tab-title"));
-        }
-
-        protected override void ExitedTree()
-        {
-            base.ExitedTree();
-            _currentMode?.Disable();
-        }
-
-        /// <summary>
-        /// Registers the passed midi source controls as children of this instrument menu and creates a button
-        /// for each one on the left hand side of the menu.
-        /// </summary>
-        /// <param name="sources">The sources to be registered</param>
-        public void SetupSources(params InstrumentMidiSourceBase[] sources)
-        {
-            var group = new ButtonGroup();
-            for (var i = 0; i < sources.Length; i++)
+            // Set nicer style classes depending on button position.
+            if (i == 0)
             {
-                var source = sources[i];
-                var button = new Button();
-                button.Text = source.ButtonName;
-                button.Group = group;
-                button.OnPressed += _ => { SwitchMode(source); };
-                MidiSourceButtonsBoxContainer.Children.Add(button);
-                MidiSourcesContainer.Children.Add(source);
-                source.VerticalExpand = true;
-                source.HorizontalExpand = true;
-                source.Visible = false;
-
-                // Set nicer style classes depending on button position.
-                if (i == 0)
-                {
-                    button.Pressed = true;
-                    button.StyleClasses.Add("OpenLeft");
-                }
-                else if (i == sources.Length - 1)
-                {
-                    button.StyleClasses.Add("OpenRight");
-                }
-                else
-                {
-                    button.StyleClasses.Add("OpenBoth");
-                }
+                button.Pressed = true;
+                button.StyleClasses.Add("OpenLeft");
+            }
+            else if (i == sources.Length - 1)
+            {
+                button.StyleClasses.Add("OpenRight");
+            }
+            else
+            {
+                button.StyleClasses.Add("OpenBoth");
             }
         }
+    }
 
-        /// <summary>
-        /// Takes the given control and registers it as an option for the configuration collapsible.
-        /// </summary>
-        /// <param name="name">The string to display on the collapsible button for this configuration.</param>
-        /// <param name="ctrl">The control used for this configuration.</param>
-        public void AddConfigurationControl(string name, Control ctrl)
-        {
-            var header = new Label();
-            var styleBox = new StyleBoxFlat();
-            var panel = new PanelContainer();
+    /// <summary>
+    /// Takes the given control and registers it as an option for the configuration collapsible.
+    /// </summary>
+    /// <param name="name">The string to display on the collapsible button for this configuration.</param>
+    /// <param name="ctrl">The control used for this configuration.</param>
+    public void AddConfigurationControl(string name, Control ctrl)
+    {
+        var header = new Label();
+        var styleBox = new StyleBoxFlat();
+        var panel = new PanelContainer();
 
-            ctrl.VerticalExpand = true;
-            ctrl.Margin = new Thickness(5);
-            header.Text = name;
-            header.StyleClasses.Add(StyleClass.LabelKeyText);
-            header.Margin = new Thickness(10,0,0,0);
-            styleBox.BorderColor = Color.FromHex("#3D4059");
-            styleBox.BorderThickness = new Thickness(2);
-            panel.PanelOverride = styleBox;
-            panel.Margin = new Thickness(0, 0, 0, 10);
+        ctrl.VerticalExpand = true;
+        ctrl.Margin = new Thickness(5);
+        header.Text = name;
+        header.StyleClasses.Add(StyleClass.LabelKeyText);
+        header.Margin = new Thickness(10, 0, 0, 0);
+        styleBox.BorderColor = Color.FromHex("#3D4059");
+        styleBox.BorderThickness = new Thickness(2);
+        panel.PanelOverride = styleBox;
+        panel.Margin = new Thickness(0, 0, 0, 10);
 
-            panel.AddChild(ctrl);
+        panel.AddChild(ctrl);
 
-            ConfigurationItemsContainer.AddChild(header);
-            ConfigurationItemsContainer.AddChild(panel);
-        }
+        ConfigurationItemsContainer.AddChild(header);
+        ConfigurationItemsContainer.AddChild(panel);
+    }
 
-        /// <summary>
-        /// Disables & hides the currently active source control, then enables & shows the given one.
-        /// </summary>
-        /// <param name="source">The source control to enable.</param>
-        /// <remarks>The given source must be registered first using the <see cref="SetupSources"/> function.</remarks>
-        public void SwitchMode(InstrumentMidiSourceBase source)
-        {
-            _currentMode?.Disable();
-            _currentMode = source;
-            _currentMode.Enable();
-        }
+    /// <summary>
+    /// Disables & hides the currently active source control, then enables & shows the given one.
+    /// </summary>
+    /// <param name="source">The source control to enable.</param>
+    /// <remarks>The given source must be registered first using the <see cref="SetupSources"/> function.</remarks>
+    public void SwitchMode(InstrumentMidiSourceBase source)
+    {
+        _currentMode?.Disable();
+        _currentMode = source;
+        _currentMode.Enable();
+    }
 
-        /// <summary>
-        /// When true, overlays the menu with a notice that MIDI is currently not available.
-        /// </summary>
-        /// <param name="available">Set to true when MIDI is available.</param>
-        /// <remarks>This should be set to false when MIDI playback is not available on the system.</remarks>
-        public void SetMidiAvailability(bool available)
-        {
-            UnavailableOverlay.Visible = !available;
-        }
+    /// <summary>
+    /// When true, overlays the menu with a notice that MIDI is currently not available.
+    /// </summary>
+    /// <param name="available">Set to true when MIDI is available.</param>
+    /// <remarks>This should be set to false when MIDI playback is not available on the system.</remarks>
+    public void SetMidiAvailability(bool available)
+    {
+        UnavailableOverlay.Visible = !available;
+    }
 
-        /// <summary>
-        /// Takes an entity with an <see cref="InstrumentComponent"/> and displays its sprite on the left hand side.
-        /// </summary>
-        /// <param name="entity">The entity to display.</param>
-        public void SetInstrument(Entity<InstrumentComponent> entity)
-        {
-            InstrumentSpriteView.SetEntity(entity);
-        }
+    /// <summary>
+    /// Takes an entity with an <see cref="InstrumentComponent"/> and displays its sprite on the left hand side.
+    /// </summary>
+    /// <param name="entity">The entity to display.</param>
+    public void SetInstrument(Entity<InstrumentComponent> entity)
+    {
+        InstrumentSpriteView.SetEntity(entity);
     }
 }
