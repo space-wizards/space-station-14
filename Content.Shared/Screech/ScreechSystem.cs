@@ -101,11 +101,7 @@ public sealed partial class ScreechSystem : EntitySystem
     /// </summary>
     private void EntityHeardIt(EntityUid ent, EntityUid source, List<EntityEffect>? effects)
     {
-        var ev = new ScreechEffectAttemptEvent()
-        {
-            Source = source,
-            Cancelled = false
-        };
+        var ev = new ScreechEffectAttemptEvent(source);
         RaiseLocalEvent(ent, ref ev);
 
         if (ev.Cancelled)
