@@ -14,10 +14,9 @@
   targetNode: icon
 
 - type: construction
-  parent: BaseWeapon
+  parent: BladedFlatcapGrey
   id: BladedFlatcapBrown
   graph: BladedFlatcapBrown
-  targetNode: icon
 
 - type: construction
   parent: BaseWeapon
@@ -26,22 +25,19 @@
   targetNode: icon
 
 - type: construction
-  parent: BaseWeapon
+  parent: Shiv
   id: ReinforcedShiv
   graph: ReinforcedShiv
-  targetNode: icon
 
 - type: construction
-  parent: BaseWeapon
+  parent: Shiv
   id: PlasmaShiv
   graph: PlasmaShiv
-  targetNode: icon
 
 - type: construction
-  parent: BaseWeapon
+  parent: Shiv
   id: UraniumShiv
   graph: UraniumShiv
-  targetNode: icon
 
 - type: construction
   parent: BaseWeapon
@@ -50,28 +46,24 @@
   targetNode: spear
 
 - type: construction
-  parent: BaseWeapon
+  parent: Spear
   id: SpearReinforced
   graph: SpearReinforced
-  targetNode: spear
 
 - type: construction
-  parent: BaseWeapon
+  parent: Spear
   id: SpearPlasma
   graph: SpearPlasma
-  targetNode: spear
 
 - type: construction
-  parent: BaseWeapon
+  parent: Spear
   id: SpearUranium
   graph: SpearUranium
-  targetNode: spear
 
 - type: construction
-  parent: BaseWeapon
+  parent: Spear
   id: SpearSharkMinnow
   graph: SpearSharkMinnow
-  targetNode: spear
 
 - type: construction
   parent: BaseWeapon
@@ -134,10 +126,9 @@
   targetNode: ImprovisedBow
 
 - type: construction
-  parent: BaseWeapon
+  parent: Spear
   id: SpearBone
   graph: SpearBone
-  targetNode: spear
 
 - type: construction
   parent: BaseWeapon
