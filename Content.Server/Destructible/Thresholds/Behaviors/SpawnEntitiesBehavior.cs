@@ -6,7 +6,6 @@ using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
@@ -48,43 +47,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             var tSys = system.EntityManager.System<TransformSystem>();
             var position = tSys.GetMapCoordinates(owner);
 
+            var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+
             var executions = 1;
             if (system.EntityManager.TryGetComponent<StackComponent>(owner, out var stack))
             {
                 executions = stack.Count;
             }
 
-            if (SpawnAfter > 0)
-                ExecuteDelayedSpawn(system, position, executions);
-            else
-                ExecuteImmediateSpawn(system, owner, position, executions);
-        }
-
-        private void ExecuteDelayedSpawn(DestructibleSystem system, MapCoordinates position, int executions)
-        {
-            foreach (var (entityId, minMax) in Spawn)
-            {
-                for (var execution = 0; execution < executions; execution++)
-                {
-                    var count = minMax.Min >= minMax.Max
-                        ? minMax.Min
-                        : system.Random.Next(minMax.Min, minMax.Max + 1);
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        var offset = GetRandomOffset(system);
-                        var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(offset));
-                        system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
-                        timedDespawnComponent.Lifetime = SpawnAfter;
-                        system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                        system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entityId);
-                    }
-                }
-            }
-        }
-
-        private void ExecuteImmediateSpawn(DestructibleSystem system, EntityUid owner, MapCoordinates position, int executions)
-        {
             foreach (var (entityId, minMax) in Spawn)
             {
                 for (var execution = 0; execution < executions; execution++)
@@ -96,11 +66,22 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     if (count == 0)
                         continue;
 
-                    if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
+                    if (SpawnAfter > 0)
+                    {
+                        for (var i = 0; i < count; i++)
+                        {
+                            var spawner = system.EntityManager.SpawnEntity(TempEntityProtoId, position.Offset(getRandomVector()));
+                            var timedDespawn = system.EntityManager.GetComponent<TimedDespawnComponent>(spawner);
+                            timedDespawn.Lifetime = SpawnAfter;
+                            var spawnOnDespawn = system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner);
+                            system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawn), entityId);
+                        }
+                    }
+                    else if (EntityPrototypeHelpers.HasComponent<StackComponent>(entityId, system.PrototypeManager, system.EntityManager.ComponentFactory))
                     {
                         var spawned = SpawnInContainer
                             ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                            : system.EntityManager.SpawnEntity(entityId, position.Offset(GetRandomOffset(system)));
+                            : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                         system.StackSystem.SetCount((spawned, null), count);
 
                         TransferForensics(spawned, system, owner);
@@ -111,18 +92,13 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                         {
                             var spawned = SpawnInContainer
                                 ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
-                                : system.EntityManager.SpawnEntity(entityId, position.Offset(GetRandomOffset(system)));
+                                : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
                             TransferForensics(spawned, system, owner);
                         }
                     }
                 }
             }
-        }
-
-        private Vector2 GetRandomOffset(DestructibleSystem system)
-        {
-            return system.Random.NextVector2(Offset);
         }
 
         public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
