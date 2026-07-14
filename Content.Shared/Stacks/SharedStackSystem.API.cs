@@ -39,15 +39,15 @@ public abstract partial class SharedStackSystem
     /// Moves as much stack count as we can from the donor to the recipient.
     /// Deletes the donor if count goes to 0.
     /// </summary>
-    /// <param name="recipient">Entity which will receive the amount to its stack</param>
     /// <param name="donor">Entity which will give the amount from its stack</param>
+    /// <param name="recipient">Entity which will receive the amount to its stack</param>
     /// <param name="transferred">How much stack count was actually moved.</param>
     /// <param name="amount">Limits amount of stack count to move from the donor. Will not always be the actual amount moved</param>
     /// <returns> True if transferred is greater than 0. </returns>
     [PublicAPI]
     public bool TryMergeStacks(
-        Entity<StackComponent?> recipient,
         Entity<StackComponent?> donor,
+        Entity<StackComponent?> recipient,
         out int transferred,
         int? amount = null
     )
@@ -72,7 +72,7 @@ public abstract partial class SharedStackSystem
         if (amount > 0)
             transferred = Math.Min(transferred, amount.Value);
 
-        var ev = new MergeEvent(recipient, donor, transferred);
+        var ev = new MergeEvent(donor, recipient, transferred);
         RaiseLocalEvent(recipient, ref ev, true);
 
         SetCount(donor, donor.Comp.Count - transferred);
@@ -102,7 +102,7 @@ public abstract partial class SharedStackSystem
 
         foreach (var held in Hands.EnumerateHeld(user))
         {
-            TryMergeStacks(held, item, out _);
+            TryMergeStacks(item, held, out _);
 
             if (item.Comp.Count == 0)
                 return;
@@ -136,7 +136,7 @@ public abstract partial class SharedStackSystem
             if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
                 continue;
 
-            if (!TryMergeStacks(recipientStack.AsNullable(), (uid, stack), out _))
+            if (!TryMergeStacks((uid, stack), recipientStack.AsNullable(), out _))
                 continue;
             merged = true;
 

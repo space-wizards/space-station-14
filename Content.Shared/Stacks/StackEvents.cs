@@ -15,4 +15,4 @@ public readonly record struct StackSplitEvent(EntityUid NewId);
 /// <param name="Donor">The entity id of the donor stack. May get deleted after event is resolved from merging.</param>
 /// <param name="Amount">The amount in the stack transferred from the donor to the recipient</param>
 [ByRefEvent]
-public readonly record struct MergeEvent(EntityUid Recipient, EntityUid Donor, int Amount);
+public readonly record struct MergeEvent(EntityUid Donor, EntityUid Recipient, int Amount);
