@@ -9,13 +9,13 @@ using Content.Client.Voting;
 using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby
 {
@@ -24,6 +24,7 @@ namespace Content.Client.Lobby
         [Dependency] private IBaseClient _baseClient = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IClyde _clyde = default!;
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IResourceCache _resourceCache = default!;
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
@@ -35,7 +36,7 @@ namespace Content.Client.Lobby
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
 
-        private ResPath? _currentBackgroundPath;
+        private OwnedTexture? _currentBackground;
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
@@ -259,13 +260,10 @@ namespace Content.Client.Lobby
         {
             if (_protoMan.TryIndex(_gameTicker.LobbyBackground, out var proto))
             {
-                if (_currentBackgroundPath == proto.Background)
-                    return;
-
                 UnloadLobbyBackground();
 
-                _currentBackgroundPath = proto.Background;
-                Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(proto.Background);
+                _currentBackground = TextureResource.LoadOwnedTexture(_resourceCache, _clyde, proto.Background);
+                Lobby!.Background.Texture = _currentBackground;
 
                 var markup = Loc.GetString("lobby-state-background-text",
                     ("backgroundTitle", Loc.GetString(proto.Title)),
@@ -293,12 +291,12 @@ namespace Content.Client.Lobby
 
         private void UnloadLobbyBackground()
         {
-            if (_currentBackgroundPath is null)
+            if (_currentBackground is null)
                 return;
 
             Lobby!.Background.Texture = null;
-            _resourceCache.TryRemoveResource<TextureResource>(_currentBackgroundPath.Value);
-            _currentBackgroundPath = null;
+            _currentBackground.Dispose();
+            _currentBackground = null;
         }
     }
 }
