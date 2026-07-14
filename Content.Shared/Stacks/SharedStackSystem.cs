@@ -101,7 +101,10 @@ public abstract partial class SharedStackSystem : EntitySystem
                 break;
         }
 
-        if (ent.Comp.AnimatePickup)
+        if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
+            return;
+
+        if (proto.AnimatePickup)
         {
             var localRotation = Transform(args.Used).LocalRotation;
             _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
@@ -213,12 +216,14 @@ public abstract partial class SharedStackSystem : EntitySystem
 
         // round up on odd
         int half = (ent.Comp.Count + 1) / 2;
+        if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
+            return;
         AlternativeVerb halve = new()
         {
             Text = Loc.GetString("comp-stack-split-halve"),
             Category = VerbCategory.Split,
             Act = () => UserSplit(ent, user, half),
-            Priority = ent.Comp.HalfOnAltInteract ? 1 : priority - 1,
+            Priority = proto.HalfOnAltInteract ? 1 : priority - 1,
         };
         args.Verbs.Add(halve);
     }
@@ -233,6 +238,9 @@ public abstract partial class SharedStackSystem : EntitySystem
     public void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
     {
         if (!Resolve(user.Owner, ref user.Comp, false))
+            return;
+
+        if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
             return;
 
         if (amount <= 0)
@@ -257,13 +265,13 @@ public abstract partial class SharedStackSystem : EntitySystem
             // If this is effectively just picking up the stack, it just picks up the stack.
             if (stack.Comp.Count <= amount)
             {
-                Hands.PickupOrDrop(user.Owner, stack.Owner, animate: stack.Comp.AnimatePickup);
+                Hands.PickupOrDrop(user.Owner, stack.Owner, animate: proto.AnimatePickup);
                 return;
             }
             split = Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero));
             if (split == null)
                 return;
-            Hands.PickupOrDrop(user.Owner, split.Value, animate: stack.Comp.AnimatePickup);
+            Hands.PickupOrDrop(user.Owner, split.Value, animate: proto.AnimatePickup);
         }
         Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
