@@ -8,9 +8,8 @@
         <BoxContainer Orientation="Horizontal" MinWidth="400">
             <Label Text="{Loc admin-event-round}"/>
             <SpinBox Name="RoundSpinBox" Value="0" MinWidth="150" Access="Public"/>
-            <Control HorizontalExpand="True"/>
-            <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}" HorizontalAlignment="Right"
-                    StyleClasses="OpenRight"/>
+            <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}"
+                    StyleClasses="OpenBoth"/>
         </BoxContainer>
         <cc:HSeparator Margin="5"/>
         <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
