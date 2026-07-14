@@ -12,8 +12,7 @@
                     StyleClasses="OpenRight"/>
         </BoxContainer>
         <cc:HSeparator Margin="5"/>
-        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"
-                  Placeholder="{Loc admin-event-description-placeholder}"/>
+        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
         <BoxContainer Orientation="Horizontal">
             <Control HorizontalExpand="True"/>
             <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Right"
