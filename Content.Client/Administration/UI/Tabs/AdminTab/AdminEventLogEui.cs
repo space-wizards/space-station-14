@@ -3,6 +3,7 @@ using Content.Shared.Administration.AdminEventLog;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
 using Robust.Client.Player;
+using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Administration.UI.Tabs.AdminTab;
@@ -44,11 +45,17 @@ public sealed partial class AdminEventLogEui : BaseEui
 
     private void OnSendEventLogPressed(ButtonEventArgs args)
     {
+        var eventText = Rope.Collapse(EventLogWindow.EventTextEdit.TextRope).TrimStart();
+
+        if (string.IsNullOrEmpty(eventText))
+            return;
+
         var message = new AdminEventLogEuiMsg(
             EventLogWindow.RoundSpinBox.Value,
-            _playerManager.LocalSession!,
-            EventLogWindow.EventTextEdit.TextRope.ToString() ?? string.Empty);
+            _playerManager.LocalSession!.Name,
+            eventText);
 
         SendMessage(message);
+        EventLogWindow.Close();
     }
 }

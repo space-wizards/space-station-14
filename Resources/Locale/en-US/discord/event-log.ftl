@@ -1,1 +1,1 @@
-event-log-footer = server: { $serverName }, round: { $roundId }
+event-log-webhook-footer = server: { $serverName }, round: { $roundId }

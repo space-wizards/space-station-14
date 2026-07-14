@@ -29,7 +29,7 @@ public sealed partial class EventWebhook : IPostInjectInit
                     Footer = new WebhookEmbedFooter()
                     {
                         Text = Loc.GetString(
-                            "custom-vote-webhook-footer",
+                            "event-log-webhook-footer",
                             ("serverName", serverName),
                             ("roundId", roundId)),
                     },

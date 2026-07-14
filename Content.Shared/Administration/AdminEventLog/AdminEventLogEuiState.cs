@@ -18,14 +18,14 @@ public sealed class AdminEventLogEuiState : EuiStateBase
 [Serializable, NetSerializable]
 public sealed class AdminEventLogEuiMsg : EuiMessageBase
 {
-    public AdminEventLogEuiMsg(int roundId, ICommonSession admin, string eventDescription)
+    public AdminEventLogEuiMsg(int roundId, string adminUser, string eventDescription)
     {
         RoundId = roundId;
-        Admin = admin;
+        AdminUser = adminUser;
         EventDescription = eventDescription;
     }
 
     public int RoundId { get; }
-    public ICommonSession Admin { get; }
+    public string AdminUser { get; }
     public string EventDescription { get; }
 }

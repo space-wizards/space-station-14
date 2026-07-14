@@ -50,7 +50,7 @@ public sealed partial class AdminEventLogEui : BaseEui
         var message = (AdminEventLogEuiMsg)msg;
 
         _eventWebhook.TrySendMessage(
-            message.Admin.Name,
+            message.AdminUser,
             message.RoundId,
             message.EventDescription,
             _config.GetCVar(CCVars.DiscordEventWebhook));
