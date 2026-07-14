@@ -11,7 +11,7 @@
   parent: BaseFurniture
   id: BaseChair
   graph: Seat
-  conditions:
+  conditions: &TileNotBlocked
   - !type:TileNotBlocked
 
 - type: construction
@@ -19,16 +19,16 @@
   parent: BaseFurniture
   id: BaseTable
   graph: Table
-  conditions:
-  - !type:TileNotBlocked
+  canRotate: false
+  conditions: *TileNotBlocked
 
 - type: construction
   abstract: true
   parent: BaseFurniture
   id: BaseBed
   graph: bed
-  conditions:
-  - !type:TileNotBlocked
+  canRotate: false
+  conditions: *TileNotBlocked
 
 - type: construction
   abstract: true
@@ -352,15 +352,14 @@
   id: MeatSpike
   graph: MeatSpike
   targetNode: MeatSpike
-  conditions:
-  - !type:TileNotBlocked
+  canRotate: false
+  conditions: *TileNotBlocked
 
 - type: construction
   parent: BaseTable # close enough
   id: Bookshelf
   graph: Bookshelf
   targetNode: bookshelf
-  category: construction-category-furniture
 
 - type: construction
   parent: BaseFurniture
@@ -378,5 +377,4 @@
   graph: Mannequin
   targetNode: mannequin
   canRotate: true
-  conditions:
-  - !type:TileNotBlocked
+  conditions: *TileNotBlocked

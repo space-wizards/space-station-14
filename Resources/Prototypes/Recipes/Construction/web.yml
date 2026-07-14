@@ -6,6 +6,7 @@
   category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   entityWhitelist:
     tags:
     - SpiderCraft
@@ -16,43 +17,37 @@
   id: WallWeb
   targetNode: wall
   category: construction-category-structures
-  canRotate: false
-  conditions:
+  conditions: &TileNotBlocked
   - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWeb
   id: TableWeb
   targetNode: table
-  canRotate: false
-  conditions:
-  - !type:TileNotBlocked
+  conditions: *TileNotBlocked
 
 - type: construction
   parent: BaseWeb
   id: WebBed
   targetNode: bed
-  canRotate: false
-  conditions:
-  - !type:TileNotBlocked
+  conditions: *TileNotBlocked
 
-# FIXME: inconsistent anchoring vs. other chair construction
 - type: construction
   parent: BaseWeb
   id: ChairWeb
   targetNode: chair
+  canRotate: true
+  conditions: *TileNotBlocked
 
 - type: construction
   parent: BaseWeb
   id: CrateWeb
   targetNode: crate
   category: construction-category-storage
-  canRotate: false
 
 - type: construction
   parent: BaseWeb
   id: WebDoor
   targetNode: door
   category: construction-category-structures
-  conditions:
-  - !type:TileNotBlocked
+  conditions: *TileNotBlocked

@@ -51,7 +51,6 @@
     - to: chair
       completed:
       - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: WebSilk
         amount: 3

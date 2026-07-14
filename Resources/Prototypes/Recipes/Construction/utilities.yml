@@ -60,9 +60,8 @@
   targetNode: generator
 
 - type: construction
-  parent: BaseUtilityWallmount
+  parent: WallmountGenerator
   id: WallmountGeneratorAPU
-  graph: WallmountGenerator
   targetNode: APU
 
 # region Disposals
@@ -73,96 +72,83 @@
   targetNode: disposal_unit
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalUnit
   id: MailingUnit
-  graph: DisposalMachine
   targetNode: mailing_unit
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalPipe
   graph: DisposalPipe
   targetNode: pipe
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalTagger
-  graph: DisposalPipe
   targetNode: tagger
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalSignaller
-  graph: DisposalPipe
   targetNode: signaller
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalTrunk
-  graph: DisposalPipe
   targetNode: trunk
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalRouter
-  graph: DisposalPipe
   targetNode: router
   mirror: DisposalRouterFlipped
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalRouterFlipped
   hide: true
-  graph: DisposalPipe
   targetNode: routerflipped
   mirror: DisposalRouter
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalSignalRouter
-  graph: DisposalPipe
   targetNode: signal_router
   mirror: DisposalSignalRouterFlipped
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalSignalRouterFlipped
   hide: true
-  graph: DisposalPipe
   targetNode: signal_router_flipped
   mirror: DisposalSignalRouter
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalJunction
-  graph: DisposalPipe
   targetNode: junction
   mirror: DisposalJunctionFlipped
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalJunctionFlipped
   hide: true
-  graph: DisposalPipe
   targetNode: junctionflipped
   mirror: DisposalJunction
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalYJunction
-  graph: DisposalPipe
   targetNode: yJunction
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalXJunction
-  graph: DisposalPipe
   targetNode: xJunction
 
 - type: construction
-  parent: BaseUtility
+  parent: DisposalPipe
   id: DisposalBend
-  graph: DisposalPipe
   targetNode: bend
 
 # region Intercom
@@ -181,14 +167,12 @@
   targetNode: signal
 
 - type: construction
-  parent: BaseUtilityWallmount
+  parent: SignalTimer
   id: ScreenTimer
-  graph: Timer
   targetNode: screen
-  canRotate: false
 
 - type: construction
-  parent: ScreenTimer
+  parent: SignalTimer
   id: BrigTimer
   targetNode: brig
 
