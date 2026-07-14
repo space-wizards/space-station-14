@@ -34,7 +34,6 @@ public sealed partial class PlantHolderSystem : EntitySystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private BotanySystem _botany = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private MutationSystem _mutation = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -220,7 +219,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
 
             args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
-                ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
+                ("name", uid)), args.User, PopupType.Medium);
             return;
         }
 
@@ -230,9 +229,9 @@ public sealed partial class PlantHolderSystem : EntitySystem
             if (component.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
+                    ("name", uid)), args.User, PopupType.Medium);
                 _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                    ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
+                    ("otherName", Identity.Entity(args.User, EntityManager))), uid, Filter.PvsExcept(args.User), true);
                 component.WeedLevel = 0;
                 UpdateSprite(uid, component);
             }
@@ -250,15 +249,15 @@ public sealed partial class PlantHolderSystem : EntitySystem
             if (component.Seed != null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
+                    ("name", uid)), args.User, PopupType.Medium);
                 _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                    ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
+                    ("name", Identity.Entity(args.User, EntityManager))), uid, Filter.PvsExcept(args.User), true);
                 RemovePlant(uid, component);
             }
             else
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User);
+                    ("name", uid)), args.User);
             }
 
             return;
@@ -895,7 +894,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
                 if (entry.Quantity < PlantMetabolismRate)
                     continue;
 
-                var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
+                var reagentProto = ProtoMan.Index<ReagentPrototype>(entry.Reagent.Prototype);
                 _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray(), entry.Quantity);
             }
 
