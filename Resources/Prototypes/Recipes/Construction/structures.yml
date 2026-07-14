@@ -287,6 +287,7 @@
 - type: construction
   parent: BaseStructureFullTile
   id: Firelock
+  graph: Firelock
   targetNode: Firelock
 
 - type: construction
@@ -500,7 +501,7 @@
   targetNode: airlock
 
 - type: construction
-  parent: BaseStructureFullTile
+  parent: PinionAirlock
   id: PinionAirlockGlass
   name: construction-recipe-pinion-airlock-glass
   targetNode: glassAirlock
