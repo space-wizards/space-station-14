@@ -1,5 +1,6 @@
 # region Base
 - type: construction
+  abstract: true
   id: BaseStorageStructure
   category: construction-category-storage
   placementMode: SnapgridCenter
@@ -7,6 +8,7 @@
   - !type:TileNotBlocked
 
 - type: construction
+  abstract: true
   parent: BaseStorageStructure
   id: BaseShelf
   graph: Shelf
