@@ -7,6 +7,8 @@
   category: construction-category-utilities
   objectType: Structure
   placementMode: SnapgridCenter
+  conditions:
+  - !type:AgainstWall
 
 - type: construction
   id: WallmountTelescreen
