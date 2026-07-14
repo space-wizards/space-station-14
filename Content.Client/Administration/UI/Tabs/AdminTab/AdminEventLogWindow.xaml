@@ -1,4 +1,5 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                Title="{Loc 'admin-event-log-title'}"
                MinWidth="600"
                MinHeight="180">
@@ -10,7 +11,9 @@
             <Button Name="ResetRoundButton" Text="{Loc admin-event-round-reset}" HorizontalAlignment="Right"
                     StyleClasses="OpenRight"/>
         </BoxContainer>
-        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"/>
+        <cc:HSeparator Margin="5"/>
+        <TextEdit Name="EventTextEdit" HorizontalExpand="True" VerticalExpand="True" Access="Public"
+                  Placeholder="{Loc admin-event-description-placeholder}"/>
         <BoxContainer Orientation="Horizontal">
             <Control HorizontalExpand="True"/>
             <Button Name="SendEventLog" Text="{Loc admin-event-send}" HorizontalAlignment="Right"
