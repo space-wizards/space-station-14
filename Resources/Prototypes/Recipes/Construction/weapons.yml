@@ -1,3 +1,11 @@
+# region Base
+- type: construction
+  abstract: true
+  id: BaseWeapon
+  category: construction-category-weapons
+  objectType: Item
+# endregion Base
+
 - type: construction
   id: BladedFlatcapGrey
   graph: BladedFlatcapGrey
