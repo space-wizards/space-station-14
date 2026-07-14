@@ -342,8 +342,8 @@
       min: 2
       max: 3
     meteorsPerWave:
-      min: 6
-      max: 10
+      min: 5
+      max: 6
 
 - type: entity
   parent: MeteorSwarm
