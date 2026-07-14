@@ -30,7 +30,7 @@ public sealed partial class EventWebhook : IPostInjectInit
                 new()
                 {
                     Title = adminUsername,
-                    Color = new Color(0xb7, 0x00, 0xff).ToArgb(), // #b700ff
+                    Color = Color.DarkViolet.ToArgb(), //#9400D3
                     Description = eventDescription,
                     Footer = new WebhookEmbedFooter()
                     {
