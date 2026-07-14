@@ -258,7 +258,7 @@
   description: We produce a deafening screech that weakens those around us.
   components:
   - type: Action
-    useDelay: 20 # unbalanced :godo:
+    useDelay: 60 # unbalanced :godo:
     raiseOnAction: true
     icon:
       sprite: Interface/Actions/changeling2.rsi

@@ -34,13 +34,10 @@ public sealed partial class ScreechSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ScreechShockWaveComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<NoiseProtectionComponent, ScreechEffectAttemptEvent>(OnScreechProtected);
         SubscribeLocalEvent<NoiseProtectionComponent, InventoryRelayedEvent<ScreechEffectAttemptEvent>>((a, ref b) => OnScreechProtected(a, ref b.Args));
-        SubscribeLocalEvent<ScreechActionComponent, ScreechActionEvent>(OnScreechAction);
-        SubscribeLocalEvent<NoiseProtectionComponent, ExaminedEvent>(OnExamine);
     }
 
+    [SubscribeLocalEvent]
     private void OnExamine(Entity<NoiseProtectionComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.ExamineText.HasValue)
@@ -49,18 +46,21 @@ public sealed partial class ScreechSystem : EntitySystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnScreechAction(Entity<ScreechActionComponent> ent, ref ScreechActionEvent args)
     {
         args.Handled = true;
         var param = ent.Comp; // shorthand
-        Screech(args.Performer, param.Range, param.Vfx, param.ScreechSound, param.SoundRange, param.Effects);
+        Screech(args.Performer, param.Range, param.Vfx, param.ScreechSound, param.Effects);
     }
 
+    [SubscribeLocalEvent]
     private void OnScreechProtected(Entity<NoiseProtectionComponent> ent, ref ScreechEffectAttemptEvent args)
     {
         args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<ScreechShockWaveComponent> ent, ref ComponentInit args)
     {
         ent.Comp.InitTime = _timing.CurTime;
@@ -70,7 +70,7 @@ public sealed partial class ScreechSystem : EntitySystem
     /// <summary>
     /// Makes the entity "source" screech, applying the "effects" to every entity in "range" that does not have screech protection.
     /// </summary>
-    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, float soundRange = 6f, List<EntityEffect>? effects = null)
+    public void Screech(EntityUid source, float range, EntProtoId? vfx = null, SoundSpecifier? screechSound = null, List<EntityEffect>? effects = null)
     {
         // first, we spawn the vfx attached to the source
         if (vfx.HasValue)
