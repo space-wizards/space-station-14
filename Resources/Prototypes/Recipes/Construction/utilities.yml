@@ -7,6 +7,9 @@
   category: construction-category-utilities
   objectType: Structure
   placementMode: SnapgridCenter
+  conditions:
+  - !type:AgainstWall
+    offset: 0 # expects a wall to the north when the camera is in its north facing
 
 - type: construction
   id: WallmountTelescreen

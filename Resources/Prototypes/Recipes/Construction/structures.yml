@@ -543,7 +543,9 @@
   id: LightTubeFixture
   graph: LightFixture
   targetNode: tubeLight
-  # TODO: Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement. Cheers, - 20kdc. soon™ - whatstone
+  conditions:
+  - !type:TileNotBlocked
+  - !type:AgainstWall
 
 - type: construction
   parent: LightTubeFixture
@@ -561,7 +563,7 @@
   targetNode: strobeLight
 
 - type: construction
-  parent: BaseStructureFullTile # standing vs. wallmount lights
+  parent: BaseStructureFullTile
   id: LightGroundFixture
   graph: LightFixture
   targetNode: groundLight
