@@ -360,5 +360,5 @@
       min: 2
       max: 3
     meteorsPerWave:
-      min: 6
-      max: 10
+      min: 3
+      max: 5
