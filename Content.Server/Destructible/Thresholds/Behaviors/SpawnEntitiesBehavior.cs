@@ -3,6 +3,8 @@ using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -36,13 +38,33 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
             var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
-            var containerSystem = system.EntityManager.System<SharedContainerSystem>();
             BaseContainer? containingContainer = null;
-            if (SpawnInContainer &&
-                containerSystem.TryGetContainingContainer((owner, null, null), out var container) &&
-                containerSystem.Remove(owner, container, force: true))
+            StorageComponent? containingStorage = null;
+            ItemStorageLocation? storageLocation = null;
+            if (SpawnInContainer && SpawnAfter <= 0)
             {
-                containingContainer = container;
+                var containerSystem = system.EntityManager.System<SharedContainerSystem>();
+                if (containerSystem.TryGetContainingContainer((owner, null, null), out var container))
+                {
+                    if (container.ID == StorageComponent.ContainerId &&
+                        system.EntityManager.HasComponent<StorageComponent>(container.Owner))
+                    {
+                        var storageSystem = system.EntityManager.System<SharedStorageSystem>();
+                        // Removing the entity clears this location, so save it first.
+                        if (storageSystem.TryGetStorageLocation(
+                                (owner, null),
+                                out _,
+                                out var storage,
+                                out var location))
+                        {
+                            containingStorage = storage;
+                            storageLocation = location;
+                        }
+                    }
+
+                    if (containerSystem.Remove(owner, container, force: true))
+                        containingContainer = container;
+                }
             }
 
             EntityUid SpawnEntity(EntProtoId prototype)
@@ -53,10 +75,23 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (containingContainer == null)
                     return system.EntityManager.SpawnNextToOrDrop(prototype, owner);
 
-                return system.EntityManager.SpawnInContainerOrDrop(
+                var spawned = system.EntityManager.SpawnInContainerOrDrop(
                     prototype,
                     containingContainer.Owner,
                     containingContainer.ID);
+
+                if (storageLocation is { } location &&
+                    containingStorage != null &&
+                    system.EntityManager.System<SharedStorageSystem>().TrySetItemStorageLocation(
+                        (spawned, null),
+                        (containingContainer.Owner, containingStorage),
+                        location))
+                {
+                    // Only one replacement can occupy the destroyed entity's old location.
+                    storageLocation = null;
+                }
+
+                return spawned;
             }
 
             var executions = 1;
