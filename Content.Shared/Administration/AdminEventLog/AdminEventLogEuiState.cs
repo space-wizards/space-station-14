@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Eui;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration.AdminEventLog;
@@ -12,4 +13,19 @@ public sealed class AdminEventLogEuiState : EuiStateBase
     }
 
     public int RoundId { get; }
+}
+
+[Serializable, NetSerializable]
+public sealed class AdminEventLogEuiMsg : EuiMessageBase
+{
+    public AdminEventLogEuiMsg(int roundId, ICommonSession admin, string eventDescription)
+    {
+        RoundId = roundId;
+        Admin = admin;
+        EventDescription = eventDescription;
+    }
+
+    public int RoundId { get; }
+    public ICommonSession Admin { get; }
+    public string EventDescription { get; }
 }

@@ -19,8 +19,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             RoundSpinBox.InitDefaultButtons();
 
             ResetRoundButton.OnPressed += ResetRoundPressed;
-
-            SendEventLog.OnPressed += SendEventLogPressed;
         }
 
         private int CurrentRound { get; set; }
@@ -51,11 +49,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         private void UpdateResetButton()
         {
             ResetRoundButton.Disabled = RoundSpinBox.Value == CurrentRound;
-        }
-
-        private void SendEventLogPressed(ButtonEventArgs args)
-        {
-            // send stuff to discord
         }
 
     }

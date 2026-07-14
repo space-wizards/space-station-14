@@ -2,38 +2,53 @@
 using Content.Shared.Administration.AdminEventLog;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
+using Robust.Client.Player;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Administration.UI.Tabs.AdminTab;
 
 [UsedImplicitly]
-public sealed class AdminEventLogEui : BaseEui
+public sealed partial class AdminEventLogEui : BaseEui
 {
-    private AdminEventLogWindow? EventLogWindow { get; }
+    [Dependency] private IPlayerManager _playerManager = default!;
+
+    private AdminEventLogWindow EventLogWindow { get; }
 
     public AdminEventLogEui()
     {
         EventLogWindow = new AdminEventLogWindow();
+        EventLogWindow.SendEventLog.OnPressed += OnSendEventLogPressed;
     }
 
     public override void Opened()
     {
         base.Opened();
 
-        EventLogWindow?.OpenCentered();
+        EventLogWindow.OpenCentered();
     }
 
     public override void Closed()
     {
         base.Closed();
 
-        EventLogWindow?.Close();
+        EventLogWindow.Close();
     }
 
     public override void HandleState(EuiStateBase state)
     {
         var s = (AdminEventLogEuiState)state;
 
-        EventLogWindow?.SetCurrentRound(s.RoundId);
-        EventLogWindow?.SetRoundSpinBox(s.RoundId);
+        EventLogWindow.SetCurrentRound(s.RoundId);
+        EventLogWindow.SetRoundSpinBox(s.RoundId);
+    }
+
+    private void OnSendEventLogPressed(ButtonEventArgs args)
+    {
+        var message = new AdminEventLogEuiMsg(
+            EventLogWindow.RoundSpinBox.Value,
+            _playerManager.LocalSession!,
+            EventLogWindow.EventTextEdit.TextRope.ToString() ?? string.Empty);
+
+        SendMessage(message);
     }
 }
