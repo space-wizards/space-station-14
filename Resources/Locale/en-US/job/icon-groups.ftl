@@ -7,6 +7,7 @@ job-icon-group-security = Security
 job-icon-group-service = Service
 job-icon-group-entertainer = Entertainer
 job-icon-group-civilian = Civilian
+job-icon-group-centcomm = CentComm
 job-icon-group-silicon = Silicon
 job-icon-group-blank = Blank
 job-icon-group-threat = Threat

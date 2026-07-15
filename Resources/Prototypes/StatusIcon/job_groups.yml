@@ -122,6 +122,23 @@
   - JobIconVisitor
 
 - type: jobIconGroup
+  id: CentCommIconGroup
+  groupName: job-icon-group-centcomm
+  sprite:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Nanotrasen
+  icons:
+  - JobIconCBURN
+  - JobIconDeathSquad
+  - JobIconERTChaplain
+  - JobIconERTEngineer
+  - JobIconERTJanitor
+  - JobIconERTLeader
+  - JobIconERTMedic
+  - JobIconERTSecurity
+  - JobIconNanotrasen
+
+- type: jobIconGroup
   id: SiliconIconGroup
   groupName: job-icon-group-silicon
   sprite:
@@ -149,10 +166,14 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
   icons:
-  - JobIconCluwne
+  - JobIconNinja
+  - JobIconPirate
   - JobIconPrisoner
   - JobIconSyndicate
-  - JobIconZombie
+  - JobIconSyndicateCommander
+  - JobIconSyndicateCorpsman
+  - JobIconSyndicateOperative
+  - JobIconWizard
 
 - type: jobIconGroup
   id: AdminIconGroup
@@ -162,7 +183,8 @@
     state: Admin
   icons:
   - JobIconAdmin
-  - JobIconNanotrasen
+  - JobIconCluwne
+  - JobIconZombie
   - JobIconSeniorEngineer
   - JobIconSeniorPhysician
   - JobIconSeniorResearcher
