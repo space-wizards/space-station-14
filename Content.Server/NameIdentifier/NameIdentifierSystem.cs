@@ -36,7 +36,13 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         if (ent.Comp.Group is null)
             return;
 
-        if (CurrentIds.TryGetValue(ent.Comp.Group, out var ids) && ids.Count > 0)
+        if (!CurrentIds.TryGetValue(ent.Comp.Group, out var ids))
+        {
+            _nameModifier.RefreshNameModifiers(ent.Owner);
+            return;
+        }
+
+        if (ids.Count > 0)
         {
             // Avoid inserting the value right back at the end or shuffling in place:
             // just pick a random spot to put it and then move that one to the end.
@@ -44,6 +50,10 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
             var random = ids[randomIndex];
             ids[randomIndex] = ent.Comp.Identifier;
             ids.Add(random);
+        }
+        else
+        {
+            ids.Add(ent.Comp.Identifier);
         }
 
         _nameModifier.RefreshNameModifiers(ent.Owner);
