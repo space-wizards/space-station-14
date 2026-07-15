@@ -231,7 +231,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
     /// </summary>
     /// <param name="thresholds">Thresholds to search.</param>
     /// <param name="trigger">Trigger to find inside of <c>thresholds</c>.</param>
-    /// <param name="likeThreshold">A threshold with the same trigger as <c>trigger</c>.</param>
+    /// <param name="likeThreshold">The first threshold found with the same trigger as <c>trigger</c>.</param>
     /// <returns>True if a like threshold was found.</returns>
     private bool TryLikeTrigger(List<DamageThreshold> thresholds,
                                 IThresholdTrigger? trigger,
