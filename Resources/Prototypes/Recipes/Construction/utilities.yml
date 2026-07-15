@@ -4,9 +4,6 @@
   id: BaseUtility
   category: construction-category-utilities
   placementMode: SnapgridCenter
-  conditions:
-  - !type:AgainstWall
-    offset: 0 # expects a wall to the north when the camera is in its north facing
 
 - type: construction
   abstract: true
@@ -23,6 +20,9 @@
   id: camera
   graph: SurveillanceCamera
   targetNode: camera
+  conditions:
+  - !type:AgainstWall
+    offset: 0 # expects a wall to the north when the camera is in its north facing
 
 - type: construction
   parent: BaseUtilityWallmount
