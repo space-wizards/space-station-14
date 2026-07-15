@@ -13,7 +13,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private IResourceCache _resCache = default!;
 
-    private readonly Dictionary<Control, Func<IStylesheetAccessor, Stylesheet>> _controlStylesheetSubs = [];
+    private readonly Dictionary<Control, Func<IStylesheetAccessor, Stylesheet?>> _controlStylesheetSubs = [];
     private readonly Dictionary<string, Stylesheet> _stylesheets = [];
     private readonly StylesheetAccessorImpl _accessor;
 
@@ -44,7 +44,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     }
 
     /// <inheritdoc/>
-    public void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet> getStylesheet)
+    public void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet?> getStylesheet)
     {
         _controlStylesheetSubs[control] = getStylesheet;
         control.Stylesheet = getStylesheet(_accessor);
@@ -67,10 +67,10 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         _sheetNanotrasen = new NanotrasenStylesheetDefinition().Build();
         _sheetSystem = new SystemStylesheetDefinition().Build();
 
-#pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618
         _sheetNanoLegacy = new StyleNano(_resCache).Stylesheet;
         _sheetSpaceLegacy = new StyleSpace(_resCache).Stylesheet;
-#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0618
 
         _stylesheets.Add("Nanotrasen", _sheetNanotrasen);
         _stylesheets.Add("System", _sheetSystem);
@@ -115,7 +115,17 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         public Stylesheet SheetSystem => GetOrThrow(owner._sheetSystem);
 
         /// <inheritdoc/>
-        public bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet)
+        public Stylesheet? GetStylesheet(string name)
+        {
+            if (TryGetStylesheet(name, out var stylesheet))
+                return stylesheet;
+
+            owner._sawmill.Error($"Failed to resolve stylesheet {name}");
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetStylesheet(string name, [NotNullWhen(true)] out Stylesheet? stylesheet)
         {
             if (!owner._initialized)
                 ThrowNotInitialized();
@@ -129,7 +139,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
             if (TryGetStylesheet(name, out var stylesheet))
                 return stylesheet;
 
-            owner._sawmill.Warning($"Failed to resolve stylesheet {name}");
+            owner._sawmill.Debug($"Failed to resolve stylesheet {name}");
             return defaultStylesheet;
         }
 

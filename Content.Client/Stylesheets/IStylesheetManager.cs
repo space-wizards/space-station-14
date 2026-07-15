@@ -65,7 +65,7 @@ public interface IStylesheetManager
     /// <param name="getStylesheet">
     /// A function used to select the stylesheet from the <see cref="IStylesheetAccessor"/>.
     /// </param>
-    void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet> getStylesheet);
+    void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet?> getStylesheet);
 
     /// <summary>
     /// Stop stylesheet update subscription from <see cref="UseStylesheet"/>.
@@ -104,12 +104,19 @@ public interface IStylesheetAccessor
     Stylesheet SheetSystem { get; }
 
     /// <summary>
-    /// Try to get a stylesheet by name.
+    /// Gets a stylesheet, or prints an error and falls back to [].
     /// </summary>
-    bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet);
+    /// <param name="name">Stylesheet name</param>
+    /// <returns>The stylesheet, or null if found</returns>
+    Stylesheet? GetStylesheet(string name);
 
     /// <summary>
-    /// Get a stylesheet, or fallback to a default.
+    /// Try to get a stylesheet by name.
+    /// </summary>
+    bool TryGetStylesheet(string name, [NotNullWhen(true)] out Stylesheet? stylesheet);
+
+    /// <summary>
+    /// Get a stylesheet, or fallback to the provided default.
     /// </summary>
     Stylesheet GetStylesheetOrDefault(string name, Stylesheet defaultStylesheet);
 }

@@ -48,8 +48,7 @@ namespace Content.Client.UserInterface.Controls
                 if (value is null)
                     return;
 
-                _styleMan.UseStylesheet(this,
-                    accessor => accessor.GetStylesheetOrDefault(value, accessor.SheetNanotrasen));
+                _styleMan.UseStylesheet(this, accessor => accessor.GetStylesheet(value));
             }
         }
 
