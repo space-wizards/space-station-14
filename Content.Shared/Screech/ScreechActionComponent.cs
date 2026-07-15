@@ -18,7 +18,7 @@ public sealed partial class ScreechActionComponent : Component
     public float Range = 6f;
 
     /// <summary>
-    /// Entity that will be spawned in a container on the screecher to display effects.
+    /// Entity that will be spawned attached to the screecher to display effects.
     /// </summary>
     [DataField]
     public EntProtoId? Vfx = "EffectScreech";
