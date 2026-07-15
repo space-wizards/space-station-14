@@ -109,6 +109,7 @@ public abstract partial class StylesheetDefinition : ISheetletConfig
             dist++;
         }
 
+        // Should be unreachable in code paths as we already check that it is in the hierarchy before getting distance.
         return int.MaxValue;
     }
 }
