@@ -5,7 +5,7 @@ silicon-law-ui-save = Save Changes
 silicon-law-ui-plus-one = +1
 silicon-law-ui-minus-one = -1
 silicon-law-ui-delete = Delete
-silicon-law-ui-check-corrupted = Corrupt Law?
+silicon-law-ui-check-corrupted = Corrupted
 silicon-law-ui-check-corrupted-tooltip = If the Law Number Identifier should be 'corrupted', I.E. Randomly Shuffling Symbols.
 silicon-law-ui-placeholder = Type here to change law text...
 
