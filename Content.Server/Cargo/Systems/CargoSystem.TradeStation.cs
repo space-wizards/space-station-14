@@ -22,12 +22,6 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
-        SubscribeLocalEvent<TradeStationComponent, GridSplitEvent>(OnTradeSplit);
-
-        SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
-        SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
-        SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
-
         _cfg.OnValueChanged(CCVars.LockboxCutEnabled, (enabled) => { _lockboxCutEnabled = enabled; }, true);
     }
 
@@ -47,6 +41,7 @@ public sealed partial class CargoSystem
         );
     }
 
+    [SubscribeLocalEvent]
     private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
     {
         UpdatePalletConsoleInterface(uid);
@@ -59,11 +54,13 @@ public sealed partial class CargoSystem
     /// I dont want it to explode if cargo uses a conveyor to move 8000 pineapple slices or whatever, they are
     /// known for their entity spam i wouldnt put it past them
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
     {
         UpdatePalletConsoleInterface(uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnTradeSplit(EntityUid uid, TradeStationComponent component, ref GridSplitEvent args)
     {
         // If the trade station gets bombed it's still a trade station.
@@ -240,6 +237,7 @@ public sealed partial class CargoSystem
         return true;
     }
 
+    [SubscribeLocalEvent]
     private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
     {
         var xform = Transform(uid);
