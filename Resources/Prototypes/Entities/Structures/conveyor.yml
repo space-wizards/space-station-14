@@ -69,6 +69,29 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  parent: ConveyorBelt
+  id: ConveyorBeltCorner
+  name: conveyor belt corner
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly. This segment turns 90 degrees.
+  components:
+  - type: Conveyor
+    conveyorCorner: true
+  - type: Sprite
+    sprite: Structures/conveyor.rsi
+    state: conveyor_corner_stopped
+    drawdepth: HighFloorObjects
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Off: { state: conveyor_corner_stopped }
+          Forward: { state: conveyor_corner_started }
+          Reverse: { state: conveyor_corner_started_r }
+  - type: Construction
+    graph: ConveyorCornerGraph
+    node: entity
+
+- type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
   name: conveyor belt assembly

@@ -28,6 +28,12 @@ public sealed partial class ConveyorComponent : Component
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public ConveyorState State;
 
+    /// <summary>
+    ///     If the reverse direction should turn -90° instead of 180°.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ConveyorCorner = false;
+
     [ViewVariables, AutoNetworkedField]
     public bool Powered;
 
