@@ -88,8 +88,20 @@ namespace Content.Server.Construction
                     }
                     else
                     {
-                        args.PushMarkup(Loc.GetString(
-                            "construction-component-to-create-header") + "\n");
+                        // Try to get the name of the prototype on the node, if one exists.
+                        var targetProtoId = target.Entity.GetId(uid, args.Examiner, new(EntityManager));
+                        if (targetProtoId != null
+                            && ProtoMan.TryIndex(targetProtoId, out var targetPrototype))
+                        {
+                            args.PushMarkup(Loc.GetString("construction-component-to-create-prototype-header",
+                            ("targetName", targetPrototype.Name)) + "\n");
+                        }
+                        else
+                        {
+                            args.PushMarkup(Loc.GetString(
+                                "construction-component-to-create-header",
+                                ("targetName", target.Name)) + "\n");
+                        }
                     }
                 }
 
