@@ -138,7 +138,8 @@
         sound:
           collection: MetalBreak
       - !type:EmptyContainersBehaviour
-        container: entity_storage
+        containers:
+        - entity_storage
   - type: EntityStorage
     capacity: 1
     whitelist:
