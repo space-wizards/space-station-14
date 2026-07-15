@@ -9,7 +9,7 @@ namespace Content.Client.Actions.UI
     /// <summary>
     /// Tooltip for actions or alerts because they are very similar.
     /// </summary>
-    public sealed class ActionAlertTooltip : PanelContainer
+    public sealed partial class ActionAlertTooltip : PanelContainer
     {
         [Dependency] private IStylesheetManager _stylesheets = default!;
         [Dependency] private IGameTiming _gameTiming = default!;
