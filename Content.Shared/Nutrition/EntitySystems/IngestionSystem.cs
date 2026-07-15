@@ -468,7 +468,7 @@ public sealed partial class IngestionSystem : EntitySystem
         }
         else
         {
-            _popup.PopupPredicted(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors), ("satiated", args.Satiated)),
+            _popup.PopupEntity(Loc.GetString(edible.Message, ("food", entity.Owner), ("flavors", flavors), ("satiated", args.Satiated)),
                 Loc.GetString(edible.OtherMessage),
                 args.User,
                 args.User);

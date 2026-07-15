@@ -53,7 +53,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             _hands.PickupOrDrop(args.User, ent, dropNear: true);
         }
 
-        _popup.PopupPredicted(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid);
         _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 

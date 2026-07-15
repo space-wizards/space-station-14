@@ -221,7 +221,7 @@ public sealed partial class DrainSystem : EntitySystem
 
         if (drainSolution.AvailableVolume > 0)
         {
-            _popup.PopupPredicted(Loc.GetString("drain-component-unclog-notapplicable", ("object", args.Target.Value)), args.Target.Value, args.User);
+            _popup.PopupEntity(Loc.GetString("drain-component-unclog-notapplicable", ("object", args.Target.Value)), args.Target.Value);
             return;
         }
 
@@ -244,7 +244,7 @@ public sealed partial class DrainSystem : EntitySystem
 
         if (!SharedRandomExtensions.PredictedProb(_timing, ent.Comp.UnclogProbability, GetNetEntity(ent)))
         {
-            _popup.PopupPredicted(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value, args.User);
+            _popup.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value);
             return;
         }
 
@@ -253,7 +253,7 @@ public sealed partial class DrainSystem : EntitySystem
 
         _solutionContainerSystem.RemoveAllSolution(ent.Comp.Solution.Value);
         _audio.PlayPredicted(ent.Comp.UnclogSound, args.Target.Value, args.User);
-        _popup.PopupPredicted(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value, args.User);
+        _popup.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }
 
     // Prevent a debug assert.

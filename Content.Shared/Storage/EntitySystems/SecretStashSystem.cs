@@ -234,7 +234,7 @@ public sealed partial class SecretStashSystem : EntitySystem
         if (storedInside != null && storedInside.Count >= 1)
         {
             var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupPredicted(popup, storedInside[0], null, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
         }
     }
 

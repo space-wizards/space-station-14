@@ -76,7 +76,7 @@ public sealed partial class EmagSystem : EntitySystem
         if (!emaggedEvent.Handled)
             return false;
 
-        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, user, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user, PopupType.Medium);
 
         _audio.PlayPredicted(ent.Comp.EmagSound, ent, ent);
 

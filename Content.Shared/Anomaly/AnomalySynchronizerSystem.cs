@@ -168,7 +168,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         if (ent.Comp.PulseOnConnect)
             _anomaly.DoAnomalyPulse(anomaly, anomaly);
 
-        _popup.PopupPredicted(Loc.GetString("anomaly-sync-connected"), ent, user, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), ent, PopupType.Medium);
         _audio.PlayPredicted(ent.Comp.ConnectedSound, ent, user);
     }
 
@@ -184,7 +184,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             _anomaly.DoAnomalyPulse(ent.Comp.ConnectedAnomaly.Value, anomaly);
         }
 
-        _popup.PopupPredicted(Loc.GetString("anomaly-sync-disconnected"), ent, user, PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), ent, PopupType.Large);
         _audio.PlayPredicted(ent.Comp.DisconnectedSound, ent, user);
 
         ent.Comp.ConnectedAnomaly = null;

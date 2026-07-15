@@ -88,7 +88,7 @@ public sealed partial class ClumsySystem : EntitySystem
         if (ent.Comp.CatchingFailDamage != null)
             _damageable.ChangeDamage(ent.Owner, ent.Comp.CatchingFailDamage, origin: args.Item);
 
-        // Collisions don't work properly with PopupPredicted or PlayPredicted.
+        // Collisions don't work properly with PlayPredicted.
         // So we make this server only.
         if (_net.IsClient)
             return;
@@ -149,7 +149,7 @@ public sealed partial class ClumsySystem : EntitySystem
         if (args.PuttingOnTable == ent.Owner)
         {
             // You are slamming yourself onto the table.
-            _popup.PopupPredicted(
+            _popup.PopupEntity(
                 Loc.GetString(ent.Comp.VaulingFailedMessageSelf, ("bonkable", args.BeingClimbedOn)),
                 Loc.GetString(ent.Comp.VaulingFailedMessageOthers, ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
                 ent,
@@ -159,13 +159,12 @@ public sealed partial class ClumsySystem : EntitySystem
         {
             // Someone else slamed you onto the table.
             // This is only run in server so you need to use popup entity.
-            _popup.PopupPredicted(
+            _popup.PopupEntity(
                 Loc.GetString(ent.Comp.VaulingFailedMessageForced,
                     ("bonker", puttingOnTableName),
                     ("victim", gettingPutOnTableName),
                     ("bonkable", args.BeingClimbedOn)),
-                ent,
-                null);
+                ent);
         }
 
         args.Cancel();

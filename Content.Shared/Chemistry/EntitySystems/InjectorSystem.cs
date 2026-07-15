@@ -469,7 +469,7 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             // Clowns will now also fumble Syringes.
             if (selfEv.OverrideMessage != null)
-                _popup.PopupPredicted(selfEv.OverrideMessage, user, user);
+                _popup.PopupEntity(selfEv.OverrideMessage, user);
             return true;
         }
 
@@ -483,7 +483,7 @@ public sealed partial class InjectorSystem : EntitySystem
         {
             var userMessage = Loc.GetString("injector-component-blocked-user");
             var otherMessage = Loc.GetString("injector-component-blocked-other", ("target", target), ("user", user));
-            _popup.PopupPredicted(userMessage, otherMessage, target, user, PopupType.SmallCaution);
+            _popup.PopupEntity(userMessage, otherMessage, target, user, PopupType.SmallCaution);
             return true;
         }
 

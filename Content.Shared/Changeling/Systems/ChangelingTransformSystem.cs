@@ -129,7 +129,7 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             selfMessage,
             othersMessage,
             ent,

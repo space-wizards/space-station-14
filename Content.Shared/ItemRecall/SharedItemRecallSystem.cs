@@ -83,10 +83,10 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
         if (TryComp<EmbeddableProjectileComponent>(ent, out var projectile))
             _proj.EmbedDetach(ent, projectile, user);
 
-        _popups.PopupPredicted(Loc.GetString("item-recall-item-summon-self", ("item", ent)),
+        _popups.PopupEntity(Loc.GetString("item-recall-item-summon-self", ("item", ent)),
                                Loc.GetString("item-recall-item-summon-others", ("item", ent), ("name", Identity.Entity(user, EntityManager))),
                                user, user);
-        _popups.PopupPredictedCoordinates(Loc.GetString("item-recall-item-disappear", ("item", ent)), Transform(ent).Coordinates, user);
+        _popups.PopupCoordinates(Loc.GetString("item-recall-item-disappear", ("item", ent)), Transform(ent).Coordinates);
 
         _hands.TryForcePickupAnyHand(user, ent);
     }
@@ -129,7 +129,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
             // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
             // I don't have the heart to move this code to server because of this small thing.
             // This line will only do something once that is fixed.
-            if (action.Comp.AttachedEntity is {} user)
+            if (action.Comp.AttachedEntity is { } user)
             {
                 _popups.PopupEntity(Loc.GetString("item-recall-item-unmark", ("item", item)), user, user, PopupType.MediumCaution);
                 RemoveFromPvsOverride(item, user);

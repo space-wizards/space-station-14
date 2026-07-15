@@ -52,7 +52,7 @@ public abstract partial class SharedJammerSystem : EntitySystem
 
         var state = Loc.GetString(args.Activated ? "radio-jammer-component-on-state" : "radio-jammer-component-off-state");
         var message = Loc.GetString("radio-jammer-component-on-use", ("state", state));
-        _popup.PopupPredicted(message, args.User.Value, args.User.Value);
+        _popup.PopupEntity(message, args.User.Value);
     }
 
     private void OnRefreshChargeRate(Entity<RadioJammerComponent> entity, ref RefreshChargeRateEvent args)

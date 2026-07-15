@@ -88,7 +88,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-windup-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-windup-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             args.Performer,
@@ -113,7 +113,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-begin-consume-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-begin-consume-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,
@@ -160,7 +160,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         var selfMessage = Loc.GetString("changeling-devour-consume-complete-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString("changeling-devour-consume-complete-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
+        _popupSystem.PopupEntity(
             selfMessage,
             othersMessage,
             ent.Owner,

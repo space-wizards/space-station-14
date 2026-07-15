@@ -101,7 +101,7 @@ public sealed partial class StethoscopeSystem : EntitySystem
             _mobState.IsDead(target, mobState)                                           ||
             !_damageable.GetAllDamage(target).DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
         {
-            _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
+            _popup.PopupEntity(Loc.GetString("stethoscope-nothing"), target);
             stethoscope.Comp.LastMeasuredDamage = null;
             return;
         }
@@ -111,12 +111,12 @@ public sealed partial class StethoscopeSystem : EntitySystem
         // Don't show the change if this is the first time listening.
         if (stethoscope.Comp.LastMeasuredDamage == null)
         {
-            _popup.PopupPredicted(absString, target, user);
+            _popup.PopupEntity(absString, target);
         }
         else
         {
             var deltaString = GetDeltaDamageString(stethoscope.Comp.LastMeasuredDamage.Value, asphyxDmg);
-            _popup.PopupPredicted(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target, user);
+            _popup.PopupEntity(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target);
         }
 
         stethoscope.Comp.LastMeasuredDamage = asphyxDmg;

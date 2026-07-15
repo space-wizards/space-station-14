@@ -339,7 +339,7 @@ public abstract partial class SharedWieldableSystem : EntitySystem
 
         var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", wieldable.Owner));
         var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", wieldable.Owner));
-        _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+        _popup.PopupEntity(selfMessage, othersMessage, user, user);
 
         var ev = new ItemWieldedEvent(user);
         RaiseLocalEvent(wieldable.Owner, ref ev);
@@ -416,7 +416,7 @@ public abstract partial class SharedWieldableSystem : EntitySystem
 
             var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
             var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User, EntityManager)), ("item", uid));
-            _popup.PopupPredicted(selfMessage, othersMessage, user, user);
+            _popup.PopupEntity(selfMessage, othersMessage, user, user);
         }
     }
 

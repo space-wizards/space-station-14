@@ -65,7 +65,7 @@ public sealed partial class CatchableSystem : EntitySystem
         // otherwise it will raise the events for that later while still in your hand
         _thrown.StopThrow(ent.Owner, args.Component);
 
-        // Collisions don't work properly with PopupPredicted or PlayPredicted.
+        // Collisions don't work properly with PlayPredicted.
         // So we make this server only.
         if (_net.IsClient)
             return;

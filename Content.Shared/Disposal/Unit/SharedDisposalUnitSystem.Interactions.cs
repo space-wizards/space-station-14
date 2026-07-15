@@ -145,7 +145,7 @@ public abstract partial class SharedDisposalUnitSystem
         {
             // TODO: If ContainerIsInsertingAttemptEvent ever ends up having the user
             // attached to the event, we'll be able to predict the pop up
-            _popup.PopupPredicted(Loc.GetString("disposal-unit-is-full"), ent, null);
+            _popup.PopupEntity(Loc.GetString("disposal-unit-is-full"), ent);
 
             args.Cancel();
             return;
