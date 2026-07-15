@@ -136,7 +136,7 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
-    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored. </param>
+    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored. All the pallets must be on the same grid. </param>
     /// <returns>Distinct set of entity UIDs found on pallets.</returns>
     public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
         EntityUid gridUid,
@@ -160,18 +160,49 @@ public sealed partial class CargoSystem
 
     #region Station
 
-    private bool SellPallets(EntityUid gridUid, EntityUid station, HashSet<EntityUid> toSell)
+    /// <summary>
+    /// Sells all goods and adds the money to the stations bank account.
+    /// Deletes the entity after sale and raises <see cref="EntitySoldEvent"/>.
+    /// The money will be split based on the account distribution unless sold in a lock box,
+    /// Then it will split between the lock box department and cargo based on the <see cref="LockboxCut"/>.
+    /// Does not check if an entity is valid to sell.
+    /// </summary>
+    /// <param name="station"> Station which will receive the money from the sale. </param>
+    /// <param name="goods"> The list of goods to be sold. </param>
+    public bool SellGoods(
+        Entity<StationBankAccountComponent> station,
+        HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
+    )
     {
-        if (toSell.Count == 0)
+        if (goods.Count == 0)
             return false;
 
-        var ev = new EntitySoldEvent(toSell, station);
-        RaiseLocalEvent(ref ev);
+        var baseDistribution = CreateAccountDistribution(station);
 
-        foreach (var ent in toSell)
+        Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
+
+        foreach (var (ent, sellComponent, price) in goods)
         {
+            distribution = baseDistribution;
+            if (sellComponent != null)
+            {
+                var cut = _lockboxCutEnabled ? station.Comp.LockboxCut : station.Comp.PrimaryCut;
+                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
+                {
+                    { sellComponent.OverrideAccount, cut },
+                    { station.Comp.PrimaryAccount, 1.0 - cut },
+                };
+            }
+
+            UpdateBankAccount(station.AsNullable(), (int)Math.Round(price), distribution, false);
+
             Del(ent);
         }
+
+        var ev = new EntitySoldEvent(goods.Select(x => x.ent).ToHashSet(), station);
+        RaiseLocalEvent(ref ev);
+
+        Dirty(station.Owner, station.Comp);
 
         return true;
     }
@@ -182,17 +213,19 @@ public sealed partial class CargoSystem
     /// and anything with a price of zero.
     /// </summary>
     /// <param name="gridUid">The grid to appraise.</param>
-    /// <param name="goods">
+    /// <param name="goods"> List of goods one the pallets. </param>
+    /// <param name="pallets"> Specific pallets to check. All the pallets must be on the same grid. </param>
     /// Output set of <c>(entity, overrideSellComponent, price)</c> tuples for each sellable item.
     /// </param>
     public void GetPalletGoods(
         EntityUid gridUid,
-        out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods
+        out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods,
+        IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)>? pallets = null
     )
     {
         goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
 
-        foreach (var ent in GetEntitiesOnCargoPallets(gridUid))
+        foreach (var ent in GetEntitiesOnCargoPallets(gridUid, pallets: pallets))
         {
             // Don't sell:
             // - anything already being sold
@@ -258,31 +291,9 @@ public sealed partial class CargoSystem
 
         GetPalletGoods(gridUid, out var goods);
 
-        if (!SellPallets(gridUid, station, goods.Select(x => x.ent).ToHashSet()))
+        if (!SellGoods((station, bankAccount), goods))
             return;
 
-        var baseDistribution = CreateAccountDistribution((station, bankAccount));
-        foreach (var (_, sellComponent, value) in goods)
-        {
-            Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
-            if (sellComponent != null)
-            {
-                var cut = _lockboxCutEnabled ? bankAccount.LockboxCut : bankAccount.PrimaryCut;
-                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
-                {
-                    { sellComponent.OverrideAccount, cut },
-                    { bankAccount.PrimaryAccount, 1.0 - cut },
-                };
-            }
-            else
-            {
-                distribution = baseDistribution;
-            }
-
-            UpdateBankAccount((station, bankAccount), (int)Math.Round(value), distribution, false);
-        }
-
-        Dirty(station, bankAccount);
         _audio.PlayPvs(ApproveSound, uid);
         UpdatePalletConsoleInterface(uid);
     }
