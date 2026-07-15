@@ -40,7 +40,7 @@ public sealed class StylesheetDefinitionTest : GameTest
 
     private sealed class TestSpecificDefinition : TestDefinition;
 
-    private sealed class TestMismatchDefinition : TestDefinition;
+    private sealed class TestMissingConstraintsDefinition : TestDefinition;
 
     [Sheetlet(typeof(TestDefinition))]
     private sealed class TestGenericSheetlet<T> : ISheetlet<T>
@@ -67,7 +67,7 @@ public sealed class StylesheetDefinitionTest : GameTest
         }
     }
 
-    [Sheetlet(typeof(TestMismatchDefinition))]
+    [Sheetlet(typeof(TestMissingConstraintsDefinition))]
     private sealed class TestMissingConstraintsSheetlet<T> : ISheetlet<T>
         where T : IExtraConfig
     {
@@ -123,7 +123,7 @@ public sealed class StylesheetDefinitionTest : GameTest
         var catcher = new LogCatcher();
         _logManager.GetSawmill("style").AddHandler(catcher);
 
-        var style = new TestMismatchDefinition();
+        var style = new TestMissingConstraintsDefinition();
         var sheet = style.Build();
 
         using (Assert.EnterMultipleScope())
