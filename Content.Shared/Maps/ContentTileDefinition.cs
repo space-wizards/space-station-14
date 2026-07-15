@@ -79,7 +79,7 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     [DataField] public byte Variants { get; set; } = 1;
 
     /// <summary>
-    ///     Allows the tile to be rotated/mirrored when placed on a grid.
+    /// Allows the tile to be rotated/mirrored when placed on a grid.
     /// </summary>
     [DataField] public bool AllowRotationMirror { get; set; } = false;
 
@@ -104,13 +104,13 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     [DataField("isSpace")] public bool MapAtmosphere { get; private set; }
 
     /// <summary>
-    ///     Friction override for mob mover in <see cref="SharedMoverController"/>
+    /// Friction override for mob mover in <see cref="SharedMoverController"/>
     /// </summary>
     [DataField]
     public float? MobFriction { get; private set; }
 
     /// <summary>
-    ///     Accel override for mob mover in <see cref="SharedMoverController"/>
+    /// Accel override for mob mover in <see cref="SharedMoverController"/>
     /// </summary>
     [DataField]
     public float? MobAcceleration { get; private set; }
@@ -128,7 +128,7 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     [DataField] public bool Indestructible = false;
 
     /// <summary>
-    ///     Hide this tile in the tile placement editor.
+    /// Hide this tile in the tile placement editor.
     /// </summary>
     [DataField] public bool EditorHidden { get; private set; } = false;
 
