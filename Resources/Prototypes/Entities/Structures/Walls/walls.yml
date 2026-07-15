@@ -233,7 +233,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
-      - !type:SpawnEntitiesBehavior
+      - !type:SpawnEntitiesBehavior # these will spawn rotated to map north due to the implementation of SpawnEntitiesBehavior
+        offset: 0
         spawn:
           Girder:
             min: 1

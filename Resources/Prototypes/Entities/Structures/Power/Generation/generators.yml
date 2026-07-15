@@ -291,6 +291,7 @@
         sound:
           collection: MetalGlassBreak
       - !type:SpawnEntitiesBehavior
+        offset: 0
         spawn:
           GeneratorRTGDamaged:
             min: 1
