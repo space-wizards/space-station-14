@@ -70,6 +70,7 @@ public abstract partial class StylesheetDefinition : ISheetletConfig
         var sheetletTypes = _reflectionManager.FindTypesWithAttribute<SheetletAttribute>()
             .Where(t =>
             {
+                // Currently we have to use this helper because the sandbox blocks the normal method.
                 t.TryGetCustomAttribute<SheetletAttribute>(out var attr);
                 return attr!.Definitions.Any(f => f.IsInstanceOfType(this));
             })
