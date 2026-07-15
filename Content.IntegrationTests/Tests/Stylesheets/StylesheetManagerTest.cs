@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Stylesheets;
 [TestOf(typeof(StylesheetManager))]
 public sealed class StylesheetManagerTest : GameTest
 {
-    [SidedDependency(Side.Client)] private IStylesheetManager _stylesheet = default!;
+    [SidedDependency(Side.Client)] private readonly IStylesheetManager _stylesheet = default!;
 
     [Test]
     [Description("Checks the basic functionality of Stylesheet Manager")]

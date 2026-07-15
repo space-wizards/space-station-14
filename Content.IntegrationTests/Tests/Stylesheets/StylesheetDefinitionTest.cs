@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Stylesheets;
 [TestOf(typeof(StylesheetDefinition))]
 public sealed class StylesheetDefinitionTest : GameTest
 {
-    [SidedDependency(Side.Client)] private ILogManager _logManager = default!;
+    [SidedDependency(Side.Client)] private readonly ILogManager _logManager = default!;
 
     #region Sheetlet Classes
 
