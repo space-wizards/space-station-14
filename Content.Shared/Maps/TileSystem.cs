@@ -122,6 +122,10 @@ public sealed partial class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile, IRobustRandom random)
     {
+        // Null variants? Uniform distribution.
+        if (tile.PlacementVariants == null)
+            return random.NextByte(tile.Variants);
+
         var variants = tile.PlacementVariants;
 
         var sum = variants.Sum();
