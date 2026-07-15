@@ -185,7 +185,7 @@ public sealed partial class StationRecordsSystem : EntitySystem
         var ev = new GeneralRecordCreatedEvent(key, record, profile);
         RaiseLocalEvent(ref ev);
 
-        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
+        Dirty(station);
     }
 
     public StationRecordKey? Convert((NetEntity, uint)? input)

@@ -5,7 +5,7 @@
 /// </summary>
 public interface IStationRecordEvent
 {
-    StationRecordKey Key { get; set; }
+    StationRecordKey Key { get; init; }
 
     EntityUid Station => Key.OriginStation;
 }

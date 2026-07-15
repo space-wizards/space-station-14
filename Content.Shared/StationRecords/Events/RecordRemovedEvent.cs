@@ -7,7 +7,7 @@
 ///     fields.
 /// </summary>
 [ByRefEvent]
-public record struct RecordRemovedEvent(StationRecordKey Key) : IStationRecordEvent
+public readonly record struct RecordRemovedEvent(StationRecordKey Key) : IStationRecordEvent
 {
     public EntityUid Station => Key.OriginStation;
 }

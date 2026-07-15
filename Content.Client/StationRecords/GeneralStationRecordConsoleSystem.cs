@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Shared.StationRecords;
+﻿using Content.Shared.StationRecords;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
 
@@ -9,41 +8,21 @@ public sealed partial class GeneralStationRecordConsoleSystem : SharedGeneralSta
 {
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    private static readonly GeneralStationRecordConsoleState EmptyState = new();
-
     protected override void UpdateUserInterface(Entity<GeneralStationRecordConsoleComponent> ent)
     {
-        var owningStation = StationSys.GetOwningStation(ent.Owner);
+        if (_ui.TryGetOpenUi(ent.Owner, GeneralStationRecordConsoleKey.Key, out var bui))
+            bui.Update();
+    }
 
-        if (!_ui.TryGetOpenUi(ent.Owner, GeneralStationRecordConsoleKey.Key, out var bui)
-            || bui is not GeneralStationRecordConsoleBoundUserInterface recordBui)
-            return;
-
-        if (!RecordsQuery.TryComp(owningStation, out var stationRecords))
+    // Needed so when a record is created or deleted, it appears in the UI instantly.
+    [SubscribeLocalEvent]
+    private void OnAfterHandleState(Entity<StationRecordsComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        var query = EntityQueryEnumerator<GeneralStationRecordConsoleComponent>();
+        while (query.MoveNext(out var uid, out _))
         {
-            recordBui.SetState(EmptyState);
-            return;
+            if (_ui.TryGetOpenUi(uid, GeneralStationRecordConsoleKey.Key, out var bui))
+                bui.Update();
         }
-
-        var listing = StationRecordsSys.BuildListing((owningStation.Value, stationRecords), ent.Comp.Filter);
-
-        switch (listing.Count)
-        {
-            case 0:
-                recordBui.SetState(EmptyState);
-                return;
-            default:
-                ent.Comp.ActiveKey ??= listing.Keys.First();
-                break;
-        }
-
-        if (ent.Comp.ActiveKey is not { } id)
-            return;
-
-        var key = new StationRecordKey(id, owningStation.Value);
-        StationRecordsSys.TryGetRecord<GeneralStationRecord>(key, out var record, stationRecords);
-
-        var newState = new GeneralStationRecordConsoleState(id, record, listing, ent.Comp.Filter, ent.Comp.CanDeleteEntries);
-        recordBui.SetState(newState);
     }
 }

@@ -42,7 +42,7 @@ public sealed partial class StationRecordsSystem
         var ev = new RecordRemovedEvent(key);
         RaiseLocalEvent(ref ev);
 
-        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
+        Dirty(key.OriginStation, records);
         return true;
     }
 
@@ -89,7 +89,7 @@ public sealed partial class StationRecordsSystem
             return StationRecordKey.Invalid;
 
         var id = station.Comp.Records.AddRecordEntry(record);
-        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
+        Dirty(station);
         return id == null ? StationRecordKey.Invalid : new StationRecordKey(id.Value, station);
     }
 
@@ -108,7 +108,7 @@ public sealed partial class StationRecordsSystem
             return;
 
         records.Records.AddRecordEntry(key.Id, record);
-        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
+        Dirty(key.OriginStation, records);
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public sealed partial class StationRecordsSystem
         }
 
         station.Comp.Records.ClearRecentlyAccessed();
-        DirtyField(station.AsNullable(), nameof(StationRecordsComponent.Records));
+        Dirty(station);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public sealed partial class StationRecordsSystem
         RaiseLocalEvent(ref ev);
 
         records.Records.RemoveFromRecentlyAccessed(key.Id);
-        DirtyField(key.OriginStation, records, nameof(StationRecordsComponent.Records));
+        Dirty(key.OriginStation, records);
     }
 
     /// <summary>

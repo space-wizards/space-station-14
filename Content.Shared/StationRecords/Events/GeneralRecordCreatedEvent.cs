@@ -9,7 +9,7 @@ namespace Content.Shared.StationRecords.Events;
 ///     Also stores the general record reference, to save some time.
 /// </summary>
 [ByRefEvent]
-public record struct GeneralRecordCreatedEvent(
+public readonly record struct GeneralRecordCreatedEvent(
     StationRecordKey Key,
     GeneralStationRecord Record,
     HumanoidCharacterProfile Profile) : IStationRecordEvent

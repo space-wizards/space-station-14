@@ -6,7 +6,7 @@
 ///     may have changed.
 /// </summary>
 [ByRefEvent]
-public record struct RecordModifiedEvent(StationRecordKey Key) : IStationRecordEvent
+public readonly record struct RecordModifiedEvent(StationRecordKey Key) : IStationRecordEvent
 {
     public EntityUid Station => Key.OriginStation;
 }
