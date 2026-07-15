@@ -33,11 +33,12 @@ public sealed partial class CargoSystem
             _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale, new CargoPalletConsoleInterfaceState(0, 0, false));
             return;
         }
-        GetPalletGoods(gridUid, out var goods);
+        var goods = GetPalletGoods(gridUid);
+        var totalAmount = (int)goods.Sum(t => t.price);
         _uiSystem.SetUiState(
             uid,
             CargoPalletConsoleUiKey.Sale,
-            new CargoPalletConsoleInterfaceState((int)goods.Sum(t => t.price), goods.Count, true)
+            new CargoPalletConsoleInterfaceState(totalAmount, goods.Count, true)
         );
     }
 
@@ -126,7 +127,7 @@ public sealed partial class CargoSystem
     /// Is the given pallet free of dynamic entities
     /// </summary>
     /// <param name="pallet"> The pallet to check. </param>
-    /// <returns> <c>true</c> if the pallet has no dynamic entities on it; otherwise <c>false</c>. </returns>
+    /// <returns> <c>true</c> if the pallet has dynamic entities on it; otherwise <c>false</c>. </returns>
     public bool IsPalletOccupied((Entity<CargoPalletComponent> Entity, TransformComponent PalletXform) pallet)
     {
         var aabb = _lookup.GetAABBNoContainer(
@@ -223,16 +224,15 @@ public sealed partial class CargoSystem
     /// and anything with a price of zero.
     /// </summary>
     /// <param name="gridUid">The grid to appraise.</param>
-    /// <param name="goods"> List of goods one the pallets. </param>
     /// <param name="pallets"> Specific pallets to check.
     /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
-    public void GetPalletGoods(
+    /// <returns> HashSet of goods on the pallets. </returns>
+    public HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> GetPalletGoods(
         EntityUid gridUid,
-        out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods,
         IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)>? pallets = null
     )
     {
-        goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
+        var goods = new HashSet<(EntityUid, OverrideSellComponent?, double)>();
 
         foreach (var ent in GetEntitiesOnCargoPallets(gridUid, pallets: pallets))
         {
@@ -248,6 +248,7 @@ public sealed partial class CargoSystem
                 continue;
             goods.Add((ent, CompOrNull<OverrideSellComponent>(ent), price));
         }
+        return goods;
     }
 
     /// <summary>
@@ -298,7 +299,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        GetPalletGoods(gridUid, out var goods);
+        var goods = GetPalletGoods(gridUid);
 
         if (!SellGoods((station, bankAccount), goods))
             return;
