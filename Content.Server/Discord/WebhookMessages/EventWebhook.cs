@@ -30,7 +30,7 @@ public sealed partial class EventWebhook : IPostInjectInit
                 new()
                 {
                     Title = adminUsername,
-                    Color = Color.DarkViolet.ToArgb(), //#9400D3
+                    Color = Color.DarkViolet.ToArgb() & 0x00FFFFFF, //#9400D3
                     Description = eventDescription,
                     Footer = new WebhookEmbedFooter()
                     {
@@ -53,7 +53,9 @@ public sealed partial class EventWebhook : IPostInjectInit
             if (await _discord.GetWebhook(webhookUrl) is not {} identifier)
                 return;
 
-            await _discord.CreateMessage(identifier.ToIdentifier(), payload);
+            var request = await _discord.CreateMessage(identifier.ToIdentifier(), payload);
+            var content = await request.Content.ReadAsStringAsync();
+            Console.WriteLine(content);
         }
         catch (Exception e)
         {
