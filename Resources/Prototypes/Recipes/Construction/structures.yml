@@ -695,13 +695,6 @@
   id: BonfireStake
   graph: Bonfire
   targetNode: bonfireStake
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
 
 - type: construction
   id: Stairs
