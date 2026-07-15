@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseSheet
+  parent: [ BaseSheet, BaseItemDestructible ]
   id: SheetGlassBase
   name: glass
   description: A sheet of glass, used often on the station in various applications.
@@ -11,22 +11,6 @@
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Damageable
     damageModifierSet: Glass
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-          params:
-            volume: -4
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -61,6 +45,22 @@
       reagents:
       - ReagentId: Silicon
         Quantity: 10
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
 
 - type: entity
   parent: SheetGlass

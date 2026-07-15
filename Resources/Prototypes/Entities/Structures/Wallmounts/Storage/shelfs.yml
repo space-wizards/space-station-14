@@ -1,7 +1,7 @@
 # Parents
 - type: entity
   abstract: true
-  parent: [ BaseWallmountCabinet, StructureHealthContainerWeak ]
+  parent: [ BaseWallmount, StructureHealthContainerWeak ]
   id: ShelfBase
   name: shelf
   description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.

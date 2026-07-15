@@ -158,6 +158,8 @@
   - type: Construction
     graph: WebStructures
     node: crate
+    containers:
+    - entity_storage
   - type: Damageable
     damageModifierSet: Web
   - type: Destructible

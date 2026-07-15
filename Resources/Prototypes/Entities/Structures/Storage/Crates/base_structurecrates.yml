@@ -35,9 +35,6 @@
       paper_label: !type:ContainerSlot
   - type: StaticPrice
     price: 75
-  - type: Construction
-    containers:
-    - entity_storage
   - type: RequireProjectileTarget
 
 - type: entity
@@ -75,6 +72,8 @@
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
+    containers:
+    - entity_storage
 
 - type: entity
   parent: CrateGeneric

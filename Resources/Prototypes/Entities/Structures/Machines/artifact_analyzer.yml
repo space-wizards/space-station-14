@@ -137,7 +137,7 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:EmptyContainer
+      - !type:EmptyContainersBehaviour
         container: entity_storage
   - type: EntityStorage
     capacity: 1

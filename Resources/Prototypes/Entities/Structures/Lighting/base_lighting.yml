@@ -23,6 +23,12 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: WallMountedItems
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
   - type: PointLight
     color: "#FFE4CE" # 5000K color temp
     energy: 0.8
