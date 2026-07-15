@@ -154,7 +154,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
             min = 1;
         }
 
-        for (var i = min; i < max; i++)
+        for (var i = min; i <= max; i++)
         {
             values.Add(i);
         }
