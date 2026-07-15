@@ -25,7 +25,7 @@ namespace Content.Client.Actions.UI
 
         public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
-            _gameTiming = IoCManager.Resolve<IGameTiming>();
+            IoCManager.InjectDependencies(this);
 
             SetOnlyStyleClass(StyleClass.TooltipPanel);
 
