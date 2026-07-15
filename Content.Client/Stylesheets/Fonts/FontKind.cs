@@ -13,7 +13,6 @@ public enum FontKind
     BoldItalic,
 }
 
-[Obsolete("Unused extensions outside NotoFamilyStack, slated for removal")]
 public static class FontKindExtensions
 {
     internal static string AsFileName(this FontKind kind)
