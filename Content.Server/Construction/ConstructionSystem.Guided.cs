@@ -98,9 +98,7 @@ namespace Content.Server.Construction
                         }
                         else
                         {
-                            args.PushMarkup(Loc.GetString(
-                                "construction-component-to-create-header",
-                                ("targetName", target.Name)) + "\n");
+                            args.PushMarkup(Loc.GetString("construction-component-to-create-header") + "\n");
                         }
                     }
                 }
