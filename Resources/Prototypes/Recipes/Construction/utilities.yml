@@ -1,298 +1,193 @@
-# SURVEILLANCE
+# region Base
 - type: construction
-  id: camera
-  graph: SurveillanceCamera
-  startNode: start
-  targetNode: camera
+  abstract: true
+  id: BaseUtility
   category: construction-category-utilities
-  objectType: Structure
   placementMode: SnapgridCenter
   conditions:
   - !type:AgainstWall
     offset: 0 # expects a wall to the north when the camera is in its north facing
 
 - type: construction
-  id: WallmountTelescreen
-  graph: WallmountTelescreen
-  startNode: start
-  targetNode: Telescreen
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-
-- type: construction
-  id: StationMap
-  graph: StationMap
-  startNode: start
-  targetNode: station_map
-  category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canRotate: true
+  abstract: true
+  parent: BaseUtility
+  id: BaseUtilityWallmount
   canBuildInImpassable: true
   conditions:
-  - !type:WallmountCondition {}
+  - !type:WallmountCondition
+# endregion Base
 
-# POWER
+# region Surveillance
 - type: construction
+  parent: BaseUtility
+  id: camera
+  graph: SurveillanceCamera
+  targetNode: camera
+
+- type: construction
+  parent: BaseUtilityWallmount
+  id: WallmountTelescreen
+  graph: WallmountTelescreen
+  targetNode: Telescreen
+
+- type: construction
+  parent: BaseUtilityWallmount
+  id: StationMap
+  graph: StationMap
+  targetNode: station_map
+  category: construction-category-structures
+# endregion Surveillance
+
+# region Power
+- type: construction
+  parent: BaseUtilityWallmount
   id: APC
   graph: APC
-  startNode: start
   targetNode: apc
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
 
 - type: construction
+  parent: BaseUtility
   id: CableTerminal
   graph: CableTerminal
-  startNode: start
   targetNode: cable_terminal
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: BaseUtilityWallmount
   id: WallmountSubstation
   graph: WallmountSubstation
-  startNode: start
   targetNode: substation
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
 
 - type: construction
+  parent: BaseUtilityWallmount
   id: WallmountGenerator
   graph: WallmountGenerator
-  startNode: start
   targetNode: generator
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
 
 - type: construction
+  parent: WallmountGenerator
   id: WallmountGeneratorAPU
-  graph: WallmountGenerator
-  startNode: start
   targetNode: APU
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
+# endregion Power
 
-# DISPOSALS
+# region Disposals
 - type: construction
+  parent: BaseUtility
   id: DisposalUnit
   graph: DisposalMachine
-  startNode: start
   targetNode: disposal_unit
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalUnit
   id: MailingUnit
-  graph: DisposalMachine
-  startNode: start
   targetNode: mailing_unit
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalPipe
   graph: DisposalPipe
-  startNode: start
   targetNode: pipe
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalTagger
-  graph: DisposalPipe
-  startNode: start
   targetNode: tagger
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalSignaller
-  graph: DisposalPipe
-  startNode: start
   targetNode: signaller
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalTrunk
-  graph: DisposalPipe
-  startNode: start
   targetNode: trunk
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalRouter
-  graph: DisposalPipe
-  startNode: start
   targetNode: router
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalRouterFlipped
 
 - type: construction
-  hide: true
+  parent: DisposalPipe
   id: DisposalRouterFlipped
-  graph: DisposalPipe
-  startNode: start
+  hide: true
   targetNode: routerflipped
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalRouter
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalSignalRouter
-  graph: DisposalPipe
-  startNode: start
   targetNode: signal_router
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalSignalRouterFlipped
 
 - type: construction
-  hide: true
+  parent: DisposalPipe
   id: DisposalSignalRouterFlipped
-  graph: DisposalPipe
-  startNode: start
+  hide: true
   targetNode: signal_router_flipped
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalSignalRouter
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalJunction
-  graph: DisposalPipe
-  startNode: start
   targetNode: junction
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalJunctionFlipped
 
 - type: construction
-  hide: true
+  parent: DisposalPipe
   id: DisposalJunctionFlipped
-  graph: DisposalPipe
-  startNode: start
+  hide: true
   targetNode: junctionflipped
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
   mirror: DisposalJunction
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalYJunction
-  graph: DisposalPipe
-  startNode: start
   targetNode: yJunction
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalXJunction
-  graph: DisposalPipe
-  startNode: start
   targetNode: xJunction
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
 
 - type: construction
+  parent: DisposalPipe
   id: DisposalBend
-  graph: DisposalPipe
-  startNode: start
   targetNode: bend
-  category: construction-category-utilities
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
+# endregion Disposals
 
-# INTERCOM
+# region Intercom
 - type: construction
+  parent: BaseUtilityWallmount
   id: IntercomAssembly
   graph: Intercom
-  startNode: start
   targetNode: intercom
   category: construction-category-structures
-  placementMode: SnapgridCenter
-  objectType: Structure
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition {}
+# endregion Intercom
 
-# TIMERS
+# region Timers
 - type: construction
+  parent: BaseUtilityWallmount
   id: SignalTimer
   graph: Timer
-  startNode: start
   targetNode: signal
-  category: construction-category-utilities
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
 
 - type: construction
+  parent: SignalTimer
   id: ScreenTimer
-  graph: Timer
-  startNode: start
   targetNode: screen
-  category: construction-category-utilities
-  objectType: Structure
-  canRotate: false
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
 
 - type: construction
+  parent: SignalTimer
   id: BrigTimer
-  graph: Timer
-  startNode: start
   targetNode: brig
-  category: construction-category-utilities
-  objectType: Structure
-  canRotate: false
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
+# endregion Timers
 
-# DEFENSES
+# region Defenses
 - type: construction
+  parent: BaseUtilityWallmount
   id: WeaponEnergyTurretControlPanel
   graph: WeaponEnergyTurretControlPanel
-  startNode: start
   targetNode: finish
-  category: construction-category-utilities
-  objectType: Structure
-  canRotate: true
-  placementMode: SnapgridCenter
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
+# endregion Defenses
