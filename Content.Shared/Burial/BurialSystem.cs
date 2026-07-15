@@ -118,7 +118,7 @@ public sealed partial class BurialSystem : EntitySystem
         {
             var selfMessage = Loc.GetString("grave-start-digging-user", ("grave", uid), ("tool", used));
             var othersMessage = Loc.GetString("grave-start-digging-others", ("user", user), ("grave", uid), ("tool", used));
-            _popupSystem.PopupEntity(selfMessage, othersMessage, user);
+            _popupSystem.PopupEntity(selfMessage, othersMessage, user, user);
             component.ActiveShovelDigging = true;
             Dirty(uid, component);
         }

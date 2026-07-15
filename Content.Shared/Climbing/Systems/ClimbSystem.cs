@@ -339,7 +339,7 @@ public sealed partial class ClimbSystem : VirtualController
                 ("climbable", climbable));
         }
 
-        _popupSystem.PopupPredicted(selfMessage, othersMessage, uid, user);
+        _popupSystem.PopupEntity(selfMessage, othersMessage, uid, user);
     }
 
     /// <summary>

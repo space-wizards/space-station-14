@@ -126,7 +126,7 @@ public abstract partial class SharedItemRecallSystem : EntitySystem
 
         if (TryComp<ItemRecallComponent>(action, out var itemRecall))
         {
-            // For some reason client thinks the station grid owns the action on client and this doesn't work. It doesn't work in PopupEntity(mispredicts) and PopupPredicted either(doesnt show).
+            // For some reason client thinks the station grid owns the action on client and this doesn't work.
             // I don't have the heart to move this code to server because of this small thing.
             // This line will only do something once that is fixed.
             if (action.Comp.AttachedEntity is { } user)
