@@ -8,8 +8,8 @@ namespace Content.Server.Delivery;
 /// addressed recipient opens it, they are made a traitor and the enclosed
 /// paper self-destructs.
 /// </summary>
-[RegisterComponent, Access(typeof(TraitorRecruitmentDeliverySystem))]
-public sealed partial class TraitorRecruitmentDeliveryComponent : Component
+[RegisterComponent, Access(typeof(DeliveryTraitorRecruitmentSystem))]
+public sealed partial class DeliveryTraitorRecruitmentComponent : Component
 {
     /// <summary>
     /// Dedicated game rule so mail recruitment stays out of normal antag budgets.

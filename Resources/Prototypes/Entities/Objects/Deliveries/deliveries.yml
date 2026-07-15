@@ -158,7 +158,7 @@
   id: TraitorRecruitmentLetterDelivery
   suffix: Traitor Recruitment
   components:
-  - type: TraitorRecruitmentDelivery
+  - type: DeliveryTraitorRecruitment
   - type: ComponentTable
     table: !type:NestedSelector
       tableId: DeliveryModifierNonBombTable

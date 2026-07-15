@@ -512,7 +512,7 @@
     cost: 75
 
 # Passive rule for traitor mail. Recruitment is driven explicitly by
-# TraitorRecruitmentDeliverySystem, so this must not auto-select antags.
+# DeliveryTraitorRecruitmentSystem, so this must not auto-select antags.
 - type: entity
   parent: BaseTraitorRule
   id: TraitorByMail

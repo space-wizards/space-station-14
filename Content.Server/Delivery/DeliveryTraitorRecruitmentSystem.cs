@@ -24,11 +24,11 @@ using Robust.Shared.Random;
 namespace Content.Server.Delivery;
 
 /// <summary>
-/// Turns the addressed recipient of a <see cref="TraitorRecruitmentDeliveryComponent"/>
+/// Turns the addressed recipient of a <see cref="DeliveryTraitorRecruitmentComponent"/>
 /// letter into a traitor when they open it, writes the reused traitor briefing
 /// onto the enclosed paper and arms its self-destruct.
 /// </summary>
-public sealed partial class TraitorRecruitmentDeliverySystem : EntitySystem
+public sealed partial class DeliveryTraitorRecruitmentSystem : EntitySystem
 {
     [Dependency] private AntagSelectionSystem _antag = default!;
     [Dependency] private RoleSystem _roles = default!;
@@ -43,16 +43,9 @@ public sealed partial class TraitorRecruitmentDeliverySystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private GameTicker _gameTicker = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<TraitorRecruitmentDeliveryComponent, DeliveryOpenedEvent>(OnOpened);
-        SubscribeLocalEvent<TraitorRecruitmentDeliveryComponent, DeliverySelectRecipientEvent>(OnSelectRecipient);
-    }
-
+    [SubscribeLocalEvent]
     private void OnSelectRecipient(
-        Entity<TraitorRecruitmentDeliveryComponent> ent,
+        Entity<DeliveryTraitorRecruitmentComponent> ent,
         ref DeliverySelectRecipientEvent args)
     {
         if (args.Cancelled || args.Recipient != null)
@@ -113,7 +106,8 @@ public sealed partial class TraitorRecruitmentDeliverySystem : EntitySystem
         args.Recipient = _random.Pick(candidates);
     }
 
-    private void OnOpened(Entity<TraitorRecruitmentDeliveryComponent> ent, ref DeliveryOpenedEvent args)
+    [SubscribeLocalEvent]
+    private void OnOpened(Entity<DeliveryTraitorRecruitmentComponent> ent, ref DeliveryOpenedEvent args)
     {
         if (!TryComp<DeliveryComponent>(ent, out var delivery) ||
             !_container.TryGetContainer(ent, delivery.Container, out var container))
@@ -164,7 +158,7 @@ public sealed partial class TraitorRecruitmentDeliverySystem : EntitySystem
         _trigger.Trigger(paper, user, key, predicted: false);
     }
 
-    private bool TryRecruit(EntityUid user, TraitorRecruitmentDeliveryComponent comp, out string briefing)
+    private bool TryRecruit(EntityUid user, DeliveryTraitorRecruitmentComponent comp, out string briefing)
     {
         briefing = string.Empty;
 
