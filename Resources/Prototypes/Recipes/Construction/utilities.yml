@@ -82,6 +82,7 @@
   targetNode: mailing_unit
 
 - type: construction
+  parent: BaseUtility
   id: DisposalPipe
   graph: DisposalPipe
   targetNode: pipe
