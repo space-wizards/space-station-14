@@ -2,10 +2,10 @@
   id: NamesDeathCommandoFirst
   values:
     prefix: names-death-commando-first-dataset-
-    count: 58
+    count: 59
 
 - type: localizedDataset
   id: NamesDeathCommandoLast
   values:
     prefix: names-death-commando-last-dataset-
-    count: 55
+    count: 56
