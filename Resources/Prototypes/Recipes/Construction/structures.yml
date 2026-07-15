@@ -10,14 +10,15 @@
   parent: BaseStructure
   id: BaseStructureFullTile
   canRotate: false
-  conditions: &tileNotBlocked
+  conditions:
   - !type:TileNotBlocked
 
 - type: construction
   abstract: true
   parent: BaseStructure
   id: BaseStructureFullTileDirectional
-  conditions: *tileNotBlocked
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   abstract: true
@@ -136,7 +137,7 @@
   id: Cardwall
   graph: Cardwall
   targetNode: cardwall
-  conditions: &TileNotBlockedSpace
+  conditions:
   - !type:TileNotBlocked
     failIfSpace: false
 # endregion Walls
@@ -147,7 +148,9 @@
   id: Grille
   graph: Grille
   targetNode: grille
-  conditions: *TileNotBlockedSpace
+  conditions:
+  - !type:TileNotBlocked
+    failIfSpace: false
 
 - type: construction
   parent: Grille
