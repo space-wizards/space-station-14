@@ -42,10 +42,12 @@ public sealed partial class SiliconLawContainer : BoxContainer
                         )
                     )
                 );
+                _law!.Corrupted = true;
             }
             else
             {
                 _law!.LawIdentifierOverride = null;
+                _law!.Corrupted = false;
             }
         };
 
@@ -59,13 +61,6 @@ public sealed partial class SiliconLawContainer : BoxContainer
         _law = law;
         LawContent.TextRope = new Rope.Leaf(Loc.GetString(law.LawString));
         PositionText.Text = law.Order.ToString();
-        if (!string.IsNullOrEmpty(law.LawIdentifierOverride))
-        {
-            Corrupted.Pressed = true;
-        }
-        else
-        {
-            Corrupted.Pressed = false;
-        }
+        Corrupted.Pressed = law.Corrupted;
     }
 }
