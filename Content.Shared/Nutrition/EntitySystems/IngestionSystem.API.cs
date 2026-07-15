@@ -71,9 +71,9 @@ public sealed partial class IngestionSystem
 
     /// <inheritdoc cref="HasMouthAvailable(EntityUid, EntityUid)"/>
     /// Overflow which takes custom flags for a mouth being blocked, in case the entity has a mouth not on the face.
-    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags)
+    public bool HasMouthAvailable(EntityUid user, EntityUid target, SlotFlags flags, bool checkDistance = true, bool showPopUp = true)
     {
-        if (!_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
+        if (checkDistance && !_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
             var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
             _popup.PopupClient(message, user, user);
@@ -86,7 +86,7 @@ public sealed partial class IngestionSystem
         if (!attempt.Cancelled)
             return true;
 
-        if (attempt.Blocker != null)
+        if (showPopUp && attempt.Blocker != null)
             _popup.PopupClient(Loc.GetString("ingestion-remove-mask", ("entity", attempt.Blocker.Value)), target, user);
 
         return false;

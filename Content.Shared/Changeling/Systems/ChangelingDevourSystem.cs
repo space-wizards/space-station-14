@@ -11,6 +11,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
@@ -32,6 +34,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedStoreSystem _store = default!;
+    [Dependency] private IngestionSystem _ingestion = default!;
 
     public override void Initialize()
     {
@@ -242,7 +245,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             return false;
         }
 
-        return true;
+        return _ingestion.HasMouthAvailable(changeling.Owner, changeling.Owner, SlotFlags.HEAD | SlotFlags.MASK, false, showPopup);
     }
 
     /// <summary>
