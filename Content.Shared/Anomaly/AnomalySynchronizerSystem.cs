@@ -89,7 +89,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     {
         if (!_power.IsPowered(ent.Owner))
         {
-            _popup.PopupClient(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent)), ent, user);
+            _popup.PopupEntity(Loc.GetString("base-computer-ui-component-not-powered", ("machine", ent)), ent, user);
             return false;
         }
 
@@ -98,7 +98,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
 
         if (anomaly.Owner is { Valid: false }) // no anomaly in range
         {
-            _popup.PopupClient(Loc.GetString("anomaly-sync-no-anomaly"), ent, user);
+            _popup.PopupEntity(Loc.GetString("anomaly-sync-no-anomaly"), ent, user);
             return false;
         }
 

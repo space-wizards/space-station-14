@@ -65,7 +65,7 @@ public abstract partial class SharedHotPotatoSystem : EntitySystem
                 break;
             }
 
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString("hot-potato-failed", ("to", Identity.Entity(hitEntity, EntityManager))),
                 ent.Owner,
                 args.User,

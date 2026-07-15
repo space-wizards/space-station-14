@@ -64,7 +64,7 @@ public sealed partial class BurialSystem : EntitySystem
         }
         else
         {
-            _popupSystem.PopupClient(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
         }
 
         args.Handled = true;
@@ -85,7 +85,7 @@ public sealed partial class BurialSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        _popupSystem.PopupClient(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
+        _popupSystem.PopupEntity(Loc.GetString("grave-digging-requires-tool", ("grave", args.Target)), uid, args.User);
         args.Handled = true;
     }
 
@@ -124,7 +124,7 @@ public sealed partial class BurialSystem : EntitySystem
         }
         else
         {
-            _popupSystem.PopupClient(Loc.GetString("grave-start-digging-user-trapped", ("grave", uid)), user, user, PopupType.Medium);
+            _popupSystem.PopupEntity(Loc.GetString("grave-start-digging-user-trapped", ("grave", uid)), user, user, PopupType.Medium);
         }
     }
 

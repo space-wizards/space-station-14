@@ -157,7 +157,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
     {
         if (predict)
         {
-            _popup.PopupClient(
+            _popup.PopupEntity(
                Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
                attacker,
                attacker,

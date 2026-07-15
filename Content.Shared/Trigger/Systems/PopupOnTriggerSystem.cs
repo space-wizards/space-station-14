@@ -20,7 +20,7 @@ public sealed partial class PopupOnTriggerSystem : XOnTriggerSystem<PopupOnTrigg
         {
             if (ent.Comp.Predicted)
             {
-                _popup.PopupClient(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
+                _popup.PopupEntity(Loc.GetString(ent.Comp.Text, ("entity", ent), ("user", user)),
                     target,
                     ent.Comp.UserIsRecipient ? args.User : ent.Owner,
                     ent.Comp.PopupType);

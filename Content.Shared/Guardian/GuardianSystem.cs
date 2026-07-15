@@ -259,7 +259,7 @@ public sealed partial class GuardianSystem : EntitySystem
             _audio.PlayPredicted(ent.Comp.UsedSound,
                 ent.Owner,
                 args.Args.Target);
-            _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHauntedPopup),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianHauntedPopup),
                 args.Args.Target.Value,
                 args.Args.Target.Value);
             // Exhaust the activator
@@ -286,7 +286,7 @@ public sealed partial class GuardianSystem : EntitySystem
 
         if (args.NewMobState == MobState.Critical)
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHostCritWarn),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianHostCritWarn),
                 ent.Comp.HostedGuardian.Value,
                 ent.Comp.HostedGuardian.Value);
             _audio.PlayPredicted(guardianComp.CriticalSound, ent.Comp.HostedGuardian.Value, args.Target);
@@ -315,7 +315,7 @@ public sealed partial class GuardianSystem : EntitySystem
             origin: args.Origin,
             ignoreResistances: true,
             interruptsDoAfters: false);
-        _popup.PopupClient(Loc.GetString(ent.Comp.GuardianDamagePopup), ent.Comp.Host.Value, ent.Comp.Host.Value);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianDamagePopup), ent.Comp.Host.Value, ent.Comp.Host.Value);
     }
 
     /// <summary>

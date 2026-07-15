@@ -224,7 +224,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             if (brain != null || module != null)
             {
-                _popup.PopupClient(Loc.GetString("borg-panel-not-open"), chassis, args.User);
+                _popup.PopupEntity(Loc.GetString("borg-panel-not-open"), chassis, args.User);
             }
             return;
         }

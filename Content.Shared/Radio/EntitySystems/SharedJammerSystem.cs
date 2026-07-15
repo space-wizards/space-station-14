@@ -88,7 +88,7 @@ public abstract partial class SharedJammerSystem : EntitySystem
                     // The range should be updated when it turns on again!
                     _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
 
-                    _popup.PopupClient(Loc.GetString(setting.Message), user, user);
+                    _popup.PopupEntity(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };

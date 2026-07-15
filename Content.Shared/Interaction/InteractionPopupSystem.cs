@@ -138,7 +138,7 @@ public sealed partial class InteractionPopupSystem : EntitySystem
             return;
         }
 
-        _popupSystem.PopupClient(msg, uid, user);
+        _popupSystem.PopupEntity(msg, uid, user);
 
         if (sfx == null)
             return;

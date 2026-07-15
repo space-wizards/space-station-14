@@ -89,7 +89,7 @@ public sealed partial class DrainSystem : EntitySystem
         // Find the solution in the container that is emptied.
         if (!_solutionContainerSystem.TryGetDrainableSolution(container, out var containerSoln, out var containerSolution) || containerSolution.Volume == FixedPoint2.Zero)
         {
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString("drain-component-empty-verb-using-is-empty-message", ("object", container)),
                 ent.Owner,
                 user);
@@ -118,7 +118,7 @@ public sealed partial class DrainSystem : EntitySystem
         {
             var solutionToSpill = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToSpillOnGround);
             _puddle.TrySpillAt(Transform(ent.Owner).Coordinates, solutionToSpill, out _);
-            _popup.PopupClient(
+            _popup.PopupEntity(
                 Loc.GetString("drain-component-empty-verb-target-is-full-message", ("object", ent.Owner)),
                 ent.Owner,
                 user);
