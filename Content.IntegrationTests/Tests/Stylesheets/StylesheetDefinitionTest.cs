@@ -132,7 +132,7 @@ public sealed class StylesheetDefinitionTest : GameTest
             Assert.That(sheet.Rules, Has.Count.EqualTo(1));
 
             // Make sure it prints an error
-            Assert.That(catcher.CaughtLogs, Has.Count.GreaterThanOrEqualTo(1));
+            Assert.That(catcher.CaughtLogs, Has.Count.EqualTo(1));
             Assert.That(catcher.CaughtLogs[0].Level, Is.EqualTo(LogEventLevel.Error));
         }
 
