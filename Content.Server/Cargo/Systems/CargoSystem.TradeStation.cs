@@ -43,9 +43,9 @@ public sealed partial class CargoSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPalletUIOpen(EntityUid uid, CargoPalletConsoleComponent component, BoundUIOpenedEvent args)
+    private void OnPalletUIOpen(Entity<CargoPalletConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
-        UpdatePalletConsoleInterface(uid);
+        UpdatePalletConsoleInterface(ent.Owner);
     }
 
     /// <summary>
@@ -56,13 +56,13 @@ public sealed partial class CargoSystem
     /// known for their entity spam i wouldnt put it past them
     /// </summary>
     [SubscribeLocalEvent]
-    private void OnPalletAppraise(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletAppraiseMessage args)
+    private void OnPalletAppraise(Entity<CargoPalletConsoleComponent> ent, ref CargoPalletAppraiseMessage args)
     {
-        UpdatePalletConsoleInterface(uid);
+        UpdatePalletConsoleInterface(ent.Owner);
     }
 
     [SubscribeLocalEvent]
-    private void OnTradeSplit(EntityUid uid, TradeStationComponent component, ref GridSplitEvent args)
+    private void OnTradeSplit(Entity<TradeStationComponent> ent, ref GridSplitEvent args)
     {
         // If the trade station gets bombed it's still a trade station.
         foreach (var gridUid in args.NewGrids)
@@ -281,12 +281,12 @@ public sealed partial class CargoSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnPalletSale(EntityUid uid, CargoPalletConsoleComponent component, CargoPalletSellMessage args)
+    private void OnPalletSale(Entity<CargoPalletConsoleComponent> ent, ref CargoPalletSellMessage args)
     {
-        var xform = Transform(uid);
+        var xform = Transform(ent.Owner);
 
         if (
-            _station.GetOwningStation(uid) is not { } station
+            _station.GetOwningStation(ent.Owner) is not { } station
             || !TryComp<StationBankAccountComponent>(station, out var bankAccount)
         )
         {
@@ -295,7 +295,11 @@ public sealed partial class CargoSystem
 
         if (xform.GridUid is not { } gridUid)
         {
-            _uiSystem.SetUiState(uid, CargoPalletConsoleUiKey.Sale, new CargoPalletConsoleInterfaceState(0, 0, false));
+            _uiSystem.SetUiState(
+                ent.Owner,
+                CargoPalletConsoleUiKey.Sale,
+                new CargoPalletConsoleInterfaceState(0, 0, false)
+            );
             return;
         }
 
@@ -304,8 +308,8 @@ public sealed partial class CargoSystem
         if (!SellGoods((station, bankAccount), goods))
             return;
 
-        _audio.PlayPvs(ApproveSound, uid);
-        UpdatePalletConsoleInterface(uid);
+        _audio.PlayPvs(ApproveSound, ent.Owner);
+        UpdatePalletConsoleInterface(ent.Owner);
     }
 
     #endregion
