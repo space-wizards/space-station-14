@@ -90,7 +90,7 @@ public sealed partial class CargoSystem
 
         while (query.MoveNext(out var uid, out var comp, out var compXform))
         {
-            if ((requestType & comp.PalletType) == 0 || compXform.ParentUid != gridUid || !compXform.Anchored)
+            if ((requestType & comp.PalletType) == 0 || !compXform.Anchored || compXform.ParentUid != gridUid)
                 continue;
             yield return ((uid, comp), compXform);
         }
@@ -113,7 +113,7 @@ public sealed partial class CargoSystem
     {
         foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
         {
-            if (pallet.PalletXform.ParentUid != gridUid)
+            if (pallet.PalletXform.ParentUid != gridUid || !pallet.PalletXform.Anchored)
                 continue;
 
             if (IsPalletOccupied(pallet))
@@ -155,7 +155,7 @@ public sealed partial class CargoSystem
         var entities = new HashSet<EntityUid>();
         foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
         {
-            if (pallet.PalletXform.ParentUid != gridUid)
+            if (pallet.PalletXform.ParentUid != gridUid || !pallet.PalletXform.Anchored)
                 continue;
 
             var aabb = _lookup.GetAABBNoContainer(
@@ -236,10 +236,6 @@ public sealed partial class CargoSystem
 
         foreach (var ent in GetEntitiesOnCargoPallets(gridUid, pallets: pallets))
         {
-            // Don't sell:
-            // - anything already being sold
-            // - anything anchored (e.g. light fixtures)
-            // - anything blacklisted (e.g. players).
             if (Transform(ent).Anchored || !CanSell(ent))
                 continue;
 
