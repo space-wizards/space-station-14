@@ -64,13 +64,13 @@ public sealed partial class BotanySystem
     /// Spawns a produce item from a plant and produces the produce.
     /// </summary>
     [PublicAPI]
-    public void SpawnProduce(Entity<PlantDataComponent?, PlantComponent?> ent, EntityCoordinates position)
+    public void SpawnProduce(Entity<PlantComponent?> ent, EntityCoordinates position)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
-        var product = random.Pick(ent.Comp1.ProductPrototypes);
+        var product = random.Pick(ent.Comp.ProductPrototypes);
         var entity = PredictedSpawnAtPosition(product, position);
         _randomHelper.RandomOffset(entity, 0.25f, random);
 
@@ -79,6 +79,6 @@ public sealed partial class BotanySystem
         produce.PlantData = ClonePlantSnapshotData(ent.Owner);
         Dirty(entity, produce);
         ProduceGrown((entity, produce));
-        _appearance.SetData(entity, ProduceVisuals.Potency, ent.Comp2.Potency);
+        _appearance.SetData(entity, ProduceVisuals.Potency, ent.Comp.Potency);
     }
 }

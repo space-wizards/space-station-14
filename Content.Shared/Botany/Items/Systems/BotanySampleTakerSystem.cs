@@ -41,7 +41,6 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
             return;
 
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
-            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
             || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
             return;
 
@@ -68,9 +67,9 @@ public sealed partial class BotanySampleTakerSystem : EntitySystem
         float? healthOverride = harvest.ReadyForHarvest ? null : holder.Health;
         var protoId = MetaData(ent.Owner).EntityPrototype!.ID;
         var snapshot = _botany.ClonePlantSnapshotData(ent.Owner);
-        _botany.SpawnSeedPacket(plantData, protoId, snapshot, Transform(args.User).Coordinates, args.User, healthOverride);
+        _botany.SpawnSeedPacket(ent, protoId, snapshot, Transform(args.User).Coordinates, args.User, healthOverride);
 
-        var name = Loc.GetString(plantData.Name);
+        var name = Loc.GetString(ent.Comp.Name);
         _popup.PopupCursor(Loc.GetString("plant-sample-component-take-sample-popup", ("seedName", name)), args.User);
 
         if (random.Prob(args.Sample.Comp.SampleProbability))

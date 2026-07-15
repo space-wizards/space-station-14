@@ -54,8 +54,8 @@ public sealed partial class SeedExtractorSystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            if (_botany.TryGetPlantComponent<PlantDataComponent>(snapshot, produce.PlantProtoId, out var plantData))
-                _botany.SpawnSeedPacket(plantData, produce.PlantProtoId.Value, snapshot, coords, args.User);
+            if (_botany.TryGetPlantComponent<PlantComponent>(snapshot, produce.PlantProtoId, out var plant))
+                _botany.SpawnSeedPacket(plant, produce.PlantProtoId.Value, snapshot, coords, args.User);
         }
     }
 }

@@ -57,7 +57,7 @@ public sealed partial class MutationSystem : EntitySystem
     /// preserving lifecycle state.
     /// </summary>
     [PublicAPI]
-    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantProto)
+    public void SpeciesChange(Entity<PlantComponent?> oldPlant, EntProtoId newPlantProto)
     {
         if (!Resolve(oldPlant, ref oldPlant.Comp, false))
             return;

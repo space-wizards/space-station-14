@@ -8,7 +8,7 @@ namespace Content.Shared.EntityEffects.Effects.Botany;
 
 /// <summary>
 /// Changes the planted plant's species by replacing the plant entity with a new entity spawned from one
-/// of the current plant's <see cref="PlantDataComponent.MutationPrototypes"/>.
+/// of the current plant's <see cref="PlantComponent.MutationPrototypes"/>.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateSpeciesChange>
@@ -18,12 +18,11 @@ public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityE
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
     {
-        if (!TryComp<PlantDataComponent>(entity, out var oldPlantData)
-            || oldPlantData.MutationPrototypes.Count == 0)
+        if (entity.Comp.MutationPrototypes.Count == 0)
             return;
 
         var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
-        var newPlantEnt = random.Pick(oldPlantData.MutationPrototypes);
+        var newPlantEnt = random.Pick(entity.Comp.MutationPrototypes);
         _mutation.SpeciesChange(entity.Owner, newPlantEnt);
     }
 }
