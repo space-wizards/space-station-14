@@ -551,7 +551,7 @@ marking-HumanHairTressshoulder-tressshoulder = Tress Shoulder
 marking-HumanHairTrimmed = Trimmed
 marking-HumanHairTrimmed-trimmed = Trimmed
 
-HairTrimflat = Trim Flat
+marking-HumanHairTrimflat = Trim Flat
 marking-HumanHairTrimflat-trimflat = Trim Flat
 
 marking-HumanHairTwintail = Twintails
@@ -578,7 +578,7 @@ marking-HumanHairUnkept-unkept = Unkept
 marking-HumanHairUpdo = Updo
 marking-HumanHairUpdo-updo = Updo
 
-HumanHairVlong = Very Long Hair
+marking-HumanHairVlong = Very Long Hair
 marking-HumanHairVlong-vlong = Very Long Hair
 
 marking-HumanHairLongest = Very Long Hair 2
