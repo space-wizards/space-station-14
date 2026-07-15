@@ -30,6 +30,7 @@ public sealed partial class EventWebhook : IPostInjectInit
                 new()
                 {
                     Title = adminUsername,
+                    // Gotta remove the alpha channel so discord doesn't freak out
                     Color = Color.DarkViolet.ToArgb() & 0x00FFFFFF, //#9400D3
                     Description = eventDescription,
                     Footer = new WebhookEmbedFooter()
