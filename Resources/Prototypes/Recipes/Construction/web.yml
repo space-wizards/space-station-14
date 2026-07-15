@@ -17,27 +17,30 @@
   id: WallWeb
   targetNode: wall
   category: construction-category-structures
-  conditions: &TileNotBlocked
+  conditions:
   - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWebStructure
   id: TableWeb
   targetNode: table
-  conditions: *TileNotBlocked
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWebStructure
   id: WebBed
   targetNode: bed
-  conditions: *TileNotBlocked
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWebStructure
   id: ChairWeb
   targetNode: chair
   canRotate: true
-  conditions: *TileNotBlocked
+  conditions:
+  - !type:TileNotBlocked
 
 - type: construction
   parent: BaseWebStructure
@@ -51,5 +54,6 @@
   id: WebDoor
   targetNode: door
   category: construction-category-structures
-  conditions: *TileNotBlocked
+  conditions:
+  - !type:TileNotBlocked
 # endregion Web
