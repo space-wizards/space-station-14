@@ -17,3 +17,13 @@
     light_boost: 2
     light_gamma: 0.9
     light_whitepoint: 1
+
+- type: shader
+  id: NodeCrawlOutline
+  kind: source
+  path: "/Textures/Shaders/outline.swsl"
+  params:
+    outline_color: "#26BEFF60"
+    light_boost: 2
+    light_gamma: 1.5
+    light_whitepoint: 48

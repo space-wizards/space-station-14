@@ -212,7 +212,7 @@ public sealed partial class NodeCrawlSystem : SharedNodeCrawlSystem
             }
 
             if (node is PipeNode pipeNode &&
-                node.ReachableNodes.Count != BitOperations.PopCount((uint)pipeNode.CurrentPipeDirection))
+                node.ReachableNodes.Count < BitOperations.PopCount((uint)pipeNode.CurrentPipeDirection))
             {
                 ent.Comp.DeadEnd = true;
             }

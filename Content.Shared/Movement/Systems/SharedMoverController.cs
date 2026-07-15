@@ -9,7 +9,6 @@ using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Content.Shared.NodeCrawl;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
@@ -48,7 +47,6 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private SharedGravitySystem _gravity = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private TagSystem _tags = default!;
-    [Dependency] private NodeCrawlerMovementSystem _nodeCrawlerMovement = default!;
 
     [Dependency] protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery = default!;
     [Dependency] protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery = default!;
@@ -227,6 +225,14 @@ public abstract partial class SharedMoverController : VirtualController
 
         UsedMobMovement[uid] = true;
 
+        var beforeMove = new BeforeMoveEvent();
+        RaiseLocalEvent(uid, ref beforeMove);
+        if (beforeMove.Handled)
+        {
+            UsedMobMovement[uid] = false;
+            return;
+        }
+
         var moveSpeedComponent = ModifierQuery.CompOrNull(uid);
 
         float friction;
@@ -236,9 +242,6 @@ public abstract partial class SharedMoverController : VirtualController
 
         // Get current tile def for things like speed/friction mods
         ContentTileDefinition? tileDef = null;
-
-        if (_nodeCrawlerMovement.TryTick((uid, mover, physicsComponent, xform)))
-            return;
 
         var touching = false;
         // Should we use tile friction or not?

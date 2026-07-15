@@ -13,13 +13,13 @@ public sealed partial class CrawlableNodeComponent : Component
     /// Node types that can be connected to by this node
     /// </summary>
     [DataField(required: true)]
-    public List<string> ReachableNodeTypes = new();
+    public List<string> ReachableNodeTypes = [];
 
     /// <summary>
     /// Other entities with <see cref="CrawlableNodeComponent" /> that can be reached from this one
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public HashSet<EntityUid> ReachableNodes = new();
+    public HashSet<EntityUid> ReachableNodes = [];
 
     /// <summary>
     /// Whether this node has an unconnected node and should be exited from on movement
@@ -31,5 +31,5 @@ public sealed partial class CrawlableNodeComponent : Component
     /// All entities with <see cref="NodeCrawlerMovementComponent" /> that are associated with this one
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<EntityUid> Crawlers = new();
+    public HashSet<EntityUid> Crawlers = [];
 }

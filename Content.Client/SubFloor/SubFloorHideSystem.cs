@@ -1,4 +1,5 @@
 using Content.Client.UserInterface.Systems.Sandbox;
+using Content.Shared.DrawDepth;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -29,19 +30,6 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
                 Value = value,
             };
             RaiseNetworkEvent(ev);
-        }
-    }
-
-    private Type[] _types = new Type[] { };
-
-    [ViewVariables]
-    public Type[] Types
-    {
-        get => _types;
-        set
-        {
-            _types = value;
-            UpdateAll();
         }
     }
 
@@ -76,16 +64,10 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
-        var revealed = !covered || ShowAll || scannerRevealed;
+        var revealEv = new GetSubFloorRevealEvent();
+        RaiseLocalEvent(uid, ref revealEv);
 
-        foreach (var type in _types)
-        {
-            if (!HasComp(uid, type))
-                continue;
-
-            revealed = true;
-            break;
-        }
+        var revealed = !covered || ShowAll || scannerRevealed || revealEv.Revealed;
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
@@ -140,4 +122,16 @@ public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
             _appearance.QueueUpdate(uid, appearance);
         }
     }
+}
+
+/// <summary>
+/// Raised on a subfloor-hidden entity to let client systems reveal it locally.
+/// </summary>
+[ByRefEvent]
+public sealed class GetSubFloorRevealEvent : EntityEventArgs
+{
+    /// <summary>
+    /// Whether the entity should be shown even if covered by a floor tile.
+    /// </summary>
+    public bool Revealed;
 }

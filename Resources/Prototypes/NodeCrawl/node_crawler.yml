@@ -25,6 +25,8 @@
       mover-container: !type:Container
   - type: LagCompensation
   - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 8
   - type: Fixtures
     fixtures:
       fix1:

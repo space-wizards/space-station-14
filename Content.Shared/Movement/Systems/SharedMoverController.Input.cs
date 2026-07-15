@@ -93,8 +93,11 @@ namespace Content.Shared.Movement.Systems
                 return;
 
             // Relay the fact we had any movement event.
+            var oldMovement = entity.Comp.HeldMoveButtons;
+            var moveVec = DirVecForButtons(buttons);
+
             // TODO: Ideally we'd do these in a tick instead of out of sim.
-            var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
+            var moveEvent = new MoveInputEvent(entity, oldMovement, moveVec);
             entity.Comp.HeldMoveButtons = buttons;
             RaiseLocalEvent(entity, ref moveEvent);
             Dirty(entity, entity.Comp);
@@ -121,7 +124,8 @@ namespace Content.Shared.Movement.Systems
 
             if (entity.Comp.HeldMoveButtons != state.HeldMoveButtons)
             {
-                var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
+                var moveVec = DirVecForButtons(state.HeldMoveButtons);
+                var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons, moveVec);
                 entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
                 RaiseLocalEvent(entity.Owner, ref moveEvent);
 

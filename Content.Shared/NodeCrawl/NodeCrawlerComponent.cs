@@ -3,6 +3,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NodeCrawl;
 
@@ -15,6 +16,18 @@ namespace Content.Shared.NodeCrawl;
 [Access(typeof(SharedNodeCrawlSystem))]
 public sealed partial class NodeCrawlerComponent : Component
 {
+    /// <summary>
+    /// Prototype of the mover spawned for node crawling.
+    /// </summary>
+    [DataField]
+    public EntProtoId MoverProto = "NodeCrawlMover";
+
+    /// <summary>
+    /// Whether this crawler can relay to other crawlers.
+    /// </summary>
+    [DataField]
+    public bool Relay;
+
     /// <summary>
     /// The mover this crawler is currently being carried by, if any
     /// </summary>
@@ -29,7 +42,7 @@ public sealed partial class NodeCrawlerComponent : Component
     public Type[] RevealedComponents = [typeof(PipeAppearanceComponent)];
 
     /// <summary>
-    /// Whitelist for entities that will be considered as entrance nodes.
+    /// Whitelist for entities that will be considered as exit nodes.
     /// </summary>
     [DataField]
     public EntityWhitelist? EntranceNodes = new ()
@@ -44,7 +57,13 @@ public sealed partial class NodeCrawlerComponent : Component
     /// How long it takes to enter a node.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan EnterDelay = TimeSpan.FromSeconds(0.5f);
+    public TimeSpan EnterDelay = TimeSpan.FromSeconds(1f);
+
+    /// <summary>
+    /// How long it takes to exit a node.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan ExitDelay = TimeSpan.FromSeconds(1f);
 }
 
 /// <summary>
@@ -53,6 +72,9 @@ public sealed partial class NodeCrawlerComponent : Component
 /// </summary>
 [Serializable, NetSerializable]
 public sealed partial class NodeCrawlEnterDoAfterEvent : SimpleDoAfterEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class NodeCrawlExitDoAfterEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Raised on an entity when it begins node crawling.

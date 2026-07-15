@@ -1,13 +1,9 @@
-using Content.Shared.DoAfter;
 using Content.Shared.Eye;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Verbs;
-using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NodeCrawl;
 
@@ -19,104 +15,58 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private SharedMoverController _mover = default!;
-    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedEyeSystem _eye = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private NodeCrawlerMovementSystem _nodeCrawler = default!;
+    [Dependency] private NodeCrawlCrawlerSystem _crawler = default!;
 
     public static readonly string MoverContainer = "mover-container";
-    public static readonly EntProtoId MoverProto = "NodeCrawlMover";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CrawlableNodeComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
-        SubscribeLocalEvent<NodeCrawlerComponent, NodeCrawlEnterDoAfterEvent>(OnNodeCrawlEntryDoAfter);
-        SubscribeLocalEvent<NodeCrawlerComponent, NodeCrawlerArrivedAtNodeEvent>(OnArrivedAtNode);
         SubscribeLocalEvent<NodeCrawlerComponent, GetVisMaskEvent>(OnGetVisMask);
 
         SubscribeLocalEvent<CrawlableNodeComponent, ComponentShutdown>(OnCrawlableShutdown);
         SubscribeLocalEvent<NodeCrawlerMovementComponent, ComponentShutdown>(OnMovementShutdown);
+        SubscribeLocalEvent<NodeCrawlerMovementComponent, EntityTerminatingEvent>(OnMovementTerminating);
         SubscribeLocalEvent<NodeCrawlerComponent, ComponentShutdown>(OnCrawlerShutdown);
 
         SubscribeLocalEvent<CrawlableNodeComponent, AnchorStateChangedEvent>(OnCrawlableAnchorChanged);
     }
 
-    private void OnGetVerbs(Entity<CrawlableNodeComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-    {
-        var user = args.User;
-        var target = args.Target;
-        if (!TryComp<NodeCrawlerComponent>(user, out var nodeCrawler))
-            return;
-
-        if (!_entityWhitelist.IsWhitelistPass(nodeCrawler.EntranceNodes, target))
-            return;
-
-        if (!args.CanAccess)
-            return;
-
-        args.Verbs.Add(new AlternativeVerb
-        {
-            Act = () => StartEntryDoAfter((user, nodeCrawler), target),
-            Text = Loc.GetString("node-crawl-enter", ("target", target)),
-        });
-    }
-
-    private void StartEntryDoAfter(Entity<NodeCrawlerComponent> ent, EntityUid target)
-    {
-        var doAfterArgs = new DoAfterArgs(EntityManager,
-            ent.Owner,
-            ent.Comp.EnterDelay,
-            new NodeCrawlEnterDoAfterEvent(),
-            ent.Owner,
-            target)
-        {
-            BreakOnMove = true,
-        };
-
-        _doAfter.TryStartDoAfter(doAfterArgs);
-    }
-
-    private void OnNodeCrawlEntryDoAfter(Entity<NodeCrawlerComponent> ent, ref NodeCrawlEnterDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Target is not { } target)
-            return;
-
-        NodeCrawl(ent, target);
-    }
-
     /// <summary>
     /// Causes an entity to begin node crawling at the target entity.
     /// </summary>
-    /// <param name="ent">The entity to node crawl.</param>
+    /// <param name="uid">The entity to node crawl.</param>
     /// <param name="target">The target to crawl into.</param>
-    public void NodeCrawl(Entity<NodeCrawlerComponent> ent, EntityUid target)
+    public void EnterNodeCrawl(EntityUid uid, EntityUid target)
     {
-        if (!_net.IsServer)
+        if (!_crawler.TryGetNodeCrawler(uid, out var ent, out var user))
             return;
 
-        var mover = Spawn(MoverProto, Transform(target).Coordinates);
+        var mover = PredictedSpawnAttachedTo(ent.Comp.MoverProto, Transform(target).Coordinates);
         var crawler = Comp<NodeCrawlerMovementComponent>(mover);
 
         var container = _container.GetContainer(mover, MoverContainer);
-        _container.Insert(ent.Owner, container);
+        _container.Insert(user, container);
 
         ent.Comp.Mover = mover;
         Dirty(ent);
 
-        var evt = new NodeCrawlerStartedCrawlingEvent((mover, crawler));
-        RaiseLocalEvent(ent, ref evt);
+        var ev = new NodeCrawlerStartedCrawlingEvent((mover, crawler));
+        RaiseLocalEvent(user, ref ev);
 
         _nodeCrawler.SetNode((mover, crawler), target);
-        _nodeCrawler.SetHeldCrawler((mover, crawler), ent);
+        _nodeCrawler.SetHeldCrawler((mover, crawler), user);
 
         SetupAir((mover, crawler));
 
-        _mover.SetRelay(ent, mover);
+        _mover.SetRelay(user, mover);
         _physics.SetCanCollide(mover, false);
-        _eye.RefreshVisibilityMask(ent.Owner);
+        _eye.RefreshVisibilityMask(user);
     }
 
     /// <summary>
@@ -136,9 +86,12 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
     /// <summary>
     /// Causes this node crawler to exit its node crawl.
     /// </summary>
-    /// <param name="ent">The crawler to exit node-crawl from.</param>
-    public void ExitNodeCrawl(Entity<NodeCrawlerComponent> ent)
+    /// <param name="uid">The crawler to exit node-crawl from.</param>
+    public void ExitNodeCrawl(EntityUid uid)
     {
+        if (!_crawler.TryGetNodeCrawler(uid, out var ent, out var user))
+            return;
+
         if (ent.Comp.Mover is not { } mover)
             return;
 
@@ -146,7 +99,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         Dirty(ent);
 
         var container = _container.GetContainer(mover, MoverContainer);
-        _container.Remove(ent.Owner, container);
+        _container.Remove(user, container);
 
         foreach (var other in _container.EmptyContainer(container))
         {
@@ -157,7 +110,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             Dirty(other, otherCrawler);
         }
 
-        _mover.RemoveRelay(ent.Owner);
+        _mover.RemoveRelay(user);
         if (_net.IsServer && !TerminatingOrDeleted(mover))
         {
             if (TryComp<NodeCrawlerMovementComponent>(mover, out var movement))
@@ -167,18 +120,10 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
         }
 
         var ev = new NodeCrawlerStoppedCrawlingEvent();
-        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(user, ref ev);
 
-        _physics.SetCanCollide(ent.Owner, true);
-        _eye.RefreshVisibilityMask(ent.Owner);
-    }
-
-    private void OnArrivedAtNode(Entity<NodeCrawlerComponent> ent, ref NodeCrawlerArrivedAtNodeEvent args)
-    {
-        if (!_entityWhitelist.IsWhitelistPass(ent.Comp.EntranceNodes, args.Node))
-            return;
-
-        ExitNodeCrawl(ent);
+        _physics.SetCanCollide(user, true);
+        _eye.RefreshVisibilityMask(user);
     }
 
     private void OnGetVisMask(Entity<NodeCrawlerComponent> ent, ref GetVisMaskEvent args)
@@ -198,7 +143,27 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
                 continue;
 
             _nodeCrawler.SetNode((crawler, movement), null);
-            ExitNodeCrawl((held, Comp<NodeCrawlerComponent>(held)));
+            ExitNodeCrawl(held);
+        }
+    }
+
+    /// <summary>
+    /// When the mover is being deleted (e.g., during prediction reset),
+    /// remove contained entities to prevent them from being deleted recursively.
+    /// </summary>
+    private void OnMovementTerminating(Entity<NodeCrawlerMovementComponent> ent, ref EntityTerminatingEvent args)
+    {
+        if (!_container.TryGetContainer(ent, MoverContainer, out var container))
+            return;
+
+        var containedList = new List<EntityUid>(container.ContainedEntities);
+        foreach (var entity in containedList)
+        {
+            _container.Remove(entity, container, reparent: false, force: true);
+
+            var xform = Transform(entity);
+            if (xform.ParentUid == ent.Owner)
+                _xform.AttachToGridOrMap(entity, xform);
         }
     }
 
@@ -211,9 +176,9 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             Dirty(node, nodeComp);
         }
 
-        if (ent.Comp.HeldCrawler is { } crawler && !TerminatingOrDeleted(crawler) && TryComp<NodeCrawlerComponent>(crawler, out var nodeCrawler))
+        if (ent.Comp.HeldCrawler is { } crawler && !TerminatingOrDeleted(crawler))
         {
-            ExitNodeCrawl((crawler, nodeCrawler));
+            ExitNodeCrawl(crawler);
         }
     }
 
@@ -233,7 +198,7 @@ public abstract partial class SharedNodeCrawlSystem : EntitySystem
             if (movement.HeldCrawler is not { } held)
                 continue;
 
-            ExitNodeCrawl((held, Comp<NodeCrawlerComponent>(held)));
+            ExitNodeCrawl(held);
         }
     }
 
