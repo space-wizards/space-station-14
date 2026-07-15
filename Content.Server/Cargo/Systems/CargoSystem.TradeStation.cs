@@ -101,14 +101,20 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search for pallets.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Buy"/>.</param>
+    /// <param name="pallets"> Specific pallets to check.
+    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
     /// <returns>Each free pallet entity with its <see cref="TransformComponent"/>.</returns>
     public IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent Transform)> GetFreeCargoPallets(
         EntityUid gridUid,
-        BuySellType requestType = BuySellType.Buy
+        BuySellType requestType = BuySellType.Buy,
+        IEnumerable<(Entity<CargoPalletComponent> Entity, TransformComponent PalletXform)>? pallets = null
     )
     {
-        foreach (var pallet in GetCargoPallets(gridUid, requestType))
+        foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
         {
+            if (pallet.PalletXform.ParentUid != gridUid)
+                continue;
+
             if (IsPalletOccupied(pallet))
                 continue;
 
@@ -136,7 +142,8 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to search.</param>
     /// <param name="requestType">Which pallet types to include. Defaults to <see cref="BuySellType.Sell"/>.</param>
-    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored. All the pallets must be on the same grid. </param>
+    /// <param name="pallets"> Specific pallets to check. If set then <see cref="requestType"/> is ignored.
+    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
     /// <returns>Distinct set of entity UIDs found on pallets.</returns>
     public IEnumerable<EntityUid> GetEntitiesOnCargoPallets(
         EntityUid gridUid,
@@ -147,6 +154,9 @@ public sealed partial class CargoSystem
         var entities = new HashSet<EntityUid>();
         foreach (var pallet in pallets ?? GetCargoPallets(gridUid, requestType))
         {
+            if (pallet.PalletXform.ParentUid != gridUid)
+                continue;
+
             var aabb = _lookup.GetAABBNoContainer(
                 pallet.Entity,
                 pallet.PalletXform.LocalPosition,
@@ -214,9 +224,8 @@ public sealed partial class CargoSystem
     /// </summary>
     /// <param name="gridUid">The grid to appraise.</param>
     /// <param name="goods"> List of goods one the pallets. </param>
-    /// <param name="pallets"> Specific pallets to check. All the pallets must be on the same grid. </param>
-    /// Output set of <c>(entity, overrideSellComponent, price)</c> tuples for each sellable item.
-    /// </param>
+    /// <param name="pallets"> Specific pallets to check.
+    /// All the pallets must be anchored to <see cref="gridUid"/> otherwise they are skipped. </param>
     public void GetPalletGoods(
         EntityUid gridUid,
         out HashSet<(EntityUid ent, OverrideSellComponent? overrideSellComponent, double price)> goods,
