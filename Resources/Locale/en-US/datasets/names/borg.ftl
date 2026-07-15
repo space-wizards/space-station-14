@@ -45,3 +45,5 @@ names-borg-dataset-44 = Rubberduck
 names-borg-dataset-45 = Shell
 names-borg-dataset-46 = Spark
 names-borg-dataset-47 = Stooge
+names-borg-dataset-48 = Blitz
+names-borg-dataset-49 = Chip
