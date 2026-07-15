@@ -15,6 +15,7 @@ using Content.Shared.Database;
 using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
+using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.GhostTypes;
 using Content.Shared.Mind;
@@ -56,7 +57,6 @@ namespace Content.Server.Ghost
         [Dependency] private VisibilitySystem _visibilitySystem = default!;
         [Dependency] private MetaDataSystem _metaData = default!;
         [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IConfigurationManager _configurationManager = default!;
         [Dependency] private IChatManager _chatManager = default!;
         [Dependency] private SharedMindSystem _mind = default!;
@@ -69,6 +69,7 @@ namespace Content.Server.Ghost
         [Dependency] private GhostSpriteStateSystem _ghostState = default!;
 
         [Dependency] private EntityQuery<GhostComponent> _ghostQuery = default!;
+        [Dependency] private EntityQuery<FollowerComponent> _followerQuery = default!;
         [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
@@ -92,6 +93,8 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
             SubscribeNetworkEvent<GhostnadoRequestEvent>(OnGhostnadoRequest);
+            SubscribeNetworkEvent<WarpToRandomFollowedRequestEvent>(OnWarpToRandomFollowedRequest);
+            SubscribeNetworkEvent<WarpToRandomRequestEvent>(OnWarpToRandomRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
@@ -323,9 +326,12 @@ namespace Content.Server.Ghost
             GhostWarpRequest(args.SenderSession, msg.Target);
         }
 
+        /// <summary>
+        /// Request to warp to the player with the most ghost followers.
+        /// </summary>
         private void OnGhostnadoRequest(GhostnadoRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (CanGhostWarp(args.SenderSession, out var uid))
+            if (!CanGhostWarp(args.SenderSession, out var uid))
             {
                 Log.Warning($"User {args.SenderSession.Name} tried to ghostnado without being a ghost.");
                 return;
@@ -337,6 +343,48 @@ namespace Content.Server.Ghost
             // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
             _followerSystem.StartFollowingEntity(uid, target);
         }
+
+        /// <summary>
+        /// Request to warp to a random player with at least one ghost follower.
+        /// </summary>
+        private void OnWarpToRandomFollowedRequest(WarpToRandomFollowedRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (!CanGhostWarp(args.SenderSession, out var uid))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player with at least one ghost follower without being a ghost.");
+                return;
+            }
+
+            var following = _followerQuery.CompOrNull(uid)?.Following;
+            if (_followerSystem.GetRandomGhostFollowed(except:following) is not {} target)
+                return;
+
+            _followerSystem.StartFollowingEntity(uid, target);
+        }
+
+        /// <summary>
+        /// Request to warp to a random player.
+        /// </summary>
+        private void OnWarpToRandomRequest(WarpToRandomRequestEvent msg, EntitySessionEventArgs args)
+        {
+            if (!CanGhostWarp(args.SenderSession, out var uid))
+            {
+                Log.Warning($"User {args.SenderSession.Name} tried to warp to a random player without being a ghost.");
+                return;
+            }
+
+            var following = _followerQuery.CompOrNull(uid)?.Following;
+            // select player warps cuz no one wants to warp to places.
+            if (GetPlayerWarps(following).ToArray() is not {} warps)
+                return;
+            if (warps.Length == 0)
+                return;
+            var warp = _random.Pick(warps);
+
+            var realTarget = GetEntity(warp.Entity);
+            _followerSystem.StartFollowingEntity(uid, realTarget);
+        }
+
 
         private void WarpTo(EntityUid uid, EntityUid target)
         {
@@ -365,7 +413,7 @@ namespace Content.Server.Ghost
             }
         }
 
-        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid except)
+        private IEnumerable<GhostWarp> GetPlayerWarps(EntityUid? except = null)
         {
             foreach (var player in _player.Sessions)
             {
@@ -593,7 +641,7 @@ namespace Content.Server.Ghost
                                       _damageable.GetTotalDamage((playerEntity.Value, damageable));
                     }
 
-                    DamageSpecifier damage = new(_prototypeManager.Index(AsphyxiationDamageType), dealtDamage);
+                    DamageSpecifier damage = new(ProtoMan.Index(AsphyxiationDamageType), dealtDamage);
 
                     _damageable.ChangeDamage(playerEntity.Value, damage, true);
                 }
