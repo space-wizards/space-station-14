@@ -75,7 +75,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         _stylesheets.Add("Nanotrasen", _sheetNanotrasen);
         _stylesheets.Add("System", _sheetSystem);
 
-        // Default stylesheet (which will automatically propogate and update any UIs without a specific Stylesheet set)
+        // Default stylesheet (which will automatically propagate and update any UIs without a specific Stylesheet set)
         _userInterfaceManager.Stylesheet = _sheetNanotrasen;
 
         UpdateControls();
