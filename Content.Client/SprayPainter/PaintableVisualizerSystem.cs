@@ -1,15 +1,15 @@
-using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Atmos.EntitySystems;
+namespace Content.Client.SprayPainter;
 
 /// <summary>
-/// Used to change the appearance of gas canisters.
+/// Updates an object's layer zero sprite whenever it is spraypainted.
 /// </summary>
-public sealed partial class GasCanisterAppearanceSystem : VisualizerSystem<GasCanisterComponent>
+public sealed partial class PaintableVisualizerSystem : VisualizerSystem<PaintableVisualizerComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, GasCanisterComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, PaintableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (!AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.Prototype, out var protoName, args.Component) || args.Sprite is not { } old)
             return;

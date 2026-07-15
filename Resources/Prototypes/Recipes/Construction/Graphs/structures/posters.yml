@@ -1,8 +1,18 @@
 - type: constructionGraph
   id: PosterGraph
   start: start
+
   graph:
   - node: start
+    edges:
+    - to: poster
+      steps:
+      - material: Paper
+        amount: 3
+        doAfter: 2
+
+  - node: poster
+    entity: PosterBlank
     edges:
     - to: tornPoster
       steps:

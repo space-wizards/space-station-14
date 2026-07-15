@@ -1,0 +1,47 @@
+- type: constructionGraph
+  id: SignGraph
+  start: start
+
+  graph:
+  - node: start
+    edges:
+    - to: sign
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+  - node: sign
+    entity: SignBlank
+
+- type: constructionGraph
+  id: SignWarningGraph
+  start: start
+
+  graph:
+  - node: start
+    edges:
+    - to: sign_warning
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+  - node: sign_warning
+    entity: SignBlankMed
+
+- type: constructionGraph
+  id: SignDirectionalGraph
+  start: start
+
+  graph:
+  - node: start
+    edges:
+    - to: sign_directional
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+  - node: sign_directional
+    entity: SignDirectionalBlank
