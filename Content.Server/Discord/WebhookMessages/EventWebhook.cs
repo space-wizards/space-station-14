@@ -53,9 +53,7 @@ public sealed partial class EventWebhook : IPostInjectInit
             if (await _discord.GetWebhook(webhookUrl) is not {} identifier)
                 return;
 
-            var request = await _discord.CreateMessage(identifier.ToIdentifier(), payload);
-            var content = await request.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
+            await _discord.CreateMessage(identifier.ToIdentifier(), payload);
         }
         catch (Exception e)
         {
