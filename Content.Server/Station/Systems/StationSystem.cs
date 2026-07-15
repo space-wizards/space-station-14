@@ -232,11 +232,11 @@ public sealed partial class StationSystem : SharedStationSystem
             }
 
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
-            var localBounds = grid.LocalAABB.Enlarged(range);
+            var worldBounds = grid.LocalAABB.Enlarged(range).Translated(worldPos);
 
             // Create a rotated box using the grid's transform
             var rotatedBounds = new Box2Rotated(
-                localBounds,
+                worldBounds,
                 worldRot,
                 worldPos);
 
