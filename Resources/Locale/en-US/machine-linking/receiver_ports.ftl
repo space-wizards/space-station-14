@@ -89,3 +89,6 @@ signal-port-description-logic-enable = Only loads the input signal into the memo
 
 signal-port-name-logic-random-input = Input Signal
 signal-port-description-logic-random-input = Receives any signal to trigger a random output.
+
+signal-port-name-rng-input = Trigger
+signal-port-description-rng-input = Trigger the RNG device.

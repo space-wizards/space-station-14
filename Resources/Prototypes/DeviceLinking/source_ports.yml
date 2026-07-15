@@ -169,3 +169,104 @@
   name: signal-port-name-item-detected
   description: signal-port-description-item-detected
   defaultLinks: [ Toggle, Trigger, Timer ]
+
+- type: sourcePort
+  id: RngOutput1
+  name: signal-port-name-rng-output-1
+  description: signal-port-description-rng-output-1
+  defaultLinks: [Trigger, Input, On, Open, Forward, Timer]
+
+- type: sourcePort
+  id: RngOutput2
+  name: signal-port-name-rng-output-2
+  description: signal-port-description-rng-output-2
+
+- type: sourcePort
+  id: RngOutput3
+  name: signal-port-name-rng-output-3
+  description: signal-port-description-rng-output-3
+
+- type: sourcePort
+  id: RngOutput4
+  name: signal-port-name-rng-output-4
+  description: signal-port-description-rng-output-4
+
+- type: sourcePort
+  id: RngOutput5
+  name: signal-port-name-rng-output-5
+  description: signal-port-description-rng-output-5
+
+- type: sourcePort
+  id: RngOutput6
+  name: signal-port-name-rng-output-6
+  description: signal-port-description-rng-output-6
+
+- type: sourcePort
+  id: RngOutput7
+  name: signal-port-name-rng-output-7
+  description: signal-port-description-rng-output-7
+
+- type: sourcePort
+  id: RngOutput8
+  name: signal-port-name-rng-output-8
+  description: signal-port-description-rng-output-8
+
+- type: sourcePort
+  id: RngOutput9
+  name: signal-port-name-rng-output-9
+  description: signal-port-description-rng-output-9
+
+- type: sourcePort
+  id: RngOutput10
+  name: signal-port-name-rng-output-10
+  description: signal-port-description-rng-output-10
+
+- type: sourcePort
+  id: RngOutput11
+  name: signal-port-name-rng-output-11
+  description: signal-port-description-rng-output-11
+
+- type: sourcePort
+  id: RngOutput12
+  name: signal-port-name-rng-output-12
+  description: signal-port-description-rng-output-12
+
+- type: sourcePort
+  id: RngOutput13
+  name: signal-port-name-rng-output-13
+  description: signal-port-description-rng-output-13
+
+- type: sourcePort
+  id: RngOutput14
+  name: signal-port-name-rng-output-14
+  description: signal-port-description-rng-output-14
+
+- type: sourcePort
+  id: RngOutput15
+  name: signal-port-name-rng-output-15
+  description: signal-port-description-rng-output-15
+
+- type: sourcePort
+  id: RngOutput16
+  name: signal-port-name-rng-output-16
+  description: signal-port-description-rng-output-16
+
+- type: sourcePort
+  id: RngOutput17
+  name: signal-port-name-rng-output-17
+  description: signal-port-description-rng-output-17
+
+- type: sourcePort
+  id: RngOutput18
+  name: signal-port-name-rng-output-18
+  description: signal-port-description-rng-output-18
+
+- type: sourcePort
+  id: RngOutput19
+  name: signal-port-name-rng-output-19
+  description: signal-port-description-rng-output-19
+
+- type: sourcePort
+  id: RngOutput20
+  name: signal-port-name-rng-output-20
+  description: signal-port-description-rng-output-20
