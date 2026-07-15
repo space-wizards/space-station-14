@@ -89,9 +89,7 @@ public sealed partial class DeliveryTraitorRecruitmentSystem : EntitySystem
 
             if (!TryComp<FingerprintComponent>(playerEnt, out var fingerprint) ||
                 fingerprint.Fingerprint == null)
-            {
                 continue;
-            }
 
             if (recordsByFingerprint.TryGetValue(fingerprint.Fingerprint, out var record))
                 candidates.Add(record);
