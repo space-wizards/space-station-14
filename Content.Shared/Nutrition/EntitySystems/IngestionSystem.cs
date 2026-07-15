@@ -543,7 +543,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
     private void OnMouthUncoveredActionAttempt(Entity<ActionRequireMouthUncoveredComponent> ent, ref ActionAttemptEvent args)
     {
-        if (!HasMouthAvailable(args.User, args.User, SlotFlags.HEAD | SlotFlags.MASK))
+        if (!HasMouthAvailable(args.User, args.User, ent.Comp.Slots))
             args.Cancelled = true;
     }
 }

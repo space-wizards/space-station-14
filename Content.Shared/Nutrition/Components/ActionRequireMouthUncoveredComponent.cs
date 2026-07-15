@@ -1,8 +1,13 @@
-﻿using Content.Shared.Nutrition.EntitySystems;
+﻿using Content.Shared.Inventory;
+using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(IngestionSystem))]
-public sealed partial class ActionRequireMouthUncoveredComponent : Component;
+public sealed partial class ActionRequireMouthUncoveredComponent : Component
+{
+    [DataField, AutoNetworkedField]
+    public SlotFlags Slots = SlotFlags.MASK;
+}
