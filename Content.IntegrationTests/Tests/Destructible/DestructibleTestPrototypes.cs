@@ -7,6 +7,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
         public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
+        public const string DestructibleThresholdSquishEntityId = "DestructibleThresholdSquishEntityId";
         public const string TestBruteDamageGroupId = "TestBrute";
         public const string TestBurnDamageGroupId = "TestBurn";
         public const string TestBluntDamageTypeId = "TestBlunt";
@@ -147,6 +148,43 @@ namespace Content.IntegrationTests.Tests.Destructible
           damage: 10
         - !type:DamageGroupTrigger
           damageGroup: {TestBurnDamageGroupId}
-          damage: 10";
+          damage: 10
+
+- type: entity
+  id: {DestructibleThresholdSquishEntityId}
+  name: {DestructibleThresholdSquishEntityId}
+  components:
+  - type: Damageable
+  - type: Injurable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+            collection: WoodDestroy
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [""Breakage""]
+    - trigger:
+        !type:DamageGroupTrigger
+        damageGroup: {TestBruteDamageGroupId}
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+            collection: MetalBreak
+    - trigger:
+        !type:DamageGroupTrigger
+        damageGroup: {TestBruteDamageGroupId}
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [""Breakage""]";
     }
 }
