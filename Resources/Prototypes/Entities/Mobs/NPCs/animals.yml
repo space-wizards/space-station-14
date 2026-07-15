@@ -554,6 +554,8 @@
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     baseWeightlessModifier: 1
+  - type: NameIdentifier
+    group: AdjectivePrefix
   - type: Damageable
     damageModifierSet: Moth
   - type: Bloodstream
@@ -1992,6 +1994,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 5
+  - type: NameIdentifier
+    group: AdjectivePrefix
   - type: DamageStateVisuals
     states:
       Alive:

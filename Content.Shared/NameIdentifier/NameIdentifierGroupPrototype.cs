@@ -1,3 +1,4 @@
+﻿using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NameIdentifier;
@@ -13,6 +14,12 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool FullName = false;
+
+    /// <summary>
+    /// Should the identifier be a prefix, or a suffix?
+    /// </summary>
+    [DataField]
+    public bool Prefix = false;
 
     /// <summary>
     /// Optional format identifier. If set, the name will be formatted using it (e.g., "MK-500").
@@ -32,4 +39,10 @@ public sealed partial class NameIdentifierGroupPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MinValue = 0;
+
+    /// <summary>
+    /// An optional field that will provide a list of name elements to pull from.
+    /// </summary>
+    [DataField]
+    public ProtoId<LocalizedDatasetPrototype>? IdentifierDataset;
 }

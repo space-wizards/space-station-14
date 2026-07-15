@@ -18,6 +18,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     [ViewVariables]
     public readonly Dictionary<string, List<int>> CurrentIds = [];
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -77,11 +78,36 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         randomVal = set[^1];
         set.RemoveAt(set.Count - 1);
 
-        return proto.Format is not null
-            ? Loc.GetString(proto.Format, ("number", randomVal))
-            : $"{randomVal}";
+        return FormatAndLocalize(randomVal, proto);
     }
 
+    /// <summary>
+    /// Format and localize the provided integer against the prototype.
+    /// </summary>
+    /// <param name="value">The selected value to process.</param>
+    /// <param name="proto">The prototype that defines optional localization and formatting.</param>
+    /// <returns>A formatted and/or localized string.</returns>
+    private string FormatAndLocalize(int value, NameIdentifierGroupPrototype proto)
+    {
+        var formatted = value.ToString();
+
+        if (proto.IdentifierDataset is not null)
+        {
+            var identifiers = ProtoMan.Index(proto.IdentifierDataset);
+            formatted = Loc.GetString(identifiers.Values.Prefix+formatted);
+        }
+
+        return proto.Format is not null
+            ? Loc.GetString(proto.Format, ("number", formatted))
+            : formatted;
+    }
+
+    /// <summary>
+    /// Initializes the component when initialized on the map.
+    /// This will use the existing identifier, if present, or generate a new one and update the component appropriately.
+    /// </summary>
+    /// <param name="ent">The entity component tuple being initialized.</param>
+    /// <param name="args">The arguments for the event. Unused.</param>
     private void OnMapInit(Entity<NameIdentifierComponent> ent, ref MapInitEvent args)
     {
         if (ent.Comp.Group is null)
@@ -90,28 +116,17 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         if (!ProtoMan.Resolve(ent.Comp.Group, out var group))
             return;
 
-        int id;
-        string uniqueName;
-
         // If it has an existing valid identifier then use that, otherwise generate a new one.
         if (ent.Comp.Identifier != -1 &&
             CurrentIds.TryGetValue(ent.Comp.Group, out var ids) &&
             ids.Remove(ent.Comp.Identifier))
         {
-            id = ent.Comp.Identifier;
-            uniqueName = group.Format is not null
-                ? Loc.GetString(group.Format, ("number", id))
-                : $"{id}";
+            ent.Comp.FullIdentifier = FormatAndLocalize(ent.Comp.Identifier, group);
         }
         else
         {
-            uniqueName = GenerateUniqueName(ent, group, out id);
-            ent.Comp.Identifier = id;
+            ent.Comp.FullIdentifier = GenerateUniqueName(ent, group, out ent.Comp.Identifier);
         }
-
-        ent.Comp.FullIdentifier = group.FullName
-            ? uniqueName
-            : $"({uniqueName})";
 
         Dirty(ent);
         _nameModifier.RefreshNameModifiers(ent.Owner);
@@ -122,10 +137,24 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         EnsureIds();
     }
 
+    /// <summary>
+    /// Fill a provided list with a range of numbers corresponding to a prototype's defined range.
+    /// </summary>
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <param name="values">Reference to the list where values should be placed.</param>
     private void FillGroup(NameIdentifierGroupPrototype proto, List<int> values)
     {
         values.Clear();
-        for (var i = proto.MinValue; i < proto.MaxValue; i++)
+
+        var (max, min) = (proto.MaxValue, proto.MinValue);
+
+        if (proto.IdentifierDataset is not null)
+        {
+            max = ProtoMan.Index(proto.IdentifierDataset).Values.Count;
+            min = 1;
+        }
+
+        for (var i = min; i < max; i++)
         {
             values.Add(i);
         }
@@ -133,14 +162,23 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
         _robustRandom.Shuffle(values);
     }
 
+    /// <summary>
+    /// Retrieve the appropriate list or create a new one if one does not already exist.
+    /// </summary>
+    /// <param name="proto">The <see cref="NameIdentifierGroupPrototype"/> prototype to retrieve from.</param>
+    /// <returns>The list corresponding to the prototype, a new empty list if not already extant.</returns>
     private List<int> GetOrCreateIdList(NameIdentifierGroupPrototype proto)
     {
-        if (!CurrentIds.TryGetValue(proto.ID, out var ids))
-        {
-            ids = new List<int>(proto.MaxValue - proto.MinValue);
-            CurrentIds.Add(proto.ID, ids);
-        }
+        // The ID list already exists.
+        if (CurrentIds.TryGetValue(proto.ID, out var ids))
+            return ids;
 
+        // If we're using a dataset, grab the count. Otherwise, use (max - min).
+        ids =  new List<int>(proto.IdentifierDataset is null
+            ? proto.MaxValue - proto.MinValue
+            : ProtoMan.Index(proto.IdentifierDataset).Values.Count);
+
+        CurrentIds.Add(proto.ID, ids);
         return ids;
     }
 
@@ -176,17 +214,16 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
 
         foreach (var proto in set.Modified.Values)
         {
-            var name_proto = (NameIdentifierGroupPrototype)proto;
+            var nameProto = (NameIdentifierGroupPrototype)proto;
 
             // Only bother adding new ones.
             if (CurrentIds.ContainsKey(proto.ID))
                 continue;
 
-            var ids = GetOrCreateIdList(name_proto);
-            FillGroup(name_proto, ids);
+            var ids = GetOrCreateIdList(nameProto);
+            FillGroup(nameProto, ids);
         }
     }
-
 
     private void CleanupIds(RoundRestartCleanupEvent ev)
     {
