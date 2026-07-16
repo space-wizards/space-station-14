@@ -232,3 +232,8 @@
     - type: Construction
       graph: Firelock
       node: FirelockEdge
+    - type: Firelock
+      openingLightSpriteState: null # Remove absent unlit states
+      closingLightSpriteState: null
+      warningLightSpriteState: null
+      denySpriteState: null

@@ -21,8 +21,8 @@ public sealed partial class DoorSystem : SharedDoorSystem
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
         var comp = ent.Comp;
-        comp.OpenSpriteStates = new List<(Enum, string)>(2);
-        comp.ClosedSpriteStates = new List<(Enum, string)>(2);
+        comp.OpenSpriteStates = new(2);
+        comp.ClosedSpriteStates = new(2);
 
         comp.OpenSpriteStates.Add((DoorVisualLayers.Base, comp.OpenSpriteState));
         comp.ClosedSpriteStates.Add((DoorVisualLayers.Base, comp.ClosedSpriteState));
