@@ -111,7 +111,7 @@
   - type: BypassInteractionChecks
   - type: ExplosionResistance
     damageCoefficient: 0
-  - type: SeeNewPlayers
+  - type: ShowNewPlayerIcon
 
 - type: entity
   abstract: true

@@ -88,8 +88,8 @@ public partial class StatusIconData : IComparable<StatusIconData>
 /// <summary>
 /// <see cref="StatusIconData"/> but in new convenient prototype form!
 /// </summary>
-[DataDefinition]
-public abstract partial class StatusIconPrototype : StatusIconData, IPrototype
+[Prototype]
+public partial class StatusIconPrototype : StatusIconData, IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
@@ -229,12 +229,29 @@ public sealed partial class SsdIconPrototype : StatusIconPrototype, IInheritingP
     public bool Abstract { get; private set; }
 }
 
+/// <summary>
+/// StatusIcons for the new players
+/// </summary>
+[Prototype]
+public sealed partial class NewPlayerIconPrototype : StatusIconPrototype, IInheritingPrototype
+{
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SsdIconPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+}
+
 [Serializable, NetSerializable]
 public enum StatusIconLocationPreference : byte
 {
     None,
     Left,
     Right,
+    Ignore,
 }
 
 public enum StatusIconLayer : byte

@@ -1,0 +1,13 @@
+﻿- type: newPlayerIcon
+  id: NewPlayerIcon
+  priority: 11
+  icon:
+    sprite: /Textures/Interface/Misc/new_player_icon.rsi
+    state: new_player_icon
+  visibleToGhosts: false
+  locationPreference: Ignore
+  offset: 25
+  isShaded: true
+  showTo:
+    components:
+    - ShowNewPlayerIcons
