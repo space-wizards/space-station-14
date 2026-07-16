@@ -51,7 +51,7 @@ public sealed partial class BlockAnchorOnSystem : EntitySystem
         if (!HasOverlap((ent, ent.Comp, Transform(ent))))
             return;
 
-        _popup.PopupEntity(Loc.GetString("anchored-already-present"), ent);
+        _popup.PopupEntity(Loc.GetString("anchored-already-present"), ent, args.User);
         args.Cancel();
     }
 

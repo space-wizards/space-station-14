@@ -30,7 +30,8 @@ public sealed partial class InflatableSafeDisassemblySystem : EntitySystem
 
         _popupSystem.PopupEntity(
             Loc.GetString("inflatable-safe-disassembly", ("item", args.Used), ("target", ent.Owner)),
-            ent);
+            ent,
+            args.User);
 
         _disassembleOnAltVerbSystem.StartDisassembly((ent, Comp<DisassembleOnAltVerbComponent>(ent)), args.User);
         args.Handled = true;

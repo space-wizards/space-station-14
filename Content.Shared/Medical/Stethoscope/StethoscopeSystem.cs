@@ -116,7 +116,7 @@ public sealed partial class StethoscopeSystem : EntitySystem
         else
         {
             var deltaString = GetDeltaDamageString(stethoscope.Comp.LastMeasuredDamage.Value, asphyxDmg);
-            _popup.PopupEntity(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target);
+            _popup.PopupEntity(Loc.GetString("stethoscope-combined-status", ("absolute", absString), ("delta", deltaString)), target, user);
         }
 
         stethoscope.Comp.LastMeasuredDamage = asphyxDmg;

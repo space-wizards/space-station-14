@@ -84,7 +84,7 @@ public sealed partial class GuardianSystem : EntitySystem
 
         if (_container.IsEntityInContainer(ent.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("guardian-inside-container"), ent.Owner);
+            _popup.PopupEntity(Loc.GetString("guardian-inside-container"), ent.Owner, ent.Owner);
             return;
         }
 
@@ -119,7 +119,7 @@ public sealed partial class GuardianSystem : EntitySystem
             return;
         }
 
-        _popup.PopupEntity(Loc.GetString("guardian-available"), host.Value);
+        _popup.PopupEntity(Loc.GetString("guardian-available"), host.Value, host.Value);
     }
 
     private void OnHostInit(Entity<GuardianHostComponent> ent, ref ComponentInit args)
@@ -211,14 +211,14 @@ public sealed partial class GuardianSystem : EntitySystem
         {
             var msg = Loc.GetString("guardian-activator-invalid-target",
                 ("entity", Identity.Entity(target, EntityManager, user)));
-            _popup.PopupEntity(msg, user);
+            _popup.PopupEntity(msg, user, user);
             return;
         }
 
         // If user is already a host don't duplicate.
         if (HasComp<GuardianHostComponent>(target))
         {
-            _popup.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user);
+            _popup.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
             return;
         }
 

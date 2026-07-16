@@ -87,7 +87,7 @@ public sealed partial class BlueprintSystem : EntitySystem
         var currentRecipes = GetBlueprintRecipes(ent);
         if (currentRecipes.Count != 0 && currentRecipes.IsSupersetOf(blueprint.Comp.ProvidedRecipes))
         {
-            _popup.PopupEntity(Loc.GetString("blueprint-receiver-popup-recipe-exists"), ent);
+            _popup.PopupEntity(Loc.GetString("blueprint-receiver-popup-recipe-exists"), ent, user);
             return false;
         }
 

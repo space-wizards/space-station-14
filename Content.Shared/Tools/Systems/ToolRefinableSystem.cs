@@ -56,7 +56,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target, ref attemptEvent);
         if (attemptEvent.IsCancelled)
         {
-            _popup.PopupEntity(attemptEvent.BlockCause, args.User);
+            _popup.PopupEntity(attemptEvent.BlockCause, args.User, args.User);
             return;
         }
 
@@ -131,7 +131,7 @@ public sealed partial class ToolRefinablSystem : EntitySystem
         RaiseLocalEvent(args.Target.Value, ref getIsBlocked);
         if (getIsBlocked.IsCancelled)
         {
-            _popup.PopupEntity(getIsBlocked.BlockCause, args.User);
+            _popup.PopupEntity(getIsBlocked.BlockCause, args.User, args.User);
             return;
         }
 

@@ -447,7 +447,7 @@ public abstract partial class SharedImplanterSystem : EntitySystem
         _damageable.TryChangeDamage(user, ent.Comp.DeimplantFailureDamage, ignoreResistances: true, origin: ent.Owner);
         var userName = Identity.Entity(user, EntityManager);
         var failedCatastrophicallyMessage = Loc.GetString("implanter-draw-failed-catastrophically", ("user", userName));
-        _popup.PopupEntity(failedCatastrophicallyMessage, user, PopupType.MediumCaution);
+        _popup.PopupEntity(failedCatastrophicallyMessage, user, user, PopupType.MediumCaution);
         _audio.PlayPredicted(ent.Comp.ImplanterDrawFailSound, ent, user);
     }
 

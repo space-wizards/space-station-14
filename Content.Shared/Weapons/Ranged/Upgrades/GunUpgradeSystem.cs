@@ -71,7 +71,7 @@ public sealed partial class GunUpgradeSystem : EntitySystem
 
         if (GetCurrentUpgrades(ent).Count >= ent.Comp.MaxUpgradeCount)
         {
-            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-upgrade-limit"), ent);
+            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-upgrade-limit"), ent, args.User);
             return;
         }
 
@@ -80,7 +80,7 @@ public sealed partial class GunUpgradeSystem : EntitySystem
 
         if (GetCurrentUpgradeTags(ent).ToHashSet().IsSupersetOf(upgradeComponent.Tags))
         {
-            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-already-present"), ent);
+            _popup.PopupEntity(Loc.GetString("upgradeable-gun-popup-already-present"), ent, args.User);
             return;
         }
 

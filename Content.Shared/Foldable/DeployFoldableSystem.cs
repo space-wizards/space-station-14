@@ -69,7 +69,7 @@ public sealed partial class DeployFoldableSystem : EntitySystem
         if (!TryComp(ent.Owner, out PhysicsComponent? anchorBody)
             || !_anchorable.TileFree(args.ClickLocation, anchorBody))
         {
-            _popup.PopupEntity(Loc.GetString("foldable-deploy-fail", ("object", ent)), ent);
+            _popup.PopupEntity(Loc.GetString("foldable-deploy-fail", ("object", ent)), ent, args.User);
             return;
         }
 

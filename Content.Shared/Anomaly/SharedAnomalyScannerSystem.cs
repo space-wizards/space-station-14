@@ -76,7 +76,7 @@ public abstract partial class SharedAnomalyScannerSystem : EntitySystem
             return;
 
         Audio.PlayPredicted(component.CompleteSound, uid, args.User);
-        Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
+        Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid, uid);
 
         UI.OpenUi(uid, AnomalyScannerUiKey.Key, args.User);
 
