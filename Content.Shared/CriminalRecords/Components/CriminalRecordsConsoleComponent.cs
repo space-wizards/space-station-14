@@ -38,7 +38,7 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// Current seleced security status for the filter by criminal status dropdown.
     /// </summary>
     [DataField]
-    public SecurityStatus FilterStatus;
+    public ProtoId<SecurityStatusPrototype>? FilterStatus;
 
     /// <summary>
     /// Channel to send messages to when someone's status gets changed.

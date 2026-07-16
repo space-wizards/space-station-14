@@ -37,13 +37,13 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     public Action<uint?>? OnKeySelected;
     public Action<StationRecordFilterType, string>? OnFiltersChanged;
-    public Action<SecurityStatus>? OnStatusSelected;
+    public Action<ProtoId<SecurityStatusPrototype>?>? OnStatusSelected;
     public Action<uint>? OnCheckStatus;
     public Action<CriminalRecord, bool, bool>? OnHistoryUpdated;
     public Action? OnHistoryClosed;
-    public Action<SecurityStatus, string>? OnDialogConfirmed;
+    public Action<ProtoId<SecurityStatusPrototype>?, string>? OnDialogConfirmed;
 
-    public Action<SecurityStatus>? OnStatusFilterPressed;
+    public Action<ProtoId<SecurityStatusPrototype>?>? OnStatusFilterPressed;
     private uint _maxLength;
     private bool _access;
     private uint? _selectedKey;
@@ -53,7 +53,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private StationRecordFilterType _currentFilterType;
 
-    private SecurityStatus _currentCrewListFilter;
+    private ProtoId<SecurityStatusPrototype>? _currentCrewListFilter;
+
+    private List<ProtoId<SecurityStatusPrototype>?> _lookup = new();
 
     public CriminalRecordsConsoleWindow(EntityUid console, uint maxLength, IPlayerManager playerManager, IPrototypeManager prototypeManager, IRobustRandom robustRandom, AccessReaderSystem accessReader)
     {
@@ -70,24 +72,31 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _maxLength = maxLength;
         _currentFilterType = StationRecordFilterType.Name;
 
-        _currentCrewListFilter = SecurityStatus.None;
+        _currentCrewListFilter = null;
 
         OpenCentered();
+
+        foreach (var status in _proto.EnumeratePrototypes<SecurityStatusPrototype>())
+        {
+            _lookup.Add(status);
+        }
+        _lookup.Sort((a, b) => _proto.Index(a!.Value).Order.CompareTo(_proto.Index(b!.Value).Order));
+        _lookup.Insert(0, null);
 
         foreach (var item in Enum.GetValues<StationRecordFilterType>())
         {
             FilterType.AddItem(GetTypeFilterLocals(item), (int)item);
         }
 
-        foreach (var status in Enum.GetValues<SecurityStatus>())
+        foreach (var (i, status) in _lookup.Index())
         {
-            AddStatusSelect(status);
+            AddStatusSelect(status, i);
         }
 
         //Populate status to filter crew list
-        foreach (var item in Enum.GetValues<SecurityStatus>())
+        foreach (var (i, item) in _lookup.Index())
         {
-            CrewListFilter.AddItem(GetCrewListFilterLocals(item), (int)item);
+            CrewListFilter.AddItem(GetCrewListFilterLocals(item), i);
         }
 
         OnClose += () => _reasonDialog?.Close();
@@ -119,7 +128,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         //Select Status to filter crew
         CrewListFilter.OnItemSelected += eventArgs =>
         {
-            var type = (SecurityStatus)eventArgs.Id;
+            var type = _lookup[eventArgs.Id];
 
             if (_currentCrewListFilter != type)
             {
@@ -137,7 +146,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         StatusOptionButton.OnItemSelected += args =>
         {
-            SetStatus((SecurityStatus)args.Id);
+            SetStatus(_lookup[args.Id]);
         };
 
         HistoryButton.OnPressed += _ =>
@@ -147,7 +156,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         };
     }
 
-    public void StatusFilterPressed(SecurityStatus statusSelected)
+    public void StatusFilterPressed(ProtoId<SecurityStatusPrototype>? statusSelected)
     {
         OnStatusFilterPressed?.Invoke(statusSelected);
     }
@@ -174,7 +183,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         _selectedKey = state.SelectedKey;
         FilterType.SelectId((int)_currentFilterType);
-        CrewListFilter.SelectId((int)_currentCrewListFilter);
+        CrewListFilter.SelectId(_lookup.IndexOf(_currentCrewListFilter));
         NoRecords.Visible = state.RecordListing == null || state.RecordListing.Count == 0;
         PopulateRecordListing(state.RecordListing);
 
@@ -222,6 +231,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
+        var statusProto = _proto.Index(criminalRecord.Status);
         var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");
         var na = Loc.GetString("generic-not-available-shorthand");
         PersonName.Text = stationRecord.Name;
@@ -236,22 +246,17 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonPrints.Text = stationRecord.Fingerprint ??  Loc.GetString("generic-not-available-shorthand");
         PersonDna.Text = stationRecord.DNA ??  Loc.GetString("generic-not-available-shorthand");
 
-        if (criminalRecord.Status != SecurityStatus.None)
+        if (criminalRecord.Status is not null)
         {
             specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
         }
         PersonStatusTX.SetFromSpriteSpecifier(specifier);
         PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
 
-        StatusOptionButton.SelectId((int)criminalRecord.Status);
+        StatusOptionButton.SelectId(_lookup.IndexOf(criminalRecord.Status));
         if (criminalRecord.Reason is { } reason)
         {
-            var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString("criminal-records-console-wanted-reason"));
-
-            if (criminalRecord.Status == SecurityStatus.Suspected)
-            {
-                message = FormattedMessage.FromMarkupOrThrow(Loc.GetString("criminal-records-console-suspected-reason"));
-            }
+            var message = FormattedMessage.FromMarkupOrThrow(Loc.GetString(statusProto!.ReasonText));
             message.AddText($": {reason}");
 
             WantedReason.SetMessage(message);
@@ -263,10 +268,10 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
     }
 
-    private void AddStatusSelect(SecurityStatus status)
+    private void AddStatusSelect(ProtoId<SecurityStatusPrototype>? status, int index)
     {
-        var name = Loc.GetString($"criminal-records-status-{status.ToString().ToLower()}");
-        StatusOptionButton.AddItem(name, (int)status);
+        var name = _proto.Index(status)?.Name ?? "criminal-records-status-none";
+        StatusOptionButton.AddItem(Loc.GetString(name), index);
     }
 
     private void FilterListingOfRecords(string text = "")
@@ -274,9 +279,10 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         OnFiltersChanged?.Invoke(_currentFilterType, text);
     }
 
-    private void SetStatus(SecurityStatus status)
+    private void SetStatus(ProtoId<SecurityStatusPrototype>? status)
     {
-        if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected || status == SecurityStatus.Hostile)
+        var statusProto = _proto.Index(status);
+        if (statusProto is not null && statusProto.NeedsReason)
         {
             GetReason(status);
             return;
@@ -285,7 +291,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         OnStatusSelected?.Invoke(status);
     }
 
-    private void GetReason(SecurityStatus status)
+    private void GetReason(ProtoId<SecurityStatusPrototype>? status)
     {
         if (_reasonDialog != null)
         {
@@ -293,8 +299,9 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             return;
         }
 
+        var statusProto = _proto.Index(status);
         var field = "reason";
-        var title = Loc.GetString("criminal-records-status-" + status.ToString().ToLower());
+        var title = Loc.GetString(statusProto?.Name ?? "criminal-records-status-none");
         var placeholders = _proto.Index(ReasonPlaceholders);
         var placeholder = Loc.GetString("criminal-records-console-reason-placeholder", ("placeholder", _random.Pick(placeholders))); // just funny it doesn't actually get used
         var prompt = Loc.GetString("criminal-records-console-reason");
@@ -313,37 +320,35 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         _reasonDialog.OnClose += () => { _reasonDialog = null; };
     }
-    private string GetStatusIcon(SecurityStatus status)
+    private string GetStatusIcon(ProtoId<SecurityStatusPrototype>? status)
     {
-        return status switch
+        var statusProto = _proto.Index(status);
+        if (statusProto is null)
         {
-            SecurityStatus.Paroled => "hud_paroled",
-            SecurityStatus.Wanted => "hud_wanted",
-            SecurityStatus.Detained => "hud_incarcerated",
-            SecurityStatus.Discharged => "hud_discharged",
-            SecurityStatus.Suspected => "hud_suspected",
-            SecurityStatus.Hostile => "hud_hostile",
-            SecurityStatus.Eliminated => "hud_eliminated",
-            _ => "SecurityIconNone"
-        };
+            return "SecurityIconNone";
+        }
+
+        var iconProto = _proto.Index(statusProto.Icon);
+        return ((SpriteSpecifier.Rsi)iconProto.Icon).RsiState;
     }
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
         return Loc.GetString($"criminal-records-{type.ToString().ToLower()}-filter");
     }
 
-    private string GetCrewListFilterLocals(SecurityStatus type)
+    private string GetCrewListFilterLocals(ProtoId<SecurityStatusPrototype>? type)
     {
         string result;
 
         // If "NONE" override to "show all"
-        if (type == SecurityStatus.None)
+        if (type == null)
         {
             result = Loc.GetString("criminal-records-console-show-all");
         }
         else
         {
-            result = Loc.GetString($"criminal-records-status-{type.ToString().ToLower()}");
+            var statusProto = _proto.Index(type);
+            result = Loc.GetString(statusProto!.Name);
         }
 
         return result;
