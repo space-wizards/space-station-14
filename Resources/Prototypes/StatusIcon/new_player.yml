@@ -10,4 +10,4 @@
   isShaded: true
   showTo:
     components:
-    - ShowNewPlayerIcons
+    - ShowNewPlayerIcon
