@@ -116,9 +116,8 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (AppearanceSystem.TryGetData<string>(entity, PaintableVisuals.Prototype, out var prototype, args.Component))
             UpdateSpriteLayers((entity.Owner, args.Sprite), prototype);
 
-        // We are checking beforehand since some doors may not have an emagging visual layer, and we don't want LayerSetVisible to throw an error.
-        if (_sprite.TryGetLayer(entity.Owner, DoorVisualLayers.BaseEmagging, out var _, false))
-            _sprite.LayerSetVisible(entity.Owner, DoorVisualLayers.BaseEmagging, state == DoorState.Emagging);
+        if (_sprite.LayerMapTryGet(entity.Owner, DoorVisualLayers.BaseEmagging, out var emaggingLayer, logMissing: false))
+            _sprite.LayerSetVisible(entity.Owner, emaggingLayer, state == DoorState.Emagging);
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
