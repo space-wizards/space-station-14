@@ -11,7 +11,7 @@
     [
         {
             "name": "chemsmoke",
-            "directions": 4,
+            "directions": 1,
             "delays":
             [
                 [
@@ -23,7 +23,7 @@
         },
         {
             "name": "chemsmoke_white",
-            "directions": 4,
+            "directions": 1,
             "delays":
             [
                 [
