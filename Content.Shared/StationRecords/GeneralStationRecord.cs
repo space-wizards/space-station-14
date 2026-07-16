@@ -38,7 +38,7 @@ public sealed partial record GeneralStationRecord
     public string JobPrototype = string.Empty;
 
     /// <summary>
-    ///     Species tied to this station record.
+    ///     Species name tied to this station record.
     /// </summary>
     [DataField]
     public string Species = string.Empty;
