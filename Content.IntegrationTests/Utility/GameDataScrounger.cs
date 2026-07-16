@@ -169,13 +169,13 @@ public static partial class GameDataScrounger
             // Take a directory off the stack.
             var dir = explorationStack.Pop();
 
-            var ignoredDir = ignoreList.Contains(dir);
+            var ignoredDir = ignoreList.Contains(Path.GetFullPath(dir));
 
             explorationStack.AddRange(Directory.EnumerateDirectories(dir));
 
             foreach (var file in Directory.EnumerateFiles(dir, "*.yml"))
             {
-                var ignored = ignoreList.Contains(file) || ignoredDir;
+                var ignored = ignoreList.Contains(Path.GetFullPath(file)) || ignoredDir;
 
                 foreach (var (kind, id) in IndexPrototypesIn(file, ignored))
                 {
@@ -358,7 +358,7 @@ public static partial class GameDataScrounger
                     if (entry is not YamlScalarNode { Value: {} value })
                         throw new Exception($"An entry in {path} is not a valid YAML scalar/string literal. Entry: {entry}");
 
-                    ignores.Add(resDir + value);
+                    ignores.Add(Path.GetFullPath($"{resDir}{value}"));
                 }
             }
         }
