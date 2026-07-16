@@ -1,6 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -9,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Lube;
@@ -21,6 +23,9 @@ public sealed partial class LubeSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private OpenableSystem _openable = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private LubedSystem _lubed = default!;
 
     public override void Initialize()
     {
@@ -81,6 +86,9 @@ public sealed partial class LubeSystem : EntitySystem
                 var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(entity));
                 lubed.SlipsLeft = rand.Next(entity.Comp.MinSlips * quantity.Int(), 1 + entity.Comp.MaxSlips * quantity.Int());
                 lubed.SlipStrength = entity.Comp.SlipStrength;
+                if (_container.TryGetContainingContainer((target, null, null), out var container) && _hands.IsHolding(container.Owner, target))
+                    _lubed.PerformLubedEffect((target, lubed), actor, out _);
+
                 Dirty(target, lubed);
                 return true;
             }
