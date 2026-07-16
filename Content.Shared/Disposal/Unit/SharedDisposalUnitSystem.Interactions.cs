@@ -143,7 +143,7 @@ public abstract partial class SharedDisposalUnitSystem
 
         if (GetContainedEntityCount(ent) >= ent.Comp.MaxCapacity)
         {
-            // TODO: Add user to ContainerIsInsertingAttemptEvent, scope the popup to the inserter
+            // TODO: Add user to ContainerIsInsertingAttemptEvent, show the popup only to the entity doing the insertion.
             _popup.PopupEntity(Loc.GetString("disposal-unit-is-full"), ent);
 
             args.Cancel();

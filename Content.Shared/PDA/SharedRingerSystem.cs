@@ -211,7 +211,6 @@ public abstract partial class SharedRingerSystem : EntitySystem
 
         _popup.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"),
             ent,
-            ent.Owner,
             Filter.Pvs(ent, 0.05f),
             false,
             PopupType.Medium);
