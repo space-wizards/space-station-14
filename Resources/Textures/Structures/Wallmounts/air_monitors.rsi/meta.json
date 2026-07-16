@@ -9,32 +9,8 @@
     "states": [
         {
             "name": "alarm0",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    1.0,
-                    0.2,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    1.0,
-                    0.2,
-                    0.1
-                ],
-                [
-                    0.5,
-                    0.1,
-                    0.1,
-                    1.0,
-                    0.2,
-                    0.1
-                ],
                 [
                     0.5,
                     0.1,
@@ -47,20 +23,8 @@
         },
         {
             "name": "alarm1",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -69,20 +33,8 @@
         },
         {
             "name": "alarm2",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -91,22 +43,22 @@
         },
         {
             "name": "alarm_b1",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "alarm_b2",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "alarm_bitem"
         },
         {
             "name": "alarmp",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "alarmx",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "auth_off"
@@ -123,32 +75,20 @@
         },
         {
             "name": "fire0",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_0",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_1",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_2",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -157,20 +97,8 @@
         },
         {
             "name": "fire_3",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -179,35 +107,23 @@
         },
         {
             "name": "fire_b0",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_b1",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_b2",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_bitem"
         },
         {
             "name": "fire_detected",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.4,
-                    0.4
-                ],
-                [
-                    0.4,
-                    0.4
-                ],
-                [
-                    0.4,
-                    0.4
-                ],
                 [
                     0.4,
                     0.4
@@ -216,32 +132,8 @@
         },
         {
             "name": "fire_emagged",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5,
-                    0.3,
-                    0.5,
-                    0.2,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.3,
-                    0.5,
-                    0.2,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5,
-                    0.3,
-                    0.5,
-                    0.2,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5,
@@ -254,24 +146,12 @@
         },
         {
             "name": "fire_off",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "fire_on",
-            "directions": 4,
+            "directions": 1,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -280,11 +160,10 @@
         },
         {
             "name": "fire_overlay",
-            "directions": 4
+            "directions": 1
         },
         {
-            "name": "firex",
-            "directions": 4
+            "name": "firex"
         }
     ]
 }
