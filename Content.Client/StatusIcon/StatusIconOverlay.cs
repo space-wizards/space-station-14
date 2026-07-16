@@ -86,7 +86,7 @@ public sealed partial class StatusIconOverlay : Overlay
 
                 // the icons are ordered left to right, top to bottom.
                 // extra icons that don't fit are just cut off.
-                if (proto.LocationPreference == StatusIconLocationPreference.Ignore)
+                if (proto.LocationPreference == StatusIconLocationPreference.Fixed)
                 {
                     yOffset = sprite.Offset.Y + bounds.Height / 2f - (float)proto.Offset / EyeManager.PixelsPerMeter;
                     xOffset = sprite.Offset.X - bounds.Width / 2f + (float)proto.OffsetHorizontal / EyeManager.PixelsPerMeter;

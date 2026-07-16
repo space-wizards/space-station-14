@@ -17,5 +17,6 @@ public sealed partial class NewPlayerIconComponent : Component
     [DataField]
     public ProtoId<NewPlayerIconPrototype> StatusIcon { get; set; } = "NewPlayerIcon";
 
+    // We only send these out to ShowNewPlayerIconComponent users, to avoid malicious new player detection.
     public override bool SessionSpecific => true;
 }

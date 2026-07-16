@@ -236,7 +236,7 @@ public sealed partial class SsdIconPrototype : StatusIconPrototype, IInheritingP
 public sealed partial class NewPlayerIconPrototype : StatusIconPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
-    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<SsdIconPrototype>))]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<NewPlayerIconPrototype>))]
     public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
@@ -248,10 +248,10 @@ public sealed partial class NewPlayerIconPrototype : StatusIconPrototype, IInher
 [Serializable, NetSerializable]
 public enum StatusIconLocationPreference : byte
 {
-    None,
-    Left,
-    Right,
-    Ignore,
+    None, // Aligns on left side, if there's room on either side
+    Left, // Aligns on left side, provided left side has room
+    Right, // Aligns on right side, provided right side has room
+    Fixed, // Gets set independently without considering existing status icons
 }
 
 public enum StatusIconLayer : byte
