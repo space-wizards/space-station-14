@@ -21,7 +21,7 @@ job-description-chemist = Synthesize medicine, botanical supplies, and any other
 job-description-doctor = Diagnose and treat injured crew, and ensure that cadavers are properly stored in the morgue.
 job-description-intern = Learn the basics of administering medicine, treating injuries, and rescuing injured crew.
 job-description-paramedic = Rescue critically injured crew, make sure they're stable, and transport them to the medbay.
-job-description-psychologist = Provide the crew with emotional support and counselling.
+job-description-psychologist = Provide the crew with emotional support and counseling.
 
 # Science
 job-description-research-assistant = Learn the basics of scientific research and technological development.
@@ -53,7 +53,7 @@ job-description-borg = Use your robotic chassis to perform a wide variety of spe
 job-description-station-ai = Remotely interface with the station's cameras, airlocks, radio, and other electronic devices from the safety of your core.
 
 # Misc.
-job-description-centcommoff = Act as liason to the newest state-of-the-art space station in Nanotrasen's fleet.
+job-description-centcommoff = Act as liaison to the newest state-of-the-art space station in Nanotrasen's fleet.
 job-description-ertchaplain = Ensure that the station's crew have their last rites performed.
 job-description-ertengineer = Ensure that the station has power and clean air.
 job-description-ertjanitor = Ensure that the station is thoroughly cleaned and sterilized.
