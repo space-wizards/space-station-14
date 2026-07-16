@@ -168,9 +168,9 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
             return;
 
         if (user == target)
-            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target, target);
         else
-            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user, user);
     }
 
     private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
