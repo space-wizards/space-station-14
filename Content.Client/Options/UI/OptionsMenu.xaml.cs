@@ -33,6 +33,7 @@ namespace Content.Client.Options.UI
             GraphicsTab.Control.ReloadValues();
             MiscTab.Control.ReloadValues();
             AccessibilityTab.Control.ReloadValues();
+            AudioTab.ReloadAudioDevices();
             AudioTab.Control.ReloadValues();
             AdminOptionsTab.Control.ReloadValues();
         }
