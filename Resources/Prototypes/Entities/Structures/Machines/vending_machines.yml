@@ -47,6 +47,8 @@
     - trigger: !type:DamageTrigger
         damage: 75
       behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
       - !type:EjectVendorItems
   - type: Repairable
     doAfterDelay: 8

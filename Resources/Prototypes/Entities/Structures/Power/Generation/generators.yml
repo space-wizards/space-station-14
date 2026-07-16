@@ -44,6 +44,8 @@
   - type: Anchorable # Reduces anchor time to 1 second
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:

@@ -59,14 +59,14 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
       - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: PlacementReplacement
     key: lights
 
@@ -92,7 +92,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -293,7 +293,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 40
+          damage: 50
         behaviors:
         - !type:SpawnEntitiesBehavior
           spawn:
@@ -477,7 +477,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

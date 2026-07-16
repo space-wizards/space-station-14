@@ -1,6 +1,6 @@
 - type: entity
   id: Recycler
-  parent: [ BaseMachinePowered, BaseConstructibleMachineDestructible ]
+  parent: BaseMachinePowered
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
@@ -95,6 +95,17 @@
   - type: Repairable
     doAfterDelay: 5
     fuelCost: 25
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: InteractionPopup
     successChance: 1.0
     interactSuccessString: petting-success-recycler

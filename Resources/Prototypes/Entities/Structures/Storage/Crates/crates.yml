@@ -162,11 +162,13 @@
     - entity_storage
   - type: Damageable
     damageModifierSet: Web
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -360,6 +362,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/livestock.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -417,6 +422,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/cage.rsi
     state: icon
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -710,6 +718,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/coffin.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -752,6 +763,9 @@
   - type: Icon
     sprite: Structures/Storage/Crates/wooden_grave.rsi
     state: base
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseDeltaPressureReinforcedGlass, Window]
+  parent: [BaseDeltaPressureReinforcedGlass, BaseWindowStructure]
   id: ReinforcedWindow
   name: reinforced window
   components:

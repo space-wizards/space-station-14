@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseStructureDynamic
-  id: BaseTarget
+  id: BaseTargetIndestructible
   components:
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
@@ -30,8 +30,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseTarget
-  id: BaseTargetDestructible
+  parent: BaseTargetIndestructible
+  id: BaseTarget
   components:
   - type: Destructible
     thresholds:
@@ -52,7 +52,7 @@
 
 
 - type: entity
-  parent: BaseTargetDestructible
+  parent: BaseTarget
   id: TargetHuman
   name: human target
   description: A shooting target. This one is a human.
@@ -62,7 +62,7 @@
     state: target_h
 
 - type: entity
-  parent: BaseTargetDestructible
+  parent: BaseTarget
   id: TargetSyndicate
   name: syndicate target
   description: A shooting target. This one is a syndicate agent.
@@ -72,7 +72,7 @@
     state: target_s
 
 - type: entity
-  parent: BaseTargetDestructible
+  parent: BaseTarget
   id: TargetClown
   name: clown target
   description: A shooting target. This one is a clown.
@@ -83,7 +83,7 @@
 
 # put it on a salvage or something
 - type: entity
-  parent: BaseTarget
+  parent: BaseTargetIndestructible
   id: TargetStrange
   name: strange target
   description: A shooting target. You aren't quite sure what this one is, but it seems to be extra robust.
