@@ -447,5 +447,5 @@ public sealed partial class CCVars
     /// The hours under which a new player will have an indicator above their sprite, when <see cref="ShowNewPlayerIcons"/> is true.
     /// </summary>
     public static readonly CVarDef<float> NewPlayerTimeTotalHours =
-        CVarDef.Create("rmc.new_player_time_total_hours", 1f, CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("game.new_player_time_total_hours", 1f, CVar.REPLICATED | CVar.SERVER);
 }
