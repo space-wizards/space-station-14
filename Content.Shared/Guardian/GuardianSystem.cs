@@ -90,7 +90,10 @@ public sealed partial class GuardianSystem : EntitySystem
 
         if (ent.Comp.HostedGuardian != null)
             ToggleGuardian(ent);
+
+        args.Handled = true;
     }
+
     private void OnGuardianPlayerDetached(Entity<GuardianComponent> ent, ref PlayerDetachedEvent args)
     {
         if (!TryComp<GuardianHostComponent>(ent.Comp.Host, out var hostComponent) ||
