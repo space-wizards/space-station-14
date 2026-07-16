@@ -175,7 +175,7 @@ public static partial class GameDataScrounger
 
             foreach (var file in Directory.EnumerateFiles(dir, "*.yml"))
             {
-                var ignored = ignoreList.Contains(Path.GetFullPath(file)) || ignoredDir;
+                var ignored = ignoredDir || ignoreList.Contains(Path.GetFullPath(file));
 
                 foreach (var (kind, id) in IndexPrototypesIn(file, ignored))
                 {
