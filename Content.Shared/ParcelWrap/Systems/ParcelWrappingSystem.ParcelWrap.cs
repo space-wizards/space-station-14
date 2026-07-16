@@ -96,7 +96,7 @@ public sealed partial class ParcelWrappingSystem
         if (target == user)
         {
             var selfMsg = Loc.GetString("parcel-wrap-popup-being-wrapped-self");
-            _popup.PopupClient(selfMsg, user, user);
+            _popup.PopupEntity(selfMsg, user, user);
         }
         else
         {
@@ -142,7 +142,7 @@ public sealed partial class ParcelWrappingSystem
 
         // Spawn the actual parcel entity.
         var targetTransform = Transform(target);
-        var spawned = Spawn(GetParcelPrototype(wrapper, target), targetTransform.Coordinates);
+        var spawned = SpawnAtPosition(GetParcelPrototype(wrapper, target), targetTransform.Coordinates);
         _transform.SetLocalRotation(spawned, targetTransform.LocalRotation);
 
         // If the target is in a container, try to put the parcel in its place in the container.

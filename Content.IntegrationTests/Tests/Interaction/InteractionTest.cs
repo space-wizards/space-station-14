@@ -16,6 +16,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
 using Robust.Client.State;
@@ -101,8 +102,7 @@ public abstract partial class InteractionTest : GameTest
 
     // SERVER dependencies
     [SidedDependency(Side.Server)] protected ITileDefinitionManager TileMan = default!;
-    [SidedDependency(Side.Server)] protected IMapManager MapMan = default!;
-    protected IPrototypeManager ProtoMan => SProtoMan;
+    [SidedDependency(Side.Server)] protected IPrototypeManager ProtoMan => SProtoMan;
     protected IGameTiming STiming => SGameTiming;
     [SidedDependency(Side.Server)] protected IComponentFactory Factory = default!;
     [SidedDependency(Side.Server)] protected HandsSystem HandSys = default!;
@@ -120,6 +120,7 @@ public abstract partial class InteractionTest : GameTest
     [SidedDependency(Side.Server)] protected SharedUserInterfaceSystem SUiSys = default!;
     [SidedDependency(Side.Server)] protected SharedCombatModeSystem SCombatMode = default!;
     [SidedDependency(Side.Server)] protected SharedGunSystem SGun = default!;
+    [SidedDependency(Side.Server)] protected SharedMeleeWeaponSystem SMelee = default!;
 
     // CLIENT dependencies
     protected IClientGameTiming CTiming => CGameTiming;

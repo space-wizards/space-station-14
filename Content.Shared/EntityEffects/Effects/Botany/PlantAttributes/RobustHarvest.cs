@@ -4,12 +4,21 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class RobustHarvest : EntityEffectBase<RobustHarvest>
 {
+    /// <summary>
+    /// How high potency can go.
+    /// </summary>
     [DataField]
     public int PotencyLimit = 50;
 
+    /// <summary>
+    /// The increase in potency per effect application.
+    /// </summary>
     [DataField]
     public int PotencyIncrease = 3;
 
+    /// <summary>
+    /// If potency passes this threshold, the produce will not have any seeds.
+    /// </summary>
     [DataField]
     public int PotencySeedlessThreshold = 30;
 
