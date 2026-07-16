@@ -78,11 +78,11 @@ public abstract partial class SharedStackSystem : EntitySystem
         switch (transferred)
         {
             case > 0:
-                _popup.PopupClient($"+{transferred}", popupPos, args.User);
+                _popup.PopupCoordinates($"+{transferred}", popupPos, args.User);
 
                 if (GetAvailableSpace(recipientStack) == 0)
                 {
-                    _popup.PopupClient(Loc.GetString("comp-stack-becomes-full"),
+                    _popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
                         popupPos.Offset(new Vector2(0, -0.5f)),
                         args.User);
                 }
@@ -90,7 +90,7 @@ public abstract partial class SharedStackSystem : EntitySystem
                 break;
 
             case 0 when GetAvailableSpace(recipientStack) == 0:
-                _popup.PopupClient(Loc.GetString("comp-stack-already-full"), popupPos, args.User);
+                _popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, args.User);
                 break;
         }
 
