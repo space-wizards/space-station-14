@@ -66,6 +66,8 @@
       state: body-overlay-2
       visible: false
 
+    - map: [ "enum.NewPlayerLayers.Layer" ]
+
 - type: entity
   id: BaseSpeciesAppearance
   parent:
