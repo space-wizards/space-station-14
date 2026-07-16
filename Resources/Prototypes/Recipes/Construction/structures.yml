@@ -264,6 +264,7 @@
   id: WindowDirectional
   graph: WindowDirectional
   targetNode: windowDirectional
+  canRotate: true
 
 - type: construction
   parent: WindowDirectional
