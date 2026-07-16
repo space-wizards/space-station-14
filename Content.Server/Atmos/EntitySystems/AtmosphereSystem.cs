@@ -28,7 +28,6 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [Dependency] private IMapManager _mapManager = default!;
     [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private IAdminLogManager _adminLog = default!;
     [Dependency] private IParallelManager _parallel = default!;
@@ -126,6 +125,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
     private void CacheDecals()
     {
-        _burntDecals = ProtoManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
+        _burntDecals = ProtoMan.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("burnt")).Select(x => x.ID).ToArray();
     }
 }

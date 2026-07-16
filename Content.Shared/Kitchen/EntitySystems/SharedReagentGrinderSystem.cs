@@ -267,8 +267,11 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         // Unpredicted because we don't have the user in the update loop
         // TODO: Make the audio API sane https://github.com/space-wizards/RobustToolbox/issues/6436
         if (_net.IsServer)
-            ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
-            AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+        {
+            ent.Comp.AudioStream = _audioSystem
+                .PlayPvs(sound, ent, sound.Params.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))
+                ?.Entity; //slightly higher pitched
+        }
     }
 
     /// <summary>
