@@ -7,7 +7,6 @@ namespace Content.IntegrationTests.Tests.Destructible
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
         public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
-        public const string DestructibleThresholdSquishEntityId = "DestructibleThresholdSquishEntityId";
         public const string TestBruteDamageGroupId = "TestBrute";
         public const string TestBurnDamageGroupId = "TestBurn";
         public const string TestBluntDamageTypeId = "TestBlunt";

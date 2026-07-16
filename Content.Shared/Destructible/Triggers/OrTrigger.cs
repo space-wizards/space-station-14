@@ -25,10 +25,4 @@ public sealed partial class OrTrigger : IThresholdTrigger
 
         return false;
     }
-
-    public bool Equals(IThresholdTrigger? other)
-    {
-        return other is OrTrigger o
-               && Triggers.Equals(o.Triggers);
-    }
 }

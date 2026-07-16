@@ -22,10 +22,4 @@ public sealed partial class DamageTrigger : IThresholdTrigger
     {
         return system.Damageable.GetTotalDamage(damageable.AsNullable()) >= Damage;
     }
-
-    public bool Equals(IThresholdTrigger? other)
-    {
-        return other is DamageTrigger o
-               && Damage.Equals(o.Damage);
-    }
 }

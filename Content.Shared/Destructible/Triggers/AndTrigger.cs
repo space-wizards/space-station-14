@@ -25,10 +25,4 @@ public sealed partial class AndTrigger : IThresholdTrigger
 
         return true;
     }
-
-    public bool Equals(IThresholdTrigger? other)
-    {
-        return other is AndTrigger o
-               && Triggers.Equals(o.Triggers);
-    }
 }
