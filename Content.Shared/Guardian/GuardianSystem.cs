@@ -201,7 +201,7 @@ public sealed partial class GuardianSystem : EntitySystem
     {
         if (ent.Comp.Used)
         {
-            _popup.PopupEntity(Loc.GetString(ent.Comp.EmptyPopup), user);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.EmptyPopup), user, user);
 
             return;
         }
@@ -414,7 +414,7 @@ public sealed partial class GuardianSystem : EntitySystem
         }
 
         _container.Insert(guardian.Owner, host.Comp.GuardianContainer);
-        _popup.PopupEntity(Loc.GetString(host.Comp.GuardianHostRecall), host.Owner);
+        _popup.PopupEntity(Loc.GetString(host.Comp.GuardianHostRecall), host.Owner, host.Owner);
         guardian.Comp.GuardianLoose = false;
 
         Dirty(host);
