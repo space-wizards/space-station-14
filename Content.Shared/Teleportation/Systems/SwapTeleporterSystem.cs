@@ -204,7 +204,10 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
         _appearance.SetData(ent, SwapTeleporterVisuals.Linked, false);
         Dirty(ent, ent.Comp);
 
-        _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent, user);
+        if (user != null)
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent, user.Value);
+        else
+            _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-link-destroyed"), ent);
 
         if (linkedNullable is {} linked)
             DestroyLink(linked, user); // the linked one is shown globally
