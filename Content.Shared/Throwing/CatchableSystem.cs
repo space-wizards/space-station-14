@@ -72,8 +72,7 @@ public sealed partial class CatchableSystem : EntitySystem
 
         var selfMessage = Loc.GetString("catchable-component-success-self", ("item", ent.Owner), ("catcher", Identity.Entity(args.Target, EntityManager)));
         var othersMessage = Loc.GetString("catchable-component-success-others", ("item", ent.Owner), ("catcher", Identity.Entity(args.Target, EntityManager)));
-        _popup.PopupEntity(selfMessage, args.Target, args.Target);
-        _popup.PopupEntity(othersMessage, args.Target, Filter.PvsExcept(args.Target), true);
+        _popup.PopupEntity(selfMessage, othersMessage, args.Target, args.Target);
         _audio.PlayPvs(ent.Comp.CatchSuccessSound, args.Target);
     }
 }

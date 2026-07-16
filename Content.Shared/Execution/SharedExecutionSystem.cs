@@ -146,33 +146,20 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
             return;
 
-        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
+        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity);
         ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
         _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim);
         _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
         args.Handled = true;
     }
 
-    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
+    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
     {
-        if (predict)
-        {
-            _popup.PopupEntity(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
-        }
-        else
-        {
-            _popup.PopupEntity(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
-        }
+        _popup.PopupEntity(
+            Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            attacker,
+            attacker,
+            PopupType.MediumCaution);
     }
 
     private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
@@ -182,8 +169,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
             attacker,
             Filter.PvsExcept(attacker),
             true,
-            PopupType.MediumCaution
-            );
+            PopupType.MediumCaution);
     }
 
     private void OnExecutionDoAfter(Entity<ExecutionComponent> entity, ref ExecutionDoAfterEvent args)

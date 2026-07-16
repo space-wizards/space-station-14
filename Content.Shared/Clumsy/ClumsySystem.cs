@@ -95,8 +95,7 @@ public sealed partial class ClumsySystem : EntitySystem
 
         var selfMessage = Loc.GetString(ent.Comp.CatchingFailedMessageSelf, ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
         var othersMessage = Loc.GetString(ent.Comp.CatchingFailedMessageOthers, ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
-        _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
-        _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
+        _popup.PopupEntity(selfMessage, othersMessage, ent.Owner, ent.Owner);
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
     }
 
