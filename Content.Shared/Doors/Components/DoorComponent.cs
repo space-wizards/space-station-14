@@ -156,7 +156,7 @@ public sealed partial class DoorComponent : Component
     /// The sprite state used for the door when it's open.
     /// </summary>
     [DataField]
-    public string OpenSpriteState = "open";
+    public string? OpenSpriteState = "open";
 
     /// <summary>
     /// The sprite states used for the door while it's open.
@@ -168,7 +168,7 @@ public sealed partial class DoorComponent : Component
     /// The sprite state used for the door when it's closed.
     /// </summary>
     [DataField]
-    public string ClosedSpriteState = "closed";
+    public string? ClosedSpriteState = "closed";
 
     /// <summary>
     /// The sprite states used for the door while it's closed.
