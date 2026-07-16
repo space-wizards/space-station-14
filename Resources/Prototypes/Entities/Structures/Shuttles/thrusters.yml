@@ -474,7 +474,7 @@
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: Transform
-    anchored: false
+    anchored: true
   - type: BlockAnchorOn
     blacklist:
       components:
