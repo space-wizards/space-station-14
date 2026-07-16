@@ -1,6 +1,6 @@
 - type: entity
   id: MachineMaterialSilo
-  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: material silo
   description: An advanced machine, capable of using bluespace technology to transmit materials to nearby machines.
   components:
@@ -46,14 +46,17 @@
         - MachineLayer
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 250
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: WiresVisuals
   - type: WiresPanel
   - type: StaticPrice

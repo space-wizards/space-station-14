@@ -311,7 +311,7 @@
 
 - type: entity
   id: GasPipeBroken
-  parent: [ GasPipeSansLayersIndestructible, BaseGasPipeLayers, StructureHealthFurniture ]
+  parent: [ GasPipeSansLayersIndestructible, BaseGasPipeLayers ]
   name: broken pipe
   description: It used to hold gas.
   components:
@@ -329,6 +329,18 @@
     node: broken
   - type: Item
     size: Small
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: GuideHelp
     guides:
     - Pipes

@@ -1,6 +1,6 @@
 - type: entity
   id: Recycler
-  parent: [ BaseMachinePowered, StructureHealthMachineStrong ]
+  parent: [ BaseMachinePowered, BaseConstructibleMachineDestructible ]
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
@@ -42,16 +42,6 @@
         - MidImpassable
         - LowImpassable
         hard: False
-  - type: Destructible
-    thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 250
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
   - type: DeviceLinkSink
     ports:
       - Reverse

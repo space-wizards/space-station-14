@@ -138,7 +138,7 @@
     sprite: Structures/Storage/Crates/surgery.rsi
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
+  parent: BaseCrate
   id: CrateWeb
   name: web crate
   components:
@@ -168,6 +168,8 @@
         !type:DamageTrigger
         damage: 25
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -339,7 +341,7 @@
     access: [["SyndicateAgent", "NuclearOperative"]]
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
+  parent: BaseCrate
   id: CrateLivestock
   name: livestock crate
   components:
@@ -362,7 +364,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -372,6 +374,8 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
@@ -394,7 +398,7 @@
     price: 125
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
+  parent: BaseCrate
   id: CrateRodentCage
   name: hamster cage
   components:
@@ -417,7 +421,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -427,6 +431,8 @@
           SheetPlastic:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
@@ -688,7 +694,7 @@
     state: crate_icon
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainerFlimsy ]
+  parent: BaseCrate
   id: CrateCoffin
   name: coffin
   description: A comfy coffin, excellent place for the vampires and corpses.
@@ -708,7 +714,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -718,6 +724,8 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: CrateCoffin
     node: cratecoffin
@@ -725,7 +733,7 @@
     - entity_storage
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainer ]
+  parent: BaseCrate
   id: CrateWoodenGrave
   name: grave
   suffix: wooden
@@ -748,7 +756,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100 # discourage just beating the grave to break it open
+        damage: 200 # discourage just beating the grave to break it open
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -758,6 +766,8 @@
           MaterialWoodPlank1:
             min: 1
             max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Physics
     bodyType: Static
   - type: Grave

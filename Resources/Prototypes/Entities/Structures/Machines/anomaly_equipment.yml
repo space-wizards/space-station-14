@@ -226,7 +226,7 @@
 
 - type: entity
   id: MachineAnomalyGenerator
-  parent: BaseMachinePowered # StructureHealthMachineMassive
+  parent: BaseMachinePowered
   name: anomaly generator
   description: The peak of pseudoscientific technology.
   placement:

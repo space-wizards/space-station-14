@@ -53,7 +53,7 @@
 
 - type: entity
   id: StationAnchor
-  parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine, StructureHealthMachineMassive]
+  parent: [StationAnchorBase, BaseMachinePowered, ConstructibleMachine]
   placement:
     mode: AlignTileAny
   components:
@@ -72,6 +72,8 @@
   - type: ExtensionCableReceiver
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -79,17 +81,19 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 150
       behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:SpawnEntitiesBehavior
-        offset: 0
-        spawn:
-          MachineFrameDestroyed:
-            min: 1
-            max: 1
   - type: StaticPrice
     price: 10000
   - type: Machine

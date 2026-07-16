@@ -1,6 +1,6 @@
 # TODO move all of this to tiles once tile smoothing is supported
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: BaseStructure
   id: CarpetBase
   name: carpet
   description: "Fancy walking surface."
@@ -28,6 +28,17 @@
         density: 5
         layer:
         - DoorPassable
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageTrigger10
+        !type:DamageTrigger
+        damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
   - type: TrayScanReveal
   - type: ToolRefinable
     refineResult:
@@ -44,9 +55,7 @@
     sprite: Structures/Furniture/Carpets/red_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger5
-        !type:DamageTrigger
-        damage: 5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -66,7 +75,7 @@
     sprite: Structures/Furniture/Carpets/black_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -84,7 +93,7 @@
     sprite: Structures/Furniture/Carpets/pink_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -102,7 +111,7 @@
     sprite: Structures/Furniture/Carpets/blue_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -120,7 +129,7 @@
     sprite: Structures/Furniture/Carpets/green_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -138,7 +147,7 @@
     sprite: Structures/Furniture/Carpets/orange_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -156,7 +165,7 @@
     sprite: Structures/Furniture/Carpets/skyblue_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -174,7 +183,7 @@
     sprite: Structures/Furniture/Carpets/purple_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -192,7 +201,7 @@
     sprite: Structures/Furniture/Carpets/cyan_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -210,7 +219,7 @@
     sprite: Structures/Furniture/Carpets/white_carpet.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -218,7 +227,7 @@
 
 # TODO nuke this once tiles support rotating sprites
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: BaseStructure
   id: CarpetChapel
   name: "chapel's carpet"
   components:
@@ -235,12 +244,21 @@
   - type: Physics
     canCollide: false
   - type: Fixtures
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: TrayScanReveal
 
 #cardpet
 
 - type: entity
-  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
+  parent: BaseStructure
   id: CarpetCard
   name: cardboard "carpet"
   description: "Even lino is better."
@@ -266,10 +284,14 @@
   - type: Fixtures
   - type: Damageable
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger5
+    - trigger: *DamageTrigger10
       behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard: *BaseCarpetSpawn

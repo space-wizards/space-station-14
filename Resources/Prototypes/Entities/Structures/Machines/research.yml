@@ -1,6 +1,6 @@
 - type: entity
   id: ResearchAndDevelopmentServer
-  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: R&D server
   description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
   components:
@@ -38,14 +38,20 @@
     board: ResearchAndDevelopmentServerMachineCircuitboard
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 250
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -66,7 +72,7 @@
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
-  parent: [ BaseMachinePowered, StructureHealthMachineStrong ]
+  parent: BaseMachinePowered
   name: "base R&D point source"
   # We should make this abstract once there are actual point sources.
   components:
@@ -101,16 +107,18 @@
           False: {visible: false}
   - type: Destructible
     thresholds:
-    - trigger: !type:DamageTrigger
-        damage: 250
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
-        offset: 0
         spawn:
-          MachineFrameDestroyed:
+          SheetSteel1:
             min: 1
             max: 1
   - type: GuideHelp

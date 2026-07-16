@@ -38,7 +38,7 @@
   - type: RequireProjectileTarget
 
 - type: entity
-  parent: [ BaseCrate, StructureHealthContainerWeak ]
+  parent: BaseCrate
   id: CrateGeneric
   categories: [ HideSpawnMenu ]
   components:
@@ -60,12 +60,16 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

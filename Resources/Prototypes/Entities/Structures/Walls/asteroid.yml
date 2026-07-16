@@ -3,12 +3,9 @@
 # Anyway
 # See WallRock variants for the remappings.
 
-#Asteroid rock
 - type: entity
-  parent: [ BaseWall, StructureHealthBarrierWeak ]
-  id: AsteroidRock
-  name: asteroid rock
-  description: A rocky asteroid.
+  parent: BaseWall
+  id: BaseAsteroidRock
   components:
   - type: Transform
     noRot: true
@@ -34,17 +31,8 @@
   - type: MiningScannerViewable
   - type: Damageable
     damageModifierSet: Rock
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Fixtures
     fixtures:
       fix1:
@@ -56,6 +44,27 @@
         layer:
         - WallLayer
         density: 2000
+
+#Asteroid rock
+- type: entity
+  parent: BaseAsteroidRock
+  id: AsteroidRock
+  name: asteroid rock
+  description: A rocky asteroid.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
 
 - type: entity
   abstract: true

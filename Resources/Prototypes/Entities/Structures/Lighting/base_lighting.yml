@@ -6,7 +6,6 @@
 #Basic lights
 - type: entity
   abstract: true
-  parent: StructureHealthMachineFlimsy
   id: BaseWallLight
   placement:
     mode: SnapgridCenter
@@ -37,6 +36,8 @@
     offset: "0, -0.5"
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 2
@@ -64,6 +65,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: PlacementReplacement
     key: lights
 

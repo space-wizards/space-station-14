@@ -52,6 +52,9 @@
     messagePerceivedByOthers: comp-window-knock
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
+  - type: Construction
+    graph: Window
+    node: window
   - type: Appearance
   - type: DamageVisuals
     thresholds: [5, 10, 20]
@@ -62,9 +65,6 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
-  - type: Construction
-    graph: Window
-    node: window
 
 - type: entity
   parent: BaseWindowStructure

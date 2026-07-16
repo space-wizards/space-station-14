@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseMachinePowered # StructureHealthMachineMassive
+  parent: BaseMachinePowered
   id: GravityGenerator
   name: gravity generator
   description: It's what keeps you to the floor.

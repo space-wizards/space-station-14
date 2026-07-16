@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseDeltaPressureGlass, StructureHealthBarrierWeak ]
+  parent: BaseDeltaPressureGlass
   id: InflatableWall
   name: inflatable barricade
   description: An inflated membrane. Activate to deflate. Do not puncture.
@@ -22,6 +22,16 @@
         - WallLayer
   - type: Damageable
     damageModifierSet: Inflatable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableWallStack1
     disassembleTime: 3
@@ -33,7 +43,7 @@
     mode: SnapgridCenter
 
 - type: entity
-  parent: [ BaseStructure, BaseDeltaPressureGlass, StructureHealthBarrierWeak ]
+  parent: [ BaseStructure, BaseDeltaPressureGlass ]
   id: InflatableDoor
   name: inflatable door
   description: An inflated membrane. Activate to deflate. Now with a door. Do not puncture.
@@ -75,6 +85,16 @@
   - type: Airtight
   - type: Damageable
     damageModifierSet: Inflatable
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableDoorStack1
     disassembleTime: 3

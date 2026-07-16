@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseMachinePowered, ConstructibleMachine, StructureHealthMachineStrong ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible  ]
   id: SurveillanceCameraRouterBase
   name: camera router
   description: A surveillance camera router. It routes. Perhaps.
@@ -43,16 +43,6 @@
         collection: ServerFans
     - type: WiresVisuals
     - type: WiresPanel
-    - type: Destructible
-      thresholds:
-      - trigger: !type:DamageTrigger
-          damage: 250
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:ChangeConstructionNodeBehavior
-          node: machineFrame
 
 - type: entity
   parent: SurveillanceCameraRouterBase

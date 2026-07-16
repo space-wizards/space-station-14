@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructure, StructureHealthBarrier ]
+  parent: BaseStructure
   id: BaseFenceWood
   name: wooden fence
   description: Wooden piece of fencing. I hope there is babushka's garden behind it.
@@ -20,6 +20,10 @@
     bodyType: Static
   - type: Transform
     anchored: true
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 2
     delay: 2
@@ -30,16 +34,14 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseFenceWood, StructureHealthBarrier ]
+  parent: BaseFenceWood
   id: BaseFenceWoodHigh
   components:
-  - type: Damageable
-    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 60
+        damage: 125
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -49,21 +51,21 @@
           MaterialWoodPlank:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true
-  parent: [ BaseFenceWood, StructureHealthBarrierWeak ]
+  parent: BaseFenceWood
   id: BaseFenceWoodSmall
   name: small wooden fence
   description: Wooden piece of small fence. The best protection for the fencing of a private territory!
   components:
-  - type: Damageable
-    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 20
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -73,6 +75,8 @@
           MaterialWoodPlank:
             min: 0
             max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Climbable
     delay: 2.5
   - type: RequireProjectileTarget

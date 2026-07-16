@@ -103,7 +103,7 @@
 - type: entity
   id: ThrusterLarge
   name: large thruster
-  parent: [ BaseThruster, StructureHealthMachineMassive]
+  parent: BaseThruster
   placement:
     mode: AlignTileAny
   components:
@@ -111,8 +111,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 400
+        damage: 900
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

@@ -1,6 +1,6 @@
 ﻿- type: entity
   abstract: true
-  parent: [ BaseStructure, StructureHealthDoorWeak ]
+  parent: BaseStructure
   id: BaseMaterialDoor
   name: door
   description: A door, where will it lead?
@@ -16,6 +16,7 @@
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
   - type: AnimationPlayer
+  - type: Physics
   - type: Fixtures
     fixtures:
       fix1:
@@ -45,10 +46,14 @@
   - type: Airtight
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 6
     fx: EffectRCDDeconstruct6
+  - type: Occluder
+  - type: BlockWeather
 
 - type: entity
   abstract: true
@@ -69,16 +74,18 @@
     node: metalDoor
   - type: Destructible
     thresholds:
-    - trigger: &DoorHealthWeak
+    - trigger: &DamageTrigger150
         !type:DamageTrigger
-        damage: 125
+        damage: 150
       behaviors:
-      - &SoundMetalBreak !type:PlaySoundBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1: &BaseDoorDrop
+          SheetSteel1:
             min: 3
             max: 5
 
@@ -94,12 +101,18 @@
     node: plasmaDoor
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger: *DamageTrigger150
       behaviors:
-      - *SoundMetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPlasma1: *BaseDoorDrop
+          SheetPlasma1:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -113,12 +126,18 @@
     node: goldDoor
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger: *DamageTrigger150
       behaviors:
-      - *SoundMetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          IngotGold1: *BaseDoorDrop
+          IngotGold1:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -132,12 +151,18 @@
     node: silverDoor
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger: *DamageTrigger150
       behaviors:
-      - *SoundMetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          IngotSilver1: *BaseDoorDrop
+          IngotSilver1:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -157,12 +182,18 @@
     node: bananiumDoor
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger: *DamageTrigger150
       behaviors:
-      - *SoundMetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialBananium1: *BaseDoorDrop
+          MaterialBananium1:
+            min: 1
+            max: 2
 
 ### Other doors ###
 
@@ -185,14 +216,20 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
       behaviors:
-      - &SoundWoodDestroy !type:PlaySoundBehavior
+      - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank1: *BaseDoorDrop
+          MaterialWoodPlank1:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -213,14 +250,20 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPaper1: *BaseDoorDrop
+          SheetPaper1:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -242,12 +285,20 @@
     damageModifierSet: Web
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
       behaviors:
-      - *SoundWoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWebSilk1: *BaseDoorDrop
+          MaterialWebSilk1:
+            min: 1
+            max: 2
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -273,12 +324,20 @@
     damageModifierSet: Card
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
       behaviors:
-      - *SoundWoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard: *BaseDoorDrop
+          MaterialCardboard:
+            min: 3
+            max: 5
 
 - type: entity
   parent: BaseMaterialDoorNavMap
@@ -299,8 +358,12 @@
     damageModifierSet: Rock
   - type: Destructible
     thresholds:
-    - trigger: *DoorHealthWeak
-      behaviors:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250 # A pickaxe can destroy this in two hits, since the door is rock.
+      behaviors: &IronstoneDestructionBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/break_stone.ogg
@@ -320,3 +383,9 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/MineralDoors/encrusted_ironstone_door.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 375
+      behaviors: *IronstoneDestructionBehavior

@@ -88,17 +88,17 @@
       fix1:
         shape:
           !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:
         - WallLayer
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallBrick
   name: brick wall
   components:
@@ -112,21 +112,23 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: &WallHealthNormal
+    - trigger:
         !type:DamageTrigger
         damage: 300
-      behaviors: &BreakRock
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/break_stone.ogg
-          params:
-            volume: -6
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: brick
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallClock
   name: clock wall
   components:
@@ -139,21 +141,23 @@
     node: clockworkWall
   - type: Destructible
     thresholds:
-    - trigger: &WallHealthWeak
+    - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 300
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: clockGirder
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ClockworkGirder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clock
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallClown
   name: bananium wall
   components:
@@ -170,13 +174,17 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: &ChangeNodeGirder
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: clown
@@ -193,15 +201,15 @@
         density: 8000 # really good ramming wall, bananium is rare so it's probably fine
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallMeat
   name: meat wall
   description: Sticky.
   components:
   - type: Tag
     tags:
-      - Wall
-      - Structure
+    - Wall
+    - Structure
   - type: Sprite
     sprite: Structures/Walls/meat.rsi
   - type: Icon
@@ -211,14 +219,23 @@
     node: meatWall
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 100 # weak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: meat
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallCult
   name: cult wall
   components:
@@ -228,41 +245,53 @@
     sprite: Structures/Walls/cult.rsi
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: &SpawnGirder
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:SpawnEntitiesBehavior # these will spawn rotated to map north due to the implementation of SpawnEntitiesBehavior
-        offset: 0
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
         spawn:
           Girder:
             min: 1
             max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: cult
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallDebug
   name: debug wall
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+    - Wall
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
     sprite: Structures/Walls/debug.rsi
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: debug
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallDiamond
   name: diamond wall
   components:
@@ -276,14 +305,23 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: diamond
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallGold
   name: gold wall
   components:
@@ -300,8 +338,17 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Fixtures
     fixtures:
       fix1:
@@ -318,7 +365,7 @@
     base: gold
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallIce
   name: ice wall
   components:
@@ -328,14 +375,23 @@
     sprite: Structures/Walls/ice.rsi
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: ice
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallPlasma
   name: plasma wall
   components:
@@ -352,8 +408,17 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plasma
@@ -361,7 +426,7 @@
     resistance: 5
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallPlastic
   name: plastic wall
   components:
@@ -378,8 +443,17 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: plastic
@@ -390,41 +464,50 @@
   name: plastitanium wall
   suffix: indestructible
   components:
-    - type: Sprite
-      sprite: Structures/Walls/plastitanium.rsi
-    - type: Icon
-      sprite: Structures/Walls/plastitanium.rsi
-    - type: IconSmooth
-      key: walls
-      base: plastitanium
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-          - FullTileMask
-          layer:
-          - WallLayer
-          density: 4000
-    - type: RadiationBlocker
-      resistance: 5
+  - type: Sprite
+    sprite: Structures/Walls/plastitanium.rsi
+  - type: Icon
+    sprite: Structures/Walls/plastitanium.rsi
+  - type: IconSmooth
+    key: walls
+    base: plastitanium
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: RadiationBlocker
+    resistance: 5
 
 - type: entity
-  parent: [ WallPlastitaniumIndestructible, StructureHealthWallStrong ]
+  parent: WallPlastitaniumIndestructible
   id: WallPlastitanium
   name: plastitanium wall
   suffix: ""
   components:
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
-    - trigger: &WallHealthStrong
+    - trigger:
         !type:DamageTrigger
-        damage: 450
-      behaviors: *SpawnGirder
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: WallDiagonalBase
@@ -433,29 +516,51 @@
   suffix: diagonal, indestructible
   components:
   - type: Sprite
+    drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: RadiationBlocker
     resistance: 5
 
 - type: entity
-  parent: [ WallPlastitaniumDiagonalIndestructible, StructureHealthWallStrong ]
+  parent: WallPlastitaniumDiagonalIndestructible
   id: WallPlastitaniumDiagonal
   name: plastitanium wall
   suffix: diagonal
   components:
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallStrong ]
+  parent: BaseWall
   id: WallReinforced
   name: reinforced wall
   components:
@@ -469,15 +574,21 @@
     node: reinforcedWall
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: &ChangeNodeReinforcedGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
-        node: reinforcedGirder
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -530,11 +641,12 @@
     damageModifierSet: StructuralMetallic # weaker because rust
 
 - type: entity
-  parent: [ WallDiagonalBase, StructureHealthWallStrong ]
+  parent: WallDiagonalBase
   id: WallReinforcedDiagonal
   name: reinforced wall
   components:
   - type: Sprite
+    drawdepth: Walls
     sprite: Structures/Walls/reinforced_diagonal.rsi
     state: state0
   - type: Icon
@@ -542,16 +654,27 @@
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *ChangeNodeReinforcedGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: RadiationBlocker
     resistance: 5
 
 # Riveting
 - type: entity
-  parent: [ BaseWall, StructureHealthWallStrong ]
+  parent: BaseWall
   id: WallRiveted
   name: riveted wall
   components:
@@ -561,10 +684,21 @@
     sprite: Structures/Walls/riveted.rsi
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: riveted
@@ -572,7 +706,7 @@
     price: 150
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallSandstone
   name: sandstone wall
   components:
@@ -586,14 +720,23 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *BreakRock
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: sandstone
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallSilver
   name: silver wall
   components:
@@ -610,19 +753,29 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: silver
 
 #shuttle walls
 - type: entity
-  parent: [ WallDiagonalBase, StructureHealthWallStrong ]
+  parent: WallDiagonalBase
   id: WallShuttleDiagonal
   name: shuttle wall
   components:
   - type: Sprite
+    drawdepth: Walls
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
   - type: Icon
@@ -641,10 +794,10 @@
       fix1:
         shape:
           !type:PolygonShape
-            vertices:
-            - "-0.5,-0.5"
-            - "0.5,0.5"
-            - "0.5,-0.5"
+          vertices:
+          - "-0.5,-0.5"
+          - "0.5,0.5"
+          - "0.5,-0.5"
         mask:
         - FullTileMask
         layer:
@@ -652,10 +805,21 @@
         density: 2000
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *ChangeNodeReinforcedGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Construction
     graph: Girder
     node: diagonalshuttleWall
@@ -665,16 +829,27 @@
     price: 200
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallStrong ]
+  parent: BaseWall
   id: WallShuttle
   name: shuttle wall
   components:
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *ChangeNodeReinforcedGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: StaticPrice
     price: 300
   - type: RadiationBlocker
@@ -717,7 +892,7 @@
         density: 2000
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallSolid
   name: solid wall
   components:
@@ -735,18 +910,28 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: walls
     base: solid
 
 - type: entity
-  parent: [ WallDiagonalBase, StructureHealthWall ]
+  parent: WallDiagonalBase
   id: WallSolidDiagonal
   name: solid wall
   components:
   - type: Sprite
+    drawdepth: Walls
     sprite: Structures/Walls/solid_diagonal.rsi
     state: state0
   - type: Icon
@@ -754,8 +939,17 @@
     state: state0
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   parent: WallSolid
@@ -773,17 +967,30 @@
   - type: IconSmooth
     key: walls
     base: solid
-  # - type: Damageable # Pretend this has a weaker damage mod
+  - type: Damageable
+    damageModifierSet: Metallic # weaker because rust
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallSolidChitin
   name: solid chitin
   components:
+  - type: Tag
+    tags:
+    - Wall
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Walls/xeno.rsi
   - type: Icon
@@ -800,7 +1007,7 @@
     fx: EffectRCDDeconstruct8
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallStrong ]
+  parent: BaseWall
   id: WallReinforcedChitin
   name: reinforced chitin
   components:
@@ -811,10 +1018,21 @@
     state: rgeneric
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthStrong
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -866,7 +1084,7 @@
     state: state0
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallUranium
   name: uranium wall
   components:
@@ -879,8 +1097,17 @@
     node: uraniumWall
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *ChangeNodeGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Fixtures
     fixtures:
       fix1:
@@ -899,7 +1126,7 @@
     resistance: 6
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallWood
   name: wood wall
   description: The traditional greytide defense.
@@ -913,19 +1140,23 @@
     node: woodWall
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
-        node: barricadefull
+        node: Barricade
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: IconSmooth
     key: woods
     base: wood
 
 - type: entity
-  parent: [ BaseWall, StructureHealthBarrier ]
+  parent: BaseWall
   id: WallWeb
   name: web wall
   description: Keeps the spiders in and the greytide out.
@@ -945,8 +1176,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 60
+        damage: 30
       behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWebSilk:
@@ -987,7 +1220,7 @@
     base: necropolis
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: BaseWall
   id: WallMining
   name: mining wall
   components:
@@ -997,8 +1230,12 @@
     sprite: Structures/Walls/mining.rsi
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 700
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: walls
     base: mining
@@ -1009,7 +1246,7 @@
   - type: Appearance
 
 - type: entity
-  parent: [ WallDiagonalBase, StructureHealthWall ]
+  parent: WallDiagonalBase
   id: WallMiningDiagonal
   name: mining wall
   components:
@@ -1022,10 +1259,24 @@
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthNormal
-      behaviors: *SpawnGirder
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 
 # Vault Walls
@@ -1085,7 +1336,7 @@
     lifetime: 15
   - type: Tag
     tags:
-      - Wall
+    - Wall
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1093,7 +1344,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
         mask:
         - FullTileMask
         layer:
@@ -1130,7 +1381,7 @@
     state: forcewall
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWallWeak ]
+  parent: BaseWall
   id: WallCobblebrick
   name: cobblestone brick wall
   description: Stone by stone, perfectly fitted together to form a wall.
@@ -1145,8 +1396,12 @@
     fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
-      behaviors: *BreakRock
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: cobblebricks
     base: cobblebrick
@@ -1247,8 +1502,15 @@
     deconstructable: false
   - type: Destructible
     thresholds:
-    - trigger: *WallHealthWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
       - !type:SpawnEntitiesBehavior
         spawn:
           SteelOre1:
@@ -1258,8 +1520,8 @@
 # Cardboard
 
 - type: entity
-  parent: [ BaseStructure, StructureHealthBarrier ]
   id: Cardwall
+  parent: BaseStructure
   name: cardboard wall
   description: Budget cuts are hitting hard.
   placement:
@@ -1287,6 +1549,8 @@
     deconstructionTarget: start
   - type: Damageable
     damageModifierSet: Card
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1303,13 +1567,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 60
+        damage: 40
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialCardboard:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: IconSmooth
     key: cards
     base: card

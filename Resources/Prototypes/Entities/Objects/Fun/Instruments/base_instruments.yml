@@ -24,7 +24,7 @@
 #These are for instruments that are larger, can't be picked up, or have collision
 - type: entity
   abstract: true
-  parent: [ BaseStructureDynamic, StructureHealthFurnitureStrong ]
+  parent: BaseStructureDynamic
   id: BasePlaceableInstrument
   name: baseinstrument
   components:
@@ -39,6 +39,18 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: UserInterface
     interfaces:
       enum.InstrumentUiKey.Key:

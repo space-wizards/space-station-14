@@ -137,7 +137,7 @@
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
-  parent: [ CoreSubstation, StructureHealthMachineWeak ]
+  parent: CoreSubstation
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
@@ -186,6 +186,8 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
       - !type:ExplodeBehavior
       - !type:PlaySoundBehavior
         sound:

@@ -1,7 +1,7 @@
 # Parents
 - type: entity
   abstract: true
-  parent: [ BaseWallmount, StructureHealthContainerWeak ]
+  parent: BaseWallmount
   id: ShelfBase
   name: shelf
   description: A strange place to place, well, anything really. You feel like you shouldn't be seeing this.
@@ -10,6 +10,14 @@
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
     state: base
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageTrigger50
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: Storage
     grid:
     - 0,0,3,1
@@ -62,9 +70,7 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger50
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageTrigger50
       behaviors:
       - !type:PlaySoundBehavior
         sound:

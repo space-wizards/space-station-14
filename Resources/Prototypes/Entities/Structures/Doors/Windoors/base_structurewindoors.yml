@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
-  parent: [BaseStructure, StructureHealthDoorWeak]
-  id: BaseBaseWindoor # blame BaseWindoor being too specific to the regular windoor for this
+  parent: BaseStructure
+  id: BaseWindoorGeneric
   placement:
     mode: SnapgridCenter
   components:
@@ -81,6 +81,8 @@
       DoorStatus: false
   - type: Damageable
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: ExaminableDamage
     messages: WindowMessages
   - type: RCDDeconstructable
@@ -153,8 +155,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseBaseWindoor
-  id: BaseBaseSecureWindoor # :o|
+  parent: BaseWindoorGeneric
+  id: BaseSecureWindoorGeneric
   components:
   - type: Sprite
     layers:
@@ -198,16 +200,16 @@
 #Normal windoors
 - type: entity
   abstract: true
-  parent: [ BaseDeltaPressureGlassQuarter, BaseBaseWindoor ]
+  parent: [ BaseDeltaPressureGlassQuarter, BaseWindoorGeneric ]
   id: BaseWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/windoor.rsi
   - type: Destructible
     thresholds:
-    - trigger: &DamageTriggerDoorWeak
+    - trigger:
         !type:DamageTrigger
-        damage: 125
+        damage: 200
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -217,19 +219,23 @@
           SheetSteel1:
             min: 2
             max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     node: windoor
 
 - type: entity
   abstract: true
-  parent: [ BaseDeltaPressureReinforcedGlassQuarter, BaseBaseSecureWindoor ]
+  parent: [ BaseDeltaPressureReinforcedGlassQuarter, BaseSecureWindoorGeneric ]
   id: BaseSecureWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/windoor.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerDoorWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -239,6 +245,8 @@
           SheetPlasteel1:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Windoor
     node: windoorSecure
@@ -255,14 +263,16 @@
 #Plasma Windoors
 - type: entity
   abstract: true
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseBaseWindoor]
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
   id: BasePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerDoorWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -272,6 +282,8 @@
           SheetSteel1:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Windoor
     node: pwindoor
@@ -282,14 +294,16 @@
 
 - type: entity
   abstract: true
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseBaseSecureWindoor]
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
   id: BaseSecurePlasmaWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/plasma.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerDoorWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 530
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -299,6 +313,8 @@
           SheetPlasteel1:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Windoor
     node: pwindoorSecure
@@ -317,14 +333,16 @@
 #Uranium Windoors
 - type: entity
   abstract: true
-  parent: [BaseDeltaPressurePlasmaQuarter, BaseBaseWindoor]
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoorGeneric]
   id: BaseUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerDoorWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -334,6 +352,8 @@
           SheetSteel1:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Windoor
     node: uwindoor
@@ -344,14 +364,16 @@
 
 - type: entity
   abstract: true
-  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseBaseSecureWindoor]
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoorGeneric]
   id: BaseSecureUraniumWindoor
   components:
   - type: Sprite
     sprite: Structures/Doors/Windoors/uranium.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTriggerDoorWeak
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -361,6 +383,8 @@
           SheetPlasteel1:
             min: 1
             max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Construction
     graph: Windoor
     node: uwindoorSecure

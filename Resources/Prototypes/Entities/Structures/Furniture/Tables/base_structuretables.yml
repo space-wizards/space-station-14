@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructure, StructureHealthFurniture ]
+  parent: BaseStructure
   id: TableBase
   name: table
   description: A square piece of metal standing on four metal legs.
@@ -8,6 +8,8 @@
   - type: Animateable
   - type: Damageable
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:

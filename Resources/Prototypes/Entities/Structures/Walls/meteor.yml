@@ -1,9 +1,23 @@
 # These define Meteor Walls separate from Asteroid walls so they have different properties
 - type: entity
+  parent: BaseAsteroidRock
   id: MeteorRock
-  parent: AsteroidRock
   name: meteorite rock
   description: What remains of a meteorite.
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 12 #This change makes meteorite walls easier to destroy for cleanup
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
 
 # Ore veins
 - type: entity
