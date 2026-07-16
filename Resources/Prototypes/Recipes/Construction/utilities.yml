@@ -1022,18 +1022,3 @@
   canBuildInImpassable: true
   conditions:
   - !type:WallmountCondition
-
-  # SHUTTLECRAFT
-- type: construction
-  id: WallmountThrusterRecipe
-  graph: WallmountThrusterGraph
-  startNode: start
-  targetNode: WallmountThrusterNode
-  category: construction-category-machines
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition
-    reversed: true
