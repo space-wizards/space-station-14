@@ -1093,9 +1093,9 @@
       - ReagentId: Vitamin
         Quantity: 11
       - ReagentId: TableSalt
-        Quantity: 5
+        Quantity: 1
       - ReagentId: Blackpepper
-        Quantity: 5
+        Quantity: 1
   - type: Sprite
     state: superbite
   - type: Tag
