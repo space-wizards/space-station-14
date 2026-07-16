@@ -95,7 +95,7 @@ public sealed partial class ContentTileDefinition : IPrototype, IInheritingProto
     [DataField] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
     [DataField("itemDrop")]
-    public EntProtoId ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
+    public EntProtoId? ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
 
     // TODO rename data-field in yaml
     /// <summary>
