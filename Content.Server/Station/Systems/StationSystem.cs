@@ -195,7 +195,7 @@ public sealed partial class StationSystem : SharedStationSystem
 
         if (TryComp<StationDataComponent>(station, out var data))
         {
-            return GetInStation(data);
+            return GetInStation(data, range);
         }
 
         return Filter.Empty();
