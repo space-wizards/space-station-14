@@ -42,6 +42,10 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
             return;
         }
 
+        // Not a valid value
+        if (ent.Comp.Identifier == -1)
+            return;
+
         if (ids.Count > 0)
         {
             // Avoid inserting the value right back at the end or shuffling in place:
@@ -74,7 +78,7 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     /// </summary>
     public string GenerateUniqueName(EntityUid uid, NameIdentifierGroupPrototype proto, out int randomVal)
     {
-        randomVal = 0;
+        randomVal = -1;
         var entityName = Name(uid);
         if (!CurrentIds.TryGetValue(proto.ID, out var set))
             return entityName;
