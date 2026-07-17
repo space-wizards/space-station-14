@@ -64,6 +64,9 @@ public sealed partial class ParentToWallSystem : EntitySystem
     {
         var children = ent.Comp.Children;
         foreach (var child in children)
-            Del(child);
+        {
+            if (!TerminatingOrDeleted(child))
+                Del(child);
+        }
     }
 }
