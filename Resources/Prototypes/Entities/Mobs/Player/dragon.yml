@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, BaseSlicingRefinable, MobNightVision ]
   id: BaseMobDragon
   suffix: ""
   name: space dragon
@@ -176,32 +176,12 @@
   - type: GhostRole
     mindRoles:
     - MindRoleDragon
-  - type: ActionGun
-    action: ActionDragonsBreath
-    gunProto: DragonsBreathGun
+  - type: ActionGrant
+    actions:
+    - ActionDragonsBreath
   - type: GuideHelp
     guides:
     - MinorAntagonists
-
-- type: entity
-  categories: [ HideSpawnMenu ]
-  id: DragonsBreathGun
-  name: dragon's lung
-  description: For dragon's breathing.
-  components:
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 5
-    rechargeSound:
-      path: /Audio/Animals/space_dragon_roar.ogg
-  - type: BasicEntityAmmoProvider
-    proto: ProjectileDragonsBreath
-    capacity: 1
-    count: 1
-  - type: Gun
-    soundGunshot:
-      path: /Audio/Animals/space_dragon_roar.ogg
-    soundEmpty: null
-    projectileSpeed: 5
 
 - type: entity
   parent: BaseMobDragon
@@ -273,15 +253,20 @@
   description: Spew out flames at anyone foolish enough to attack you!
   components:
   - type: Action
+    useDelay: 5
     # TODO: actual sprite and iconOn
     icon: { sprite : Objects/Weapons/Guns/Projectiles/magic.rsi, state: fireball }
     itemIconStyle: BigAction
     priority: 2
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Animals/space_dragon_breath.ogg
   - type: TargetAction
     checkCanAccess: false
     range: 0
   - type: WorldTargetAction
-    event: !type:ActionGunShootEvent
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileDragonsBreath
+      projectileSpeed: 5
 
 - type: entity
   parent: Smoke

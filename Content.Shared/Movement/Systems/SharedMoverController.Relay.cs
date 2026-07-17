@@ -34,7 +34,13 @@ public abstract partial class SharedMoverController
     protected virtual void OnInputMoverCanMoveUpdated(Entity<InputMoverComponent> ent, ref CanMoveUpdatedEvent args)
     {
         if (!args.CanMove)
-            SetMoveInput(ent, MoveButtons.None);
+        {
+            // Remove from active mover query when entity cannot move
+            RemCompDeferred<ActiveInputMoverComponent>(ent);
+            return;
+        }
+
+        UpdateMoverStatus((ent, ent.Comp));
     }
 
     /// <summary>

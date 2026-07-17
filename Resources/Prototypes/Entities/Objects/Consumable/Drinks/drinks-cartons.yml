@@ -275,7 +275,7 @@
       - ReagentId: JuiceLime
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-juice-lime
+    localizedLabel: reagent-name-juice-lime
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -291,7 +291,7 @@
       - ReagentId: JuiceOrange
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-juice-orange
+    localizedLabel: reagent-name-juice-orange
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
@@ -307,6 +307,6 @@
       - ReagentId: Cream
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-cream
+    localizedLabel: reagent-name-cream
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi

@@ -43,8 +43,8 @@ public sealed partial class ShuttleSystem
     private float _platingMass;
 
     private const float _sparkChance = 0.2f;
-    // shuttle mass to consider the neutral point for inertia scaling
-    private const float _baseShuttleMass = 50f;
+    // shuttle mass to consider the neutral point for inertia scaling: 100 tiles at standard weight
+    private const float _baseShuttleMass = 100f * TileDensityMultiplier;
     // exists primarily for optimisation so not a cvar
     private const float _minImpulseVelocity = 0.07f;
     // high-speed collisions tend to be a series of increasingly smaller collisions so don't spam admin logs
@@ -77,7 +77,7 @@ public sealed partial class ShuttleSystem
         Subs.CVar(_cfg, CCVars.ImpactMassBias, value => _massBias = value, true);
         Subs.CVar(_cfg, CCVars.ImpactInertiaScaling, value => _inertiaScaling = value, true);
 
-        _platingMass = _protoManager.Index(_platingId).Mass;
+        _platingMass = ProtoMan.Index(_platingId).Mass;
     }
 
     /// <summary>

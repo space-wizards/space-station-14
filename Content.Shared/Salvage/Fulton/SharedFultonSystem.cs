@@ -140,12 +140,12 @@ public abstract partial class SharedFultonSystem : EntitySystem
             {
                 component.Beacon = args.Target.Value;
                 Audio.PlayPredicted(beacon.LinkSound, uid, args.User);
-                _popup.PopupClient(Loc.GetString("fulton-linked"), uid, args.User);
+                _popup.PopupEntity(Loc.GetString("fulton-linked"), uid, args.User);
             }
             else
             {
                 component.Beacon = EntityUid.Invalid;
-                _popup.PopupClient(Loc.GetString("fulton-folded"), uid, args.User);
+                _popup.PopupEntity(Loc.GetString("fulton-folded"), uid, args.User);
             }
 
             return;
@@ -224,7 +224,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (!CanFultonTarget(fulton, target, out var message))
         {
             if (message is not null)
-                _popup.PopupClient(Loc.GetString(message), fulton, user);
+                _popup.PopupEntity(Loc.GetString(message), fulton, user);
 
             return false;
         }
