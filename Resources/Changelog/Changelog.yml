@@ -4268,10 +4268,3 @@
   id: 9764
   time: '2026-06-23T17:00:19.0000000+00:00'
   url: https://github.com/space-wizards-federation/space-station-14/pull/175
-- author: YoungThugSS14
-  changes:
-  - message: The Wand of Entrance is no longer in the random magic item spell pool, note the Staff of Entrance is.
-    type: Tweak
-  id: 9765
-  time: '2026-06-24T11:22:30.0000000+00:00'
-  url: https://github.com/space-wizards-federation/space-station-14/pull/114
