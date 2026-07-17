@@ -4384,3 +4384,100 @@
   id: 9780
   time: '2026-07-01T03:46:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40593
+- author: psykana
+  changes:
+  - message: Speedloaders now update revolver chambers correctly.
+    type: Fix
+  id: 9781
+  time: '2026-07-01T05:22:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43259
+- author: LordKnish
+  changes:
+  - message: Revenant ability icons now fill their action buttons.
+    type: Fix
+  id: 9782
+  time: '2026-07-01T05:41:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44258
+- author: evrys
+  changes:
+  - message: Fixed "point at location" binding so it can be used on inventory items too
+    type: Fix
+  id: 9783
+  time: '2026-07-01T06:57:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43747
+- author: Centronias
+  changes:
+  - message: The Smartfridge's sprite now properly reflects whether or not the fridge is powered.
+    type: Fix
+  id: 9784
+  time: '2026-07-01T08:07:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43917
+- author: qwerltaz
+  changes:
+  - message: Chat highlights now highlight your name again.
+    type: Fix
+  id: 9785
+  time: '2026-07-01T08:39:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43911
+- author: ProPeperos
+  changes:
+  - message: Cargo request computer now has separate category for instruments
+    type: Add
+  - message: Instrument from cargo has been tweaked and reduced in price
+    type: Tweak
+  id: 9786
+  time: '2026-07-01T11:03:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43949
+- author: notquitehadouken
+  changes:
+  - message: Revenants no longer collide with regular ghosts.
+    type: Fix
+  id: 9787
+  time: '2026-07-01T21:18:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42869
+- author: B-Kirill
+  changes:
+  - message: Electrified objects, such as airlocks, now properly shock when activated via world activation hotkey.
+    type: Fix
+  id: 9788
+  time: '2026-07-02T02:47:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42657
+- author: jessicamaybe
+  changes:
+  - message: Ghost warp to most followed works again
+    type: Fix
+  id: 9789
+  time: '2026-07-02T04:53:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44464
+- author: insoPL
+  changes:
+  - message: Borgs drop some steel and scrap electronics when gibbed
+    type: Tweak
+  - message: Borgs now drop their hats when gibbed
+    type: Fix
+  id: 9790
+  time: '2026-07-02T09:20:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42439
+- author: ProPeperos
+  changes:
+  - message: You can no longer rotate stairs
+    type: Fix
+  - message: You can no longer rotate catwalks
+    type: Fix
+  id: 9791
+  time: '2026-07-02T19:27:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44471
+- author: CrimsonVengeance
+  changes:
+  - message: Fixed OrganBaseTorso to be Inedible.
+    type: Fix
+  id: 9792
+  time: '2026-07-02T21:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44300
+- author: Samuka-C
+  changes:
+  - message: Unanchored gas miners no longer say they are active when in fact they are not.
+    type: Fix
+  id: 9793
+  time: '2026-07-02T22:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44394

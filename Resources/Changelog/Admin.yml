@@ -1817,5 +1817,12 @@ Entries:
   id: 223
   time: '2026-06-29T19:22:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44367
+- author: Samuka-C
+  changes:
+  - message: Added the Stinky smite, for the stinkiest players
+    type: Add
+  id: 224
+  time: '2026-07-02T22:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44394
 Name: Admin
 Order: 3
