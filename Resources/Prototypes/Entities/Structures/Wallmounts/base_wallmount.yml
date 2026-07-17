@@ -8,6 +8,7 @@
   components:
   - type: Clickable
   - type: WallMount
+  - type: ParentToWall
   - type: InteractionOutline
   - type: Transform
     anchored: true

@@ -15,14 +15,12 @@ public sealed partial class WallMountComponent : Component
     /// <summary>
     ///     Range of angles for which the exemption applies. Bigger is more permissive.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("arc"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Angle Arc = new(MathF.PI);
 
     /// <summary>
     ///     The direction in which the exemption arc is facing, relative to the entity's rotation. Defaults to south.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("direction"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Angle Direction = Angle.Zero;
 }

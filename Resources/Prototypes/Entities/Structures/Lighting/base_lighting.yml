@@ -77,6 +77,8 @@
           collection: GlassBreak
   - type: PlacementReplacement
     key: lights
+  - type: ParentToWall
+    offset: 0, 1 # points away from the wall
   placement:
     mode: SnapgridCenter
     snap:

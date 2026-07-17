@@ -41,6 +41,8 @@
     enabled: false
     usesApcPower: true
   - type: WallMount
+  - type: ParentToWall
+    offset: 0, -1 # points into the wall
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Eye
