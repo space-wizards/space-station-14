@@ -12,7 +12,7 @@ public sealed partial class ParentToWallComponent : Component
 {
     /// <summary>
     /// The offset (local to the entity) the tile lookup should be in.
-    /// To offset forward (i.e. the wall should be to the south when facing south), this should be -Vector2i.UnitY.
+    /// To offset forward (i.e. the wall should be to the south when facing south), this should be -Vector2.UnitY.
     /// </summary>
     [DataField]
     public Vector2 Offset;

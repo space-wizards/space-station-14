@@ -8,7 +8,7 @@ namespace Content.Shared.Wall;
 
 /// <summary>
 /// A system for wallmounts to have their lifecycle tied with the wallmounted objects that live on them.
-/// Ensures that wallmount entities aren't left stranded in space when a wall is destroyed.
+/// Ensures that wallmount entities aren't left floating in space when a wall is destroyed.
 /// </summary>
 public sealed partial class ParentToWallSystem : EntitySystem
 {
