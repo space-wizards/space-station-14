@@ -16,6 +16,7 @@ namespace Content.Server.Stack
     {
         [Dependency] private SharedHandsSystem _hands = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
 
         [Dependency] private EntityQuery<StackComponent> _stackQuery;
 
@@ -39,7 +40,7 @@ namespace Content.Server.Stack
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
             // If spawned in player hand it sets the parent to the player for the split event
             // This should always be later overridden
-            Xform.SetParent(newEntity, spawnPosition.EntityId);
+            _transform.SetParent(newEntity, spawnPosition.EntityId);
 
             // There should always be a StackComponent
             var stackComp = _stackQuery.Comp(newEntity);
