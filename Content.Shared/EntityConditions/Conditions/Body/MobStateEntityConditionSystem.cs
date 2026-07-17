@@ -20,9 +20,12 @@ public sealed partial class MobStateEntityConditionSystem : EntityConditionSyste
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class MobStateCondition : EntityConditionBase<MobStateCondition>
 {
+    /// <summary>
+    /// The mobstate necessary to fulfill this condition.
+    /// </summary>
     [DataField]
     public MobState Mobstate = MobState.Alive;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-mob-state-condition", ("state", Mobstate));
+        Loc.GetString("entity-condition-guidebook-mob-state-condition", ("state", Mobstate));
 }

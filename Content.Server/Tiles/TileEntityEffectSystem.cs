@@ -3,9 +3,9 @@ using Content.Shared.EntityEffects;
 
 namespace Content.Server.Tiles;
 
-public sealed class TileEntityEffectSystem : EntitySystem
+public sealed partial class TileEntityEffectSystem : EntitySystem
 {
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
 
     public override void Initialize()
     {
@@ -22,6 +22,6 @@ public sealed class TileEntityEffectSystem : EntitySystem
     {
         var otherUid = args.Tripper;
 
-        _entityEffects.ApplyEffects(otherUid, ent.Comp.Effects.ToArray());
+        _entityEffects.ApplyEffects(otherUid, ent.Comp.Effects.ToArray(), user: otherUid);
     }
 }

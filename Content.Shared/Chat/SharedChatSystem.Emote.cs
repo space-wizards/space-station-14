@@ -13,7 +13,7 @@ public abstract partial class SharedChatSystem
     private void CacheEmotes()
     {
         var dict = new Dictionary<string, EmotePrototype>();
-        var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
+        var emotes = ProtoMan.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
             foreach (var word in emote.ChatTriggers)
@@ -57,7 +57,7 @@ public abstract partial class SharedChatSystem
         bool forceEmote = false
     )
     {
-        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
+        if (!ProtoMan.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
 
         return TryEmoteWithChat(source, proto, range, hideLog: hideLog, nameOverride, ignoreActionBlocker: ignoreActionBlocker, forceEmote: forceEmote);
@@ -109,7 +109,7 @@ public abstract partial class SharedChatSystem
     /// <returns>True if an emote was performed. False if the emote is unavailable, cancelled, etc.</returns>
     public bool TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
     {
-        if (!_prototypeManager.Resolve<EmotePrototype>(emoteId, out var proto))
+        if (!ProtoMan.Resolve<EmotePrototype>(emoteId, out var proto))
             return false;
 
         return TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
@@ -193,7 +193,7 @@ public abstract partial class SharedChatSystem
 
         // Check the whitelist and blacklist
         if (_whitelist.IsWhitelistFail(emote.Whitelist, source) ||
-            _whitelist.IsBlacklistPass(emote.Blacklist, source))
+            _whitelist.IsWhitelistPass(emote.Blacklist, source))
         {
             return false;
         }

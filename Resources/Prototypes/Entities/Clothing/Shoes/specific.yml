@@ -19,13 +19,11 @@
     slots:
       item:
         name: clothing-boots-sidearm
+        ejectOnBreak: true
         whitelist:
           tags:
-          - Knife
+          - ToyKnife
           - ToySidearm
-        blacklist:
-          components:
-          - Sharp
 
 - type: entity
   parent: ClothingShoesClownBase
@@ -170,7 +168,9 @@
   description: Stylish black shoes.
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+      - ClothMade
+      - Recyclable
     - type: Sprite
       sprite: Clothing/Shoes/color.rsi
       layers:

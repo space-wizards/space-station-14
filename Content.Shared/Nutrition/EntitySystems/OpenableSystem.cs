@@ -17,10 +17,10 @@ namespace Content.Shared.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class OpenableSystem : EntitySystem
 {
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -148,18 +148,6 @@ public sealed partial class OpenableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns true if the entity either does not have OpenableComponent or it is opened.
-    /// Drinks that don't have OpenableComponent are automatically open, so it returns true.
-    /// </summary>
-    public bool IsOpen(EntityUid uid, OpenableComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return true;
-
-        return comp.Opened;
-    }
-
-    /// <summary>
     /// Returns true if the entity both has OpenableComponent and is not opened.
     /// Drinks that don't have OpenableComponent are automatically open, so it returns false.
     /// If user is not null a popup will be shown to them.
@@ -174,10 +162,7 @@ public sealed partial class OpenableSystem : EntitySystem
 
         if (user != null)
         {
-            if (predicted)
-                _popup.PopupClient(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
-            else
-                _popup.PopupEntity(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
+            _popup.PopupEntity(Loc.GetString(comp.ClosedPopup, ("owner", uid)), user.Value, user.Value);
         }
 
         return true;

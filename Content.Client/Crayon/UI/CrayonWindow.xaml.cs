@@ -20,7 +20,7 @@ namespace Content.Client.Crayon.UI
     [GenerateTypedNameReferences]
     public sealed partial class CrayonWindow : DefaultWindow
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem = default!;
 
         private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
@@ -137,7 +137,8 @@ namespace Content.Client.Crayon.UI
 
         private void ButtonOnPressed(ButtonEventArgs obj)
         {
-            if (obj.Button.Name == null) return;
+            if (obj.Button.Name == null)
+                return;
 
             _selected = obj.Button.Name;
             _autoSelected = null;

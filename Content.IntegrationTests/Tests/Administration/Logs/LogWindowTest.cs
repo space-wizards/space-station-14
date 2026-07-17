@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 public sealed class LogWindowTest : InteractionTest
 {
-    protected override PoolSettings Settings => new() { Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false };
+    public override PoolSettings PoolSettings => new() { Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false };
 
     [Test]
     public async Task TestAdminLogsWindow()
@@ -37,12 +37,23 @@ public sealed class LogWindowTest : InteractionTest
         var refresh = logWindow.Logs.RefreshButton;
         var cont = logWindow.Logs.LogsContainer;
 
+        async Task<AdminLogLabel[]> SearchForLog(Guid logGuid)
+        {
+            await Client.WaitPost(() => search.Text = logGuid.ToString());
+            await ClickControl(refresh);
+
+            await RunUntilSynced();
+            await RunTicks(10);
+
+            return cont.Children
+                .Where(x => x.Visible && x is AdminLogLabel)
+                .Cast<AdminLogLabel>()
+                .ToArray();
+        }
+
         // Search for the log we added earlier.
-        await Client.WaitPost(() => search.Text = guid.ToString());
-        await ClickControl(refresh);
-        await RunTicks(5);
-        var searchResult = cont.Children.Where(x => x.Visible && x is AdminLogLabel).Cast<AdminLogLabel>().ToArray();
-        Assert.That(searchResult.Length, Is.EqualTo(1));
+        var searchResult = await SearchForLog(guid);
+        Assert.That(searchResult, Has.Length.EqualTo(1));
         Assert.That(searchResult[0].Log.Message, Contains.Substring($" test log 1: {guid}"));
 
         // Add a new log
@@ -50,11 +61,8 @@ public sealed class LogWindowTest : InteractionTest
         await Server.WaitPost(() => log.Add(LogType.Unknown, $"{SPlayer} test log 2: {guid}"));
 
         // Update the search and refresh
-        await Client.WaitPost(() => search.Text = guid.ToString());
-        await ClickControl(refresh);
-        await RunTicks(5);
-        searchResult = cont.Children.Where(x => x.Visible && x is AdminLogLabel).Cast<AdminLogLabel>().ToArray();
-        Assert.That(searchResult.Length, Is.EqualTo(1));
+        searchResult = await SearchForLog(guid);
+        Assert.That(searchResult, Has.Length.EqualTo(1));
         Assert.That(searchResult[0].Log.Message, Contains.Substring($" test log 2: {guid}"));
     }
 }

@@ -25,6 +25,18 @@ entity-effect-guidebook-spawn-entity =
         *[other] {$amount} {MAKEPLURAL($entname)}
     }
 
+entity-effect-guidebook-destroy =
+    { $chance ->
+        [1] Destroys
+        *[other] destroy
+    } the object
+
+entity-effect-guidebook-break =
+    { $chance ->
+        [1] Breaks
+        *[other] break
+    } the object
+
 entity-effect-guidebook-explosion =
     { $chance ->
         [1] Causes
@@ -126,19 +138,19 @@ entity-effect-guidebook-status-effect =
         [update]{ $chance ->
                     [1] Causes
                     *[other] cause
-                 } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
+                 } {$key} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
         [add]   { $chance ->
                     [1] Causes
                     *[other] cause
-                } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} with accumulation
+                } {$key} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} with accumulation
         [set]  { $chance ->
                     [1] Causes
                     *[other] cause
-                } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
+                } {$key} for at least {NATURALFIXED($time, 3)} {MANY("second", $time)} without accumulation
         *[remove]{ $chance ->
                     [1] Removes
                     *[other] remove
-                } {NATURALFIXED($time, 3)} {MANY("second", $time)} of {LOC($key)}
+                } {NATURALFIXED($time, 3)} {MANY("second", $time)} of {$key}
     } { $delay ->
         [0] immediately
         *[other] after a {NATURALFIXED($delay, 3)} second delay
@@ -149,19 +161,19 @@ entity-effect-guidebook-status-effect-indef =
         [update]{ $chance ->
                     [1] Causes
                     *[other] cause
-                 } permanent {LOC($key)}
+                 } permanent {$key}
         [add]   { $chance ->
                     [1] Causes
                     *[other] cause
-                } permanent {LOC($key)}
+                } permanent {$key}
         [set]  { $chance ->
                     [1] Causes
                     *[other] cause
-                } permanent {LOC($key)}
+                } permanent {$key}
         *[remove]{ $chance ->
                     [1] Removes
                     *[other] remove
-                } {LOC($key)}
+                } {$key}
     } { $delay ->
         [0] immediately
         *[other] after a {NATURALFIXED($delay, 3)} second delay
@@ -323,8 +335,14 @@ entity-effect-guidebook-drunk =
 
 entity-effect-guidebook-electrocute =
     { $chance ->
-        [1] Electrocutes
-        *[other] electrocute
+        [1] { $stuns ->
+            [true] Electrocutes
+            *[false] Shocks
+            }
+        *[other] { $stuns ->
+            [true] electrocute
+            *[false] shock
+            }
     } the metabolizer for {NATURALFIXED($time, 3)} {MANY("second", $time)}
 
 entity-effect-guidebook-emote =
@@ -461,8 +479,8 @@ entity-effect-guidebook-plant-attribute =
         [1] Adjusts
         *[other] adjust
     } {$attribute} by {$positive ->
-    [true] [color=red]{$amount}[/color]
-    *[false] [color=green]{$amount}[/color]
+    [false] [color=red]{$amount}[/color]
+    *[true] [color=green]{$amount}[/color]
     }
 
 entity-effect-guidebook-plant-cryoxadone =
@@ -476,6 +494,12 @@ entity-effect-guidebook-plant-phalanximine =
         [1] Restores
         *[other] restore
     } viability to a plant rendered nonviable by a mutation
+
+entity-effect-guidebook-plant-remove-kudzu =
+    { $chance ->
+        [1] Removes
+        *[other] remove
+    } kudzu weed growth from a plant
 
 entity-effect-guidebook-plant-diethylamine =
     { $chance ->
@@ -500,3 +524,15 @@ entity-effect-guidebook-plant-seeds-remove =
         [1] Removes the
         *[other] remove the
     } seeds of the plant
+
+entity-effect-guidebook-plant-mutate-chemicals =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } a plant to produce {$name}
+
+entity-effect-guidebook-add-reagent-to-bloodstream =
+    { $chance ->
+        [1] Injects
+        *[other] inject
+    } {$quantity} of {$reagent} directly into the bloodstream

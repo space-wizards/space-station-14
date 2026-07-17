@@ -1,13 +1,12 @@
 - type: job
   id: CentralCommandOfficial
-  name: job-name-centcomoff
-  description: job-description-centcomoff
+  name: job-name-centcommoff
+  description: job-description-centcommoff
   playTimeTracker: JobCentralCommandOfficial
   setPreference: false
-  startingGear: CentcomGear
+  startingGear: CentcommGear
   icon: "JobIconNanotrasen"
   supervisors: job-supervisors-hos
-  canBeAntag: false
   accessGroups:
   - AllAccess
   access:
@@ -17,7 +16,7 @@
     implants: [ MindShieldImplant, DeathRattleImplantCentcomm ]
 
 - type: startingGear
-  id: CentcomGear
+  id: CentcommGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
     shoes: ClothingShoesBootsCombatFilled
