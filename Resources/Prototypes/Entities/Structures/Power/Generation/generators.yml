@@ -2,7 +2,7 @@
 
 - type: entity
   abstract: true
-  id: BaseGenerator
+  id: CoreGenerator
   description: A high efficiency thermoelectric generator.
   name: generator
   placement:
@@ -68,8 +68,8 @@
 
 - type: entity
   abstract: true
-  parent: [BaseGenerator, BaseMachine]
-  id: BaseGeneratorStanding
+  parent: [CoreGenerator, BaseMachine]
+  id: BaseGenerator
   components:
   - type: Fixtures
     fixtures:
@@ -88,7 +88,7 @@
 - type: entity
   abstract: true
   id: BaseGeneratorWallmount
-  parent: [ BaseGenerator, BaseWallmount ]
+  parent: [ CoreGenerator, BaseWallmount ]
   name: wallmount generator
   description: A high efficiency thermoelectric generator stuffed in a wall cabinet.
   components:
@@ -151,7 +151,7 @@
 # Generators in use
 
 - type: entity
-  parent: BaseGeneratorStanding
+  parent: BaseGenerator
   id: GeneratorBasic
   suffix: Basic, 3kW
   components:
@@ -159,7 +159,7 @@
     supplyRate: 3000
 
 - type: entity
-  parent: BaseGeneratorStanding
+  parent: BaseGenerator
   id: GeneratorBasic15kW
   suffix: Basic, 15kW
   components:
@@ -167,7 +167,7 @@
       supplyRate: 15000
 
 - type: entity
-  parent: BaseGeneratorWallmount
+  parent: BaseGenerator
   id: GeneratorWallmountBasic
   suffix: Basic, 3kW
   components:
@@ -230,7 +230,7 @@
 # RTG - no fuel requirement
 
 - type: entity
-  parent: BaseGeneratorStanding
+  parent: BaseGenerator
   id: GeneratorRTG
   name: RTG
   description: A Radioisotope Thermoelectric Generator for long term power.

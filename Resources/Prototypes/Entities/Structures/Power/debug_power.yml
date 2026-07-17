@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: DebugGenerator
-  parent: BaseGeneratorStanding
+  parent: BaseGenerator
   suffix: DEBUG
   components:
   - type: PowerSupplier

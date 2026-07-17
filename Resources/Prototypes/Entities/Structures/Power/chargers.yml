@@ -1,7 +1,7 @@
 # Base recharging behaviours
 - type: entity
   abstract: true
-  id: BaseRecharger
+  id: CoreRecharger
   placement:
     mode: SnapgridCenter
   components:
@@ -29,8 +29,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseRecharger
-  id: BaseItemRecharger
+  parent: CoreRecharger
+  id: CoreItemRecharger
   components:
   - type: PowerChargerVisuals
   - type: ContainerContainer
@@ -43,8 +43,8 @@
 # Base physical rechargers
 - type: entity
   abstract: true
-  parent: [BaseRecharger, BaseMachinePowered, ConstructibleMachine]
-  id: BaseRechargerMachine
+  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine]
+  id: BaseRecharger
   components:
   - type: Transform
     anchored: true
@@ -54,8 +54,8 @@
 
 - type: entity
   abstract: true
-  parent: [BaseItemRecharger, BaseMachinePowered, ConstructibleMachine]
-  id: BaseItemRechargerMachine
+  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine]
+  id: BaseItemRecharger
   components:
   - type: Sprite
     drawdepth: SmallObjects
@@ -79,7 +79,7 @@
 
 # Instances
 - type: entity
-  parent: BaseItemRechargerMachine
+  parent: BaseItemRecharger
   id: PowerCellRecharger
   name: cell recharger
   description: An older model recharger that can recharge power cells.
@@ -124,7 +124,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: [ BaseItemRechargerMachine, ConstructibleMachine ]
+  parent: [ BaseItemRecharger, ConstructibleMachine ]
   id: PowerCageRecharger
   name: cage recharger
   description: A specialized machine made for recharging the heavy cage batteries used by ship-mounted weapons.
@@ -165,7 +165,7 @@
     price: 500
 
 - type: entity
-  parent: BaseItemRechargerMachine
+  parent: BaseItemRecharger
   id: WeaponCapacitorRecharger
   name: recharger
   description: A modern recharging station that can fit both power cells and small electronic devices.
@@ -191,7 +191,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: BaseItemRechargerMachine
+  parent: BaseItemRecharger
   id: TurboItemRecharger
   name: turbo recharger
   description: An overclocked recharger. Not recommended for use around asthmatics.
@@ -219,7 +219,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: [ BaseItemRecharger, BaseWallmount ]
+  parent: [ CoreItemRecharger, BaseWallmount ]
   id: WallWeaponCapacitorRecharger
   name: wall recharger
   description: A compact wall-mounted recharger. It can only recharge electronic devices and has no space for power cells.
@@ -247,7 +247,7 @@
           - PotatoBattery
 
 - type: entity
-  parent: BaseRechargerMachine
+  parent: BaseRecharger
   id: BorgCharger
   name: cyborg recharging station
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
