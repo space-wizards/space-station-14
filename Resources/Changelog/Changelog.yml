@@ -4593,3 +4593,123 @@
   id: 9809
   time: '2026-07-07T03:09:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35316
+- author: spderman3333
+  changes:
+  - message: Fixed characters exceeding the maximum character limit not being able to be deleted.
+    type: Fix
+  id: 9810
+  time: '2026-07-08T13:11:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44558
+- author: 0-Anon
+  changes:
+  - message: Added another source of chlorine and mercury in the form of centrifuging pest killer.
+    type: Add
+  id: 9811
+  time: '2026-07-09T00:53:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43725
+- author: ScarKy0
+  changes:
+  - message: Mortar and pestle & handheld juicer audio will no longer loop endlessly.
+    type: Fix
+  id: 9812
+  time: '2026-07-09T16:37:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44574
+- author: mqole
+  changes:
+  - message: Reduced motion effect options have been moved to their own checkboxes. You might need to adjust your settings!
+    type: Tweak
+  id: 9813
+  time: '2026-07-09T16:45:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44589
+- author: psykana
+  changes:
+  - message: Nuclear operatives no longer get a minor win just for surviving. If crew escapes, winner is decided based on the location of the disk.
+    type: Tweak
+  id: 9814
+  time: '2026-07-09T20:52:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39715
+- author: AftrLite
+  changes:
+  - message: Removed straps from backpack sprites
+    type: Tweak
+  id: 9815
+  time: '2026-07-10T02:23:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44583
+- author: CroilBird
+  changes:
+  - message: Canister valve logs now only show gases that were present in the canister mixture.
+    type: Tweak
+  id: 9816
+  time: '2026-07-10T13:00:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44598
+- author: Princess-Cheeseballs
+  changes:
+  - message: Metamorphic glasses are now 30u again allowing bartenders to make 3 drinks per shaker.
+    type: Tweak
+  - message: The salt and pepper requirements for several recipes have been heavily reduced.
+    type: Tweak
+  - message: Butter now requires Cream instead of Milk to create.
+    type: Tweak
+  - message: Sliceable foods now properly retain their parent reagent's contents
+    type: Fix
+  id: 9817
+  time: '2026-07-10T19:51:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44087
+- author: MilenVolf
+  changes:
+  - message: Recycling jackboots / high heels / combat boots with items inside now will drop them instead of deleting.
+    type: Fix
+  id: 9818
+  time: '2026-07-10T20:04:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44486
+- author: Krunklehorn
+  changes:
+  - message: Gyroscopes now throttle down on smaller shuttles, making them much easier to use.
+    type: Add
+  id: 9819
+  time: '2026-07-11T04:23:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37419
+- author: slarticodefast
+  changes:
+  - message: Fixed multiple popups revealing the player's identity if it is hidden.
+    type: Fix
+  id: 9820
+  time: '2026-07-11T14:28:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44572
+- author: B_Kirill
+  changes:
+  - message: Fixed client mispredicts when moving multiple items into or out of storage at once.
+    type: Fix
+  id: 9821
+  time: '2026-07-11T14:43:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44612
+- author: insoPL
+  changes:
+  - message: Borgs drop materials on module removal
+    type: Tweak
+  - message: Borgs no longer drop default modules on gib
+    type: Tweak
+  id: 9822
+  time: '2026-07-11T16:56:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43876
+- author: Crotalus
+  changes:
+  - message: Add filtering / sorting support to end of round player manifest
+    type: Tweak
+  id: 9823
+  time: '2026-07-11T20:49:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39165
+- author: Ewanderer
+  changes:
+  - message: You can no longer blow yourself up with the micro bomb implant while pacified.
+    type: Tweak
+  id: 9824
+  time: '2026-07-11T22:09:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44198
+- author: Coolsurf6
+  changes:
+  - message: Removed liquid gas canisters from being purchased by Cargo.
+    type: Remove
+  id: 9825
+  time: '2026-07-12T21:02:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44587

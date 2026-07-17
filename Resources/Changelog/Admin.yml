@@ -1831,5 +1831,21 @@ Entries:
   id: 225
   time: '2026-07-08T08:50:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44373
+- author: Errant-4
+  changes:
+  - message: The F7 playertab's filter now also works with role (Crew Aligned, Team Antagonist etc) and role subtype (Traitor, Zombie etc).
+    type: Tweak
+  id: 226
+  time: '2026-07-09T18:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44592
+- author: w3ryfrate
+  changes:
+  - message: Added "togglechat" command to easily toggle dead, ooc and looc channels on/off.
+    type: Add
+  - message: Removed commands "setdeadchat", "setlooc" and "setooc."
+    type: Remove
+  id: 227
+  time: '2026-07-13T06:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44480
 Name: Admin
 Order: 3
