@@ -1,15 +1,3 @@
-metabolizer-type-animal = Animal
-metabolizer-type-bloodsucker = Bloodsucker
-metabolizer-type-dragon = Dragon
-metabolizer-type-human = Human
-metabolizer-type-slime = Slime
-metabolizer-type-vox = Vox
-metabolizer-type-rat = Rat
-metabolizer-type-plant = Plant
-metabolizer-type-dwarf = Dwarf
-metabolizer-type-moth = Moth
-metabolizer-type-arachnid = Arachnid
-
 metabolizer-type-alcohol-resistant = alcohol-resistant
 metabolizer-type-water-allergic = water-allergic
 metabolizer-type-poison-resistant = poison-resistant
