@@ -215,11 +215,10 @@ public abstract partial class SharedStackSystem : EntitySystem
             args.Verbs.Add(verb);
         }
 
-        // round up on odd
-        int half = (ent.Comp.Count + 1) / 2;
         if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
             return;
 
+        int half = (ent.Comp.Count + 1) / 2;
         AlternativeVerb halve = new()
         {
             Text = Loc.GetString("comp-stack-split-halve"),
@@ -257,7 +256,6 @@ public abstract partial class SharedStackSystem : EntitySystem
         // Not an early return so that they can share visuals i.e. popups.
         if (
             !_hands.TryGetActiveItem(user.Owner, out var split)
-            || !TryComp<StackComponent>(split, out var splitStack)
             || !TryMergeStacks((stack.Owner, stack.Comp), split.Value, out var transferred, amount: amount)
         )
         {
