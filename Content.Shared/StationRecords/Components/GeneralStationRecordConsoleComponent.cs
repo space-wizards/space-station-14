@@ -1,9 +1,8 @@
-using Content.Server.StationRecords.Systems;
-using Content.Shared.StationRecords;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.StationRecords.Components;
+namespace Content.Shared.StationRecords.Components;
 
-[RegisterComponent, Access(typeof(GeneralStationRecordConsoleSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class GeneralStationRecordConsoleComponent : Component
 {
     /// <summary>
@@ -22,6 +21,6 @@ public sealed partial class GeneralStationRecordConsoleComponent : Component
     /// <summary>
     /// Whether this Records Console is able to delete entries.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanDeleteEntries;
 }

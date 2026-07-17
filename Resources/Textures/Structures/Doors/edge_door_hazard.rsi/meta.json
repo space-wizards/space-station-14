@@ -8,81 +8,11 @@
     },
     "states": [
         {
-            "name": "alert_cold",
-            "directions": 4,
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
-        },
-        {
-            "name": "alert_hot",
-            "directions": 4,
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
-        },
-        {
-            "name": "closed",
-            "directions": 4
+            "name": "closed"
         },
         {
             "name": "closing",
-            "directions": 4,
             "delays": [
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
                 [
                     0.2,
                     0.2,
@@ -94,45 +24,17 @@
             ]
         },
         {
-            "name": "deny",
-            "directions": 4
+            "name": "deny"
         },
         {
-            "name": "locked",
-            "directions": 4
+            "name": "locked"
         },
         {
-            "name": "open",
-            "directions": 4
+            "name": "open"
         },
         {
             "name": "opening",
-            "directions": 4,
             "delays": [
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
-                [
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2,
-                    0.2
-                ],
                 [
                     0.2,
                     0.2,
@@ -145,20 +47,7 @@
         },
         {
             "name": "palert",
-            "directions": 4,
             "delays": [
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
-                [
-                    0.5,
-                    0.5
-                ],
                 [
                     0.5,
                     0.5
@@ -197,20 +86,16 @@
             ]
         },
         {
-            "name": "welded",
-            "directions": 4
+            "name": "pressure_unlit"
         },
         {
-            "name": "welded_open",
-            "directions": 4
+            "name": "temperature_unlit"
         },
         {
-            "name": "pressure_unlit",
-            "directions": 4
+            "name": "welded"
         },
         {
-            "name": "temperature_unlit",
-            "directions": 4
+            "name": "welded_open"
         }
     ]
 }
