@@ -213,9 +213,7 @@ public sealed partial class SpaceVillainGame
     private bool CheckGameConditions(EntityUid uid, SpaceVillainArcadeComponent arcade)
     {
         if (arcade.UncappedFlag)
-        {
             return true;
-        }
 
         switch (
             PlayerChar.Hp > 0 && PlayerChar.Mp > 0,

@@ -18,9 +18,7 @@ public sealed partial class SpaceVillainGame
             {
                 _hp = value;
                 if (!Uncapped)
-                {
                     _hp = MathHelper.Clamp(_hp, 0, HpMax);
-                }
             }
         }
         private int _hp;
@@ -35,7 +33,7 @@ public sealed partial class SpaceVillainGame
             set
             {
                 _hpMax = Math.Max(value, 0);
-                Hp = _hp;  // Re-clamp the HP value
+                Hp = _hp; // Re-clamp the HP value
             }
         }
         private int _hpMax;
@@ -51,9 +49,7 @@ public sealed partial class SpaceVillainGame
             {
                 _mp = value;
                 if (!Uncapped)
-                {
                     _mp = MathHelper.Clamp(_mp, 0, MpMax);
-                }
             }
         }
         private int _mp;
