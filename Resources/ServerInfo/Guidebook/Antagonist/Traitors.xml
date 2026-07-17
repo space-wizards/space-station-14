@@ -24,7 +24,7 @@
     <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Uplink Implant"/>
   </Box>
 
-  [bold]Make sure to close your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to notice you have it and confiscate it from you!
+  [bold]Make sure to lock your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to notice you have it and confiscate it from you!
 
   Implanted uplinks are not normally accessible to other people, so they do not have any security measures. They can, however, be removed from you with an empty implanter.
 
@@ -43,7 +43,7 @@
     <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Pointless"/>
   </Box>
 
-  The purchases that you make should be to help you with your objectives. Some gear may not be of use to you, and you'll have to choose between being sneaky or going loud.
+  The purchases that you make should be to help you with your objectives, but remember to buy wisely, as anything you buy is non-refundable. Some gear may not be of use to you, and you'll have to choose between being sneaky or going loud.
 
   If you do not have a PDA when you are activated, an [color=cyan]uplink implant[/color] is provided [bold]for the full [color=red]TC[/color] price of the implant.[/bold] It can be accessed from your hotbar.
 
@@ -63,7 +63,64 @@
 
   Remember, the Syndicate want only your targets dead. [color=red]Try to avoid mass murder or major damage to the station,[/color] as the more innocent lives you take, the more of a liability you become.
 
-  ## Evasion & Self-Termination
+  ## Evasion
+  You will not always be successful in perfectly blending in with the crew, as there are many options the crew can use to expose you. Sometimes, you may have to run from crewmembers who want to capture you. Fortunately, there are ways of lowering your chances of being exposed, caught, and ways of blending in with the crew once more.
+
+  - Your character has its own unique fingerprint. If you are not wearing gloves, any objects you touch will leave your fingerprint on it. If [color=#cb0000]someone[/color] was to use a forensic scanner on these objects, it would allow them to trace the fingerprint(s) on the item back to the people the prints belong to.
+    - However, you can counter this by wearing gloves to conceal your fingerprints or using soap to remove evidence off objects.
+    - If you have access to your uplink, and have at least three telecrystals, you could use these methods:
+      - You can buy an Agent ID, copy access from other IDs, change the name of the ID to other crewmembers or an anonymous name, and use it to access areas of the station without being traced back to you.
+      - While it is not recommended, if you have access to your uplink, and have at least three telecrystals, you can buy a DNA Scrambler implanter from your uplink and use it to modify your DNA (and completely change your look), but this should only be used as a last resort, and planned ahead for.
+
+  - IDs used to access airlocks are logged by those same airlocks. Anyone with the LogProbe app can download logs from airlocks to see who accessed the airlock and the time it was accessed.
+    - You can access airlocks with IDs that are not yours, preventing anyone from tracing the logs back to you.
+    - Forcefully opening airlocks with a Jaws of Life can be used as an alternative if you do not have an ID with proper access. However, this is very slow if the airlock is powered.
+    - If you can cut power to airlocks, you can open them without an ID as long as it is not bolted.
+
+  - There are surveillance cameras that can be found on the station, which are used by the station's A.I to see around the station or for crew to use as a way for monitoring areas with cameras. This can be used against others as a way for locating you, or the other way around.
+    - Cameras require power to operate, so cutting power to the area through power cables, substations, or through other means will disable them.
+    - The use of disguises, such as a [color=cyan]chameleon projector[/color], chameleon clothing, or simply changing around your look can be used to avoid being recognized by others. Just remember to wear a mask, as your face can instantly give away your identity.
+    - If you have access to your uplink, and have at least six telecrystals, you can buy a DNA Scrambler implanter from your uplink and use it to modify your DNA and completely change your look, and buy an Agent ID to change your name and job title.
+
+  - If you are caught and being pursued by Security, there are methods to avoid being caught, or at least lowering your chances of being captured and detained. Some require getting your hands dirty, while others are more subtle and rewarding.
+    - Avoid wearing, holding, or pulling anything that lowers your movement speed.
+      - Duffelbags, hardsuits or spacesuits, active magboots, and certain other wearable items can slow you down, regardless of whether they're being worn, held, or pulled.
+      - Not all pullable objects will slow you down, but if you're pulling an object you cannot hold in your hands, it likely will slow you down.
+      - If you are severely damaged, your movement speed will be lowered. If you know you may be forced to escape from crewmembers, you should get medical help, and stay away from any harmful situations.
+    - Use the station itself to your advantage
+      - You can make use of rooms or objects to hide in.
+        - Closets, crates, and other objects that you can fit inside of can be used to hide inside of.
+        - Hiding inside of rooms, especially ones that crewmembers pursuing you cannot access, can buy you time or help you entirely lose those chasing you.
+        - You can pull objects you pass by (canisters, closets, crates, unwrenched walls, etc) behind you, creating obstacles crewmembers following you have to pull out the way, or force them to find a way around.
+      - Take some slippery or stunning objects. They even cause your target to drop what's in their hands.
+        - Soap, bananas, and other items with a slippery characteristic can give you a few extra seconds to get away from others.
+        - Pies, bolas, flashes, and other certain items can be used to stun and force someone to collapse.
+    - Your uplink has plenty of tools that may serve you well in evading security.
+      - Buying a chameleon kit and Agent ID opens up opportunities for disguise, especially under heat. If you can buy yourself enough time in hiding, switching out your clothing and ID can allow you to walk back out into the halls without anyone noticing at thing about you. Just make sure your head is *entirely* hidden and your ID is configured correctly.
+      - Syndicate soap can be bought for one telecrystal. If a crew member without any form of slip protection runs over it, they will slip and fall, becoming stunned for five seconds, taking an extra second to recover and get up. The soap also does 50 stamina damage, providing you a stamina advantage, and opens up the opportunity of using the soap again or stunning the person yourself.
+        - The Slipocalypse Clustersoap is better fit for a group of crewmembers chasing you. While the stun time is severely lowered to half a second, you will be able to cover more ground with its explosive spread of small soaplets that.
+      - Access breakers allow you to bolt open and remove access from airlocks, allowing you to pass through and continue moving without roadblocks. However, it has a maximum of three charges, and has a slowly recharge. Use it wisely.
+      - Hyperzine injectors, if used, makes you faster in movement speed, modifies the maximum stamina your character has, removes 3.5 seconds of stun, knockdown, and forced sleep on your character, and causes the adrenaline effect, which helps your character keep moving fast, even if your body is weakened. Hyperzine also lowers the effects of drowsiness, chloral hydrate, and reduces bleeding.
+        - If you are put into critical condition, your hyperzine will evenly heal 0.5 Burn and Brute damage, as well as two Asphyxiation damage.
+        - If your character has narcolepsy, hyperzine will temporarily starve it off for as long as it's in your body.
+        - Be sure to avoid using the Hyperzine injector too much, as 45 units of hyperzine will overdose your character. Wait until you stop jittering and feeling the effects of Hyperzine before injecting yourself again.
+      - Get creative! There a plenty of tools and items in your uplink that can cater to your needs. Be sure to spend them wisely, and make do with what you can to the best of your ability.
+    - Get physical.
+      - Plenty of objects in Space Station 14 can be used as a means of self-defense or getting crewmembers off of you. Even your own body may be able to save you in a time of need.
+        - Glass shards, broken bottles or lights, high-heeled boots, or even a cane can be used in a pinch as a weapon. Even other items that may seem useless could help you as a way to do some damage.
+        - By pressing [color=yellow][bold][keybind="OpenCraftingMenu"][/bold][/color] on your keyboard or clicking on your crafting menu button, you can get crafty and construct weaponry such as bats, spears, improvised ranged weapons, explosives, ammunition, etc.
+        - Find stronger melee weaponry, like knives, swords, knuckle dusters, and plenty of others.
+        - If you can get your hands on it, guns will do you well against others. All guns have their own level of effectiveness. Some will only do a small favor for you, while others may give you a heavy hand.
+        - Use your uplink in exchange for telecrystals
+          - Buy a weapon or two from your uplink in exchange for some telecrystals. From a simple energy dagger or Kardashev-Mosin to a energy sword or Bulldog.
+          - Explosives or allies may do the job as well when it comes to distractions.
+          - Implants may be able to help you get away faster or buy you extra time.
+        - As a last resort if you have no other choice, crack those knuckles and get ready to put on a show with fists and shoving. It's unoptimal, but it may save you.
+    - Do your own thing!
+      - There are plenty of other ways to evade detection and escape from the clutches of your doom. In fact, you could disregard this part and go loud to make things interesting for roleplay.
+
+  ## Objectives
+  Objectives are randomized tasks you are given to complete as a traitor, but they also act as suggestions for how you should play your role. You may be required to harm, kill, steal, or cause other issues for the station and its crew. You may also be required to help other traitors with their objectives. Sometimes you may have to complete your objectives whi
   Your objectives may require you to [italic][color=cyan]make it to CentComm without being killed or captured.[/color][/italic] Don't let [color=#cb0000]Security[/color] stop you, complete your other objectives and [bold]come back alive.[/bold]
 
   Alternatively, your objectives may require you to [italic][color=cyan]die a glorious death[/color][/italic]. It is up to you for deciding how you will die, meaning that mass-murder, station destruction, etc, are permitted. However, [bold]make sure you don't come back from the dead,[/bold] or else, you may wake up in cuffs.
