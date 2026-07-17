@@ -77,7 +77,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
                 continue;
 
             temp.NextSlowdownUpdate = null;
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, movement);
+            _movementSpeedModifier.RefreshMovementSpeedModifiers((uid, movement));
             Dirty(uid, temp);
         }
     }

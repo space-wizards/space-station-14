@@ -303,11 +303,6 @@ public abstract partial class SharedMoverController : VirtualController
         // If you want to slow down an entity with "friction" you shouldn't be using this system.
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
-
-        var wishEv = new ModifyMovementTargetDirectionEvent(wishDir);
-        RaiseLocalEvent(entity, ref wishEv);
-        wishDir = wishEv.WishDir;
-
         friction = Math.Max(friction, _minDamping);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);

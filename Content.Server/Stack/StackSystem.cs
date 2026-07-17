@@ -1,3 +1,5 @@
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -12,13 +14,18 @@ namespace Content.Server.Stack
     [UsedImplicitly]
     public sealed partial class StackSystem : SharedStackSystem
     {
+        [Dependency] private SharedHandsSystem _hands = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+
+        [Dependency] private EntityQuery<StackComponent> _stackQuery;
+
         #region Spawning
 
         /// <inheritdoc />
         [PublicAPI]
         public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
         {
-            if (!Resolve(ent.Owner, ref ent.Comp))
+            if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
                 return null;
 
             // Try to remove the amount of things we want to split from the original stack...
@@ -35,7 +42,7 @@ namespace Content.Server.Stack
             Xform.SetParent(newEntity, spawnPosition.EntityId);
 
             // There should always be a StackComponent
-            var stackComp = Comp<StackComponent>(newEntity);
+            var stackComp = _stackQuery.Comp(newEntity);
 
             SetCount((newEntity, stackComp), amount);
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks

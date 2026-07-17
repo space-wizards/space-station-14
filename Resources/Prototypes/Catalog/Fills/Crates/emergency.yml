@@ -42,7 +42,7 @@
   parent: CrateInternals
   id: CrateEmergencyInternals
   name: internals crate
-  description: Master your life energy and control your breathing with three breath masks, three gas masks, three emergency EVA suits, three oxygen tanks, and three nitrogen tanks.
+  description: Master your life energy and control your breathing with three breath masks, three gas masks, three emergency pressure suits, three oxygen tanks, and three nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -63,7 +63,7 @@
   parent: CrateInternals
   id: CrateEmergencyInternalsLarge
   name: internals crate (large)
-  description: Master your life energy and control your breathing with six breath masks, six gas masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
+  description: Master your life energy and control your breathing with six breath masks, six gas masks, six emergency pressure suits, six oxygen tanks, and six nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
