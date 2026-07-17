@@ -4,6 +4,11 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Instruments.UI;
 
+/// <summary>
+/// A type of <see cref="BoxContainer"/> to be added to the <see cref="InstrumentMenu"/> for displaying and handling
+/// all necessary controls regarding a certain type of MIDI input (i.e.: Files, Bands, Hardware input).
+/// Must be initialized and registered to the menu inside <see cref="InstrumentBoundUserInterface"/>.
+/// </summary>
 [GenerateTypedNameReferences]
 public abstract partial class InstrumentMidiSourceBase : BoxContainer
 {
