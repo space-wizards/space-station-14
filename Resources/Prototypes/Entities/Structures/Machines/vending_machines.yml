@@ -1,11 +1,11 @@
 ﻿# base
 
 - type: entity
-  id: VendingMachine
+  abstract: true
   parent: BaseMachinePowered
+  id: VendingMachine
   name: vending machine
   description: Just add capitalism!
-  abstract: true
   components:
   - type: ActionGrant
     actions:
@@ -108,8 +108,8 @@
   - type: WiresVisuals
 
 - type: entity
-  id: VendingMachineWallmount
   parent: BaseWallmountMachine
+  id: VendingMachineWallmount
   name: vending machine
   abstract: true
   components:
@@ -169,7 +169,6 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: Rotatable
 
 # Vending machines
 

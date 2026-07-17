@@ -83,11 +83,11 @@
     - Wallmount
 
 - type: entity
+  parent: AlwaysPoweredWallLight
+  id: PoweredlightEmpty
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
-  id: PoweredlightEmpty
   suffix: Empty
-  parent: AlwaysPoweredWallLight
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
@@ -128,10 +128,10 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredlightEmpty
   id: Poweredlight
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: ""
-  parent: PoweredlightEmpty
   components:
   - type: Sprite
     state: base
@@ -153,10 +153,10 @@
 
 #LED lights
 - type: entity
+  parent: Poweredlight
   id: PoweredlightLED
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: LED
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LedLightTube
@@ -184,10 +184,10 @@
 
 #Exterior lights
 - type: entity
+  parent: Poweredlight
   id: PoweredlightExterior
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: Exterior
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: ExteriorLightTube
@@ -210,10 +210,10 @@
 
 #Sodium lights
 - type: entity
+  parent: Poweredlight
   id: PoweredlightSodium
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
   suffix: Sodium
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: SodiumLightTube
@@ -241,11 +241,11 @@
 
 #Small lights
 - type: entity
+  parent: AlwaysPoweredWallLight
+  id: SmallLight
   name: small light
   description: "An always powered light."
-  id: SmallLight
   suffix: Always Powered
-  parent: AlwaysPoweredWallLight
   components:
     - type: AmbientSound
       volume: -15
@@ -295,11 +295,11 @@
       node: bulbLight
 
 - type: entity
+  parent: SmallLight
+  id: PoweredSmallLightEmpty
   name: small light
   description: "A light fixture. Draws power and produces light when equipped with a light bulb."
-  id: PoweredSmallLightEmpty
   suffix: Empty
-  parent: SmallLight
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
@@ -341,9 +341,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredSmallLightEmpty
   id: PoweredLEDSmallLight
   suffix: LED
-  parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
     state: base
@@ -362,9 +362,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredSmallLightEmpty
   id: PoweredDimSmallLight
   suffix: Dim
-  parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
     state: base
@@ -383,9 +383,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredSmallLightEmpty
   id: PoweredWarmSmallLight
   suffix: Warm
-  parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
     state: base
@@ -404,9 +404,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: PoweredSmallLightEmpty
   id: PoweredSmallLight
   suffix: ""
-  parent: PoweredSmallLightEmpty
   components:
   - type: Sprite
     state: base
@@ -422,10 +422,10 @@
 
 #Emergency Lights
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: EmergencyLight
   name: emergency light
   description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
-  parent: AlwaysPoweredWallLight
   suffix: ""
   components:
   - type: PointLight
@@ -492,9 +492,9 @@
 #Coloured lights
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightCyan
   suffix: Cyan
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalCyan
@@ -510,9 +510,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightCyan
   suffix: Always Powered, Cyan
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -521,9 +521,9 @@
     color: "#47f8ff"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightBlue
   suffix: Blue
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalBlue
@@ -539,9 +539,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightBlue
   suffix: Always Powered, Blue
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -550,9 +550,9 @@
     color: "#39a1ff"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightYellow
   suffix: Yellow
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalYellow
@@ -568,9 +568,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightYellow
   suffix: Always Powered, Yellow
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -579,9 +579,9 @@
     color: "#ffde46"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightPink
   suffix: Pink
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalPink
@@ -597,9 +597,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightPink
   suffix: Always Powered, Pink
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -608,9 +608,9 @@
     color: "#ff66cc"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightOrange
   suffix: Orange
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalOrange
@@ -626,9 +626,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightOrange
   suffix: Always Powered, Orange
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -637,9 +637,9 @@
     color: "#ff8227"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightBlack
   suffix: Black
-  parent: Poweredlight
   description:
   components:
   - type: PoweredLight
@@ -656,9 +656,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightBlack
   suffix: Always Powered, Black
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -667,9 +667,9 @@
     color: "#363636"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightRed
   suffix: Red
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalRed
@@ -685,9 +685,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightRed
   suffix: Always Powered, Red
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
@@ -696,9 +696,9 @@
     color: "#fb4747"
 
 - type: entity
+  parent: Poweredlight
   id: PoweredlightGreen
   suffix: Green
-  parent: Poweredlight
   components:
   - type: PoweredLight
     hasLampOnSpawn: LightTubeCrystalGreen
@@ -714,9 +714,9 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  parent: AlwaysPoweredWallLight
   id: AlwaysPoweredlightGreen
   suffix: Always Powered, Green
-  parent: AlwaysPoweredWallLight
   components:
   - type: PointLight
     radius: 8
