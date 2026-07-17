@@ -151,7 +151,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Arachnid ]
+    metabolizerTypes: [ CopperBlood, OxygenRespirate, CarbonDioxideExhale, SpiderDigestion ]
 
 - type: entity
   parent: OrganArachnid

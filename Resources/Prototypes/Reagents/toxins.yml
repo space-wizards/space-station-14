@@ -412,7 +412,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
+          type: [ AnimalDiet ] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
             Poison: 0.4
@@ -420,7 +420,7 @@
         probability: 0.04 #Scaled for time, not metabolismrate.
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [Animal]
+            type: [ AnimalDiet ]
 
 - type: reagent
   id: Amatoxin
@@ -488,7 +488,7 @@
       - !type:PopupMessage
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox ]
+          type: [ AnimalDiet, TrashDiet ]
           inverted: true
         type: Local
         visualType: MediumCaution
@@ -498,12 +498,12 @@
         probability: 0.1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant ]
+          type: [ AnimalDiet, TrashDiet, PlantDiet ]
           inverted: true
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal, Vox, Plant ]
+          type: [ AnimalDiet, TrashDiet, PlantDiet ]
           inverted: true
         damage:
           types:
@@ -511,20 +511,20 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Plant ]
+          type: [ PlantDiet ]
         damage:
           types:
             Poison: .25
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ AnimalDiet ]
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Vox ]
+          type: [ TrashDiet ]
         reagent: Protein
         amount: 0.25
 
@@ -546,7 +546,7 @@
           reagent: Allicin
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [Animal]
+          type: [ AnimalDiet ]
         damage:
           types:
             Poison: 0.06
@@ -593,7 +593,7 @@
           reagent: Honk
           min: 1
         - !type:MetabolizerTypeCondition
-          type: [ Animal ]
+          type: [ AnimalDiet ]
         damage:
           types:
             Poison: 0.06
@@ -721,7 +721,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Arachnid]
+          type: [ SpiderDigestion ]
           inverted: true
         damage:
           types:
@@ -732,7 +732,7 @@
           reagent: Mechanotoxin
           min: 2
         - !type:MetabolizerTypeCondition
-          type: [Arachnid]
+          type: [ SpiderDigestion ]
           inverted: true
         walkSpeedModifier: 0.8
         sprintSpeedModifier: 0.8
@@ -742,7 +742,7 @@
           reagent: Mechanotoxin
           min: 4
         - !type:MetabolizerTypeCondition
-          type: [Arachnid]
+          type: [ SpiderDigestion ]
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
@@ -761,7 +761,7 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Vox]
+          type: [ TrashDiet ]
 
 - type: reagent
   id: Hemorrhinol

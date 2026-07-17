@@ -23,12 +23,12 @@
         factor: 1.0
         conditions:
           - !type:MetabolizerTypeCondition
-            type: [ Human ]
+            type: [ FerrousBlood ]
             inverted: true
       - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Bloodsucker ]
+          type: [ BloodDiet ]
         damage:
           Brute: -3
           Burn: -1.25
@@ -78,13 +78,13 @@
         factor: 1
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ SlimeBlood ]
           inverted: true
       - !type:ModifyBloodLevel
         amount: 0.5 # drawing 15u removes 5% blood level from a slimeperson, this will add 5% when injecting 15u
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [Slime]
+          type: [ SlimeBlood ]
   footstepSound:
     collection: FootstepSlime # makes sense
     params:

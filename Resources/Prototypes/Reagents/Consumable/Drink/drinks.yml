@@ -445,7 +445,7 @@
         ignoreResistances: true
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Slime ]
+          type: [ WaterAllergic ]
         damage:
           types:
             Heat: 3

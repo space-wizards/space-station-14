@@ -207,7 +207,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Moth ]
+    metabolizerTypes: [ OxygenRespirate, CarbonDioxideExhale, FiberDiet ]
 
 - type: entity
   parent: OrganMoth

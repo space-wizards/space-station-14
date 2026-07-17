@@ -112,7 +112,7 @@
   - type: Metabolizer
     solutionOnBody: false
     updateInterval: 0.25
-    metabolizerTypes: [ Dragon ]
+    metabolizerTypes: [ ]
     stages: [ Digestion, Bloodstream ]
   - type: ToolRefinable
     refineResult:

@@ -1,46 +1,131 @@
 # If your species wants to metabolize stuff differently,
 # you'll likely have to tag its metabolizers with something other than Human.
 
-- type: metabolizerType
-  id: Animal
-  name: metabolizer-type-animal
+#- type: metabolizerType
+#  id: Animal
+#  name: metabolizer-type-animal
+#
+#- type: metabolizerType
+#  id: Bloodsucker
+#  name: metabolizer-type-bloodsucker
+#
+#- type: metabolizerType
+#  id: Dragon
+#  name: metabolizer-type-dragon
+#
+#- type: metabolizerType
+#  id: Human
+#  name: metabolizer-type-human
+#
+#- type: metabolizerType
+#  id: Slime
+#  name: metabolizer-type-slime
+#
+#- type: metabolizerType
+#  id: Vox
+#  name: metabolizer-type-vox
+#
+#- type: metabolizerType
+#  id: Rat
+#  name: metabolizer-type-rat
+#
+#- type: metabolizerType
+#  id: Plant
+#  name: metabolizer-type-plant
+#
+#- type: metabolizerType
+#  id: Dwarf
+#  name: metabolizer-type-dwarf
+#
+#- type: metabolizerType
+#  id: Moth
+#  name: metabolizer-type-moth
+#
+#- type: metabolizerType
+#  id: Arachnid
+#  name: metabolizer-type-arachnid
 
 - type: metabolizerType
-  id: Bloodsucker
-  name: metabolizer-type-bloodsucker
+  id: AlcoholResistant
+  name: metabolizer-type-alcohol-resistant
 
 - type: metabolizerType
-  id: Dragon
-  name: metabolizer-type-dragon
+  id: WaterAllergic
+  name: metabolizer-type-water-allergic
 
 - type: metabolizerType
-  id: Human
-  name: metabolizer-type-human
+  id: PoisonResistant
+  name: metabolizer-type-poison-resistant
 
 - type: metabolizerType
-  id: Slime
-  name: metabolizer-type-slime
+  id: FerrousBlood
+  name: metabolizer-type-ferrous-blood
 
 - type: metabolizerType
-  id: Vox
-  name: metabolizer-type-vox
+  id: BloodDiet
+  name: metabolizer-type-blood-diet
 
 - type: metabolizerType
-  id: Rat
-  name: metabolizer-type-rat
+  id: SlimeBlood
+  name: metabolizer-type-slime-blood
 
 - type: metabolizerType
-  id: Plant
-  name: metabolizer-type-plant
+  id: PlantDiet
+  name: metabolizer-type-plant-diet
 
 - type: metabolizerType
-  id: Dwarf
-  name: metabolizer-type-dwarf
+  id: AmmoniaHeal
+  name: metabolizer-type-ammonia-heal
 
 - type: metabolizerType
-  id: Moth
-  name: metabolizer-type-moth
+  id: AmmoniaExhale
+  name: metabolizer-type-ammonia-exhale
 
 - type: metabolizerType
-  id: Arachnid
-  name: metabolizer-type-arachnid
+  id: CopperBlood
+  name: metabolizer-type-copper-blood
+
+- type: metabolizerType
+  id: FiberDiet
+  name: metabolizer-type-fiber-diet
+
+- type: metabolizerType
+  id: WehImmune
+  name: metabolizer-type-weh-immune
+
+- type: metabolizerType
+  id: OxygenRespirate
+  name: metabolizer-type-oxygen-respirate
+
+- type: metabolizerType
+  id: CarbonDioxideExhale
+  name: metabolizer-type-carbon-dioxide-exhale
+
+- type: metabolizerType
+  id: OxygenAllergic
+  name: metabolizer-type-oxygen-allergic
+
+- type: metabolizerType
+  id: CarbonDioxideRespirate
+  name: metabolizer-type-carbon-dioxide-respirate
+
+- type: metabolizerType
+  id: NitrogenRespirate
+  name: metabolizer-type-nitrogen-respirate
+
+- type: metabolizerType
+  id: NitrousOxideExhale
+  name: metabolizer-type-nitrous-oxide-exhale
+
+- type: metabolizerType
+  id: TrashDiet
+  name: metabolizer-type-trash-diet
+
+- type: metabolizerType
+  id: AnimalDiet
+  name: metabolizer-type-animal-diet
+
+- type: metabolizerType
+  id: SpiderDigestion
+  name: metabolizer-type-spider-digestion
+

@@ -179,7 +179,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Plant ]
+    metabolizerTypes: [ OxygenRespirate, CarbonDioxideExhale, CarbonDioxideRespirate, PlantDiet ]
 
 - type: entity
   parent: OrganDiona

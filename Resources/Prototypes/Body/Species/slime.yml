@@ -182,7 +182,7 @@
   abstract: true
   components:
   - type: Metabolizer
-    metabolizerTypes: [ Slime ]
+    metabolizerTypes: [ SlimeBlood, NitrogenRespirate, NitrousOxideExhale, PoisonResistant, WaterAllergic ]
 
 - type: entity
   parent: OrganSlimePerson
@@ -257,7 +257,7 @@
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6
-    metabolizerTypes: [ Slime ]
+    metabolizerTypes: [ SlimeBlood, NitrogenRespirate, NitrousOxideExhale, PoisonResistant ]
     stages: [ Digestion, Bloodstream, Metabolites ]
 
 - type: entity
