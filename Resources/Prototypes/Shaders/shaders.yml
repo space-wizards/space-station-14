@@ -99,6 +99,16 @@
   kind: source
   path: "/Textures/Shaders/hcut.swsl"
 
+# Horizontal waterline cut with optional surface tint (post-shader UV padding aware)
+- type: shader
+  id: WaterDepthCut
+  kind: source
+  path: "/Textures/Shaders/water_depth_cut.swsl"
+  params:
+    CutHeight: 0.35
+    WaterTint: 0.12, 0.42, 0.52, 0.5
+
+
 # Stylized simulation of blindness
 - type: shader
   id: Cataracts

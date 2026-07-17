@@ -1,0 +1,21 @@
+light_mode unshaded;
+
+uniform highp float CutHeight;
+uniform highp vec4 WaterTint;
+
+void fragment()
+{
+    highp vec4 tex = zTexture(UV);
+    highp float spriteCut = clamp(CutHeight, 0.0, 1.0);
+
+    // Robust enlarges sprite post-shader targets to 125% of the sprite bounds.
+    // The sprite occupies the middle 80% of the target, with 10% padding on each edge.
+    highp float waterline = 0.1 + spriteCut * 0.8;
+
+    // UV space belongs to the post-render target, so this remains screen-horizontal even when the entity turns.
+    highp float visible = UV.y > waterline ? 1.0 : 0.0;
+    highp float surfaceBand = 1.0 - smoothstep(waterline, waterline + 0.044, UV.y);
+    highp vec3 tinted = mix(tex.rgb, WaterTint.rgb, surfaceBand * WaterTint.a);
+    // Post-shaders must output transparent pixels to erase the sprite render target; discard preserves it.
+    COLOR = vec4(tinted, tex.a * visible);
+}

@@ -8,8 +8,12 @@ namespace Content.Client.Movement.Systems;
 
 public sealed class FloorOcclusionSystem : SharedFloorOcclusionSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    private static readonly ProtoId<ShaderPrototype> HorizontalCut = "HorizontalCut";
 
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    private readonly Dictionary<EntityUid, ShaderInstance> _occlusionPostShaders = new();
     private EntityQuery<SpriteComponent> _spriteQuery;
 
     public override void Initialize()
@@ -46,20 +50,24 @@ public sealed class FloorOcclusionSystem : SharedFloorOcclusionSystem
     private void SetShader(Entity<SpriteComponent?> sprite, bool enabled)
     {
         if (!_spriteQuery.Resolve(sprite.Owner, ref sprite.Comp, false))
-            return;
+        {
+            if (!enabled)
+                _occlusionPostShaders.Remove(sprite.Owner);
 
-        var shader = _proto.Index<ShaderPrototype>("HorizontalCut").Instance();
-
-        if (sprite.Comp.PostShader is not null && sprite.Comp.PostShader != shader)
             return;
+        }
 
         if (enabled)
         {
-            sprite.Comp.PostShader = shader;
+            if (!_occlusionPostShaders.TryGetValue(sprite.Owner, out var shader))
+            {
+                shader = _proto.Index(HorizontalCut).InstanceUnique();
+                _occlusionPostShaders.Add(sprite.Owner, shader);
+            }
+
+            _sprite.AddPostShader(sprite, shader);
         }
-        else
-        {
-            sprite.Comp.PostShader = null;
-        }
+        else if (_occlusionPostShaders.Remove(sprite.Owner, out var occlusionShader))
+            _sprite.RemovePostShader(sprite, occlusionShader);
     }
 }
