@@ -102,6 +102,10 @@
   components:
   - type: Organ
     category: ArmLeft
+  - type: HandOrgan
+    handID: left
+    data:
+      location: Left
   - type: Sprite
     state: l_arm
   - type: VisualOrgan
@@ -121,6 +125,10 @@
   components:
   - type: Organ
     category: ArmRight
+  - type: HandOrgan
+    handID: right
+    data:
+      location: Right
   - type: Sprite
     state: r_arm
   - type: VisualOrgan
@@ -131,52 +139,6 @@
     markingData:
       layers:
       - RArm
-
-- type: entity
-  parent: OrganBase
-  id: OrganBaseHandLeft
-  name: left hand
-  abstract: true
-  components:
-  - type: Organ
-    category: HandLeft
-  - type: HandOrgan
-    handID: left
-    data:
-      location: Left
-  - type: Sprite
-    state: l_hand
-  - type: VisualOrgan
-    layer: enum.HumanoidVisualLayers.LHand
-    data:
-      state: l_hand
-  - type: VisualOrganMarkings
-    markingData:
-      layers:
-      - LHand
-
-- type: entity
-  parent: OrganBase
-  id: OrganBaseHandRight
-  name: right hand
-  abstract: true
-  components:
-  - type: Organ
-    category: HandRight
-  - type: HandOrgan
-    handID: right
-    data:
-      location: Right
-  - type: Sprite
-    state: r_hand
-  - type: VisualOrgan
-    layer: enum.HumanoidVisualLayers.RHand
-    data:
-      state: r_hand
-  - type: VisualOrganMarkings
-    markingData:
-      layers:
-      - RHand
 
 - type: entity
   parent: OrganBase
@@ -215,44 +177,6 @@
     markingData:
       layers:
       - RLeg
-
-- type: entity
-  parent: OrganBase
-  id: OrganBaseFootLeft
-  name: left foot
-  abstract: true
-  components:
-  - type: Organ
-    category: FootLeft
-  - type: Sprite
-    state: l_foot
-  - type: VisualOrgan
-    layer: enum.HumanoidVisualLayers.LFoot
-    data:
-      state: l_foot
-  - type: VisualOrganMarkings
-    markingData:
-      layers:
-      - LFoot
-
-- type: entity
-  parent: OrganBase
-  id: OrganBaseFootRight
-  name: right foot
-  abstract: true
-  components:
-  - type: Organ
-    category: FootRight
-  - type: Sprite
-    state: r_foot
-  - type: VisualOrgan
-    layer: enum.HumanoidVisualLayers.RFoot
-    data:
-      state: r_foot
-  - type: VisualOrganMarkings
-    markingData:
-      layers:
-      - RFoot
 
 - type: entity
   parent: OrganBase

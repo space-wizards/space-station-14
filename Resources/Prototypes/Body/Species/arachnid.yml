@@ -48,12 +48,8 @@
       Head: OrganArachnidHead
       ArmLeft: OrganArachnidArmLeft
       ArmRight: OrganArachnidArmRight
-      HandRight: OrganArachnidHandRight
-      HandLeft: OrganArachnidHandLeft
       LegLeft: OrganArachnidLegLeft
       LegRight: OrganArachnidLegRight
-      FootLeft: OrganArachnidFootLeft
-      FootRight: OrganArachnidFootRight
       Brain: OrganArachnidBrain
       Eyes: OrganArachnidEyes
       Tongue: OrganArachnidTongue
@@ -197,28 +193,12 @@
   id: OrganArachnidArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganArachnidExternal ]
-  id: OrganArachnidHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganArachnidExternal ]
-  id: OrganArachnidHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganArachnidExternal ]
   id: OrganArachnidLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganArachnidExternal ]
   id: OrganArachnidLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganArachnidExternal ]
-  id: OrganArachnidFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganArachnidExternal ]
-  id: OrganArachnidFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganArachnidInternal ]

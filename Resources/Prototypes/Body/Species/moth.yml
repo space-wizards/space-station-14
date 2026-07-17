@@ -24,28 +24,16 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.LArm:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RArm:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LHand:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RHand:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.LLeg:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RLeg:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 1
+      limit: 2
       required: false
 
 - type: entity
@@ -114,12 +102,8 @@
       Head: OrganMothHead
       ArmLeft: OrganMothArmLeft
       ArmRight: OrganMothArmRight
-      HandRight: OrganMothHandRight
-      HandLeft: OrganMothHandLeft
       LegLeft: OrganMothLegLeft
       LegRight: OrganMothLegRight
-      FootLeft: OrganMothFootLeft
-      FootRight: OrganMothFootRight
       Brain: OrganMothBrain
       Eyes: OrganMothEyes
       Tongue: OrganMothTongue
@@ -257,28 +241,12 @@
   id: OrganMothArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganMothExternal ]
-  id: OrganMothHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganMothExternal ]
-  id: OrganMothHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganMothExternal ]
   id: OrganMothLegLeft
 
 - type: entity
   parent: [ OrganBaseLegRight, OrganMothExternal ]
   id: OrganMothLegRight
-
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganMothExternal ]
-  id: OrganMothFootLeft
-
-- type: entity
-  parent: [ OrganBaseFootRight, OrganMothExternal ]
-  id: OrganMothFootRight
 
 - type: entity
   parent: [ OrganBaseBrain, OrganSpriteHumanInternal, OrganMothInternal ]

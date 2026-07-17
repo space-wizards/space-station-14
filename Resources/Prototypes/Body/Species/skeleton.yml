@@ -15,28 +15,16 @@
       limit: 1
       required: false
     enum.HumanoidVisualLayers.LArm:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RArm:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LHand:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RHand:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.LLeg:
-      limit: 1
+      limit: 2
       required: false
     enum.HumanoidVisualLayers.RLeg:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.LFoot:
-      limit: 1
-      required: false
-    enum.HumanoidVisualLayers.RFoot:
-      limit: 1
+      limit: 2
       required: false
 
 - type: entity
@@ -58,12 +46,8 @@
       Head: OrganSkeletonPersonHead
       ArmLeft: OrganSkeletonPersonArmLeft
       ArmRight: OrganSkeletonPersonArmRight
-      HandRight: OrganSkeletonPersonHandRight
-      HandLeft: OrganSkeletonPersonHandLeft
       LegLeft: OrganSkeletonPersonLegLeft
       LegRight: OrganSkeletonPersonLegRight
-      FootLeft: OrganSkeletonPersonFootLeft
-      FootRight: OrganSkeletonPersonFootRight
   - type: HumanoidProfile
     species: Skeleton
 
@@ -218,14 +202,6 @@
   id: OrganSkeletonPersonArmRight
 
 - type: entity
-  parent: [ OrganBaseHandLeft, OrganSkeletonPersonExternal ]
-  id: OrganSkeletonPersonHandLeft
-
-- type: entity
-  parent: [ OrganBaseHandRight, OrganSkeletonPersonExternal ]
-  id: OrganSkeletonPersonHandRight
-
-- type: entity
   parent: [ OrganBaseLegLeft, OrganSkeletonPersonExternal ]
   id: OrganSkeletonPersonLegLeft
 
@@ -233,10 +209,4 @@
   parent: [ OrganBaseLegRight, OrganSkeletonPersonExternal ]
   id: OrganSkeletonPersonLegRight
 
-- type: entity
-  parent: [ OrganBaseFootLeft, OrganSkeletonPersonExternal ]
-  id: OrganSkeletonPersonFootLeft
 
-- type: entity
-  parent: [ OrganBaseFootRight, OrganSkeletonPersonExternal ]
-  id: OrganSkeletonPersonFootRight

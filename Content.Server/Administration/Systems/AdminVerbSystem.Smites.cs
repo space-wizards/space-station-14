@@ -353,7 +353,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    var parts = new HashSet<ProtoId<OrganCategoryPrototype>>() { "HandRight", "HandLeft" };
+                    var parts = new HashSet<ProtoId<OrganCategoryPrototype>>() { "ArmRight", "ArmLeft" };
                     _bodySystem.TryGetOrgansWithComponent<OrganComponent>((args.Target, body), out var organs);
                     foreach (var organ in organs.Where(it => it.Comp.Category is { } category && parts.Contains(category)))
                     {
@@ -378,7 +378,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
-                    var parts = new HashSet<ProtoId<OrganCategoryPrototype>>() { "HandRight", "HandLeft" };
+                    var parts = new HashSet<ProtoId<OrganCategoryPrototype>>() { "ArmRight", "ArmLeft" };
                     _bodySystem.TryGetOrgansWithComponent<OrganComponent>((args.Target, body), out var organs);
                     foreach (var organ in organs.Where(it => it.Comp.Category is { } category && parts.Contains(category)))
                     {
