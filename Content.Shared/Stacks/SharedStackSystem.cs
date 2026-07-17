@@ -268,15 +268,17 @@ public abstract partial class SharedStackSystem : EntitySystem
             // If this is effectively just picking up the stack, it just picks up the stack.
             if (stack.Comp.Count <= amount)
             {
-                Hands.PickupOrDrop(user.Owner, stack.Owner);
+                _hands.PickupOrDrop(user.Owner, stack.Owner);
                 return;
             }
             split = Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero));
             if (split == null)
                 return;
-            Hands.PickupOrDrop(user.Owner, split.Value, animate: proto.AnimatePickup);
+
+            _hands.PickupOrDrop(user.Owner, split.Value, animate: proto.AnimatePickup);
         }
-        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
+
+        _popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
 
     /// <summary>
