@@ -10,6 +10,7 @@ namespace Content.Server.Players.Whitelist;
 /// Managed for caching whitelist statuses for connected players on the server.
 /// If trying to get the data of disconnected players, use <see cref="IServerDbManager.GetWhitelistStatusAsync"/> directly.
 /// </summary>
+// TODO: This manager can likely be converted into a more general purpose manager once we expand the IServerDbManager's functions.
 public sealed partial class WhitelistManager : IPostInjectInit
 {
     [Dependency] private IServerDbManager _db = default!;
