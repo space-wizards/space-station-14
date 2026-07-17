@@ -13,9 +13,9 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     soundHit:
       collection: AlienClaw
-    wideAnimationRotation: 90
     attackRate: 1
     damage:
       types:
