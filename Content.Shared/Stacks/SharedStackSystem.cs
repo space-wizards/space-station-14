@@ -218,7 +218,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
             return;
 
-        int half = (ent.Comp.Count + 1) / 2;
+        var half = (ent.Comp.Count + 1) / 2;
         AlternativeVerb halve = new()
         {
             Text = Loc.GetString("comp-stack-split-halve"),
@@ -254,10 +254,8 @@ public abstract partial class SharedStackSystem : EntitySystem
 
         // Tries to merge stack with a stack in hand. If not possible does the split
         // Not an early return so that they can share visuals i.e. popups.
-        if (
-            !_hands.TryGetActiveItem(user.Owner, out var split)
-            || !TryMergeStacks((stack.Owner, stack.Comp), split.Value, out var transferred, amount: amount)
-        )
+        if (!_hands.TryGetActiveItem(user.Owner, out var split)
+            || !TryMergeStacks(stack.AsNullable(), split.Value, out _, amount: amount))
         {
             // If this is effectively just picking up the stack, it just picks up the stack.
             if (stack.Comp.Count <= amount)
