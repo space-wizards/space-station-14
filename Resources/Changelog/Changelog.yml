@@ -4713,3 +4713,67 @@
   id: 9825
   time: '2026-07-12T21:02:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44587
+- author: B_Kirill
+  changes:
+  - message: Fixed hand labeler showing "Removed label successfully" when there was no label to remove.
+    type: Fix
+  id: 9826
+  time: '2026-07-13T06:27:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44630
+- author: SPCR
+  changes:
+  - message: Fixed beards showing through helmets
+    type: Fix
+  id: 9827
+  time: '2026-07-13T08:06:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44599
+- author: TriviaSolari
+  changes:
+  - message: New "Terminal" human hairstyle, featuring support for multiple colours.
+    type: Add
+  - message: The "Long Over Eye" and "Very Long Over Eye" human hairstyles now have an optional highlight stripe.
+    type: Tweak
+  id: 9828
+  time: '2026-07-13T08:19:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44111
+- author: Hitlinemoss
+  changes:
+  - message: The Viper and Pulse Carbine now default to full-auto mode.
+    type: Tweak
+  id: 9829
+  time: '2026-07-13T10:24:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42830
+- author: slarticodefast, psykana
+  changes:
+  - message: Mice and other small mobs can no longer toggle items.
+    type: Tweak
+  - message: Stunbatons can now be toggled only in hands.
+    type: Tweak
+  - message: Fixed riggable entities exploding in microwaves without prior rigging.
+    type: Fix
+  - message: Fixed rigged stunbatons exploding if you look at them funny.
+    type: Fix
+  id: 9830
+  time: '2026-07-13T18:38:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43117
+- author: M4rchy-S
+  changes:
+  - message: Smart Fridge UI could show empty items when it is not
+    type: Fix
+  id: 9831
+  time: '2026-07-13T18:45:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44648
+- author: murolem
+  changes:
+  - message: Added two new teleport buttons to the ghost warp screen - warp to Random and warp to Random Followed. Triple the warp!
+    type: Add
+  id: 9832
+  time: '2026-07-13T20:41:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44499
+- author: Hitlinemoss
+  changes:
+  - message: Senior courier ID cards now have a unique sprite, as with other senior ID cards.
+    type: Fix
+  id: 9833
+  time: '2026-07-13T22:22:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41842

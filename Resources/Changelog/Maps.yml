@@ -1190,7 +1190,14 @@
   changes:
   - message: On Serpentcrest, weh auto-injectors no longer transform to a lizard.
     type: Tweak
-  id: 9820
+  id: 147
   time: '2026-07-11T05:13:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44546
+- author: ProPeperos
+  changes:
+  - message: On Serpentcrest - Tweaks to atmos and TEG room, small qol to engi department
+    type: Tweak
+  id: 148
+  time: '2026-07-13T07:13:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44122
 Order: 2
