@@ -4361,3 +4361,26 @@
   id: 9777
   time: '2026-06-30T20:47:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44121
+- author: IntegerTempest
+  changes:
+  - message: Various aggressive mobs and critters now can see in the dark.
+    type: Add
+  id: 9778
+  time: '2026-06-30T21:36:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39403
+- author: AndrewFenriz
+  changes:
+  - message: Tether Guns and Force Guns are now crafted without a pre-installed battery
+    type: Tweak
+  id: 9779
+  time: '2026-07-01T01:15:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43936
+- author: ZigTag
+  changes:
+  - message: Your voice is now selectable
+    type: Add
+  - message: Game now supports having multiple voice sets per species
+    type: Tweak
+  id: 9780
+  time: '2026-07-01T03:46:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40593
