@@ -4100,3 +4100,130 @@
   id: 9740
   time: '2026-06-04T22:38:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44240
+- author: PJB3005
+  changes:
+  - message: Ghosts can now click a follow button next to chat messages to jump there immediately! Can be turned off in settings.
+    type: Add
+  id: 9741
+  time: '2026-06-12T16:19:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44284
+- author: riccardi48
+  changes:
+  - message: Force gun's sprite now changes on use
+    type: Fix
+  id: 9742
+  time: '2026-06-15T17:27:47.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/14
+- author: jessicamaybe
+  changes:
+  - message: Removed the action from winter coats. You can still use the verb to toggle them.
+    type: Remove
+  id: 9743
+  time: '2026-06-15T22:17:21.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/24
+- author: riccardi48
+  changes:
+  - message: Fixed modifier color for plant metabolism effects
+    type: Fix
+  id: 9744
+  time: '2026-06-15T22:32:18.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/13
+- author: whatston3
+  changes:
+  - message: Moproaches will now properly clean up spills, and spider bites carry toxin again.
+    type: Fix
+  id: 9745
+  time: '2026-06-16T00:46:10.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/41
+- author: mnva0
+  changes:
+  - message: Scarves now help insulate from cold temperatures. This is equivalent to the protection of winter boots.
+    type: Tweak
+  id: 9746
+  time: '2026-06-16T10:11:47.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/47
+- author: ScarKy0
+  changes:
+  - message: Handheld Mortars and Juicers now work again.
+    type: Fix
+  id: 9747
+  time: '2026-06-16T23:55:43.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/50
+- author: chromiumboy
+  changes:
+  - message: Things travelling long distances through the disposal network should no longer cause disposal pipes to spontaneously unanchor, unless they are genuinely trapped in a loop.
+    type: Fix
+  id: 9748
+  time: '2026-06-17T14:28:11.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/3
+- author: kontakt
+  changes:
+  - message: Borgs no long destroy their posi when engaging martyr module.
+    type: Fix
+  id: 9749
+  time: '2026-06-18T02:55:28.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/84
+- author: riccardi48
+  changes:
+  - message: Fixed a bug which prevented departments from canceling their own orders from their departments request console
+    type: Fix
+  id: 9750
+  time: '2026-06-18T21:16:10.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/11
+- author: riccardi48
+  changes:
+  - message: The approval section on order labels will now be filled out correctly.
+    type: Fix
+  id: 9751
+  time: '2026-06-18T22:40:33.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/15
+- author: rumaks-xyz
+  changes:
+  - message: Tasers are no longer available in security lockers
+    type: Remove
+  id: 9752
+  time: '2026-06-19T02:01:18.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/67
+- author: jessicamaybe
+  changes:
+  - message: Ambient music should now play in their proper locations
+    type: Fix
+  id: 9753
+  time: '2026-06-19T02:51:42.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/28
+- author: YoungThugSS14
+  changes:
+  - message: The Wand of Entrance is no longer in the random magic item spell pool, note the Staff of Entrance is.
+    type: Tweak
+  id: 9754
+  time: '2026-06-19T10:01:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43933
+- author: iaada
+  changes:
+  - message: Atmospheric entities have been given their own category in the construction menu filter.
+    type: Add
+  id: 9755
+  time: '2026-06-20T02:04:31.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/94
+- author: RemFexxel
+  changes:
+  - message: Edited Space Law for better readability.
+    type: Tweak
+  id: 9756
+  time: '2026-06-20T13:50:49.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/1
+- author: ThatGuyUSA
+  changes:
+  - message: Fixed janitorial winter coat in-hand sprite.
+    type: Fix
+  id: 9757
+  time: '2026-06-20T14:47:54.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/128
+- author: insoPL
+  changes:
+  - message: Directional arrows were added to recyclers
+    type: Add
+  id: 9758
+  time: '2026-06-20T22:03:52.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/118
+

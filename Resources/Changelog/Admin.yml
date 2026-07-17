@@ -1754,5 +1754,12 @@ Entries:
   id: 214
   time: '2026-06-05T15:24:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44243
+- author: PJB3005
+  changes:
+  - message: When a character name gets mentioned in an adminhelp message, the game will now attempt to provide a "quick info" link for the relevant player/entity.
+    type: Add
+  id: 215
+  time: '2026-06-20T23:47:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44319
 Name: Admin
 Order: 3
