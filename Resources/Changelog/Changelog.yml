@@ -4317,3 +4317,47 @@
   id: 9771
   time: '2026-06-29T12:22:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44086
+- author: ThatGuyUSA
+  changes:
+  - message: Holoparasites and their injectors are now predicted.
+    type: Tweak
+  id: 9772
+  time: '2026-06-29T21:25:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43519
+- author: whatston3
+  changes:
+  - message: Cows, pigs and goats can eat just about anything again.
+    type: Fix
+  id: 9773
+  time: '2026-06-29T21:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44427
+- author: Centronias
+  changes:
+  - message: The "emergency EVA suit" and "paramedic void suit" once again have actions to toggle their helmets, like hardsuits.
+    type: Fix
+  id: 9774
+  time: '2026-06-29T22:06:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44425
+- author: Ewanderer
+  changes:
+  - message: You can now electrolyze Ammonia!
+    type: Add
+  - message: Ammonia now needs heat to synthesize!
+    type: Tweak
+  id: 9775
+  time: '2026-06-30T07:57:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43736
+- author: ketufaispikinut
+  changes:
+  - message: Player zombies become ghost roles too.
+    type: Tweak
+  id: 9776
+  time: '2026-06-30T18:51:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43905
+- author: themias
+  changes:
+  - message: Popup messages for welders and lighters show the correct item name
+    type: Fix
+  id: 9777
+  time: '2026-06-30T20:47:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44121
