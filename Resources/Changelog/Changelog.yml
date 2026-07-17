@@ -4777,3 +4777,49 @@
   id: 9833
   time: '2026-07-13T22:22:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41842
+- author: B_Kirill
+  changes:
+  - message: Added new not fun meteors variations: flesh and kudzu meteors.
+    type: Add
+  id: 9834
+  time: '2026-07-14T03:55:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37716
+- author: AsnDen
+  changes:
+  - message: Faxes now are visually turned off when there is no power
+    type: Fix
+  - message: Faxes are colored again
+    type: Fix
+  id: 9835
+  time: '2026-07-14T05:19:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38387
+- author: SlamBamActionman
+  changes:
+  - message: Being drunk/suffering from bloodloss now causes movement impairments, making it harder to walk straight.
+    type: Add
+  id: 9836
+  time: '2026-07-14T10:47:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44652
+- author: Princess-Cheeseballs
+  changes:
+  - message: Shields are now more effective at blocking specific damage types.
+    type: Tweak
+  - message: Many lesser used shields have had their health increased, but are now worse at blocking damage.
+    type: Tweak
+  id: 9837
+  time: '2026-07-14T12:14:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44628
+- author: TiniestShark
+  changes:
+  - message: Vox hardsuits now have added tail states and properly hide a Vox's tail when in use.
+    type: Add
+  id: 9838
+  time: '2026-07-14T16:24:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42704
+- author: SlamBamActionman
+  changes:
+  - message: Grappling hooks no longer move grids if both the hook and user are on the same grid.
+    type: Fix
+  id: 9839
+  time: '2026-07-14T16:48:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44564

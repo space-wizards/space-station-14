@@ -1200,4 +1200,11 @@
   id: 148
   time: '2026-07-13T07:13:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44122
+- author: ProPeperos
+  changes:
+  - message: On all Evac shuttles - Tweaked atmos systems and small fixes
+    type: Tweak
+  id: 149
+  time: '2026-07-14T07:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44651
 Order: 2
