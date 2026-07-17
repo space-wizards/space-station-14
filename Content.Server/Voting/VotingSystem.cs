@@ -112,7 +112,7 @@ public sealed partial class VotingSystem : EntitySystem
         }
 
         // Must be whitelisted
-        if (_whitelistManager.IsWhitelisted(initiator.UserId) && _cfg.GetCVar(CCVars.VotekickInitiatorWhitelistedRequirement))
+        if (_whitelistManager.IsConnectedWhitelisted(initiator.UserId) && _cfg.GetCVar(CCVars.VotekickInitiatorWhitelistedRequirement))
             return false;
 
         // Must be eligible to vote

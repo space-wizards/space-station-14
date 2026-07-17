@@ -14,6 +14,7 @@ namespace Content.Server.Whitelist;
 public sealed partial class AddWhitelistCommand : LocalizedCommands
 {
     [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
     [Dependency] private WhitelistManager _whitelistManager = default!;
     public override string Command => "whitelistadd";
 
@@ -32,7 +33,7 @@ public sealed partial class AddWhitelistCommand : LocalizedCommands
         if (data != null)
         {
             var guid = data.UserId;
-            if (_whitelistManager.IsWhitelisted(guid))
+            if (await _dbManager.GetWhitelistStatusAsync(guid))
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistadd-existing", ("username", data.Username)));
                 return;
@@ -61,6 +62,7 @@ public sealed partial class AddWhitelistCommand : LocalizedCommands
 public sealed partial class RemoveWhitelistCommand : LocalizedCommands
 {
     [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
     [Dependency] private WhitelistManager _whitelistManager = default!;
 
     public override string Command => "whitelistremove";
@@ -80,7 +82,7 @@ public sealed partial class RemoveWhitelistCommand : LocalizedCommands
         if (data != null)
         {
             var guid = data.UserId;
-            if (!_whitelistManager.IsWhitelisted(guid))
+            if (!await _dbManager.GetWhitelistStatusAsync(guid))
             {
                 shell.WriteLine(Loc.GetString("cmd-whitelistremove-existing", ("username", data.Username)));
                 return;

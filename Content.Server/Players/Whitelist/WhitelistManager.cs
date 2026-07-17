@@ -6,6 +6,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Players.Whitelist;
 
+/// <summary>
+/// Managed for caching whitelist statuses for connected players on the server.
+/// If trying to get the data of disconnected players, use <see cref="IServerDbManager.GetWhitelistStatusAsync"/> directly.
+/// </summary>
 public sealed partial class WhitelistManager : IPostInjectInit
 {
     [Dependency] private IServerDbManager _db = default!;
@@ -26,21 +30,21 @@ public sealed partial class WhitelistManager : IPostInjectInit
         _whitelistStatus.Remove(session.UserId);
     }
 
-    /// <inheritdoc cref="IsWhitelisted(Robust.Shared.Network.NetUserId)"/>
-    public bool IsWhitelisted(ICommonSession session)
+    /// <inheritdoc cref="IsConnectedWhitelisted(Robust.Shared.Network.NetUserId)"/>
+    public bool IsConnectedWhitelisted(ICommonSession session)
     {
-        return IsWhitelisted(session.UserId);
+        return IsConnectedWhitelisted(session.UserId);
     }
 
     /// <summary>
-    /// Returns true if the player has whitelist status on the server.
-    /// Returns false if the player doesn't, or if the database failed to load them.
+    /// Returns true if the player has whitelist status on the server, false if they don't.
+    /// Returns false and raises an error if the player is not in the cached database, meaning they are either not connected or database failed.
     /// </summary>
-    public bool IsWhitelisted(NetUserId userId)
+    public bool IsConnectedWhitelisted(NetUserId userId)
     {
         if (!_whitelistStatus.TryGetValue(userId, out var whitelistStatus))
         {
-            _sawmill.Error("Unable to check if player {Player} is whitelisted for the server in the database. Stack trace:\\n{StackTrace}",
+            _sawmill.Error("{Player} is either not connected, or the database failed to load their whitelist status. Stack trace:\\n{StackTrace}",
                 userId,
                 Environment.StackTrace);
             return false;
@@ -50,17 +54,18 @@ public sealed partial class WhitelistManager : IPostInjectInit
     }
 
     /// <summary>
-    /// Adds a player to the whitelist and the whitelist tracker.
+    /// Adds a player to the whitelist and updates the tracker.
     /// </summary>
     public async void AddWhitelist(NetUserId player)
     {
-        _whitelistStatus[player] = true;
+        if (_whitelistStatus.ContainsKey(player))
+            _whitelistStatus[player] = true;
 
         await _db.AddToWhitelistAsync(player);
     }
 
     /// <summary>
-    /// Removes a player from the whitelist and the whitelist tracker.
+    /// Removes a player from the whitelist and updates the tracker.
     /// </summary>
     public async void RemoveWhitelist(NetUserId player)
     {
