@@ -4240,3 +4240,38 @@
   id: 9760
   time: '2026-06-21T21:09:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44134
+- author: whatston3
+  changes:
+  - message: The ID card console now correctly sets and clears accesses that any privileged ID has, and respects existing accesses the console cannot set.
+    type: Fix
+  id: 9761
+  time: '2026-06-21T23:23:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44016
+- author: murolem
+  changes:
+  - message: Added recipe history to the construction menu.
+    type: Add
+  id: 9762
+  time: '2026-06-22T15:04:31.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/8
+- author: korczoczek
+  changes:
+  - message: When slicing something inside a container, the resultant slices will now fill out the space where the whole food item used to be instead of dropping onto the floor
+    type: Tweak
+  id: 9763
+  time: '2026-06-22T23:11:50.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/160
+- author: insoPL
+  changes:
+  - message: Virtual items can not longer be ejected from cryo
+    type: Fix
+  id: 9764
+  time: '2026-06-23T17:00:19.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/175
+- author: YoungThugSS14
+  changes:
+  - message: The Wand of Entrance is no longer in the random magic item spell pool, note the Staff of Entrance is.
+    type: Tweak
+  id: 9765
+  time: '2026-06-24T11:22:30.0000000+00:00'
+  url: https://github.com/space-wizards-federation/space-station-14/pull/114

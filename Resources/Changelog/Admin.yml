@@ -1775,5 +1775,26 @@ Entries:
   id: 217
   time: '2026-06-21T22:16:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44326
+- author: PJB3005
+  changes:
+  - message: Admin logs now have their timezone displayed in local time rather than UTC
+    type: Fix
+  id: 218
+  time: '2026-06-22T14:49:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44332
+- author: PJB3005
+  changes:
+  - message: '"Respawn" admin action has been renamed to "return to lobby." Similar related actions have had tooltips added to clarify behavior.'
+    type: Tweak
+  id: 219
+  time: '2026-06-23T01:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44333
+- author: PJB3005
+  changes:
+  - message: '"Admin only" and "Play sound" options when sending bwoinks now work properly if the UI is popped out'
+    type: Fix
+  id: 220
+  time: '2026-06-23T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44334
 Name: Admin
 Order: 3
