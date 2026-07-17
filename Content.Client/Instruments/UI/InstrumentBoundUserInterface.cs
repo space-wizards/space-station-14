@@ -60,7 +60,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _fileSource.StopPlayingRequest += OnStopPlayingRequest;
         _fileSource.LoopingToggled += OnLoopToggledRequest;
         _fileSource.TrackPositionChangeRequest += OnTrackPositionChangeRequest;
-        _fileSource.Instrument = (Owner, EntMan.GetComponent<InstrumentComponent>(Owner));
+        _fileSource.Instrument = (Owner, instrument);
 
         _bandSource.RefreshBandRequest += OnRefreshBandsRequest;
         _bandSource.JoinBandRequest += OnSetBandMasterRequest;
@@ -76,11 +76,16 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (EntMan.TryGetComponent<MetaDataComponent>(Owner, out var metaData))
             _instrumentMenu.Title = metaData.EntityName;
 
-        _instrumentMenu.SetupSources(_fileSource, _bandSource, _inputSource);
         _instrumentMenu.SetMidiAvailability(_midiManager.IsAvailable);
-        _instrumentMenu.SwitchMode(_fileSource);
         _instrumentMenu.SetInstrument((Owner, instrument));
 
+        // Initialize sources and switch to the (probably) most used one.
+        // Add additional concrete InstrumentMidiSourceBase types here.
+        _instrumentMenu.SetupSources(_fileSource, _bandSource, _inputSource);
+        _instrumentMenu.SwitchMode(_fileSource);
+
+        // Initialize controls used to configure various system parameters.
+        // Append any additional configuration controls here.
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-menu-channels-label"),
             _channelsControl);
@@ -88,7 +93,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
 
-        // Append additional configuration controls here
+
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
