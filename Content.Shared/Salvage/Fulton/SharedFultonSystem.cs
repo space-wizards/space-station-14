@@ -116,7 +116,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return;
 
         var user = args.User;
-
         var verb = new UtilityVerb()
         {
             Act = () =>
@@ -125,7 +124,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
             },
             Text = Loc.GetString("fulton-verb-text"),
         };
-
         args.Verbs.Add(verb);
     }
 
@@ -204,15 +202,15 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return false;
         }
 
-        if (!CanApplyFulton(target, fulton.Comp))
-        {
-            message = "fulton-invalid";
-            return false;
-        }
-
         if (HasComp<FultonedComponent>(target))
         {
             message = "fulton-fultoned";
+            return false;
+        }
+
+        if (!CanApplyFulton(target, fulton.Comp))
+        {
+            message = "fulton-invalid";
             return false;
         }
 
