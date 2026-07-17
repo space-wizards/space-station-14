@@ -9,7 +9,7 @@ namespace Content.Shared.Blocking.Components;
 /// <summary>
 /// This component goes on an item that you want to use to block
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class BlockingComponent : Component
 {
     /// <summary>

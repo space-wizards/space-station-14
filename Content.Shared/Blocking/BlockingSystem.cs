@@ -18,6 +18,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
@@ -66,7 +67,7 @@ public sealed partial class BlockingSystem : EntitySystem
             return;
 
         _actionContainer.EnsureAction(entity, ref entity.Comp.BlockingToggleActionEntity, entity.Comp.BlockingToggleAction);
-        Dirty(entity);
+        DirtyField(entity, entity.Comp, nameof(BlockingComponent.BlockingToggleActionEntity));
     }
 
     private void OnItemToggled(Entity<BlockingComponent> entity, ref ItemToggledEvent args)
@@ -214,7 +215,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         entity.Comp.IsRaised = true;
-        Dirty(entity);
+        DirtyField(entity, entity.Comp, nameof(BlockingComponent.IsRaised));
 
         return true;
     }
@@ -265,7 +266,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         entity.Comp.IsRaised = false;
-        Dirty(entity);
+        DirtyField(entity, entity.Comp, nameof(BlockingComponent.IsRaised));
         return true;
     }
 
@@ -293,7 +294,7 @@ public sealed partial class BlockingSystem : EntitySystem
     private void StartBlocking(Entity<BlockingComponent> entity, EntityUid user)
     {
         entity.Comp.User = user;
-        Dirty(entity);
+        DirtyField(entity, entity.Comp, nameof(BlockingComponent.User));
 
         //To make sure that this bodytype doesn't get set as anything but the original
         if (EnsureComp<BlockingUserComponent>(user, out var userComp))
@@ -303,12 +304,12 @@ public sealed partial class BlockingSystem : EntitySystem
 
         if (!TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            Dirty(user, userComp);
+            DirtyField(user, userComp, nameof(BlockingUserComponent.BlockingItem));
             return;
         }
 
         userComp.OriginalBodyType = physicsComponent.BodyType;
-        Dirty(user, userComp);
+        DirtyFields(user, userComp, null, nameof(BlockingUserComponent.BlockingItem), nameof(BlockingUserComponent.OriginalBodyType));
     }
 
     /// <summary>
@@ -338,6 +339,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
         RemComp<BlockingUserComponent>(user);
         entity.Comp.User = null;
+        DirtyField(entity, entity.Comp, nameof(BlockingComponent.User));
     }
 
     private DamageModifierSet GetBlockingModifier(Entity<BlockingComponent> entity)
