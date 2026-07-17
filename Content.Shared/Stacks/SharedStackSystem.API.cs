@@ -165,7 +165,7 @@ public abstract partial class SharedStackSystem
         {
             TryMergeStacks(item, held, out _);
 
-            if (GetCount(item) == 0)
+            if (item.Comp.Count == 0)
                 return;
         }
 
@@ -193,29 +193,22 @@ public abstract partial class SharedStackSystem
     }
 
     /// <summary>
-    /// Moves the count from the doner into the collection of entities.
+    /// Moves the count from the donor into the collection of entities.
     /// </summary>
     /// <returns>True if anything moved.</returns>
     [PublicAPI]
-    public bool TryMergeToStacks(Entity<StackComponent?> doner, HashSet<Entity<StackComponent>> stacks)
+    public bool TryMergeToStacks(Entity<StackComponent?> donor, HashSet<Entity<StackComponent>> stacks)
     {
-        if (!_stackQuery.Resolve(doner.Owner, ref doner.Comp, false))
+        if (!_stackQuery.Resolve(donor.Owner, ref donor.Comp, false))
             return false;
 
-        // Filter out the non-stacks and non-matching stacks
-        var validTargets = new List<Entity<StackComponent>>();
+        var count = GetCount(donor);
         foreach (var stack in stacks)
         {
-            if (stack.Comp.StackTypeId != doner.Comp.StackTypeId)
+            if (stack.Comp.StackTypeId != donor.Comp.StackTypeId)
                 continue;
 
-            validTargets.Add(stack);
-        }
-
-        var count = GetCount(doner);
-        foreach (var stack in validTargets)
-        {
-            TryMergeStacks(doner, stack.AsNullable(), out var transferred);
+            TryMergeStacks(donor, stack.AsNullable(), out var transferred);
 
             count -= transferred;
             if (count == 0)
@@ -334,12 +327,12 @@ public abstract partial class SharedStackSystem
     private int GetCount(List<Entity<StackComponent>> stacks, ProtoId<StackPrototype> id)
     {
         var count = 0;
-        foreach (var stack in stacks)
+        foreach (var (_, stack) in stacks)
         {
-            if (stack.Comp.StackTypeId != id)
+            if (stack.StackTypeId != id)
                 continue;
 
-            count += GetCount(stack.AsNullable());
+            count += stack.Count;
         }
 
         return count;
