@@ -1796,5 +1796,12 @@ Entries:
   id: 220
   time: '2026-06-23T18:21:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44334
+- author: JustinWinningham
+  changes:
+  - message: Admin panel now groups like types when sorting on 'Role Type' column
+    type: Fix
+  id: 221
+  time: '2026-06-26T03:02:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43897
 Name: Admin
 Order: 3

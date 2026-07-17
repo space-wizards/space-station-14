@@ -4268,3 +4268,31 @@
   id: 9764
   time: '2026-06-23T17:00:19.0000000+00:00'
   url: https://github.com/space-wizards-federation/space-station-14/pull/175
+- author: riccardi48
+  changes:
+  - message: Tabletop piece moving is now predicted correctly
+    type: Fix
+  id: 9765
+  time: '2026-06-27T11:34:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44348
+- author: ketufaispikinut
+  changes:
+  - message: Mailing unit has been resprited.
+    type: Tweak
+  id: 9766
+  time: '2026-06-27T15:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44350
+- author: metalgearsloth
+  changes:
+  - message: AFK users will now be kicked. Before the kick a window will popup to mark that they're not AFK.
+    type: Add
+  id: 9767
+  time: '2026-06-28T04:32:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44353
+- author: Samuka-C
+  changes:
+  - message: RD's teleporter can no longer be used to create portals in different grids by placing both portals in the same grid then spliting the grid.
+    type: Fix
+  id: 9768
+  time: '2026-06-28T05:05:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44360
