@@ -17,11 +17,13 @@ public sealed partial class InstrumentMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        var styleBox = new StyleBoxFlat();
-        styleBox.BorderThickness = new Thickness(0);
-        styleBox.Padding = new Thickness(10);
-        MainTabContainer.PanelStyleBoxOverride = styleBox;
+        var styleBox = new StyleBoxFlat
+        {
+            BorderThickness = new Thickness(0),
+            Padding = new Thickness(10),
+        };
 
+        MainTabContainer.PanelStyleBoxOverride = styleBox;
         MainTabContainer.SetTabTitle(0, Loc.GetString("instruments-component-menu-play-tab-title"));
         MainTabContainer.SetTabTitle(1, Loc.GetString("instruments-component-menu-config-tab-title"));
     }

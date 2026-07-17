@@ -20,7 +20,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 {
     private const double RecoveryGracePeriod = 2.0;
 
-    [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MidiFileCollectionManager _midiCollection = default!;
     [Dependency] private IFileDialogManager _dialogs = default!;
