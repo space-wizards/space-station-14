@@ -219,6 +219,7 @@ public abstract partial class SharedStackSystem : EntitySystem
         int half = (ent.Comp.Count + 1) / 2;
         if (!ProtoMan.TryIndex(ent.Comp.StackTypeId, out var proto))
             return;
+
         AlternativeVerb halve = new()
         {
             Text = Loc.GetString("comp-stack-split-halve"),
@@ -248,21 +249,16 @@ public abstract partial class SharedStackSystem : EntitySystem
 
         if (amount <= 0)
         {
-            Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
+            _popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
             return;
         }
 
         // Tries to merge stack with a stack in hand. If not possible does the split
         // Not an early return so that they can share visuals i.e. popups.
         if (
-            !Hands.TryGetActiveItem(user.Owner, out var split)
+            !_hands.TryGetActiveItem(user.Owner, out var split)
             || !TryComp<StackComponent>(split, out var splitStack)
-            || !TryMergeStacks(
-                (stack.Owner, stack.Comp),
-                (split.Value, splitStack),
-                out var transferred,
-                amount: amount
-            )
+            || !TryMergeStacks((stack.Owner, stack.Comp), split.Value, out var transferred, amount: amount)
         )
         {
             // If this is effectively just picking up the stack, it just picks up the stack.
@@ -271,6 +267,7 @@ public abstract partial class SharedStackSystem : EntitySystem
                 _hands.PickupOrDrop(user.Owner, stack.Owner);
                 return;
             }
+
             split = Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero));
             if (split == null)
                 return;

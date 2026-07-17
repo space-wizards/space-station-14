@@ -60,5 +60,4 @@ public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField]
     public bool AnimatePickup { get; private set; } = true;
-
 }
