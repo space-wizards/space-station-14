@@ -4816,3 +4816,42 @@
   id: 9838
   time: '2026-07-14T16:48:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44564
+- author: whatston3
+  changes:
+  - message: Constructed lights and cameras now must be placed against a wall.
+    type: Add
+  id: 9839
+  time: '2026-07-14T21:15:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44669
+- author: TriviaSolari
+  changes:
+  - message: Silicons can now whisper their laws when stating them
+    type: Add
+  - message: Silicon laws list now has a footer that tracks the number of times laws have been changed
+    type: Add
+  - message: Silicons can now select multiple laws to announce at once, with a randomized delay between each message
+    type: Tweak
+  id: 9840
+  time: '2026-07-15T03:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42806
+- author: Crude Oil
+  changes:
+  - message: Fixed crawl slowdown remaining after standing up
+    type: Fix
+  id: 9841
+  time: '2026-07-15T13:29:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44683
+- author: Hitlinemoss
+  changes:
+  - message: Unknown shuttles and most antagonist ghostroles no longer spawn while the evac shuttle is inbound, docked, or in transit.
+    type: Tweak
+  id: 9842
+  time: '2026-07-15T14:11:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42196
+- author: SlamBamActionman
+  changes:
+  - message: Glue and lube now apply their effects immediately when used on a held item.
+    type: Tweak
+  id: 9843
+  time: '2026-07-16T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44552

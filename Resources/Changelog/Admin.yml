@@ -1847,5 +1847,41 @@ Entries:
   id: 227
   time: '2026-07-13T06:06:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44480
+- author: Crude Oil
+  changes:
+  - message: Admin logs command autocompletes on players
+    type: Add
+  - message: Admins now have a "player logs" verb that opens admin logs with that player selected
+    type: Add
+  - message: Added "player logs" button to the ahelp window
+    type: Add
+  - message: Removed "ban list" button from the ahelp window
+    type: Remove
+  - message: Player selection in admin logs remains consistent when selecting different rounds
+    type: Tweak
+  id: 228
+  time: '2026-07-14T21:11:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44604
+- author: Samuka
+  changes:
+  - message: Added the event log button to log events more easily!
+    type: Add
+  id: 229
+  time: '2026-07-15T00:01:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44655
+- author: TriviaSolari
+  changes:
+  - message: Editing ion laws now properly randomizes law numbers
+    type: Fix
+  id: 230
+  time: '2026-07-15T03:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42806
+- author: SlamBamActionman
+  changes:
+  - message: Admin ghosts and Godmode are now immune to lube/glue effects on items.
+    type: Fix
+  id: 231
+  time: '2026-07-16T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44552
 Name: Admin
 Order: 3
