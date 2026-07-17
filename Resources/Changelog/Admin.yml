@@ -1761,5 +1761,19 @@ Entries:
   id: 215
   time: '2026-06-20T23:47:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44319
+- author: Axionyxx
+  changes:
+  - message: Trust score and account creation date are now displayed in the player panel
+    type: Add
+  id: 216
+  time: '2026-06-21T20:23:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44317
+- author: PJB3005
+  changes:
+  - message: admin_overlay command to enable/disable admin overlay from scripts
+    type: Add
+  id: 217
+  time: '2026-06-21T22:16:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44326
 Name: Admin
 Order: 3

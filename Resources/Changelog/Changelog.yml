@@ -4226,4 +4226,24 @@
   id: 9758
   time: '2026-06-20T22:03:52.0000000+00:00'
   url: https://github.com/space-wizards-federation/space-station-14/pull/118
-
+- author: Festivite
+  changes:
+  - message: Fixed an inconsistent lighter outline coloring on the HOP's job icon.
+    type: Fix
+  id: 9759
+  time: '2026-06-21T19:04:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44292
+- author: ArtisticRoomba
+  changes:
+  - message: Filled foolboxes have slightly less items in them, as there was a chance to overfill the box and spawn an item outside of it.
+    type: Tweak
+  id: 9760
+  time: '2026-06-21T21:09:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44134
+- author: ThatGuyUSA
+  changes:
+  - message: Fixed janitorial winter coat in-hand sprite.
+    type: Fix
+  id: 9761
+  time: '2026-06-21T23:02:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44160
