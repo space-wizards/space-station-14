@@ -4240,10 +4240,3 @@
   id: 9760
   time: '2026-06-21T21:09:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44134
-- author: ThatGuyUSA
-  changes:
-  - message: Fixed janitorial winter coat in-hand sprite.
-    type: Fix
-  id: 9761
-  time: '2026-06-21T23:02:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/44160
