@@ -8,6 +8,7 @@
     state: monkey_painting
 
 # Directional Station Guide Signs
+
 - type: entity
   parent: BaseSign
   id: BaseSignDirectional
@@ -15,6 +16,10 @@
   components:
     - type: Sprite
       snapCardinals: false
+      # The way that Directonal Guide Signs are mapped are unaligned on the wall, making them anchored makes them all be placed in the middle of the wall
+      # TODO: Combine all the directional guide signs in to some modular prototype so it's easier to map and remove the overlap when rotating the camera
+    - type: Transform
+      anchored: false
 
 - type: entity
   parent: BaseSignDirectional
