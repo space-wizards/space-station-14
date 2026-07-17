@@ -4855,3 +4855,108 @@
   id: 9843
   time: '2026-07-16T15:31:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44552
+- author: ketufaispikinut
+  changes:
+  - message: Player-controlled zombies no longer show up in the ghost role menu.
+    type: Fix
+  id: 9844
+  time: '2026-07-16T18:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44691
+- author: Crude Oil
+  changes:
+  - message: Skeletons rattle when screaming again
+    type: Fix
+  id: 9845
+  time: '2026-07-16T20:19:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44689
+- author: mirrorcult
+  changes:
+  - message: Doafter progress bar animation now has a fade in & fade out
+    type: Tweak
+  id: 9846
+  time: '2026-07-16T22:14:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44701
+- author: B_Kirill
+  changes:
+  - message: Fixed puddles not being removed when tile changes to lattice.
+    type: Fix
+  id: 9847
+  time: '2026-07-17T04:53:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44715
+- author: psykana
+  changes:
+  - message: Station announcements are now also audible on the hull of the station
+    type: Fix
+  id: 9848
+  time: '2026-07-17T05:06:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44686
+- author: Hitlinemoss
+  changes:
+  - message: Most job descriptions in the Loadout menu have been adjusted for added clarity.
+    type: Tweak
+  id: 9849
+  time: '2026-07-17T05:20:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44646
+- author: Princess-Cheeseballs
+  changes:
+  - message: Shields that are deactivated no longer block damage
+    type: Fix
+  id: 9850
+  time: '2026-07-17T07:20:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44700
+- author: ProPeperos
+  changes:
+  - message: Signs and posters no longer display "unanchored" message
+    type: Fix
+  id: 9851
+  time: '2026-07-17T15:01:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44491
+- author: YoungThugSS14
+  changes:
+  - message: Holoparasites now play a sound when released.
+    type: Tweak
+  id: 9852
+  time: '2026-07-17T15:06:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44703
+- author: MidZik
+  changes:
+  - message: Shimmer effect on an invisible ninja, stealth cardboard box, and invisible crate is now much subtler.
+    type: Tweak
+  id: 9853
+  time: '2026-07-17T16:41:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35575
+- author: Steffo99
+  changes:
+  - message: Improved the graphics of Space Villain!
+    type: Tweak
+  id: 9854
+  time: '2026-07-17T16:50:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40963
+- author: Steffo99
+  changes:
+  - message: Added functionality to the LMTR wire of Space Villain!
+    type: Add
+  id: 9855
+  time: '2026-07-17T17:03:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40961
+- author: ProPeperos
+  changes:
+  - message: Fire alarms are now placed closer to the side of the wall
+    type: Tweak
+  id: 9856
+  time: '2026-07-17T18:43:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44707
+- author: jessicamaybe
+  changes:
+  - message: Space music no longer plays if you are a ghost
+    type: Tweak
+  id: 9857
+  time: '2026-07-17T19:25:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44696
+- author: ProPeperos
+  changes:
+  - message: Thrusters no longer have a bit of a pipe sticking out of them
+    type: Tweak
+  id: 9858
+  time: '2026-07-17T19:25:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44731
