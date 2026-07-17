@@ -51,9 +51,10 @@ public sealed partial class StationRecordsSystem
     /// </summary>
     /// <param name="ent">The EntityId of the station from which you want to get the record.</param>
     /// <param name="entry">The resulting entry.</param>
+    /// <param name="random">An optional entity to use as a seed.</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if a record was obtained. False otherwise.</returns>
-    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry) where T : StationRecord
+    public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry, EntityUid? seedEntity = null) where T : StationRecord
     {
         entry = default;
 
@@ -63,7 +64,7 @@ public sealed partial class StationRecordsSystem
         if (ent.Comp.Records.Keys.Count == 0)
             return false;
 
-        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner));
+        var random = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(seedEntity ?? ent.Owner));
         var key = random.Pick(ent.Comp.Records.Keys);
 
         return ent.Comp.Records.TryGetRecordEntry(key, out entry);
