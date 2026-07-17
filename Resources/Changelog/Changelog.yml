@@ -4296,3 +4296,24 @@
   id: 9768
   time: '2026-06-28T05:05:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44360
+- author: Xeri7
+  changes:
+  - message: Made Sprite Fade only happen when there is something there.
+    type: Tweak
+  id: 9769
+  time: '2026-06-29T06:11:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37907
+- author: eoineoineoin
+  changes:
+  - message: Fixed bug where APCs could turn on during a station power-off event
+    type: Fix
+  id: 9770
+  time: '2026-06-29T11:37:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32130
+- author: DevArchwave
+  changes:
+  - message: Construction ghosts of pipes and some other things should display correctly again.
+    type: Fix
+  id: 9771
+  time: '2026-06-29T12:22:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44086

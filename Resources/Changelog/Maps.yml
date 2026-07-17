@@ -1175,4 +1175,15 @@
   id: 145
   time: '2026-06-12T16:06:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44279
+- author: ProPeperos
+  changes:
+  - message: On Packed - Added protective grill to the west arm of arrivals
+    type: Add
+  - message: On Packed - You can now find sheep!
+    type: Add
+  - message: On Packed - Distro and Waste starts up automatically
+    type: Tweak
+  id: 146
+  time: '2026-06-29T12:05:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43985
 Order: 2

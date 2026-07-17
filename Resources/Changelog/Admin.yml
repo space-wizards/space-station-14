@@ -1803,5 +1803,19 @@ Entries:
   id: 221
   time: '2026-06-26T03:02:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43897
+- author: ScarKy0
+  changes:
+  - message: Aghosts can now open several storage UIs at once. To bring back previous behaviour remove your "BypassOpenStorageLimit" tag.
+    type: Add
+  id: 222
+  time: '2026-06-29T09:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44404
+- author: Samuka-C
+  changes:
+  - message: Added a new button to the server tab which toggles dead chat!
+    type: Add
+  id: 223
+  time: '2026-06-29T19:22:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44367
 Name: Admin
 Order: 3
