@@ -8,8 +8,7 @@
   "license": "CC-BY-SA-3.0",
   "states": [
     {
-      "name": "base",
-      "directions": 4
+      "name": "base"
     },
     {
       "name": "thrust",
