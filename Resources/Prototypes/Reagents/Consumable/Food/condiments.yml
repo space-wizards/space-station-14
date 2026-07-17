@@ -127,7 +127,7 @@
   color: saddlebrown
   recognizable: true
   metabolisms:
-    Food:
+    Digestion:
       effects:
       - !type:SatiateHunger
         factor: 0.5
@@ -159,7 +159,7 @@
   - !type:PlantAdjustHealth
     amount: -2
   metabolisms:
-    Food:
+    Digestion:
       effects:
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
@@ -174,17 +174,16 @@
   color: "#fb7125"
   recognizable: true
   physicalDesc: reagent-physical-desc-sticky
-  slippery: false
   viscosity: 0.55 #Start using syrup to attach your remote recievers to your microwaves!
   tileReactions:
     - !type:SpillTileReaction
   metabolisms:
-    Food:
+    Digestion:
       # 12 diona blood for 1 unit of syrup, this stuff better be worthwhile.
       effects:
       - !type:SatiateHunger
         factor: 6.0 #Stronger than cookedramen
   footstepSound:
-    collection: FootstepBlood
+    collection: FootstepSlime
     params:
       volume: 6

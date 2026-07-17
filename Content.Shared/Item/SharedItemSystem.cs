@@ -6,17 +6,15 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
-public abstract class SharedItemSystem : EntitySystem
+public abstract partial class SharedItemSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] protected SharedContainerSystem Container = default!;
 
     public override void Initialize()
     {
@@ -39,19 +37,37 @@ public abstract class SharedItemSystem : EntitySystem
 
     public void SetSize(EntityUid uid, ProtoId<ItemSizePrototype> size, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref component, false) || component.Size == size)
             return;
 
         component.Size = size;
         Dirty(uid, component);
+        var ev = new ItemSizeChangedEvent(uid);
+        RaiseLocalEvent(uid, ref ev, broadcast: true);
     }
 
     public void SetShape(EntityUid uid, List<Box2i>? shape, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref component, false) || component.Shape == shape)
             return;
 
         component.Shape = shape;
+        Dirty(uid, component);
+        var ev = new ItemSizeChangedEvent(uid);
+        RaiseLocalEvent(uid, ref ev, broadcast: true);
+    }
+
+    /// <summary>
+    /// Sets the offset used for the item's sprite inside the storage UI.
+    /// Dirties.
+    /// </summary>
+    [PublicAPI]
+    public void SetStoredOffset(EntityUid uid, Vector2i newOffset, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.StoredOffset = newOffset;
         Dirty(uid, component);
     }
 
@@ -91,7 +107,7 @@ public abstract class SharedItemSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
+        args.Handled = _handsSystem.TryPickup(args.User, uid, null, animateUser: false);
     }
 
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -123,12 +139,13 @@ public abstract class SharedItemSystem : EntitySystem
     {
         // show at end of message generally
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
-            ("size", GetItemSizeLocale(component.Size))), priority: -1);
+            ("size", GetItemSizeLocale(component.Size))),
+            priority: -2);
     }
 
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
     {
-        return _prototype.Index(id);
+        return ProtoMan.Index(id);
     }
 
     /// <summary>
@@ -187,15 +204,21 @@ public abstract class SharedItemSystem : EntitySystem
     public IReadOnlyList<Box2i> GetAdjustedItemShape(Entity<ItemComponent?> entity, Angle rotation, Vector2i position)
     {
         if (!Resolve(entity, ref entity.Comp))
-            return new Box2i[] { };
+            return [];
 
+        var adjustedShapes = new List<Box2i>();
+        GetAdjustedItemShape(adjustedShapes, entity, rotation, position);
+        return adjustedShapes;
+    }
+
+    public void GetAdjustedItemShape(List<Box2i> adjustedShapes, Entity<ItemComponent?> entity, Angle rotation, Vector2i position)
+    {
         var shapes = GetItemShape(entity);
         var boundingShape = shapes.GetBoundingBox();
         var boundingCenter = ((Box2) boundingShape).Center;
         var matty = Matrix3Helpers.CreateTransform(boundingCenter, rotation);
         var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
 
-        var adjustedShapes = new List<Box2i>();
         foreach (var shape in shapes)
         {
             var transformed = matty.TransformBox(shape).Translated(drift);
@@ -204,8 +227,6 @@ public abstract class SharedItemSystem : EntitySystem
 
             adjustedShapes.Add(translated);
         }
-
-        return adjustedShapes;
     }
 
     /// <summary>
@@ -222,6 +243,7 @@ public abstract class SharedItemSystem : EntitySystem
             {
                 // Set the deactivated shape to the default item's shape before it gets changed.
                 itemToggleSize.DeactivatedShape ??= new List<Box2i>(GetItemShape(item));
+                Dirty(uid, itemToggleSize);
                 SetShape(uid, itemToggleSize.ActivatedShape, item);
             }
 
@@ -229,6 +251,7 @@ public abstract class SharedItemSystem : EntitySystem
             {
                 // Set the deactivated size to the default item's size before it gets changed.
                 itemToggleSize.DeactivatedSize ??= item.Size;
+                Dirty(uid, itemToggleSize);
                 SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.ActivatedSize, item);
             }
         }
@@ -244,7 +267,26 @@ public abstract class SharedItemSystem : EntitySystem
                 SetSize(uid, (ProtoId<ItemSizePrototype>) itemToggleSize.DeactivatedSize, item);
             }
         }
+    }
 
-        Dirty(uid, item);
+    /// <summary>
+    /// Sorts two protos by <see cref="ItemComponent"/> size, from smallest to largest.
+    /// </summary>
+    /// <param name="a">The first proto.</param>
+    /// <param name="b">The second proto.</param>
+    /// <returns> Less than 0 if a is smaller, greater than 0 if a is larger,
+    /// 0 if they are the same or either proto doesn't have an <see cref="ItemComponent"/>.</returns>
+    [PublicAPI]
+    public int CompareSize(EntProtoId a, EntProtoId b)
+    {
+        var protoA = ProtoMan.Index(a);
+        var protoB = ProtoMan.Index(b);
+        if (!protoA.TryComp<ItemComponent>(out var compA, Factory) ||
+            !protoB.TryComp<ItemComponent>(out var compB, Factory))
+        {
+            return 0;
+        }
+
+        return ProtoMan.Index(compA.Size).CompareTo(ProtoMan.Index(compB.Size));
     }
 }

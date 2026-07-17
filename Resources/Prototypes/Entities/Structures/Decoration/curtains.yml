@@ -7,6 +7,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Sprite
+    snapCardinals: true
   - type: Occluder
   - type: AnimationPlayer
   - type: Fixtures
@@ -35,8 +37,9 @@
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,7 +63,6 @@
   description: Contains less than 1% mercury.
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/hospital.rsi
     layers:
     - state: closed
@@ -90,7 +92,6 @@
   suffix: Fancy black
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/black.rsi
     layers:
     - state: closed
@@ -120,7 +121,6 @@
   suffix: Fancy blue
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/blue.rsi
     layers:
     - state: closed
@@ -128,6 +128,20 @@
   - type: Construction
     graph: Curtains
     node: CurtainsBlue
+
+- type: entity
+  id: CurtainsSkyBlue
+  parent: BaseCurtains
+  suffix: Fancy sky blue
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/Curtains/skyblue.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: Curtains
+    node: CurtainsSkyBlue
 
 - type: entity
   id: CurtainsBlueOpen
@@ -145,12 +159,26 @@
     canCollide: false
 
 - type: entity
+  id: CurtainsSkyBlueOpen
+  parent: CurtainsSkyBlue
+  suffix: Open, Fancy sky blue
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Construction
+    graph: Curtains
+    node: CurtainsSkyBlueOpen
+  - type: Physics
+    canCollide: false
+
+- type: entity
   id: CurtainsCyan
   parent: BaseCurtains
   suffix: Fancy cyan
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/cyan.rsi
     layers:
     - state: closed
@@ -180,7 +208,6 @@
   suffix: Fancy green
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/green.rsi
     layers:
     - state: closed
@@ -210,7 +237,6 @@
   suffix: Fancy orange
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/orange.rsi
     layers:
     - state: closed
@@ -240,7 +266,6 @@
   suffix: Fancy pink
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/pink.rsi
     layers:
     - state: closed
@@ -270,7 +295,6 @@
   suffix: Fancy purple
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/purple.rsi
     layers:
     - state: closed
@@ -300,7 +324,6 @@
   suffix: Fancy red
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/red.rsi
     layers:
     - state: closed
@@ -330,7 +353,6 @@
   suffix: Fancy white
   components:
   - type: Sprite
-    snapCardinals: true
     sprite: Structures/Decoration/Curtains/white.rsi
     layers:
     - state: closed

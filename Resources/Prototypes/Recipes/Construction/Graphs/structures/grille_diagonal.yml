@@ -6,8 +6,9 @@
       edges:
         - to: grilleDiagonal
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
           steps:
             - material: MetalRod
               amount: 2
@@ -15,8 +16,9 @@
               
         - to: clockworkGrilleDiagonal
           completed:
-            - !type:SnapToGrid
-              southRotation: true
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
           steps:
             - material: MetalRod
               amount: 2

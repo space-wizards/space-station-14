@@ -1,22 +1,76 @@
 {
     "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Modified from https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi",
-    "size": {
-      "x": 32,
-      "y": 32
+    "size":
+    {
+        "x": 32,
+        "y": 32
     },
-    "states": [
-      {
-        "name": "icon",
-        "delays": [
-        [
-            1,
-            1,
-            1,
-            1
-        ]
-      ]
-    }
-  ]
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi. Fill levels by RedBookcase on GitHub.",
+    "states":
+    [
+        {
+            "name": "icon",
+            "delays":
+            [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "fill-1",
+            "delays":
+            [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "fill-2",
+            "delays":
+            [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "fill-3",
+            "delays":
+            [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "fill-4",
+            "delays":
+            [
+                [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            ]
+        }
+    ]
 }

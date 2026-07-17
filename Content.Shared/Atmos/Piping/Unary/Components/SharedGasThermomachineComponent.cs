@@ -7,7 +7,7 @@ public sealed record GasThermoMachineData(float EnergyDelta);
 
 [Serializable]
 [NetSerializable]
-public enum ThermomachineUiKey
+public enum ThermomachineUiKey : byte
 {
     Key
 }
@@ -27,25 +27,5 @@ public sealed class GasThermomachineChangeTemperatureMessage : BoundUserInterfac
     public GasThermomachineChangeTemperatureMessage(float temperature)
     {
         Temperature = temperature;
-    }
-}
-
-[Serializable]
-[NetSerializable]
-public sealed class GasThermomachineBoundUserInterfaceState : BoundUserInterfaceState
-{
-    public float MinTemperature { get; }
-    public float MaxTemperature { get; }
-    public float Temperature { get; }
-    public bool Enabled { get; }
-    public bool IsHeater { get; }
-
-    public GasThermomachineBoundUserInterfaceState(float minTemperature, float maxTemperature, float temperature, bool enabled, bool isHeater)
-    {
-        MinTemperature = minTemperature;
-        MaxTemperature = maxTemperature;
-        Temperature = temperature;
-        Enabled = enabled;
-        IsHeater = isHeater;
     }
 }

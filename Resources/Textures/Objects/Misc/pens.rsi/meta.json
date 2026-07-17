@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. pen_centcom is a resprited version of pen_cap by PuroSlavKing (Github). Luxury pen is drawn by Ubaser. pen_wizard based on overpriced_pen by Velken.",
   "size": {
     "x": 32,
     "y": 32
@@ -31,6 +31,9 @@
     {
       "name": "pen_red"
     },
+	{
+	  "name": "pen_wizard"
+	},
     {
       "name": "pen-inhand-left",
       "directions": 4

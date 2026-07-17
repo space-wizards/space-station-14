@@ -3,17 +3,18 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedFirelockSystem : EntitySystem
+public abstract partial class SharedFirelockSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedDoorSystem _doorSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -27,7 +28,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         // Visuals
         SubscribeLocalEvent<FirelockComponent, MapInitEvent>(UpdateVisuals);
-        SubscribeLocalEvent<FirelockComponent, ComponentStartup>(UpdateVisuals);
+        SubscribeLocalEvent<FirelockComponent, ComponentStartup>(OnComponentStartup);
 
         SubscribeLocalEvent<FirelockComponent, ExaminedEvent>(OnExamined);
     }
@@ -81,14 +82,14 @@ public abstract class SharedFirelockSystem : EntitySystem
     {
         if (ent.Comp.Temperature)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
         }
         else if (ent.Comp.Pressure)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+            _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
@@ -103,6 +104,11 @@ public abstract class SharedFirelockSystem : EntitySystem
     #endregion
 
     #region Visuals
+
+    protected virtual void OnComponentStartup(Entity<FirelockComponent> ent, ref ComponentStartup args)
+    {
+        UpdateVisuals(ent.Owner,ent.Comp, args);
+    }
 
     private void UpdateVisuals(EntityUid uid, FirelockComponent component, EntityEventArgs args) => UpdateVisuals(uid, component);
 
@@ -141,4 +147,23 @@ public abstract class SharedFirelockSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("firelock-component-examine-temperature-warning"));
         }
     }
+}
+
+[Serializable, NetSerializable]
+public enum FirelockVisuals : byte
+{
+    PressureWarning,
+    TemperatureWarning,
+}
+
+[Serializable, NetSerializable]
+public enum FirelockVisualLayersPressure : byte
+{
+    Base
+}
+
+[Serializable, NetSerializable]
+public enum FirelockVisualLayersTemperature : byte
+{
+    Base
 }

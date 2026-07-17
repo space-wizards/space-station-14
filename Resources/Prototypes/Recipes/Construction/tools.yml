@@ -1,54 +1,61 @@
+# region Base
 - type: construction
-  name: torch
-  id: LightTorch
-  graph: LightTorch
-  startNode: start
-  targetNode: torch
+  abstract: true
+  id: BaseTool
   category: construction-category-tools
-  description: A torch fashioned from some wood.
-  icon: { sprite: Objects/Misc/torch.rsi, state: icon }
   objectType: Item
+# endregion Base
 
+# region Logic Gates
 - type: construction
-  name: logic gate
+  parent: BaseTool
   id: LogicGate
   graph: LogicGate
-  startNode: start
   targetNode: logic_gate
-  category: construction-category-tools
-  description: A binary logic gate for signals.
-  icon: { sprite: Objects/Devices/gates.rsi, state: or_icon }
-  objectType: Item
 
 - type: construction
-  name: edge detector
+  parent: LogicGate
   id: EdgeDetector
-  graph: LogicGate
-  startNode: start
   targetNode: edge_detector
-  category: construction-category-tools
-  description: An edge detector for signals.
-  icon: { sprite: Objects/Devices/gates.rsi, state: edge_detector }
-  objectType: Item
 
 - type: construction
-  name: power sensor
+  parent: LogicGate
   id: PowerSensor
-  graph: LogicGate
-  startNode: start
   targetNode: power_sensor
-  category: construction-category-tools
-  description: A power network checking device for signals.
-  icon: { sprite: Objects/Devices/gates.rsi, state: power_sensor }
-  objectType: Item
 
 - type: construction
-  name: memory cell
+  parent: LogicGate
   id: MemoryCell
-  graph: LogicGate
-  startNode: start
   targetNode: memory_cell
-  category: construction-category-tools
-  description: A memory cell for signals.
-  icon: { sprite: Objects/Devices/gates.rsi, state: memory_cell }
-  objectType: Item
+
+- type: construction
+  parent: LogicGate
+  id: RandomGate
+  targetNode: random_gate
+# endregion Logic Gates
+
+# region Miscellaneous
+- type: construction
+  parent: BaseTool
+  id: LightTorch
+  graph: LightTorch
+  targetNode: torch
+
+- type: construction
+  parent: BaseTool
+  id: MakeshiftMortarAndPestle
+  graph: MakeshiftMortarAndPestle
+  targetNode: mortarAndPestle
+
+- type: construction
+  parent: BaseTool
+  id: MakeshiftJuicer
+  graph: MakeshiftJuicer
+  targetNode: juicer
+
+- type: construction
+  parent: BaseTool
+  id: MakeshiftCentrifuge
+  graph: MakeshiftCentrifuge
+  targetNode: makeshiftCentrifuge
+# endregion Miscellaneous

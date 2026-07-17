@@ -31,6 +31,12 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? LawIdentifierOverride;
 
+    /// <summary>
+    /// A flag that marks whether or not a law is considered corrupted (e.g. by an ion storm).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Corrupted;
+
     public int CompareTo(SiliconLaw? other)
     {
         if (other == null)
@@ -77,8 +83,7 @@ public partial class SiliconLaw : IComparable<SiliconLaw>, IEquatable<SiliconLaw
 /// <summary>
 /// This is a prototype for a law governing the behavior of silicons.
 /// </summary>
-[Prototype("siliconLaw")]
-[Serializable, NetSerializable]
+[Prototype]
 public sealed partial class SiliconLawPrototype : SiliconLaw, IPrototype
 {
     /// <inheritdoc/>

@@ -9,9 +9,9 @@ namespace Content.Server.Containers
     /// Implements functionality of EmptyOnMachineDeconstructComponent.
     /// </summary>
     [UsedImplicitly]
-    public sealed class EmptyOnMachineDeconstructSystem : EntitySystem
+    public sealed partial class EmptyOnMachineDeconstructSystem : EntitySystem
     {
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -33,12 +33,14 @@ namespace Content.Server.Containers
 
         private void OnDeconstruct(EntityUid uid, EmptyOnMachineDeconstructComponent component, MachineDeconstructedEvent ev)
         {
-            if (!EntityManager.TryGetComponent<ContainerManagerComponent>(uid, out var mComp))
+            if (!TryComp<ContainerManagerComponent>(uid, out var mComp))
                 return;
-            var baseCoords = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+
+            var baseCoords = Transform(uid).Coordinates;
+
             foreach (var v in component.Containers)
             {
-                if (mComp.TryGetContainer(v, out var container))
+                if (_container.TryGetContainer(uid, v, out var container, mComp))
                 {
                     _container.EmptyContainer(container, true, baseCoords);
                 }

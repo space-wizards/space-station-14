@@ -9,6 +9,9 @@ namespace Content.Shared.Electrocution;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ElectrifiedComponent : Component
 {
+    /// <summary>
+    /// Check if it is actually electrified at the moment.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
@@ -41,6 +44,12 @@ public sealed partial class ElectrifiedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool OnInteractUsing = true;
+
+    /// <summary>
+    /// Whether the entity should electrocute on activation in world.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool OnActivateInWorld = false;
 
     /// <summary>
     /// Indicates if the entity requires power to function
@@ -82,7 +91,7 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time multiplier for HV electrocution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float HighVoltageTimeMultiplier = 1.5f;
+    public float HighVoltageTimeMultiplier = 2f;
 
     /// <summary>
     /// Damage multiplier for MV electrocution
@@ -94,8 +103,11 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time multiplier for MV electrocution
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MediumVoltageTimeMultiplier = 1.25f;
+    public float MediumVoltageTimeMultiplier = 1.5f;
 
+    /// <summary>
+    /// Base damage to be inflected upon electrocution.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float ShockDamage = 7.5f;
 
@@ -103,29 +115,53 @@ public sealed partial class ElectrifiedComponent : Component
     /// Shock time, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ShockTime = 8f;
+    public float ShockTime = 5f;
 
+    /// <summary>
+    /// Base conductivity, is combined coefficient of electrocution targets to check if electrocution attempts works.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float SiemensCoefficient = 1f;
 
+    /// <summary>
+    /// Noise to play when shocking.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier ShockNoises = new SoundCollectionSpecifier("sparks");
 
+    /// <summary>
+    /// Sound to play when disabled.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_on.ogg");
+    public SoundPathSpecifier AirlockElectrifyDisabled = new("/Audio/Machines/airlock_electrify_off.ogg");
 
+    /// <summary>
+    /// Sound to play when enabled.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_off.ogg");
+    public SoundPathSpecifier AirlockElectrifyEnabled = new("/Audio/Machines/airlock_electrify_on.ogg");
 
+    /// <summary>
+    /// If sound should be played upon shocking something or someone.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool PlaySoundOnShock = true;
 
+    /// <summary>
+    /// Volume of shock sound.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float ShockVolume = 20;
 
+    /// <summary>
+    /// The chance if it would shock someone.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float Probability = 1f;
 
+    /// <summary>
+    /// If the power wire of this component is cut, aka no longer electrified.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsWireCut = false;
 }

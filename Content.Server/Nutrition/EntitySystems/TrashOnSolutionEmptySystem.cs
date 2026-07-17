@@ -3,19 +3,22 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed class TrashOnSolutionEmptySystem : EntitySystem
+    public sealed partial class TrashOnSolutionEmptySystem : EntitySystem
     {
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+
+        private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<TrashOnSolutionEmptyComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<TrashOnSolutionEmptyComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
         public void OnMapInit(Entity<TrashOnSolutionEmptyComponent> entity, ref MapInitEvent args)
@@ -23,16 +26,13 @@ namespace Content.Server.Nutrition.EntitySystems
             CheckSolutions(entity);
         }
 
-        public void OnSolutionChange(Entity<TrashOnSolutionEmptyComponent> entity, ref SolutionContainerChangedEvent args)
+        public void OnSolutionChange(Entity<TrashOnSolutionEmptyComponent> entity, ref SolutionChangedEvent args)
         {
             CheckSolutions(entity);
         }
 
         public void CheckSolutions(Entity<TrashOnSolutionEmptyComponent> entity)
         {
-            if (!EntityManager.HasComponent<SolutionContainerManagerComponent>(entity))
-                return;
-
             if (_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
                 UpdateTags(entity, solution);
         }
@@ -41,11 +41,11 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (solution.Volume <= 0)
             {
-                _tagSystem.AddTag(entity.Owner, "Trash");
+                _tagSystem.AddTag(entity.Owner, TrashTag);
                 return;
             }
-            if (_tagSystem.HasTag(entity.Owner, "Trash"))
-                _tagSystem.RemoveTag(entity.Owner, "Trash");
+
+            _tagSystem.RemoveTag(entity.Owner, TrashTag);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Content.Server.Singularity.EntitySystems;
 /// <summary>
 /// Handles singularity attractors.
 /// </summary>
-public sealed class SingularityAttractorSystem : EntitySystem
+public sealed partial class SingularityAttractorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -36,9 +36,6 @@ public sealed class SingularityAttractorSystem : EntitySystem
     /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         var query = EntityQueryEnumerator<SingularityAttractorComponent, TransformComponent>();
         var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var attractor, out var xform))
@@ -64,7 +61,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
 
         attractor.LastPulseTime = _timing.CurTime;
 
-        var mapPos = xform.Coordinates.ToMap(EntityManager, _transform);
+        var mapPos = _transform.ToMapCoordinates(xform.Coordinates);
 
         if (mapPos == MapCoordinates.Nullspace)
             return;
@@ -72,7 +69,7 @@ public sealed class SingularityAttractorSystem : EntitySystem
         var query = EntityQuery<SingularityComponent, RandomWalkComponent, TransformComponent>();
         foreach (var (singulo, walk, singuloXform) in query)
         {
-            var singuloMapPos = singuloXform.Coordinates.ToMap(EntityManager, _transform);
+            var singuloMapPos = _transform.ToMapCoordinates(singuloXform.Coordinates);
 
             if (singuloMapPos.MapId != mapPos.MapId)
                 continue;

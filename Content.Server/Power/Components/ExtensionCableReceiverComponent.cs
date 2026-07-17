@@ -7,7 +7,7 @@ namespace Content.Server.Power.Components
     public sealed partial class ExtensionCableReceiverComponent : Component
     {
         [ViewVariables]
-        public ExtensionCableProviderComponent? Provider { get; set; }
+        public Entity<ExtensionCableProviderComponent>? Provider { get; set; }
 
         [ViewVariables]
         public bool Connectable = false;

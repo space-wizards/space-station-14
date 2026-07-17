@@ -1,0 +1,44 @@
+using Content.Server.Cloning.Components;
+using Content.Shared.Objectives.Systems;
+using Robust.Shared.Random;
+
+namespace Content.Server.Cloning;
+
+/// <summary>
+///     This deals with spawning and setting up a clone of a random crew member.
+/// </summary>
+public sealed partial class RandomCloneSpawnerSystem : EntitySystem
+{
+    [Dependency] private CloningSystem _cloning = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private AliveHumanoidTargetSystem _target = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<RandomCloneSpawnerComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<RandomCloneSpawnerComponent> ent, ref MapInitEvent args)
+    {
+        QueueDel(ent.Owner);
+
+        if (!ProtoMan.TryIndex(ent.Comp.Settings, out var settings))
+        {
+            Log.Error($"Used invalid cloning settings {ent.Comp.Settings} for RandomCloneSpawner");
+            return;
+        }
+
+        var allHumans = _target.GetMinds();
+
+        if (allHumans.Count == 0)
+            return;
+
+        var bodyToClone = _random.Pick(allHumans).Comp.OwnedEntity;
+
+        if (bodyToClone != null)
+            _cloning.TryCloning(bodyToClone.Value, _transformSystem.GetMapCoordinates(ent.Owner), settings, out _);
+    }
+}

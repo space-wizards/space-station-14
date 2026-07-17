@@ -1,12 +1,11 @@
 using System.Numerics;
-using Content.Server.DeviceNetwork;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.IntegrationTests.Tests.DeviceNetwork
 {
@@ -14,7 +13,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(DeviceNetworkComponent))]
     [TestOf(typeof(WiredNetworkComponent))]
     [TestOf(typeof(WirelessNetworkComponent))]
-    public sealed class DeviceNetworkTest
+    public sealed class DeviceNetworkTest : GameTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -52,10 +51,9 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task NetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
@@ -106,18 +104,16 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             {
                 Assert.That(payload, Is.EquivalentTo(deviceNetTestSystem.LastPayload));
             });
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task WirelessNetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
@@ -190,19 +186,16 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             {
                 Assert.That(payload, Is.Not.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
             });
-
-            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task WiredNetworkDeviceSendAndReceive()
         {
-            await using var pair = await PoolManager.GetServerClient();
+            var pair = Pair;
             var server = pair.Server;
             var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var deviceNetSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
             var deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
@@ -273,8 +266,6 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             {
                 Assert.That(payload, Is.EqualTo(deviceNetTestSystem.LastPayload).AsCollection);
             });
-
-            await pair.CleanReturnAsync();
         }
     }
 }

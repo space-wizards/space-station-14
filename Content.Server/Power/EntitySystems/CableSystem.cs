@@ -13,10 +13,10 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed partial class CableSystem : EntitySystem
 {
-    [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
+    [Dependency] private ITileDefinitionManager _tileManager = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
+    [Dependency] private StackSystem _stack = default!;
+    [Dependency] private ElectrocutionSystem _electrocutionSystem = default!;
 
     public override void Initialize()
     {
@@ -47,13 +47,13 @@ public sealed partial class CableSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
-        var ev = new CableAnchorStateChangedEvent(xform);
+        var ev = new CableAnchorStateChangedEvent((uid, xform));
         RaiseLocalEvent(uid, ref ev);
 
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
-        _adminLogger.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
+        _adminLogger.Add(LogType.CableCut, LogImpact.High, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
 
         Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);
@@ -61,7 +61,7 @@ public sealed partial class CableSystem : EntitySystem
 
     private void OnAnchorChanged(EntityUid uid, CableComponent cable, ref AnchorStateChangedEvent args)
     {
-        var ev = new CableAnchorStateChangedEvent(args.Transform, args.Detaching);
+        var ev = new CableAnchorStateChangedEvent((uid, args.Transform), args.Detaching);
         RaiseLocalEvent(uid, ref ev);
 
         if (args.Anchored)
@@ -69,7 +69,7 @@ public sealed partial class CableSystem : EntitySystem
 
         // anchor state can change as a result of deletion (detach to null).
         // We don't want to spawn an entity when deleted.
-        if (!TryLifeStage(uid, out var life) || life >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // This entity should not be un-anchorable. But this can happen if the grid-tile is deleted (RCD, explosion,

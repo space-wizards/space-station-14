@@ -43,6 +43,8 @@ wires-board-name-jukebox = Jukebox
 wires-board-name-computer = Computer
 wires-board-name-holopad = Holopad
 wires-board-name-barsign = Bar Sign
+wires-board-name-weapon-energy-turret = Sentry turret
+wires-board-name-turret-controls = Sentry turret control panel
 
 # names that get displayed in the wire hacking hud & admin logs.
 
@@ -62,7 +64,7 @@ wire-name-vending-eject = VEND
 wire-name-pa-keyboard = KEYB
 wire-name-pa-limiter = LIMT
 wire-name-pa-power = POWR
-wire-name-pa-strength = STRC
+wire-name-pa-strength = STR
 wire-name-bomb-live = LIVE
 wire-name-bomb-delay = DLAY
 wire-name-bomb-proceed = PRCD
