@@ -4,8 +4,8 @@
   abstract: true
   parent: BaseMachine
   id: BaseGenerator
-  name: generator
   description: A high efficiency thermoelectric generator.
+  name: generator
   placement:
     mode: SnapgridCenter
   components:
@@ -83,8 +83,8 @@
 
 - type: entity
   abstract: true
-  parent: [ CoreGenerator, BaseWallmount ]
   id: BaseGeneratorWallmount
+  parent: [ BaseGenerator, BaseWallmount ]
   name: wallmount generator
   description: A high efficiency thermoelectric generator stuffed in a wall cabinet.
   components:
@@ -130,10 +130,10 @@
 
 - type: entity
   parent: BaseWallmountMetallic
+  categories: [ HideSpawnMenu ]
   id: BaseGeneratorWallmountFrame
   name: wallmount generator frame
   description: A construction frame for a wallmount generator.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: WallMountedItems
