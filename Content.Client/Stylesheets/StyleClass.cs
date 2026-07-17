@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Stylesheets;
+namespace Content.Client.Stylesheets;
 
 ///
 /// <summary>
@@ -40,13 +40,18 @@ public static class StyleClass
     public const string LabelSubText = "LabelSubText";
     public const string LabelKeyText = "LabelKeyText";
     public const string LabelWeak = "LabelWeak"; // replaces `LabelSecondaryColor`
+    public const string LabelMonospaceText = "ConsoleText";
+    public const string LabelMonospaceHeading = "ConsoleHeading";
+    public const string LabelMonospaceSubHeading = "ConsoleSubHeading";
 
     public const string BackgroundPanel = "BackgroundPanel"; // replaces `AngleRect`
+    public const string BackgroundPanelDark = "BackgroundPanelDark"; // replaces `Inset`
     public const string BackgroundPanelOpenLeft = "BackgroundPanelOpenLeft"; // replaces `BackgroundOpenLeft`
     public const string BackgroundPanelOpenRight = "BackgroundPanelOpenRight"; // replaces `BackgroundOpenRight`
 
     public const string PanelDark = "PanelDark";
     public const string PanelLight = "PanelLight";
+    public const string PanelDropTarget = "PanelDropTarget";
 
     public const string ButtonOpenRight = "OpenRight";
     public const string ButtonOpenLeft = "OpenLeft";
@@ -56,6 +61,8 @@ public static class StyleClass
     public const string ButtonBig = "ButtonBig";
 
     public const string CrossButtonRed = "CrossButtonRed";
+    public const string RefreshButton = "RefreshButton";
+    public const string HelpButton = "HelpButton";
 
     public const string ItemStatus = "ItemStatus";
     public const string ItemStatusNotHeld = "ItemStatusNotHeld";

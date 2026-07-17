@@ -9,7 +9,7 @@ namespace Content.Shared.EntityConditions.Conditions.Tags;
 /// <inheritdoc cref="EntityConditionSystem{T, TCondition}"/>
 public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<TagComponent, TagCondition>
 {
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     protected override void Condition(Entity<TagComponent> entity, ref EntityConditionEvent<TagCondition> args)
     {
@@ -20,9 +20,12 @@ public sealed partial class HasTagEntityConditionSystem : EntityConditionSystem<
 /// <inheritdoc cref="EntityCondition"/>
 public sealed partial class TagCondition : EntityConditionBase<TagCondition>
 {
+    /// <summary>
+    /// Tag required to fulfill this condition.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<TagPrototype> Tag;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-has-tag", ("tag", Tag), ("invert", Inverted));
+        Loc.GetString("entity-condition-guidebook-has-tag", ("tag", Tag), ("invert", Inverted));
 }

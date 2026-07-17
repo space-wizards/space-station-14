@@ -1,8 +1,6 @@
 - type: entity
-  name: pen
   suffix: Exploding
   parent: Pen
-  description: A dark ink pen.
   id: PenExploding
   components:
   - type: TimerTrigger
@@ -25,6 +23,18 @@
     - Trigger
   - type: EmitSoundOnUse
     handle: false # don't want the sound to stop the explosion from triggering
+  - type: AddComponentsOnTrigger # make them embed into the target, but only when activated so that they can't be metagamed
+    components: # copied from PenEmbeddable
+    - type: EmbeddableProjectile
+      offset: 0.3,0.0
+      removalTime: 0.0
+    - type: ThrowingAngle
+      angle: 315
+    - type: LandAtCursor
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Piercing: 3
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]

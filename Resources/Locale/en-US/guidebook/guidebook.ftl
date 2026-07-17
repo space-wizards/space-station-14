@@ -2,6 +2,7 @@ guidebook-window-title = Guidebook
 guidebook-placeholder-text = Select an entry.
 guidebook-placeholder-text-2 = If you're new, head over to "New? Start here!"
 guidebook-filter-placeholder-text = Filter items
+guidebook-toc-header = Table of Contents
 
 guidebook-parser-error = Parser Error
 guidebook-error-message = Error Message

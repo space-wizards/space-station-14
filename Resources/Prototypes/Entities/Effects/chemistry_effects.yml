@@ -25,11 +25,11 @@
   - type: ActiveEdgeSpreader
   - type: EdgeSpreader
     id: Smoke
-  - type: SolutionContainerManager
-    solutions:
-      solutionArea:
-        maxVol: 600
-        canReact: false
+  - type: Solution
+    id: solutionArea
+    solution:
+      maxVol: 600 # Required for it to spawn correctly, but should be removed in the future:tm: Arguably could move the solution to SmokeComponent as well considering it's nonreactive
+      canReact: false
 
 - type: entity
   parent: BaseFoam
@@ -102,6 +102,7 @@
   - type: SmoothEdge
   - type: IconSmooth
     mode: NoSprite
+    key: foam
   - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
@@ -199,8 +200,9 @@
     replacementTiles:
     - FloorMetalFoam
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -254,8 +256,9 @@
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: FlimsyMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

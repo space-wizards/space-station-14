@@ -10,8 +10,9 @@
     - type: WirelessNetworkConnection
       range: 200
     - type: Damageable
-      damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Injurable
+      damageContainer: StructuralInorganic
     - type: Rotatable
       rotateWhileAnchored: true
     - type: Fixtures

@@ -18,6 +18,8 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         IIconConfig iconCfg = sheet;
 
         var crossTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
+        var refreshTex = sheet.GetTextureOr(iconCfg.RefreshIconPath, NanotrasenStylesheet.TextureRoot);
+        var helpTex = sheet.GetTextureOr(iconCfg.HelpIconPath, NanotrasenStylesheet.TextureRoot);
 
         var rules = new List<StyleRule>
         {
@@ -49,6 +51,16 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
             E<TextureButton>()
                 .Class(StyleClass.CrossButtonRed)
                 .Prop(TextureButton.StylePropertyTexture, crossTex),
+
+            // Refresh Button
+            E<TextureButton>()
+                .Class(StyleClass.RefreshButton)
+                .Prop(TextureButton.StylePropertyTexture, refreshTex),
+
+            // Help button
+            E<TextureButton>()
+                .Class(StyleClass.HelpButton)
+                .Prop(TextureButton.StylePropertyTexture, helpTex),
 
             // Ensure labels in buttons are aligned.
             E<Label>()
@@ -91,10 +103,19 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         string? styleclass)
     {
         rules.AddRange([
-            E().MaybeClass(styleclass).PseudoNormal().Prop(Control.StylePropertyModulateSelf, palette.Element),
-            E().MaybeClass(styleclass).PseudoHovered().Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
-            E().MaybeClass(styleclass).PseudoPressed().Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
-            E()
+            CButton()
+                .MaybeClass(styleclass)
+                .PseudoNormal()
+                .Prop(Control.StylePropertyModulateSelf, palette.Element),
+            CButton()
+                .MaybeClass(styleclass)
+                .PseudoHovered()
+                .Prop(Control.StylePropertyModulateSelf, palette.HoveredElement),
+            CButton()
+                .MaybeClass(styleclass)
+                .PseudoPressed()
+                .Prop(Control.StylePropertyModulateSelf, palette.PressedElement),
+            CButton()
                 .MaybeClass(styleclass)
                 .PseudoDisabled()
                 .Prop(Control.StylePropertyModulateSelf, palette.DisabledElement),

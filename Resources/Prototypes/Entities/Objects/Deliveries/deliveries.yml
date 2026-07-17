@@ -102,6 +102,9 @@
     containers:
       delivery: !type:NestedSelector
         tableId: PackageDeliveryRewards
+  - type: Tag
+    tags:
+      - PackageDelivery
 
 - type: entity
   parent: BaseDelivery
@@ -177,6 +180,7 @@
   components:
   - type: DeliveryFragile
   - type: Damageable
+  - type: Injurable
     damageContainer: Inorganic
   - type: DamageOnHighSpeedImpact
     minimumSpeed: 0.1
