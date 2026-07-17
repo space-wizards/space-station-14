@@ -3,18 +3,14 @@ namespace Content.IntegrationTests.Tests.Stacks;
 public static class StackTestPrototypes
 {
     public const string StackPrototype = "TestStack";
-
-    public const string StackEnt1 = "StackEnt1";
-    public const string StackEnt2 = "StackEnt2";
-    public const string StackEnt30 = "StackEnt30";
     public const string StackEntEdible = "StackEntEdible";
 
+    public const string StackEnt1 = "StackEnt1";
     private const string StackCount1 = "1";
-    public static readonly int Count1 = int.Parse(StackCount1);
+    public const string StackEnt2 = "StackEnt2";
     private const string StackCount2 = "2";
-    public static readonly int Count2 = int.Parse(StackCount2);
+    public const string StackEnt30 = "StackEnt30";
     private const string StackCount30 = "30"; // Also the maximum size of the test stack
-    public static readonly int Count30 = int.Parse(StackCount30);
 
     [TestPrototypes]
     public const string Prototypes =
