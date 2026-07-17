@@ -2,6 +2,7 @@
 using Content.Shared.Random.Helpers;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Random;
 
 namespace Content.Shared.StationRecords.Systems;
@@ -51,9 +52,11 @@ public sealed partial class StationRecordsSystem
     /// </summary>
     /// <param name="ent">The EntityId of the station from which you want to get the record.</param>
     /// <param name="entry">The resulting entry.</param>
-    /// <param name="seedEntity">An optional entity to use as a seed.</param>
+    /// <param name="seedEntity">An optional entity to use as a seed (see remarks).</param>
     /// <typeparam name="T">Type to get from the record set.</typeparam>
     /// <returns>True if a record was obtained. False otherwise.</returns>
+    /// <remarks><see cref="seedEntity"/> should be used where possible with predicted randomness to prevent repeated values within a tick.</remarks>
+    [PublicAPI]
     public bool TryGetRandomRecord<T>(Entity<StationRecordsComponent?> ent, [NotNullWhen(true)] out T? entry, EntityUid? seedEntity = null) where T : StationRecord
     {
         entry = default;
