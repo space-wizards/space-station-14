@@ -1824,5 +1824,12 @@ Entries:
   id: 224
   time: '2026-07-02T22:35:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44394
+- author: Doru991
+  changes:
+  - message: Quick info links in the ahelp window now only trigger for entities that are being or have been controlled by a player.
+    type: Tweak
+  id: 225
+  time: '2026-07-08T08:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44373
 Name: Admin
 Order: 3

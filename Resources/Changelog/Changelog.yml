@@ -4481,3 +4481,115 @@
   id: 9793
   time: '2026-07-02T22:35:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44394
+- author: murolem
+  changes:
+  - message: Added randomizer lock buttons to the character editor screen. The buttons allow you to lock selected values when when randomizing (for example - species).
+    type: Add
+  id: 9794
+  time: '2026-07-02T23:56:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44363
+- author: Samuka-C
+  changes:
+  - message: Fix not moving in the direction you were walking after slipping.
+    type: Fix
+  id: 9795
+  time: '2026-07-03T02:49:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44478
+- author: Nem
+  changes:
+  - message: Ending an expedition early by jumping to the expedition again will no longer drop you on the Nukie planet map.
+    type: Fix
+  id: 9796
+  time: '2026-07-03T09:22:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44482
+- author: Verbalase
+  changes:
+  - message: Minor change in the rules about grammar.
+    type: Tweak
+  id: 9797
+  time: '2026-07-03T13:04:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44477
+- author: ScarKy0
+  changes:
+  - message: Ghost pointlight has been replaced by a new half-bright mode.
+    type: Tweak
+  id: 9798
+  time: '2026-07-03T13:40:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44442
+- author: Krunklehorn
+  changes:
+  - message: Mobs that don't have hands can once again exit closed containers.
+    type: Fix
+  id: 9799
+  time: '2026-07-04T03:43:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37250
+- author: themias
+  changes:
+  - message: The space dragon's fire breath now plays its sound.
+    type: Fix
+  id: 9800
+  time: '2026-07-04T19:51:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43539
+- author: sudobeans
+  changes:
+  - message: Main guidebook window doen't reset when re-opened.
+    type: Tweak
+  id: 9801
+  time: '2026-07-04T22:30:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37235
+- author: c4llv07e
+  changes:
+  - message: Fixed character selection bug when sometimes spawning with different characters!
+    type: Fix
+  id: 9802
+  time: '2026-07-05T14:15:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39382
+- author: ScarKy0
+  changes:
+  - message: Wearing critters on your head no longer grants nightvision.
+    type: Fix
+  id: 9803
+  time: '2026-07-05T15:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44501
+- author: Samuka-C
+  changes:
+  - message: All shotguns, the Hristov, and the PKA now feature custom ammo counters.
+    type: Add
+  id: 9804
+  time: '2026-07-05T15:51:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44476
+- author: SlamBamActionman
+  changes:
+  - message: Dwarves are now shortened via sprite displacement, rather than being scaled.
+    type: Tweak
+  id: 9805
+  time: '2026-07-05T22:34:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43816
+- author: Samuka-C
+  changes:
+  - message: Added a accessibility option to remove the noise from night vision overlay.
+    type: Add
+  id: 9806
+  time: '2026-07-06T12:57:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44526
+- author: SlamBamActionman
+  changes:
+  - message: Grids and wrecks in space can now be pulled using a grappling hook while wearing magboots/being rooted.
+    type: Add
+  id: 9807
+  time: '2026-07-06T13:46:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43746
+- author: sowelipililimute
+  changes:
+  - message: Reagents now display a textual description of their colour when inspected, for colourblind people
+    type: Add
+  id: 9808
+  time: '2026-07-07T03:09:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38789
+- author: sowelipililimute
+  changes:
+  - message: Added a table of contents to each guidebook entry
+    type: Add
+  id: 9809
+  time: '2026-07-07T03:09:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35316
