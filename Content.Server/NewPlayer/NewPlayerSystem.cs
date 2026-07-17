@@ -30,6 +30,22 @@ public sealed partial class NewPlayerSystem : EntitySystem
         args.Cancelled = !(args.Player?.AttachedEntity is not { } uid || HasComp<ShowNewPlayerIconComponent>(uid));
     }
 
+    /// <summary>
+    /// This is a bit of a "hack" to ensure that the component states are properly updated in the event a component
+    /// is removed out of when the client isn't here to receive it. It's taken from how SharedRevolutionarySystem does it.
+    /// TODO: It's not ideal, and preferably we'd have a more solid way to handle specific session component handling.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnComponentStartup(Entity<ShowNewPlayerIconComponent> entity, ref ComponentStartup args)
+    {
+        var newPlayerQuery = AllEntityQuery<NewPlayerIconComponent>();
+        while (newPlayerQuery.MoveNext(out var uid, out var comp))
+        {
+            Dirty(uid, comp);
+        }
+    }
+
+    // Async because it needs to run GetWhitelistStatusAsync. Seems to work!
     [SubscribeLocalEvent]
     private async void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {

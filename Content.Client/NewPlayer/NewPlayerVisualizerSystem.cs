@@ -1,7 +1,6 @@
 ﻿using Content.Shared.CCVar;
 using Content.Shared.NewPlayer;
 using Content.Shared.StatusIcon.Components;
-using Robust.Client.GameObjects;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.NewPlayer;
@@ -9,7 +8,7 @@ namespace Content.Client.NewPlayer;
 /// <summary>
 /// Used to visualize <see cref="NewPlayerIconComponent"/> status icons, if enabled on the server.
 /// </summary>
-public sealed partial class NewPlayerVisualizerSystem : VisualizerSystem<NewPlayerIconComponent>
+public sealed partial class NewPlayerSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;
 
