@@ -22,3 +22,27 @@
     price: 20
   - type: Transform
     anchored: false
+
+- type: entity
+  parent: BaseSign
+  id: BaseSignRoom
+  abstract: true
+  suffix: SignRoom
+
+- type: entity
+  parent: BaseSign
+  id: BaseSignWarning
+  abstract: true
+  suffix: SignWarning
+
+- type: entity
+  parent: BaseSign
+  id: BaseSignGas
+  abstract: true
+  suffix: SignGas
+
+- type: entity
+  parent: BaseSign
+  id: BaseSignNumber
+  abstract: true
+  suffix: SignNumber
