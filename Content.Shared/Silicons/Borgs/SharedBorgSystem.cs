@@ -224,7 +224,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             if (brain != null || module != null)
             {
-                _popup.PopupClient(Loc.GetString("borg-panel-not-open"), chassis, args.User);
+                _popup.PopupEntity(Loc.GetString("borg-panel-not-open"), chassis, args.User);
             }
             return;
         }
@@ -234,7 +234,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             if (TryComp<ActorComponent>(used, out var actor) && !CanPlayerBeBorged(actor.PlayerSession))
             {
-                // Don't use PopupClient because CanPlayerBeBorged is not predicted.
                 _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
                 return;
             }
@@ -327,7 +326,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         if (!CanPlayerBeBorged(session))
         {
-            // Don't use PopupClient because MindAddedMessage and CanPlayerBeBorged are not predicted.
             _popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), brain);
             _container.RemoveEntity(borg, brain);
             _throwing.TryThrow(brain, _random.NextVector2() * 5, 5f);
