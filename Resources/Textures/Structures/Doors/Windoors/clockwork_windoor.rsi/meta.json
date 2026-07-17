@@ -34,7 +34,7 @@
 	{
 	  "name": "deny_unlit",
 	  "delays":[
-	    [
+		[
             0.1,
             0.2,
             0.1
@@ -76,7 +76,6 @@
     },
     {
       "name": "closing_unlit"
-      ]
     },
     {
       "name": "clockworkdeny",
