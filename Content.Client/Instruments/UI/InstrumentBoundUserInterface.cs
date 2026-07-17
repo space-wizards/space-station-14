@@ -18,12 +18,12 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     [Dependency] private IMidiManager _midiManager = default!;
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private ILogManager _logManager = default!;
-    private ISawmill _sawmill = default!;
+    private readonly ISawmill _sawmill = default!;
 
-    private InstrumentSystem _instruments = default!;
-    private ActionBlockerSystem _actionBlockerSystem = default!;
-    private InteractionSystem _interactionSystem = default!;
-    private SharedContainerSystem _sharedContainerSystem = default!;
+    private readonly InstrumentSystem _instruments = default!;
+    private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    private readonly InteractionSystem _interactionSystem = default!;
+    private readonly SharedContainerSystem _sharedContainerSystem = default!;
 
     private readonly FileMidiSource _fileSource = new();
     private readonly BandMidiSource _bandSource = new();
