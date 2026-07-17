@@ -518,6 +518,17 @@
   - type: DynamicRuleCost
     cost: 75
 
+# Passive rule for traitor mail. Recruitment is driven explicitly by
+# DeliveryTraitorRecruitmentSystem, so this must not auto-select antags.
+- type: entity
+  parent: BaseTraitorRule
+  id: TraitorByMail
+  components:
+  - type: AntagSelection
+    antags: []
+  - type: DynamicRuleCost
+    cost: 0
+
 - type: entity
   parent: BaseTraitorRule
   id: SleeperAgents
