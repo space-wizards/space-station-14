@@ -419,6 +419,7 @@
 # button frames
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: ButtonFrame
   name: button frame
   categories: [ HideSpawnMenu ]
@@ -428,16 +429,12 @@
     snap:
     - Wallmount
   components:
-  - type: Clickable
   - type: WallMount
     arc: 360
-  - type: Physics
-    canCollide: false
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
-  - type: Fixtures
 
 - type: entity
   id: ButtonFrameGrey

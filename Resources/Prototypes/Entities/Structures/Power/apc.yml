@@ -1,9 +1,9 @@
 - type: entity
-  parent: BaseWallmount
-  categories: [ HideSpawnMenu ]
+  parent: BaseWallmountMetallic
   id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
+  categories: [ HideSpawnMenu ]
   placement:
     mode: SnapgridCenter
   components:
@@ -104,7 +104,6 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
-  - type: WallMount
   - type: WiresPanel
   - type: Wires
     alwaysRandomize: true
@@ -113,8 +112,6 @@
   - type: WiresVisuals
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

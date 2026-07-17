@@ -222,22 +222,14 @@
     networkSet: true
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: SurveillanceCameraAssembly
   name: camera
   description: A surveillance camera. Doesn't seem to be watching anybody any time soon. Probably.
   components:
-    - type: Clickable
-    - type: InteractionOutline
     - type: Construction
       graph: SurveillanceCamera
       node: assembly
-    - type: WallMount
-    - type: Transform
-      anchored: true
-    - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
-      damageContainer: StructuralInorganic
     - type: Sprite
       drawdepth: WallMountedItems
       sprite: Structures/Wallmounts/camera.rsi

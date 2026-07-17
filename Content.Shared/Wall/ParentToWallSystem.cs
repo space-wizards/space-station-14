@@ -1,3 +1,4 @@
+using Content.Shared.Destructible;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -5,17 +6,24 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wall;
 
+/// <summary>
+/// A system for wallmounts to have their lifecycle tied with the wallmounted objects that live on them.
+/// Ensures that wallmount entities aren't left stranded in space when a wall is destroyed.
+/// </summary>
 public sealed partial class ParentToWallSystem : EntitySystem
 {
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private SharedTransformSystem _xform = default!;
     [Dependency] private TagSystem _tag = default!;
 
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<ParentedWallComponent> _parentedWallQuery = default!;
 
-    private readonly ProtoId<TagPrototype> _wallTag = "Wall";
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
+    /// <summary>
+    /// Wallmount init: tries to find a wall to parent itself to and registers itself.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnParentToWallMapInit(Entity<ParentToWallComponent> ent, ref MapInitEvent args)
     {
@@ -31,7 +39,7 @@ public sealed partial class ParentToWallSystem : EntitySystem
         var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, mapGrid, tileRef.GridIndices);
         while (anchoredQuery.MoveNext(out var maybeAnchor))
         {
-            if (maybeAnchor is { } anchor && _tag.HasTag(anchor, _wallTag))
+            if (maybeAnchor is { } anchor && _tag.HasTag(anchor, WallTag))
             {
                 // Parent the entity to the wall.
                 var parentedWall = EnsureComp<ParentedWallComponent>(anchor);
@@ -46,6 +54,9 @@ public sealed partial class ParentToWallSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Wallmount remove handler: removes the entity from its linked parent's set.
+    /// </summary>
     [SubscribeLocalEvent]
     private void OnParentToWallRemove(Entity<ParentToWallComponent> ent, ref ComponentRemove args)
     {
@@ -59,14 +70,40 @@ public sealed partial class ParentToWallSystem : EntitySystem
             Dirty(parent, parentComp);
     }
 
+    /// <summary>
+    /// Wall destroyed handler: delete all the wall's linked children, trying to destroy them first.
+    /// </summary>
     [SubscribeLocalEvent]
-    private void OnParentedWallDestroyed(Entity<ParentedWallComponent> ent, ref EntityTerminatingEvent args)
+    private void OnParentedWallDestroyed(Entity<ParentedWallComponent> ent, ref DestructionEventArgs args)
     {
-        var children = ent.Comp.Children;
-        foreach (var child in children)
+        DeleteChildren(ent, attemptDestroy: true);
+    }
+
+    /// <summary>
+    /// Wall termining handler: delete all the wall's linked children.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnParentedWallTerminating(Entity<ParentedWallComponent> ent, ref EntityTerminatingEvent args)
+    {
+        DeleteChildren(ent, attemptDestroy: false);
+    }
+
+    /// <summary>
+    /// Destroys all of an entities linked entities, optionally attempting to destroy them.
+    /// </summary>
+    private void DeleteChildren(Entity<ParentedWallComponent> ent, bool attemptDestroy)
+    {
+        foreach (var child in ent.Comp.Children)
         {
-            if (!TerminatingOrDeleted(child))
-                Del(child);
+            // Already being destroyed, nothing to do.
+            if (TerminatingOrDeleted(child))
+                continue;
+
+            // Try to destroy the entity normally, otherwise queue delete it
+            if (attemptDestroy && _destructible.DestroyEntity(child))
+                continue;
+
+            PredictedQueueDel(child);
         }
     }
 }

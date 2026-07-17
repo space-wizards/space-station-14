@@ -102,6 +102,7 @@
 # Construction Frame
 
 - type: entity
+  parent: BaseWalmountMetallic
   id: TimerFrame
   name: timer frame
   description: A construction frame for a timer.
