@@ -9,7 +9,7 @@ namespace Content.Client.Animus.Actions;
 public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimationBase
 {
     ///<summary>
-    /// How high should they hop during the waddle? Higher hop = more energy.
+    /// Time for one full rotation. Higher value = slower rotation
     /// </summary>
     [DataField]
     public float RollingPeriod = 0.75f;
