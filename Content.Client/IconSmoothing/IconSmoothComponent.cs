@@ -21,13 +21,15 @@ public sealed partial class IconSmoothComponent : Component
     public (EntityUid?, Vector2i)? LastPosition;
 
     /// <summary>
-    ///     We will smooth with other objects with the same key.
+    ///     Objects with this key can smooth with us, and vice versa.
+    ///     TODO: YAML HELL, Make smoothing one way.
     /// </summary>
     [DataField("key", required: true)]
     public string SmoothKey { get; private set; }
 
     /// <summary>
-    ///     Additional keys to smooth with.
+    ///     We will attempt to smooth with any objects that contain these keys.
+    ///     Only works one way, objects with these keys will not smooth with us
     /// </summary>
     [DataField]
     public List<string> AdditionalKeys = new();
