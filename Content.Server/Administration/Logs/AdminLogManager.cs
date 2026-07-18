@@ -42,6 +42,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IAdminLogEventPublisher _publisher = default!;
     [Dependency] private readonly ServerDbEntryManager _serverDbEntry = default!;
+    [Dependency] private readonly EuiManager _euis = default!;
 
     public const string SawmillId = "admin.logs";
 

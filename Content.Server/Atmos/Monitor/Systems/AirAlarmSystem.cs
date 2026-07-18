@@ -23,7 +23,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
 
-
 namespace Content.Server.Atmos.Monitor.Systems;
 
 // AirAlarm system - specific for atmos devices, rather than
@@ -37,15 +36,16 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // response data in its data key.
 public sealed partial class AirAlarmSystem : EntitySystem
 {
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
-    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
-    [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
-    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly DeviceListSystem _deviceList = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private AtmosAlarmableSystem _atmosAlarmable = default!;
+    [Dependency] private AtmosDeviceNetworkSystem _atmosDevNet = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private DeviceListSystem _deviceList = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery = default!;
 
     #region Device Network API
 
@@ -297,12 +297,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
                 addr = netConn.Address;
             }
 
-            if (args.Actor is { } actor)
-            {
-                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                    $"{actor:actor} changed {uid:target} mode to {args.Mode}",
-                    new { actor = (int) actor, target = (int) uid, mode = args.Mode });
-            }
+            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
             SetMode(uid, addr, args.Mode, false);
         }
         else
@@ -315,12 +310,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
     {
         component.AutoMode = args.Enabled;
 
-        if (args.Actor is { } actor)
-        {
-            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                $"{actor:actor} changed {uid:target} auto mode to {args.Enabled}",
-                new { actor = (int) actor, target = (int) uid, enabled = args.Enabled });
-        }
+        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} auto mode to {args.Enabled}");
         UpdateUI(uid, component);
     }
 
@@ -328,21 +318,10 @@ public sealed partial class AirAlarmSystem : EntitySystem
     {
         if (AccessCheck(uid, args.Actor, component))
         {
-            if (args.Actor is { } actor)
-            {
-                if (args.Gas != null)
-                {
-                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{actor:actor} changed {args.Address} {args.Gas} {args.Type} threshold using {uid:target}",
-                        new { actor = (int) actor, target = (int) uid, address = args.Address, gas = args.Gas, thresholdType = args.Type });
-                }
-                else
-                {
-                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                        $"{actor:actor} changed {args.Address} {args.Type} threshold using {uid:target}",
-                        new { actor = (int) actor, target = (int) uid, address = args.Address, thresholdType = args.Type });
-                }
-            }
+            if (args.Gas != null)
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} {args.Gas} {args.Type} threshold using {ToPrettyString(uid)}");
+            else
+                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} {args.Type} threshold using {ToPrettyString(uid)}");
 
             SetThreshold(uid, args.Address, args.Type, args.Threshold, args.Gas);
         }
@@ -357,12 +336,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (AccessCheck(uid, args.Actor, component)
             && _deviceList.ExistsInDeviceList(uid, args.Address))
         {
-            if (args.Actor is { } actor)
-            {
-                _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium,
-                    $"{actor:actor} changed {args.Address} settings using {uid:target}",
-                    new { actor = (int) actor, target = (int) uid, address = args.Address });
-            }
+            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} settings using {ToPrettyString(uid)}");
 
             SetDeviceData(uid, args.Address, args.Data);
         }
@@ -385,7 +359,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             case GasVentPumpData ventData:
                 foreach (string addr in component.VentData.Keys)
                 {
-                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to vent {addr}");
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to vent {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -393,7 +367,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
-                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{args.Actor} copied settings to scrubber {addr}");
+                    _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to scrubber {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -422,7 +396,7 @@ public sealed partial class AirAlarmSystem : EntitySystem
         if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
-            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Low, $"{user} attempted to access {uid} without access");
+            _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Low, $"{ToPrettyString(user)} attempted to access {ToPrettyString(uid)} without access");
             return false;
         }
 

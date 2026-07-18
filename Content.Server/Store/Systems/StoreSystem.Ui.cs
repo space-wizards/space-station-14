@@ -23,10 +23,8 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
 
     private void InitializeUi()
@@ -232,7 +230,7 @@ public sealed partial class StoreSystem
 
         _adminLogger.Add(LogType.StorePurchase,
             logImpact,
-            $"{buyer:player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, _proto)}\" from {uid}{logExtraInfo}.");
+            $"{buyer:player} purchased listing \"{ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listing, ProtoMan)}\" from {uid}{logExtraInfo}.");
 
         listing.PurchaseAmount++; //track how many times something has been purchased
         if (msg.SoundSource != null && GetEntity(msg.SoundSource) != null)

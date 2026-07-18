@@ -988,8 +988,8 @@ public sealed partial class ShuttleSystem
 
                 if (_bodyQuery.TryGetComponent(ent, out var mob))
                 {
-                    _adminLogger.Add(LogType.Gib, LogImpact.Extreme, $"{ent:player} got gibbed by the shuttle" +
-                                                                $" {uid} arriving from FTL at {xform.Coordinates:coordinates}");
+                    _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(ent):player} got gibbed by the shuttle" +
+                                                                $" {ToPrettyString(uid)} arriving from FTL at {xform.Coordinates:coordinates}");
                     var gibs = _gibbing.Gib(ent);
                     _immuneEnts.UnionWith(gibs);
                     continue;

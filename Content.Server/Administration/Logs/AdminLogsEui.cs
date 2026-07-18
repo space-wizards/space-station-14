@@ -178,7 +178,7 @@ public sealed partial class AdminLogsEui : BaseEui
                     Limit = _clientBatchSize
                 };
 
-                SendLogs(true);
+                SendLogs(true, _filter);
                 break;
             }
             case NextLogsRequest:

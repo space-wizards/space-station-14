@@ -245,8 +245,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 Dirty(item, pill);
 
                 // Log pill creation by a user
-                _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{user:user} printed {item:pill} {itemSolution.Value.Comp.Solution}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} printed {ToPrettyString(item):pill} {SharedSolutionContainerSystem.ToPrettyString(itemSolution.Comp.Solution)}");
             }
 
             UpdateUiState(chemMaster);
@@ -279,7 +278,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Log bottle creation by a user
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{user:user} bottled {container:bottle} {solution}");
+                $"{ToPrettyString(user):user} bottled {ToPrettyString(container):bottle} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
 
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);

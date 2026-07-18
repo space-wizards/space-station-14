@@ -135,7 +135,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
             return;
         }
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested undocking of {dock.Owner:entity}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested undocking of {dockEnt.Value:entity}");
 
         Undock(dock);
     }

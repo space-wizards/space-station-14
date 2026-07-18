@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Station.Components;
@@ -26,7 +27,18 @@ public sealed partial class ChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Global station announcement from {sender}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) EntityUid.Invalid,
+                message,
+                channel = ChatChannel.Radio.ToString(),
+                sender,
+                scope = "global"
+            }));
     }
 
     /// <inheritdoc />
@@ -47,7 +59,36 @@ public sealed partial class ChatSystem
         {
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
+        if (source is { } sourceUid)
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Low,
+                $"Station announcement from {sourceUid:actor} as {sender}: {message}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = (int) sourceUid,
+                    message,
+                    channel = ChatChannel.Radio.ToString(),
+                    sender,
+                    scope = "filtered"
+                }));
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Low,
+                $"Station announcement from {sender}: {message}",
+                JsonSerializer.SerializeToDocument(new
+                {
+                    speaker = (int) EntityUid.Invalid,
+                    message,
+                    channel = ChatChannel.Radio.ToString(),
+                    sender,
+                    scope = "filtered"
+                }));
+        }
     }
 
     /// <inheritdoc />
@@ -81,6 +122,18 @@ public sealed partial class ChatSystem
             _audio.PlayGlobal(announcementSound ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+        _adminLogger.Add(
+            LogType.Chat,
+            LogImpact.Low,
+            $"Station announcement on {station} from {source:actor} as {sender}: {message}",
+            JsonSerializer.SerializeToDocument(new
+            {
+                speaker = (int) source,
+                message,
+                channel = ChatChannel.Radio.ToString(),
+                sender,
+                station = station.Value.ToString(),
+                scope = "station"
+            }));
     }
 }

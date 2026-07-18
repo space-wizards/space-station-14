@@ -20,13 +20,16 @@ namespace Content.Server.Pinpointer;
 /// </summary>
 public sealed partial class NavMapSystem : SharedNavMapSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly TurfSystem _turfSystem = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private TurfSystem _turfSystem = default!;
+
+    [Dependency] private EntityQuery<AirtightComponent> _airtightQuery = default!;
+    [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
+    [Dependency] private EntityQuery<NavMapComponent> _navQuery = default!;
 
     public const float CloseDistance = 15f;
     public const float FarDistance = 30f;
@@ -184,8 +187,8 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
             beacon.Enabled == args.Enabled)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Medium,
-            $"{args.Actor:player} configured NavMapBeacon \'{ent:entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} configured NavMapBeacon \'{ToPrettyString(ent):entity}\' with text \'{args.Text}\', color {args.Color.ToHexNoAlpha()}, and {(args.Enabled ? "enabled" : "disabled")} it.");
 
         if (TryComp<WarpPointComponent>(ent, out var warpPoint))
         {

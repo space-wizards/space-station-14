@@ -52,6 +52,8 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<CustomVoteLog> CustomVoteLog { get; set; } = null!;
+        public DbSet<CustomVoteLogOption> CustomVoteLogOption { get; set; } = null!;
         public DbSet<AdminAuditEvent> AdminAuditEvent { get; set; } = null!;
         public DbSet<AdminAuditEventPayload> AdminAuditEventPayload { get; set; } = null!;
 

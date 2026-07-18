@@ -33,7 +33,6 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BloodstreamSystem _blood = default!;

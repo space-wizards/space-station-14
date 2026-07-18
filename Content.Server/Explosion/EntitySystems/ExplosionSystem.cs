@@ -23,11 +23,13 @@ using Content.Shared.Inventory;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
+using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -36,7 +38,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -16,11 +16,10 @@ namespace Content.Server.StationEvents.Events;
 /// </summary>
 public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : IComponent
 {
-    [Dependency] protected readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly ChatSystem ChatSystem = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly StationSystem StationSystem = default!;
+    [Dependency] protected IAdminLogManager AdminLogManager = default!;
+    [Dependency] protected ChatSystem ChatSystem = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected StationSystem StationSystem = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -39,7 +38,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        _adminLogger.Add(LogType.EventAnnounced, $"Event added / announced: {uid}");
+        AdminLogManager.Add(LogType.EventAnnounced, $"Event added / announced: {ToPrettyString(uid)}");
 
         // we don't want to send to players who aren't in game (i.e. in the lobby)
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
@@ -58,7 +57,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        _adminLogger.Add(LogType.EventStarted, LogImpact.High, $"Event started: {uid}");
+        AdminLogManager.Add(LogType.EventStarted, LogImpact.High, $"Event started: {ToPrettyString(uid)}");
 
         if (stationEvent.Duration != null)
         {
@@ -78,7 +77,7 @@ public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T 
         if (!TryComp<StationEventComponent>(uid, out var stationEvent))
             return;
 
-        _adminLogger.Add(LogType.EventStopped, $"Event ended: {uid}");
+        AdminLogManager.Add(LogType.EventStopped, $"Event ended: {ToPrettyString(uid)}");
 
         // we don't want to send to players who aren't in game (i.e. in the lobby)
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
