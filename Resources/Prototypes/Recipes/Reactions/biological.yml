@@ -118,8 +118,8 @@
     Slime:
       amount: 15
   effects:
-    - !type:CreateEntityReactionEffect
-      entity: MobAdultSlimesGreen
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreen
 
 - type: reaction
   id: VestineCreateSlime
@@ -130,6 +130,5 @@
     Slime:
       amount: 15
   effects:
-    - !type:CreateEntityReactionEffect
-      entity: MobAdultSlimesGreenAngry
-
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreenAngry
