@@ -6,15 +6,14 @@ using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed partial class VocalSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private ActionsSystem _actions = default!;
@@ -25,7 +24,7 @@ public sealed partial class VocalSystem : EntitySystem
 
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
+        SubscribeLocalEvent<VocalComponent, VoiceChangedEvent>(OnVoiceChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, EmoteActionEvent>(OnEmoteAction);
     }
@@ -40,7 +39,6 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.Sounds = source.Comp.Sounds;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
@@ -53,7 +51,6 @@ public sealed partial class VocalSystem : EntitySystem
     {
         // try to add scream action when vocal comp added
         _actions.AddAction(uid, ref component.EmoteActionEntity, component.EmoteAction);
-        LoadSounds(uid, component);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
@@ -65,9 +62,9 @@ public sealed partial class VocalSystem : EntitySystem
         }
     }
 
-    private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
+    private void OnVoiceChanged(EntityUid uid, VocalComponent component, VoiceChangedEvent args)
     {
-        LoadSounds(uid, component, args.NewSex);
+        LoadSounds(uid, component, args.NewVoice);
     }
 
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
@@ -86,7 +83,7 @@ public sealed partial class VocalSystem : EntitySystem
             return;
 
         // just play regular sound based on emote proto
-        args.Handled = _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), args.Emote);
     }
 
     private void OnEmoteAction(EntityUid uid, VocalComponent component, EmoteActionEvent args)
@@ -109,20 +106,20 @@ public sealed partial class VocalSystem : EntitySystem
         if (component.EmoteSounds is not { } sounds)
             return false;
 
-        return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), component.ScreamId);
     }
 
-    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
+    /// <summary>
+    /// This only works on Humanoids. Mobs should have emoteSounds on <see cref="VocalComponent"/> set directly instead.
+    /// </summary>
+    private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        if (component.Sounds == null)
+        if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
             return;
 
-        sex ??= CompOrNull<HumanoidProfileComponent>(uid)?.Sex ?? Sex.Unsexed;
+        protoId ??= humanoid.Voice;
 
-        if (!component.Sounds.TryGetValue(sex.Value, out var protoId))
-            return;
-
-        if (!_proto.HasIndex(protoId))
+        if (!ProtoMan.HasIndex(protoId))
             return;
 
         component.EmoteSounds = protoId;

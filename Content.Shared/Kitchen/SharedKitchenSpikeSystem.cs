@@ -37,7 +37,6 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private ISharedAdminLogManager _logger = default!;
-    [Dependency] private IPrototypeManager _protoManager = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private ExamineSystemShared _examineSystem = default!;
     [Dependency] private MetaDataSystem _metaDataSystem = default!;
@@ -132,8 +131,8 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || !victim.HasValue)
             return;
 
-        var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
-        _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+        var quality = ProtoMan.Index(ent.Comp.RequiredToolQuality);
+        _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-need-tool-quality",
             ("target", Identity.Entity(victim.Value, EntityManager)),
             ("quality", Loc.GetString(quality.Name))),
             ent,
@@ -154,8 +153,8 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !_toolSystem.HasQuality(args.Used, ent.Comp.RequiredToolQuality, tool))
         {
-            var quality = _protoManager.Index(ent.Comp.RequiredToolQuality);
-            _popupSystem.PopupClient(Loc.GetString("comp-kitchen-spike-need-tool-quality",
+            var quality = ProtoMan.Index(ent.Comp.RequiredToolQuality);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-need-tool-quality",
                 ("target", Identity.Entity(victim.Value, EntityManager)),
                 ("quality", Loc.GetString(quality.Name))),
                 ent,
@@ -167,7 +166,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         var victimIdentity = Identity.Entity(victim.Value, EntityManager);
 
-        _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("victim", victimIdentity)),
+        _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("victim", victimIdentity)),
             Loc.GetString("comp-kitchen-spike-begin-butcher", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
             ent,
             args.User,
@@ -291,7 +290,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
         var victimIdentity = Identity.Entity(args.Target.Value, EntityManager);
 
-        _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-butcher-self", ("victim", victimIdentity)),
+        _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-butcher-self", ("victim", victimIdentity)),
             Loc.GetString("comp-kitchen-spike-butcher", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
             ent,
             args.User,
@@ -458,7 +457,7 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
                 ("hook", hook));
         }
 
-        _popupSystem.PopupPredicted(messageSelf, messageOthers, hook, user, PopupType.MediumCaution);
+        _popupSystem.PopupEntity(messageSelf, messageOthers, hook, user, PopupType.MediumCaution);
     }
 
     /// <summary>

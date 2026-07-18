@@ -114,11 +114,11 @@ public abstract partial class SharedHandsSystem
 
         TryDrop(ent, handName, null, false);
 
-        if (!ent.Comp.Hands.Remove(handName))
-            return;
-
         if (ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
 
         ent.Comp.SortedHands.Remove(handName);
         if (ent.Comp.ActiveHandId == handName)
@@ -360,6 +360,23 @@ public abstract partial class SharedHandsSystem
         var nextHand = ent.Comp.SortedHands[newActiveIndex];
 
         TrySetActiveHand(ent, nextHand);
+    }
+
+    /// <summary>
+    /// Checks if an item is being held by another entity.
+    /// </summary>
+    /// <param name="item">Item that we are checking.</param>
+    /// <param name="user">User who is holding our item.</param>
+    /// <returns>Returns true if our item is being held.</returns>
+    public bool IsHeld(Entity<TransformComponent?> item, [NotNullWhen(true)] out EntityUid? user)
+    {
+        user = null;
+        item.Comp ??= Transform(item);
+        if (!IsHolding(item.Comp.ParentUid, item))
+            return false;
+
+        user = item.Comp.ParentUid;
+        return true;
     }
 
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
