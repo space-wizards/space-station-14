@@ -212,7 +212,7 @@
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
-        damage: 2000
+        damage: 800
       behaviors:
       - !type:PlaySoundBehavior
         sound:
