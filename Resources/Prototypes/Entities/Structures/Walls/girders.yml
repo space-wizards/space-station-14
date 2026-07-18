@@ -23,7 +23,7 @@
 
 - type: entity
   id: Girder
-  parent: [ BaseGirder, StructureHealthBarrier ]
+  parent: [ BaseGirder, StructureHealthBarrierStrong ]
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
@@ -39,7 +39,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 80
+        damage: 120
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

@@ -29,10 +29,6 @@
     - map: [ "enum.EdgeLayer.West" ]
       state: rock_asteroid_west
   - type: MiningScannerViewable
-  - type: Damageable
-    damageModifierSet: Rock
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Fixtures
     fixtures:
       fix1:
@@ -52,6 +48,8 @@
   name: asteroid rock
   description: A rocky asteroid.
   components:
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:

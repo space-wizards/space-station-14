@@ -5,6 +5,8 @@
   name: meteorite rock
   description: What remains of a meteorite.
   components:
+  - type: Damageable
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
