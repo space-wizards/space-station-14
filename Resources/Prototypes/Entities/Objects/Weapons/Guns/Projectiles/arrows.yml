@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, SolutionDart]
   id: BaseArrow
   abstract: true
   components:
@@ -41,17 +41,13 @@
     damage:
       types:
         Piercing: 25
-  - type: SolutionContainerManager
-    solutions:
-      ammo:
-        maxVol: 2
   - type: RefillableSolution # This is sus. You can't really just run an arrowhead under a sink faucet.
-    solution: ammo
+    solution: melee
   - type: InjectableSolution
-    solution: ammo
+    solution: melee
   - type: SolutionInjectOnEmbed
     transferAmount: 2
-    solution: ammo
+    solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
   - type: Appearance
@@ -201,6 +197,9 @@
       color: brown
     - state: tip
       color: brown
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Projectile
     damage:
       types:

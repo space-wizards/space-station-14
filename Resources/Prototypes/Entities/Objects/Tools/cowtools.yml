@@ -19,6 +19,7 @@
   - type: Tool
     qualities:
     - Cutting
+    - Shearing
     useSound:
       path: /Audio/Items/wirecutter.ogg
     speedModifier: 0.05

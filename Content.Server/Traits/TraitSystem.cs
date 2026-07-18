@@ -2,19 +2,16 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
-using Content.Shared.StatusEffectNew;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Traits;
 
-public sealed class TraitSystem : EntitySystem
+public sealed partial class TraitSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -28,7 +25,7 @@ public sealed class TraitSystem : EntitySystem
     {
         // Check if player's job allows to apply traits
         if (args.JobId == null ||
-            !_prototypeManager.Resolve<JobPrototype>(args.JobId, out var protoJob) ||
+            !ProtoMan.Resolve<JobPrototype>(args.JobId, out var protoJob) ||
             !protoJob.ApplyTraits)
         {
             return;
@@ -36,7 +33,7 @@ public sealed class TraitSystem : EntitySystem
 
         foreach (var traitId in args.Profile.TraitPreferences)
         {
-            if (!_prototypeManager.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
+            if (!ProtoMan.TryIndex<TraitPrototype>(traitId, out var traitPrototype))
             {
                 Log.Error($"No trait found with ID {traitId}!");
                 return;
