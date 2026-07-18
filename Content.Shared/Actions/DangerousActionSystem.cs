@@ -27,7 +27,7 @@ public sealed partial class DangerousActionSystem : EntitySystem
         if (!_pacifiedQuery.HasComp(args.User))
             return;
         //if found popup message and cancel
-        _popup.PopupClient(Loc.GetString(ent.Comp.PacificationMessage),args.User,args.User,PopupType.Small);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.PacificationMessage), args.User, args.User);
         args.Cancelled = true;
     }
 
