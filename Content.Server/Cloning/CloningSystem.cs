@@ -69,25 +69,26 @@ public sealed partial class CloningSystem : SharedCloningSystem
 
         // Add equipment first so that SetEntityName also renames the ID card.
         if (settings.CopyEquipment != null)
-            CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.Whitelist, settings.Blacklist);
+            CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy storage on the mob itself as well.
         // This is needed for slime storage.
         if (settings.CopyInternalStorage)
-            CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+            CopyStorage(original, clone.Value, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // copy implants and their storage contents
         if (settings.CopyImplants)
-            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.Whitelist, settings.Blacklist);
+            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.EquipmentWhitelist, settings.EquipmentBlacklist);
 
         // Copy permanent status effects
         if (settings.CopyStatusEffects)
-            CopyStatusEffects(original, clone.Value);
+            CopyStatusEffects(original, clone.Value, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         var originalName = _nameMod.GetBaseName(original);
 
         // Set the clone's name. The raised events will also adjust their PDA and ID card names.
         _metaData.SetEntityName(clone.Value, originalName, raiseEvents: settings.RaiseEntityRenamedEvent);
+        _metaData.SetEntityDescription(clone.Value, Description(original));
         _identity.QueueIdentityUpdate(clone.Value); // We have to manually refresh the identity in case we did not raise events.
 
         _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"The body of {original:player} was cloned as {clone.Value:player}");

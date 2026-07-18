@@ -10,6 +10,7 @@ using Content.Shared.Examine;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Midi;
@@ -17,6 +18,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.GameStates;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Instruments;
@@ -118,7 +120,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
         instrument.Playing = true;
@@ -132,7 +134,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
         Clean(uid, instrument);
@@ -146,7 +148,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument) || !TryComp(uid, out ActiveInstrumentComponent? activeInstrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
         if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
@@ -190,7 +192,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
         if (master != null)
@@ -222,7 +224,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (args.SenderSession.AttachedEntity != GetInstrumentPlayer(uid))
             return;
 
         if (msg.Channel == RobustMidiEvent.PercussionChannel && !instrument.AllowPercussion)
@@ -233,7 +235,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (msg.Value)
         {
             // Prevent stuck notes when turning off a channel... Shrimple.
-            RaiseNetworkEvent(new InstrumentMidiEventEvent(msg.Uid, new []{RobustMidiEvent.AllNotesOff((byte)msg.Channel, 0)}));
+            RaiseNetworkEvent(new InstrumentMidiEventEvent(msg.Uid, [RobustMidiEvent.AllNotesOff((byte)msg.Channel, 0)]));
         }
 
         Dirty(uid, instrument);
@@ -268,6 +270,21 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         _bandRequestQueue.Add(args);
     }
 
+    /// <summary>
+    /// Returns the entity currently playing this instrument.
+    /// </summary>
+    public EntityUid? GetInstrumentPlayer(EntityUid uid)
+    {
+        if (TryComp<ActivatableUIComponent>(uid, out var activatable)
+            && activatable.CurrentSingleUser is { } user)
+            return user;
+
+        if (TryComp<ActorComponent>(uid, out var actor))
+            return actor.PlayerSession.AttachedEntity;
+
+        return null;
+    }
+
     public (NetEntity, string)[] GetBands(EntityUid uid)
     {
         if (Deleted(uid))
@@ -276,7 +293,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         var list = new ValueList<(NetEntity, string)>();
 
         if (!TryComp(uid, out InstrumentComponent? originInstrument)
-            || originInstrument.InstrumentPlayer is not {} originPlayer)
+            || GetInstrumentPlayer(uid) is not { } originPlayer)
             return Array.Empty<(NetEntity, string)>();
 
         // It's probably faster to get all possible active instruments than all entities in range
@@ -291,7 +308,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 continue;
 
             // We want to use the instrument player's name.
-            if (instrument.InstrumentPlayer is not {} playerUid)
+            if (GetInstrumentPlayer(entity) is not { } playerUid)
                 continue;
 
             // Maybe a bit expensive but oh well GetBands is queued and has a timer anyway.
@@ -319,7 +336,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             var netUid = GetNetEntity(uid);
 
             // Reset puppet instruments too.
-            RaiseNetworkEvent(new InstrumentMidiEventEvent(netUid, new[]{RobustMidiEvent.SystemReset(0)}));
+            RaiseNetworkEvent(new InstrumentMidiEventEvent(netUid, [RobustMidiEvent.SystemReset(0)]));
 
             RaiseNetworkEvent(new InstrumentStopMidiEvent(netUid));
         }
@@ -340,9 +357,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
+        var player = GetInstrumentPlayer(uid);
         if (!instrument.Playing
-            || args.SenderSession.AttachedEntity != instrument.InstrumentPlayer
-            || instrument.InstrumentPlayer == null
+            || args.SenderSession.AttachedEntity != player
+            || player == null
             || args.SenderSession.AttachedEntity is not { } attached)
         {
             return;
@@ -370,12 +388,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
             if (instrument.RespectMidiLimits)
             {
-                if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (1 / 3d) + 1))
+                if (instrument.LaggedBatches == (int)(MaxMidiLaggedBatches * (1 / 3d) + 1))
                 {
                     _popup.PopupEntity(Loc.GetString("instrument-component-finger-cramps-light-message"),
                         uid, attached, PopupType.SmallCaution);
                 }
-                else if (instrument.LaggedBatches == (int) (MaxMidiLaggedBatches * (2 / 3d) + 1))
+                else if (instrument.LaggedBatches == (int)(MaxMidiLaggedBatches * (2 / 3d) + 1))
                 {
                     _popup.PopupEntity(Loc.GetString("instrument-component-finger-cramps-serious-message"),
                         uid, attached, PopupType.MediumCaution);
@@ -426,7 +444,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         var query = AllEntityQuery<ActiveInstrumentComponent, InstrumentComponent>();
         while (query.MoveNext(out var uid, out _, out var instrument))
         {
-            if (instrument.Master is {} master)
+            if (instrument.Master is { } master)
             {
                 if (Deleted(master))
                 {
@@ -454,7 +472,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
                 (instrument.BatchesDropped >= MaxMidiBatchesDropped
                  || instrument.LaggedBatches >= MaxMidiLaggedBatches))
             {
-                if (instrument.InstrumentPlayer is {Valid: true} mob)
+                if (GetInstrumentPlayer(uid) is { Valid: true } mob)
                 {
                     _stuns.TryUpdateParalyzeDuration(mob, TimeSpan.FromSeconds(1));
 

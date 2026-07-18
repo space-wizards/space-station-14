@@ -307,6 +307,9 @@ Resources/MapImages
 
 *.bak
 
+# Shader error output
+error.glsl
+
 # Direnv stuff
 .direnv/
 

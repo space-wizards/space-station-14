@@ -34,7 +34,7 @@
   description: changeling-catalog-voice-mimic-desc
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: mimicry}
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreUtility
   conditions:
@@ -49,7 +49,7 @@
   icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: biodegrade }
   applyToMob: true
   cost:
-    ChangelingDNA: 20
+    ChangelingDNA: 10
   categories:
   - ChangelingStoreUtility
   conditions:
@@ -130,3 +130,32 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingStingHallucinogenic
+
+- type: listing
+  id: ChangelingLastResort
+  name: changeling-catalog-last-resort-name
+  description: changeling-catalog-last-resort-desc
+  applyToMob: true
+  cost:
+    ChangelingDNA: 20
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productAction: ActionChangelingLastResort
+
+- type: listing
+  id: ChangelingNightVision
+  name: changeling-catalog-night-vision-name
+  description: changeling-catalog-night-vision-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: nv_on }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 5
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingNightVisionDummy
