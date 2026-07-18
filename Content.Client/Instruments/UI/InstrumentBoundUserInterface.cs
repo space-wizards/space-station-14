@@ -49,8 +49,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            return;
+        var instrument = EntMan.GetComponent<InstrumentComponent>(Owner);
 
         instrument.OnMidiPlaybackEnded += OnMidiPlaybackEnded;
 
@@ -92,8 +91,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         _instrumentMenu.AddConfigurationControl(
             _loc.GetString("instruments-component-midi-file-collection-label"),
             _midiCollectionUtilsControl);
-
-
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
