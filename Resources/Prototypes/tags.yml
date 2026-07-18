@@ -1174,7 +1174,7 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
-  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal by collision.
+  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal on collision.
 
 - type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
