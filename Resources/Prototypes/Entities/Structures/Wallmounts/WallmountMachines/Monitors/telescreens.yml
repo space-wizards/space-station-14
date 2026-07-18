@@ -28,7 +28,7 @@
     node: Telescreen
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b89f25"
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -58,18 +58,12 @@
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:
-      - map: ["computerLayerBody"]
-        state: telescreen_frame
-      - map: ["computerLayerScreen"]
-        state: telescreen
+    - map: ["computerLayerBody"]
+      state: telescreen_frame
+    - map: ["computerLayerScreen"]
+      state: telescreen
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors: #excess damage, don't spawn entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50

@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Samuka-C (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "assembly"
+        },
+        {
+            "name": "closing",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "opening",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.4
+                ]
+            ]
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "closed"
+        },
+        {
+            "name": "welded"
+        }
+    ]
+}

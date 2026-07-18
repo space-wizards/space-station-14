@@ -6,3 +6,5 @@ add-uplink-command-completion-2 = Uplink uid (default to PDA)
 add-uplink-command-completion-3 = Is uplink discount enabled
 add-uplink-command-error-1 = Selected player doesn't control any entity
 add-uplink-command-error-2 = Failed to add uplink to the player
+add-uplink-command-success-pda = Uplink added to player PDA with code {$code}
+add-uplink-command-success-implant = Uplink added to player as an implant

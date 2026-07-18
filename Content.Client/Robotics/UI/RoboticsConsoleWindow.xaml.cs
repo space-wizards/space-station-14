@@ -15,8 +15,8 @@ namespace Content.Client.Robotics.UI;
 [GenerateTypedNameReferences]
 public sealed partial class RoboticsConsoleWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IGameTiming _timing = default!;
     private readonly LockSystem _lock;
     private readonly SpriteSystem _sprite;
 
@@ -63,7 +63,7 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         };
 
         // cant put multiple styles in xaml for some reason
-        DestroyButton.StyleClasses.Add(StyleBase.ButtonCaution);
+        DestroyButton.StyleClasses.Add(StyleClass.Negative);
     }
 
     public void SetEntity(EntityUid uid)

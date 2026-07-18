@@ -1,7 +1,3 @@
-comp-gas-filter-ui-filter-status = Status:
-comp-gas-filter-ui-status-enabled = On
-comp-gas-filter-ui-status-disabled = Off
-
 comp-gas-filter-ui-filter-transfer-rate = Transfer Rate (L/s):
 comp-gas-filter-ui-filter-set-rate = Set
 

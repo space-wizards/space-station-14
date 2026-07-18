@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  parent: [ DrinkBaseMaterialPlastic, SolutionSmall, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
   id: BaseSqueezeBottle
   components:
   - type: Openable
@@ -8,25 +8,14 @@
       collection: packetOpenSounds
   - type: Sprite
     layers:
-    - state: icon
+    - state: icon_empty
       map: ["enum.OpenableVisuals.Layer"]
-    - state: fill6
+    - state: fill-6
       map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
     - state: icon-front
       map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 6
-    fillBaseName: fill # TODO rename to "fill-"
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -38,16 +27,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: SpaceGlue
-          Quantity: 30
-  - type: Tag
-    tags:
-      - DrinkSpaceGlue
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceGlue
+        Quantity: 60
   - type: Glue
 
 - type: entity
@@ -58,13 +42,11 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: SpaceLube
-          Quantity: 30
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 60
   - type: Lube
 
 # Find your nearest clown and give them a gift :o)
@@ -75,19 +57,16 @@
   suffix: DEBUG
   description: This anomalous beaker infinitely produces space lube and as such is to be closely guarded such that it doesn't fall in the wrong hands.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 1000
-        reagents:
-        - ReagentId: SpaceLube
-          Quantity: 1000
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 960
   - type: SolutionRegeneration
-    solution: beaker
     generated:
       reagents:
       - ReagentId: SpaceLube
-        Quantity: 200
+        Quantity: 240
 
 - type: entity
   parent: [DrinkBaseMaterialGlass, DrinkBase]
@@ -97,13 +76,8 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
-  - type: ExaminableSolution
-    solution: drink
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 # Mopwata
 - type: weightedRandomFillSolution
@@ -158,13 +132,11 @@
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Mopwata
-          Quantity: 40
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Mopwata
+        Quantity: 50 # Extra space for the random fill
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata
