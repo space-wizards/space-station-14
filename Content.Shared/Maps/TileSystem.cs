@@ -123,6 +123,10 @@ public sealed partial class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile, IRobustRandom random)
     {
+        // Null variants? Uniform distribution.
+        if (tile.PlacementVariants == null)
+            return random.NextByte(tile.Variants);
+
         var variants = tile.PlacementVariants;
 
         var sum = variants.Sum();
@@ -306,7 +310,7 @@ public sealed partial class TileSystem : EntitySystem
             previousTileId = tileDef.BaseTurf.Value;
         }
 
-        if (spawnItem)
+        if (spawnItem && tileDef.ItemDropPrototypeName != null)
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
