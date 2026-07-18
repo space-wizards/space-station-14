@@ -1,0 +1,76 @@
+# These are modifier sets used for humanoids
+
+#region Standard round-start
+
+- type: damageModifierSet
+  id: Slime
+  coefficients:
+    Blunt: 0.6
+    Slash: 1.2
+    Piercing: 1.2
+    Cold: 1.5
+    Poison: 0.8
+
+- type: damageModifierSet
+  id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
+  coefficients:
+    Cold: 1.3
+
+- type: damageModifierSet
+  id: Diona
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.8
+    Heat: 1.5
+    Shock: 1.2
+
+- type: damageModifierSet
+  id: Moth # Slightly worse at everything but cold
+  coefficients:
+    Cold: 0.7
+    Heat: 1.2
+
+- type: damageModifierSet
+  id: Vox
+  coefficients: # To be decided
+    Poison: 1
+
+# Vulps get more heat damage because fur
+- type: damageModifierSet
+  id: Vulpkanin
+  coefficients:
+    Heat: 1.15
+    Cold: 0.85
+
+#endregion
+#region Special
+
+# immune to everything except physical and heat damage; vulnerable to holy damage because they're undead, but not as vulnerable as a ghost or demon would be
+- type: damageModifierSet
+  id: Skeleton
+  coefficients:
+    Blunt: 1.1
+    Slash: 0.8
+    Piercing: 0.6
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
+    Holy: 0.5
+  flatReductions:
+    Blunt: 5
+
+# hurt a lot by blunt, immune to a good amount of other stuff because they're a cookie
+- type: damageModifierSet
+  id: Gingerbread
+  coefficients:
+    Blunt: 1.5
+    Cold: 0.0
+    Radiation: 0.5
+    Asphyxiation: 0.0
+    Bloodloss: 0.0
+    Cellular: 0.0
+
+#endregion
