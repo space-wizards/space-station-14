@@ -9,10 +9,10 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
         [DataField]
         public bool Enabled = true;
 
-        [DataField]
+        [DataField("inletOne")]
         public string InletOneName = "inletOne";
 
-        [DataField]
+        [DataField("inletTwo")]
         public string InletTwoName = "inletTwo";
 
         [DataField]
