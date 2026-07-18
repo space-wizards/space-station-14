@@ -2,7 +2,7 @@ namespace Content.Shared.Gravity;
 
 public abstract partial class SharedGravitySystem
 {
-    [Dependency] private readonly EntityQuery<GravityComponent> _gravityQuery = default!;
+    [Dependency] private EntityQuery<GravityComponent> _gravityQuery = default!;
 
     protected const float GravityKick = 100.0f;
     protected const float ShakeCooldown = 0.2f;

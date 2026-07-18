@@ -28,12 +28,12 @@ public interface IBuiPreTickUpdate
 /// <summary>
 /// Implements <see cref="BuiPreTickUpdateSystem"/>.
 /// </summary>
-public sealed class BuiPreTickUpdateSystem : EntitySystem
+public sealed partial class BuiPreTickUpdateSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = null!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
-    [Dependency] private readonly IGameTiming _gameTiming = null!;
-    [Dependency] private readonly EntityQuery<UserInterfaceUserComponent> _userQuery = default!;
+    [Dependency] private IPlayerManager _playerManager = null!;
+    [Dependency] private UserInterfaceSystem _uiSystem = null!;
+    [Dependency] private IGameTiming _gameTiming = null!;
+    [Dependency] private EntityQuery<UserInterfaceUserComponent> _userQuery = default!;
 
     public void RunUpdates()
     {
