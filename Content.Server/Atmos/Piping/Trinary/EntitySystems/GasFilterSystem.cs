@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
@@ -83,16 +84,27 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
                 float selectedFilterRatio;
                 var maxFilterRatio =
-                    AtmosphereSystem.FractionToMaxPressure(removedFilteredGas, filterNode.Air, Atmospherics.MaxOutputPressure);
-                if (filter.ClogMode == GasFilterClogMode.Block) {
+                    SharedAtmosphereSystem.FractionToMaxPressure(removedFilteredGas, filterNode.Air, Atmospherics.MaxOutputPressure);
+                // In the pass mode we want to keep pumping as long as either of the outputs accepts
+                // the relevant gas fraction, so the filter clogs as late as possible. To do this we
+                // simply fit as much gas as possible from the pumped gas into the relevant output.
+                // This however can inadvertently filter out only one gas fraction from the inlet
+                // node and thus change the gas ratios there. To prevent this there also exists a
+                // block mode. In block mode we want to stop as soon as either of the outputs gets
+                // on the pressure limit, so we compute how much we can process into either output
+                // and then select the lower of the two.
+                if (filter.ClogMode == GasFilterClogMode.Block)
+                {
                     var maxOutletRatio =
-                        AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                        SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
                     selectedFilterRatio = Math.Min(maxOutletRatio, maxFilterRatio);
                     selectedOutletRatio = selectedFilterRatio;
-                } else { // filter.ClogMode == GasFilterClogMode.Pass
+                }
+                else // filter.ClogMode == GasFilterClogMode.Pass
+                {
                     selectedFilterRatio = maxFilterRatio;
                     selectedOutletRatio =
-                        AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                        SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
                 }
 
                 var filteredGas = removedFilteredGas.RemoveRatio(selectedFilterRatio);
@@ -103,7 +115,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 _ambientSoundSystem.SetAmbience(uid, selectedFilterRatio > 0f);
             } else {
                 selectedOutletRatio =
-                    AtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                    SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
             }
 
             var passthroughGas = removedGas.RemoveRatio(selectedOutletRatio);

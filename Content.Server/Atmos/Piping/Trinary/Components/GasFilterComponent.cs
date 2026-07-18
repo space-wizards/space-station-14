@@ -9,6 +9,9 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [DataField]
         public bool Enabled = true;
 
+        /// <summary>
+        /// Determines the filter's behavior when one of its outputs reaches maximum pressure.
+        /// </summary>
         [DataField]
         public GasFilterClogMode ClogMode = GasFilterClogMode.Block;
 

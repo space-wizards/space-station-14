@@ -64,9 +64,16 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
         Pass
     }
 
+    /// <summary>
+    /// Message sent to change the clog mode of the gas filter.
+    /// </summary>
+    /// <param name="mode">The new clog mode value.</param>
     [Serializable, NetSerializable]
     public sealed class GasFilterChangeClogModeMessage(GasFilterClogMode mode) : BoundUserInterfaceMessage
     {
+        /// <summary>
+        /// The new clog mode value.
+        /// </summary>
         public readonly GasFilterClogMode ClogMode = mode;
     }
 }
