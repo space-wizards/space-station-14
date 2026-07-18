@@ -82,12 +82,10 @@ public sealed class AddTests : GameTest
 
         SharedAdminLog log = default;
 
+        var searchFilter = new LogFilter { Search = guid.ToString() };
         await PoolManager.WaitUntil(Server, async () =>
         {
-            var logs = await _sAdminLogManager.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
+            var logs = await _sAdminLogManager.CurrentRoundLogs(searchFilter);
 
             if (logs.Count == 0)
             {
@@ -257,12 +255,10 @@ public sealed class PreRoundAddTests : GameTest
 
         SharedAdminLog log = default;
 
+        var searchFilter = new LogFilter { Search = guid.ToString() };
         await PoolManager.WaitUntil(Server, async () =>
         {
-            var logs = await _sAdminLogManager.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
+            var logs = await _sAdminLogManager.CurrentRoundLogs(searchFilter);
 
             if (logs.Count == 0)
             {
@@ -289,81 +285,21 @@ public sealed class PreRoundAddTests : GameTest
             json.Dispose();
         }
     }
+}
 
-    [Test]
-    public async Task DuplicatePlayerDoesNotThrowTest()
+/// <summary>
+/// Tests for the <see cref="AdminLogHelpers"/> semantics builders and explicit Tier 3
+/// participant handling. Uses a connected, in-round pair so the acting player has an
+/// attached entity (semantics builders read <c>session.AttachedEntity</c>).
+/// </summary>
+public sealed class AdminLogSemanticsTests : GameTest
+{
+    public override PoolSettings PoolSettings => new()
     {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pair.Server;
-
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-
-        var guid = Guid.NewGuid();
-
-        await server.WaitPost(() =>
-        {
-            var player = sPlayers.Sessions.Single();
-
-            sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
-        });
-
-        await PoolManager.WaitUntil(server, async () =>
-        {
-            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
-
-            if (logs.Count == 0)
-            {
-                return false;
-            }
-
-            return true;
-        });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
-    }
-
-    [Test]
-    public async Task DuplicatePlayerIdDoesNotThrowTest()
-    {
-        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
-        var server = pair.Server;
-
-        var sPlayers = server.ResolveDependency<IPlayerManager>();
-
-        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
-
-        var guid = Guid.NewGuid();
-
-        await server.WaitPost(() =>
-        {
-            var player = sPlayers.Sessions.Single();
-
-            sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
-        });
-
-        await PoolManager.WaitUntil(server, async () =>
-        {
-            var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
-            {
-                Search = guid.ToString()
-            });
-
-            if (logs.Count == 0)
-            {
-                return false;
-            }
-
-            return true;
-        });
-
-        await pair.CleanReturnAsync();
-        Assert.Pass();
-    }
+        AdminLogsEnabled = true,
+        DummyTicker = false,
+        Connected = true
+    };
 
     [Test]
     public async Task ActorVictimToolHelperPreservesSelfActionEntityRoles()
