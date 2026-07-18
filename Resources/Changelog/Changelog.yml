@@ -4779,7 +4779,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/41842
 - author: B_Kirill
   changes:
-  - message: Added new not fun meteors variations: flesh and kudzu meteors.
+  - message: 'Added new not fun meteors variations: flesh and kudzu meteors.'
     type: Add
   id: 9834
   time: '2026-07-14T03:55:09.0000000+00:00'
