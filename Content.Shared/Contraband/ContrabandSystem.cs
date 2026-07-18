@@ -10,7 +10,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Storage;
-using Content.Shared.Storage.EntitySystems;
 
 namespace Content.Shared.Contraband;
 
@@ -22,7 +21,6 @@ public sealed partial class ContrabandSystem : EntitySystem
     [Dependency] private IConfigurationManager _configuration = default!;
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
-    [Dependency] private SharedStorageSystem _storage = default!;
 
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
