@@ -1,55 +1,55 @@
 - type: cargoProduct
-  id: ServiceJanitorial
+  id: JanitorialSupplies
   icon:
     sprite: Objects/Specific/Janitorial/spray_bottle.rsi
     state: cleaner
-  product: CrateServiceJanitorialSupplies
+  product: CrateJanitorialSupplies
   cost: 560
   category: cargoproduct-category-name-janitorial
   group: market
 
 - type: cargoProduct
-  id: ServiceCleanerGrenades
+  id: JanitorialCleanerGrenades
   icon:
     sprite: Objects/Weapons/Grenades/janitor.rsi
     state: icon
-  product: CrateServiceCleanerGrenades
+  product: CrateJanitorialCleanerGrenades
   cost: 400
   category: cargoproduct-category-name-janitorial
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsReplacement
+  id: JanitorialLightsReplacement
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceReplacementLights
+  product: CrateJanitorialReplacementLights
   cost: 600
   category: cargoproduct-category-name-janitorial
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsColorful
+  id: JanitorialLightsColorful
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceColorfulLights
+  product: CrateJanitorialColorfulLights
   cost: 800
   category: cargoproduct-category-name-janitorial
   group: market
 
 - type: cargoProduct
-  id: ServiceLightsHoliday
+  id: JanitorialLightsHoliday
   icon:
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  product: CrateServiceHolidayLights
+  product: CrateJanitorialHolidayLights
   cost: 800
   category: cargoproduct-category-name-janitorial
   group: market
 
 - type: cargoProduct
-  id: MousetrapBoxes
+  id: JanitorialMousetrapBoxes
   icon:
     sprite: Objects/Devices/mousetrap.rsi
     state: mousetrap
@@ -62,7 +62,7 @@
   group: market
 
 - type: cargoProduct
-  id: ServiceJanitorBiosuit
+  id: JanitorialBiosuit
   icon:
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
     state: icon
@@ -72,7 +72,7 @@
   group: market
 
 - type: cargoProduct
-  id: JanitorExplosive
+  id: JanitorialBombSuit
   icon:
     sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
     state: icon
@@ -82,7 +82,7 @@
   group: market
 
 - type: cargoProduct
-  id: ServiceJanitorTrolley
+  id: JanitorialJanitorialTrolley
   icon:
     sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
     state: icon-cart

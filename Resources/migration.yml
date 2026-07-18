@@ -846,13 +846,18 @@ WeaponRifleM90GrenadeLauncher: null
 
 # 2026-07-18
 CrateChemistryVials: null
+CrateSecurityHelmet: null
+CrateSecuritySupplies: null
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
+CrateServiceCleanerGrenades: CrateJanitorialCleanerGrenades
+CrateServiceColorfulLights: CrateJanitorialColorfulLights
+CrateServiceHolidayLights: CrateJanitorialHolidayLights
+CrateServiceReplacementLights: CrateJanitorialReplacementLights
+CrateServiceJanitorialSupplies: CrateJanitorialSupplies
+CrateMaterialTextiles: CrateMaterialCloth
 CrateFoodBarSupply: CrateServiceBarSupply
 CrateFoodCooking: CrateServiceCooking
 CrateFoodDinnerware: CrateServiceDinnerware
 CrateFoodGetMore: CrateServiceGetMore
-CrateSecurityHelmet: null
-CrateSecuritySupplies: null
-CrateMaterialTextiles: CrateMaterialCloth

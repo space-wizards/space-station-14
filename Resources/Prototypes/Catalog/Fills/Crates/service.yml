@@ -114,7 +114,7 @@
 
 - type: entity
   parent: CratePlastic
-  id: CrateServiceJanitorialSupplies
+  id: CrateJanitorialSupplies
   name: janitorial supplies crate
   description: Fight back against dirt and grime with Nanotrasen's Janitorial Essentials(tm)! Contains three buckets, caution signs, and cleaner grenades. Also has a single mop, broom, spray cleaner, wire brush, rag, and trash bag.
   components:
@@ -141,7 +141,7 @@
 
 - type: entity
   parent: CratePlastic
-  id: CrateServiceCleanerGrenades
+  id: CrateJanitorialCleanerGrenades
   name: bulk cleanades crate
   description: Contains two boxes of cleaner grenades, for those deeply-entrenched stains.
   components:
@@ -153,7 +153,7 @@
 
 - type: entity
   parent: CrateGenericSteel
-  id: CrateServiceReplacementLights
+  id: CrateJanitorialReplacementLights
   name: replacement lights crate
   description: May the light of Aether shine upon this station! Or at least, the light of twelve fluorescent light tubes and twelve incandescent light bulbs.
   components:
@@ -166,7 +166,7 @@
 
 - type: entity
   parent: CrateGenericSteel
-  id: CrateServiceColorfulLights
+  id: CrateJanitorialColorfulLights
   name: colorful lights crate
   description: It's not a party until it's hard to see, a little disorienting, and your ears hurt. Contains twelve light tubes and twelve light bulbs in a variety of colors.
   components:
@@ -179,7 +179,7 @@
 
 - type: entity
   parent: CrateGenericSteel
-  id: CrateServiceHolidayLights
+  id: CrateJanitorialHolidayLights
   name: holiday lights crate
   description: Deck the halls with these festive holiday lights! Contains twelve red light tubes and twelve green light tubes.
   components:

@@ -78,8 +78,8 @@
   id: LowValueServiceCrateTable
   table: !type:GroupSelector
     children:
-    - id: CrateServiceColorfulLights
-    - id: CrateServiceReplacementLights
+    - id: CrateJanitorialColorfulLights
+    - id: CrateJanitorialReplacementLights
     - id: CrateServiceBureaucracy
     - id: PetCarrier
     - id: CrateHydroponicsTools
@@ -88,7 +88,7 @@
       weight: 0.5
     - id: CrateHydroponicsSeedsMedicinal
       weight: 0.5
-    - id: CrateServiceJanitorialSupplies
+    - id: CrateJanitorialSupplies
     - id: JanitorialTrolley
       weight: 0.2
 
