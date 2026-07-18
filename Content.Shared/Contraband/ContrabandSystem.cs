@@ -9,6 +9,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 
 namespace Content.Shared.Contraband;
 
@@ -20,6 +22,7 @@ public sealed partial class ContrabandSystem : EntitySystem
     [Dependency] private IConfigurationManager _configuration = default!;
     [Dependency] private SharedIdCardSystem _id = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private SharedStorageSystem _storage = default!;
 
     private bool _contrabandExamineEnabled;
     private bool _contrabandExamineOnlyInHudEnabled;
@@ -170,6 +173,37 @@ public sealed partial class ContrabandSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Determines if an item is contraband, but furthermore iterates over any items inside its storage to determine if it contains any contraband as well.
+    /// </summary>
+    /// <param name="contraband">The entity that we are checking for contraband.</param>
+    /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
+    /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
+    /// <param name="hasContraband">Whether the storage contains contraband. Pass in a false bool variable.</param>
+    /// <returns>Whether the item itself is contraband only, NOT if it contains contraband.</returns>
+    public bool IsContraband(Entity<ContrabandComponent?> contraband,
+        EntityUid? player,
+        [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId,
+        ref bool hasContraband)
+    {
+        var isContraband = IsContraband(contraband, player, out contraProtoId);
+
+        if (!TryComp(contraband.Owner, out StorageComponent? storage))
+        {
+            return isContraband;
+        }
+
+        foreach (var ent in storage.Container.ContainedEntities)
+        {
+            hasContraband = hasContraband || IsContraband(ent, player, out _, ref hasContraband);
+
+            if(hasContraband)
+                break;
+        }
+
+        return isContraband;
     }
 }
 

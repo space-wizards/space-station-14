@@ -59,6 +59,8 @@ namespace Content.Client.Inventory
 
         private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/camo.png");
         private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/contra.png");
+        private readonly ResPath _hasContrabandTexturePath = new("/Textures/Interface/Default/Slots/has_contra.png");
+        private readonly Color _hasContrabandColor = (0f, 1f, 1f);
 
         private readonly Color _chameleonColor = new(147, 112, 219);
 
@@ -322,15 +324,26 @@ namespace Content.Client.Inventory
 
             button.SetEntity(viewEnt);
 
-            if (_admin.IsAdmin() && _isAdminView && EntMan.HasComponent<ChameleonClothingComponent>(entity))
+            if (_admin.IsAdmin() && _isAdminView)
             {
-                button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
+                if (EntMan.HasComponent<ChameleonClothingComponent>(entity))
+                {
+                    button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
+                }
+
+                var hasContraband = false;
+                var isContraband = _contraband.IsContraband(entity.Value, Owner, out var contraProtoId, ref hasContraband);
+                if (isContraband || hasContraband)
+                {
+                    var texture = hasContraband ? _hasContrabandTexturePath : _contrabandTexturePath;
+                    var color = isContraband ? _proto.Index(contraProtoId)?.Color ?? Color.White : _hasContrabandColor;
+                    button.AddAdminOverlay(texture, color);
+                }
             }
 
-            if (_admin.IsAdmin() && _isAdminView && _contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
-            {
-                button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
-            }
+
+
+
         }
     }
 }
