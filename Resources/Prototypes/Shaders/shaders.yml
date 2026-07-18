@@ -59,6 +59,11 @@
   path: "/Textures/Shaders/camera_static.swsl"
 
 - type: shader
+  id: CameraStaticAccessible
+  kind: source
+  path: "/Textures/Shaders/camera_static_accessible.swsl"
+
+- type: shader
   id: Drunk
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
@@ -120,3 +125,8 @@
   id: HeatBlur
   kind: source
   path: "/Textures/Shaders/heatBlur.swsl"
+  
+- type: shader
+  id: NightVision
+  kind: source
+  path: "/Textures/Shaders/nightvision.swsl"

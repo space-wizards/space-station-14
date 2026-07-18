@@ -1,7 +1,5 @@
 ﻿- type: construction
+  parent: BaseItemMisc
   id: Artifact
   graph: Artifact
-  startNode: start
   targetNode: done
-  category: construction-category-misc
-  objectType: Item
