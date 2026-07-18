@@ -117,9 +117,9 @@
     description: cargo-gift-cleaning
     dest: cargo-gift-dest-janitor
     gifts:
-      ServiceJanitorial: 2
-      ServiceLightsReplacement: 2
-      ServiceJanitorBiosuit: 1
+      JanitorialSupplies: 2
+      JanitorialLightsReplacement: 2
+      JanitorialBiosuit: 1
 
 - type: entity
   id: GiftsMedical
