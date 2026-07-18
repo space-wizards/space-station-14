@@ -39,18 +39,18 @@ public sealed partial class ParentToWallSystem : EntitySystem
         var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, mapGrid, tileRef.GridIndices);
         while (anchoredQuery.MoveNext(out var maybeAnchor))
         {
-            if (maybeAnchor is { } anchor && _tag.HasTag(anchor, WallTag))
-            {
-                // Parent the entity to the wall.
-                var parentedWall = EnsureComp<ParentedWallComponent>(anchor);
-                parentedWall.Children.Add(ent);
-                Dirty(anchor, parentedWall);
+            if (maybeAnchor is not { } anchor || !_tag.HasTag(anchor, WallTag))
+                continue;
 
-                ent.Comp.Parent = anchor;
-                Dirty(ent);
+            // Parent the entity to the wall.
+            var parentedWall = EnsureComp<ParentedWallComponent>(anchor);
+            parentedWall.Children.Add(ent);
+            Dirty(anchor, parentedWall);
 
-                return;
-            }
+            ent.Comp.Parent = anchor;
+            Dirty(ent);
+
+            return;
         }
     }
 
