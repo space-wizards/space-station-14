@@ -45,7 +45,7 @@
     state: base
   product: CrateSpaceThruster
   cost: 1500
-  category: cargoproduct-category-name-shuttle
+  category: cargoproduct-category-name-space
   group: market
 
 # - type: cargoProduct
@@ -55,6 +55,6 @@
     # state: avionics-systems
   # product: CrateSpaceShuttlePower
   # cost: 3000
-  # category: cargoproduct-category-name-shuttle
+  # category: cargoproduct-category-name-space
   # group: market
 #  locked: true   # only the QM has permission to order by default
