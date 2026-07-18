@@ -23,7 +23,6 @@
       - ForceFixRotations
       - Window
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
   - type: Icon
     sprite: Structures/Windows/window.rsi
@@ -68,8 +67,10 @@
         acts: [ "Destruction" ]
   - type: Airtight
   - type: IconSmooth
-    key: windows
+    key: walls
     base: window
+  - type: PlacementReplacement
+    key: walls
   - type: InteractionPopup
     interactSuccessString: comp-window-knock
     messagePerceivedByOthers: comp-window-knock
@@ -95,7 +96,6 @@
   name: tinted window
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/tinted_window.rsi
   - type: Icon
     sprite: Structures/Windows/tinted_window.rsi
@@ -239,7 +239,6 @@
     - Window
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/window_diagonal.rsi
     state: state0
   - type: Tag
@@ -248,7 +247,7 @@
     - Window
   - type: IconSmooth
     mode: Diagonal
-    key: windows
+    key: walls
     base: state
   - type: Icon
     sprite: Structures/Windows/window_diagonal.rsi

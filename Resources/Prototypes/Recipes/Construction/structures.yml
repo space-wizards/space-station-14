@@ -25,19 +25,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: ClockworkGirder
-  graph: ClockworkGirder
-  startNode: start
-  targetNode: clockGirder
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   id: Wall
   graph: Girder
   startNode: start
@@ -64,10 +51,10 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: WallClock
-  graph: ClockworkGirder
+  id: BrassWall
+  graph: Girder
   startNode: start
-  targetNode: clockworkWall
+  targetNode: brassWall
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
@@ -107,19 +94,6 @@
   graph: Girder
   startNode: start
   targetNode: silverWall
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: PlasticWall
-  graph: Girder
-  startNode: start
-  targetNode: plasticWall
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
@@ -182,19 +156,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: ClownWall
-  graph: Girder
-  startNode: start
-  targetNode: bananiumWall
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   id: MeatWall
   graph: Girder
   startNode: start
@@ -234,35 +195,10 @@
   canRotate: false
 
 - type: construction
-  id: ClockGrille
-  graph: ClockGrille
-  startNode: start
-  targetNode: clockGrille
-  category: construction-category-structures
-  conditions:
-    - !type:TileNotBlocked
-      failIfSpace: false
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-
-- type: construction
   id: GrilleDiagonal
   graph: GrilleDiagonal
   startNode: start
   targetNode: grilleDiagonal
-  category: construction-category-structures
-  conditions:
-    - !type:TileNotBlocked
-      failIfSpace: false
-  objectType: Structure
-  placementMode: SnapgridCenter
-
-- type: construction
-  id: ClockworkGrilleDiagonal
-  graph: GrilleDiagonal
-  startNode: start
-  targetNode: clockworkGrilleDiagonal
   category: construction-category-structures
   conditions:
     - !type:TileNotBlocked
@@ -339,34 +275,6 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
-
-- type: construction
-  id: ClockworkWindow
-  graph: Window
-  startNode: start
-  targetNode: clockworkWindow
-  category: construction-category-structures
-  canBuildInImpassable: true
-  conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-
-- type: construction
-  id: ClockworkWindowDiagonal
-  name: construction-recipe-clockwork-window-diagonal
-  graph: WindowDiagonal
-  startNode: start
-  targetNode: clockworkWindowDiagonal
-  category: construction-category-structures
-  canBuildInImpassable: true
-  conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
-  objectType: Structure
-  placementMode: SnapgridCenter
 
 - type: construction
   id: PlasmaWindow
@@ -456,19 +364,6 @@
   graph: WindowDirectional
   startNode: start
   targetNode: windowReinforcedDirectional
-  category: construction-category-structures
-  canBuildInImpassable: true
-  conditions:
-    - !type:EmptyOrWindowValidInTile
-    - !type:NoWindowsInTile
-  objectType: Structure
-  placementMode: SnapgridCenter
-
-- type: construction
-  id: WindowClockworkDirectional
-  graph: WindowDirectional
-  startNode: start
-  targetNode: windowClockworkDirectional
   category: construction-category-structures
   canBuildInImpassable: true
   conditions:
@@ -965,32 +860,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: PinionAirlock
-  name: construction-recipe-pinion-airlock
-  graph: PinionAirlock
-  startNode: start
-  targetNode: airlock
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: PinionAirlockGlass
-  name: construction-recipe-pinion-airlock-glass
-  graph: PinionAirlock
-  startNode: start
-  targetNode: glassAirlock
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
   id: AirlockShuttle
   graph: AirlockShuttle
   startNode: start
@@ -1034,18 +903,6 @@
   graph: Windoor
   startNode: start
   targetNode: windoorSecure
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: ClockworkWindoor
-  graph: Windoor
-  startNode: start
-  targetNode: windoorClockwork
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
@@ -1261,18 +1118,6 @@
   category: construction-category-structures
   placementMode: SnapgridCenter
   objectType: Structure
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  id: BananiumDoor
-  graph: DoorGraph
-  startNode: start
-  targetNode: bananiumDoor
-  category: construction-category-structures
-  objectType: Structure
-  placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked

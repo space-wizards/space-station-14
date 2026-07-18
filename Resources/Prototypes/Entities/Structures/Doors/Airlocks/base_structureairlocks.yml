@@ -49,6 +49,11 @@
       map: ["enum.DoorVisualLayers.BaseEmagging"]
       shader: unshaded
       visible: false
+  - type: IconSmooth
+    key: walls
+    additionalKeys:
+    - woods
+    mode: NoSprite
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures

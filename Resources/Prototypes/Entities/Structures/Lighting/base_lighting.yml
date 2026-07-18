@@ -91,6 +91,7 @@
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    offset: 0, 1
     state: empty
   - type: PointLight
     enabled: false
@@ -432,7 +433,7 @@
     enabled: false
     radius: 5
     energy: 0.6
-    offset: "0, 0.4"
+    offset: "0, 0.35"
     color: "#7CFC00"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: ApcPowerReceiver
@@ -450,6 +451,7 @@
     speed: 40
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    offset: 0, 1
     layers:
     - state: base
       map: [ "enum.EmergencyLightVisualLayers.Base" ]

@@ -45,6 +45,8 @@
         layer:
         - WallLayer
         density: 4000
+  - type: PlacementReplacement
+    key: walls
 
 - type: entity
   id: PlastitaniumWindowSquareBase
@@ -59,7 +61,7 @@
     sprite: Structures/Windows/plastitanium_window.rsi
     state: full
   - type: IconSmooth
-    key: windows
+    key: walls
     base: ptwindow
   - type: Airtight
   - type: Fixtures

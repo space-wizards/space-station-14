@@ -4,7 +4,6 @@
   parent: [BaseDeltaPressureReinforcedGlass, Window]
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Structures/Windows/reinforced_window.rsi
@@ -109,7 +108,6 @@
     - Window
   components:
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Windows/reinforced_window_diagonal.rsi
     state: state0
   - type: Tag

@@ -21,6 +21,7 @@
     graph: LightFixture
     node: bulbLight
   - type: Sprite
+    offset: 0, 1
     sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
     drawdepth: WallMountedItems
     layers:

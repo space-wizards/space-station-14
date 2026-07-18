@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "By AftrLite.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "malign0",
+            "directions": 4
+        },
+        {
+            "name": "malign1",
+            "directions": 4
+        },
+        {
+            "name": "malign2",
+            "directions": 4
+        },
+        {
+            "name": "malign3",
+            "directions": 4
+        },
+        {
+            "name": "malign4",
+            "directions": 4
+        },
+        {
+            "name": "malign5",
+            "directions": 4
+        },
+        {
+            "name": "malign6",
+            "directions": 4
+        },
+        {
+            "name": "malign7",
+            "directions": 4
+        }
+    ]
+}

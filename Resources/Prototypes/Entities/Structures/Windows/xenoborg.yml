@@ -10,5 +10,5 @@
     sprite: Structures/Windows/xenoborg.rsi
     state: full
   - type: IconSmooth
-    key: windows
+    key: walls
     base: xenoborg
