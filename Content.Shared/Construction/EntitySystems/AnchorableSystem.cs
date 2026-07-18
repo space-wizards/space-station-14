@@ -91,7 +91,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Valid(uid, userUid, usingUid, false, out var failMessage))
         {
             if (failMessage != null)
-                _popup.PopupClient(failMessage, uid, userUid);
+                _popup.PopupEntity(failMessage, uid, userUid);
             return;
         }
 
@@ -139,7 +139,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         _transformSystem.Unanchor(uid, xform);
         RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-unanchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Unanchor,
@@ -157,7 +157,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(xform.Coordinates, anchorBody))
         {
-            _popup.PopupClient(Loc.GetString("anchorable-occupied"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("anchorable-occupied"), uid, args.User);
             return;
         }
 
@@ -177,7 +177,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
             if (AnyUnstackable(uid, coordinates))
             {
-                _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
+                _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
                 return;
             }
 
@@ -191,7 +191,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-anchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Anchor,
@@ -246,7 +246,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Valid(uid, userUid, usingUid, true, out var failMessage, anchorable, usingTool))
         {
             if (failMessage != null)
-                _popup.PopupClient(Loc.GetString(failMessage), uid, userUid);
+                _popup.PopupEntity(Loc.GetString(failMessage), uid, userUid);
             return;
         }
 
@@ -258,7 +258,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         if (AnyUnstackable(uid, transform.Coordinates))
         {
-            _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
+            _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
             return;
         }
 
@@ -317,7 +317,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TileFree(coordinates, entity.Comp))
             return true;
 
-        _popup.PopupClient(Loc.GetString("anchorable-occupied"), entity, user);
+        _popup.PopupEntity(Loc.GetString("anchorable-occupied"), entity, user);
         return false;
     }
 

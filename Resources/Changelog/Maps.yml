@@ -1168,4 +1168,43 @@
   id: 144
   time: '2026-05-30T01:23:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44119
+- author: Codubreku
+  changes:
+  - message: On Serpentcrest, wall screens now show evacuation timers properly.
+    type: Fix
+  id: 145
+  time: '2026-06-12T16:06:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44279
+- author: ProPeperos
+  changes:
+  - message: On Packed - Added protective grill to the west arm of arrivals
+    type: Add
+  - message: On Packed - You can now find sheep!
+    type: Add
+  - message: On Packed - Distro and Waste starts up automatically
+    type: Tweak
+  id: 146
+  time: '2026-06-29T12:05:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43985
+- author: Sulfari
+  changes:
+  - message: On Serpentcrest, weh auto-injectors no longer transform to a lizard.
+    type: Tweak
+  id: 147
+  time: '2026-07-11T05:13:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44546
+- author: ProPeperos
+  changes:
+  - message: On Serpentcrest - Tweaks to atmos and TEG room, small qol to engi department
+    type: Tweak
+  id: 148
+  time: '2026-07-13T07:13:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44122
+- author: ProPeperos
+  changes:
+  - message: On all Evac shuttles - Tweaked atmos systems and small fixes
+    type: Tweak
+  id: 149
+  time: '2026-07-14T07:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44651
 Order: 2
