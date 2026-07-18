@@ -116,8 +116,11 @@
     - trigger: &DamageWallWeak
         !type:DamageTrigger
         damage: 150
-      behaviors: &SpawnGirder
-      - !type:SpawnEntitiesBehavior
+      behaviors:
+      - &SoundBreakStone !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+      - &SpawnGirder !type:SpawnEntitiesBehavior
         offset: 0
         spawn:
           Girder:
@@ -225,7 +228,8 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: meat
@@ -275,7 +279,8 @@
     - trigger:
         !type:DamageTrigger
         damage: 1
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: debug
@@ -333,7 +338,7 @@
     thresholds:
     - trigger: *DamageWallWeak
       behaviors: &ChangeNodeGirder
-      - !type:PlaySoundBehavior
+      - &SoundMetalSlam !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
       - !type:ChangeConstructionNodeBehavior
@@ -482,7 +487,8 @@
     - trigger: &DamageWallStrong
         !type:DamageTrigger
         damage: 350
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SpawnGirder
 
 - type: entity
   parent: WallDiagonalBase
@@ -518,7 +524,9 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SoundMetalSlam
+      - *SpawnGirder
 
 - type: entity
   parent: [ BaseWall, StructureHealthWallStrong ]
@@ -625,7 +633,9 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SoundMetalSlam
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: riveted
@@ -1085,6 +1095,11 @@
     sprite: Structures/Walls/mining.rsi
   - type: Damageable
     damageModifierSet: SteelMod
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageWallNormal
+      behaviors:
+      - *SpawnGirder
   - type: IconSmooth
     key: walls
     base: mining
@@ -1111,7 +1126,8 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
-      behaviors: *SpawnGirder
+      behaviors:
+      - *SpawnGirder
 
 
 # Vault Walls

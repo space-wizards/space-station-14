@@ -799,8 +799,8 @@
 
 # Rocks and ore veins
 - type: entity
+  parent: [ BaseWall, StructureHealthWallWeak ]
   id: WallRock
-  parent: BaseWall
   name: rock
   suffix: planetmap
   components:
@@ -812,17 +812,16 @@
       tags:
       - Pickaxe
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 150
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
   - type: IconSmooth
     key: walls
     mode: NoSprite
