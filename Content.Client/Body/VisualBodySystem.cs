@@ -1,22 +1,23 @@
 using System.Linq;
+using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Body;
 
-public sealed class VisualBodySystem : SharedVisualBodySystem
+public sealed partial class VisualBodySystem : SharedVisualBodySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MarkingManager _marking = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
+    [Dependency] private MarkingManager _marking = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -73,6 +74,16 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetData(target, index, ent.Comp.Data);
+
+        var displacement = ent.Comp.Displacement;
+        if (displacement != null && ProtoMan.Resolve(displacement, out var displacementProto))
+        {
+            _displacement.TryAddDisplacement(displacementProto.Displacement,
+                (target, Comp<SpriteComponent>(target)),
+                index,
+                ent.Comp.Layer,
+                out _);
+        }
     }
 
     private void RemoveVisual(Entity<VisualOrganComponent> ent, EntityUid target)
@@ -81,6 +92,8 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetRsiState(target, index, RSI.StateId.Invalid);
+
+        _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer);
     }
 
     private void OnMarkingsGotInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)
@@ -147,7 +160,7 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         if (!censorNudity)
             yield break;
 
-        var group = _prototype.Index(ent.Comp.MarkingData.Group);
+        var group = ProtoMan.Index(ent.Comp.MarkingData.Group);
         foreach (var layer in ent.Comp.MarkingData.Layers)
         {
             if (!group.Limits.TryGetValue(layer, out var layerLimits))
@@ -167,8 +180,11 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         }
     }
 
-    private void ApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, EntityUid target)
+    private void ApplyMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
     {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
         var applied = new List<Marking>();
         foreach (var marking in AllMarkings(ent))
         {
@@ -178,6 +194,9 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
             if (!_sprite.LayerMapTryGet(target, proto.BodyPart, out var index, true))
                 continue;
 
+            ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
+
+            var numDisplacements = 0;
             for (var i = 0; i < proto.Sprites.Count; i++)
             {
                 var sprite = proto.Sprites[i];
@@ -190,8 +209,15 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
 
                 if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
                 {
-                    var layer = _sprite.AddLayer(target, sprite, index + i + 1);
-                    _sprite.LayerMapSet(target, layerId, layer);
+                    // Having three separate indices and a magic +1 is cursed, but:
+                    // - index refers to the index of the organ the marking is applied to
+                    // - i is the current sprite of the marking that is being applied
+                    // - numDisplacements tracks how many displacements have been applied, and is
+                    //   an additional offset to ensure that the order of the base sprites is correct
+                    //   after inserting a displacement layer
+                    // - The +1 ensures that markings render on top of the base organ
+                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
+                    _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
                 }
 
@@ -199,6 +225,20 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                     _sprite.LayerSetColor(target, layerId, marking.MarkingColors[i]);
                 else
                     _sprite.LayerSetColor(target, layerId, Color.White);
+
+                if (displacement != null && proto.CanBeDisplaced)
+                {
+                    _displacement.TryAddDisplacement(
+                        displacement,
+                        (target, target.Comp),
+                        // Similar logic as above, but this makes the displacement layer go below the
+                        // original sprite. So it should be all the displacements, then all the sprite layers on top
+                        index + i + 1,
+                        layerId,
+                        out _
+                    );
+                    numDisplacements++;
+                }
             }
 
             applied.Add(marking);
@@ -206,8 +246,11 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
         ent.Comp.AppliedMarkings = applied;
     }
 
-    private void RemoveMarkings(Entity<VisualOrganMarkingsComponent> ent, EntityUid target)
+    private void RemoveMarkings(Entity<VisualOrganMarkingsComponent> ent, Entity<SpriteComponent?> target)
     {
+        if (!Resolve(target, ref target.Comp))
+            return;
+
         foreach (var marking in ent.Comp.AppliedMarkings)
         {
             if (!_marking.TryGetMarking(marking, out var proto))
@@ -220,6 +263,13 @@ public sealed class VisualBodySystem : SharedVisualBodySystem
                     continue;
 
                 var layerId = $"{proto.ID}-{rsi.RsiState}";
+
+                // If this marking is one that can be displaced, we need to remove the displacement as well; otherwise
+                // altering a marking at runtime can lead to the renderer falling over.
+                // The Vulps must be shaved.
+                // (https://github.com/space-wizards/space-station-14/issues/40135).
+                if (proto.CanBeDisplaced)
+                    _displacement.EnsureDisplacementIsNotOnSprite((target, target.Comp), layerId);
 
                 if (!_sprite.LayerMapTryGet(target, layerId, out var index, false))
                     continue;

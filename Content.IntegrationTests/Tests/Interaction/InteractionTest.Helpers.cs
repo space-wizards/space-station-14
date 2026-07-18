@@ -259,6 +259,7 @@ public abstract partial class InteractionTest
 
     /// <summary>
     /// Drops the currently held entity.
+    /// Causes an error if no entity was held.
     /// </summary>
     protected async Task Drop()
     {
@@ -275,6 +276,36 @@ public abstract partial class InteractionTest
 
         await RunTicks(1);
         Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
+    }
+
+    /// <summary>
+    /// Drops all currently held entities.
+    /// Does nothing if no entity was held.
+    /// </summary>
+    protected async Task DropAll()
+    {
+        await Server.WaitPost(() =>
+        {
+            HandSys.DropAll((ToServer(Player), Hands));
+        });
+
+        await RunTicks(1);
+
+        // make sure that all hands are empty
+        Assert.That(HandSys.GetEmptyHandCount((ToServer(Player), Hands)), Is.EqualTo(HandSys.GetHandCount((ToServer(Player), Hands))));
+    }
+
+    /// <summary>
+    /// Swaps the current hand.
+    /// </summary>
+    protected async Task SwapHands(bool reverse = false)
+    {
+        await Server.WaitPost(() =>
+        {
+            HandSys.SwapHands((ToServer(Player), Hands), reverse: reverse);
+        });
+
+        await RunTicks(1);
     }
 
     #region Interact
@@ -481,6 +512,80 @@ public abstract partial class InteractionTest
         await RunTicks(1);
 
         Assert.That(combat.IsInCombatMode, Is.EqualTo(enabled), $"Player could not set combate mode to {enabled}");
+    }
+
+    /// <summary>
+    /// Simulate a light attack that misses its target.
+    /// Defaults to TargetCoords.
+    /// </summary>
+    protected async Task AttemptLightAttackMiss(NetCoordinates? coordinates = null)
+    {
+        // Enter combat mode before attacking.
+        var wasInCombatMode = IsInCombatMode();
+        await SetCombatMode(true);
+
+        coordinates ??= TargetCoords;
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SMelee.TryGetWeapon(SPlayer, out var weaponUid, out var weaponComp), "No weapon to attack with.");
+            SMelee.AttemptLightAttackMiss(SPlayer, weaponUid, weaponComp!, ToServer(coordinates.Value));
+        });
+
+        // If the player was not in combat mode before then disable it again.
+        await SetCombatMode(wasInCombatMode);
+
+        // TODO: Validate that an attack actually happened.
+    }
+
+    /// <summary>
+    /// Simulate a light attack that hits its target.
+    /// </summary>
+    protected async Task AttemptLightAttack(NetEntity? target = null)
+    {
+        // Enter combat mode before attacking.
+        var wasInCombatMode = IsInCombatMode();
+        await SetCombatMode(true);
+
+        target ??= Target;
+        Assert.That(target, Is.Not.Null, "No target specified.");
+        var sTarget = ToServer(target!.Value);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SMelee.TryGetWeapon(SPlayer, out var weaponUid, out var weaponComp), "No weapon to attack with.");
+            SMelee.AttemptLightAttack(SPlayer, weaponUid, weaponComp!, sTarget);
+        });
+
+        // If the player was not in combat mode before then disable it again.
+        await SetCombatMode(wasInCombatMode);
+
+        // TODO: Validate that an attack actually happened.
+    }
+
+    /// <summary>
+    /// Simulate a disarm attack that hits its target.
+    /// </summary>
+    protected async Task AttemptDisarmAttack(NetEntity? target = null)
+    {
+        // Enter combat mode before attacking.
+        var wasInCombatMode = IsInCombatMode();
+        await SetCombatMode(true);
+
+        target ??= Target;
+        Assert.That(target, Is.Not.Null, "No target specified.");
+        var sTarget = ToServer(target!.Value);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SMelee.TryGetWeapon(SPlayer, out var weaponUid, out var weaponComp), "No weapon to attack with.");
+            SMelee.AttemptDisarmAttack(SPlayer, weaponUid, weaponComp!, sTarget);
+        });
+
+        // If the player was not in combat mode before then disable it again.
+        await SetCombatMode(wasInCombatMode);
+
+        // TODO: Validate that an attack actually happened.
     }
 
     /// <summary>
@@ -758,7 +863,7 @@ public abstract partial class InteractionTest
         var pos = Transform.ToMapCoordinates(serverCoords);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out var gridUid, out var grid))
+            if (MapSystem.TryFindGridAt(pos, out var gridUid, out var grid))
                 tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
@@ -1117,7 +1222,7 @@ public abstract partial class InteractionTest
                 MapSystem.SetTile(gridEnt, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
             }
-            else if (MapMan.TryFindGridAt(pos, out var gUid, out var gComp))
+            else if (MapSystem.TryFindGridAt(pos, out var gUid, out var gComp))
             {
                 MapSystem.SetTile(gUid, gComp, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
@@ -1126,7 +1231,7 @@ public abstract partial class InteractionTest
             if (proto == null)
                 return;
 
-            gridEnt = MapMan.CreateGridEntity(MapData.MapId);
+            gridEnt = MapSystem.CreateGridEntity(MapData.MapId);
             grid = gridEnt;
             gridUid = gridEnt;
             gridComp = gridEnt.Comp;
@@ -1134,7 +1239,7 @@ public abstract partial class InteractionTest
             Transform.SetWorldPosition((gridUid, gridXform), pos.Position);
             MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
-            if (!MapMan.TryFindGridAt(pos, out _, out _))
+            if (!MapSystem.TryFindGridAt(pos, out _, out _))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);
@@ -1156,11 +1261,6 @@ public abstract partial class InteractionTest
     protected async Task RunTicks(int ticks)
     {
         await Pair.RunTicksSync(ticks);
-    }
-
-    protected async Task RunSeconds(float seconds)
-    {
-        await Pair.RunSeconds(seconds);
     }
 
     #endregion

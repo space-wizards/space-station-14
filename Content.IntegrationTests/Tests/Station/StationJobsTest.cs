@@ -9,6 +9,7 @@ using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -105,16 +106,25 @@ public sealed class StationJobsTest : GameTest
             }
         });
 
+        var dummies = await server.AddDummySessions(TotalPlayers);
         await server.WaitAssertion(() =>
         {
-            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                .AddJob("TAssistant", JobPriority.Medium, PlayerCount)
-                .AddPreference("TClown", JobPriority.Low)
-                .AddPreference("TMime", JobPriority.High)
-                .WithPlayers(
-                    new Dictionary<NetUserId, HumanoidCharacterProfile>()
-                    .AddJob("TCaptain", JobPriority.High, CaptainCount)
-                );
+            var fakePlayers = new Dictionary<NetUserId, HumanoidCharacterProfile>(TotalPlayers);
+            var i = 0;
+            foreach (var dummy in dummies)
+            {
+                if (i < PlayerCount)
+                {
+                    fakePlayers.AddJob(dummy, "TAssistant", JobPriority.Medium)
+                        .AddPreference("TClown", JobPriority.Low)
+                        .AddPreference("TMime", JobPriority.High);
+                    i++;
+                }
+                else
+                {
+                    fakePlayers.AddJob(dummy, "TCaptain", JobPriority.High);
+                }
+            }
             Assert.That(fakePlayers, Is.Not.Empty);
 
             var start = new Stopwatch();
@@ -252,13 +262,9 @@ public sealed class StationJobsTest : GameTest
 internal static class JobExtensions
 {
     public static Dictionary<NetUserId, HumanoidCharacterProfile> AddJob(
-        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, string jobId, JobPriority prio = JobPriority.Medium,
-        int amount = 1)
+        this Dictionary<NetUserId, HumanoidCharacterProfile> inp, ICommonSession session, string jobId, JobPriority prio = JobPriority.Medium)
     {
-        for (var i = 0; i < amount; i++)
-        {
-            inp.Add(new NetUserId(Guid.NewGuid()), HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
-        }
+        inp.Add(session.UserId, HumanoidCharacterProfile.Random().WithJobPriority(jobId, prio));
 
         return inp;
     }

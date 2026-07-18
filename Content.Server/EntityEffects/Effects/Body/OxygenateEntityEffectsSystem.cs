@@ -12,7 +12,7 @@ namespace Content.Server.EntityEffects.Effects.Body;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class OxygenateEntityEffectsSystem : EntityEffectSystem<RespiratorComponent, Oxygenate>
 {
-    [Dependency] private readonly RespiratorSystem _respirator = default!;
+    [Dependency] private RespiratorSystem _respirator = default!;
     protected override void Effect(Entity<RespiratorComponent> entity, ref EntityEffectEvent<Oxygenate> args)
     {
         _respirator.UpdateSaturation(entity, args.Scale * args.Effect.Factor, entity.Comp);

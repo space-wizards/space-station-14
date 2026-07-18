@@ -7,6 +7,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -26,13 +27,13 @@ namespace Content.Shared.Containers.ItemSlots
     /// </remarks>
     public sealed partial class ItemSlotsSystem : EntitySystem
     {
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containers = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-        [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedContainerSystem _containers = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
+        [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
 
         public override void Initialize()
         {
@@ -248,9 +249,9 @@ namespace Content.Shared.Containers.ItemSlots
                 //
                 // doing a check to make sure that they're all the same or something is probably frivolous
                 if (lockedFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(lockedFailPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(lockedFailPopup), uid, args.User);
                 else if (whitelistFailPopup != null)
-                    _popupSystem.PopupClient(Loc.GetString(whitelistFailPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(whitelistFailPopup), uid, args.User);
                 return;
             }
 
@@ -268,7 +269,7 @@ namespace Content.Shared.Containers.ItemSlots
                 Insert(uid, slot, args.Used, args.User, excludeUserAudio: true);
 
                 if (slot.InsertSuccessPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
+                    _popupSystem.PopupEntity(Loc.GetString(slot.InsertSuccessPopup), uid, args.User);
 
                 args.Handled = true;
                 return;
@@ -518,7 +519,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.Locked)
             {
                 if (popup.HasValue && slot.LockedFailPopup.HasValue)
-                    _popupSystem.PopupClient(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
+                    _popupSystem.PopupEntity(Loc.GetString(slot.LockedFailPopup), uid, popup.Value);
                 return false;
             }
 
@@ -619,6 +620,29 @@ namespace Content.Shared.Containers.ItemSlots
                 _handsSystem.PickupOrDrop(user.Value, item.Value);
 
             return true;
+        }
+
+        /// <summary>
+        ///     Unlocks all slots and ejects items from them on the floor.
+        /// </summary>
+        public void EjectFromAllSlots(Entity<ItemSlotsComponent> entity)
+        {
+            EjectFromAllSlots(entity, _ => true);
+        }
+
+        /// <summary>
+        ///     Unlocks all slots and ejects items from them on the floor. Works only while <paramref name="shouldEject"/> returns true.
+        /// </summary>
+        private void EjectFromAllSlots(Entity<ItemSlotsComponent> entity, Func<ItemSlot, bool> shouldEject)
+        {
+            foreach (var slot in entity.Comp.Slots.Values)
+            {
+                if (slot.HasItem && shouldEject(slot))
+                {
+                    SetLock(entity.Owner, slot, false, entity.Comp);
+                    TryEject(entity.Owner, slot, null, out _);
+                }
+            }
         }
 
         #endregion
@@ -826,14 +850,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         private void OnBreak(EntityUid uid, ItemSlotsComponent component, EntityEventArgs args)
         {
-            foreach (var slot in component.Slots.Values)
-            {
-                if (slot.EjectOnBreak && slot.HasItem)
-                {
-                    SetLock(uid, slot, false, component);
-                    TryEject(uid, slot, null, out var _);
-                }
-            }
+            EjectFromAllSlots((uid, component), slot => slot.EjectOnBreak);
         }
 
         /// <summary>

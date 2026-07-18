@@ -8,11 +8,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Dice;
 
-public abstract class SharedDiceSystem : EntitySystem
+public abstract partial class SharedDiceSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -81,7 +81,7 @@ public abstract class SharedDiceSystem : EntitySystem
         var popupString = Loc.GetString("dice-component-on-roll-land",
             ("die", entity),
             ("currentSide", entity.Comp.CurrentValue));
-        _popup.PopupPredicted(popupString, entity, user);
+        _popup.PopupEntity(popupString, entity);
         _audio.PlayPredicted(entity.Comp.Sound, entity, user);
     }
 }
