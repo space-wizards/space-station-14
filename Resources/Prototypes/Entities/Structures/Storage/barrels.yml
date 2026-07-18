@@ -1,0 +1,203 @@
+- type: entity
+  parent: StorageTank
+  id: BaseBarrelChem
+  abstract: true
+  name: chemical barrel
+  description: A small metal drum. How tropical.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/barrels.rsi
+    state: metalbarrel
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.48,0.18,0.28"
+        density: 200
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpillBehavior
+        solution: tank
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 3000 # 30 sheets, 1 stack
+  - type: ExaminableSolution
+    solution: tank
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BaseBarrelChemRadioactive
+  abstract: true
+  name: radioactive barrel
+  description: It seems to be leaking a bit. I don't think you'd want to be around this for long.
+  components:
+  - type: Sprite
+    state: radbarrel
+  - type: RadiationSource
+    intensity: 1.0
+    slope: 0.25
+
+- type: entityTable
+  id: RandomChemicalBarrel
+  table: !type:GroupSelector
+    children:
+    - id: BarrelChemFilledIodine
+    - id: BarrelChemFilledFluorine
+    - id: BarrelChemFilledChlorine
+    - id: BarrelChemFilledEthanol
+    - id: BarrelChemFilledPhosphorus
+    - id: BarrelChemFilledSilicon
+    - id: BarrelChemFilledMercury
+    - id: BarrelChemFilledLube # oiled up...
+      weight: 0.1
+
+- type: entityTable
+  id: RandomChemicalBarrelRadioactive
+  table: !type:GroupSelector
+    children:
+    - id: BaseBarrelChemRadioactiveEmpty
+      weight: 2
+    - id: BaseBarrelChemRadioactiveFilledRadium
+    - id: BaseBarrelChemRadioactiveFilledUranium
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemEmpty
+  suffix: Empty
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledIodine
+  suffix: Iodine
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Iodine
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledFluorine
+  suffix: Fluorine
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Fluorine
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledChlorine
+  suffix: Chlorine
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Chlorine
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledEthanol
+  suffix: Ethanol
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Ethanol
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledPhosphorus
+  suffix: Phosphorus
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Phosphorus
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledMercury
+  suffix: Mercury
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Mercury
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledSilicon
+  suffix: Silicon
+  components:
+  - type: Sprite
+    state: silicatebarrel
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Silicon
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledLube
+  suffix: Lube
+  description: Slippery...
+  components:
+  - type: Sprite
+    state: silicatebarrel
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveEmpty
+  suffix: Empty
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveFilledRadium
+  suffix: Radium
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Radium
+        Quantity: 960
+
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveFilledUranium
+  suffix: Uranium
+  components:
+  - type: Solution
+    solution:
+      reagents:
+      - ReagentId: Uranium
+        Quantity: 960

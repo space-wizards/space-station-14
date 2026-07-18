@@ -15,6 +15,7 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Python>python3</Python>
+    <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
     <ProjectGuid>{C899FCA4-7037-4E49-ABC2-44DE72487110}</ProjectGuid>
     <TargetFramework>net4.7.2</TargetFramework>
     <RestorePackages>false</RestorePackages>

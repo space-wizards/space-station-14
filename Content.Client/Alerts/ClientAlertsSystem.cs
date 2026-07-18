@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -9,12 +10,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Alerts;
 
 [UsedImplicitly]
-public sealed class ClientAlertsSystem : AlertsSystem
+public sealed partial class ClientAlertsSystem : AlertsSystem
 {
     public AlertOrderPrototype? AlertOrder { get; set; }
 
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IUserInterfaceManager _ui = default!;
 
     public event EventHandler? ClearAlerts;
     public event EventHandler<IReadOnlyDictionary<AlertKey, AlertState>>? SyncAlerts;
@@ -27,11 +28,17 @@ public sealed class ClientAlertsSystem : AlertsSystem
         SubscribeLocalEvent<AlertsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<AlertsComponent, ComponentHandleState>(OnHandleState);
     }
+
+    protected override void HandledAlert()
+    {
+        _ui.ClickSound();
+    }
+
     protected override void LoadPrototypes()
     {
         base.LoadPrototypes();
 
-        AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
+        AlertOrder = ProtoMan.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
             Log.Error("No alertOrder prototype found, alerts will be in random order");
     }
@@ -52,7 +59,23 @@ public sealed class ClientAlertsSystem : AlertsSystem
         if (args.Current is not AlertComponentState cast)
             return;
 
+        // Save all client-sided alerts to later put back in
+        var clientAlerts = new Dictionary<AlertKey, AlertState>();
+        foreach (var alert in alerts.Comp.Alerts)
+        {
+            if (alert.Key.AlertType != null && TryGet(alert.Key.AlertType.Value, out var alertProto))
+            {
+                if (alertProto.ClientHandled)
+                    clientAlerts[alert.Key] = alert.Value;
+            }
+        }
+
         alerts.Comp.Alerts = new(cast.Alerts);
+
+        foreach (var alert in clientAlerts)
+        {
+            alerts.Comp.Alerts[alert.Key] = alert.Value;
+        }
 
         UpdateHud(alerts);
     }

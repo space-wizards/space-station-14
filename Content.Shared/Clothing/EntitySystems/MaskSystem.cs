@@ -8,13 +8,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed class MaskSystem : EntitySystem
+public sealed partial class MaskSystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private SharedActionsSystem _actionSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
 
     public override void Initialize()
     {
@@ -29,7 +29,10 @@ public sealed class MaskSystem : EntitySystem
     private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
     {
         if (_inventorySystem.InSlotWithFlags(uid, SlotFlags.MASK))
+        {
             args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
+            Dirty(uid, component);
+        }
     }
 
     private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
@@ -54,13 +57,12 @@ public sealed class MaskSystem : EntitySystem
 
         var dir = mask.IsToggled ? "down" : "up";
         var msg = $"action-mask-pull-{dir}-popup-message";
-        _popupSystem.PopupClient(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
+        _popupSystem.PopupEntity(Loc.GetString(msg, ("mask", uid)), args.Performer, args.Performer);
     }
 
     private void OnGotUnequipped(EntityUid uid, MaskComponent mask, GotUnequippedEvent args)
     {
-        // Masks are currently always un-toggled when unequipped.
-        SetToggled((uid, mask), false);
+        SetToggled(uid, false);
     }
 
     private void OnFolded(Entity<MaskComponent> ent, ref FoldedEvent args)

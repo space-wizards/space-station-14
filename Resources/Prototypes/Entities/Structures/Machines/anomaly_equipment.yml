@@ -37,6 +37,7 @@
     color: "#fca3c0"
   - type: Appearance
   - type: WiresPanel
+  - type: WiresVisuals
   - type: AmbientSound
     enabled: false
     range: 3
@@ -53,19 +54,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
-      enum.AnomalyVesselVisuals.AnomalyState:
+      enum.AnomalyVesselVisuals.AnomalySeverity:
         enum.PowerDeviceVisualLayers.Powered:
-          1: { state: powered-1 }
-          2: { state: powered-2 }
-          3: { state: powered-3 }
+          Stable: { state: powered-1 }
+          Decaying: { state: powered-2 }
+          Growing: { state: powered-3 }
         enum.AnomalyVesselVisualLayers.Base:
-          1: { state: anomaly-1 }
-          2: { state: anomaly-2 }
-          3: { state: anomaly-3 }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
+          Stable: { state: anomaly-1 }
+          Decaying: { state: anomaly-2 }
+          Growing: { state: anomaly-3 }
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
@@ -228,6 +225,7 @@
   components:
   - type: StationAiWhitelist
   - type: SpriteFade
+    alwaysFade: true
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
     offset: 0,1
@@ -270,6 +268,7 @@
         - Sheet
     materialWhiteList:
     - Plasma
+  - type: OreSiloClient
   - type: Fixtures
     fixtures:
       fix1:

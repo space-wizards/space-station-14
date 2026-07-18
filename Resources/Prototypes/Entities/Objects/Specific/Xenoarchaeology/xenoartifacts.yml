@@ -27,9 +27,10 @@
     effectsTable: !type:NestedSelector
       tableId: XenoArtifactEffectsDefaultTable
   - type: Damageable
+  - type: Injurable
   - type: Actions
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.25
     baseSprintSpeed: 0.5
@@ -51,13 +52,15 @@
       Acidic: [Touch]
 
 - type: entity
+  parent: BaseAction
   id: ActionArtifactActivate
   name: Activate Artifact
   description: Activate yourself, causing chaos to those near you.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       state: ano29
     useDelay: 300
+  - type: InstantAction
     event: !type:ArtifactSelfActivateEvent

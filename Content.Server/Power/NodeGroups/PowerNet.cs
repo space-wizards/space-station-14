@@ -5,6 +5,8 @@ using Content.Server.Power.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 
 namespace Content.Server.Power.NodeGroups
 {

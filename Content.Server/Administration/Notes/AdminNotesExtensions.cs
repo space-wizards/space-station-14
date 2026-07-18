@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.Linq;
 using Content.Server.Database;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Database;
@@ -11,7 +13,7 @@ public static class AdminNotesExtensions
         NoteSeverity? severity = null;
         var secret = false;
         NoteType type;
-        string[]? bannedRoles = null;
+        ImmutableArray<BanRoleDef>? bannedRoles = null;
         string? unbannedByName = null;
         DateTime? unbannedTime = null;
         bool? seen = null;
@@ -30,13 +32,13 @@ public static class AdminNotesExtensions
                 type = NoteType.Message;
                 seen = adminMessage.Seen;
                 break;
-            case ServerBanNoteRecord ban:
+            case BanNoteRecord { Type: BanType.Server } ban:
                 type = NoteType.ServerBan;
                 severity = ban.Severity;
                 unbannedTime = ban.UnbanTime;
                 unbannedByName = ban.UnbanningAdmin?.LastSeenUserName ?? Loc.GetString("system-user");
                 break;
-            case ServerRoleBanNoteRecord roleBan:
+            case BanNoteRecord { Type: BanType.Role } roleBan:
                 type = NoteType.RoleBan;
                 severity = roleBan.Severity;
                 bannedRoles = roleBan.Roles;
@@ -48,14 +50,14 @@ public static class AdminNotesExtensions
         }
 
         // There may be bans without a user, but why would we ever be converting them to shared notes?
-        if (note.Player is null)
-            throw new ArgumentNullException(nameof(note), "Player user ID cannot be null for a note");
+        if (note.Players.Length == 0)
+            throw new ArgumentNullException(nameof(note), "Player user ID cannot be empty for a note");
 
         return new SharedAdminNote(
             note.Id,
-            note.Player!.UserId,
-            note.Round?.Id,
-            note.Round?.Server.Name,
+            [..note.Players.Select(p => p.UserId)],
+            [..note.Rounds.Select(r => r.Id)],
+            note.Rounds.SingleOrDefault()?.Server.Name, // TODO: Show all server names?
             note.PlaytimeAtNote,
             type,
             note.Message,

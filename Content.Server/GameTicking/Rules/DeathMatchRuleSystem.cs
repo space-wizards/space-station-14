@@ -1,16 +1,14 @@
-using System.Linq;
-using Content.Server.Administration.Commands;
+using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Points;
-using Content.Shared.Storage;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 
@@ -19,15 +17,16 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// Manages <see cref="DeathMatchRuleComponent"/>
 /// </summary>
-public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
+public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PointSystem _point = default!;
-    [Dependency] private readonly RespawnRuleSystem _respawn = default!;
-    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private OutfitSystem _outfitSystem = default!;
+    [Dependency] private PointSystem _point = default!;
+    [Dependency] private RespawnRuleSystem _respawn = default!;
+    [Dependency] private RoundEndSystem _roundEnd = default!;
+    [Dependency] private StationSpawningSystem _stationSpawning = default!;
+    [Dependency] private EntityTableSystem _entityTable = default!;
 
     public override void Initialize()
     {
@@ -55,7 +54,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             var mob = mobMaybe!.Value;
 
             _mind.TransferTo(newMind, mob);
-            SetOutfitCommand.SetOutfit(mob, dm.Gear, EntityManager);
+            _outfitSystem.SetOutfit(mob, dm.Gear);
             EnsureComp<KillTrackerComponent>(mob);
             _respawn.AddToTracker(ev.Player.UserId, (uid, tracker));
 
@@ -99,8 +98,10 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             if (ev.Assist is KillPlayerSource assist && dm.Victor == null)
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
 
-            var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns).Cast<string?>().ToList();
-            EntityManager.SpawnEntities(_transform.GetMapCoordinates(ev.Entity), spawns);
+            foreach (var spawn in _entityTable.GetSpawns(dm.RewardSpawns))
+            {
+                SpawnNextToOrDrop(spawn, ev.Entity);
+            }
         }
     }
 
@@ -128,5 +129,6 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         }
         args.AddLine(Loc.GetString("point-scoreboard-header"));
         args.AddLine(new FormattedMessage(point.Scoreboard).ToMarkup());
+        args.AddLine("");
     }
 }

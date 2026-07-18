@@ -12,8 +12,10 @@
     ClothingNeckLesbianPin: 3
     ClothingNeckNonBinaryPin: 3
     ClothingNeckPansexualPin: 3
+    ClothingNeckPluralPin: 3
     ClothingNeckOmnisexualPin: 3
     ClothingNeckGenderqueerPin: 3
+    ClothingNeckGenderfluidPin: 3
     ClothingNeckTransPin: 3
     ClothingNeckAutismPin: 3
     ClothingNeckGoldAutismPin: 3
@@ -33,10 +35,11 @@
     ClothingNeckScarfStripedTrans: 2
     ClothingHeadHatXmasCrown: 2
     BedsheetRainbow: 2
-    ClothingNeckHeadphones: 2
+    ClothingMultipleHeadphones: 2
     ClothingHeadHatFlowerWreath: 2
     ClothingUniformColorRainbow: 2
     ClothingUnderSocksCoder: 2
     ClothingUnderSocksBee: 2
   contrabandInventory:
     ClothingNeckScarfStripedLesbianLong: 2
+    ClothingUniformJumpskirtColorRainbow: 2

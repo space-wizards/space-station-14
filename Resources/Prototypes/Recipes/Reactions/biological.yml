@@ -40,7 +40,6 @@
     Water: 4
     Nitrogen: 1
 
-
 - type: reaction
   id: SapBloodBreakdown
   source: true
@@ -81,6 +80,21 @@
     Nitrogen: 4.5
     Chlorine: 2.5
     Protein: 6
+
+- type: reaction
+  id: SulfurBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    SulfurBlood:
+      amount: 20
+  products:
+    Water: 10
+    Sulfur: 2
+    Hydrogen: 1
+    CarbonDioxide: 3
+    Protein: 4
 
 - type: reaction
   id: ZombieBloodBreakdown

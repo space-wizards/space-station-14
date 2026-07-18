@@ -1,0 +1,125 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseWeaponGravityGun
+  components:
+  - type: Item
+    size: Normal
+  - type: ItemToggle
+    onUse: false
+  - type: ToggleableVisuals
+    spriteLayer: unshaded
+    inhandVisuals:
+      left:
+      - state: inhand-left-unshaded
+        shader: unshaded
+      right:
+      - state: inhand-right-unshaded
+        shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TetherVisualsStatus.Key:
+        unshaded:
+          True: { visible: true }
+          False: { visible: false }
+
+- type: entity
+  parent: [ BaseWeaponGravityGun, PowerCellSlotMediumItem ]
+  id: WeaponTetherGun
+  name: tether gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/tether_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: false
+  - type: PowerCellDraw
+  - type: ToggleCellDraw
+  - type: TetherGun
+    frequency: 5
+    dampingRatio: 4
+
+- type: entity
+  parent: WeaponTetherGun
+  id: WeaponTetherGunEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  parent: [ BaseWeaponGravityGun, PowerCellSlotMediumItem ]
+  id: WeaponForceGun
+  name: force gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/force_gun.rsi
+    layers:
+    - state: base
+    - state: base-unshaded
+      map: [ "unshaded" ]
+      shader: unshaded
+      visible: false
+  - type: PowerCellDraw
+  - type: ToggleCellDraw
+  - type: ForceGun
+    frequency: 15
+    dampingRatio: 4
+    massLimit: 50
+    lineColor: "#18a2d5"
+    soundLaunch:
+      path: /Audio/Weapons/soup.ogg
+      params:
+        volume: 2
+
+- type: entity
+  parent: WeaponForceGun
+  id: WeaponForceGunEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+# Admeme
+- type: entity
+  parent: WeaponTetherGun
+  id: WeaponTetherGunAdmin
+  name: tether gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  suffix: Admeme
+  components:
+  - type: TetherGun
+    canTetherAlive: true
+    canUnanchor: true
+    maxForce: 10000
+    massLimit: 10000
+    dampingRatio: 4
+    frequency: 20
+
+- type: entity
+  parent: WeaponForceGun
+  id: WeaponForceGunAdmin
+  name: force gun
+  description: Manipulates gravity around objects to fling them at high velocities.
+  suffix: Admeme
+  components:
+  - type: ForceGun
+    canTetherAlive: true
+    canUnanchor: true
+    maxForce: 10000
+    massLimit: 10000
+    frequency: 15
+    dampingRatio: 4
+    throwForce: 50
+    throwDistance: 100
+    lineColor: "#18a2d5"

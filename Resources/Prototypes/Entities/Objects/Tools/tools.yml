@@ -28,6 +28,7 @@
   - type: Tool
     qualities:
       - Cutting
+      - Shearing
     useSound:
       path: /Audio/Items/wirecutter.ogg
   - type: RandomSprite
@@ -256,7 +257,10 @@
     qualities:
       - Screwing
     speedModifier: 1.5
-    useSound: /Audio/Items/drill_use.ogg
+    useSound: !type:SoundPathSpecifier
+      path: /Audio/Items/drill_use.ogg
+      params:
+        volume: -2.5
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -264,18 +268,26 @@
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_screw
-        useSound:
+        useSound: !type:SoundPathSpecifier
           path: /Audio/Items/drill_use.ogg
-        changeSound:
+          params:
+            volume: -2.5
+        changeSound: !type:SoundPathSpecifier
           path: /Audio/Items/change_drill.ogg
+          params:
+            volume: -5
       - behavior: Anchoring
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_bolt
-        useSound:
+        useSound: !type:SoundPathSpecifier
           path: /Audio/Items/drill_use.ogg
-        changeSound:
+          params:
+            volume: -2.5
+        changeSound: !type:SoundPathSpecifier
           path: /Audio/Items/change_drill.ogg
+          params:
+            volume: -5
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
@@ -320,7 +332,6 @@
     - Deconstruct
   - type: LimitedCharges
     maxCharges: 30
-    charges: 30
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: icon
@@ -351,18 +362,17 @@
   suffix: Empty
   components:
   - type: LimitedCharges
-    charges: 0
+    lastCharges: -1
 
 - type: entity
   id: RCDRecharging
   parent: RCD
   name: experimental RCD
-  description: A bluespace-enhanced rapid construction device that passively generates its own compressed matter.
+  description: Cyborg-mounted Rapid Construction Device which creates compressed matter on the fly using an internal fabricator.
   suffix: AutoRecharge
   components:
   - type: LimitedCharges
     maxCharges: 20
-    charges: 20
   - type: AutoRecharge
     rechargeDuration: 10
 
@@ -501,6 +511,7 @@
   - type: Item
     sprite: Objects/Tools/rolling_pin.rsi
     size: Small
+    storedRotation: -45
   - type: Clothing
     sprite: Objects/Tools/rolling_pin.rsi
     quickEquip: false

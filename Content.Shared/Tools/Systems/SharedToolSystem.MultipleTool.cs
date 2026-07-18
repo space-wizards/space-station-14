@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (TryComp(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -78,7 +78,7 @@ public abstract partial class SharedToolSystem
         if (playSound && current.ChangeSound != null)
             _audioSystem.PlayPredicted(current.ChangeSound, uid, user);
 
-        if (_protoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
+        if (ProtoMan.TryIndex(current.Behavior.First(), out ToolQualityPrototype? quality))
             multiple.CurrentQualityName = Loc.GetString(quality.Name);
     }
 }

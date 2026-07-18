@@ -36,8 +36,9 @@
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable
-    damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -77,7 +78,8 @@
     node: medicalbed
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
+  - type: AmbientMusicMarkerMedical
 
 - type: entity
   parent: Bed

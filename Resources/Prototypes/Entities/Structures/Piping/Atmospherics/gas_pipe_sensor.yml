@@ -1,10 +1,10 @@
 - type: entity
-  parent: [AirSensorBase, GasPipeBase]
+  parent: [AirSensorBase, GasBinaryBase]
   id: GasPipeSensor
   name: gas pipe sensor
   description: Reports on the status of the gas in the attached pipe network.
   placement:
-    mode: SnapgridCenter
+    mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
@@ -18,6 +18,15 @@
     - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       state: lights
       shader: unshaded
+  - type: AtmosPipeLayers
+    spriteRsiPaths:
+      Primary: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+      Secondary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+      Tertiary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+    alternativePrototypes:
+      Primary: GasPipeSensor
+      Secondary: GasPipeSensorAlt1
+      Tertiary: GasPipeSensorAlt2
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -56,7 +65,12 @@
   suffix: Distribution
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-distribution-loop
+    localizedLabel: gas-pipe-sensor-distribution-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorDistribution
+      Secondary: GasPipeSensorDistributionAlt1
+      Tertiary: GasPipeSensorDistributionAlt2
 
 - type: entity
   parent: GasPipeSensor
@@ -64,7 +78,12 @@
   suffix: Waste
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-waste-loop
+    localizedLabel: gas-pipe-sensor-waste-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorWaste
+      Secondary: GasPipeSensorWasteAlt1
+      Tertiary: GasPipeSensorWasteAlt2
 
 - type: entity
   parent: GasPipeSensor
@@ -72,7 +91,12 @@
   suffix: Mixed air
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-mixed-air
+    localizedLabel: gas-pipe-sensor-mixed-air
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorMixedAir
+      Secondary: GasPipeSensorMixedAirAlt1
+      Tertiary: GasPipeSensorMixedAirAlt2
 
 - type: entity
   parent: GasPipeSensor
@@ -80,7 +104,12 @@
   suffix: TEG hot
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-hot-loop
+    localizedLabel: gas-pipe-sensor-teg-hot-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorTEGHot
+      Secondary: GasPipeSensorTEGHotAlt1
+      Tertiary: GasPipeSensorTEGHotAlt2
 
 - type: entity
   parent: GasPipeSensor
@@ -88,4 +117,9 @@
   suffix: TEG cold
   components:
   - type: Label
-    currentLabel: gas-pipe-sensor-teg-cold-loop
+    localizedLabel: gas-pipe-sensor-teg-cold-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorTEGCold
+      Secondary: GasPipeSensorTEGColdAlt1
+      Tertiary: GasPipeSensorTEGColdAlt2

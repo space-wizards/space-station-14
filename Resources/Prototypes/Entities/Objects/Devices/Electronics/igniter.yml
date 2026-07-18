@@ -7,9 +7,16 @@
   - type: Sprite
     sprite: Objects/Devices/igniter.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: IgnitionSource
     temperature: 800
   - type: IgniteOnTrigger
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: WelderOn
+  - type: UseDelayOnTrigger
+  - type: UseDelayTriggerCondition
   - type: TriggerOnSignal
   - type: DeviceNetwork
     deviceNetId: Wireless
