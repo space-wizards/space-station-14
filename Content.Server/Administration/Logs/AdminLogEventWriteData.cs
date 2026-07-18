@@ -22,6 +22,13 @@ public sealed class AdminLogEventWriteData
     /// Null when there's only one player or the roles aren't known.
     /// </summary>
     public Dictionary<Guid, AdminLogEntityRole>? PlayerRoles { get; set; }
+
+    /// <summary>
+    /// Which queue this log originated from. Used to re-queue failed writes back to
+    /// the correct queue (pre-round vs in-round) instead of guessing from the current run level.
+    /// Not persisted.
+    /// </summary>
+    public bool IsPreRound { get; set; }
 }
 
 public sealed class AdminLogEventEntityWriteData

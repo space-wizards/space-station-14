@@ -307,7 +307,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
                 ent.Comp.CurrentDevourSound = pvsSound.Value.Entity;
         }
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent:player} started changeling devour windup against {target:player}");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), ent, target: target, used: ent)
         {
@@ -364,7 +364,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         ent.Comp.NextTick = curTime + ent.Comp.DamageTimeBetweenTicks;
 
-        _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} began to devour {args.Target:player} identity");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} began to devour {args.Target:player} identity");
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             ent,
@@ -397,7 +397,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
 
         if (!_mobState.IsDead((EntityUid)target))
         {
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  unsuccessfully devoured {args.Target:player}'s identity");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  unsuccessfully devoured {args.Target:player}'s identity");
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User, args.User, PopupType.Medium);
             return;
         }
@@ -416,7 +416,7 @@ public sealed partial class ChangelingDevourSystem : EntitySystem
             && HasComp<HumanoidProfileComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
-            _adminLogger.AddStructured(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  successfully devoured {args.Target:player}'s identity");
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player}  successfully devoured {args.Target:player}'s identity");
             _changelingIdentitySystem.CloneToPausedMap((ent, identityStorage), target.Value);
 
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)

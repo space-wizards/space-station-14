@@ -39,7 +39,7 @@ public sealed class AddTests : GameTest
         {
             var entity = SSpawnAtPosition(null, coordinates);
 
-            sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}",
+            _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}",
                 new { entity = (int) entity });
         });
 
@@ -76,7 +76,7 @@ public sealed class AddTests : GameTest
         {
             var entity = SSpawnAtPosition(null, coordinates);
 
-            sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}",
+            _sAdminLogManager.Add(LogType.Unknown, $"{entity} test log: {guid}",
                 new { entity = (int) entity, guid = guid });
         });
 
@@ -131,7 +131,7 @@ public sealed class AddTests : GameTest
 
             for (var i = 0; i < amount; i++)
             {
-                sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log.");
+                _sAdminLogManager.Add(LogType.Unknown, $"{entity:Entity} test log.");
             }
         });
 
@@ -154,7 +154,7 @@ public sealed class AddTests : GameTest
 
             Assert.DoesNotThrow(() =>
             {
-                sAdminLogSystem.Add(LogType.Unknown, $"{player:Player} test log.",
+                _sAdminLogManager.Add(LogType.Unknown, $"{player:Player} test log.",
                     players: new Guid[] { player.UserId });
             });
         });
@@ -162,7 +162,7 @@ public sealed class AddTests : GameTest
         await PoolManager.WaitUntil(Server, async () =>
         {
             var filter = new LogFilter { Types = new HashSet<LogType> { LogType.Unknown } };
-            var logs = await sAdminLogSystem.CurrentRoundLogs(filter);
+            var logs = await _sAdminLogManager.CurrentRoundLogs(filter);
             // Find the specific log that has our player
             var match = logs.FirstOrDefault(l => l.Players.Contains(playerGuid));
             return match.Id != 0;
@@ -246,7 +246,7 @@ public sealed class PreRoundAddTests : GameTest
 
         await Server.WaitPost(() =>
         {
-            sAdminLogSystem.AddStructured(LogType.Unknown, $"test log: {guid}",
+            _sAdminLogManager.Add(LogType.Unknown, $"test log: {guid}",
                 new { guid });
         });
 

@@ -145,37 +145,44 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public async void Update()
     {
-        if (_runLevel == GameRunLevel.PreRoundLobby)
+        try
         {
-            await PreRoundUpdate();
-            return;
-        }
-
-        var count = _logQueue.Count;
-        Queue.Set(count);
-
-        var preRoundCount = _preRoundLogQueue.Count;
-        PreRoundQueue.Set(preRoundCount);
-
-        if (count + preRoundCount == 0)
-        {
-            return;
-        }
-
-        if (_timing.RealTime >= _nextUpdateTime)
-        {
-            await TrySaveLogs();
-            return;
-        }
-
-        if (count >= _queueMax)
-        {
-            if (_metricsEnabled)
+            if (_runLevel == GameRunLevel.PreRoundLobby)
             {
-                QueueCapReached.Inc();
+                await PreRoundUpdate();
+                return;
             }
 
-            await TrySaveLogs();
+            var count = _logQueue.Count;
+            Queue.Set(count);
+
+            var preRoundCount = _preRoundLogQueue.Count;
+            PreRoundQueue.Set(preRoundCount);
+
+            if (count + preRoundCount == 0)
+            {
+                return;
+            }
+
+            if (_timing.RealTime >= _nextUpdateTime)
+            {
+                await TrySaveLogs();
+                return;
+            }
+
+            if (count >= _queueMax)
+            {
+                if (_metricsEnabled)
+                {
+                    QueueCapReached.Inc();
+                }
+
+                await TrySaveLogs();
+            }
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Unhandled exception in admin log Update: {e}");
         }
     }
 
@@ -314,10 +321,14 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
         catch (Exception e)
         {
-            var targetQueue = _runLevel == GameRunLevel.PreRoundLobby ? _preRoundLogQueue : _logQueue;
-
+            // Re-queue each log to the queue it originally came from. Choosing a single target
+            // queue from the current run level would mix pre-round and in-round logs, causing
+            // them to be dropped or persisted against the wrong round.
+            var requeued = 0;
             foreach (var log in copy)
             {
+                var targetQueue = log.IsPreRound ? _preRoundLogQueue : _logQueue;
+
                 if (targetQueue.Count >= _dropThreshold)
                 {
                     Interlocked.Increment(ref _logsDropped);
@@ -325,9 +336,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 }
 
                 targetQueue.Enqueue(log);
+                requeued++;
             }
 
-            _sawmill.Error($"Failed to persist admin logs. Re-queued {copy.Count} logs. Structured publish skipped. Error: {e}");
+            _sawmill.Error($"Failed to persist admin logs. Re-queued {requeued} logs. Structured publish skipped. Error: {e}");
         }
     }
 
@@ -364,17 +376,32 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public async void RoundStarting(int id)
     {
-        _currentRoundId = id;
-
-        // Flush pre-round logs immediately now that we have a valid round ID.
-        // Use dropPreRoundInLobby: false because the round is starting — these
-        // logs should be persisted, not dropped. Bypass TrySaveLogs guard since
-        // this is a lifecycle event that must flush before the round proceeds.
-        if (!_preRoundLogQueue.IsEmpty || !_logQueue.IsEmpty)
+        try
         {
-            // Wait for any in-progress save to complete
+            _currentRoundId = id;
+
+            // Flush pre-round logs immediately now that we have a valid round ID.
+            // Use dropPreRoundInLobby: false because the round is starting — these
+            // logs should be persisted, not dropped.
+            if (_preRoundLogQueue.IsEmpty && _logQueue.IsEmpty)
+                return;
+
+            // Wait for any in-progress save to complete before flushing. Bounded so a stalled
+            // save (e.g. a lost database connection) can't spin the game ticker forever.
+            const int maxWaitAttempts = 100; // ~1s total at 10ms per attempt, hopfully
+            var attempts = 0;
             while (Interlocked.CompareExchange(ref _savingLogs, 1, 0) != 0)
-                await Task.Yield();
+            {
+                if (++attempts >= maxWaitAttempts)
+                {
+                    _sawmill.Warning(
+                        "RoundStarting timed out waiting for an in-progress admin log save; skipping the " +
+                        "pre-round flush. Pending logs will be persisted on the next update.");
+                    return;
+                }
+
+                await Task.Delay(10);
+            }
 
             try
             {
@@ -384,6 +411,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             {
                 Interlocked.Exchange(ref _savingLogs, 0);
             }
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Unhandled exception in admin log RoundStarting: {e}");
         }
     }
 
@@ -532,10 +563,11 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Players = logPlayers,
             Entities = logEntities,
             PlayerRoles = mergedPlayerRoles?.Count > 0 ? mergedPlayerRoles : null,
+            IsPreRound = preRound,
         };
 
-        // Chat-notify admins for High/Extreme impact logs
-        DoAdminAlerts(logPlayers, message, impact, handler);
+        // Chat-notify admins for High/Extreme impact logs.
+        DoAdminAlerts(logPlayers, message, impact, handlerValues);
 
         if (preRound)
         {
@@ -657,7 +689,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             case LogType.Landed:
                 if (ContainsAny(key, "actor", "user", "player", "thrower"))
                     return AdminLogEntityRole.Actor;
-                if (ContainsAny(key, "item", "thrown", "target", "entity"))
+                if (ContainsAny(key, "item", "thrown", "target") || key == "entity")
                     return AdminLogEntityRole.Target;
                 if (ContainsAny(key, "container", "slot"))
                     return AdminLogEntityRole.Container;
@@ -669,7 +701,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     return AdminLogEntityRole.Actor;
                 if (ContainsAny(key, "used", "tool", "weapon", "instrument"))
                     return AdminLogEntityRole.Tool;
-                if (ContainsAny(key, "target", "entity"))
+                if (key.Contains("target") || key == "entity")
                     return AdminLogEntityRole.Target;
                 break;
 
@@ -685,7 +717,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
             //identity
             case LogType.Identity:
-                if (ContainsAny(key, "name", "actor", "player", "user", "entity"))
+                if (ContainsAny(key, "name", "actor", "player", "user") || key == "entity")
                     return AdminLogEntityRole.Actor;
                 break;
         }
@@ -693,7 +725,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         // generic fallbacks
         if (ContainsAny(key, "actor", "user", "player", "attacker"))
             return AdminLogEntityRole.Actor;
-        if (ContainsAny(key, "target", "recipient", "entity"))
+        if (ContainsAny(key, "target", "recipient") || key == "entity")
             return AdminLogEntityRole.Target;
         if (ContainsAny(key, "tool", "weapon", "instrument", "projectile", "using"))
             return AdminLogEntityRole.Tool;
@@ -781,7 +813,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         players.Add(user);
     }
 
-    private void DoAdminAlerts(List<Guid> players, string message, LogImpact impact, LogStringHandler handler)
+    private void DoAdminAlerts(List<Guid> players, string message, LogImpact impact, Dictionary<string, object?> values)
     {
         // Only High/Extreme impact logs can ever produce an alert.
         if (impact != LogImpact.High && impact != LogImpact.Extreme)
@@ -838,7 +870,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             if (CreateTpLinks(playerNetEnts, out var tpLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(tpLinks);
 
-            var coords = GetCoordinates(handler.Values);
+            var coords = GetCoordinates(values);
 
             if (CreateCordLinks(coords, out var cordLinks))
                 _chat.SendAdminAlertNoFormatOrEscape(cordLinks);
