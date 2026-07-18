@@ -231,11 +231,7 @@ public abstract partial class SharedBloodstreamSystem : EntitySystem
 
             // We'll play a special sound and popup for feedback.
             // Only the burned entity can see the popup.
-            // TODO: Make the PopupSystem API more sane so that this is handled by a single method.
-            if (args.Origin == ent.Owner) // predict the popup on the client if they caused damage to themselves
-                _popup.PopupClient(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
-            else
-                _popup.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
             _audio.PlayPredicted(ent.Comp.BloodHealedSound, ent, args.Origin);
         }
     }

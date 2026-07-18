@@ -1,7 +1,7 @@
 using Content.Client.Movement.Systems;
-using Content.Client.Overlays;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
+using Content.Shared.NightVision;
 using Content.Shared.Overlays;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -15,10 +15,9 @@ namespace Content.Client.Ghost
         [Dependency] private IClientConsoleHost _console = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private SharedActionsSystem _actions = default!;
-        [Dependency] private PointLightSystem _pointLightSystem = default!;
         [Dependency] private ContentEyeSystem _contentEye = default!;
         [Dependency] private SpriteSystem _sprite = default!;
-        [Dependency] private NightVisionOverlaySystem _nv = default!;
+        [Dependency] private SharedNightVisionSystem _nv = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
