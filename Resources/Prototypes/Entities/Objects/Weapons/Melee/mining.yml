@@ -25,7 +25,7 @@
     damage:
       types:
         Piercing: 10
-        Structural: 30
+        Structural: 8
   - type: Item
     size: Normal
     shape:
@@ -63,7 +63,7 @@
     damage:
       types:
         Piercing: 3
-        Structural: 15
+        Structural: 5
 
 - type: entity
   name: diamond tipped mining drill
@@ -84,7 +84,7 @@
     damage:
       types:
         Piercing: 6
-        Structural: 30
+        Structural: 10
 
 
 - type: entity
@@ -162,7 +162,7 @@
       types:
         Blunt: 6
         Slash: 2
-        Structural: 30
+        Structural: 10
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying
@@ -258,4 +258,4 @@
       types:
         Blunt: 2
         Slash: 6
-        Structural: 20
+        Structural: 10

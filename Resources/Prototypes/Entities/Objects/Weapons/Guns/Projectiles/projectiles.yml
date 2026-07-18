@@ -552,7 +552,7 @@
     damage:
       types:
         Blunt: 15
-        Structural: 30
+        Structural: 15
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.22 # roughly 5.5 tiles

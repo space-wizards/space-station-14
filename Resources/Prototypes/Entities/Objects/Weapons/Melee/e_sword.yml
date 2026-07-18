@@ -44,7 +44,6 @@
       types:
         Slash: 15
         Heat: 15
-        Structural: 20
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 1
@@ -312,7 +311,6 @@
         types:
             Slash: 12
             Heat: 12
-            Structural: 15
   - type: ItemToggleActiveSound
     activeSound:
       path: /Audio/Weapons/ebladehum.ogg
@@ -377,7 +375,6 @@
       types:
         Slash: 20
         Heat: 20
-        Structural: 20
   - type: MeleeRequiresWield
   - type: HeldSpeedModifier #slowdown is what balances this compared to a dsword
     walkModifier: 0.6
