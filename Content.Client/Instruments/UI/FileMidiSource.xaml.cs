@@ -123,8 +123,12 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             PlaybackSlider.MaxValue = Instrument.Comp.PlayerTotalTick;
             PlaybackSlider.SetValueWithoutEvent(Instrument.Comp.PlayerTick);
             // TODO: SequencerTimeScale does not return the actual ticks/seconds, find solution.
-            var totalTime = TimeSpan.FromSeconds(Math.Ceiling(Instrument.Comp.PlayerTotalTick / Instrument.Comp.Renderer!.SequencerTimeScale));
-            var currentTime = TimeSpan.FromSeconds(Math.Ceiling(Instrument.Comp.PlayerTick / Instrument.Comp.Renderer!.SequencerTimeScale));
+            var totalTime =
+                TimeSpan.FromSeconds(Math.Ceiling(Instrument.Comp.PlayerTotalTick /
+                                                  Instrument.Comp.Renderer!.SequencerTimeScale));
+            var currentTime =
+                TimeSpan.FromSeconds(Math.Ceiling(Instrument.Comp.PlayerTick /
+                                                  Instrument.Comp.Renderer!.SequencerTimeScale));
             TimeLabel.Text = totalTime.Hours < 1
                 ? Loc.GetString(
                     "instruments-component-menu-files-track-playtime-seconds-minutes",
@@ -206,7 +210,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         {
             _isMidiFileDialogueWindowOpen = false;
         }
-
     }
 
     private void OnRemoveButtonPressed(ButtonEventArgs obj)

@@ -271,7 +271,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     {
         var instrument = new Entity<InstrumentComponent>(Owner, comp);
 
-        for(var i = 0; i < MaxSearchDepth; i++)
+        for (var i = 0; i < MaxSearchDepth; i++)
         {
             if (instrument.Comp.Master is not { } master)
                 break;

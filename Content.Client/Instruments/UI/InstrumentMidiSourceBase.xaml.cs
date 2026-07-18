@@ -21,6 +21,7 @@ public abstract partial class InstrumentMidiSourceBase : BoxContainer
     /// Returns true if this source is currently the active one.
     /// </summary>
     protected bool Enabled { get; private set; }
+
     protected InstrumentMidiSourceBase()
     {
         RobustXamlLoader.Load(this);
