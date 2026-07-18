@@ -1357,14 +1357,14 @@
   suffix: Machine Board
   description: A machine circuit board for a fax machine.
   components:
-    - type: Sprite
-      state: service
-    - type: MachineBoard
-      prototype: FaxMachineBase
-      stackRequirements:
-        Manipulator: 1
-        Steel: 3
-        Cable: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: FaxMachineBase
+    stackRequirements:
+      Manipulator: 1
+      Steel: 3
+      Cable: 1
 
 - type: entity
   parent: BaseMachineCircuitboard
