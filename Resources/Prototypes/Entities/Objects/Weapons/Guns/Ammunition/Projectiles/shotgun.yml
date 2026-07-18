@@ -11,7 +11,7 @@
     damage:
       types:
         Piercing: 40
-
+        Structural: 20
 
 - type: entity
   parent: BaseBullet
