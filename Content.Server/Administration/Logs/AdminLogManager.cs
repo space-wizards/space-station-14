@@ -534,6 +534,9 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             PlayerRoles = mergedPlayerRoles?.Count > 0 ? mergedPlayerRoles : null,
         };
 
+        // Chat-notify admins for High/Extreme impact logs
+        DoAdminAlerts(logPlayers, message, impact, handler);
+
         if (preRound)
         {
             _preRoundLogQueue.Enqueue(log);
@@ -780,6 +783,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     private void DoAdminAlerts(List<Guid> players, string message, LogImpact impact, LogStringHandler handler)
     {
+        // Only High/Extreme impact logs can ever produce an alert.
+        if (impact != LogImpact.High && impact != LogImpact.Extreme)
+            return;
+
         var adminLog = false;
         var logMessage = message;
         var playerNetEnts = new List<(NetEntity, string)>();
