@@ -4981,3 +4981,68 @@
   id: 9861
   time: '2026-07-17T23:46:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44187
+- author: Bef1234
+  changes:
+  - message: Adjusted 80s Hair to be consistent
+    type: Tweak
+  id: 9862
+  time: '2026-07-18T02:15:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43854
+- author: cashew-42
+  changes:
+  - message: Fixed metamorphic glass not displaying drink names.
+    type: Fix
+  id: 9863
+  time: '2026-07-18T03:14:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44741
+- author: whatston3
+  changes:
+  - message: Revenants are now teleported by portals on collision, and can traverse through portals via alt-click/right-click.
+    type: Add
+  id: 9864
+  time: '2026-07-18T03:44:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44457
+- author: noxypaws
+  changes:
+  - message: Added a fretless bass guitar instrument
+    type: Add
+  id: 9865
+  time: '2026-07-18T04:04:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43996
+- author: peaceful-joules
+  changes:
+  - message: Fixed some device having wrong sprites after reconnecting
+    type: Fix
+  id: 9866
+  time: '2026-07-18T04:11:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44708
+- author: Princess-Cheeseballs
+  changes:
+  - message: Skeletons have been made weaker to brute damage, and now gib at 100 damage instead of 150.
+    type: Tweak
+  - message: Skeletons are now flammable.
+    type: Tweak
+  id: 9867
+  time: '2026-07-18T04:25:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43730
+- author: AgentSmithRadio
+  changes:
+  - message: Rebalanced the contents of the Getmore Bakemore crate.
+    type: Tweak
+  id: 9868
+  time: '2026-07-18T05:03:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42296
+- author: andersonhunter
+  changes:
+  - message: Removed damage from toy swords
+    type: Tweak
+  id: 9869
+  time: '2026-07-18T05:07:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43110
+- author: puwa-puwa
+  changes:
+  - message: Lockable machines (such as emitters) must now be unlocked before being deconstructed
+    type: Tweak
+  id: 9870
+  time: '2026-07-18T05:16:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43099
