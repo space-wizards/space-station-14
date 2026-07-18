@@ -14,5 +14,5 @@ public sealed partial class ContainerVehicleComponent : Component
     /// The ID of the container for the operator.
     /// </summary>
     [DataField(required: true)]
-    public readonly string ContainerId;
+    public string ContainerId { get; private set; } = default!;
 }
