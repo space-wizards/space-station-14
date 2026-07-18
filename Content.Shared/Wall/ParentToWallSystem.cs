@@ -2,6 +2,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wall;
@@ -12,8 +13,10 @@ namespace Content.Shared.Wall;
 /// </summary>
 public sealed partial class ParentToWallSystem : EntitySystem
 {
+    [Dependency] private INetManager _net = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
     [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private TagSystem _tag = default!;
 
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
@@ -86,6 +89,37 @@ public sealed partial class ParentToWallSystem : EntitySystem
     private void OnParentedWallTerminating(Entity<ParentedWallComponent> ent, ref EntityTerminatingEvent args)
     {
         DeleteChildren(ent, attemptDestroy: false);
+    }
+
+    /// <summary>
+    /// Handles the anchor state of our wall changing.
+    /// We can only anchor entities to grids so we need to reparent all child entities when our wall anchoring changes.
+    /// GODO...
+    /// </summary>
+    /// <param name="ent">The wall being unanchored</param>
+    /// <param name="args">The event in question.</param>
+    [SubscribeLocalEvent]
+    private void OnAnchorChanged(Entity<ParentedWallComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        // TODO: List contains invalid poster ents on client
+        if (_net.IsClient)
+            return;
+
+        if (!args.Anchored)
+        {
+            foreach (var child in ent.Comp.Children)
+            {
+                _transform.SetParent(child, ent);
+            }
+        }
+        else
+        {
+            foreach (var child in ent.Comp.Children)
+            {
+                _transform.AnchorEntity(child);
+            }
+        }
+
     }
 
     /// <summary>
