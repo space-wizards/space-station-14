@@ -19,10 +19,10 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.48,0.25,0.48"
-        mask: &portalMask
+        mask:
         - FullTileMask
         - GhostImpassable
-        layer: &portalLayer
+        layer:
         - WallLayer
         hard: false
   - type: Portal
@@ -102,8 +102,11 @@
           !type:PhysShapeCircle
           radius: 0.6
           position: 0, 0.26
-        mask: *portalMask
-        layer: *portalLayer
+        mask:
+        - FullTileMask
+        - GhostImpassable
+        layer:
+        - WallLayer
         hard: false
 
 - type: entity

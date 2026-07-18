@@ -39,7 +39,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
-    private static readonly ProtoId<TagPrototype> AllowTraversalTag = "AllowPortalTraversal";
+    private static readonly ProtoId<TagPrototype> ShowTraverseVerbTag = "AllowPortalTraversal";
     private static readonly ProtoId<TagPrototype> PreventCollisionTag = "PreventPortalCollision";
 
     private const int MaxRandomTeleportAttempts = 20;
@@ -56,7 +56,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     private void OnGetVerbs(Entity<PortalComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         // Traversal altverb for ghosts to use that bypasses normal functionality
-        if (!args.CanAccess || !_tag.HasTag(args.User, AllowTraversalTag))
+        if (!args.CanAccess || !_tag.HasTag(args.User, ShowTraverseVerbTag))
             return;
 
         // Don't use the verb with unlinked or with multi-output portals
