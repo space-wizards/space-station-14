@@ -14,6 +14,7 @@
     size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
+  - type: TransformableContainer
   - type: SolutionContainerVisuals
     maxFillLevels: 9
     metamorphic: true
