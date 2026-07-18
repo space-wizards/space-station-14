@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffectNew;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Speech.EntitySystems;
@@ -42,11 +43,12 @@ public abstract partial class SharedRatvarianLanguageSystem : RelayAccentSystem<
     /// <summary>
     /// Applies or refreshes the Ratvarian speech status effect on an entity.
     /// </summary>
+    [PublicAPI]
     public virtual void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh)
     {
     }
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<RatvarianLanguageComponent>? ent = null)
     {
         var ruleTranslation = message;
         var finalMessage = new StringBuilder();

@@ -32,9 +32,9 @@ public sealed partial class StutteringSystem : SharedStutteringSystem
         Status.TryRemoveStatusEffect(uid, Stuttering);
     }
 
-    public override string Accentuate(string message, Entity<StutteringAccentComponent>? component)
+    public override string Accentuate(string message, Entity<StutteringAccentComponent>? ent = null)
     {
-        if (component == null)
+        if (ent == null)
             return message;
 
         var length = message.Length;
@@ -46,17 +46,17 @@ public sealed partial class StutteringSystem : SharedStutteringSystem
         for (var i = 0; i < length; i++)
         {
             newLetter = message[i].ToString();
-            if (Stutter.IsMatch(newLetter) && _random.Prob(component.Value.Comp.MatchRandomProb))
+            if (Stutter.IsMatch(newLetter) && _random.Prob(ent.Value.Comp.MatchRandomProb))
             {
-                if (_random.Prob(component.Value.Comp.FourRandomProb))
+                if (_random.Prob(ent.Value.Comp.FourRandomProb))
                 {
                     newLetter = $"{newLetter}-{newLetter}-{newLetter}-{newLetter}";
                 }
-                else if (_random.Prob(component.Value.Comp.ThreeRandomProb))
+                else if (_random.Prob(ent.Value.Comp.ThreeRandomProb))
                 {
                     newLetter = $"{newLetter}-{newLetter}-{newLetter}";
                 }
-                else if (_random.Prob(component.Value.Comp.CutRandomProb))
+                else if (_random.Prob(ent.Value.Comp.CutRandomProb))
                 {
                     newLetter = "";
                 }

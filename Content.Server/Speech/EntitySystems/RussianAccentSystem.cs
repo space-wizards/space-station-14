@@ -9,7 +9,7 @@ public sealed partial class RussianAccentSystem : RelayAccentSystem<RussianAccen
 {
     [Dependency] private ReplacementAccentSystem _replacement = default!;
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<RussianAccentComponent>? ent = null)
     {
         var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "russian"));
 

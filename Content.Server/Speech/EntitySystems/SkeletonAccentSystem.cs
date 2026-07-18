@@ -13,7 +13,7 @@ public sealed partial class SkeletonAccentSystem : RelayAccentSystem<SkeletonAcc
     [GeneratedRegex(@"(?<!\w)[^aeiou]one", RegexOptions.IgnoreCase, "en-US")]
     private static partial Regex BoneRegex();
 
-    public override string Accentuate(string message, Entity<SkeletonAccentComponent>? ent)
+    public override string Accentuate(string message, Entity<SkeletonAccentComponent>? ent = null)
     {
         // Order:
         // Do character manipulations first

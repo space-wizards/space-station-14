@@ -36,7 +36,7 @@ public sealed partial class ReplacementAccentSystem : RelayAccentSystem<Replacem
         ProtoMan.PrototypesReloaded -= OnPrototypesReloaded;
     }
 
-    public override string Accentuate(string message, Entity<ReplacementAccentComponent>? ent)
+    public override string Accentuate(string message, Entity<ReplacementAccentComponent>? ent = null)
     {
         if (ent == null)
             return message;

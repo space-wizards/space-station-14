@@ -37,7 +37,7 @@ public sealed partial class MumbleAccentSystem : RelayAccentSystem<MumbleAccentC
         }
     }
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<MumbleAccentComponent>? ent = null)
     {
         return _replacement.ApplyReplacements(message, "mumble");
     }

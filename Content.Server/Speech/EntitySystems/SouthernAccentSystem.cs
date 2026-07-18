@@ -15,7 +15,7 @@ public sealed partial class SouthernAccentSystem : RelayAccentSystem<SouthernAcc
 
     [Dependency] private ReplacementAccentSystem _replacement = default!;
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<SouthernAccentComponent>? ent = null)
     {
         message = _replacement.ApplyReplacements(message, "southern");
 

@@ -16,7 +16,7 @@ public sealed partial class SlowAccentSystem : RelayAccentSystem<SlowAccentCompo
     /// </summary>
     private static readonly Regex NoFinalPunctuation = new("\\w\\z");
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<SlowAccentComponent>? ent = null)
     {
         // Add... some... delay... between... each... word
         message = WordEndings.Replace(message, "... ");

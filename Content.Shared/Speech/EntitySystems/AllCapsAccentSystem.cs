@@ -7,7 +7,7 @@ namespace Content.Shared.Speech.EntitySystems;
 /// </summary>
 public sealed class AllCapsAccentSystem : RelayAccentSystem<AllCapsAccentComponent>
 {
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<AllCapsAccentComponent>? ent = null)
     {
         return message.ToUpperInvariant();
     }

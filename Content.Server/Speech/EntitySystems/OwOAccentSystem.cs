@@ -17,7 +17,7 @@ public sealed partial class OwOAccentSystem : RelayAccentSystem<OwOAccentCompone
         { "you", "wu" },
     };
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<OwOAccentComponent>? ent = null)
     {
         foreach (var (word, repl) in SpecialWords)
         {

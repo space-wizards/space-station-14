@@ -12,14 +12,14 @@ public sealed partial class ParrotAccentSystem : RelayAccentSystem<ParrotAccentC
 
     [Dependency] private IRobustRandom _random = default!;
 
-    public override string Accentuate(string message, Entity<ParrotAccentComponent>? entity)
+    public override string Accentuate(string message, Entity<ParrotAccentComponent>? ent = null)
     {
         // TODO: Make this accent possible to apply without an entity with the component.
-        if (entity == null)
+        if (ent == null)
             return message;
 
         // Sometimes repeat the longest word at the end of the message, after a squawk! SQUAWK! Sometimes!
-        if (_random.Prob(entity.Value.Comp.LongestWordRepeatChance))
+        if (_random.Prob(ent.Value.Comp.LongestWordRepeatChance))
         {
             // Don't count non-alphanumeric characters as parts of words
             var cleaned = WordCleanupRegex.Replace(message, string.Empty);
@@ -27,28 +27,28 @@ public sealed partial class ParrotAccentSystem : RelayAccentSystem<ParrotAccentC
             var words = cleaned.Split(null).Reverse();
             // Find longest word
             var longest = words.MaxBy(word => word.Length);
-            if (longest?.Length >= entity.Value.Comp.LongestWordMinLength)
+            if (longest?.Length >= ent.Value.Comp.LongestWordMinLength)
             {
                 message = EnsurePunctuation(message);
 
                 // Capitalize the first letter of the repeated word
                 longest = string.Concat(longest[0].ToString().ToUpper(), longest.AsSpan(1));
 
-                message = string.Format("{0} {1} {2}!", message, GetRandomSquawk(entity.Value), longest);
+                message = string.Format("{0} {1} {2}!", message, GetRandomSquawk(ent.Value), longest);
                 return message; // No more changes, or it's too much
             }
         }
 
-        if (_random.Prob(entity.Value.Comp.SquawkPrefixChance))
+        if (_random.Prob(ent.Value.Comp.SquawkPrefixChance))
         {
             // AWWK! Sometimes add a squawk at the begining of the message
-            message = string.Format("{0} {1}", GetRandomSquawk(entity.Value), message);
+            message = string.Format("{0} {1}", GetRandomSquawk(ent.Value), message);
         }
         else
         {
             // Otherwise add a squawk at the end of the message! RAWWK!
             message = EnsurePunctuation(message);
-            message = string.Format("{0} {1}", message, GetRandomSquawk(entity.Value));
+            message = string.Format("{0} {1}", message, GetRandomSquawk(ent.Value));
         }
 
         return message;

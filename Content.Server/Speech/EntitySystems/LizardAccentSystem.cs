@@ -12,7 +12,7 @@ public sealed class LizardAccentSystem : RelayAccentSystem<LizardAccentComponent
     private static readonly Regex RegexLowerEndX = new(@"\bx([\-|r|R]|\b)");
     private static readonly Regex RegexUpperEndX = new(@"\bX([\-|r|R]|\b)");
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<LizardAccentComponent>? ent = null)
     {
         // hissss
         message = RegexLowerS.Replace(message, "sss");

@@ -20,7 +20,7 @@ public sealed partial class BarkAccentSystem : RelayAccentSystem<BarkAccentCompo
         { "Oh", "Oof" },
     };
 
-    public override string Accentuate(string message)
+    public override string Accentuate(string message, Entity<BarkAccentComponent>? ent = null)
     {
         foreach (var (word, repl) in SpecialWords)
         {

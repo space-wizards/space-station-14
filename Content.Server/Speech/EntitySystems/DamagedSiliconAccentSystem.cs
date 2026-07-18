@@ -22,7 +22,7 @@ public sealed partial class DamagedSiliconAccentSystem : RelayAccentSystem<Damag
     protected override Type[]? AccentAfter => [typeof(ReplacementAccentSystem)];
     protected override Type[]? RelayAccentAfter => [typeof(ReplacementAccentSystem)];
 
-    public override string Accentuate(string message, Entity<DamagedSiliconAccentComponent>? ent)
+    public override string Accentuate(string message, Entity<DamagedSiliconAccentComponent>? ent = null)
     {
         if (ent == null)
             return message;

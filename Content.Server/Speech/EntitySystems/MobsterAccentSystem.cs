@@ -19,7 +19,7 @@ public sealed partial class MobsterAccentSystem : RelayAccentSystem<MobsterAccen
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ReplacementAccentSystem _replacement = default!;
 
-    public override string Accentuate(string message, Entity<MobsterAccentComponent>? ent)
+    public override string Accentuate(string message, Entity<MobsterAccentComponent>? ent = null)
     {
         // Order:
         // Do text manipulations first
