@@ -144,5 +144,6 @@ public sealed partial class ParentToWallSystem : EntitySystem
 
             PredictedQueueDel(child);
         }
+        ent.Comp.Children.Clear();
     }
 }
