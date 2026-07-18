@@ -1,5 +1,4 @@
 ﻿using Robust.Client.Animus.Timers;
-using Robust.Shared.Random;
 
 namespace Content.Client.Animus.Timers;
 
