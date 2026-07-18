@@ -4960,3 +4960,24 @@
   id: 9858
   time: '2026-07-17T19:25:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44731
+- author: muburu
+  changes:
+  - message: Slimepeople can change their eye color again.
+    type: Fix
+  id: 9859
+  time: '2026-07-17T21:22:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44508
+- author: whatston3
+  changes:
+  - message: Batches of mail are no longer addressed to just one person.
+    type: Fix
+  id: 9860
+  time: '2026-07-17T22:11:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44728
+- author: mrhappypenguin
+  changes:
+  - message: Added option to toggle head-related transfer function (HRTF) audio.
+    type: Add
+  id: 9861
+  time: '2026-07-17T23:46:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44187
