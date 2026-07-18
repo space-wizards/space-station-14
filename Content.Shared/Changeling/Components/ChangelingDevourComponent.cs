@@ -1,6 +1,8 @@
 using Content.Shared.Changeling.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -125,6 +127,15 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public float DevourPreventionPercentageThreshold = 0.1f;
 
+    /// <summary>
+    /// DNA awarded for successfully devouring a new identity.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<string, FixedPoint2> DevourDnaReward = new()
+    {
+        { "ChangelingDNA", 10 }
+    };
+
     public override bool SendOnlyToOwner => true;
 }
 
@@ -134,9 +145,10 @@ public sealed partial class ChangelingDevourComponent : Component
 /// <param name="Changeling">The changeling devouring this entity.</param>
 /// <param name="Devoured">The entity that was devoured.</param>
 /// <param name="ObtainedIdentity">Whether the changeling is going to be given the target's identity after devouring.</param>
-/// <param name="Unique">Whether this entity was eaten by the changeling before.</param>
+/// <param name="Unique">Whether the changeling has never had the identity of this target before.</param>
+/// <param name="GrantedDna">Whether this devour has granted the changeling Dna.</param>
 [ByRefEvent]
-public record struct ChangelingDevouredEvent(EntityUid Changeling, EntityUid Devoured, bool ObtainedIdentity, bool Unique);
+public record struct ChangelingDevouredEvent(EntityUid Changeling, EntityUid Devoured, bool ObtainedIdentity, bool Unique, bool GrantedDna);
 
 /// <summary>
 /// Event raised on an entity when devoured by a changeling.
@@ -144,6 +156,7 @@ public record struct ChangelingDevouredEvent(EntityUid Changeling, EntityUid Dev
 /// <param name="Changeling">The changeling devouring this entity.</param>
 /// <param name="Devoured">The entity that was devoured.</param>
 /// <param name="ObtainedIdentity">Whether the changeling is going to be given the target's identity after devouring.</param>
-/// <param name="Unique">Whether this entity was eaten by the changeling before.</param>
+/// <param name="Unique">Whether the changeling has never had the identity of this target before.</param>
+/// <param name="GrantedDna">Whether this devour has granted the changeling Dna.</param>
 [ByRefEvent]
-public record struct ChangelingGotDevouredEvent(EntityUid Changeling, EntityUid Devoured, bool ObtainedIdentity, bool Unique);
+public record struct ChangelingGotDevouredEvent(EntityUid Changeling, EntityUid Devoured, bool ObtainedIdentity, bool Unique, bool GrantedDna);

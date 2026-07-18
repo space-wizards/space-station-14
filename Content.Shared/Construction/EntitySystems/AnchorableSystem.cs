@@ -25,18 +25,17 @@ namespace Content.Shared.Construction.EntitySystems;
 
 public sealed partial class AnchorableSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedStationSystem _stationSystem = null!;
-    [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedStationSystem _stationSystem = null!;
+    [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    [Dependency] private readonly EntityQuery<PhysicsComponent> _physicsQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public readonly ProtoId<TagPrototype> Unstackable = "Unstackable";
 
@@ -133,7 +132,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         _transformSystem.Unanchor(uid, xform);
         RaiseLocalEvent(uid, new UserUnanchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-unanchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Unanchor,
@@ -151,7 +150,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
             !TileFree(xform.Coordinates, anchorBody))
         {
-            _popup.PopupClient(Loc.GetString("anchorable-occupied"), uid, args.User);
+            _popup.PopupEntity(Loc.GetString("anchorable-occupied"), uid, args.User);
             return;
         }
 
@@ -167,11 +166,11 @@ public sealed partial class AnchorableSystem : EntitySystem
         // TODO: Anchoring snaps rn anyway!
         if (component.Snap)
         {
-            var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
+            var coordinates = xform.Coordinates.SnapToGrid(EntityManager);
 
             if (AnyUnstackable(uid, coordinates))
             {
-                _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
+                _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, args.User);
                 return;
             }
 
@@ -185,7 +184,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         RaiseLocalEvent(uid, new UserAnchoredEvent(args.User, used));
 
-        _popup.PopupClient(Loc.GetString("anchorable-anchored"), uid, args.User);
+        _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, args.User);
 
         _adminLogger.Add(
             LogType.Anchor,
@@ -260,7 +259,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         if (AnyUnstackable(uid, transform.Coordinates))
         {
-            _popup.PopupClient(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
+            _popup.PopupEntity(Loc.GetString("construction-step-condition-no-unstackable-in-tile"), uid, userUid);
             return;
         }
 
@@ -315,7 +314,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (TileFree(coordinates, entity.Comp))
             return true;
 
-        _popup.PopupClient(Loc.GetString("anchorable-occupied"), entity, user);
+        _popup.PopupEntity(Loc.GetString("anchorable-occupied"), entity, user);
         return false;
     }
 
