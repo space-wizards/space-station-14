@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.event.pull_request.draft == false
+    if: ${{ github.actor != vars.REPO_BOT_NAME && github.event.pull_request.draft == false }}
     strategy:
       matrix:
         os: [ubuntu-latest]
