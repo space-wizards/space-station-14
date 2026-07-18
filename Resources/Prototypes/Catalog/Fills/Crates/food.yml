@@ -53,36 +53,6 @@
 
 - type: entity
   parent: CrateFreezer
-  id: CrateFoodGetMore
-  name: Getmore Bakemore crate
-  description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: FoodSnackRaisins
-          amount: 6
-        - id: FoodSnackChocolate
-          amount: 6
-        - id: FoodSnackPistachios
-          amount: 2
-        - id: ReagentContainerFlour
-          amount: 3
-        - id: ReagentContainerSugar
-          amount: 2
-        - id: FoodCondimentPacketSalt
-          amount: 3
-        - id: DrinkMilkCarton
-          amount: 2
-        - id: DrinkSoyMilkCarton
-          amount: 1
-        - id: FoodContainerEgg
-          amount: 2
-        - id: FoodBoxCloth
-
-- type: entity
-  parent: CrateFreezer
   id: CrateFoodIceCream
   name: ice cream delivery
   description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
