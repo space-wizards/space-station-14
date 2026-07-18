@@ -45,7 +45,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: Update the in-game credits at time time ${{ github.event.repository.updated_at}}
+          commit-message: Update the in-game credits at time ${{ github.event.repository.updated_at}}
           title: Update in-game credits at time ${{ github.event.repository.updated_at}}
           body: This is an automated Pull Request. This PR adds new GitHub contributors to the in-game credits section.
           author: ${{ vars.CREDITS_COMMIT_AUTHOR_NAME }} <${{ vars.CREDITS_COMMIT_AUTHOR_EMAIL }}>
