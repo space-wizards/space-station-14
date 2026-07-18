@@ -40,7 +40,6 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountyPrintLabelMessage>(OnPrintLabelMessage);
         SubscribeLocalEvent<CargoBountyConsoleComponent, BountySkipMessage>(OnSkipBountyMessage);
         SubscribeLocalEvent<CargoBountyLabelComponent, PriceCalculationEvent>(OnGetBountyPrice);
-        SubscribeLocalEvent<CargoBountyLabelComponent, PaperCopiedEvent>(OnBountyCopied);
         SubscribeLocalEvent<EntitySoldEvent>(OnSold);
         SubscribeLocalEvent<StationCargoBountyDatabaseComponent, MapInitEvent>(OnMapInit);
     }
@@ -164,6 +163,7 @@ public sealed partial class CargoSystem
         component.Calculating = false;
     }
 
+    [SubscribeLocalEvent]
     private void OnBountyCopied(Entity<CargoBountyLabelComponent> original, ref PaperCopiedEvent evt)
     {
         var newLabel = EnsureComp<CargoBountyLabelComponent>(evt.Copy);

@@ -5,12 +5,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 
 public sealed partial class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<NanoTaskPrintedComponent, PaperCopiedEvent>(OnNanoTaskCopied);
-    }
-
+    [SubscribeLocalEvent]
     private void OnNanoTaskCopied(Entity<NanoTaskPrintedComponent> original, ref PaperCopiedEvent evt)
     {
         var newTask = EnsureComp<NanoTaskPrintedComponent>(evt.Copy);

@@ -36,7 +36,6 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<CargoSlipComponent, PaperCopiedEvent>(OnCargoSlipCopied);
         }
 
         private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
@@ -123,6 +122,7 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
+        [SubscribeLocalEvent]
         private void OnCargoSlipCopied(Entity<CargoSlipComponent> original, ref PaperCopiedEvent evt)
         {
             var slip = EnsureComp<CargoSlipComponent>(evt.Copy);
