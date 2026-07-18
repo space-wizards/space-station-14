@@ -25,7 +25,7 @@ public sealed partial class XAERandomTeleportInvokerSystem : BaseXAESystem<XAERa
         var component = ent.Comp;
 
         var xform = Transform(args.Artifact);
-        _popup.PopupPredictedCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, args.User, PopupType.Medium);
+        _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, PopupType.Medium);
 
         var offsetTo = _random.NextVector2(component.MinRange, component.MaxRange);
 

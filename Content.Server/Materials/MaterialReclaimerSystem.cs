@@ -169,6 +169,8 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
                 SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
         }
 
+        var eventArgs = new DestructionEventArgs();
+        RaiseLocalEvent(item, eventArgs);
         QueueDel(item);
     }
 
