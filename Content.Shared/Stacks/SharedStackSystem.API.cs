@@ -1,5 +1,6 @@
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stacks;
@@ -36,9 +37,76 @@ public abstract partial class SharedStackSystem
     #region Merge Stacks
 
     /// <summary>
+    /// Merges together the counts from a set of stacks into the smallest number of entities.
+    /// </summary>
+    /// <param name="stacks">Entities to merge. Returns stack entities with non-zero count.</param>
+    [PublicAPI]
+    public void MergeStacks(ref HashSet<EntityUid> stacks)
+    {
+        // Filter out the non-stacks and separate them by their stack types
+        var stacksByType = new Dictionary<ProtoId<StackPrototype>, List<Entity<StackComponent>>>();
+        foreach (var uid in stacks)
+        {
+            if (!_stackQuery.TryComp(uid, out var stackComponent))
+                continue;
+
+            if (stacksByType.TryGetValue(stackComponent.StackTypeId, out var list))
+                list.Add((uid, stackComponent));
+            else
+            {
+                list = new List<Entity<StackComponent>>();
+                list.Add((uid, stackComponent));
+                stacksByType[stackComponent.StackTypeId] = list;
+            }
+        }
+
+        stacks.Clear();
+
+        // Set the count
+        foreach (var (type, stackList) in stacksByType)
+        {
+            var count = GetCount(stackList, type);
+
+            foreach (var stack in stackList)
+            {
+                // We've already moved all our stacks, so we clear the count of the remaining ones.
+                if (count == 0)
+                {
+                    SetCount(stack.AsNullable(), count);
+                    continue;
+                }
+
+                var amount = Math.Min(count, GetMaxCount(stack.Comp));
+                SetCount(stack.AsNullable(), amount);
+
+                count -= amount;
+                stacks.Add(stack);
+            }
+        }
+    }
+
+    /// <summary>
+    /// This will find all the stacks in an area and merge them together.
+    /// </summary>
+    /// <remarks>
+    /// Useful for when you're spawning an unknown number of stacks like from an entity table
+    /// and want to combine them together at the end.
+    /// </remarks>
+    /// <returns>Stack entities with non-zero counts.</returns>
+    [PublicAPI]
+    public HashSet<EntityUid> MergeStacksAtPosition(MapCoordinates pos, float range = 0.5f, LookupFlags flags = EntityLookupSystem.DefaultFlags)
+    {
+        var entities = _entityLookup.GetEntitiesInRange(pos, range, flags);
+        MergeStacks(ref entities);
+        return entities;
+    }
+
+    /// <summary>
     /// Moves as much stack count as we can from the donor to the recipient.
     /// Deletes the donor if count goes to 0.
     /// </summary>
+    /// <param name="donor">Entity losing count.</param>
+    /// <param name="recipient">Entity gaining count.</param>
     /// <param name="transferred">How much stack count was moved.</param>
     /// <param name="amount">Optional. Limits amount of stack count to move from the donor.</param>
     /// <returns> True if transferred is greater than 0. </returns>
@@ -53,10 +121,10 @@ public abstract partial class SharedStackSystem
         if (donor == recipient)
             return false;
 
-        if (!Resolve(recipient, ref recipient.Comp, false) || !Resolve(donor, ref donor.Comp, false))
-            return false;
-
-        if (recipient.Comp.StackTypeId != donor.Comp.StackTypeId)
+        // Check they're stacks of the same type
+        if (!_stackQuery.Resolve(recipient, ref recipient.Comp, false)
+            || !_stackQuery.Resolve(donor, ref donor.Comp, false)
+            || recipient.Comp.StackTypeId != donor.Comp.StackTypeId)
             return false;
 
         // The most we can transfer
@@ -86,14 +154,14 @@ public abstract partial class SharedStackSystem
         if (!Resolve(user.Owner, ref user.Comp, false))
             return;
 
-        if (!Resolve(item.Owner, ref item.Comp, false))
+        if (!_stackQuery.Resolve(item.Owner, ref item.Comp, false))
         {
             // This isn't even a stack. Just try to pickup as normal.
-            Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
+            _hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
             return;
         }
 
-        foreach (var held in Hands.EnumerateHeld(user))
+        foreach (var held in _hands.EnumerateHeld(user))
         {
             TryMergeStacks(item, held, out _);
 
@@ -101,7 +169,7 @@ public abstract partial class SharedStackSystem
                 return;
         }
 
-        Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
+        _hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
     }
 
     /// <summary>
@@ -121,22 +189,33 @@ public abstract partial class SharedStackSystem
         var intersecting = new HashSet<Entity<StackComponent>>(); // Should we reuse a HashSet instead of making a new one?
         _entityLookup.GetEntitiesIntersecting(map, bounds, intersecting, LookupFlags.Dynamic | LookupFlags.Sundries);
 
-        var merged = false;
-        foreach (var recipientStack in intersecting)
+        return TryMergeToStacks((uid, stack), intersecting);
+    }
+
+    /// <summary>
+    /// Moves the count from the donor into the collection of entities.
+    /// </summary>
+    /// <returns>True if anything moved.</returns>
+    [PublicAPI]
+    public bool TryMergeToStacks(Entity<StackComponent?> donor, HashSet<Entity<StackComponent>> stacks)
+    {
+        if (!_stackQuery.Resolve(donor.Owner, ref donor.Comp, false))
+            return false;
+
+        var count = GetCount(donor);
+        foreach (var stack in stacks)
         {
-            var otherEnt = recipientStack.Owner;
-            // if you merge a ton of stacks together, you will end up deleting a few by accident.
-            if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
+            if (stack.Comp.StackTypeId != donor.Comp.StackTypeId)
                 continue;
 
-            if (!TryMergeStacks((uid, stack), recipientStack.AsNullable(), out _))
-                continue;
-            merged = true;
+            TryMergeStacks(donor, stack.AsNullable(), out var transferred);
 
-            if (stack.Count <= 0)
+            count -= transferred;
+            if (count == 0)
                 break;
         }
-        return merged;
+
+        return true;
     }
 
     #endregion
@@ -149,7 +228,7 @@ public abstract partial class SharedStackSystem
     /// <remarks> All setter functions should end up here. </remarks>
     public void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         // Do nothing if amount is already the same.
@@ -167,7 +246,7 @@ public abstract partial class SharedStackSystem
         ent.Comp.UiUpdateNeeded = true;
         Dirty(ent);
 
-        Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count);
+        _appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count);
         RaiseLocalEvent(ent.Owner, new StackCountChangedEvent(old, ent.Comp.Count));
 
         // Queue delete stack if count reaches zero.
@@ -196,7 +275,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public void ReduceCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
 
         // Don't reduce unlimited stacks
@@ -214,7 +293,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public bool TryUse(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         // We're unlimited and always greater than amount
@@ -239,7 +318,24 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetCount(Entity<StackComponent?> ent)
     {
-        return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
+        return _stackQuery.Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
+    }
+
+    /// <summary>
+    /// Gets the total count from a list of stacks.
+    /// </summary>
+    private int GetCount(List<Entity<StackComponent>> stacks, ProtoId<StackPrototype> id)
+    {
+        var count = 0;
+        foreach (var (_, stack) in stacks)
+        {
+            if (stack.StackTypeId != id)
+                continue;
+
+            count += stack.Count;
+        }
+
+        return count;
     }
 
     /// <summary>
@@ -279,7 +375,9 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetMaxCount(EntityPrototype entityId)
     {
-        entityId.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        if (!entityId.TryComp<StackComponent>(out var stackComp, EntityManager.ComponentFactory))
+            return 1;
+
         return GetMaxCount(stackComp);
     }
 
@@ -287,7 +385,7 @@ public abstract partial class SharedStackSystem
     [PublicAPI]
     public int GetMaxCount(EntityUid uid)
     {
-        return GetMaxCount(CompOrNull<StackComponent>(uid));
+        return GetMaxCount(_stackQuery.CompOrNull(uid));
     }
 
     /// <summary>

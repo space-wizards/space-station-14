@@ -24,3 +24,11 @@ changeling-catalog-lethal-sting-desc = Causes very slow damage to the target. Us
 
 changeling-catalog-hallucinogenic-sting-name = Hallucinogenic Sting
 changeling-catalog-hallucinogenic-sting-desc = Causes the target to get high and have difficulty speaking. Causes confusion among the crew. Can be used on self.
+
+changeling-catalog-last-resort-name = Last Resort
+changeling-catalog-last-resort-desc = Gib your current body and escape as a weak head slug. If you infest a humanoid corpse, you can return to a full changeling body.
+
+                                      Warning! This resets your progress as a changeling, removing your store purchases and absorbed identities!
+
+changeling-catalog-night-vision-name = Night Vision
+changeling-catalog-night-vision-desc = You modify your photoreceptors and heighten your senses as to become able to see in complete darkness.

@@ -906,7 +906,7 @@
   id: MagazinePistolSubMachineGunTopMounted # WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -1420,7 +1420,7 @@
 
 - type: Tag
   id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
-  
+
 - type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater
 
