@@ -31,11 +31,11 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
 
         Entity<SpriteComponent?> spriteEnt = (ent, sprite);
 
-        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Frame, ent.Comp.StateFrame);
-        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Keyboard, ent.Comp.StateKeyboard);
-        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Keys, ent.Comp.StateKeys);
-        SpriteSystem.LayerSetRsiState(spriteEnt, ComputerVisualLayers.Screen, ent.Comp.StateScreen);
-        SpriteSystem.LayerSetRsiState(spriteEnt, WiresVisualLayers.MaintenancePanel, ent.Comp.StatePanel);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Frame, ent.Comp.StateFrame);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keyboard, ent.Comp.StateKeyboard);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Keys, ent.Comp.StateKeys);
+        TrySetLayerState(spriteEnt, ComputerVisualLayers.Screen, ent.Comp.StateScreen);
+        TrySetLayerState(spriteEnt, WiresVisualLayers.MaintenancePanel, ent.Comp.StatePanel);
     }
 
     protected override void OnAppearanceChange(EntityUid uid,
@@ -57,6 +57,12 @@ public sealed partial class ComputerVisualizerSystem : VisualizerSystem<Computer
         {
             args.Sprite.LayerSetShader(keysLayer, powered ? _unshadedShader : null);
         }
+    }
+
+    private void TrySetLayerState(Entity<SpriteComponent?> ent, Enum key, string? state)
+    {
+        if (SpriteSystem.LayerMapTryGet(ent, key, out var layer, logMissing: false))
+            SpriteSystem.LayerSetRsiState(ent, layer, state);
     }
 }
 
