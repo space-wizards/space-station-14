@@ -65,10 +65,6 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { state: fat_yellow }
           False: { state: fat_red }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: true }
-          False: { visible: false }
   - type: Construction
     graph: Machine
     node: machine
@@ -99,6 +95,7 @@
   - type: Machine
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
+  - type: WiresVisuals
   - type: Appearance
   - type: Speech
     speechVerb: Robotic

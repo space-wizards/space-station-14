@@ -97,7 +97,7 @@
   suffix: vestine
   components:
   - type: Label
-    currentLabel: reagent-name-vestine
+    localizedLabel: reagent-name-vestine
   - type: Solution
     solution:
       reagents:
@@ -113,7 +113,7 @@
   suffix: radium
   components:
   - type: Label
-    currentLabel: reagent-name-radium
+    localizedLabel: reagent-name-radium
   - type: Solution
     solution:
       reagents:
@@ -128,7 +128,7 @@
   suffix: chlorine
   components:
   - type: Label
-    currentLabel: reagent-name-chlorine
+    localizedLabel: reagent-name-chlorine
   - type: Solution
     solution:
       reagents:
@@ -143,7 +143,7 @@
   suffix: plasma
   components:
   - type: Label
-    currentLabel: reagent-name-plasma
+    localizedLabel: reagent-name-plasma
   - type: Solution
     solution:
       reagents:
