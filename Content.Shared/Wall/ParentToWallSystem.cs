@@ -1,4 +1,5 @@
 using Content.Shared.Destructible;
+using Content.Shared.RCD;
 using Content.Shared.Tag;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -21,9 +22,11 @@ public sealed partial class ParentToWallSystem : EntitySystem
 
     [Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
     [Dependency] private EntityQuery<ParentedWallComponent> _parentedWallQuery = default!;
+    [Dependency] private EntityQuery<ParentToWallComponent> _childWallmountQuery = default!;
 
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
+    #region Handlers
     /// <summary>
     /// Wallmount init: tries to find a wall to parent itself to and registers itself.
     /// </summary>
@@ -55,6 +58,12 @@ public sealed partial class ParentToWallSystem : EntitySystem
                 Dirty(anchor, parentedWall);
             }
 
+            if (!ent.Comp.Anchor)
+            {
+                ent.Comp.Anchored = false;
+                _transform.SetParent(ent, anchor);
+            }
+
             ent.Comp.Parent = anchor;
             Dirty(ent);
 
@@ -68,14 +77,16 @@ public sealed partial class ParentToWallSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnParentToWallRemove(Entity<ParentToWallComponent> ent, ref ComponentRemove args)
     {
-        // If this entity is being torn down by the parent, don't bookkeep.
-        if (ent.Comp.Parent is not { } parent
-            || TerminatingOrDeleted(parent)
-            || !_parentedWallQuery.TryComp(ent.Comp.Parent, out var parentComp))
-            return;
+        DetachFromParent(ent);
+    }
 
-        if (parentComp.Children.Remove(ent))
-            Dirty(parent, parentComp);
+    /// <summary>
+    /// Wallmount terminating handler: removes the entity from its linked parent's set.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnParentToWallTerminating(Entity<ParentToWallComponent> ent, ref EntityTerminatingEvent args)
+    {
+        DetachFromParent(ent);
     }
 
     /// <summary>
@@ -101,19 +112,29 @@ public sealed partial class ParentToWallSystem : EntitySystem
     /// We can only anchor entities to grids so we need to reparent all child entities when our wall anchoring changes.
     /// GODO...
     /// </summary>
-    /// <param name="ent">The wall being unanchored</param>
+    /// <param name="ent">The wall being unanchored.</param>
     /// <param name="args">The event in question.</param>
     [SubscribeLocalEvent]
-    private void OnAnchorChanged(Entity<ParentedWallComponent> ent, ref AnchorStateChangedEvent args)
+    private void OnWallAnchorChanged(Entity<ParentedWallComponent> ent, ref AnchorStateChangedEvent args)
     {
-        // TODO: List contains invalid poster ents on client
-        if (_net.IsClient)
-            return;
-
         if (!args.Anchored)
         {
             foreach (var child in ent.Comp.Children)
             {
+                // FIXME: load-bearing cope - client is full of invalid entities
+                if (TerminatingOrDeleted(child))
+                {
+                    Log.Warning($"Child {child} is terminating in {ent}");
+                    continue;
+                }
+
+                if (_childWallmountQuery.TryComp(child, out var parentToWall)
+                    && parentToWall.Anchored)
+                {
+                    parentToWall.Anchored = false;
+                    Dirty(child, parentToWall);
+                }
+
                 _transform.SetParent(child, ent);
             }
         }
@@ -121,14 +142,78 @@ public sealed partial class ParentToWallSystem : EntitySystem
         {
             foreach (var child in ent.Comp.Children)
             {
-                _transform.AnchorEntity(child);
+                // FIXME: load-bearing cope - client is full of invalid entities
+                if (TerminatingOrDeleted(child))
+                {
+                    Log.Warning($"Child {child} is terminating in {ent}");
+                    continue;
+                }
+
+                // Only reanchor if the child wants to be anchored.
+                if (_childWallmountQuery.TryComp(child, out var parentToWall))
+                {
+                    if (!parentToWall.Anchor)
+                        continue;
+
+                    if (!parentToWall.Anchored)
+                    {
+                        parentToWall.Anchored = true;
+                        Dirty(child, parentToWall);
+                    }
+                }
+
+                // Doesn't play well with uninitialized entities, see RT#6739
+                if (!Transform(child).Anchored)
+                    _transform.AnchorEntity(child);
             }
         }
-
     }
 
     /// <summary>
-    /// Destroys all of an entities linked entities, optionally attempting to destroy them.
+    /// Handles the anchor state of a wallmount changing.
+    /// If we weren't expecting this from our own
+    /// </summary>
+    /// <param name="ent">The wall being unanchored.</param>
+    /// <param name="args">The event in question.</param>
+    [SubscribeLocalEvent]
+    private void OnChildAnchorChanged(Entity<ParentToWallComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        if (TerminatingOrDeleted(ent))
+            return;
+
+        // We've been unexpectedly (un)anchored, farewell parent.
+        if (args.Anchored != ent.Comp.Anchored)
+            DetachFromParent(ent);
+    }
+
+    /// <summary>
+    /// Handles RCD deconstruction on a wall.
+    /// If there is anything that should block deconstruction, cancel the attempt and tell the user why.
+    /// </summary>
+    /// <param name="ent">The wall being deconstructed.</param>
+    /// <param name="args">The event in question.</param>
+    [SubscribeLocalEvent]
+    private void OnAttemptRCDDeconstruction(Entity<ParentedWallComponent> ent, ref AttemptRCDDeconstructionEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        foreach (var child in ent.Comp.Children)
+        {
+            if (!_childWallmountQuery.TryComp(child, out var parentToWall)
+                || !parentToWall.BlockDeconstruction)
+                continue;
+
+            args.Reason = Loc.GetString("parent-to-wall-cannot-deconstruct");
+            args.Cancel();
+            return;
+        }
+    }
+    #endregion Handlers
+
+    #region Internal
+    /// <summary>
+    /// Destroys all of a wall's linked entities, optionally attempting to destroy them.
     /// </summary>
     private void DeleteChildren(Entity<ParentedWallComponent> ent, bool attemptDestroy)
     {
@@ -146,4 +231,20 @@ public sealed partial class ParentToWallSystem : EntitySystem
         }
         ent.Comp.Children.Clear();
     }
+
+    /// <summary>
+    /// Removes the association from a child to its wall, if it has one.
+    /// </summary>
+    private void DetachFromParent(Entity<ParentToWallComponent> ent)
+    {
+        // If this entity is being torn down by the parent, don't bookkeep.
+        if (ent.Comp.Parent is not { } parent
+            || TerminatingOrDeleted(parent)
+            || !_parentedWallQuery.TryComp(ent.Comp.Parent, out var parentComp))
+            return;
+
+        if (parentComp.Children.Remove(ent))
+            Dirty(parent, parentComp);
+    }
+    #endregion Internal
 }

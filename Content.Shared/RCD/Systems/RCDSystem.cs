@@ -565,6 +565,18 @@ public sealed partial class RCDSystem : EntitySystem
 
                 return false;
             }
+
+            // Does anything else want to prevent this from being deconstructed?
+            var ev = new AttemptRCDDeconstructionEvent(user, uid);
+            RaiseLocalEvent(target.Value, ref ev);
+
+            if (ev.Cancelled)
+            {
+                if (popMsgs && !string.IsNullOrEmpty(ev.Reason))
+                    _popup.PopupEntity(ev.Reason, uid, user);
+
+                return false;
+            }
         }
 
         return true;

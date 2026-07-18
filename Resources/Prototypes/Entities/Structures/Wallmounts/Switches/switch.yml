@@ -6,6 +6,9 @@
   components:
   - type: WallMount
     arc: 360
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
     drawdepth: SmallObjects
@@ -52,6 +55,9 @@
   components:
   - type: WallMount
     arc: 360
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: StationAiWhitelist
   - type: Sprite
     drawdepth: SmallObjects
@@ -95,6 +101,9 @@
   components:
   - type: WallMount
     arc: 360
+  - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
@@ -433,6 +442,8 @@
   - type: WallMount
     arc: 360
   - type: ParentToWall
+    anchor: false
+    blockDeconstruction: false
   - type: Transform
     anchored: true
   - type: Sprite
