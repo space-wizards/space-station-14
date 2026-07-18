@@ -37,7 +37,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 30
+        damage: 40
       behaviors: *DoDestruction
 
 # Landmark furniture like statues and trees
@@ -49,7 +49,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 70
+        damage: 80
       behaviors: *DoDestruction
 
 #endregion
@@ -65,7 +65,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 20
+        damage: 30
       behaviors: *DoDestruction
 
 # full window / reinforced direction window / girder
@@ -77,7 +77,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 60
+        damage: 80
       behaviors: *DoDestruction
 
 # reinforced full window / deployable security barrier
@@ -89,7 +89,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 120
+        damage: 130
       behaviors: *DoDestruction
 
 #endregion
@@ -104,7 +104,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 25
+        damage: 20
       behaviors: *DoDestruction
 
 # Crate / wall closet
@@ -116,7 +116,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 50
+        damage: 60
       behaviors: *DoDestruction
 
 # Locker / closet
@@ -140,7 +140,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 175
+        damage: 140
       behaviors: *DoDestruction
 
 #endregion
@@ -155,10 +155,10 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors: *DoDestruction
     - trigger: !type:DamageTrigger
-        damage: 20
+        damage: 25
       behaviors: &DoBreakage
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
@@ -202,10 +202,10 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 250
+        damage: 275
       behaviors: *DoDestruction
     - trigger: !type:DamageTrigger
-        damage: 150
+        damage: 175
       behaviors: *DoBreakage
 
 # Multi-tile machine
@@ -235,8 +235,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 125
+        damage: 175
       behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 75
+      behaviors: *DoBreakage
 
 # Airlocks / firelocks
 - type: entity
@@ -247,8 +250,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 200
+        damage: 250
       behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors: *DoBreakage
 
 # High-security airlocks / blast doors
 - type: entity
@@ -259,8 +265,11 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 275
+        damage: 350
       behaviors: *DoDestruction
+    - trigger: !type:DamageTrigger
+        damage: 250
+      behaviors: *DoBreakage
 
 #endregion
 #region Walls
@@ -274,7 +283,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 150
+        damage: 200
       behaviors: *DoDestruction
 
 # Basic steel wall
@@ -298,7 +307,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 450
+        damage: 400
       behaviors: *DoDestruction
 
 #endregion
