@@ -805,7 +805,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!TryComp<GhostRoleAntagSpawnerComponent>(spawner, out var spawnerComp))
         {
             Log.Error($"Antag spawner {spawner} does not have a {nameof(GhostRoleAntagSpawnerComponent)}.");
-            _adminLogger.AddStructured(LogType.AntagSelection, $"Antag spawner {spawner:subject} in gamerule {ent:tool} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
+            _adminLogger.Add(LogType.AntagSelection, $"Antag spawner {spawner:subject} in gamerule {ent:tool} failed due to not having {nameof(GhostRoleAntagSpawnerComponent)}.");
             Del(spawner);
             return null;
         }
@@ -836,7 +836,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return player.AttachedEntity;
 
         Log.Debug($"Pre-selected {session.Name} as antagonist: {ToPrettyString(ent)}");
-        _adminLogger.AddStructured(LogType.AntagSelection, $"Pre-selected {session:player} as antagonist: {ent:subject}");
+        _adminLogger.Add(LogType.AntagSelection, $"Pre-selected {session:player} as antagonist: {ent:subject}");
     }
 
         if (player.AttachedEntity is not { } uid)
