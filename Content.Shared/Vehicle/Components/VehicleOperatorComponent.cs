@@ -5,7 +5,7 @@ namespace Content.Shared.Vehicle.Components;
 /// <summary>
 /// Tracking component for handling the operator of a given <see cref="VehicleComponent"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(VehicleSystem))]
 public sealed partial class VehicleOperatorComponent : Component
 {

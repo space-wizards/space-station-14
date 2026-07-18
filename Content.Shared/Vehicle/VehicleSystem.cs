@@ -65,6 +65,17 @@ public sealed partial class VehicleSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
+    private void OnOperatorUpdateCanMove(Entity<VehicleOperatorComponent> ent, ref UpdateCanMoveEvent args)
+    {
+        if (ent.Comp.Vehicle is not { } vehicleUid ||
+            !_vehicleQuery.TryComp(vehicleUid, out var vehicle))
+            return;
+
+        if (!CanOperate((vehicleUid, vehicle), ent.Owner))
+            args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
     private void OnVehicleShutdown(Entity<VehicleComponent> ent, ref ComponentShutdown args)
     {
         if (_timing.ApplyingState)
@@ -117,13 +128,13 @@ public sealed partial class VehicleSystem : EntitySystem
         {
             var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
             vehicleOperator.Vehicle = entity.Owner;
-            DirtyFields(operatorUid, vehicleOperator, null, nameof(VehicleOperatorComponent.Vehicle));
+            Dirty(operatorUid, vehicleOperator);
         }
         else
         {
             var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
             vehicleOperator.Vehicle = entity.Owner;
-            DirtyFields(operatorUid, vehicleOperator, null, nameof(VehicleOperatorComponent.Vehicle));
+            Dirty(operatorUid, vehicleOperator);
         }
 
         _mover.SetRelay(operatorUid, entity);
