@@ -2,8 +2,8 @@ using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
+using Content.Shared.EntityConditions;
 using Content.Shared.GameTicking;
-using Content.Shared.Random.Rules;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Audio;
@@ -25,11 +25,11 @@ public sealed partial class ContentAudioSystem
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IStateManager _state = default!;
-    [Dependency] private RulesSystem _rules = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedEntityConditionsSystem _conditions = default!;
 
-    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(60);
-    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(120);
+    private readonly TimeSpan _minAmbienceTime = TimeSpan.FromSeconds(40);
+    private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(100);
 
     private const float AmbientMusicFadeTime = 10f;
     private static float _volumeSlider;
@@ -88,7 +88,7 @@ public sealed partial class ContentAudioSystem
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {
-        if (obj.WasModified<AmbientMusicPrototype>() || obj.WasModified<RulesPrototype>())
+        if (obj.WasModified<AmbientMusicPrototype>())
             SetupAmbientSounds();
     }
 
@@ -165,7 +165,7 @@ public sealed partial class ContentAudioSystem
         {
             var player = _player.LocalSession?.AttachedEntity;
 
-            if (player == null || _musicProto == null || !_rules.IsTrue(player.Value, ProtoMan.Index<RulesPrototype>(_musicProto.Rules)))
+            if (player == null || _musicProto == null || !_conditions.TryConditions(player.Value, _musicProto.Conditions))
             {
                 FadeOut(_ambientMusicStream, duration: AmbientMusicFadeTime);
                 _musicProto = null;
@@ -192,9 +192,10 @@ public sealed partial class ContentAudioSystem
 
         _musicProto = GetAmbience();
 
-        if (_musicProto == null || _musicProto == _lastMusicProto)
+        if (_musicProto == null || _musicProto == _lastMusicProto && !_musicProto.AllowRepeat)
         {
             _interruptable = false;
+            _nextAudio = _timing.CurTime + _random.Next(_minAmbienceTime, _maxAmbienceTime);
             return;
         }
 
@@ -228,9 +229,7 @@ public sealed partial class ContentAudioSystem
 
     private AmbientMusicPrototype? GetAmbience()
     {
-        var player = _player.LocalEntity;
-
-        if (player == null)
+        if (_player.LocalEntity is not { } player)
             return null;
 
         var ev = new PlayAmbientMusicEvent();
@@ -244,8 +243,10 @@ public sealed partial class ContentAudioSystem
 
         foreach (var amb in ambiences)
         {
-            if (!_rules.IsTrue(player.Value, ProtoMan.Index<RulesPrototype>(amb.Rules)))
+            if (!_conditions.TryConditions(player, amb.Conditions))
+            {
                 continue;
+            }
 
             return amb;
         }
