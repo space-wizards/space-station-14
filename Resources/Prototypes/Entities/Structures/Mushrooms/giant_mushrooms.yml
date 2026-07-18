@@ -29,6 +29,12 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            Fungalin: 500  #figure out the proper values for this and the other gas spawning
+          temperature: 373.15
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: AtmosDevice
