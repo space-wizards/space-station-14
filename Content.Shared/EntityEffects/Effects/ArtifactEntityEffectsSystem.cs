@@ -11,7 +11,7 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : EntityEffectSystem<XenoArtifactComponent, ArtifactDurabilityRestore>
 {
-    [Dependency] private readonly SharedXenoArtifactSystem _xenoArtifact = default!;
+    [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
     protected override void Effect(Entity<XenoArtifactComponent> entity, ref EntityEffectEvent<ArtifactDurabilityRestore> args)
     {
@@ -30,8 +30,8 @@ public sealed partial class ArtifactDurabilityRestoreEntityEffectsSystem : Entit
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class ArtifactUnlockEntityEffectSystem : EntityEffectSystem<XenoArtifactComponent, ArtifactUnlock>
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedXenoArtifactSystem _xenoArtifact = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedXenoArtifactSystem _xenoArtifact = default!;
 
     protected override void Effect(Entity<XenoArtifactComponent> entity, ref EntityEffectEvent<ArtifactUnlock> args)
     {

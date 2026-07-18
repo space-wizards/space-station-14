@@ -12,8 +12,8 @@ namespace Content.Server.Arcade.SpaceVillain;
 /// </summary>
 public sealed partial class SpaceVillainGame
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
     private readonly SharedAudioSystem _audioSystem = default!;
     private readonly UserInterfaceSystem _uiSystem = default!;
     private readonly SpaceVillainArcadeSystem _svArcade = default!;
@@ -71,7 +71,8 @@ public sealed partial class SpaceVillainGame
             HpMax = 30,
             Hp = 30,
             MpMax = 10,
-            Mp = 10
+            Mp = 10,
+            Uncapped = arcade.UncappedFlag,
         };
 
         VillainChar = new()
@@ -79,7 +80,8 @@ public sealed partial class SpaceVillainGame
             HpMax = 45,
             Hp = 45,
             MpMax = 20,
-            Mp = 20
+            Mp = 20,
+            Uncapped = arcade.UncappedFlag,
         };
     }
 
@@ -210,6 +212,9 @@ public sealed partial class SpaceVillainGame
     /// <returns>A bool indicating if the game should continue.</returns>
     private bool CheckGameConditions(EntityUid uid, SpaceVillainArcadeComponent arcade)
     {
+        if (arcade.UncappedFlag)
+            return true;
+
         switch (
             PlayerChar.Hp > 0 && PlayerChar.Mp > 0,
             VillainChar.Hp > 0 && VillainChar.Mp > 0

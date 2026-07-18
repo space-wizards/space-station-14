@@ -14,10 +14,19 @@ namespace Content.Shared.Silicons.Laws;
 /// </summary>
 public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedStunSystem _stunSystem = default!;
+    [Dependency] private EmagSystem _emag = default!;
+    [Dependency] private SharedMindSystem _mind = default!;
+
+    /// <summary>
+    /// Minimum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMinLength = 3;
+    /// <summary>
+    /// Maximum length of generated ion storm law identifiers.
+    /// </summary>
+    public const int IonStormIdentifierMaxLength = 10;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -37,7 +46,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         // prevent self-emagging
         if (uid == args.UserUid)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
+            _popup.PopupEntity(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
             return;
         }
 
@@ -45,7 +54,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             TryComp<WiresPanelComponent>(uid, out var panel) &&
             !panel.Open)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
+            _popup.PopupEntity(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
             return;
         }
 

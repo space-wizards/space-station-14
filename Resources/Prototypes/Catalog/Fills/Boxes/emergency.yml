@@ -40,7 +40,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxCardboard
@@ -84,7 +84,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
 
@@ -129,7 +129,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
 
@@ -174,7 +174,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxCardboard
@@ -220,7 +220,7 @@
         - id: FoodSnackNutribrick
         - id: DrinkWaterBottleFull
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvival
@@ -258,7 +258,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvival
@@ -316,7 +316,7 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
 
 
 - type: entity
@@ -354,4 +354,4 @@
     - state: internals
     - state: nitrogentank
   - type: Label
-    currentLabel: reagent-name-nitrogen
+    localizedLabel: reagent-name-nitrogen
