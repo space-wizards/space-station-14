@@ -139,16 +139,6 @@
   group: market
 
 - type: cargoProduct
-  id: ServiceBoxes
-  icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box
-  product: CrateServiceBox
-  cost: 400
-  category: cargoproduct-category-name-service
-  group: market
-
-- type: cargoProduct
   id: ServiceFoodCartHot
   icon:
     sprite: Objects/Specific/Kitchen/food_carts.rsi
