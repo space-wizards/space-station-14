@@ -65,6 +65,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
             return;
+            
         NotifyLawsChanged((uid, lawcomp), component.EmaggedSound);
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
