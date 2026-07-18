@@ -1754,5 +1754,134 @@ Entries:
   id: 214
   time: '2026-06-05T15:24:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44243
+- author: PJB3005
+  changes:
+  - message: When a character name gets mentioned in an adminhelp message, the game will now attempt to provide a "quick info" link for the relevant player/entity.
+    type: Add
+  id: 215
+  time: '2026-06-20T23:47:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44319
+- author: Axionyxx
+  changes:
+  - message: Trust score and account creation date are now displayed in the player panel
+    type: Add
+  id: 216
+  time: '2026-06-21T20:23:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44317
+- author: PJB3005
+  changes:
+  - message: admin_overlay command to enable/disable admin overlay from scripts
+    type: Add
+  id: 217
+  time: '2026-06-21T22:16:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44326
+- author: PJB3005
+  changes:
+  - message: Admin logs now have their timezone displayed in local time rather than UTC
+    type: Fix
+  id: 218
+  time: '2026-06-22T14:49:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44332
+- author: PJB3005
+  changes:
+  - message: '"Respawn" admin action has been renamed to "return to lobby." Similar related actions have had tooltips added to clarify behavior.'
+    type: Tweak
+  id: 219
+  time: '2026-06-23T01:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44333
+- author: PJB3005
+  changes:
+  - message: '"Admin only" and "Play sound" options when sending bwoinks now work properly if the UI is popped out'
+    type: Fix
+  id: 220
+  time: '2026-06-23T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44334
+- author: JustinWinningham
+  changes:
+  - message: Admin panel now groups like types when sorting on 'Role Type' column
+    type: Fix
+  id: 221
+  time: '2026-06-26T03:02:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43897
+- author: ScarKy0
+  changes:
+  - message: Aghosts can now open several storage UIs at once. To bring back previous behaviour remove your "BypassOpenStorageLimit" tag.
+    type: Add
+  id: 222
+  time: '2026-06-29T09:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44404
+- author: Samuka-C
+  changes:
+  - message: Added a new button to the server tab which toggles dead chat!
+    type: Add
+  id: 223
+  time: '2026-06-29T19:22:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44367
+- author: Samuka-C
+  changes:
+  - message: Added the Stinky smite, for the stinkiest players
+    type: Add
+  id: 224
+  time: '2026-07-02T22:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44394
+- author: Doru991
+  changes:
+  - message: Quick info links in the ahelp window now only trigger for entities that are being or have been controlled by a player.
+    type: Tweak
+  id: 225
+  time: '2026-07-08T08:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44373
+- author: Errant-4
+  changes:
+  - message: The F7 playertab's filter now also works with role (Crew Aligned, Team Antagonist etc) and role subtype (Traitor, Zombie etc).
+    type: Tweak
+  id: 226
+  time: '2026-07-09T18:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44592
+- author: w3ryfrate
+  changes:
+  - message: Added "togglechat" command to easily toggle dead, ooc and looc channels on/off.
+    type: Add
+  - message: Removed commands "setdeadchat", "setlooc" and "setooc."
+    type: Remove
+  id: 227
+  time: '2026-07-13T06:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44480
+- author: Crude Oil
+  changes:
+  - message: Admin logs command autocompletes on players
+    type: Add
+  - message: Admins now have a "player logs" verb that opens admin logs with that player selected
+    type: Add
+  - message: Added "player logs" button to the ahelp window
+    type: Add
+  - message: Removed "ban list" button from the ahelp window
+    type: Remove
+  - message: Player selection in admin logs remains consistent when selecting different rounds
+    type: Tweak
+  id: 228
+  time: '2026-07-14T21:11:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44604
+- author: Samuka
+  changes:
+  - message: Added the event log button to log events more easily!
+    type: Add
+  id: 229
+  time: '2026-07-15T00:01:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44655
+- author: TriviaSolari
+  changes:
+  - message: Editing ion laws now properly randomizes law numbers
+    type: Fix
+  id: 230
+  time: '2026-07-15T03:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42806
+- author: SlamBamActionman
+  changes:
+  - message: Admin ghosts and Godmode are now immune to lube/glue effects on items.
+    type: Fix
+  id: 231
+  time: '2026-07-16T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44552
 Name: Admin
 Order: 3

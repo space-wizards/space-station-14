@@ -23,8 +23,8 @@
     - Prying
   - type: BlockItemNameInHand
   - type: CustomSpriteAmmoCounter
-    loadedAmmoSprite: Interface/ItemStatus/Tiles/tile.png
-    spentAmmoSprite: Interface/ItemStatus/Tiles/tile_empty.png
+    loadedAmmoSprite: Interface/ItemStatus/Tiles/not_spent.png
+    spentAmmoSprite: Interface/ItemStatus/Tiles/spent.png
     numberOfRows: 3
   - type: AmmoCounter
   - type: Gun
