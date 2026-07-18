@@ -202,19 +202,6 @@
         - id: DeskBell
 
 - type: entity
-  parent: CrateGenericSteel
-  id: CrateServiceFaxMachine
-  name: fax machine crate
-  description: A fax machine and a screwdriver to set the name with.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: Screwdriver
-        - id: FaxMachineFlatpack
-
-- type: entity
   parent: CrateCommandSecure
   id: CrateServicePersonnel
   name: personnel crate
