@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Wall;
 
 /// <summary>
-/// A system for wallmounts to have their lifecycle tied with the wallmounted objects that live on them.
+/// A system for wallmounts to have their lifecycle tied to the wall that they're mounted on.
 /// Ensures that wallmount entities aren't left floating in space when a wall is destroyed.
 /// </summary>
 public sealed partial class ParentToWallSystem : EntitySystem
@@ -34,11 +34,13 @@ public sealed partial class ParentToWallSystem : EntitySystem
             || !_mapGridQuery.TryComp(gridUid, out var mapGrid))
             return;
 
+        // Find our target position relative to our entity.
         var coords = new EntityCoordinates(ent, ent.Comp.Offset);
 
         if (!_map.TryGetTileRef(gridUid, mapGrid, coords, out var tileRef))
             return;
 
+        // Look for an anchored wall by its tag.
         var anchoredQuery = _map.GetAnchoredEntitiesEnumerator(gridUid, mapGrid, tileRef.GridIndices);
         while (anchoredQuery.MoveNext(out var maybeAnchor))
         {
@@ -47,8 +49,11 @@ public sealed partial class ParentToWallSystem : EntitySystem
 
             // Parent the entity to the wall.
             var parentedWall = EnsureComp<ParentedWallComponent>(anchor);
-            parentedWall.Children.Add(ent);
-            Dirty(anchor, parentedWall);
+            if (!parentedWall.Children.Contains(ent))
+            {
+                parentedWall.Children.Add(ent);
+                Dirty(anchor, parentedWall);
+            }
 
             ent.Comp.Parent = anchor;
             Dirty(ent);
