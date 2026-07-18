@@ -90,7 +90,7 @@
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: Label
-    currentLabel: reagent-name-absinthe
+    localizedLabel: reagent-name-absinthe
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
@@ -112,7 +112,7 @@
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
   - type: Label
-    currentLabel: reagent-name-blue-curacao
+    localizedLabel: reagent-name-blue-curacao
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi
     layers:
@@ -146,7 +146,7 @@
       - ReagentId: Nothing
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-nothing
+    localizedLabel: reagent-name-nothing
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
@@ -162,7 +162,7 @@
       - ReagentId: Champagne
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-champagne
+    localizedLabel: reagent-name-champagne
   - type: Sprite
     sprite: Objects/Consumable/Drinks/champagnebottle.rsi
   - type: Openable
@@ -177,7 +177,7 @@
   description: A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
   - type: Label
-    currentLabel: reagent-name-cognac
+    localizedLabel: reagent-name-cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -204,7 +204,7 @@
       - ReagentId: Grenadine
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-grenadine
+    localizedLabel: reagent-name-grenadine
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
     layers:
@@ -222,7 +222,7 @@
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: Label
-    currentLabel: reagent-name-gin
+    localizedLabel: reagent-name-gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
@@ -244,7 +244,7 @@
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: Label
-    currentLabel: reagent-name-gildlager
+    localizedLabel: reagent-name-gildlager
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gildlagerbottle.rsi
 
@@ -266,7 +266,7 @@
   description: The great taste of coffee with none of the benifits.
   components:
   - type: Label
-    currentLabel: reagent-name-coffeeliqueur
+    localizedLabel: reagent-name-coffeeliqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
 
@@ -293,7 +293,7 @@
       - ReagentId: MelonLiquor
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-melon-liquor
+    localizedLabel: reagent-name-melon-liquor
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi
     layers:
@@ -311,7 +311,7 @@
   description: Silver laced tequila, served in space night clubs across the galaxy.
   components:
   - type: Label
-    currentLabel: reagent-name-patron
+    localizedLabel: reagent-name-patron
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
@@ -363,7 +363,7 @@
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: Label
-    currentLabel: reagent-name-rum
+    localizedLabel: reagent-name-rum
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
@@ -385,7 +385,7 @@
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
   - type: Label
-    currentLabel: reagent-name-tequila
+    localizedLabel: reagent-name-tequila
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
@@ -407,7 +407,7 @@
   description: Sweet, sweet dryness!
   components:
   - type: Label
-    currentLabel: reagent-name-vermouth
+    localizedLabel: reagent-name-vermouth
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
@@ -429,7 +429,7 @@
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
   - type: Label
-    currentLabel: reagent-name-vodka
+    localizedLabel: reagent-name-vodka
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
@@ -451,7 +451,7 @@
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
   - type: Label
-    currentLabel: reagent-name-whiskey
+    localizedLabel: reagent-name-whiskey
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
@@ -473,7 +473,7 @@
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
   - type: Label
-    currentLabel: reagent-name-wine
+    localizedLabel: reagent-name-wine
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
   - type: Tag
@@ -540,7 +540,7 @@
       - ReagentId: Beer
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-beer
+    localizedLabel: reagent-name-beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
@@ -564,7 +564,7 @@
       - ReagentId: Ale
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-ale
+    localizedLabel: reagent-name-ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
@@ -582,7 +582,7 @@
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
   - type: Label
-    currentLabel: reagent-name-beer
+    localizedLabel: reagent-name-beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
@@ -611,7 +611,7 @@
   description: A true dorf's drink of choice.
   components:
   - type: Label
-    currentLabel: reagent-name-ale
+    localizedLabel: reagent-name-ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
@@ -642,6 +642,6 @@
       - ReagentId: Sake
         Quantity: 60
   - type: Label
-    currentLabel: reagent-name-sake
+    localizedLabel: reagent-name-sake
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sakebottle.rsi
