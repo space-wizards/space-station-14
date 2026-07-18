@@ -119,14 +119,14 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
         sourceSolEnt = null;
         if (!_actionBlocker.CanComplexInteract(user))
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-no-hands"), user, user);
+            _popup.PopupEntity(Loc.GetString("mopping-system-no-hands"), user, user);
             return false;
         }
 
         if (!_solContainer.TryGetSolution(sourceContainer, sourceSolutionName, out sourceSolEnt)
             || sourceSolEnt.Value.Comp.Solution.Volume == FixedPoint2.Zero)
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-empty", ("used", sourceContainer)),
+            _popup.PopupEntity(Loc.GetString("mopping-system-empty", ("used", sourceContainer)),
                 sourceContainer,
                 user);
             return false;
@@ -134,7 +134,7 @@ public sealed partial class SolutionDumpingSystem : EntitySystem
 
         if (checkAvailableVolume && targetSol.AvailableVolume == FixedPoint2.Zero)
         {
-            _popup.PopupClient(Loc.GetString("mopping-system-full", ("used", targetContainer)), targetContainer, user);
+            _popup.PopupEntity(Loc.GetString("mopping-system-full", ("used", targetContainer)), targetContainer, user);
             return false;
         }
 
