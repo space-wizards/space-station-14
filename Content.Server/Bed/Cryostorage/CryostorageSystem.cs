@@ -316,7 +316,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
             if (HasComp<AttachedClothingComponent>(item))
                 continue;
 
-            data.ItemSlots.Add(slotDef.Name, Name(item));
+            data.ItemSlots.Add((slotDef.Name, slotDef.DisplayName, Name(item)));
         }
 
         foreach (var hand in _hands.EnumerateHands(uid))
