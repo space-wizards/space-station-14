@@ -124,6 +124,18 @@
 
 - type: construction
   parent: Girder
+  id: WallMining
+  targetNode: wallMining
+
+- type: construction
+  parent: Girder
+  id: WallMiningDiagonal
+  name: construction-recipe-wall-mining-diagonal
+  targetNode: wallMiningDiagonal
+  canRotate: true
+
+- type: construction
+  parent: Girder
   id: ClownWall
   targetNode: bananiumWall
 
@@ -224,6 +236,23 @@
   parent: BaseWindow
   id: ShuttleWindow
   targetNode: shuttleWindow
+
+- type: construction
+  parent: BaseWindowDiagonal
+  id: ShuttleWindowDiagonal
+  name: construction-recipe-shuttle-window-diagonal
+  targetNode: shuttleWindowDiagonal
+
+- type: construction
+  parent: BaseWindow
+  id: MiningWindow
+  targetNode: miningWindow
+
+- type: construction
+  parent: BaseWindowDiagonal
+  id: MiningWindowDiagonal
+  name: construction-recipe-mining-window-diagonal
+  targetNode: miningWindowDiagonal
 
 - type: construction
   parent: BaseWindowDiagonal
@@ -508,6 +537,19 @@
   parent: PinionAirlock
   id: PinionAirlockGlass
   name: construction-recipe-pinion-airlock-glass
+  targetNode: glassAirlock
+
+- type: construction
+  parent: BaseStructureFullTile
+  id: AirlockMining
+  name: construction-recipe-mining-airlock
+  graph: MiningAirlock
+  targetNode: airlock
+
+- type: construction
+  parent: AirlockMining
+  id: AirlockGlassMining
+  name: construction-recipe-mining-airlock-glass
   targetNode: glassAirlock
 
 - type: construction
