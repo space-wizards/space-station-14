@@ -20,22 +20,22 @@ public sealed partial class BlockingSystem
         SubscribeLocalEvent<BlockingUserComponent, EntityTerminatingEvent>(OnEntityTerminating);
     }
 
-    private void OnParentChanged(EntityUid uid, BlockingUserComponent component, ref EntParentChangedMessage args)
+    private void OnParentChanged(Entity<BlockingUserComponent> entity, ref EntParentChangedMessage args)
     {
-        UserStopBlocking(uid, component);
+        UserStopBlocking(entity);
     }
 
-    private void OnInsertAttempt(EntityUid uid, BlockingUserComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnInsertAttempt(Entity<BlockingUserComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
     {
-        UserStopBlocking(uid, component);
+        UserStopBlocking(entity);
     }
 
-    private void OnAnchorChanged(EntityUid uid, BlockingUserComponent component, ref AnchorStateChangedEvent args)
+    private void OnAnchorChanged(Entity<BlockingUserComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
             return;
 
-        UserStopBlocking(uid, component);
+        UserStopBlocking(entity);
     }
 
     private void OnUserDamageModified(Entity<BlockingUserComponent> entity, ref DamageModifyEvent args)
@@ -46,7 +46,7 @@ public sealed partial class BlockingSystem
         if (args.Damage.GetTotal() <= 0)
             return;
 
-        var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
+        var blockFraction = blocking.IsRaised ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
         blockFraction = Math.Clamp(blockFraction, 0, 1);
 
         // This is how much damage the shield is attempting to block
@@ -60,28 +60,28 @@ public sealed partial class BlockingSystem
         args.Damage *= 1f - blockFraction;
         args.Damage += blowthrough;
 
-        if (blocking.IsBlocking && damage.AnyPositive())
+        if (blocking.IsRaised && damage.AnyPositive())
             _audio.PlayPvs(blocking.BlockSound, entity);
     }
 
-    private void OnEntityTerminating(EntityUid uid, BlockingUserComponent component, ref EntityTerminatingEvent args)
+    private void OnEntityTerminating(Entity<BlockingUserComponent> entity, ref EntityTerminatingEvent args)
     {
-        if (!_blockQuery.TryComp(component.BlockingItem, out var blockingComponent))
+        if (!_blockQuery.TryComp(entity.Comp.BlockingItem, out var blockComponent))
             return;
 
-        StopBlockingHelper(component.BlockingItem.Value, blockingComponent, uid);
-
+        StopBlocking((entity.Comp.BlockingItem.Value, blockComponent), entity);
     }
 
     /// <summary>
     /// Check for the shield and has the user stop blocking
     /// Used where you'd like the user to stop blocking, but also don't want to remove the <see cref="BlockingUserComponent"/>
     /// </summary>
-    /// <param name="uid">The user blocking</param>
-    /// <param name="component">The <see cref="BlockingUserComponent"/></param>
-    private void UserStopBlocking(EntityUid uid, BlockingUserComponent component)
+    /// <param name="entity">The user blocking</param>
+    private void UserStopBlocking(Entity<BlockingUserComponent> entity)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        if (!_blockQuery.TryComp(entity.Comp.BlockingItem, out var blockComponent))
+            return;
+
+        LowerShield((entity.Comp.BlockingItem.Value, blockComponent), entity);
     }
 }

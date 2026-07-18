@@ -384,6 +384,7 @@ public sealed partial class GuardianSystem : EntitySystem
 
     private void ReleaseGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent> guardian)
     {
+        _audio.PlayPredicted(host.Comp.ReleaseSound, guardian, host);
         if (guardian.Comp.GuardianLoose)
         {
             DebugTools.Assert(!host.Comp.GuardianContainer.Contains(guardian));
