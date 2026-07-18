@@ -59,12 +59,12 @@
       damageContainer: StructuralInorganic
     - type: Destructible
       thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 50
-          behaviors:
-            - !type:DoActsBehavior
-              acts: ["Destruction"]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
     - type: Appearance
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
@@ -142,12 +142,12 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label

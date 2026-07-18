@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Shared.EntityEffects.Effects;
 using Content.Server.Spreader;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
@@ -17,7 +16,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -35,7 +33,6 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private IAdminLogManager _logger = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private BloodstreamSystem _blood = default!;
@@ -45,16 +42,13 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
-    private EntityQuery<SmokeComponent> _smokeQuery;
-    private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery;
+    [Dependency] private EntityQuery<SmokeComponent> _smokeQuery = default!;
+    [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
-        _smokeQuery = GetEntityQuery<SmokeComponent>();
-        _smokeAffectedQuery = GetEntityQuery<SmokeAffectedComponent>();
 
         SubscribeLocalEvent<SmokeComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SmokeComponent, EndCollideEvent>(OnEndCollide);
@@ -165,12 +159,10 @@ public sealed partial class SmokeSystem : EntitySystem
 
         // We have no more neighbours to spread to. So instead we will randomly distribute our volume to neighbouring smoke tiles.
 
-        var smokeQuery = GetEntityQuery<SmokeComponent>();
-
         _random.Shuffle(args.Neighbors);
         foreach (var neighbor in args.Neighbors)
         {
-            if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+            if (!_smokeQuery.TryGetComponent(neighbor, out var smoke))
                 continue;
 
             smoke.SpreadAmount++;
@@ -312,7 +304,7 @@ public sealed partial class SmokeSystem : EntitySystem
             if (reagentQuantity.Quantity == FixedPoint2.Zero)
                 continue;
 
-            var reagent = _prototype.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+            var reagent = ProtoMan.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
             reagent.ReactionTile(tile, reagentQuantity.Quantity, EntityManager, reagentQuantity.Reagent.Data);
         }
     }
@@ -343,7 +335,7 @@ public sealed partial class SmokeSystem : EntitySystem
             !_solutionContainerSystem.ResolveSolution(smoke.Owner, SmokeComponent.SolutionName, ref smoke.Comp1.Solution, out var solution))
             return;
 
-        var color = solution.GetColor(_prototype);
+        var color = solution.GetColor(ProtoMan);
         _appearance.SetData(smoke.Owner, SmokeVisuals.Color, color, smoke.Comp2);
     }
 }
