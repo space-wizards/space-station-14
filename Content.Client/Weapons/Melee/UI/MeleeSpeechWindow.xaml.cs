@@ -7,7 +7,6 @@ namespace Content.Client.Weapons.Melee.UI;
 [GenerateTypedNameReferences]
 public sealed partial class MeleeSpeechWindow : DefaultWindow
 {
-
     public event Action<string>? OnBattlecryChanged;
 
 	public MeleeSpeechWindow()

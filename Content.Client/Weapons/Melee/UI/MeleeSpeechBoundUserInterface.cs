@@ -7,9 +7,9 @@ namespace Content.Client.Weapons.Melee.UI;
 /// <summary>
 /// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
 /// </summary>
-public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
+public sealed partial class MeleeSpeechBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     [ViewVariables]
     private MeleeSpeechWindow? _window;
