@@ -109,7 +109,7 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
 
     private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
     {
-        Gui?.TargetWindow.UpdateGhostnadoButton(msg.EntityFound);
+        Gui?.TargetWindow.UpdateGhostnadoButtons(msg.EntityFound);
     }
 
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)
@@ -129,6 +129,18 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         _net.SendSystemNetworkMessage(msg);
     }
 
+    private void OnWarpToRandomFollowedClicked(bool warp = true)
+    {
+        var msg = new WarpToRandomFollowedRequestEvent(warp);
+        _net.SendSystemNetworkMessage(msg);
+    }
+
+    private void OnWarpToRandomClicked()
+    {
+        var msg = new WarpToRandomRequestEvent();
+        _net.SendSystemNetworkMessage(msg);
+    }
+
     public void LoadGui()
     {
         if (Gui == null)
@@ -138,7 +150,9 @@ public sealed partial class GhostUIController : UIController, IOnSystemChanged<G
         Gui.ReturnToBodyPressed += ReturnToBody;
         Gui.GhostRolesPressed += GhostRolesPressed;
         Gui.TargetWindow.WarpClicked += OnWarpClicked;
-        Gui.TargetWindow.OnGhostnado += OnGhostnado;
+        Gui.TargetWindow.OnGhostnadoClicked += OnGhostnado;
+        Gui.TargetWindow.OnWarpToRandomFollowedClicked += OnWarpToRandomFollowedClicked;
+        Gui.TargetWindow.OnWarpToRandomClicked += OnWarpToRandomClicked;
         Gui.TargetWindow.OnOpen += OnWindowOpened;
 
         UpdateGui();

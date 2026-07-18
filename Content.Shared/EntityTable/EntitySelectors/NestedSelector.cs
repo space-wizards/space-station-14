@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
@@ -8,10 +9,13 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// </summary>
 public sealed partial class NestedSelector : EntityTableSelector
 {
+    /// <summary>
+    /// The prototype from which to draw random items.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<EntityTablePrototype> TableId;
 
-    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
+    protected override IEnumerable<EntProtoId> GetSpawnsImplementation(IRobustRandom rand,
         IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)

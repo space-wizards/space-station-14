@@ -189,7 +189,7 @@ namespace Content.Shared.Ghost
     }
 
     /// <summary>
-    /// A client to server request for their ghost to be warped to the most followed entity.
+    /// A client to server request for their ghost to be warped to the most followed player.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class GhostnadoRequestEvent(bool warp = false) : EntityEventArgs
@@ -206,6 +206,21 @@ namespace Content.Shared.Ghost
     {
         public bool EntityFound { get; } = entityFound;
     }
+
+    /// <summary>
+    /// A client to server request for their ghost to be warped to a random player with at least one ghost follower.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class WarpToRandomFollowedRequestEvent (bool warp = false) : EntityEventArgs
+    {
+        public bool Warp { get; } = warp;
+    }
+
+    /// <summary>
+    /// A client to server request for their ghost to be warped to a random player.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class WarpToRandomRequestEvent : EntityEventArgs;
 
     /// <summary>
     /// A client to server request for their ghost to return to body

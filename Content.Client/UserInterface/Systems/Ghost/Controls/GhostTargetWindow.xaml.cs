@@ -16,14 +16,18 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
         private string _searchText = string.Empty;
 
         public event Action<NetEntity>? WarpClicked;
-        public event Action<bool>? OnGhostnado;
+        public event Action<bool>? OnGhostnadoClicked;
+        public event Action<bool>? OnWarpToRandomFollowedClicked;
+        public event Action? OnWarpToRandomClicked;
 
         public GhostTargetWindow()
         {
             RobustXamlLoader.Load(this);
             SearchBar.OnTextChanged += OnSearchTextChanged;
 
-            GhostnadoButton.OnPressed += _ => OnGhostnado?.Invoke(true);
+            GhostnadoButton.OnPressed += _ => OnGhostnadoClicked?.Invoke(true);
+            WarpToRandomFollowedButton.OnPressed += _ => OnWarpToRandomFollowedClicked?.Invoke(true);
+            WarpToRandomButton.OnPressed += _ => OnWarpToRandomClicked?.Invoke();
         }
 
         public void UpdateWarps(IEnumerable<GhostWarp> warps)
@@ -95,9 +99,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             GhostScroll.SetScrollValue(Vector2.Zero);
         }
 
-        public void UpdateGhostnadoButton(bool enabled)
+        public void UpdateGhostnadoButtons(bool enabled)
         {
             GhostnadoButton.Disabled = !enabled;
+            WarpToRandomFollowedButton.Disabled = !enabled;
         }
     }
 }
