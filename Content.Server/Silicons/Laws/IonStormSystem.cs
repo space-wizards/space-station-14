@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Silicons.Laws;
 
