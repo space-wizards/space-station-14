@@ -375,53 +375,21 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         });
     }
 
-    public async void RoundStarting(int id)
+    public void RoundStarting(int id)
     {
-        try
-        {
-            _currentRoundId = id;
-
-            // Flush pre-round logs immediately now that we have a valid round ID.
-            // Use dropPreRoundInLobby: false because the round is starting — these
-            // logs should be persisted, not dropped.
-            if (_preRoundLogQueue.IsEmpty && _logQueue.IsEmpty)
-                return;
-
-            // Wait for any in-progress save to complete before flushing. Bounded so a stalled
-            // save (e.g. a lost database connection) can't spin the game ticker forever.
-            const int maxWaitAttempts = 100; // ~1s total at 10ms per attempt, hopfully
-            var attempts = 0;
-            while (Interlocked.CompareExchange(ref _savingLogs, 1, 0) != 0)
-            {
-                if (++attempts >= maxWaitAttempts)
-                {
-                    _sawmill.Warning(
-                        "RoundStarting timed out waiting for an in-progress admin log save; skipping the " +
-                        "pre-round flush. Pending logs will be persisted on the next update.");
-                    return;
-                }
-
-                await Task.Delay(10);
-            }
-
-            try
-            {
-                await SaveLogs(dropPreRoundInLobby: false);
-            }
-            finally
-            {
-                Interlocked.Exchange(ref _savingLogs, 0);
-            }
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error($"Unhandled exception in admin log RoundStarting: {e}");
-        }
+        _currentRoundId = id;
+        // Pre-round logs pick up _currentRoundId on the next Update() cycle and are persisted then.
     }
 
     public void RunLevelChanged(GameRunLevel level)
     {
         _runLevel = level;
+
+        if (level == GameRunLevel.InRound)
+        {
+            // triggers TrySaveLogs and flushes any pending pre-round logs.
+            _nextUpdateTime = TimeSpan.Zero;
+        }
 
         if (level == GameRunLevel.PreRoundLobby)
         {

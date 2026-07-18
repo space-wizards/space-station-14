@@ -9,6 +9,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -228,6 +229,10 @@ public sealed class PreRoundAddTests : GameTest
 {
     public override PoolSettings PoolSettings => new PoolSettings
     {
+        // Recycled pairs carry over AdminLogManager state (run level, queues, send-delay timer)
+        // from whatever test used the server instance before, which makes the pre-round flush
+        // unreliable. Demand a brand-new pair so the lobby state is deterministic.
+        Fresh = true,
         Dirty = true,
         InLobby = true,
         AdminLogsEnabled = true
