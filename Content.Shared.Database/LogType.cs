@@ -485,7 +485,12 @@ public enum LogType
     Connection = 104,
 
     /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 105,
+
+    /// <summary>
     /// A player changed the mode on atmos device.
     /// </summary>
-    AtmosModeChanged = 105,
+    AtmosModeChanged = 106,
 }

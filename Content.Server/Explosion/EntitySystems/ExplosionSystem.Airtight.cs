@@ -38,7 +38,7 @@ public sealed partial class ExplosionSystem
         _explosionTypes.Clear();
 
         int index = 0;
-        foreach (var prototype in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<ExplosionPrototype>())
         {
             _explosionTypes.Add(prototype.ID, index);
             index++;
@@ -54,12 +54,24 @@ public sealed partial class ExplosionSystem
         ReloadMap();
     }
 
+    /// <summary>
+    /// Update the map of explosion blockers.
+    /// </summary>
+    /// <param name="gridId">The entity of the grid.</param>
+    /// <param name="tile">Coordinates of the tile.</param>
+    /// <param name="grid">Grid entity's MapGrid component.</param>
+    /// <seealso cref="UpdateAirtightMap(EntityUid, MapGridComponent, Vector2i)"/>
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null)
     {
         if (Resolve(gridId, ref grid, false))
             UpdateAirtightMap(gridId, grid, tile);
     }
 
+    /// <summary>
+    /// Gets a copy of local tolerance data given its index.
+    /// </summary>
+    /// <param name="idx">A TileData.ToleranceCacheIndex value.</param>
+    /// <seealso cref="TileData.ToleranceCacheIndex"/>
     [Access(typeof(ExplosionGridTileFlood))]
     public ToleranceValues GetToleranceValues(int idx)
     {
@@ -241,7 +253,7 @@ public sealed partial class ExplosionSystem
         {
             // TODO EXPLOSION SYSTEM
             // cache explosion type damage.
-            if (!_prototypeManager.Resolve(id, out var explosionType))
+            if (!ProtoMan.Resolve(id, out var explosionType))
                 continue;
 
             // evaluate the damage that this damage type would do to this entity
@@ -283,7 +295,7 @@ public sealed partial class ExplosionSystem
                 damagePerIntensity += value * Math.Max(0, modifier);
             }
 
-            explosionTolerance[index] = GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
+            explosionTolerance[index] += GetExplosionTolerance(uid, totalDamageTarget, damagePerIntensity, damageThresholds);
         }
     }
 
