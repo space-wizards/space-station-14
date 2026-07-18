@@ -861,3 +861,8 @@ CrateFoodBarSupply: CrateServiceBarSupply
 CrateFoodCooking: CrateServiceCooking
 CrateFoodDinnerware: CrateServiceDinnerware
 CrateFoodGetMore: CrateServiceGetMore
+CrateEngineeringGyroscope: CrateSpaceGyroscope
+CrateEngineeringJetpack: CrateSpaceMiniJetpack
+CrateEngineeringMiniJetpack: CrateSpaceMiniJetpack
+CrateEngineeringShuttle: CrateSpaceShuttlePower
+CrateEngineeringThruster: CrateSpaceThruster

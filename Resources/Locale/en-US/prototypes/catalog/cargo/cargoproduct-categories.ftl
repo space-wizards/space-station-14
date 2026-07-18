@@ -15,4 +15,4 @@ cargoproduct-category-name-medical = Medical
 cargoproduct-category-name-science = Science
 cargoproduct-category-name-security = Security
 cargoproduct-category-name-service = Service
-cargoproduct-category-name-shuttle = Shuttle
+cargoproduct-category-name-space = Space
