@@ -7,7 +7,7 @@ public sealed partial class AnimusConditionIsWeightless : AnimusConditionBase
 {
     private GravitySystem _gravitySystem = null!;
 
-    public override void Initialize(EntityManager entityManager)
+    public override void Initialize(IEntityManager entityManager)
     {
         base.Initialize(entityManager);
 

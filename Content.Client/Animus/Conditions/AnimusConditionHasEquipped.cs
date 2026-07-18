@@ -6,16 +6,22 @@ namespace Content.Client.Animus.Conditions;
 
 public sealed partial class AnimusConditionHasEquipped : AnimusConditionBase
 {
+    /// <summary>
+    /// Slot to check i.e.: shoes
+    /// </summary>
     [DataField]
     public string Slot;
 
+    /// <summary>
+    /// Prototype ID of the item required in the specified slot.
+    /// </summary>
     [DataField]
     public ProtoId<IPrototype> Prototype;
 
     private InventorySystem _inventorySystem = null!;
-    private EntityManager _entities = null!;
+    private IEntityManager _entities = null!;
 
-    public override void Initialize(EntityManager entityManager)
+    public override void Initialize(IEntityManager entityManager)
     {
         base.Initialize(entityManager);
         _entities = entityManager;

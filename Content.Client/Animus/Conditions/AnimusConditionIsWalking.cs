@@ -12,14 +12,14 @@ namespace Content.Client.Animus.Conditions;
 
 public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
 {
-    private enum MovementType
+    public enum MovementType
     {
         Walking,
         Sprinting,
         Both,
     }
 
-    private EntityManager _entities = null!;
+    private IEntityManager _entities = null!;
     private GravitySystem _gravitySystem = null!;
     private ActionBlockerSystem _actionBlockerSystem = null!;
     private BuckleSystem _buckleSystem = null!;
@@ -39,9 +39,9 @@ public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
     /// Requirement movement type
     /// </summary>
     [DataField]
-    private MovementType MovType = MovementType.Both;
+    public MovementType MoveType = MovementType.Both;
 
-    public override void Initialize(EntityManager entityManager)
+    public override void Initialize(IEntityManager entityManager)
     {
         base.Initialize(entityManager);
         _entities = entityManager;
@@ -56,22 +56,18 @@ public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
     {
         if (_inputMoverComponent == null)
         {
-            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var physics))
-            {
+            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var inputMover))
                 return false;
-            }
 
-            _inputMoverComponent = physics;
+            _inputMoverComponent = inputMover;
         }
 
         if (_physicsComponent == null)
         {
-            if (!_entities.TryGetComponent<PhysicsComponent>(entity, out var input))
-            {
+            if (!_entities.TryGetComponent<PhysicsComponent>(entity, out var physics))
                 return false;
-            }
 
-            _physicsComponent = input;
+            _physicsComponent = physics;
         }
 
         if (!IgnoreMovementInput)
@@ -81,11 +77,11 @@ public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
 
             var velocity = _sharedMoverController.GetVelocityInput(_inputMoverComponent);
 
-            if (MovType == MovementType.Both && velocity.Walking == Vector2.Zero && velocity.Sprinting == Vector2.Zero)
+            if (MoveType == MovementType.Both && velocity.Walking == Vector2.Zero && velocity.Sprinting == Vector2.Zero)
                 return false;
-            if (MovType == MovementType.Walking && velocity.Walking == Vector2.Zero)
+            if (MoveType == MovementType.Walking && velocity.Walking == Vector2.Zero)
                 return false;
-            if (MovType == MovementType.Sprinting && velocity.Sprinting == Vector2.Zero)
+            if (MoveType == MovementType.Sprinting && velocity.Sprinting == Vector2.Zero)
                 return false;
         }
 

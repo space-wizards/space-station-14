@@ -1914,6 +1914,9 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: Animus
+    stateMachines:
+    - FrequentHopping
   - type: GhostRole
     makeSentient: true
     allowSpeech: true

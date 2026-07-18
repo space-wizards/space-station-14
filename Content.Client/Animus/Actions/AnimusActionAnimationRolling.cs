@@ -14,10 +14,10 @@ public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimation
     [DataField]
     public float RollingPeriod = 0.75f;
 
-    private EntityManager _entities = null!;
+    private IEntityManager _entities = null!;
     private InputMoverComponent? _inputMoverComponent;
 
-    public override void Initialize(EntityManager entityManager)
+    public override void Initialize(IEntityManager entityManager)
     {
         _entities = entityManager;
     }
@@ -26,14 +26,11 @@ public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimation
     {
         if (_inputMoverComponent == null)
         {
-            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var input))
-            {
+            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var inputMover))
                 return null;
-            }
 
-            _inputMoverComponent = input;
+            _inputMoverComponent = inputMover;
         }
-
 
         var direction = _inputMoverComponent.WishDir.GetDir();
         var directionBool =

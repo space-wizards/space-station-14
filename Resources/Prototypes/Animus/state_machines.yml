@@ -1,6 +1,4 @@
-﻿# This file exists for demonstration purposes only.
-
-- type: animus
+﻿- type: animus
   # Checks for clown shoes and starts a waddling animation when the entity is walking.
   # Should the entity lose gravity, it starts spinning uncontrollably.
   id: AbsoluteClown
@@ -23,7 +21,7 @@
 
 - type: animus
   # This animus causes any equipped entity to make a little jump/hop every 0.5 to 2.0 seconds.
-  id: HoppingAnimation
+  id: FrequentHopping
   states:
   - !type:AnimusStateAnimation
     conditions:

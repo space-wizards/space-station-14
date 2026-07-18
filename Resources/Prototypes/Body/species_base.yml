@@ -87,6 +87,9 @@
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
+  - type: Animus
+    stateMachines:
+    - AbsoluteClown
   - type: AnimationPlayer
   - type: Buckle
   - type: CombatMode

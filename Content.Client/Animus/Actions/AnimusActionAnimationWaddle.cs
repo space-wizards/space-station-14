@@ -40,10 +40,10 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
     /// </summary>
     private bool _lastStep;
 
-    private EntityManager _entities = null!;
+    private IEntityManager _entities = null!;
     private InputMoverComponent? _inputMoverComponent;
 
-    public override void Initialize(EntityManager entityManager)
+    public override void Initialize(IEntityManager entityManager)
     {
         _entities = entityManager;
     }
@@ -62,12 +62,10 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
     {
         if (_inputMoverComponent == null)
         {
-            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var physics))
-            {
+            if (!_entities.TryGetComponent<InputMoverComponent>(entity, out var inputMover))
                 return null;
-            }
 
-            _inputMoverComponent = physics;
+            _inputMoverComponent = inputMover;
         }
 
         appearanceSystem.TryGetData<RotationState>(entity, RotationVisuals.RotationState, out var rotationState);
