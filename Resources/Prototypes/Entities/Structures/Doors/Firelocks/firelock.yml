@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseFirelock
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, StructureHealthDoor ]
+  id: BaseFirelock
   name: firelock
   description: Apply crowbar.
   components:
@@ -21,7 +21,7 @@
   - type: DeviceNetworkRequiresPower
   - type: InteractionOutline
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
+    damageModifierSet: SteelMod
   - type: Injurable
     damageContainer: StructuralInorganic
   - type: RCDDeconstructable
@@ -35,10 +35,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 250
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      # TODO this should go to the broken node first
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     snapCardinals: true

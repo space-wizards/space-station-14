@@ -1,6 +1,6 @@
 ﻿- type: entity
+  parent: [ BaseStructure, StructureHealthDoor ]
   id: Airlock
-  parent: BaseStructure
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
@@ -142,7 +142,7 @@
     resistance: 3
   - type: Occluder
   - type: Damageable
-    damageModifierSet: StrongMetallic
+    damageModifierSet: SteelMod
   - type: Injurable
     damageContainer: StructuralInorganic
   - type: RCDDeconstructable
@@ -153,10 +153,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 250
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       # TODO this should go to the broken node first
       - !type:PlaySoundBehavior
         sound:

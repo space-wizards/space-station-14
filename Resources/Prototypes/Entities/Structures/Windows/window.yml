@@ -67,7 +67,7 @@
   - type: BlockWeather
 
 - type: entity
-  parent: BaseWindowStructure
+  parent: [ BaseWindowStructure, StructureHealthBarrier ]
   id: Window
   components:
   - type: Sprite
@@ -76,14 +76,12 @@
     sprite: Structures/Windows/window.rsi
     state: full
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierNormal
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -93,8 +91,6 @@
           ShardGlass:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: Window
@@ -190,7 +186,7 @@
     node: windowDirectional
 
 - type: entity
-  parent: BaseWindowStructureDirectional
+  parent: [ BaseWindowStructureDirectional, StructureHealthBarrierWeak ]
   id: WindowDirectional
   components:
   - type: Sprite
@@ -200,14 +196,12 @@
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Damageable
-    damageModifierSet: Glass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -217,8 +211,6 @@
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   abstract: true

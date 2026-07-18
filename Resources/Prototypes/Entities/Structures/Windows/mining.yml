@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseWindowStructure, BaseRCDResistant]
+  parent: [BaseWindowStructure, BaseRCDResistant, StructureHealthBarrierStrong]
   id: MiningWindow
   name: mining window
   components:
@@ -12,14 +12,12 @@
     fuelCost: 15
     doAfterDelay: 3
   - type: Damageable
-    damageModifierSet: RGlass
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 130
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -32,8 +30,6 @@
           PartRodMetal:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: IconSmooth
     base: mwindow
   - type: DamageVisuals
