@@ -59,18 +59,15 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
         SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(OnDamageChanged);
     }
 
-        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-        [Dependency] public readonly AudioSystem AudioSystem = default!;
-        [Dependency] public readonly GibbingSystem Gibbing = default!;
-        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
-        [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
-        [Dependency] public readonly StackSystem StackSystem = default!;
-        [Dependency] public readonly TriggerSystem TriggerSystem = default!;
-        [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
-        [Dependency] public readonly PuddleSystem PuddleSystem = default!;
-        [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
-        [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IAdminLogManager _adminLogger = default!;
+    /// <summary>
+    /// Map Initialization function for <see cref="DestructibleComponent"/>, adding automatic overkill threshold.
+    /// </summary>
+    /// <param name="entity">The uid, component tuple.</param>
+    /// <param name="args">The event arguments.</param>
+    private void OnMapInit(Entity<DestructibleComponent> entity, ref MapInitEvent args)
+    {
+        AddOverkillThreshold(entity);
+    }
 
     /// <summary>
     /// Check if any thresholds were reached. if they were, execute them.
@@ -95,30 +92,7 @@ public sealed partial class DestructibleSystem : SharedDestructibleSystem
                         logImpact = behavior.Impact;
                     if (behavior is DoActsBehavior doActsBehavior)
                     {
-                        if (logImpact <= b.Impact)
-                            logImpact = b.Impact;
-                        if (b is DoActsBehavior doActsBehavior)
-                        {
-                            return $"{b.GetType().Name}:{doActsBehavior.Acts.ToString()}";
-                        }
-                        return b.GetType().Name;
-                    }));
-
-                    // If it doesn't have a humanoid component, it's probably not particularly notable?
-                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidProfileComponent>(uid))
-                        logImpact = LogImpact.Medium;
-
-                    if (args.Origin != null)
-                    {
-                        _adminLogger.Add(LogType.Damaged,
-                            logImpact,
-                            $"{args.Origin.Value:actor} caused {uid:subject} to trigger [{triggeredBehaviors}]");
-                    }
-                    else
-                    {
-                        _adminLogger.Add(LogType.Damaged,
-                            logImpact,
-                            $"Unknown damage source caused {uid:subject} to trigger [{triggeredBehaviors}]");
+                        return $"{behavior.GetType().Name}:{doActsBehavior.Acts.ToString()}";
                     }
                     return behavior.GetType().Name;
                 }));

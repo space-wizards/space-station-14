@@ -208,7 +208,7 @@ public sealed partial class ChangelingClonerSystem : EntitySystem
         if (!HasComp<HumanoidProfileComponent>(target))
             return; // cloning only works for humanoids at the moment
 
-        if (!_prototype.Resolve(ent.Comp.Settings, out var settings))
+        if (!ProtoMan.Resolve(ent.Comp.Settings, out var settings))
             return;
 
         _adminLogger.Add(LogType.Identity,

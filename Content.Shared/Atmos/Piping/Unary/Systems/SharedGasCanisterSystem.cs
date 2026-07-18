@@ -119,7 +119,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
                 containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
         }
 
-        _adminLogger.Add(LogType.CanisterValve, impact, $"{args.Actor:player} set the valve on {uid:canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        _adminLogger.Add(LogType.CanisterValve, impact, $"{args.Actor:player} set the valve on {entity:canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
         ToggleValve(entity, args.Valve, args.Actor);
         DirtyUI(entity);

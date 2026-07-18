@@ -33,6 +33,7 @@ public sealed partial class IdentitySystem : EntitySystem
     [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
     [Dependency] private readonly HumanoidProfileSystem _humanoidProfile = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";

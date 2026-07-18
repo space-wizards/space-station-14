@@ -34,6 +34,8 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 

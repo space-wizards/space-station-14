@@ -514,4 +514,9 @@ public enum LogType
     /// the post-round countdown and the window where shuttle grief typically occurs.
     /// </summary>
     ShuttleArrivedAtCentComm = 110,
+
+    /// <summary>
+    /// Silicon law changes.
+    /// </summary>
+    SiliconLaw = 111,
 }

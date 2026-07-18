@@ -80,49 +80,6 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
           // but pressing the number does.
     }
 
-    /// <summary>
-    /// Transform the changeling into another identity.
-    /// This can be any cloneable humanoid and doesn't have to be stored in the ChangelingIdentiyComponent,
-    /// so make sure to validate the target before.
-    /// </summary>
-    public void TransformInto(Entity<ChangelingTransformComponent?> ent, EntityUid targetIdentity)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        var selfMessage = Loc.GetString("changeling-transform-attempt-self", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        var othersMessage = Loc.GetString("changeling-transform-attempt-others", ("user", Identity.Entity(ent.Owner, EntityManager)));
-        _popupSystem.PopupPredicted(
-            selfMessage,
-            othersMessage,
-            ent,
-            ent,
-            PopupType.MediumCaution);
-
-        if (_net.IsServer)
-            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent)?.Entity;
-
-        if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player}) ");
-        else
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ent.Owner:player} begun an attempt to transform into \"{Name(targetIdentity)}\"");
-
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(
-            EntityManager,
-            ent,
-            ent.Comp.TransformWindup,
-            new ChangelingTransformDoAfterEvent(),
-            ent,
-            target: targetIdentity)
-        {
-            BreakOnMove = true,
-            BreakOnWeightlessMove = true,
-            DuplicateCondition = DuplicateConditions.None,
-            RequireCanInteract = false,
-            DistanceThreshold = null,
-        });
-    }
-
     private void OnTransformSelected(Entity<ChangelingTransformComponent> ent,
         ref ChangelingTransformIdentitySelectMessage args)
     {
@@ -233,11 +190,12 @@ public sealed partial class ChangelingTransformSystem : EntitySystem
             _cloning.CopyStatusEffects(targetIdentity, args.User, settings.StatusEffectWhitelist, settings.StatusEffectBlacklist);
 
         if (TryComp<ChangelingStoredIdentityComponent>(targetIdentity, out var storedIdentity) && storedIdentity.OriginalSession != null)
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\" ({storedIdentity.OriginalSession:player})");
         else
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ent.Owner:player} successfully transformed into \"{Name(targetIdentity)}\"");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(ent.Owner):player} successfully transformed into \"{Name(targetIdentity)}\"");
 
         _metaData.SetEntityName(ent, Name(targetIdentity), raiseEvents: false); // Don't raise events because we don't want to rename the ID card.
+        _metaData.SetEntityDescription(ent, Description(targetIdentity));
         _identity.QueueIdentityUpdate(ent); // We have to manually refresh the identity because we did not raise events.
 
         Dirty(ent);

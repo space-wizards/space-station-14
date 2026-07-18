@@ -18,6 +18,8 @@
     - PreventAccessLogging
     - AllowBiomeLoading
     - NotGhostnadoWarpable
+    - AllowPortalTraversal
+    - PreventPortalCollision
   - type: Input
     context: "aghost"
   - type: Ghost

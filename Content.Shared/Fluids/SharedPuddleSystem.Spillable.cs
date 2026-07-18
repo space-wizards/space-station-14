@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -22,7 +23,7 @@ namespace Content.Shared.Fluids;
 public abstract partial class SharedPuddleSystem
 {
     private static readonly FixedPoint2 MeleeHitTransferProportion = 0.25;
-    [Dependency] private InjectorSystem _injectorSystem = default!;
+    [Dependency] private readonly InjectorSystem _injectorSystem = default!;
 
     protected virtual void InitializeSpillable()
     {
