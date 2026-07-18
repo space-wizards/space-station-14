@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
@@ -264,9 +265,14 @@ public sealed partial class DockingSystem : SharedDockingSystem
             var followerUid = gridAIsLighter ? gridA : gridB;
             var followerBody = gridAIsLighter ? bodyA : bodyB;
             var referenceBody = gridAIsLighter ? bodyB : bodyA;
+            var referenceUid = gridAIsLighter ? gridB : gridA;
+
+            var followerCenterWorld = Vector2.Transform(followerBody.LocalCenter, _transform.GetWorldMatrix(followerUid));
+            var followerCenterReferenceGrid =
+                Vector2.Transform(followerCenterWorld, _transform.GetInvWorldMatrix(referenceUid));
 
             // Prevent shuttle annihilating cargo (any leftover relative momentum becomes a swing around the dock joint)
-            _physics.SetLinearVelocity(followerUid, referenceBody.LinearVelocity, body: followerBody);
+            _physics.SetLinearVelocity(followerUid, _physics.GetLinearVelocity(referenceUid, followerCenterReferenceGrid, component: referenceBody), body: followerBody);
             _physics.SetAngularVelocity(followerUid, referenceBody.AngularVelocity, body: followerBody);
 
             SharedJointSystem.LinearStiffness(
