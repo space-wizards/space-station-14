@@ -2,11 +2,11 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, main, develop, staging, stable ]
+    branches: [ master, main, develop, dev, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master, main, develop, staging, stable ]
+    branches: [ master, main, develop, dev, staging, stable ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}
