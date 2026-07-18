@@ -47,7 +47,7 @@
 
 #Asteroid rock
 - type: entity
-  parent: BaseAsteroidRock
+  parent: [ BaseAsteroidRock, StructureHealthBarrierWeak ]
   id: AsteroidRock
   name: asteroid rock
   description: A rocky asteroid.
@@ -56,10 +56,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 120
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/break_stone.ogg
