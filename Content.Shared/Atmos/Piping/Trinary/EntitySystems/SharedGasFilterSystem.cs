@@ -9,45 +9,30 @@ public abstract partial class SharedGasFilterSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
-        SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
-        SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
-    }
-
-    protected virtual void UpdateUi(Entity<GasFilterComponent> ent)
-    {
-    }
-
-    protected void UpdateAppearance(Entity<GasFilterComponent> ent)
-    {
-        _appearance.SetData(ent, FilterVisuals.Enabled, ent.Comp.Enabled);
-    }
-
+    [SubscribeLocalEvent]
     private void OnToggleStatusMessage(Entity<GasFilterComponent> ent, ref GasFilterToggleStatusMessage args)
     {
         ent.Comp.Enabled = args.Enabled;
         _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent.Owner):device} to {args.Enabled}");
 
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(GasFilterComponent.Enabled));
         UpdateUi(ent);
         UpdateAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnTransferRateChangeMessage(Entity<GasFilterComponent> ent, ref GasFilterChangeRateMessage args)
     {
         ent.Comp.TransferRate = Math.Clamp(args.Rate, 0f, ent.Comp.MaxTransferRate);
         _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(ent.Owner):device} to {args.Rate}");
 
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(GasFilterComponent.TransferRate));
         UpdateUi(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnSelectGasMessage(Entity<GasFilterComponent> ent, ref GasFilterSelectGasMessage args)
     {
         if (args.Gas.HasValue)
@@ -69,7 +54,16 @@ public abstract partial class SharedGasFilterSystem : EntitySystem
                 $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(ent.Owner):device} to none");
         }
 
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(GasFilterComponent.FilteredGas));
         UpdateUi(ent);
+    }
+
+    protected void UpdateAppearance(Entity<GasFilterComponent> ent)
+    {
+        _appearance.SetData(ent, FilterVisuals.Enabled, ent.Comp.Enabled);
+    }
+
+    protected virtual void UpdateUi(Entity<GasFilterComponent> ent)
+    {
     }
 }

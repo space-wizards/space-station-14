@@ -9,16 +9,42 @@ public abstract partial class SharedGasMixerSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnToggleStatusMessage(Entity<GasMixerComponent> ent, ref GasMixerToggleStatusMessage args)
     {
-        base.Initialize();
+        ent.Comp.Enabled = args.Enabled;
+        _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent.Owner):device} to {args.Enabled}");
 
-        SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
-        SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
-        SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
+        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.Enabled));
+        UpdateUi(ent);
+        UpdateAppearance(ent);
     }
-    protected virtual void UpdateUi(Entity<GasMixerComponent> ent)
+
+    [SubscribeLocalEvent]
+    private void OnOutputPressureChangeMessage(Entity<GasMixerComponent> ent, ref GasMixerChangeOutputPressureMessage args)
     {
+        ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxTargetPressure);
+        _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent.Owner):device} to {ent.Comp.TargetPressure}kPa");
+
+        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.TargetPressure));
+        UpdateUi(ent);
+    }
+
+    [SubscribeLocalEvent]
+    private void OnChangeNodePercentageMessage(Entity<GasMixerComponent> ent,
+        ref GasMixerChangeNodePercentageMessage args)
+    {
+        var nodeOne = Math.Clamp(args.NodeOne, 0f, 100.0f) / 100.0f;
+        ent.Comp.InletOneConcentration = nodeOne;
+        ent.Comp.InletTwoConcentration = 1.0f - ent.Comp.InletOneConcentration;
+        _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(ent.Owner):device} to {ent.Comp.InletOneConcentration}:{ent.Comp.InletTwoConcentration}");
+
+        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.InletOneConcentration));
+        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.InletTwoConcentration));
+        UpdateUi(ent);
     }
 
     protected void UpdateAppearance(Entity<GasMixerComponent> ent)
@@ -26,34 +52,8 @@ public abstract partial class SharedGasMixerSystem : EntitySystem
         _appearance.SetData(ent, FilterVisuals.Enabled, ent.Comp.Enabled);
     }
 
-    private void OnToggleStatusMessage(Entity<GasMixerComponent> ent, ref GasMixerToggleStatusMessage args)
+    protected virtual void UpdateUi(Entity<GasMixerComponent> ent)
     {
-        ent.Comp.Enabled = args.Enabled;
-        _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(ent.Owner):device} to {args.Enabled}");
-        Dirty(ent);
-        UpdateUi(ent);
-        UpdateAppearance(ent);
     }
 
-    private void OnOutputPressureChangeMessage(Entity<GasMixerComponent> ent, ref GasMixerChangeOutputPressureMessage args)
-    {
-        ent.Comp.TargetPressure = Math.Clamp(args.Pressure, 0f, ent.Comp.MaxTargetPressure);
-        _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(ent.Owner):device} to {ent.Comp.TargetPressure}kPa");
-        Dirty(ent);
-        UpdateUi(ent);
-    }
-
-    private void OnChangeNodePercentageMessage(Entity<GasMixerComponent> ent,
-        ref GasMixerChangeNodePercentageMessage args)
-    {
-        float nodeOne = Math.Clamp(args.NodeOne, 0f, 100.0f) / 100.0f;
-        ent.Comp.InletOneConcentration = nodeOne;
-        ent.Comp.InletTwoConcentration = 1.0f - ent.Comp.InletOneConcentration;
-        _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(ent.Owner):device} to {ent.Comp.InletOneConcentration}:{ent.Comp.InletTwoConcentration}");
-        Dirty(ent);
-        UpdateUi(ent);
-    }
 }
