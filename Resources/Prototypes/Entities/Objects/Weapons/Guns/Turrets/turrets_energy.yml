@@ -67,10 +67,6 @@
         base:
           True: { state: destroyed }
           False: { state: base }
-      enum.WiresVisuals.MaintenancePanelState:
-        enum.WiresVisualLayers.MaintenancePanel:
-          True: { visible: false }
-          False: { visible: true }
   - type: HTN
     enabled: false
   - type: StationAiWhitelist
