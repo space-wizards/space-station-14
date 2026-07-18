@@ -115,7 +115,7 @@
     thresholds:
     - trigger: &DamageWallWeak
         !type:DamageTrigger
-        damage: 200
+        damage: 150
       behaviors: &SpawnGirder
       - !type:SpawnEntitiesBehavior
         offset: 0
@@ -481,7 +481,7 @@
     thresholds:
     - trigger: &DamageWallStrong
         !type:DamageTrigger
-        damage: 400
+        damage: 350
       behaviors: *SpawnGirder
 
 - type: entity
@@ -521,7 +521,7 @@
       behaviors: *SpawnGirder
 
 - type: entity
-  parent: [ BaseWall, StructureHealthWall ]
+  parent: [ BaseWall, StructureHealthWallStrong ]
   id: WallReinforced
   name: reinforced wall
   components:
@@ -813,7 +813,7 @@
     thresholds:
     - trigger: &DamageWallNormal
         !type:DamageTrigger
-        damage: 300
+        damage: 250
       behaviors: *ChangeNodeGirder
   - type: IconSmooth
     key: walls
@@ -1000,7 +1000,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 130
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:

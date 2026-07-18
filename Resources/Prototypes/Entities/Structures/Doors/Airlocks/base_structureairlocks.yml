@@ -143,8 +143,6 @@
   - type: Occluder
   - type: Damageable
     damageModifierSet: SteelMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 8
@@ -153,7 +151,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250
+        damage: 200
       behaviors:
       # TODO this should go to the broken node first
       - !type:PlaySoundBehavior

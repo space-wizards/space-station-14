@@ -1,6 +1,6 @@
 ﻿- type: entity
+  parent: [ BaseStructureDynamic, StructureHealthDoorWeak ]
   id: FirelockFrame
-  parent: BaseStructureDynamic
   name: firelock frame
   description: That is a firelock frame.
   components:
@@ -22,22 +22,23 @@
     graph: Firelock
     node: frame1
   - type: InteractionOutline
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 6
     fx: EffectRCDDeconstruct6
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

@@ -44,10 +44,6 @@
       path: /Audio/Effects/stonedoor_openclose.ogg
   - type: Appearance
   - type: Airtight
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 6
@@ -65,32 +61,32 @@
 ### Metal doors ###
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
-  id: MetalDoor
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
+  id: MetalDoor # steel
   name: metal door
   components:
   - type: Construction
     graph: DoorGraph
     node: metalDoor
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger150
+    - trigger: &DamageDoorWeak
         !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
+      - &SoundMetalBreak !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetSteel1:
+          SheetSteel1: &BaseDoorSpawn
             min: 3
             max: 5
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: PlasmaDoor
   name: plasma door
   components:
@@ -101,21 +97,15 @@
     node: plasmaDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
+    - trigger: *DamageDoorWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPlasma1:
-            min: 3
-            max: 5
+          SheetPlasma1: *BaseDoorSpawn
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: GoldDoor
   name: gold door
   components:
@@ -126,21 +116,15 @@
     node: goldDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
+    - trigger: *DamageDoorWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          IngotGold1:
-            min: 3
-            max: 5
+          IngotGold1: *BaseDoorSpawn
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthDoorWeak ]
   id: SilverDoor
   name: silver door
   components:
@@ -151,19 +135,14 @@
     node: silverDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
+    - trigger: *DamageDoorWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+      - *SoundMetalBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          IngotSilver1:
-            min: 3
-            max: 5
+          IngotSilver1: *BaseDoorSpawn
 
+# soon removed :o(
 - type: entity
   parent: BaseMaterialDoorNavMap
   id: BananiumDoor
@@ -182,7 +161,7 @@
     node: bananiumDoor
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger150
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -198,7 +177,7 @@
 ### Other doors ###
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrierStrong ]
   id: WoodDoor
   name: wooden door
   components:
@@ -218,21 +197,17 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 120
       behaviors:
-      - !type:PlaySoundBehavior
+      - &SoundWoodDestroy !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWoodPlank1:
-            min: 3
-            max: 5
+          MaterialWoodPlank1: *BaseDoorSpawn
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrierWeak ]
   id: PaperDoor
   name: paper door
   components:
@@ -250,23 +225,19 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageBarrierWeak
         !type:DamageTrigger
-        damage: 50
+        damage: 30
       behaviors:
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
-          SheetPaper1:
-            min: 3
-            max: 5
+          SheetPaper1: *BaseDoorSpawn
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrier ]
   id: WebDoor
   name: web door
   description: A door, leading to the lands of the spiders... or a spaced room.
@@ -287,13 +258,9 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
+      - *SoundWoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWebSilk1:
@@ -301,7 +268,7 @@
             max: 2
 
 - type: entity
-  parent: BaseMaterialDoorNavMap
+  parent: [ BaseMaterialDoorNavMap, StructureHealthBarrierWeak ]
   id: CardDoor
   name: cardboard door
   components:

@@ -21,7 +21,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 130
+        damage: 120
       behaviors:
       - !type:PlaySoundBehavior
         sound:

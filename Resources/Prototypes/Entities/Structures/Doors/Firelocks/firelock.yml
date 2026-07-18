@@ -20,10 +20,6 @@
     receiveFrequencyId: AtmosMonitor
   - type: DeviceNetworkRequiresPower
   - type: InteractionOutline
-  - type: Damageable
-    damageModifierSet: SteelMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 4
     delay: 6
@@ -31,11 +27,13 @@
   - type: Tag
     tags:
     - ForceFixRotations # Allow fixrotations to target these
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 250
+        damage: 200
       behaviors:
       # TODO this should go to the broken node first
       - !type:PlaySoundBehavior
