@@ -173,7 +173,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// Used to track <see cref="UndamagedSwings"/>.
     /// <remarks>Only dealt with clientside; therefore not networked.</remarks>
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? LastUndamagedHitEntity;
 
     /// <summary>
@@ -189,7 +189,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <seealso cref="UndamagedAlertThreshold"/>
     /// <remarks>Only dealt with clientside; therefore not networked.</remarks>
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public int UndamagedSwings = 0;
 }
 

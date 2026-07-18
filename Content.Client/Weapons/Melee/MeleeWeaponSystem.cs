@@ -1,11 +1,8 @@
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.Effects;
-using Content.Shared.Hands.Components;
-using Content.Shared.Mobs.Components;
-using Content.Shared.StatusEffect;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -251,11 +248,11 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             if (ent.Owner == user)
             {
-                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", target)), target, user);
+                PopupSystem.PopupClient(Loc.GetString("melee-self-weapon-dealt-no-damage", ("target", Identity.Entity(target, EntityManager, user))), target, user);
             }
             else
             {
-                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", target)), target, user);
+                PopupSystem.PopupClient(Loc.GetString("melee-weapon-dealt-no-damage", ("weapon", ent), ("target", Identity.Entity(target, EntityManager, user))), target, user);
             }
 
             ent.Comp.UndamagedSwings = 0;
