@@ -25,7 +25,6 @@ namespace Content.Server.Station.Systems;
 [PublicAPI]
 public sealed partial class StationSystem : SharedStationSystem
 {
-    [Dependency] private ILogManager _logManager = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -43,7 +42,7 @@ public sealed partial class StationSystem : SharedStationSystem
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("station");
+        _sawmill = LogManager.GetSawmill("station");
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
@@ -196,7 +195,7 @@ public sealed partial class StationSystem : SharedStationSystem
 
         if (TryComp<StationDataComponent>(station, out var data))
         {
-            return GetInStation(data);
+            return GetInStation(data, range);
         }
 
         return Filter.Empty();
@@ -233,11 +232,11 @@ public sealed partial class StationSystem : SharedStationSystem
             }
 
             var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
-            var localBounds = grid.LocalAABB.Enlarged(range);
+            var worldBounds = grid.LocalAABB.Enlarged(range).Translated(worldPos);
 
             // Create a rotated box using the grid's transform
             var rotatedBounds = new Box2Rotated(
-                localBounds,
+                worldBounds,
                 worldRot,
                 worldPos);
 
