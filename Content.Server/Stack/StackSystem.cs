@@ -1,3 +1,4 @@
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -13,6 +14,11 @@ namespace Content.Server.Stack
     [UsedImplicitly]
     public sealed partial class StackSystem : SharedStackSystem
     {
+        [Dependency] private SharedHandsSystem _hands = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+
+        [Dependency] private EntityQuery<StackComponent> _stackQuery;
+
         #region Spawning
 
         /// <summary>
@@ -26,7 +32,7 @@ namespace Content.Server.Stack
         [PublicAPI]
         public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
         {
-            if (!Resolve(ent.Owner, ref ent.Comp))
+            if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
                 return null;
 
             // Try to remove the amount of things we want to split from the original stack...
@@ -40,7 +46,7 @@ namespace Content.Server.Stack
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
 
             // There should always be a StackComponent
-            var stackComp = Comp<StackComponent>(newEntity);
+            var stackComp = _stackQuery.Comp(newEntity);
 
             SetCount((newEntity, stackComp), amount);
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
@@ -288,16 +294,16 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
+                _popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
                 return;
             }
 
             if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
                 return;
 
-            Hands.PickupOrDrop(user.Owner, split);
+            _hands.PickupOrDrop(user.Owner, split);
 
-            Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
+            _popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
         }
         #endregion
     }

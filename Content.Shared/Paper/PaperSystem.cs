@@ -125,8 +125,18 @@ public sealed partial class PaperSystem : EntitySystem
     {
         if (IsWritingTool(args.Used))
         {
+            if (entity.Comp.EditingDisabled)
+            {
+                var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
+                _popupSystem.PopupEntity(paperEditingDisabledMessage, entity, args.User);
+
+                args.Handled = true;
+                return;
+            }
+
             if (IsEditable(entity, args.Used))
             {
+
                 var ev = new PaperWriteAttemptEvent(entity.Owner);
                 RaiseLocalEvent(args.User, ref ev);
                 if (ev.Cancelled)
@@ -134,7 +144,7 @@ public sealed partial class PaperSystem : EntitySystem
                     if (ev.FailReason is not null)
                     {
                         var fileWriteMessage = Loc.GetString(ev.FailReason);
-                        _popupSystem.PopupClient(fileWriteMessage, entity.Owner, args.User);
+                        _popupSystem.PopupEntity(fileWriteMessage, entity.Owner, args.User);
                     }
 
                     args.Handled = true;
@@ -172,12 +182,10 @@ public sealed partial class PaperSystem : EntitySystem
                     ("user", args.User),
                     ("target", args.Target),
                     ("stamp", args.Used));
-
-            _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
             var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
                     ("target", args.Target),
                     ("stamp", args.Used));
-            _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
+            _popupSystem.PopupEntity(stampPaperSelfMessage, stampPaperOtherMessage, args.User, args.User);
 
             _audio.PlayPredicted(stampComp.Sound, entity, args.User);
 
