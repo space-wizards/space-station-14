@@ -162,9 +162,9 @@ public sealed partial class ParentToWallSystem : EntitySystem
                     }
                 }
 
-                // Doesn't play well with uninitialized entities, see RT#6739
-                if (!Transform(child).Anchored)
-                    _transform.AnchorEntity(child);
+                var childXform = Transform(child);
+                if (!childXform.Anchored)
+                    childXform.Anchored = true; // FIXME: TransformSystem.AnchorEntity doesn't play well with uninitialized entities, see RT#6739.
             }
         }
     }
