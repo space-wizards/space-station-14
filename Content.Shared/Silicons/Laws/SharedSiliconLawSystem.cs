@@ -54,7 +54,9 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         component.OwnerName = Name(args.UserUid);
 
-        NotifyLawsChanged(uid, component.EmaggedSound);
+        if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
+            return;
+        NotifyLawsChanged((uid, lawcomp), component.EmaggedSound);
         if(_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
@@ -63,7 +65,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         args.Handled = true;
     }
 
-    public virtual void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
+    public virtual void NotifyLawsChanged(Entity<SiliconLawProviderComponent> ent, SoundSpecifier? cue = null)
     {
 
     }
