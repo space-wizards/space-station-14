@@ -847,7 +847,6 @@ WeaponRifleM90GrenadeLauncher: null
 # 2026-07-18
 CrateChemistryVials: null
 CrateSecurityHelmet: null
-CrateSecuritySupplies: null
 CrateEmergencyInternals: CrateEmergencyEVA
 CrateEmergencyInternalsLarge: CrateEmergencyEVA
 CrateNitrogenInternals: CrateEmergencyEVA
