@@ -322,7 +322,6 @@
   parent: BaseSolutionMeteor
   id: MeteorPotato
   name: Space potato
-  suffix: Meteor
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
   suffix: Meteor
   components:
