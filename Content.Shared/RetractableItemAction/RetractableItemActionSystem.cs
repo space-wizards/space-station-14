@@ -13,13 +13,13 @@ namespace Content.Shared.RetractableItemAction;
 /// <summary>
 /// System for handling retractable items, such as armblades.
 /// </summary>
-public sealed class RetractableItemActionSystem : EntitySystem
+public sealed partial class RetractableItemActionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
 
     public override void Initialize()
     {
@@ -58,7 +58,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
             && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid)
             && !_hands.CanDropHeld(args.Performer, activeHand, false))
         {
-            _popups.PopupClient(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
+            _popups.PopupEntity(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
             return;
         }
 

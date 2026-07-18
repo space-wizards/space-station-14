@@ -25,14 +25,13 @@
           - !type:MetabolizerTypeCondition
             type: [ Human ]
             inverted: true
-      - !type:HealthChange
+      - !type:EvenHealthChange
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Bloodsucker ]
         damage:
-          groups:
-            Brute: -3
-            Burn: -1.25
+          Brute: -3
+          Burn: -1.25
     Bloodstream: # Don't inject someone else's blood into yourself! Your own blood won't actually metabolise.
       effects:
       - !type:HealthChange
