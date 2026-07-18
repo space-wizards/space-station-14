@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
@@ -8,9 +7,9 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Database;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -20,7 +19,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class GasFilterSystem : EntitySystem
+    public sealed partial class GasFilterSystem : SharedGasFilterSystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -39,40 +38,12 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
             SubscribeLocalEvent<GasFilterComponent, ActivateInWorldEvent>(OnFilterActivate);
             SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnFilterAnalyzed);
-            SubscribeLocalEvent<GasFilterComponent, ExaminedEvent>(OnExamined);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
         }
 
-        private void OnExamined(Entity<GasFilterComponent> ent, ref ExaminedEvent args)
-        {
-            if (Loc.TryGetString("gas-volume-pump-system-examined",
-                    out var transferRateStr,
-                    ("statusColor", "lightblue"),
-                    ("rate", ent.Comp.TransferRate.ToString("G"))
-                ))
-            {
-                args.PushMarkup(transferRateStr);
-            }
-
-            var gasName = Loc.GetString("comp-gas-filter-ui-filter-gas-none");
-            if (ent.Comp.FilteredGas.HasValue)
-            {
-                var gas = _atmosphereSystem.GetGas((Gas)ent.Comp.FilteredGas);
-                gasName = Loc.GetString(gas.Name);
-            }
-
-            if (Loc.TryGetString("comp-gas-filter-filtered-gas-examine",
-                    out var filteredGasStr,
-                    ("statusColor", "lightblue"),
-                    ("filteredGas", gasName)
-                ))
-            {
-                args.PushMarkup(filteredGasStr);
-            }
-        }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
         {
@@ -193,6 +164,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
             DirtyUI(uid, filter);
+            Dirty(uid, filter);
 
         }
 
@@ -206,6 +178,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                     _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
                         $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {args.Gas.ToString()}");
                     DirtyUI(uid, filter);
+                    Dirty(uid, filter);
                 }
                 else
                 {
@@ -218,6 +191,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
                     $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to none");
                 DirtyUI(uid, filter);
+                Dirty(uid, filter);
             }
         }
 

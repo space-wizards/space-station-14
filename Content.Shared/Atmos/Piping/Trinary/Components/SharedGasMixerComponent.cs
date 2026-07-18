@@ -1,7 +1,36 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Trinary.Components
 {
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    public sealed partial class GasMixerComponent : Component
+    {
+        [DataField]
+        public bool Enabled = true;
+
+        [DataField]
+        public string InletOneName = "inletOne";
+
+        [DataField]
+        public string InletTwoName = "inletTwo";
+
+        [DataField]
+        public string OutletName = "outlet";
+
+        [DataField, AutoNetworkedField]
+        public float TargetPressure = Atmospherics.OneAtmosphere;
+
+        [DataField]
+        public float MaxTargetPressure = Atmospherics.MaxOutputPressure;
+
+        [DataField]
+        public float InletOneConcentration = 0.5f;
+
+        [DataField, AutoNetworkedField]
+        public float InletTwoConcentration = 0.5f;
+    }
+
     [Serializable, NetSerializable]
     public enum GasMixerUiKey
     {

@@ -1,9 +1,35 @@
 ﻿using Content.Shared.Atmos.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Piping.Trinary.Components
 {
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    public sealed partial class GasFilterComponent : Component
+    {
+        [DataField]
+        public bool Enabled = true;
+
+        [DataField("inlet")]
+        public string InletName = "inlet";
+
+        [DataField("filter")]
+        public string FilterName = "filter";
+
+        [DataField("outlet")]
+        public string OutletName = "outlet";
+
+        [DataField, AutoNetworkedField]
+        public float TransferRate = Atmospherics.MaxTransferRate;
+
+        [DataField]
+        public float MaxTransferRate = Atmospherics.MaxTransferRate;
+
+        [DataField, AutoNetworkedField]
+        public Gas? FilteredGas;
+    }
+
     [Serializable, NetSerializable]
     public enum GasFilterUiKey
     {

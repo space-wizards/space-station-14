@@ -8,6 +8,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
+using Content.Shared.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
@@ -20,7 +21,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed partial class GasMixerSystem : EntitySystem
+    public sealed partial class GasMixerSystem : SharedGasMixerSystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -38,34 +39,12 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
             SubscribeLocalEvent<GasMixerComponent, ActivateInWorldEvent>(OnMixerActivate);
             SubscribeLocalEvent<GasMixerComponent, GasAnalyzerScanEvent>(OnMixerAnalyzed);
-            SubscribeLocalEvent<GasMixerComponent, ExaminedEvent>(OnExamined);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerChangeNodePercentageMessage>(OnChangeNodePercentageMessage);
             SubscribeLocalEvent<GasMixerComponent, GasMixerToggleStatusMessage>(OnToggleStatusMessage);
 
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceDisabledEvent>(OnMixerLeaveAtmosphere);
-        }
-
-        private void OnExamined(Entity<GasMixerComponent> ent, ref ExaminedEvent args)
-        {
-            if (Loc.TryGetString("gas-pressure-pump-system-examined",
-                    out var transferPressureStr,
-                    ("statusColor", "lightblue"),
-                    ("pressure", ent.Comp.TargetPressure)
-                ))
-            {
-                args.PushMarkup(transferPressureStr);
-            }
-
-            if (Loc.TryGetString("comp-gas-mixer-ratio-examine",
-                    out var sidePortRatioStr,
-                    ("statusColor", "lightblue"),
-                    ("sidePortRatio", ent.Comp.InletTwoConcentration.ToString("0.##%"))
-                ))
-            {
-                args.PushMarkup(sidePortRatioStr);
-            }
         }
 
         private void OnInit(EntityUid uid, GasMixerComponent mixer, ComponentInit args)
@@ -213,6 +192,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _adminLogger.Add(LogType.AtmosPressureChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the pressure on {ToPrettyString(uid):device} to {args.Pressure}kPa");
             DirtyUI(uid, mixer);
+            Dirty(uid, mixer);
         }
 
         private void OnChangeNodePercentageMessage(EntityUid uid, GasMixerComponent mixer,
@@ -224,6 +204,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(uid):device} to {mixer.InletOneConcentration}:{mixer.InletTwoConcentration}");
             DirtyUI(uid, mixer);
+            Dirty(uid, mixer);
         }
 
         /// <summary>
