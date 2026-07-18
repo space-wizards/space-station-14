@@ -11,8 +11,8 @@ public sealed partial class AnimusTimerRandomTimeRange : AnimusTimerBase
     [DataField]
     public TimeSpan MaxTime;
 
-    public override TimeSpan GetNextPeriod(IRobustRandom random)
+    public override TimeSpan GetNextPeriod()
     {
-        return random.Next(MinTime, MaxTime);
+        return Random.Next(MinTime, MaxTime);
     }
 }

@@ -35,8 +35,8 @@ public sealed partial class AnimusActionAnimationHopping : AnimusActionAnimation
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(new Vector2(), 0),
-                        new AnimationTrackProperty.KeyFrame(new Vector2(0, HopIntensity), AnimationLength/3),
-                        new AnimationTrackProperty.KeyFrame(new Vector2(), AnimationLength/3*2),
+                        new AnimationTrackProperty.KeyFrame(new Vector2(0, HopIntensity), AnimationLength / 3),
+                        new AnimationTrackProperty.KeyFrame(new Vector2(), AnimationLength / 3 * 2),
                     },
                 },
             },

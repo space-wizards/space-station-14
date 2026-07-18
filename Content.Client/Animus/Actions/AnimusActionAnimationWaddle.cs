@@ -1,4 +1,4 @@
-﻿﻿using System.Numerics;
+﻿using System.Numerics;
 using Content.Shared.Movement.Components;
 using Content.Shared.Rotation;
 using Robust.Client.Animations;
@@ -66,6 +66,7 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
             {
                 return null;
             }
+
             _inputMoverComponent = physics;
         }
 
@@ -73,7 +74,7 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
         if (rotationState == RotationState.Horizontal)
             return null;
 
-        if(restarting)
+        if (restarting)
             _lastStep = !_lastStep;
         return PlayWaddleAnimationUsing(CalculateAnimationLength(), CalculateTumbleIntensity());
     }
@@ -93,8 +94,8 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(0), 0),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(tumbleIntensity), len/2),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(0), len/2),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(tumbleIntensity), len / 2),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(0), len / 2),
                     },
                 },
                 new AnimationTrackComponentProperty()
@@ -105,8 +106,8 @@ public sealed partial class AnimusActionAnimationWaddle : AnimusActionAnimationB
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(new Vector2(), 0),
-                        new AnimationTrackProperty.KeyFrame(HopIntensity, len/2),
-                        new AnimationTrackProperty.KeyFrame(new Vector2(), len/2),
+                        new AnimationTrackProperty.KeyFrame(HopIntensity, len / 2),
+                        new AnimationTrackProperty.KeyFrame(new Vector2(), len / 2),
                     },
                 },
             },

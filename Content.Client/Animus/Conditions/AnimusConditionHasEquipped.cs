@@ -14,6 +14,7 @@ public sealed partial class AnimusConditionHasEquipped : AnimusConditionBase
 
     private InventorySystem _inventorySystem = null!;
     private EntityManager _entities = null!;
+
     public override void Initialize(EntityManager entityManager)
     {
         base.Initialize(entityManager);

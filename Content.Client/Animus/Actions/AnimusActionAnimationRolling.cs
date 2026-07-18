@@ -30,12 +30,14 @@ public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimation
             {
                 return null;
             }
+
             _inputMoverComponent = input;
         }
 
 
         var direction = _inputMoverComponent.WishDir.GetDir();
-        var directionBool = direction is Direction.East or Direction.NorthEast or Direction.SouthEast or Direction.North;
+        var directionBool =
+            direction is Direction.East or Direction.NorthEast or Direction.SouthEast or Direction.North;
         var anim = new Animation()
         {
             Length = TimeSpan.FromSeconds(RollingPeriod),
@@ -49,8 +51,9 @@ public sealed partial class AnimusActionAnimationRolling : AnimusActionAnimation
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(directionBool ? 360 : 0), 0f),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(180), RollingPeriod/2),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(directionBool ? 0 : 360), RollingPeriod/2),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(180), RollingPeriod / 2),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(directionBool ? 0 : 360),
+                            RollingPeriod / 2),
                     },
                 },
             },

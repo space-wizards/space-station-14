@@ -60,6 +60,7 @@ public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
             {
                 return false;
             }
+
             _inputMoverComponent = physics;
         }
 
@@ -69,6 +70,7 @@ public sealed partial class AnimusConditionIsWalking : AnimusConditionBase
             {
                 return false;
             }
+
             _physicsComponent = input;
         }
 
