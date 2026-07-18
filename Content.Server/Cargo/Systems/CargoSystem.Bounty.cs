@@ -140,7 +140,7 @@ public sealed partial class CargoSystem
             return;
 
         // make sure this label was actually applied to a crate.
-        if (!_container.TryGetContainingContainer((uid, null, null), out var container) || container.ID != LabelSystem.ContainerName)
+        if (!_container.TryGetContainingContainer((uid, null, null), out var container) || container.ID != SharedLabelSystem.ContainerName)
             return;
 
         if (component.AssociatedStationId is not { } station || !TryComp<StationCargoBountyDatabaseComponent>(station, out var database))
@@ -204,7 +204,7 @@ public sealed partial class CargoSystem
             return false;
 
         // make sure this label was actually applied to a crate.
-        if (!_container.TryGetContainer(uid, LabelSystem.ContainerName, out var container, containerMan))
+        if (!_container.TryGetContainer(uid, SharedLabelSystem.ContainerName, out var container, containerMan))
             return false;
 
         if (container.ContainedEntities.FirstOrNull() is not { } label ||

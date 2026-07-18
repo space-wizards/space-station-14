@@ -18,8 +18,6 @@ using Content.Shared.Fax.Components;
 using Content.Shared.Fax.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
-using Content.Shared.Labels.Components;
-using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
@@ -46,7 +44,6 @@ public sealed partial class FaxSystem : EntitySystem
     [Dependency] private PopupSystem _popupSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private PaperSystem _paperSystem = default!;
-    [Dependency] private LabelSystem _labelSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private ToolSystem _toolSystem = default!;
     [Dependency] private QuickDialogSystem _quickDialog = default!;
@@ -300,14 +297,13 @@ public sealed partial class FaxSystem : EntitySystem
                         return;
 
                     args.Data.TryGetValue(FaxConstants.FaxPaperOriginalEntity, out EntityUid? originalEntity);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperLabelData, out string? label);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
                     args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
                     args.Data.TryGetValue(FaxConstants.FaxPaperSenderFaxNameData, out string? senderFaxName);
 
-                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false, senderFaxName, originalEntity);
+                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy, locked ?? false, senderFaxName, originalEntity);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -471,13 +467,11 @@ public sealed partial class FaxSystem : EntitySystem
             !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
 
         // TODO: See comment in 'Send()' about not being able to copy whole entities
         var printout = new FaxPrintout(paper.Content,
                                        nameMod?.BaseName ?? metadata.EntityName,
-                                       labelComponent?.CurrentLabel,
                                        metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
                                        paper.StampedBy,
@@ -527,8 +521,6 @@ public sealed partial class FaxSystem : EntitySystem
 
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
 
-        TryComp<LabelComponent>(sendEntity, out var labelComponent);
-
         var content = paper.Content;
 
         if (component.AddSenderInfo)
@@ -554,7 +546,6 @@ public sealed partial class FaxSystem : EntitySystem
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
             { FaxConstants.FaxPaperNameData, nameMod?.BaseName ?? metadata.EntityName },
-            { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
             { FaxConstants.FaxPaperOriginalEntity, sendEntity },
             { FaxConstants.FaxPaperContentData, content },
             { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
@@ -639,11 +630,6 @@ public sealed partial class FaxSystem : EntitySystem
         }
 
         _metaData.SetEntityName(printed, printout.Name);
-
-        if (printout.Label is { } label)
-        {
-            _labelSystem.Label(printed, label);
-        }
 
         if (printout.OriginalEntity != null)
         {

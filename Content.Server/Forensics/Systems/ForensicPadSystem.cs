@@ -18,7 +18,7 @@ namespace Content.Server.Forensics
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private PopupSystem _popupSystem = default!;
         [Dependency] private ForensicsSystem _forensics = default!;
-        [Dependency] private LabelSystem _label = default!;
+        [Dependency] private SharedLabelSystem _label = default!;
 
         public override void Initialize()
         {

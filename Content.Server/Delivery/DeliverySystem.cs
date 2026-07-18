@@ -27,7 +27,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private StationRecordsSystem _records = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private FingerprintReaderSystem _fingerprintReader = default!;
-    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedLabelSystem _label = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private ChatSystem _chat = default!;
 

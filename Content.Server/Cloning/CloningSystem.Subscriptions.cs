@@ -31,7 +31,7 @@ namespace Content.Server.Cloning;
 public sealed partial class CloningSystem
 {
     [Dependency] private SharedStackSystem _stack = default!;
-    [Dependency] private LabelSystem _label = default!;
+    [Dependency] private SharedLabelSystem _label = default!;
     [Dependency] private ForensicsSystem _forensics = default!;
     [Dependency] private PaperSystem _paper = default!;
     [Dependency] private VocalSystem _vocal = default!;
