@@ -68,7 +68,7 @@
         damage: 30
       behaviors: *DoDestruction
 
-# full window / reinforced direction window / girder
+# full window / reinforced direction window
 - type: entity
   abstract: true
   parent: BaseStructureHealth
@@ -80,7 +80,7 @@
         damage: 80
       behaviors: *DoDestruction
 
-# reinforced full window / deployable security barrier
+# reinforced full window / deployable security barrier / girder
 - type: entity
   abstract: true
   parent: BaseStructureHealth

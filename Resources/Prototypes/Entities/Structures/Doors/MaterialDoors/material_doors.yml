@@ -95,6 +95,8 @@
   - type: Construction
     graph: DoorGraph
     node: plasmaDoor
+  - type: Damageable
+    damageModifierSet: PlasmaMod
   - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
@@ -114,6 +116,8 @@
   - type: Construction
     graph: DoorGraph
     node: goldDoor
+  - type: Damageable
+    damageModifierSet: PreciousMetalMod
   - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
@@ -133,6 +137,8 @@
   - type: Construction
     graph: DoorGraph
     node: silverDoor
+  - type: Damageable
+    damageModifierSet: PreciousMetalMod
   - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
@@ -192,7 +198,7 @@
     graph: DoorGraph
     node: woodDoor
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: WoodMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -222,10 +228,10 @@
     graph: DoorGraph
     node: paperDoor
   - type: Damageable
-    damageModifierSet: Wood
+    damageModifierSet: CardMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageBarrierWeak
+    - trigger:
         !type:DamageTrigger
         damage: 30
       behaviors:
@@ -253,7 +259,7 @@
     graph: WebStructures
     node: door
   - type: Damageable
-    damageModifierSet: Web
+    damageModifierSet: ThreadMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -288,24 +294,21 @@
         path:
           "/Audio/Weapons/pierce.ogg"
   - type: Damageable
-    damageModifierSet: Card
+    damageModifierSet: CardMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard:
-            min: 3
-            max: 5
+          MaterialCardboard: *BaseDoorSpawn
 
+# soon removed
 - type: entity
   parent: BaseMaterialDoorNavMap
   id: IronstoneDoor
@@ -342,6 +345,7 @@
             min: 0
             max: 1
 
+# soon removed
 - type: entity
   parent: IronstoneDoor
   id: EncrustedIronstoneDoor

@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthBarrierWeak ]
   id: Grille
-  parent: BaseStructure
   name: grille
   description: A flimsy framework of iron rods.
   components:
@@ -33,10 +33,6 @@
     graph: Grille
     node: grille
     deconstructionTarget: start
-  - type: Damageable
-    damageModifierSet: PerforatedMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Electrified
     requirePower: true
     noWindowInTile: true
@@ -66,22 +62,24 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200 #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 30
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 0
+            max: 1
       - !type:ChangeConstructionNodeBehavior
         node: grilleBroken
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: "/Audio/Weapons/grille_hit.ogg"
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -91,6 +89,7 @@
           False: { visible: False }
   - type: AnimationPlayer
 
+# soon removed
 - type: entity
   id: ClockworkGrille
   parent: Grille
@@ -112,8 +111,8 @@
     deconstructionTarget: start
 
 - type: entity
+  parent: [ BaseStructure, StructureHealthFurnitureWeak ]
   id: GrilleBroken
-  parent: BaseStructure
   name: grille
   description: A flimsy framework of iron rods. It has seen better days.
   components:
@@ -140,20 +139,17 @@
     tags:
     - ForceNoFixRotations
   - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 10
+        damage: 5
       behaviors:
-      - !type:ChangeConstructionNodeBehavior
-        node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
+# soon removed
 - type: entity
   id: ClockworkGrilleBroken
   parent: GrilleBroken
@@ -172,8 +168,8 @@
     node: clockGrilleBroken
 
 - type: entity
-  id: GrilleDiagonal
   parent: Grille
+  id: GrilleDiagonal
   name: diagonal grille
   components:
   - type: Transform

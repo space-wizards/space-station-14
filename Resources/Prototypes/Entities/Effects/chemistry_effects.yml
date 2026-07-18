@@ -157,9 +157,10 @@
     prototype: FoamedAluminiumMetal
 
 - type: entity
+  abstract: true
+  parent: StructureHealthBarrierWeak
   id: BaseFoamedMetal
   name: base foamed metal
-  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -199,18 +200,6 @@
     - TrainLattice
     replacementTiles:
     - FloorMetalFoam
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 12
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   id: FoamedIronMetal
@@ -235,10 +224,10 @@
       state: iron_foam-west
 
 - type: entity
+  parent: BaseFoamedMetal
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
   description: "Leftover sparse foam from an aluminum foam grenade. Easily destroyed."
-  parent: BaseFoamedMetal
   components:
   - type: Sprite
     drawdepth: Effects
@@ -255,10 +244,6 @@
       state: metal_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
-  - type: Damageable
-    damageModifierSet: FlimsyMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
