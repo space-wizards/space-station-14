@@ -890,6 +890,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Generation
+    databaseKey: "punpun"
+    showNumberOne: true
 
 - type: entity
   name: Tropico

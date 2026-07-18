@@ -211,6 +211,14 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region Generations
+
+        Task<uint> LoadGeneration(string key);
+
+        Task SaveGeneration(string key, uint value);
+
+        #endregion
+
         #region Admin Logs
 
         Task<Server> AddOrGetServer(string serverName);
