@@ -5046,3 +5046,31 @@
   id: 9870
   time: '2026-07-18T05:16:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43099
+- author: AndrewFenriz, EmoGarbage404
+  changes:
+  - message: Added wheelchairs and the janicart. Coming to a station near you!
+    type: Add
+  id: 9871
+  time: '2026-07-18T18:17:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43527
+- author: whatston3
+  changes:
+  - message: The ore processor produces the correct amount of refined material when smelting in batches.
+    type: Fix
+  id: 9872
+  time: '2026-07-18T19:11:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44753
+- author: iaada
+  changes:
+  - message: The agent ID has a new UI.
+    type: Tweak
+  id: 9873
+  time: '2026-07-18T20:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39769
+- author: Hitlinemoss
+  changes:
+  - message: More names have been added to the pool of random names for borgs, dragons, the station AI, syndicate agents, and xenoborgs.
+    type: Add
+  id: 9874
+  time: '2026-07-18T21:52:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44251
