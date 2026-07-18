@@ -30,6 +30,34 @@ set windows-shell := ["C:\\Program Files\\Git\\bin\\sh.exe", "-c"]
 # Software development environments like VS Code and Rider have plugins for Just support.
 # To install and use these, refer to their own installation instructions.
 
+# ---------------
+# Useful commands
+# ---------------
+
+# When starting development, run this to get setup:
+# just setup-project
+
+# You can easily pull from Wizden with just two commands:
+# just add-upstream-remote-wizden
+# just get-latest-changes
+
+# When developing the game, you can run the client and server
+# separately by running:
+# just build-and-run-client
+# just build-and-run-server
+
+# You can run the client and server at the same time by running:
+# just build-and-run-game
+
+# These run different tests:
+# just run-unit-tests
+# just run-integration-tests
+# just run-sandbox-test
+
+# Provide an argument to run-unit-tests or run-integration-tests to run
+# a test in that project:
+# just run-integration-tests SandboxTest
+
 # -----------------------------
 # Building and running the game
 # -----------------------------
@@ -176,7 +204,7 @@ add-upstream-remote REMOTE: (add-remote "upstream" REMOTE)
 
 # Creates a remote called upstream that points to Wizden. Used when working on the Wizden codebase, or if you're a downstream wanting to pull from Wizden.
 [group("Git")]
-add-upstream-remote-to-wizden: (add-upstream-remote "https://github.com/Space-Wizards/space-station-14.git")
+add-upstream-remote-wizden: (add-upstream-remote "https://github.com/Space-Wizards/space-station-14.git")
 
 # Updates your current branch with the latest changes on your upstream.
 [group("Git")]
