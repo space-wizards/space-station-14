@@ -13,10 +13,10 @@ namespace Content.Shared.Temperature.Systems;
 /// </summary>
 public abstract partial class SharedEntityHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     private readonly int _settingCount = Enum.GetValues<EntityHeaterSetting>().Length;
 
@@ -69,7 +69,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // Still allow changing the setting without power
         ent.Comp.Setting = setting;
         _audio.PlayPredicted(ent.Comp.SettingSound, ent, user);
-        _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
+        _popup.PopupEntity(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
         Dirty(ent);
 
         // Only show the glowing heating element layer if there's power

@@ -12,7 +12,7 @@
   - type: Stunbaton
     energyPerUse: 50
   - type: ItemToggle
-    predictable: false
+    onActivate: false
     soundActivate:
       collection: sparks
       params:
@@ -72,10 +72,9 @@
   - type: StaticPrice
     price: 80
   - type: Riggable
-  - type: SolutionContainerManager
+  - type: SolutionManager
     solutions:
-      battery:
-        maxVol: 5
+    - SolutionRiggable
   - type: InjectableSolution
     solution: battery
   - type: DrawableSolution

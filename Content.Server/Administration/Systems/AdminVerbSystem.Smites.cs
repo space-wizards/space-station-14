@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
@@ -13,13 +14,14 @@ using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
+using Content.Shared.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Server.Tabletop.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Systems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body;
 using Content.Shared.Body.Components;
@@ -68,34 +70,35 @@ public sealed partial class AdminVerbSystem
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
 
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
-    [Dependency] private readonly CreamPieSystem _creamPieSystem = default!;
-    [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
-    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
-    [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
-    [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly RoleSystem _role = default!;
-    [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
-    [Dependency] private readonly VomitSystem _vomitSystem = default!;
-    [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly SuperBonkSystem _superBonkSystem = default!;
-    [Dependency] private readonly SlipperySystem _slipperySystem = default!;
-    [Dependency] private readonly GibbingSystem _gibbing = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private BodySystem _bodySystem = default!;
+    [Dependency] private CreamPieSystem _creamPieSystem = default!;
+    [Dependency] private ElectrocutionSystem _electrocutionSystem = default!;
+    [Dependency] private EntityStorageSystem _entityStorageSystem = default!;
+    [Dependency] private ExplosionSystem _explosionSystem = default!;
+    [Dependency] private FixtureSystem _fixtures = default!;
+    [Dependency] private FlammableSystem _flammableSystem = default!;
+    [Dependency] private GhostKickManager _ghostKickManager = default!;
+    [Dependency] private SharedGodmodeSystem _sharedGodmodeSystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+    [Dependency] private PolymorphSystem _polymorphSystem = default!;
+    [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private RoleSystem _role = default!;
+    [Dependency] private TabletopSystem _tabletopSystem = default!;
+    [Dependency] private VomitSystem _vomitSystem = default!;
+    [Dependency] private WeldableSystem _weldableSystem = default!;
+    [Dependency] private SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private SuperBonkSystem _superBonkSystem = default!;
+    [Dependency] private SlipperySystem _slipperySystem = default!;
+    [Dependency] private GibbingSystem _gibbing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private AtmosDeviceSystem _atmosDevice = default!;
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
@@ -1072,6 +1075,31 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", homingRodSlowName, Loc.GetString("admin-smite-homing-rod-slow-description"))
         };
         args.Verbs.Add(homingRodSlow);
+
+        var makeStinkyName = Loc.GetString("admin-smite-make-stinky-name").ToLowerInvariant();
+        Verb makeStinky = new()
+        {
+            Text = makeStinkyName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new("Clothing/Mask/gas.rsi"), "icon"),
+            Act = () =>
+            {
+                var gasMiner = EnsureComp<GasMinerComponent>(args.Target);
+                gasMiner.SpawnGas = Gas.Ammonia;
+                gasMiner.SpawnAmount = 20;
+                gasMiner.ShowExamineText = false;
+
+                // Atmos device is not networked, no dirty.
+                var atmosDevice = EnsureComp<AtmosDeviceComponent>(args.Target);
+                atmosDevice.RequireAnchored = false;
+
+                _atmosDevice.JoinAtmosphere((args.Target, atmosDevice));
+                Dirty(args.Target, gasMiner);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", makeStinkyName, Loc.GetString("admin-smite-make-stinky-description"))
+        };
+        args.Verbs.Add(makeStinky);
     }
 
     public void HomingLaunchSequence(EntityUid target, EntProtoId proto, float distance, float speed)
@@ -1080,7 +1108,9 @@ public sealed partial class AdminVerbSystem
         // I would do it now but theres a massive rod rewrite, and I don't wanna poke it for this.
         // find reasonable spawn location (use gamerule and find rod?) but respect map not on grid etc etc
 
-        var offset = new Random(target.Id).NextAngle().RotateVec(new Vector2(distance, 0));
+        var random = new RobustRandom() as IRobustRandom;
+        random.SetSeed(target.Id);
+        var offset = random.NextAngle().RotateVec(new Vector2(distance, 0));
         var spawnCoords = _transformSystem.GetMapCoordinates(target).Offset(offset);
         var rod = Spawn(proto, spawnCoords);
         // Here we abuse the ChasingWalkComp by making it skip targetting logic and dialling its frequency up

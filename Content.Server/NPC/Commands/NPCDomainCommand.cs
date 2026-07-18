@@ -10,10 +10,10 @@ namespace Content.Server.NPC.Commands;
 /// Lists out the domain of a particular HTN compound task.
 /// </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class NPCDomainCommand : IConsoleCommand
+public sealed partial class NPCDomainCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntitySystemManager _sysManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private IEntitySystemManager _sysManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     public string Command => "npcdomain";
     public string Description => "Lists the domain of a particular HTN compound task";

@@ -388,9 +388,9 @@
           min: 20
         probability: 0.03
         #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: NorepinephricAcid
@@ -441,9 +441,9 @@
       - !type:Emote
         emote: Cough
         probability: 0.08
-      - !type:GenericStatusEffect
-        key: TemporaryBlindness
-        component: TemporaryBlindness
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        type: Add
         conditions:
         - !type:ReagentCondition
           reagent: TearGas
