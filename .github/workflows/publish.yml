@@ -12,10 +12,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.repository == vars.UPSTREAM_REPO_NAME && vars.PUBLISH_FORK_ID != '' && vars.CDN_URL != '' }}
 
     steps:
     - name: Fail if we are attempting to run on the master branch
-      if: ${{GITHUB.REF_NAME == 'master' && github.repository == 'space-wizards/space-station-14'}}
+      if: ${{GITHUB.REF_NAME == 'master' && github.repository == vars.UPSTREAM_REPO_NAME}}
       run: exit 1
 
     - name: Install dependencies
@@ -47,7 +48,7 @@ jobs:
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
     - name: Publish version
-      run: Tools/publish_multi_request.py
+      run: Tools/publish_multi_request.py --fork-id ${{ vars.PUBLISH_FORK_ID }} --cdn_url ${{ vars.CDN_URL }}
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}

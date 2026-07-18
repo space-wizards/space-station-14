@@ -2,7 +2,7 @@ name: RSI Validator
 
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master, main, develop, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
@@ -16,7 +16,7 @@ concurrency:
 jobs:
   validate_rsis:
     name: Validate RSIs
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: ${{ github.actor != vars.REPO_BOT_NAME && github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

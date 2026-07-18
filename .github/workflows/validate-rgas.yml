@@ -1,7 +1,7 @@
 name: RGA schema validator
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master, main, develop, staging, stable ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
@@ -13,7 +13,7 @@ concurrency:
 jobs:
   yaml-schema-validation:
     name: YAML RGA schema validator
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: ${{ github.actor != vars.REPO_BOT_NAME && github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
