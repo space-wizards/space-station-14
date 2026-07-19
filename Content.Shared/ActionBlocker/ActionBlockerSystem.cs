@@ -19,26 +19,15 @@ namespace Content.Shared.ActionBlocker
     /// Utility methods to check if a specific entity is allowed to perform an action.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ActionBlockerSystem : EntitySystem
+    public sealed partial class ActionBlockerSystem : EntitySystem
     {
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
-        private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery;
+        [Dependency] private EntityQuery<ComplexInteractionComponent> _complexInteractionQuery = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _complexInteractionQuery = GetEntityQuery<ComplexInteractionComponent>();
-
-            SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
-        }
-
-        private void OnMoverStartup(EntityUid uid, InputMoverComponent component, ComponentStartup args)
-        {
-            UpdateCanMove(uid, component);
-        }
-
+        // These two methods should probably both live in SharedMoverController
+        // but they're called in a million places and I'm not doing that
+        // refactor right now.
         public bool CanMove(EntityUid uid, InputMoverComponent? component = null)
         {
             return Resolve(uid, ref component, false) && component.CanMove;
@@ -56,7 +45,9 @@ namespace Content.Shared.ActionBlocker
                 Dirty(uid, component);
 
             component.CanMove = !ev.Cancelled;
-            return !ev.Cancelled;
+            var updatedEv = new CanMoveUpdatedEvent(component.CanMove);
+            RaiseLocalEvent(uid, ref updatedEv);
+            return component.CanMove;
         }
 
         /// <summary>
@@ -167,15 +158,21 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanPickup(EntityUid user, EntityUid item)
+        /// <summary>
+        /// Whether a user can pickup the given item.
+        /// </summary>
+        /// <param name="user">The mob trying to pick up the item.</param>
+        /// <param name="item">The item being picked up.</param>
+        /// <param name="showPopup">Whether or not to show a popup to the player telling them why the attempt failed.</param>
+        public bool CanPickup(EntityUid user, EntityUid item, bool showPopup = false)
         {
-            var userEv = new PickupAttemptEvent(user, item);
+            var userEv = new PickupAttemptEvent(user, item, showPopup);
             RaiseLocalEvent(user, userEv);
 
             if (userEv.Cancelled)
                 return false;
 
-            var itemEv = new GettingPickedUpAttemptEvent(user, item);
+            var itemEv = new GettingPickedUpAttemptEvent(user, item, showPopup);
             RaiseLocalEvent(item, itemEv);
 
             return !itemEv.Cancelled;

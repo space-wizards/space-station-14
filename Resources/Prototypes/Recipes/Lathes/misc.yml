@@ -8,14 +8,7 @@
   completetime: 2
   materials:
     Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  abstract: true
-  id: BaseFauxTileRecipe
-  completetime: 1
-  materials:
-    Plastic: 100
+    Glass: 200
 
 # Recipes
 
@@ -127,7 +120,7 @@
   result: AirTank
   completetime: 4
   materials:
-    Steel: 300
+    Steel: 400
 
 - type: latheRecipe
   id: DoubleEmergencyOxygenTank
@@ -186,60 +179,6 @@
     Plastic: 100
 
 - type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroGrass
-  result: FloorTileItemAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileMowedAstroGrass
-  result: FloorTileItemMowedAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileJungleAstroGrass
-  result: FloorTileItemJungleAstroGrass
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroIce
-  result: FloorTileItemAstroIce
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroSnow
-  result: FloorTileItemAstroSnow
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroAsteroidSand
-  result: FloorTileItemAstroAsteroidSand
-
-- type: latheRecipe
-  parent: BaseFauxTileRecipe
-  id: FauxTileAstroAsteroidSandBorderless
-  result: FloorTileItemAstroAsteroidSandBorderless
-
-- type: latheRecipe
-  id: FloorGreenCircuit
-  result: FloorTileItemGCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
-
-- type: latheRecipe
-  parent: FloorGreenCircuit
-  id: FloorBlueCircuit
-  result: FloorTileItemBCircuit4
-
-- type: latheRecipe
-  id: FloorRedCircuit
-  result: FloorTileItemRCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
-
-- type: latheRecipe
   id: HandheldStationMap
   result: HandheldStationMapEmpty
   completetime: 2
@@ -276,4 +215,26 @@
   completetime: 1
   materials:
     Steel: 30
-    
+
+- type: latheRecipe
+  id: BoxFolderClipboardEmpty
+  result: BoxFolderClipboardEmpty
+  completetime: 2
+  materials:
+    Wood: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: BoxFolderPlasticClipboardEmpty
+  result: BoxFolderPlasticClipboardEmpty
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: TowelColorWhite
+  result: TowelColorWhite
+  completetime: 2
+  materials:
+    Cloth: 300

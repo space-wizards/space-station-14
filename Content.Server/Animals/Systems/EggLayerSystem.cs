@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions.Events;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -17,15 +18,15 @@ namespace Content.Server.Animals.Systems;
 ///     Gives the ability to lay eggs/other things;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-public sealed class EggLayerSystem : EntitySystem
+public sealed partial class EggLayerSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly HungerSystem _hunger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private HungerSystem _hunger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -100,8 +101,11 @@ public sealed class EggLayerSystem : EntitySystem
 
         // Sound + popups
         _audio.PlayPvs(egglayer.EggLaySound, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
+        _popup.PopupEntity(
+            Loc.GetString("action-popup-lay-egg-user"),
+            Loc.GetString("action-popup-lay-egg-others", ("entity", Identity.Entity(uid, EntityManager))),
+            uid,
+            uid);
 
         return true;
     }

@@ -8,6 +8,10 @@
     sprite: Clothing/Neck/Ties/redtie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/redtie.rsi
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Clothing/Neck/Ties/redtie.rsi
   - type: Tag
     tags:
     - HamsterWearable
@@ -25,7 +29,11 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Clothing/Neck/Ties/dettie.rsi
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci
@@ -36,6 +44,10 @@
     sprite: Clothing/Neck/Ties/scitie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/scitie.rsi
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Clothing/Neck/Ties/scitie.rsi
   - type: Tag
     tags:
     - ClothMade

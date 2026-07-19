@@ -20,7 +20,6 @@
       collection: trashBagRustle
     whitelist:
       tags:
-        - Cartridge
         - Trash
   - type: UseDelay
     delay: 0.5
@@ -35,6 +34,7 @@
   - type: Clothing
     slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
+    equippedState: equipped-BELT
   - type: Item
     size: Normal
 
@@ -52,6 +52,10 @@
     heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
+  - type: Clothing
+    slots: [belt]
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    equippedState: blue-equipped-BELT
   - type: Storage
     maxItemSize: Large
     grid:
@@ -61,7 +65,7 @@
     areaInsertRadius: 5
   - type: Tag
     tags:
-    - TrashBagHolding
+    - TrashBagBlue
 
 - type: entity
   parent: TrashBag

@@ -1,42 +1,31 @@
 using Content.Server.Speech.Components;
-using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
-namespace Content.Server.Speech.EntitySystems
+namespace Content.Server.Speech.EntitySystems;
+
+public sealed partial class OwOAccentSystem : RelayAccentSystem<OwOAccentComponent>
 {
-    public sealed class OwOAccentSystem : EntitySystem
+    [Dependency] private IRobustRandom _random = default!;
+
+    private static readonly IReadOnlyList<string> Faces = new List<string>{
+        " (•`ω´•)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
+    }.AsReadOnly();
+
+    private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        { "you", "wu" },
+    };
 
-        private static readonly IReadOnlyList<string> Faces = new List<string>{
-            " (•`ω´•)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
-        }.AsReadOnly();
-
-        private static readonly IReadOnlyDictionary<string, string> SpecialWords = new Dictionary<string, string>()
+    public override string Accentuate(string message, Entity<OwOAccentComponent>? ent = null)
+    {
+        foreach (var (word, repl) in SpecialWords)
         {
-            { "you", "wu" },
-        };
-
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<OwOAccentComponent, AccentGetEvent>(OnAccent);
+            message = message.Replace(word, repl);
         }
 
-        public string Accentuate(string message)
-        {
-            foreach (var (word, repl) in SpecialWords)
-            {
-                message = message.Replace(word, repl);
-            }
-
-            return message.Replace("!", _random.Pick(Faces))
-                .Replace("r", "w").Replace("R", "W")
-                .Replace("l", "w").Replace("L", "W");
-        }
-
-        private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)
-        {
-            args.Message = Accentuate(args.Message);
-        }
+        return message.Replace("!", _random.Pick(Faces))
+            .Replace("r", "w").Replace("R", "W")
+            .Replace("l", "w").Replace("L", "W");
     }
 }

@@ -1,0 +1,84 @@
+# Carpets that are tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackCarpetClown
+  name: stack-clown-carpet-tile
+  spawn: FloorTileItemCarpetClown
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackCarpetOffice
+  name: stack-office-carpet-tile
+  spawn: FloorTileItemCarpetOffice
+
+# Carpets that are not actually tiles (yet)
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetRed
+  name: stack-red-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-red }
+  spawn: FloorCarpetItemRed
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetBlack
+  name: stack-black-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-black }
+  spawn: FloorCarpetItemBlack
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetBlue
+  name: stack-blue-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-blue }
+  spawn: FloorCarpetItemBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetGreen
+  name: stack-green-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-green }
+  spawn: FloorCarpetItemGreen
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetOrange
+  name: stack-orange-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-orange }
+  spawn: FloorCarpetItemOrange
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetSkyBlue
+  name: stack-skyblue-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-skyblue }
+  spawn: FloorCarpetItemSkyBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetPurple
+  name: stack-purple-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-purple }
+  spawn: FloorCarpetItemPurple
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetPink
+  name: stack-pink-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-pink }
+  spawn: FloorCarpetItemPink
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetCyan
+  name: stack-cyan-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-cyan }
+  spawn: FloorCarpetItemCyan
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetWhite
+  name: stack-white-carpet-tile
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: carpet-white }
+  spawn: FloorCarpetItemWhite

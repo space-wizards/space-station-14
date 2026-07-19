@@ -8,7 +8,4 @@ namespace Content.Shared.Administration.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedMeleeWeaponSystem))]
-public sealed partial class DisarmProneComponent : Component
-{
-
-}
+public sealed partial class DisarmProneComponent : Component;
