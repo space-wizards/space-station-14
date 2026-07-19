@@ -11,10 +11,10 @@ namespace Content.Shared.Mindshield.FakeMindShield;
 
 public sealed partial class FakeMindShieldSystem : EntitySystem
 {
-    [Dependency] private SharedActionsSystem _actions = default!;
-    [Dependency] private TagSystem _tag = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
