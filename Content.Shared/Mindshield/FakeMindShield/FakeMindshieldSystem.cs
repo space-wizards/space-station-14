@@ -48,9 +48,6 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         if (!TryComp<ActionsComponent>(ent, out var actionsComp))
             return;
 
-        // In case the fake mindshield ever doesn't have an action.
-        var actionFound = false;
-
         foreach (var action in actionsComp.Actions)
         {
             if (!_tag.HasTag(action, FakeMindShieldImplantTag))
@@ -59,28 +56,18 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
             if (!TryComp<ActionComponent>(action, out var actionComp))
                 continue;
 
-            actionFound = true;
-
             if (_actions.IsCooldownActive(actionComp, _timing.CurTime))
                 continue;
 
-            ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
             ShowTogglePopup(ent);
-            Dirty(ent);
 
             if (actionComp.UseDelay != null)
                 _actions.SetCooldown(action, actionComp.UseDelay.Value);
-
-            return;
         }
 
-        // If they don't have the action for some reason, still set it correctly.
-        if (!actionFound)
-        {
-            ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
-            Dirty(ent);
-        }
+        ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
+        Dirty(ent);
     }
 }
 
