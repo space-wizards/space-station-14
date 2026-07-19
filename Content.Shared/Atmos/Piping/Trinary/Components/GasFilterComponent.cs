@@ -9,14 +9,23 @@ public sealed partial class GasFilterComponent : Component
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
-    [DataField("inlet")]
-    public string InletName = "inlet";
+    /// <summary>
+    /// Node name for the inlet pipe of the filter
+    /// </summary>
+    [DataField]
+    public string Inlet = "inlet";
 
-    [DataField("filter")]
-    public string FilterName = "filter";
+    /// <summary>
+    /// Node name for the primary outlet pipe of the filter
+    /// </summary>
+    [DataField]
+    public string Outlet = "outlet";
 
-    [DataField("outlet")]
-    public string OutletName = "outlet";
+    /// <summary>
+    /// Node name for the secondary outlet of the filter (gas being filtered)
+    /// </summary>
+    [DataField]
+    public string Filter = "filter";
 
     [DataField, AutoNetworkedField]
     public float TransferRate = Atmospherics.MaxTransferRate;

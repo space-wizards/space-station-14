@@ -29,7 +29,7 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
     private void OnFilterUpdated(Entity<GasFilterComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         if (!ent.Comp.Enabled
-            || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.InletName, ent.Comp.FilterName, ent.Comp.OutletName, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
+            || !_nodeContainer.TryGetNodes(ent.Owner, ent.Comp.Inlet, ent.Comp.Filter, ent.Comp.Outlet, out PipeNode? inletNode, out PipeNode? filterNode, out PipeNode? outletNode)
             || (outletNode.Air.Pressure >= Atmospherics.MaxOutputPressure && filterNode.Air.Pressure >= Atmospherics.MaxOutputPressure)) // No need to transfer if targets are full.
         {
             _ambientSoundSystem.SetAmbience(ent.Owner, false);
@@ -96,21 +96,21 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
         args.GasMixtures ??= new List<(string, GasMixture?)>();
 
         // multiply by volume fraction to make sure to send only the gas inside the analyzed pipe element, not the whole pipe system
-        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.InletName, out PipeNode? inlet) && inlet.Air.Volume != 0f)
+        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.Inlet, out PipeNode? inlet) && inlet.Air.Volume != 0f)
         {
             var inletAirLocal = inlet.Air.Clone();
             inletAirLocal.Multiply(inlet.Volume / inlet.Air.Volume);
             inletAirLocal.Volume = inlet.Volume;
             args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-inlet"), inletAirLocal));
         }
-        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.FilterName, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
+        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.Filter, out PipeNode? filterNode) && filterNode.Air.Volume != 0f)
         {
             var filterNodeAirLocal = filterNode.Air.Clone();
             filterNodeAirLocal.Multiply(filterNode.Volume / filterNode.Air.Volume);
             filterNodeAirLocal.Volume = filterNode.Volume;
             args.GasMixtures.Add((Loc.GetString("gas-analyzer-window-text-filter"), filterNodeAirLocal));
         }
-        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.OutletName, out PipeNode? outlet) && outlet.Air.Volume != 0f)
+        if (_nodeContainer.TryGetNode(ent.Owner, ent.Comp.Outlet, out PipeNode? outlet) && outlet.Air.Volume != 0f)
         {
             var outletAirLocal = outlet.Air.Clone();
             outletAirLocal.Multiply(outlet.Volume / outlet.Air.Volume);

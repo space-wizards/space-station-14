@@ -9,14 +9,23 @@ public sealed partial class GasMixerComponent : Component
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
-    [DataField("inletOne")]
-    public string InletOneName = "inletOne";
+    /// <summary>
+    /// Node name for the primary input pipe of the mixer
+    /// </summary>
+    [DataField]
+    public string InletOne = "inletOne";
 
-    [DataField("inletTwo")]
-    public string InletTwoName = "inletTwo";
+    /// <summary>
+    /// Node name for the secondary input pipe of the mixer
+    /// </summary>
+    [DataField]
+    public string InletTwo = "inletTwo";
 
-    [DataField("outlet")]
-    public string OutletName = "outlet";
+    /// <summary>
+    /// Node name for the outlet pipe of the mixer
+    /// </summary>
+    [DataField]
+    public string Outlet = "outlet";
 
     [DataField, AutoNetworkedField]
     public float TargetPressure = Atmospherics.OneAtmosphere;
