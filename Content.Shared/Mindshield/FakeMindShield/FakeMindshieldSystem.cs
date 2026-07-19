@@ -26,31 +26,31 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
     }
 
-    private void ShowTogglePopup(EntityUid uid, FakeMindShieldComponent comp)
+    private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent)
     {
-        var message = comp.IsEnabled
+        var message = ent.Comp.IsEnabled
             ? Loc.GetString("fake-mindshield-enabled")
             : Loc.GetString("fake-mindshield-disabled");
 
-        _popup.PopupEntity(message, uid, uid, PopupType.Small);
+        _popup.PopupEntity(message, ent, ent, PopupType.Small);
     }
 
-    private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent args)
+    private void OnToggleMindshield(Entity<FakeMindShieldComponent> ent, ref FakeMindShieldToggleEvent args)
     {
-        comp.IsEnabled = !comp.IsEnabled;
+        ent.Comp.IsEnabled = !ent.Comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
-        ShowTogglePopup(uid, comp);
-        Dirty(uid, comp);
+        ShowTogglePopup(ent);
+        Dirty(ent);
     }
 
-    private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
+    private void OnChameleonControllerOutfitSelected(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args)
     {
-        if (component.IsEnabled == args.ChameleonOutfit.HasMindShield)
+        if (ent.Comp.IsEnabled == args.ChameleonOutfit.HasMindShield)
             return;
 
         // This assumes there is only one fake mindshield action per entity (This is currently enforced)
-        if (!TryComp<ActionsComponent>(uid, out var actionsComp))
+        if (!TryComp<ActionsComponent>(ent, out var actionsComp))
             return;
 
         // In case the fake mindshield ever doesn't have an action.
@@ -69,10 +69,10 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
             if (_actions.IsCooldownActive(actionComp, _timing.CurTime))
                 continue;
 
-            component.IsEnabled = args.ChameleonOutfit.HasMindShield;
+            ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
-            ShowTogglePopup(uid, component);
-            Dirty(uid, component);
+            ShowTogglePopup(ent);
+            Dirty(ent);
 
             if (actionComp.UseDelay != null)
                 _actions.SetCooldown(action, actionComp.UseDelay.Value);
@@ -83,8 +83,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         // If they don't have the action for some reason, still set it correctly.
         if (!actionFound)
         {
-            component.IsEnabled = args.ChameleonOutfit.HasMindShield;
-            Dirty(uid, component);
+            ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
+            Dirty(ent);
         }
     }
 }
