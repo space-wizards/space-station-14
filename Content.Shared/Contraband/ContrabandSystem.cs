@@ -178,9 +178,6 @@ public sealed partial class ContrabandSystem : EntitySystem
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
     /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
-    /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
-    /// <param name="hasContraband">Whether the storage contains contraband. Pass in a false bool variable.</param>
-    /// <returns>Whether the item itself is contraband only, NOT if it contains contraband.</returns>
     public bool HasContraband(Entity<ContrabandComponent?> contraband,
         EntityUid? player)
     {
