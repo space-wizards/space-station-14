@@ -4,7 +4,6 @@ using Content.Shared.Implants;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -16,7 +15,6 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private INetManager _net = default!;
 
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
@@ -27,11 +25,9 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
         SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
     }
+
     private void ShowTogglePopup(EntityUid uid, FakeMindShieldComponent comp)
     {
-        if (!_net.IsServer)
-            return;
-
         var message = comp.IsEnabled
             ? Loc.GetString("fake-mindshield-enabled")
             : Loc.GetString("fake-mindshield-disabled");
