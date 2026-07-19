@@ -16,7 +16,7 @@
     </BoxContainer>
 
     <!-- Current track label -->
-    <Label Name="CurrentTrackLabel"></Label>
+    <Label Name="CurrentTrackLabel" MinHeight="24"></Label>
 
     <!-- Track position -->
     <Slider Name="PlaybackSlider" HorizontalExpand="True" />

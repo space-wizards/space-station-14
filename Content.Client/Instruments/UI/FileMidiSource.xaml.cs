@@ -45,9 +45,9 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     /// </summary>
     public event Action<bool>? LoopingToggled;
 
-    private readonly string _noTrackSelectedText = Loc.GetString("instruments-component-menu-files-no-track-selected");
     private readonly List<ResPath> _loadedTracks = [];
     private bool _isMidiFileDialogueWindowOpen;
+    private bool _selectedInternally;
     private float _timeSinceLastRecoverAttempt;
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        CurrentTrackLabel.Text = _noTrackSelectedText;
+        CurrentTrackLabel.Text = string.Empty;
 
         _midiCollection.MidiFileAdded += AddTrack;
         _midiCollection.MidiFileRemoved += RemoveTrack;
@@ -153,7 +153,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         TrackList.ClearSelected();
         IsPlaying = false;
         StopPlayingRequest?.Invoke();
-        CurrentTrackLabel.Text = _noTrackSelectedText;
+        CurrentTrackLabel.Text = string.Empty;
     }
 
     private void OnFilterBarTextChanged(LineEdit.LineEditEventArgs obj)
@@ -163,17 +163,15 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void OnTrackListItemSelected(ItemList.ItemListSelectedEventArgs obj)
     {
-        var currentItem = obj.ItemList[obj.ItemIndex];
-
-        if (currentItem.Metadata is not ResPath resPath)
-            return;
-
-        CurrentTrackLabel.Text = currentItem.Text;
-
-        if (!IsPlaying)
-            return;
-
-        StartPlaying(resPath);
+        if (!_selectedInternally)
+        {
+            StopPlaying();
+            IsPlaying = false;
+        }
+        else
+        {
+            PlayTrackListItem(obj.ItemIndex);
+        }
     }
 
     private async void OnAddButtonPressed(ButtonEventArgs obj)
@@ -223,10 +221,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         if (PlayButton.Pressed)
         {
             DisableFileManagement();
-            if (!TryGetSelectedTrackPath(out var trackPath))
+            if (!TryGetSelectedTrack(out var track))
                 return;
 
-            StartPlaying(trackPath.Value);
+            StartPlaying(track);
         }
         else
         {
@@ -284,7 +282,19 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         PlaybackSlider.MaxValue = 1;
         PlaybackSlider.SetValueWithoutEvent(0);
+        CurrentTrackLabel.Text = string.Empty;
         TimeLabel.Text = "--.--/--.--";
+    }
+
+    private void PlayTrackListItem(int index)
+    {
+        if (index >= TrackList.Count || index < 0)
+            return;
+
+        if (TrackList[index] is not { } item)
+            return;
+
+        StartPlaying(item);
     }
 
     private void StopPlaying()
@@ -293,11 +303,18 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         ResetTrackIndicators();
     }
 
-    private void StartPlaying(ResPath trackPath)
+    private void StartPlaying(ItemList.Item item)
     {
+        if (item.Metadata is not ResPath resPath)
+            return;
+
+        if (item.Text == null)
+            return;
+
         _timeSinceLastRecoverAttempt = 0;
-        var midiData = _midiCollection.GetMidiData(trackPath);
+        var midiData = _midiCollection.GetMidiData(resPath);
         StartPlayingRequest?.Invoke(midiData);
+        CurrentTrackLabel.Text = item.Text;
     }
 
     private void FilterTrackList()
@@ -349,11 +366,10 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void ReplayCurrentTrack()
     {
-        if (!TryGetSelectedTrack(out var item))
+        if (!TryGetSelectedTrack(out var track))
             return;
 
-        item.Selected = false;
-        item.Selected = true;
+        StartPlaying(track);
     }
 
     /// <summary>
@@ -374,28 +390,36 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         if (TrackList.Count == 0)
             return;
 
-        if (IsShuffle)
+        _selectedInternally = true;
+        try
         {
-            TrackList[_random.Next(0, TrackList.Count)].Selected = true;
-        }
-        else
-        {
-            if (!TryGetSelectedTrack(out var item))
+            if (IsShuffle)
             {
+                TrackList[_random.Next(0, TrackList.Count)].Selected = true;
+            }
+            else
+            {
+                if (!TryGetSelectedTrack(out var item))
+                {
+                    TrackList[0].Selected = true;
+                    return;
+                }
+
+                for (var i = 0; i < TrackList.Count - 1; i++)
+                {
+                    if (TrackList[i] != item)
+                        continue;
+                    TrackList[i + 1].Selected = true;
+                    return;
+                }
+
+                TrackList[0].Selected = false;
                 TrackList[0].Selected = true;
-                return;
             }
-
-            for (var i = 0; i < TrackList.Count - 1; i++)
-            {
-                if (TrackList[i] != item)
-                    continue;
-                TrackList[i + 1].Selected = true;
-                return;
-            }
-
-            TrackList[0].Selected = false;
-            TrackList[0].Selected = true;
+        }
+        finally
+        {
+            _selectedInternally = false;
         }
     }
 }

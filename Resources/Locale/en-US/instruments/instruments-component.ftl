@@ -18,7 +18,6 @@ instruments-component-menu-play-stop-button = Play/Stop
 instruments-component-menu-loop-button = Loop
 instruments-component-menu-shuffle-button = Shuffle
 instruments-component-menu-channels-label = Channels
-instruments-component-menu-files-no-track-selected = No file selected...
 instruments-component-menu-files-track-playtime-seconds-minutes = {$currentMinutes}:{$currentSeconds}/{$totalMinutes}:{$totalSeconds}
 instruments-component-menu-files-track-playtime-seconds-minutes-hours = {$currentHours}:{$currentMinutes}:{$currentSeconds}/{$totalHours}:{$totalMinutes}:{$totalSeconds}
 instruments-component-menu-files-file-management-disabled-info = Library cannot be changed while playback is active.
