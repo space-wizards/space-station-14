@@ -9,14 +9,10 @@ namespace Content.Client.Atmos.UI;
 /// Initializes a <see cref="GasMixerWindow"/> and updates it from the entity's <see cref="GasMixerComponent"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed class GasMixerBoundUserInterface : BoundUserInterface
+public sealed class GasMixerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private GasMixerWindow? _window;
-
-    public GasMixerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -29,6 +25,19 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
         _window.MixerNodePercentageChanged += OnMixerSetPercentagePressed;
 
         Update();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (_window == null || !EntMan.TryGetComponent(Owner, out GasMixerComponent? mixer))
+            return;
+
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.SetMixerStatus(mixer.Enabled);
+        _window.SetOutputPressure(mixer.TargetPressure);
+        _window.SetNodePercentages(mixer.InletOneConcentration);
     }
 
     private void OnToggleStatusButtonPressed(bool status)
@@ -54,18 +63,5 @@ public sealed class GasMixerBoundUserInterface : BoundUserInterface
             node = _window.NodeOneLastEdited ? node : 100.0f - node;
 
         SendPredictedMessage(new GasMixerChangeNodePercentageMessage(node));
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (_window == null || !EntMan.TryGetComponent(Owner, out GasMixerComponent? mixer))
-            return;
-
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-        _window.SetMixerStatus(mixer.Enabled);
-        _window.SetOutputPressure(mixer.TargetPressure);
-        _window.SetNodePercentages(mixer.InletOneConcentration);
     }
 }

@@ -19,21 +19,13 @@ public sealed partial class GasMixerSystem : SharedGasMixerSystem
     [Dependency] private SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<GasMixerComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<GasMixerComponent, AtmosDeviceUpdateEvent>(OnMixerUpdated);
-        SubscribeLocalEvent<GasMixerComponent, GasAnalyzerScanEvent>(OnMixerAnalyzed);
-        SubscribeLocalEvent<GasMixerComponent, AtmosDeviceDisabledEvent>(OnMixerLeaveAtmosphere);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInit(Entity<GasMixerComponent> ent, ref ComponentInit args)
     {
         UpdateAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnMixerUpdated(Entity<GasMixerComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         // TODO ATMOS: Cache total moles since it's expensive.
@@ -112,11 +104,12 @@ public sealed partial class GasMixerSystem : SharedGasMixerSystem
             _ambientSoundSystem.SetAmbience(ent.Owner, true);
     }
 
+    [SubscribeLocalEvent]
     private void OnMixerLeaveAtmosphere(Entity<GasMixerComponent> ent, ref AtmosDeviceDisabledEvent args)
     {
         ent.Comp.Enabled = false;
 
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.Enabled));
         UpdateAppearance(ent);
         _ambientSoundSystem.SetAmbience(ent.Owner, false);
         _ui.CloseUi(ent.Owner, GasMixerUiKey.Key);
@@ -125,6 +118,7 @@ public sealed partial class GasMixerSystem : SharedGasMixerSystem
     /// <summary>
     /// Returns the gas mixture for the gas analyzer
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnMixerAnalyzed(Entity<GasMixerComponent> ent, ref GasAnalyzerScanEvent args)
     {
         args.GasMixtures ??= new List<(string, GasMixture?)>();

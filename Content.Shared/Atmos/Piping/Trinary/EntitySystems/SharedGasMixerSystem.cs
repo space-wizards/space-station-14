@@ -42,8 +42,7 @@ public abstract partial class SharedGasMixerSystem : EntitySystem
         _adminLogger.Add(LogType.AtmosRatioChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the ratio on {ToPrettyString(ent.Owner):device} to {ent.Comp.InletOneConcentration}:{ent.Comp.InletTwoConcentration}");
 
-        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.InletOneConcentration));
-        DirtyField(ent.Owner, ent.Comp, nameof(GasMixerComponent.InletTwoConcentration));
+        DirtyFields(ent.Owner, ent.Comp, null, nameof(GasMixerComponent.InletOneConcentration), nameof(GasMixerComponent.InletTwoConcentration));
         UpdateUi(ent);
     }
 

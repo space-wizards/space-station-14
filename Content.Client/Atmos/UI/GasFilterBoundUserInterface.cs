@@ -11,16 +11,12 @@ namespace Content.Client.Atmos.UI;
 /// Initializes a <see cref="GasFilterWindow"/> and updates it from the entity's <see cref="GasFilterComponent"/>.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class GasFilterBoundUserInterface : BoundUserInterface
+public sealed partial class GasFilterBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;
 
     [ViewVariables]
     private GasFilterWindow? _window;
-
-    public GasFilterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -34,6 +30,28 @@ public sealed partial class GasFilterBoundUserInterface : BoundUserInterface
         _window.SelectGasPressed += OnSelectGasPressed;
 
         Update();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (_window == null || !EntMan.TryGetComponent(Owner, out GasFilterComponent? filter))
+            return;
+
+        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.SetFilterStatus(filter.Enabled);
+        _window.SetTransferRate(filter.TransferRate);
+
+        if (filter.FilteredGas is { } filtered)
+        {
+            var gas = _atmosphere.GetGas(filtered);
+            _window.SetGasFiltered(gas.ID, Loc.GetString(gas.Name));
+        }
+        else
+        {
+            _window.SetGasFiltered(null, Loc.GetString("comp-gas-filter-ui-filter-gas-none"));
+        }
     }
 
     private void OnToggleStatusButtonPressed(bool status)
@@ -63,28 +81,6 @@ public sealed partial class GasFilterBoundUserInterface : BoundUserInterface
                 return;
 
             SendPredictedMessage(new GasFilterSelectGasMessage(gas));
-        }
-    }
-
-    public override void Update()
-    {
-        base.Update();
-
-        if (_window == null || !EntMan.TryGetComponent(Owner, out GasFilterComponent? filter))
-            return;
-
-        _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-        _window.SetFilterStatus(filter.Enabled);
-        _window.SetTransferRate(filter.TransferRate);
-
-        if (filter.FilteredGas is { } filtered)
-        {
-            var gas = _atmosphere.GetGas(filtered);
-            _window.SetGasFiltered(gas.ID, Loc.GetString(gas.Name));
-        }
-        else
-        {
-            _window.SetGasFiltered(null, Loc.GetString("comp-gas-filter-ui-filter-gas-none"));
         }
     }
 }

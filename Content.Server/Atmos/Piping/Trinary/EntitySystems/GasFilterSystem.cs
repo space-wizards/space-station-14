@@ -19,21 +19,13 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<GasFilterComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
-        SubscribeLocalEvent<GasFilterComponent, AtmosDeviceDisabledEvent>(OnFilterLeaveAtmosphere);
-        SubscribeLocalEvent<GasFilterComponent, GasAnalyzerScanEvent>(OnFilterAnalyzed);
-    }
-
+    [SubscribeLocalEvent]
     private void OnInit(Entity<GasFilterComponent> ent, ref ComponentInit args)
     {
         UpdateAppearance(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnFilterUpdated(Entity<GasFilterComponent> ent, ref AtmosDeviceUpdateEvent args)
     {
         if (!ent.Comp.Enabled
@@ -84,20 +76,21 @@ public sealed partial class GasFilterSystem : SharedGasFilterSystem
         _atmosphereSystem.Merge(inletNode.Air, removed);
     }
 
+    [SubscribeLocalEvent]
     private void OnFilterLeaveAtmosphere(Entity<GasFilterComponent> ent, ref AtmosDeviceDisabledEvent args)
     {
         ent.Comp.Enabled = false;
-        Dirty(ent);
 
+        DirtyField(ent.Owner, ent.Comp, nameof(GasFilterComponent.Enabled));
         UpdateAppearance(ent);
         _ambientSoundSystem.SetAmbience(ent.Owner, false);
-
         _ui.CloseUi(ent.Owner, GasFilterUiKey.Key);
     }
 
     /// <summary>
     /// Returns the gas mixture for the gas analyzer
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnFilterAnalyzed(Entity<GasFilterComponent> ent, ref GasAnalyzerScanEvent args)
     {
         args.GasMixtures ??= new List<(string, GasMixture?)>();
