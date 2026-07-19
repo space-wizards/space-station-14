@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Mech.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -32,7 +31,6 @@ namespace Content.Server.Mech.Systems;
 /// <inheritdoc/>
 public sealed partial class MechSystem : SharedMechSystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private SharedBatterySystem _battery = default!;
     [Dependency] private ContainerSystem _container = default!;
@@ -88,7 +86,6 @@ public sealed partial class MechSystem : SharedMechSystem
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
         {
             InsertBattery(uid, args.Used, component, battery);
-            _actionBlocker.UpdateCanMove(uid);
             return;
         }
 
@@ -113,7 +110,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.MaxEnergy = battery.MaxCharge;
 
         Dirty(uid, component);
-        _actionBlocker.UpdateCanMove(uid);
+        Vehicle.RefreshCanRun(uid);
     }
 
     private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
@@ -122,7 +119,6 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
 
         RemoveBattery(uid, component);
-        _actionBlocker.UpdateCanMove(uid);
 
         args.Handled = true;
     }
@@ -141,7 +137,7 @@ public sealed partial class MechSystem : SharedMechSystem
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
-        _actionBlocker.UpdateCanMove(uid);
+        Vehicle.RefreshCanRun(uid);
         Dirty(uid, component);
     }
 
