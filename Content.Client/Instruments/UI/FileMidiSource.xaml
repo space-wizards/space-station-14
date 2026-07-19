@@ -23,8 +23,8 @@
 
     <!-- Track controls -->
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <Button Name="PlayButton" Text="{Loc 'instruments-component-menu-play-stop-button'}" ToggleMode="True" StyleClasses="OpenRight" />
-        <Button Name="LoopButton" Text="{Loc 'instruments-component-menu-loop-button'}" ToggleMode="True" StyleClasses="OpenBoth" />
+        <Button Name="PlayButton" Text="{Loc 'instruments-component-menu-play-stop-button'}" ToggleMode="True" Margin="0 0 20 0" />
+        <Button Name="LoopButton" Text="{Loc 'instruments-component-menu-loop-button'}" ToggleMode="True" StyleClasses="OpenRight" />
         <Button Name="ShuffleButton" Text="{Loc 'instruments-component-menu-shuffle-button'}" ToggleMode="True" StyleClasses="OpenLeft" />
         <BoxContainer HorizontalExpand="True" />
         <Label Name="TimeLabel" Text="--:--/--:--" Align="Right"/>
