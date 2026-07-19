@@ -239,6 +239,7 @@ namespace Content.Shared.Preferences
             // appearance
             Eyes = 1 << 5,
             Skin = 1 << 6,
+            Markings = 1 << 7,
         }
 
         /// <summary>
@@ -251,7 +252,8 @@ namespace Content.Shared.Preferences
             | RandomizeCfg.Sex
             | RandomizeCfg.Gender
             | RandomizeCfg.Eyes
-            | RandomizeCfg.Skin;
+            | RandomizeCfg.Skin
+            | RandomizeCfg.Markings;
 
         /// <summary>
         /// Picks a random species from roundstart species.
@@ -366,7 +368,7 @@ namespace Content.Shared.Preferences
             profile.Name = (randomizeCfg & RandomizeCfg.Name) != 0 ? RandomName(speciesProto, profile.Gender) : baseProfile.Name;
             profile.Age = (randomizeCfg & RandomizeCfg.Age) != 0 ? RandomAge(speciesProto) : baseProfile.Age;
 
-            profile.Appearance = HumanoidCharacterAppearance.Random(randomizeCfg, baseProfile.Appearance, speciesProto, profile.Sex);
+            profile.Appearance = HumanoidCharacterAppearance.Random(speciesProto, profile.Sex, randomizeCfg, baseProfile.Appearance);
 
             return profile;
         }
@@ -453,6 +455,31 @@ namespace Content.Shared.Preferences
             return new(this)
             {
                 _jobPriorities = dictionary
+            };
+        }
+
+        /// <summary>
+        /// Return a HumanoidCharacterProfile with only the job priorities listed in the NewCharacterJobs cvar
+        /// </summary>
+        public HumanoidCharacterProfile WithJobFromCvar(IConfigurationManager cfg)
+        {
+            // This path should run only rarely, so the cvar does not need to be locally stored
+            var jobs = new HashSet<string>(cfg.GetCVar(CCVars.NewCharacterJobs).Split(","));
+            var priority = JobPriority.High;
+            Dictionary<ProtoId<JobPrototype>, JobPriority> priorities = new();
+
+            foreach (var job in jobs)
+            {
+                // Remove whitespaces in case the input contained any
+                priorities.Add(job.Trim(), priority);
+
+                // There can be only one High priority
+                priority = JobPriority.Medium;
+            }
+
+            return new(this)
+            {
+                _jobPriorities = priorities,
             };
         }
 
@@ -588,6 +615,7 @@ namespace Content.Shared.Preferences
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
             if (Sex != other.Sex) return false;
+            if (Voice != other.Voice) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
