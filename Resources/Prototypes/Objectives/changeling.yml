@@ -52,9 +52,10 @@
     title: objective-escape-identity-title
   - type: ChangelingEscapeIdentityCondition
   - type: PickRandomPerson
-    filters:
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    conditions:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - ChangelingRole
 
@@ -69,10 +70,11 @@
   - type: TargetObjective
     title: objective-condition-kill-maroon-title
   - type: PickRandomPerson
-    filters:
+    conditions:
     # Can't have multiple objectives to kill the same person.
-    - !type:TargetObjectiveMindFilter
-      blacklist:
+    - !type:ObjectiveTargetCondition
+      inverted: true
+      whitelist:
         components:
         - KillPersonCondition
   - type: KillPersonCondition

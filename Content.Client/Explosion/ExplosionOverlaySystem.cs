@@ -4,7 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;
 
@@ -14,7 +13,6 @@ namespace Content.Client.Explosion;
 /// </summary>
 public sealed partial class ExplosionOverlaySystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _protoMan = default!;
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private IOverlayManager _overlayMan = default!;
     [Dependency] private SharedPointLightSystem _lights = default!;
@@ -61,7 +59,7 @@ public sealed partial class ExplosionOverlaySystem : EntitySystem
     {
         EnsureComp<ExplosionVisualsTexturesComponent>(uid);
 
-        if (!_protoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
+        if (!ProtoMan.TryIndex(component.ExplosionType, out ExplosionPrototype? type) ||
             !TryComp(uid, out ExplosionVisualsTexturesComponent? textures))
         {
             return;
