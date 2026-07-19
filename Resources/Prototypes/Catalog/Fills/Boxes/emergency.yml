@@ -17,7 +17,7 @@
     - state: internals
     - state: emergencytank
   - type: Label
-    currentLabel: reagent-name-oxygen
+    localizedLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvival
@@ -160,7 +160,7 @@
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
   - type: Label
-    currentLabel: reagent-name-oxygen
+    localizedLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxHug
@@ -203,7 +203,7 @@
     - state: internals
     - state: extendedtank
   - type: Label
-    currentLabel: reagent-name-oxygen
+    localizedLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvivalDeluxeExtended
@@ -252,7 +252,7 @@
     - state: internals
     - state: extendedtank
   - type: Label
-    currentLabel: reagent-name-oxygen
+    localizedLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvivalSyndicate
