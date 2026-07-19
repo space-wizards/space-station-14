@@ -20,7 +20,7 @@ public sealed partial class GenerationSystem : EntitySystem
     public Dictionary<string, uint> Generations = new();
 
     /// <summary>
-    /// "Bloodlines" present here
+    /// "Bloodlines" that are present this shift are stored here
     /// </summary>
     public HashSet<string> Present = new();
 
@@ -33,26 +33,25 @@ public sealed partial class GenerationSystem : EntitySystem
         LoadFromDb();
     }
 
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<GenerationComponent> ent, ref MapInitEvent args)
+    {
+        Present.Add(ent.Comp.DatabaseKey);
+        if (Generations.TryGetValue(ent.Comp.DatabaseKey, out var value))
+            ent.Comp.GenerationNumber = value;
+        else
+        {
+            // starts at gen 1
+            Generations.Add(ent.Comp.DatabaseKey, 1);
+            ent.Comp.GenerationNumber = 1;
+        }
+    }
+
     private void OnRefreshNameModifiers(Entity<GenerationComponent> ent, ref RefreshNameModifiersEvent args)
     {
         // Don't apply the modifier if the component is being removed
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
-
-        if (ent.Comp.GenerationNumber == 0)
-        {
-            Present.Add(ent.Comp.DatabaseKey);
-            if (Generations.TryGetValue(ent.Comp.DatabaseKey, out var value))
-            {
-                ent.Comp.GenerationNumber = value;
-            }
-            else
-            {
-                // retrieve data
-                Generations.Add(ent.Comp.DatabaseKey, 1);
-                ent.Comp.GenerationNumber = 1;
-            }
-        }
 
         if (ent.Comp.GenerationNumber == 1 && !ent.Comp.ShowNumberOne)
             return;
