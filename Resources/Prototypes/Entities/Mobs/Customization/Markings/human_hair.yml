@@ -1419,12 +1419,6 @@
 - type: marking
   id: HumanHairTerminal
   bodyPart: Hair
-  coloring:
-    layers:
-      terminal_headband:
-        type:
-          !type:SimpleColoring
-            color: "#C3C3C3"
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: terminal
@@ -1432,3 +1426,6 @@
     state: terminal_highlight
   - sprite: Mobs/Customization/human_hair.rsi
     state: terminal_headband
+    coloring:
+      type: !type:SimpleColoring
+        color: '#C3C3C3'
