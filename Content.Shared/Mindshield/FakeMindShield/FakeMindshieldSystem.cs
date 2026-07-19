@@ -35,7 +35,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
             ? Loc.GetString("fake-mindshield-enabled")
             : Loc.GetString("fake-mindshield-disabled");
 
-        _popup.PopupEntity(message, ent);
+        _popup.PopupEntity(message, ent, ent);
     }
 
     /// <summary>
