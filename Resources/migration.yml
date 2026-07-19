@@ -843,3 +843,27 @@ CratePartsT4: null
 
 #2027-07-17
 WeaponRifleM90GrenadeLauncher: null
+
+# 2026-07-18
+SheetGlassLingering0: null
+SheetRGlassLingering0: null
+SheetRPGlassLingering0: null
+SheetSteelLingering0: null
+SheetPlasteelLingering0: null
+SheetPlasmaLingering0: null
+PartRodMetalLingering0: null
+FloorTileItemSteelLingering0: null
+FloorTileItemWhiteLingering0: null
+FloorTileItemDarkLingering0: null
+SoapBorg: Soap
+Ointment10Lingering: Ointment
+RegenerativeMeshLingering0: null
+Brutepack10Lingering: Brutepack
+MedicatedSutureLingering0: null
+Bloodpack10Lingering: Bloodpack
+Gauze10Lingering: Gauze
+BorgVial: ChemistryEmptyVial
+BorgBeaker: Beaker
+CableHVStackLingering10: CableHVStack10
+CableMVStackLingering10: CableMVStack10
+CableApcStackLingering10: CableApcStack10

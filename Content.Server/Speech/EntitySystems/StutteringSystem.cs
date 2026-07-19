@@ -1,8 +1,8 @@
+using System.Text;
+using System.Text.RegularExpressions;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -17,28 +17,26 @@ public sealed partial class StutteringSystem : SharedStutteringSystem
     public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh)
     {
         if (refresh)
-            Status.TryUpdateStatusEffectDuration(uid, SharedStutteringSystem.Stuttering, time);
+            Status.TryUpdateStatusEffectDuration(uid, Stuttering, time);
         else
-            Status.TryAddStatusEffectDuration(uid, SharedStutteringSystem.Stuttering, time);
+            Status.TryAddStatusEffectDuration(uid, Stuttering, time);
     }
 
     public override void DoRemoveStutterTime(EntityUid uid, TimeSpan timeRemoved)
     {
-        Status.TryAddTime(uid, SharedStutteringSystem.Stuttering, -timeRemoved);
+        Status.TryAddTime(uid, Stuttering, -timeRemoved);
     }
 
     public override void DoRemoveStutter(EntityUid uid)
     {
-        Status.TryRemoveStatusEffect(uid, SharedStutteringSystem.Stuttering);
+        Status.TryRemoveStatusEffect(uid, Stuttering);
     }
 
-    protected override string AccentuateInternal(EntityUid uid, StutteringAccentComponent comp, string message)
+    public override string Accentuate(string message, Entity<StutteringAccentComponent>? ent = null)
     {
-        return Accentuate(message, comp);
-    }
+        if (ent == null)
+            return message;
 
-    public string Accentuate(string message, StutteringAccentComponent component)
-    {
         var length = message.Length;
 
         var finalMessage = new StringBuilder();
@@ -48,17 +46,17 @@ public sealed partial class StutteringSystem : SharedStutteringSystem
         for (var i = 0; i < length; i++)
         {
             newLetter = message[i].ToString();
-            if (Stutter.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
+            if (Stutter.IsMatch(newLetter) && _random.Prob(ent.Value.Comp.MatchRandomProb))
             {
-                if (_random.Prob(component.FourRandomProb))
+                if (_random.Prob(ent.Value.Comp.FourRandomProb))
                 {
                     newLetter = $"{newLetter}-{newLetter}-{newLetter}-{newLetter}";
                 }
-                else if (_random.Prob(component.ThreeRandomProb))
+                else if (_random.Prob(ent.Value.Comp.ThreeRandomProb))
                 {
                     newLetter = $"{newLetter}-{newLetter}-{newLetter}";
                 }
-                else if (_random.Prob(component.CutRandomProb))
+                else if (_random.Prob(ent.Value.Comp.CutRandomProb))
                 {
                     newLetter = "";
                 }
@@ -74,3 +72,4 @@ public sealed partial class StutteringSystem : SharedStutteringSystem
         return finalMessage.ToString();
     }
 }
+
