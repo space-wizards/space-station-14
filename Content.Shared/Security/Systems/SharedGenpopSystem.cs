@@ -81,7 +81,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
 
         if (!_accessReader.IsAllowed(user, ent))
         {
-            _popup.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), user);
+            _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), user, user);
             return;
         }
 
@@ -106,7 +106,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
         if (!_accessReader.FindPotentialAccessItems(args.User).Contains(ent.Comp.LinkedId.Value))
         {
             if (!args.Silent)
-                _popup.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), ent, args.User);
+                _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), ent, args.User);
             args.Cancelled = true;
             return;
         }
@@ -115,7 +115,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             !expireIdCard.Expired)
         {
             if (!args.Silent)
-                _popup.PopupClient(Loc.GetString("genpop-prisoner-id-popup-not-served"), ent, args.User);
+                _popup.PopupEntity(Loc.GetString("genpop-prisoner-id-popup-not-served"), ent, args.User);
             args.Cancelled = true;
         }
     }
