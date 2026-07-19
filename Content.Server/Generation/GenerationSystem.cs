@@ -64,7 +64,7 @@ public sealed partial class GenerationSystem : EntitySystem
 
     private void OnGameRunLevelChange(GameRunLevelChangedEvent ev)
     {
-        if (ev.New == GameRunLevel.PostRound && ev.Old == GameRunLevel.InRound)
+        if (ev.New != GameRunLevel.InRound && ev.Old == GameRunLevel.InRound)
         {
             ShiftEnd();
         }

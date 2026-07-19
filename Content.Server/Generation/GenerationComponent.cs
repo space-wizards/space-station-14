@@ -1,8 +1,7 @@
 namespace Content.Server.Generation;
 
 /// <summary>
-/// Causes this entity to react to ghost player using the "Boo!" action by speaking
-/// a randomly chosen message from a specified set.
+/// Makes it so that an entity is associated with a database-saved number which indicates how many shifts it has died in a row (1 for 0 death / first-generation to n for n-1 death / nth generation)
 /// </summary>
 [RegisterComponent]
 public sealed partial class GenerationComponent : Component
