@@ -54,7 +54,7 @@
     proto: OxygenBreather
   storage:
     back:
-    - BoxHug
+    - BoxSurvivalHug
 
 - type: loadout
   id: EmergencyNitrogenClown
@@ -63,7 +63,7 @@
     proto: NitrogenBreather
   storage:
     back:
-    - BoxHugNitrogen
+    - BoxSurvivalHugNitrogen
 
 # Engineering / Extended
 - type: loadout
