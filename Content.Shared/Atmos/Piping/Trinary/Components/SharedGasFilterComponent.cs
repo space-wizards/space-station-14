@@ -16,13 +16,15 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
         public string FilterLabel { get; }
         public float TransferRate { get; }
         public bool Enabled { get; }
+        public GasFilterClogMode ClogMode { get; }
         public Gas? FilteredGas { get; }
 
-        public GasFilterBoundUserInterfaceState(string filterLabel, float transferRate, bool enabled, Gas? filteredGas)
+        public GasFilterBoundUserInterfaceState(string filterLabel, float transferRate, bool enabled, GasFilterClogMode clogMode, Gas? filteredGas)
         {
             FilterLabel = filterLabel;
             TransferRate = transferRate;
             Enabled = enabled;
+            ClogMode = clogMode;
             FilteredGas = filteredGas;
         }
     }
@@ -53,5 +55,25 @@ namespace Content.Shared.Atmos.Piping.Trinary.Components
     public sealed class GasFilterSelectGasMessage(Gas? gas) : BoundUserInterfaceMessage
     {
         public readonly Gas? Gas = gas;
+    }
+
+    [Serializable, NetSerializable]
+    public enum GasFilterClogMode : byte
+    {
+        Block,
+        Pass
+    }
+
+    /// <summary>
+    /// Message sent to change the clog mode of the gas filter.
+    /// </summary>
+    /// <param name="mode">The new clog mode value.</param>
+    [Serializable, NetSerializable]
+    public sealed class GasFilterChangeClogModeMessage(GasFilterClogMode mode) : BoundUserInterfaceMessage
+    {
+        /// <summary>
+        /// The new clog mode value.
+        /// </summary>
+        public readonly GasFilterClogMode ClogMode = mode;
     }
 }

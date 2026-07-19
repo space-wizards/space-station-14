@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
@@ -42,7 +43,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
-
+            SubscribeLocalEvent<GasFilterComponent, GasFilterChangeClogModeMessage>(OnChangeClogModeMessage);
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
@@ -69,35 +70,58 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
             }
 
-            var removed = inletNode.Air.RemoveVolume(transferVol);
-
+            var removedGas = inletNode.Air.RemoveVolume(transferVol);
+            // Ratio of each each `removedGas` fraction that can be passed to its node without
+            // exceeding max pressure. This might end up negative, but such cases are handled
+            // correctly by the `RemoveRatio` method.
+            float selectedOutletRatio;
             if (filter.FilteredGas.HasValue)
             {
-                // Make sure we don't pump over the pressure limit.
-                var limitMolesFilter =
-                    AtmosphereSystem.MolesToMaxPressure(removed, filterNode.Air, Atmospherics.MaxOutputPressure);
+                var maxFilteredMoles = removedGas.GetMoles(filter.FilteredGas.Value);
+                var removedFilteredGas = new GasMixture { Temperature = removedGas.Temperature };
+                removedFilteredGas.SetMoles(filter.FilteredGas.Value, maxFilteredMoles);
+                removedGas.SetMoles(filter.FilteredGas.Value, 0f);
 
-                var availableMoles = removed.GetMoles(filter.FilteredGas.Value);
-                var filteredMoles = Math.Max(Math.Min(limitMolesFilter, availableMoles), 0);
-                var filteredGasMixture = new GasMixture { Temperature = removed.Temperature };
+                float selectedFilterRatio;
+                var maxFilterRatio =
+                    SharedAtmosphereSystem.FractionToMaxPressure(removedFilteredGas, filterNode.Air, Atmospherics.MaxOutputPressure);
+                // In the pass mode we want to keep pumping as long as either of the outputs accepts
+                // the relevant gas fraction, so the filter clogs as late as possible. To do this we
+                // simply fit as much gas as possible from the pumped gas into the relevant output.
+                // This however can inadvertently filter out only one gas fraction from the inlet
+                // node and thus change the gas ratios there. To prevent this there also exists a
+                // block mode. In block mode we want to stop as soon as either of the outputs gets
+                // on the pressure limit, so we compute how much we can process into either output
+                // and then select the lower of the two.
+                if (filter.ClogMode == GasFilterClogMode.Block)
+                {
+                    var maxOutletRatio =
+                        SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                    selectedFilterRatio = Math.Min(maxOutletRatio, maxFilterRatio);
+                    selectedOutletRatio = selectedFilterRatio;
+                }
+                else // filter.ClogMode == GasFilterClogMode.Pass
+                {
+                    selectedFilterRatio = maxFilterRatio;
+                    selectedOutletRatio =
+                        SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
+                }
 
-                filteredGasMixture.SetMoles(filter.FilteredGas.Value, filteredMoles);
-                removed.AdjustMoles(filter.FilteredGas.Value, -filteredMoles);
+                var filteredGas = removedFilteredGas.RemoveRatio(selectedFilterRatio);
+                _atmosphereSystem.Merge(filterNode.Air, filteredGas);
+                var leftoverFilteredMoles = removedFilteredGas.GetMoles(filter.FilteredGas.Value);
+                inletNode.Air.AdjustMoles(filter.FilteredGas.Value, leftoverFilteredMoles);
 
-                _atmosphereSystem.Merge(filterNode.Air, filteredGasMixture);
-
-                _ambientSoundSystem.SetAmbience(uid, filteredMoles > 0f);
+                _ambientSoundSystem.SetAmbience(uid, selectedFilterRatio > 0f);
+            } else {
+                selectedOutletRatio =
+                    SharedAtmosphereSystem.FractionToMaxPressure(removedGas, outletNode.Air, Atmospherics.MaxOutputPressure);
             }
 
-            // Fraction of `removed` that can be sent to outlet without exceeding max pressure.
-            var limitRatioOutlet =
-                AtmosphereSystem.FractionToMaxPressure(removed, outletNode.Air, Atmospherics.MaxOutputPressure);
+            var passthroughGas = removedGas.RemoveRatio(selectedOutletRatio);
 
-            // This might end up negative, but such cases are handled correctly by the `RemoveRatio` method
-            var passthrough = removed.RemoveRatio(limitRatioOutlet);
-
-            _atmosphereSystem.Merge(outletNode.Air, passthrough);
-            _atmosphereSystem.Merge(inletNode.Air, removed);
+            _atmosphereSystem.Merge(outletNode.Air, passthroughGas);
+            _atmosphereSystem.Merge(inletNode.Air, removedGas);
         }
 
         private void OnFilterLeaveAtmosphere(EntityUid uid, GasFilterComponent filter, ref AtmosDeviceDisabledEvent args)
@@ -138,7 +162,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasFilterUiKey.Key,
-                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.FilteredGas));
+                new GasFilterBoundUserInterfaceState(MetaData(uid).EntityName, filter.TransferRate, filter.Enabled, filter.ClogMode, filter.FilteredGas));
         }
 
         private void UpdateAppearance(EntityUid uid, GasFilterComponent? filter = null)
@@ -156,6 +180,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
+        }
+
+        private void OnChangeClogModeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeClogModeMessage args)
+        {
+            filter.ClogMode = args.ClogMode;
+            _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
+                $"{ToPrettyString(args.Actor):player} set the clog mode on {ToPrettyString(uid):device} to {args.ClogMode}");
+            DirtyUI(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
