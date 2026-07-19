@@ -5,7 +5,6 @@ using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
@@ -14,7 +13,6 @@ namespace Content.Shared.Mindshield.FakeMindShield;
 /// </summary>
 public sealed partial class FakeMindShieldSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private TagSystem _tag = default!;
@@ -71,15 +69,14 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         if (!TryComp<ActionsComponent>(ent, out var actionsComp))
             return;
 
+        ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
+
         foreach (var action in actionsComp.Actions)
         {
             if (!_tag.HasTag(action, FakeMindShieldImplantTag))
                 continue;
 
             if (!TryComp<ActionComponent>(action, out var actionComp))
-                continue;
-
-            if (_actions.IsCooldownActive(actionComp, _timing.CurTime))
                 continue;
 
             _actions.SetToggled(action, args.ChameleonOutfit.HasMindShield);
@@ -89,7 +86,6 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
                 _actions.SetCooldown(action, actionComp.UseDelay.Value);
         }
 
-        ent.Comp.IsEnabled = args.ChameleonOutfit.HasMindShield;
         Dirty(ent);
     }
 }
