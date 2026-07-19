@@ -165,7 +165,6 @@ public sealed partial class AdminSystem : EntitySystem
 
         if (!obj.IsAdmin)
         {
-            DemoteAdminGhost(obj.Player);
             RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
             return;
         }
@@ -173,29 +172,6 @@ public sealed partial class AdminSystem : EntitySystem
         SendFullPlayerList(obj.Player);
     }
 
-    /// <summary>
-    /// If a freshly de-adminned player is an aghost, demote them to a regular ghost,
-    /// or kick them back into their character, if they have one.
-    /// </summary>
-    private void DemoteAdminGhost(ICommonSession session)
-    {
-        if (session.AttachedEntity is not { } aghost)
-            return;
-
-        if (Comp<MetaDataComponent>(aghost).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName.Id)
-            return;
-
-        if (!_minds.TryGetMind(session, out var mindId, out var mind))
-            return;
-
-        // Return to our character if we aghosted out of it
-        if (mind.VisitingEntity == aghost && mind.OwnedEntity is not null)
-            _minds.UnVisit(mindId, mind);
-        else
-            _ghost.SpawnGhost((mindId, mind), aghost); // transfers the mind for us
-
-        QueueDel(aghost);
-    }
 
     private void OnPlayerDetached(PlayerDetachedEvent ev)
     {
