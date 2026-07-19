@@ -766,6 +766,27 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        public async IAsyncEnumerable<(string, uint)> LoadGenerations()
+        {
+            await using var db = await GetDb();
+
+            foreach (var value in db.DbContext.Generations)
+            {
+                if (value != null)
+                    yield return (value.Key, value.Number);
+            }
+        }
+
+        public async Task SaveGenerations(Dictionary<string, uint> generations)
+        {
+            await using var db = await GetDb();
+            foreach (var keypair in generations)
+            {
+                db.DbContext.Generations.Add(new Generation() { Key = keypair.Key, Number = keypair.Value });
+            }
+            await db.DbContext.SaveChangesAsync();
+        }
+
         [return: NotNullIfNotNull(nameof(round))]
         protected RoundRecord? MakeRoundRecord(Round? round)
         {

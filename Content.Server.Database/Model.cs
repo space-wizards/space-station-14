@@ -51,6 +51,7 @@ namespace Content.Server.Database
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
         public DbSet<CustomVoteLog> CustomVoteLog { get; set; } = null!;
         public DbSet<CustomVoteLogOption> CustomVoteLogOption { get; set; } = null!;
+        public DbSet<Generation> Generations { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -766,6 +767,23 @@ namespace Content.Server.Database
         NoHwid = 6
     }
 
+    /// <summary>
+    /// Generation number storage
+    /// </summary>
+    [PrimaryKey(nameof(Key))]
+    public class Generation
+    {
+        /// <summary>
+        /// The unique name of this generation data's lineage
+        /// </summary>
+        [Key]
+        public required string Key { get; set; }
+
+        /// <summary>
+        /// The current generation we're at.
+        /// </summary>
+        public uint Number { get; set; }
+    }
     public class ServerBanHit
     {
         public int Id { get; set; }

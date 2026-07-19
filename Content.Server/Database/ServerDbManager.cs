@@ -213,9 +213,9 @@ namespace Content.Server.Database
 
         #region Generations
 
-        Task<uint> LoadGeneration(string key);
+        IAsyncEnumerable<(string, uint)> LoadGenerations();
 
-        Task SaveGeneration(string key, uint value);
+        Task SaveGenerations(Dictionary<string, uint> generations);
 
         #endregion
 
@@ -724,6 +724,18 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddRoundPlayers(id, playerIds));
+        }
+
+        public IAsyncEnumerable<(string, uint)> LoadGenerations()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.LoadGenerations());
+        }
+
+        public Task SaveGenerations(Dictionary<string, uint> generations)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveGenerations(generations));
         }
 
         public Task UpdateAdminRankAsync(AdminRank rank, CancellationToken cancel = default)

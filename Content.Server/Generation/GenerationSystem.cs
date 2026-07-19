@@ -13,9 +13,16 @@ public sealed partial class GenerationSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private TransformSystem _xform = default!;
     [Dependency] private IServerDbManager _db = default!;
-    [Dependency] private ServerDbEntryManager _dbEntryManager = default!;
 
-    public Dictionary<string, uint> Generations = new Dictionary<string, uint>();
+    /// <summary>
+    /// Generation values retrieved from the DB
+    /// </summary>
+    public Dictionary<string, uint> Generations = new();
+
+    /// <summary>
+    /// "Bloodlines" present here
+    /// </summary>
+    public HashSet<string> Present = new();
 
 
     public override void Initialize()
@@ -23,6 +30,7 @@ public sealed partial class GenerationSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChange);
         SubscribeLocalEvent<GenerationComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
+        LoadFromDb();
     }
 
     private void OnRefreshNameModifiers(Entity<GenerationComponent> ent, ref RefreshNameModifiersEvent args)
@@ -31,8 +39,9 @@ public sealed partial class GenerationSystem : EntitySystem
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (ent.Comp.GenerationNumber == 0)
+        if (ent.Comp.GenerationNumber != 0)
         {
+            Present.Add(ent.Comp.DatabaseKey);
             if (Generations.TryGetValue(ent.Comp.DatabaseKey, out var value))
             {
                 ent.Comp.GenerationNumber = value;
@@ -40,14 +49,16 @@ public sealed partial class GenerationSystem : EntitySystem
             else
             {
                 // retrieve data
-                Generations.Add(ent.Comp.DatabaseKey, _db.LoadGeneration(ent.Comp.DatabaseKey).Start);
+                Generations.Add(ent.Comp.DatabaseKey, 1);
                 ent.Comp.GenerationNumber = 1;
             }
-            if (ent.Comp.GenerationNumber == 1 && !ent.Comp.ShowNumberOne)
-                return;
         }
 
+        if (ent.Comp.GenerationNumber == 1 && !ent.Comp.ShowNumberOne)
+            return;
+
         var format = "name-generations";
+
         // Low priority to stuck it as close as the original name as possible
         args.AddModifier(format, -15, ("roman", ToRomanNumeral(ent.Comp.GenerationNumber)));
     }
@@ -62,7 +73,7 @@ public sealed partial class GenerationSystem : EntitySystem
     private void ShiftEnd()
     {
         // Increase data
-        foreach (var key in Generations.Keys)
+        foreach (var key in Present)
         {
             Generations[key] += 1;
         }
@@ -76,22 +87,39 @@ public sealed partial class GenerationSystem : EntitySystem
                 continue;
             }
 
-            /*if (eShuttle != null && eShuttle.Value.IsValid() && generation.MustEvac)
+            if (eShuttle != null && eShuttle.Value.IsValid() && generation.MustEvac)
             {
                 if (Transform(eShuttle.Value).MapID != _xform.GetMapCoordinates(ent).MapId)
                 {
                     // not on evac...
+                    continue;
                 }
 
-            }*/
+            }
 
             // we lived, reset generation counter!
             Generations[generation.DatabaseKey] = 1;
         }
+
+        Present.Clear();
+
         // Store data
-        // Clear generation data cache
-        //Generations.Clear();
+        StoreIntoDb();
     }
+
+    private async void LoadFromDb()
+    {
+        await foreach (var keypair in _db.LoadGenerations())
+        {
+            Generations.Add(keypair.Item1, keypair.Item2);
+        }
+    }
+
+    private async void StoreIntoDb()
+    {
+        await _db.SaveGenerations(Generations);
+    }
+
     private static readonly List<(uint, string)> Map = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")];
 
     /// <summary>
