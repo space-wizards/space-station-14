@@ -121,6 +121,24 @@
       role: JobPassenger
       time: 10h
 
+- type: loadoutEffectGroup
+  id: ReporterStarter
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 3h
+
+- type: loadoutEffectGroup
+  id: ReporterCapstone
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobReporter
+      time: 30h
+
 # Command
 
 - type: loadoutEffectGroup
