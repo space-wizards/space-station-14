@@ -18,12 +18,12 @@ namespace Content.Shared.Weapons.Ranged.Upgrades;
 
 public sealed partial class GunUpgradeSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedContainerSystem _container = default!;
-    [Dependency] private SharedGunSystem _gun = default!;
-    [Dependency] private EntityWhitelistSystem _entityWhitelist = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedGunSystem _gun = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -89,7 +89,7 @@ public sealed partial class GunUpgradeSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("gun-upgrade-popup-insert", ("upgrade", args.Used),("gun", ent.Owner)), args.User, args.User);
         _gun.RefreshModifiers(ent.Owner);
 
-        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} inserted gun upgrade {ToPrettyString(args.Used)} into {ToPrettyString(ent.Owner)}.");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{args.User:player} inserted gun upgrade {args.Used} into {ent.Owner}.");
     }
 
     private void OnFireRateRefresh(Entity<GunUpgradeFireRateComponent> ent, ref GunRefreshModifiersEvent args)

@@ -18,10 +18,10 @@ namespace Content.Server.Mindshield;
 /// </summary>
 public sealed partial class MindShieldSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogManager = default!;
-    [Dependency] private RoleSystem _roleSystem = default!;
-    [Dependency] private MindSystem _mindSystem = default!;
-    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly RoleSystem _roleSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -53,7 +53,7 @@ public sealed partial class MindShieldSystem : EntitySystem
         if (_mindSystem.TryGetMind(implanted, out var mindId, out _) &&
             _roleSystem.MindRemoveRole<RevolutionaryRoleComponent>(mindId))
         {
-            _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(implanted)} was deconverted due to being implanted with a Mindshield.");
+            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{implanted} was deconverted due to being implanted with a Mindshield.");
         }
     }
 

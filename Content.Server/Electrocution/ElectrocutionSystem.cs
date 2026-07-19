@@ -430,7 +430,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
             if (_damageable.TryChangeDamage(uid, new DamageSpecifier(ProtoMan.Index(DamageType), dmg), out var damage, origin: sourceUid))
             {
                 _adminLogger.Add(LogType.Electrocution,
-                    $"{ToPrettyString(uid):entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
+                    $"{uid:entity} received {damage:damage} powered electrocution damage{(sourceUid != null ? " from " + sourceUid.Value : ""):source}");
             }
         }
 

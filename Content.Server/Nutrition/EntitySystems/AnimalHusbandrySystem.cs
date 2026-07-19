@@ -23,17 +23,17 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class AnimalHusbandrySystem : EntitySystem
 {
-    [Dependency] private EntityLookupSystem _entityLookup = default!;
-    [Dependency] private HungerSystem _hunger = default!;
-    [Dependency] private IAdminLogManager _adminLog = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     private readonly HashSet<EntityUid> _failedAttempts = new();
     private readonly HashSet<EntityUid> _birthQueue = new();
@@ -126,7 +126,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
 
         component.GestationEndTime = _timing.CurTime + component.GestationDuration;
         component.Gestating = true;
-        _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} (carrier) and {ToPrettyString(partner)} (partner) successfully bred.");
+        _adminLogger.Add(LogType.Action, $"{uid} (carrier) and {partner} (partner) successfully bred.");
         return true;
     }
 
@@ -198,7 +198,7 @@ public sealed partial class AnimalHusbandrySystem : EntitySystem
                 // Make sure the name prefix is applied
                 _nameMod.RefreshNameModifiers(offspring);
             }
-            _adminLog.Add(LogType.Action, $"{ToPrettyString(uid)} gave birth to {ToPrettyString(offspring)}.");
+            _adminLogger.Add(LogType.Action, $"{uid} gave birth to {offspring}.");
         }
 
         _popup.PopupEntity(Loc.GetString(component.BirthPopup, ("parent", Identity.Entity(uid, EntityManager))), uid);

@@ -19,10 +19,10 @@ namespace Content.Shared.Prying.Systems;
 /// </summary>
 public sealed partial class PryingSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private SharedAudioSystem _audioSystem = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private AlertsSystem _alerts = default!;
 
     public override void Initialize()
@@ -164,11 +164,11 @@ public sealed partial class PryingSystem : EntitySystem
 
         if (tool != user && tool != null)
         {
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user} is using {tool.Value} to pry {target}");
         }
         else
         {
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is prying {ToPrettyString(target)}");
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{user} is prying {target}");
         }
         return _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }

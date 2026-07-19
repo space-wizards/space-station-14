@@ -46,4 +46,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> AdminLogsHighLogPlaytime =
         CVarDef.Create("adminlogs.high_log_playtime", 5, CVar.SERVERONLY);
+
+    public static readonly CVarDef<bool> AdminAuditLogEnabled =
+        CVarDef.Create("adminlogs.audit_enabled", true, CVar.SERVERONLY);
+
+    public static readonly CVarDef<float> AdminAuditLogQueueSendDelay =
+        CVarDef.Create("adminlogs.audit_queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 }

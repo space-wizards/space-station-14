@@ -11,11 +11,11 @@ namespace Content.Server.Containers;
 
 public sealed partial class ThrowInsertContainerSystem : EntitySystem
 {
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -50,6 +50,13 @@ public sealed partial class ThrowInsertContainerSystem : EntitySystem
         _audio.PlayPvs(ent.Comp.InsertSound, ent);
 
         if (args.Component.Thrower != null)
-            _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.Component.Thrower.Value):player} landed in {ToPrettyString(ent)}");
+        {
+            var thrower = args.Component.Thrower.Value;
+
+            _adminLogger.Add(
+                LogType.Landed,
+                LogImpact.Low,
+                $"{args.Thrown:target} thrown by {thrower:actor} landed in {ent:container}");
+        }
     }
 }

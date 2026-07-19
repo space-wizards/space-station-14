@@ -42,20 +42,20 @@ namespace Content.Shared.Cuffs
     // TODO remove all the IsServer() checks.
     public abstract partial class SharedCuffableSystem : EntitySystem
     {
-        [Dependency] private INetManager _net = default!;
-        [Dependency] private ISharedAdminLogManager _adminLog = default!;
-        [Dependency] private ActionBlockerSystem _actionBlocker = default!;
-        [Dependency] private AlertsSystem _alerts = default!;
-        [Dependency] private SharedAudioSystem _audio = default!;
-        [Dependency] private SharedContainerSystem _container = default!;
-        [Dependency] private SharedDoAfterSystem _doAfter = default!;
-        [Dependency] private SharedHandsSystem _hands = default!;
-        [Dependency] private SharedVirtualItemSystem _virtualItem = default!;
-        [Dependency] private SharedInteractionSystem _interaction = default!;
-        [Dependency] private SharedPopupSystem _popup = default!;
-        [Dependency] private SharedTransformSystem _transform = default!;
-        [Dependency] private UseDelaySystem _delay = default!;
-        [Dependency] private SharedCombatModeSystem _combatMode = default!;
+        [Dependency] private readonly INetManager _net = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
+        [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly UseDelaySystem _delay = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
         public override void Initialize()
         {
@@ -359,9 +359,9 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
-                    _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-self-success-message"), user, user);
-                    _adminLog.Add(LogType.Action, LogImpact.Medium,
-                        $"{ToPrettyString(user):player} has cuffed himself");
+                    _popup.PopupClient(Loc.GetString("handcuff-component-cuff-self-success-message"), user, user);
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{user:player} has cuffed himself");
                 }
                 else
                 {
@@ -369,8 +369,8 @@ namespace Content.Shared.Cuffs
                         ("otherName", Identity.Name(target, EntityManager, user))), user, user);
                     _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-by-other-success-message",
                         ("otherName", Identity.Name(user, EntityManager, target))), target, target);
-                    _adminLog.Add(LogType.Action, LogImpact.High,
-                        $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
+                        $"{user:player} has cuffed {target:player}");
                 }
             }
             else
@@ -657,7 +657,7 @@ namespace Content.Shared.Cuffs
             if (!_doAfter.TryStartDoAfter(doAfterEventArgs))
                 return;
 
-            _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):player} is trying to uncuff {ToPrettyString(target):subject}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{user:player} is trying to uncuff {target:subject}");
 
             var popupText = user == target.Owner
                 ? "cuffable-component-start-uncuffing-self-observer"
@@ -757,13 +757,13 @@ namespace Content.Shared.Cuffs
                 {
                     _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
                         ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
-                    _adminLog.Add(LogType.Action, LogImpact.High,
-                        $"{ToPrettyString(user):player} has successfully uncuffed {ToPrettyString(target):player}");
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
+                        $"{user:player} has successfully uncuffed {target:player}");
                 }
                 else
                 {
-                    _adminLog.Add(LogType.Action, LogImpact.High,
-                        $"{ToPrettyString(user):player} has successfully uncuffed themselves");
+                    _adminLogger.Add(LogType.Action, LogImpact.High,
+                        $"{user:player} has successfully uncuffed themselves");
                 }
             }
             else if (user != null)

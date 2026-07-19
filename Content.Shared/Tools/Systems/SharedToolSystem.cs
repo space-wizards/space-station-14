@@ -19,7 +19,7 @@ namespace Content.Shared.Tools.Systems;
 public abstract partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

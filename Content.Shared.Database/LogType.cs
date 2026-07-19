@@ -485,7 +485,38 @@ public enum LogType
     Connection = 104,
 
     /// <summary>
+    /// A player toggled combat mode.
+    /// </summary>
+    CombatModeToggle = 105,
+
+    /// <summary>
+    /// A new round started (RunLevel transitioned to InRound).
+    /// </summary>
+    RoundStarted = 106,
+
+    /// <summary>
+    /// A round ended and entered post-round (RunLevel transitioned to PostRound).
+    /// </summary>
+    RoundEnded = 107,
+
+    /// <summary>
+    /// The round restarted and returned to lobby (RunLevel transitioned to PreRoundLobby).
+    /// </summary>
+    RoundRestarted = 108,
+
+    /// <summary>
+    /// The emergency shuttle launched from the station toward CentComm (FTL started).
+    /// </summary>
+    ShuttleLaunched = 109,
+
+    /// <summary>
+    /// The emergency shuttle arrived at CentComm (FTL completed). Marks the start of
+    /// the post-round countdown and the window where shuttle grief typically occurs.
+    /// </summary>
+    ShuttleArrivedAtCentComm = 110,
+
+    /// <summary>
     /// Silicon law changes.
     /// </summary>
-    SiliconLaw = 105,
+    SiliconLaw = 111,
 }

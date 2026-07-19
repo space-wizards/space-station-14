@@ -35,20 +35,20 @@ namespace Content.Shared.Kitchen;
 /// </summary>
 public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private ISharedAdminLogManager _logger = default!;
-    [Dependency] private DamageableSystem _damageableSystem = default!;
-    [Dependency] private ExamineSystemShared _examineSystem = default!;
-    [Dependency] private MetaDataSystem _metaDataSystem = default!;
-    [Dependency] private MobStateSystem _mobStateSystem = default!;
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private SharedAudioSystem _audioSystem = default!;
-    [Dependency] private GibbingSystem _gibbing = default!;
-    [Dependency] private SharedContainerSystem _containerSystem = default!;
-    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private SharedInteractionSystem _interaction = default!;
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
-    [Dependency] private SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly GibbingSystem _gibbing = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {
@@ -248,9 +248,9 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
             // normally medium severity, but for humanoids high severity, so new players get relay'd to admin alerts.
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.High : LogImpact.Medium;
 
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 logSeverity,
-                $"{ToPrettyString(args.User):user} put {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} put {args.Target:target} on the {ent:spike}");
 
             _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
@@ -273,9 +273,9 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
                 args.Target.Value,
                 ent);
 
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Medium,
-                $"{ToPrettyString(args.User):user} took {ToPrettyString(args.Target):target} off the {ToPrettyString(ent):spike}");
+                $"{args.User:user} took {args.Target:target} off the {ent:spike}");
 
             _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
@@ -325,9 +325,9 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
 
             var logSeverity = HasComp<HumanoidProfileComponent>(args.Target) ? LogImpact.Extreme : LogImpact.High;
 
-            _logger.Add(LogType.Gib,
+            _adminLogger.Add(LogType.Gib,
                 logSeverity,
-                $"{ToPrettyString(args.User):user} finished butchering {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} finished butchering {args.Target:target} on the {ent:spike}");
         }
         else
         {
@@ -336,9 +336,9 @@ public sealed partial class SharedKitchenSpikeSystem : EntitySystem
             _damageableSystem.ChangeDamage(args.Target.Value, ent.Comp.ButcherDamage, true);
 
             // Log severity for damaging other entities is normally medium.
-            _logger.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Medium,
-                $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+                $"{args.User:user} butchered {args.Target:target} on the {ent:spike}");
         }
 
         _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);

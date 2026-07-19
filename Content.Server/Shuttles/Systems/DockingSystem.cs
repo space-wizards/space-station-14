@@ -1,4 +1,6 @@
 using Content.Server.Doors.Systems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -26,6 +28,7 @@ public sealed partial class DockingSystem : SharedDockingSystem
     [Dependency] private SharedJointSystem _jointSystem = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     [Dependency] private EntityQuery<MapGridComponent> _gridQuery = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -132,6 +135,8 @@ public sealed partial class DockingSystem : SharedDockingSystem
             return;
         }
 
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested undocking of {dockEnt.Value:entity}");
+
         Undock(dock);
     }
 
@@ -178,6 +183,8 @@ public sealed partial class DockingSystem : SharedDockingSystem
             _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"), args.Actor);
             return;
         }
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{args.Actor:player} requested docking of {ourDock.Value:entity} with {targetDock.Value:target}");
 
         Dock((ourDock.Value, ourDockComp), (targetDock.Value, targetDockComp));
     }

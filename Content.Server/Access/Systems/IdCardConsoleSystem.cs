@@ -212,7 +212,7 @@ public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
         /*TODO: ECS SharedIdCardConsoleComponent and then log on card ejection, together with the save.
         This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
         _adminLogger.Add(LogType.Action,
-            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", changeStrings)}] [{string.Join(", ", newAccessList)}]");
+            $"{player} has modified {targetId} with the following accesses: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
     }
 
     /// <summary>

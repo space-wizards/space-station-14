@@ -4,10 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
@@ -364,19 +366,62 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        protected override IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
             // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
             // Read the link above for parameterization before changing this method or you get the bullet
             if (!string.IsNullOrWhiteSpace(filter?.Search))
             {
-                return db.AdminLog.FromSql($"""
-SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
-WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
-""");
+                var search = filter.Search;
+                return filter.SearchMode switch
+                {
+#pragma warning disable RA0026
+                    LogSearchMode.Regex when IsValidRegex(search) => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => Regex.IsMatch(a.Payload.Message, search, RegexOptions.IgnoreCase)),
+#pragma warning restore RA0026
+                    LogSearchMode.Regex => db.AdminLogEvent // Invalid regex, return empty
+                        .Include(a => a.Payload)
+                        .Where(a => false),
+                    LogSearchMode.Wildcard => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => EF.Functions.ILike(a.Payload.Message, search)),
+                    LogSearchMode.Exact => db.AdminLogEvent
+                        .Include(a => a.Payload)
+                        .Where(a => EF.Functions.ILike(a.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                    _ => db.AdminLogEvent // Keyword, use GIN-indexed SearchVector
+                        .Include(a => a.Payload)
+                        .Where(a => a.Payload.SearchVector
+                            .Matches(EF.Functions.PlainToTsQuery("english", search)))
+                };
             }
 
-            return db.AdminLog;
+            return db.AdminLogEvent;
+        }
+
+        protected override bool SupportsRegex => true;
+
+        protected override IQueryable<AdminAuditEvent> ApplyAuditLogSearch(
+            IQueryable<AdminAuditEvent> query,
+            string search,
+            LogSearchMode searchMode)
+        {
+            return searchMode switch
+            {
+#pragma warning disable RA0026
+                LogSearchMode.Regex when IsValidRegex(search) =>
+                    query.Where(log => Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase)),
+#pragma warning restore RA0026
+                LogSearchMode.Regex => // Invalid regex, return empty
+                    query.Where(_ => false),
+                LogSearchMode.Wildcard =>
+                    query.Where(log => EF.Functions.ILike(log.Message, search)),
+                LogSearchMode.Exact =>
+                    query.Where(log => EF.Functions.ILike(log.Message, $"%{EscapeLikePattern(search)}%", "\\")),
+                _ => // Keyword, use GIN-indexed SearchVector
+                    query.Where(log => log.SearchVector
+                        .Matches(EF.Functions.PlainToTsQuery("english", search)))
+            };
         }
 
         protected override DateTime NormalizeDatabaseTime(DateTime time)

@@ -153,7 +153,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             filter.Enabled = args.Enabled;
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
+                $"{args.Actor:player} set the power on {uid:device} to {args.Enabled}");
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
         }
@@ -162,7 +162,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, filter.MaxTransferRate);
             _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
-                $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.Rate}");
+                $"{args.Actor:player} set the transfer rate on {uid:device} to {args.Rate}");
             DirtyUI(uid, filter);
 
         }
@@ -175,7 +175,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 {
                     filter.FilteredGas = args.Gas;
                     _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                        $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to {args.Gas.ToString()}");
+                        $"{args.Actor:player} set the filter on {uid:device} to {args.Gas.ToString()}");
                     DirtyUI(uid, filter);
                 }
                 else
@@ -187,7 +187,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             {
                 filter.FilteredGas = null;
                 _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
-                    $"{ToPrettyString(args.Actor):player} set the filter on {ToPrettyString(uid):device} to none");
+                    $"{args.Actor:player} set the filter on {uid:device} to none");
                 DirtyUI(uid, filter);
             }
         }

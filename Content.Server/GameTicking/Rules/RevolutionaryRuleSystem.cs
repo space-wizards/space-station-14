@@ -38,20 +38,20 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
-    [Dependency] private AntagSelectionSystem _antag = default!;
-    [Dependency] private EmergencyShuttleSystem _emergencyShuttle = default!;
-    [Dependency] private EuiManager _euiMan = default!;
-    [Dependency] private IAdminLogManager _adminLogManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private ISharedPlayerManager _player = default!;
-    [Dependency] private MindSystem _mind = default!;
-    [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private RoleSystem _role = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private SharedStunSystem _stun = default!;
-    [Dependency] private StationSystem _stationSystem = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly EuiManager _euiMan = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
 
     //Used in OnPostFlash, no reference to the rule component is available
     public readonly ProtoId<NpcFactionPrototype> RevolutionaryNpcFaction = "Revolutionary";
@@ -160,9 +160,9 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
 
         if (ev.User != null)
         {
-            _adminLogManager.Add(LogType.Mind,
+            _adminLogger.Add(LogType.Mind,
                 LogImpact.Medium,
-                $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+                $"{ev.User.Value} converted {ev.Target} into a Revolutionary");
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
@@ -240,7 +240,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
                 _stun.TryUpdateParalyzeDuration(uid, stunTime);
                 RemCompDeferred<RevolutionaryComponent>(uid);
                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", Identity.Entity(uid, EntityManager))), uid);
-                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to all Head Revolutionaries dying.");
+                _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{uid} was deconverted due to all Head Revolutionaries dying.");
 
                 if (!_mind.TryGetMind(uid, out var mindId, out var mind, mc))
                     continue;

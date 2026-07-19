@@ -3,8 +3,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Npgsql;
 
 namespace Content.Server.Database
 {
@@ -52,11 +50,6 @@ namespace Content.Server.Database
 
             // ReSharper restore StringLiteralTypo
 
-            modelBuilder.Entity<AdminLog>()
-                .HasIndex(l => l.Message)
-                .HasMethod("GIN")
-                .IsTsVectorExpressionIndex("english");
-
             foreach(var entity in modelBuilder.Model.GetEntityTypes())
             {
                 foreach(var property in entity.GetProperties())
@@ -65,21 +58,29 @@ namespace Content.Server.Database
                         property.SetColumnType("timestamp with time zone");
                 }
             }
-        }
 
-        public override IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
-        {
-            return query.Where(log => EF.Functions.ToTsVector("english", log.Message).Matches(searchText));
-        }
+            // Stored generated tsvector column on the log message for fast full-text search.
+            // PostgreSQL materializes to_tsvector('english', message) at insert time so
+            // SS14.Admin queries never recompute it per row. The GIN index enables sub-ms (ideally)
+            // @@ lookups across millions of payload rows.
+            // SQLite ignores this property (see ModelSqlite.cs).
+            modelBuilder.Entity<AdminLogEventPayload>()
+                .HasGeneratedTsVectorColumn(
+                    p => p.SearchVector,
+                    "english",
+                    p => p.Message)
+                .HasIndex(p => p.SearchVector)
+                .HasDatabaseName("IX_admin_log_event_payload_search_vector_gin")
+                .HasMethod("GIN");
 
-        public override int CountAdminLogs()
-        {
-            using var command = new NpgsqlCommand("SELECT reltuples FROM pg_class WHERE relname = 'admin_log';", (NpgsqlConnection?) Database.GetDbConnection());
-
-            Database.GetDbConnection().Open();
-            var count = Convert.ToInt32((float) (command.ExecuteScalar() ?? 0));
-            Database.GetDbConnection().Close();
-            return count;
+            modelBuilder.Entity<AdminAuditEvent>()
+                .HasGeneratedTsVectorColumn(
+                    e => e.SearchVector,
+                    "english",
+                    e => e.Message)
+                .HasIndex(e => e.SearchVector)
+                .HasDatabaseName("IX_admin_audit_event_search_vector_gin")
+                .HasMethod("GIN");
         }
     }
 }

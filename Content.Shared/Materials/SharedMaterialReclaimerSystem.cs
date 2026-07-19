@@ -27,15 +27,15 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 {
-    [Dependency] private ISharedAdminLogManager _adminLog = default!;
-    [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] protected SharedAmbientSoundSystem AmbientSound = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] protected SharedContainerSystem Container = default!;
-    [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private EmagSystem _emag = default!;
-    [Dependency] private OpenableSystem _openable = default!;
-    [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 
@@ -136,9 +136,9 @@ public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 
         if (user != null)
         {
-            _adminLog.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.High,
-                $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the material reclaimer, {ToPrettyString(uid)}");
+                $"{user.Value:player} destroyed {item} in the material reclaimer, {uid}");
         }
 
         if (Timing.CurTime > component.NextSound)

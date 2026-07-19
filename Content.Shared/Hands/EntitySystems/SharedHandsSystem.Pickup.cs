@@ -292,7 +292,7 @@ public abstract partial class SharedHandsSystem
         _interactionSystem.DoContactInteraction(uid, entity); //Possibly fires twice if manually picked up via interacting with the object
 
         if (log)
-            _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):user} picked up {ToPrettyString(entity):entity}");
+            _adminLogger.Add(LogType.Pickup, LogImpact.Low, $"{uid:user} picked up {entity:entity}");
 
         Dirty(uid, hands);
 

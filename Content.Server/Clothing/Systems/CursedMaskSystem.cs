@@ -20,13 +20,13 @@ namespace Content.Server.Clothing.Systems;
 /// <inheritdoc/>
 public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
 {
-    [Dependency] private IAdminLogManager _adminLog = default!;
-    [Dependency] private GhostSystem _ghostSystem = default!;
-    [Dependency] private HTNSystem _htn = default!;
-    [Dependency] private MindSystem _mind = default!;
-    [Dependency] private NPCSystem _npc = default!;
-    [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly HTNSystem _htn = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     // We can't store this info on the component easily
     private static readonly ProtoId<HTNCompoundPrototype> TakeoverRootTask = "SimpleHostileCompound";
@@ -45,9 +45,9 @@ public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
             ent.Comp.StolenMind = mind;
 
             _popup.PopupEntity(Loc.GetString("cursed-mask-takeover-popup"), wearer, session, PopupType.LargeCaution);
-            _adminLog.Add(LogType.Action,
+            _adminLogger.Add(LogType.Action,
                 LogImpact.Extreme,
-                $"{ToPrettyString(wearer):player} had their body taken over and turned into an enemy through the cursed mask {ToPrettyString(ent):entity}");
+                $"{wearer:player} had their body taken over and turned into an enemy through the cursed mask {ent:entity}");
         }
 
         var npcFaction = EnsureComp<NpcFactionMemberComponent>(wearer);
@@ -81,9 +81,9 @@ public sealed partial class CursedMaskSystem : SharedCursedMaskSystem
             if (Exists(ent.Comp.StolenMind))
             {
                 _mind.TransferTo(ent.Comp.StolenMind.Value, args.Wearer);
-                _adminLog.Add(LogType.Action,
+                _adminLogger.Add(LogType.Action,
                     LogImpact.Medium,
-                    $"{ToPrettyString(args.Wearer):player} was restored to their body after the removal of {ToPrettyString(ent):entity}.");
+                    $"{args.Wearer:player} was restored to their body after the removal of {ent:entity}.");
                 ent.Comp.StolenMind = null;
             }
         }

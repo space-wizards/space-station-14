@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -22,7 +23,7 @@ namespace Content.Shared.Fluids;
 public abstract partial class SharedPuddleSystem
 {
     private static readonly FixedPoint2 MeleeHitTransferProportion = 0.25;
-    [Dependency] private InjectorSystem _injectorSystem = default!;
+    [Dependency] private readonly InjectorSystem _injectorSystem = default!;
 
     protected virtual void InitializeSpillable()
     {
@@ -162,10 +163,10 @@ public abstract partial class SharedPuddleSystem
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            AdminLogger.Add(LogType.MeleeHit,
-                $"{ToPrettyString(args.User):actor} "
-                + $"splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} "
-                + $"from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            _adminLogger.Add(LogType.MeleeHit,
+                $"{args.User:actor} "
+                + $"splashed {splitSolution:solution} "
+                + $"from {entity.Owner:entity} onto {hit:target}");
 
             Reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 

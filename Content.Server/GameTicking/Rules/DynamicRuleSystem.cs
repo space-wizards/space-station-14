@@ -13,10 +13,10 @@ namespace Content.Server.GameTicking.Rules;
 
 public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleComponent>
 {
-    [Dependency] private IAdminLogManager _adminLog = default!;
-    [Dependency] private EntityTableSystem _entityTable = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     protected override void Added(EntityUid uid, DynamicRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
@@ -110,11 +110,11 @@ public sealed partial class DynamicRuleSystem : GameRuleSystem<DynamicRuleCompon
             if (TryComp<DynamicRuleCostComponent>(ruleUid, out var cost))
             {
                 entity.Comp.Budget -= cost.Cost;
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} with cost {cost.Cost} on budget {entity.Comp.Budget}.");
             }
             else
             {
-                _adminLog.Add(LogType.EventRan, LogImpact.High, $"{ToPrettyString(entity)} ran rule {ToPrettyString(ruleUid)} which had no cost.");
+                _adminLogger.Add(LogType.EventRan, LogImpact.High, $"{entity} ran rule {ruleUid} which had no cost.");
             }
         }
 

@@ -12,10 +12,10 @@ namespace Content.Shared.Atmos.Piping.Unary.Systems;
 
 public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<GasCanisterComponent>
 {
-    [Dependency] protected ISharedAdminLogManager AdminLogger = default!;
-    [Dependency] private ItemSlotsSystem _slots = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private   readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     public override void Initialize()
     {
@@ -77,11 +77,11 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
 
         if (canister.ReleaseValveOpen)
         {
-            AdminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
+            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.High, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister} while the valve was open, releasing [{GetContainedGasesString((uid, canister))}] to atmosphere");
         }
         else
         {
-            AdminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {ToPrettyString(args.Actor):player} ejected tank {ToPrettyString(item):tank} from {ToPrettyString(uid):canister}");
+            _adminLogger.Add(LogType.CanisterTankEjected, LogImpact.Medium, $"Player {args.Actor:player} ejected tank {item:tank} from {uid:canister}");
         }
 
         if (UI.TryGetUiState<GasCanisterBoundUserInterfaceState>(uid, GasCanisterUiKey.Key, out var lastState))
@@ -98,7 +98,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
     {
         var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
-        AdminLogger.Add(LogType.CanisterPressure, LogImpact.Medium, $"{ToPrettyString(args.Actor):player} set the release pressure on {ToPrettyString(uid):canister} to {args.Pressure}");
+        _adminLogger.Add(LogType.CanisterPressure, LogImpact.Medium, $"{args.Actor:player} set the release pressure on {uid:canister} to {args.Pressure}");
 
         canister.ReleasePressure = pressure;
         Dirty(uid, canister);
@@ -119,7 +119,7 @@ public abstract partial class SharedGasCanisterSystem : GasMaxPressureSystem<Gas
                 containedGasDict.Add((Gas)i, entity.Comp.Air[i]);
         }
 
-        AdminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Actor):player} set the valve on {ToPrettyString(entity):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        _adminLogger.Add(LogType.CanisterValve, impact, $"{args.Actor:player} set the valve on {entity:canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
         ToggleValve(entity, args.Valve, args.Actor);
         DirtyUI(entity);

@@ -46,27 +46,27 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
      * Handles the escape shuttle + CentCom.
      */
 
-    [Dependency] private IAdminLogManager _logger = default!;
-    [Dependency] private IAdminManager _admin = default!;
-    [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private SharedMapSystem _mapSystem = default!;
-    [Dependency] private AccessReaderSystem _reader = default!;
-    [Dependency] private ChatSystem _chatSystem = default!;
-    [Dependency] private CommunicationsConsoleSystem _commsConsole = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private DockingSystem _dock = default!;
-    [Dependency] private GameTicker _ticker = default!;
-    [Dependency] private IdCardSystem _idSystem = default!;
-    [Dependency] private NavMapSystem _navMap = default!;
-    [Dependency] private MapLoaderSystem _loader = default!;
-    [Dependency] private MetaDataSystem _metaData = default!;
-    [Dependency] private RoundEndSystem _roundEnd = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private ShuttleSystem _shuttle = default!;
-    [Dependency] private StationSystem _station = default!;
-    [Dependency] private TransformSystem _transformSystem = default!;
-    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _reader = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private readonly DockingSystem _dock = default!;
+    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly IdCardSystem _idSystem = default!;
+    [Dependency] private readonly NavMapSystem _navMap = default!;
+    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ShuttleSystem _shuttle = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     private const float ShuttleSpawnBuffer = 1f;
 
@@ -208,6 +208,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
             TryComp<FTLComponent>(uid, out var ftlComp) ? ftlComp.TravelTime : _shuttle.DefaultTravelTime
         );
 
+        _adminLogger.Add(
+            LogType.ShuttleLaunched,
+            LogImpact.High,
+            $"Emergency shuttle {uid:subject} launched from station toward CentComm. ETA: {ftlTime.TotalSeconds:F0}s");
+
         if (TryComp<DeviceNetworkComponent>(uid, out var netComp))
         {
             var payload = new NetworkPayload
@@ -229,6 +234,11 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     private void OnEmergencyFTLComplete(EntityUid uid, EmergencyShuttleComponent component, ref FTLCompletedEvent args)
     {
         var countdownTime = TimeSpan.FromSeconds(ConfigManager.GetCVar(CCVars.RoundRestartTime));
+
+        _adminLogger.Add(
+            LogType.ShuttleArrivedAtCentComm,
+            LogImpact.High,
+            $"Emergency shuttle {uid:subject} arrived at CentComm. Round restart in {countdownTime.TotalSeconds:F0}s. Post-round window open.");
         var shuttle = args.Entity;
         if (TryComp<DeviceNetworkComponent>(shuttle, out var net))
         {
@@ -277,10 +287,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         // UHH GOOD LUCK
         if (targetGrid == null)
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} unable to dock with station {ToPrettyString(stationUid)}");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} unable to dock with station {stationUid:target}");
 
             return new ShuttleDockResult
             {
@@ -292,10 +302,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         ShuttleDockResultType resultType;
         if (_shuttle.TryFTLDock(stationShuttle.EmergencyShuttle.Value, shuttle, targetGrid.Value, out var config, DockTag))
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} docked with stations");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} docked with station {stationUid:target}");
 
             resultType = _dock.IsConfigPriority(config, DockTag)
                 ? ShuttleDockResultType.PriorityDock
@@ -303,10 +313,10 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         }
         else
         {
-            _logger.Add(
+            _adminLogger.Add(
                 LogType.EmergencyShuttle,
                 LogImpact.High,
-                $"Emergency shuttle {ToPrettyString(stationUid)} unable to find a valid docking port for {ToPrettyString(stationUid)}");
+                $"Emergency shuttle {stationShuttle.EmergencyShuttle.Value:subject} unable to find a valid docking port for station {stationUid:target}");
 
             resultType = ShuttleDockResultType.NoDock;
         }

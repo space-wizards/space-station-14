@@ -118,8 +118,8 @@ public sealed partial class GlueSystem : EntitySystem
             if (quantity > 0)
             {
                 _audio.PlayPredicted(entity.Comp.Squeeze, entity.Owner, actor);
-                _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+                _popup.PopupClient(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{actor:actor} glued {target:subject} with {entity.Owner:tool}");
                 var gluedComp = EnsureComp<GluedComponent>(target);
                 gluedComp.Duration = quantity.Double() * entity.Comp.DurationPerUnit;
                 if (_container.TryGetContainingContainer((target, null, null), out var container) && _hands.IsHolding(container.Owner, target))

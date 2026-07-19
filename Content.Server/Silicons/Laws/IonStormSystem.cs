@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
@@ -10,6 +12,7 @@ namespace Content.Server.Silicons.Laws;
 public sealed partial class IonStormSystem : EntitySystem
 {
     [Dependency] private SiliconLawSystem _siliconLaw = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IonLawSystem _ionLaw = default!;
 
@@ -102,6 +105,8 @@ public sealed partial class IonStormSystem : EntitySystem
         }
 
         SiliconLawSystem.RankLaws(laws.Laws);
+
+        _adminLogger.Add(LogType.Mind, LogImpact.High, $"{ent:silicon} had its laws changed by an ion storm to {laws.LoggingString()}");
 
         // laws unique to this silicon, dont use station laws anymore
         EnsureComp<SiliconLawProviderComponent>(ent);

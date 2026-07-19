@@ -1,5 +1,8 @@
+using System.Text.Json;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -7,7 +10,8 @@ namespace Content.Server.Administration.Commands
     [AnyCommand]
     public sealed partial class ReAdminCommand : LocalizedCommands
     {
-        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
         public override string Command => "readmin";
 
@@ -27,6 +31,16 @@ namespace Content.Server.Administration.Commands
             }
 
             _adminManager.ReAdmin(player);
+
+            _auditLog.LogAction(
+                player.UserId.UserId,
+                AdminAuditAction.ReAdmin,
+                AuditSeverity.Notable,
+                "Re-adminned self",
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    action = "readmin_self"
+                }));
         }
     }
 }

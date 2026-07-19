@@ -1,5 +1,8 @@
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
 using Content.Server.EUI;
@@ -17,12 +20,13 @@ namespace Content.Server.Administration.Notes;
 
 public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 {
-    [Dependency] private IAdminManager _admins = default!;
-    [Dependency] private IServerDbManager _db = default!;
-    [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private EuiManager _euis = default!;
-    [Dependency] private IEntitySystemManager _systems = default!;
-    [Dependency] private IConfigurationManager _config = default!;
+    [Dependency] private readonly IAdminManager _admins = default!;
+    [Dependency] private readonly IServerDbManager _db = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly EuiManager _euis = default!;
+    [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
 
     public const string SawmillId = "admin.notes";
 
@@ -162,6 +166,26 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             null,
             seen
         );
+
+        if (type == NoteType.Note || type == NoteType.Watchlist)
+        {
+            _auditLog.LogAction(
+                createdBy.UserId.UserId,
+                type == NoteType.Note ? AdminAuditAction.NoteCreate : AdminAuditAction.WatchlistCreate,
+                AuditSeverity.Notable,
+                $"Created {type} #{noteId} for player {player}",
+                targetPlayerUserId: player,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    noteId,
+                    type = type.ToString(),
+                    message,
+                    severity = severity?.ToString(),
+                    secret,
+                    expiryTime
+                }));
+        }
+
         NoteAdded?.Invoke(note);
     }
 
@@ -207,6 +231,23 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
         }
 
         _sawmill.Info($"{deletedBy.Name} has deleted {type} {noteId}");
+
+        if (type == NoteType.Note || type == NoteType.Watchlist)
+        {
+            _auditLog.LogAction(
+                deletedBy.UserId.UserId,
+                type == NoteType.Note ? AdminAuditAction.NoteDelete : AdminAuditAction.WatchlistDelete,
+                AuditSeverity.Notable,
+                $"Deleted {type} #{noteId}",
+                targetPlayerUserId: note.Players.FirstOrDefault().UserId,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    noteId,
+                    type = type.ToString(),
+                    message = note.Message
+                }));
+        }
+
         NoteDeleted?.Invoke(note);
     }
 
@@ -294,6 +335,30 @@ public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectI
             EditedByName = editedBy.Name,
             ExpiryTime = expiryTime
         };
+
+        if (type == NoteType.Note || type == NoteType.Watchlist)
+        {
+            _auditLog.LogAction(
+                editedBy.UserId.UserId,
+                type == NoteType.Note ? AdminAuditAction.NoteEdit : AdminAuditAction.WatchlistEdit,
+                AuditSeverity.Notable,
+                $"Edited {type} #{noteId}",
+                targetPlayerUserId: note.Players.FirstOrDefault().UserId,
+                payload: JsonSerializer.SerializeToDocument(new
+                {
+                    noteId,
+                    type = type.ToString(),
+                    oldMessage = note.Message,
+                    newMessage = message,
+                    oldSeverity = note.NoteSeverity?.ToString(),
+                    newSeverity = severity?.ToString(),
+                    oldSecret = note.Secret,
+                    newSecret = secret,
+                    oldExpiry = note.ExpiryTime,
+                    newExpiry = expiryTime
+                }));
+        }
+
         NoteModified?.Invoke(newNote);
     }
 

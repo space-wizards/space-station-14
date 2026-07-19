@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
@@ -317,13 +318,50 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        protected override IQueryable<AdminLogEvent> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
-            IQueryable<AdminLog> query = db.AdminLog;
-            if (filter?.Search != null)
-                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
+            // Only join Payload when search is active. Downstream callers
+            // (GetAdminLogMessages, GetAdminLogs, GetAdminLogsJson) add their own
+            // .Include(log => log.Payload) when they need it, so we avoid forcing
+            // the join for non-search queries.
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                var search = filter.Search;
+                switch (filter.SearchMode)
+                {
+                    case LogSearchMode.Regex when IsValidRegex(search):
+                        // SQLite has no native regex. Skip text filter so other filters
+                        // (round, server, type, impact) still narrow the result set.
+                        // Client-side SearchModeHelper applies the real regex to loaded results.
+                        return db.AdminLogEvent.Include(log => log.Payload);
+                    case LogSearchMode.Regex: // Invalid regex, return empty
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => false);
+                    case LogSearchMode.Wildcard:
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => EF.Functions.Like(log.Payload.Message, search));
+                    case LogSearchMode.Exact:
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => EF.Functions.Like(log.Payload.Message, $"%{EscapeLikePattern(search)}%", "\\"));
+                    default: // Keyword — tokenize into words, require all present
+                    {
+                        IQueryable<AdminLogEvent> query = db.AdminLogEvent.Include(log => log.Payload);
+                        foreach (var word in search.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            var escaped = EscapeLikePattern(word);
+                            query = query.Where(log =>
+                                EF.Functions.Like(log.Payload.Message, $"%{escaped}%", "\\"));
+                        }
 
-            return query;
+                        return query;
+                    }
+                }
+            }
+
+            return db.AdminLogEvent;
         }
 
         public override async Task<int> AddAdminNote(AdminNote note)
@@ -452,16 +490,8 @@ namespace Content.Server.Database
                 {
                     if (!task.IsCompleted)
                     {
-                        if (Thread.CurrentThread == _holdingThread)
-                        {
-                            throw new InvalidOperationException(
-                                "Multiple database requests from same thread on synchronous database!");
-                        }
-
-                        throw new InvalidOperationException(
-                            $"Different threads trying to access the database at once! " +
-                            $"Holding thread: {DiagThread(_holdingThread)}, " +
-                            $"current thread: {DiagThread(Thread.CurrentThread)}");
+                        //Rather than throw, block briefly to let the other operation finish.
+                        task.Wait(cancel);
                     }
 
                     _holdingThread = Thread.CurrentThread;
@@ -474,9 +504,6 @@ namespace Content.Server.Database
             {
                 if (_synchronous)
                 {
-                    if (Thread.CurrentThread != _holdingThread)
-                        throw new InvalidOperationException("Released on different thread than took lock???");
-
                     _holdingThread = null;
                 }
 

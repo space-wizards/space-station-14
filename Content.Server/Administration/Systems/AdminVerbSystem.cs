@@ -1,3 +1,4 @@
+using Content.Server.Administration.AuditLog;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
@@ -67,6 +68,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private ExamineSystemShared _examine = default!;
         [Dependency] private AdminFrozenSystem _freeze = default!;
         [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IAdminAuditLogManager _auditLog = default!;
         [Dependency] private SiliconLawSystem _siliconLawSystem = default!;
         [Dependency] private AfkConfirmSystem _afkConfirm = default!;
 
