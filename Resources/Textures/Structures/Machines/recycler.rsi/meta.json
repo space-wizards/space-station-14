@@ -8,47 +8,15 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/icons/obj/recycling.dmi",
     "states": [
         {
-            "name": "grinder-a0"
-
-        },
-        {
-            "name": "grinder-a1",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "grinder-b0"
-
-        },
-        {
-            "name": "grinder-b1",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "grinder-o0",
+            "name": "recycler-o0",
             "directions": 4
         },
         {
-            "name": "grinder-o0bld",
+            "name": "recycler-o0bld",
             "directions": 4
         },
         {
-            "name": "grinder-o1",
+            "name": "recycler-o1",
             "directions": 4,
             "delays": [
                 [
@@ -78,7 +46,7 @@
             ]
         },
         {
-            "name": "grinder-o1bld",
+            "name": "recycler-o1bld",
             "directions": 4,
             "delays": [
                 [
@@ -108,57 +76,12 @@
             ]
         },
         {
-            "name": "grinder-o2",
+            "name": "recycler-o2",
             "directions": 4
         },
         {
-            "name": "grinder-o2bld",
+            "name": "recycler-o2bld",
             "directions": 4
-        },
-        {
-            "name": "separator-"
-
-        },
-        {
-            "name": "separator-0"
-
-        },
-        {
-            "name": "separator-A0"
-
-        },
-        {
-            "name": "separator-A1",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "separator-AO0"
-
-        },
-        {
-            "name": "separator-AO1",
-            "delays": [
-                [
-                    0.3,
-                    0.3,
-                    0.3
-                ]
-            ]
-        },
-        {
-            "name": "separator-B0"
-
-        },
-        {
-            "name": "separator-BO0"
-
         }
     ]
 }

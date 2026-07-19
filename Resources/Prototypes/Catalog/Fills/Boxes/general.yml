@@ -39,6 +39,24 @@
     - BoxCardboard
 
 - type: entity
+  parent: BoxBaseHug
+  id: BoxHug
+  name: box of hugs
+  description: A special box for sensitive people.
+  components:
+  - type: PhysicalComposition # Half of the "regular" cardboard box
+    materialComposition:
+      Cardboard: 50
+  - type: Sprite
+    layers:
+    - state: box_hug
+    - state: heart
+  - type: Tag
+    tags:
+    - BoxCardboard
+    - BoxHug
+
+- type: entity
   name: mousetrap box
   parent: BoxCardboard
   id: BoxMousetrap
@@ -236,7 +254,7 @@
     containers:
       storagebase:
         id: Brutepack
-        amount: 3
+        amount: 2
 
 - type: entity
   name: inflatable wall box
@@ -307,7 +325,7 @@
     whitelist:
       tags:
         - TrashBag
-        - TrashBagBlue
+        - TrashBagHolding
   - type: Sprite
     layers:
       - state: box

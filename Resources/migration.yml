@@ -715,6 +715,10 @@ VimChassis: null
 # 2025-08-01
 FoodDonutJellySlugcat: FoodDonutJellyScurret
 
+# 2025-08-06
+TrashBagBlue: TrashBagHolding
+BagOfSummoningGarbage: null
+
 # 2025-08-11
 ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
 ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
@@ -867,3 +871,9 @@ BorgBeaker: Beaker
 CableHVStackLingering10: CableHVStack10
 CableMVStackLingering10: CableMVStack10
 CableApcStackLingering10: CableApcStack10
+
+# 2026-07-19
+BoxHugNitrogen: BoxSurvivalHugNitrogen
+BoxMime: BoxSurvival
+BoxMimeNitrogen: BoxSurvivalNitrogen
+BoxMimeMoth: BoxSurvival
