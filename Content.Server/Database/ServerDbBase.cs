@@ -782,7 +782,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             foreach (var keypair in generations)
             {
-                db.DbContext.Generations.Add(new Generation() { Key = keypair.Key, Number = keypair.Value });
+                // i know jack shit about DBs and this is unperformant but hopefully this list will never contai nmore than like 10 elements :3
+                var gen = db.DbContext.Generations.Find([keypair.Key]);
+                if (gen != null)
+                    gen.Number = keypair.Value;
+                else
+                    db.DbContext.Generations.Add(new Generation() { Key = keypair.Key, Number = keypair.Value });
+
             }
             await db.DbContext.SaveChangesAsync();
         }

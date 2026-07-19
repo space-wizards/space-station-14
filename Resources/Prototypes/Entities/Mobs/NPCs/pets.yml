@@ -135,6 +135,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Generation
+    databaseKey: devmouse
+    mustEvac: false
 
 - type: entity
   name: Puppy Ian
@@ -661,6 +664,8 @@
     flavors:
     - meaty
     - sadness
+  - type: Generation
+    databaseKey: hamlet
 
 - type: entity
   parent: MobHamsterHamlet

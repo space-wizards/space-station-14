@@ -39,7 +39,7 @@ public sealed partial class GenerationSystem : EntitySystem
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (ent.Comp.GenerationNumber != 0)
+        if (ent.Comp.GenerationNumber == 0)
         {
             Present.Add(ent.Comp.DatabaseKey);
             if (Generations.TryGetValue(ent.Comp.DatabaseKey, out var value))

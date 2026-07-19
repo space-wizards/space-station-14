@@ -21,7 +21,7 @@ namespace Content.Server.Database.Migrations.Postgres
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.6")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -913,6 +913,22 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_custom_vote_log_option");
 
                     b.ToTable("custom_vote_log_option", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Generation", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("text")
+                        .HasColumnName("key");
+
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint")
+                        .HasColumnName("number");
+
+                    b.HasKey("Key")
+                        .HasName("PK_generations");
+
+                    b.ToTable("generations", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
