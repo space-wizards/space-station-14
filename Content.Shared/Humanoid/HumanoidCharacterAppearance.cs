@@ -74,14 +74,14 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         return EnsureValid(appearance, species, sex);
     }
 
-    private static IReadOnlyList<Color> _realisticEyeColors = new List<Color>
-    {
+    private static readonly IReadOnlyList<Color> RealisticEyeColors =
+    [
         Color.Brown,
         Color.Gray,
         Color.Azure,
         Color.SteelBlue,
         Color.Black
-    };
+    ];
 
     /// <summary>
     /// Picks a random eye color.
@@ -90,7 +90,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
     {
         var random = IoCManager.Resolve<IRobustRandom>();
 
-        var eyes = random.Pick(_realisticEyeColors);
+        var eyes = random.Pick(RealisticEyeColors);
         return eyes;
     }
 
@@ -136,10 +136,13 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         var palette = GetRandomClampedPalette(skinType, random);
 
         // squash Cfg as necessary
-        palette.SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
-            ? palette.SkinColor : skinType.Strategy.ClosestSkinColor(baseAppearance.SkinColor);
-        palette.EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
-            ? palette.EyeColor : ClampEyeColorToStrategy(baseAppearance.EyeColor, skinType, random);
+        palette = palette with
+        {
+            SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
+                ? palette.SkinColor : skinType.Strategy.ClosestSkinColor(baseAppearance.SkinColor),
+            EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
+                ? palette.EyeColor : ClampEyeColorToStrategy(baseAppearance.EyeColor, skinType, random)
+        };
 
         var markings = ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
             ? RandomizeMarkings(species, sex, palette, protoMan, random)
@@ -191,7 +194,7 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
                     continue;
                 }
 
-                var actualMarkings = appearance.Markings.GetValueOrDefault(organ)?.ShallowClone() ?? [];
+                var actualMarkings = appearance.Markings.GetValueOrDefault(organ)?.ShallowClone() ?? new();
 
                 markingManager.EnsureValidColors(actualMarkings);
                 markingManager.EnsureValidGroupAndSex(actualMarkings, organData.Value.Group, sex);

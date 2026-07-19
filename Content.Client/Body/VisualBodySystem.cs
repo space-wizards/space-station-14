@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Shared.Body;
 using Content.Shared.CCVar;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;

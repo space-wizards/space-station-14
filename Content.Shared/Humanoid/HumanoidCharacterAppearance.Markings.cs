@@ -13,30 +13,17 @@ public sealed partial class HumanoidCharacterAppearance
     /// <summary>
     ///     Stores 3 colours as character skin tone, hair tone, and eye tone.
     /// </summary>
-    private struct CharacterPalette(Color skinColor, Color hairColor, Color eyeColor)
-    {
-        public Color SkinColor = skinColor;
-        public Color HairColor = hairColor;
-        public Color EyeColor = eyeColor;
-    }
+    private record CharacterPalette(Color SkinColor, Color HairColor, Color EyeColor);
 
     # region Palettes
-
-    /// <summary>
-    ///     Generates a new random <see cref="CharacterPalette"/>.
-    /// </summary>
-    private static CharacterPalette GetRandomPalette(IRobustRandom random)
-    {
-        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
-        return GetPaletteFromBase(baseColor, random.Next(4));
-    }
 
     /// <summary>
     ///     Generates a new random <see cref="CharacterPalette"/>, clamped to a <see cref="SkinColorationPrototype"/> strategy.
     /// </summary>
     private static CharacterPalette GetRandomClampedPalette(SkinColorationPrototype skinColoration, IRobustRandom random)
     {
-        var palette = GetRandomPalette(random);
+        var baseColor = new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1);
+        var palette = GetPaletteFromBase(baseColor, random.Next(4));
         return ClampPaletteToStrategy(palette, skinColoration, random);
     }
 
@@ -61,14 +48,7 @@ public sealed partial class HumanoidCharacterAppearance
             _ => baseColor.GetOneComplementary(),
         };
 
-        if (list.Length != 3) // this should never happen
-            throw new ArgumentException($"Palettes must have exactly 3 colours, palette contains {list.Length} colours");
         return new(list[0], list[1], list[2]);
-    }
-
-    private static float RandomizeColor(float channel, IRobustRandom random)
-    {
-        return MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
     }
 
     /// <summary>
@@ -76,9 +56,12 @@ public sealed partial class HumanoidCharacterAppearance
     /// </summary>
     private static CharacterPalette ClampPaletteToStrategy(CharacterPalette palette, SkinColorationPrototype skinType, IRobustRandom random)
     {
-        palette.SkinColor = skinType.Strategy.ClosestSkinColor(palette.SkinColor);
-        palette.HairColor = ClampHairColorToStrategy(palette.HairColor, skinType, random);
-        palette.EyeColor = ClampEyeColorToStrategy(palette.EyeColor, skinType, random);
+        palette = palette with
+        {
+            SkinColor = skinType.Strategy.ClosestSkinColor(palette.SkinColor),
+            HairColor = ClampHairColorToStrategy(palette.HairColor, skinType, random),
+            EyeColor = ClampEyeColorToStrategy(palette.EyeColor, skinType, random)
+        };
 
         return palette;
     }
@@ -91,6 +74,9 @@ public sealed partial class HumanoidCharacterAppearance
     {
         if (skinType.RealisticColors)
         {
+            static float RandomizeColor(float channel, IRobustRandom random) =>
+                MathHelper.Clamp01(channel + random.NextFloat(-0.25f, 0.25f));
+
             // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
             color = random.Pick(HairStyles.RealisticHairColors);
             color = color
@@ -100,9 +86,7 @@ public sealed partial class HumanoidCharacterAppearance
         }
 
         if (skinType.SquashEyeHairColors)
-        {
             color = skinType.Strategy.ClosestSkinColor(color);
-        }
 
         return color;
     }
@@ -114,7 +98,7 @@ public sealed partial class HumanoidCharacterAppearance
     private static Color ClampEyeColorToStrategy(Color color, SkinColorationPrototype skinType, IRobustRandom random)
     {
         if (skinType.RealisticColors)
-            color = random.Pick(_realisticEyeColors);
+            color = random.Pick(RealisticEyeColors);
 
         if (skinType.SquashEyeHairColors)
             color = skinType.Strategy.ClosestSkinColor(color);
@@ -124,6 +108,8 @@ public sealed partial class HumanoidCharacterAppearance
 
     #endregion
     #region Markings
+
+    // TODO refactor how markings work completely so this isnt such a behemoth
 
     /// <summary>
     ///     Generates random colored markings for a specified character, respecting species and sex.
@@ -137,7 +123,7 @@ public sealed partial class HumanoidCharacterAppearance
         var markingManager = IoCManager.Resolve<MarkingManager>();
         var markingData = markingManager.GetMarkingData(species);
 
-        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings = [];
+        Dictionary<ProtoId<OrganCategoryPrototype>, Dictionary<HumanoidVisualLayers, List<Marking>>> markings = new();
 
         foreach (var (organ, organData) in markingData)
         {
@@ -145,7 +131,7 @@ public sealed partial class HumanoidCharacterAppearance
             if (!protoMan.TryIndex(organData.Group, out var groupProto))
                 continue;
 
-            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = [];
+            Dictionary<HumanoidVisualLayers, List<Marking>> layerMarkings = new();
             foreach (var layer in organData.Layers)
             {
                 var allMarkings = markingManager.MarkingsByLayerAndGroupAndSex(layer, organData.Group, sex);
@@ -165,34 +151,6 @@ public sealed partial class HumanoidCharacterAppearance
     }
 
     /// <summary>
-    ///     Picks a random marking for a <see cref="HumanoidVisualLayers.Hair"/> or <see cref="HumanoidVisualLayers.FacialHair"/> layer.
-    ///     These layers are handled differently to other markings, so we need unique behaviour for them.
-    /// </summary>
-    /// <returns>A list of markings for the <see cref="HumanoidVisualLayers"/>.</returns>
-    private static List<Marking> PickHairsRandomMarking(HumanoidVisualLayers layer, MarkingsLimits layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Color color, IRobustRandom random)
-    {
-        if (allMarkings.Count == 0 || !random.Prob(layerLimits.Weight))
-            return new();
-
-        var hairId = PickWeightedMarkingId(allMarkings, random);
-        if (hairId is null || !allMarkings.TryGetValue(hairId, out var hairProto))
-            return new();
-
-        if (allMarkings.TryGetValue(hairProto.ID, out var hairMarking))
-            return new List<Marking> { hairMarking.AsMarking().WithColor(color) };
-
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        var defaultHair = layer switch
-        {
-            HumanoidVisualLayers.FacialHair => HairStyles.DefaultFacialHairStyle,
-            _ => HairStyles.DefaultHairStyle,
-        };
-
-        var defaultHairProto = protoMan.Index(defaultHair);
-        return new List<Marking> { new Marking(defaultHair, defaultHairProto.Sprites.Count).WithColor(color) };
-    }
-
-    /// <summary>
     ///     Generates a list of random coloured markings for a <see cref="HumanoidVisualLayers"/> layer,
     ///     with respect to the layer and marking weights and marking limits.
     /// </summary>
@@ -202,7 +160,7 @@ public sealed partial class HumanoidCharacterAppearance
     private static List<Marking> PickLayerRandomMarkings(HumanoidVisualLayers layer, MarkingsLimits? layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, CharacterPalette palette, IRobustRandom random)
     {
         if (layerLimits is null)
-            return [];
+            return new();
 
         if (layer == HumanoidVisualLayers.Hair ||
             layer == HumanoidVisualLayers.FacialHair)
@@ -270,6 +228,34 @@ public sealed partial class HumanoidCharacterAppearance
             outMarkings.Add(new Marking(protoToAdd, colors));
         }
         return outMarkings;
+    }
+
+    /// <summary>
+    ///     Picks a random marking for a <see cref="HumanoidVisualLayers.Hair"/> or <see cref="HumanoidVisualLayers.FacialHair"/> layer.
+    ///     These layers are handled differently to other markings, so we need unique behaviour for them.
+    /// </summary>
+    /// <returns>A list of markings for the <see cref="HumanoidVisualLayers"/>.</returns>
+    private static List<Marking> PickHairsRandomMarking(HumanoidVisualLayers layer, MarkingsLimits layerLimits, IReadOnlyDictionary<string, MarkingPrototype> allMarkings, Color color, IRobustRandom random)
+    {
+        if (allMarkings.Count == 0 || !random.Prob(layerLimits.Weight))
+            return new();
+
+        var hairId = PickWeightedMarkingId(allMarkings, random);
+        if (hairId is null || !allMarkings.TryGetValue(hairId, out var hairProto))
+            return new();
+
+        if (allMarkings.TryGetValue(hairProto.ID, out var hairMarking))
+            return new List<Marking> { hairMarking.AsMarking().WithColor(color) };
+
+        var protoMan = IoCManager.Resolve<IPrototypeManager>();
+        var defaultHair = layer switch
+        {
+            HumanoidVisualLayers.FacialHair => HairStyles.DefaultFacialHairStyle,
+            _ => HairStyles.DefaultHairStyle,
+        };
+
+        var defaultHairProto = protoMan.Index(defaultHair);
+        return new List<Marking> { new Marking(defaultHair, defaultHairProto.Sprites.Count).WithColor(color) };
     }
 
     /// <summary>
