@@ -57,10 +57,12 @@ namespace Content.Client.Inventory
 
         #region Admin overlay vars
 
-        private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/camo.png");
-        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/contra.png");
-        private readonly ResPath _hasContrabandTexturePath = new("/Textures/Interface/Default/Slots/has_contra.png");
-        private readonly Color _hasContrabandColor = (0f, 1f, 1f);
+        private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/ContrabandOverlay/camo.png");
+        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/ContrabandOverlay/contra.png");
+        private readonly string _hasContrabandTexturePathBeginning = "/Textures/Interface/Default/Slots/ContrabandOverlay/has_contra";
+        private readonly string _hasContrabandTexturePathEnding = ".png";
+        private readonly int _hasContrabandMaximumValue = 9;
+        private readonly Color _hasContrabandDefaultColor = (0f, 1f, 1f);
 
         private readonly Color _chameleonColor = new(147, 112, 219);
 
@@ -326,26 +328,33 @@ namespace Content.Client.Inventory
 
             if (_admin.IsAdmin() && _isAdminView)
             {
+                // overlay for chameleon clothing
                 if (EntMan.HasComponent<ChameleonClothingComponent>(entity))
                 {
                     button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
                 }
 
                 // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
-                if (_contraband.HasContraband(entity.Value, Owner))
+                if (_contraband.StorageHasContraband(entity.Value, Owner, out var contraList))
                 {
-                    button.AddAdminOverlay(_hasContrabandTexturePath, _hasContrabandColor);
+                    var hasContraColor = _hasContrabandDefaultColor;
+                    if (contraList.Count() == 1)
+                        hasContraColor = _proto.Index(contraList[0]).Color;
+
+                    var path = new ResPath(_hasContrabandTexturePathBeginning +
+                                           Math.Min(_hasContrabandMaximumValue, contraList.Count) +
+                                           _hasContrabandTexturePathEnding);
+                    button.AddAdminOverlay(path, hasContraColor);
                 }
 
+                // overlay for items that are themselves contraband
                 if (_contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
                 {
                     button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
                 }
+
+                // more overlays can be added if needed...
             }
-
-
-
-
         }
     }
 }
