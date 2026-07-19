@@ -135,7 +135,7 @@
     - state: nitrogentank
 
 - type: entity
-  parent: BoxHugHealing
+  parent: BoxHug
   id: BoxSurvivalHug
   suffix: Survival; O2
   components:
@@ -146,8 +146,6 @@
         - id: ClothingMaskBreath
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
-  - type: Label
-    localizedLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvivalHug
@@ -161,8 +159,6 @@
         - id: ClothingMaskBreath
         - id: EmergencyNitrogenTankFilled # This should probably be replaced by an equivalent to the funny emergency oxygen tank, once that exists
         - id: EmergencyMedipen
-  - type: Label
-    localizedLabel: reagent-name-nitrogen
 
 # Primarily intended for antagonists that spawn outside the station (e.g ninjas, wizards)
 # Contains food and water because, unlike normal crew, we don't want to force them to seek food mid-round.
