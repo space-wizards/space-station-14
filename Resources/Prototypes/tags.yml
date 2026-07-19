@@ -971,7 +971,7 @@
   id: MonkeyCube # Storage whitelist: ClothingBeltChef. CargoBounty: BountyMonkeyCube
 
 - type: Tag
-  id: MonkeyWearable # Used by inventoryTemplate:monkey to whitelist clothing items for kobolds/monkeys.
+  id: MonkeyWearable # Used by inventoryTemplate:monkey to whitelist items for certain clothing slots.
 
 - type: Tag
   id: Mop # Storage whitelist: JanitorialTrolley
