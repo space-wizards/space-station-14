@@ -287,14 +287,6 @@
         whitelist:
           tags:
           - GoldenPlunger
-      cart_mop:
-        whitelist:
-          tags:
-          - MopBasic
-      cart_advmop:
-        whitelist:
-          tags:
-          - MopAdv
       cart_garbage:
         whitelist:
           tags:
@@ -335,6 +327,14 @@
         whitelist:
           tags:
           - Bucket
+      cart_mop:
+        whitelist:
+          tags:
+          - MopBasic
+      cart_advmop:
+        whitelist:
+          tags:
+          - MopAdv
     sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
   - type: Appearance
   - type: SolutionContainerVisuals
