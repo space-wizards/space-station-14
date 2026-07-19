@@ -74,7 +74,7 @@ public sealed partial class MutationSystem : EntitySystem
         ChemicalsSpeciesChange(newPlantUid, newPlantProto);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
-            _plantTray.PlantingPlantInTray(trayEnt, newPlantUid);
+            _plantTray.PlantingPlantInTray(trayEnt.AsNullable(), newPlantUid);
         else
             _plant.PlantingPlant(newPlantUid);
 

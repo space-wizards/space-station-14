@@ -175,16 +175,17 @@ public sealed partial class PlantSystem : EntitySystem
     /// Tries to get the tray entity that the plant is in.
     /// </summary>
     [PublicAPI]
-    public bool TryGetTray(Entity<PlantComponent?> ent, out Entity<PlantTrayComponent?> trayEnt)
+    public bool TryGetTray(Entity<PlantComponent?> ent, out Entity<PlantTrayComponent> trayEnt)
     {
         trayEnt = default!;
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         trayEnt.Owner = Transform(ent.Owner).ParentUid;
-        if (!TryComp(trayEnt.Owner, out trayEnt.Comp))
+        if (!TryComp<PlantTrayComponent>(trayEnt.Owner, out var trayComp))
             return false;
 
+        trayEnt.Comp = trayComp;
         return true;
     }
 
@@ -336,9 +337,6 @@ public sealed partial class PlantSystem : EntitySystem
             return string.Empty;
 
         var markup = new List<string>();
-        if (_plantHolder.GetToxinsThreshold(ent))
-            markup.Add(Loc.GetString("plant-component-toxins-high-warning"));
-
         if (ent.Comp.ImproperHeat)
             markup.Add(Loc.GetString("plant-component-heat-improper-warning"));
 

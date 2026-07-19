@@ -28,7 +28,7 @@ public sealed partial class PlantChangeTraitsEntityEffectSystem : EntityEffectSy
         }
 
         if (args.Effect.Remove)
-            RemCompDeferred(entity.Owner, traitType);
+            RemCompDeferred(entity.Owner, traitType.GetType());
         else if (!HasComp(entity.Owner, traitType.GetType()))
             AddComp(entity.Owner, traitType);
     }

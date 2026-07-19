@@ -31,7 +31,8 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
 
         var water = _plantTray.GetWaterThreshold(ent.Owner);
         var nutrition = _plantTray.GetNutrientThreshold(ent.Owner);
-        var alert = _plantTray.GetWeedThreshold(ent.Owner);
+        var alert = _plantTray.GetWeedThreshold(ent.Owner)
+                    || _plantTray.GetToxinThreshold(ent.Owner);
         var health = false;
         var harvest = false;
 
@@ -40,7 +41,6 @@ public sealed partial class PlantTrayVisualizerSystem : VisualizerSystem<PlantTr
             if (TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
             {
                 alert |= _plantWeedPest.GetPestThreshold(plantUid.Value)
-                         || _plantHolder.GetToxinsThreshold(plantUid.Value)
                          || plantHolder.ImproperHeat
                          || plantHolder.ImproperPressure
                          || plantHolder.MissingGas;

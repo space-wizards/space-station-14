@@ -14,7 +14,7 @@ namespace Content.Shared.Botany.Components;
 public sealed partial class PlantTrayComponent : Component
 {
     /// <summary>
-    /// Current water level in the plant.
+    /// Amount of water available to the plant.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float WaterLevel = 100f;
@@ -23,7 +23,7 @@ public sealed partial class PlantTrayComponent : Component
     public float MaxWaterLevel = 100f;
 
     /// <summary>
-    /// Current nutrient level in the plant.
+    /// Amount of nutrients available to the plant.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float NutritionLevel = 100f;
@@ -32,13 +32,31 @@ public sealed partial class PlantTrayComponent : Component
     public float MaxNutritionLevel = 100f;
 
     /// <summary>
-    /// Current weed level in the plant.
+    /// Amount of weeds growing in the tray.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float WeedLevel;
 
     [DataField, AutoNetworkedField]
     public float MaxWeedLevel = 10f;
+
+    /// <summary>
+    /// Amount of pests in the tray
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PestLevel;
+
+    [DataField, AutoNetworkedField]
+    public float MaxPestLevel = 10f;
+
+    /// <summary>
+    /// Amount of toxins in the tray.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ToxinLevel;
+
+    [DataField, AutoNetworkedField]
+    public float MaxToxinLevel = 100f;
 
     /// <summary>
     /// Chance per tick for weeds to grow around this tray.

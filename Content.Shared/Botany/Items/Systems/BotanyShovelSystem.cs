@@ -21,11 +21,25 @@ public sealed partial class BotanyShovelSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnAfterInteract(Entity<ShovelComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled || !args.CanReach || !HasComp<PlantTrayComponent>(args.Target))
+        if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
+        // Allow interacting with either the plant or the tray.
+        var target = args.Target.Value;
+        if (HasComp<PlantComponent>(target))
+        {
+            if (!_plant.TryGetTray(target, out var tray))
+                return;
+
+            target = tray.Owner;
+        }
+        else if (!HasComp<PlantTrayComponent>(target))
+        {
+            return;
+        }
+
         var ev = new TrayShovelAttemptEvent(ent, args.User);
-        RaiseLocalEvent(args.Target.Value, ref ev);
+        RaiseLocalEvent(target, ref ev);
 
         args.Handled = true;
     }

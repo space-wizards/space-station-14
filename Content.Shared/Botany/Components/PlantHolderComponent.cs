@@ -87,24 +87,6 @@ public sealed partial class PlantHolderComponent : Component
     public bool ForceUpdate;
 
     /// <summary>
-    /// Current pest level in the plant.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float PestLevel;
-
-    [DataField, AutoNetworkedField]
-    public float MaxPestLevel = 10f;
-
-    /// <summary>
-    /// Current toxin level in the plant.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Toxins;
-
-    [DataField, AutoNetworkedField]
-    public float MaxToxins = 100f;
-
-    /// <summary>
     /// True if the plant is losing health due to too high/low temperature.
     /// </summary>
     [DataField, AutoNetworkedField]

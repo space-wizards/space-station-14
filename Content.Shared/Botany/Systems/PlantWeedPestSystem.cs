@@ -14,7 +14,9 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MutationSystem _mutation = default!;
+    [Dependency] private PlantSystem _plant = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantWeedPestComponent> ent, ref PlantCrossPollinateEvent args)
@@ -30,13 +32,14 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantWeedPestComponent> ent, ref PlantGrowEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        var trayUid = GetEntity(args.Tray);
+        if (!TryComp<PlantTrayComponent>(trayUid, out var tray))
             return;
 
         if (_random.Prob(ent.Comp.PestGrowthChance))
-            _plantHolder.AdjustsPests(ent.Owner, ent.Comp.PestGrowthAmount);
+            _plantTray.AdjustPest((trayUid, tray), ent.Comp.PestGrowthAmount);
 
-        if (holder.PestLevel > ent.Comp.PestTolerance)
+        if (tray.PestLevel > ent.Comp.PestTolerance)
             _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.PestDamageAmount);
     }
 
@@ -70,9 +73,9 @@ public sealed partial class PlantWeedPestSystem : EntitySystem
     public bool GetPestThreshold(Entity<PlantWeedPestComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false)
-            || !TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+            || !_plant.TryGetTray(ent.Owner, out var tray))
             return false;
 
-        return holder.PestLevel > ent.Comp.PestTolerance;
+        return tray.Comp.PestLevel > ent.Comp.PestTolerance;
     }
 }

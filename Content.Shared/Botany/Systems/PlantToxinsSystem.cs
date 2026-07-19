@@ -13,6 +13,7 @@ public sealed partial class PlantToxinsSystem : EntitySystem
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private MutationSystem _mutation = default!;
     [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
 
     [SubscribeLocalEvent]
     private void OnCrossPollinate(Entity<PlantToxinsComponent> ent, ref PlantCrossPollinateEvent args)
@@ -28,24 +29,26 @@ public sealed partial class PlantToxinsSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref PlantGrowEvent args)
     {
-        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
+        var trayUid = GetEntity(args.Tray);
+        if (!TryComp<PlantTrayComponent>(trayUid, out var tray)
+            || !TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
         if (ent.Comp.ToxinUptakeDivisor <= 0)
             return;
 
-        var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / ent.Comp.ToxinUptakeDivisor));
-        if (holder.Toxins > ent.Comp.ToxinsTolerance)
+        var toxinUptake = MathF.Max(1, MathF.Round(tray.ToxinLevel / ent.Comp.ToxinUptakeDivisor));
+        if (tray.ToxinLevel > ent.Comp.ToxinsTolerance)
         {
             // Get minimum value between health left and toxin uptake.
             var actualUptake = Math.Min(toxinUptake, holder.Health);
 
             _plantHolder.AdjustsHealth(ent.Owner, -actualUptake);
-            _plantHolder.AdjustsToxins(ent.Owner, -actualUptake);
+            _plantTray.AdjustToxin((trayUid, tray), -actualUptake);
         }
         else
         {
-            _plantHolder.AdjustsToxins(ent.Owner, -toxinUptake);
+            _plantTray.AdjustToxin((trayUid, tray), -toxinUptake);
         }
     }
 

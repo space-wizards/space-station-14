@@ -7,16 +7,16 @@ namespace Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that adjusts the pests of a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustPests>
+public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustPests>
 {
-    [Dependency] private PlantHolderSystem _plantHolder = default!;
+    [Dependency] private PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
     {
-        if (_plantHolder.IsDead(entity.Owner))
+        if (!_plantTray.TryGetAlivePlant(entity.AsNullable()))
             return;
 
-        _plantHolder.AdjustsPests(entity.Owner, args.Effect.Amount);
+        _plantTray.AdjustPest(entity.AsNullable(), args.Effect.Amount);
     }
 }
 

@@ -21,6 +21,18 @@
   - type: Physics
   - type: Plant
   - type: PlantHolder
+  - type: Damageable
+  - type: Injurable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: RequireProjectileTarget
   - type: PlantHarvest
   - type: PlantChemicals
   - type: PlantToxins

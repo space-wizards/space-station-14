@@ -1,4 +1,5 @@
 using Content.Shared.Botany.Components;
+using Content.Shared.Damage.Systems;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Botany.Systems;
@@ -8,6 +9,12 @@ namespace Content.Shared.Botany.Systems;
 /// </summary>
 public sealed partial class PlantHolderSystem : EntitySystem
 {
+    [SubscribeLocalEvent]
+    private void OnDamageDealt(Entity<PlantHolderComponent> ent, ref DamageDealtEvent args)
+    {
+        AdjustsHealth(ent.AsNullable(), -args.Damage.GetTotal().Float());
+    }
+
     /// <summary>
     /// Adjusts the health of the plant.
     /// </summary>
@@ -56,20 +63,6 @@ public sealed partial class PlantHolderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adjusts the pests of the plant.
-    /// </summary>
-    [PublicAPI]
-    public void AdjustsPests(Entity<PlantHolderComponent?> ent, float amount)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return;
-
-        ent.Comp.PestLevel += amount;
-        ent.Comp.PestLevel = MathHelper.Clamp(ent.Comp.PestLevel, 0f, ent.Comp.MaxPestLevel);
-        DirtyField(ent, nameof(ent.Comp.PestLevel));
-    }
-
-    /// <summary>
     /// Adjusts the age of the plant.
     /// </summary>
     [PublicAPI]
@@ -80,20 +73,6 @@ public sealed partial class PlantHolderSystem : EntitySystem
 
         ent.Comp.Age = Math.Max(0, ent.Comp.Age + amount);
         DirtyField(ent, nameof(ent.Comp.Age));
-    }
-
-    /// <summary>
-    /// Adjusts the toxins of the plant.
-    /// </summary>
-    [PublicAPI]
-    public void AdjustsToxins(Entity<PlantHolderComponent?> ent, float amount)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return;
-
-        ent.Comp.Toxins += amount;
-        ent.Comp.Toxins = MathHelper.Clamp(ent.Comp.Toxins, 0f, ent.Comp.MaxToxins);
-        DirtyField(ent, nameof(ent.Comp.Toxins));
     }
 
     /// <summary>
@@ -160,15 +139,6 @@ public sealed partial class PlantHolderSystem : EntitySystem
         ent.Comp.Dead = true;
         ent.Comp.Health = Math.Max(0, ent.Comp.Health);
         Dirty(ent);
-    }
-
-    [PublicAPI]
-    public bool GetToxinsThreshold(Entity<PlantHolderComponent?> ent)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return false;
-
-        return ent.Comp.Toxins >= ent.Comp.MaxToxins * 0.5f;
     }
 
     [PublicAPI]
