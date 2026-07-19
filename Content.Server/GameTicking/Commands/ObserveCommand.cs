@@ -1,6 +1,8 @@
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 
 namespace Content.Server.GameTicking.Commands
@@ -10,6 +12,7 @@ namespace Content.Server.GameTicking.Commands
     {
         [Dependency] private IEntityManager _e = default!;
         [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         public string Command => "observe";
         public string Description => "";
@@ -32,10 +35,10 @@ namespace Content.Server.GameTicking.Commands
             }
 
             var asAdmin = args.Length > 0 &&
-                args[0].ToLower() == "admin" &&
+                args[0].Equals("admin", StringComparison.InvariantCultureIgnoreCase) &&
                 _adminManager.IsAdmin(player);
 
-            if (!asAdmin && _adminManager.IsAdmin(player))
+            if (!asAdmin && _adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
             {
                 _adminManager.DeAdmin(player);
             }
