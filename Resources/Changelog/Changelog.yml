@@ -5074,3 +5074,51 @@
   id: 9874
   time: '2026-07-18T21:52:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44251
+- author: Hitlinemoss
+  changes:
+  - message: A new "Assistive items" loadout tab has been added.
+    type: Add
+  - message: Canes have been moved from the "Trinkets" loadout tab to the "Assistive items" tab.
+    type: Tweak
+  id: 9875
+  time: '2026-07-19T00:40:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41264
+- author: Starlight991
+  changes:
+  - message: Slimes can now be summoned using chemistry: Cognizine creates a friendly slime, while Vestine creates a hostile one.
+    type: Add
+  id: 9876
+  time: '2026-07-19T01:23:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36673
+- author: Absotively
+  changes:
+  - message: Battlecry changes don't require pressing enter, are visible on battlecry window reopen
+    type: Tweak
+  - message: Can't enter too-long battlecry that then gets cut off
+    type: Tweak
+  id: 9877
+  time: '2026-07-19T01:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40337
+- author: Varen
+  changes:
+  - message: Dual-port air vents now function as expected with air alarms, without other device linking
+    type: Tweak
+  id: 9878
+  time: '2026-07-19T01:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38941
+- author: widgetbeck, mqole
+  changes:
+  - message: Randomized characters will now roll markings.
+    type: Add
+  - message: Added a 'Lock Markings' button to the character randomizer settings.
+    type: Add
+  id: 9879
+  time: '2026-07-19T03:45:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38528
+- author: B_Kirill, mirrorcult
+  changes:
+  - message: Wall-mounted entities are now only visible from the side of the wall they are attached to.
+    type: Tweak
+  id: 9880
+  time: '2026-07-19T04:58:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43476
