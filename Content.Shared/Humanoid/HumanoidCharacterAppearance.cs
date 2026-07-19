@@ -139,9 +139,9 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
         palette = palette with
         {
             SkinColor = (charEditorRandomizeConfig & RandomizeCfg.Skin) != 0 || baseAppearance is null
-                ? palette.SkinColor : skinType.Strategy.ClosestSkinColor(baseAppearance.SkinColor),
+                ? palette.SkinColor : baseAppearance.SkinColor,
             EyeColor = (charEditorRandomizeConfig & RandomizeCfg.Eyes) != 0 || baseAppearance is null
-                ? palette.EyeColor : ClampEyeColorToStrategy(baseAppearance.EyeColor, skinType, random)
+                ? palette.EyeColor : baseAppearance.EyeColor
         };
 
         var markings = ((charEditorRandomizeConfig & RandomizeCfg.Markings) != 0 || baseAppearance is null)
@@ -166,21 +166,22 @@ public sealed partial class HumanoidCharacterAppearance : IEquatable<HumanoidCha
 
     public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, ProtoId<SpeciesPrototype> species, Sex sex)
     {
-        var eyeColor = ClampColor(appearance.EyeColor);
 
         var proto = IoCManager.Resolve<IPrototypeManager>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
 
         var skinColor = appearance.SkinColor;
+        var eyeColor = appearance.EyeColor;
         var validatedMarkings = appearance.Markings.ShallowClone();
 
         if (proto.TryIndex(species, out var speciesProto))
         {
-            var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
+            var coloration = proto.Index(speciesProto.SkinColoration);
             var organs = markingManager.GetOrgans(species);
-            skinColor = strategy.EnsureVerified(skinColor);
+            skinColor = coloration.Strategy.EnsureVerified(skinColor);
+            eyeColor = ClampEyeColorToStrategy(eyeColor, coloration);
 
-            foreach (var (organ, markings) in appearance.Markings)
+            foreach (var (organ, _) in appearance.Markings)
             {
                 if (!organs.ContainsKey(organ))
                     validatedMarkings.Remove(organ);

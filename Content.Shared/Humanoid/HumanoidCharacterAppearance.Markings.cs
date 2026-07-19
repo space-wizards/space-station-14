@@ -58,9 +58,9 @@ public sealed partial class HumanoidCharacterAppearance
     {
         palette = palette with
         {
-            SkinColor = skinType.Strategy.ClosestSkinColor(palette.SkinColor),
+            SkinColor = skinType.Strategy.EnsureVerified(palette.SkinColor),
             HairColor = ClampHairColorToStrategy(palette.HairColor, skinType, random),
-            EyeColor = ClampEyeColorToStrategy(palette.EyeColor, skinType, random)
+            EyeColor = ClampEyeColorToStrategy(palette.EyeColor, skinType)
         };
 
         return palette;
@@ -95,13 +95,15 @@ public sealed partial class HumanoidCharacterAppearance
     ///     Clamps an eye color to a <see cref="SkinColorationPrototype"/> strategy.
     /// </summary>
 
-    private static Color ClampEyeColorToStrategy(Color color, SkinColorationPrototype skinType, IRobustRandom random)
+    private static Color ClampEyeColorToStrategy(Color color, SkinColorationPrototype skinType)
     {
+        var random = IoCManager.Resolve<IRobustRandom>();
+
         if (skinType.RealisticColors)
             color = random.Pick(RealisticEyeColors);
 
         if (skinType.SquashEyeHairColors)
-            color = skinType.Strategy.ClosestSkinColor(color);
+            color = skinType.Strategy.EnsureVerified(color);
 
         return color;
     }
