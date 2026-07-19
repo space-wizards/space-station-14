@@ -159,7 +159,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
-    private void CycleEquipment(EntityUid uid, MechComponent? component = null)
+    public void CycleEquipment(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
