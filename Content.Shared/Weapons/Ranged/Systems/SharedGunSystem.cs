@@ -23,6 +23,8 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
+using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -63,6 +65,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected SharedPopupSystem PopupSystem = default!;
     [Dependency] protected SharedProjectileSystem Projectiles = default!;
     [Dependency] protected SharedTransformSystem TransformSystem = default!;
+    [Dependency] protected SharedWieldableSystem Wieldable = default!;
     [Dependency] protected TagSystem TagSystem = default!;
     [Dependency] protected ThrowingSystem ThrowingSystem = default!;
 
@@ -90,6 +93,8 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected const string FireRateExamineColor = "yellow";
     public const string ModeExamineColor = "cyan";
 
+    private EntityQuery<GunAltFireComponent> _gunAltFireQuery;
+
     public override void Initialize()
     {
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
@@ -115,6 +120,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         SubscribeLocalEvent<GunComponent, CycleModeEvent>(OnCycleMode);
         SubscribeLocalEvent<GunComponent, HandSelectedEvent>(OnGunSelected);
         SubscribeLocalEvent<GunComponent, MapInitEvent>(OnMapInit);
+
+        _gunAltFireQuery = GetEntityQuery<GunAltFireComponent>();
     }
 
     private void OnMapInit(Entity<GunComponent> gun, ref MapInitEvent args)
@@ -157,7 +164,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         gun.Comp.ShootCoordinates = GetCoordinates(msg.Coordinates);
         gun.Comp.Target = GetEntity(msg.Target);
-        AttemptShoot(user.Value, gun);
+        AttemptShoot(user.Value, gun, msg.AltFire);
         if (msg.Continuous)
             gun.Comp.ShotCounter = 0;
     }
@@ -176,7 +183,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userGun != (gunUid, gun))
             return;
 
-        StopShooting(userGun);
+        StopShooting(userGun, args.SenderSession.AttachedEntity);
     }
 
     public bool CanShoot(GunComponent component)
@@ -187,34 +194,55 @@ public abstract partial class SharedGunSystem : EntitySystem
         return true;
     }
 
+
+
     /// <summary>
-    ///     Tries to get an entity with <see cref="GunComponent"/> from the specified entity's hands, or from the entity itself.
+    /// Tries to get an entity with <see cref="GunComponent"/> from the specified entity's hands, or from the entity itself.
     /// </summary>
     /// <param name="entity">Entity that is holding the gun, or is the gun</param>
     /// <param name="gun">Gun entity to return</param>
     /// <returns>True if gun was found</returns>
     public bool TryGetGun(EntityUid entity, out Entity<GunComponent> gun)
     {
-        gun = default;
+        return TryGetGun(entity, out gun, out _);
+    }
 
-        if (_hands.GetActiveItem(entity) is { } held &&
-            TryComp(held, out GunComponent? gunComp))
+    /// <summary>
+    /// Tries to get an entity with <see cref="GunComponent"/> from the specified entity's hands, or from the entity itself.
+    /// </summary>
+    /// <param name="entity">Entity that is holding the gun, or is the gun</param>
+    /// <param name="gun">Gun entity to return</param>
+    /// <param name="activeHandGun">If the gun is in the owner's active hand, i.e. being used to shoot with</param>
+    /// <returns>True if gun was found</returns>
+    public bool TryGetGun(EntityUid entity, out Entity<GunComponent> gun, out bool activeHandGun)
+    {
+        gun = default;
+        activeHandGun = false;
+
+        foreach (var hand in _hands.EnumerateHands(entity))
         {
-            gun = (held, gunComp);
-            return true;
+            if (_hands.TryGetHeldItem(entity, hand, out var held) &&
+                TryComp(held, out GunComponent? gunComp))
+            {
+                gun = (held.Value, gunComp);
+                if (_hands.GetActiveHand(entity) == hand)
+                    activeHandGun = true;
+                return true;
+            }
         }
 
         // Last resort is check if the entity itself is a gun.
-        if (TryComp(entity, out gunComp))
+        if (TryComp<GunComponent>(entity, out var selfGunComp))
         {
-            gun = (entity, gunComp);
+            gun = (entity, selfGunComp);
+            activeHandGun = true;
             return true;
         }
 
         return false;
     }
 
-    private void StopShooting(Entity<GunComponent> ent)
+    private void StopShooting(Entity<GunComponent> ent, EntityUid? user)
     {
         if (ent.Comp.ShotCounter == 0)
             return;
@@ -222,7 +250,23 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.ShotCounter = 0;
         ent.Comp.ShootCoordinates = null;
         ent.Comp.Target = null;
+
+        // GunAltFire treats force wielding as requiring both hands while shooting; therefore it auto-unwields upon stopping.
+        if (user != null && TryComp<GunAltFireComponent>(ent, out var gunAltFireComp) && gunAltFireComp.ForceWielding)
+            Wieldable.TryUnwield((ent, null), user.Value);
+
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
+    }
+
+    private void StopBurst(Entity<GunComponent> ent, EntityUid? user, GunAltFireComponent? gunAltFireComp)
+    {
+        ent.Comp.NextFire += TimeSpan.FromSeconds(ent.Comp.BurstCooldown);
+        ent.Comp.BurstActivated = false;
+        ent.Comp.BurstShotsCount = 0;
+        if (user != null && gunAltFireComp != null && gunAltFireComp.ForceWielding)
+        {
+            Wieldable.TryUnwield((ent, null), user.Value);
+        }
     }
 
     /// <summary>
@@ -250,7 +294,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         return result;
     }
 
-    private bool AttemptShoot(EntityUid user, Entity<GunComponent> gun)
+    private bool AttemptShoot(EntityUid user, Entity<GunComponent> gun, bool altFire = false)
     {
         if (gun.Comp.FireRateModified <= 0f ||
             !_actionBlockerSystem.CanAttack(user))
@@ -284,9 +328,18 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.Comp.NextFire > curTime)
             return false;
 
+        _gunAltFireQuery.TryComp(gun, out var gunAltFireComp);
+
+        // Check for alt fire, and set the firemode/firerate depending on if it's primary fire, alt fire, or an active burst
+        var fireMode = gun.Comp.SelectedMode;
+        if (gun.Comp.BurstActivated)
+            fireMode = SelectiveFire.Burst;
+        else if (altFire && gunAltFireComp != null)
+            fireMode = gunAltFireComp.AltFireMode;
+
         var fireRate = TimeSpan.FromSeconds(1f / gun.Comp.FireRateModified);
 
-        if (gun.Comp.SelectedMode == SelectiveFire.Burst || gun.Comp.BurstActivated)
+        if (fireMode == SelectiveFire.Burst || gun.Comp.BurstActivated)
             fireRate = TimeSpan.FromSeconds(1f / gun.Comp.BurstFireRate);
 
         // First shot
@@ -309,25 +362,18 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
-        if (!gun.Comp.BurstActivated)
+        switch (gun.Comp.SelectedMode)
         {
-            switch (gun.Comp.SelectedMode)
-            {
-                case SelectiveFire.SemiAuto:
-                    shots = Math.Min(shots, 1 - gun.Comp.ShotCounter);
-                    break;
-                case SelectiveFire.Burst:
-                    shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
-                    break;
-                case SelectiveFire.FullAuto:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.Comp.SelectedMode}!");
-            }
-        }
-        else
-        {
-            shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
+            case SelectiveFire.SemiAuto:
+                shots = Math.Min(shots, 1 - gun.Comp.ShotCounter);
+                break;
+            case SelectiveFire.Burst:
+                shots = Math.Min(shots, gun.Comp.ShotsPerBurstModified - gun.Comp.ShotCounter);
+                break;
+            case SelectiveFire.FullAuto:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.Comp.SelectedMode}!");
         }
 
         var attemptEv = new AttemptShootEvent(user, null);
@@ -343,6 +389,26 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.Comp.BurstShotsCount = 0;
             gun.Comp.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.Comp.NextFire.TotalSeconds));
             return false;
+        }
+
+        // Alt firing while not wielding/holding the gun is not permitted; we quit out here if it happens
+        if (gunAltFireComp != null && (altFire || gun.Comp.BurstActivated) && gunAltFireComp.ForceWielding &&
+            TryComp<WieldableComponent>(gun, out var wieldable))
+        {
+            if (user == gun.Owner)
+            {
+                StopBurst(gun, user, gunAltFireComp);
+                return false;
+            }
+
+            if (!wieldable.Wielded)
+            {
+                if (!Wieldable.TryWield((gun, wieldable), user))
+                {
+                    StopBurst(gun, user, gunAltFireComp);
+                    return false;
+                }
+            }
         }
 
         var fromCoordinates = Transform(user).Coordinates;
@@ -368,9 +434,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             var emptyGunShotEvent = new OnEmptyGunShotEvent(user);
             RaiseLocalEvent(gun, ref emptyGunShotEvent);
 
-            gun.Comp.BurstActivated = false;
-            gun.Comp.BurstShotsCount = 0;
-            gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldown);
+            StopBurst(gun, user, gunAltFireComp);
 
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -389,7 +453,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // Handle burstfire
-        if (gun.Comp.SelectedMode == SelectiveFire.Burst)
+        if (fireMode == SelectiveFire.Burst)
         {
             gun.Comp.BurstActivated = true;
         }
@@ -398,9 +462,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             gun.Comp.BurstShotsCount += shots;
             if (gun.Comp.BurstShotsCount >= gun.Comp.ShotsPerBurstModified)
             {
-                gun.Comp.NextFire += TimeSpan.FromSeconds(gun.Comp.BurstCooldown);
-                gun.Comp.BurstActivated = false;
-                gun.Comp.BurstShotsCount = 0;
+                StopBurst(gun, user, gunAltFireComp);
             }
         }
 

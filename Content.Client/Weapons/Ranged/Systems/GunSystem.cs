@@ -180,20 +180,52 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entity = entityNull.Value;
 
-        if (!TryGetGun(entity, out var gun))
+        if (!TryGetGun(entity, out var gun, out var activeHandGun))
         {
             return;
         }
+
+        // The goal of this section is to determine if the client:
+        // Should send a message to shoot
+        // Should send a message to stop shooting
+        // Shouldn't send anything
 
         var useKey = gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
 
-        if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.Comp.BurstActivated)
+        // Normal shooting input
+        if (_inputSystem.CmdStates.GetState(useKey) == BoundKeyState.Down && activeHandGun)
         {
-            if (gun.Comp.ShotCounter != 0)
-                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+            AttemptRaiseRequestShootEvent(gun, entity, false);
             return;
         }
 
+        // Alt shooting input
+        if (TryComp<GunAltFireComponent>(gun, out var altFire) && activeHandGun)
+        {
+            var altKey = !gun.Comp.UseKey ? EngineKeyFunctions.Use : EngineKeyFunctions.UseSecondary;
+            if (_inputSystem.CmdStates.GetState(altKey) == BoundKeyState.Down)
+            {
+                AttemptRaiseRequestShootEvent(gun, entity, true);
+                return;
+            }
+        }
+
+        // Offhand burst fire (necessary since the player "owns" the gun)
+        if (gun.Comp.BurstActivated)
+        {
+            AttemptRaiseRequestShootEvent(gun, entity, false);
+            return;
+        }
+
+        // The gun is still trying to fire? We request a stop.
+        if (gun.Comp.ShotCounter != 0)
+        {
+            RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gun) });
+        }
+    }
+
+    private void AttemptRaiseRequestShootEvent(Entity<GunComponent> gun, EntityUid user, bool altFire)
+    {
         if (gun.Comp.NextFire > Timing.CurTime)
             return;
 
@@ -210,7 +242,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
         var target = GetBestTarget(_eyeManager.CurrentEye, mousePos);
 
-        var coordinates = TransformSystem.ToCoordinates(entity, mousePos);
+        var coordinates = TransformSystem.ToCoordinates(user, mousePos);
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -221,6 +253,7 @@ public sealed partial class GunSystem : SharedGunSystem
             Coordinates = GetNetCoordinates(coordinates),
             Gun = GetNetEntity(gun),
             Continuous = _cfg.GetCVar(CCVars.ControlHoldToAttackRanged),
+            AltFire = altFire,
         });
     }
 
