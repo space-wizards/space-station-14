@@ -7,7 +7,6 @@ using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.DisplacementMap;
 
@@ -16,7 +15,6 @@ namespace Content.Client.Body;
 public sealed partial class VisualBodySystem : SharedVisualBodySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private MarkingManager _marking = default!;
     [Dependency] private SpriteSystem _sprite = default!;
@@ -76,6 +74,16 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetData(target, index, ent.Comp.Data);
+
+        var displacement = ent.Comp.Displacement;
+        if (displacement != null && ProtoMan.Resolve(displacement, out var displacementProto))
+        {
+            _displacement.TryAddDisplacement(displacementProto.Displacement,
+                (target, Comp<SpriteComponent>(target)),
+                index,
+                ent.Comp.Layer,
+                out _);
+        }
     }
 
     private void RemoveVisual(Entity<VisualOrganComponent> ent, EntityUid target)
@@ -84,6 +92,8 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             return;
 
         _sprite.LayerSetRsiState(target, index, RSI.StateId.Invalid);
+
+        _displacement.EnsureDisplacementIsNotOnSprite((target, Comp<SpriteComponent>(target)), ent.Comp.Layer);
     }
 
     private void OnMarkingsGotInserted(Entity<VisualOrganMarkingsComponent> ent, ref OrganGotInsertedEvent args)
@@ -150,7 +160,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
         if (!censorNudity)
             yield break;
 
-        var group = _prototype.Index(ent.Comp.MarkingData.Group);
+        var group = ProtoMan.Index(ent.Comp.MarkingData.Group);
         foreach (var layer in ent.Comp.MarkingData.Layers)
         {
             if (!group.Limits.TryGetValue(layer, out var layerLimits))
@@ -185,58 +195,82 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                 continue;
 
             ent.Comp.MarkingsDisplacement.TryGetValue(proto.BodyPart, out var displacement);
-            ApplyMarkingLayers(target, marking, index, displacement, proto);
-
+            ApplyMarkingLayers(target, proto, marking, index, displacement);
             applied.Add(marking);
         }
+
         ent.Comp.AppliedMarkings = applied;
     }
 
     /// <summary>
-    ///     Apply marking layer sprites to a target entity from a prototype.
+    ///     Apply marking layers to an entity from a prototype.
     /// </summary>
     /// <param name="target">The entity to apply the marking.</param>
+    /// <param name="proto">The marking prototype to add.</param>
     /// <param name="marking">The marking's colors and configuration data.</param>
     /// <param name="index">The index of the body part layer on the entity's sprite stack.</param>
     /// <param name="displacement">Optional displacement data associated with this entity.</param>
-    /// <param name="proto">The marking prototype to use.</param>
     private void ApplyMarkingLayers(Entity<SpriteComponent?> target,
+        MarkingPrototype proto,
         Marking marking,
         int index,
-        DisplacementData? displacement,
-        MarkingPrototype proto)
+        DisplacementData? displacement)
     {
         if (!Resolve(target, ref target.Comp))
             return;
 
+        var numDisplacements = 0;
         for (var i = 0; i < proto.Sprites.Count; i++)
         {
             var layer = proto.Sprites[i];
             var layerId = layer.GetLayerID(markingId: proto.ID);
             var sprite = layer.Sprite;
-            var spriteLayerIndex = index + i + 1;
+            var layerIndex = index + i + 1;
 
-            // Add the marking layer to the target entity, if the target doesn't have it yet.
-            if (!_sprite.LayerMapTryGet(target, layerId, out _, logMissing: false))
+            // Add the marking layer to the target entity, if the target doesn't have it yet
+            if (!_sprite.LayerMapTryGet(target, layerId, out _, false))
             {
-                var spriteLayer = _sprite.AddLayer(target, sprite, newIndex: spriteLayerIndex);
+                // Having three separate indices and a magic +1 is cursed, but:
+                // - index refers to the index of the organ the marking is applied to
+                // - i is the current sprite of the marking that is being applied
+                // - numDisplacements tracks how many displacements have been applied, and is
+                //   an additional offset to ensure that the order of the base sprites is correct
+                //   after inserting a displacement layer
+                // - The +1 ensures that markings render on top of the base organ
+                var spriteLayer = _sprite.AddLayer(target, sprite, layerIndex + numDisplacements);
                 _sprite.LayerMapSet(target, layerId, spriteLayer);
                 _sprite.LayerSetSprite(target, layerId, sprite);
             }
 
-            // Set the color layer to the marking layer state color, or white if nonexistent.
-            var layerColor = Color.White;
-            if (i < marking.MarkingColors?.Count)
-                layerColor = marking.MarkingColors[i];
+            // Set layer color
+            var layerColor = i < marking.MarkingColors?.Count
+                ? marking.MarkingColors[i]
+                : Color.White;
+
             _sprite.LayerSetColor(target, layerId, layerColor);
 
-            // Apply displacements.
+            // Apply displacements
             if (displacement != null && proto.CanBeDisplaced)
-                _displacement.TryAddDisplacement(displacement,
-                    sprite: (target, target.Comp),
-                    index: spriteLayerIndex,
-                    key: layerId,
-                    out _);
+            {
+                _displacement.TryAddDisplacement(
+                    displacement,
+                    (target, target.Comp),
+                    // Similar logic as above, but this makes the displacement layer go below the
+                    // original sprite. So it should be all the displacements, then all the sprite layers on top
+                    layerIndex,
+                    layerId,
+                    out _
+                );
+                numDisplacements++;
+            }
+
+            // Apply shaders
+            if (proto.Shaders is not null &&
+                proto.Shaders.TryGetValue(sprite.RsiState, out var shader))
+            {
+                // TODO: fix this when LayerSetShader is moved out of component
+                target.Comp.LayerSetShader(layerIndex + numDisplacements, shader);
+            }
         }
     }
 

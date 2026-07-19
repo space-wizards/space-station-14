@@ -4,7 +4,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: afro
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairAfro2
@@ -12,7 +11,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: afro2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBaby
@@ -20,7 +18,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: baby
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBigafro
@@ -28,7 +25,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bigafro
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairAntenna
@@ -36,7 +32,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: antenna
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBalding
@@ -44,7 +39,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: e
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBedhead
@@ -52,7 +46,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bedhead
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBedheadv2
@@ -60,7 +53,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bedheadv2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBedheadv3
@@ -68,7 +60,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bedheadv3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCube
@@ -76,7 +67,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cube
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPulato
@@ -84,7 +74,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: pulato
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongBedhead
@@ -92,7 +81,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: long_bedhead
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongBedhead2
@@ -100,7 +88,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: long_bedhead2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFloorlengthBedhead
@@ -108,7 +95,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: floorlength_bedhead
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBeehive
@@ -116,7 +102,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: beehive
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBeehivev2
@@ -124,7 +109,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: beehivev2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBob
@@ -132,7 +116,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bob
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBob2
@@ -140,7 +123,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bob2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBobcut
@@ -148,7 +130,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bobcut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBob4
@@ -156,7 +137,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bob4
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBob5
@@ -164,7 +144,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bob5
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBobcurl
@@ -172,7 +151,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bobcurl
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBoddicker
@@ -180,7 +158,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: boddicker
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBowlcut
@@ -188,7 +165,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bowlcut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBowlcut2
@@ -196,7 +172,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bowlcut2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBraid
@@ -204,7 +179,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: braid
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBraided
@@ -212,7 +186,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: braided
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBraidfront
@@ -220,7 +193,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: braidfront
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBraid2
@@ -228,7 +200,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: braid2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHbraid
@@ -236,7 +207,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: hbraid
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShortbraid
@@ -244,7 +214,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shortbraid
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBraidtail
@@ -252,7 +221,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: braidtail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBun
@@ -260,7 +228,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBunhead2
@@ -268,7 +235,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bunhead2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBun3
@@ -276,7 +242,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bun3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLargebun
@@ -284,7 +249,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: largebun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairManbun
@@ -292,7 +256,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: manbun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTightbun
@@ -300,7 +263,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: tightbun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBusiness
@@ -308,7 +270,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: business
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBusiness2
@@ -316,7 +277,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: business2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBusiness3
@@ -324,7 +284,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: business3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBusiness4
@@ -332,7 +291,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: business4
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBuzzcut
@@ -340,7 +298,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: buzzcut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCia
@@ -348,7 +305,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cia
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicAfro
@@ -356,7 +312,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicafro
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicBigAfro
@@ -364,7 +319,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicbigafro
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicBusiness
@@ -372,7 +326,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicbusiness
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicCia
@@ -380,7 +333,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classiccia
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicCornrows2
@@ -388,7 +340,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classiccornrows2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicFloorlengthBedhead
@@ -396,7 +347,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicfloorlength_bedhead
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicModern
@@ -404,7 +354,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicmodern
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicMulder
@@ -412,7 +361,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicmulder
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicWisp
@@ -420,7 +368,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classicwisp
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCoffeehouse
@@ -428,7 +375,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: coffeehouse
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCombover
@@ -436,7 +382,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: combover
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCornrows
@@ -444,7 +389,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cornrows
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCornrows2
@@ -452,7 +396,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cornrows2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCornrowbun
@@ -460,7 +403,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cornrowbun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCornrowbraid
@@ -468,7 +410,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cornrowbraid
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCornrowtail
@@ -476,7 +417,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: cornrowtail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCrewcut
@@ -484,7 +424,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: crewcut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCrewcut2
@@ -492,7 +431,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: crewcut2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCurls
@@ -500,7 +438,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: curls
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairC
@@ -508,7 +445,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: c
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDandypompadour
@@ -516,7 +452,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: dandypompadour
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDevilock
@@ -524,7 +459,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: devilock
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDoublebun
@@ -532,7 +466,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: doublebun
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDoublebunLong
@@ -540,7 +473,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: doublebun_long
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDreads
@@ -548,7 +480,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: dreads
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDrillruru
@@ -556,7 +487,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: drillruru
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairDrillhairextended
@@ -564,7 +494,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: drillhairextended
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairEmo
@@ -572,7 +501,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: emo
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairEmofringe
@@ -580,7 +508,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: emofringe
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairNofade
@@ -588,7 +515,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: nofade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHighfade
@@ -596,7 +522,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: highfade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairMedfade
@@ -604,7 +529,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: medfade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLowfade
@@ -612,7 +536,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: lowfade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBaldfade
@@ -620,7 +543,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: baldfade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFeather
@@ -628,7 +550,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: feather
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFather
@@ -636,7 +557,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: father
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSargeant
@@ -644,7 +564,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sargeant
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFlair
@@ -652,7 +571,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: flair
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBigflattop
@@ -660,7 +578,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bigflattop
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFlow
@@ -668,7 +585,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: f
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairGelled
@@ -676,7 +592,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: gelled
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairGentle
@@ -684,7 +599,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: gentle
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHalfbang
@@ -692,7 +606,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: halfbang
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHalfbang2
@@ -700,7 +613,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: halfbang2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHalfshaved
@@ -708,7 +620,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: halfshaved
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHedgehog
@@ -716,7 +627,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: hedgehog
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHimecut
@@ -724,7 +634,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: himecut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHimecut2
@@ -732,7 +641,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: himecut2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShorthime
@@ -740,7 +648,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shorthime
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHimeup
@@ -748,7 +655,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: himeup
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHitop
@@ -756,7 +662,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: hitop
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairJade
@@ -764,7 +669,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: jade
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairJensen
@@ -772,7 +676,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: jensen
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairJoestar
@@ -780,7 +683,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: joestar
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairKeanu
@@ -788,7 +690,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: keanu
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairKusanagi
@@ -796,7 +697,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: kusanagi
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLong
@@ -804,7 +704,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: long
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLong2
@@ -812,7 +711,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: long2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLong3
@@ -820,7 +718,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: long3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongWithBundles
@@ -828,7 +725,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longbundled
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongovereye
@@ -836,7 +732,8 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longovereye
-    name: marking-layer-hair
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longovereye_highlight
 
 - type: marking
   id: HumanHairLbangs
@@ -844,7 +741,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: lbangs
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongemo
@@ -852,7 +748,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longemo
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongfringe
@@ -860,7 +755,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longfringe
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongsidepart
@@ -868,7 +762,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longsidepart
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairMegaeyebrows
@@ -876,7 +769,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: megaeyebrows
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairMessy
@@ -884,7 +776,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: messy
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairModern
@@ -892,7 +783,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: modern
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairMohawk
@@ -900,7 +790,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: d
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairNitori
@@ -908,7 +797,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: nitori
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairReversemohawk
@@ -916,7 +804,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: reversemohawk
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUnshavenMohawk
@@ -924,7 +811,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: unshaven_mohawk
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairMulder
@@ -932,7 +818,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: mulder
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairOdango
@@ -940,7 +825,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: odango
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairOmbre
@@ -948,7 +832,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ombre
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairOneshoulder
@@ -956,7 +839,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: oneshoulder
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShortovereye
@@ -964,7 +846,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shortovereye
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairOxton
@@ -972,7 +853,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: oxton
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairParted
@@ -980,7 +860,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: parted
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPart
@@ -988,7 +867,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: part
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairKagami
@@ -996,7 +874,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: kagami
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPigtails
@@ -1004,7 +881,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: pigtails
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPigtails2
@@ -1012,7 +888,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: pigtails2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPixie
@@ -1020,7 +895,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: pixie
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPompadour
@@ -1028,7 +902,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: pompadour
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBigpompadour
@@ -1036,7 +909,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: bigpompadour
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail
@@ -1044,7 +916,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail2
@@ -1052,7 +923,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail3
@@ -1060,7 +930,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail4
@@ -1068,7 +937,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail4
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail5
@@ -1076,7 +944,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail5
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail6
@@ -1084,7 +951,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail6
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPonytail7
@@ -1092,7 +958,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ponytail7
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairHighponytail
@@ -1100,7 +965,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: highponytail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairStail
@@ -1108,7 +972,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: stail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongstraightponytail
@@ -1116,7 +979,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longstraightponytail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairCountry
@@ -1124,7 +986,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: country
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairFringetail
@@ -1132,7 +993,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: fringetail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSidetail
@@ -1140,7 +1000,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sidetail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSidetail2
@@ -1148,7 +1007,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sidetail2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSidetail3
@@ -1156,7 +1014,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sidetail3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSidetail4
@@ -1164,7 +1021,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sidetail4
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSpikyponytail
@@ -1172,7 +1028,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: spikyponytail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairPoofy
@@ -1180,7 +1035,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: poofy
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairQuiff
@@ -1188,7 +1042,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: quiff
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairRonin
@@ -1196,7 +1049,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: ronin
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShaved
@@ -1204,7 +1056,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shaved
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShavedpart
@@ -1212,7 +1063,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shavedpart
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShortbangs
@@ -1220,7 +1070,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shortbangs
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairA
@@ -1228,7 +1077,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: a
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShorthair2
@@ -1236,7 +1084,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shorthair2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShorthair3
@@ -1244,7 +1091,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shorthair3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairD
@@ -1252,7 +1098,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: d
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairE
@@ -1260,7 +1105,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: e
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairF
@@ -1268,7 +1112,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: f
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShorthairg
@@ -1276,7 +1119,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shorthairg
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHair80s
@@ -1284,7 +1126,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: 80s
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairRosa
@@ -1292,7 +1133,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: rosa
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairB
@@ -1300,7 +1140,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: b
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSidecut
@@ -1308,7 +1147,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: sidecut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSkinhead
@@ -1316,7 +1154,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: skinhead
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairProtagonist
@@ -1324,7 +1161,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: protagonist
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSpikey
@@ -1332,7 +1168,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: spikey
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSpiky
@@ -1340,7 +1175,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: spiky
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSpiky2
@@ -1348,7 +1182,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: spiky2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSpookyLong
@@ -1356,7 +1189,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: spookylong
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSwept
@@ -1364,7 +1196,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: swept
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairSwept2
@@ -1372,7 +1203,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: swept2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairBAlt
@@ -1380,7 +1210,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: b_alt
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairThinning
@@ -1388,7 +1217,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: thinning
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairThinningfront
@@ -1396,7 +1224,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: thinningfront
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairThinningrear
@@ -1404,7 +1231,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: thinningrear
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTopknot
@@ -1412,7 +1238,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: topknot
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTressshoulder
@@ -1420,7 +1245,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: tressshoulder
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTrimmed
@@ -1428,7 +1252,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: trimmed
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTrimflat
@@ -1436,7 +1259,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: trimflat
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTwintail
@@ -1444,7 +1266,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: twintail
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTwoStrands
@@ -1452,7 +1273,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: twostrands
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUndercut
@@ -1460,7 +1280,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: undercut
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUndercutleft
@@ -1468,7 +1287,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: undercutleft
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUndercutright
@@ -1476,7 +1294,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: undercutright
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUnkept
@@ -1484,7 +1301,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: unkept
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUpdo
@@ -1492,7 +1308,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: updo
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairVlong
@@ -1500,7 +1315,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: vlong
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongest
@@ -1508,7 +1322,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longest
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongest2
@@ -1516,7 +1329,8 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longest2
-    name: marking-layer-hair
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: longovereye_highlight
 
 - type: marking
   id: HumanHairVeryshortovereyealternate
@@ -1524,7 +1338,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: veryshortovereyealternate
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairVlongfringe
@@ -1532,7 +1345,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: vlongfringe
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairVolaju
@@ -1540,7 +1352,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: volaju
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairWisp
@@ -1548,7 +1359,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: wisp
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairUneven
@@ -1556,7 +1366,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: uneven
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairTailed
@@ -1564,7 +1373,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: tailed
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicLong2
@@ -1572,7 +1380,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classiclong2
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairClassicLong3
@@ -1580,7 +1387,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: classiclong3
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairShaped
@@ -1588,7 +1394,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: shaped
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongBow
@@ -1596,7 +1401,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longbow
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairLongWithBangs
@@ -1604,7 +1408,6 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longwithbangs
-    name: marking-layer-hair
 
 - type: marking
   id: HumanHairOverEyePigtail
@@ -1612,4 +1415,20 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: overeyepigtail
-    name: marking-layer-hair
+
+- type: marking
+  id: HumanHairTerminal
+  bodyPart: Hair
+  coloring:
+    layers:
+      terminal_headband:
+        type:
+          !type:SimpleColoring
+            color: "#C3C3C3"
+  sprites:
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: terminal
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: terminal_highlight
+  - sprite: Mobs/Customization/human_hair.rsi
+    state: terminal_headband
