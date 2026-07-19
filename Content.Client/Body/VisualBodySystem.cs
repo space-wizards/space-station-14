@@ -265,11 +265,10 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             }
 
             // Apply shaders
-            if (proto.Shaders is not null &&
-                proto.Shaders.TryGetValue(sprite.RsiState, out var shader))
+            if (layer.Shaders != null)
             {
                 // TODO: fix this when LayerSetShader is moved out of component
-                target.Comp.LayerSetShader(layerIndex + numDisplacements, shader);
+                target.Comp.LayerSetShader(layerIndex + numDisplacements, layer.Shaders);
             }
         }
     }

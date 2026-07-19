@@ -35,6 +35,12 @@ public sealed partial record MarkingLayerData
     public bool ForcedColoring = false;
 
     /// <summary>
+    ///     Optional field allowing assignment of shader to this layer.
+    /// </summary>
+    [DataField]
+    public string? Shaders = null;
+
+    /// <summary>
     ///     Tries to get a player-friendly name for this marking layer.
     /// </summary>
     /// <param name="markingId">The ID of the marking this layer belongs to.</param>

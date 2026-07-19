@@ -62,13 +62,6 @@ public sealed partial class MarkingPrototype : IPrototype
     public List<MarkingLayerData> Sprites { get; private set; } = default!;
 
     /// <summary>
-    ///     Optional dictionary allowing assignment of shaders to sprite layers in a marking.
-    ///     This implementation is very messy but unfortunately Robust doesn't like shaders in SpriteSpecifiers.
-    /// </summary>
-    [DataField]
-    public Dictionary<string, string>? Shaders { get; private set; }
-
-    /// <summary>
     /// Chance this marking will be added by appearance randomizer.
     /// </summary>
     /// <remarks>
