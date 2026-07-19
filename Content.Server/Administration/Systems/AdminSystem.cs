@@ -165,7 +165,7 @@ public sealed partial class AdminSystem : EntitySystem
 
         if (!obj.IsAdmin)
         {
-            DowngradeAdminGhost(obj.Player);
+            DemoteAdminGhost(obj.Player);
             RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
             return;
         }
@@ -177,7 +177,7 @@ public sealed partial class AdminSystem : EntitySystem
     /// If a freshly de-adminned player is an aghost, demote them to a regular ghost,
     /// or kick them back into their character, if they have one.
     /// </summary>
-    private void DowngradeAdminGhost(ICommonSession session)
+    private void DemoteAdminGhost(ICommonSession session)
     {
         if (session.AttachedEntity is not { } aghost)
             return;
