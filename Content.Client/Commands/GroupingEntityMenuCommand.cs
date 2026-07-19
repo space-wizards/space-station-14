@@ -5,9 +5,9 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
 
-public sealed class GroupingEntityMenuCommand : LocalizedCommands
+public sealed partial class GroupingEntityMenuCommand : LocalizedCommands
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override string Command => "entitymenug";
 

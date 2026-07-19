@@ -1,47 +1,47 @@
-﻿<DefaultWindow Title="{Loc Make Ghost Role}"
+﻿<DefaultWindow Title="{Loc make-ghost-roles-window-title}"
             xmlns="https://spacestation14.io">
 
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleEntityLabel" Text="Entity" />
+            <Label Name="RoleEntityLabel" Text="{Loc make-ghost-roles-window-entity-label}" />
             <Label Name="RoleEntity" Text="" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleNameLabel" Text="Role Name" />
+            <Label Name="RoleNameLabel" Text="{Loc make-ghost-roles-window-role-name-label}" />
             <LineEdit Name="RoleName" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleDescriptionLabel" Text="Role Description" />
+            <Label Name="RoleDescriptionLabel" Text="{Loc make-ghost-roles-window-role-description-label}" />
             <LineEdit Name="RoleDescription" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RoleRulesLabel" Text="Role Rules" />
+            <Label Name="RoleRulesLabel" Text="{Loc make-ghost-roles-window-role-rules-label}" />
             <LineEdit Name="RoleRules" HorizontalExpand="True" Text="{Loc ghost-role-component-default-rules}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="MakeSentientLabel" Text="Make Sentient" />
+            <Label Name="MakeSentientLabel" Text="{Loc make-ghost-roles-window-make-sentient-label}" />
             <CheckBox Name="MakeSentientCheckbox" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Name="RaffleLabel" Text="Raffle Role?" />
+            <Label Name="RaffleLabel" Text="{Loc make-ghost-roles-window-raffle-role-label}" />
             <OptionButton Name="RaffleButton" />
         </BoxContainer>
         <BoxContainer Name="RaffleCustomSettingsContainer" Orientation="Vertical" Visible="False">
             <BoxContainer Orientation="Horizontal">
-                <Label Name="RaffleInitialDurationLabel" Text="Initial Duration (s)" />
+                <Label Name="RaffleInitialDurationLabel" Text="{Loc make-ghost-roles-window-initial-duration-label}" />
                 <SpinBox Name="RaffleInitialDuration" HorizontalExpand="True" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
-                <Label Name="RaffleJoinExtendsDurationByLabel" Text="Joins Extend By (s)" />
+                <Label Name="RaffleJoinExtendsDurationByLabel" Text="{Loc make-ghost-roles-window-join-extends-by-label}" />
                 <SpinBox Name="RaffleJoinExtendsDurationBy" HorizontalExpand="True" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
-                <Label Name="RaffleMaxDurationLabel" Text="Max Duration (s)" />
+                <Label Name="RaffleMaxDurationLabel" Text="{Loc make-ghost-roles-window-max-duration-label}" />
                 <SpinBox Name="RaffleMaxDuration" HorizontalExpand="True" />
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Button Name="MakeButton" Text="Make" />
+            <Button Name="MakeButton" Text="{Loc make-ghost-roles-window-make-button}" />
         </BoxContainer>
     </BoxContainer>
 

@@ -1,0 +1,36 @@
+# Weapons
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointHeadOfSecurityWeapon
+  name: head of security weapon spawner
+  components:
+  - type: EntityTableSpawner
+    offset: 0.2
+    table: !type:AllSelector
+      children:
+      - id: WeaponSubMachineGunWt550
+      - id: MagazinePistolSubMachineGunTopMounted
+      - id: MagazinePistolSubMachineGunTopMounted
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+      state: icon
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointWardenWeapon
+  name: warden weapon spawner
+  components:
+  - type: EntityTableSpawner
+    offset: 0.2
+    table: !type:AllSelector
+      children:
+      - id: WeaponEnergyShotgun
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+      state: icon
