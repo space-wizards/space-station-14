@@ -830,6 +830,9 @@
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
+- type: Tag
+  id: JanicartKeys # Uses for GenericKeyedVehicle of Janicart
+
 ## K ##
 
 - type: Tag
