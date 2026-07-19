@@ -50,16 +50,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TagComponent, AnchorStateChangedEvent>(OnTagAnchorChanged);
-
-        SubscribeLocalEvent<WallMountComponent, ComponentShutdown>(OnWallMountShutdown);
-        SubscribeLocalEvent<WallMountComponent, AfterAutoHandleStateEvent>(OnWallMountAfterHandleState);
-
-        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
-        SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-
         _overlayInstance = new WallMountVisibilityOverlay(_timing, _map, _sprite, _xform, _tree, this, _gridQuery, _spriteQuery);
-
         Subs.CVar(_cfg, CCVars.WallMountDirectionalVisibility, OnDirectionalVisibilityChanged, true);
     }
 
@@ -75,9 +66,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
         DirectionalVisibilityEnabled = enabled;
 
         if (enabled)
-        {
             _overlay.AddOverlay(_overlayInstance);
-        }
         else
         {
             _overlay.RemoveOverlay(_overlayInstance);
@@ -88,6 +77,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Invalidates tile cache when anchor state changes for a blocking entity.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnTagAnchorChanged(Entity<TagComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!_tag.HasAnyTag(ent.Comp, BlockingTags))
@@ -107,6 +97,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Makes the entity visible again on component shutdown.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnWallMountShutdown(Entity<WallMountComponent> ent, ref ComponentShutdown args)
     {
         if (TerminatingOrDeleted(ent))
@@ -121,6 +112,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Makes the entity visible again if directional visibility is disabled for this mount.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnWallMountAfterHandleState(Entity<WallMountComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (ent.Comp.DirectionalVisibility)
@@ -135,6 +127,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Removes all cached entries for a grid that is being removed.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnGridRemoval(GridRemovalEvent ev)
     {
         foreach (var key in _tileCache.Keys.Where(k => k.Grid == ev.EntityUid).ToList())
@@ -146,6 +139,7 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Clears tile cache and resets all wall-mount visibility on round restart.
     /// </summary>
+    [SubscribeNetworkEvent]
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
         _tileCache.Clear();
