@@ -15,7 +15,7 @@ public sealed partial class ConfirmableActionSystem : EntitySystem
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

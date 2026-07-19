@@ -28,7 +28,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -314,6 +314,19 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         ent.Comp.Permanent = val;
         Dirty(ent);
         ScheduleExpiry((ent.Owner, ent.Comp));
+    }
+
+    /// <summary>
+    /// Gets the remaining time before a non-permanent ID expires.
+    /// </summary>
+    public TimeSpan GetRemainingTime(Entity<ExpireIdCardComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Expired || ent.Comp.Permanent)
+            return TimeSpan.Zero;
+
+        return _timers.TryGetTimer<ExpireIdCardComponent>(ent.Owner, ExpiryTimer, out var timer)
+            ? timer.Remaining
+            : TimeSpan.Zero;
     }
 
     /// <summary>

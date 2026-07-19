@@ -19,7 +19,7 @@ public sealed partial class SharedAnomalyCoreSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {
@@ -46,6 +46,13 @@ public sealed partial class SharedAnomalyCoreSystem : EntitySystem
     {
         if (!ent.Comp.IsDecayed)
             _timers.SetTimerAt(ent, DecayTimer, ent.Comp.DecayMoment, flags: EntityTimerFlags.IgnoreEntityPause);
+    }
+
+    public TimeSpan GetRemainingTime(Entity<AnomalyCoreComponent> ent)
+    {
+        return _timers.TryGetTimer<AnomalyCoreComponent>(ent.Owner, DecayTimer, out var timer)
+            ? timer.Remaining
+            : TimeSpan.Zero;
     }
 
     private void OnTimer(Entity<AnomalyCoreComponent> ent, ref EntityTimerEvent args)

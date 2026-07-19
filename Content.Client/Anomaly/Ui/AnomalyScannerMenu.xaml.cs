@@ -10,23 +10,21 @@ namespace Content.Client.Anomaly.Ui;
 public sealed partial class AnomalyScannerMenu : FancyWindow
 {
     public FormattedMessage LastMessage = new();
-    public TimeSpan? NextPulseTime;
-
     public AnomalyScannerMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
     }
 
-    public void UpdateMenu(TimeSpan currentTime)
+    public void UpdateMenu(TimeSpan? remaining)
     {
         var msg = new FormattedMessage(LastMessage);
 
-        if (NextPulseTime != null)
+        if (remaining != null)
         {
             msg.PushNewline();
             msg.PushNewline();
-            var time = NextPulseTime.Value - currentTime;
+            var time = remaining.Value;
             var timestring = $"{time.Minutes:00}:{time.Seconds:00}";
             msg.AddMarkupOrThrow(Loc.GetString("anomaly-scanner-pulse-timer", ("time", timestring)));
         }

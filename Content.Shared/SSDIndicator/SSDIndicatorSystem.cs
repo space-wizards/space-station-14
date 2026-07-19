@@ -20,7 +20,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;

@@ -16,7 +16,7 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
 
     [Dependency] private SecretDataAnomalySystem _secretData = default!;
     [Dependency] private AnomalySystem _anomaly = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

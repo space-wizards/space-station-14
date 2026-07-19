@@ -17,7 +17,7 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

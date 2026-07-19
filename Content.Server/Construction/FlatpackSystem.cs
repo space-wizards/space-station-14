@@ -16,7 +16,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AmbientSoundSystem _ambientSound = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -18,7 +18,7 @@ namespace Content.Server.Research.Systems
         private static readonly EntityTimerId UpdateTimer = new("update");
 
         [Dependency] private IAdminLogManager _adminLog = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
         [Dependency] private AccessReaderSystem _accessReader = default!;
         [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private UserInterfaceSystem _uiSystem = default!;

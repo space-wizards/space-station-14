@@ -16,7 +16,6 @@ public sealed partial class DrunkOverlay : Overlay
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
     private readonly Shared.StatusEffectNew.StatusEffectsSystem _statusEffectsSystem;
 
@@ -67,12 +66,12 @@ public sealed partial class DrunkOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffectsSystem.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
+        if (!_statusEffectsSystem.TryGetMaxRemainingTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
             return;
 
         var time = status.Item2;
 
-        var power = time == null ? MaxBoozePower : (float)Math.Min((time - _timing.CurTime).Value.TotalSeconds, MaxBoozePower);
+        var power = time == null ? MaxBoozePower : (float)Math.Min(time.Value.TotalSeconds, MaxBoozePower);
 
         CurrentBoozePower += BoozePowerScale * (power - CurrentBoozePower) * args.DeltaSeconds / (power + 1);
     }

@@ -27,7 +27,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
     private static readonly EntityTimerId UiTimer = new("ui");
 
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;

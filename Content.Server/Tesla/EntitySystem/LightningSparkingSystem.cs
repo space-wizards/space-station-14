@@ -14,7 +14,7 @@ public sealed partial class LightningSparkingSystem : EntitySystem
 
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

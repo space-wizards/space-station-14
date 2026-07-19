@@ -16,7 +16,6 @@ public sealed partial class DrowsinessOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IEntitySystemManager _sysMan = default!;
-    [Dependency] private IGameTiming _timing = default!;
     private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -45,11 +44,11 @@ public sealed partial class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffects.TryGetEffectsEndTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var endTime))
+        if (!_statusEffects.TryGetEffectsRemainingTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var time))
             return;
 
-        endTime ??= TimeSpan.MaxValue;
-        var timeLeft = (float)(endTime - _timing.CurTime).Value.TotalSeconds;
+        time ??= TimeSpan.MaxValue;
+        var timeLeft = (float) time.Value.TotalSeconds;
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
 

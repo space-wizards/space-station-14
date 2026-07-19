@@ -43,7 +43,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
-    [Dependency] protected IEntityTimerManager Timers = default!;
+    [Dependency] protected EntityTimerSystem Timers = default!;
 
     [Dependency] private EntityQuery<PhysicsComponent> _physQuery = default!;
 

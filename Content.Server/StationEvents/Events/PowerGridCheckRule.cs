@@ -19,7 +19,7 @@ namespace Content.Server.StationEvents.Events
         private static readonly EntityTimerId PowerOnSoundTimer = new("power-on-sound");
 
         [Dependency] private ApcSystem _apcSystem = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         public override void Initialize()
         {

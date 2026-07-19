@@ -15,7 +15,7 @@ public sealed partial class LightningArcShooterSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private LightningSystem _lightning = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

@@ -12,7 +12,7 @@ public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private readonly EntProtoId _hotPotatoEffectId = "HotPotatoEffect";
 

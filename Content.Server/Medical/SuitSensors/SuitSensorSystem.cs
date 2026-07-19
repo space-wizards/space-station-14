@@ -10,7 +10,7 @@ public sealed partial class SuitSensorSystem : SharedSuitSensorSystem
 {
     private static readonly EntityTimerId UpdateTimer = new("update");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SingletonDeviceNetServerSystem _singletonServerSystem = default!;
 

@@ -18,7 +18,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
     private static readonly EntityTimerId EndTimer = new("end");
 
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 

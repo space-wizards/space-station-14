@@ -25,7 +25,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private const string CyborgTimerPrefix = "cyborg:";
 

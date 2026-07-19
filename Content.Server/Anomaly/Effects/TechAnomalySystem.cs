@@ -18,7 +18,7 @@ public sealed partial class TechAnomalySystem : EntitySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private BeamSystem _beam = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

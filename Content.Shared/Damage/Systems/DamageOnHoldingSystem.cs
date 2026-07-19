@@ -11,7 +11,7 @@ public sealed partial class DamageOnHoldingSystem : EntitySystem
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageableSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

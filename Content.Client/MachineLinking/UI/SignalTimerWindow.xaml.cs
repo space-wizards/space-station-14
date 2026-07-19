@@ -37,14 +37,14 @@ public sealed partial class SignalTimerWindow : DefaultWindow
         OnStartTimer?.Invoke();
     }
 
-    public void UpdateTimer(TimeSpan currentTime)
+    public void UpdateTimer(TimeSpan remaining)
     {
         if (!_timerStarted || _triggerTime == null)
             return;
 
-        if (currentTime < _triggerTime.Value)
+        if (remaining > TimeSpan.Zero)
         {
-            StartTimer.Text = TextScreenSystem.TimeToString(_triggerTime.Value - currentTime);
+            StartTimer.Text = TextScreenSystem.TimeToString(remaining);
         }
         else
         {

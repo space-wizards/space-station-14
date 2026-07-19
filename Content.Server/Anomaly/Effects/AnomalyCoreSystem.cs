@@ -1,6 +1,6 @@
+using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Cargo;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -9,7 +9,7 @@ namespace Content.Server.Anomaly.Effects;
 /// </summary>
 public sealed partial class AnomalyCoreSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private SharedAnomalyCoreSystem _core = default!;
 
     public override void Initialize()
     {
@@ -18,7 +18,7 @@ public sealed partial class AnomalyCoreSystem : EntitySystem
 
     private void OnGetPrice(Entity<AnomalyCoreComponent> core, ref PriceCalculationEvent args)
     {
-        var timeLeft = core.Comp.DecayMoment - _gameTiming.CurTime;
+        var timeLeft = _core.GetRemainingTime(core);
         var lerp = timeLeft.TotalSeconds / core.Comp.TimeToDecay;
         lerp = Math.Clamp(lerp, 0, 1);
 

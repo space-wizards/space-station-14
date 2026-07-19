@@ -19,7 +19,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
     private static readonly EntityTimerId SpeechCooldownTimer = new("speech-cooldown");
     private static readonly EntityTimerId CritTimeoutTimer = new("crit-timeout");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()

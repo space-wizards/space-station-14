@@ -16,7 +16,7 @@ public sealed partial class RottingSystem : SharedRottingSystem
     private static readonly EntityTimerId PerishTimer = new("perish");
     private static readonly EntityTimerId RotTimer = new("rot");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;

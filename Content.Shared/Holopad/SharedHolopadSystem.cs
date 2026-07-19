@@ -8,7 +8,7 @@ public abstract partial class SharedHolopadSystem : EntitySystem
     private static readonly EntityTimerId CooldownTimer = new("cooldown");
 
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {
@@ -54,7 +54,7 @@ public abstract partial class SharedHolopadSystem : EntitySystem
     public TimeSpan GetHolopadControlLockedPeriod(Entity<HolopadComponent> entity)
     {
         return _timers.TryGetTimer<HolopadComponent>(entity, LockoutTimer, out var timer)
-            ? timer.Deadline - _timing.CurTime
+            ? timer.Remaining
             : TimeSpan.Zero;
     }
 
@@ -66,7 +66,7 @@ public abstract partial class SharedHolopadSystem : EntitySystem
     public TimeSpan GetHolopadBroadcastCoolDown(Entity<HolopadComponent> entity)
     {
         return _timers.TryGetTimer<HolopadComponent>(entity, CooldownTimer, out var timer)
-            ? timer.Deadline - _timing.CurTime
+            ? timer.Remaining
             : TimeSpan.Zero;
     }
 }

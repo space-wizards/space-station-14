@@ -22,7 +22,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
 {
     private static readonly EntityTimerId PrintTimer = new("print");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private CargoSystem _cargo = default!;
     [Dependency] private LabelSystem _label = default!;

@@ -151,11 +151,11 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         DestroyButton.Disabled = !_allowBorgControl;
     }
 
-    public void UpdateDestroyButton(TimeSpan currentTime)
+    public void UpdateDestroyButton(TimeSpan remaining)
     {
         if (_entMan.TryGetComponent(Entity, out RoboticsConsoleComponent? console))
         {
-            DestroyButton.Disabled = currentTime < console.NextDestroy;
+            DestroyButton.Disabled = remaining > TimeSpan.Zero;
         }
         else
         {

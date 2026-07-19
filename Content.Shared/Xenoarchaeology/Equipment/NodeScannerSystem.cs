@@ -17,7 +17,7 @@ public sealed partial class NodeScannerSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

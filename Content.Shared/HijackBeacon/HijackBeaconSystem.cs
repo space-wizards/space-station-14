@@ -25,7 +25,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public readonly SoundSpecifier AnnounceSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
     public readonly SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
@@ -337,7 +337,9 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return 69420; // Mature error code
 
-        return (int) (ent.Comp.CompletionTime - _gameTiming.CurTime).TotalSeconds;
+        return _timers.TryGetTimer<HijackBeaconComponent>(ent.Owner, CompletionTimer, out var timer)
+            ? (int) timer.Remaining.TotalSeconds
+            : 0;
     }
 
     private void Schedule(Entity<HijackBeaconComponent> ent, ActiveHijackBeaconComponent? active = null)

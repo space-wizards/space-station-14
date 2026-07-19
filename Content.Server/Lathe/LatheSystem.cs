@@ -40,7 +40,7 @@ namespace Content.Server.Lathe
         private static readonly EntityTimerId HeatTimer = new("heat");
 
         [Dependency] private IGameTiming _timing = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private AtmosphereSystem _atmosphere = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;

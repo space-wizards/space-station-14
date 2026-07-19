@@ -20,7 +20,7 @@ public abstract partial class SharedEmpSystem : EntitySystem
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     [Dependency] private EntityQuery<EmpResistanceComponent> _resistanceQuery = default!;
 

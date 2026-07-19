@@ -19,7 +19,6 @@ public sealed partial class RainbowOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IEntitySystemManager _sysMan = default!;
-    [Dependency] private IGameTiming _timing = default!;
     private readonly StatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -60,11 +59,11 @@ public sealed partial class RainbowOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffects.TryGetEffectsEndTimeWithComp<SeeingRainbowsStatusEffectComponent>(playerEntity, out var endTime))
+        if (!_statusEffects.TryGetEffectsRemainingTimeWithComp<SeeingRainbowsStatusEffectComponent>(playerEntity, out var time))
             return;
 
-        endTime ??= TimeSpan.MaxValue;
-        var timeLeft = (float)(endTime - _timing.CurTime).Value.TotalSeconds;
+        time ??= TimeSpan.MaxValue;
+        var timeLeft = (float) time.Value.TotalSeconds;
 
         TimeTicker += args.DeltaSeconds;
         if (timeLeft - TimeTicker > timeLeft / 16f)

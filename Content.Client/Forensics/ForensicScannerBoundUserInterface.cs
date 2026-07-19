@@ -7,7 +7,7 @@ namespace Content.Client.Forensics
 {
     public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        private static readonly EntityTimerId PrintTimer = new("print");
 
         [ViewVariables]
         private ForensicScannerMenu? _window;
@@ -34,14 +34,7 @@ namespace Content.Client.Forensics
             if (_window != null)
                 _window.UpdatePrinterState(true);
 
-            // This UI does not require pinpoint accuracy as to when the Print
-            // button is available again, so spawning client-side timers is
-            // fine. The server will make sure the cooldown is honored.
-            Timer.Spawn(_printCooldown, () =>
-            {
-                if (_window != null)
-                    _window.UpdatePrinterState(false);
-            });
+            SetTimer(PrintTimer, _printCooldown);
         }
 
         private void Clear()
@@ -61,15 +54,15 @@ namespace Content.Client.Forensics
 
             _printCooldown = cast.PrintCooldown;
 
-            // TODO: Fix this
-            if (cast.PrintReadyAt > _gameTiming.CurTime)
-                Timer.Spawn(cast.PrintReadyAt - _gameTiming.CurTime, () =>
-                {
-                    if (_window != null)
-                        _window.UpdatePrinterState(false);
-                });
+            SetTimerAt(PrintTimer, cast.PrintReadyAt);
 
             _window.UpdateState(cast);
+        }
+
+        protected override void OnTimer(EntityTimerEvent timer)
+        {
+            if (timer.Id == PrintTimer)
+                _window?.UpdatePrinterState(false);
         }
     }
 }

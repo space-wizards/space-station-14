@@ -58,15 +58,15 @@ namespace Content.Client.Kitchen.UI
             DisableCookingPanelOverlay.Visible = shouldDisable;
         }
 
-        public void UpdateCookTime(TimeSpan currentTime)
+        public void UpdateCookTime(TimeSpan remaining)
         {
             if (!IsBusy)
                 return;
 
-            if (CurrentCooktimeEnd > currentTime)
+            if (remaining > TimeSpan.Zero)
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time", CurrentCooktimeEnd.Subtract(currentTime).Seconds));
+                ("time", remaining.Seconds));
             }
         }
 

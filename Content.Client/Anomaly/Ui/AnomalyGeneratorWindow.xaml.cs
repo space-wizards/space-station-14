@@ -10,7 +10,6 @@ namespace Content.Client.Anomaly.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnomalyGeneratorWindow : FancyWindow
 {
-    private TimeSpan _cooldownEnd = TimeSpan.Zero;
     private bool _hasEnoughFuel;
 
     public Action? OnGenerateButtonPressed;
@@ -30,9 +29,8 @@ public sealed partial class AnomalyGeneratorWindow : FancyWindow
         EntityView.SetEntity(uid);
     }
 
-    public void UpdateState(AnomalyGeneratorUserInterfaceState state, TimeSpan currentTime)
+    public void UpdateState(AnomalyGeneratorUserInterfaceState state, TimeSpan remaining)
     {
-        _cooldownEnd = state.CooldownEndTime;
         _hasEnoughFuel = state.FuelCost <= state.FuelAmount;
 
         var fuelCompletion = Math.Clamp((float) state.FuelAmount / state.FuelCost, 0f, 1f);
@@ -42,28 +40,27 @@ public sealed partial class AnomalyGeneratorWindow : FancyWindow
         var charges = state.FuelAmount / state.FuelCost;
         FuelText.Text = Loc.GetString("anomaly-generator-charges", ("charges", charges));
 
-        UpdateTimer(currentTime);
+        UpdateTimer(remaining);
     }
 
-    public void UpdateTimer(TimeSpan currentTime)
+    public void UpdateTimer(TimeSpan remaining)
     {
-        if (currentTime >= _cooldownEnd)
+        if (remaining <= TimeSpan.Zero)
         {
             CooldownLabel.SetMarkup(Loc.GetString("anomaly-generator-no-cooldown"));
         }
         else
         {
-            var timeLeft = _cooldownEnd - currentTime;
-            var timeString = $"{timeLeft.Minutes:0}:{timeLeft.Seconds:00}";
+            var timeString = $"{remaining.Minutes:0}:{remaining.Seconds:00}";
             CooldownLabel.SetMarkup(Loc.GetString("anomaly-generator-cooldown", ("time", timeString)));
         }
 
-        UpdateReady(currentTime);
+        UpdateReady(remaining);
     }
 
-    private void UpdateReady(TimeSpan currentTime)
+    private void UpdateReady(TimeSpan remaining)
     {
-        var ready = _hasEnoughFuel && currentTime >= _cooldownEnd;
+        var ready = _hasEnoughFuel && remaining <= TimeSpan.Zero;
 
         var msg = ready
             ? Loc.GetString("anomaly-generator-yes-fire")

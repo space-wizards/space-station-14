@@ -20,7 +20,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class FatExtractorSystem : EntitySystem
 {
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;

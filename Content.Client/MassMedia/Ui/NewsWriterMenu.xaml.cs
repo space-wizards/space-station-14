@@ -59,12 +59,11 @@ public sealed partial class NewsWriterMenu : FancyWindow
         ArticleEditorPanel.ContentField.TextRope = new Rope.Leaf(draftContent);
     }
 
-    public void UpdatePublishTime(TimeSpan currentTime)
+    public void UpdatePublishTime(TimeSpan remainingTime)
     {
         if (!_nextPublish.HasValue)
             return;
 
-        var remainingTime = _nextPublish.Value.Subtract(currentTime);
         if (remainingTime.TotalSeconds <= 0)
         {
             _nextPublish = null;

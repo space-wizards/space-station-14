@@ -13,7 +13,7 @@ public sealed partial class ThermalRegulatorSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private TemperatureSystem _tempSys = default!;
     [Dependency] private ActionBlockerSystem _actionBlockerSys = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

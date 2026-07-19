@@ -20,7 +20,7 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
     [Dependency] private ElectrocutionSystem _electrocution = default!;
     [Dependency] private EmpSystem _emp = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

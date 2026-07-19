@@ -12,7 +12,7 @@ public abstract partial class SharedReleaseGasOnTriggerSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] protected IEntityTimerManager Timers = default!;
+    [Dependency] protected EntityTimerSystem Timers = default!;
 
     protected static readonly EntityTimerId ReleaseTimer = new("release");
 

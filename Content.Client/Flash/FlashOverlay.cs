@@ -18,7 +18,6 @@ public sealed partial class FlashOverlay : Overlay
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IEntityManager _entityManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IConfigurationManager _configManager = default!;
 
     private readonly StatusEffectsSystem _statusSys;
@@ -51,12 +50,14 @@ public sealed partial class FlashOverlay : Overlay
         if (!_statusSys.TryGetTime(playerEntity.Value, SharedFlashSystem.FlashedKey, out var time))
             return;
 
-        var curTime = _timing.CurTime;
         if (time.StartEffectTime == null || time.EndEffectTime == null)
             return;
 
+        if (!_statusSys.TryGetRemainingTime(time.EffectEnt, out var remaining) || remaining == null)
+            return;
+
         var lastsFor = (float)(time.EndEffectTime.Value - time.StartEffectTime.Value).TotalSeconds;
-        var timeDone = (float)(curTime - time.StartEffectTime.Value).TotalSeconds;
+        var timeDone = lastsFor - (float) remaining.Value.TotalSeconds;
 
         PercentComplete = timeDone / lastsFor;
     }

@@ -25,7 +25,7 @@ public sealed partial class MimePowersSystem : EntitySystem
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

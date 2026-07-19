@@ -13,7 +13,7 @@ public sealed partial class SolutionInjectWhileEmbeddedSystem : EntitySystem
     private static readonly EntityTimerId InjectTimer = new("inject");
 
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

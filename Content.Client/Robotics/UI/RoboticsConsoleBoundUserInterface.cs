@@ -10,8 +10,6 @@ public sealed partial class RoboticsConsoleBoundUserInterface : BoundUserInterfa
 {
     private static readonly EntityTimerId DestroyTimer = new("destroy");
 
-    [Dependency] private IGameTiming _timing = default!;
-
     [ViewVariables]
     public RoboticsConsoleWindow _window = default!;
 
@@ -44,18 +42,25 @@ public sealed partial class RoboticsConsoleBoundUserInterface : BoundUserInterfa
             return;
 
         _window.UpdateState(cast);
-        _window.UpdateDestroyButton(_timing.CurTime);
 
         if (EntMan.TryGetComponent<RoboticsConsoleComponent>(Owner, out var console) &&
-            console.NextDestroy > _timing.CurTime)
+            console.NextDestroy != TimeSpan.Zero)
             SetTimerAt(DestroyTimer, console.NextDestroy);
         else
             CancelTimer(DestroyTimer);
+
+        UpdateDestroyButton();
     }
 
     protected override void OnTimer(EntityTimerEvent timer)
     {
         if (timer.Id == DestroyTimer)
-            _window.UpdateDestroyButton(timer.FiredAt);
+            UpdateDestroyButton();
+    }
+
+    private void UpdateDestroyButton()
+    {
+        var remaining = TryGetTimer(DestroyTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
+        _window.UpdateDestroyButton(remaining);
     }
 }

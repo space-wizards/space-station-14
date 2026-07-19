@@ -16,7 +16,7 @@ public sealed partial class SuperBonkSystem : EntitySystem
     [Dependency] private ClumsySystem _clumsySystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

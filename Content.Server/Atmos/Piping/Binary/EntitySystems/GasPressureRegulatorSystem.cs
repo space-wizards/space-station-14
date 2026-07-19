@@ -24,7 +24,7 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private static readonly EntityTimerId UiUpdateTimer = new("ui-update");
 

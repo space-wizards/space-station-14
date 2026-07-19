@@ -12,7 +12,7 @@ public sealed partial class HugBotSystem : SharedHugBotSystem
 {
     private static readonly EntityTimerId HugCooldownTimer = new("hug-cooldown");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

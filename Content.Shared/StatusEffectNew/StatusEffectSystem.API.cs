@@ -268,6 +268,60 @@ public sealed partial class StatusEffectsSystem
     }
 
     /// <summary>
+    /// Attempts to get the maximum remaining time for status effects containing <typeparamref name="T"/>.
+    /// A null remaining time represents an infinite effect.
+    /// </summary>
+    public bool TryGetMaxRemainingTime<T>(EntityUid uid, out (EntityUid EffectEnt, TimeSpan? Remaining) time)
+        where T : IComponent
+    {
+        time = default;
+        if (!TryEffectsWithComp<T>(uid, out var effects))
+            return false;
+
+        var foundFinite = false;
+        foreach (var effect in effects)
+        {
+            if (effect.Comp2.EndEffectTime is null)
+            {
+                time = (effect.Owner, null);
+                return true;
+            }
+
+            var remaining = _timers.TryGetTimer<StatusEffectComponent>(effect.Owner, EndTimer, out var timer)
+                ? timer.Remaining
+                : TimeSpan.Zero;
+            if (!foundFinite || remaining > time.Remaining!.Value)
+            {
+                time = (effect.Owner, remaining);
+                foundFinite = true;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Gets the remaining time for a status effect entity. A null value represents an infinite effect.
+    /// </summary>
+    public bool TryGetRemainingTime(Entity<StatusEffectComponent?> effect, out TimeSpan? remaining)
+    {
+        remaining = default;
+        if (!Resolve(effect, ref effect.Comp, false))
+            return false;
+
+        if (effect.Comp.EndEffectTime is null)
+        {
+            remaining = null;
+            return true;
+        }
+
+        remaining = _timers.TryGetTimer<StatusEffectComponent>(effect.Owner, EndTimer, out var timer)
+            ? timer.Remaining
+            : TimeSpan.Zero;
+        return true;
+    }
+
+    /// <summary>
     /// Attempts to edit the remaining time for a status effect on an entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
@@ -406,6 +460,21 @@ public sealed partial class StatusEffectsSystem
         }
 
         return endTime is not null;
+    }
+
+    /// <summary>
+    /// Gets the longest remaining time among effects containing <typeparamref name="T"/>.
+    /// A null value represents an infinite effect.
+    /// </summary>
+    public bool TryGetEffectsRemainingTimeWithComp<T>(EntityUid? target, out TimeSpan? remaining)
+        where T : IComponent
+    {
+        remaining = TimeSpan.Zero;
+        if (target is not { } uid || !TryGetMaxRemainingTime<T>(uid, out var time))
+            return false;
+
+        remaining = time.Remaining;
+        return true;
     }
 
     /// <summary>

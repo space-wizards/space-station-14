@@ -28,7 +28,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private EmagSystem _emag = default!;
         [Dependency] private IGameTiming _timing = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         private void InitializeConsole()
         {

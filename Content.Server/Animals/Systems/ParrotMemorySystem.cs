@@ -33,7 +33,7 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private MobStateSystem _mobState = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

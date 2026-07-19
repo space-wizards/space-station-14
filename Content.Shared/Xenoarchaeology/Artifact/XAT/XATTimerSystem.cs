@@ -15,7 +15,7 @@ public sealed partial class XATTimerSystem : BaseXATSystem<XATTimerComponent>
     private static readonly EntityTimerId ActivationTimer = new("xat-activation");
 
     [Dependency] private IRobustRandom _robustRandom = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -64,10 +64,13 @@ public sealed partial class XATTimerSystem : BaseXATSystem<XATTimerComponent>
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(
-            Loc.GetString("xenoarch-trigger-examine-timer",
-            ("time", MathF.Ceiling((float) (node.Comp1.NextActivation - Timing.CurTime).TotalSeconds)))
-        );
+        if (_timers.TryGetTimer<XATTimerComponent>(node.Owner, ActivationTimer, out var timer))
+        {
+            args.PushMarkup(
+                Loc.GetString("xenoarch-trigger-examine-timer",
+                ("time", MathF.Ceiling((float) timer.Remaining.TotalSeconds)))
+            );
+        }
     }
 
     private TimeSpan GetNextDelay(XATTimerComponent comp)

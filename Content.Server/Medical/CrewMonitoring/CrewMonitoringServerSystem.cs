@@ -16,7 +16,7 @@ public sealed partial class CrewMonitoringServerSystem : EntitySystem
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SingletonDeviceNetServerSystem _singletonServerSystem = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private const float UpdateRate = 3f;
     public override void Initialize()

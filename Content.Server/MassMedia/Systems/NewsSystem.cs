@@ -49,7 +49,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IdentitySystem _identity = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private WebhookIdentifier? _webhookId = null;
     private Color _webhookEmbedColor;

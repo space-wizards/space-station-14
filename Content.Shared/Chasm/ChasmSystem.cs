@@ -22,7 +22,7 @@ public sealed partial class ChasmSystem : EntitySystem
     [Dependency] private SharedGrapplingGunSystem _grapple = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;

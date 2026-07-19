@@ -23,7 +23,7 @@ namespace Content.Server.VendingMachines
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private PricingSystem _pricing = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 

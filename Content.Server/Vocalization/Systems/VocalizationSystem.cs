@@ -21,7 +21,7 @@ public sealed partial class VocalizationSystem : EntitySystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

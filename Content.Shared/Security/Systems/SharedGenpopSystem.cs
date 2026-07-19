@@ -169,7 +169,8 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             Disabled = !hasAccess,
         });
 
-        var servedTime = 1 - (expire.ExpireTime - Timing.CurTime).TotalSeconds / genpopId.SentenceDuration.TotalSeconds;
+        var remaining = IdCard.GetRemainingTime((ent.Comp.LinkedId.Value, expire));
+        var servedTime = 1 - remaining.TotalSeconds / genpopId.SentenceDuration.TotalSeconds;
 
         // Can't reset it after its expired.
         if (expire.Expired)
@@ -229,7 +230,7 @@ public abstract partial class SharedGenpopSystem : EntitySystem
             else
             {
                 var sentence = ent.Comp.SentenceDuration;
-                var served = ent.Comp.SentenceDuration - (expireIdCard.ExpireTime - Timing.CurTime);
+                var served = ent.Comp.SentenceDuration - IdCard.GetRemainingTime((ent.Owner, expireIdCard));
 
                 args.PushText(Loc.GetString("genpop-prisoner-id-examine-wait",
                     ("minutes", served.Minutes),

@@ -32,7 +32,7 @@ public sealed partial class TriggerSystem : EntitySystem
     private static readonly EntityTimerId RepeatingTriggerTimer = new("repeating-trigger");
 
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _entityTimers = default!;
+    [Dependency] private EntityTimerSystem _entityTimers = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -190,7 +190,9 @@ public sealed partial class TriggerSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false) || !HasComp<ActiveTimerTriggerComponent>(ent))
             return null; // not a timer or not currently active
 
-        return ent.Comp.NextTrigger - _timing.CurTime;
+        return _entityTimers.TryGetTimer<TimerTriggerComponent>(ent.Owner, TimerTriggerTimer, out var timer)
+            ? timer.Remaining
+            : null;
     }
     public override void Update(float frameTime)
     {

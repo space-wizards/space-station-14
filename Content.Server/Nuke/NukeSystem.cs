@@ -45,7 +45,7 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private static readonly EntityTimerId DetonationTimer = new("detonation");
     private static readonly EntityTimerId SongTimer = new("song");
@@ -637,10 +637,16 @@ public sealed partial class NukeSystem : EntitySystem
 
     private void UpdateRemainingTimes(NukeComponent component)
     {
-        if (component.Status == NukeStatus.ARMED)
-            component.RemainingTime = Math.Max(0f, (float) (component.DetonationTime - _timing.CurTime).TotalSeconds);
-        else if (component.Status == NukeStatus.COOLDOWN)
-            component.CooldownTime = Math.Max(0f, (float) (component.CooldownEndTime - _timing.CurTime).TotalSeconds);
+        if (component.Status == NukeStatus.ARMED &&
+            _timers.TryGetTimer<NukeComponent>(component.Owner, DetonationTimer, out var detonation))
+        {
+            component.RemainingTime = (float) detonation.Remaining.TotalSeconds;
+        }
+        else if (component.Status == NukeStatus.COOLDOWN &&
+                 _timers.TryGetTimer<NukeComponent>(component.Owner, CooldownTimer, out var cooldown))
+        {
+            component.CooldownTime = (float) cooldown.Remaining.TotalSeconds;
+        }
     }
 
     #endregion

@@ -11,7 +11,7 @@ public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRes
     private static readonly EntityTimerId RestartTimerId = new("restart-round");
 
     [Dependency] private IChatManager _chatManager = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

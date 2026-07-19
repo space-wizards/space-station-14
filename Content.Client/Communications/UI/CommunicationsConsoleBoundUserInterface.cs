@@ -9,10 +9,10 @@ namespace Content.Client.Communications.UI
 {
     public sealed partial class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
+        private static readonly EntityTimerId CountdownTimer = new("countdown");
         private static readonly EntityTimerId CountdownRefreshTimer = new("countdown-refresh");
 
         [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private IGameTiming _timing = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -86,13 +86,17 @@ namespace Content.Client.Communications.UI
                 _menu.CountdownStarted = commsState.CountdownStarted;
                 _menu.AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
                 _menu.CurrentLevel = commsState.CurrentAlert;
-                _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
-
-                _menu.UpdateCountdown(_timing.CurTime);
-                if (commsState.CountdownStarted)
+                if (commsState.CountdownStarted && commsState.ExpectedCountdownEnd is { } deadline)
+                {
+                    SetTimerAt(CountdownTimer, deadline);
                     SetTimer(CountdownRefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+                }
                 else
+                {
+                    CancelTimer(CountdownTimer);
                     CancelTimer(CountdownRefreshTimer);
+                }
+                UpdateRemainingTime();
                 _menu.UpdateAlertLevels(commsState.AlertLevels, _menu.CurrentLevel);
                 _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
                 _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
@@ -103,8 +107,17 @@ namespace Content.Client.Communications.UI
 
         protected override void OnTimer(EntityTimerEvent timer)
         {
-            if (timer.Id == CountdownRefreshTimer)
-                _menu?.UpdateCountdown(_timing.CurTime);
+            if (timer.Id == CountdownTimer)
+                CancelTimer(CountdownRefreshTimer);
+
+            if (timer.Id == CountdownTimer || timer.Id == CountdownRefreshTimer)
+                UpdateRemainingTime();
+        }
+
+        private void UpdateRemainingTime()
+        {
+            var remaining = TryGetTimer(CountdownTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
+            _menu?.UpdateCountdown(remaining);
         }
     }
 }

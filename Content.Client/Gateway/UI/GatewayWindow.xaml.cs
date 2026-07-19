@@ -22,11 +22,9 @@ public sealed partial class GatewayWindow : FancyWindow,
     public NetEntity Owner;
 
     private NetEntity? _current;
-    private TimeSpan _nextReady;
     private TimeSpan _cooldown;
 
     private TimeSpan _unlockTime;
-    private TimeSpan _nextUnlock;
 
     /// <summary>
     /// Re-apply the state if the timer has elapsed.
@@ -55,17 +53,15 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     }
 
-    public void UpdateState(GatewayBoundUserInterfaceState state, TimeSpan currentTime)
+    public void UpdateState(GatewayBoundUserInterfaceState state, TimeSpan unlockRemaining, TimeSpan cooldownRemaining)
     {
         _destinations = state.Destinations;
         _current = state.Current;
-        _nextReady = state.NextReady;
         _cooldown = state.Cooldown;
         _unlockTime = state.UnlockTime;
-        _nextUnlock = state.NextUnlock;
 
-        _isUnlockPending = _nextUnlock >= currentTime;
-        _isCooldownPending = _nextReady >= currentTime;
+        _isUnlockPending = unlockRemaining > TimeSpan.Zero;
+        _isCooldownPending = cooldownRemaining > TimeSpan.Zero;
 
         Container.RemoveAllChildren();
 
@@ -87,13 +83,11 @@ public sealed partial class GatewayWindow : FancyWindow,
             return;
         }
 
-        var now = currentTime;
-
         foreach (var dest in _destinations)
         {
             var ent = dest.Entity;
             var name = dest.Name;
-            var locked = dest.Locked && _nextUnlock > currentTime;
+            var locked = dest.Locked && unlockRemaining > TimeSpan.Zero;
 
             var box = new BoxContainer()
             {
@@ -140,7 +134,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 Text = Loc.GetString("gateway-window-open-portal"),
                 Pressed = Pressable(),
                 ToggleMode = true,
-                Disabled = now < _nextReady || Pressable(),
+                Disabled = cooldownRemaining > TimeSpan.Zero || Pressable(),
                 HorizontalAlignment = HAlignment.Right,
                 Margin = new Thickness(10f, 0f, 0f, 0f),
                 Visible = !locked,
@@ -183,36 +177,26 @@ public sealed partial class GatewayWindow : FancyWindow,
         _lastState = state;
     }
 
-    public void Refresh(TimeSpan currentTime)
+    public void Refresh(TimeSpan unlockRemaining, TimeSpan cooldownRemaining)
     {
-        var now = currentTime;
         var dirtyState = false;
 
         // if its not going to close then show it as empty
-        if (_nextUnlock == TimeSpan.Zero)
+        if (unlockRemaining <= TimeSpan.Zero)
         {
+            if (_isUnlockPending)
+            {
+                dirtyState = true;
+                _isUnlockPending = false;
+            }
+
             NextUnlockBar.Value = 1f;
             NextUnlockText.Text = "00:00";
         }
         else
         {
-            var remaining = _nextUnlock - now;
-            if (remaining < TimeSpan.Zero)
-            {
-                if (_isUnlockPending)
-                {
-                    dirtyState = true;
-                    _isUnlockPending = false;
-                }
-
-                NextUnlockBar.Value = 1f;
-                NextUnlockText.Text = "00:00";
-            }
-            else
-            {
-                NextUnlockBar.Value = 1f - (float) (remaining.TotalSeconds / _unlockTime.TotalSeconds);
-                NextUnlockText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
-            }
+            NextUnlockBar.Value = 1f - (float) (unlockRemaining.TotalSeconds / _unlockTime.TotalSeconds);
+            NextUnlockText.Text = $"{unlockRemaining.Minutes:00}:{unlockRemaining.Seconds:00}";
         }
 
         // if its not going to close then show it as empty
@@ -221,31 +205,27 @@ public sealed partial class GatewayWindow : FancyWindow,
             NextReadyBar.Value = 1f;
             NextCloseText.Text = "00:00";
         }
+        else if (cooldownRemaining <= TimeSpan.Zero)
+        {
+            if (_isCooldownPending)
+            {
+                dirtyState = true;
+                _isCooldownPending = false;
+            }
+
+            NextReadyBar.Value = 1f;
+            NextCloseText.Text = "00:00";
+        }
         else
         {
-            var remaining = _nextReady - now;
-            if (remaining < TimeSpan.Zero)
-            {
-                if (_isCooldownPending)
-                {
-                    dirtyState = true;
-                    _isCooldownPending = false;
-                }
-
-                NextReadyBar.Value = 1f;
-                NextCloseText.Text = "00:00";
-            }
-            else
-            {
-                NextReadyBar.Value = 1f - (float) (remaining.TotalSeconds / _cooldown.TotalSeconds);
-                NextCloseText.Text = $"{remaining.Minutes:00}:{remaining.Seconds:00}";
-            }
+            NextReadyBar.Value = 1f - (float) (cooldownRemaining.TotalSeconds / _cooldown.TotalSeconds);
+            NextCloseText.Text = $"{cooldownRemaining.Minutes:00}:{cooldownRemaining.Seconds:00}";
         }
 
         if (dirtyState && _lastState != null)
         {
             // Refresh UI buttons.
-            UpdateState(_lastState, currentTime);
+            UpdateState(_lastState, unlockRemaining, cooldownRemaining);
         }
     }
 }

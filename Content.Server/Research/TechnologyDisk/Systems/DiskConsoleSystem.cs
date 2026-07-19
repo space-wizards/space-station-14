@@ -17,7 +17,7 @@ public sealed partial class DiskConsoleSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ResearchSystem _research = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

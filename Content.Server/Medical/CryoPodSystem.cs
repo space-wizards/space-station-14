@@ -20,7 +20,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private DamageableSystem _damageable = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private static readonly EntityTimerId UiUpdateTimer = new("ui-update");
 

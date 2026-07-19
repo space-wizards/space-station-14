@@ -8,9 +8,9 @@ namespace Content.Client.Anomaly.Ui;
 [UsedImplicitly]
 public sealed partial class AnomalyScannerBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId PulseTimer = new("pulse");
     private static readonly EntityTimerId RefreshTimer = new("refresh");
 
-    [Dependency] private IGameTiming _timing = default!;
     private AnomalyScannerMenu? _menu;
 
     public AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -38,18 +38,33 @@ public sealed partial class AnomalyScannerBoundUserInterface : BoundUserInterfac
             return;
 
         _menu.LastMessage = msg.Message;
-        _menu.NextPulseTime = msg.NextPulseTime;
-        _menu.UpdateMenu(_timing.CurTime);
-        if (msg.NextPulseTime != null)
+        if (msg.NextPulseTime is { } deadline)
+        {
+            SetTimerAt(PulseTimer, deadline);
             SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        }
         else
+        {
+            CancelTimer(PulseTimer);
             CancelTimer(RefreshTimer);
+        }
+
+        UpdateRemainingTime();
     }
 
     protected override void OnTimer(EntityTimerEvent timer)
     {
-        if (timer.Id == RefreshTimer)
-            _menu?.UpdateMenu(_timing.CurTime);
+        if (timer.Id == PulseTimer)
+            CancelTimer(RefreshTimer);
+
+        if (timer.Id == PulseTimer || timer.Id == RefreshTimer)
+            UpdateRemainingTime();
+    }
+
+    private void UpdateRemainingTime()
+    {
+        var remaining = TryGetTimer(PulseTimer, out var timer) ? timer.Remaining : (TimeSpan?) null;
+        _menu?.UpdateMenu(remaining);
     }
 
     protected override void Dispose(bool disposing)

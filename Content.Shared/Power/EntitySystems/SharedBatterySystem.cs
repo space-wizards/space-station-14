@@ -15,7 +15,7 @@ public abstract partial class SharedBatterySystem : EntitySystem
     private static readonly EntityTimerId RechargeTimer = new("recharge");
 
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()

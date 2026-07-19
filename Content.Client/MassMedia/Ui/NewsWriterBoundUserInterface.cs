@@ -13,8 +13,6 @@ public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
     private static readonly EntityTimerId PublishTimer = new("publish");
     private static readonly EntityTimerId RefreshTimer = new("refresh");
 
-    [Dependency] private IGameTiming _timing = default!;
-
     [ViewVariables]
     private NewsWriterMenu? _menu;
 
@@ -45,17 +43,9 @@ public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
             return;
 
         _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish, cast.DraftTitle, cast.DraftContent);
-        _menu?.UpdatePublishTime(_timing.CurTime);
-
-        if (cast.NextPublish <= _timing.CurTime)
-        {
-            CancelTimer(PublishTimer);
-            CancelTimer(RefreshTimer);
-            return;
-        }
-
         SetTimerAt(PublishTimer, cast.NextPublish);
         SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        UpdateRemainingTime();
     }
 
     protected override void OnTimer(EntityTimerEvent timer)
@@ -64,7 +54,13 @@ public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
             CancelTimer(RefreshTimer);
 
         if (timer.Id == PublishTimer || timer.Id == RefreshTimer)
-            _menu?.UpdatePublishTime(timer.FiredAt);
+            UpdateRemainingTime();
+    }
+
+    private void UpdateRemainingTime()
+    {
+        var remaining = TryGetTimer(PublishTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
+        _menu?.UpdatePublishTime(remaining);
     }
 
     private void OnPublishButtonPressed()

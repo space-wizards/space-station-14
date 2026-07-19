@@ -35,7 +35,7 @@ namespace Content.Server.PowerSink
         [Dependency] private SharedAudioSystem _audio = default!;
         [Dependency] private StationSystem _station = default!;
         [Dependency] private BatterySystem _battery = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         public override void Initialize()
         {

@@ -27,7 +27,7 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
 
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private EntityStorageSystem _entityStorage = default!;
     [Dependency] private WeldableSystem _weldableSystem = default!;

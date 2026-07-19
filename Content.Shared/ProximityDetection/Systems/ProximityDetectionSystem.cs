@@ -14,7 +14,7 @@ public sealed partial class ProximityDetectionSystem : EntitySystem
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

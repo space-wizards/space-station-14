@@ -22,6 +22,7 @@ namespace Content.Shared.Teleportation.Systems;
 public sealed partial class SwapTeleporterSystem : EntitySystem
 {
     private static readonly EntityTimerId TeleportTimer = new("teleport");
+    private static readonly EntityTimerId CooldownTimer = new("cooldown");
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
@@ -31,7 +32,7 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -128,7 +129,7 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        if (_timing.CurTime < comp.NextTeleportUse)
+        if (_timers.TryGetTimer<SwapTeleporterComponent>(uid, CooldownTimer, out _))
         {
             _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-cancel-time"), ent, user);
             return;
@@ -139,7 +140,7 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
         comp.NextTeleportUse = _timing.CurTime + comp.Cooldown;
         comp.TeleportTime = _timing.CurTime + comp.TeleportDelay;
         Dirty(uid, comp);
-        _timers.SetTimerAt(ent, TeleportTimer, comp.TeleportTime.Value);
+        Schedule(ent);
         args.Handled = true;
     }
 
@@ -246,10 +247,10 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
                 : "swap-teleporter-examine-link-present";
             args.PushMarkup(Loc.GetString(locale));
 
-            if (_timing.CurTime < comp.NextTeleportUse)
+            if (_timers.TryGetTimer<SwapTeleporterComponent>(ent.Owner, CooldownTimer, out var timer))
             {
                 args.PushMarkup(Loc.GetString("swap-teleporter-examine-time-remaining",
-                    ("second", (int) ((comp.NextTeleportUse - _timing.CurTime).TotalSeconds + 0.5f))));
+                    ("second", (int) (timer.Remaining.TotalSeconds + 0.5f))));
             }
         }
     }
@@ -278,5 +279,10 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
             _timers.SetTimerAt(ent, TeleportTimer, deadline);
         else
             _timers.CancelTimer<SwapTeleporterComponent>(ent, TeleportTimer);
+
+        if (ent.Comp.NextTeleportUse > _timing.CurTime)
+            _timers.SetTimerAt(ent, CooldownTimer, ent.Comp.NextTeleportUse);
+        else
+            _timers.CancelTimer<SwapTeleporterComponent>(ent, CooldownTimer);
     }
 }

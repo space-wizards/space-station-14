@@ -12,7 +12,7 @@ public sealed partial class AutoOrientSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMoverController _mover = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private TimeSpan _delay = TimeSpan.Zero;
 

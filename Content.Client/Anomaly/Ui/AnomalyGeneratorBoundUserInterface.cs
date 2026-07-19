@@ -8,12 +8,10 @@ namespace Content.Client.Anomaly.Ui;
 [UsedImplicitly]
 public sealed partial class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId CooldownTimer = new("cooldown");
     private static readonly EntityTimerId RefreshTimer = new("refresh");
 
-    [Dependency] private IGameTiming _timing = default!;
-
     private AnomalyGeneratorWindow? _window;
-    private TimeSpan _cooldownEnd;
 
     public AnomalyGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -39,32 +37,22 @@ public sealed partial class AnomalyGeneratorBoundUserInterface : BoundUserInterf
         if (state is not AnomalyGeneratorUserInterfaceState msg)
             return;
 
-        _window?.UpdateState(msg, _timing.CurTime);
-
-        _cooldownEnd = msg.CooldownEndTime;
-        ScheduleRefresh();
+        SetTimerAt(CooldownTimer, msg.CooldownEndTime);
+        SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        _window?.UpdateState(msg, GetRemaining());
     }
 
     protected override void OnTimer(EntityTimerEvent timer)
     {
-        if (timer.Id != RefreshTimer)
-            return;
+        if (timer.Id == CooldownTimer)
+            CancelTimer(RefreshTimer);
 
-        _window?.UpdateTimer(_timing.CurTime);
-        ScheduleRefresh();
+        if (timer.Id == CooldownTimer || timer.Id == RefreshTimer)
+            _window?.UpdateTimer(GetRemaining());
     }
 
-    private void ScheduleRefresh()
+    private TimeSpan GetRemaining()
     {
-        var remaining = _cooldownEnd - _timing.CurTime;
-        if (remaining <= TimeSpan.Zero)
-        {
-            CancelTimer(RefreshTimer);
-            return;
-        }
-
-        SetTimer(RefreshTimer, remaining < TimeSpan.FromSeconds(1)
-            ? remaining
-            : TimeSpan.FromSeconds(1));
+        return TryGetTimer(CooldownTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
     }
 }

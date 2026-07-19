@@ -16,7 +16,7 @@ namespace Content.Server.NPC.Systems;
 public sealed partial class NPCRetaliationSystem : EntitySystem
 {
     [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private static readonly EntityTimerId AttackMemoryTimer = new("attack-memory");
 

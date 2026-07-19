@@ -7,7 +7,7 @@ public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
     private static readonly EntityTimerId CameraSwitchTimer = new("camera-switch");
     private static readonly TimeSpan CameraSwitchDelay = TimeSpan.FromSeconds(10);
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

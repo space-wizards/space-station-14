@@ -21,7 +21,6 @@ namespace Content.Client.Communications.UI
         public bool AlertLevelSelectable;
         public bool CountdownStarted;
         public string CurrentLevel = string.Empty;
-        public TimeSpan? CountdownEnd;
 
         public event Action? OnEmergencyLevel;
         public event Action<string>? OnAlertLevel;
@@ -110,7 +109,7 @@ namespace Content.Client.Communications.UI
             }
         }
 
-        public void UpdateCountdown(TimeSpan currentTime)
+        public void UpdateCountdown(TimeSpan remaining)
         {
             if (!CountdownStarted)
             {
@@ -119,11 +118,9 @@ namespace Content.Client.Communications.UI
                 return;
             }
 
-            var diff = MathHelper.Max((CountdownEnd - currentTime) ?? TimeSpan.Zero, TimeSpan.Zero);
-
             EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
             var infoText = Loc.GetString($"comms-console-menu-time-remaining",
-                ("time", diff.ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture)));
+                ("time", remaining.ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture)));
             CountdownLabel.SetMessage(infoText);
         }
     }

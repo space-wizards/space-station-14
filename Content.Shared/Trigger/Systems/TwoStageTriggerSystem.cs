@@ -10,7 +10,7 @@ public sealed partial class TwoStageTriggerSystem : EntitySystem
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private TriggerSystem _triggerSystem = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

@@ -11,7 +11,7 @@ public sealed partial class DamageContactsSystem : EntitySystem
 {
     private static readonly EntityTimerId DamageTimer = new("damage");
 
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;

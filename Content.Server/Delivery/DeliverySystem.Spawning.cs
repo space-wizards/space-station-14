@@ -19,7 +19,7 @@ public sealed partial class DeliverySystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private void InitializeSpawning()
     {

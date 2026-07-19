@@ -41,7 +41,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private GunSystem _gun = default!;
         [Dependency] private RadioSystem _radio = default!;
         [Dependency] private NavMapSystem _navMap = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         public override void Initialize()
         {

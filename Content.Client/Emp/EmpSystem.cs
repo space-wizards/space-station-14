@@ -9,7 +9,7 @@ public sealed partial class EmpSystem : SharedEmpSystem
     private static readonly EntityTimerId EffectTimer = new("effect");
 
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

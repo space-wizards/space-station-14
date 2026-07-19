@@ -13,7 +13,7 @@ namespace Content.Shared.StatusEffect
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private AlertsSystem _alertsSystem = default!;
-        [Dependency] private IEntityTimerManager _timers = default!;
+        [Dependency] private EntityTimerSystem _timers = default!;
 
         private const string TimerPrefix = "status:";
 
@@ -193,7 +193,8 @@ namespace Content.Shared.StatusEffect
                 if (refresh)
                 {
                     //Making sure we don't reset a longer cooldown by applying a shorter one.
-                    if ((status.ActiveEffects[key].Cooldown.Item2 - _gameTiming.CurTime) < time)
+                    if (!_timers.TryGetTimer<StatusEffectsComponent>(uid, GetTimerId(key), out var timer) ||
+                        timer.Remaining < time)
                     {
                         //Refresh cooldown time.
                         status.ActiveEffects[key].Cooldown = cooldown;

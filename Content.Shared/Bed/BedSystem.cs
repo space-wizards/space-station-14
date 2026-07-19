@@ -27,7 +27,7 @@ public sealed partial class BedSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private SleepingSystem _sleepingSystem = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     [Dependency] private EntityQuery<SleepingComponent> _sleepingQuery = default!;
 

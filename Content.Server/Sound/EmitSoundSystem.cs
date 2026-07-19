@@ -9,7 +9,7 @@ public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
     private static readonly EntityTimerId SoundTimer = new("sound");
 
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     private void OnTimer(Entity<SpamEmitSoundComponent> ent, ref EntityTimerEvent args)
     {

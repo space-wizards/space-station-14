@@ -13,7 +13,7 @@ public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSys
     private static readonly EntityTimerId EmpChangeTimer = new("emp-change");
 
     [Dependency] private IdentitySystem _identity = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

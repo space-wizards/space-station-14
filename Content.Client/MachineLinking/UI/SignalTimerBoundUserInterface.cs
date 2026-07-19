@@ -10,8 +10,6 @@ public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
     private static readonly EntityTimerId EndTimer = new("end");
     private static readonly EntityTimerId RefreshTimer = new("refresh");
 
-    [Dependency] private IGameTiming _timing = default!;
-
     [ViewVariables]
     private SignalTimerWindow? _window;
 
@@ -65,17 +63,17 @@ public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
         _window.SetTriggerTime(cast.TriggerTime);
         _window.SetTimerStarted(cast.TimerStarted);
         _window.SetHasAccess(cast.HasAccess);
-        _window.UpdateTimer(_timing.CurTime);
-
-        if (!cast.TimerStarted || cast.TriggerTime <= _timing.CurTime)
+        if (!cast.TimerStarted)
         {
             CancelTimer(EndTimer);
             CancelTimer(RefreshTimer);
+            _window.UpdateTimer(TimeSpan.Zero);
             return;
         }
 
         SetTimerAt(EndTimer, cast.TriggerTime);
         SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        UpdateRemainingTime();
     }
 
     protected override void OnTimer(EntityTimerEvent timer)
@@ -84,6 +82,12 @@ public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
             CancelTimer(RefreshTimer);
 
         if (timer.Id == EndTimer || timer.Id == RefreshTimer)
-            _window?.UpdateTimer(timer.FiredAt);
+            UpdateRemainingTime();
+    }
+
+    private void UpdateRemainingTime()
+    {
+        var remaining = TryGetTimer(EndTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
+        _window?.UpdateTimer(remaining);
     }
 }

@@ -15,8 +15,6 @@ namespace Content.Client.Kitchen.UI
         private static readonly EntityTimerId CookTimer = new("cook");
         private static readonly EntityTimerId RefreshTimer = new("refresh");
 
-        [Dependency] private IGameTiming _timing = default!;
-
         [ViewVariables]
         private MicrowaveMenu? _menu;
 
@@ -77,12 +75,12 @@ namespace Content.Client.Kitchen.UI
 
             _menu.IsBusy = cState.IsMicrowaveBusy;
             _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
-            _menu.UpdateCookTime(_timing.CurTime);
 
-            if (cState.IsMicrowaveBusy && cState.CurrentCookTimeEnd > _timing.CurTime)
+            if (cState.IsMicrowaveBusy)
             {
                 SetTimerAt(CookTimer, cState.CurrentCookTimeEnd);
                 SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+                UpdateRemainingTime();
             }
             else
             {
@@ -134,7 +132,13 @@ namespace Content.Client.Kitchen.UI
                 CancelTimer(RefreshTimer);
 
             if (timer.Id == CookTimer || timer.Id == RefreshTimer)
-                _menu?.UpdateCookTime(timer.FiredAt);
+                UpdateRemainingTime();
+        }
+
+        private void UpdateRemainingTime()
+        {
+            var remaining = TryGetTimer(CookTimer, out var timer) ? timer.Remaining : TimeSpan.Zero;
+            _menu?.UpdateCookTime(remaining);
         }
 
         private void RefreshContentsDisplay(EntityUid[] containedSolids)

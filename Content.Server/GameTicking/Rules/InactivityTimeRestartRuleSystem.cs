@@ -14,7 +14,7 @@ public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<Ina
 
     [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

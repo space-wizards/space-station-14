@@ -19,7 +19,7 @@ public sealed partial class MatchstickSystem : EntitySystem
     [Dependency] private SharedPointLightSystem _lights = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedIgnitionSourceSystem _ignition = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

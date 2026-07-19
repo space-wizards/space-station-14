@@ -16,7 +16,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
 
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
     [Dependency] private DeviceLinkSystem _signalSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;

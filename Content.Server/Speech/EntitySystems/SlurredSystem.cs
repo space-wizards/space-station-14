@@ -4,7 +4,6 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -12,7 +11,6 @@ public sealed partial class SlurredSystem : SharedSlurredSystem
 {
     [Dependency] private StatusEffectsSystem _status = default!;
     [Dependency] private IRobustRandom _random = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>
     /// Divisor applied to total seconds used to get the odds of slurred speech occuring.
@@ -30,11 +28,11 @@ public sealed partial class SlurredSystem : SharedSlurredSystem
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetMaxTime<SlurredAccentComponent>(uid, out var time))
+        if (!_status.TryGetMaxRemainingTime<SlurredAccentComponent>(uid, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
-        var magic = time.Item2 == null ? SlurredModifier : (float)(time.Item2 - _timing.CurTime).Value.TotalSeconds - SlurredThreshold;
+        var magic = time.Item2 == null ? SlurredModifier : (float) time.Item2.Value.TotalSeconds - SlurredThreshold;
 
         return Math.Clamp(magic / SlurredModifier, 0f, 1f);
     }

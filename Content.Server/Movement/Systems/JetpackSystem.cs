@@ -14,7 +14,7 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
 
     [Dependency] private GasTankSystem _gasTank = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {

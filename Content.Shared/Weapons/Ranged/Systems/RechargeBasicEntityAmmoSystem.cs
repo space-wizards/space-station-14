@@ -13,10 +13,9 @@ public sealed partial class RechargeBasicEntityAmmoSystem : EntitySystem
 
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _netManager = default!;
-    [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedGunSystem _gun = default!;
-    [Dependency] private IEntityTimerManager _timers = default!;
+    [Dependency] private EntityTimerSystem _timers = default!;
 
     public override void Initialize()
     {
@@ -80,8 +79,10 @@ public sealed partial class RechargeBasicEntityAmmoSystem : EntitySystem
             return;
         }
 
-        var timeLeft = ent.Comp.NextCharge + _metadata.GetPauseTime(ent) - _timing.CurTime;
-        args.PushMarkup(Loc.GetString("recharge-basic-entity-ammo-can-recharge", ("seconds", Math.Round(timeLeft.Value.TotalSeconds, 1))));
+        if (!_timers.TryGetTimer<RechargeBasicEntityAmmoComponent>(ent.Owner, RechargeTimer, out var timer))
+            return;
+
+        args.PushMarkup(Loc.GetString("recharge-basic-entity-ammo-can-recharge", ("seconds", Math.Round(timer.Remaining.TotalSeconds, 1))));
     }
 
     public void Reset(Entity<RechargeBasicEntityAmmoComponent?> ent)
