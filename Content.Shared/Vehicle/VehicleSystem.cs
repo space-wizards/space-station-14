@@ -301,7 +301,7 @@ public sealed partial class VehicleSystem : EntitySystem
         if (TerminatingOrDeleted(entity))
             return;
 
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return;
 
         _actionBlocker.UpdateCanMove(entity);
