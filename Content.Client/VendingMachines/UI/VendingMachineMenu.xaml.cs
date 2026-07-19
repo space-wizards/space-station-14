@@ -150,6 +150,8 @@ namespace Content.Client.VendingMachines.UI
                 return;
             }
 
+            FlavorRight.Text = Loc.GetString("vending-machine-categorised-flavor-right");
+
             var listData = new List<CategoryListData>
             {
                 //make first button show every item
