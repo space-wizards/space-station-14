@@ -5085,7 +5085,7 @@
   url: https://github.com/space-wizards/space-station-14/pull/41264
 - author: Starlight991
   changes:
-  - message: Slimes can now be summoned using chemistry: Cognizine creates a friendly slime, while Vestine creates a hostile one.
+  - message: 'Slimes can now be summoned using chemistry: Cognizine creates a friendly slime, while Vestine creates a hostile one.'
     type: Add
   id: 9876
   time: '2026-07-19T01:23:14.0000000+00:00'
