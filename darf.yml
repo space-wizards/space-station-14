@@ -1,0 +1,828 @@
+version: 2
+profile:
+  _traitPreferences:
+  - SocialAnxiety
+  _loadouts:
+    JobBotanist:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        BotanistOuterClothing:
+        - prototype: BotanistApron
+        BotanistBackpack:
+        - prototype: BotanistDuffel
+        BotanistJumpsuit:
+        - prototype: BotanistOveralls
+        BotanistHead:
+        - prototype: BotanistHead
+        GroupTankHarness: []
+      role: JobBotanist
+      entityName: null
+    JobLibrarian:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        CommonBackpack:
+        - prototype: CommonDuffel
+        LibrarianJumpsuit:
+        - prototype: LibrarianJumpsuit
+        GroupTankHarness: []
+      role: JobLibrarian
+      entityName: null
+    JobChef:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: Lighter
+        - prototype: CigPackRed
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        ChefOuterClothing: []
+        CommonBackpack:
+        - prototype: CommonDuffel
+        ChefJumpsuit:
+        - prototype: ChefJumpsuit
+        ChefMask: []
+        ChefHead: []
+        GroupTankHarness: []
+      role: JobChef
+      entityName: null
+    JobPsychologist:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: Lighter
+        - prototype: ClothingNeckGayPin
+        - prototype: CigPackRed
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        MedicalBackpack:
+        - prototype: MedicalDoctorDuffel
+        PsychologistJumpsuit:
+        - prototype: PsychologistJumpsuit
+        GroupTankHarness: []
+      role: JobPsychologist
+      entityName: null
+    JobResearchAssistant:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: Lighter
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        ScientistBackpack:
+        - prototype: ScientistDuffel
+        ResearchAssistantJumpsuit:
+        - prototype: WhiteJumpsuit
+        GroupTankHarness: []
+      role: JobResearchAssistant
+      entityName: null
+    JobChaplain:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        ChaplainBible:
+        - prototype: Bible
+        ChaplainOuterClothing: []
+        CommonBackpack:
+        - prototype: CommonDuffel
+        ChaplainJumpsuit:
+        - prototype: ChaplainJumpsuit
+        ChaplainNeck: []
+        ChaplainMask: []
+        ChaplainHead: []
+        GroupTankHarness: []
+      role: JobChaplain
+      entityName: null
+    JobLawyer:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: ClothingNeckGayPin
+        - prototype: CigPackRed
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        CommonBackpack:
+        - prototype: CommonDuffel
+        LawyerJumpsuit:
+        - prototype: LawyerJumpsuit
+        LawyerNeck: []
+        GroupTankHarness: []
+      role: JobLawyer
+      entityName: null
+    JobMusician:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Instruments:
+        - prototype: Synthesizer
+        - prototype: Trumpet
+        Trinkets:
+        - prototype: Lighter
+        - prototype: CigPackRed
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        MusicianOuterClothing: []
+        CommonBackpack:
+        - prototype: CommonDuffel
+        MusicianJumpsuit:
+        - prototype: MusicianJumpsuit
+        GroupTankHarness: []
+      role: JobMusician
+      entityName: null
+    JobBorg:
+      selectedLoadouts: {}
+      role: JobBorg
+      entityName: Door-Opener-9000
+    JobClown:
+      selectedLoadouts:
+        ClownJobTrinkets: []
+        Trinkets: []
+        SurvivalClown:
+        - prototype: EmergencyOxygenClown
+        Glasses: []
+        ClownShoes:
+        - prototype: ClownShoes
+        ClownOuterClothing: []
+        ClownBackpack:
+        - prototype: ClownDuffel
+        ClownJumpsuit:
+        - prototype: ClownSuit
+        ClownHead: []
+        GroupTankHarness: []
+      role: JobClown
+      entityName: null
+    JobCargoTechnician:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: Lighter
+        - prototype: ClothingNeckGayPin
+        - prototype: CigPackRed
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        CargoTechnicianID:
+        - prototype: CargoTechnicianPDA
+        CargoTechnicianShoes:
+        - prototype: BlackShoes
+        CargoTechnicianOuterClothing:
+        - prototype: CargoTechnicianWintercoat
+        CargoTechnicianBackpack:
+        - prototype: CargoTechnicianSatchel
+        CargoTechnicianJumpsuit:
+        - prototype: CargoTechnicianJumpsuit
+        CargoTechnicianHead: []
+        GroupTankHarness: []
+      role: JobCargoTechnician
+      entityName: null
+    JobServiceWorker:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        CommonBackpack:
+        - prototype: CommonDuffel
+        BartenderJumpsuit:
+        - prototype: BartenderJumpsuit
+        GroupTankHarness: []
+      role: JobServiceWorker
+      entityName: null
+    JobTechnicalAssistant:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        SurvivalExtended:
+        - prototype: EmergencyOxygenExtended
+        StationEngineerBackpack:
+        - prototype: StationEngineerDuffel
+        TechnicalAssistantJumpsuit:
+        - prototype: YellowJumpsuit
+        GroupTankHarness: []
+      role: JobTechnicalAssistant
+      entityName: null
+    JobStationAi:
+      selectedLoadouts: {}
+      role: JobStationAi
+      entityName: Door-Opener-9001
+    JobSalvageSpecialist:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        SalvageSpecialistShoes:
+        - prototype: SalvageBoots
+        SalvageSpecialistOuterClothing:
+        - prototype: SalvageSpecialistWintercoat
+        SalvageSpecialistBackpack:
+        - prototype: SalvageSpecialistDuffel
+        GroupTankHarness: []
+      role: JobSalvageSpecialist
+      entityName: null
+    JobJanitor:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        JanitorJobTrinkets: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        JanitorOuterClothing: []
+        CommonBackpack:
+        - prototype: CommonDuffel
+        JanitorGloves:
+        - prototype: JanitorRubberGloves
+        JanitorJumpsuit:
+        - prototype: JanitorJumpsuit
+        JanitorHead: []
+        GroupTankHarness: []
+      role: JobJanitor
+      entityName: null
+    JobBartender:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        BartenderJobTrinkets:
+        - prototype: BartenderGoldenShaker
+        Trinkets:
+        - prototype: ClothingNeckGayPin
+        - prototype: CigPackRed
+        - prototype: Lighter
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        BartenderOuterClothing: []
+        CommonBackpack:
+        - prototype: CommonDuffel
+        BartenderJumpsuit:
+        - prototype: BartenderJumpsuit
+        BartenderHead: []
+        GroupTankHarness: []
+      role: JobBartender
+      entityName: null
+    JobChemist:
+      selectedLoadouts:
+        GroupSpeciesBreathToolMedical: []
+        Trinkets: []
+        SurvivalMedical:
+        - prototype: EmergencyOxygenMedical
+        Glasses: []
+        MedicalShoes:
+        - prototype: WhiteShoes
+        ChemistOuterClothing: []
+        ChemistBackpack:
+        - prototype: ChemistBackpack
+        ChemistJumpsuit:
+        - prototype: ChemistJumpsuit
+        MedicalMask: []
+        GroupTankHarness: []
+      role: JobChemist
+      entityName: null
+    JobReporter:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets:
+        - prototype: Lighter
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        CommonBackpack:
+        - prototype: CommonDuffel
+        ReporterJumpsuit:
+        - prototype: JournalistJumpsuit
+        GroupTankHarness: []
+        ReporterHead: []
+        ReporterOuterClothing: []
+      role: JobReporter
+      entityName: null
+    JobMedicalDoctor:
+      selectedLoadouts:
+        GroupSpeciesBreathToolMedical: []
+        Trinkets: []
+        SurvivalMedical:
+        - prototype: EmergencyOxygenMedical
+        Glasses:
+        - prototype: Glasses
+        MedicalDoctorPDA:
+        - prototype: MedicalDoctorPDA
+        MedicalShoes:
+        - prototype: MedicalWinterBoots
+        MedicalDoctorOuterClothing:
+        - prototype: MedicalDoctorWintercoat
+        MedicalBackpack:
+        - prototype: MedicalDoctorDuffel
+        MedicalDoctorJumpsuit:
+        - prototype: MedicalDoctorJumpsuit
+        MedicalMask: []
+        MedicalDoctorHead:
+        - prototype: MedicalBeret
+        GroupTankHarness: []
+      role: JobMedicalDoctor
+      entityName: null
+    JobMedicalIntern:
+      selectedLoadouts:
+        GroupSpeciesBreathToolMedical: []
+        Trinkets:
+        - prototype: CigPackRed
+        - prototype: ClothingNeckGayPin
+        - prototype: Lighter
+        SurvivalMedical:
+        - prototype: EmergencyOxygenMedical
+        MedicalBackpack:
+        - prototype: MedicalDoctorDuffel
+        MedicalInternJumpsuit:
+        - prototype: WhiteJumpsuit
+        GroupTankHarness: []
+        Glasses:
+        - prototype: Glasses
+      role: JobMedicalIntern
+      entityName: null
+    JobSecurityCadet:
+      selectedLoadouts:
+        GroupSpeciesBreathToolSecurity: []
+        Trinkets: []
+        SurvivalSecurity:
+        - prototype: EmergencyOxygenSecurity
+        SecurityBackpack:
+        - prototype: SecurityDuffel
+        SecurityCadetJumpsuit:
+        - prototype: RedJumpsuit
+      role: JobSecurityCadet
+      entityName: null
+    JobHeadOfPersonnel:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses: []
+        HoPOuterClothing: []
+        HoPBackpack:
+        - prototype: CommonSatchel
+        HoPJumpsuit:
+        - prototype: HoPJumpsuit
+        HoPNeck:
+        - prototype: HoPCloak
+        HoPHead:
+        - prototype: HoPHead
+        GroupTankHarness: []
+      role: JobHeadOfPersonnel
+      entityName: null
+    JobChiefMedicalOfficer:
+      selectedLoadouts:
+        GroupSpeciesBreathToolMedical: []
+        Trinkets: []
+        SurvivalMedical:
+        - prototype: EmergencyOxygenMedical
+        ChiefMedicalOfficerShoes:
+        - prototype: MedicalWinterBoots
+        ChiefMedicalOfficerNeck:
+        - prototype: ChiefMedicalOfficerCloak
+        ChiefMedicalOfficerOuterClothing: []
+        MedicalBackpack:
+        - prototype: MedicalDoctorSatchel
+        ChiefMedicalOfficerJumpsuit:
+        - prototype: ChiefMedicalOfficerJumpsuit
+        MedicalMask: []
+        ChiefMedicalOfficerHead:
+        - prototype: ChiefMedicalOfficerBeret
+        GroupTankHarness: []
+        Glasses:
+        - prototype: Glasses
+      role: JobChiefMedicalOfficer
+      entityName: null
+    JobQuartermaster:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        QuartermasterShoes:
+        - prototype: CargoWinterBoots
+        QuartermasterOuterClothing: []
+        CargoTechnicianBackpack:
+        - prototype: CargoTechnicianSatchel
+        QuartermasterJumpsuit:
+        - prototype: QuartermasterJumpsuit
+        QuartermasterNeck:
+        - prototype: QuartermasterCloak
+        QuartermasterHead:
+        - prototype: QuartermasterBeret
+        GroupTankHarness: []
+      role: JobQuartermaster
+      entityName: null
+    JobAtmosphericTechnician:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        SurvivalExtended:
+        - prototype: EmergencyOxygenExtended
+        AtmosphericTechnicianShoes:
+        - prototype: EngineeringWinterBoots
+        AtmosphericTechnicianOuterClothing:
+        - prototype: AtmosphericTechnicianWintercoat
+        AtmosphericTechnicianBackpack:
+        - prototype: AtmosphericTechnicianDuffel
+        AtmosphericTechnicianJumpsuit:
+        - prototype: AtmosphericTechnicianJumpsuit
+        GroupTankHarness: []
+      role: JobAtmosphericTechnician
+      entityName: null
+    JobDetective:
+      selectedLoadouts:
+        GroupSpeciesBreathToolSecurity: []
+        DetectiveJobTrinkets:
+        - prototype: SecStar
+        Trinkets: []
+        SurvivalSecurity:
+        - prototype: EmergencyOxygenSecurity
+        SecurityShoes:
+        - prototype: JackBoots
+        DetectiveOuterClothing:
+        - prototype: DetectiveArmorVest
+        SecurityBackpack:
+        - prototype: SecuritySatchel
+        DetectiveJumpsuit:
+        - prototype: NoirJumpsuit
+        DetectiveNeck:
+        - prototype: DetectiveTie
+        DetectiveHead:
+        - prototype: DetectiveFedora
+      role: JobDetective
+      entityName: null
+    JobWarden:
+      selectedLoadouts:
+        GroupSpeciesBreathToolSecurity: []
+        WardenJobTrinkets:
+        - prototype: SecStar
+        Trinkets: []
+        SurvivalSecurity:
+        - prototype: EmergencyOxygenSecurity
+        SecurityShoes:
+        - prototype: SecurityWinterBoots
+        WardenOuterClothing:
+        - prototype: WardenCoat
+        SecurityBelt:
+        - prototype: SecurityBelt
+        SecurityBackpack:
+        - prototype: SecuritySatchel
+        WardenJumpsuit:
+        - prototype: WardenJumpsuit
+        WardenHead:
+        - prototype: WardenBeret
+      role: JobWarden
+      entityName: null
+    JobParamedic:
+      selectedLoadouts:
+        GroupSpeciesBreathToolMedical: []
+        Trinkets: []
+        SurvivalMedical:
+        - prototype: EmergencyOxygenMedical
+        Glasses:
+        - prototype: Glasses
+        ParamedicShoes:
+        - prototype: MedicalWinterBoots
+        ParamedicOuterClothing:
+        - prototype: ParamedicWindbreaker
+        MedicalBackpack:
+        - prototype: MedicalDoctorSatchel
+        ParamedicJumpsuit:
+        - prototype: ParamedicJumpsuit
+        MedicalMask: []
+        ParamedicHead: []
+        GroupTankHarness: []
+      role: JobParamedic
+      entityName: null
+    JobHeadOfSecurity:
+      selectedLoadouts:
+        GroupSpeciesBreathToolSecurity: []
+        HeadofSecurityJobTrinkets: []
+        Trinkets: []
+        SurvivalSecurity:
+        - prototype: EmergencyOxygenSecurity
+        SecurityShoes:
+        - prototype: JackBoots
+        HeadofSecurityOuterClothing:
+        - prototype: HeadofSecurityWinterCoat
+        SecurityBelt:
+        - prototype: SecurityBelt
+        SecurityBackpack:
+        - prototype: SecuritySatchel
+        HeadofSecurityJumpsuit:
+        - prototype: HeadofSecurityTurtleneck
+        HeadofSecurityNeck:
+        - prototype: HeadofSecurityMantle
+        HeadofSecurityHead:
+        - prototype: HeadofSecurityBeret
+      role: JobHeadOfSecurity
+      entityName: null
+    JobResearchDirector:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        ResearchDirectorShoes:
+        - prototype: BrownShoes
+        ScientistGloves:
+        - prototype: PurpleGloves
+        ResearchDirectorOuterClothing: []
+        ScientistBackpack:
+        - prototype: ScientistSatchel
+        ResearchDirectorJumpsuit:
+        - prototype: ResearchDirectorJumpsuit
+        ResearchDirectorNeck:
+        - prototype: ResearchDirectorCloak
+        ResearchDirectorHead:
+        - prototype: ResearchDirectorBeret
+        GroupTankHarness: []
+      role: JobResearchDirector
+      entityName: null
+    JobPassenger:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses: []
+        PassengerShoes:
+        - prototype: WinterBoots
+        PassengerOuterClothing:
+        - prototype: PassengerWintercoat
+        PassengerGloves:
+        - prototype: PassengerGloves
+        PassengerFace:
+        - prototype: PassengerFace
+        PassengerNeck:
+        - prototype: Mantle
+        CommonBackpack:
+        - prototype: CommonSatchel
+        PassengerJumpsuit:
+        - prototype: GreyJumpsuit
+        GroupTankHarness: []
+      role: JobPassenger
+      entityName: null
+    JobSecurityOfficer:
+      selectedLoadouts:
+        GroupSpeciesBreathToolSecurity: []
+        SecurityJobTrinkets:
+        - prototype: SecStar
+        Trinkets: []
+        SurvivalSecurity:
+        - prototype: EmergencyOxygenSecurity
+        SecurityBelt:
+        - prototype: SecurityBelt
+        SecurityPDA:
+        - prototype: SeniorOfficerPDA
+        SecurityShoes:
+        - prototype: JackBoots
+        SecurityOuterClothing:
+        - prototype: ArmorVest
+        SecurityBackpack:
+        - prototype: SecuritySatchel
+        SecurityJumpsuit:
+        - prototype: TrooperUniform
+        SecurityHead:
+        - prototype: SecurityBeret
+      role: JobSecurityOfficer
+      entityName: null
+    JobCaptain:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        CaptainOuterClothing:
+        - prototype: CaptainOuterClothing
+        CaptainBackpack:
+        - prototype: CaptainSatchel
+        CaptainJumpsuit:
+        - prototype: CaptainJumpsuit
+        CaptainNeck:
+        - prototype: CaptainMantle
+        CaptainHead:
+        - prototype: CaptainCap
+      role: JobCaptain
+      entityName: null
+    JobChiefEngineer:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        SurvivalExtended:
+        - prototype: EmergencyOxygenExtended
+        ChiefEngineerShoes:
+        - prototype: BrownShoes
+        ChiefEngineerOuterClothing: []
+        ChiefEngineerNeck:
+        - prototype: ChiefEngineerCloak
+        StationEngineerBackpack:
+        - prototype: StationEngineerSatchel
+        ChiefEngineerJumpsuit:
+        - prototype: ChiefEngineerJumpsuit
+        ChiefEngineerHead:
+        - prototype: ChiefEngineerBeret
+        GroupTankHarness: []
+      role: JobChiefEngineer
+      entityName: null
+    JobStationEngineer:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        SurvivalExtended:
+        - prototype: EmergencyOxygenExtended
+        StationEngineerID:
+        - prototype: SeniorEngineerPDA
+        StationEngineerShoes:
+        - prototype: EngineeringWinterBoots
+        StationEngineerOuterClothing: []
+        StationEngineerBackpack:
+        - prototype: StationEngineerSatchel
+        StationEngineerJumpsuit:
+        - prototype: StationEngineerJumpsuit
+        StationEngineerHead:
+        - prototype: SeniorEngineerBeret
+        GroupTankHarness: []
+      role: JobStationEngineer
+      entityName: null
+    JobMime:
+      selectedLoadouts:
+        Trinkets:
+        - prototype: ClothingNeckGayPin
+        - prototype: CigPackRed
+        - prototype: Lighter
+        SurvivalMime:
+        - prototype: EmergencyOxygenMime
+        Glasses:
+        - prototype: Glasses
+        MimeBelt:
+        - prototype: MimeSuspendersRed
+        MimeOuterClothing: []
+        MimeBackpack:
+        - prototype: MimeSatchel
+        MimeJumpsuit:
+        - prototype: MimeJumpsuit
+        MimeMask:
+        - prototype: MimeMask
+        MimeHead:
+        - prototype: MimeHead
+        GroupTankHarness: []
+      role: JobMime
+      entityName: null
+    JobScientist:
+      selectedLoadouts:
+        GroupSpeciesBreathTool: []
+        Trinkets: []
+        Survival:
+        - prototype: EmergencyOxygen
+        Glasses:
+        - prototype: Glasses
+        ScientistPDA:
+        - prototype: SeniorResearcherPDA
+        ScientistShoes:
+        - prototype: WhiteShoes
+        ScientistGloves:
+        - prototype: PurpleGloves
+        ScientistOuterClothing: []
+        ScientistBackpack:
+        - prototype: ScientistSatchel
+        ScientistJumpsuit:
+        - prototype: SeniorResearcherJumpsuit
+        ScientistNeck:
+        - prototype: ScientistTie
+        ScientistHead:
+        - prototype: ScientificBeret
+        GroupTankHarness: []
+      role: JobScientist
+      entityName: null
+  _jobPriorities:
+    Scientist: High
+  _antagPreferences:
+  - Nukeops
+  voice: MaleVulpkanin
+  species: Vulpkanin
+  spawnPriority: Cryosleep
+  sex: Male
+  preferenceUnavailable: StayInLobby
+  name: Daria Z'Wulfe
+  gender: Male
+  flavorText: ""
+  appearance:
+    skinColor: '#E5C7DAFF'
+    markings:
+      Eyes: {}
+      Head:
+        Hair:
+        - markingColor:
+          - '#290062FF'
+          markingId: HumanHairFeather
+        Head:
+        - markingColor:
+          - '#EECDE2FF'
+          markingId: VulpHeadBlaze
+        - markingColor:
+          - '#EECFE3FF'
+          markingId: VulpHeadMask
+        Snout:
+        - markingColor:
+          - '#EECFE3FF'
+          markingId: VulpSnout
+        HeadTop:
+        - markingColor:
+          - '#EECFE3FF'
+          - '#F4F4F4FF'
+          markingId: VulpEar
+      Torso:
+        Tail:
+        - markingColor:
+          - '#EECFE3FF'
+          - '#ED8BB4FF'
+          markingId: VulpTailFluffy
+        Chest:
+        - markingColor:
+          - '#EEEEEEFF'
+          markingId: VulpBellyFox
+        UndergarmentTop:
+        - markingColor:
+          - '#FFFFFFFF'
+          markingId: UndergarmentTopSportsbraVulpkanin
+      ArmLeft: {}
+      LegLeft: {}
+      ArmRight: {}
+      FootLeft:
+        LFoot:
+        - markingColor:
+          - '#E5E3D2FF'
+          markingId: VulpClawsFootLeft
+      HandLeft:
+        LHand:
+        - markingColor:
+          - '#E5E3D1FF'
+          markingId: VulpClawsHandLeft
+      LegRight: {}
+      FootRight:
+        RFoot:
+        - markingColor:
+          - '#E5E3D1FF'
+          markingId: VulpClawsFootRight
+      HandRight:
+        RHand:
+        - markingColor:
+          - '#E5E3D1FF'
+          markingId: VulpClawsHandRight
+    eyeColor: '#F0FFFFFF'
+  age: 25
+forkId: wizards-testing
+...
