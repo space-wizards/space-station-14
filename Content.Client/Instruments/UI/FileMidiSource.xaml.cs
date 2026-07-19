@@ -391,8 +391,8 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     /// <remarks>Selecting another track causes its playback if <see cref="IsPlaying"/> is true.</remarks>
     public void SelectNextTrack()
     {
-        // Only proceed if panel is visible.
-        if (!Visible)
+        // Only proceed if file panel is active.
+        if (!Enabled)
             return;
 
         // Only proceed if the play button is pressed.

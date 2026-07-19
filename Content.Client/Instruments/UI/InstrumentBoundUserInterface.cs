@@ -126,7 +126,7 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
     private void OnSwitchFilteredChannel(int channelIndex, bool state)
     {
-        _instruments.SetFilteredChannel(Owner, channelIndex, state);
+        _instruments.SetFilteredChannel(Owner, channelIndex, !state);
     }
 
     private void OnChannelsUpdateRequest()
@@ -285,52 +285,28 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
 
         // Ignore channel switch request while updating.
         _channelsControl.SwitchFilteredChannel -= OnSwitchFilteredChannel;
-        List<(int, string, bool)> channelSettings = [];
+        List<(int, string, string, string, bool)> channelSettings = [];
 
         var activeInstrument = ResolveActiveInstrument(instrument);
 
         for (var i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
-            var label = _loc.GetString("instrument-component-channel-name",
-                ("number", i));
+            var trackName = "";
+            var instrumentName = "";
+            var programName = "";
             if (activeInstrument != null
                 && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
                 && resolvedMidiChannel != null)
             {
-                if (_channelsControl.DisplayTrackNames)
-                {
-                    label = resolvedMidiChannel switch
-                    {
-                        { TrackName: not null, InstrumentName: not null } =>
-                            Loc.GetString("instruments-component-channels-multi",
-                                ("channel", i),
-                                ("name", resolvedMidiChannel.TrackName),
-                                ("other", resolvedMidiChannel.InstrumentName)),
-                        { TrackName: not null } =>
-                            Loc.GetString("instruments-component-channels-single",
-                                ("channel", i),
-                                ("name", resolvedMidiChannel.TrackName)),
-                        _ => label,
-                    };
-                }
-                else
-                {
-                    label = resolvedMidiChannel switch
-                    {
-                        { ProgramName: not null } =>
-                            Loc.GetString("instruments-component-channels-single",
-                                ("channel", i),
-                                ("name", resolvedMidiChannel.ProgramName)),
-                        _ => label,
-                    };
-                }
+                trackName = resolvedMidiChannel.TrackName ?? "";
+                instrumentName = resolvedMidiChannel.InstrumentName ?? "";
+                programName = resolvedMidiChannel.ProgramName ?? "";
+                var state = !instrument?.FilteredChannels[i] ?? false;
+                channelSettings.Add((i, trackName, instrumentName, programName, state));
             }
-
-            var state = !instrument?.FilteredChannels[i] ?? false;
-            channelSettings.Add((i, label, state));
         }
 
-        _channelsControl.SetChannels(channelSettings);
+        _channelsControl.SetChannels(channelSettings.ToArray());
         _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
     }
 }
