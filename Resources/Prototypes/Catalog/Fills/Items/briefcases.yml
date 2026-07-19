@@ -91,16 +91,6 @@
         id: WeaponShotgunBulldog
 
 - type: entity
-  id: BriefcaseWeaponDMRFilled
-  parent: BriefcaseWeapon
-  name: secure estoc case
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: WeaponRifleEstoc
-
-- type: entity
   id: BriefcaseWeaponChinaLakeFilled
   parent: BriefcaseWeapon
   name: secure china lake case

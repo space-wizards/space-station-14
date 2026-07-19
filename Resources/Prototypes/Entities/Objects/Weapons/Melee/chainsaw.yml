@@ -4,12 +4,13 @@
   id: Chainsaw
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
+  - type: Tool
+    qualities:
+    - Slicing
+    - Sawing
   - type: Wieldable
     wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
-      params:
-        volume: -3
-  - type: Sharp
+      path: /Audio/Weapons/chainsaw_pull.ogg
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     state: icon
@@ -24,26 +25,19 @@
         Blunt: 2
         Structural: 4
     soundHit:
-      path: /Audio/Weapons/chainsaw.ogg
+      path: /Audio/Weapons/chainsaw_rev.ogg
       params:
-        volume: -3
+        volume: -2
   - type: IncreaseDamageOnWield
     damage:
       types:
         Slash: 4
         Structural: 4
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,2
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
-  - type: RefillableSolution
-    solution: Welder
-  - type: SolutionContainerManager
-    solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 300
-        maxVol: 300
   - type: UseDelay
     delay: 1

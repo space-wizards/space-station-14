@@ -37,7 +37,7 @@ public abstract partial class SharedStunSystem
 
         // Here so server can tell the client to do things
         // Don't dirty the component if we don't need to
-        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
+        if (Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
             return;
 
         if (!Blocker.CanConsciouslyPerformAction(entity))

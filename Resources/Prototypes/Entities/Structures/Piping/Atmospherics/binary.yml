@@ -41,7 +41,6 @@
     priority: 1
   - type: ApcPowerReceiver
     powerLoad: 200
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: SubFloorHide
@@ -105,7 +104,6 @@
       priority: 1
     - type: ApcPowerReceiver
       powerLoad: 200
-    - type: Rotatable
     - type: Transform
       noRot: false
     - type: SubFloorHide
@@ -173,7 +171,6 @@
   placement:
     mode: AlignAtmosPipeLayers
   components:
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: SubFloorHide
@@ -540,7 +537,6 @@
           True: { state: running }
           False: { state: unlit }
   - type: PipeColorVisuals
-  - type: Rotatable
   - type: GasRecycler
   - type: PipeRestrictOverlap
   - type: NodeContainer
@@ -593,7 +589,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Rotatable
   - type: Transform
     noRot: false
   - type: Sprite
