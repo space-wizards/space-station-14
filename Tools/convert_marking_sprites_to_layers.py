@@ -2,88 +2,34 @@ import os
 import shutil
 import sys
 import yaml
+import yaml_utils
 
 """
     What's all this then...???
 
-    This script converts per-layer marking coloring to be in the "sprites" datafield instead of the "coloring"
-    datafield. It also adds locale names to hair and facial hair automatically.
+    This script converts per-layer shaders and marking coloring to be in the "sprites" datafield
     It used to do more than this, but then I made markings more backward-compatible in YML!
 
     Converted marking files will replace their original file path.
     The old version of the file is saved to a `.bak` file in the same directory.
 
+    Arguments:
+        <path>: Input .yml file
+        --add-hair-names: Optional flag, adds "marking-layer-hair" and "marking-layer-facial-hair" locale names
+            to hair and facial hair, respectively.
+
     Example usage:
         py convert_marking_sprites_to_layers.py Resources/Prototypes/Entities/Mobs/Customization/Markings/ears.yml
+
     (it's a mouthful. sorry)
 """
 
 VALID_EXTENSION = ".yml"
-USAGE_HINT = f"Usage: py convert_marking_sprites_to_layers.py <path{VALID_EXTENSION}>"
+USAGE_HINT = f"Usage: py convert_marking_sprites_to_layers.py <path{VALID_EXTENSION}> [--add-hair-names]"
 TAG_PREFIX = "!type:"
 prototypes_changed = 0
 
-class ClassRepresentation:
-    """
-        Representation of a C# class, such as marking coloring data.
-
-        Attributes:
-            prefix (str): The class tag itself ("!type:SimpleColoring")
-            data (Any): The data contained in this tag. ({ "color" : "#FF0000" })
-    """
-    def __init__(self, prefix, data):
-        self.prefix = prefix
-        self.data = data
-
-class InlineListRepresentation(list):
-    """
-        Marks a list as needing to be represented inline.
-    """
-    pass
-
-class PrototypeDumper(yaml.SafeDumper):
-    """
-        Custom dumper for special YML formatting.
-    """
-    def write_line_break(self, data = None):
-        super().write_line_break(data)
-
-        # Add an extra line break between top-level list items (prototypes).
-        if (len(self.indents) == 1):
-            super().write_line_break()
-
-def class_tag_constructor(loader: yaml.Loader, tag_suffix: str, node: yaml.Node):
-    """
-        Parses a C# class data tag as a mapping.
-    """
-    if (isinstance(node, yaml.MappingNode)):
-        value = loader.construct_mapping(node, deep=True)
-    if (isinstance(node, yaml.SequenceNode)):
-        value = loader.construct_sequence(node, deep=True)
-    if (isinstance(node, yaml.ScalarNode)):
-        value = loader.construct_scalar(node)
-
-    if value is not None:
-        tag = ClassRepresentation(f"{TAG_PREFIX}{tag_suffix}", value)
-        return tag
-
-    # If we continue we might break something. Uuuhh
-    print(f"Tag declaration was not accounted for in constructor: {node}")
-    sys.exit(1)
-
-def class_tag_representer(dumper: yaml.Dumper, data: ClassRepresentation):
-    """
-        Represent class tags as mappings.
-    """
-    return dumper.represent_mapping(data.prefix, data.data)
-
-def inline_list_representer(dumper: yaml.Dumper, data: InlineListRepresentation):
-    """
-        Represent inline lists with flow style.
-    """
-    return dumper.represent_sequence("tag:yaml.org,2002:seq", data, flow_style=True)
-
-def misc_conversion_for_my_convenience(marking: dict):
+def misc_conversion_for_my_convenience(marking: dict, flags: list):
     """
         Conversions that exist purely to reduce tedium on my part. Smiles.
 
@@ -96,31 +42,17 @@ def misc_conversion_for_my_convenience(marking: dict):
     if not sprites or sprite_count <= 0:
         return
 
-    # Make the first layer of  all hair markings use a "hair" locale ID
-    body_part = marking.get("bodyPart")
-    if body_part == "Hair":
-        sprites[0]["name"] = "marking-layer-hair"
+    if "--add-hair-names" in flags:
+        # Make the first layer of  all hair markings use a "hair" locale ID
+        body_part = marking.get("bodyPart")
+        if body_part == "Hair":
+            sprites[0]["name"] = "marking-layer-hair"
 
-    # Make the first layer of all facial hair markings use a "facial hair" locale ID
-    if body_part == "FacialHair":
-        sprites[0]["name"] = "marking-layer-facial-hair"
+        # Make the first layer of all facial hair markings use a "facial hair" locale ID
+        if body_part == "FacialHair":
+            sprites[0]["name"] = "marking-layer-facial-hair"
 
-def convert_to_inline_list(marking: dict, field: str):
-    """
-        Convert a data field to use inline list representation, assuming it is a list.
-
-        Parameters:
-            marking (dict): The marking prototype.
-            field (str): The name of the field to convert.
-    """
-
-    datafield = marking.get(field)
-    if not datafield or not isinstance(datafield, list):
-        return
-
-    marking[field] = InlineListRepresentation(datafield)
-
-def convert_prototype(proto: dict) -> dict:
+def convert_prototype(proto: dict, flags: list) -> dict:
     """
         Convert an individual prototype into the new format, if it is a marking.
 
@@ -142,80 +74,74 @@ def convert_prototype(proto: dict) -> dict:
 
     new_marking: dict = proto.copy()
     sprites: list = new_marking.get("sprites")
-    layer_coloring: dict = {}
 
     # Convert certain data fields into inline lists for consistency.
-    convert_to_inline_list(new_marking, "groupWhitelist")
-    convert_to_inline_list(new_marking, "sexRestriction")
+    yaml_utils.convert_field_to_inline_list(new_marking, "groupWhitelist")
+    yaml_utils.convert_field_to_inline_list(new_marking, "sexRestriction")
 
     # Get per-layer coloring if it exists
+    layer_coloring: dict = {}
     coloring: dict = new_marking.get("coloring")
-    if coloring and "layers" in coloring:
-        layer_coloring = new_marking["coloring"].pop("layers")
+    if coloring:
+        if "layers" in coloring:
+            layer_coloring = new_marking["coloring"].pop("layers")
+        if len(coloring) == 0: # Clear if empty
+            new_marking.pop("coloring")
+
+    # Get per-layer shaders if it exists
+    shaders: dict = new_marking.get("shaders")
 
     for sprite in sprites:
-        # Convert layer coloring, if it exists
         state: str = sprite.get("state")
-        if state and state in layer_coloring:
-            coloring = layer_coloring.pop(state)
-            sprite["coloring"] = coloring
+        if state:
+            if (state in layer_coloring): # Convert layer coloring
+                sprite["coloring"] = layer_coloring.pop(state)
+            if (shaders and state in shaders):  # Convert shaders
+                sprite["shaders"] = shaders.pop(state);
+
+    if (shaders and len(shaders) == 0):
+        new_marking.pop("shaders") # Clear if empty
+
 
     # Convert other shit
-    misc_conversion_for_my_convenience(new_marking)
+    misc_conversion_for_my_convenience(new_marking, flags)
 
     prototypes_changed += 1
     return new_marking
 
-def add_yaml_representers():
-    """
-        Initialize constructors and representers to format certain data types a certain way -
-        such as in-line lists and C# class tags (!type:).
-    """
-    yaml.add_multi_constructor(TAG_PREFIX, class_tag_constructor, Loader=yaml.SafeLoader)
-    yaml.add_representer(ClassRepresentation, class_tag_representer, Dumper=PrototypeDumper)
-    yaml.add_representer(InlineListRepresentation, inline_list_representer, Dumper=PrototypeDumper)
-
-def convert_file(input_file: str):
+def convert_file(input_file: str, flags: list):
     """
         Open an input YAML file and convert all markings inside it.
 
         Parameters:
             input_file (str): The YAML prototype file to convert.
     """
-    add_yaml_representers()
+    yaml_utils.add_yaml_representers()
 
     file_path, ext = os.path.splitext(input_file)
     backup_path: str = f"{file_path}{ext}.bak"
 
     if (ext != VALID_EXTENSION):
-        print(f"ERROR: Prototype file is not a {VALID_EXTENSION} file! Path: {input_file}")
-        sys.exit(1)
+        raise ValueError(f"ERROR: Prototype file is not a {VALID_EXTENSION} file! Path: {input_file}")
 
     with (open(input_file, 'r') as f):
         prototypes = yaml.safe_load(f)
 
     # YML files must be lists of prototype objects
     if not isinstance(prototypes, list):
-        print(f"ERROR: File {input_file} is not a valid YAML prototype file!")
-        sys.exit(1)
+        raise ValueError(f"ERROR: File {input_file} is not a valid YAML prototype file!")
 
     # Convert each applicable prototype to use the new marking system.
-    converted_prototypes: list = [convert_prototype(proto) for proto in prototypes]
+    converted_prototypes: list = [convert_prototype(proto, flags) for proto in prototypes]
     if (prototypes_changed == 0):
-        print(f"ERROR: No valid prototypes to convert in {input_file}.")
-        sys.exit(1)
+        raise ValueError(f"ERROR: No valid prototypes to convert in {input_file}.")
 
     # Copy the old prototype file to a backup
     shutil.copy(input_file, backup_path)
 
     # Replace the old prototype file.
-    with (open(input_file, 'w') as f):
-        yaml.dump(converted_prototypes, f,
-            Dumper=PrototypeDumper,
-            default_flow_style=False,
-            allow_unicode=True,
-            sort_keys=False)
-        print(f"Successfully converted {input_file}. Changed prototypes: {prototypes_changed}")
+    yaml_utils.write_yaml_to_file(input_file, converted_prototypes)
+    print(f"Successfully converted {input_file}. Changed prototypes: {prototypes_changed}")
 
 def main():
     """
@@ -223,16 +149,15 @@ def main():
     """
 
     if (len(sys.argv) < 1):
-        print(USAGE_HINT)
-        sys.exit(1)
+        raise ValueError(USAGE_HINT)
 
     input_file: str = sys.argv[1]
-    if not os.path.exists(input_file):
-        print(f"File {input_file} not found.")
-        print(USAGE_HINT)
-        sys.exit(1)
+    flags: list = sys.argv[2:]
 
-    convert_file(input_file)
+    if not os.path.exists(input_file):
+        raise FileNotFoundError(f"File {input_file} not found.")
+
+    convert_file(input_file, flags)
 
 # Go go gadget marking conversion
 main()
