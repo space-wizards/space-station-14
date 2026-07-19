@@ -19,13 +19,6 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<FakeMindShieldComponent, FakeMindShieldToggleEvent>(OnToggleMindshield);
-        SubscribeLocalEvent<FakeMindShieldComponent, ChameleonControllerOutfitSelectedEvent>(OnChameleonControllerOutfitSelected);
-    }
-
     private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent)
     {
         var message = ent.Comp.IsEnabled
@@ -35,6 +28,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _popup.PopupEntity(message, ent, ent, PopupType.Small);
     }
 
+    [SubscribeLocalEvent]
     private void OnToggleMindshield(Entity<FakeMindShieldComponent> ent, ref FakeMindShieldToggleEvent args)
     {
         ent.Comp.IsEnabled = !ent.Comp.IsEnabled;
@@ -44,6 +38,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         Dirty(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnChameleonControllerOutfitSelected(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args)
     {
         if (ent.Comp.IsEnabled == args.ChameleonOutfit.HasMindShield)
