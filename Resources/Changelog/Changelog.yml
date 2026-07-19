@@ -5115,3 +5115,28 @@
   id: 9879
   time: '2026-07-19T03:45:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38528
+- author: '[redacted]'
+  changes:
+  - message: Fake mindshield implant now shows a pop-up when toggled on or off, including when auto-toggled by the Chameleon implant controller.
+    type: Fix
+  id: 9880
+  time: '2026-07-19T21:04:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43100
+- author: AsnDen
+  changes:
+  - message: Trash bag of holding was added. It can store 4 times more trash then general trash bag and can be researched by RnD.
+    type: Add
+  - message: Now it is impossible to store trash bags in backpacks.
+    type: Tweak
+  - message: Visual bag with mop and bucket overlapping on janitorial trolley was fixed.
+    type: Fix
+  id: 9881
+  time: '2026-07-19T21:06:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39416
+- author: Hitlinemoss
+  changes:
+  - message: Nanotrasen's standard-issue survival boxes are now smaller, but no longer contain food, water bottles, or emergency flares. (Survival boxes used by nukies and wizards remain the same.)
+    type: Tweak
+  id: 9882
+  time: '2026-07-19T22:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41664
