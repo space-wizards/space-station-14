@@ -16,8 +16,8 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20260719154342_punpunhaskids")]
-    partial class punpunhaskids
+    [Migration("20260719154342_PunPunHasKids")]
+    partial class PunPunHasKids
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

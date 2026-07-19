@@ -5,7 +5,7 @@
 namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
-    public partial class punpunhaskids : Migration
+    public partial class PunPunHasKids : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
