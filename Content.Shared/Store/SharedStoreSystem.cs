@@ -8,7 +8,6 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Store.Components;
 using Content.Shared.Store.Events;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Store;
 
@@ -18,7 +17,6 @@ namespace Content.Shared.Store;
 /// </summary>
 public abstract partial class SharedStoreSystem : EntitySystem
 {
-    [Dependency] protected IPrototypeManager Proto = default!;
     [Dependency] protected SharedMindSystem Mind = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedStackSystem Stack = default!;

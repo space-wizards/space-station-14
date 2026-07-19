@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Content.Shared.Ghost;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
+using Content.Shared.Tag;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Weapons.Misc;
 using Content.Shared.Verbs;
@@ -16,6 +16,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -26,17 +27,20 @@ namespace Content.Shared.Teleportation.Systems;
 /// <seealso cref="PortalComponent"/>
 public abstract partial class SharedPortalSystem : EntitySystem
 {
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private INetManager _netMan = default!;
+    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
-    [Dependency] private SharedAudioSystem _audio = default!;
-    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private PullingSystem _pulling = default!;
-    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
+    private static readonly ProtoId<TagPrototype> ShowTraverseVerbTag = "AllowPortalTraversal";
+    private static readonly ProtoId<TagPrototype> PreventCollisionTag = "PreventPortalCollision";
 
     private const int MaxRandomTeleportAttempts = 20;
 
@@ -52,7 +56,7 @@ public abstract partial class SharedPortalSystem : EntitySystem
     private void OnGetVerbs(Entity<PortalComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         // Traversal altverb for ghosts to use that bypasses normal functionality
-        if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
+        if (!args.CanAccess || !_tag.HasTag(args.User, ShowTraverseVerbTag))
             return;
 
         // Don't use the verb with unlinked or with multi-output portals
@@ -91,6 +95,9 @@ public abstract partial class SharedPortalSystem : EntitySystem
             return;
 
         var subject = args.OtherEntity;
+
+        if (_tag.HasTag(args.OtherEntity, PreventCollisionTag))
+            return;
 
         // best not.
         if (Transform(subject).Anchored)

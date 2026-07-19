@@ -55,10 +55,10 @@ public sealed class LatheTest : GameTest
                 // Check each lathe individually
                 foreach (var latheProto in latheProtos)
                 {
-                    if (!latheProto.TryGetComponent<LatheComponent>(out var latheComp, compFactory))
+                    if (!latheProto.TryComp<LatheComponent>(out var latheComp, compFactory))
                         continue;
 
-                    if (!latheProto.TryGetComponent<MaterialStorageComponent>(out var storageComp, compFactory))
+                    if (!latheProto.TryComp<MaterialStorageComponent>(out var storageComp, compFactory))
                         continue;
 
                     // Test which material-containing entities are accepted by this lathe
@@ -80,7 +80,7 @@ public sealed class LatheTest : GameTest
                     var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.StaticPacks);
                     latheSystem.AddRecipesFromPacks(recipes, latheComp.DynamicPacks);
-                    if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
+                    if (latheProto.TryComp<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
                     {
                         latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagStaticPacks);
                         latheSystem.AddRecipesFromPacks(recipes, emagRecipesComp.EmagDynamicPacks);

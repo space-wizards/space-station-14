@@ -65,7 +65,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: Label
-    currentLabel: reagent-name-water
+    localizedLabel: reagent-name-water
 
 # Large Plastic Bottles
 
@@ -81,7 +81,7 @@
       - ReagentId: Cola
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-cola
+    localizedLabel: reagent-name-cola
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
@@ -97,7 +97,7 @@
       - ReagentId: SpaceMountainWind
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-space-mountain-wind
+    localizedLabel: reagent-name-space-mountain-wind
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
@@ -113,7 +113,7 @@
       - ReagentId: SpaceUp
         Quantity: 120
   - type: Label
-    currentLabel: reagent-name-space-up
+    localizedLabel: reagent-name-space-up
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
@@ -131,7 +131,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
   - type: Label
-    currentLabel: reagent-name-soda-water
+    localizedLabel: reagent-name-soda-water
 
 - type: entity
   parent: [DrinkVisualsAllFilled, DrinkBottlePlasticBaseFull]
@@ -147,7 +147,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic-bottle.rsi
   - type: Label
-    currentLabel: reagent-name-tonic-water
+    localizedLabel: reagent-name-tonic-water
 
 # Large
 
@@ -164,7 +164,7 @@
       - ReagentId: Sugar
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-sugar
+    localizedLabel: reagent-name-sugar
   # TODO new sprite
 
 - type: entity
@@ -179,7 +179,7 @@
       - ReagentId: LemonLime
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-lemon-lime
+    localizedLabel: reagent-name-lemon-lime
   # TODO new sprite
 
 - type: entity
@@ -194,7 +194,7 @@
       - ReagentId: Mead
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-mead
+    localizedLabel: reagent-name-mead
   # TODO new sprite
 
 - type: entity
@@ -209,7 +209,7 @@
       - ReagentId: Ice
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-ice
+    localizedLabel: reagent-name-ice
   # TODO new sprite
 
 - type: entity
@@ -224,7 +224,7 @@
       - ReagentId: CoconutWater
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-coconut-water
+    localizedLabel: reagent-name-coconut-water
   # TODO new sprite
 
 - type: entity
@@ -239,7 +239,7 @@
       - ReagentId: Coffee
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-coffee
+    localizedLabel: reagent-name-coffee
   # TODO new sprite
 
 - type: entity
@@ -254,7 +254,7 @@
       - ReagentId: Tea
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-tea
+    localizedLabel: reagent-name-tea
   # TODO new sprite
 
 - type: entity
@@ -269,7 +269,7 @@
       - ReagentId: GreenTea
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-green-tea
+    localizedLabel: reagent-name-green-tea
   # TODO new sprite
 
 - type: entity
@@ -284,7 +284,7 @@
       - ReagentId: IcedTea
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-iced-tea
+    localizedLabel: reagent-name-iced-tea
   # TODO new sprite
 
 - type: entity
@@ -299,7 +299,7 @@
       - ReagentId: DrGibb
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-dr-gibb
+    localizedLabel: reagent-name-dr-gibb
   # TODO new sprite
 
 - type: entity
@@ -314,7 +314,7 @@
       - ReagentId: RootBeer
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-root-beer
+    localizedLabel: reagent-name-root-beer
   # TODO new sprite
 
 - type: entity
@@ -329,7 +329,7 @@
       - ReagentId: JuiceWatermelon
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-juice-watermelon
+    localizedLabel: reagent-name-juice-watermelon
   # TODO new sprite
 
 - type: entity
@@ -344,5 +344,5 @@
       - ReagentId: EnergyDrink
         Quantity: 240
   - type: Label
-    currentLabel: reagent-name-energy-drink
+    localizedLabel: reagent-name-energy-drink
   # TODO new sprite

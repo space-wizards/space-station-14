@@ -5,6 +5,16 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   components:
   - type: ReagentGrinder
+    grindSound:
+      params:
+        volume: -2.5
+        rolloffFactor: 2
+      path: /Audio/Machines/blender.ogg
+    juiceSound:
+      params:
+        volume: -2.5
+        rolloffFactor: 2
+      path: /Audio/Machines/juicer.ogg
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
