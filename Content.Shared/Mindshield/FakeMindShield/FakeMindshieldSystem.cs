@@ -9,6 +9,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
+/// <summary>
+/// This system is responsible for handling the fake mindshield implant.
+/// </summary>
 public sealed partial class FakeMindShieldSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -16,9 +19,18 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private TagSystem _tag = default!;
 
-    // This tag should be placed on the fake mindshield action so there is a way to easily identify it.
+    /// <summary>
+    /// This tag should be placed on the fake mindshield action for identification.
+    /// </summary>
     private static readonly ProtoId<TagPrototype> FakeMindShieldImplantTag = "FakeMindShieldImplant";
 
+    /// <summary>
+    /// Displays a popup to inform the player of activation or deactivation.
+    /// </summary>
+    /// <param name="ent">
+    /// An associated tuple. The state in <see cref="FakeMindShieldComponent"/> will be used
+    /// to display the appropriate popup.
+    /// </param>
     private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent)
     {
         var message = ent.Comp.IsEnabled
@@ -28,6 +40,11 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         _popup.PopupEntity(message, ent);
     }
 
+    /// <summary>
+    /// Run when <see cref="FakeMindShieldToggleEvent"/> is raised. Toggles the component and the action indication.
+    /// </summary>
+    /// <param name="ent">An associated tuple. The state in <see cref="FakeMindShieldComponent"/> will be toggled.</param>
+    /// <param name="args">The event arguments. Will be marked as handled.</param>
     [SubscribeLocalEvent]
     private void OnToggleMindshield(Entity<FakeMindShieldComponent> ent, ref FakeMindShieldToggleEvent args)
     {
@@ -38,6 +55,12 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Handles implant interactions with chameleon outfits.
+    /// (De)Activates the mindshield if the chameleon outfit requires it. Displays a popup if state changes.
+    /// </summary>
+    /// <param name="ent">An associated tuple. The state in <see cref="FakeMindShieldComponent"/> will be set if changed.</param>
+    /// <param name="args">The event arguments.</param>
     [SubscribeLocalEvent]
     private void OnChameleonControllerOutfitSelected(Entity<FakeMindShieldComponent> ent, ref ChameleonControllerOutfitSelectedEvent args)
     {
@@ -71,4 +94,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Generic <see cref="InstantActionEvent"/>.
+/// </summary>
 public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent;
