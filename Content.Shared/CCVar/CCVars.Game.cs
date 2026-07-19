@@ -69,7 +69,7 @@ public sealed partial class CCVars
     ///     Controls the maximum number of character slots a player is allowed to have.
     /// </summary>
     public static readonly CVarDef<int>
-        GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 30, CVar.ARCHIVE | CVar.SERVERONLY);
+        GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 30, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
 
     /// <summary>
     ///     Controls the game map prototype to load. SS14 stores these prototypes in Prototypes/Maps.
@@ -424,4 +424,21 @@ public sealed partial class CCVars
     /// </remarks>
     public static readonly CVarDef<int> TileStackLimit =
         CVarDef.Create("game.tile_stack_limit", 5, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// The list of jobs that will be enabled on newly created characters.
+    /// The first job will be set to High priority, subsequent ones to Medium.
+    /// </summary>
+    /// <remarks>
+    /// When setting multiple values in server config, separate them with commas, like "Captain, SecurityOfficer,Janitor"
+    /// Spaces between entries can be either used or omitted.
+    /// </remarks>
+    public static readonly CVarDef<string> NewCharacterJobs =
+        CVarDef.Create("game.new_character_jobs", "Passenger", CVar.REPLICATED);
+
+    /// <summary>
+    /// Determines whether wall-mounted entities are hidden when viewed from outside their facing arc.
+    /// </summary>
+    public static readonly CVarDef<bool> WallMountDirectionalVisibility =
+        CVarDef.Create("game.wallmount_directional_visibility", true, CVar.SERVER | CVar.REPLICATED);
 }

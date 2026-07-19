@@ -9,7 +9,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class ItemTogglePrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
 
     /// <summary>
     /// The activation state to check for.

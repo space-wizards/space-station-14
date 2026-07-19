@@ -37,7 +37,8 @@ public sealed partial class SolutionComponent : Component
 /// We manually network the component state as it raises one less event and therefore is better performance wise.
 /// </remarks>
 [Serializable, NetSerializable]
-public sealed class SolutionComponentState(Solution solution) : ComponentState
+public sealed class SolutionComponentState(string id, Solution solution) : ComponentState
 {
+    public string Id = id;
     public Solution Solution = solution;
 }

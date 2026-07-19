@@ -13,7 +13,7 @@
     text: changeling-role-greeting
     color: Red
     sound: /Audio/Ambience/Antag/changeling_start.ogg
-  components:
+  components: # When updating components, remember to copy the changes over to MobLing !!!!!
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
@@ -23,10 +23,12 @@
   - type: Store
     name: store-preset-name-changeling
     categories:
-    - ChangelingAbilities
+    - ChangelingStoreCombat
+    - ChangelingStoreStealth
+    - ChangelingStoreUtility
     currencyWhitelist:
     - ChangelingDNA
     balance:
-      ChangelingDNA: 50
+      ChangelingDNA: 60
   mindRoles:
   - MindRoleChangeling

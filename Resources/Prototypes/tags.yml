@@ -25,6 +25,9 @@
   id: AllowGhostShownByEvent # Used by GhostSystem to show tagged ghosts (usually at round end).
 
 - type: Tag
+  id: AllowPortalTraversal # Used by PortalSystem to allow traversing a portal by verb.
+
+- type: Tag
   id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
@@ -203,6 +206,9 @@
 - type: Tag
   id: BypassInteractionRangeChecks # Tagged entities don't care about distance or walls when touching things (Aghost).
 
+- type: Tag
+  id: BypassOpenStorageLimit # Tagged entities can open several storage UIs at once (Aghost).
+
 ## C ##
 
 - type: Tag
@@ -356,9 +362,6 @@
 
 - type: Tag
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
-
-- type: Tag
-  id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
 
 - type: Tag
   id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
@@ -633,10 +636,6 @@
 - type: Tag
   id: GeigerCounter # Storage whitelist: BaseClothingBeltEngineering
 
-# Used for warps
-- type: Tag
-  id: GhostOnlyWarp
-
 - type: Tag
   id: GenderPin #  Chameleon key for ClothingGenderPinBase.
 
@@ -831,6 +830,9 @@
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
+- type: Tag
+  id: JanicartKeys # Uses for GenericKeyedVehicle of Janicart
+
 ## K ##
 
 - type: Tag
@@ -910,7 +912,7 @@
   id: MagazinePistolSubMachineGunTopMounted # WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -999,8 +1001,12 @@
   id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
+
 - type: Tag
-  id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
+  id: NinjaBombingTarget # Ninjas will target this warp point
+
+- type: Tag
+  id: NinjaBombingTargetBlacklist # Ninjas will not target this warp point
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
@@ -1171,6 +1177,9 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
+  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal on collision.
+
+- type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
 
 - type: Tag
@@ -1273,6 +1282,9 @@
 
 - type: Tag
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
+
+- type: Tag
+  id: Sheep # Reproductive partner key
 
 - type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
@@ -1413,6 +1425,12 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
+  id: TeleportScrollWarp # whitelists a warp point for the wizard's teleport scroll
+
+- type: Tag
+  id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
+
+- type: Tag
   id: TheaterBagel # used for Bagel Station's randomized theater
 
 - type: Tag
@@ -1444,6 +1462,9 @@
 
 - type: Tag
   id: ToySidearm # Storage whitelist: ClothingShoesClownBase
+
+- type: Tag
+  id: ToyKnife # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.

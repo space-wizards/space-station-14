@@ -57,22 +57,22 @@ namespace Content.Server.Zombies;
 /// </remarks>
 public sealed partial class ZombieSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IBanManager _ban = default!;
-    [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly NpcFactionSystem _faction = default!;
-    [Dependency] private readonly GhostSystem _ghost = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
-    [Dependency] private readonly ServerInventorySystem _inventory = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
-    [Dependency] private readonly NPCSystem _npc = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IBanManager _ban = default!;
+    [Dependency] private IChatManager _chatMan = default!;
+    [Dependency] private SharedCombatModeSystem _combat = default!;
+    [Dependency] private NpcFactionSystem _faction = default!;
+    [Dependency] private GhostSystem _ghost = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedVisualBodySystem _visualBody = default!;
+    [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private ServerInventorySystem _inventory = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+    [Dependency] private NameModifierSystem _nameMod = default!;
+    [Dependency] private NPCSystem _npc = default!;
+    [Dependency] private TagSystem _tag = default!;
+    [Dependency] private ISharedPlayerManager _player = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
     private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
@@ -263,7 +263,10 @@ public sealed partial class ZombieSystem
         _inventory.TryUnequip(target, "ears", true, true);
 
         //popup
-        _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
+        _popup.PopupEntity(
+            Loc.GetString("zombie-transform", ("target", Identity.Entity(target, EntityManager))),
+            target,
+            PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
         _mind.MakeSentient(target);
@@ -309,13 +312,7 @@ public sealed partial class ZombieSystem
 
         if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
         {
-            //yet more hardcoding. Visit zombie.ftl for more information.
-            var ghostRole = EnsureComp<GhostRoleComponent>(target);
-            EnsureComp<GhostTakeoverAvailableComponent>(target);
-            ghostRole.RoleName = Loc.GetString("zombie-generic");
-            ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
-            ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            ghostRole.MindRoles.Add(MindRoleZombie);
+            MakeGhostRole(target);
         }
 
         if (TryComp<HandsComponent>(target, out var handsComp))
