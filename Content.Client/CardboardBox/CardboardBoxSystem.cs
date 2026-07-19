@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.CardboardBox;
 using Content.Shared.CardboardBox.Components;
@@ -12,19 +11,15 @@ namespace Content.Client.CardboardBox;
 public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private EntityLookupSystem _entityLookup = default!;
-    [Dependency] private TransformSystem _transform = default!;
     [Dependency] private ExamineSystemShared _examine = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private TransformSystem _transform = default!;
 
-    private EntityQuery<MobStateComponent> _mobStateQuery;
-    private EntityQuery<TransformComponent> _xformQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        _mobStateQuery = GetEntityQuery<MobStateComponent>();
-        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeNetworkEvent<PlayBoxEffectMessage>(OnBoxEffect);
     }
@@ -36,24 +31,29 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!TryComp<CardboardBoxComponent>(source, out var box))
             return;
 
-        if (!_xformQuery.TryGetComponent(source, out var xform))
-            return;
-
+        var xform = Transform(source);
         var sourcePos = _transform.GetMapCoordinates(source, xform);
 
-        //Any mob that can move should be surprised?
-        //God mind rework needs to come faster so it can just check for mind
-        //TODO: Replace with Mind Query when mind rework is in.
+        // Any mob that can move should be surprised?
+        // God mind rework needs to come faster so it can just check for mind
+        // TODO: Replace with Mind Query when mind rework is in.
+        var mobMoverEntities = new List<EntityUid>();
         var mover = GetEntity(msg.Mover);
 
-        //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
+        // Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
         var movers = new HashSet<Entity<MobMoverComponent>>();
         _entityLookup.GetEntitiesInRange(xform.Coordinates, box.Distance, movers);
 
-        var mobMoverEntities = movers.Select(moverComp =>
-        moverComp.Owner).Where(uid => uid != mover).ToList();
+        foreach (var moverComp in movers)
+        {
+            var uid = moverComp.Owner;
+            if (uid == mover)
+                continue;
 
-        //Play the effect for the mobs as long as they can see the box and are in range.
+            mobMoverEntities.Add(uid);
+        }
+
+        // Play the effect for the mobs as long as they can see the box and are in range.
         foreach (var mob in mobMoverEntities)
         {
             var mapPos = _transform.GetMapCoordinates(mob);
@@ -65,8 +65,7 @@ public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
                 continue;
 
             var ent = Spawn(box.Effect, mapPos);
-
-            if (!_xformQuery.TryGetComponent(ent, out var entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
+            if (!TryComp(ent, out TransformComponent? entTransform) || !TryComp<SpriteComponent>(ent, out var sprite))
                 continue;
 
             _sprite.SetOffset((ent, sprite), new Vector2(0, 1));

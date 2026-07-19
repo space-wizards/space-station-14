@@ -61,6 +61,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2
+  - type: GravityAffected
   - type: Strap
     buckleOffset: "0,-0.05"
   - type: Fixtures
@@ -109,6 +110,7 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: GravityAffected
   - type: Destructible
     thresholds:
     - trigger:

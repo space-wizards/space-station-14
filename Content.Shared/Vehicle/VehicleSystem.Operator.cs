@@ -6,15 +6,7 @@ namespace Content.Shared.Vehicle;
 
 public sealed partial class VehicleSystem
 {
-    private void InitializeOperator()
-    {
-        SubscribeLocalEvent<StrapVehicleComponent, StrappedEvent>(OnVehicleStrapped);
-        SubscribeLocalEvent<StrapVehicleComponent, UnstrappedEvent>(OnVehicleUnstrapped);
-
-        SubscribeLocalEvent<ContainerVehicleComponent, EntInsertedIntoContainerMessage>(OnContainerEntInserted);
-        SubscribeLocalEvent<ContainerVehicleComponent, EntRemovedFromContainerMessage>(OnContainerEntRemoved);
-    }
-
+    [SubscribeLocalEvent]
     private void OnVehicleStrapped(Entity<StrapVehicleComponent> ent, ref StrappedEvent args)
     {
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
@@ -22,13 +14,19 @@ public sealed partial class VehicleSystem
         TrySetOperator((ent, vehicle), args.Buckle);
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleUnstrapped(Entity<StrapVehicleComponent> ent, ref UnstrappedEvent args)
     {
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
-        TrySetOperator((ent, vehicle), null);
+
+        if (vehicle.Operator != args.Buckle)
+            return;
+
+        TryRemoveOperator((ent, vehicle));
     }
 
+    [SubscribeLocalEvent]
     private void OnContainerEntInserted(Entity<ContainerVehicleComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)
@@ -37,9 +35,10 @@ public sealed partial class VehicleSystem
         if (!_vehicleQuery.TryComp(ent, out var vehicle))
             return;
 
-        TrySetOperator((ent, vehicle), args.Entity, removeExisting: false);
+        TrySetOperator((ent, vehicle), args.Entity);
     }
 
+    [SubscribeLocalEvent]
     private void OnContainerEntRemoved(Entity<ContainerVehicleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState || args.Container.ID != ent.Comp.ContainerId)

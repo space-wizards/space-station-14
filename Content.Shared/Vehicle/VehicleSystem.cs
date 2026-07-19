@@ -29,35 +29,16 @@ public sealed partial class VehicleSystem : EntitySystem
     [Dependency] private SharedMoverController _mover = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    private EntityQuery<VehicleComponent> _vehicleQuery;
-    private EntityQuery<VehicleOperatorComponent> _operatorQuery;
-    private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<InputMoverComponent> _inputMoverQuery;
-    private EntityQuery<HandsComponent> _handsQuery;
-
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        _vehicleQuery = GetEntityQuery<VehicleComponent>();
-        _operatorQuery = GetEntityQuery<VehicleOperatorComponent>();
-        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        _inputMoverQuery = GetEntityQuery<InputMoverComponent>();
-        _handsQuery = GetEntityQuery<HandsComponent>();
-
-        InitializeOperator();
-        InitializeKey();
-
-        SubscribeLocalEvent<VehicleComponent, BeforeDamageChangedEvent>(OnBeforeDamageChanged);
-        SubscribeLocalEvent<VehicleComponent, UpdateCanMoveEvent>(OnVehicleUpdateCanMove);
-        SubscribeLocalEvent<VehicleComponent, ComponentShutdown>(OnVehicleShutdown);
-        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnVehicleGetAdditionalAccess);
-
-        SubscribeLocalEvent<VehicleOperatorComponent, ComponentShutdown>(OnOperatorShutdown);
-    }
+    [Dependency] private EntityQuery<VehicleComponent> _vehicleQuery;
+    [Dependency] private EntityQuery<VehicleOperatorComponent> _operatorQuery;
+    [Dependency] private EntityQuery<AppearanceComponent> _appearanceQuery;
+    [Dependency] private EntityQuery<InputMoverComponent> _inputMoverQuery;
+    [Dependency] private EntityQuery<HandsComponent> _handsQuery;
 
     /// <remarks>
     /// We subscribe to BeforeDamageChangedEvent so that we can access the damage value before the container is applied.
     /// </remarks>
+    [SubscribeLocalEvent]
     private void OnBeforeDamageChanged(Entity<VehicleComponent> ent, ref BeforeDamageChangedEvent args)
     {
         if (!ent.Comp.TransferDamage || !args.Damage.AnyPositive() || ent.Comp.Operator is not { } operatorUid)
@@ -74,6 +55,7 @@ public sealed partial class VehicleSystem : EntitySystem
         _damageable.TryChangeDamage(operatorUid, damage, origin: args.Origin);
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleUpdateCanMove(Entity<VehicleComponent> ent, ref UpdateCanMoveEvent args)
     {
         var ev = new VehicleCanRunEvent(ent);
@@ -82,11 +64,27 @@ public sealed partial class VehicleSystem : EntitySystem
             args.Cancel();
     }
 
+    [SubscribeLocalEvent]
+    private void OnOperatorUpdateCanMove(Entity<VehicleOperatorComponent> ent, ref UpdateCanMoveEvent args)
+    {
+        if (ent.Comp.Vehicle is not { } vehicleUid ||
+            !_vehicleQuery.TryComp(vehicleUid, out var vehicle))
+            return;
+
+        if (!CanOperate((vehicleUid, vehicle), ent.Owner))
+            args.Cancel();
+    }
+
+    [SubscribeLocalEvent]
     private void OnVehicleShutdown(Entity<VehicleComponent> ent, ref ComponentShutdown args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         TryRemoveOperator(ent);
     }
 
+    [SubscribeLocalEvent]
     private void OnVehicleGetAdditionalAccess(Entity<VehicleComponent> ent, ref GetAdditionalAccessEvent args)
     {
         // Vehicles inherit access from whoever is driving them
@@ -94,8 +92,12 @@ public sealed partial class VehicleSystem : EntitySystem
             args.Entities.Add(operatorUid);
     }
 
+    [SubscribeLocalEvent]
     private void OnOperatorShutdown(Entity<VehicleOperatorComponent> ent, ref ComponentShutdown args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         TryRemoveOperator((ent, ent));
     }
 
@@ -103,84 +105,49 @@ public sealed partial class VehicleSystem : EntitySystem
     /// Set the operator for a given vehicle
     /// </summary>
     /// <param name="entity">The vehicle</param>
-    /// <param name="uid">The new operator. If null, it will only remove the operator.</param>
-    /// <param name="removeExisting">If true, will remove the current operator when setting the new one.</param>
+    /// <param name="operatorUid">The new operator.</param>
     /// <returns>If the new operator was successfully able to be set</returns>
-    public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid? uid, bool removeExisting = true)
+    public bool TrySetOperator(Entity<VehicleComponent> entity, EntityUid operatorUid)
     {
-        // Early exit if no change needed
-        if (entity.Comp.Operator == null && uid is null)
+        // Early exit if setting the same operator that's already present.
+        if (entity.Comp.Operator == operatorUid)
+            return _operatorQuery.TryComp(operatorUid, out var existingOperator) && existingOperator.Vehicle == entity.Owner;
+
+        if (entity.Comp.Operator is not null)
             return false;
 
-        // Early exit if setting the same operator that's already present
-        if (entity.Comp.Operator == uid)
-            return true;
-
-        // Do not run logic if the entity is already operating a vehicle.
-        // However, if they are operating *this* vehicle, return true (they are indeed the operator)
-        if (uid is not null && _operatorQuery.TryComp(uid, out var eOperator))
-        {
-            if (eOperator.Vehicle == entity.Owner)
-                return true;
-
-            // If trying to operate another vehicle, fail unless removeExisting is true
-            if (!removeExisting)
-                return false;
-        }
-
-        if (!removeExisting && entity.Comp.Operator is not null)
+        if (_operatorQuery.TryComp(operatorUid, out var eOperator) && eOperator.Vehicle is not null)
             return false;
 
-        if (uid != null && !CanOperate(entity.AsNullable(), uid.Value))
+        if (!CanOperate(entity.AsNullable(), operatorUid))
             return false;
 
-        var oldOperator = entity.Comp.Operator;
+        entity.Comp.Operator = operatorUid;
 
-        if (oldOperator is { } currentOperator &&
-            _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent))
+        if (_operatorQuery.HasComp(operatorUid))
         {
-            var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
-            RaiseLocalEvent(currentOperator, ref exitEvent);
-
-            currentOperatorComponent.Vehicle = null;
-            RemCompDeferred<VehicleOperatorComponent>(currentOperator);
-            RemCompDeferred<RelayInputMoverComponent>(currentOperator);
-            RemCompDeferred<InteractionRelayComponent>(currentOperator);
-        }
-
-        entity.Comp.Operator = uid;
-
-        if (uid != null)
-        {
-            if (_operatorQuery.HasComp(uid.Value))
-            {
-                var vehicleOperator = Comp<VehicleOperatorComponent>(uid.Value);
-                vehicleOperator.Vehicle = entity.Owner;
-                Dirty(uid.Value, vehicleOperator);
-            }
-            else
-            {
-                var vehicleOperator = AddComp<VehicleOperatorComponent>(uid.Value);
-                vehicleOperator.Vehicle = entity.Owner;
-                Dirty(uid.Value, vehicleOperator);
-            }
-
-            _mover.SetRelay(uid.Value, entity);
-
-            var enterEvent = new OnVehicleEnteredEvent(entity, uid.Value);
-            RaiseLocalEvent(uid.Value, ref enterEvent);
+            var vehicleOperator = Comp<VehicleOperatorComponent>(operatorUid);
+            vehicleOperator.Vehicle = entity.Owner;
+            Dirty(operatorUid, vehicleOperator);
         }
         else
         {
-            RemCompDeferred<MovementRelayTargetComponent>(entity);
+            var vehicleOperator = AddComp<VehicleOperatorComponent>(operatorUid);
+            vehicleOperator.Vehicle = entity.Owner;
+            Dirty(operatorUid, vehicleOperator);
         }
+
+        _mover.SetRelay(operatorUid, entity);
+
+        var enterEvent = new OnVehicleEnteredEvent(entity, operatorUid);
+        RaiseLocalEvent(operatorUid, ref enterEvent);
 
         RefreshCanRun((entity, entity.Comp));
 
-        var setEvent = new VehicleOperatorSetEvent(uid, oldOperator);
+        var setEvent = new VehicleOperatorSetEvent(operatorUid, null);
         RaiseLocalEvent(entity, ref setEvent);
 
-        Dirty(entity);
+        DirtyFields(entity.Owner, entity.Comp, null, nameof(VehicleComponent.Operator));
         return true;
     }
 
@@ -192,7 +159,51 @@ public sealed partial class VehicleSystem : EntitySystem
     [PublicAPI]
     public bool TryRemoveOperator(Entity<VehicleComponent> entity)
     {
-        return TrySetOperator(entity, null, removeExisting: true);
+        if (entity.Comp.Operator is not { } currentOperator)
+            return false;
+
+        _operatorQuery.TryComp(currentOperator, out var currentOperatorComponent);
+
+        if (currentOperatorComponent != null)
+        {
+            var exitEvent = new OnVehicleExitedEvent(entity, currentOperator);
+            RaiseLocalEvent(currentOperator, ref exitEvent);
+
+            currentOperatorComponent.Vehicle = null;
+            RemCompDeferred<VehicleOperatorComponent>(currentOperator);
+        }
+
+        entity.Comp.Operator = null;
+        ClearOperatorRelays(currentOperator, entity);
+
+        RefreshCanRun((entity, entity.Comp));
+
+        var setEvent = new VehicleOperatorSetEvent(null, currentOperator);
+        RaiseLocalEvent(entity, ref setEvent);
+
+        Dirty(entity);
+        return true;
+    }
+
+    private void ClearOperatorRelays(EntityUid operatorUid, EntityUid vehicleUid)
+    {
+        if (TryComp<RelayInputMoverComponent>(operatorUid, out var relayMover) &&
+            relayMover.RelayEntity == vehicleUid)
+        {
+            RemCompDeferred<RelayInputMoverComponent>(operatorUid);
+        }
+
+        if (TryComp<InteractionRelayComponent>(operatorUid, out var interactionRelay) &&
+            interactionRelay.RelayEntity == vehicleUid)
+        {
+            RemCompDeferred<InteractionRelayComponent>(operatorUid);
+        }
+
+        if (TryComp<MovementRelayTargetComponent>(vehicleUid, out var relayTarget) &&
+            relayTarget.Source == operatorUid)
+        {
+            RemCompDeferred<MovementRelayTargetComponent>(vehicleUid);
+        }
     }
 
     /// <summary>
@@ -206,10 +217,17 @@ public sealed partial class VehicleSystem : EntitySystem
         if (!Resolve(operatorEntity, ref operatorEntity.Comp, false))
             return true;
 
-        if (!_vehicleQuery.TryComp(operatorEntity.Comp.Vehicle, out var vehicle))
+        var vehicleUid = operatorEntity.Comp.Vehicle;
+        if (vehicleUid is null)
             return true;
 
-        return TrySetOperator((operatorEntity.Comp.Vehicle.Value, vehicle), null, removeExisting: true);
+        if (_vehicleQuery.TryComp(vehicleUid, out var vehicle))
+            return TryRemoveOperator((vehicleUid.Value, vehicle));
+
+        ClearOperatorRelays(operatorEntity.Owner, vehicleUid.Value);
+        operatorEntity.Comp.Vehicle = null;
+        RemCompDeferred<VehicleOperatorComponent>(operatorEntity.Owner);
+        return true;
     }
 
     /// <summary>
@@ -296,9 +314,7 @@ public sealed partial class VehicleSystem : EntitySystem
             return;
 
         if (_inputMoverQuery.TryComp(entity, out var inputMover))
-        {
             _appearance.SetData(entity, VehicleVisuals.CanRun, inputMover.CanMove, appearance);
-        }
 
         _appearance.SetData(entity, VehicleVisuals.HasOperator, entity.Comp.Operator is not null, appearance);
     }
