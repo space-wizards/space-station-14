@@ -46,7 +46,6 @@ public sealed partial class ContainerFillSystem : EntitySystem
                 {
                     var alreadyContained = container.ContainedEntities.Count > 0 ? string.Join("\n", container.ContainedEntities.Select(e => $"\t - {ToPrettyString(e)}")) : "< empty >";
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.\nCurrent contents:\n{alreadyContained}");
-                    _transform.AttachToGridOrMap(ent);
                     break;
                 }
             }
