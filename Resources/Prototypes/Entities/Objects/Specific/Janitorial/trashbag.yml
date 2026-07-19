@@ -65,7 +65,7 @@
     areaInsertRadius: 5
   - type: Tag
     tags:
-    - TrashBagBlue
+    - TrashBagHolding
 
 - type: entity
   parent: TrashBag

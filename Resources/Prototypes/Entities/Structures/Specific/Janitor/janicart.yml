@@ -233,7 +233,7 @@
         whitelist:
           tags:
           - TrashBag
-          - TrashBagBlue
+          - TrashBagHolding
         priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
@@ -299,10 +299,10 @@
         whitelist:
           tags:
           - TrashBag
-      cart_garbage_blue:
+      cart_garbage_holding:
         whitelist:
           tags:
-          - TrashBagBlue
+          - TrashBagHolding
       cart_replacer:
         whitelist:
           components:

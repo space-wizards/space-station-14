@@ -307,7 +307,7 @@
     whitelist:
       tags:
         - TrashBag
-        - TrashBagBlue
+        - TrashBagHolding
   - type: Sprite
     layers:
       - state: box
