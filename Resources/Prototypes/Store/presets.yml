@@ -23,6 +23,8 @@
       Telecrystal: 0
     expectedFaction:
     - Syndicate
+  - type: Stylesheet
+    stylesheet: Syndicate
 
 - type: entity
   id: StorePresetSpellbook

@@ -10,9 +10,9 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Stylesheets;
 
 [Virtual]
-public partial class SystemStylesheet : CommonStylesheet
+public partial class SyndicateStylesheet : CommonStylesheet
 {
-    public override string StylesheetName => "System";
+    public override string StylesheetName => "Syndicate";
 
     public override NotoFontFamilyStack BaseFont { get; } // TODO NotoFontFamilyStack is temporary, to be replaced with FontFamilyStack
                                                           //      waiting on engine support for font properties before proper implementation of font stacks
@@ -35,7 +35,7 @@ public partial class SystemStylesheet : CommonStylesheet
         (StyleClass.FontLarge, PrimaryFontSize + FontSizeStep),
     };
 
-    public SystemStylesheet(object config, StylesheetManager man) : base(config)
+    public SyndicateStylesheet(object config, StylesheetManager man) : base(config)
     {
         BaseFont = new NotoFontFamilyStack(ResCache);
         var rules = new[]
@@ -49,7 +49,7 @@ public partial class SystemStylesheet : CommonStylesheet
             ],
             // Finally, load all the other sheetlets.
             GetAllSheetletRules<PalettedStylesheet, CommonSheetletAttribute>(man),
-            GetAllSheetletRules<SystemStylesheet, CommonSheetletAttribute>(man),
+            GetAllSheetletRules<SyndicateStylesheet, CommonSheetletAttribute>(man),
         };
 
         Stylesheet = new Stylesheet(rules.SelectMany(x => x).ToArray());

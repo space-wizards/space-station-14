@@ -201,6 +201,8 @@
     color: "#c94242"
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
+  - type: Stylesheet
+    stylesheet: Syndicate
 
 - type: entity
   parent: BaseComputerShuttle
@@ -287,6 +289,8 @@
           type: WiresBoundUserInterface
   - type: Computer
     board: ComputerIFFSyndicateCircuitboard
+  - type: Stylesheet
+    stylesheet: Syndicate
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -718,6 +722,8 @@
     radius: 1.5
     energy: 4.0
     color: "#f71713"
+  - type: Stylesheet
+    stylesheet: Syndicate
 
 - type: entity
   parent: ComputerComms
