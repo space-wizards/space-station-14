@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
@@ -44,6 +45,7 @@ public sealed partial class AdminSystem : EntitySystem
     [Dependency] private HandsSystem _hands = default!;
     [Dependency] private SharedJobSystem _jobs = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private GhostSystem _ghost = default!;
     [Dependency] private MindSystem _minds = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private PhysicsSystem _physics = default!;
@@ -163,11 +165,36 @@ public sealed partial class AdminSystem : EntitySystem
 
         if (!obj.IsAdmin)
         {
+            DowngradeAdminGhost(obj.Player);
             RaiseNetworkEvent(new FullPlayerListEvent(), obj.Player.Channel);
             return;
         }
 
         SendFullPlayerList(obj.Player);
+    }
+
+    /// <summary>
+    /// If a freshly de-adminned player is an aghost, demote them to a regular ghost,
+    /// or kick them back into their character, if they have one.
+    /// </summary>
+    private void DowngradeAdminGhost(ICommonSession session)
+    {
+        if (session.AttachedEntity is not { } aghost)
+            return;
+
+        if (Comp<MetaDataComponent>(aghost).EntityPrototype?.ID != GameTicker.AdminObserverPrototypeName.Id)
+            return;
+
+        if (!_minds.TryGetMind(session, out var mindId, out var mind))
+            return;
+
+        // Return to our character if we aghosted out of it
+        if (mind.VisitingEntity == aghost && mind.OwnedEntity is not null)
+            _minds.UnVisit(mindId, mind);
+        else
+            _ghost.SpawnGhost((mindId, mind), aghost); // transfers the mind for us
+
+        QueueDel(aghost);
     }
 
     private void OnPlayerDetached(PlayerDetachedEvent ev)
