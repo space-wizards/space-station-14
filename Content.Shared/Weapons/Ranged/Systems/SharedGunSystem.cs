@@ -251,9 +251,8 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.ShootCoordinates = null;
         ent.Comp.Target = null;
 
-        // GunAltFire treats force wielding as requiring both hands while shooting; therefore it auto-unwields upon stopping.
-        if (user != null && TryComp<GunAltFireComponent>(ent, out var gunAltFireComp) && gunAltFireComp.ForceWielding)
-            Wieldable.TryUnwield((ent, null), user.Value);
+        var ev = new GunShootingStoppedEvent(user);
+        RaiseLocalEvent(ent, ref ev);
 
         DirtyField(ent.AsNullable(), nameof(GunComponent.ShotCounter));
     }
@@ -263,10 +262,12 @@ public abstract partial class SharedGunSystem : EntitySystem
         ent.Comp.NextFire += TimeSpan.FromSeconds(ent.Comp.BurstCooldown);
         ent.Comp.BurstActivated = false;
         ent.Comp.BurstShotsCount = 0;
-        if (user != null && gunAltFireComp != null && gunAltFireComp.ForceWielding)
-        {
-            Wieldable.TryUnwield((ent, null), user.Value);
-        }
+
+        var ev = new GunBurstStoppedEvent(user);
+        RaiseLocalEvent(ent, ref ev);
+
+        DirtyField(ent.AsNullable(), nameof(GunComponent.BurstActivated));
+        DirtyField(ent.AsNullable(), nameof(GunComponent.BurstShotsCount));
     }
 
     /// <summary>
@@ -764,6 +765,20 @@ public record struct ShooterImpulseEvent()
 {
     public bool Push;
 };
+
+/// <summary>
+/// Raised when a gun that was previously shooting stops.
+/// </summary>
+/// <param name="User">The entity firing the gun.</param>
+[ByRefEvent]
+public record struct GunShootingStoppedEvent(EntityUid? User);
+
+/// <summary>
+/// Raised when a gun firing in burst mode is made to stop shooting.
+/// </summary>
+/// <param name="User">The entity firing the gun.</param>
+[ByRefEvent]
+public record struct GunBurstStoppedEvent(EntityUid? User);
 
 public enum EffectLayers : byte
 {
