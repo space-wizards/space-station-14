@@ -1227,4 +1227,11 @@
   id: 151
   time: '2026-07-18T09:28:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/43438
+- author: ProPeperos
+  changes:
+  - message: On Plasma - Modernized atmos, and other tweaks and fixes
+    type: Tweak
+  id: 152
+  time: '2026-07-19T11:40:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44660
 Order: 2

@@ -5115,10 +5115,3 @@
   id: 9879
   time: '2026-07-19T03:45:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38528
-- author: B_Kirill, mirrorcult
-  changes:
-  - message: Wall-mounted entities are now only visible from the side of the wall they are attached to.
-    type: Tweak
-  id: 9880
-  time: '2026-07-19T04:58:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/43476
