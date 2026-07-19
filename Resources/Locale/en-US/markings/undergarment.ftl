@@ -24,7 +24,7 @@ marking-UndergarmentTopSportsbraVox = Sports Bra
 marking-UndergarmentTopSportsbraVox-sports_vox = Sports Bra
 
 marking-UndergarmentBottomBoxersVox = Boxers
-marking-UndergarmentBottomBoxersVox_boxers_vox = Boxers
+marking-UndergarmentBottomBoxersVox-boxers_vox = Boxers
 marking-UndergarmentBottomBriefsVox = Briefs
 marking-UndergarmentBottomBriefsVox-briefs_vox = Briefs
 marking-UndergarmentBottomSatinVox = Satin

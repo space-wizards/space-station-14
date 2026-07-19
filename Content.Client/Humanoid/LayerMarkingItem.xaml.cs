@@ -88,7 +88,7 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
     private void UpdateData()
     {
         MarkingTexture.Textures = _markingPrototype.Sprites.Select(layer => _sprite.Frame0(layer)).ToList();
-        SelectButton.Text = Loc.GetString($"marking-{_markingPrototype.ID}");
+        SelectButton.Text = _markingPrototype.GetName();
     }
 
     private void UpdateSelection()
@@ -148,7 +148,6 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
             return;
 
         _colorSliders = new();
-
         for (var i = 0; i < _markingPrototype.Sprites.Count; i++)
         {
             var container = new BoxContainer()
@@ -162,12 +161,8 @@ public sealed partial class LayerMarkingItem : BoxContainer, ISearchableControl
             var selector = new ColorSelectorSliders();
             selector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv;
 
-            var label = _markingPrototype.Sprites[i] switch
-            {
-                SpriteSpecifier.Rsi rsi => Loc.GetString($"marking-{_markingPrototype.ID}-{rsi.RsiState}"),
-                SpriteSpecifier.Texture texture => Loc.GetString($"marking-{_markingPrototype.ID}-{texture.TexturePath.Filename}"),
-                _ => throw new InvalidOperationException("SpriteSpecifier not of known type"),
-            };
+            var stateId = MarkingManager.GetMarkingStateId(_markingPrototype, _markingPrototype.Sprites[i]);
+            var label = Loc.GetString(stateId);
 
             container.AddChild(new Label { Text = label });
             container.AddChild(selector);
