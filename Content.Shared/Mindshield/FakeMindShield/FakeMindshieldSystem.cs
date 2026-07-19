@@ -84,6 +84,8 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
             if (actionComp.UseDelay != null)
                 _actions.SetCooldown(action, actionComp.UseDelay.Value);
+
+            break;
         }
 
         Dirty(ent);
