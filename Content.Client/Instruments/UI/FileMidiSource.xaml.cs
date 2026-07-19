@@ -87,6 +87,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         RemoveButton.OnPressed += OnRemoveButtonPressed;
         PlayButton.OnToggled += OnPlayButtonToggled;
         LoopButton.OnToggled += OnLoopButtonToggled;
+        ShuffleButton.OnPressed += OnShuffleButtonPressed;
         PlaybackSlider.OnValueChanged += OnPlaybackSliderValueChanged;
         PlaybackSlider.OnKeyBindUp += OnPlaybackSliderKeyBindUp;
 
@@ -240,6 +241,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     private void OnLoopButtonToggled(ButtonToggledEventArgs obj)
     {
         LoopingToggled?.Invoke(LoopButton.Pressed);
+    }
+
+    private void OnShuffleButtonPressed(ButtonEventArgs obj)
+    {
+        if (obj.Button.Pressed && !TrackList.GetSelected().Any())
+        {
+            TrackList[_random.Next(0, TrackList.Count)].Selected = true;
+        }
     }
 
     private void OnPlaybackSliderValueChanged(Range _)
