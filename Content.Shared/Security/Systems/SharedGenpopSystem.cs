@@ -14,17 +14,17 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Security.Systems;
 
-public abstract class SharedGenpopSystem : EntitySystem
+public abstract partial class SharedGenpopSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] protected readonly SharedIdCardSystem IdCard = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] protected readonly MetaDataSystem MetaDataSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
+    [Dependency] private IConfigurationManager _cfgManager = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
+    [Dependency] private SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] protected SharedIdCardSystem IdCard = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] protected MetaDataSystem MetaDataSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedUserInterfaceSystem _userInterface = default!;
 
     // CCvar.
     private int _maxIdJobLength;
@@ -60,7 +60,7 @@ public abstract class SharedGenpopSystem : EntitySystem
         ent.Comp.LinkedId = EntityUid.Invalid;
 
         _lock.Lock(ent.Owner, args.Actor);
-        _entityStorage.CloseStorage(ent);
+        _entityStorage.CloseStorage(ent.Owner, args.Actor);
 
         CreateId(ent, args.Name, args.Sentence, args.Crime);
     }
@@ -81,7 +81,7 @@ public abstract class SharedGenpopSystem : EntitySystem
 
         if (!_accessReader.IsAllowed(user, ent))
         {
-            _popup.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), user);
+            _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), user, user);
             return;
         }
 
@@ -106,7 +106,7 @@ public abstract class SharedGenpopSystem : EntitySystem
         if (!_accessReader.FindPotentialAccessItems(args.User).Contains(ent.Comp.LinkedId.Value))
         {
             if (!args.Silent)
-                _popup.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), ent, args.User);
+                _popup.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), ent, args.User);
             args.Cancelled = true;
             return;
         }
@@ -115,7 +115,7 @@ public abstract class SharedGenpopSystem : EntitySystem
             !expireIdCard.Expired)
         {
             if (!args.Silent)
-                _popup.PopupClient(Loc.GetString("genpop-prisoner-id-popup-not-served"), ent, args.User);
+                _popup.PopupEntity(Loc.GetString("genpop-prisoner-id-popup-not-served"), ent, args.User);
             args.Cancelled = true;
         }
     }
@@ -200,7 +200,7 @@ public abstract class SharedGenpopSystem : EntitySystem
 
         ent.Comp.LinkedId = null;
         _lock.Unlock(ent.Owner, user);
-        _entityStorage.OpenStorage(ent.Owner);
+        _entityStorage.OpenStorage(ent.Owner, user);
 
         if (TryComp<ExpireIdCardComponent>(ent.Comp.LinkedId, out var expire))
             IdCard.ExpireId((ent.Comp.LinkedId.Value, expire));

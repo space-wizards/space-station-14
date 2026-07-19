@@ -1,18 +1,19 @@
 using System.Text;
-using Content.Shared.Drunk;
+using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class SlurredSystem : SharedSlurredSystem
+public sealed partial class SlurredSystem : SharedSlurredSystem
 {
-    [Dependency] private readonly StatusEffectsSystem _status = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     /// <summary>
     /// Divisor applied to total seconds used to get the odds of slurred speech occuring.
@@ -30,19 +31,23 @@ public sealed class SlurredSystem : SharedSlurredSystem
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetMaxTime<SlurredAccentComponent>(uid, out var time))
+        if (!TryComp<StatusEffectComponent>(uid, out var component) || component.AppliedTo == null)
+            return 0;
+
+        if (!_status.TryGetMaxTime<SlurredAccentComponent>(component.AppliedTo.Value, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.
-        var magic = time.Item2 == null ? SlurredModifier : (float)(time.Item2 - _timing.CurTime).Value.TotalSeconds - SlurredThreshold;
+        var magic = time.Item2 == null ? SlurredModifier : (float) (time.Item2 - _timing.CurTime).Value.TotalSeconds - SlurredThreshold;
 
         return Math.Clamp(magic / SlurredModifier, 0f, 1f);
     }
 
-    protected override string AccentuateInternal(EntityUid uid, SlurredAccentComponent comp, string message)
+    // TODO: Make this accent possible to use without a status effect
+    protected override void OnAccent(Entity<SlurredAccentComponent> ent, ref AccentGetEvent args)
     {
-        var scale = GetProbabilityScale(uid);
-        return Accentuate(message, scale);
+        var scale = GetProbabilityScale(ent);
+        args.Message = Accentuate(args.Message, scale);
     }
 
     private string Accentuate(string message, float scale)
@@ -81,7 +86,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
                 }
             }
 
-            if (!_random.Prob(scale * 3 / 20))
+            if (!_random.Prob(scale * 3/20))
             {
                 sb.Append(character);
                 continue;

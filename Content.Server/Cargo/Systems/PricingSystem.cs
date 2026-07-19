@@ -1,9 +1,8 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Cargo.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Cargo;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -22,13 +21,12 @@ namespace Content.Server.Cargo.Systems;
 /// <summary>
 /// This handles calculating the price of items, and implements two basic methods of pricing materials.
 /// </summary>
-public sealed class PricingSystem : EntitySystem
+public sealed partial class PricingSystem : EntitySystem
 {
-    [Dependency] private readonly IConsoleHost _consoleHost = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private IConsoleHost _consoleHost = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -130,32 +128,12 @@ public sealed class PricingSystem : EntitySystem
         args.Price += entity.Comp.RandomPrice ?? 0;
     }
 
-    private double GetSolutionPrice(EntityUid entity)
-    {
-        var price = 0.0;
-
-        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions(entity))
-        {
-            var solution = soln.Comp.Solution;
-            foreach (var (reagent, quantity) in solution.Contents)
-            {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
-                    continue;
-
-                // TODO check ReagentData for price information?
-                price += (float) quantity * reagentProto.PricePerUnit;
-            }
-        }
-
-        return price;
-    }
-
     private double GetMaterialPrice(PhysicalCompositionComponent component)
     {
         double price = 0;
         foreach (var (id, quantity) in component.MaterialComposition)
         {
-            price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
+            price += ProtoMan.Index<MaterialPrototype>(id).Price * quantity;
         }
         return price;
     }
@@ -166,14 +144,14 @@ public sealed class PricingSystem : EntitySystem
 
         if (recipe.Result is { } result)
         {
-            price += GetEstimatedPrice(_prototypeManager.Index(result));
+            price += GetEstimatedPrice(ProtoMan.Index(result));
         }
 
         if (recipe.ResultReagents is { } resultReagents)
         {
             foreach (var (reagent, amount) in resultReagents)
             {
-                price += (_prototypeManager.Index(reagent).PricePerUnit * amount).Double();
+                price += (ProtoMan.Index(reagent).PricePerUnit * amount).Double();
             }
         }
 
@@ -306,7 +284,7 @@ public sealed class PricingSystem : EntitySystem
             var solution = soln.Comp.Solution;
             foreach (var (reagent, quantity) in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                if (!ProtoMan.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
 
                 // TODO check ReagentData for price information?
@@ -328,7 +306,7 @@ public sealed class PricingSystem : EntitySystem
         {
             foreach (var (reagent, quantity) in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
+                if (!ProtoMan.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
 
                 // TODO check ReagentData for price information?
