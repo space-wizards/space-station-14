@@ -99,7 +99,7 @@ public sealed partial class HumanoidCharacterAppearance
     {
         var random = IoCManager.Resolve<IRobustRandom>();
 
-        if (skinType.RealisticColors)
+        if (skinType.RealisticColors && !RealisticEyeColors.Contains(color))
             color = random.Pick(RealisticEyeColors);
 
         if (skinType.SquashEyeHairColors)
