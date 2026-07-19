@@ -24,6 +24,7 @@
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
+    offset: 0, 1
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
       state: base
@@ -36,7 +37,7 @@
     energy: 0.8
     radius: 10
     softness: 1
-    offset: "0, -0.5"
+    offset: "0, 0.5"
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
