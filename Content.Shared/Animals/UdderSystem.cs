@@ -18,12 +18,15 @@ namespace Content.Shared.Animals;
 /// </summary>
 public sealed partial class UdderSystem : EntitySystem
 {
+    private static readonly EntityTimerId GrowthTimer = new("growth");
+
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -33,11 +36,13 @@ public sealed partial class UdderSystem : EntitySystem
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<UdderComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<UdderComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(EntityUid uid, UdderComponent component, MapInitEvent args)
     {
         component.NextGrowth = _timing.CurTime + component.GrowthDelay;
+        _timers.SetTimerAt<UdderComponent>((uid, component), GrowthTimer, component.NextGrowth);
     }
 
     private void OnEntRemoved(Entity<UdderComponent> entity, ref EntRemovedFromContainerMessage args)
@@ -50,39 +55,29 @@ public sealed partial class UdderSystem : EntitySystem
         entity.Comp.Solution = null;
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<UdderComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<UdderComponent>();
-        while (query.MoveNext(out var uid, out var udder))
+        if (args.Id != GrowthTimer)
+            return;
+
+        var udder = ent.Comp;
+        udder.NextGrowth = args.ScheduledTime + udder.GrowthDelay;
+        _timers.SetTimerAt(ent, GrowthTimer, udder.NextGrowth);
+
+        if (_mobState.IsDead(ent) ||
+            !_solutionContainerSystem.ResolveSolution(ent.Owner, udder.SolutionName, ref udder.Solution, out var solution) ||
+            solution.AvailableVolume == 0)
+            return;
+
+        if (TryComp(ent, out HungerComponent? hunger))
         {
-            if (_timing.CurTime < udder.NextGrowth)
-                continue;
+            if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                return;
 
-            udder.NextGrowth += udder.GrowthDelay;
-
-            if (_mobState.IsDead(uid))
-                continue;
-
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
-                continue;
-
-            if (solution.AvailableVolume == 0)
-                continue;
-
-            // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-            if (TryComp(uid, out HungerComponent? hunger))
-            {
-                // Is there enough nutrition to produce reagent?
-                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
-                    continue;
-
-                _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
-            }
-
-            //TODO: toxins from bloodstream !?
-            _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
+            _hunger.ModifyHunger(ent, -udder.HungerUsage, hunger);
         }
+
+        _solutionContainerSystem.TryAddReagent(udder.Solution!.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
     }
 
     private void AttemptMilk(Entity<UdderComponent?> udder, EntityUid userUid, EntityUid containerUid)

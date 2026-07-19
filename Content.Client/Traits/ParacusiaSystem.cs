@@ -11,34 +11,26 @@ namespace Content.Client.Traits;
 
 public sealed partial class ParacusiaSystem : SharedParacusiaSystem
 {
+    private static readonly EntityTimerId IncidentTimer = new("incident");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPlayerManager _player = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ParacusiaComponent, LocalPlayerDetachedEvent>(OnPlayerDetach);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        if (_player.LocalEntity is not EntityUid localPlayer)
-            return;
-
-        PlayParacusiaSounds(localPlayer);
+        SubscribeLocalEvent<ParacusiaComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnComponentStartup(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
     {
         component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents));
+        _timers.SetTimerAt<ParacusiaComponent>((uid, component), IncidentTimer, component.NextIncidentTime);
     }
 
     private void OnPlayerDetach(EntityUid uid, ParacusiaComponent component, LocalPlayerDetachedEvent args)
@@ -46,17 +38,19 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
         component.Stream = _audio.Stop(component.Stream);
     }
 
-    private void PlayParacusiaSounds(EntityUid uid)
+    private void OnTimer(Entity<ParacusiaComponent> ent, ref EntityTimerEvent args)
     {
-        if (!TryComp<ParacusiaComponent>(uid, out var paracusia))
+        if (args.Id != IncidentTimer)
             return;
 
-        if (_timing.CurTime <= paracusia.NextIncidentTime)
-            return;
+        var paracusia = ent.Comp;
 
-        // Set the new time.
         var timeInterval = _random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents);
-        paracusia.NextIncidentTime += TimeSpan.FromSeconds(timeInterval);
+        paracusia.NextIncidentTime = args.ScheduledTime + TimeSpan.FromSeconds(timeInterval);
+        _timers.SetTimerAt(ent, IncidentTimer, paracusia.NextIncidentTime);
+
+        if (!_timing.IsFirstTimePredicted || _player.LocalEntity != ent.Owner)
+            return;
 
         // Offset position where the sound is played
         var randomOffset =
@@ -66,10 +60,10 @@ public sealed partial class ParacusiaSystem : SharedParacusiaSystem
                 _random.NextFloat(-paracusia.MaxSoundDistance, paracusia.MaxSoundDistance)
             );
 
-        var newCoords = Transform(uid).Coordinates.Offset(randomOffset);
+        var newCoords = Transform(ent).Coordinates.Offset(randomOffset);
 
         // Play the sound
-        paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, uid, newCoords)?.Entity;
+        paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, ent, newCoords)?.Entity;
     }
 
 }

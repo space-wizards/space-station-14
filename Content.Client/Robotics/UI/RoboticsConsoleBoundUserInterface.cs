@@ -1,11 +1,17 @@
 using Content.Shared.Robotics;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Content.Shared.Robotics.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Robotics.UI;
 
-public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
+public sealed partial class RoboticsConsoleBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId DestroyTimer = new("destroy");
+
+    [Dependency] private IGameTiming _timing = default!;
+
     [ViewVariables]
     public RoboticsConsoleWindow _window = default!;
 
@@ -38,5 +44,18 @@ public sealed class RoboticsConsoleBoundUserInterface : BoundUserInterface
             return;
 
         _window.UpdateState(cast);
+        _window.UpdateDestroyButton(_timing.CurTime);
+
+        if (EntMan.TryGetComponent<RoboticsConsoleComponent>(Owner, out var console) &&
+            console.NextDestroy > _timing.CurTime)
+            SetTimerAt(DestroyTimer, console.NextDestroy);
+        else
+            CancelTimer(DestroyTimer);
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == DestroyTimer)
+            _window.UpdateDestroyButton(timer.FiredAt);
     }
 }

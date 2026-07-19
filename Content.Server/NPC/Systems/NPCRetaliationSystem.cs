@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
@@ -5,7 +6,6 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
@@ -16,13 +16,16 @@ namespace Content.Server.NPC.Systems;
 public sealed partial class NPCRetaliationSystem : EntitySystem
 {
     [Dependency] private NpcFactionSystem _npcFaction = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    private static readonly EntityTimerId AttackMemoryTimer = new("attack-memory");
 
     /// <inheritdoc />
     public override void Initialize()
     {
         SubscribeLocalEvent<NPCRetaliationComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<NPCRetaliationComponent, DisarmedEvent>(OnDisarmed);
+        SubscribeLocalEvent<NPCRetaliationComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnDamageChanged(Entity<NPCRetaliationComponent> ent, ref DamageChangedEvent args)
@@ -53,27 +56,39 @@ public sealed partial class NPCRetaliationSystem : EntitySystem
 
         _npcFaction.AggroEntity(ent.Owner, target);
         if (ent.Comp.AttackMemoryLength is {} memoryLength)
-            ent.Comp.AttackMemories[target] = _timing.CurTime + memoryLength;
+        {
+            ent.Comp.AttackMemories[target] = _timers.SetTimer(ent, AttackMemoryTimer, memoryLength);
+            ScheduleNextMemory(ent);
+        }
 
         return true;
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<NPCRetaliationComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != AttackMemoryTimer || !TryComp(ent, out FactionExceptionComponent? factionException))
+            return;
 
-        var query = EntityQueryEnumerator<NPCRetaliationComponent, FactionExceptionComponent>();
-        while (query.MoveNext(out var uid, out var retaliationComponent, out var factionException))
+        foreach (var (target, deadline) in ent.Comp.AttackMemories.ToArray())
         {
-            // TODO: can probably reuse this allocation and clear it
-            foreach (var entity in new ValueList<EntityUid>(retaliationComponent.AttackMemories.Keys))
-            {
-                if (!TerminatingOrDeleted(entity) && _timing.CurTime < retaliationComponent.AttackMemories[entity])
-                    continue;
+            if (!TerminatingOrDeleted(target) && deadline > args.FiredAt)
+                continue;
 
-                _npcFaction.DeAggroEntity((uid, factionException), entity);
-                // TODO: should probably remove the AttackMemory, thats the whole point of the ValueList right??
-            }
+            _npcFaction.DeAggroEntity((ent.Owner, factionException), target);
+            ent.Comp.AttackMemories.Remove(target);
         }
+
+        ScheduleNextMemory(ent);
+    }
+
+    private void ScheduleNextMemory(Entity<NPCRetaliationComponent> ent)
+    {
+        if (ent.Comp.AttackMemories.Count == 0)
+        {
+            _timers.CancelTimer<NPCRetaliationComponent>(ent.Owner, AttackMemoryTimer);
+            return;
+        }
+
+        _timers.SetTimerAt(ent, AttackMemoryTimer, ent.Comp.AttackMemories.Values.Min());
     }
 }

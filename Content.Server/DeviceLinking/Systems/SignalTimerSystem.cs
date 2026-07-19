@@ -12,17 +12,15 @@ namespace Content.Server.DeviceLinking.Systems;
 
 public sealed partial class SignalTimerSystem : EntitySystem
 {
+    private static readonly EntityTimerId SignalTimer = new("signal-timer");
+
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private DeviceLinkSystem _signalSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private AccessReaderSystem _accessReader = default!;
-
-    /// <summary>
-    /// Per-tick timer cache.
-    /// </summary>
-    private List<Entity<SignalTimerComponent>> _timers = new();
 
     public override void Initialize()
     {
@@ -35,6 +33,8 @@ public sealed partial class SignalTimerSystem : EntitySystem
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerDelayChangedMessage>(OnDelayChangedMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalTimerStartMessage>(OnTimerStartMessage);
         SubscribeLocalEvent<SignalTimerComponent, SignalReceivedEvent>(OnSignalReceived);
+        SubscribeLocalEvent<ActiveSignalTimerComponent, ComponentInit>(OnActiveTimerInit);
+        SubscribeLocalEvent<ActiveSignalTimerComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnInit(EntityUid uid, SignalTimerComponent component, ComponentInit args)
@@ -82,33 +82,18 @@ public sealed partial class SignalTimerSystem : EntitySystem
         }
     }
 
-    public override void Update(float frameTime)
+    private void OnActiveTimerInit(Entity<ActiveSignalTimerComponent> ent, ref ComponentInit args)
     {
-        base.Update(frameTime);
-        UpdateTimer();
+        if (ent.Comp.TriggerTime != TimeSpan.Zero)
+            Schedule(ent);
     }
 
-    private void UpdateTimer()
+    private void OnTimer(Entity<ActiveSignalTimerComponent> ent, ref EntityTimerEvent args)
     {
-        _timers.Clear();
+        if (args.Id != SignalTimer || !TryComp<SignalTimerComponent>(ent, out var timer))
+            return;
 
-        var query = EntityQueryEnumerator<ActiveSignalTimerComponent, SignalTimerComponent>();
-        while (query.MoveNext(out var uid, out var active, out var timer))
-        {
-            if (active.TriggerTime > _gameTiming.CurTime)
-                continue;
-
-            _timers.Add((uid, timer));
-        }
-
-        foreach (var timer in _timers)
-        {
-            // Exploded or the likes.
-            if (!Exists(timer.Owner))
-                continue;
-
-            Trigger(timer.Owner, timer.Comp);
-        }
+        Trigger(ent, timer);
     }
 
     /// <summary>
@@ -188,6 +173,7 @@ public sealed partial class SignalTimerSystem : EntitySystem
         TryComp<AppearanceComponent>(uid, out var appearance);
         var timer = EnsureComp<ActiveSignalTimerComponent>(uid);
         timer.TriggerTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.Delay);
+        Schedule((uid, timer));
 
         if (appearance != null)
         {
@@ -196,5 +182,10 @@ public sealed partial class SignalTimerSystem : EntitySystem
         }
 
         _signalSystem.InvokePort(uid, component.StartPort);
+    }
+
+    private void Schedule(Entity<ActiveSignalTimerComponent> ent)
+    {
+        _timers.SetTimerAt(ent, SignalTimer, ent.Comp.TriggerTime);
     }
 }

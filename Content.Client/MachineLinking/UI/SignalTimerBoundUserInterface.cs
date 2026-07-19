@@ -5,8 +5,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.MachineLinking.UI;
 
-public sealed class SignalTimerBoundUserInterface : BoundUserInterface
+public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId EndTimer = new("end");
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
+    [Dependency] private IGameTiming _timing = default!;
+
     [ViewVariables]
     private SignalTimerWindow? _window;
 
@@ -60,5 +65,25 @@ public sealed class SignalTimerBoundUserInterface : BoundUserInterface
         _window.SetTriggerTime(cast.TriggerTime);
         _window.SetTimerStarted(cast.TimerStarted);
         _window.SetHasAccess(cast.HasAccess);
+        _window.UpdateTimer(_timing.CurTime);
+
+        if (!cast.TimerStarted || cast.TriggerTime <= _timing.CurTime)
+        {
+            CancelTimer(EndTimer);
+            CancelTimer(RefreshTimer);
+            return;
+        }
+
+        SetTimerAt(EndTimer, cast.TriggerTime);
+        SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == EndTimer)
+            CancelTimer(RefreshTimer);
+
+        if (timer.Id == EndTimer || timer.Id == RefreshTimer)
+            _window?.UpdateTimer(timer.FiredAt);
     }
 }

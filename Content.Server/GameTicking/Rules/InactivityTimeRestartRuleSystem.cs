@@ -1,23 +1,27 @@
-using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.Player;
 using Robust.Shared.Player;
-using Timer = Robust.Shared.Timing.Timer;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<InactivityRuleComponent>
 {
+    private static readonly EntityTimerId InactivityTimer = new("inactivity");
+    private static readonly EntityTimerId RestartTimerId = new("restart-round");
+
     [Dependency] private IChatManager _chatManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
+        SubscribeLocalEvent<InactivityRuleComponent, EntityTimerEvent>(OnTimer);
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
 
@@ -39,9 +43,7 @@ public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<Ina
         if (!Resolve(uid, ref component))
             return;
 
-        component.TimerCancel.Cancel();
-        component.TimerCancel = new CancellationTokenSource();
-        Timer.Spawn(component.InactivityMaxTime, () => TimerFired(uid, component), component.TimerCancel.Token);
+        _timers.SetTimer<InactivityRuleComponent>((uid, component), InactivityTimer, component.InactivityMaxTime);
     }
 
     public void StopTimer(EntityUid uid, InactivityRuleComponent? component = null)
@@ -49,19 +51,25 @@ public sealed partial class InactivityTimeRestartRuleSystem : GameRuleSystem<Ina
         if (!Resolve(uid, ref component))
             return;
 
-        component.TimerCancel.Cancel();
+        _timers.CancelTimers<InactivityRuleComponent>(uid);
     }
 
-    private void TimerFired(EntityUid uid, InactivityRuleComponent? component = null)
+    private void OnTimer(Entity<InactivityRuleComponent> ent, ref EntityTimerEvent args)
     {
-        if (!Resolve(uid, ref component))
+        if (args.Id == RestartTimerId)
+        {
+            GameTicker.RestartRound();
+            return;
+        }
+
+        if (args.Id != InactivityTimer)
             return;
 
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) component.RoundEndDelay.TotalSeconds)));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds",(int) ent.Comp.RoundEndDelay.TotalSeconds)));
 
-        Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
+        _timers.SetTimer(ent, RestartTimerId, ent.Comp.RoundEndDelay);
     }
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)

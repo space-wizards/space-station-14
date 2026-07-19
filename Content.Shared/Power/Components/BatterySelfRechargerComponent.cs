@@ -8,7 +8,7 @@ namespace Content.Shared.Power.Components;
 /// To be used in combination with <see cref="BatteryComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 public sealed partial class BatterySelfRechargerComponent : Component
 {
     /// <summary>

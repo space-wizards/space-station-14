@@ -1,5 +1,6 @@
 ﻿using Content.Server.Ghost.Roles.Raffles;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Ghost.Roles.Components;
 
@@ -7,7 +8,7 @@ namespace Content.Server.Ghost.Roles.Components;
 /// Indicates that a ghost role is currently being raffled, and stores data about the raffle in progress.
 /// Raffles start when the first player joins a raffle.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 [Access(typeof(GhostRoleSystem))]
 public sealed partial class GhostRoleRaffleComponent : Component
 {
@@ -31,16 +32,15 @@ public sealed partial class GhostRoleRaffleComponent : Component
     public HashSet<ICommonSession> AllMembers = [];
 
     /// <summary>
-    /// Time left in the raffle in seconds. This must be initialized to a positive value.
+    /// Absolute simulation time at which the raffle ends.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
-    public TimeSpan Countdown = TimeSpan.MaxValue;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan EndTime;
 
     /// <summary>
     /// The cumulative time, i.e. how much time the raffle will take in total. Added to when the time is extended
     /// by someone joining the raffle.
-    /// Must be set to the same value as <see cref="Countdown"/> on initialization.
+    /// Must be initialized to the raffle's configured initial duration.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("cumulativeTime")]

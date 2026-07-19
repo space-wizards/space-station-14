@@ -13,7 +13,10 @@ namespace Content.Server.Atmos.Rotting;
 
 public sealed partial class RottingSystem : SharedRottingSystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    private static readonly EntityTimerId PerishTimer = new("perish");
+    private static readonly EntityTimerId RotTimer = new("rot");
+
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private ContainerSystem _container = default!;
     [Dependency] private DamageableSystem _damageable = default!;
@@ -25,6 +28,20 @@ public sealed partial class RottingSystem : SharedRottingSystem
         SubscribeLocalEvent<RottingComponent, GibbedBeforeDeletionEvent>(OnGibbed);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
+        SubscribeLocalEvent<PerishableComponent, ComponentStartup>(OnPerishableStartup);
+        SubscribeLocalEvent<PerishableComponent, EntityTimerEvent>(OnPerishTimer);
+        SubscribeLocalEvent<RottingComponent, ComponentStartup>(OnRottingStartup);
+        SubscribeLocalEvent<RottingComponent, EntityTimerEvent>(OnRotTimer);
+    }
+
+    private void OnPerishableStartup(Entity<PerishableComponent> ent, ref ComponentStartup args)
+    {
+        _timers.SetTimerAt(ent, PerishTimer, ent.Comp.RotNextUpdate);
+    }
+
+    private void OnRottingStartup(Entity<RottingComponent> ent, ref ComponentStartup args)
+    {
+        _timers.SetTimerAt(ent, RotTimer, ent.Comp.NextRotUpdate);
     }
 
     private void OnGibbed(EntityUid uid, RottingComponent component, GibbedBeforeDeletionEvent args)
@@ -64,74 +81,75 @@ public sealed partial class RottingSystem : SharedRottingSystem
         return 1f;
     }
 
-    public override void Update(float frameTime)
+    private void OnPerishTimer(Entity<PerishableComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != PerishTimer)
+            return;
 
-        var perishQuery = EntityQueryEnumerator<PerishableComponent>();
-        while (perishQuery.MoveNext(out var uid, out var perishable))
+        var perishable = ent.Comp;
+        perishable.RotNextUpdate = args.ScheduledTime + perishable.PerishUpdateRate;
+        _timers.SetTimerAt(ent, PerishTimer, perishable.RotNextUpdate);
+
+        var stage = PerishStage(ent, MaxStages);
+        if (stage != perishable.Stage)
         {
-            if (_timing.CurTime < perishable.RotNextUpdate)
-                continue;
+            perishable.Stage = stage;
+            DirtyField(ent, perishable, nameof(PerishableComponent.Stage));
+        }
 
-            perishable.RotNextUpdate += perishable.PerishUpdateRate;
+        if (IsRotten(ent) || !IsRotProgressing(ent, perishable))
+            return;
 
-            var stage = PerishStage((uid, perishable), MaxStages);
-            if (stage != perishable.Stage)
+        perishable.RotAccumulator += perishable.PerishUpdateRate * GetRotRate(ent);
+        DirtyField(ent, perishable, nameof(PerishableComponent.RotAccumulator));
+        if (perishable.RotAccumulator < perishable.RotAfter)
+            return;
+
+        var rot = AddComp<RottingComponent>(ent);
+        var ev = new BeginRottingEvent();
+        RaiseLocalEvent(ent, ref ev);
+        rot.NextRotUpdate = args.FiredAt + rot.RotUpdateRate;
+        _timers.SetTimerAt<RottingComponent>((ent, rot), RotTimer, rot.NextRotUpdate);
+    }
+
+    private void OnRotTimer(Entity<RottingComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != RotTimer ||
+            !TryComp<PerishableComponent>(ent, out var perishable) ||
+            !TryComp<TransformComponent>(ent, out var xform))
+            return;
+
+        var rotting = ent.Comp;
+        rotting.NextRotUpdate = args.ScheduledTime + rotting.RotUpdateRate;
+        _timers.SetTimerAt(ent, RotTimer, rotting.NextRotUpdate);
+
+        if (!IsRotProgressing(ent, perishable))
+            return;
+        rotting.TotalRotTime += rotting.RotUpdateRate * GetRotRate(ent);
+
+        if (rotting.DealDamage)
+        {
+            var damage = rotting.Damage * rotting.RotUpdateRate.TotalSeconds;
+            _damageable.TryChangeDamage(ent.Owner, damage, true, false);
+        }
+
+        if (TryComp<RotIntoComponent>(ent, out var rotInto))
+        {
+            var stage = RotStage(ent, rotting, perishable);
+            if (stage >= rotInto.Stage)
             {
-                perishable.Stage = stage;
-                DirtyField(uid, perishable, nameof(PerishableComponent.Stage));
-            }
-
-            if (IsRotten(uid) || !IsRotProgressing(uid, perishable))
-                continue;
-
-            perishable.RotAccumulator += perishable.PerishUpdateRate * GetRotRate(uid);
-            DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
-            if (perishable.RotAccumulator >= perishable.RotAfter)
-            {
-                var rot = AddComp<RottingComponent>(uid);
-                var ev = new BeginRottingEvent();
-                RaiseLocalEvent(uid, ref ev);
-                rot.NextRotUpdate = _timing.CurTime + rot.RotUpdateRate;
+                Spawn(rotInto.Entity, xform.Coordinates);
+                QueueDel(ent);
+                return;
             }
         }
 
-        var rotQuery = EntityQueryEnumerator<RottingComponent, PerishableComponent, TransformComponent>();
-        while (rotQuery.MoveNext(out var uid, out var rotting, out var perishable, out var xform))
-        {
-            if (_timing.CurTime < rotting.NextRotUpdate) // This is where it starts to get noticable on larger animals, no need to run every second
-                continue;
-            rotting.NextRotUpdate += rotting.RotUpdateRate;
+        if (!TryComp<PhysicsComponent>(ent, out var physics))
+            return;
 
-            if (!IsRotProgressing(uid, perishable))
-                continue;
-            rotting.TotalRotTime += rotting.RotUpdateRate * GetRotRate(uid);
-
-            if (rotting.DealDamage)
-            {
-                var damage = rotting.Damage * rotting.RotUpdateRate.TotalSeconds;
-                _damageable.TryChangeDamage(uid, damage, true, false);
-            }
-
-            if (TryComp<RotIntoComponent>(uid, out var rotInto))
-            {
-                var stage = RotStage(uid, rotting, perishable);
-                if (stage >= rotInto.Stage)
-                {
-                    Spawn(rotInto.Entity, xform.Coordinates);
-                    QueueDel(uid);
-                    continue;
-                }
-            }
-
-            if (!TryComp<PhysicsComponent>(uid, out var physics))
-                continue;
-
-            // We need a way to get the mass of the mob alone without armor etc in the future
-            // or just remove the mass mechanics altogether because they aren't good.
-            var molRate = perishable.MolsPerSecondPerUnitMass * (float)rotting.RotUpdateRate.TotalSeconds;
-            _atmosphere.AdjustTileMixture(uid, Gas.Ammonia, molRate * physics.FixturesMass, excite: true);
-        }
+        // We need a way to get the mass of the mob alone without armor etc in the future
+        // or just remove the mass mechanics altogether because they aren't good.
+        var molRate = perishable.MolsPerSecondPerUnitMass * (float)rotting.RotUpdateRate.TotalSeconds;
+        _atmosphere.AdjustTileMixture(ent.Owner, Gas.Ammonia, molRate * physics.FixturesMass, excite: true);
     }
 }

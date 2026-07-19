@@ -10,42 +10,41 @@ namespace Content.Server.Medical.CrewMonitoring;
 
 public sealed partial class CrewMonitoringServerSystem : EntitySystem
 {
+    private static readonly EntityTimerId UpdateTimer = new("update");
+
     [Dependency] private SuitSensorSystem _sensors = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private SingletonDeviceNetServerSystem _singletonServerSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private const float UpdateRate = 3f;
-    private float _updateDiff;
-
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         SubscribeLocalEvent<CrewMonitoringServerComponent, DeviceNetServerDisconnectedEvent>(OnDisconnected);
+        SubscribeLocalEvent<CrewMonitoringServerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<CrewMonitoringServerComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnStartup(Entity<CrewMonitoringServerComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        _timers.SetTimer(ent, UpdateTimer, TimeSpan.FromSeconds(UpdateRate));
+    }
 
-        // check update rate
-        _updateDiff += frameTime;
-        if (_updateDiff < UpdateRate)
+    private void OnTimer(Entity<CrewMonitoringServerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != UpdateTimer)
             return;
-        _updateDiff -= UpdateRate;
 
-        var servers = EntityQueryEnumerator<CrewMonitoringServerComponent>();
+        _timers.SetTimer(ent, UpdateTimer, TimeSpan.FromSeconds(UpdateRate));
+        if (!_singletonServerSystem.IsActiveServer(ent))
+            return;
 
-        while (servers.MoveNext(out var id, out var server))
-        {
-            if (!_singletonServerSystem.IsActiveServer(id))
-                continue;
-
-            UpdateTimeout(id);
-            BroadcastSensorStatus(id, server);
-        }
+        UpdateTimeout(ent, ent.Comp);
+        BroadcastSensorStatus(ent, ent.Comp);
     }
 
     /// <summary>

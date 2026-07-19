@@ -13,7 +13,9 @@ namespace Content.Shared.StatusEffect
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private AlertsSystem _alertsSystem = default!;
-        private List<EntityUid> _toRemove = new();
+        [Dependency] private IEntityTimerManager _timers = default!;
+
+        private const string TimerPrefix = "status:";
 
         public override void Initialize()
         {
@@ -23,37 +25,36 @@ namespace Content.Shared.StatusEffect
 
             SubscribeLocalEvent<StatusEffectsComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<StatusEffectsComponent, ComponentHandleState>(OnHandleState);
+            SubscribeLocalEvent<StatusEffectsComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<StatusEffectsComponent, RejuvenateEvent>(OnRejuvenate);
+            SubscribeLocalEvent<StatusEffectsComponent, EntityTimerEvent>(OnTimer);
         }
 
-        public override void Update(float frameTime)
+        private void OnStartup(Entity<StatusEffectsComponent> ent, ref ComponentStartup args)
         {
-            base.Update(frameTime);
+            RegisterTimers(ent);
+        }
 
-            var curTime = _gameTiming.CurTime;
-            var enumerator = EntityQueryEnumerator<ActiveStatusEffectsComponent, StatusEffectsComponent>();
-            _toRemove.Clear();
+        private static EntityTimerId GetTimerId(string key)
+        {
+            return new EntityTimerId(TimerPrefix + key);
+        }
 
-            while (enumerator.MoveNext(out var uid, out _, out var status))
-            {
-                if (status.ActiveEffects.Count == 0)
-                {
-                    // This shouldn't happen, but just in case something sneaks through
-                    _toRemove.Add(uid);
-                    continue;
-                }
+        private void RegisterTimers(Entity<StatusEffectsComponent> ent)
+        {
+            _timers.CancelTimers<StatusEffectsComponent>(ent);
+            foreach (var (key, effect) in ent.Comp.ActiveEffects)
+                _timers.SetTimerAt(ent, GetTimerId(key), effect.Cooldown.Item2, flags: EntityTimerFlags.UpdatesOutsidePrediction);
+        }
 
-                foreach (var state in status.ActiveEffects)
-                {
-                    if (curTime > state.Value.Cooldown.Item2)
-                        TryRemoveStatusEffect(uid, state.Key, status);
-                }
-            }
+        private void OnTimer(Entity<StatusEffectsComponent> ent, ref EntityTimerEvent args)
+        {
+            if (!args.Id.Value.StartsWith(TimerPrefix, StringComparison.Ordinal))
+                return;
 
-            foreach (var uid in _toRemove)
-            {
-                RemComp<ActiveStatusEffectsComponent>(uid);
-            }
+            var key = args.Id.Value[TimerPrefix.Length..];
+            if (ent.Comp.ActiveEffects.TryGetValue(key, out var effect) && effect.Cooldown.Item2 <= args.FiredAt)
+                TryRemoveStatusEffect(ent, key, ent.Comp);
         }
 
         private void OnGetState(EntityUid uid, StatusEffectsComponent component, ref ComponentGetState args)
@@ -87,6 +88,8 @@ namespace Content.Shared.StatusEffect
                 RemComp<ActiveStatusEffectsComponent>(uid);
             else
                 EnsureComp<ActiveStatusEffectsComponent>(uid);
+
+            RegisterTimers((uid, component));
         }
 
         private void OnRejuvenate(EntityUid uid, StatusEffectsComponent component, RejuvenateEvent args)
@@ -208,6 +211,9 @@ namespace Content.Shared.StatusEffect
                 EnsureComp<ActiveStatusEffectsComponent>(uid);
             }
 
+            _timers.SetTimerAt<StatusEffectsComponent>((uid, status), GetTimerId(key), status.ActiveEffects[key].Cooldown.Item2,
+                flags: EntityTimerFlags.UpdatesOutsidePrediction);
+
             if (proto.Alert != null)
             {
                 var cooldown1 = GetAlertCooldown(uid, proto.Alert.Value, status);
@@ -286,6 +292,7 @@ namespace Content.Shared.StatusEffect
             }
 
             status.ActiveEffects.Remove(key);
+            _timers.CancelTimer<StatusEffectsComponent>(uid, GetTimerId(key));
             if (status.ActiveEffects.Count == 0)
             {
                 RemComp<ActiveStatusEffectsComponent>(uid);
@@ -384,6 +391,8 @@ namespace Content.Shared.StatusEffect
             var timer = status.ActiveEffects[key].Cooldown;
             timer.Item2 += time;
             status.ActiveEffects[key].Cooldown = timer;
+            _timers.SetTimerAt<StatusEffectsComponent>((uid, status), GetTimerId(key), timer.Item2,
+                flags: EntityTimerFlags.UpdatesOutsidePrediction);
 
             if (ProtoMan.TryIndex<StatusEffectPrototype>(key, out var proto)
                 && proto.Alert != null)
@@ -421,6 +430,8 @@ namespace Content.Shared.StatusEffect
 
             timer.Item2 -= time;
             status.ActiveEffects[key].Cooldown = timer;
+            _timers.SetTimerAt<StatusEffectsComponent>((uid, status), GetTimerId(key), timer.Item2,
+                flags: EntityTimerFlags.UpdatesOutsidePrediction);
 
             if (ProtoMan.TryIndex<StatusEffectPrototype>(key, out var proto)
                 && proto.Alert != null)
@@ -450,6 +461,8 @@ namespace Content.Shared.StatusEffect
                 return false;
 
             status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+            _timers.SetTimerAt<StatusEffectsComponent>((uid, status), GetTimerId(key), status.ActiveEffects[key].Cooldown.Item2,
+                flags: EntityTimerFlags.UpdatesOutsidePrediction);
 
             Dirty(uid, status);
             return true;

@@ -4,18 +4,24 @@ using Content.Shared.Emp;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Clothing.Systems;
 
 public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
+    private static readonly EntityTimerId EmpChangeTimer = new("emp-change");
+
     [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
+        SubscribeLocalEvent<EmpDisabledComponent, ComponentStartup>(OnEmpStartup);
+        SubscribeLocalEvent<ChameleonClothingComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -63,25 +69,21 @@ public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSys
         Dirty(uid, component);
     }
 
-    public override void Update(float frameTime)
+    private void OnEmpStartup(Entity<EmpDisabledComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
-        // Randomize EMP-affected clothing
-        var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
-        while (query.MoveNext(out var uid, out _, out var chameleon))
-        {
-            if (!chameleon.EmpContinuous)
-                continue;
+        if (TryComp<ChameleonClothingComponent>(ent, out var chameleon) && chameleon.EmpContinuous)
+            _timers.SetTimerAt<ChameleonClothingComponent>((ent.Owner, chameleon), EmpChangeTimer, Timing.CurTime);
+    }
 
-            if (Timing.CurTime < chameleon.NextEmpChange)
-                continue;
+    private void OnTimer(Entity<ChameleonClothingComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != EmpChangeTimer || !ent.Comp.EmpContinuous || !HasComp<EmpDisabledComponent>(ent))
+            return;
 
-            // randomly pick cloth element from available and apply it
-            var pick = GetRandomValidPrototype(chameleon.Slot, chameleon.RequireTag);
-            SetSelectedPrototype(uid, pick, component: chameleon);
-
-            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
-        }
+        var pick = GetRandomValidPrototype(ent.Comp.Slot, ent.Comp.RequireTag);
+        SetSelectedPrototype(ent, pick, component: ent.Comp);
+        ent.Comp.NextEmpChange = args.ScheduledTime + TimeSpan.FromSeconds(1f / ent.Comp.EmpChangeIntensity);
+        _timers.SetTimerAt(ent, EmpChangeTimer, ent.Comp.NextEmpChange);
     }
 
     private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)

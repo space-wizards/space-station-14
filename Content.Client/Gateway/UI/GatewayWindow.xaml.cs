@@ -9,7 +9,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Gateway.UI;
 
@@ -17,8 +16,6 @@ namespace Content.Client.Gateway.UI;
 public sealed partial class GatewayWindow : FancyWindow,
     IComputerWindow<EmergencyConsoleBoundUserInterfaceState>
 {
-    private readonly IGameTiming _timing;
-
     public event Action<NetEntity>? OpenPortal;
     private List<GatewayDestinationData> _destinations = new();
 
@@ -49,8 +46,6 @@ public sealed partial class GatewayWindow : FancyWindow,
     public GatewayWindow()
     {
         RobustXamlLoader.Load(this);
-        var dependencies = IoCManager.Instance!;
-        _timing = dependencies.Resolve<IGameTiming>();
 
         NextUnlockBar.ForegroundStyleBoxOverride = new StyleBoxFlat(Color.FromHex("#C74EBD"));
     }
@@ -60,7 +55,7 @@ public sealed partial class GatewayWindow : FancyWindow,
 
     }
 
-    public void UpdateState(GatewayBoundUserInterfaceState state)
+    public void UpdateState(GatewayBoundUserInterfaceState state, TimeSpan currentTime)
     {
         _destinations = state.Destinations;
         _current = state.Current;
@@ -69,8 +64,8 @@ public sealed partial class GatewayWindow : FancyWindow,
         _unlockTime = state.UnlockTime;
         _nextUnlock = state.NextUnlock;
 
-        _isUnlockPending = _nextUnlock >= _timing.CurTime;
-        _isCooldownPending = _nextReady >= _timing.CurTime;
+        _isUnlockPending = _nextUnlock >= currentTime;
+        _isCooldownPending = _nextReady >= currentTime;
 
         Container.RemoveAllChildren();
 
@@ -92,13 +87,13 @@ public sealed partial class GatewayWindow : FancyWindow,
             return;
         }
 
-        var now = _timing.CurTime;
+        var now = currentTime;
 
         foreach (var dest in _destinations)
         {
             var ent = dest.Entity;
             var name = dest.Name;
-            var locked = dest.Locked && _nextUnlock > _timing.CurTime;
+            var locked = dest.Locked && _nextUnlock > currentTime;
 
             var box = new BoxContainer()
             {
@@ -188,11 +183,9 @@ public sealed partial class GatewayWindow : FancyWindow,
         _lastState = state;
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    public void Refresh(TimeSpan currentTime)
     {
-        base.FrameUpdate(args);
-
-        var now = _timing.CurTime;
+        var now = currentTime;
         var dirtyState = false;
 
         // if its not going to close then show it as empty
@@ -252,7 +245,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         if (dirtyState && _lastState != null)
         {
             // Refresh UI buttons.
-            UpdateState(_lastState);
+            UpdateState(_lastState, currentTime);
         }
     }
 }

@@ -10,14 +10,18 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed partial class LightningArcShooterSystem : EntitySystem
 {
+    private static readonly EntityTimerId ShootTimer = new("shoot");
+
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private LightningSystem _lightning = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<LightningArcShooterComponent, MapInitEvent>(OnShooterMapInit);
+        SubscribeLocalEvent<LightningArcShooterComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnShooterMapInit(EntityUid uid, LightningArcShooterComponent component, ref MapInitEvent args)
@@ -26,22 +30,18 @@ public sealed partial class LightningArcShooterSystem : EntitySystem
             component.NextShootTime = _gameTiming.CurTime;
         else
             component.NextShootTime = _gameTiming.CurTime + TimeSpan.FromSeconds(component.ShootMaxInterval);
+        _timers.SetTimerAt<LightningArcShooterComponent>((uid, component), ShootTimer, component.NextShootTime);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<LightningArcShooterComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != ShootTimer)
+            return;
 
-        var query = EntityQueryEnumerator<LightningArcShooterComponent>();
-        while (query.MoveNext(out var uid, out var arcShooter))
-        {
-            if (arcShooter.NextShootTime > _gameTiming.CurTime)
-                continue;
-
-            ArcShoot(uid, arcShooter);
-            var delay = TimeSpan.FromSeconds(_random.NextFloat(arcShooter.ShootMinInterval, arcShooter.ShootMaxInterval));
-            arcShooter.NextShootTime += delay;
-        }
+        ArcShoot(ent, ent.Comp);
+        var delay = TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.ShootMinInterval, ent.Comp.ShootMaxInterval));
+        ent.Comp.NextShootTime = args.ScheduledTime + delay;
+        _timers.SetTimerAt(ent, ShootTimer, ent.Comp.NextShootTime);
     }
 
     private void ArcShoot(EntityUid uid, LightningArcShooterComponent component)

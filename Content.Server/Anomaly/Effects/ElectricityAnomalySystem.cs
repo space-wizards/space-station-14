@@ -11,6 +11,8 @@ namespace Content.Server.Anomaly.Effects;
 
 public sealed partial class ElectricityAnomalySystem : EntitySystem
 {
+    private static readonly EntityTimerId PassiveElectrocutionTimer = new("passive-electrocution");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private IRobustRandom _random = default!;
@@ -18,12 +20,21 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
     [Dependency] private ElectrocutionSystem _electrocution = default!;
     [Dependency] private EmpSystem _emp = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
+        SubscribeLocalEvent<ElectricityAnomalyComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ElectricityAnomalyComponent, EntityTimerEvent>(OnTimer);
+    }
+
+    private void OnMapInit(Entity<ElectricityAnomalyComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextSecond = _timing.CurTime;
+        _timers.SetTimerAt(ent, PassiveElectrocutionTimer, ent.Comp.NextSecond, TimeSpan.FromSeconds(1));
     }
 
     private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
@@ -43,28 +54,22 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
         _lightning.ShootRandomLightnings(anomaly, range, anomaly.Comp.MaxBoltCount * 3, arcDepth: 3);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ElectricityAnomalyComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != PassiveElectrocutionTimer ||
+            !TryComp<AnomalyComponent>(ent, out var anomaly) ||
+            !TryComp<TransformComponent>(ent, out var xform))
+            return;
 
-        var query = EntityQueryEnumerator<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var elec, out var anom, out var xform))
-        {
-            if (_timing.CurTime < elec.NextSecond)
-                continue;
-            elec.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+        ent.Comp.NextSecond = args.NextDeadline ?? args.FiredAt;
+        if (!_random.Prob(ent.Comp.PassiveElectrocutionChance * anomaly.Stability))
+            return;
 
-            if (!_random.Prob(elec.PassiveElectrocutionChance * anom.Stability))
-                continue;
+        var range = ent.Comp.MaxElectrocuteRange * anomaly.Stability;
+        var damage = (int) (ent.Comp.MaxElectrocuteDamage * anomaly.Severity);
+        var duration = ent.Comp.MaxElectrocuteDuration * anomaly.Severity;
 
-            var range = elec.MaxElectrocuteRange * anom.Stability;
-            var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);
-            var duration = elec.MaxElectrocuteDuration * anom.Severity;
-
-            foreach (var (ent, comp) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(_transform.GetMapCoordinates(uid, xform), range))
-            {
-                _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
-            }
-        }
+        foreach (var (target, status) in _lookup.GetEntitiesInRange<StatusEffectsComponent>(_transform.GetMapCoordinates(ent, xform), range))
+            _electrocution.TryDoElectrocution(target, ent, damage, duration, true, statusEffects: status, ignoreInsulation: true);
     }
 }

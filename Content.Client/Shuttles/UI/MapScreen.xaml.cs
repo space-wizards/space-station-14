@@ -43,9 +43,7 @@ public sealed partial class MapScreen : BoxContainer
     private List<ShuttleBeaconObject> _beacons = new();
     private List<ShuttleExclusionObject> _exclusions = new();
 
-    private TimeSpan _nextPing;
     private TimeSpan _pingCooldown = TimeSpan.FromSeconds(3);
-    private TimeSpan _nextMapDequeue;
 
     private float _minMapDequeue = 0.05f;
     private float _maxMapDequeue = 0.25f;
@@ -54,6 +52,8 @@ public sealed partial class MapScreen : BoxContainer
 
     public event Action<MapCoordinates, Angle>? RequestFTL;
     public event Action<NetEntity, Angle>? RequestBeaconFTL;
+    public event Action<TimeSpan>? PingCooldownStarted;
+    public event Action<TimeSpan>? MapDequeueRequested;
 
     private readonly Dictionary<MapId, BoxContainer> _mapHeadings = new();
     private readonly Dictionary<MapId, List<IMapObject>> _mapObjects = new();
@@ -216,13 +216,13 @@ public sealed partial class MapScreen : BoxContainer
         RebuildMapObjects();
         BumpMapDequeue();
 
-        _nextPing = _timing.CurTime + _pingCooldown;
+        PingCooldownStarted?.Invoke(_pingCooldown);
         MapRebuildButton.Disabled = true;
     }
 
     private void BumpMapDequeue()
     {
-        _nextMapDequeue = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(_minMapDequeue, _maxMapDequeue));
+        MapDequeueRequested?.Invoke(TimeSpan.FromSeconds(_random.NextFloat(_minMapDequeue, _maxMapDequeue)));
     }
 
     private void MapRebuildPressed(BaseButton.ButtonEventArgs obj)
@@ -509,21 +509,25 @@ public sealed partial class MapScreen : BoxContainer
 
         var curTime = _timing.CurTime;
 
-        if (_nextMapDequeue < curTime && _pendingMapObjects.Count > 0)
-        {
-            var mapObj = _pendingMapObjects[^1];
-            _pendingMapObjects.RemoveAt(_pendingMapObjects.Count - 1);
-            AddMapObject(mapObj.mapId, mapObj.mapobj);
-            BumpMapDequeue();
-        }
-
-        if (!IsPingBlocked() && _nextPing < curTime)
-        {
-            MapRebuildButton.Disabled = false;
-        }
-
         var progress = _ftlTime.ProgressAt(curTime);
         FTLBar.Value = float.IsFinite(progress) ? progress : 1;
+    }
+
+    public void OnMapDequeueTimer()
+    {
+        if (_pendingMapObjects.Count == 0)
+            return;
+
+        var mapObj = _pendingMapObjects[^1];
+        _pendingMapObjects.RemoveAt(_pendingMapObjects.Count - 1);
+        AddMapObject(mapObj.mapId, mapObj.mapobj);
+        BumpMapDequeue();
+    }
+
+    public void OnPingCooldownTimer()
+    {
+        if (!IsPingBlocked())
+            MapRebuildButton.Disabled = false;
     }
 
     protected override void Draw(DrawingHandleScreen handle)

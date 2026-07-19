@@ -7,9 +7,12 @@ namespace Content.Shared.Movement.Systems;
 
 public sealed partial class AutoOrientSystem : EntitySystem
 {
+    private static readonly EntityTimerId OrientTimer = new("orient");
+
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private TimeSpan _delay = TimeSpan.Zero;
 
@@ -17,6 +20,7 @@ public sealed partial class AutoOrientSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<AutoOrientComponent, EntParentChangedMessage>(OnEntParentChanged);
+        SubscribeLocalEvent<AutoOrientComponent, EntityTimerEvent>(OnTimer);
 
         Subs.CVar(_cfgManager, CCVars.AutoOrientDelay, OnAutoOrient, true);
     }
@@ -30,22 +34,16 @@ public sealed partial class AutoOrientSystem : EntitySystem
     {
         ent.Comp.NextChange = _timing.CurTime + _delay;
         Dirty(ent);
+        _timers.SetTimerAt(ent, OrientTimer, ent.Comp.NextChange.Value);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<AutoOrientComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != OrientTimer)
+            return;
 
-        var query = EntityQueryEnumerator<AutoOrientComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.NextChange <= _timing.CurTime)
-            {
-                comp.NextChange = null;
-                Dirty(uid, comp);
-                _mover.ResetCamera(uid);
-            }
-        }
+        ent.Comp.NextChange = null;
+        Dirty(ent);
+        _mover.ResetCamera(ent);
     }
 }

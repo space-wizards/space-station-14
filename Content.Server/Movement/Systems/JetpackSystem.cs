@@ -10,8 +10,23 @@ namespace Content.Server.Movement.Systems;
 
 public sealed partial class JetpackSystem : SharedJetpackSystem
 {
+    private static readonly EntityTimerId GasTimer = new("gas");
+
     [Dependency] private GasTankSystem _gasTank = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ActiveJetpackComponent, ComponentStartup>(OnActiveStartup);
+        SubscribeLocalEvent<ActiveJetpackComponent, EntityTimerEvent>(OnTimer);
+    }
+
+    private void OnActiveStartup(Entity<ActiveJetpackComponent> ent, ref ComponentStartup args)
+    {
+        _timers.SetTimerAt(ent, GasTimer, ent.Comp.TargetTime);
+    }
 
     protected override bool CanEnable(EntityUid uid, JetpackComponent component)
     {
@@ -20,39 +35,28 @@ public sealed partial class JetpackSystem : SharedJetpackSystem
                !(gasTank.Air.TotalMoles < component.MoleUsage);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ActiveJetpackComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != GasTimer ||
+            !TryComp<JetpackComponent>(ent, out var comp) ||
+            !TryComp<GasTankComponent>(ent, out var gasTankComp))
+            return;
 
-        var toDisable = new ValueList<(EntityUid Uid, JetpackComponent Component)>();
-        var query = EntityQueryEnumerator<ActiveJetpackComponent, JetpackComponent, GasTankComponent>();
+        var active = ent.Comp;
+        var gasTank = (ent.Owner, gasTankComp);
+        active.TargetTime = args.FiredAt + TimeSpan.FromSeconds(active.EffectCooldown);
+        _timers.SetTimerAt(ent, GasTimer, active.TargetTime);
+        var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
 
-        while (query.MoveNext(out var uid, out var active, out var comp, out var gasTankComp))
-        {
-            if (_timing.CurTime < active.TargetTime)
-                continue;
+        if (usedAir == null)
+            return;
 
-            var gasTank = (uid, gasTankComp);
-            active.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(active.EffectCooldown);
-            var usedAir = _gasTank.RemoveAir(gasTank, comp.MoleUsage);
+        var usedEnoughAir =
+            MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage / 100);
 
-            if (usedAir == null)
-                continue;
+        if (!usedEnoughAir)
+            SetEnabled(ent, comp, false);
 
-            var usedEnoughAir =
-                MathHelper.CloseTo(usedAir.TotalMoles, comp.MoleUsage, comp.MoleUsage/100);
-
-            if (!usedEnoughAir)
-            {
-                toDisable.Add((uid, comp));
-            }
-
-            _gasTank.UpdateUserInterface(gasTank);
-        }
-
-        foreach (var (uid, comp) in toDisable)
-        {
-            SetEnabled(uid, comp, false);
-        }
+        _gasTank.UpdateUserInterface(gasTank);
     }
 }

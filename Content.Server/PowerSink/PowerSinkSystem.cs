@@ -13,6 +13,8 @@ namespace Content.Server.PowerSink
 {
     public sealed partial class PowerSinkSystem : EntitySystem
     {
+        private static readonly EntityTimerId ExplosionTimer = new("explosion");
+
         /// <summary>
         /// Percentage of battery full to trigger the announcement warning at.
         /// </summary>
@@ -33,12 +35,30 @@ namespace Content.Server.PowerSink
         [Dependency] private SharedAudioSystem _audio = default!;
         [Dependency] private StationSystem _station = default!;
         [Dependency] private BatterySystem _battery = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PowerSinkComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<PowerSinkComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<PowerSinkComponent, EntityTimerEvent>(OnTimer);
+        }
+
+        private void OnStartup(Entity<PowerSinkComponent> ent, ref ComponentStartup args)
+        {
+            if (ent.Comp.ExplosionTime is { } deadline)
+                _timers.SetTimerAt(ent, ExplosionTimer, deadline);
+        }
+
+        private void OnTimer(Entity<PowerSinkComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != ExplosionTimer)
+                return;
+
+            _explosionSystem.QueueExplosion(ent, "PowerSink", 2000f, 4f, 20f, canCreateVacuum: true);
+            RemComp<PowerSinkComponent>(ent);
         }
 
         private void OnExamine(EntityUid uid, PowerSinkComponent component, ExaminedEvent args)
@@ -57,7 +77,6 @@ namespace Content.Server.PowerSink
 
         public override void Update(float frameTime)
         {
-            var toRemove = new RemQueue<(EntityUid Entity, PowerSinkComponent Sink)>();
             var query = EntityQueryEnumerator<PowerSinkComponent, PowerConsumerComponent, BatteryComponent, TransformComponent>();
 
             // Realistically it's gonna be like <5 per station.
@@ -97,21 +116,11 @@ namespace Content.Server.PowerSink
                 {
                     // Set explosion sequence to start soon
                     component.ExplosionTime = _gameTiming.CurTime.Add(_explosionDelayTime);
+                    _timers.SetTimerAt<PowerSinkComponent>((entity, component), ExplosionTimer, component.ExplosionTime.Value);
 
                     // Wind-up SFX
                     _audio.PlayPvs(component.ChargeFireSound, entity); // Play SFX
                 }
-                else if (_gameTiming.CurTime >= component.ExplosionTime)
-                {
-                    // Explode!
-                    toRemove.Add((entity, component));
-                }
-            }
-
-            foreach (var (entity, component) in toRemove)
-            {
-                _explosionSystem.QueueExplosion(entity, "PowerSink", 2000f, 4f, 20f, canCreateVacuum: true);
-                RemComp(entity, component);
             }
         }
 

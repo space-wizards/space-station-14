@@ -10,13 +10,16 @@ namespace Content.Server.Silicons.Bots;
 /// </summary>
 public sealed partial class HugBotSystem : SharedHugBotSystem
 {
-    [Dependency] private IGameTiming _gameTiming = default!;
+    private static readonly EntityTimerId HugCooldownTimer = new("hug-cooldown");
+
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<HugBotComponent, HTNRaisedEvent>(OnHtnRaisedEvent);
+        SubscribeLocalEvent<RecentlyHuggedByHugBotComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnHtnRaisedEvent(Entity<HugBotComponent> entity, ref HTNRaisedEvent args)
@@ -38,22 +41,14 @@ public sealed partial class HugBotSystem : SharedHugBotSystem
     public void ApplyHugBotCooldown(Entity<HugBotComponent> hugBot, EntityUid target)
     {
         var hugged = EnsureComp<RecentlyHuggedByHugBotComponent>(target);
-        hugged.CooldownCompleteAfter = _gameTiming.CurTime + hugBot.Comp.HugCooldown;
+        hugged.CooldownCompleteAfter = _timers.SetTimer<RecentlyHuggedByHugBotComponent>((target, hugged),
+            HugCooldownTimer, hugBot.Comp.HugCooldown);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<RecentlyHuggedByHugBotComponent> ent, ref EntityTimerEvent args)
     {
-        // Iterate through all RecentlyHuggedByHugBot entities...
-        var huggedEntities = AllEntityQuery<RecentlyHuggedByHugBotComponent>();
-        while (huggedEntities.MoveNext(out var huggedEnt, out var huggedComp))
-        {
-            // ... and if their cooldown is complete...
-            if (huggedComp.CooldownCompleteAfter <= _gameTiming.CurTime)
-            {
-                // ... remove it, allowing them to receive the blessing of hugs once more.
-                RemCompDeferred<RecentlyHuggedByHugBotComponent>(huggedEnt);
-            }
-        }
+        if (args.Id == HugCooldownTimer)
+            RemCompDeferred<RecentlyHuggedByHugBotComponent>(ent);
     }
 }
 

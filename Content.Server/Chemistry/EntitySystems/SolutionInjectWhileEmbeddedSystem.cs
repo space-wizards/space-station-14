@@ -10,38 +10,37 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// </summary>
 public sealed partial class SolutionInjectWhileEmbeddedSystem : EntitySystem
 {
-	[Dependency] private IGameTiming _gameTiming = default!;
+    private static readonly EntityTimerId InjectTimer = new("inject");
+
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionInjectWhileEmbeddedComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        _timers.SetTimerAt(ent, InjectTimer, ent.Comp.NextUpdate);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<SolutionInjectWhileEmbeddedComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != InjectTimer)
+            return;
 
-        var query = EntityQueryEnumerator<SolutionInjectWhileEmbeddedComponent, EmbeddableProjectileComponent>();
-        while (query.MoveNext(out var uid, out var injectComponent, out var projectileComponent))
-        {
-            if (_gameTiming.CurTime < injectComponent.NextUpdate)
-                continue;
+        ent.Comp.NextUpdate = args.ScheduledTime + ent.Comp.UpdateInterval;
+        _timers.SetTimerAt(ent, InjectTimer, ent.Comp.NextUpdate);
 
-            injectComponent.NextUpdate += injectComponent.UpdateInterval;
+        if (!TryComp<EmbeddableProjectileComponent>(ent, out var projectile) || projectile.EmbeddedIntoUid is not { } target)
+            return;
 
-            if(projectileComponent.EmbeddedIntoUid == null)
-                continue;
-
-            var ev = new InjectOverTimeEvent(projectileComponent.EmbeddedIntoUid.Value);
-            RaiseLocalEvent(uid, ref ev);
-
-        }
+        var ev = new InjectOverTimeEvent(target);
+        RaiseLocalEvent(ent, ref ev);
     }
 }

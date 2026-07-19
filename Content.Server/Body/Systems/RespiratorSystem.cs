@@ -30,6 +30,8 @@ namespace Content.Server.Body.Systems;
 [UsedImplicitly]
 public sealed partial class RespiratorSystem : EntitySystem
 {
+    private static readonly EntityTimerId RespirationTimer = new("respiration");
+
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private AlertsSystem _alertsSystem = default!;
@@ -41,6 +43,7 @@ public sealed partial class RespiratorSystem : EntitySystem
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedEntityConditionsSystem _entityConditions = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private static readonly ProtoId<MetabolismStagePrototype> RespirationStage = new("Respiration");
 
@@ -52,6 +55,7 @@ public sealed partial class RespiratorSystem : EntitySystem
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+        SubscribeLocalEvent<RespiratorComponent, EntityTimerEvent>(OnTimer);
 
         // BodyComp stuff
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(_body.RelayEvent);
@@ -70,59 +74,52 @@ public sealed partial class RespiratorSystem : EntitySystem
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
+        _timers.SetTimerAt(ent, RespirationTimer, ent.Comp.NextUpdate);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<RespiratorComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != RespirationTimer)
+            return;
 
-        var query = EntityQueryEnumerator<RespiratorComponent>();
-        while (query.MoveNext(out var uid, out var respirator))
+        var respirator = ent.Comp;
+        respirator.NextUpdate = args.ScheduledTime + respirator.AdjustedUpdateInterval;
+        _timers.SetTimerAt(ent, RespirationTimer, respirator.NextUpdate);
+
+        if (_mobState.IsDead(ent))
+            return;
+
+        UpdateSaturation(ent, -(float) respirator.UpdateInterval.TotalSeconds, respirator);
+        if (!_mobState.IsIncapacitated(ent))
         {
-            if (_gameTiming.CurTime < respirator.NextUpdate)
-                continue;
-
-            respirator.NextUpdate += respirator.AdjustedUpdateInterval;
-
-            if (_mobState.IsDead(uid))
-                continue;
-
-            UpdateSaturation(uid, -(float)respirator.UpdateInterval.TotalSeconds, respirator);
-
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            switch (respirator.Status)
             {
-                switch (respirator.Status)
-                {
-                    case RespiratorStatus.Inhaling:
-                        Inhale((uid, respirator));
-                        respirator.Status = RespiratorStatus.Exhaling;
-                        break;
-                    case RespiratorStatus.Exhaling:
-                        Exhale((uid, respirator));
-                        respirator.Status = RespiratorStatus.Inhaling;
-                        break;
-                }
+                case RespiratorStatus.Inhaling:
+                    Inhale((ent.Owner, ent.Comp));
+                    respirator.Status = RespiratorStatus.Exhaling;
+                    break;
+                case RespiratorStatus.Exhaling:
+                    Exhale((ent.Owner, ent.Comp));
+                    respirator.Status = RespiratorStatus.Inhaling;
+                    break;
             }
-
-            if (respirator.Saturation < respirator.SuffocationThreshold)
-            {
-                if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
-                {
-                    respirator.LastGaspEmoteTime = _gameTiming.CurTime;
-                    _chat.TryEmoteWithChat(uid,
-                        respirator.GaspEmote,
-                        ChatTransmitRange.HideChat,
-                        ignoreActionBlocker: true);
-                }
-
-                TakeSuffocationDamage((uid, respirator));
-                respirator.SuffocationCycles += 1;
-                continue;
-            }
-
-            StopSuffocation((uid, respirator));
-            respirator.SuffocationCycles = 0;
         }
+
+        if (respirator.Saturation < respirator.SuffocationThreshold)
+        {
+            if (args.FiredAt >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
+            {
+                respirator.LastGaspEmoteTime = args.FiredAt;
+                _chat.TryEmoteWithChat(ent, respirator.GaspEmote, ChatTransmitRange.HideChat, ignoreActionBlocker: true);
+            }
+
+            TakeSuffocationDamage(ent);
+            respirator.SuffocationCycles += 1;
+            return;
+        }
+
+        StopSuffocation(ent);
+        respirator.SuffocationCycles = 0;
     }
 
     public void Inhale(Entity<RespiratorComponent?> entity)

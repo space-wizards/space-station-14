@@ -3,14 +3,20 @@ using Content.Server.Anomaly.Effects;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly;
 
 /// <inheritdoc cref="SharedAnomalyScannerSystem"/>
 public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
 {
+    private static readonly EntityTimerId PulseCountdownTimer = new("pulse-countdown");
+    private static readonly TimeSpan PulseCountdownLength = TimeSpan.FromSeconds(5);
+    private static readonly TimeSpan PulseCountdownInterval = TimeSpan.FromSeconds(1);
+
     [Dependency] private SecretDataAnomalySystem _secretData = default!;
     [Dependency] private AnomalySystem _anomaly = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -20,6 +26,8 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
         SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnScannerAnomalyStabilityChanged);
         SubscribeLocalEvent<AnomalyHealthChangedEvent>(OnScannerAnomalyHealthChanged);
         SubscribeLocalEvent<AnomalyBehaviorChangedEvent>(OnScannerAnomalyBehaviorChanged);
+        SubscribeLocalEvent<AnomalyComponent, AnomalyPulseEvent>(OnAnomalyPulse);
+        SubscribeLocalEvent<AnomalyScannerComponent, EntityTimerEvent>(OnPulseCountdownTimer);
 
         Subs.BuiEvents<AnomalyScannerComponent>(
             AnomalyScannerUiKey.Key,
@@ -34,6 +42,7 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
             return;
 
         scannerComp.ScannedAnomaly = anomaly;
+        SchedulePulseCountdown((scanner, scannerComp), anomalyComp);
         UpdateScannerUi(scanner, scannerComp);
 
         TryComp<AppearanceComponent>(scanner, out var appearanceComp);
@@ -66,17 +75,30 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
         UI.SetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
-    /// <inheritdoc />
-    public override void Update(float frameTime)
+    private void OnAnomalyPulse(Entity<AnomalyComponent> ent, ref AnomalyPulseEvent args)
     {
-        base.Update(frameTime);
-
-        var anomalyQuery = EntityQueryEnumerator<AnomalyComponent>();
-        while (anomalyQuery.MoveNext(out var ent, out var anomaly))
+        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
+        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
         {
-            var secondsUntilNextPulse = (anomaly.NextPulseTime - Timing.CurTime).TotalSeconds;
-            UpdateScannerPulseTimers((ent, anomaly),  secondsUntilNextPulse);
+            if (scanner.ScannedAnomaly == ent.Owner)
+                SchedulePulseCountdown((scannerUid, scanner), ent.Comp);
         }
+    }
+
+    private void OnPulseCountdownTimer(Entity<AnomalyScannerComponent> scanner, ref EntityTimerEvent args)
+    {
+        if (args.Id != PulseCountdownTimer ||
+            !TryComp<AnomalyComponent>(scanner.Comp.ScannedAnomaly, out var anomaly))
+            return;
+
+        var secondsUntilNextPulse = (anomaly.NextPulseTime - args.FiredAt).TotalSeconds;
+        if (secondsUntilNextPulse > PulseCountdownLength.TotalSeconds)
+        {
+            _timers.CancelTimer<AnomalyScannerComponent>(scanner, PulseCountdownTimer);
+            return;
+        }
+
+        UpdateScannerPulseTimer(scanner, secondsUntilNextPulse);
     }
 
     /// <inheritdoc />
@@ -105,6 +127,9 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
     private void OnScannerUiOpened(EntityUid uid, AnomalyScannerComponent component, BoundUIOpenedEvent args)
     {
         UpdateScannerUi(uid, component);
+
+        if (TryComp<AnomalyComponent>(component.ScannedAnomaly, out var anomaly))
+            SchedulePulseCountdown((uid, component), anomaly);
     }
 
     private void OnScannerAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
@@ -168,20 +193,18 @@ public sealed partial class AnomalyScannerSystem : SharedAnomalyScannerSystem
         }
     }
 
-    private void UpdateScannerPulseTimers(Entity<AnomalyComponent> anomalyEnt, double secondsUntilNextPulse)
+    private void UpdateScannerPulseTimer(Entity<AnomalyScannerComponent> scanner, double secondsUntilNextPulse)
     {
         if (secondsUntilNextPulse > 5)
             return;
 
         var rounded = Math.Max(0, (int)Math.Ceiling(secondsUntilNextPulse));
+        Appearance.SetData(scanner, AnomalyScannerVisuals.AnomalyNextPulse, rounded);
+    }
 
-        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
-        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
-        {
-            if (scanner.ScannedAnomaly != anomalyEnt)
-                continue;
-
-            Appearance.SetData(scannerUid, AnomalyScannerVisuals.AnomalyNextPulse, rounded);
-        }
+    private void SchedulePulseCountdown(Entity<AnomalyScannerComponent> scanner, AnomalyComponent anomaly)
+    {
+        var deadline = anomaly.NextPulseTime - PulseCountdownLength;
+        _timers.SetTimerAt(scanner, PulseCountdownTimer, deadline, PulseCountdownInterval);
     }
 }

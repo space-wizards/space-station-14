@@ -13,7 +13,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Audio;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Xenoarchaeology.Ui;
@@ -21,21 +20,16 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnalysisConsoleMenu : FancyWindow
 {
-    private static readonly TimeSpan ExtractInfoDisplayForDuration = TimeSpan.FromSeconds(3);
-
     [Dependency] private IEntityManager _ent = default!;
     [Dependency] private IResourceCache _resCache = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     private readonly ArtifactAnalyzerSystem _artifactAnalyzer;
     private readonly XenoArtifactSystem _xenoArtifact;
     private readonly AudioSystem _audio;
-    private readonly MetaDataSystem _meta = default!;
 
     private Entity<AnalysisConsoleComponent> _owner;
     private Entity<XenoArtifactNodeComponent>? _currentNode;
 
-    private TimeSpan? _hideExtractInfoIn;
     private int _extractionSum;
 
     public event Action? OnServerSelectionButtonPressed;
@@ -49,7 +43,6 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         _xenoArtifact = _ent.System<XenoArtifactSystem>();
         _artifactAnalyzer = _ent.System<ArtifactAnalyzerSystem>();
         _audio = _ent.System<AudioSystem>();
-        _meta = _ent.System<MetaDataSystem>();
 
         if (BackPanel.PanelOverride is StyleBoxTexture tex)
             tex.Texture = _resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -116,8 +109,6 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         if (count == 0)
             extractionMessage.AddMarkupOrThrow(Loc.GetString("analysis-console-extract-none"));
 
-        _hideExtractInfoIn = _timing.CurTime + ExtractInfoDisplayForDuration;
-
         ExtractionResearchLabel.SetMessage(extractionMessage);
 
         ExtractionSumLabel.SetMarkup(Loc.GetString("analysis-console-extract-sum", ("value", _extractionSum)));
@@ -126,16 +117,10 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         OnExtractButtonPressed?.Invoke();
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    public void HideExtractInfo()
     {
-        base.FrameUpdate(args);
-
-        if (_hideExtractInfoIn == null || _timing.CurTime + _meta.GetPauseTime(_owner) < _hideExtractInfoIn)
-            return;
-
         ExtractContainer.Visible = false;
         NodeViewContainer.Visible = true;
-        _hideExtractInfoIn = null;
     }
 
     public void Update(Entity<AnalysisConsoleComponent> ent)
@@ -230,4 +215,3 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             ("class", Loc.GetString($"artifact-node-class-{Math.Min(6, predecessorNodes.Count + 1)}"))));
     }
 }
-

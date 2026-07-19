@@ -33,6 +33,8 @@ namespace Content.Server.MassMedia.Systems;
 
 public sealed partial class NewsSystem : SharedNewsSystem
 {
+    private static readonly EntityTimerId PublishTimer = new("publish");
+
     [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -47,6 +49,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IBaseServer _baseServer = default!;
     [Dependency] private IdentitySystem _identity = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private WebhookIdentifier? _webhookId = null;
     private Color _webhookEmbedColor;
@@ -76,6 +79,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NewsWriterComponent, EntityTimerEvent>(OnPublishTimer);
 
         // New writer bui messages
         Subs.BuiEvents<NewsWriterComponent>(NewsWriterUiKey.Key, subs =>
@@ -94,30 +98,27 @@ public sealed partial class NewsSystem : SharedNewsSystem
         SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeUiReadyEvent>(OnReaderUiReady);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<NewsWriterComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
-                continue;
-
-            comp.PublishEnabled = true;
-            UpdateWriterUi((uid, comp));
-        }
-    }
-
     #region Writer Event Handlers
 
     private void OnMapInit(Entity<NewsWriterComponent> ent, ref MapInitEvent args)
     {
+        if (!ent.Comp.PublishEnabled)
+            _timers.SetTimerAt(ent, PublishTimer, ent.Comp.NextPublish);
+
         var station = _station.GetOwningStation(ent);
         if (!station.HasValue)
             return;
 
         EnsureComp<StationNewsComponent>(station.Value);
+    }
+
+    private void OnPublishTimer(Entity<NewsWriterComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != PublishTimer || ent.Comp.PublishEnabled)
+            return;
+
+        ent.Comp.PublishEnabled = true;
+        UpdateWriterUi(ent);
     }
 
     private void OnWriteUiDeleteMessage(Entity<NewsWriterComponent> ent, ref NewsWriterDeleteMessage msg)
@@ -170,6 +171,7 @@ public sealed partial class NewsSystem : SharedNewsSystem
 
         ent.Comp.PublishEnabled = false;
         ent.Comp.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.PublishCooldown);
+        _timers.SetTimerAt(ent, PublishTimer, ent.Comp.NextPublish);
 
         var authorName = _identity.GetIdentityShortInfo(msg.Actor, ent);
 

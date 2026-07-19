@@ -14,10 +14,13 @@ namespace Content.Shared.Animals;
 /// </summary>
 public sealed partial class WoolySystem : EntitySystem
 {
+    private static readonly EntityTimerId GrowthTimer = new("growth");
+
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -25,11 +28,13 @@ public sealed partial class WoolySystem : EntitySystem
 
         SubscribeLocalEvent<WoolyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<WoolyComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<WoolyComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(EntityUid uid, WoolyComponent component, MapInitEvent args)
     {
         component.NextGrowth = _timing.CurTime + component.GrowthDelay;
+        _timers.SetTimerAt<WoolyComponent>((uid, component), GrowthTimer, component.NextGrowth);
     }
 
     private void OnEntRemoved(Entity<WoolyComponent> entity, ref EntRemovedFromContainerMessage args)
@@ -42,38 +47,28 @@ public sealed partial class WoolySystem : EntitySystem
         entity.Comp.Solution = null;
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<WoolyComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != GrowthTimer)
+            return;
 
-        var query = EntityQueryEnumerator<WoolyComponent>();
-        while (query.MoveNext(out var uid, out var wooly))
+        var wooly = ent.Comp;
+        wooly.NextGrowth = args.ScheduledTime + wooly.GrowthDelay;
+        _timers.SetTimerAt(ent, GrowthTimer, wooly.NextGrowth);
+
+        if (_mobState.IsDead(ent) ||
+            !_solutionContainer.ResolveSolution(ent.Owner, wooly.SolutionName, ref wooly.Solution, out var solution) ||
+            solution.AvailableVolume == 0)
+            return;
+
+        if (TryComp(ent, out HungerComponent? hunger))
         {
-            if (_timing.CurTime < wooly.NextGrowth)
-                continue;
+            if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
+                return;
 
-            wooly.NextGrowth += wooly.GrowthDelay;
-
-            if (_mobState.IsDead(uid))
-                continue;
-
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
-                continue;
-
-            if (solution.AvailableVolume == 0)
-                continue;
-
-            // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
-            if (TryComp(uid, out HungerComponent? hunger))
-            {
-                // Is there enough nutrition to produce reagent?
-                if (_hunger.GetHungerThreshold(hunger) < HungerThreshold.Okay)
-                    continue;
-
-                _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
-            }
-
-            _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);
+            _hunger.ModifyHunger(ent, -wooly.HungerUsage, hunger);
         }
+
+        _solutionContainer.TryAddReagent(wooly.Solution!.Value, wooly.ReagentId, wooly.Quantity, out _);
     }
 }

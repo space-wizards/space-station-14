@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Content.Shared.DeviceLinking;
+﻿using Content.Shared.DeviceLinking;
 using Content.Shared.Radio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -10,8 +9,6 @@ namespace Content.Shared.Singularity.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmitterComponent : Component
 {
-    public CancellationTokenSource? TimerCancel;
-
     // whether the power switch is in "on"
     [ViewVariables] public bool IsOn;
     // Whether the power switch is on AND the machine has enough power (so is actively firing)

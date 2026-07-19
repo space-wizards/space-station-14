@@ -12,14 +12,18 @@ using Content.Shared.VendingMachines;
 using Content.Shared.Wall;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.VendingMachines
 {
     public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     {
+        private static readonly EntityTimerId EmpEjectTimer = new("emp-eject");
+
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private PricingSystem _pricing = default!;
         [Dependency] private ThrowingSystem _throwingSystem = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -35,6 +39,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
 
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
+            SubscribeLocalEvent<EmpDisabledComponent, ComponentStartup>(OnEmpStartup);
+            SubscribeLocalEvent<VendingMachineComponent, EntityTimerEvent>(OnTimer);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -200,19 +206,20 @@ namespace Content.Server.VendingMachines
             vendComponent.ThrowNextItem = false;
         }
 
-        public override void Update(float frameTime)
+        private void OnEmpStartup(Entity<EmpDisabledComponent> ent, ref ComponentStartup args)
         {
-            base.Update(frameTime);
+            if (TryComp<VendingMachineComponent>(ent, out var vending))
+                _timers.SetTimerAt<VendingMachineComponent>((ent.Owner, vending), EmpEjectTimer, Timing.CurTime);
+        }
 
-            var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
-            while (disabled.MoveNext(out var uid, out _, out var comp))
-            {
-                if (comp.NextEmpEject < Timing.CurTime)
-                {
-                    EjectRandom(uid, true, false, comp);
-                    comp.NextEmpEject += (5 * comp.EjectDelay);
-                }
-            }
+        private void OnTimer(Entity<VendingMachineComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != EmpEjectTimer || !HasComp<EmpDisabledComponent>(ent))
+                return;
+
+            EjectRandom(ent, true, false, ent.Comp);
+            ent.Comp.NextEmpEject = args.ScheduledTime + 5 * ent.Comp.EjectDelay;
+            _timers.SetTimerAt(ent, EmpEjectTimer, ent.Comp.NextEmpEject);
         }
 
         private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)

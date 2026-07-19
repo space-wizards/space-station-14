@@ -1,6 +1,7 @@
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Random.Helpers;
 using Content.Shared.StatusEffectNew;
+using Robust.Shared.GameStates;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -11,9 +12,12 @@ namespace Content.Shared.Traits.Assorted;
 /// </summary>
 public sealed partial class NarcolepsySystem : EntitySystem
 {
+    private static readonly EntityTimerId IncidentTimer = new("incident");
+
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -21,12 +25,15 @@ public sealed partial class NarcolepsySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NarcolepsyComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NarcolepsyComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<NarcolepsyComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<NarcolepsyComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextIncidentTime = _timing.CurTime + _random.Next(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents);
         DirtyField(ent, ent.Comp, nameof(ent.Comp.NextIncidentTime));
+        Schedule(ent);
     }
 
     /// <summary>
@@ -39,29 +46,35 @@ public sealed partial class NarcolepsySystem : EntitySystem
 
         ent.Comp.NextIncidentTime = _timing.CurTime + time;
         DirtyField(ent, ent.Comp, nameof(ent.Comp.NextIncidentTime));
+        Schedule((ent.Owner, ent.Comp));
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<NarcolepsyComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        Schedule(ent);
+    }
 
-        var query = EntityQueryEnumerator<NarcolepsyComponent>();
+    private void OnTimer(Entity<NarcolepsyComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != IncidentTimer)
+            return;
 
-        while (query.MoveNext(out var uid, out var narcolepsy))
-        {
-            if (narcolepsy.NextIncidentTime > _timing.CurTime)
-                continue;
+        var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent));
 
-            var rand = SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(uid));
+        var duration = ent.Comp.MinDurationOfIncident +
+            (ent.Comp.MaxDurationOfIncident - ent.Comp.MinDurationOfIncident) * rand.NextDouble();
 
-            var duration = narcolepsy.MinDurationOfIncident + (narcolepsy.MaxDurationOfIncident - narcolepsy.MinDurationOfIncident) * rand.NextDouble();
+        ent.Comp.NextIncidentTime +=
+            ent.Comp.MinTimeBetweenIncidents +
+            (ent.Comp.MaxTimeBetweenIncidents - ent.Comp.MinTimeBetweenIncidents) * rand.NextDouble() + duration;
+        DirtyField(ent, ent.Comp, nameof(ent.Comp.NextIncidentTime));
+        Schedule(ent);
 
-            // Set the new time.
-            narcolepsy.NextIncidentTime +=
-                narcolepsy.MinTimeBetweenIncidents + (narcolepsy.MaxTimeBetweenIncidents - narcolepsy.MinTimeBetweenIncidents) * rand.NextDouble() + duration;
-            DirtyField(uid, narcolepsy, nameof(narcolepsy.NextIncidentTime));
+        _statusEffects.TryAddStatusEffectDuration(ent, SleepingSystem.StatusEffectForcedSleeping, duration);
+    }
 
-            _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
-        }
+    private void Schedule(Entity<NarcolepsyComponent> ent)
+    {
+        _timers.SetTimerAt(ent, IncidentTimer, ent.Comp.NextIncidentTime);
     }
 }

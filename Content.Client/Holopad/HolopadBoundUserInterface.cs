@@ -3,11 +3,15 @@ using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
 using Robust.Shared.Player;
 using System.Numerics;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Holopad;
 
 public sealed partial class HolopadBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+    private static readonly TimeSpan RefreshInterval = TimeSpan.FromSeconds(0.25);
+
     [Dependency] private ISharedPlayerManager _playerManager = default!;
 
     [ViewVariables]
@@ -39,6 +43,7 @@ public sealed partial class HolopadBoundUserInterface : BoundUserInterface
 
         _window.SetState(Owner, uiKey);
         _window.UpdateState(new Dictionary<NetEntity, string>());
+        SetTimer(RefreshTimer, TimeSpan.Zero, RefreshInterval);
 
         // Set message actions
         _window.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
@@ -55,6 +60,12 @@ public sealed partial class HolopadBoundUserInterface : BoundUserInterface
         // Otherwise offset to the left so the holopad can still be seen
         else
             _window.OpenCenteredAt(new Vector2(0.3333f, 0.50f));
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == RefreshTimer)
+            _window?.UpdateAppearance();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

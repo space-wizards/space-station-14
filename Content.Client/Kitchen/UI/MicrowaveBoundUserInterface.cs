@@ -10,8 +10,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
-    public sealed class MicrowaveBoundUserInterface : BoundUserInterface
+    public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
     {
+        private static readonly EntityTimerId CookTimer = new("cook");
+        private static readonly EntityTimerId RefreshTimer = new("refresh");
+
+        [Dependency] private IGameTiming _timing = default!;
+
         [ViewVariables]
         private MicrowaveMenu? _menu;
 
@@ -72,6 +77,18 @@ namespace Content.Client.Kitchen.UI
 
             _menu.IsBusy = cState.IsMicrowaveBusy;
             _menu.CurrentCooktimeEnd = cState.CurrentCookTimeEnd;
+            _menu.UpdateCookTime(_timing.CurTime);
+
+            if (cState.IsMicrowaveBusy && cState.CurrentCookTimeEnd > _timing.CurTime)
+            {
+                SetTimerAt(CookTimer, cState.CurrentCookTimeEnd);
+                SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+            }
+            else
+            {
+                CancelTimer(CookTimer);
+                CancelTimer(RefreshTimer);
+            }
 
             _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy || cState.ContainedSolids.Length == 0);
             // TODO move this to a component state and ensure the net ids.
@@ -109,6 +126,15 @@ namespace Content.Client.Kitchen.UI
             {
                 _menu.IngredientsPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#1B1B1E") };
             }
+        }
+
+        protected override void OnTimer(EntityTimerEvent timer)
+        {
+            if (timer.Id == CookTimer)
+                CancelTimer(RefreshTimer);
+
+            if (timer.Id == CookTimer || timer.Id == RefreshTimer)
+                _menu?.UpdateCookTime(timer.FiredAt);
         }
 
         private void RefreshContentsDisplay(EntityUid[] containedSolids)

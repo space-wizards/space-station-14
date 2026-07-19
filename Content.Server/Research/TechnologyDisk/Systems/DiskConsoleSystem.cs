@@ -11,10 +11,13 @@ namespace Content.Server.Research.TechnologyDisk.Systems;
 
 public sealed partial class DiskConsoleSystem : EntitySystem
 {
+    private static readonly EntityTimerId PrintTimer = new("print");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ResearchSystem _research = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -24,22 +27,24 @@ public sealed partial class DiskConsoleSystem : EntitySystem
         SubscribeLocalEvent<DiskConsoleComponent, ResearchRegistrationChangedEvent>(OnRegistrationChanged);
         SubscribeLocalEvent<DiskConsoleComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
 
-        SubscribeLocalEvent<DiskConsolePrintingComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<DiskConsolePrintingComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<DiskConsolePrintingComponent, ComponentStartup>(OnPrintingStartup);
+            SubscribeLocalEvent<DiskConsolePrintingComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnPrintingStartup(Entity<DiskConsolePrintingComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        _timers.SetTimerAt(ent, PrintTimer, ent.Comp.FinishTime);
+    }
 
-        var query = EntityQueryEnumerator<DiskConsolePrintingComponent, DiskConsoleComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var printing, out var console, out var xform))
-        {
-            if (printing.FinishTime > _timing.CurTime)
-                continue;
+    private void OnTimer(Entity<DiskConsolePrintingComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != PrintTimer || !TryComp<DiskConsoleComponent>(ent, out var console) ||
+            !TryComp<TransformComponent>(ent, out var xform))
+            return;
 
-            RemComp(uid, printing);
-            Spawn(console.DiskPrototype, xform.Coordinates);
-        }
+        RemComp(ent, ent.Comp);
+        Spawn(console.DiskPrototype, xform.Coordinates);
     }
 
     private void OnPrintDisk(EntityUid uid, DiskConsoleComponent component, DiskConsolePrintDiskMessage args)
@@ -58,6 +63,7 @@ public sealed partial class DiskConsoleSystem : EntitySystem
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(uid);
         printing.FinishTime = _timing.CurTime + component.PrintDuration;
+        _timers.SetTimerAt<DiskConsolePrintingComponent>((uid, printing), PrintTimer, printing.FinishTime);
         UpdateUserInterface(uid, component);
     }
 
@@ -87,7 +93,7 @@ public sealed partial class DiskConsoleSystem : EntitySystem
             totalPoints = server.Points;
         }
 
-        var canPrint = !(TryComp<DiskConsolePrintingComponent>(uid, out var printing) && printing.FinishTime >= _timing.CurTime) &&
+        var canPrint = !HasComp<DiskConsolePrintingComponent>(uid) &&
                        totalPoints >= component.PricePerDisk;
 
         var state = new DiskConsoleBoundUserInterfaceState(totalPoints, component.PricePerDisk, canPrint);

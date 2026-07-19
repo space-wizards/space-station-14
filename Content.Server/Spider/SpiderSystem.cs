@@ -12,10 +12,13 @@ namespace Content.Server.Spider;
 
 public sealed partial class SpiderSystem : SharedSpiderSystem
 {
+    private static readonly EntityTimerId WebTimer = new("web");
+
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <summary>
     ///     A recycled hashset used to check turfs for spiderwebs.
@@ -26,30 +29,26 @@ public sealed partial class SpiderSystem : SharedSpiderSystem
     {
         base.Initialize();
         SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
+        SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<SpiderComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnStartup(Entity<SpiderComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        ent.Comp.NextWebSpawn ??= _timing.CurTime + ent.Comp.WebSpawnCooldown;
+        _timers.SetTimerAt(ent, WebTimer, ent.Comp.NextWebSpawn.Value);
+    }
 
-        var query = EntityQueryEnumerator<SpiderComponent>();
-        while (query.MoveNext(out var uid, out var spider))
-        {
-            spider.NextWebSpawn ??= _timing.CurTime + spider.WebSpawnCooldown;
+    private void OnTimer(Entity<SpiderComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != WebTimer)
+            return;
 
-            if (_timing.CurTime < spider.NextWebSpawn)
-                continue;
+        ent.Comp.NextWebSpawn = args.ScheduledTime + ent.Comp.WebSpawnCooldown;
+        _timers.SetTimerAt(ent, WebTimer, ent.Comp.NextWebSpawn.Value);
 
-            spider.NextWebSpawn += spider.WebSpawnCooldown;
-
-            if (HasComp<ActorComponent>(uid)
-                || _mobState.IsDead(uid)
-                || !spider.SpawnsWebsAsNonPlayer)
-                continue;
-
-            var transform = Transform(uid);
-            SpawnWeb((uid, spider), transform.Coordinates);
-        }
+        if (!HasComp<ActorComponent>(ent) && !_mobState.IsDead(ent) && ent.Comp.SpawnsWebsAsNonPlayer)
+            SpawnWeb(ent, Transform(ent).Coordinates);
     }
 
     private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderWebActionEvent args)

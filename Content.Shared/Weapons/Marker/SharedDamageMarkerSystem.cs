@@ -4,6 +4,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
@@ -12,17 +13,22 @@ namespace Content.Shared.Weapons.Marker;
 
 public abstract partial class SharedDamageMarkerSystem : EntitySystem
 {
+    private static readonly EntityTimerId ExpiryTimer = new("expiry");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _netManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<DamageMarkerOnCollideComponent, StartCollideEvent>(OnMarkerCollide);
         SubscribeLocalEvent<DamageMarkerComponent, AttackedEvent>(OnMarkerAttacked);
+        SubscribeLocalEvent<DamageMarkerComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DamageMarkerComponent, EntityTimerEvent>(OnExpiry);
     }
 
     private void OnMarkerAttacked(EntityUid uid, DamageMarkerComponent component, AttackedEvent args)
@@ -40,19 +46,15 @@ public abstract partial class SharedDamageMarkerSystem : EntitySystem
         }
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<DamageMarkerComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        _timers.SetTimerAt(ent, ExpiryTimer, ent.Comp.EndTime);
+    }
 
-        var query = EntityQueryEnumerator<DamageMarkerComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.EndTime > _timing.CurTime)
-                continue;
-
-            RemCompDeferred<DamageMarkerComponent>(uid);
-        }
+    private void OnExpiry(Entity<DamageMarkerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == ExpiryTimer)
+            RemCompDeferred<DamageMarkerComponent>(ent);
     }
 
     private void OnMarkerCollide(EntityUid uid, DamageMarkerOnCollideComponent component, ref StartCollideEvent args)
@@ -72,6 +74,7 @@ public abstract partial class SharedDamageMarkerSystem : EntitySystem
         marker.Damage = new DamageSpecifier(component.Damage);
         marker.Marker = projectile.Weapon.Value;
         marker.EndTime = _timing.CurTime + component.Duration;
+        _timers.SetTimerAt<DamageMarkerComponent>((args.OtherEntity, marker), ExpiryTimer, marker.EndTime);
         component.Amount--;
         Dirty(args.OtherEntity, marker);
 

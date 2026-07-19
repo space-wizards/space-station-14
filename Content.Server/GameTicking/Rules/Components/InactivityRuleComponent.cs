@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Content.Server.GameTicking.Rules.Components;
+﻿namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// Gamerule that ends the round after a period of inactivity.
@@ -19,6 +17,4 @@ public sealed partial class InactivityRuleComponent : Component
     /// </summary>
     [DataField("roundEndDelay", required: true)]
     public TimeSpan RoundEndDelay  = TimeSpan.FromSeconds(10);
-
-    public CancellationTokenSource TimerCancel = new();
 }

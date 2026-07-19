@@ -6,27 +6,20 @@ namespace Content.Server.Sound;
 
 public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
 {
+    private static readonly EntityTimerId SoundTimer = new("sound");
+
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<SpamEmitSoundComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<SpamEmitSoundComponent>();
+        if (args.Id != SoundTimer || !ent.Comp.Enabled)
+            return;
 
-        while (query.MoveNext(out var uid, out var soundSpammer))
-        {
-            if (!soundSpammer.Enabled)
-                continue;
-
-            if (_timing.CurTime >= soundSpammer.NextSound)
-            {
-                if (soundSpammer.PopUp != null)
-                    Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), uid);
-                TryEmitSound(uid, soundSpammer, predict: false);
-
-                SpamEmitSoundReset((uid, soundSpammer));
-            }
-        }
+        if (ent.Comp.PopUp != null)
+            Popup.PopupEntity(Loc.GetString(ent.Comp.PopUp), ent);
+        TryEmitSound(ent, ent.Comp, predict: false);
+        SpamEmitSoundReset(ent);
     }
 
     public override void Initialize()
@@ -34,6 +27,7 @@ public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
         base.Initialize();
 
         SubscribeLocalEvent<SpamEmitSoundComponent, MapInitEvent>(HandleSpamEmitSoundMapInit);
+        SubscribeLocalEvent<SpamEmitSoundComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void HandleSpamEmitSoundMapInit(Entity<SpamEmitSoundComponent> entity, ref MapInitEvent args)
@@ -43,6 +37,7 @@ public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
         // Prewarm so multiple entities have more variation.
         entity.Comp.NextSound -= Random.Next(entity.Comp.MaxInterval);
         Dirty(entity);
+        _timers.SetTimerAt(entity, SoundTimer, entity.Comp.NextSound);
     }
 
     private void SpamEmitSoundReset(Entity<SpamEmitSoundComponent> entity)
@@ -52,6 +47,7 @@ public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
             : entity.Comp.MaxInterval);
 
         Dirty(entity);
+        _timers.SetTimerAt(entity, SoundTimer, entity.Comp.NextSound);
     }
 
     public override void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
@@ -66,5 +62,7 @@ public sealed partial class EmitSoundSystem : SharedEmitSoundSystem
 
         if (enabled)
             SpamEmitSoundReset((entity, entity.Comp));
+        else
+            _timers.CancelTimer<SpamEmitSoundComponent>(entity, SoundTimer);
     }
 }

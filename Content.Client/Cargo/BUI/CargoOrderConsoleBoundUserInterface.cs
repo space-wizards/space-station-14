@@ -9,11 +9,15 @@ using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Cargo.BUI
 {
     public sealed partial class CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
+        private static readonly EntityTimerId RefreshTimer = new("refresh");
+        private static readonly TimeSpan RefreshInterval = TimeSpan.FromSeconds(0.25);
+
         [Dependency] private SharedCargoSystem _cargoSystem = default!;
         [Dependency] private IdentitySystem _identity = default!;
 
@@ -61,6 +65,7 @@ namespace Content.Client.Cargo.BUI
             _orderMenu = new CargoConsoleOrderMenu();
 
             _menu.OnClose += Close;
+            SetTimer(RefreshTimer, TimeSpan.Zero, RefreshInterval);
 
             _menu.OnItemSelected += (row) =>
             {
@@ -104,6 +109,12 @@ namespace Content.Client.Cargo.BUI
             };
 
             _menu.OpenCentered();
+        }
+
+        protected override void OnTimer(EntityTimerEvent timer)
+        {
+            if (timer.Id == RefreshTimer)
+                _menu?.Refresh(timer.FiredAt);
         }
 
         private void Populate(List<CargoOrderData> orders)

@@ -6,36 +6,33 @@ namespace Content.Server.Spawners.EntitySystems;
 
 public sealed partial class SpawnerSystem : EntitySystem
 {
+    private static readonly EntityTimerId SpawnTimer = new("spawn");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TimedSpawnerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TimedSpawnerComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<TimedSpawnerComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != SpawnTimer)
+            return;
 
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<TimedSpawnerComponent>();
-        while (query.MoveNext(out var uid, out var timedSpawner))
-        {
-            if (timedSpawner.NextFire > curTime)
-                continue;
-
-            OnTimerFired(uid, timedSpawner);
-
-            timedSpawner.NextFire += timedSpawner.IntervalSeconds;
-        }
+        ent.Comp.NextFire = args.NextDeadline ?? args.ScheduledTime + ent.Comp.IntervalSeconds;
+        OnTimerFired(ent, ent.Comp);
     }
 
     private void OnMapInit(Entity<TimedSpawnerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextFire = _timing.CurTime + ent.Comp.IntervalSeconds;
+        _timers.SetTimerAt(ent, SpawnTimer, ent.Comp.NextFire, ent.Comp.IntervalSeconds);
     }
 
     private void OnTimerFired(EntityUid uid, TimedSpawnerComponent component)

@@ -23,8 +23,11 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed partial class BluespaceLockerSystem : EntitySystem
 {
+    private static readonly EntityTimerId EffectCooldownTimer = new("effect-cooldown");
+
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private EntityStorageSystem _entityStorage = default!;
     [Dependency] private WeldableSystem _weldableSystem = default!;
@@ -58,11 +61,13 @@ public sealed partial class BluespaceLockerSystem : EntitySystem
         if (!bypassLimit && Resolve(effectTargetUid, ref effectTargetComponent, false))
             if (effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval > 0)
             {
-                var curTimeTicks = _timing.CurTick.Value;
-                if (curTimeTicks < effectTargetComponent.BluespaceEffectNextTime)
+                if (_timers.TryGetTimer<BluespaceLockerComponent>(effectTargetUid, EffectCooldownTimer, out _))
                     return;
 
-                effectTargetComponent.BluespaceEffectNextTime = curTimeTicks + (uint) (_timing.TickRate * effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval);
+                effectTargetComponent.BluespaceEffectNextTime = _timing.CurTick.Value +
+                    (uint) (_timing.TickRate * effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval);
+                _timers.SetTimer<BluespaceLockerComponent>((effectTargetUid, effectTargetComponent), EffectCooldownTimer,
+                    TimeSpan.FromSeconds(effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval));
             }
 
         Spawn(effectSourceComponent.BehaviorProperties.BluespaceEffectPrototype, effectTargetUid.ToCoordinates());

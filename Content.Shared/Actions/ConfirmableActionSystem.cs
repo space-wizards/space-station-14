@@ -1,6 +1,7 @@
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Popups;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Actions;
@@ -10,31 +11,19 @@ namespace Content.Shared.Actions;
 /// </summary>
 public sealed partial class ConfirmableActionSystem : EntitySystem
 {
+    private static readonly EntityTimerId UnprimeTimer = new("unprime");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<ConfirmableActionComponent, ActionAttemptEvent>(OnAttempt);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // handle automatic unpriming
-        var now = _timing.CurTime;
-        var query = EntityQueryEnumerator<ConfirmableActionComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.NextUnprime is not {} time)
-                continue;
-
-            if (now >= time)
-                Unprime((uid, comp));
-        }
+        SubscribeLocalEvent<ConfirmableActionComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ConfirmableActionComponent, EntityTimerEvent>(OnUnprimeTimer);
     }
 
     private void OnAttempt(Entity<ConfirmableActionComponent> ent, ref ActionAttemptEvent args)
@@ -67,6 +56,7 @@ public sealed partial class ConfirmableActionSystem : EntitySystem
         comp.NextConfirm = _timing.CurTime + comp.ConfirmDelay;
         comp.NextUnprime = comp.NextConfirm + comp.PrimeTime;
         Dirty(uid, comp);
+        _timers.SetTimerAt(ent, UnprimeTimer, comp.NextUnprime.Value);
 
         _popup.PopupEntity(Loc.GetString(comp.Popup), user, user, PopupType.LargeCaution);
     }
@@ -77,5 +67,20 @@ public sealed partial class ConfirmableActionSystem : EntitySystem
         comp.NextConfirm = null;
         comp.NextUnprime = null;
         Dirty(uid, comp);
+        _timers.CancelTimer<ConfirmableActionComponent>(uid, UnprimeTimer);
+    }
+
+    private void OnHandleState(Entity<ConfirmableActionComponent> ent, ref ComponentHandleState args)
+    {
+        if (ent.Comp.NextUnprime is {} deadline)
+            _timers.SetTimerAt(ent, UnprimeTimer, deadline);
+        else
+            _timers.CancelTimer<ConfirmableActionComponent>(ent, UnprimeTimer);
+    }
+
+    private void OnUnprimeTimer(Entity<ConfirmableActionComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == UnprimeTimer)
+            Unprime(ent);
     }
 }

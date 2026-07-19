@@ -11,33 +11,24 @@ namespace Content.Server.Trigger.Systems;
 /// <seealso cref="FireStackOnTriggerSystem"/>
 public sealed partial class IgniteOnTriggerSystem : EntitySystem
 {
+    private static readonly EntityTimerId IgniteTimer = new("ignite");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedIgnitionSourceSystem _source = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<IgniteOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<IgniteOnTriggerComponent, EntityTimerEvent>(OnTimer);
     }
 
-    // TODO: move this into ignition source component
-    // it already has an update loop
-    public override void Update(float deltaTime)
+    private void OnTimer(Entity<IgniteOnTriggerComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(deltaTime);
-
-        var query = EntityQueryEnumerator<IgniteOnTriggerComponent, IgnitionSourceComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var source))
-        {
-            if (!source.Ignited)
-                continue;
-
-            if (_timing.CurTime < comp.IgnitedUntil)
-                continue;
-
-            _source.SetIgnited((uid, source), false);
-        }
+        if (args.Id == IgniteTimer && TryComp<IgnitionSourceComponent>(ent, out var source) && source.Ignited)
+            _source.SetIgnited((ent, source), false);
     }
 
     private void OnTrigger(Entity<IgniteOnTriggerComponent> ent, ref TriggerEvent args)
@@ -52,6 +43,7 @@ public sealed partial class IgniteOnTriggerSystem : EntitySystem
 
         _source.SetIgnited(target.Value);
         ent.Comp.IgnitedUntil = _timing.CurTime + ent.Comp.IgnitedTime;
+        _timers.SetTimerAt(ent, IgniteTimer, ent.Comp.IgnitedUntil);
         Dirty(ent);
 
         args.Handled = true;

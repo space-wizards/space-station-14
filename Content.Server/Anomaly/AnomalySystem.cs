@@ -17,6 +17,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly;
@@ -38,6 +39,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private RadiationSystem _radiation = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public const float MinParticleVariation = 0.8f;
     public const float MaxParticleVariation = 1.2f;
@@ -67,6 +69,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         ShuffleParticlesEffect(anomaly);
         anomaly.Comp.Continuity = _random.NextFloat(anomaly.Comp.MinContituty, anomaly.Comp.MaxContituty);
         SetBehavior(anomaly, GetRandomBehavior());
+        ScheduleAnomalyTimers(anomaly);
     }
 
     public void ShuffleParticlesEffect(Entity<AnomalyComponent> anomaly)
@@ -175,14 +178,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             AnomalousParticleType.Sigma => Loc.GetString("anomaly-particles-sigma"),
             _ => throw new ArgumentOutOfRangeException()
         };
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        UpdateGenerator();
-        UpdateVessels();
     }
 
     #region Behavior

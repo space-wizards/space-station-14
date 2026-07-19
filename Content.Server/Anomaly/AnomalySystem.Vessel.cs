@@ -5,6 +5,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly;
 
@@ -15,6 +16,8 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+    private static readonly EntityTimerId VesselBeepTimer = new("vessel-beep");
+
     private void InitializeVessel()
     {
         SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
@@ -22,6 +25,7 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
+        SubscribeLocalEvent<AnomalyVesselComponent, EntityTimerEvent>(OnVesselBeepTimer);
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
     }
 
@@ -49,6 +53,7 @@ public sealed partial class AnomalySystem
     private void OnVesselMapInit(EntityUid uid, AnomalyVesselComponent component, MapInitEvent args)
     {
         UpdateVesselAppearance(uid,  component);
+        ScheduleVesselBeep((uid, component));
     }
 
     private void OnVesselInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
@@ -67,6 +72,7 @@ public sealed partial class AnomalySystem
         anomalyComponent.ConnectedVessel = uid;
         _radiation.SetSourceEnabled(uid, true);
         UpdateVesselAppearance(uid,  component);
+        ScheduleVesselBeep((uid, component), immediate: true);
         Popup.PopupEntity(Loc.GetString("anomaly-vessel-component-anomaly-assigned"), uid);
     }
 
@@ -87,6 +93,7 @@ public sealed partial class AnomalySystem
                 continue;
 
             component.Anomaly = null;
+            _timers.CancelTimer<AnomalyVesselComponent>(ent, VesselBeepTimer);
             UpdateVesselAppearance(ent,  component);
             _radiation.SetSourceEnabled(ent, false);
 
@@ -105,6 +112,7 @@ public sealed partial class AnomalySystem
                 continue;
 
             UpdateVesselAppearance(ent,  component);
+            ScheduleVesselBeep((ent, component), immediate: true);
         }
     }
 
@@ -136,33 +144,47 @@ public sealed partial class AnomalySystem
         _ambient.SetAmbience(uid, on);
     }
 
-    private void UpdateVessels()
+    private void OnVesselBeepTimer(Entity<AnomalyVesselComponent> vessel, ref EntityTimerEvent args)
     {
-        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
-        while (query.MoveNext(out var vesselEnt, out var vessel))
+        if (args.Id != VesselBeepTimer || vessel.Comp.Anomaly is not { } anomalyUid ||
+            !TryComp<AnomalyComponent>(anomalyUid, out var anomaly))
+            return;
+
+        if (!TryGetVesselTimerPercentage(anomaly, out var timerPercentage))
+            return;
+
+        Audio.PlayPvs(vessel.Comp.BeepSound, vessel);
+        var interval = (vessel.Comp.MaxBeepInterval - vessel.Comp.MinBeepInterval) * (1 - timerPercentage) +
+                       vessel.Comp.MinBeepInterval;
+        vessel.Comp.NextBeep = args.FiredAt + interval;
+        _timers.SetTimerAt(vessel, VesselBeepTimer, vessel.Comp.NextBeep);
+    }
+
+    private void ScheduleVesselBeep(Entity<AnomalyVesselComponent> vessel, bool immediate = false)
+    {
+        if (vessel.Comp.Anomaly is not { } anomalyUid || !TryComp<AnomalyComponent>(anomalyUid, out var anomaly) ||
+            !TryGetVesselTimerPercentage(anomaly, out _))
         {
-            if (vessel.Anomaly is not { } anomUid)
-                continue;
-
-            if (!TryComp<AnomalyComponent>(anomUid, out var anomaly))
-                continue;
-
-            if (Timing.CurTime < vessel.NextBeep)
-                continue;
-
-            // a lerp between the max and min values for each threshold.
-            // longer beeps that get shorter as the anomaly gets more extreme
-            float timerPercentage;
-            if (anomaly.Stability <= anomaly.DecayThreshold)
-                timerPercentage = (anomaly.DecayThreshold - anomaly.Stability) / anomaly.DecayThreshold;
-            else if (anomaly.Stability >= anomaly.GrowthThreshold)
-                timerPercentage = (anomaly.Stability - anomaly.GrowthThreshold) / (1 - anomaly.GrowthThreshold);
-            else //it's not unstable
-                continue;
-
-            Audio.PlayPvs(vessel.BeepSound, vesselEnt);
-            var beepInterval = (vessel.MaxBeepInterval - vessel.MinBeepInterval) * (1 - timerPercentage) + vessel.MinBeepInterval;
-            vessel.NextBeep = beepInterval + Timing.CurTime;
+            _timers.CancelTimer<AnomalyVesselComponent>(vessel, VesselBeepTimer);
+            return;
         }
+
+        var deadline = immediate ? Timing.CurTime : vessel.Comp.NextBeep;
+        _timers.SetTimerAt(vessel, VesselBeepTimer, deadline);
+    }
+
+    private static bool TryGetVesselTimerPercentage(AnomalyComponent anomaly, out float timerPercentage)
+    {
+        if (anomaly.Stability <= anomaly.DecayThreshold)
+            timerPercentage = (anomaly.DecayThreshold - anomaly.Stability) / anomaly.DecayThreshold;
+        else if (anomaly.Stability >= anomaly.GrowthThreshold)
+            timerPercentage = (anomaly.Stability - anomaly.GrowthThreshold) / (1 - anomaly.GrowthThreshold);
+        else
+        {
+            timerPercentage = default;
+            return false;
+        }
+
+        return true;
     }
 }

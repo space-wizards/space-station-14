@@ -777,6 +777,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
         source.Comp.ControlLockoutOwner = user;
         source.Comp.ControlLockoutEndTime = _timing.CurTime + source.Comp.ControlLockoutDuration;
         source.Comp.ControlLockoutCoolDownEndTime = _timing.CurTime + source.Comp.ControlLockoutCoolDown;
+        RegisterHolopadTimers(source);
 
         Dirty(source);
 
@@ -785,6 +786,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
             receiver.Comp.ControlLockoutOwner = user;
             receiver.Comp.ControlLockoutEndTime = _timing.CurTime + source.Comp.ControlLockoutDuration;
             receiver.Comp.ControlLockoutCoolDownEndTime = _timing.CurTime + source.Comp.ControlLockoutCoolDown;
+            RegisterHolopadTimers(receiver);
 
             Dirty(receiver);
         }
@@ -836,6 +838,7 @@ public sealed partial class HolopadSystem : SharedHolopadSystem
 
         if (isDirty)
         {
+            RegisterHolopadTimers(source);
             Dirty(source);
         }
     }

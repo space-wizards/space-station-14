@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Medical.Cryogenics;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
 
@@ -19,7 +20,9 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
+    private static readonly EntityTimerId UiUpdateTimer = new("ui-update");
 
     public override void Initialize()
     {
@@ -27,23 +30,25 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
+        SubscribeLocalEvent<ActiveCryoPodComponent, ComponentStartup>(OnActiveStartup);
+        SubscribeLocalEvent<ActiveCryoPodComponent, EntityTimerEvent>(OnUiUpdateTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnActiveStartup(Entity<ActiveCryoPodComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        if (!TryComp(ent, out CryoPodComponent? cryoPod))
+            return;
 
-        var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
+        _timers.SetTimer(ent, UiUpdateTimer, cryoPod.UiUpdateInterval, cryoPod.UiUpdateInterval);
+    }
 
-        while (query.MoveNext(out var uid, out _, out var cryoPod))
-        {
-            if (Timing.CurTime < cryoPod.NextUiUpdateTime)
-                continue;
+    private void OnUiUpdateTimer(Entity<ActiveCryoPodComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != UiUpdateTimer || !TryComp(ent, out CryoPodComponent? cryoPod))
+            return;
 
-            cryoPod.NextUiUpdateTime += cryoPod.UiUpdateInterval;
-            Dirty(uid, cryoPod);
-            UpdateUi((uid, cryoPod));
-        }
+        Dirty(ent.Owner, cryoPod);
+        UpdateUi((ent.Owner, cryoPod));
     }
 
     protected override void UpdateUi(Entity<CryoPodComponent> entity)

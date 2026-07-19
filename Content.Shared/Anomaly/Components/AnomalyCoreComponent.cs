@@ -7,7 +7,7 @@ namespace Content.Shared.Anomaly.Components;
 /// This component exists for a limited time, and after it expires it modifies the entity, greatly reducing its value and changing its visuals
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalyCoreSystem))]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class AnomalyCoreComponent : Component
 {
     /// <summary>

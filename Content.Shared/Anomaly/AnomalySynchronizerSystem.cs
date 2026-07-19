@@ -17,6 +17,8 @@ namespace Content.Shared.Anomaly;
 /// </summary>
 public sealed partial class AnomalySynchronizerSystem : EntitySystem
 {
+    private static readonly EntityTimerId CheckTimer = new("check");
+
     [Dependency] private EntityLookupSystem _entityLookup = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedAnomalySystem _anomaly = default!;
@@ -25,6 +27,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -34,52 +37,66 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         SubscribeLocalEvent<AnomalySynchronizerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AnomalySynchronizerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalySynchronizerComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<AnomalySynchronizerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<AnomalySynchronizerComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<AnomalySynchronizerComponent, EntityTimerEvent>(OnTimer);
 
         SubscribeLocalEvent<AnomalyPulseEvent>(OnAnomalyPulse);
         SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnAnomalySeverityChanged);
         SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnAnomalyStabilityChanged);
     }
 
-    public override void Update(float frameTime)
+    private void OnStartup(Entity<AnomalySynchronizerComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        RegisterTimer(ent);
+    }
 
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<AnomalySynchronizerComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var sync, out var synchronizerTransform))
+    private void OnHandleState(Entity<AnomalySynchronizerComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RegisterTimer(ent);
+    }
+
+    private void RegisterTimer(Entity<AnomalySynchronizerComponent> ent)
+    {
+        if (ent.Comp.ConnectedAnomaly != null)
+            _timers.SetTimerAt(ent, CheckTimer, ent.Comp.NextCheckTime);
+        else
+            _timers.CancelTimer<AnomalySynchronizerComponent>(ent, CheckTimer);
+    }
+
+    private void OnTimer(Entity<AnomalySynchronizerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != CheckTimer || ent.Comp.ConnectedAnomaly == null ||
+            !TryComp<TransformComponent>(ent, out var synchronizerTransform))
+            return;
+
+        var sync = ent.Comp;
+        sync.NextCheckTime = args.ScheduledTime + sync.CheckFrequency;
+        _timers.SetTimerAt(ent, CheckTimer, sync.NextCheckTime);
+        Dirty(ent);
+
+        if (TerminatingOrDeleted(sync.ConnectedAnomaly))
         {
-            if (sync.ConnectedAnomaly == null)
-                continue;
-
-            if (curTime < sync.NextCheckTime)
-                continue;
-
-            sync.NextCheckTime += sync.CheckFrequency;
-            Dirty(uid, sync);
-
-            if (TerminatingOrDeleted(sync.ConnectedAnomaly))
-            {
-                DisconnectFromAnomaly((uid, sync));
-                continue;
-            }
-
-            // Use TryComp instead of Transform(uid) to take care of cases where the anomaly is out of
-            // PVS range on the client, but the synchronizer isn't.
-            if (!TryComp(sync.ConnectedAnomaly.Value, out TransformComponent? anomalyTransform))
-                continue;
-
-            if (anomalyTransform.MapUid != synchronizerTransform.MapUid)
-            {
-                DisconnectFromAnomaly((uid, sync));
-                continue;
-            }
-
-            if (!synchronizerTransform.Coordinates.TryDistance(EntityManager, anomalyTransform.Coordinates, out var distance))
-                continue;
-
-            if (distance > sync.AttachRange)
-                DisconnectFromAnomaly((uid, sync));
+            DisconnectFromAnomaly(ent);
+            return;
         }
+
+        // Use TryComp instead of Transform(uid) to take care of cases where the anomaly is out of
+        // PVS range on the client, but the synchronizer isn't.
+        if (!TryComp(sync.ConnectedAnomaly.Value, out TransformComponent? anomalyTransform))
+            return;
+
+        if (anomalyTransform.MapUid != synchronizerTransform.MapUid)
+        {
+            DisconnectFromAnomaly(ent);
+            return;
+        }
+
+        if (!synchronizerTransform.Coordinates.TryDistance(EntityManager, anomalyTransform.Coordinates, out var distance))
+            return;
+
+        if (distance > sync.AttachRange)
+            DisconnectFromAnomaly(ent);
     }
 
     /// <summary>
@@ -160,6 +177,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             return;
 
         ent.Comp.ConnectedAnomaly = anomaly;
+        ent.Comp.NextCheckTime = _timers.SetTimer(ent, CheckTimer, ent.Comp.CheckFrequency);
         Dirty(ent);
         //move the anomaly to the center of the synchronizer, for aesthetics.
         var targetXform = _transform.GetWorldPosition(ent);
@@ -188,6 +206,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         _audio.PlayPredicted(ent.Comp.DisconnectedSound, ent, user);
 
         ent.Comp.ConnectedAnomaly = null;
+        _timers.CancelTimer<AnomalySynchronizerComponent>(ent, CheckTimer);
         Dirty(ent);
     }
 

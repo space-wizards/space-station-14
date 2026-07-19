@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
@@ -38,13 +37,6 @@ public sealed partial class GasPressureRegulatorComponent : Component
     [GuidebookData]
     [DataField]
     public float MaxTransferRate = Atmospherics.MaxTransferRate;
-
-    /// <summary>
-    /// The server time at which the next UI update will be sent.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan NextUiUpdate = TimeSpan.Zero;
 
     /// <summary>
     /// Sets the opening threshold of the pressure regulator.

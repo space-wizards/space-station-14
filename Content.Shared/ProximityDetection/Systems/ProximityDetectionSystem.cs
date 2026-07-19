@@ -10,8 +10,11 @@ namespace Content.Shared.ProximityDetection.Systems;
 /// </summary>
 public sealed partial class ProximityDetectionSystem : EntitySystem
 {
+    private static readonly EntityTimerId UpdateTimer = new("update");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -19,6 +22,7 @@ public sealed partial class ProximityDetectionSystem : EntitySystem
 
         SubscribeLocalEvent<ProximityDetectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ProximityDetectorComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<ProximityDetectorComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<ProximityDetectorComponent> ent, ref MapInitEvent args)
@@ -27,6 +31,7 @@ public sealed partial class ProximityDetectionSystem : EntitySystem
 
         component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
         DirtyField(ent, component, nameof(ProximityDetectorComponent.NextUpdate));
+        _timers.SetTimerAt(ent, UpdateTimer, component.NextUpdate);
     }
 
     private void OnToggled(Entity<ProximityDetectorComponent> ent, ref ItemToggledEvent args)
@@ -37,23 +42,17 @@ public sealed partial class ProximityDetectionSystem : EntitySystem
             ClearTarget(ent);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ProximityDetectorComponent> ent, ref EntityTimerEvent args)
     {
-        var query = EntityQueryEnumerator<ProximityDetectorComponent>();
+        if (args.Id != UpdateTimer)
+            return;
 
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (component.NextUpdate > _timing.CurTime)
-                continue;
+        ent.Comp.NextUpdate = args.ScheduledTime + ent.Comp.UpdateCooldown;
+        DirtyField(ent, ent.Comp, nameof(ProximityDetectorComponent.NextUpdate));
+        _timers.SetTimerAt(ent, UpdateTimer, ent.Comp.NextUpdate);
 
-            component.NextUpdate += component.UpdateCooldown;
-            DirtyField(uid, component, nameof(ProximityDetectorComponent.NextUpdate));
-
-            if (!_toggle.IsActivated(uid))
-                continue;
-
-            UpdateTarget((uid, component));
-        }
+        if (_toggle.IsActivated(ent.Owner))
+            UpdateTarget(ent);
     }
 
     private void ClearTarget(Entity<ProximityDetectorComponent> ent)

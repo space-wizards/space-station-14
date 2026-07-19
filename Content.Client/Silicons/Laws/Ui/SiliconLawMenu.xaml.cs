@@ -12,7 +12,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Silicons.Laws.Ui;
@@ -22,7 +21,6 @@ public sealed partial class SiliconLawMenu : FancyWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IChatManager _chatManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityManager _entityManager = default!;
     [Dependency] private IRobustRandom _random = default!;
 
@@ -37,8 +35,9 @@ public sealed partial class SiliconLawMenu : FancyWindow
     private readonly List<RadioChannelPrototype> _selectableRadioChannels = new();
 
     private readonly HashSet<SiliconLaw> _selectedLaws = new();
-    private readonly Queue<(SiliconLaw law, TimeSpan announceTime)> _queuedLaws = new();
-    private TimeSpan _nextAllowedAnnouncePress = TimeSpan.Zero;
+    private readonly Queue<SiliconLaw> _queuedLaws = new();
+
+    public event Action? OnAnnouncementStarted;
 
     private EntityUid _owner;
 
@@ -53,23 +52,15 @@ public sealed partial class SiliconLawMenu : FancyWindow
         LawAnnounceButton.OnPressed += OnLawAnnounceButtonPressed;
     }
 
-    protected override void FrameUpdate(FrameEventArgs args)
+    public TimeSpan? AdvanceAnnouncement()
     {
-        base.FrameUpdate(args);
-
-        var curTime = _timing.CurTime;
-        LawAnnounceButton.Disabled = curTime < _nextAllowedAnnouncePress;
-        // Don't want to change the channel while currently announcing laws
-        LawChatChannelOption.Disabled = curTime < _nextAllowedAnnouncePress;
-        
-        // Announce laws
-        // Skip if no queued laws or delay still active
-        if (_queuedLaws.Count < 1 || _queuedLaws.Peek().announceTime > curTime)
+        if (!_queuedLaws.TryDequeue(out var law))
         {
-            return;
+            LawAnnounceButton.Disabled = false;
+            LawChatChannelOption.Disabled = false;
+            return null;
         }
 
-        var law = _queuedLaws.Dequeue().law;
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
         var lawDescription = Loc.GetString(law.LawString);
@@ -91,6 +82,10 @@ public sealed partial class SiliconLawMenu : FancyWindow
                 : $"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}";
             _chatManager.SendMessage(radioMessage, ChatSelectChannel.Radio);
         }
+
+        return _queuedLaws.Count > 0
+            ? TimeSpan.FromSeconds(_random.NextFloat(MinChatCooldown, MaxChatCooldown))
+            : AnnounceBaseCooldown;
     }
 
     public void Update(EntityUid uid, SiliconLawBuiState state)
@@ -179,17 +174,11 @@ public sealed partial class SiliconLawMenu : FancyWindow
         var toAnnounce = _selectedLaws.ToList();
         toAnnounce.Sort();
 
-        // Queue up laws to be announced
-        // The first message will be sent immediately, while future ones have a cooldown
-        var totalChatCooldown = TimeSpan.Zero;
         foreach (var law in toAnnounce)
-        {
-            var chatCooldown = TimeSpan.FromSeconds(_random.NextFloat(MinChatCooldown, MaxChatCooldown));
-            _queuedLaws.Enqueue((law, _timing.CurTime + totalChatCooldown));
-            totalChatCooldown += chatCooldown;
-        }
+            _queuedLaws.Enqueue(law);
 
-        // Disable button until all laws announced, plus an additional cooldown
-        _nextAllowedAnnouncePress = _timing.CurTime + totalChatCooldown + AnnounceBaseCooldown;
+        LawAnnounceButton.Disabled = true;
+        LawChatChannelOption.Disabled = true;
+        OnAnnouncementStarted?.Invoke();
     }
 }

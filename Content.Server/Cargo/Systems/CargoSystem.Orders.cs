@@ -22,9 +22,13 @@ namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
+        private static readonly EntityTimerId IncomeTimer = new("income");
+        private static readonly EntityTimerId PrintTimer = new("print");
+
         [Dependency] private SharedTransformSystem _transformSystem = default!;
         [Dependency] private EmagSystem _emag = default!;
         [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         private void InitializeConsole()
         {
@@ -35,6 +39,8 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<StationBankAccountComponent, MapInitEvent>(OnBankMapInit);
+            SubscribeLocalEvent<StationBankAccountComponent, EntityTimerEvent>(OnIncomeTimer);
         }
 
         private void OnInteractUsingCash(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
@@ -121,18 +127,21 @@ namespace Content.Server.Cargo.Systems
             args.Handled = true;
         }
 
-        private void UpdateConsole()
+        private void OnBankMapInit(Entity<StationBankAccountComponent> ent, ref MapInitEvent args)
         {
-            var stationQuery = EntityQueryEnumerator<StationBankAccountComponent>();
-            while (stationQuery.MoveNext(out var uid, out var bank))
-            {
-                if (Timing.CurTime < bank.NextIncomeTime)
-                    continue;
-                bank.NextIncomeTime += bank.IncomeDelay;
+            _timers.SetTimerAt(ent, IncomeTimer, ent.Comp.NextIncomeTime);
+        }
 
-                var balanceToAdd = (int) Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
-                UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
-            }
+        private void OnIncomeTimer(Entity<StationBankAccountComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != IncomeTimer)
+                return;
+
+            ent.Comp.NextIncomeTime = args.ScheduledTime + ent.Comp.IncomeDelay;
+            _timers.SetTimerAt(ent, IncomeTimer, ent.Comp.NextIncomeTime);
+
+            var balanceToAdd = (int) Math.Round(ent.Comp.IncreasePerSecond * ent.Comp.IncomeDelay.TotalSeconds);
+            UpdateBankAccount((ent.Owner, (StationBankAccountComponent?) ent.Comp), balanceToAdd, ent.Comp.RevenueDistribution);
         }
 
         #region Interface
@@ -333,11 +342,11 @@ namespace Content.Server.Cargo.Systems
             if (!ProtoMan.Resolve(component.Account, out var account))
                 return;
 
-            if (Timing.CurTime < component.NextPrintTime)
+            if (_timers.TryGetTimer<CargoOrderConsoleComponent>(uid, PrintTimer, out _))
                 return;
 
             var label = Spawn(account.AcquisitionSlip, Transform(uid).Coordinates);
-            component.NextPrintTime = Timing.CurTime + component.PrintDelay;
+            component.NextPrintTime = _timers.SetTimer<CargoOrderConsoleComponent>((uid, component), PrintTimer, component.PrintDelay);
             _audio.PlayPvs(component.PrintSound, uid);
 
             var paper = EnsureComp<PaperComponent>(label);

@@ -7,8 +7,11 @@ namespace Content.Server.Buckle.Systems;
 
 public sealed partial class IgniteOnBuckleSystem : EntitySystem
 {
+    private static readonly EntityTimerId IgniteTimer = new("ignite");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private FlammableSystem _flammable = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -18,6 +21,7 @@ public sealed partial class IgniteOnBuckleSystem : EntitySystem
         SubscribeLocalEvent<IgniteOnBuckleComponent, UnstrappedEvent>(OnUnstrapped);
 
         SubscribeLocalEvent<ActiveIgniteOnBuckleComponent, MapInitEvent>(ActiveOnInit);
+        SubscribeLocalEvent<ActiveIgniteOnBuckleComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnStrapped(Entity<IgniteOnBuckleComponent> ent, ref StrappedEvent args)
@@ -34,6 +38,7 @@ public sealed partial class IgniteOnBuckleSystem : EntitySystem
     {
         // Handle this via a separate MapInit so the component can be added by itself if need be.
         ent.Comp.NextIgniteTime = _timing.CurTime + ent.Comp.NextIgniteTime;
+        _timers.SetTimerAt(ent, IgniteTimer, ent.Comp.NextIgniteTime);
         Dirty(ent);
     }
 
@@ -42,29 +47,23 @@ public sealed partial class IgniteOnBuckleSystem : EntitySystem
         RemCompDeferred<ActiveIgniteOnBuckleComponent>(args.Buckle);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ActiveIgniteOnBuckleComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != IgniteTimer || !TryComp<FlammableComponent>(ent, out var flammableComponent))
+            return;
 
-        var curTime = _timing.CurTime;
+        var igniteComponent = ent.Comp;
+        igniteComponent.NextIgniteTime = args.ScheduledTime + TimeSpan.FromSeconds(igniteComponent.IgniteTime);
+        _timers.SetTimerAt(ent, IgniteTimer, igniteComponent.NextIgniteTime);
+        Dirty(ent);
 
-        var query = EntityQueryEnumerator<ActiveIgniteOnBuckleComponent, FlammableComponent>();
-        while (query.MoveNext(out var uid, out var igniteComponent, out var flammableComponent))
-        {
-            if (curTime < igniteComponent.NextIgniteTime)
-                continue;
+        if (flammableComponent.FireStacks > igniteComponent.MaxFireStacks)
+            return;
 
-            igniteComponent.NextIgniteTime += TimeSpan.FromSeconds(igniteComponent.IgniteTime);
-            Dirty(uid, igniteComponent);
+        var stacks = flammableComponent.FireStacks + igniteComponent.FireStacks;
+        if (igniteComponent.MaxFireStacks.HasValue)
+            stacks = Math.Min(stacks, igniteComponent.MaxFireStacks.Value);
 
-            if (flammableComponent.FireStacks > igniteComponent.MaxFireStacks)
-                continue;
-
-            var stacks = flammableComponent.FireStacks + igniteComponent.FireStacks;
-            if (igniteComponent.MaxFireStacks.HasValue)
-                stacks = Math.Min(stacks, igniteComponent.MaxFireStacks.Value);
-
-            _flammable.SetFireStacks(uid, stacks, flammableComponent, true);
-        }
+        _flammable.SetFireStacks(ent, stacks, flammableComponent, true);
     }
 }

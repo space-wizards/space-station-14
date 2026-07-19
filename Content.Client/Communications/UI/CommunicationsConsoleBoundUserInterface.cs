@@ -9,7 +9,10 @@ namespace Content.Client.Communications.UI
 {
     public sealed partial class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
+        private static readonly EntityTimerId CountdownRefreshTimer = new("countdown-refresh");
+
         [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
@@ -85,13 +88,23 @@ namespace Content.Client.Communications.UI
                 _menu.CurrentLevel = commsState.CurrentAlert;
                 _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
 
-                _menu.UpdateCountdown();
+                _menu.UpdateCountdown(_timing.CurTime);
+                if (commsState.CountdownStarted)
+                    SetTimer(CountdownRefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+                else
+                    CancelTimer(CountdownRefreshTimer);
                 _menu.UpdateAlertLevels(commsState.AlertLevels, _menu.CurrentLevel);
                 _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
                 _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
                 _menu.AnnounceButton.Disabled = !_menu.CanAnnounce;
                 _menu.BroadcastButton.Disabled = !_menu.CanBroadcast;
             }
+        }
+
+        protected override void OnTimer(EntityTimerEvent timer)
+        {
+            if (timer.Id == CountdownRefreshTimer)
+                _menu?.UpdateCountdown(_timing.CurTime);
         }
     }
 }

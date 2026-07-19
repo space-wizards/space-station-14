@@ -11,11 +11,14 @@ namespace Content.Server.VentHorde.Systems;
 
 public sealed partial class VentHordeSystem : EntitySystem
 {
+    private static readonly EntityTimerId SpawnTimer = new("spawn");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedJitteringSystem _jitter = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -26,6 +29,13 @@ public sealed partial class VentHordeSystem : EntitySystem
 
         SubscribeLocalEvent<VentHordeSpawnerComponent, BreakageEventArgs>(OnSpawnerBreakage);
         SubscribeLocalEvent<VentHordeSpawnerComponent, AnchorStateChangedEvent>(OnSpawnerAnchored);
+        SubscribeLocalEvent<VentHordeSpawnerComponent, EntityTimerEvent>(OnTimer);
+    }
+
+    private void OnTimer(Entity<VentHordeSpawnerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == SpawnTimer)
+            EndHordeSpawn(ent);
     }
 
     private void OnSpawnerInit(Entity<VentHordeSpawnerComponent> entity, ref MapInitEvent args)
@@ -80,6 +90,7 @@ public sealed partial class VentHordeSystem : EntitySystem
 
         hordeSpawner.Entities = spawns;
         hordeSpawner.SpawnTime = _timing.CurTime + spawnDelay;
+        _timers.SetTimerAt<VentHordeSpawnerComponent>((uid, hordeSpawner), SpawnTimer, hordeSpawner.SpawnTime.Value);
     }
 
     /// <summary>
@@ -103,17 +114,4 @@ public sealed partial class VentHordeSystem : EntitySystem
         RemCompDeferred<VentHordeSpawnerComponent>(entity);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<VentHordeSpawnerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.SpawnTime != null && _timing.CurTime > comp.SpawnTime)
-            {
-                EndHordeSpawn((uid, comp));
-            }
-        }
-    }
 }

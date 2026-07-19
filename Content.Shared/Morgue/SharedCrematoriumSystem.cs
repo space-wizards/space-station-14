@@ -10,6 +10,7 @@ using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -17,6 +18,8 @@ namespace Content.Shared.Morgue;
 
 public abstract partial class SharedCrematoriumSystem : EntitySystem
 {
+    private static readonly EntityTimerId CookingTimer = new("cooking");
+
     [Dependency] protected SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected StandingStateSystem Standing = default!;
@@ -26,6 +29,7 @@ public abstract partial class SharedCrematoriumSystem : EntitySystem
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -34,6 +38,8 @@ public abstract partial class SharedCrematoriumSystem : EntitySystem
         SubscribeLocalEvent<CrematoriumComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<CrematoriumComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
         SubscribeLocalEvent<ActiveCrematoriumComponent, StorageOpenAttemptEvent>(OnAttemptOpen);
+        SubscribeLocalEvent<CrematoriumComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<CrematoriumComponent, EntityTimerEvent>(OnCookingTimer);
     }
 
     private void OnExamine(Entity<CrematoriumComponent> ent, ref ExaminedEvent args)
@@ -106,6 +112,7 @@ public abstract partial class SharedCrematoriumSystem : EntitySystem
         AddComp<ActiveCrematoriumComponent>(ent);
         ent.Comp.ActiveUntil = _timing.CurTime + ent.Comp.CookTime;
         Dirty(ent);
+        _timers.SetTimerAt<CrematoriumComponent>((ent.Owner, ent.Comp), CookingTimer, ent.Comp.ActiveUntil);
         return true;
     }
 
@@ -153,18 +160,17 @@ public abstract partial class SharedCrematoriumSystem : EntitySystem
             _audio.PlayPvs(ent.Comp1.CremateFinishSound, ent.Owner);
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<CrematoriumComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        if (HasComp<ActiveCrematoriumComponent>(ent))
+            _timers.SetTimerAt(ent, CookingTimer, ent.Comp.ActiveUntil);
+        else
+            _timers.CancelTimer<CrematoriumComponent>(ent, CookingTimer);
+    }
 
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<ActiveCrematoriumComponent, CrematoriumComponent>();
-        while (query.MoveNext(out var uid, out _, out var crematorium))
-        {
-            if (curTime < crematorium.ActiveUntil)
-                continue;
-
-            FinishCooking((uid, crematorium, null));
-        }
+    private void OnCookingTimer(Entity<CrematoriumComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == CookingTimer && HasComp<ActiveCrematoriumComponent>(ent))
+            FinishCooking((ent.Owner, ent.Comp, null));
     }
 }

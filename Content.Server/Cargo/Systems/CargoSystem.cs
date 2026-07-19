@@ -61,7 +61,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateConsole();
         UpdateTelepad(frameTime);
         UpdateBounty();
     }

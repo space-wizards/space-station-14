@@ -2,20 +2,26 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed partial class SolutionRegenerationSystem : EntitySystem
 {
+    private static readonly EntityTimerId RegenerationTimer = new("regeneration");
+
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SolutionRegenerationComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionRegenerationComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<SolutionRegenerationComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<SolutionRegenerationComponent> ent, ref MapInitEvent args)
@@ -23,33 +29,37 @@ public sealed partial class SolutionRegenerationSystem : EntitySystem
         ent.Comp.NextRegenTime = _timing.CurTime + ent.Comp.Duration;
 
         Dirty(ent);
+        Schedule(ent);
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<SolutionRegenerationComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        Schedule(ent);
+    }
 
-        // TODO: SolutionRegenerationComponent on Solution Entities!
-        var query = EntityQueryEnumerator<SolutionRegenerationComponent, SolutionComponent>();
-        while (query.MoveNext(out var uid, out var regen, out var solution))
+    private void OnTimer(Entity<SolutionRegenerationComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != RegenerationTimer || !TryComp<SolutionComponent>(ent, out var solution))
+            return;
+
+        ent.Comp.NextRegenTime = args.NextDeadline ?? ent.Comp.NextRegenTime + ent.Comp.Duration;
+        Dirty(ent);
+        for (var i = 0u; i < args.ElapsedCount; i++)
         {
-            if (_timing.CurTime < regen.NextRegenTime)
-                continue;
-
-            // timer ignores if its full, it's just a fixed cycle
-            regen.NextRegenTime += regen.Duration;
-            // Needs to be networked and dirtied so that the client can reroll it during prediction
-            Dirty(uid, regen);
-            var amount = FixedPoint2.Min(solution.Solution.AvailableVolume, regen.Generated.Volume);
+            var amount = FixedPoint2.Min(solution.Solution.AvailableVolume, ent.Comp.Generated.Volume);
             if (amount <= FixedPoint2.Zero)
-                continue;
+                break;
 
-            // Don't bother cloning and splitting if adding the whole thing
-            var generated = amount == regen.Generated.Volume
-                ? regen.Generated
-                : regen.Generated.Clone().SplitSolution(amount);
+            var generated = amount == ent.Comp.Generated.Volume
+                ? ent.Comp.Generated
+                : ent.Comp.Generated.Clone().SplitSolution(amount);
 
-            _solutionContainer.TryAddSolution((uid, solution), generated);
+            _solutionContainer.TryAddSolution((ent, solution), generated);
         }
+    }
+
+    private void Schedule(Entity<SolutionRegenerationComponent> ent)
+    {
+        _timers.SetTimerAt(ent, RegenerationTimer, ent.Comp.NextRegenTime, ent.Comp.Duration);
     }
 }

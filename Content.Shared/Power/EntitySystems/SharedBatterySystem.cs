@@ -12,7 +12,10 @@ namespace Content.Shared.Power.EntitySystems;
 /// </summary>
 public abstract partial class SharedBatterySystem : EntitySystem
 {
+    private static readonly EntityTimerId RechargeTimer = new("recharge");
+
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -30,6 +33,8 @@ public abstract partial class SharedBatterySystem : EntitySystem
         SubscribeLocalEvent<BatterySelfRechargerComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
         SubscribeLocalEvent<BatterySelfRechargerComponent, ComponentStartup>(OnRechargerStartup);
         SubscribeLocalEvent<BatterySelfRechargerComponent, ComponentRemove>(OnRechargerRemove);
+        SubscribeLocalEvent<BatterySelfRechargerComponent, AfterAutoHandleStateEvent>(OnRechargerHandleState);
+        SubscribeLocalEvent<BatterySelfRechargerComponent, EntityTimerEvent>(OnRechargeTimer);
         SubscribeLocalEvent<BatteryVisualsComponent, ChargeChangedEvent>(OnVisualsChargeChanged);
         SubscribeLocalEvent<BatteryVisualsComponent, BatteryStateChangedEvent>(OnVisualsStateChanged);
     }
@@ -114,20 +119,6 @@ public abstract partial class SharedBatterySystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        var curTime = _timing.CurTime;
-
-        // Update self-recharging cooldowns.
-        var rechargerQuery = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
-        while (rechargerQuery.MoveNext(out var uid, out var recharger, out var battery))
-        {
-            if (recharger.NextAutoRecharge == null || curTime < recharger.NextAutoRecharge)
-                continue;
-
-            recharger.NextAutoRecharge = null; // Don't refresh every tick.
-            Dirty(uid, recharger);
-            RefreshChargeRate((uid, battery)); // Cooldown is over, apply the new recharge rate.
-        }
-
         // Raise events when the battery is full or empty so that other systems can react and visuals can get updated.
         // This is not doing that many calculations, it only has to get the current charge and only raises events if something did change.
         // If this turns out to be too expensive and shows up on grafana consider updating it less often.
@@ -143,10 +134,37 @@ public abstract partial class SharedBatterySystem : EntitySystem
 
     private void OnRechargerStartup(Entity<BatterySelfRechargerComponent> ent, ref ComponentStartup args)
     {
+        RegisterRechargeTimer(ent);
+
         // In case this component is added after the battery component.
         // Don't do this in case the battery is not net synced, because then the client would raise events overwriting the networked server state on spawn.
         if (ent.Comp.NetSyncEnabled)
             RefreshChargeRate(ent.Owner);
+    }
+
+    private void OnRechargerHandleState(Entity<BatterySelfRechargerComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RegisterRechargeTimer(ent);
+    }
+
+    private void RegisterRechargeTimer(Entity<BatterySelfRechargerComponent> ent)
+    {
+        if (ent.Comp.NextAutoRecharge is { } deadline)
+            _timers.SetTimerAt(ent, RechargeTimer, deadline);
+        else
+            _timers.CancelTimer<BatterySelfRechargerComponent>(ent, RechargeTimer);
+    }
+
+    private void OnRechargeTimer(Entity<BatterySelfRechargerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != RechargeTimer || ent.Comp.NextAutoRecharge == null)
+            return;
+
+        ent.Comp.NextAutoRecharge = null;
+        Dirty(ent);
+
+        if (TryComp<BatteryComponent>(ent, out var battery))
+            RefreshChargeRate((ent, battery));
     }
 
     private void OnRechargerRemove(Entity<BatterySelfRechargerComponent> ent, ref ComponentRemove args)

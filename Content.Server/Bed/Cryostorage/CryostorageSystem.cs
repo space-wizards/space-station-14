@@ -26,6 +26,7 @@ using Content.Shared.Station;
 using Content.Shared.StationRecords.Components;
 using Content.Shared.StationRecords.Systems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed.Cryostorage;
 
@@ -48,6 +49,9 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private StationRecordsSystem _stationRecords = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    private static readonly EntityTimerId GracePeriodTimer = new("grace-period");
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -59,6 +63,8 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
 
         SubscribeLocalEvent<CryostorageContainedComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<CryostorageContainedComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<CryostorageContainedComponent, ComponentStartup>(OnContainedStartup);
+        SubscribeLocalEvent<CryostorageContainedComponent, EntityTimerEvent>(OnGracePeriodTimer);
 
         _playerManager.PlayerStatusChanged += PlayerStatusChanged;
     }
@@ -127,6 +133,12 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
     {
         // if you spawned into cryostorage, we're not gonna round-remove you.
         ent.Comp.GracePeriodEndTime = null;
+        _timers.CancelTimer<CryostorageContainedComponent>(ent.Owner, GracePeriodTimer);
+    }
+
+    private void OnContainedStartup(Entity<CryostorageContainedComponent> ent, ref ComponentStartup args)
+    {
+        RegisterGracePeriod(ent);
     }
 
     private void OnMindRemoved(Entity<CryostorageContainedComponent> ent, ref MindRemovedMessage args)
@@ -137,7 +149,10 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
             return;
 
         if (comp.GracePeriodEndTime != null)
+        {
             comp.GracePeriodEndTime = Timing.CurTime + cryostorageComponent.NoMindGracePeriod;
+            RegisterGracePeriod(ent);
+        }
         comp.AllowReEnteringBody = false;
         comp.UserId = args.Mind.Comp.UserId;
     }
@@ -155,6 +170,7 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
             containedComponent.AllowReEnteringBody = true;
             var delay = CompOrNull<CryostorageComponent>(containedComponent.Cryostorage)?.NoMindGracePeriod ?? TimeSpan.Zero;
             containedComponent.GracePeriodEndTime = Timing.CurTime + delay;
+            RegisterGracePeriod((entity, containedComponent));
             containedComponent.UserId = args.Session.UserId;
         }
         else if (args.NewStatus == SessionStatus.InGame)
@@ -330,22 +346,21 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         return data;
     }
 
-    public override void Update(float frameTime)
+    private void OnGracePeriodTimer(Entity<CryostorageContainedComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != GracePeriodTimer || ent.Comp.GracePeriodEndTime is null)
+            return;
 
-        var query = EntityQueryEnumerator<CryostorageContainedComponent>();
-        while (query.MoveNext(out var uid, out var containedComp))
-        {
-            if (containedComp.GracePeriodEndTime == null)
-                continue;
+        Mind.TryGetMind(ent.Owner, out _, out var mindComp);
+        var id = mindComp?.UserId ?? ent.Comp.UserId;
+        HandleEnterCryostorage(ent, id);
+    }
 
-            if (Timing.CurTime < containedComp.GracePeriodEndTime)
-                continue;
-
-            Mind.TryGetMind(uid, out _, out var mindComp);
-            var id = mindComp?.UserId ?? containedComp.UserId;
-            HandleEnterCryostorage((uid, containedComp), id);
-        }
+    private void RegisterGracePeriod(Entity<CryostorageContainedComponent> ent)
+    {
+        if (ent.Comp.GracePeriodEndTime is { } deadline)
+            _timers.SetTimerAt(ent, GracePeriodTimer, deadline);
+        else
+            _timers.CancelTimer<CryostorageContainedComponent>(ent.Owner, GracePeriodTimer);
     }
 }

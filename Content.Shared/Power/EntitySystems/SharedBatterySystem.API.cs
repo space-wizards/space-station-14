@@ -276,6 +276,7 @@ public abstract partial class SharedBatterySystem
             return;
 
         ent.Comp.NextAutoRecharge = _timing.CurTime + cooldown;
+        _timers.SetTimerAt<BatterySelfRechargerComponent>((ent.Owner, ent.Comp), RechargeTimer, ent.Comp.NextAutoRecharge.Value);
         Dirty(ent);
         RefreshChargeRate(ent.Owner); // Apply the new charge rate.
     }

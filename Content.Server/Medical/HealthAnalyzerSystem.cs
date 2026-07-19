@@ -24,6 +24,8 @@ namespace Content.Server.Medical;
 
 public sealed partial class HealthAnalyzerSystem : EntitySystem
 {
+    private static readonly EntityTimerId UpdateTimer = new("update");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PowerCellSystem _cell = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -34,6 +36,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -42,41 +45,35 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<HealthAnalyzerComponent, EntGotInsertedIntoContainerMessage>(OnInsertedIntoContainer);
         SubscribeLocalEvent<HealthAnalyzerComponent, ItemToggledEvent>(OnToggled);
         SubscribeLocalEvent<HealthAnalyzerComponent, DroppedEvent>(OnDropped);
+        SubscribeLocalEvent<HealthAnalyzerComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<HealthAnalyzerComponent> ent, ref EntityTimerEvent args)
     {
-        var analyzerQuery = EntityQueryEnumerator<HealthAnalyzerComponent, TransformComponent>();
-        while (analyzerQuery.MoveNext(out var uid, out var component, out var transform))
+        if (args.Id != UpdateTimer || ent.Comp.ScannedEntity is not { } patient ||
+            !TryComp<TransformComponent>(ent, out var transform))
+            return;
+
+        var component = ent.Comp;
+        component.NextUpdate = args.FiredAt + component.UpdateInterval;
+        _timers.SetTimerAt(ent, UpdateTimer, component.NextUpdate);
+
+        if (Deleted(patient))
         {
-            //Update rate limited to 1 second
-            if (component.NextUpdate > _timing.CurTime)
-                continue;
-
-            if (component.ScannedEntity is not {} patient)
-                continue;
-
-            if (Deleted(patient))
-            {
-                StopAnalyzingEntity((uid, component), patient);
-                continue;
-            }
-
-            component.NextUpdate = _timing.CurTime + component.UpdateInterval;
-
-            //Get distance between health analyzer and the scanned entity
-            //null is infinite range
-            var patientCoordinates = Transform(patient).Coordinates;
-            if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
-            {
-                //Range too far, disable updates until they are back in range
-                PauseAnalyzingEntity((uid, component), patient);
-                continue;
-            }
-
-            component.IsAnalyzerActive = true;
-            UpdateScannedUser(uid, patient, true);
+            StopAnalyzingEntity(ent, patient);
+            return;
         }
+
+        // Get distance between health analyzer and the scanned entity; null is infinite range.
+        var patientCoordinates = Transform(patient).Coordinates;
+        if (component.MaxScanRange != null && !_transformSystem.InRange(patientCoordinates, transform.Coordinates, component.MaxScanRange.Value))
+        {
+            PauseAnalyzingEntity(ent, patient);
+            return;
+        }
+
+        component.IsAnalyzerActive = true;
+        UpdateScannedUser(ent, patient, true);
     }
 
     /// <summary>
@@ -163,6 +160,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
         _toggle.TryActivate(healthAnalyzer.Owner);
 
         UpdateScannedUser(healthAnalyzer, target, true);
+        healthAnalyzer.Comp.NextUpdate = _timers.SetTimer(healthAnalyzer, UpdateTimer, healthAnalyzer.Comp.UpdateInterval);
     }
 
     /// <summary>
@@ -174,6 +172,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     {
         //Unlink the analyzer
         healthAnalyzer.Comp.ScannedEntity = null;
+        _timers.CancelTimer<HealthAnalyzerComponent>(healthAnalyzer, UpdateTimer);
 
         _toggle.TryDeactivate(healthAnalyzer.Owner);
 

@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -12,19 +13,46 @@ namespace Content.Shared.Beeper.Systems;
 //This handles generic proximity beeper logic
 public sealed partial class BeeperSystem : EntitySystem
 {
+    private static readonly EntityTimerId BeepTimer = new("beep");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private ItemToggleSystem _toggle = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        var query = EntityQueryEnumerator<BeeperComponent, ItemToggleComponent>();
-        while (query.MoveNext(out var uid, out var beeper, out var toggle))
-        {
-            if (toggle.Activated)
-                RunUpdate_Internal(uid, beeper);
-        }
+        base.Initialize();
+
+        SubscribeLocalEvent<BeeperComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BeeperComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<BeeperComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<BeeperComponent, EntityTimerEvent>(OnTimer);
+    }
+
+    private void OnMapInit(Entity<BeeperComponent> ent, ref MapInitEvent args)
+    {
+        Schedule(ent);
+    }
+
+    private void OnHandleState(Entity<BeeperComponent> ent, ref ComponentHandleState args)
+    {
+        Schedule(ent);
+    }
+
+    private void OnToggled(Entity<BeeperComponent> ent, ref ItemToggledEvent args)
+    {
+        if (args.Activated)
+            RunUpdate_Internal(ent, ent.Comp);
+        else
+            _timers.CancelTimer<BeeperComponent>(ent, BeepTimer);
+    }
+
+    private void OnTimer(Entity<BeeperComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == BeepTimer)
+            RunUpdate_Internal(ent, ent.Comp);
     }
 
     public void SetIntervalScaling(EntityUid owner, BeeperComponent beeper, FixedPoint2 newScaling)
@@ -84,13 +112,29 @@ public sealed partial class BeeperSystem : EntitySystem
             return;
 
         UpdateBeepInterval(owner, beeper);
-        if (beeper.NextBeep >= _timing.CurTime)
+        if (beeper.NextBeep > _timing.CurTime)
+        {
+            _timers.SetTimerAt<BeeperComponent>((owner, beeper), BeepTimer, beeper.NextBeep);
             return;
+        }
 
         var beepEvent = new BeepPlayedEvent(beeper.IsMuted);
         RaiseLocalEvent(owner, ref beepEvent);
         if (!beeper.IsMuted && _net.IsServer)
             _audio.PlayPvs(beeper.BeepSound, owner);
         beeper.LastBeepTime = _timing.CurTime;
+        _timers.SetTimerAt<BeeperComponent>((owner, beeper), BeepTimer, beeper.NextBeep);
+    }
+
+    private void Schedule(Entity<BeeperComponent> ent)
+    {
+        if (!_toggle.IsActivated(ent.Owner))
+        {
+            _timers.CancelTimer<BeeperComponent>(ent, BeepTimer);
+            return;
+        }
+
+        UpdateBeepInterval(ent, ent.Comp);
+        _timers.SetTimerAt(ent, BeepTimer, ent.Comp.NextBeep);
     }
 }

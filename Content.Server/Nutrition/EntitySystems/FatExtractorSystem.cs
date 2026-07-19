@@ -20,11 +20,13 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed partial class FatExtractorSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private HungerSystem _hunger = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
+
+    private static readonly EntityTimerId ProcessingTimer = new("processing");
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,6 +35,13 @@ public sealed partial class FatExtractorSystem : EntitySystem
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterCloseEvent>(OnClosed);
         SubscribeLocalEvent<FatExtractorComponent, StorageAfterOpenEvent>(OnOpen);
         SubscribeLocalEvent<FatExtractorComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<FatExtractorComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<FatExtractorComponent, EntityTimerEvent>(OnTimer);
+    }
+
+    private void OnStartup(Entity<FatExtractorComponent> ent, ref ComponentStartup args)
+    {
+        _timers.SetTimer(ent, ProcessingTimer, ent.Comp.UpdateTime, ent.Comp.UpdateTime);
     }
 
     private void OnGotEmagged(EntityUid uid, FatExtractorComponent component, ref GotEmaggedEvent args)
@@ -79,7 +88,6 @@ public sealed partial class FatExtractorSystem : EntitySystem
         component.Processing = true;
         _appearance.SetData(uid, FatExtractorVisuals.Processing, true);
         component.Stream = _audio.PlayPvs(component.ProcessSound, uid)?.Entity;
-        component.NextUpdate = _timing.CurTime + component.UpdateTime;
     }
 
     public void StopProcessing(EntityUid uid, FatExtractorComponent? component = null)
@@ -115,38 +123,31 @@ public sealed partial class FatExtractorSystem : EntitySystem
         return true;
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<FatExtractorComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != ProcessingTimer || !TryComp(ent, out EntityStorageComponent? storage))
+            return;
 
-        var query = EntityQueryEnumerator<FatExtractorComponent, EntityStorageComponent>();
-        while (query.MoveNext(out var uid, out var fat, out var storage))
+        if (TryGetValidOccupant(ent.Owner, out var occupant, ent.Comp, storage))
         {
-            if (TryGetValidOccupant(uid, out var occupant, fat, storage))
-            {
-                if (!fat.Processing)
-                    StartProcessing(uid, fat, storage);
-            }
-            else
-            {
-                StopProcessing(uid, fat);
-                continue;
-            }
+            if (!ent.Comp.Processing)
+                StartProcessing(ent.Owner, ent.Comp, storage);
+        }
+        else
+        {
+            StopProcessing(ent.Owner, ent.Comp);
+            return;
+        }
 
-            if (!fat.Processing)
-                continue;
+        if (!ent.Comp.Processing)
+            return;
 
-            if (_timing.CurTime < fat.NextUpdate)
-                continue;
-            fat.NextUpdate += fat.UpdateTime;
-
-            _hunger.ModifyHunger(occupant.Value, -fat.NutritionPerSecond);
-            fat.NutrientAccumulator += fat.NutritionPerSecond;
-            if (fat.NutrientAccumulator >= fat.NutrientPerMeat)
-            {
-                fat.NutrientAccumulator -= fat.NutrientPerMeat;
-                Spawn(fat.MeatPrototype, Transform(uid).Coordinates);
-            }
+        _hunger.ModifyHunger(occupant.Value, -ent.Comp.NutritionPerSecond);
+        ent.Comp.NutrientAccumulator += ent.Comp.NutritionPerSecond;
+        if (ent.Comp.NutrientAccumulator >= ent.Comp.NutrientPerMeat)
+        {
+            ent.Comp.NutrientAccumulator -= ent.Comp.NutrientPerMeat;
+            Spawn(ent.Comp.MeatPrototype, Transform(ent).Coordinates);
         }
     }
 }

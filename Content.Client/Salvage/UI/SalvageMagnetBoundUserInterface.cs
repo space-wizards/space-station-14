@@ -4,11 +4,14 @@ using Content.Shared.Salvage;
 using Content.Shared.Salvage.Magnet;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Salvage.UI;
 
 public sealed partial class SalvageMagnetBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
     [Dependency] private IEntityManager _entManager = default!;
 
     private OfferingWindow? _window;
@@ -24,6 +27,13 @@ public sealed partial class SalvageMagnetBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindowCenteredLeft<OfferingWindow>();
         _window.Title = Loc.GetString("salvage-magnet-window-title");
+        SetTimer(RefreshTimer, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == RefreshTimer)
+            _window?.Refresh(timer.FiredAt);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

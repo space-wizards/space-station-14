@@ -11,9 +11,12 @@ namespace Content.Server.Construction;
 /// <inheritdoc/>
 public sealed partial class FlatpackSystem : SharedFlatpackSystem
 {
+    private static readonly EntityTimerId PackTimer = new("pack");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private AmbientSoundSystem _ambientSound = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -22,6 +25,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
 
         SubscribeLocalEvent<FlatpackCreatorComponent, FlatpackCreatorStartPackBuiMessage>(OnStartPack);
         SubscribeLocalEvent<FlatpackCreatorComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<FlatpackCreatorComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnStartPack(Entity<FlatpackCreatorComponent> ent, ref FlatpackCreatorStartPackBuiMessage args)
@@ -42,6 +46,7 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
         _itemSlots.SetLock(uid, comp.SlotId, true);
         comp.Packing = true;
         comp.PackEndTime = _timing.CurTime + comp.PackDuration;
+        _timers.SetTimerAt(ent, PackTimer, comp.PackEndTime);
         Appearance.SetData(uid, FlatpackCreatorVisuals.Packing, true);
         _ambientSound.SetAmbience(uid, true);
         Dirty(uid, comp);
@@ -82,20 +87,9 @@ public sealed partial class FlatpackSystem : SharedFlatpackSystem
         Del(board);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<FlatpackCreatorComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<FlatpackCreatorComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!comp.Packing)
-                continue;
-
-            if (_timing.CurTime < comp.PackEndTime)
-                continue;
-
-            FinishPacking((uid, comp), false);
-        }
+        if (args.Id == PackTimer && ent.Comp.Packing)
+            FinishPacking(ent, false);
     }
 }

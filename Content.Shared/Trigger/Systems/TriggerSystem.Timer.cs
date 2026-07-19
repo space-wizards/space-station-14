@@ -2,7 +2,9 @@
 using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Examine;
 using Content.Shared.Verbs;
+using Robust.Shared.GameStates;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
@@ -11,11 +13,16 @@ public sealed partial class TriggerSystem
     private void InitializeTimer()
     {
         SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
+        SubscribeLocalEvent<RepeatingTriggerComponent, ComponentHandleState>(OnRepeatHandleState);
+        SubscribeLocalEvent<RepeatingTriggerComponent, EntityTimerEvent>(OnRepeatingTimer);
         SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomInit);
         SubscribeLocalEvent<TimerTriggerComponent, ComponentShutdown>(OnTimerShutdown);
+        SubscribeLocalEvent<TimerTriggerComponent, ComponentHandleState>(OnTimerHandleState);
         SubscribeLocalEvent<TimerTriggerComponent, ExaminedEvent>(OnTimerExamined);
         SubscribeLocalEvent<TimerTriggerComponent, TriggerEvent>(OnTimerTriggered);
         SubscribeLocalEvent<TimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnTimerGetAltVerbs);
+        SubscribeLocalEvent<ActiveTimerTriggerComponent, ComponentInit>(OnActiveTimerInit);
+        SubscribeLocalEvent<ActiveTimerTriggerComponent, EntityTimerEvent>(OnActiveTimer);
     }
 
     // set the time of the first trigger after being spawned
@@ -23,6 +30,12 @@ public sealed partial class TriggerSystem
     {
         ent.Comp.NextTrigger = _timing.CurTime + ent.Comp.Delay;
         Dirty(ent);
+        ScheduleRepeatingTimer(ent);
+    }
+
+    private void OnRepeatHandleState(Entity<RepeatingTriggerComponent> ent, ref ComponentHandleState args)
+    {
+        ScheduleRepeatingTimer(ent);
     }
 
     private void OnRandomInit(Entity<RandomTimerTriggerComponent> ent, ref MapInitEvent args)
@@ -40,6 +53,17 @@ public sealed partial class TriggerSystem
     private void OnTimerShutdown(Entity<TimerTriggerComponent> ent, ref ComponentShutdown args)
     {
         RemComp<ActiveTimerTriggerComponent>(ent);
+    }
+
+    private void OnTimerHandleState(Entity<TimerTriggerComponent> ent, ref ComponentHandleState args)
+    {
+        ScheduleActiveTimer(ent.Owner, ent.Comp);
+    }
+
+    private void OnActiveTimerInit(Entity<ActiveTimerTriggerComponent> ent, ref ComponentInit args)
+    {
+        if (TryComp<TimerTriggerComponent>(ent, out var timer))
+            ScheduleActiveTimer(ent, timer);
     }
 
     private void OnTimerExamined(Entity<TimerTriggerComponent> ent, ref ExaminedEvent args)
@@ -140,42 +164,70 @@ public sealed partial class TriggerSystem
         }
     }
 
-    private void UpdateRepeat()
+    private void OnRepeatingTimer(Entity<RepeatingTriggerComponent> ent, ref EntityTimerEvent args)
     {
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<RepeatingTriggerComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.NextTrigger > curTime)
-                continue;
+        if (args.Id != RepeatingTriggerTimer)
+            return;
 
-            comp.NextTrigger += comp.Delay;
-            Dirty(uid, comp);
-            Trigger(uid, null, comp.KeyOut);
-        }
+        ent.Comp.NextTrigger = args.NextDeadline ?? args.ScheduledTime + ent.Comp.Delay;
+        Dirty(ent);
+        Trigger(ent, null, ent.Comp.KeyOut);
     }
 
-    private void UpdateTimer()
+    private void OnActiveTimer(Entity<ActiveTimerTriggerComponent> ent, ref EntityTimerEvent args)
     {
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<ActiveTimerTriggerComponent, TimerTriggerComponent>();
-        while (query.MoveNext(out var uid, out _, out var timer))
-        {
-            if (_net.IsServer && timer.BeepSound != null && timer.NextBeep <= curTime)
-            {
-                _audio.PlayPvs(timer.BeepSound, uid);
-                timer.NextBeep += timer.BeepInterval;
-            }
+        if (!TryComp<TimerTriggerComponent>(ent, out var timer))
+            return;
 
-            if (timer.NextTrigger <= curTime)
-            {
-                var user = TerminatingOrDeleted(timer.User) ? null : timer.User;
-                Trigger(uid, user, timer.KeyOut);
-                // Remove after triggering to prevent it from starting the timer again
-                RemComp<ActiveTimerTriggerComponent>(uid);
-                if (TryComp<AppearanceComponent>(uid, out var appearance))
-                    _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
-            }
+        if (args.Id == TimerTriggerBeepTimer)
+        {
+            if (_net.IsServer && timer.BeepSound != null)
+                _audio.PlayPvs(timer.BeepSound, ent);
+
+            timer.NextBeep = args.NextDeadline ?? timer.NextBeep + timer.BeepInterval;
+            return;
         }
+
+        if (args.Id != TimerTriggerTimer)
+            return;
+
+        var user = TerminatingOrDeleted(timer.User) ? null : timer.User;
+        Trigger(ent, user, timer.KeyOut);
+        // Remove after triggering to prevent it from starting the timer again.
+        RemComp<ActiveTimerTriggerComponent>(ent);
+        if (TryComp<AppearanceComponent>(ent, out var appearance))
+            _appearance.SetData(ent, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
+    }
+
+    private void ScheduleRepeatingTimer(Entity<RepeatingTriggerComponent> ent)
+    {
+        if (ent.Comp.Delay <= TimeSpan.Zero)
+            return;
+
+        _entityTimers.SetTimerAt(
+            ent,
+            RepeatingTriggerTimer,
+            ent.Comp.NextTrigger,
+            ent.Comp.Delay);
+    }
+
+    private void ScheduleActiveTimer(EntityUid uid, TimerTriggerComponent timer)
+    {
+        if (!TryComp<ActiveTimerTriggerComponent>(uid, out var active))
+            return;
+
+        _entityTimers.SetTimerAt<ActiveTimerTriggerComponent>(
+            (uid, active),
+            TimerTriggerTimer,
+            timer.NextTrigger);
+
+        if (!_net.IsServer || timer.BeepSound == null || timer.BeepInterval <= TimeSpan.Zero)
+            return;
+
+        _entityTimers.SetTimerAt<ActiveTimerTriggerComponent>(
+            (uid, active),
+            TimerTriggerBeepTimer,
+            timer.NextBeep,
+            timer.BeepInterval);
     }
 }

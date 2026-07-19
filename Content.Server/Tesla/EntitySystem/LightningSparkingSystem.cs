@@ -10,14 +10,18 @@ namespace Content.Server.Tesla.EntitySystems;
 /// </summary>
 public sealed partial class LightningSparkingSystem : EntitySystem
 {
+    private static readonly EntityTimerId SparkingTimer = new("sparking");
+
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<LightningSparkingComponent, HitByLightningEvent>(OnHitByLightning);
+        SubscribeLocalEvent<LightningSparkingComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnHitByLightning(Entity<LightningSparkingComponent> uid, ref HitByLightningEvent args)
@@ -25,23 +29,15 @@ public sealed partial class LightningSparkingSystem : EntitySystem
         _appearance.SetData(uid.Owner, TeslaCoilVisuals.Lightning, true);
         uid.Comp.LightningEndTime = _gameTiming.CurTime + TimeSpan.FromSeconds(uid.Comp.LightningTime);
         uid.Comp.IsSparking = true;
+        _timers.SetTimerAt(uid, SparkingTimer, uid.Comp.LightningEndTime);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<LightningSparkingComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != SparkingTimer || !ent.Comp.IsSparking)
+            return;
 
-        var query = EntityQueryEnumerator<LightningSparkingComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (!component.IsSparking)
-                continue;
-
-            if (component.LightningEndTime < _gameTiming.CurTime)
-            {
-                _appearance.SetData(uid, TeslaCoilVisuals.Lightning, false);
-                component.IsSparking = false;
-            }
-        }
+        _appearance.SetData(ent, TeslaCoilVisuals.Lightning, false);
+        ent.Comp.IsSparking = false;
     }
 }

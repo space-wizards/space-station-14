@@ -138,7 +138,5 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        UpdateSpawner(frameTime);
     }
 }

@@ -41,6 +41,8 @@ namespace Content.Server.Ghost.Roles;
 [UsedImplicitly]
 public sealed partial class GhostRoleSystem : EntitySystem
 {
+    private static readonly EntityTimerId RaffleTimer = new("raffle");
+
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private EuiManager _euiManager = default!;
@@ -53,6 +55,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
     [Dependency] private SharedRoleSystem _roleSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
@@ -86,6 +89,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentInit>(OnRaffleInit);
         SubscribeLocalEvent<GhostRoleRaffleComponent, ComponentShutdown>(OnRaffleShutdown);
+        SubscribeLocalEvent<GhostRoleRaffleComponent, EntityTimerEvent>(OnRaffleTimer);
 
         SubscribeLocalEvent<GhostRoleMobSpawnerComponent, TakeGhostRoleEvent>(OnSpawnerTakeRole);
         SubscribeLocalEvent<GhostRoleMobSpawnerComponent, GetVerbsEvent<Verb>>(OnVerb);
@@ -187,7 +191,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
         base.Update(frameTime);
 
         UpdateGhostRoleCount();
-        UpdateRaffles(frameTime);
     }
 
     /// <summary>
@@ -209,63 +212,54 @@ public sealed partial class GhostRoleSystem : EntitySystem
     /// <summary>
     /// Handles ghost role raffle logic.
     /// </summary>
-    private void UpdateRaffles(float frameTime)
+    private void OnRaffleTimer(Entity<GhostRoleRaffleComponent> ent, ref EntityTimerEvent args)
     {
-        var query = EntityQueryEnumerator<GhostRoleRaffleComponent, MetaDataComponent>();
-        while (query.MoveNext(out var entityUid, out var raffle, out var meta))
+        if (args.Id != RaffleTimer)
+            return;
+
+        var raffle = ent.Comp;
+        if (raffle.CurrentMembers.Count == 0)
         {
-            if (meta.EntityPaused)
-                continue;
-
-            // if all participants leave/were removed from the raffle, the raffle is canceled.
-            if (raffle.CurrentMembers.Count == 0)
-            {
-                RemoveRaffleAndUpdateEui(entityUid, raffle);
-                continue;
-            }
-
-            raffle.Countdown = raffle.Countdown.Subtract(TimeSpan.FromSeconds(frameTime));
-            if (raffle.Countdown.Ticks > 0)
-                continue;
-
-            // the raffle is over! find someone to take over the ghost role
-            if (!TryComp(entityUid, out GhostRoleComponent? ghostRole))
-            {
-                Log.Warning($"Ghost role raffle finished on {entityUid} but {nameof(GhostRoleComponent)} is missing");
-                RemoveRaffleAndUpdateEui(entityUid, raffle);
-                continue;
-            }
-
-            if (ghostRole.RaffleConfig is null)
-            {
-                Log.Warning($"Ghost role raffle finished on {entityUid} but RaffleConfig became null");
-                RemoveRaffleAndUpdateEui(entityUid, raffle);
-                continue;
-            }
-
-            var foundWinner = false;
-            var deciderPrototype = ProtoMan.Index(ghostRole.RaffleConfig.Decider);
-
-            // use the ghost role's chosen winner picker to find a winner
-            deciderPrototype.Decider.PickWinner(
-                raffle.CurrentMembers.AsEnumerable(),
-                session =>
-                {
-                    var success = TryTakeover(session, raffle.Identifier);
-                    foundWinner |= success;
-                    return success;
-                }
-            );
-
-            if (!foundWinner)
-            {
-                Log.Warning($"Ghost role raffle for {entityUid} ({ghostRole.RoleName}) finished without " +
-                            $"{ghostRole.RaffleConfig?.Decider} finding a winner");
-            }
-
-            // raffle over
-            RemoveRaffleAndUpdateEui(entityUid, raffle);
+            RemoveRaffleAndUpdateEui(ent, raffle);
+            return;
         }
+
+        if (!TryComp(ent, out GhostRoleComponent? ghostRole))
+        {
+            Log.Warning($"Ghost role raffle finished on {ent} but {nameof(GhostRoleComponent)} is missing");
+            RemoveRaffleAndUpdateEui(ent, raffle);
+            return;
+        }
+
+        if (ghostRole.RaffleConfig is null)
+        {
+            Log.Warning($"Ghost role raffle finished on {ent} but RaffleConfig became null");
+            RemoveRaffleAndUpdateEui(ent, raffle);
+            return;
+        }
+
+        var foundWinner = false;
+        var deciderPrototype = ProtoMan.Index(ghostRole.RaffleConfig.Decider);
+
+        // use the ghost role's chosen winner picker to find a winner
+        deciderPrototype.Decider.PickWinner(
+            raffle.CurrentMembers.AsEnumerable(),
+            session =>
+            {
+                var success = TryTakeover(session, raffle.Identifier);
+                foundWinner |= success;
+                return success;
+            }
+        );
+
+        if (!foundWinner)
+        {
+            Log.Warning($"Ghost role raffle for {ent} ({ghostRole.RoleName}) finished without " +
+                        $"{ghostRole.RaffleConfig?.Decider} finding a winner");
+        }
+
+        // raffle over
+        RemoveRaffleAndUpdateEui(ent, raffle);
     }
 
     private bool TryTakeover(ICommonSession player, uint identifier)
@@ -366,7 +360,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
         var raffle = ent.Comp;
         raffle.Identifier = ghostRole.Identifier;
         var countdown = _cfg.GetCVar(CCVars.GhostQuickLottery)? 1 : settings.InitialDuration;
-        raffle.Countdown = TimeSpan.FromSeconds(countdown);
+        raffle.EndTime = _timing.CurTime + TimeSpan.FromSeconds(countdown);
+        _timers.SetTimerAt(ent, RaffleTimer, raffle.EndTime);
         raffle.CumulativeTime = TimeSpan.FromSeconds(settings.InitialDuration);
         // we copy these settings into the component because they would be cumbersome to access otherwise
         raffle.JoinExtendsDurationBy = TimeSpan.FromSeconds(settings.JoinExtendsDurationBy);
@@ -408,8 +403,9 @@ public sealed partial class GhostRoleSystem : EntitySystem
         if (raffle.AllMembers.Add(player) && raffle.AllMembers.Count > 1
             && raffle.CumulativeTime.Add(raffle.JoinExtendsDurationBy) <= raffle.MaxDuration)
         {
-                raffle.Countdown += raffle.JoinExtendsDurationBy;
-                raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
+            raffle.EndTime += raffle.JoinExtendsDurationBy;
+            _timers.SetTimerAt<GhostRoleRaffleComponent>((roleEnt.Owner, raffle), RaffleTimer, raffle.EndTime);
+            raffle.CumulativeTime += raffle.JoinExtendsDurationBy;
         }
 
         UpdateAllEui();
@@ -425,7 +421,10 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
         if (raffleEnt.Comp.CurrentMembers.Remove(player))
         {
-            UpdateAllEui();
+            if (raffleEnt.Comp.CurrentMembers.Count == 0)
+                RemoveRaffleAndUpdateEui(raffleEnt, raffleEnt.Comp);
+            else
+                UpdateAllEui();
         }
         else
         {
@@ -441,11 +440,17 @@ public sealed partial class GhostRoleSystem : EntitySystem
     public void LeaveAllRaffles(ICommonSession player)
     {
         var shouldUpdateEui = false;
+        var empty = new List<Entity<GhostRoleRaffleComponent>>();
 
         foreach (var raffleEnt in _ghostRoleRaffles.Values)
         {
             shouldUpdateEui |= raffleEnt.Comp.CurrentMembers.Remove(player);
+            if (raffleEnt.Comp.CurrentMembers.Count == 0)
+                empty.Add(raffleEnt);
         }
+
+        foreach (var raffleEnt in empty)
+            RemoveRaffleAndUpdateEui(raffleEnt, raffleEnt.Comp);
 
         if (shouldUpdateEui)
             UpdateAllEui();
@@ -657,7 +662,7 @@ public sealed partial class GhostRoleSystem : EntitySystem
 
             var rafflePlayerCount = (uint?) raffle?.CurrentMembers.Count ?? 0;
             var raffleEndTime = raffle is not null
-                ? _timing.CurTime.Add(raffle.Countdown)
+                ? raffle.EndTime
                 : TimeSpan.MinValue;
 
             TryPrototypes((uid, role), out var antags, out var jobs);

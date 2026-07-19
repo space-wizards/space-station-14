@@ -10,6 +10,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly;
 
@@ -20,6 +21,9 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
+    private static readonly EntityTimerId GeneratorCooldownTimer = new("generator-cooldown");
+    private static readonly EntityTimerId GenerationTimer = new("generation");
+
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
@@ -31,6 +35,8 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyGeneratorComponent, AnomalyGeneratorGenerateButtonPressedEvent>(OnGenerateButtonPressed);
         SubscribeLocalEvent<AnomalyGeneratorComponent, PowerChangedEvent>(OnGeneratorPowerChanged);
         SubscribeLocalEvent<GeneratingAnomalyGeneratorComponent, ComponentStartup>(OnGeneratingStartup);
+        SubscribeLocalEvent<GeneratingAnomalyGeneratorComponent, EntityTimerEvent>(OnGenerationTimer);
+        SubscribeLocalEvent<AnomalyGeneratorComponent, EntityTimerEvent>(OnGeneratorTimer);
     }
 
     private void OnGeneratorPowerChanged(EntityUid uid, AnomalyGeneratorComponent component, ref PowerChangedEvent args)
@@ -79,6 +85,8 @@ public sealed partial class AnomalySystem
         generating.EndTime = Timing.CurTime + component.GenerationLength;
         generating.AudioStream = Audio.PlayPvs(component.GeneratingSound, uid, AudioParams.Default.WithLoop(true))?.Entity;
         component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
+        _timers.SetTimerAt<GeneratingAnomalyGeneratorComponent>((uid, generating), GenerationTimer, generating.EndTime);
+        _timers.SetTimerAt<AnomalyGeneratorComponent>((uid, component), GeneratorCooldownTimer, component.CooldownEndTime);
         UpdateGeneratorUi(uid, component);
     }
 
@@ -156,6 +164,22 @@ public sealed partial class AnomalySystem
     private void OnGeneratingStartup(EntityUid uid, GeneratingAnomalyGeneratorComponent component, ComponentStartup args)
     {
         Appearance.SetData(uid, AnomalyGeneratorVisuals.Generating, true);
+        _timers.SetTimerAt<GeneratingAnomalyGeneratorComponent>((uid, component), GenerationTimer, component.EndTime);
+    }
+
+    private void OnGenerationTimer(Entity<GeneratingAnomalyGeneratorComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != GenerationTimer || !TryComp<AnomalyGeneratorComponent>(ent, out var generator))
+            return;
+
+        ent.Comp.AudioStream = _audio.Stop(ent.Comp.AudioStream);
+        OnGeneratingFinished(ent, generator);
+    }
+
+    private void OnGeneratorTimer(Entity<AnomalyGeneratorComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == GeneratorCooldownTimer)
+            UpdateGeneratorUi(ent, ent.Comp);
     }
 
     private void OnGeneratingFinished(EntityUid uid, AnomalyGeneratorComponent component)
@@ -179,16 +203,4 @@ public sealed partial class AnomalySystem
         _radio.SendRadioMessage(uid, message, ProtoMan.Index<RadioChannelPrototype>(component.ScienceChannel), uid);
     }
 
-    private void UpdateGenerator()
-    {
-        var query = EntityQueryEnumerator<GeneratingAnomalyGeneratorComponent, AnomalyGeneratorComponent>();
-        while (query.MoveNext(out var ent, out var active, out var gen))
-        {
-            if (Timing.CurTime < active.EndTime)
-                continue;
-
-            active.AudioStream = _audio.Stop(active.AudioStream);
-            OnGeneratingFinished(ent, gen);
-        }
-    }
 }

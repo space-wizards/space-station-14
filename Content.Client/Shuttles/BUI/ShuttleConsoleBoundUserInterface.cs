@@ -4,12 +4,16 @@ using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
 public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId PingCooldownTimer = new("ping-cooldown");
+    private static readonly EntityTimerId MapDequeueTimer = new("map-dequeue");
+
     [ViewVariables]
     private ShuttleConsoleWindow? _window;
 
@@ -26,6 +30,16 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.RequestBeaconFTL += OnFTLBeaconRequest;
         _window.DockRequest += OnDockRequest;
         _window.UndockRequest += OnUndockRequest;
+        _window.PingCooldownStarted += delay => SetTimer(PingCooldownTimer, delay);
+        _window.MapDequeueRequested += delay => SetTimer(MapDequeueTimer, delay);
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == PingCooldownTimer)
+            _window?.OnPingCooldownTimer();
+        else if (timer.Id == MapDequeueTimer)
+            _window?.OnMapDequeueTimer();
     }
 
     private void OnUndockRequest(NetEntity entity)

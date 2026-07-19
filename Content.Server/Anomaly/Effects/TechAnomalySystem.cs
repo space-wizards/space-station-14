@@ -11,11 +11,14 @@ namespace Content.Server.Anomaly.Effects;
 
 public sealed partial class TechAnomalySystem : EntitySystem
 {
+    private static readonly EntityTimerId SignalTimer = new("signal");
+
     [Dependency] private DeviceLinkSystem _signal = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private BeamSystem _beam = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -25,27 +28,22 @@ public sealed partial class TechAnomalySystem : EntitySystem
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+        SubscribeLocalEvent<TechAnomalyComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnTechMapInit(Entity<TechAnomalyComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextTimer = _timing.CurTime;
+        _timers.SetTimerAt(ent, SignalTimer, ent.Comp.NextTimer, TimeSpan.FromSeconds(ent.Comp.TimerFrequency));
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<TechAnomalyComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != SignalTimer)
+            return;
 
-        var query = EntityQueryEnumerator<TechAnomalyComponent, AnomalyComponent>();
-        while (query.MoveNext(out var uid, out var tech, out var anom))
-        {
-            if (_timing.CurTime < tech.NextTimer)
-                continue;
-
-            tech.NextTimer += TimeSpan.FromSeconds(tech.TimerFrequency);
-
-            _signal.InvokePort(uid, tech.TimerPort);
-        }
+        ent.Comp.NextTimer = args.NextDeadline ?? args.FiredAt;
+        _signal.InvokePort(ent, ent.Comp.TimerPort);
     }
 
     private void OnStabilityChanged(Entity<TechAnomalyComponent> tech, ref AnomalyStabilityChangedEvent args)

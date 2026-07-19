@@ -25,6 +25,7 @@ public sealed partial class SwapTeleporterComponent : Component
     /// the time at which <see cref="TeleportDelay"/> ends and the teleportation occurs
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [AutoPausedField]
     public TimeSpan? TeleportTime;
 
     /// <summary>

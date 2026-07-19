@@ -20,6 +20,8 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class EggLayerSystem : EntitySystem
 {
+    private static readonly EntityTimerId GrowthTimer = new("growth");
+
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ActionsSystem _actions = default!;
     [Dependency] private AudioSystem _audio = default!;
@@ -27,6 +29,7 @@ public sealed partial class EggLayerSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -34,38 +37,26 @@ public sealed partial class EggLayerSystem : EntitySystem
 
         SubscribeLocalEvent<EggLayerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EggLayerComponent, EggLayInstantActionEvent>(OnEggLayAction);
+        SubscribeLocalEvent<EggLayerComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<EggLayerComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<EggLayerComponent>();
-        while (query.MoveNext(out var uid, out var eggLayer))
-        {
-            // Players should be using the action.
-            if (HasComp<ActorComponent>(uid))
-                continue;
+        if (args.Id != GrowthTimer)
+            return;
 
-            if (_timing.CurTime < eggLayer.NextGrowth)
-                continue;
+        ent.Comp.NextGrowth = args.ScheduledTime + TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.EggLayCooldownMin, ent.Comp.EggLayCooldownMax));
+        _timers.SetTimerAt(ent, GrowthTimer, ent.Comp.NextGrowth);
 
-            // Randomize next growth time for more organic egglaying.
-            eggLayer.NextGrowth += TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
-
-            if (_mobState.IsDead(uid))
-                continue;
-
-            // Hungerlevel check/modification is done in TryLayEgg()
-            // so it's used for player controlled chickens as well.
-
-            TryLayEgg(uid, eggLayer);
-        }
+        if (!HasComp<ActorComponent>(ent) && !_mobState.IsDead(ent))
+            TryLayEgg(ent, ent.Comp);
     }
 
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
         _actions.AddAction(uid, ref component.Action, component.EggLayAction);
         component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
+        _timers.SetTimerAt<EggLayerComponent>((uid, component), GrowthTimer, component.NextGrowth);
     }
 
     private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)

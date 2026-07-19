@@ -25,15 +25,16 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     [Dependency] private LockSystem _lock = default!;
     [Dependency] private RadioSystem _radio = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
-    // almost never timing out more than 1 per tick so initialize with that capacity
-    private List<string> _removing = new(1);
+    private const string CyborgTimerPrefix = "cyborg:";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RoboticsConsoleComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+        SubscribeLocalEvent<RoboticsConsoleComponent, EntityTimerEvent>(OnCyborgTimer);
         Subs.BuiEvents<RoboticsConsoleComponent>(RoboticsConsoleUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpened);
@@ -43,31 +44,14 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         });
     }
 
-    public override void Update(float frameTime)
+    private void OnCyborgTimer(Entity<RoboticsConsoleComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (!args.Id.Value.StartsWith(CyborgTimerPrefix, StringComparison.Ordinal))
+            return;
 
-        var now = _timing.CurTime;
-        var query = EntityQueryEnumerator<RoboticsConsoleComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            // remove cyborgs that havent pinged in a while
-            _removing.Clear();
-            foreach (var (address, data) in comp.Cyborgs)
-            {
-                if (now >= data.Timeout)
-                    _removing.Add(address);
-            }
-
-            // needed to prevent modifying while iterating it
-            foreach (var address in _removing)
-            {
-                comp.Cyborgs.Remove(address);
-            }
-
-            if (_removing.Count > 0)
-                UpdateUserInterface((uid, comp));
-        }
+        var address = args.Id.Value[CyborgTimerPrefix.Length..];
+        if (ent.Comp.Cyborgs.Remove(address))
+            UpdateUserInterface(ent);
     }
 
     private void OnPacketReceived(Entity<RoboticsConsoleComponent> ent, ref DeviceNetworkPacketEvent args)
@@ -84,6 +68,7 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         var real = data.Value;
         real.Timeout = _timing.CurTime + ent.Comp.Timeout;
         ent.Comp.Cyborgs[args.SenderAddress] = real;
+        _timers.SetTimerAt(ent, GetCyborgTimer(args.SenderAddress), real.Timeout);
 
         UpdateUserInterface(ent);
     }
@@ -128,6 +113,8 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
         if (!ent.Comp.Cyborgs.Remove(args.Address, out var data))
             return;
 
+        _timers.CancelTimer<RoboticsConsoleComponent>(ent, GetCyborgTimer(args.Address));
+
         var payload = new NetworkPayload()
         {
             [DeviceNetworkConstants.Command] = RoboticsConsoleConstants.NET_DESTROY_COMMAND
@@ -147,5 +134,10 @@ public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
     {
         var state = new RoboticsConsoleState(ent.Comp.Cyborgs, ent.Comp.AllowBorgControl);
         _ui.SetUiState(ent.Owner, RoboticsConsoleUiKey.Key, state);
+    }
+
+    private static EntityTimerId GetCyborgTimer(string address)
+    {
+        return new EntityTimerId(CyborgTimerPrefix + address);
     }
 }

@@ -36,7 +36,11 @@ namespace Content.Server.Lathe
     [UsedImplicitly]
     public sealed partial class LatheSystem : SharedLatheSystem
     {
+        private static readonly EntityTimerId ProductionTimer = new("production");
+        private static readonly EntityTimerId HeatTimer = new("heat");
+
         [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private AtmosphereSystem _atmosphere = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -79,48 +83,48 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
             SubscribeLocalEvent<LatheHeatProducingComponent, LatheStartPrintingEvent>(OnHeatStartPrinting);
+            SubscribeLocalEvent<LatheProducingComponent, EntityTimerEvent>(OnProductionTimer);
+            SubscribeLocalEvent<LatheHeatProducingComponent, EntityTimerEvent>(OnHeatTimer);
         }
-        public override void Update(float frameTime)
-        {
-            var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
-            while (query.MoveNext(out var uid, out var comp, out var lathe))
-            {
-                if (lathe.CurrentRecipe == null)
-                    continue;
 
-                if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
-                    FinishProducing(uid, lathe);
+        private void OnProductionTimer(Entity<LatheProducingComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != ProductionTimer || !TryComp<LatheComponent>(ent, out var lathe) || lathe.CurrentRecipe == null)
+                return;
+
+            FinishProducing(ent, lathe, ent.Comp);
+        }
+
+        private void OnHeatTimer(Entity<LatheHeatProducingComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != HeatTimer || !HasComp<LatheProducingComponent>(ent) || !TryComp<TransformComponent>(ent, out var xform))
+                return;
+
+            var heatComp = ent.Comp;
+            heatComp.NextSecond = args.ScheduledTime + TimeSpan.FromSeconds(1);
+            _timers.SetTimerAt(ent, HeatTimer, heatComp.NextSecond);
+
+            var position = _transform.GetGridTilePositionOrDefault((ent.Owner, xform));
+            _environments.Clear();
+
+            if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
+                _environments.Add(tileMix);
+
+            if (xform.GridUid != null)
+            {
+                var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
+                while (enumerator.MoveNext(out var mix))
+                {
+                    _environments.Add(mix);
+                }
             }
 
-            var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheProducingComponent, TransformComponent>();
-            while (heatQuery.MoveNext(out var uid, out var heatComp, out _, out var xform))
+            if (_environments.Count > 0)
             {
-                if (_timing.CurTime < heatComp.NextSecond)
-                    continue;
-                heatComp.NextSecond += TimeSpan.FromSeconds(1);
-
-                var position = _transform.GetGridTilePositionOrDefault((uid, xform));
-                _environments.Clear();
-
-                if (_atmosphere.GetTileMixture(xform.GridUid, xform.MapUid, position, true) is { } tileMix)
-                    _environments.Add(tileMix);
-
-                if (xform.GridUid != null)
+                var heatPerTile = heatComp.EnergyPerSecond / _environments.Count;
+                foreach (var env in _environments)
                 {
-                    var enumerator = _atmosphere.GetAdjacentTileMixtures(xform.GridUid.Value, position, false, true);
-                    while (enumerator.MoveNext(out var mix))
-                    {
-                        _environments.Add(mix);
-                    }
-                }
-
-                if (_environments.Count > 0)
-                {
-                    var heatPerTile = heatComp.EnergyPerSecond / _environments.Count;
-                    foreach (var env in _environments)
-                    {
-                        _atmosphere.AddHeat(env, heatPerTile);
-                    }
+                    _atmosphere.AddHeat(env, heatPerTile);
                 }
             }
         }
@@ -220,6 +224,10 @@ namespace Content.Server.Lathe
             {
                 FinishProducing(uid, component, lathe);
             }
+            else
+            {
+                _timers.SetTimerAt<LatheProducingComponent>((uid, lathe), ProductionTimer, lathe.StartTime + time);
+            }
             return true;
         }
 
@@ -227,6 +235,8 @@ namespace Content.Server.Lathe
         {
             if (!Resolve(uid, ref comp, ref prodComp, false))
                 return;
+
+            _timers.CancelTimer<LatheProducingComponent>(uid, ProductionTimer);
 
             if (comp.CurrentRecipe != null)
             {
@@ -321,6 +331,7 @@ namespace Content.Server.Lathe
         private void OnHeatStartPrinting(EntityUid uid, LatheHeatProducingComponent component, LatheStartPrintingEvent args)
         {
             component.NextSecond = _timing.CurTime;
+            _timers.SetTimerAt<LatheHeatProducingComponent>((uid, component), HeatTimer, component.NextSecond);
         }
 
         private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)

@@ -10,10 +10,13 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class SuperBonkSystem : EntitySystem
 {
+    private static readonly EntityTimerId BonkTimer = new("bonk");
+
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private ClumsySystem _clumsySystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -22,6 +25,7 @@ public sealed partial class SuperBonkSystem : EntitySystem
         SubscribeLocalEvent<SuperBonkComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SuperBonkComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SuperBonkComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnInit(Entity<SuperBonkComponent> ent, ref ComponentInit args)
@@ -29,6 +33,7 @@ public sealed partial class SuperBonkSystem : EntitySystem
         var (_, component) = ent;
 
         component.NextBonk = _timing.CurTime + component.BonkCooldown;
+        _timers.SetTimerAt(ent, BonkTimer, component.NextBonk);
     }
 
     private void OnMobStateChanged(Entity<SuperBonkComponent> ent, ref MobStateChangedEvent args)
@@ -47,24 +52,19 @@ public sealed partial class SuperBonkSystem : EntitySystem
             RemComp<ClumsyComponent>(uid);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<SuperBonkComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-        var comps = EntityQueryEnumerator<SuperBonkComponent>();
+        if (args.Id != BonkTimer)
+            return;
 
-        while (comps.MoveNext(out var uid, out var comp))
+        if (!ent.Comp.Tables.MoveNext() || !TryBonk(ent, ent.Comp.Tables.Current))
         {
-            if (comp.NextBonk > _timing.CurTime)
-                continue;
-
-            if (!TryBonk(uid, comp.Tables.Current) || !comp.Tables.MoveNext())
-            {
-                RemComp<SuperBonkComponent>(uid);
-                continue;
-            }
-
-            comp.NextBonk += comp.BonkCooldown;
+            RemComp<SuperBonkComponent>(ent);
+            return;
         }
+
+        ent.Comp.NextBonk = args.ScheduledTime + ent.Comp.BonkCooldown;
+        _timers.SetTimerAt(ent, BonkTimer, ent.Comp.NextBonk);
     }
 
     public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)

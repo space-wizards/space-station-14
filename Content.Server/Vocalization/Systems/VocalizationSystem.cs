@@ -15,22 +15,43 @@ namespace Content.Server.Vocalization.Systems;
 /// </summary>
 public sealed partial class VocalizationSystem : EntitySystem
 {
+    private static readonly EntityTimerId VocalizeTimer = new("vocalize");
+
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<VocalizerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<VocalizerComponent, EntityTimerEvent>(OnTimer);
         SubscribeLocalEvent<VocalizerRequiresPowerComponent, TryVocalizeEvent>(OnRequiresPowerTryVocalize);
     }
 
     private void OnMapInit(Entity<VocalizerComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextVocalizeInterval = _random.Next(ent.Comp.MinVocalizeInterval, ent.Comp.MaxVocalizeInterval);
+        ent.Comp.NextVocalizeInterval = _gameTiming.CurTime + _random.Next(ent.Comp.MinVocalizeInterval, ent.Comp.MaxVocalizeInterval);
+        _timers.SetTimerAt(ent, VocalizeTimer, ent.Comp.NextVocalizeInterval);
+    }
+
+    private void OnTimer(Entity<VocalizerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != VocalizeTimer)
+            return;
+
+        var interval = _random.Next(ent.Comp.MinVocalizeInterval, ent.Comp.MaxVocalizeInterval);
+        ent.Comp.NextVocalizeInterval = args.ScheduledTime + interval;
+
+        // Configuration can shorten the interval past the current time. Do not catch up by spamming.
+        if (ent.Comp.NextVocalizeInterval < args.FiredAt)
+            ent.Comp.NextVocalizeInterval = args.FiredAt + interval;
+
+        _timers.SetTimerAt(ent, VocalizeTimer, ent.Comp.NextVocalizeInterval);
+        TrySpeak(ent);
     }
 
     private void OnRequiresPowerTryVocalize(Entity<VocalizerRequiresPowerComponent> ent, ref TryVocalizeEvent args)
@@ -90,34 +111,6 @@ public sealed partial class VocalizationSystem : EntitySystem
         _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, entity.Comp.HideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // get current game time for delay
-        var currentGameTime = _gameTiming.CurTime;
-
-        // query to get all entities with a VocalizeComponent
-        var query = EntityQueryEnumerator<VocalizerComponent>();
-        while (query.MoveNext(out var uid, out var vocalizer))
-        {
-            // go to next entity if it is too early for this one to speak
-            if (currentGameTime < vocalizer.NextVocalizeInterval)
-                continue;
-
-            // set a new time for the speak interval, regardless of whether speaking works
-            var randomSpeakInterval = _random.Next(vocalizer.MinVocalizeInterval, vocalizer.MaxVocalizeInterval);
-            vocalizer.NextVocalizeInterval += randomSpeakInterval;
-
-            // if an admin updates the speak interval to be immediate, this loop will spam messages until the
-            // nextspeakinterval catches up with the current game time. Prevent this from happening
-            if (vocalizer.NextVocalizeInterval < _gameTiming.CurTime)
-                vocalizer.NextVocalizeInterval = _gameTiming.CurTime + randomSpeakInterval;
-
-            // try to speak
-            TrySpeak((uid, vocalizer));
-        }
-    }
 }
 
 /// <summary>

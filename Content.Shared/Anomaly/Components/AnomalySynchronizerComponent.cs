@@ -10,7 +10,7 @@ namespace Content.Shared.Anomaly.Components;
 /// A device that allows you to translate anomaly activity into multitool signals.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 [Access(typeof(AnomalySynchronizerSystem))]
 public sealed partial class AnomalySynchronizerComponent : Component
 {

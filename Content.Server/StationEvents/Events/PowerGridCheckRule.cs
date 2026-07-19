@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.StationEvents.Components;
@@ -7,8 +6,8 @@ using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timing.Timer;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events
@@ -16,13 +15,18 @@ namespace Content.Server.StationEvents.Events
     [UsedImplicitly]
     public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
+        private static readonly EntityTimerId PowerOffTimer = new("power-off");
+        private static readonly EntityTimerId PowerOnSoundTimer = new("power-on-sound");
+
         [Dependency] private ApcSystem _apcSystem = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PowerGridCheckNotifyComponent, ComponentStartup>(OnApcStartup);
             SubscribeLocalEvent<PowerGridCheckNotifyComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
+            SubscribeLocalEvent<PowerGridCheckRuleComponent, EntityTimerEvent>(OnTimer);
         }
 
         protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -44,7 +48,8 @@ namespace Content.Server.StationEvents.Events
             RobustRandom.Shuffle(component.Powered);
 
             component.NumberPerSecond = Math.Max(1, (int)(component.Powered.Count / component.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
-
+            var interval = TimeSpan.FromSeconds(component.UpdateRate);
+            _timers.SetTimer<PowerGridCheckRuleComponent>((uid, component), PowerOffTimer, interval, interval);
         }
 
         /// <summary>
@@ -114,34 +119,31 @@ namespace Content.Server.StationEvents.Events
                 }
             }
 
-            // Can't use the default EndAudio
-            component.AnnounceCancelToken?.Cancel();
-            component.AnnounceCancelToken = new CancellationTokenSource();
-            Timer.Spawn(3000, () =>
-            {
-                Audio.PlayGlobal(component.PowerOnSound, Filter.Broadcast(), true);
-            }, component.AnnounceCancelToken.Token);
+            _timers.CancelTimer<PowerGridCheckRuleComponent>(uid, PowerOffTimer);
+            _timers.SetTimer<PowerGridCheckRuleComponent>((uid, component), PowerOnSoundTimer, TimeSpan.FromSeconds(3));
             component.Unpowered.Clear();
         }
 
-        protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
+        private void OnTimer(Entity<PowerGridCheckRuleComponent> ent, ref EntityTimerEvent args)
         {
-            base.ActiveTick(uid, component, gameRule, frameTime);
-
-            var updates = 0;
-            component.FrameTimeAccumulator += frameTime;
-            if (component.FrameTimeAccumulator > component.UpdateRate)
+            if (args.Id == PowerOnSoundTimer)
             {
-                updates = (int) (component.FrameTimeAccumulator / component.UpdateRate);
-                component.FrameTimeAccumulator -= component.UpdateRate * updates;
+                Audio.PlayGlobal(ent.Comp.PowerOnSound, Filter.Broadcast(), true);
+                return;
             }
 
-            for (var i = 0; i < updates; i++)
-            {
-                if (component.Powered.Count == 0)
-                    break;
+            if (args.Id != PowerOffTimer)
+                return;
 
-                var selected = component.Powered.Pop();
+            for (var i = 0u; i < args.ElapsedCount; i++)
+            {
+                if (ent.Comp.Powered.Count == 0)
+                {
+                    _timers.CancelTimer<PowerGridCheckRuleComponent>(ent, PowerOffTimer);
+                    break;
+                }
+
+                var selected = ent.Comp.Powered.Pop();
                 if (Deleted(selected))
                     continue;
                 if (TryComp<ApcComponent>(selected, out var apcComponent))
@@ -149,7 +151,7 @@ namespace Content.Server.StationEvents.Events
                     if (apcComponent.MainBreakerEnabled)
                         _apcSystem.ApcToggleBreaker(selected, apcComponent);
                 }
-                component.Unpowered.Add(selected);
+                ent.Comp.Unpowered.Add(selected);
             }
         }
     }

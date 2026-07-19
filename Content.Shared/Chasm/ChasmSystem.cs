@@ -15,11 +15,14 @@ namespace Content.Shared.Chasm;
 /// </summary>
 public sealed partial class ChasmSystem : EntitySystem
 {
+    private static readonly EntityTimerId FallingTimer = new("falling");
+
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedGrapplingGunSystem _grapple = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     [Dependency] private EntityQuery<ChasmFallingComponent> _chasmFallingQuery;
     [Dependency] private EntityQuery<ChasmComponent> _chasmQuery;
@@ -33,32 +36,25 @@ public sealed partial class ChasmSystem : EntitySystem
         SubscribeLocalEvent<ChasmComponent, ComponentShutdown>(OnShutdown);
 
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
+        SubscribeLocalEvent<ChasmFallingComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ChasmFallingComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != FallingTimer)
+            return;
 
-        var query = EntityQueryEnumerator<ChasmFallingComponent>();
-        while (query.MoveNext(out var uid, out var chasm))
+        var chasmEvent = new EntityCompletedFallingIntoChasmEvent(ent);
+        RaiseLocalEvent(ent.Comp.FallingInto, ref chasmEvent);
+        if (_chasmQuery.TryComp(ent.Comp.FallingInto, out var chasmComp))
         {
-            if (_timing.CurTime < chasm.NextDeletionTime)
-                continue;
-
-            var chasmEvent = new EntityCompletedFallingIntoChasmEvent((uid, chasm));
-            RaiseLocalEvent(chasm.FallingInto, ref chasmEvent);
-            if (_chasmQuery.TryComp(chasm.FallingInto, out var chasmComp))
-            {
-                var tripperEvent = new CompletedFallingIntoChasmEvent((chasm.FallingInto, chasmComp));
-                RaiseLocalEvent(uid, ref tripperEvent);
-            }
-            else
-            {
-                DebugTools.Assert($"{ToPrettyString(chasm.FallingInto)} is missing {nameof(ChasmComponent)}");
-            }
-
-            PredictedQueueDel(uid);
+            var tripperEvent = new CompletedFallingIntoChasmEvent((ent.Comp.FallingInto, chasmComp));
+            RaiseLocalEvent(ent, ref tripperEvent);
         }
+        else
+            DebugTools.Assert($"{ToPrettyString(ent.Comp.FallingInto)} is missing {nameof(ChasmComponent)}");
+
+        PredictedQueueDel(ent);
     }
 
     private void OnStepTriggered(Entity<ChasmComponent> entity, ref StepTriggeredOffEvent args)
@@ -107,6 +103,7 @@ public sealed partial class ChasmSystem : EntitySystem
         falling.FallingInto = chasm;
 
         falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
+        _timers.SetTimerAt<ChasmFallingComponent>((tripper, falling), FallingTimer, falling.NextDeletionTime);
         _blocker.UpdateCanMove(tripper);
 
         if (playSound)

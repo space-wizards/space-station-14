@@ -19,6 +19,9 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// </summary>
 public abstract partial class SharedArtifactCrusherSystem : EntitySystem
 {
+    private static readonly EntityTimerId DamageTimer = new("damage");
+    private static readonly EntityTimerId FinishTimer = new("finish");
+
     [Dependency] protected SharedAudioSystem AudioSystem = default!;
     [Dependency] protected SharedContainerSystem ContainerSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -27,6 +30,7 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,6 +44,7 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
         SubscribeLocalEvent<ArtifactCrusherComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<ArtifactCrusherComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<ArtifactCrusherComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<ArtifactCrusherComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnInit(Entity<ArtifactCrusherComponent> ent, ref ComponentInit args)
@@ -121,6 +126,8 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
+        _timers.SetTimerAt<ArtifactCrusherComponent>((uid, crusher), DamageTimer, crusher.NextSecond);
+        _timers.SetTimerAt<ArtifactCrusherComponent>((uid, crusher), FinishTimer, crusher.CrushEndTime);
         crusher.CrushingSoundEntity = AudioSystem.PlayPredicted(crusher.CrushingSound, ent, user)?.Entity ?? crusher.CrushingSoundEntity;
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
@@ -132,6 +139,8 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
             return;
 
         ent.Comp.Crushing = false;
+        _timers.CancelTimer<ArtifactCrusherComponent>(ent, DamageTimer);
+        _timers.CancelTimer<ArtifactCrusherComponent>(ent, FinishTimer);
         _appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, false);
 
         if (early)
@@ -142,29 +151,22 @@ public abstract partial class SharedArtifactCrusherSystem : EntitySystem
 
     public virtual void FinishCrushing(Entity<ArtifactCrusherComponent, EntityStorageComponent> ent) { }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ArtifactCrusherComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (!ent.Comp.Crushing || !TryComp<EntityStorageComponent>(ent, out var storage))
+            return;
 
-        var query = EntityQueryEnumerator<ArtifactCrusherComponent, EntityStorageComponent>();
-        while (query.MoveNext(out var uid, out var crusher, out var storage))
+        if (args.Id == DamageTimer)
         {
-            if (!crusher.Crushing)
-                continue;
+            var contents = new ValueList<EntityUid>(storage.Contents.ContainedEntities);
+            foreach (var contained in contents)
+                _damageable.TryChangeDamage(contained, ent.Comp.CrushingDamage);
 
-            if (crusher.NextSecond < _timing.CurTime)
-            {
-                var contents = new ValueList<EntityUid>(storage.Contents.ContainedEntities);
-                foreach (var contained in contents)
-                {
-                    _damageable.TryChangeDamage(contained, crusher.CrushingDamage);
-                }
-                crusher.NextSecond += TimeSpan.FromSeconds(1);
-                Dirty(uid, crusher);
-            }
-
-            if (crusher.CrushEndTime < _timing.CurTime)
-                FinishCrushing((uid, crusher, storage));
+            ent.Comp.NextSecond = args.ScheduledTime + TimeSpan.FromSeconds(1);
+            Dirty(ent);
+            _timers.SetTimerAt(ent, DamageTimer, ent.Comp.NextSecond);
         }
+        else if (args.Id == FinishTimer)
+            FinishCrushing((ent.Owner, ent.Comp, storage));
     }
 }

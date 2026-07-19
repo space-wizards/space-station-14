@@ -10,6 +10,7 @@ using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -17,6 +18,8 @@ namespace Content.Shared.Access.Systems;
 
 public abstract partial class SharedIdCardSystem : EntitySystem
 {
+    private static readonly EntityTimerId ExpiryTimer = new("expiry");
+
     [Dependency] private IConfigurationManager _cfgManager = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -25,6 +28,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
     [Dependency] private InventorySystem _inventorySystem = default!;
     [Dependency] private MetaDataSystem _metaSystem = default!;
     [Dependency] private SharedJobStatusSystem _jobStatus = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     // CCVar.
     private int _maxNameLength;
@@ -36,6 +40,9 @@ public abstract partial class SharedIdCardSystem : EntitySystem
 
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<IdCardComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<ExpireIdCardComponent, MapInitEvent>(OnExpireMapInit);
+        SubscribeLocalEvent<ExpireIdCardComponent, ComponentHandleState>(OnExpireHandleState);
+        SubscribeLocalEvent<ExpireIdCardComponent, EntityTimerEvent>(OnExpireTimer);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
         SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
 
@@ -297,6 +304,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
             return;
         ent.Comp.ExpireTime = time;
         Dirty(ent);
+        ScheduleExpiry((ent.Owner, ent.Comp));
     }
 
     public void SetPermanent(Entity<ExpireIdCardComponent?> ent, bool val)
@@ -305,6 +313,7 @@ public abstract partial class SharedIdCardSystem : EntitySystem
             return;
         ent.Comp.Permanent = val;
         Dirty(ent);
+        ScheduleExpiry((ent.Owner, ent.Comp));
     }
 
     /// <summary>
@@ -321,19 +330,27 @@ public abstract partial class SharedIdCardSystem : EntitySystem
         Dirty(ent);
     }
 
-    public override void Update(float frameTime)
+    private void OnExpireMapInit(Entity<ExpireIdCardComponent> ent, ref MapInitEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<ExpireIdCardComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.Expired || comp.Permanent)
-                continue;
+        ScheduleExpiry(ent);
+    }
 
-            if (_timing.CurTime < comp.ExpireTime)
-                continue;
+    private void OnExpireHandleState(Entity<ExpireIdCardComponent> ent, ref ComponentHandleState args)
+    {
+        ScheduleExpiry(ent);
+    }
 
-            ExpireId((uid, comp));
-        }
+    private void OnExpireTimer(Entity<ExpireIdCardComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == ExpiryTimer && !ent.Comp.Expired && !ent.Comp.Permanent)
+            ExpireId(ent);
+    }
+
+    private void ScheduleExpiry(Entity<ExpireIdCardComponent> ent)
+    {
+        if (!ent.Comp.Expired && !ent.Comp.Permanent)
+            _timers.SetTimerAt(ent, ExpiryTimer, ent.Comp.ExpireTime);
+        else
+            _timers.CancelTimer<ExpireIdCardComponent>(ent, ExpiryTimer);
     }
 }

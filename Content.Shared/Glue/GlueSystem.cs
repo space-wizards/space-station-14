@@ -14,12 +14,15 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Glue;
 
 public sealed partial class GlueSystem : EntitySystem
 {
+    private static readonly EntityTimerId UnglueTimer = new("unglue");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private NameModifierSystem _nameMod = default!;
@@ -29,12 +32,38 @@ public sealed partial class GlueSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
+        SubscribeLocalEvent<GluedComponent, ComponentHandleState>(OnGluedHandleState);
+        SubscribeLocalEvent<GluedComponent, EntityTimerEvent>(OnTimer);
+        SubscribeLocalEvent<UnremoveableComponent, ComponentStartup>(OnUnremoveableStartup);
+    }
+
+    private void OnGluedHandleState(Entity<GluedComponent> ent, ref ComponentHandleState args)
+    {
+        if (HasComp<UnremoveableComponent>(ent))
+            _timers.SetTimerAt(ent, UnglueTimer, ent.Comp.Until);
+    }
+
+    private void OnUnremoveableStartup(Entity<UnremoveableComponent> ent, ref ComponentStartup args)
+    {
+        if (TryComp<GluedComponent>(ent, out var glued))
+            _timers.SetTimerAt<GluedComponent>((ent, glued), UnglueTimer, glued.Until);
+    }
+
+    private void OnTimer(Entity<GluedComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != UnglueTimer || !HasComp<UnremoveableComponent>(ent))
+            return;
+
+        RemComp<UnremoveableComponent>(ent);
+        RemComp<GluedComponent>(ent);
+        _nameMod.RefreshNameModifiers(ent.Owner);
     }
 
     // When glue bottle is used on item it will apply the glued and unremoveable components.
@@ -134,23 +163,6 @@ public sealed partial class GlueSystem : EntitySystem
         return false;
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<GluedComponent, UnremoveableComponent>();
-        while (query.MoveNext(out var uid, out var glue, out var _))
-        {
-            if (_timing.CurTime < glue.Until)
-                continue;
-
-            RemComp<UnremoveableComponent>(uid);
-            RemComp<GluedComponent>(uid);
-
-            _nameMod.RefreshNameModifiers(uid);
-        }
-    }
-
     private void PerformGluedEffect(Entity<GluedComponent> entity, EntityUid user)
     {
         // Check if anything on the user cancels it.
@@ -167,6 +179,7 @@ public sealed partial class GlueSystem : EntitySystem
         var comp = EnsureComp<UnremoveableComponent>(entity);
         comp.DeleteOnDrop = false;
         entity.Comp.Until = _timing.CurTime + entity.Comp.Duration;
+        _timers.SetTimerAt(entity, UnglueTimer, entity.Comp.Until);
         Dirty(entity.Owner, comp);
         Dirty(entity);
     }

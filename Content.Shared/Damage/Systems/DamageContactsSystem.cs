@@ -9,7 +9,9 @@ namespace Content.Shared.Damage.Systems;
 
 public sealed partial class DamageContactsSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    private static readonly EntityTimerId DamageTimer = new("damage");
+
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private DamageableSystem _damageable = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
@@ -21,23 +23,24 @@ public sealed partial class DamageContactsSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DamageContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<DamageContactsComponent, EndCollideEvent>(OnEntityExit);
+        SubscribeLocalEvent<DamagedByContactComponent, ComponentStartup>(OnDamagedStartup);
+        SubscribeLocalEvent<DamagedByContactComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnDamagedStartup(Entity<DamagedByContactComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        var interval = TimeSpan.FromSeconds(1);
+        ent.Comp.NextSecond = _timers.SetTimer(ent, DamageTimer, interval, interval);
+    }
 
-        var query = EntityQueryEnumerator<DamagedByContactComponent>();
+    private void OnTimer(Entity<DamagedByContactComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != DamageTimer)
+            return;
 
-        while (query.MoveNext(out var ent, out var damaged))
-        {
-            if (_timing.CurTime < damaged.NextSecond)
-                continue;
-            damaged.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
-
-            if (damaged.Damage != null)
-                _damageable.TryChangeDamage(ent, damaged.Damage, interruptsDoAfters: false);
-        }
+        ent.Comp.NextSecond = args.NextDeadline ?? args.ScheduledTime + TimeSpan.FromSeconds(1);
+        if (ent.Comp.Damage != null)
+            _damageable.TryChangeDamage(ent.Owner, ent.Comp.Damage, interruptsDoAfters: false);
     }
 
     private void OnEntityExit(EntityUid uid, DamageContactsComponent component, ref EndCollideEvent args)

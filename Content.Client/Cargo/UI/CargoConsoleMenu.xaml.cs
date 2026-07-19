@@ -10,7 +10,6 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.UI
@@ -18,8 +17,6 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
-        [Dependency] private IGameTiming _timing = default!;
-
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _protoManager;
         private readonly CargoSystem _cargoSystem;
@@ -303,10 +300,8 @@ namespace Content.Client.Cargo.UI
             _station = station;
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        public void Refresh(TimeSpan currentTime)
         {
-            base.FrameUpdate(args);
-
             if (!_bankQuery.TryComp(_station, out var bankAccount) ||
                 !_orderConsoleQuery.TryComp(_owner, out var orderConsole))
             {
@@ -321,7 +316,7 @@ namespace Content.Client.Cargo.UI
             UnlimitedNotifier.Visible = orderConsole.TransferUnbounded;
             AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
-                                           _timing.CurTime < orderConsole.NextAccountActionTime;
+                                           currentTime < orderConsole.NextAccountActionTime;
 
             RightPart.Visible = orderConsole.Mode != CargoOrderConsoleMode.PrintSlip;
         }

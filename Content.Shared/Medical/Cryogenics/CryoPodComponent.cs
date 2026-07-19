@@ -62,13 +62,6 @@ public sealed partial class CryoPodComponent : Component
     public TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// The timestamp for the next UI update.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextUiUpdateTime = TimeSpan.Zero;
-
-    /// <summary>
     /// How many units to transfer per injection from the beaker to the mob?
     /// </summary>
     [DataField]

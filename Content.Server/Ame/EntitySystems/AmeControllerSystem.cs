@@ -23,8 +23,11 @@ namespace Content.Server.Ame.EntitySystems;
 
 public sealed partial class AmeControllerSystem : EntitySystem
 {
+    private static readonly EntityTimerId ControllerTimer = new("controller");
+    private static readonly EntityTimerId UiTimer = new("ui");
+
     [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private SharedAudioSystem _audioSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
@@ -40,26 +43,27 @@ public sealed partial class AmeControllerSystem : EntitySystem
         SubscribeLocalEvent<AmeControllerComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
+        SubscribeLocalEvent<AmeControllerComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnInit(EntityUid uid, AmeControllerComponent component, ComponentInit args)
     {
         _itemSlots.AddItemSlot(uid, SharedAmeControllerComponent.FuelSlotId, component.FuelSlot);
 
+        component.NextUpdate = _timers.SetTimer<AmeControllerComponent>((uid, component), ControllerTimer, component.UpdatePeriod);
         UpdateUi(uid, component);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<AmeControllerComponent> ent, ref EntityTimerEvent args)
     {
-        var curTime = _gameTiming.CurTime;
-        var query = EntityQueryEnumerator<AmeControllerComponent, NodeContainerComponent>();
-        while (query.MoveNext(out var uid, out var controller, out var nodes))
+        if (args.Id == ControllerTimer)
         {
-            if (controller.NextUpdate <= curTime)
-                UpdateController(uid, curTime, controller, nodes);
-            else if (controller.NextUIUpdate <= curTime)
-                UpdateUi(uid, controller);
+            UpdateController(ent, args.FiredAt, ent.Comp);
+            return;
         }
+
+        if (args.Id == UiTimer)
+            UpdateUi(ent, ent.Comp);
     }
 
     private void OnRemove(EntityUid uid, AmeControllerComponent component, ComponentRemove args)
@@ -85,6 +89,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
 
         controller.LastUpdate = curTime;
         controller.NextUpdate = curTime + controller.UpdatePeriod;
+        _timers.SetTimerAt<AmeControllerComponent>((uid, controller), ControllerTimer, controller.NextUpdate);
         // update the UI regardless of other factors to update the power readings
         UpdateUi(uid, controller);
 
@@ -140,7 +145,7 @@ public sealed partial class AmeControllerSystem : EntitySystem
         var state = GetUiState(uid, controller);
         _userInterfaceSystem.SetUiState(uid, AmeControllerUiKey.Key, state);
 
-        controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
+        controller.NextUIUpdate = _timers.SetTimer<AmeControllerComponent>((uid, controller), UiTimer, controller.UpdateUIPeriod);
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)

@@ -7,27 +7,43 @@ namespace Content.Client.HotPotato;
 
 public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
 {
+    private static readonly EntityTimerId EffectTimer = new("effect");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private readonly EntProtoId _hotPotatoEffectId = "HotPotatoEffect";
 
-    // TODO: particle system
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        base.Update(frameTime);
+        base.Initialize();
+        SubscribeLocalEvent<ActiveHotPotatoComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ActiveHotPotatoComponent, EntityTimerEvent>(OnTimer);
+    }
 
-        if (!_timing.IsFirstTimePredicted)
+    private void OnStartup(Entity<ActiveHotPotatoComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.TargetTime < _timing.CurTime)
+            ent.Comp.TargetTime = _timing.CurTime;
+        Schedule(ent);
+    }
+
+    private void OnTimer(Entity<ActiveHotPotatoComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != EffectTimer)
             return;
 
-        var query = AllEntityQuery<ActiveHotPotatoComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (_timing.CurTime < comp.TargetTime)
-                continue;
-            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
-            Spawn(_hotPotatoEffectId, _transform.GetMapCoordinates(uid).Offset(_random.NextVector2(0.25f)));
-        }
+        ent.Comp.TargetTime = args.FiredAt + TimeSpan.FromSeconds(ent.Comp.EffectCooldown);
+        Schedule(ent);
+
+        if (_timing.IsFirstTimePredicted)
+            Spawn(_hotPotatoEffectId, _transform.GetMapCoordinates(ent).Offset(_random.NextVector2(0.25f)));
+    }
+
+    private void Schedule(Entity<ActiveHotPotatoComponent> ent)
+    {
+        _timers.SetTimerAt(ent, EffectTimer, ent.Comp.TargetTime);
     }
 }

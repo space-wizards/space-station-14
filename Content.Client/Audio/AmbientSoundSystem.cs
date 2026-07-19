@@ -22,14 +22,16 @@ namespace Content.Client.Audio;
 /// </summary>
 public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
 {
+    private static readonly EntityTimerId SampleTimer = new("content.client.audio.ambient-sample");
+
     [Dependency] private AmbientSoundTreeSystem _treeSys = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _xformSystem = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IOverlayManager _overlayManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
@@ -41,7 +43,6 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
     private Vector2 MaxAmbientVector => new(_maxAmbientRange, _maxAmbientRange);
 
     private float _cooldown;
-    private TimeSpan _targetTime = TimeSpan.Zero;
     private float _ambienceVolume = 0.0f;
 
     private static AudioParams _params = AudioParams.Default
@@ -101,6 +102,9 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
         Subs.CVar(_cfg, CCVars.AmbientRange, SetAmbientRange, true);
         Subs.CVar(_cfg, CCVars.AmbienceVolume, SetAmbienceGain, true);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<TransformComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnShutdown(EntityUid uid, AmbientSoundComponent component, ComponentShutdown args)
@@ -127,7 +131,13 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
             _audio.SetVolume(stream, _params.Volume + ent.Comp.Volume + _ambienceVolume);
         }
     }
-    private void SetCooldown(float value) => _cooldown = value;
+    private void SetCooldown(float value)
+    {
+        _cooldown = value;
+
+        if (_playerManager.LocalEntity is { } player && TryComp<TransformComponent>(player, out var xform))
+            Schedule((player, xform), TimeSpan.Zero);
+    }
     private void SetAmbientCount(int value) => _maxAmbientCount = value;
     private void SetAmbientRange(float value) => _maxAmbientRange = value;
 
@@ -150,29 +160,43 @@ public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
         return count;
     }
 
-    public override void Update(float frameTime)
+    private void OnPlayerAttached(LocalPlayerAttachedEvent args)
     {
-        base.Update(frameTime);
+        if (TryComp<TransformComponent>(args.Entity, out var xform))
+            Schedule((args.Entity, xform), TimeSpan.Zero);
+    }
 
-        if (!_gameTiming.IsFirstTimePredicted)
+    private void OnPlayerDetached(LocalPlayerDetachedEvent args)
+    {
+        _timers.CancelTimer<TransformComponent>(args.Entity, SampleTimer);
+        ClearSounds();
+    }
+
+    private void OnTimer(Entity<TransformComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != SampleTimer || _playerManager.LocalEntity != ent.Owner)
             return;
 
         if (_cooldown <= 0f)
             return;
 
-        if (_gameTiming.CurTime < _targetTime)
-            return;
+        Schedule(ent, TimeSpan.FromSeconds(_cooldown));
 
-        _targetTime = _gameTiming.CurTime + TimeSpan.FromSeconds(_cooldown);
+        ProcessNearbyAmbience(ent.Comp);
+    }
 
-        var player = _playerManager.LocalEntity;
-        if (!TryComp(player, out TransformComponent? xform))
+    private void Schedule(Entity<TransformComponent> ent, TimeSpan delay)
+    {
+        if (_cooldown <= 0f)
         {
-            ClearSounds();
+            _timers.CancelTimer<TransformComponent>(ent, SampleTimer);
             return;
         }
 
-        ProcessNearbyAmbience(xform);
+        _timers.SetTimer(ent,
+            SampleTimer,
+            delay,
+            flags: EntityTimerFlags.IgnoreEntityPause | EntityTimerFlags.UpdatesOutsidePrediction);
     }
 
     private void ClearSounds()

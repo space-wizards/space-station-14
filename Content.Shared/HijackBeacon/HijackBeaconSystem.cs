@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -15,12 +16,16 @@ namespace Content.Shared.HijackBeacon;
 
 public sealed partial class HijackBeaconSystem : EntitySystem
 {
+    private static readonly EntityTimerId CompletionTimer = new("completion");
+    private static readonly EntityTimerId CooldownTimer = new("cooldown");
+
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private AnchorableSystem _anchor = default!;
     [Dependency] private SharedChatSystem _chat = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public readonly SoundSpecifier AnnounceSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
     public readonly SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
@@ -34,37 +39,44 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         SubscribeLocalEvent<HijackBeaconComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<HijackBeaconComponent, HijackBeaconDeactivateDoAfterEvent>(OnDeactivateDoAfter);
         SubscribeLocalEvent<HijackBeaconComponent, ExaminedEvent>(OnExaminedEvent);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActiveHijackBeaconComponent, HijackBeaconComponent>();
-        while (query.MoveNext(out var uid, out var active, out var comp))
-        {
-            switch (comp.Status)
-            {
-                case HijackBeaconStatus.Armed:
-                    if (_gameTiming.CurTime < active.CompletionTime)
-                        return;
-
-                    HijackFinish((uid, comp));
-                    Dirty(uid, comp);
-                    break;
-                case HijackBeaconStatus.Cooldown:
-                    if (comp.CooldownTime < _gameTiming.CurTime)
-                    {
-                        comp.Status = HijackBeaconStatus.AwaitActivate;
-                        RemCompDeferred<ActiveHijackBeaconComponent>(uid);
-                        Dirty(uid, comp);
-                    }
-                    break;
-            }
-        }
+        SubscribeLocalEvent<HijackBeaconComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<HijackBeaconComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ActiveHijackBeaconComponent, ComponentHandleState>(OnActiveHandleState);
+        SubscribeLocalEvent<HijackBeaconComponent, EntityTimerEvent>(OnTimer);
     }
 
     #region Event Subs
+
+    private void OnMapInit(Entity<HijackBeaconComponent> ent, ref MapInitEvent args)
+    {
+        Schedule(ent);
+    }
+
+    private void OnHandleState(Entity<HijackBeaconComponent> ent, ref ComponentHandleState args)
+    {
+        Schedule(ent);
+    }
+
+    private void OnActiveHandleState(Entity<ActiveHijackBeaconComponent> ent, ref ComponentHandleState args)
+    {
+        if (TryComp<HijackBeaconComponent>(ent, out var beacon))
+            Schedule((ent.Owner, beacon));
+    }
+
+    private void OnTimer(Entity<HijackBeaconComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == CompletionTimer && ent.Comp.Status == HijackBeaconStatus.Armed)
+        {
+            HijackFinish(ent);
+            Dirty(ent);
+        }
+        else if (args.Id == CooldownTimer && ent.Comp.Status == HijackBeaconStatus.Cooldown)
+        {
+            ent.Comp.Status = HijackBeaconStatus.AwaitActivate;
+            RemCompDeferred<ActiveHijackBeaconComponent>(ent);
+            Dirty(ent);
+        }
+    }
 
     /// <summary>
     ///     Deactivate beacon if it gets unanchored(via a bomb or something)
@@ -179,6 +191,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         EnsureComp<ActiveHijackBeaconComponent>(ent, out var activeComp);
         activeComp.CompletionTime = _gameTiming.CurTime + ent.Comp.RemainingTime;
         ent.Comp.Status = HijackBeaconStatus.Armed;
+        Schedule(ent, activeComp);
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
@@ -202,6 +215,7 @@ public sealed partial class HijackBeaconSystem : EntitySystem
         // Put beacon on cooldown
         ent.Comp.CooldownTime = ent.Comp.Cooldown + _gameTiming.CurTime;
         ent.Comp.Status = HijackBeaconStatus.Cooldown;
+        Schedule(ent);
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
@@ -324,6 +338,17 @@ public sealed partial class HijackBeaconSystem : EntitySystem
             return 69420; // Mature error code
 
         return (int) (ent.Comp.CompletionTime - _gameTiming.CurTime).TotalSeconds;
+    }
+
+    private void Schedule(Entity<HijackBeaconComponent> ent, ActiveHijackBeaconComponent? active = null)
+    {
+        _timers.CancelTimer<HijackBeaconComponent>(ent, CompletionTimer);
+        _timers.CancelTimer<HijackBeaconComponent>(ent, CooldownTimer);
+
+        if (ent.Comp.Status == HijackBeaconStatus.Armed && Resolve(ent.Owner, ref active, false))
+            _timers.SetTimerAt(ent, CompletionTimer, active.CompletionTime);
+        else if (ent.Comp.Status == HijackBeaconStatus.Cooldown)
+            _timers.SetTimerAt(ent, CooldownTimer, ent.Comp.CooldownTime);
     }
 
     #endregion

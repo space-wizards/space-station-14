@@ -25,6 +25,9 @@ namespace Content.Server.Telephone;
 
 public sealed partial class TelephoneSystem : SharedTelephoneSystem
 {
+    private static readonly EntityTimerId StateTimer = new("state");
+    private static readonly EntityTimerId RingTimer = new("ring");
+
     [Dependency] private AppearanceSystem _appearanceSystem = default!;
     [Dependency] private InteractionSystem _interaction = default!;
     [Dependency] private IdCardSystem _idCardSystem = default!;
@@ -34,6 +37,7 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IReplayRecordingManager _replay = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     // Has set used to prevent telephone feedback loops
     private HashSet<(EntityUid, string, Entity<TelephoneComponent>)> _recentChatMessages = new();
@@ -47,6 +51,8 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
         SubscribeLocalEvent<TelephoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<TelephoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<TelephoneComponent, TelephoneMessageReceivedEvent>(OnTelephoneMessageReceived);
+        SubscribeLocalEvent<TelephoneComponent, EntityTimerEvent>(OnTimer);
+        SubscribeLocalEvent<TelephoneComponent, ComponentStartup>(OnStartup);
     }
 
     #region: Events
@@ -119,6 +125,59 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
 
     #endregion
 
+    private void OnStartup(Entity<TelephoneComponent> ent, ref ComponentStartup args)
+    {
+        ScheduleStateTimers(ent);
+    }
+
+    private void OnTimer(Entity<TelephoneComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == RingTimer)
+        {
+            if (ent.Comp.CurrentState != TelephoneState.Ringing || ent.Comp.RingTone == null)
+                return;
+
+            _audio.PlayPvs(ent.Comp.RingTone, ent);
+            ent.Comp.NextRingToneTime = args.FiredAt + ent.Comp.RingInterval;
+            _timers.SetTimerAt(ent, RingTimer, ent.Comp.NextRingToneTime);
+            return;
+        }
+
+        if (args.Id != StateTimer)
+            return;
+
+        switch (ent.Comp.CurrentState)
+        {
+            case TelephoneState.Ringing:
+            case TelephoneState.InCall:
+                EndTelephoneCalls(ent);
+                break;
+            case TelephoneState.EndingCall:
+                TerminateTelephoneCalls(ent);
+                break;
+        }
+    }
+
+    private void ScheduleStateTimers(Entity<TelephoneComponent> ent)
+    {
+        _timers.CancelTimer<TelephoneComponent>(ent, StateTimer);
+        _timers.CancelTimer<TelephoneComponent>(ent, RingTimer);
+
+        var timeout = ent.Comp.CurrentState switch
+        {
+            TelephoneState.Ringing => ent.Comp.RingingTimeout,
+            TelephoneState.InCall => ent.Comp.IdlingTimeout,
+            TelephoneState.EndingCall => ent.Comp.HangingUpTimeout,
+            _ => (TimeSpan?) null,
+        };
+
+        if (timeout is { } delay)
+            _timers.SetTimerAt(ent, StateTimer, ent.Comp.StateStartTime + delay);
+
+        if (ent.Comp.CurrentState == TelephoneState.Ringing && ent.Comp.RingTone != null)
+            _timers.SetTimerAt(ent, RingTimer, ent.Comp.NextRingToneTime);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -145,36 +204,6 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
                 }
             }
 
-            switch (telephone.CurrentState)
-            {
-                // Try to play ring tone if ringing
-                case TelephoneState.Ringing:
-                    if (_timing.CurTime > telephone.StateStartTime + telephone.RingingTimeout)
-                        EndTelephoneCalls(entity);
-
-                    else if (telephone.RingTone != null &&
-                        _timing.CurTime > telephone.NextRingToneTime)
-                    {
-                        _audio.PlayPvs(telephone.RingTone, uid);
-                        telephone.NextRingToneTime = _timing.CurTime + telephone.RingInterval;
-                    }
-
-                    break;
-
-                // Try to hang up if there has been no recent in-call activity
-                case TelephoneState.InCall:
-                    if (_timing.CurTime > telephone.StateStartTime + telephone.IdlingTimeout)
-                        EndTelephoneCalls(entity);
-
-                    break;
-
-                // Try to terminate if the telephone has finished hanging up
-                case TelephoneState.EndingCall:
-                    if (_timing.CurTime > telephone.StateStartTime + telephone.HangingUpTimeout)
-                        TerminateTelephoneCalls(entity);
-
-                    break;
-            }
         }
 
         _recentChatMessages.Clear();
@@ -392,6 +421,7 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
         var evSentMessage = new TelephoneMessageSentEvent(message, chatMsg, messageSource);
         RaiseLocalEvent(source, ref evSentMessage);
         source.Comp.StateStartTime = _timing.CurTime;
+        ScheduleStateTimers(source);
 
         var evReceivedMessage = new TelephoneMessageReceivedEvent(message, chatMsg, messageSource, source);
 
@@ -402,6 +432,7 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
 
             RaiseLocalEvent(receiverUid, ref evReceivedMessage);
             receiverTelephone.StateStartTime = _timing.CurTime;
+            ScheduleStateTimers((receiverUid, receiverTelephone));
         }
 
         if (name != Name(messageSource))
@@ -419,6 +450,9 @@ public sealed partial class TelephoneSystem : SharedTelephoneSystem
         entity.Comp.PreviousState = entity.Comp.CurrentState;
         entity.Comp.CurrentState = newState;
         entity.Comp.StateStartTime = _timing.CurTime;
+        if (newState == TelephoneState.Ringing)
+            entity.Comp.NextRingToneTime = _timing.CurTime;
+        ScheduleStateTimers(entity);
         Dirty(entity);
 
         _appearanceSystem.SetData(entity, TelephoneVisuals.Key, entity.Comp.CurrentState);

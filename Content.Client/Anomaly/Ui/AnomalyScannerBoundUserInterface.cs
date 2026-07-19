@@ -1,12 +1,16 @@
 using Content.Shared.Anomaly;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
-public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
+public sealed partial class AnomalyScannerBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
+    [Dependency] private IGameTiming _timing = default!;
     private AnomalyScannerMenu? _menu;
 
     public AnomalyScannerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -35,7 +39,17 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
 
         _menu.LastMessage = msg.Message;
         _menu.NextPulseTime = msg.NextPulseTime;
-        _menu.UpdateMenu();
+        _menu.UpdateMenu(_timing.CurTime);
+        if (msg.NextPulseTime != null)
+            SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+        else
+            CancelTimer(RefreshTimer);
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == RefreshTimer)
+            _menu?.UpdateMenu(_timing.CurTime);
     }
 
     protected override void Dispose(bool disposing)
@@ -46,4 +60,3 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
         _menu?.Dispose();
     }
 }
-

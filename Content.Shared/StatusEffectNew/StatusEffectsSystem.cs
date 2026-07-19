@@ -14,7 +14,11 @@ namespace Content.Shared.StatusEffectNew;
 /// </summary>
 public sealed partial class StatusEffectsSystem : EntitySystem
 {
+    private static readonly EntityTimerId StartTimer = new("start");
+    private static readonly EntityTimerId EndTimer = new("end");
+
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
 
@@ -33,6 +37,9 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
+        SubscribeLocalEvent<StatusEffectComponent, ComponentStartup>(OnEffectStartup);
+        SubscribeLocalEvent<StatusEffectComponent, AfterAutoHandleStateEvent>(OnEffectHandleState);
+        SubscribeLocalEvent<StatusEffectComponent, EntityTimerEvent>(OnTimer);
 
         SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
 
@@ -41,26 +48,39 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         ReloadStatusEffectsCache();
     }
 
-    public override void Update(float frameTime)
+    private void OnEffectStartup(Entity<StatusEffectComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        RegisterTimers(ent);
+    }
 
-        var query = EntityQueryEnumerator<StatusEffectComponent>();
-        while (query.MoveNext(out var ent, out var effect))
+    private void OnEffectHandleState(Entity<StatusEffectComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RegisterTimers(ent);
+    }
+
+    private void RegisterTimers(Entity<StatusEffectComponent> ent)
+    {
+        if (!ent.Comp.Applied)
+            _timers.SetTimerAt(ent, StartTimer, ent.Comp.StartEffectTime);
+        else
+            _timers.CancelTimer<StatusEffectComponent>(ent, StartTimer);
+
+        if (ent.Comp.EndEffectTime is { } endTime)
+            _timers.SetTimerAt(ent, EndTimer, endTime);
+        else
+            _timers.CancelTimer<StatusEffectComponent>(ent, EndTimer);
+    }
+
+    private void OnTimer(Entity<StatusEffectComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == StartTimer)
         {
-            TryApplyStatusEffect((ent, effect));
-
-            if (effect.EndEffectTime is null)
-                continue;
-
-            if (_timing.CurTime < effect.EndEffectTime)
-                continue;
-
-            if (effect.AppliedTo is null)
-                continue;
-
-            PredictedQueueDel(ent);
+            TryApplyStatusEffect(ent);
+            return;
         }
+
+        if (args.Id == EndTimer && ent.Comp.AppliedTo != null)
+            PredictedQueueDel(ent);
     }
 
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
@@ -297,6 +317,11 @@ public sealed partial class StatusEffectsSystem : EntitySystem
 
         ent.Comp.EndEffectTime = endTime;
 
+        if (endTime is { } deadline)
+            _timers.SetTimerAt<StatusEffectComponent>((ent.Owner, ent.Comp), EndTimer, deadline);
+        else
+            _timers.CancelTimer<StatusEffectComponent>(ent, EndTimer);
+
         if (ent.Comp.AppliedTo is not { } appliedTo)
             return; // Not much we can do!
 
@@ -315,6 +340,9 @@ public sealed partial class StatusEffectsSystem : EntitySystem
             return;
 
         ent.Comp.StartEffectTime = startTime;
+
+        if (!ent.Comp.Applied)
+            _timers.SetTimerAt<StatusEffectComponent>((ent.Owner, ent.Comp), StartTimer, startTime);
 
         if (ent.Comp.AppliedTo is not { } appliedTo)
             return; // Not much we can do!

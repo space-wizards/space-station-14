@@ -17,6 +17,8 @@ namespace Content.Server.DeviceLinking.Systems;
 
 public sealed partial class PowerSensorSystem : EntitySystem
 {
+    private static readonly EntityTimerId CheckTimer = new("check");
+
     [Dependency] private DeviceLinkSystem _deviceLink = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private PowerNetSystem _powerNet = default!;
@@ -24,6 +26,7 @@ public sealed partial class PowerSensorSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -32,25 +35,23 @@ public sealed partial class PowerSensorSystem : EntitySystem
         SubscribeLocalEvent<PowerSensorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PowerSensorComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PowerSensorComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PowerSensorComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float deltaTime)
+    private void OnTimer(Entity<PowerSensorComponent> ent, ref EntityTimerEvent args)
     {
-        var query = EntityQueryEnumerator<PowerSensorComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            var now = _timing.CurTime;
-            if (comp.NextCheck > now)
-                continue;
+        if (args.Id != CheckTimer)
+            return;
 
-            comp.NextCheck = now + comp.CheckDelay;
-            UpdateOutputs(uid, comp);
-        }
+        ent.Comp.NextCheck = args.FiredAt + ent.Comp.CheckDelay;
+        _timers.SetTimerAt(ent, CheckTimer, ent.Comp.NextCheck);
+        UpdateOutputs(ent, ent.Comp);
     }
 
     private void OnInit(EntityUid uid, PowerSensorComponent comp, ComponentInit args)
     {
         _deviceLink.EnsureSourcePorts(uid, comp.ChargingPort, comp.DischargingPort);
+        comp.NextCheck = _timers.SetTimer<PowerSensorComponent>((uid, comp), CheckTimer, comp.CheckDelay);
     }
 
     private void OnExamined(EntityUid uid, PowerSensorComponent comp, ExaminedEvent args)

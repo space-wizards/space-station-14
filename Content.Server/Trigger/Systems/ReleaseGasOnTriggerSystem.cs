@@ -9,40 +9,44 @@ public sealed partial class ReleaseGasOnTriggerSystem : SharedReleaseGasOnTrigge
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private IGameTiming _timing = default!;
-
-
-    public override void Update(float frameTime)
+    public override void Initialize()
     {
-        base.Update(frameTime);
+        base.Initialize();
+        SubscribeLocalEvent<ReleaseGasOnTriggerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ReleaseGasOnTriggerComponent, EntityTimerEvent>(OnTimer);
+    }
 
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<ReleaseGasOnTriggerComponent>();
+    private void OnStartup(Entity<ReleaseGasOnTriggerComponent> ent, ref ComponentStartup args)
+    {
+        if (ent.Comp.Active)
+            Timers.SetTimerAt(ent, ReleaseTimer, ent.Comp.NextReleaseTime);
+    }
 
-        while (query.MoveNext(out var uid, out var comp))
+    private void OnTimer(Entity<ReleaseGasOnTriggerComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != ReleaseTimer || !ent.Comp.Active)
+            return;
+
+        var comp = ent.Comp;
+        var giverGasMix = comp.Air.Remove(comp.StartingTotalMoles * comp.RemoveFraction);
+        var environment = _atmosphereSystem.GetContainingMixture(ent.Owner, false, true);
+
+        if (environment == null)
         {
-            if (!comp.Active || comp.NextReleaseTime > curTime)
-                continue;
+            _appearance.SetData(ent, ReleaseGasOnTriggerVisuals.Key, false);
+            RemCompDeferred<ReleaseGasOnTriggerComponent>(ent);
+            return;
+        }
 
-            var giverGasMix = comp.Air.Remove(comp.StartingTotalMoles * comp.RemoveFraction);
-            var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
+        _atmosphereSystem.Merge(environment, giverGasMix);
+        comp.NextReleaseTime = args.ScheduledTime + comp.ReleaseInterval;
+        Timers.SetTimerAt(ent, ReleaseTimer, comp.NextReleaseTime);
 
-            if (environment == null)
-            {
-                _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
-                RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
-                continue;
-            }
-
-            _atmosphereSystem.Merge(environment, giverGasMix);
-            comp.NextReleaseTime += comp.ReleaseInterval;
-
-            if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
-                comp.Air.TotalMoles <= 0)
-            {
-                _appearance.SetData(uid, ReleaseGasOnTriggerVisuals.Key, false);
-                RemCompDeferred<ReleaseGasOnTriggerComponent>(uid);
-            }
+        if (comp.PressureLimit != 0 && environment.Pressure >= comp.PressureLimit ||
+            comp.Air.TotalMoles <= 0)
+        {
+            _appearance.SetData(ent, ReleaseGasOnTriggerVisuals.Key, false);
+            RemCompDeferred<ReleaseGasOnTriggerComponent>(ent);
         }
     }
 }

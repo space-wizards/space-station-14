@@ -12,7 +12,7 @@ namespace Content.Shared.HijackBeacon;
 /// <remarks>
 ///     Status and timer fields are private so the state machine is preserved.
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class HijackBeaconComponent : Component
 {
     /// <summary>
@@ -42,7 +42,7 @@ public sealed partial class HijackBeaconComponent : Component
     /// <summary>
     ///     Remaining cooldown time before the beacon can be reactivated.
     /// </summary>
-    [DataField, AutoNetworkedField, Access(typeof(HijackBeaconSystem))]
+    [DataField, AutoNetworkedField, AutoPausedField, Access(typeof(HijackBeaconSystem))]
     public TimeSpan CooldownTime = TimeSpan.Zero;
 
     /// <summary>

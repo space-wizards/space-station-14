@@ -8,9 +8,12 @@ namespace Content.Server.Body.Systems;
 
 public sealed partial class ThermalRegulatorSystem : EntitySystem
 {
+    private static readonly EntityTimerId RegulationTimer = new("regulation");
+
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private TemperatureSystem _tempSys = default!;
     [Dependency] private ActionBlockerSystem _actionBlockerSys = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -18,11 +21,13 @@ public sealed partial class ThermalRegulatorSystem : EntitySystem
 
         SubscribeLocalEvent<ThermalRegulatorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ThermalRegulatorComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<ThermalRegulatorComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        _timers.SetTimerAt(ent, RegulationTimer, ent.Comp.NextUpdate);
     }
 
     private void OnUnpaused(Entity<ThermalRegulatorComponent> ent, ref EntityUnpausedEvent args)
@@ -30,17 +35,14 @@ public sealed partial class ThermalRegulatorSystem : EntitySystem
         ent.Comp.NextUpdate += args.PausedTime;
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<ThermalRegulatorComponent> ent, ref EntityTimerEvent args)
     {
-        var query = EntityQueryEnumerator<ThermalRegulatorComponent>();
-        while (query.MoveNext(out var uid, out var regulator))
-        {
-            if (_gameTiming.CurTime < regulator.NextUpdate)
-                continue;
+        if (args.Id != RegulationTimer)
+            return;
 
-            regulator.NextUpdate += regulator.UpdateInterval;
-            ProcessThermalRegulation((uid, regulator));
-        }
+        ent.Comp.NextUpdate = args.ScheduledTime + ent.Comp.UpdateInterval;
+        _timers.SetTimerAt(ent, RegulationTimer, ent.Comp.NextUpdate);
+        ProcessThermalRegulation((ent.Owner, ent.Comp));
     }
 
     /// <summary>

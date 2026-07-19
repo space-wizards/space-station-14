@@ -15,7 +15,7 @@ namespace Content.Server.Nuke
     ///     Basically a station self-destruction mechanism.
     ///     To activate it, user needs to insert an authorization disk and enter a secret code.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, AutoGenerateComponentPause]
     [Access(typeof(NukeSystem))]
     public sealed partial class NukeComponent : SharedNukeComponent
     {
@@ -152,11 +152,17 @@ namespace Content.Server.Nuke
         [DataField]
         public float RemainingTime;
 
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+        public TimeSpan DetonationTime;
+
         /// <summary>
         ///     Time until bomb cooldown will expire in seconds.
         /// </summary>
         [DataField]
         public float CooldownTime;
+
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+        public TimeSpan CooldownEndTime;
 
         /// <summary>
         ///     Current nuclear code buffer. Entered manually by players.

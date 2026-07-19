@@ -3,6 +3,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
@@ -10,37 +11,55 @@ namespace Content.Shared.Xenoarchaeology.Equipment;
 /// <summary> Controls behaviour of artifact node scanner device. </summary>
 public sealed partial class NodeScannerSystem : EntitySystem
 {
+    private static readonly EntityTimerId LinkTimer = new("link");
+
     [Dependency] private UseDelaySystem _useDelay = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<NodeScannerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<NodeScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
+        SubscribeLocalEvent<NodeScannerConnectedComponent, ComponentInit>(OnConnectedInit);
+        SubscribeLocalEvent<NodeScannerConnectedComponent, ComponentHandleState>(OnConnectedHandleState);
+        SubscribeLocalEvent<NodeScannerConnectedComponent, EntityTimerEvent>(OnLinkTimer);
     }
 
-    /// <inheritdoc />
-    public override void Update(float frameTime)
+    private void OnConnectedInit(Entity<NodeScannerConnectedComponent> ent, ref ComponentInit args)
     {
-        var scannerQuery = EntityQueryEnumerator<NodeScannerConnectedComponent, NodeScannerComponent, TransformComponent>();
-        while (scannerQuery.MoveNext(out var uid, out var connected, out var scanner, out var transform))
+        Schedule(ent);
+    }
+
+    private void OnConnectedHandleState(Entity<NodeScannerConnectedComponent> ent, ref ComponentHandleState args)
+    {
+        Schedule(ent);
+    }
+
+    private void OnLinkTimer(Entity<NodeScannerConnectedComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != LinkTimer ||
+            !TryComp<NodeScannerComponent>(ent, out var scanner) ||
+            !TryComp<TransformComponent>(ent, out var transform) ||
+            !TryComp<TransformComponent>(ent.Comp.AttachedTo, out var artifactTransform))
+            return;
+
+        if (!_transform.InRange(artifactTransform.Coordinates, transform.Coordinates, scanner.MaxLinkedRange))
         {
-            if (connected.NextUpdate > _timing.CurTime)
-                continue;
-
-            connected.NextUpdate = _timing.CurTime + connected.LinkUpdateInterval;
-
-            var attachedArtifact = connected.AttachedTo;
-            var artifactCoordinates = Transform(attachedArtifact).Coordinates;
-            if (!_transform.InRange(artifactCoordinates, transform.Coordinates, scanner.MaxLinkedRange))
-            {
-                //scanner is too far, disconnect
-                RemCompDeferred(uid, connected);
-            }
+            RemCompDeferred<NodeScannerConnectedComponent>(ent);
+            return;
         }
+
+        ent.Comp.NextUpdate = args.NextDeadline ?? args.FiredAt + ent.Comp.LinkUpdateInterval;
+        Dirty(ent);
+    }
+
+    private void Schedule(Entity<NodeScannerConnectedComponent> ent)
+    {
+        _timers.SetTimerAt(ent, LinkTimer, ent.Comp.NextUpdate, ent.Comp.LinkUpdateInterval);
     }
 
     private void OnBeforeRangedInteract(EntityUid uid, NodeScannerComponent component, BeforeRangedInteractEvent args)
@@ -94,6 +113,9 @@ public sealed partial class NodeScannerSystem : EntitySystem
             connected.AttachedTo = artifact;
             Dirty(device, connected);
         }
+
+        connected.NextUpdate = _timing.CurTime + connected.LinkUpdateInterval;
+        Schedule((device.Owner, connected));
 
         _ui.TryOpenUi((device, null), NodeScannerUiKey.Key, actor, predicted: true);
     }

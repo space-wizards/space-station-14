@@ -25,12 +25,15 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
 {
+    private static readonly EntityTimerId LearnCooldownTimer = new("learn-cooldown");
+
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -112,7 +115,7 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
             return;
 
         // can't learn too soon after having already learnt something else
-        if (_gameTiming.CurTime < entity.Comp1.NextLearnInterval)
+        if (_timers.TryGetTimer<ParrotMemoryComponent>(entity, LearnCooldownTimer, out _))
             return;
 
         // remove whitespace around message, if any
@@ -133,7 +136,8 @@ public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
 
         // only from this point this message has a chance of being learned
         // set new time for learn interval, regardless of whether the learning succeeds
-        entity.Comp1.NextLearnInterval = _gameTiming.CurTime + entity.Comp1.LearnCooldown;
+        entity.Comp1.NextLearnInterval = _timers.SetTimer<ParrotMemoryComponent>(
+            (entity.Owner, entity.Comp1), LearnCooldownTimer, entity.Comp1.LearnCooldown);
 
         // decide if this message passes the learning chance
         if (!_random.Prob(entity.Comp1.LearnChance))

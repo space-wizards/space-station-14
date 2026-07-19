@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -8,57 +9,62 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public sealed partial class RechargeBasicEntityAmmoSystem : EntitySystem
 {
+    private static readonly EntityTimerId RechargeTimer = new("recharge");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _netManager = default!;
     [Dependency] private MetaDataSystem _metadata = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, EntityTimerEvent>(OnTimer);
         SubscribeLocalEvent<RechargeBasicEntityAmmoComponent, ExaminedEvent>(OnExamined);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<RechargeBasicEntityAmmoComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-        var query = EntityQueryEnumerator<RechargeBasicEntityAmmoComponent, BasicEntityAmmoProviderComponent>();
+        if (args.Id != RechargeTimer ||
+            !TryComp<BasicEntityAmmoProviderComponent>(ent, out var ammo) ||
+            ammo.Count is null ||
+            ammo.Count == ammo.Capacity ||
+            ent.Comp.NextCharge is null)
+            return;
 
-        while (query.MoveNext(out var uid, out var recharge, out var ammo))
+        if (_gun.UpdateBasicEntityAmmoCount((ent, ammo), ammo.Count.Value + 1))
         {
-            if (ammo.Count is null || ammo.Count == ammo.Capacity || recharge.NextCharge == null)
-                continue;
-
-            if (recharge.NextCharge > _timing.CurTime)
-                continue;
-
-            if (_gun.UpdateBasicEntityAmmoCount((uid, ammo), ammo.Count.Value + 1))
-            {
-                // We don't predict this because occasionally on client it may not play.
-                // PlayPredicted will still be predicted on the client.
-                if (_netManager.IsServer)
-                    _audio.PlayPvs(recharge.RechargeSound, uid);
-            }
-
-            if (ammo.Count == ammo.Capacity)
-            {
-                recharge.NextCharge = null;
-                Dirty(uid, recharge);
-                continue;
-            }
-
-            recharge.NextCharge = recharge.NextCharge.Value + TimeSpan.FromSeconds(recharge.RechargeCooldown);
-            Dirty(uid, recharge);
+            if (_netManager.IsServer)
+                _audio.PlayPvs(ent.Comp.RechargeSound, ent);
         }
+
+        if (ammo.Count == ammo.Capacity)
+        {
+            ent.Comp.NextCharge = null;
+            Dirty(ent);
+            return;
+        }
+
+        ent.Comp.NextCharge += TimeSpan.FromSeconds(ent.Comp.RechargeCooldown);
+        Dirty(ent);
+        Schedule(ent);
     }
 
     private void OnInit(Entity<RechargeBasicEntityAmmoComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextCharge = _timing.CurTime;
         Dirty(ent);
+        Schedule(ent);
+    }
+
+    private void OnHandleState(Entity<RechargeBasicEntityAmmoComponent> ent, ref ComponentHandleState args)
+    {
+        Schedule(ent);
     }
 
     private void OnExamined(Entity<RechargeBasicEntityAmmoComponent> ent, ref ExaminedEvent args)
@@ -87,6 +93,15 @@ public sealed partial class RechargeBasicEntityAmmoSystem : EntitySystem
         {
             ent.Comp.NextCharge = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.RechargeCooldown);
             Dirty(ent);
+            Schedule((ent.Owner, ent.Comp));
         }
+    }
+
+    private void Schedule(Entity<RechargeBasicEntityAmmoComponent> ent)
+    {
+        if (ent.Comp.NextCharge is {} deadline)
+            _timers.SetTimerAt(ent, RechargeTimer, deadline);
+        else
+            _timers.CancelTimer<RechargeBasicEntityAmmoComponent>(ent, RechargeTimer);
     }
 }

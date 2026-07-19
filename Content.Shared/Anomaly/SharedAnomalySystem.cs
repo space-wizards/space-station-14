@@ -10,6 +10,7 @@ using Content.Shared.Weapons.Melee.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -26,6 +27,12 @@ namespace Content.Shared.Anomaly;
 
 public abstract partial class SharedAnomalySystem : EntitySystem
 {
+    public static readonly EntityTimerId PulseTimerId = new("pulse");
+    private static readonly EntityTimerId HealthTimer = new("health");
+    private static readonly EntityTimerId PulseVisualTimer = new("pulse-visual");
+    private static readonly EntityTimerId SupercriticalTimer = new("supercritical");
+    private static readonly TimeSpan HealthInterval = TimeSpan.FromSeconds(1);
+
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] protected IRobustRandom Random = default!;
@@ -36,6 +43,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] protected IEntityTimerManager Timers = default!;
 
     [Dependency] private EntityQuery<PhysicsComponent> _physQuery = default!;
 
@@ -45,6 +53,62 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         SubscribeLocalEvent<AnomalyComponent, MeleeThrowOnHitStartEvent>(OnAnomalyThrowStart);
         SubscribeLocalEvent<AnomalyComponent, LandEvent>(OnLand);
+        SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnAnomalyMapInit);
+        SubscribeLocalEvent<AnomalyComponent, ComponentHandleState>(OnAnomalyHandleState);
+        SubscribeLocalEvent<AnomalyComponent, EntityTimerEvent>(OnAnomalyTimer);
+        SubscribeLocalEvent<AnomalyPulsingComponent, ComponentHandleState>(OnPulsingHandleState);
+        SubscribeLocalEvent<AnomalyPulsingComponent, EntityTimerEvent>(OnPulsingTimer);
+        SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentHandleState>(OnSupercriticalHandleState);
+        SubscribeLocalEvent<AnomalySupercriticalComponent, EntityTimerEvent>(OnSupercriticalTimer);
+    }
+
+    private void OnAnomalyMapInit(Entity<AnomalyComponent> ent, ref MapInitEvent args)
+    {
+        ScheduleAnomalyTimers(ent);
+    }
+
+    private void OnAnomalyHandleState(Entity<AnomalyComponent> ent, ref ComponentHandleState args)
+    {
+        ScheduleAnomalyTimers(ent);
+    }
+
+    private void OnAnomalyTimer(Entity<AnomalyComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == PulseTimerId)
+        {
+            DoAnomalyPulse(ent, ent.Comp);
+        }
+        else if (args.Id == HealthTimer && ent.Comp.Stability < ent.Comp.DecayThreshold)
+        {
+            ChangeAnomalyHealth(ent, ent.Comp.HealthChangePerSecond * args.ElapsedCount, ent.Comp);
+        }
+    }
+
+    private void OnPulsingHandleState(Entity<AnomalyPulsingComponent> ent, ref ComponentHandleState args)
+    {
+        Timers.SetTimerAt(ent, PulseVisualTimer, ent.Comp.EndTime);
+    }
+
+    private void OnPulsingTimer(Entity<AnomalyPulsingComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != PulseVisualTimer)
+            return;
+
+        Appearance.SetData(ent, AnomalyVisuals.IsPulsing, false);
+        RemComp<AnomalyPulsingComponent>(ent);
+    }
+
+    private void OnSupercriticalHandleState(Entity<AnomalySupercriticalComponent> ent, ref ComponentHandleState args)
+    {
+        Timers.SetTimerAt(ent, SupercriticalTimer, ent.Comp.EndTime);
+    }
+
+    private void OnSupercriticalTimer(Entity<AnomalySupercriticalComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != SupercriticalTimer || !TryComp<AnomalyComponent>(ent, out var anomaly))
+            return;
+
+        DoAnomalySupercriticalEvent(ent, anomaly);
     }
 
     private void OnAnomalyThrowStart(Entity<AnomalyComponent> ent, ref MeleeThrowOnHitStartEvent args)
@@ -99,6 +163,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
         pulse.EndTime  = Timing.CurTime + pulse.PulseDuration;
+        Timers.SetTimerAt<AnomalyPulsingComponent>((uid, pulse), PulseVisualTimer, pulse.EndTime);
         Appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
 
         var powerMod = 1f;
@@ -118,6 +183,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         var variation = Random.NextFloat(-component.PulseVariation, component.PulseVariation) + 1;
         component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * variation;
+        Timers.SetTimerAt<AnomalyComponent>((uid, component), PulseTimerId, component.NextPulseTime);
     }
 
     /// <summary>
@@ -141,6 +207,7 @@ public abstract partial class SharedAnomalySystem : EntitySystem
 
         var super = AddComp<AnomalySupercriticalComponent>(ent);
         super.EndTime = Timing.CurTime + ent.Comp.SupercriticalDuration;
+        Timers.SetTimerAt<AnomalySupercriticalComponent>((ent.Owner, super), SupercriticalTimer, super.EndTime);
         Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
         SetScannerSupercritical((ent, ent.Comp), true);
         Dirty(ent, super);
@@ -329,45 +396,10 @@ public abstract partial class SharedAnomalySystem : EntitySystem
         return score * component.SeverityGrowthCoefficient;
     }
 
-    public override void Update(float frameTime)
+    protected void ScheduleAnomalyTimers(Entity<AnomalyComponent> anomaly)
     {
-        base.Update(frameTime);
-
-        var anomalyQuery = EntityQueryEnumerator<AnomalyComponent>();
-        while (anomalyQuery.MoveNext(out var ent, out var anomaly))
-        {
-            // if the stability is under the death threshold,
-            // update it every second to start killing it slowly.
-            if (anomaly.Stability < anomaly.DecayThreshold)
-            {
-                ChangeAnomalyHealth(ent, anomaly.HealthChangePerSecond * frameTime, anomaly);
-            }
-
-            var secondsUntilNextPulse = (anomaly.NextPulseTime - Timing.CurTime).TotalSeconds;
-            if (secondsUntilNextPulse < 0)
-            {
-                DoAnomalyPulse(ent, anomaly);
-            }
-        }
-
-        var pulseQuery = EntityQueryEnumerator<AnomalyPulsingComponent>();
-        while (pulseQuery.MoveNext(out var ent, out var pulse))
-        {
-            if (Timing.CurTime > pulse.EndTime)
-            {
-                Appearance.SetData(ent, AnomalyVisuals.IsPulsing, false);
-                RemComp(ent, pulse);
-            }
-        }
-
-        var supercriticalQuery = EntityQueryEnumerator<AnomalySupercriticalComponent, AnomalyComponent>();
-        while (supercriticalQuery.MoveNext(out var ent, out var super, out var anom))
-        {
-            if (Timing.CurTime <= super.EndTime)
-                continue;
-            DoAnomalySupercriticalEvent(ent, anom);
-            // Removal of the supercritical component is handled by DoAnomalySupercriticalEvent
-        }
+        Timers.SetTimerAt(anomaly, PulseTimerId, anomaly.Comp.NextPulseTime);
+        Timers.SetTimer(anomaly, HealthTimer, HealthInterval, HealthInterval);
     }
 
     private void SetScannerSupercritical(Entity<AnomalyComponent> anomalyEnt, bool value)

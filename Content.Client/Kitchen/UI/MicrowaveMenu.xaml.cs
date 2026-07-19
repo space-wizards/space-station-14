@@ -2,15 +2,12 @@
 using Robust.Client.UserInterface.Controls;
 using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Kitchen.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class MicrowaveMenu : FancyWindow
     {
-        [Dependency] private IGameTiming _timing = default!;
-
         public event Action<BaseButton.ButtonEventArgs, int>? OnCookTimeSelected;
 
         public ButtonGroup CookTimeButtonGroup { get; }
@@ -61,17 +58,15 @@ namespace Content.Client.Kitchen.UI
             DisableCookingPanelOverlay.Visible = shouldDisable;
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        public void UpdateCookTime(TimeSpan currentTime)
         {
-            base.FrameUpdate(args);
-
             if (!IsBusy)
                 return;
 
-            if (CurrentCooktimeEnd > _timing.CurTime)
+            if (CurrentCooktimeEnd > currentTime)
             {
                 CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-                ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
+                ("time", CurrentCooktimeEnd.Subtract(currentTime).Seconds));
             }
         }
 

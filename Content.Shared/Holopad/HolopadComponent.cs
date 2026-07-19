@@ -11,7 +11,7 @@ namespace Content.Shared.Holopad;
 /// <remarks>
 /// Holopads also require a <see cref="TelephoneComponent"/> to function
 /// </remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true), AutoGenerateComponentPause]
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component
 {

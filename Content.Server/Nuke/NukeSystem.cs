@@ -45,6 +45,14 @@ public sealed partial class NukeSystem : EntitySystem
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    private static readonly EntityTimerId DetonationTimer = new("detonation");
+    private static readonly EntityTimerId SongTimer = new("song");
+    private static readonly EntityTimerId AlertTimer = new("alert");
+    private static readonly EntityTimerId CooldownTimer = new("cooldown");
+    private static readonly EntityTimerId UiTimer = new("ui");
+    private static readonly TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -67,6 +75,7 @@ public sealed partial class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, ExaminedEvent>(OnExaminedEvent);
+        SubscribeLocalEvent<NukeComponent, EntityTimerEvent>(OnTimer);
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
@@ -92,23 +101,48 @@ public sealed partial class NukeSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<NukeComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        UpdateRemainingTimes(ent.Comp);
 
-        var query = EntityQueryEnumerator<NukeComponent>();
-        while (query.MoveNext(out var uid, out var nuke))
+        if (args.Id == UiTimer)
         {
-            switch (nuke.Status)
-            {
-                case NukeStatus.ARMED:
-                    TickTimer(uid, frameTime, nuke);
-                    break;
-                case NukeStatus.COOLDOWN:
-                    TickCooldown(uid, frameTime, nuke);
-                    break;
-            }
+            UpdateUserInterface(ent.Owner, ent.Comp);
+            return;
         }
+
+        if (args.Id == CooldownTimer && ent.Comp.Status == NukeStatus.COOLDOWN)
+        {
+            ent.Comp.CooldownTime = 0;
+            ent.Comp.Status = NukeStatus.AWAIT_ARM;
+            _timers.CancelTimer<NukeComponent>(ent.Owner, UiTimer);
+            UpdateStatus(ent.Owner, ent.Comp);
+            return;
+        }
+
+        if (ent.Comp.Status != NukeStatus.ARMED)
+            return;
+
+        if (args.Id == SongTimer && !ent.Comp.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
+        {
+            _sound.DispatchStationEventMusic(ent.Owner, _selectedNukeSong, StationEventMusicType.Nuke);
+            ent.Comp.PlayedNukeSong = true;
+        }
+        else if (args.Id == AlertTimer && !ent.Comp.PlayedAlertSound)
+        {
+            _sound.PlayGlobalOnStation(ent.Owner, _audio.ResolveSound(ent.Comp.AlertSound), new AudioParams { Volume = -5f });
+            _sound.StopStationEventMusic(ent.Owner, StationEventMusicType.Nuke);
+            ent.Comp.PlayedAlertSound = true;
+            UpdateAppearance(ent.Owner, ent.Comp);
+        }
+        else if (args.Id == DetonationTimer)
+        {
+            ent.Comp.RemainingTime = 0;
+            ActivateBomb(ent.Owner, ent.Comp);
+            return;
+        }
+
+        UpdateUserInterface(ent.Owner, ent.Comp);
     }
 
     private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
@@ -299,57 +333,6 @@ public sealed partial class NukeSystem : EntitySystem
     }
     #endregion
 
-    private void TickCooldown(EntityUid uid, float frameTime, NukeComponent? nuke = null)
-    {
-        if (!Resolve(uid, ref nuke))
-            return;
-
-        nuke.CooldownTime -= frameTime;
-        if (nuke.CooldownTime <= 0)
-        {
-            // reset nuke to default state
-            nuke.CooldownTime = 0;
-            nuke.Status = NukeStatus.AWAIT_ARM;
-            UpdateStatus(uid, nuke);
-        }
-
-        UpdateUserInterface(uid, nuke);
-    }
-
-    private void TickTimer(EntityUid uid, float frameTime, NukeComponent? nuke = null)
-    {
-        if (!Resolve(uid, ref nuke))
-            return;
-
-        nuke.RemainingTime -= frameTime;
-
-        // Start playing the nuke event song so that it ends a couple seconds before the alert sound
-        // should play
-        if (nuke.RemainingTime <= _nukeSongLength + nuke.AlertSoundTime + NukeSongBuffer && !nuke.PlayedNukeSong && !ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
-        {
-            _sound.DispatchStationEventMusic(uid, _selectedNukeSong, StationEventMusicType.Nuke);
-            nuke.PlayedNukeSong = true;
-        }
-
-        // play alert sound if time is running out
-        if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
-        {
-            _sound.PlayGlobalOnStation(uid, _audio.ResolveSound(nuke.AlertSound), new AudioParams{Volume = -5f});
-            _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
-            nuke.PlayedAlertSound = true;
-            UpdateAppearance(uid, nuke);
-        }
-
-        if (nuke.RemainingTime <= 0)
-        {
-            nuke.RemainingTime = 0;
-            ActivateBomb(uid, nuke);
-        }
-
-        else
-            UpdateUserInterface(uid, nuke);
-    }
-
     private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -404,6 +387,8 @@ public sealed partial class NukeSystem : EntitySystem
 
         if (!_ui.HasUi(uid, NukeUiKey.Key))
             return;
+
+        UpdateRemainingTimes(component);
 
         var anchored = Transform(uid).Anchored;
 
@@ -522,6 +507,7 @@ public sealed partial class NukeSystem : EntitySystem
         }
 
         component.Status = NukeStatus.ARMED;
+        RegisterArmedTimers((uid, component));
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
     }
@@ -536,6 +522,9 @@ public sealed partial class NukeSystem : EntitySystem
 
         if (component.Status != NukeStatus.ARMED)
             return;
+
+        UpdateRemainingTimes(component);
+        _timers.CancelTimers<NukeComponent>(uid);
 
         var stationUid = _station.GetOwningStation(uid);
         if (stationUid != null)
@@ -566,6 +555,9 @@ public sealed partial class NukeSystem : EntitySystem
         _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
+        component.CooldownEndTime = _timing.CurTime + TimeSpan.FromSeconds(component.CooldownTime);
+        _timers.SetTimerAt<NukeComponent>((uid, component), CooldownTimer, component.CooldownEndTime);
+        _timers.SetTimer<NukeComponent>((uid, component), UiTimer, UiUpdateInterval, UiUpdateInterval);
 
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
@@ -623,7 +615,32 @@ public sealed partial class NukeSystem : EntitySystem
             return;
 
         component.RemainingTime = timer;
+        if (component.Status == NukeStatus.ARMED)
+            RegisterArmedTimers((uid, component));
         UpdateUserInterface(uid, component);
+    }
+
+    private void RegisterArmedTimers(Entity<NukeComponent> ent)
+    {
+        ent.Comp.DetonationTime = _timing.CurTime + TimeSpan.FromSeconds(ent.Comp.RemainingTime);
+        _timers.SetTimerAt(ent, DetonationTimer, ent.Comp.DetonationTime);
+        _timers.SetTimerAt(ent, AlertTimer, ent.Comp.DetonationTime - TimeSpan.FromSeconds(ent.Comp.AlertSoundTime));
+
+        if (!ResolvedSoundSpecifier.IsNullOrEmpty(_selectedNukeSong))
+        {
+            var songOffset = TimeSpan.FromSeconds(_nukeSongLength + ent.Comp.AlertSoundTime + NukeSongBuffer);
+            _timers.SetTimerAt(ent, SongTimer, ent.Comp.DetonationTime - songOffset);
+        }
+
+        _timers.SetTimer(ent, UiTimer, UiUpdateInterval, UiUpdateInterval);
+    }
+
+    private void UpdateRemainingTimes(NukeComponent component)
+    {
+        if (component.Status == NukeStatus.ARMED)
+            component.RemainingTime = Math.Max(0f, (float) (component.DetonationTime - _timing.CurTime).TotalSeconds);
+        else if (component.Status == NukeStatus.COOLDOWN)
+            component.CooldownTime = Math.Max(0f, (float) (component.CooldownEndTime - _timing.CurTime).TotalSeconds);
     }
 
     #endregion
@@ -690,4 +707,3 @@ public sealed class NukeDisarmSuccessEvent : EntityEventArgs
 {
 
 }
-

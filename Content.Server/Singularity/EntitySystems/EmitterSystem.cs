@@ -1,5 +1,4 @@
 using System.Numerics;
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -25,13 +24,15 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Singularity.EntitySystems
 {
     public sealed partial class EmitterSystem : SharedEmitterSystem
     {
+        private static readonly EntityTimerId ShotTimer = new("shot");
+
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
@@ -40,6 +41,7 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private GunSystem _gun = default!;
         [Dependency] private RadioSystem _radio = default!;
         [Dependency] private NavMapSystem _navMap = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         public override void Initialize()
         {
@@ -53,6 +55,7 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, DestructionEventArgs>(OnDestruction);
             SubscribeLocalEvent<EmitterComponent, MachineDeconstructedEvent>(OnDeconstructed); // you shouldn't be able to deconstruct locked emitters but out of scope to fix
             SubscribeLocalEvent<EmitterComponent, LockToggledEvent>(OnLockToggled);
+            SubscribeLocalEvent<EmitterComponent, EntityTimerEvent>(OnShotTimer);
         }
 
         private void OnAnchorStateChanged(EntityUid uid, EmitterComponent component, ref AnchorStateChangedEvent args)
@@ -178,9 +181,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             component.IsPowered = false;
 
-            // Must be set while emitter powered.
-            DebugTools.AssertNotNull(component.TimerCancel);
-            component.TimerCancel?.Cancel();
+            _timers.CancelTimer<EmitterComponent>(uid, ShotTimer);
 
             UpdateAppearance(uid, component);
         }
@@ -195,42 +196,33 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsPowered = true;
 
             component.FireShotCounter = 0;
-            component.TimerCancel = new CancellationTokenSource();
-
-            Timer.Spawn(component.FireBurstDelayMax, () => ShotTimerCallback(uid, component), component.TimerCancel.Token);
+            _timers.SetTimer<EmitterComponent>((uid, component), ShotTimer, component.FireBurstDelayMax);
 
             UpdateAppearance(uid, component);
         }
 
-        private void ShotTimerCallback(EntityUid uid, EmitterComponent component)
+        private void OnShotTimer(Entity<EmitterComponent> ent, ref EntityTimerEvent args)
         {
-            if (component.Deleted)
+            if (args.Id != ShotTimer || !ent.Comp.IsPowered || !ent.Comp.IsOn)
                 return;
 
-            // Any power-off condition should result in the timer for this method being cancelled
-            // and thus not firing
-            DebugTools.Assert(component.IsPowered);
-            DebugTools.Assert(component.IsOn);
-
-            Fire(uid, component);
+            Fire(ent, ent.Comp);
 
             TimeSpan delay;
-            if (component.FireShotCounter < component.FireBurstSize)
+            if (ent.Comp.FireShotCounter < ent.Comp.FireBurstSize)
             {
-                component.FireShotCounter += 1;
-                delay = component.FireInterval;
+                ent.Comp.FireShotCounter += 1;
+                delay = ent.Comp.FireInterval;
             }
             else
             {
-                component.FireShotCounter = 0;
-                var diff = component.FireBurstDelayMax - component.FireBurstDelayMin;
+                ent.Comp.FireShotCounter = 0;
+                var diff = ent.Comp.FireBurstDelayMax - ent.Comp.FireBurstDelayMin;
                 // TIL you can do TimeSpan * double.
-                delay = component.FireBurstDelayMin + _random.NextFloat() * diff;
+                delay = ent.Comp.FireBurstDelayMin + _random.NextFloat() * diff;
             }
 
-            // Must be set while emitter powered.
-            DebugTools.AssertNotNull(component.TimerCancel);
-            Timer.Spawn(delay, () => ShotTimerCallback(uid, component), component.TimerCancel!.Token);
+            _timers.SetTimer(ent, ShotTimer, delay);
         }
 
         private void Fire(EntityUid uid, EmitterComponent component)

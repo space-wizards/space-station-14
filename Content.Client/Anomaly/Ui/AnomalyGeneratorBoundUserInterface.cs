@@ -1,13 +1,19 @@
 using Content.Shared.Anomaly;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
-public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
+public sealed partial class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
+    [Dependency] private IGameTiming _timing = default!;
+
     private AnomalyGeneratorWindow? _window;
+    private TimeSpan _cooldownEnd;
 
     public AnomalyGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -32,7 +38,33 @@ public sealed class AnomalyGeneratorBoundUserInterface : BoundUserInterface
 
         if (state is not AnomalyGeneratorUserInterfaceState msg)
             return;
-        _window?.UpdateState(msg);
+
+        _window?.UpdateState(msg, _timing.CurTime);
+
+        _cooldownEnd = msg.CooldownEndTime;
+        ScheduleRefresh();
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id != RefreshTimer)
+            return;
+
+        _window?.UpdateTimer(_timing.CurTime);
+        ScheduleRefresh();
+    }
+
+    private void ScheduleRefresh()
+    {
+        var remaining = _cooldownEnd - _timing.CurTime;
+        if (remaining <= TimeSpan.Zero)
+        {
+            CancelTimer(RefreshTimer);
+            return;
+        }
+
+        SetTimer(RefreshTimer, remaining < TimeSpan.FromSeconds(1)
+            ? remaining
+            : TimeSpan.FromSeconds(1));
     }
 }
-

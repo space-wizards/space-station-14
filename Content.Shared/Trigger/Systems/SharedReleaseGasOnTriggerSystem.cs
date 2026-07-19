@@ -12,6 +12,9 @@ public abstract partial class SharedReleaseGasOnTriggerSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] protected IEntityTimerManager Timers = default!;
+
+    protected static readonly EntityTimerId ReleaseTimer = new("release");
 
     public override void Initialize()
     {
@@ -30,6 +33,7 @@ public abstract partial class SharedReleaseGasOnTriggerSystem : EntitySystem
 
         ent.Comp.Active = true;
         ent.Comp.NextReleaseTime = _timing.CurTime;
+        Timers.SetTimerAt(ent, ReleaseTimer, ent.Comp.NextReleaseTime);
         ent.Comp.StartingTotalMoles = ent.Comp.Air.TotalMoles;
         _appearance.SetData(ent, ReleaseGasOnTriggerVisuals.Key, true);
     }

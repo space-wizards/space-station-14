@@ -16,7 +16,10 @@ namespace Content.Server.Damage.ForceSay;
 /// <inheritdoc cref="DamageForceSayComponent"/>
 public sealed partial class DamageForceSaySystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    private static readonly EntityTimerId SpeechCooldownTimer = new("speech-cooldown");
+    private static readonly EntityTimerId CritTimeoutTimer = new("crit-timeout");
+
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
@@ -31,20 +34,13 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         // (this won't double raise, because of the cooldown)
         SubscribeLocalEvent<DamageForceSayComponent, DamageChangedEvent>(OnDamageChanged, after: new []{ typeof(MobThresholdSystem)} );
         SubscribeLocalEvent<DamageForceSayComponent, SleepStateChangedEvent>(OnSleep);
+        SubscribeLocalEvent<AllowNextCritSpeechComponent, EntityTimerEvent>(OnCritTimeout);
     }
 
-    public override void Update(float frameTime)
+    private void OnCritTimeout(Entity<AllowNextCritSpeechComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
-
-        var query = AllEntityQuery<AllowNextCritSpeechComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (_timing.CurTime < comp.Timeout)
-                continue;
-
-            RemCompDeferred<AllowNextCritSpeechComponent>(uid);
-        }
+        if (args.Id == CritTimeoutTimer)
+            RemCompDeferred<AllowNextCritSpeechComponent>(ent);
     }
 
     private void TryForceSay(EntityUid uid, DamageForceSayComponent component, bool useSuffix=true)
@@ -53,8 +49,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
             return;
 
         // disallow if cooldown hasn't ended
-        if (component.NextAllowedTime != null &&
-            _timing.CurTime < component.NextAllowedTime)
+        if (_timers.TryGetTimer<DamageForceSayComponent>(uid, SpeechCooldownTimer, out _))
             return;
 
         var ev = new BeforeForceSayEvent(component.ForceSayStringDataset);
@@ -66,7 +61,7 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         var suffix = Loc.GetString(_random.Pick(prefixList.Values));
 
         // set cooldown & raise event
-        component.NextAllowedTime = _timing.CurTime + component.Cooldown;
+        component.NextAllowedTime = _timers.SetTimer<DamageForceSayComponent>((uid, component), SpeechCooldownTimer, component.Cooldown);
         RaiseNetworkEvent(new DamageForceSayEvent { Suffix = useSuffix ? suffix : null }, actor.PlayerSession);
     }
 
@@ -78,7 +73,8 @@ public sealed partial class DamageForceSaySystem : EntitySystem
         var nextCrit = EnsureComp<AllowNextCritSpeechComponent>(uid);
 
         // timeout is *3 ping to compensate for roundtrip + leeway
-        nextCrit.Timeout = _timing.CurTime + TimeSpan.FromMilliseconds(actor.PlayerSession.Ping * 3);
+        nextCrit.Timeout = _timers.SetTimer<AllowNextCritSpeechComponent>((uid, nextCrit), CritTimeoutTimer,
+            TimeSpan.FromMilliseconds(actor.PlayerSession.Ping * 3));
     }
 
     private void OnSleep(EntityUid uid, DamageForceSayComponent component, SleepStateChangedEvent args)

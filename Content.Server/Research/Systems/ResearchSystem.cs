@@ -15,8 +15,10 @@ namespace Content.Server.Research.Systems
     [UsedImplicitly]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
+        private static readonly EntityTimerId UpdateTimer = new("update");
+
         [Dependency] private IAdminLogManager _adminLog = default!;
-        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
         [Dependency] private AccessReaderSystem _accessReader = default!;
         [Dependency] private EntityLookupSystem _lookup = default!;
         [Dependency] private UserInterfaceSystem _uiSystem = default!;
@@ -32,6 +34,8 @@ namespace Content.Server.Research.Systems
             InitializeServer();
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, ResearchRegistrationChangedEvent>(OnDatabaseRegistrationChanged);
+            SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnResearchTimerStartup);
+            SubscribeLocalEvent<ResearchServerComponent, EntityTimerEvent>(OnTimer);
         }
 
         /// <summary>
@@ -88,17 +92,19 @@ namespace Content.Server.Research.Systems
             return set;
         }
 
-        public override void Update(float frameTime)
+        private void OnResearchTimerStartup(Entity<ResearchServerComponent> ent, ref ComponentStartup args)
         {
-            var query = EntityQueryEnumerator<ResearchServerComponent>();
-            while (query.MoveNext(out var uid, out var server))
-            {
-                if (server.NextUpdateTime > _timing.CurTime)
-                    continue;
-                server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
+            _timers.SetTimerAt(ent, UpdateTimer, ent.Comp.NextUpdateTime);
+        }
 
-                UpdateServer(uid, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
-            }
+        private void OnTimer(Entity<ResearchServerComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != UpdateTimer)
+                return;
+
+            ent.Comp.NextUpdateTime = args.FiredAt + ent.Comp.ResearchConsoleUpdateTime;
+            _timers.SetTimerAt(ent, UpdateTimer, ent.Comp.NextUpdateTime);
+            UpdateServer(ent, (int) ent.Comp.ResearchConsoleUpdateTime.TotalSeconds, ent.Comp);
         }
     }
 }

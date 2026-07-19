@@ -9,12 +9,15 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Salvage.UI;
 
 [UsedImplicitly]
 public sealed partial class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
     [ViewVariables]
     private OfferingWindow? _window;
 
@@ -36,6 +39,13 @@ public sealed partial class SalvageExpeditionConsoleBoundUserInterface : BoundUs
         base.Open();
         _window = this.CreateWindowCenteredLeft<OfferingWindow>();
         _window.Title = Loc.GetString("salvage-expedition-window-title");
+        SetTimer(RefreshTimer, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == RefreshTimer)
+            _window?.Refresh(timer.FiredAt);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -22,6 +22,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     public event Action<NetEntity, NetEntity>? DockRequest;
     public event Action<NetEntity>? UndockRequest;
+    public event Action<TimeSpan>? PingCooldownStarted;
+    public event Action<TimeSpan>? MapDequeueRequested;
 
     public ShuttleConsoleWindow()
     {
@@ -52,6 +54,8 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             RequestBeaconFTL?.Invoke(ent, angle);
         };
+        MapContainer.PingCooldownStarted += delay => PingCooldownStarted?.Invoke(delay);
+        MapContainer.MapDequeueRequested += delay => MapDequeueRequested?.Invoke(delay);
 
         DockContainer.DockRequest += (entity, netEntity) =>
         {
@@ -62,6 +66,16 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             UndockRequest?.Invoke(entity);
         };
+    }
+
+    public void OnMapDequeueTimer()
+    {
+        MapContainer.OnMapDequeueTimer();
+    }
+
+    public void OnPingCooldownTimer()
+    {
+        MapContainer.OnPingCooldownTimer();
     }
 
     private void ClearModes(ShuttleConsoleMode mode)

@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Server.StationEvents.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -18,11 +17,6 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier PowerOnSound = new SoundCollectionSpecifier(DefaultPowerOn, AudioParams.Default.WithVolume(-4f));
-
-    /// <summary>
-    /// Token source for cancelling the power restoration announcement.
-    /// </summary>
-    public CancellationTokenSource? AnnounceCancelToken;
 
     /// <summary>
     /// Station affected by the power grid event.
@@ -59,11 +53,6 @@ public sealed partial class PowerGridCheckRuleComponent : Component
     /// </summary>
     public float UpdateRate => 1.0f / NumberPerSecond;
 
-    /// <summary>
-    /// Accumulated frame time to track when to process the next APC toggle.
-    /// </summary>
-    [DataField]
-    public float FrameTimeAccumulator = 0.0f;
 }
 
 /// <summary>

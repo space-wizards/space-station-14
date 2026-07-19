@@ -9,6 +9,7 @@ using Content.Shared.Paper;
 using Content.Shared.Physics;
 using Content.Shared.Speech.Muting;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -16,12 +17,15 @@ namespace Content.Shared.Abilities.Mime;
 
 public sealed partial class MimePowersSystem : EntitySystem
 {
+    private static readonly EntityTimerId RepentTimer = new("repent");
+
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private SharedActionsSystem _actionsSystem = default!;
     [Dependency] private AlertsSystem _alertsSystem = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -30,29 +34,26 @@ public sealed partial class MimePowersSystem : EntitySystem
         SubscribeLocalEvent<MimePowersComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<MimePowersComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<MimePowersComponent, InvisibleWallActionEvent>(OnInvisibleWall);
+        SubscribeLocalEvent<MimePowersComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<MimePowersComponent, EntityTimerEvent>(OnRepentTimer);
 
         SubscribeLocalEvent<MimePowersComponent, BreakVowAlertEvent>(OnBreakVowAlert);
         SubscribeLocalEvent<MimePowersComponent, RetakeVowAlertEvent>(OnRetakeVowAlert);
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<MimePowersComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
-        // Queue to track whether mimes can retake vows yet
+        ScheduleRepent(ent);
+    }
 
-        var query = EntityQueryEnumerator<MimePowersComponent>();
-        while (query.MoveNext(out var uid, out var mime))
-        {
-            if (!mime.VowBroken || mime.ReadyToRepent)
-                continue;
+    private void OnRepentTimer(Entity<MimePowersComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != RepentTimer || !ent.Comp.VowBroken || ent.Comp.ReadyToRepent)
+            return;
 
-            if (_timing.CurTime < mime.VowRepentTime)
-                continue;
-
-            mime.ReadyToRepent = true;
-            Dirty(uid, mime);
-            _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), uid, uid);
-        }
+        ent.Comp.ReadyToRepent = true;
+        Dirty(ent);
+        _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), ent, ent);
     }
 
     private void OnComponentInit(Entity<MimePowersComponent> ent, ref ComponentInit args)
@@ -144,6 +145,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         mimePowers.VowBroken = true;
         mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
         Dirty(uid, mimePowers);
+        _timers.SetTimerAt<MimePowersComponent>((uid, mimePowers), RepentTimer, mimePowers.VowRepentTime);
         RemComp<MutedComponent>(uid);
         if (mimePowers.PreventWriting)
             RemComp<BlockWritingComponent>(uid);
@@ -171,6 +173,7 @@ public sealed partial class MimePowersSystem : EntitySystem
         mimePowers.ReadyToRepent = false;
         mimePowers.VowBroken = false;
         Dirty(uid, mimePowers);
+        _timers.CancelTimer<MimePowersComponent>(uid, RepentTimer);
         AddComp<MutedComponent>(uid);
         if (mimePowers.PreventWriting)
         {
@@ -182,5 +185,13 @@ public sealed partial class MimePowersSystem : EntitySystem
         _alertsSystem.ClearAlert(uid, mimePowers.VowBrokenAlert);
         _alertsSystem.ShowAlert(uid, mimePowers.VowAlert);
         _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
+    }
+
+    private void ScheduleRepent(Entity<MimePowersComponent> ent)
+    {
+        if (ent.Comp.VowBroken && !ent.Comp.ReadyToRepent)
+            _timers.SetTimerAt(ent, RepentTimer, ent.Comp.VowRepentTime);
+        else
+            _timers.CancelTimer<MimePowersComponent>(ent, RepentTimer);
     }
 }

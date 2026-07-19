@@ -13,7 +13,6 @@ namespace Content.Client.Communications.UI
     public sealed partial class CommunicationsConsoleMenu : FancyWindow
     {
         [Dependency] private IConfigurationManager _cfg = default!;
-        [Dependency] private IGameTiming _timing = default!;
         [Dependency] private ILocalizationManager _loc = default!;
 
         public bool CanAnnounce;
@@ -74,12 +73,6 @@ namespace Content.Client.Communications.UI
             EmergencyShuttleButton.Disabled = !CanCall;
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
-        {
-            base.FrameUpdate(args);
-            UpdateCountdown();
-        }
-
         // The current alert could make levels unselectable, so we need to ensure that the UI reacts properly.
         // If the current alert is unselectable, the only item in the alerts list will be
         // the current alert. Otherwise, it will be the list of alerts, with the current alert
@@ -117,7 +110,7 @@ namespace Content.Client.Communications.UI
             }
         }
 
-        public void UpdateCountdown()
+        public void UpdateCountdown(TimeSpan currentTime)
         {
             if (!CountdownStarted)
             {
@@ -126,7 +119,7 @@ namespace Content.Client.Communications.UI
                 return;
             }
 
-            var diff = MathHelper.Max((CountdownEnd - _timing.CurTime) ?? TimeSpan.Zero, TimeSpan.Zero);
+            var diff = MathHelper.Max((CountdownEnd - currentTime) ?? TimeSpan.Zero, TimeSpan.Zero);
 
             EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
             var infoText = Loc.GetString($"comms-console-menu-time-remaining",

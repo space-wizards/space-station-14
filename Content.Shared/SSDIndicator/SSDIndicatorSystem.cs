@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -12,11 +13,14 @@ namespace Content.Shared.SSDIndicator;
 /// </summary>
 public sealed partial class SSDIndicatorSystem : EntitySystem
 {
+    private static readonly EntityTimerId SleepTimer = new("ssd-sleep");
+
     public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
 
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -26,9 +30,20 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SSDIndicatorComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<SSDIndicatorComponent, EntityTimerEvent>(OnTimer);
 
-        _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
+        _cfg.OnValueChanged(CCVars.ICSSDSleep, OnSsdSleepChanged, true);
         _cfg.OnValueChanged(CCVars.ICSSDSleepTime, obj => _icSsdSleepTime = obj, true);
+    }
+
+    private void OnSsdSleepChanged(bool enabled)
+    {
+        _icSsdSleep = enabled;
+
+        var query = EntityQueryEnumerator<SSDIndicatorComponent>();
+        while (query.MoveNext(out var uid, out var component))
+            Schedule((uid, component));
     }
 
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
@@ -39,6 +54,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         if (_icSsdSleep)
         {
             component.FallAsleepTime = TimeSpan.Zero;
+            _timers.CancelTimer<SSDIndicatorComponent>(uid, SleepTimer);
             _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
         }
 
@@ -53,6 +69,7 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         if (_icSsdSleep)
         {
             component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+            Schedule((uid, component));
         }
 
         Dirty(uid, component);
@@ -67,30 +84,36 @@ public sealed partial class SSDIndicatorSystem : EntitySystem
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         component.NextUpdate = _timing.CurTime + component.UpdateInterval;
         Dirty(uid, component);
+        Schedule((uid, component));
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<SSDIndicatorComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        Schedule(ent);
+    }
 
-        if (!_icSsdSleep)
+    private void OnTimer(Entity<SSDIndicatorComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != SleepTimer || !_icSsdSleep || !ent.Comp.IsSSD || TerminatingOrDeleted(ent))
             return;
 
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<SSDIndicatorComponent>();
+        _statusEffects.TryUpdateStatusEffectDuration(ent, StatusEffectSSDSleeping);
+        ent.Comp.NextUpdate = args.FiredAt + ent.Comp.UpdateInterval;
+        Dirty(ent);
+        _timers.SetTimerAt(ent, SleepTimer, ent.Comp.NextUpdate);
+    }
 
-        while (query.MoveNext(out var uid, out var ssd))
+    private void Schedule(Entity<SSDIndicatorComponent> ent)
+    {
+        if (!_icSsdSleep || !ent.Comp.IsSSD)
         {
-            // Forces the entity to sleep when the time has come
-            if (!ssd.IsSSD
-                || ssd.NextUpdate > curTime
-                || ssd.FallAsleepTime > curTime
-                || TerminatingOrDeleted(uid))
-                continue;
-
-            _statusEffects.TryUpdateStatusEffectDuration(uid, StatusEffectSSDSleeping);
-            ssd.NextUpdate += ssd.UpdateInterval;
-            Dirty(uid, ssd);
+            _timers.CancelTimer<SSDIndicatorComponent>(ent, SleepTimer);
+            return;
         }
+
+        var deadline = ent.Comp.FallAsleepTime > ent.Comp.NextUpdate
+            ? ent.Comp.FallAsleepTime
+            : ent.Comp.NextUpdate;
+        _timers.SetTimerAt(ent, SleepTimer, deadline);
     }
 }

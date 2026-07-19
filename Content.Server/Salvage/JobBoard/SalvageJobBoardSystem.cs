@@ -20,7 +20,9 @@ namespace Content.Server.Salvage.JobBoard;
 
 public sealed partial class SalvageJobBoardSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
+    private static readonly EntityTimerId PrintTimer = new("print");
+
+    [Dependency] private IEntityTimerManager _timers = default!;
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private CargoSystem _cargo = default!;
     [Dependency] private LabelSystem _label = default!;
@@ -252,7 +254,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
 
     private void OnPrintLabelMessage(Entity<SalvageJobBoardConsoleComponent> ent, ref JobBoardPrintLabelMessage args)
     {
-        if (_timing.CurTime < ent.Comp.NextPrintTime)
+        if (_timers.TryGetTimer<SalvageJobBoardConsoleComponent>(ent, PrintTimer, out _))
             return;
 
         if (_station.GetOwningStation(ent) is not { } station ||
@@ -278,7 +280,7 @@ public sealed partial class SalvageJobBoardSystem : EntitySystem
         }
         _paper.SetContent(label, Loc.GetString("job-board-label-text", ("target", string.Join(',', target)), ("reward", job.Reward)));
 
-        ent.Comp.NextPrintTime = _timing.CurTime + ent.Comp.PrintDelay;
+        ent.Comp.NextPrintTime = _timers.SetTimer(ent, PrintTimer, ent.Comp.PrintDelay);
     }
 
     private void UpdateUi(Entity<SalvageJobBoardConsoleComponent> ent, Entity<SalvageJobsDataComponent> stationEnt)

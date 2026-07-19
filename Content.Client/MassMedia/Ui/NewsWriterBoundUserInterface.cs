@@ -8,8 +8,13 @@ using Robust.Shared.Utility;
 namespace Content.Client.MassMedia.Ui;
 
 [UsedImplicitly]
-public sealed class NewsWriterBoundUserInterface : BoundUserInterface
+public sealed partial class NewsWriterBoundUserInterface : BoundUserInterface
 {
+    private static readonly EntityTimerId PublishTimer = new("publish");
+    private static readonly EntityTimerId RefreshTimer = new("refresh");
+
+    [Dependency] private IGameTiming _timing = default!;
+
     [ViewVariables]
     private NewsWriterMenu? _menu;
 
@@ -40,6 +45,26 @@ public sealed class NewsWriterBoundUserInterface : BoundUserInterface
             return;
 
         _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish, cast.DraftTitle, cast.DraftContent);
+        _menu?.UpdatePublishTime(_timing.CurTime);
+
+        if (cast.NextPublish <= _timing.CurTime)
+        {
+            CancelTimer(PublishTimer);
+            CancelTimer(RefreshTimer);
+            return;
+        }
+
+        SetTimerAt(PublishTimer, cast.NextPublish);
+        SetTimer(RefreshTimer, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == PublishTimer)
+            CancelTimer(RefreshTimer);
+
+        if (timer.Id == PublishTimer || timer.Id == RefreshTimer)
+            _menu?.UpdatePublishTime(timer.FiredAt);
     }
 
     private void OnPublishButtonPressed()

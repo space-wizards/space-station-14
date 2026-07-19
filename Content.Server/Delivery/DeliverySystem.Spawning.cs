@@ -13,19 +13,24 @@ namespace Content.Server.Delivery;
 /// </summary>
 public sealed partial class DeliverySystem
 {
+    private static readonly EntityTimerId DeliveryTimer = new("delivery");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private EntityTableSystem _entityTable = default!;
     [Dependency] private SharedPowerReceiverSystem _power = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     private void InitializeSpawning()
     {
         SubscribeLocalEvent<CargoDeliveryDataComponent, MapInitEvent>(OnDataMapInit);
+        SubscribeLocalEvent<CargoDeliveryDataComponent, EntityTimerEvent>(OnDeliveryTimer);
     }
 
     private void OnDataMapInit(Entity<CargoDeliveryDataComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextDelivery = _timing.CurTime + ent.Comp.MinDeliveryCooldown; // We want an early wave of mail so cargo doesn't have to wait
+        _timers.SetTimerAt(ent, DeliveryTimer, ent.Comp.NextDelivery);
     }
 
     protected override void SpawnDeliveries(Entity<DeliverySpawnerComponent?> ent)
@@ -126,18 +131,13 @@ public sealed partial class DeliverySystem
         Dirty(ent);
     }
 
-    private void UpdateSpawner(float frameTime)
+    private void OnDeliveryTimer(Entity<CargoDeliveryDataComponent> ent, ref EntityTimerEvent args)
     {
-        var dataQuery = EntityQueryEnumerator<CargoDeliveryDataComponent>();
-        var curTime = _timing.CurTime;
+        if (args.Id != DeliveryTimer)
+            return;
 
-        while (dataQuery.MoveNext(out var uid, out var deliveryData))
-        {
-            if (deliveryData.NextDelivery > curTime)
-                continue;
-
-            deliveryData.NextDelivery += _random.Next(deliveryData.MinDeliveryCooldown, deliveryData.MaxDeliveryCooldown); // Random cooldown between min and max
-            AdjustStationDeliveries((uid, deliveryData));
-        }
+        ent.Comp.NextDelivery = args.ScheduledTime + _random.Next(ent.Comp.MinDeliveryCooldown, ent.Comp.MaxDeliveryCooldown);
+        _timers.SetTimerAt(ent, DeliveryTimer, ent.Comp.NextDelivery);
+        AdjustStationDeliveries(ent);
     }
 }

@@ -2,6 +2,7 @@ using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
@@ -12,11 +13,14 @@ namespace Content.Shared.Emp;
 
 public abstract partial class SharedEmpSystem : EntitySystem
 {
+    private static readonly EntityTimerId DisabledTimer = new("disabled");
+
     [Dependency] protected IGameTiming Timing = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     [Dependency] private EntityQuery<EmpResistanceComponent> _resistanceQuery = default!;
 
@@ -29,6 +33,8 @@ public abstract partial class SharedEmpSystem : EntitySystem
         SubscribeLocalEvent<EmpDisabledComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<EmpDisabledComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<EmpDisabledComponent, RejuvenateEvent>(OnRejuvenate);
+        SubscribeLocalEvent<EmpDisabledComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<EmpDisabledComponent, EntityTimerEvent>(OnDisabledTimer);
 
         SubscribeLocalEvent<EmpResistanceComponent, EmpAttemptEvent>(OnResistEmpAttempt);
     }
@@ -134,23 +140,20 @@ public abstract partial class SharedEmpSystem : EntitySystem
         var disabled = EnsureComp<EmpDisabledComponent>(uid);
         disabled.DisabledUntil = Timing.CurTime + duration * durMultiplier;
         Dirty(uid, disabled);
+        _timers.SetTimerAt<EmpDisabledComponent>((uid, disabled), DisabledTimer, disabled.DisabledUntil);
 
         return ev.Affected;
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<EmpDisabledComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        _timers.SetTimerAt(ent, DisabledTimer, ent.Comp.DisabledUntil);
+    }
 
-        var curTime = Timing.CurTime;
-        var query = EntityQueryEnumerator<EmpDisabledComponent>();
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (curTime < comp.DisabledUntil)
-                continue;
-
-            RemComp<EmpDisabledComponent>(uid);
-        }
+    private void OnDisabledTimer(Entity<EmpDisabledComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == DisabledTimer)
+            RemComp<EmpDisabledComponent>(ent);
     }
 
     private void OnExamine(Entity<EmpDisabledComponent> ent, ref ExaminedEvent args)

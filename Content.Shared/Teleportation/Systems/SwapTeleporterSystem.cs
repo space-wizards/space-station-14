@@ -7,6 +7,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -20,6 +21,8 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public sealed partial class SwapTeleporterSystem : EntitySystem
 {
+    private static readonly EntityTimerId TeleportTimer = new("teleport");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -28,6 +31,7 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -36,6 +40,8 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
         SubscribeLocalEvent<SwapTeleporterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
         SubscribeLocalEvent<SwapTeleporterComponent, ActivateInWorldEvent>(OnActivateInWorld);
         SubscribeLocalEvent<SwapTeleporterComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<SwapTeleporterComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<SwapTeleporterComponent, EntityTimerEvent>(OnTeleportTimer);
 
         SubscribeLocalEvent<SwapTeleporterComponent, ComponentShutdown>(OnShutdown);
     }
@@ -133,6 +139,7 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
         comp.NextTeleportUse = _timing.CurTime + comp.Cooldown;
         comp.TeleportTime = _timing.CurTime + comp.TeleportDelay;
         Dirty(uid, comp);
+        _timers.SetTimerAt(ent, TeleportTimer, comp.TeleportTime.Value);
         args.Handled = true;
     }
 
@@ -252,20 +259,24 @@ public sealed partial class SwapTeleporterSystem : EntitySystem
         DestroyLink((ent, ent), null);
     }
 
-    public override void Update(float frameTime)
+    private void OnHandleState(Entity<SwapTeleporterComponent> ent, ref ComponentHandleState args)
     {
-        base.Update(frameTime);
+        Schedule(ent);
+    }
 
-        var query = EntityQueryEnumerator<SwapTeleporterComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var xform))
-        {
-            if (comp.TeleportTime == null)
-                continue;
+    private void OnTeleportTimer(Entity<SwapTeleporterComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != TeleportTimer || !TryComp<TransformComponent>(ent, out var xform))
+            return;
 
-            if (_timing.CurTime < comp.TeleportTime)
-                continue;
+        DoTeleport((ent, ent.Comp, xform));
+    }
 
-            DoTeleport((uid, comp, xform));
-        }
+    private void Schedule(Entity<SwapTeleporterComponent> ent)
+    {
+        if (ent.Comp.TeleportTime is {} deadline)
+            _timers.SetTimerAt(ent, TeleportTimer, deadline);
+        else
+            _timers.CancelTimer<SwapTeleporterComponent>(ent, TeleportTimer);
     }
 }

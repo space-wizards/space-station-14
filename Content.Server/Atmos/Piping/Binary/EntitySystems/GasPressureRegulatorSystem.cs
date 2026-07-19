@@ -24,7 +24,9 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    private static readonly EntityTimerId UiUpdateTimer = new("ui-update");
 
     public override void Initialize()
     {
@@ -33,38 +35,29 @@ public sealed partial class GasPressureRegulatorSystem : SharedGasPressureRegula
         SubscribeLocalEvent<GasPressureRegulatorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureRegulatorComponent, AtmosDeviceUpdateEvent>(OnPressureRegulatorUpdated);
         SubscribeLocalEvent<GasPressureRegulatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<GasPressureRegulatorComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<GasPressureRegulatorComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUiUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+        _timers.SetTimer(ent, UiUpdateTimer, ent.Comp.UpdateInterval, ent.Comp.UpdateInterval);
     }
 
     /// <summary>
     /// Dirties the regulator every second or so, so that the UI can update.
     /// The UI automatically updates after an AutoHandleStateEvent.
     /// </summary>
-    /// <param name="frameTime"></param>
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<GasPressureRegulatorComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != UiUpdateTimer)
+            return;
 
-        var query = EntityQueryEnumerator<GasPressureRegulatorComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (comp.NextUiUpdate > _timing.CurTime)
-                continue;
-
-            comp.NextUiUpdate += comp.UpdateInterval;
-
-            DirtyFields(uid,
-                comp,
-                null,
-                nameof(comp.InletPressure),
-                nameof(comp.OutletPressure),
-                nameof(comp.FlowRate));
-        }
+        DirtyFields(ent.Owner,
+            ent.Comp,
+            null,
+            nameof(ent.Comp.InletPressure),
+            nameof(ent.Comp.OutletPressure),
+            nameof(ent.Comp.FlowRate));
     }
 
     private void OnInit(Entity<GasPressureRegulatorComponent> ent, ref ComponentInit args)

@@ -32,6 +32,8 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class PlantHolderSystem : EntitySystem
 {
+    private static readonly EntityTimerId UpdateTimer = new("update");
+
     [Dependency] private AtmosphereSystem _atmosphere = default!;
     [Dependency] private BotanySystem _botany = default!;
     [Dependency] private MutationSystem _mutation = default!;
@@ -48,6 +50,7 @@ public sealed partial class PlantHolderSystem : EntitySystem
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private SharedToolSystem _tool = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
@@ -63,21 +66,25 @@ public sealed partial class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
+        SubscribeLocalEvent<PlantHolderComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<PlantHolderComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnStartup(Entity<PlantHolderComponent> ent, ref ComponentStartup args)
     {
-        base.Update(frameTime);
+        if (ent.Comp.NextUpdate < _gameTiming.CurTime)
+            ent.Comp.NextUpdate = _gameTiming.CurTime;
+        _timers.SetTimerAt(ent, UpdateTimer, ent.Comp.NextUpdate);
+    }
 
-        var query = EntityQueryEnumerator<PlantHolderComponent>();
-        while (query.MoveNext(out var uid, out var plantHolder))
-        {
-            if (plantHolder.NextUpdate > _gameTiming.CurTime)
-                continue;
-            plantHolder.NextUpdate = _gameTiming.CurTime + plantHolder.UpdateDelay;
+    private void OnTimer(Entity<PlantHolderComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id != UpdateTimer)
+            return;
 
-            Update(uid, plantHolder);
-        }
+        ent.Comp.NextUpdate = args.FiredAt + ent.Comp.UpdateDelay;
+        _timers.SetTimerAt(ent, UpdateTimer, ent.Comp.NextUpdate);
+        Update(ent, ent.Comp);
     }
 
     private int GetCurrentGrowthStage(Entity<PlantHolderComponent> entity)

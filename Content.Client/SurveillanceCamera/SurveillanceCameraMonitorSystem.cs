@@ -1,30 +1,39 @@
-using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Client.SurveillanceCamera;
 
-public sealed class SurveillanceCameraMonitorSystem : EntitySystem
+public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
 {
-    public override void Update(float frameTime)
+    private static readonly EntityTimerId CameraSwitchTimer = new("camera-switch");
+    private static readonly TimeSpan CameraSwitchDelay = TimeSpan.FromSeconds(10);
+
+    [Dependency] private IEntityTimerManager _timers = default!;
+
+    public override void Initialize()
     {
-        var query = EntityQueryEnumerator<ActiveSurveillanceCameraMonitorVisualsComponent>();
+        base.Initialize();
+        SubscribeLocalEvent<ActiveSurveillanceCameraMonitorVisualsComponent, EntityTimerEvent>(OnTimer);
+    }
 
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            comp.TimeLeft -= frameTime;
+    private void OnTimer(
+        Entity<ActiveSurveillanceCameraMonitorVisualsComponent> ent,
+        ref EntityTimerEvent args)
+    {
+        if (args.Id != CameraSwitchTimer)
+            return;
 
-            if (comp.TimeLeft <= 0)
-            {
-                comp.OnFinish?.Invoke();
-
-                RemCompDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
-            }
-        }
+        ent.Comp.OnFinish?.Invoke();
+        RemCompDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(ent);
     }
 
     public void AddTimer(EntityUid uid, Action onFinish)
     {
         var comp = EnsureComp<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
         comp.OnFinish = onFinish;
+        comp.Deadline = _timers.SetTimer<ActiveSurveillanceCameraMonitorVisualsComponent>(
+            (uid, comp),
+            CameraSwitchTimer,
+            CameraSwitchDelay);
     }
 
     public void RemoveTimer(EntityUid uid)

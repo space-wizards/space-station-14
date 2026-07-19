@@ -27,7 +27,12 @@ namespace Content.Shared.Trigger.Systems;
 /// </remarks>
 public sealed partial class TriggerSystem : EntitySystem
 {
+    private static readonly EntityTimerId TimerTriggerTimer = new("timer-trigger");
+    private static readonly EntityTimerId TimerTriggerBeepTimer = new("timer-trigger-beep");
+    private static readonly EntityTimerId RepeatingTriggerTimer = new("repeating-trigger");
+
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IEntityTimerManager _entityTimers = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;
@@ -117,6 +122,7 @@ public sealed partial class TriggerSystem : EntitySystem
         ent.Comp.NextBeep = curTime + delay;
         ent.Comp.User = user;
         Dirty(ent);
+        ScheduleActiveTimer(ent.Owner, ent.Comp);
 
         var ev = new ActiveTimerTriggerEvent(user);
         RaiseLocalEvent(ent.Owner, ref ev);
@@ -159,6 +165,7 @@ public sealed partial class TriggerSystem : EntitySystem
 
         ent.Comp.NextTrigger += amount;
         Dirty(ent);
+        ScheduleActiveTimer(ent.Owner, ent.Comp);
         return true;
     }
 
@@ -189,8 +196,6 @@ public sealed partial class TriggerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        UpdateTimer();
-        UpdateRepeat();
         UpdateProximity();
         UpdateTimedCollide();
     }

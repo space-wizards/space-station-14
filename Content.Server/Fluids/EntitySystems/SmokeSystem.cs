@@ -29,6 +29,8 @@ namespace Content.Server.Fluids.EntitySystems;
 /// </summary>
 public sealed partial class SmokeSystem : EntitySystem
 {
+    private static readonly EntityTimerId ReactionTimer = new("reaction");
+
     // If I could do it all again this could probably use a lot more of puddles.
     [Dependency] private IAdminLogManager _logger = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -41,6 +43,7 @@ public sealed partial class SmokeSystem : EntitySystem
     [Dependency] private SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     [Dependency] private EntityQuery<SmokeComponent> _smokeQuery = default!;
     [Dependency] private EntityQuery<SmokeAffectedComponent> _smokeAffectedQuery = default!;
@@ -55,23 +58,18 @@ public sealed partial class SmokeSystem : EntitySystem
         SubscribeLocalEvent<SmokeComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<SmokeComponent, SpreadNeighborsEvent>(OnSmokeSpread);
+        SubscribeLocalEvent<SmokeAffectedComponent, EntityTimerEvent>(OnTimer);
     }
 
     /// <inheritdoc/>
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<SmokeAffectedComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != ReactionTimer)
+            return;
 
-        var query = EntityQueryEnumerator<SmokeAffectedComponent>();
-        var curTime = _timing.CurTime;
-        while (query.MoveNext(out var uid, out var smoke))
-        {
-            if (curTime < smoke.NextSecond)
-                continue;
-
-            smoke.NextSecond += TimeSpan.FromSeconds(1);
-            SmokeReact(uid, smoke.SmokeEntity);
-        }
+        ent.Comp.NextSecond = args.ScheduledTime + TimeSpan.FromSeconds(1);
+        _timers.SetTimerAt(ent, ReactionTimer, ent.Comp.NextSecond);
+        SmokeReact(ent, ent.Comp.SmokeEntity);
     }
 
     private void OnStartCollide(Entity<SmokeComponent> entity, ref StartCollideEvent args)
@@ -82,6 +80,7 @@ public sealed partial class SmokeSystem : EntitySystem
         var smokeAffected = AddComp<SmokeAffectedComponent>(args.OtherEntity);
         smokeAffected.SmokeEntity = entity;
         smokeAffected.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+        _timers.SetTimerAt<SmokeAffectedComponent>((args.OtherEntity, smokeAffected), ReactionTimer, smokeAffected.NextSecond);
     }
 
     private void OnEndCollide(Entity<SmokeComponent> entity, ref EndCollideEvent args)

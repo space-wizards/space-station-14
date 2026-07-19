@@ -9,7 +9,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Holopad;
@@ -20,7 +19,6 @@ public sealed partial class HolopadWindow : FancyWindow
     [Dependency] private IEntityManager _entManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private ILogManager _logManager = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     private readonly SharedHolopadSystem _holopadSystem = default!;
     private readonly SharedTelephoneSystem _telephoneSystem = default!;
@@ -38,9 +36,6 @@ public sealed partial class HolopadWindow : FancyWindow
     public event Action? SendHolopadStartBroadcastMessageAction;
     public event Action? SendHolopadActivateProjectorMessageAction;
     public event Action? SendHolopadRequestStationAiMessageAction;
-
-    private TimeSpan _updateDelay = TimeSpan.FromSeconds(0.25f);
-    private TimeSpan _nextUpdate;
 
     public HolopadWindow()
     {
@@ -219,7 +214,7 @@ public sealed partial class HolopadWindow : FancyWindow
         UpdateAppearance();
     }
 
-    private void UpdateAppearance()
+    public void UpdateAppearance()
     {
         if (!_entManager.TryGetComponent<TelephoneComponent>(_owner, out var telephone))
             return;
@@ -307,17 +302,6 @@ public sealed partial class HolopadWindow : FancyWindow
         CallPlacementControlsContainer.Visible = !ActiveCallControlsContainer.Visible;
         CallerIdContainer.Visible = telephone.CurrentState is TelephoneState.Ringing;
         AnswerCallButton.Visible = telephone.CurrentState is TelephoneState.Ringing;
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-
-        if (_timing.CurTime < _nextUpdate)
-            return;
-
-        _nextUpdate = _timing.CurTime + _updateDelay;
-        UpdateAppearance();
     }
 
     private sealed class HolopadContactButton : Button

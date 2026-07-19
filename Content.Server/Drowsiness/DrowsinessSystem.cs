@@ -9,44 +9,38 @@ namespace Content.Server.Drowsiness;
 
 public sealed partial class DrowsinessSystem : SharedDrowsinessSystem
 {
+    private static readonly EntityTimerId IncidentTimer = new("incident");
+
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnEffectApplied(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         ent.Comp.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.TimeBetweenIncidents.X, ent.Comp.TimeBetweenIncidents.Y));
+        _timers.SetTimerAt(ent, IncidentTimer, ent.Comp.NextIncidentTime);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<DrowsinessStatusEffectComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (args.Id != IncidentTimer || !TryComp<StatusEffectComponent>(ent, out var statusEffect))
+            return;
 
-        var query = EntityQueryEnumerator<DrowsinessStatusEffectComponent, StatusEffectComponent>();
-        while (query.MoveNext(out var uid, out var drowsiness, out var statusEffect))
-        {
-            if (_timing.CurTime < drowsiness.NextIncidentTime)
-                continue;
+        var duration = TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.DurationOfIncident.X, ent.Comp.DurationOfIncident.Y));
+        ent.Comp.NextIncidentTime = args.FiredAt +
+            TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.TimeBetweenIncidents.X, ent.Comp.TimeBetweenIncidents.Y)) +
+            duration;
+        _timers.SetTimerAt(ent, IncidentTimer, ent.Comp.NextIncidentTime);
 
-            if (statusEffect.AppliedTo is null)
-                continue;
-
-            // Set the new time.
-            drowsiness.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(drowsiness.TimeBetweenIncidents.X, drowsiness.TimeBetweenIncidents.Y));
-
-            // sleep duration
-            var duration = TimeSpan.FromSeconds(_random.NextFloat(drowsiness.DurationOfIncident.X, drowsiness.DurationOfIncident.Y));
-
-            // Make sure the sleep time doesn't cut into the time to next incident.
-            drowsiness.NextIncidentTime += duration;
-
-            _statusEffects.TryAddStatusEffectDuration(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
-        }
+        if (statusEffect.AppliedTo is { } target)
+            _statusEffects.TryAddStatusEffectDuration(target, SleepingSystem.StatusEffectForcedSleeping, duration);
     }
 }

@@ -9,9 +9,12 @@ namespace Content.Server.Chat.Systems;
 
 public sealed partial class AutoEmoteSystem : EntitySystem
 {
+    private const string TimerPrefix = "emote:";
+
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private ChatSystem _chatSystem = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
@@ -19,44 +22,29 @@ public sealed partial class AutoEmoteSystem : EntitySystem
 
         SubscribeLocalEvent<AutoEmoteComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AutoEmoteComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<AutoEmoteComponent, EntityTimerEvent>(OnTimer);
     }
 
-    public override void Update(float frameTime)
+    private void OnTimer(Entity<AutoEmoteComponent> ent, ref EntityTimerEvent args)
     {
-        base.Update(frameTime);
+        if (!args.Id.Value.StartsWith(TimerPrefix, StringComparison.Ordinal))
+            return;
 
-        var curTime = _gameTiming.CurTime;
-        var query = EntityQueryEnumerator<AutoEmoteComponent>();
-        while (query.MoveNext(out var uid, out var autoEmote))
-        {
-            if (autoEmote.NextEmoteTime > curTime)
-                continue;
+        var key = args.Id.Value[TimerPrefix.Length..];
+        if (!ent.Comp.EmoteTimers.ContainsKey(key))
+            return;
 
-            foreach (var (key, time) in autoEmote.EmoteTimers)
-            {
-                if (time > curTime)
-                    continue;
+        var prototype = ProtoMan.Index<AutoEmotePrototype>(key);
+        ResetTimer(ent, key, ent.Comp, prototype);
+        if (!_random.Prob(prototype.Chance))
+            return;
 
-                var autoEmotePrototype = ProtoMan.Index<AutoEmotePrototype>(key);
-                ResetTimer(uid, key, autoEmote, autoEmotePrototype);
-
-                if (!_random.Prob(autoEmotePrototype.Chance))
-                    continue;
-
-                if (autoEmotePrototype.WithChat)
-                {
-                    _chatSystem.TryEmoteWithChat(uid,
-                        autoEmotePrototype.EmoteId,
-                        autoEmotePrototype.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal,
-                        ignoreActionBlocker: autoEmotePrototype.IgnoreActionBlocker,
-                        forceEmote: autoEmotePrototype.Force);
-                }
-                else
-                {
-                    _chatSystem.TryEmoteWithoutChat(uid, autoEmotePrototype.EmoteId);
-                }
-            }
-        }
+        if (prototype.WithChat)
+            _chatSystem.TryEmoteWithChat(ent, prototype.EmoteId,
+                prototype.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal,
+                ignoreActionBlocker: prototype.IgnoreActionBlocker, forceEmote: prototype.Force);
+        else
+            _chatSystem.TryEmoteWithoutChat(ent, prototype.EmoteId);
     }
 
     private void OnMapInit(EntityUid uid, AutoEmoteComponent autoEmote, MapInitEvent args)
@@ -109,6 +97,8 @@ public sealed partial class AutoEmoteSystem : EntitySystem
         if (!autoEmote.EmoteTimers.Remove(autoEmotePrototypeId))
             return false;
 
+        _timers.CancelTimer<AutoEmoteComponent>(uid, TimerId(autoEmotePrototypeId));
+
         if (autoEmote.EmoteTimers.Count > 0)
             autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
         else if (removeEmpty)
@@ -135,10 +125,13 @@ public sealed partial class AutoEmoteSystem : EntitySystem
         var curTime = _gameTiming.CurTime;
         var time = curTime + autoEmotePrototype.Interval;
         autoEmote.EmoteTimers[autoEmotePrototypeId] = time;
+        _timers.SetTimerAt<AutoEmoteComponent>((uid, autoEmote), TimerId(autoEmotePrototypeId), time);
 
         if (autoEmote.NextEmoteTime > time || autoEmote.NextEmoteTime <= curTime)
             autoEmote.NextEmoteTime = time;
 
         return true;
     }
+
+    private static EntityTimerId TimerId(string prototypeId) => new($"{TimerPrefix}{prototypeId}");
 }

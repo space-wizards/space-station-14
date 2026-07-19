@@ -32,6 +32,9 @@ namespace Content.Server.Zombies
 {
     public sealed partial class ZombieSystem : SharedZombieSystem
     {
+        private static readonly EntityTimerId InfectionTimer = new("infection");
+        private static readonly EntityTimerId HealingTimer = new("healing");
+
         [Dependency] private IGameTiming _timing = default!;
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private BloodstreamSystem _bloodstream = default!;
@@ -43,6 +46,7 @@ namespace Content.Server.Zombies
         [Dependency] private MobStateSystem _mobState = default!;
         [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private SharedRoleSystem _role = default!;
+        [Dependency] private IEntityTimerManager _timers = default!;
 
         public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
@@ -75,6 +79,9 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
             SubscribeLocalEvent<PendingZombieComponent, BeforeRemoveAnomalyOnDeathEvent>(OnBeforeRemoveAnomalyOnDeath);
+            SubscribeLocalEvent<PendingZombieComponent, EntityTimerEvent>(OnInfectionTimer);
+            SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieStartup);
+            SubscribeLocalEvent<ZombieComponent, EntityTimerEvent>(OnHealingTimer);
 
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
@@ -110,57 +117,58 @@ namespace Content.Server.Zombies
             }
 
             component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
+            _timers.SetTimerAt<PendingZombieComponent>((uid, component), InfectionTimer, component.NextTick);
         }
 
-        public override void Update(float frameTime)
+        private void OnInfectionTimer(Entity<PendingZombieComponent> ent, ref EntityTimerEvent args)
         {
-            base.Update(frameTime);
-            var curTime = _timing.CurTime;
+            if (args.Id != InfectionTimer ||
+                !TryComp<Shared.Damage.Components.DamageableComponent>(ent, out var damage) ||
+                !TryComp<MobStateComponent>(ent, out var mobState))
+                return;
 
-            // Hurt the living infected
-            var query = EntityQueryEnumerator<PendingZombieComponent, Shared.Damage.Components.DamageableComponent, MobStateComponent>();
-            while (query.MoveNext(out var uid, out var comp, out var damage, out var mobState))
-            {
-                // Process only once per second
-                if (comp.NextTick > curTime)
-                    continue;
+            var comp = ent.Comp;
+            comp.NextTick = args.FiredAt + TimeSpan.FromSeconds(1);
+            _timers.SetTimerAt(ent, InfectionTimer, comp.NextTick);
 
-                comp.NextTick = curTime + TimeSpan.FromSeconds(1f);
+            comp.GracePeriod -= TimeSpan.FromSeconds(1);
+            if (comp.GracePeriod > TimeSpan.Zero)
+                return;
 
-                comp.GracePeriod -= TimeSpan.FromSeconds(1f);
-                if (comp.GracePeriod > TimeSpan.Zero)
-                    continue;
+            if (_random.Prob(comp.InfectionWarningChance))
+                _popup.PopupEntity(Loc.GetString(_random.Pick(comp.InfectionWarnings)), ent, ent);
 
-                if (_random.Prob(comp.InfectionWarningChance))
-                    _popup.PopupEntity(Loc.GetString(_random.Pick(comp.InfectionWarnings)), uid, uid);
+            var multiplier = _mobState.IsCritical(ent, mobState)
+                ? comp.CritDamageMultiplier
+                : 1f;
 
-                var multiplier = _mobState.IsCritical(uid, mobState)
-                    ? comp.CritDamageMultiplier
-                    : 1f;
+            _damageable.ChangeDamage((ent.Owner, damage), comp.Damage * multiplier, true, false);
+        }
 
-                _damageable.ChangeDamage((uid, damage), comp.Damage * multiplier, true, false);
-            }
+        private void OnZombieStartup(Entity<ZombieComponent> ent, ref ComponentStartup args)
+        {
+            ent.Comp.NextTick = _timing.CurTime;
+            _timers.SetTimer(ent, HealingTimer, TimeSpan.FromSeconds(1));
+        }
 
-            // Heal the zombified
-            var zombQuery = EntityQueryEnumerator<ZombieComponent, Shared.Damage.Components.DamageableComponent, MobStateComponent>();
-            while (zombQuery.MoveNext(out var uid, out var comp, out var damage, out var mobState))
-            {
-                // Process only once per second
-                if (comp.NextTick + TimeSpan.FromSeconds(1) > curTime)
-                    continue;
+        private void OnHealingTimer(Entity<ZombieComponent> ent, ref EntityTimerEvent args)
+        {
+            if (args.Id != HealingTimer ||
+                !TryComp<Shared.Damage.Components.DamageableComponent>(ent, out var damage) ||
+                !TryComp<MobStateComponent>(ent, out var mobState))
+                return;
 
-                comp.NextTick = curTime;
+            ent.Comp.NextTick = args.FiredAt;
+            _timers.SetTimer(ent, HealingTimer, TimeSpan.FromSeconds(1));
 
-                if (_mobState.IsDead(uid, mobState))
-                    continue;
+            if (_mobState.IsDead(ent, mobState))
+                return;
 
-                var multiplier = _mobState.IsCritical(uid, mobState)
-                    ? comp.PassiveHealingCritMultiplier
-                    : 1f;
+            var multiplier = _mobState.IsCritical(ent, mobState)
+                ? ent.Comp.PassiveHealingCritMultiplier
+                : 1f;
 
-                // Gradual healing for living zombies.
-                _damageable.ChangeDamage((uid, damage), comp.PassiveHealing * multiplier, true, false);
-            }
+            _damageable.ChangeDamage((ent.Owner, damage), ent.Comp.PassiveHealing * multiplier, true, false);
         }
 
         private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)

@@ -14,21 +14,44 @@ namespace Content.Shared.Anomaly;
 /// </summary>
 public sealed partial class SharedAnomalyCoreSystem : EntitySystem
 {
+    private static readonly EntityTimerId DecayTimer = new("decay");
+
     [Dependency] private IGameTiming _gameTiming = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private IEntityTimerManager _timers = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<AnomalyCoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CorePoweredThrowerComponent, AttemptMeleeThrowOnHitEvent>(OnAttemptMeleeThrowOnHit);
         SubscribeLocalEvent<CorePoweredThrowerComponent, ExaminedEvent>(OnCorePoweredExamined);
+        SubscribeLocalEvent<AnomalyCoreComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<AnomalyCoreComponent, EntityTimerEvent>(OnTimer);
     }
 
     private void OnMapInit(Entity<AnomalyCoreComponent> core, ref MapInitEvent args)
     {
         core.Comp.DecayMoment = _gameTiming.CurTime + TimeSpan.FromSeconds(core.Comp.TimeToDecay);
+        RegisterTimer(core);
         Dirty(core, core.Comp);
+    }
+
+    private void OnHandleState(Entity<AnomalyCoreComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RegisterTimer(ent);
+    }
+
+    private void RegisterTimer(Entity<AnomalyCoreComponent> ent)
+    {
+        if (!ent.Comp.IsDecayed)
+            _timers.SetTimerAt(ent, DecayTimer, ent.Comp.DecayMoment, flags: EntityTimerFlags.IgnoreEntityPause);
+    }
+
+    private void OnTimer(Entity<AnomalyCoreComponent> ent, ref EntityTimerEvent args)
+    {
+        if (args.Id == DecayTimer && !ent.Comp.IsDecayed)
+            Decay(ent, ent.Comp);
     }
 
     private void OnAttemptMeleeThrowOnHit(Entity<CorePoweredThrowerComponent> ent, ref AttemptMeleeThrowOnHitEvent args)
@@ -84,22 +107,6 @@ public sealed partial class SharedAnomalyCoreSystem : EntitySystem
         else
         {
             args.PushMarkup(Loc.GetString("anomaly-gorilla-charge-infinite"));
-        }
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<AnomalyCoreComponent>();
-        while (query.MoveNext(out var uid, out var component))
-        {
-            if (component.IsDecayed)
-                continue;
-
-            //When time runs out, we completely decompose
-            if (component.DecayMoment < _gameTiming.CurTime)
-                Decay(uid, component);
         }
     }
 

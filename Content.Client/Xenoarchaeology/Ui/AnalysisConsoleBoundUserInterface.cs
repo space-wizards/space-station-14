@@ -2,6 +2,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Client.UserInterface;
 using JetBrains.Annotations;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
@@ -12,6 +13,9 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [UsedImplicitly]
 public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
+    private static readonly EntityTimerId ExtractInfoTimer = new("extract-info");
+    private static readonly TimeSpan ExtractInfoDuration = TimeSpan.FromSeconds(3);
+
     [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;
 
@@ -33,7 +37,14 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         _consoleMenu.OnExtractButtonPressed += () =>
         {
             SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
+            SetTimer(ExtractInfoTimer, ExtractInfoDuration);
         };
+    }
+
+    protected override void OnTimer(EntityTimerEvent timer)
+    {
+        if (timer.Id == ExtractInfoTimer)
+            _consoleMenu?.HideExtractInfo();
     }
 
     /// <summary>
@@ -55,4 +66,3 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         _consoleMenu?.Dispose();
     }
 }
-
