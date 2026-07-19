@@ -52,6 +52,7 @@ public sealed class DeltaPressureTest : AtmosTest
       types:
         Structural: 1000
   - type: Damageable
+  - type: Injurable
   - type: Destructible
     thresholds:
     - trigger:
@@ -84,7 +85,19 @@ public sealed class DeltaPressureTest : AtmosTest
     baseDamage:
       types:
         Structural: 1000
-";
+
+- type: entity
+  parent: DeltaPressureSolidTest
+  id: DeltaPressureSolidTestDeltaOnly
+  components:
+  - type: DeltaPressure
+    minPressure: 100000
+    minPressureDelta: 10000
+    scalingType: Threshold
+    baseDamage:
+      types:
+        Structural: 1000
+ ";
 
     #endregion
 
@@ -337,5 +350,90 @@ public sealed class DeltaPressureTest : AtmosTest
 
             await Server.WaitRunTicks(30);
         }
+    }
+
+    /// <summary>
+    /// Asserts that diagonal pressure groupings do not trigger delta pressure damage.
+    /// </summary>
+    [Test]
+    public async Task ProcessingDeltaCardinalOnlyStandbyTest()
+    {
+        Entity<DeltaPressureComponent> dpEnt = default;
+
+        await Server.WaitPost(delegate
+        {
+            SAtmos.SetAtmosphereSimulation(ProcessEnt, false);
+            var uid = SEntMan.SpawnAtPosition("DeltaPressureSolidTestDeltaOnly", new EntityCoordinates(ProcessEnt.Owner, Vector2.Zero));
+            dpEnt = new Entity<DeltaPressureComponent>(uid, SEntMan.GetComponent<DeltaPressureComponent>(uid));
+            Assert.That(SAtmos.IsDeltaPressureEntityInList(ProcessEnt.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+
+            var indices = Transform.GetGridOrMapTilePosition(dpEnt);
+            var tiles = ProcessEnt.Comp1.Tiles;
+
+            // Same pressure on each opposing pair: N==S and E==W, so delta should be zero.
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.North)], 12_000f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.South)], 12_000f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.East)], 100f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.West)], 100f);
+        });
+
+        await Server.WaitPost(delegate
+        {
+            SAtmos.RunProcessingFull(ProcessEnt, ProcessEnt.Owner, SAtmos.AtmosTickRate);
+        });
+        await Server.WaitRunTicks(30);
+
+        await Server.WaitAssertion(delegate
+        {
+            Assert.That(!SEntMan.Deleted(dpEnt), $"{dpEnt} should not take damage when only diagonal comparisons would differ.");
+            foreach (var mix in SAtmos.GetAllMixtures(ProcessEnt))
+            {
+                mix.Clear();
+            }
+        });
+    }
+
+    /// <summary>
+    /// Asserts that opposing pressure groupings do trigger delta pressure damage.
+    /// </summary>
+    [Test]
+    public async Task ProcessingDeltaCardinalOnlyDamageTest()
+    {
+        Entity<DeltaPressureComponent> dpEnt = default;
+
+        await Server.WaitPost(delegate
+        {
+            SAtmos.SetAtmosphereSimulation(ProcessEnt, false);
+            var uid = SEntMan.SpawnAtPosition("DeltaPressureSolidTestDeltaOnly", new EntityCoordinates(ProcessEnt.Owner, Vector2.Zero));
+            dpEnt = new Entity<DeltaPressureComponent>(uid, SEntMan.GetComponent<DeltaPressureComponent>(uid));
+            Assert.That(SAtmos.IsDeltaPressureEntityInList(ProcessEnt.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
+
+            var indices = Transform.GetGridOrMapTilePosition(dpEnt);
+            var tiles = ProcessEnt.Comp1.Tiles;
+
+            // There was a nasty bug where the indexing for comparisons was off and diagonals were
+            // being compared against instead of cardinals. This test basically
+            // stamps that out, so hopefully something silly doesn't happen again
+            // smile
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.North)], 12_000f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.South)], 100f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.East)], 12_000f);
+            SetTilePressure(tiles[indices.Offset(AtmosDirection.West)], 100f);
+        });
+
+        await Server.WaitPost(delegate
+        {
+            SAtmos.RunProcessingFull(ProcessEnt, ProcessEnt.Owner, SAtmos.AtmosTickRate);
+        });
+        await Server.WaitRunTicks(30);
+
+        await Server.WaitAssertion(delegate
+        {
+            Assert.That(SEntMan.Deleted(dpEnt), $"{dpEnt} should take damage when opposing cardinals have threshold pressure differences.");
+            foreach (var mix in SAtmos.GetAllMixtures(ProcessEnt))
+            {
+                mix.Clear();
+            }
+        });
     }
 }

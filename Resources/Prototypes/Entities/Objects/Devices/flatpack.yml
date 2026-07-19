@@ -52,6 +52,26 @@
 
 - type: entity
   parent: BaseFlatpack
+  id: AmeControllerFlatpack
+  name: AME controller flatpack
+  description: A flatpack used for constructing the terminal that controls the antimatter engine.
+  components:
+  - type: Sprite
+    layers:
+    - state: ame-part
+    - state: overlay
+      color: "#EFB341"
+  - type: Flatpack
+    entity: AmeController
+  - type: StaticPrice
+    price: 1000
+  - type: GuideHelp
+    guides:
+    - AME
+    - Power
+
+- type: entity
+  parent: BaseFlatpack
   id: AmePartFlatpack
   name: AME flatpack
   description: A flatpack used for constructing an antimatter engine reactor.
@@ -282,16 +302,19 @@
     - FoodRecipes
 
 - type: entity
-  parent: [ BaseFlatpack, BaseXenoborgContraband ]
-  id: XenoborgExtractorFlatpack
-  name: xenoborg extractor flatpack
-  description: A flatpack used for constructing a xenoborg extractor.
+  parent: BaseFlatpack
+  id: MachineAnomalyVesselFlatpack
+  name: anomaly vessel flatpack
+  description: A flatpack used for constructing an anomaly vessel.
   components:
-  - type: Item
-    size: Normal
   - type: Flatpack
-    entity: XenoborgExtractor
+    entity: MachineAnomalyVessel
   - type: GuideHelp
     guides:
-    - Xenoborgs
-
+    - ScannersAndVessels
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#D381C9"
+    - state: icon-default
