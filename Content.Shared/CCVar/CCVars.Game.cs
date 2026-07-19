@@ -435,4 +435,10 @@ public sealed partial class CCVars
     /// </remarks>
     public static readonly CVarDef<string> NewCharacterJobs =
         CVarDef.Create("game.new_character_jobs", "Passenger", CVar.REPLICATED);
+
+    /// <summary>
+    /// Determines whether wall-mounted entities are hidden when viewed from outside their facing arc.
+    /// </summary>
+    public static readonly CVarDef<bool> WallMountDirectionalVisibility =
+        CVarDef.Create("game.wallmount_directional_visibility", true, CVar.SERVER | CVar.REPLICATED);
 }
