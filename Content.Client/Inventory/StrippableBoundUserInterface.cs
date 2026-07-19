@@ -331,13 +331,15 @@ namespace Content.Client.Inventory
                     button.AddAdminOverlay(_chameleonClothingTexturePath, _chameleonColor);
                 }
 
-                var hasContraband = false;
-                var isContraband = _contraband.IsContraband(entity.Value, Owner, out var contraProtoId, ref hasContraband);
-                if (isContraband || hasContraband)
+                // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
+                if (_contraband.HasContraband(entity.Value, Owner))
                 {
-                    var texture = hasContraband ? _hasContrabandTexturePath : _contrabandTexturePath;
-                    var color = isContraband ? _proto.Index(contraProtoId)?.Color ?? Color.White : _hasContrabandColor;
-                    button.AddAdminOverlay(texture, color);
+                    button.AddAdminOverlay(_hasContrabandTexturePath, _hasContrabandColor);
+                }
+
+                if (_contraband.IsContraband(entity.Value, Owner, out var contraProtoId))
+                {
+                    button.AddAdminOverlay(_contrabandTexturePath, _proto.Index(contraProtoId).Color);
                 }
             }
 

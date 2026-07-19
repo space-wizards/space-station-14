@@ -174,34 +174,29 @@ public sealed partial class ContrabandSystem : EntitySystem
     }
 
     /// <summary>
-    /// Determines if an item is contraband, but furthermore iterates over any items inside its storage to determine if it contains any contraband as well.
+    /// Determines if any item inside a storage entity is contraband.
     /// </summary>
     /// <param name="contraband">The entity that we are checking for contraband.</param>
     /// <param name="player">The player that we are checking if they are allowed to have this contraband.</param>
     /// <param name="contraProtoId">The contraband ProtoId if the item is contraband.</param>
     /// <param name="hasContraband">Whether the storage contains contraband. Pass in a false bool variable.</param>
     /// <returns>Whether the item itself is contraband only, NOT if it contains contraband.</returns>
-    public bool IsContraband(Entity<ContrabandComponent?> contraband,
-        EntityUid? player,
-        [NotNullWhen(true)] out ProtoId<ContrabandSeverityPrototype>? contraProtoId,
-        ref bool hasContraband)
+    public bool HasContraband(Entity<ContrabandComponent?> contraband,
+        EntityUid? player)
     {
-        var isContraband = IsContraband(contraband, player, out contraProtoId);
 
         if (!TryComp(contraband.Owner, out StorageComponent? storage))
         {
-            return isContraband;
+            return false;
         }
 
         foreach (var ent in storage.Container.ContainedEntities)
         {
-            hasContraband = hasContraband || IsContraband(ent, player, out _, ref hasContraband);
-
-            if(hasContraband)
-                break;
+            if (IsContraband(ent, player, out _) || HasContraband(ent, player))
+                return true;
         }
 
-        return isContraband;
+        return false;
     }
 }
 
