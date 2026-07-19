@@ -448,7 +448,7 @@
   - type: Storage
     grid:
     - 0,0,4,3
-    quickInsert: true
+  - type: QuickPickup
   - type: ItemMapper
     mapLayers:
       qm_clipboard_paper:
