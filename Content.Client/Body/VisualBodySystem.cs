@@ -265,10 +265,10 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             }
 
             // Apply shaders
-            if (layer.Shaders != null)
+            if (layer.Shader != null)
             {
                 // TODO: fix this when LayerSetShader is moved out of component
-                target.Comp.LayerSetShader(layerIndex + numDisplacements, layer.Shaders);
+                target.Comp.LayerSetShader(layerIndex + numDisplacements, layer.Shader);
             }
         }
     }

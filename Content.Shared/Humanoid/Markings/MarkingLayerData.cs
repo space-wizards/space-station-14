@@ -38,7 +38,7 @@ public sealed partial record MarkingLayerData
     ///     Optional field allowing assignment of shader to this layer.
     /// </summary>
     [DataField]
-    public string? Shaders = null;
+    public string? Shader = null;
 
     /// <summary>
     ///     Tries to get a player-friendly name for this marking layer.

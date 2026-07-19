@@ -85,7 +85,7 @@ def convert_prototype(proto: dict, flags: list) -> dict:
     if coloring:
         if "layers" in coloring:
             layer_coloring = new_marking["coloring"].pop("layers")
-        if len(coloring) == 0: # Clear if empty
+        if len(coloring.keys()) == 0: # Clear if empty
             new_marking.pop("coloring")
 
     # Get per-layer shaders if it exists
@@ -97,11 +97,10 @@ def convert_prototype(proto: dict, flags: list) -> dict:
             if (state in layer_coloring): # Convert layer coloring
                 sprite["coloring"] = layer_coloring.pop(state)
             if (shaders and state in shaders):  # Convert shaders
-                sprite["shaders"] = shaders.pop(state);
+                sprite["shader"] = shaders.pop(state);
 
-    if (shaders and len(shaders) == 0):
+    if (isinstance(shaders, dict) and len(shaders) == 0):
         new_marking.pop("shaders") # Clear if empty
-
 
     # Convert other shit
     misc_conversion_for_my_convenience(new_marking, flags)
@@ -141,7 +140,7 @@ def convert_file(input_file: str, flags: list):
 
     # Replace the old prototype file.
     yaml_utils.write_yaml_to_file(input_file, converted_prototypes)
-    print(f"Successfully converted {input_file}. Changed prototypes: {prototypes_changed}")
+    print(f"Successfully converted {input_file}. Processed prototypes: {prototypes_changed}")
 
 def main():
     """
