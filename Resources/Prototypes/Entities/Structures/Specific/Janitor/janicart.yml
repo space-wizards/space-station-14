@@ -233,6 +233,7 @@
         whitelist:
           tags:
           - TrashBag
+          - TrashBagBlue
         priority: 3 # Higher than drinking priority
   - type: Fixtures
     fixtures:
