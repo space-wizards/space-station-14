@@ -150,6 +150,10 @@ public sealed partial class BotanySystem : EntitySystem
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 
+    /// <summary>
+    /// Spawns produce from given SeedData on the floor at a position.
+    /// </summary>
+    /// <param name="yieldMod">A coefficient to multiply the number of produced entities by. Resulting yield will always be at least 1.</param>
     public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
     {
         var totalYield = 0;
