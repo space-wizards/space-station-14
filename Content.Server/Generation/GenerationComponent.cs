@@ -28,7 +28,6 @@ public sealed partial class GenerationComponent : Component
 
     /// <summary>
     /// Stores the generation number of this entity, retrieved from the DB.
-    /// A value of 0 means its unset.
     /// </summary>
     [Access(typeof(GenerationSystem)), ViewVariables]
     public uint GenerationNumber;
