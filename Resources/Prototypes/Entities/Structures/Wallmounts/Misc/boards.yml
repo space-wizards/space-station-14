@@ -1,0 +1,85 @@
+﻿- type: entity
+  abstract: true
+  parent: BaseWallmount
+  id: BaseWallmountBoard
+  components:
+  - type: Appearance
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Wooden
+
+
+- type: entity
+  parent: BaseWallmountBoard
+  id: NoticeBoard
+  name: notice board asda
+  description: Is there a job for a witcher?
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    layers:
+      - state: noticeboard
+      - state: notice-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: StorageFillVisualizer
+    maxFillLevels: 6
+    fillBaseName: notice
+  - type: Appearance
+  - type: Storage
+    grid:
+    - 0,0,4,3
+    maxItemSize: Small
+    whitelist:
+      tags:
+        - Folder
+        - Document
+        - Write
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Construction
+    graph: NoticeBoard
+    node: noticeBoard
+
+- type: entity
+  parent: [ BaseWallmount, BasePaperLabelable ]
+  id: postboard
+  name: post board
+  description: Apply paper directly to the boardhead.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Wallmounts/Boards/noticeboard.rsi
+    layers:
+      - state: noticeboard
+      - state: notice-0
+      - map: ["enum.StorageFillLayers.Fill"]
+  - type: Appearance
