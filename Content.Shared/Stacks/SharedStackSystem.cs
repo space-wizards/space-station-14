@@ -204,7 +204,7 @@ public abstract partial class SharedStackSystem : EntitySystem
                 Category = VerbCategory.Split,
                 Act = () => UserSplit(ent, user, amount),
                 // we want to sort by size, not alphabetically by the verb text.
-                Priority = priority
+                Priority = priority,
             };
 
             priority--;
@@ -232,39 +232,35 @@ public abstract partial class SharedStackSystem : EntitySystem
     ///     This empty virtual method allows for UserSplit() to be called on the server from the client.
     ///     When prediction is improved, those two methods should be moved to shared, in order to predict the splitting itself (not just the verbs)
     /// </remarks>
-    public void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
+    public void UserSplit(Entity<StackComponent> stack, EntityUid user, int amount)
     {
-        if (!Resolve(user.Owner, ref user.Comp, false))
-            return;
-
-        if (!ProtoMan.TryIndex(stack.Comp.StackTypeId, out var proto))
-            return;
-
         if (amount <= 0)
         {
-            _popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
+            _popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user, PopupType.Medium);
             return;
         }
 
-        // Tries to merge stack with a stack in hand. If not possible does the split
-        // Not an early return so that they can share visuals i.e. popups.
-        if (!_hands.TryGetActiveItem(user.Owner, out var split)
-            || !TryMergeStacks(stack.AsNullable(), split.Value, out _, amount: amount))
+        // Tries to merge stack with a stack in hand.
+        if (_hands.TryGetActiveItem(user, out var merger)
+            && TryMergeStacks(stack.AsNullable(), merger.Value, out _, amount: amount))
         {
-            // If this is effectively just picking up the stack, it just picks up the stack.
-            if (stack.Comp.Count <= amount)
-            {
-                _hands.PickupOrDrop(user.Owner, stack.Owner, animate: stack.Comp.AnimatePickup);
-                return;
-            }
-
-            split = Split(stack.AsNullable(), amount, new EntityCoordinates(user.Owner, Vector2.Zero));
-            if (split == null)
-                return;
-            _hands.PickupOrDrop(user.Owner, split.Value, animate: stack.Comp.AnimatePickup);
+            _popup.PopupCursor(Loc.GetString("comp-stack-split"), user);
+            return;
         }
 
-        _popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
+        // If this is effectively just picking up the stack, it just picks up the stack.
+        if (stack.Comp.Count <= amount)
+        {
+            // No AnimatePickup passed as this is a normal pickup.
+            _hands.PickupOrDrop(user, stack.Owner);
+            return;
+        }
+
+        if (Split(stack.AsNullable(), amount, new EntityCoordinates(user, Vector2.Zero), user: user) is not { } split)
+            return;
+
+        _hands.PickupOrDrop(user, split, animate: stack.Comp.AnimatePickup);
+        _popup.PopupCursor(Loc.GetString("comp-stack-split"), user);
     }
 
     /// <summary>
@@ -276,7 +272,7 @@ public abstract partial class SharedStackSystem : EntitySystem
     /// <param name="spawnPosition">Where to spawn the new stack</param>
     /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
     [PublicAPI]
-    public virtual EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+    public virtual EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition, EntityUid? user = null)
     {
         return null;
     }

@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="NewId">The entity id of the new stack.</param>
 [ByRefEvent]
-public readonly record struct StackSplitEvent(EntityUid NewId);
+public readonly record struct StackSplitEvent(EntityUid NewId, EntityUid? user);
 
 /// <summary>
 ///     Raised on the recipient stack entity when it is merged with another stack.

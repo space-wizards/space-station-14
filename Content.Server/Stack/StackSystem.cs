@@ -24,7 +24,7 @@ namespace Content.Server.Stack
 
         /// <inheritdoc />
         [PublicAPI]
-        public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
+        public override EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition, EntityUid? user = null)
         {
             if (!_stackQuery.Resolve(ent.Owner, ref ent.Comp))
                 return null;
@@ -38,9 +38,6 @@ namespace Content.Server.Stack
 
             // Set the output parameter in the event instance to the newly split stack.
             var newEntity = SpawnAtPosition(stackType.Spawn, spawnPosition);
-            // If spawned in player hand it sets the parent to the player for the split event
-            // This should always be later overridden
-            _transform.SetParent(newEntity, spawnPosition.EntityId);
 
             // There should always be a StackComponent
             var stackComp = _stackQuery.Comp(newEntity);
@@ -49,7 +46,7 @@ namespace Content.Server.Stack
             stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
             Dirty(newEntity, stackComp);
 
-            var ev = new StackSplitEvent(newEntity);
+            var ev = new StackSplitEvent(newEntity, user);
             RaiseLocalEvent(ent, ref ev);
 
             return newEntity;

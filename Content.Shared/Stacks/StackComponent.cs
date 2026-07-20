@@ -87,7 +87,7 @@ public sealed partial class StackComponent : Component
     public StackLayerFunction LayerFunction = StackLayerFunction.None;
 
     /// <summary>
-    /// Wether alt clicking on a stack should take half of the stack or only one.
+    /// Whether alt clicking on a stack should take half of the stack or only one.
     /// </summary>
     [DataField]
     public bool HalfOnAltInteract = true;
