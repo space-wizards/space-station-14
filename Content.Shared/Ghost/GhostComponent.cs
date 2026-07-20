@@ -64,10 +64,11 @@ public sealed partial class GhostComponent : Component
     public float BooRadius = 3;
 
     /// <summary>
-    /// Maximum number of entities that can affected by the Boo action.
+    /// The boo budget when causing a boo.
+    /// Entities handling the <see cref="GhostBooEvent"/> will subtract their cost from this.
     /// </summary>
     [DataField]
-    public int BooMaxTargets = 3;
+    public int BooValue = 10;
 
     /// <summary>
     /// Is this ghost allowed to interact with entities?

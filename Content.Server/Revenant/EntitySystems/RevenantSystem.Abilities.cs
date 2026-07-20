@@ -31,6 +31,7 @@ using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Content.Shared.IdentityManagement;
+using Content.Server.Ghost.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -47,10 +48,10 @@ public sealed partial class RevenantSystem
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
 
-    [Dependency] private EntityQuery<TagComponent> _tagQuery = default!;
     [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
-    [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery = default!;
     [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
+    [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery = default!;
+    [Dependency] private EntityQuery<SpookyExtinguishComponent> _extinguishQuery = default!;
 
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -75,9 +76,10 @@ public sealed partial class RevenantSystem
             return;
         var target = args.Target;
 
-        if (HasComp<PoweredLightComponent>(target))
+        // Flicker lights, extinguish candles with a spooky noise
+        if (_poweredLightQuery.HasComp(target) || _extinguishQuery.HasComp(target))
         {
-            args.Handled = _ghost.DoGhostBooEvent(target);
+            args.Handled = _ghost.DoGhostBooEvent(target, out _);
             return;
         }
 
@@ -162,7 +164,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
+        if (_physics.GetEntitiesIntersectingBody(uid, (int)CollisionGroup.Impassable).Count > 0)
         {
             _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
             return;
@@ -268,7 +270,7 @@ public sealed partial class RevenantSystem
         foreach (var ent in lookup)
         {
             //break windows
-            if (_tagQuery.HasComponent(ent) && _tag.HasTag(ent, WindowTag))
+            if (_tag.HasTag(ent, WindowTag))
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
@@ -283,13 +285,13 @@ public sealed partial class RevenantSystem
             _entityStorage.OpenStorage(ent, args.Performer);
 
             //chucks shit
-            if (_itemQuery.HasComponent(ent) &&
+            if (_itemQuery.HasComp(ent) &&
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
 
             //flicker lights
-            if (_poweredLightQuery.HasComponent(ent))
-                _ghost.DoGhostBooEvent(ent);
+            if (_poweredLightQuery.HasComp(ent) || _extinguishQuery.HasComp(ent))
+                _ghost.DoGhostBooEvent(ent, out _);
         }
     }
 

@@ -34,4 +34,10 @@ public sealed partial class SpookySpeakerComponent : Component
     /// </summary>
     [DataField, AutoPausedField]
     public TimeSpan NextSpeakTime;
+
+    /// <summary>
+    /// The cost to activate this component.
+    /// </summary>
+    [DataField]
+    public int Cost = 4;
 }

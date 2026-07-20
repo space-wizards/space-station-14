@@ -1,26 +1,26 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Chat;
 using Content.Shared.Random.Helpers;
+using Robust.Server.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost;
 
-public sealed partial class SpookySpeakerSystem : EntitySystem
+public sealed partial class GhostSystem
 {
-    [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private AudioSystem _audio = default!;
     [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private FlammableSystem _flammable = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery = default!;
 
-        SubscribeLocalEvent<SpookySpeakerComponent, GhostBooEvent>(OnGhostBoo);
-    }
-
-    private void OnGhostBoo(Entity<SpookySpeakerComponent> entity, ref GhostBooEvent args)
+    [SubscribeLocalEvent]
+    private void OnSpeakerBoo(Entity<SpookySpeakerComponent> entity, ref GhostBooEvent args)
     {
         // Only activate sometimes, so groups don't all trigger together
         if (!_random.Prob(entity.Comp.SpeakChance))
@@ -45,6 +45,28 @@ public sealed partial class SpookySpeakerSystem : EntitySystem
         // Set the delay for the next message
         entity.Comp.NextSpeakTime = curTime + entity.Comp.Cooldown;
 
+        args.Cost = entity.Comp.Cost;
+        args.Handled = true;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnExtinguishBoo(Entity<SpookyExtinguishComponent> entity, ref GhostBooEvent args)
+    {
+        // Check if we can extinguish the entity.
+        if (!_flammableQuery.TryComp(entity, out var flammable))
+            return;
+
+        // Check if we need to extinguish this entity.
+        if (!_random.Prob(entity.Comp.ExtinguishChance))
+            return;
+
+        _flammable.Extinguish(entity, flammable);
+
+        if (entity.Comp.ExtinguishSound != null)
+            _audio.PlayPvs(entity.Comp.ExtinguishSound, entity);
+
+        // Only set handled if we random
+        args.Cost = entity.Comp.Cost;
         args.Handled = true;
     }
 }

@@ -9,6 +9,11 @@ namespace Content.Server.Light.EntitySystems;
 /// </summary>
 public sealed class PoweredLightSystem : SharedPoweredLightSystem
 {
+    /// <summary>
+    /// The cost, in boo budget points, of flickering a light.
+    /// </summary>
+    const int FlickerBooCost = 4;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,6 +38,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         blinkingComp.StopBlinkingTime = curTime + light.GhostBlinkingTime;
         Dirty(uid, blinkingComp);
 
+        args.Cost = FlickerBooCost;
         args.Handled = true;
     }
 

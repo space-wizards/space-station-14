@@ -147,19 +147,23 @@ namespace Content.Server.Ghost
             // Shuffle the possible targets so we don't favor any particular entities
             _random.Shuffle(entities);
 
-            var booCounter = 0;
+            var booBudget = component.BooValue;
+            var anythingAffected = false;
             foreach (var ent in entities)
             {
-                var handled = DoGhostBooEvent(ent);
+                var handled = DoGhostBooEvent(ent, out var cost);
 
                 if (handled)
-                    booCounter++;
+                {
+                    anythingAffected = true;
+                    booBudget -= cost;
+                }
 
-                if (booCounter >= component.BooMaxTargets)
+                if (booBudget <= 0)
                     break;
             }
 
-            if (booCounter == 0)
+            if (!anythingAffected)
                 _popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
 
             args.Handled = true;
@@ -473,11 +477,12 @@ namespace Content.Server.Ghost
             }
         }
 
-        public bool DoGhostBooEvent(EntityUid target)
+        public bool DoGhostBooEvent(EntityUid target, out int cost)
         {
             var ghostBoo = new GhostBooEvent();
             RaiseLocalEvent(target, ghostBoo, true);
 
+            cost = int.Max(1, ghostBoo.Cost);
             return ghostBoo.Handled;
         }
 
