@@ -50,11 +50,6 @@ public sealed partial class WallMountVisibilityOverlay(
     private readonly List<EntityUid> _toRemove = [];
 
     /// <summary>
-    /// Per-frame cache for whether a tile has any blocking entity.
-    /// </summary>
-    private readonly Dictionary<(EntityUid Grid, Vector2i Tile), bool> _tileCache = [];
-
-    /// <summary>
     /// Alpha change per second during fade.
     /// </summary>
     private const float FadeSpeed = 9f;
@@ -98,11 +93,6 @@ public sealed partial class WallMountVisibilityOverlay(
         }
 
         ApplyFadeToVisibleEntities(viewportState);
-    }
-
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        _tileCache.Clear();
     }
 
     /// <summary>
@@ -167,11 +157,7 @@ public sealed partial class WallMountVisibilityOverlay(
             return 1f;
 
         var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
-        var key = (gridUid, tile);
-        if (!_tileCache.TryGetValue(key, out var blocked))
-            _tileCache[key] = blocked = _visibility.IsTileBlocked((gridUid, grid), tile);
-
-        if (!blocked)
+        if (!_visibility.IsTileBlocked((gridUid, grid), tile))
             return 1f;
 
         var (pos, rot) = _xform.GetWorldPositionRotation(xform);
@@ -266,7 +252,6 @@ public sealed partial class WallMountVisibilityOverlay(
     {
         _fadeCache.Dispose();
         _toRemove.Clear();
-        _tileCache.Clear();
 
         base.DisposeBehavior();
     }
