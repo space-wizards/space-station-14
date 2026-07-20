@@ -48,16 +48,4 @@ public sealed partial class StackPrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField]
     public int? MaxCount { get; private set; }
-
-    /// <summary>
-    /// Whether alt clicking on a stack should take half of the stack or only one.
-    /// </summary>
-    [DataField]
-    public bool HalfOnAltInteract { get; private set; } = true;
-
-    /// <summary>
-    /// If the pickup animation should play when merging stacks. Useful if custom animation on stack pickup is wanted.
-    /// </summary>
-    [DataField]
-    public bool AnimatePickup { get; private set; } = true;
 }
