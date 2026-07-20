@@ -174,7 +174,7 @@ public abstract partial class SharedReagentGrinderSystem : EntitySystem
         // Maybe I should have done that for the microwave too?
         if (ent.Comp.InputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
         {
-            _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-interact-full"), ent.Owner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-interact-full"), ent.Owner, args.User);
             return;
         }
 
