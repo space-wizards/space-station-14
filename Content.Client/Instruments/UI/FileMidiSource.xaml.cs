@@ -83,6 +83,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
         FilterBar.OnTextChanged += OnFilterBarTextChanged;
         TrackList.OnItemSelected += OnTrackListItemSelected;
+        TrackList.OnItemDeselected += OnTrackListItemDeselected;
         AddButton.OnPressed += OnAddButtonPressed;
         RemoveButton.OnPressed += OnRemoveButtonPressed;
         PlayButton.OnToggled += OnPlayButtonToggled;
@@ -91,7 +92,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         PlaybackSlider.OnValueChanged += OnPlaybackSliderValueChanged;
         PlaybackSlider.OnKeyBindUp += OnPlaybackSliderKeyBindUp;
 
-        AddButton.TooltipSupplier = SupplyFileManagementTooltip;
         RemoveButton.TooltipSupplier = SupplyFileManagementTooltip;
         ReloadTrackList();
     }
@@ -168,15 +168,21 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private void OnTrackListItemSelected(ItemList.ItemListSelectedEventArgs obj)
     {
+        UpdateFileRemoveButton();
         if (!_selectedInternally)
         {
-            StopPlaying();
             IsPlaying = false;
+            StopPlaying();
         }
         else
         {
             PlayTrackListItem(obj.ItemIndex);
         }
+    }
+
+    private void OnTrackListItemDeselected(ItemList.ItemListDeselectedEventArgs obj)
+    {
+        RemoveButton.Disabled = true;
     }
 
     private async void OnAddButtonPressed(ButtonEventArgs obj)
@@ -219,13 +225,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         if (TryGetSelectedTrackPath(out var trackPath) && trackPath is { } resPath)
             _midiCollection.RemoveMidiFile(resPath);
+        UpdateFileRemoveButton();
     }
 
     private void OnPlayButtonToggled(ButtonToggledEventArgs obj)
     {
+        UpdateFileRemoveButton();
         if (PlayButton.Pressed)
         {
-            DisableFileManagement();
             if (!TryGetSelectedTrack(out var track))
                 return;
 
@@ -233,7 +240,6 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         }
         else
         {
-            EnableFileManagement();
             StopPlaying();
         }
     }
@@ -273,22 +279,15 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         if (sender is not Button { Disabled: true })
             return null;
 
-        var tooltipText = Loc.GetString("instruments-component-menu-files-file-management-disabled-info");
+        var tooltipText = Loc.GetString("instruments-component-menu-files-file-remove-disabled-info");
         var tooltip = new Tooltip();
         tooltip.SetMessage(FormattedMessage.FromUnformatted(tooltipText));
         return tooltip;
     }
 
-    private void DisableFileManagement()
+    private void UpdateFileRemoveButton()
     {
-        RemoveButton.Disabled = true;
-        AddButton.Disabled = true;
-    }
-
-    private void EnableFileManagement()
-    {
-        RemoveButton.Disabled = false;
-        AddButton.Disabled = false;
+        RemoveButton.Disabled = !TrackList.GetSelected().Any() || IsPlaying;
     }
 
     private void ResetTrackIndicators()
@@ -314,6 +313,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
     {
         StopPlayingRequest?.Invoke();
         ResetTrackIndicators();
+        UpdateFileRemoveButton();
     }
 
     private void StartPlaying(ItemList.Item item)
@@ -328,6 +328,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         var midiData = _midiCollection.GetMidiData(resPath);
         StartPlayingRequest?.Invoke(midiData);
         CurrentTrackLabel.Text = item.Text;
+        UpdateFileRemoveButton();
     }
 
     private void FilterTrackList()
