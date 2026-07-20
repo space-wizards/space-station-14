@@ -4,6 +4,7 @@
   abstract: true
   components:
   - type: Foldable
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.FoldedVisuals.State:
