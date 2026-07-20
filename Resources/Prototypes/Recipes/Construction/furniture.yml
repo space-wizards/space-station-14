@@ -377,6 +377,16 @@
 
 - type: construction
   parent: BaseFurniture
+  id: PostBoard
+  graph: PostBoard
+  targetNode: postBoard
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition
+
+- type: construction
+  parent: BaseFurniture
   id: Mannequin
   graph: Mannequin
   targetNode: mannequin

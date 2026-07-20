@@ -68,7 +68,7 @@
 
 - type: entity
   parent: [ BaseWallmount, BasePaperLabelable ]
-  id: postboard
+  id: PostBoard
   name: post board
   description: Apply paper directly to the boardhead.
   components:
@@ -95,3 +95,6 @@
           CaptainsPaper: { state: captains_paper }
           Invoice: { state: invoice }
   - type: Appearance
+  - type: Construction
+    graph: PostBoard
+    node: postBoard
