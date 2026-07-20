@@ -2,23 +2,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class GermanAccentSystem : EntitySystem
+public sealed partial class GermanAccentSystem : RelayAccentSystem<GermanAccentComponent>
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ReplacementAccentSystem _replacement = default!;
 
     private static readonly Regex RegexTh = new(@"(?<=\s|^)th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexThe = new(@"(?<=\s|^)the(?=\s|$)", RegexOptions.IgnoreCase);
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<GermanAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    public string Accentuate(string message)
+    public override string Accentuate(string message, Entity<GermanAccentComponent>? ent = null)
     {
         var msg = message;
 
@@ -36,6 +33,9 @@ public sealed class GermanAccentSystem : EntitySystem
                       msg.Substring(match.Index + 3);
             }
         }
+
+        // now, apply word replacements
+        msg = _replacement.ApplyReplacements(msg, "german");
 
         // replace th with zh (for zhis, zhat, etc. the => ze is handled by replacements already)
         var msgBuilder = new StringBuilder(msg);
@@ -73,10 +73,5 @@ public sealed class GermanAccentSystem : EntitySystem
         }
 
         return msgBuilder.ToString();
-    }
-
-    private void OnAccent(Entity<GermanAccentComponent> ent, ref AccentGetEvent args)
-    {
-        args.Message = Accentuate(args.Message);
     }
 }

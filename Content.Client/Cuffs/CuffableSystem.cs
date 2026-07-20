@@ -11,11 +11,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Cuffs;
 
-public sealed class CuffableSystem : SharedCuffableSystem
+public sealed partial class CuffableSystem : SharedCuffableSystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private IResourceCache _cache = default!;
 
     public override void Initialize()
     {

@@ -1,0 +1,14 @@
+- type: species
+  id: Dwarf
+  name: species-name-dwarf
+  roundStart: true
+  prototype: MobDwarf
+  dollPrototype: AppearanceDwarf
+  skinColoration: HumanToned
+  defaultSoundsBySex:
+  - UnisexDwarf
+  - FemaleDwarf
+  - UnisexDwarf
+  voices:
+  - UnisexDwarf
+  - FemaleDwarf

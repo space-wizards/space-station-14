@@ -20,7 +20,7 @@ namespace Content.Client.Crayon.UI
     [GenerateTypedNameReferences]
     public sealed partial class CrayonWindow : DefaultWindow
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private IEntitySystemManager _entitySystem = default!;
         private readonly SpriteSystem _spriteSystem = default!;
 
         private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
