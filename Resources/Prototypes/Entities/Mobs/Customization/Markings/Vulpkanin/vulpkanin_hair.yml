@@ -1,3 +1,5 @@
+# Hairs
+
 - type: marking
   id: VulpHairAdhara
   bodyPart: Hair
@@ -6,7 +8,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: adhara
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairAnita
@@ -16,7 +17,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: anita
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairApollo
@@ -26,7 +26,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: apollo
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairBelle
@@ -36,7 +35,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: belle
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairBraided
@@ -46,7 +44,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: braided
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairBun
@@ -56,7 +53,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: bun
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairCleanCut
@@ -66,7 +62,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: clean_cut
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairCurl
@@ -76,7 +71,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: curl
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairHawk
@@ -86,7 +80,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: hawk
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairJagged
@@ -96,7 +89,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: jagged
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairJeremy
@@ -106,7 +98,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: jeremy
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairKajam
@@ -116,7 +107,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: kajam
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairKeid
@@ -126,7 +116,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: keid
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairKleeia
@@ -136,7 +125,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: kleeia
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairMizar
@@ -146,7 +134,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: mizar
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairPunkBraided
@@ -156,7 +143,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: punkbraided
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairRaine
@@ -166,7 +152,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: raine
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairRough
@@ -176,7 +161,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: rough
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairShort
@@ -186,7 +170,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: short
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairShort2
@@ -196,7 +179,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: short2
-    name: marking-layer-hair
 
 - type: marking
   id: VulpHairSpike
@@ -206,7 +188,8 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/hair.rsi
     state: spike
-    name: marking-layer-hair
+
+# Facial Hairs
 
 - type: marking
   id: VulpFacialHairRuff
@@ -216,7 +199,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: ruff
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VulpFacialHairElder
@@ -226,7 +208,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: elder
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VulpFacialHairElderChin
@@ -236,7 +217,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: elder_chin
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VulpFacialHairKita
@@ -246,7 +226,6 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: kita
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VulpFacialHairGoatee
@@ -256,4 +235,3 @@
   sprites:
   - sprite: Mobs/Customization/Vulpkanin/facial_hair.rsi
     state: goatee
-    name: marking-layer-facial-hair

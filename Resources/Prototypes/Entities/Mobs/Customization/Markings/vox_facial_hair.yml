@@ -6,7 +6,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: beard_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairColonel
@@ -16,7 +15,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: colonel_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairFu
@@ -26,7 +24,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: fu_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairMane
@@ -36,7 +33,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: mane_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairManeSmall
@@ -46,7 +42,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: manesmall_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairNeck
@@ -56,7 +51,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: neck_s
-    name: marking-layer-facial-hair
 
 - type: marking
   id: VoxFacialHairTufts
@@ -66,4 +60,3 @@
   sprites:
   - sprite: Mobs/Customization/vox_facial_hair.rsi
     state: tuft_s
-    name: marking-layer-facial-hair

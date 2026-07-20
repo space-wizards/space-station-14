@@ -6,7 +6,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: afro_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairBraids
@@ -16,7 +15,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: braid_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairBushy
@@ -26,7 +24,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: bushy_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairCrestedQuills
@@ -36,7 +33,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: crestedquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairEmperorQuills
@@ -46,7 +42,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: emperorquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairFlowing
@@ -56,7 +51,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: flowing_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairHawk
@@ -66,7 +60,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: hawk_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairHedgehog
@@ -76,7 +69,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: hedgehog_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairHorns
@@ -86,7 +78,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: horns_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairKeelQuills
@@ -96,7 +87,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: keelquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairKeetQuills
@@ -106,7 +96,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: keetquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairKingly
@@ -116,7 +105,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: kingly_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairLongBraid
@@ -126,7 +114,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: long_braid_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairMadScientist
@@ -136,7 +123,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: mad_scientist_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairMange
@@ -146,7 +132,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: mange_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairMohawk
@@ -156,7 +141,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: mohawk_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairNights
@@ -166,7 +150,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: nights_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairPony
@@ -176,7 +159,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: ponytail_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairRazorClipped
@@ -186,7 +168,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: razor_clipped_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairRazor
@@ -196,7 +177,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: razor_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairSortBraid
@@ -206,7 +186,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: short_braid_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairShortQuills
@@ -216,7 +195,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: shortquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairSlick
@@ -226,7 +204,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: slick_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairSpotty
@@ -236,7 +213,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: spotty_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairSurf
@@ -246,7 +222,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: surf_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairTielQuills
@@ -256,7 +231,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: tielquills_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairWiseBraid
@@ -266,7 +240,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: wise_braid_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairYasu
@@ -276,7 +249,6 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: yasu_s
-    name: marking-layer-hair
 
 - type: marking
   id: VoxHairCatfish
@@ -286,4 +258,3 @@
   sprites:
   - sprite: Mobs/Customization/vox_hair.rsi
     state: catfish_s
-    name: marking-layer-hair
