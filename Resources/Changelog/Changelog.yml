@@ -5140,3 +5140,45 @@
   id: 9882
   time: '2026-07-19T22:52:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41664
+- author: Pok27
+  changes:
+  - message: There are now more item status in hands
+    type: Add
+  id: 9883
+  time: '2026-07-19T23:56:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39264
+- author: ketufaispikinut
+  changes:
+  - message: Added guardians (holoparasites) for wizards that can be bought for 2 Wiz€oin™.
+    type: Add
+  id: 9884
+  time: '2026-07-20T00:45:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44624
+- author: Hitlinemoss
+  changes:
+  - message: Several crates available from the request console have been consolidated for the sake of convenience.
+    type: Tweak
+  - message: The textiles crate has been replaced by the cloth crate, containing 90 cloth.
+    type: Tweak
+  - message: In the request console, raw bar/kitchen ingredients have been moved from the Food tab to the Service tab.
+    type: Tweak
+  - message: In the request console, various janitorial supplies have been moved from the Service tab to the new Janitorial tab.
+    type: Tweak
+  - message: In the request console, EVA gear and shuttle parts are now found in the new Space tab.
+    type: Tweak
+  - message: Fixed a handful of request console items being in the wrong tab.
+    type: Fix
+  - message: The radiation protection crate no longer contains vodka or shot glasses.
+    type: Remove
+  - message: The boxes crate and security supplies crate have been removed from the cargo request console.
+    type: Remove
+  id: 9885
+  time: '2026-07-20T02:36:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42712
+- author: AreYouConfused
+  changes:
+  - message: chameleon kit presets should fill every slot for every option.
+    type: Fix
+  id: 9886
+  time: '2026-07-20T05:59:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44789
