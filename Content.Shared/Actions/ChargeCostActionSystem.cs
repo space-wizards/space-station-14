@@ -15,11 +15,7 @@ public sealed partial class ChargeCostActionSystem : EntitySystem
     [Dependency] private PowerCellSystem _powerCell = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ChargeCostActionComponent, ActionAttemptEvent>(OnActionAttempt);
-    }
-
+    [SubscribeLocalEvent]
     private void OnActionAttempt(Entity<ChargeCostActionComponent> ent, ref ActionAttemptEvent args)
     {
         if (args.Cancelled)

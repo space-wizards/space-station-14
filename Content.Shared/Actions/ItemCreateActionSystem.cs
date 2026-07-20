@@ -11,11 +11,7 @@ public sealed partial class ItemCreateActionSystem : EntitySystem
 {
     [Dependency] private SharedHandsSystem _hands = default!;
 
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ActionsContainerComponent, CreateItemEvent>(OnCreateItem);
-    }
-
+    [SubscribeLocalEvent]
     private void OnCreateItem(Entity<ActionsContainerComponent> ent, ref CreateItemEvent args)
     {
         var ev = new CreateItemAttemptEvent(args.Performer);
