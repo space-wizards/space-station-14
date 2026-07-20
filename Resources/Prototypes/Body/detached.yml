@@ -1,0 +1,14 @@
+- type: entity
+  id: DetachedBody
+  parent:
+  - BaseSpeciesLayers
+  save: false
+  components:
+  - type: Clickable
+  - type: Body
+  - type: VisualBody
+  - type: ContainerContainer
+  - type: Appearance
+  - type: HideableHumanoidLayers
+  - type: Item
+  - type: InteractionOutline
