@@ -267,6 +267,7 @@
     event: !type:ProjectileSpellEvent
       prototype: ProjectileDragonsBreath
       projectileSpeed: 5
+      inheritVelocity: false
 
 - type: entity
   parent: Smoke
