@@ -205,7 +205,6 @@
     - CorgiWearable
     - WhitelistChameleon
 
-
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretBrigmedic
