@@ -32,7 +32,7 @@
 - type: entity
   parent: BaseWallmountBoard
   id: NoticeBoard
-  name: notice board asda
+  name: notice board
   description: Is there a job for a witcher?
   components:
   - type: Sprite
@@ -62,9 +62,6 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: Tag
-    tags:
-    - Wooden
   - type: Construction
     graph: NoticeBoard
     node: noticeBoard
@@ -79,7 +76,9 @@
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/postboard.rsi
     layers:
-      - state: noticeboard
-      - state: notice-0
+      - state: postboard
+      - state: postboard_over
       - map: ["enum.StorageFillLayers.Fill"]
+      - state: postboard_paper
+        map: ["postboard_paper"]
   - type: Appearance
