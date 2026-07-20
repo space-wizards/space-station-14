@@ -1,6 +1,4 @@
-using System.Linq;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
 using Content.Shared.Tag;
 using Content.Shared.Wall;
 using Robust.Client.GameObjects;
@@ -34,17 +32,12 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// </summary>
     private static readonly ProtoId<TagPrototype>[] BlockingTags = ["Wall"];
 
-    /// <summary>
-    /// Caches for whether a tile has any blocking entity.
-    /// </summary>
-    private readonly Dictionary<(EntityUid Grid, Vector2i Tile), bool> _tileCache = [];
-
     private WallMountVisibilityOverlay _overlayInstance = default!;
 
     /// <summary>
     /// Whether directional visibility is currently enabled.
     /// </summary>
-    internal bool DirectionalVisibilityEnabled = true;
+    public bool DirectionalVisibilityEnabled = true;
 
     public override void Initialize()
     {
@@ -72,26 +65,6 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
             _overlay.RemoveOverlay(_overlayInstance);
             SetAllVisible(true);
         }
-    }
-
-    /// <summary>
-    /// Invalidates tile cache when anchor state changes for a blocking entity.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnTagAnchorChanged(Entity<TagComponent> ent, ref AnchorStateChangedEvent args)
-    {
-        if (!_tag.HasAnyTag(ent.Comp, BlockingTags))
-            return;
-
-        var xform = args.Transform;
-        if (xform.GridUid is not { } gridUid)
-            return;
-
-        if (!_gridQuery.TryGetComponent(gridUid, out var grid))
-            return;
-
-        var tile = _map.TileIndicesFor(gridUid, grid, xform.Coordinates);
-        _tileCache.Remove((gridUid, tile));
     }
 
     /// <summary>
@@ -125,31 +98,9 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     }
 
     /// <summary>
-    /// Removes all cached entries for a grid that is being removed.
-    /// </summary>
-    [SubscribeLocalEvent]
-    private void OnGridRemoval(GridRemovalEvent ev)
-    {
-        foreach (var key in _tileCache.Keys.Where(k => k.Grid == ev.EntityUid).ToList())
-        {
-            _tileCache.Remove(key);
-        }
-    }
-
-    /// <summary>
-    /// Clears tile cache and resets all wall-mount visibility on round restart.
-    /// </summary>
-    [SubscribeNetworkEvent]
-    private void OnRoundRestart(RoundRestartCleanupEvent ev)
-    {
-        _tileCache.Clear();
-        SetAllVisible(true);
-    }
-
-    /// <summary>
     /// Forces all wall-mount entities to become visible or hidden.
     /// </summary>
-    internal void SetAllVisible(bool visible)
+    public void SetAllVisible(bool visible)
     {
         var query = AllEntityQuery<WallMountComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out _, out var sprite))
@@ -161,27 +112,16 @@ public sealed partial class WallMountVisibilitySystem : EntitySystem
     /// <summary>
     /// Checks whether the tile contains any anchored blocking entity.
     /// </summary>
-    internal bool IsTileBlocked(EntityUid gridUid, Vector2i tile, EntityUid? ignoreUid = null)
+    public bool IsTileBlocked(Entity<MapGridComponent> grid, Vector2i tile)
     {
-        if (!_gridQuery.TryGetComponent(gridUid, out var grid))
-            return false;
-
-        var key = (gridUid, tile);
-        if (_tileCache.TryGetValue(key, out var cached))
-            return cached;
-
-        var enumerator = _map.GetAnchoredEntitiesEnumerator(gridUid, grid, tile);
+        var enumerator = _map.GetAnchoredEntitiesEnumerator(grid.Owner, grid, tile);
         while (enumerator.MoveNext(out var anchored))
         {
-            if (anchored == ignoreUid)
-                continue;
-
             if (!_tag.HasAnyTag(anchored.Value, BlockingTags))
                 continue;
 
-            return _tileCache[key] = true;
+            return true;
         }
-
-        return _tileCache[key] = false;
+        return false;
     }
 }
