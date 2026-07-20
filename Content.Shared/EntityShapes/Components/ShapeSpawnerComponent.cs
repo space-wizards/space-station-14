@@ -1,6 +1,6 @@
 using Content.Shared.EntityShapes.Shapes;
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityShapes.Components;
 
@@ -10,11 +10,17 @@ namespace Content.Shared.EntityShapes.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ShapeSpawnerComponent : Component
 {
+    /// <summary>
+    /// The shape to use to spawn the entities.
+    /// </summary>
     [DataField(required: true)]
     public EntityShape Shape;
 
+    /// <summary>
+    /// Table to spawn at each point of the shape.
+    /// </summary>
     [DataField(required: true)]
-    public EntProtoId Spawn;
+    public EntityTableSelector Spawn;
 
     /// <summary>
     /// If true, aligns center coordinates of a spawner to the nearest tile.
@@ -23,4 +29,10 @@ public sealed partial class ShapeSpawnerComponent : Component
     /// </summary>
     [DataField]
     public bool AlignCoords;
+
+    /// <summary>
+    /// Sets whether to delete the entity with this component after the spawner is finished.
+    /// </summary>
+    [DataField]
+    public bool DeleteSpawnerAfterSpawn = true;
 }

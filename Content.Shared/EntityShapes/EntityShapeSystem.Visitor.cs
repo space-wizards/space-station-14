@@ -2,6 +2,7 @@
 using System.Numerics;
 using Content.Shared.EntityShapes.Shapes;
 using Content.Shared.Random.Helpers;
+using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,6 +16,7 @@ public sealed partial class EntityShapeSystem
     /// <param name="shape">The shape to calculate.</param>
     /// <param name="center">Amount to offset the final result.</param>
     /// <param name="rand">The randomizer to use. <br/> Defaults to the instance <see cref="IoCManager"/> provides.</param>
+    [PublicAPI]
     public IEnumerable<Vector2> GetShape(
         EntityShape? shape,
         Vector2? center = null,
@@ -27,7 +29,7 @@ public sealed partial class EntityShapeSystem
         center ??= Vector2.Zero;
         return shape.Accept(
             GetEntityShapeVisitor.Instance,
-            new GetEntityShapeVisitor.Args(ProtoMan, rand, center)
+            new GetEntityShapeVisitor.Args(ProtoMan, rand, center.Value)
         );
     }
 }
@@ -41,7 +43,8 @@ sealed file class GetEntityShapeVisitor :
     public record struct Args(
         IPrototypeManager ProtoMan,
         IRobustRandom Rand,
-        Vector2? Center = null,
+        Vector2 Center,
+        Vector2? Offset = null,
         int? Size = null,
         float? StepSize = null
     );
@@ -52,7 +55,7 @@ sealed file class GetEntityShapeVisitor :
         // 1. YAML DataFields
         // 2. Arguments passed from the parent
         // 3. Default value.
-        shape.Offset = shape.DefaultOffset ?? args.Center ?? shape.Offset;
+        shape.Offset = (shape.DefaultOffset ?? args.Offset ?? Vector2.Zero) + args.Center;
         shape.Size = shape.DefaultSize ?? args.Size ?? shape.Size;
         shape.StepSize = shape.DefaultStepSize  ?? args.StepSize ?? shape.StepSize;
     }
@@ -77,11 +80,11 @@ sealed file class GetEntityShapeVisitor :
                 stepSize = options.GroupStepSize;
             }
 
-            var newArgs = args with { Center = offset, Size = size, StepSize = stepSize };
+            var newArgs = args with { Offset = offset, Size = size, StepSize = stepSize };
             result.AddRange(child.Accept(this, newArgs));
         }
 
-        return result.Distinct().ToList();
+        return result;
     }
 
     public IEnumerable<Vector2> VisitGroupShape(GroupEntityShape shape, Args args)
@@ -96,14 +99,14 @@ sealed file class GetEntityShapeVisitor :
             return Enumerable.Empty<Vector2>();
 
         var child = SharedRandomExtensions.Pick(validWeightedChildren, args.Rand);
-        var newArgs = args with { Center = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
+        var newArgs = args with { Offset = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
         return child.Accept(this, newArgs);
     }
 
     public IEnumerable<Vector2> VisitNestedShape(NestedEntityShape shape, Args args)
     {
         ApplyOverrides(shape, args);
-        var newArgs = args with { Center = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
+        var newArgs = args with { Offset = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
         return args.ProtoMan.Index(shape.Id).Shape.Accept(this, newArgs);
     }
 
@@ -122,7 +125,7 @@ sealed file class GetEntityShapeVisitor :
     {
         ApplyOverrides(shape, args);
 
-        var newArgs = args with { Center = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
+        var newArgs = args with { Offset = shape.Offset, Size = shape.Size, StepSize = shape.StepSize };
         var shapeRefs = shape.Accept(this, newArgs).ToList();
 
         if (shape.FilledChance != null)
@@ -200,28 +203,25 @@ sealed file class GetEntityShapeVisitor :
         var topRight = center - new Vector2(-range, -range);
         var bottomRight = center - new Vector2(-range, range);
 
-        // for example 0.999 should be considered as 1 so the loop works correctly
-        var side = (int) MathF.Round(range, 2);
-
         // Left side
-        for (var i = 0f; i < side; i += stepSize)
+        for (var i = 0f; i < range; i++)
         {
-            yield return bottomLeft + Vector2.UnitY * i;
+            yield return bottomLeft + Vector2.UnitY * stepSize;
         }
         // Top side
-        for (var i = 0f; i < side; i += stepSize)
+        for (var i = 0f; i < range; i++)
         {
-            yield return topLeft + Vector2.UnitX * i;
+            yield return topLeft + Vector2.UnitX * stepSize;
         }
         // Right side
-        for (var i = 0f; i < side; i += stepSize)
+        for (var i = 0f; i < range; i++)
         {
-            yield return topRight + -Vector2.UnitY * i;
+            yield return topRight + -Vector2.UnitY * stepSize;
         }
         // Bottom side
-        for (var i = 0f; i < side; i += stepSize)
+        for (var i = 0f; i < range; i++)
         {
-            yield return bottomRight + -Vector2.UnitX * i;
+            yield return bottomRight + -Vector2.UnitX * stepSize;
         }
     }
 

@@ -1,15 +1,16 @@
 ﻿- type: entity
   parent: MarkerBase
   id: SpawnerShapeLavaCross
-  name: Lava Spawner
+  name: lava shape spawner
   suffix: Cross, Size 5
-  categories: [ Debug ]
+  categories: [ Debug, Spawner ]
   components:
   - type: Sprite
     layers:
     - state: green
   - type: ShapeSpawner
-    spawn: FloorLavaEntity
+    spawn:
+      id: FloorLavaEntity
     shape:
       id: Cross
       size: 5
@@ -17,15 +18,16 @@
 - type: entity
   parent: MarkerBase
   id: SpawnerShapeLavaCrossDiagonal
-  name: Lava Spawner
+  name: lava shape spawner
   suffix: Cross, Size 5
-  categories: [ Debug ]
+  categories: [ Debug, Spawner ]
   components:
   - type: Sprite
     layers:
     - state: green
   - type: ShapeSpawner
-    spawn: FloorLavaEntity
+    spawn:
+      id: FloorLavaEntity
     shape:
       id: DiagonalCross
       size: 5
@@ -33,15 +35,16 @@
 - type: entity
   parent: MarkerBase
   id: SpawnerShapeLavaCrossCombined
-  name: Lava Spawner
+  name: lava shape spawner
   suffix: Combined cross, Size 4
-  categories: [ Debug ]
+  categories: [ Debug, Spawner ]
   components:
   - type: Sprite
     layers:
     - state: green
   - type: ShapeSpawner
-    spawn: FloorLavaEntity
+    spawn:
+      id: FloorLavaEntity
     shape:
       id: BothCross
       size: 4
@@ -49,15 +52,16 @@
 - type: entity
   parent: MarkerBase
   id: SpawnerShapeLavaComplex
-  name: Lava Spawner
+  name: lava shape spawner
   suffix: Box
-  categories: [ Debug ]
+  categories: [ Debug, Spawner ]
   components:
   - type: Sprite
     layers:
     - state: green
   - type: ShapeSpawner
-    spawn: FloorLavaEntity
+    spawn:
+      id: FloorLavaEntity
     shape:
       id: BoxFilled
       size: 5
