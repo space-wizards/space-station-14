@@ -2,8 +2,8 @@
 # If you are in a watchdog environment, please create config.toml in your instance's root directory instead of editing this.
 # If you are in a development environment, ensure you are editing /bin/Content.Server/server_config.toml. Be aware that this file may be overwritten on build.
 
-# This configuration file contains **some popular** options most often changed by sandboxers and server hosts.
-# Along with a description of what they do. Look at the end of the file for a list of all options available if it's not listed here.
+# This configuration file contains **some popular** options most often changed by sandboxers and server hosts, along with a description of what they do.
+# Look at the end of the file for a list of all options available if it's not listed here.
 
 [net]
 # The ticks per second the server runs at.
@@ -58,7 +58,7 @@ admins_count_in_playercount = false
 id = "unknown_server_id"
 
 [events]
-# Controls if the game should run station events. (Meteors, Sleeper Syndicates ETC)
+# Controls if the game should run station events. (Meteors, Sleeper Syndicates, etc.)
 # enabled = true
 
 [shuttle]
@@ -73,7 +73,7 @@ emergency_early_launch_allowed = false
 loginlocal = true
 # A player username that will be automatically elevated to full admin privileges on join.
 # Please only use this to give yourself admin privileges temporarily.
-# For a more permanent solution, use the permissions pannel in the game. (f7 -> Permissions Pannel, or `permissions` in the client console)
+# For a more permanent solution, use the permissions pannel in the game. (F7 -> Permissions Pannel, or `permissions` in the client console)
 login_host_user = ""
 
 [whitelist]
@@ -104,8 +104,8 @@ server_url = ""
 
 [status]
 # This is the address of the SS14 server as the launcher uses it.
-# This is only needed if you're proxying the status HTTP server
-# by default the launcher will assume the address and port match that of the status server.
+# This is only needed if you're proxying the status HTTP server.
+# By default, the launcher will assume the address and port match that of the status server.
 # Example: udp://mydomain.com:1212
 connectaddress = ""
 
