@@ -58,13 +58,14 @@ namespace Content.Client.Inventory
         #region Admin overlay vars
 
         private readonly ResPath _chameleonClothingTexturePath = new("/Textures/Interface/Default/Slots/ContrabandOverlay/camo.png");
-        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/ContrabandOverlay/contra.png");
+        private readonly Color _chameleonColor = new(147, 112, 219);
+
         private readonly string _hasContrabandTexturePathBeginning = "/Textures/Interface/Default/Slots/ContrabandOverlay/has_contra";
         private readonly string _hasContrabandTexturePathEnding = ".png";
         private readonly int _hasContrabandMaximumValue = 9;
         private readonly Color _hasContrabandDefaultColor = (0f, 1f, 1f);
 
-        private readonly Color _chameleonColor = new(147, 112, 219);
+        private readonly ResPath _contrabandTexturePath = new("/Textures/Interface/Default/Slots/ContrabandOverlay/contra.png");
 
         #endregion
 
@@ -344,6 +345,7 @@ namespace Content.Client.Inventory
                     var path = new ResPath(_hasContrabandTexturePathBeginning +
                                            Math.Min(_hasContrabandMaximumValue, contraList.Count) +
                                            _hasContrabandTexturePathEnding);
+
                     button.AddAdminOverlay(path, hasContraColor);
                 }
 

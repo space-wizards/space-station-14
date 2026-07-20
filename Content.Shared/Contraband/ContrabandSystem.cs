@@ -186,7 +186,6 @@ public sealed partial class ContrabandSystem : EntitySystem
         if (!Resolve(contraband.Owner, ref contraband.Comp, false))
             return false;
 
-
         foreach (var ent in contraband.Comp.Container.ContainedEntities)
         {
             if (IsContraband(ent, player, out var itemContraId))
