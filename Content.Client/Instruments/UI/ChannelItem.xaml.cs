@@ -45,6 +45,13 @@ public sealed partial class ChannelItem : Control
         IoCManager.InjectDependencies(this);
 
         ChannelEnableSwitchButton.OnPressed += OnChannelEnableSwitchButtonPressed;
+        MouseFilter = MouseFilterMode.Stop;
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindUp(args);
+        ChannelState = !ChannelState;
     }
 
     private void OnChannelEnableSwitchButtonPressed(BaseButton.ButtonEventArgs obj)
