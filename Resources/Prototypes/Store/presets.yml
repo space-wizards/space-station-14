@@ -5,6 +5,7 @@
   - type: Store
     name: store-preset-name-uplink
     categories:
+    - UplinkFree
     - UplinkWeaponry
     - UplinkAmmo
     - UplinkExplosives

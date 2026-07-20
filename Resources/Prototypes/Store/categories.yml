@@ -35,64 +35,69 @@
 
 #uplink categoires
 - type: storeCategory
+  id: UplinkFree
+  name: store-category-free
+  priority: 0
+
+- type: storeCategory
   id: UplinkWeaponry
   name: store-category-weapons
-  priority: 0
+  priority: 1
 
 - type: storeCategory
   id: UplinkAmmo
   name: store-category-ammo
-  priority: 1
+  priority: 2
 
 - type: storeCategory
   id: UplinkExplosives
   name: store-category-explosives
-  priority: 2
+  priority: 3
 
 - type: storeCategory
   id: UplinkWearables
   name: store-category-wearables
-  priority: 3
+  priority: 4
 
 - type: storeCategory
   id: UplinkChemicals
   name: store-category-chemicals
-  priority: 4
+  priority: 5
 
 - type: storeCategory
   id: UplinkDeception
   name: store-category-deception
-  priority: 5
+  priority: 6
 
 - type: storeCategory
   id: UplinkDisruption
   name: store-category-disruption
-  priority: 6
+  priority: 7
 
 - type: storeCategory
   id: UplinkImplants
   name: store-category-implants
-  priority: 7
+  priority: 8
 
 - type: storeCategory
   id: UplinkAllies
   name: store-category-allies
-  priority: 8
+  priority: 9
 
 - type: storeCategory
   id: UplinkJob
   name: store-category-job
-  priority: 9
+  priority: 10
 
 - type: storeCategory
   id: UplinkPointless
   name: store-category-pointless
-  priority: 10
+  priority: 11
 
 - type: storeCategory
   id: UplinkObjective
   name: store-category-objective
-  priority: 11
+  priority: 12
 
 #nukie delivery
 
