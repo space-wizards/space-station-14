@@ -225,6 +225,12 @@ public abstract partial class SharedStackSystem : EntitySystem
 
     #endregion
 
+    /// <summary>
+    ///     Splits a stack and either mergers the stack into the hand of the user of picks it up into the hand of the user
+    /// </summary>
+    /// <param name="stack"> Stack which is to be split from </param>
+    /// <param name="user"> The user who is trying to split the stack </param>
+    /// <param name="amount"> Amount to try and split the stack. Will not always be the amount moved </param>
     /// <remarks>
     ///     OnStackAlternativeInteract() was moved to shared in order to faciliate prediction of stack splitting verbs.
     ///     However, prediction of interacitons with spawned entities is non-functional (or so i'm told)
