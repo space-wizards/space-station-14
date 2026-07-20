@@ -1,83 +1,37 @@
-﻿using Content.Shared.Atmos.Prototypes;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Piping.Trinary.Components
+namespace Content.Shared.Atmos.Piping.Trinary.Components;
+
+[Serializable, NetSerializable]
+public enum GasFilterUiKey
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    public sealed partial class GasFilterComponent : Component
+    Key,
+}
+
+[Serializable, NetSerializable]
+public sealed class GasFilterToggleStatusMessage : BoundUserInterfaceMessage
+{
+    public bool Enabled { get; }
+
+    public GasFilterToggleStatusMessage(bool enabled)
     {
-        [DataField]
-        public bool Enabled = true;
-
-        [DataField("inlet")]
-        public string InletName = "inlet";
-
-        [DataField("filter")]
-        public string FilterName = "filter";
-
-        [DataField("outlet")]
-        public string OutletName = "outlet";
-
-        [DataField, AutoNetworkedField]
-        public float TransferRate = Atmospherics.MaxTransferRate;
-
-        [DataField]
-        public float MaxTransferRate = Atmospherics.MaxTransferRate;
-
-        [DataField, AutoNetworkedField]
-        public Gas? FilteredGas;
+        Enabled = enabled;
     }
+}
 
-    [Serializable, NetSerializable]
-    public enum GasFilterUiKey
+[Serializable, NetSerializable]
+public sealed class GasFilterChangeRateMessage : BoundUserInterfaceMessage
+{
+    public float Rate { get; }
+
+    public GasFilterChangeRateMessage(float rate)
     {
-        Key,
+        Rate = rate;
     }
+}
 
-    [Serializable, NetSerializable]
-    public sealed class GasFilterBoundUserInterfaceState : BoundUserInterfaceState
-    {
-        public string FilterLabel { get; }
-        public float TransferRate { get; }
-        public bool Enabled { get; }
-        public Gas? FilteredGas { get; }
-
-        public GasFilterBoundUserInterfaceState(string filterLabel, float transferRate, bool enabled, Gas? filteredGas)
-        {
-            FilterLabel = filterLabel;
-            TransferRate = transferRate;
-            Enabled = enabled;
-            FilteredGas = filteredGas;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GasFilterToggleStatusMessage : BoundUserInterfaceMessage
-    {
-        public bool Enabled { get; }
-
-        public GasFilterToggleStatusMessage(bool enabled)
-        {
-            Enabled = enabled;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GasFilterChangeRateMessage : BoundUserInterfaceMessage
-    {
-        public float Rate { get; }
-
-        public GasFilterChangeRateMessage(float rate)
-        {
-            Rate = rate;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GasFilterSelectGasMessage(Gas? gas) : BoundUserInterfaceMessage
-    {
-        public readonly Gas? Gas = gas;
-    }
+[Serializable, NetSerializable]
+public sealed class GasFilterSelectGasMessage(Gas? gas) : BoundUserInterfaceMessage
+{
+    public readonly Gas? Gas = gas;
 }

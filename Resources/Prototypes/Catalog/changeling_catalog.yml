@@ -144,3 +144,18 @@
   - !type:ListingLimitedStockCondition
     stock: 1
   productAction: ActionChangelingLastResort
+
+- type: listing
+  id: ChangelingNightVision
+  name: changeling-catalog-night-vision-name
+  description: changeling-catalog-night-vision-desc
+  icon: { sprite: /Textures/Interface/Actions/changeling2.rsi, state: nv_on }
+  applyToMob: true
+  cost:
+    ChangelingDNA: 5
+  categories:
+  - ChangelingStoreUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  productComponents: ChangelingNightVisionDummy

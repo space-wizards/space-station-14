@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Robust.Shared.Utility;

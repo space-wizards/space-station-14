@@ -35,7 +35,7 @@ public sealed partial class FlashOverlay : Overlay
         _shader = _prototypeManager.Index(FlashedEffectShader).InstanceUnique();
         _statusSys = _entityManager.System<StatusEffectsSystem>();
 
-        _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
+        _configManager.OnValueChanged(CCVars.DisableFlashEffect, (b) => { _reducedMotion = b; }, invokeImmediately: true);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

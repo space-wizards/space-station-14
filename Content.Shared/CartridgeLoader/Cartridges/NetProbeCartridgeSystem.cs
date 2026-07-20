@@ -45,7 +45,7 @@ public sealed partial class NetProbeCartridgeSystem : EntitySystem
         // Why is there no NextFloat(float min, float max)???
         var audioParams = AudioParams.Default.WithVolume(-2f).WithVariation(0.2f);
         _audioSystem.PlayPredicted(component.SoundScan, target, args.Args.User, audioParams);
-        _popupSystem.PopupPredictedCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
+        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.Args.User);
 
         // Limit the amount of saved probe results to 9
         // This is hardcoded because the UI doesn't support a dynamic number of results

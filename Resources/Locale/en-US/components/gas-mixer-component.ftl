@@ -6,6 +6,4 @@ comp-gas-mixer-ui-mixer-node-side = Side Port:
 comp-gas-mixer-ui-mixer-set = Set
 comp-gas-mixer-ui-mixer-max = Max
 
-comp-gas-mixer-ui-needs-anchor = Anchor it first!
-
 comp-gas-mixer-ratio-examine = The side port ratio is [color={$statusColor}]{$sidePortRatio}[/color].
