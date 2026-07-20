@@ -10,6 +10,7 @@ public sealed partial class CryostorageEntryControl : BoxContainer
 {
     public event Action<string>? SlotRemoveButtonPressed;
     public event Action<string>? HandRemoveButtonPressed;
+    public event Action<string>? InsidePlayerButtonPressed;
 
     public NetEntity Entity;
     public bool LastOpenState;
@@ -41,6 +42,14 @@ public sealed partial class CryostorageEntryControl : BoxContainer
             control.Button.OnPressed += _ => HandRemoveButtonPressed?.Invoke(name);
             ItemsContainer.AddChild(control);
         }
+
+        foreach (var (slotId, itemName) in data.ItemsStoredInsidePlayer)
+        {
+            var control = new CryostorageSlotControl($"{Loc.GetString("comp-storage-window-title")} {slotId}", itemName);
+            control.Button.OnPressed += _ => InsidePlayerButtonPressed?.Invoke("ItemsStoredInside" + slotId);
+            ItemsContainer.AddChild(control);
+        }
+
         Collapsible.BodyVisible = LastOpenState;
     }
 }

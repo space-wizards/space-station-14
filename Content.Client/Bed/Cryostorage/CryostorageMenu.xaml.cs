@@ -14,6 +14,7 @@ public sealed partial class CryostorageMenu : FancyWindow
 {
     public event Action<NetEntity, string>? SlotRemoveButtonPressed;
     public event Action<NetEntity, string>? HandRemoveButtonPressed;
+    public event Action<NetEntity, string>? InsidePlayerRemoveButtonPressed;
 
     public CryostorageMenu()
     {
@@ -46,6 +47,7 @@ public sealed partial class CryostorageMenu : FancyWindow
             var control = new CryostorageEntryControl(player);
             control.SlotRemoveButtonPressed += a => SlotRemoveButtonPressed?.Invoke(player.PlayerEnt, a);
             control.HandRemoveButtonPressed += a => HandRemoveButtonPressed?.Invoke(player.PlayerEnt, a);
+            control.InsidePlayerButtonPressed += a => InsidePlayerRemoveButtonPressed?.Invoke(player.PlayerEnt, a);
             EntriesContainer.Children.Add(control);
         }
 

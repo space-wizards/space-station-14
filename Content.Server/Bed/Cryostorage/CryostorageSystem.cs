@@ -10,22 +10,23 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
+using Content.Shared.Popups;
+using Content.Shared.Station;
 using Content.Shared.StationRecords;
+using Content.Shared.StationRecords.Components;
+using Content.Shared.StationRecords.Systems;
+using Content.Shared.Storage;
 using Content.Shared.UserInterface;
 using Robust.Server.Player;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using System.Globalization;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
-using Content.Shared.Popups;
-using Content.Shared.Station;
-using Content.Shared.StationRecords.Components;
-using Content.Shared.StationRecords.Systems;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Bed.Cryostorage;
 
@@ -98,12 +99,21 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
         {
             entity = _hands.GetHeldItem(cryoContained, args.Key);
         }
-        else
+        else if (args.Type == CryostorageRemoveItemBuiMessage.RemovalType.Inventory)
         {
             if (_inventory.TryGetSlotContainer(cryoContained, args.Key, out var slot, out _))
                 entity = slot.ContainedEntity;
         }
+        else
+        {
+            var storage = CompOrNull<StorageComponent>(cryoContained);
+            if (storage == null)
+                return;
 
+            string prefix = "ItemsStoredInside";
+            string numberPart = args.Key.Substring(prefix.Length);
+            entity = storage.Container.ContainedEntities[int.Parse(numberPart) - 1];
+        }
         if (entity == null)
             return;
 
@@ -325,6 +335,14 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
                 continue;
 
             data.HeldItems.Add(hand, Name(heldEntity.Value));
+        }
+
+        var storage = CompOrNull<StorageComponent>(uid);
+        if (storage != null)
+        {
+            short i = 1;
+            foreach (var a in storage.Container.ContainedEntities)
+                data.ItemsStoredInsidePlayer.Add((i++, Name(a)));
         }
 
         return data;
