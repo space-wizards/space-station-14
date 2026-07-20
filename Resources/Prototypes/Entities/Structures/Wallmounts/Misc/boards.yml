@@ -78,7 +78,7 @@
     layers:
       - state: postboard
       - state: paper
-        sprite: Structures/Storage/Crates/labels.rsi
+        sprite: Structures/Wallmounts/labels.rsi
         map: ["enum.PaperLabelVisuals.Layer"]
       - state: postboard_over
       - map: ["enum.StorageFillLayers.Fill"]
