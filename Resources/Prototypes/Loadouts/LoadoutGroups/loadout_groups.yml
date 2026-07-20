@@ -9,13 +9,12 @@
   - GlassesJensen
 
 - type: loadoutGroup
-  parent: [ TrinketSmokeables, TrinketFolders, TrinketPins ]
+  parent: [ TrinketSmokeables, TrinketFolders, TrinketPins, TrinketTowels ]
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
   maxLimit: 3
   loadouts:
-  - TowelColorWhite
   - FlowerWreath
   - Hairflower
   - Headphones
@@ -65,6 +64,12 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
+
+- type: loadoutGroup
+  abstract: true
+  id: TrinketTowels
+  loadouts:
+  - TowelColorWhite
 
 - type: loadoutGroup
   id: AssistiveItems
