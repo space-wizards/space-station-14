@@ -80,14 +80,14 @@ public sealed partial class DevourSystem : EntitySystem
                 case MobState.Invalid:
                 case MobState.Alive:
                 default:
-                    _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-fail-target-alive"), ent.Owner, ent.Owner);
+                    _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), ent.Owner, ent.Owner);
                     break;
             }
 
             return;
         }
 
-        _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-structure"), ent.Owner, ent.Owner);
+        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), ent.Owner, ent.Owner);
 
         if (ent.Comp.SoundStructureDevour != null)
             _audioSystem.PlayPredicted(ent.Comp.SoundStructureDevour, ent.Owner, ent.Owner, ent.Comp.SoundStructureDevour.Params);
