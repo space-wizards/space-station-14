@@ -15,8 +15,6 @@ import yaml_utils
 
     Arguments:
         <path>: Input .yml file
-        --add-hair-names: Optional flag, adds "marking-layer-hair" and "marking-layer-facial-hair" locale names
-            to hair and facial hair, respectively.
 
     Example usage:
         py convert_marking_sprites_to_layers.py Resources/Prototypes/Entities/Mobs/Customization/Markings/ears.yml
@@ -27,30 +25,8 @@ import yaml_utils
 VALID_EXTENSION = ".yml"
 USAGE_HINT = f"Usage: py convert_marking_sprites_to_layers.py <path{VALID_EXTENSION}> [--add-hair-names]"
 TAG_PREFIX = "!type:"
+prototypes_processed = 0
 prototypes_changed = 0
-
-def misc_conversion_for_my_convenience(marking: dict, flags: list):
-    """
-        Conversions that exist purely to reduce tedium on my part. Smiles.
-
-        Parameters:
-            marking (dict): A marking prototype that has been converted to the new format.
-    """
-
-    sprites: list = marking.get("sprites")
-    sprite_count = len(sprites)
-    if not sprites or sprite_count <= 0:
-        return
-
-    if "--add-hair-names" in flags:
-        # Make the first layer of  all hair markings use a "hair" locale ID
-        body_part = marking.get("bodyPart")
-        if body_part == "Hair":
-            sprites[0]["name"] = "marking-layer-hair"
-
-        # Make the first layer of all facial hair markings use a "facial hair" locale ID
-        if body_part == "FacialHair":
-            sprites[0]["name"] = "marking-layer-facial-hair"
 
 def convert_prototype(proto: dict, flags: list) -> dict:
     """
@@ -65,6 +41,7 @@ def convert_prototype(proto: dict, flags: list) -> dict:
         Returns:
             dict: The final prototype data.
     """
+    global prototypes_processed
     global prototypes_changed
 
     if ("type" not in proto or proto["type"] != "marking" # Not a marking prototype
@@ -82,30 +59,34 @@ def convert_prototype(proto: dict, flags: list) -> dict:
     # Get per-layer coloring if it exists
     layer_coloring: dict = {}
     coloring: dict = new_marking.get("coloring")
-    if coloring:
-        if "layers" in coloring:
-            layer_coloring = new_marking["coloring"].pop("layers")
-        if len(coloring.keys()) == 0: # Clear if empty
-            new_marking.pop("coloring")
+    if coloring and "layers" in coloring:
+        layer_coloring = new_marking["coloring"].pop("layers")
 
     # Get per-layer shaders if it exists
     shaders: dict = new_marking.get("shaders")
 
+    changed = False
     for sprite in sprites:
         state: str = sprite.get("state")
         if state:
             if (state in layer_coloring): # Convert layer coloring
                 sprite["coloring"] = layer_coloring.pop(state)
-            if (shaders and state in shaders):  # Convert shaders
+                changed = True
+            if (shaders and state in shaders): # Convert shaders
                 sprite["shader"] = shaders.pop(state);
+                changed = True
 
-    if (isinstance(shaders, dict) and len(shaders) == 0):
-        new_marking.pop("shaders") # Clear if empty
+    # Clear if empty
+    if isinstance(coloring, dict) and len(coloring) == 0:
+        new_marking.pop("coloring")
+    if isinstance(shaders, dict) and len(shaders) == 0:
+        new_marking.pop("shaders")
 
-    # Convert other shit
-    misc_conversion_for_my_convenience(new_marking, flags)
+    prototypes_processed += 1
 
-    prototypes_changed += 1
+    if changed:
+        prototypes_changed += 1
+
     return new_marking
 
 def convert_file(input_file: str, flags: list):
@@ -132,7 +113,7 @@ def convert_file(input_file: str, flags: list):
 
     # Convert each applicable prototype to use the new marking system.
     converted_prototypes: list = [convert_prototype(proto, flags) for proto in prototypes]
-    if (prototypes_changed == 0):
+    if (prototypes_processed == 0):
         raise ValueError(f"ERROR: No valid prototypes to convert in {input_file}.")
 
     # Copy the old prototype file to a backup
@@ -140,7 +121,7 @@ def convert_file(input_file: str, flags: list):
 
     # Replace the old prototype file.
     yaml_utils.write_yaml_to_file(input_file, converted_prototypes)
-    print(f"Successfully converted {input_file}. Processed prototypes: {prototypes_changed}")
+    print(f"Successfully converted {input_file}. Processed: {prototypes_processed}, Changed: {prototypes_changed}")
 
 def main():
     """
