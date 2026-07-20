@@ -75,7 +75,7 @@ public sealed partial class SharedExecutionSystem : EntitySystem
         if (ev.CancelExecution)
         {
             if (ev.CancelMessage != null)
-                _popup.PopupPredicted(ev.CancelMessage, victim, null, PopupType.MediumCaution); //TODO: When cuff breaking is predicted, null should be changed to attacker. Otherwise the cuffs breaking looks oddly delayed.
+                _popup.PopupEntity(ev.CancelMessage, victim, PopupType.MediumCaution); //TODO: When cuff breaking is predicted, null should be changed to attacker. Otherwise the cuffs breaking looks oddly delayed.
             return;
         }
 

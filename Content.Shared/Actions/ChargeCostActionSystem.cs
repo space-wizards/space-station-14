@@ -9,11 +9,11 @@ namespace Content.Shared.Actions;
 /// <summary>
 /// <see cref="ChargeCostActionComponent"/>
 /// </summary>
-public sealed class ChargeCostActionSystem : EntitySystem
+public sealed partial class ChargeCostActionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private SharedBatterySystem _battery = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -30,7 +30,7 @@ public sealed class ChargeCostActionSystem : EntitySystem
 
         if (!_powerCell.TryGetBatteryFromSlotOrEntity((action.Container.Value, null), out var battery) || !_battery.TryUseCharge(battery.Value.AsNullable(), ent.Comp.Charge))
         {
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.NoPowerPopup), args.User, args.User);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.NoPowerPopup), args.User, args.User);
             args.Cancelled = true;
         }
     }

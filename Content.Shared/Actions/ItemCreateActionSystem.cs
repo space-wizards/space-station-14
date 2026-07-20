@@ -7,9 +7,9 @@ namespace Content.Shared.Actions;
 /// <summary>
 /// Creates an entity in the hands of the entity using the action.
 /// </summary>
-public sealed class ItemCreateActionSystem : EntitySystem
+public sealed partial class ItemCreateActionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
