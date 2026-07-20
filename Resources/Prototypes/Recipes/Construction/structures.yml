@@ -511,7 +511,7 @@
   targetNode: glassAirlock
 
 - type: construction
-  parent: BaseStructureFullTile
+  parent: BaseStructureFullTileDirectional
   id: AirlockShuttle
   graph: AirlockShuttle
   targetNode: airlock

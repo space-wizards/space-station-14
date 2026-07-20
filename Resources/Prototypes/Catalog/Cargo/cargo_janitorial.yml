@@ -1,0 +1,92 @@
+- type: cargoProduct
+  id: JanitorialSupplies
+  icon:
+    sprite: Objects/Specific/Janitorial/spray_bottle.rsi
+    state: cleaner
+  product: CrateJanitorialSupplies
+  cost: 560
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialCleanerGrenades
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateJanitorialCleanerGrenades
+  cost: 400
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialLightsReplacement
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateJanitorialReplacementLights
+  cost: 600
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialLightsColorful
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateJanitorialColorfulLights
+  cost: 800
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialLightsHoliday
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateJanitorialHolidayLights
+  cost: 800
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialMousetrapBoxes
+  icon:
+    sprite: Objects/Devices/mousetrap.rsi
+    state: mousetrap
+  product: BoxMousetrap
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 500
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+    state: icon
+  product: CrateJanitorBiosuit
+  cost: 800
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialBombSuit
+  icon:
+    sprite: Clothing/Head/Helmets/janitor_bombsuit.rsi
+    state: icon
+  product: ClosetJanitorBombFilled
+  cost: 1000
+  category: cargoproduct-category-name-janitorial
+  group: market
+
+- type: cargoProduct
+  id: JanitorialJanitorialTrolley
+  icon:
+    sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+    state: icon-cart
+  product: JanitorialTrolley
+  cost: 300
+  category: cargoproduct-category-name-janitorial
+  group: market
