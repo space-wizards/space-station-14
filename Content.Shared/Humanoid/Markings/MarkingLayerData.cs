@@ -31,6 +31,9 @@ public sealed partial record MarkingLayerData
     /// <summary>
     ///     If this is true, then this layer cannot be recolored in the character editor.
     /// </summary>
+    /// <remarks>
+    ///     This field is redundant if ForcedColoring is enabled on the marking.
+    /// </remarks>
     [DataField]
     public bool ForcedColoring = false;
 
