@@ -1,0 +1,493 @@
+# When adding new sound makers, also add it to id: AllToySoundMakerTable
+# These entities exist to make a (funny) sound and not much else
+
+## Bike horns
+
+- type: entity
+  parent: BaseItem
+  id: BikeHorn
+  name: bike horn
+  description: A horn off of a bicycle.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/bikehorn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/bikehorn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: UseDelay
+    delay: 0.5
+  - type: EmitSoundOnUse
+    sound: &SoundBikeHorn
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound: *SoundBikeHorn
+  - type: EmitSoundOnTrigger
+    sound: *SoundBikeHorn
+  - type: EmitSoundOnActivate
+    sound: *SoundBikeHorn
+  - type: EmitSoundOnCollide
+    sound: *SoundBikeHorn
+  - type: Tag
+    tags:
+    - Payload # yes, you can make re-usable prank grenades
+    - BikeHorn
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit: *SoundBikeHorn
+    damage:
+      types:
+        Blunt: 0
+  - type: Tool
+    qualities:
+    - Honking
+    useSound: *SoundBikeHorn
+
+- type: entity
+  parent: BaseItem
+  id: CluwneHorn
+  name: broken bike horn
+  description: A broken horn off of a bicycle.
+  components:
+  - type: UseDelay
+  - type: Sprite
+    sprite: Objects/Fun/cluwnehorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/cluwnehorn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/cluwnehorn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: Tag
+    tags:
+    - Payload # yes, you can make re-usable prank grenades
+    - CluwneHorn
+  - type: EmitSoundOnTrigger
+    sound: &SoundCluwneHorn
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnUse
+    sound: *SoundCluwneHorn
+  - type: EmitSoundOnActivate
+    sound: *SoundCluwneHorn
+  - type: EmitSoundOnCollide
+    sound: *SoundCluwneHorn
+  - type: EmitSoundOnLand
+    sound: *SoundCluwneHorn
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit: *SoundCluwneHorn
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
+  parent: BikeHorn
+  id: GoldenBikeHorn
+  name: golden honker
+  description: A happy honk prize, pray to the gods for your reward.
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/goldbikehorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/goldbikehorn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/goldbikehorn.rsi
+    slots: [Belt]
+  - type: Prayable
+  - type: StaticPrice
+    price: 100 # reduced price due to heisentests
+  - type: PointLight
+    radius: 1.2
+    energy: 2.2
+    castShadows: false
+    color: "#ffca1b"
+
+- type: entity
+  parent: BikeHorn
+  id: BananiumHorn
+  name: bananium horn
+  description: An air horn made from bananium.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/bananiumhorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/bananiumhorn.rsi
+    size: Small
+  - type: Clothing
+    sprite: Objects/Fun/bananiumhorn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: UseDelay
+    delay: 3
+  - type: EmitSoundOnUse
+    sound: &SoundBananiumHorn
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnLand
+    sound: *SoundBananiumHorn
+  - type: EmitSoundOnTrigger
+    sound: *SoundBananiumHorn
+  - type: EmitSoundOnActivate
+    sound: *SoundBananiumHorn
+  - type: EmitSoundOnCollide
+    sound: *SoundBananiumHorn
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit: *SoundBananiumHorn
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: Construction
+    graph: BananiumHorn
+    node: bananiumHorn
+  - type: Tool
+    useSound: *SoundBananiumHorn
+
+- type: entity
+  parent: BaseItem
+  id: PushHorn
+  name: push horn
+  description: This powerful bikehorn is sure to blast frowns away.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/push_horn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/push_horn.rsi
+    slots: [Belt]
+    quickEquip: false
+  - type: EmitSoundOnUse
+    handle: false
+    sound: "/Audio/Items/Toys/pushHornHonk.ogg"
+  - type: EmitSoundOnLand
+    sound: "/Audio/Items/Toys/pushHornFloor.ogg"
+  - type: UseDelay
+    delay: 10
+  - type: TriggerOnUse
+  - type: RepulseAttractOnTrigger
+    speed: 50
+    range: 3.5
+    whitelist:
+      components:
+      - MobMover
+  - type: SpawnOnTrigger
+    proto: EffectGravityPulse
+    predicted: true
+
+## Whistles
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseWhistle
+  name: whistle
+  description: Someone forgot to turn off a kettle?
+  components:
+  - type: Item
+    sprite: Objects/Fun/whistles.rsi
+    size: Tiny
+  - type: Sprite
+    sprite: Objects/Fun/whistles.rsi
+  - type: Clothing
+    sprite: Objects/Fun/whistles.rsi
+    quickEquip: false
+    slots: neck
+  - type: UseDelay
+    delay: 3
+  - type: EmitSoundOnUse
+    sound:
+      collection: BaseWhistle
+  - type: Whistle
+    distance: 3
+
+- type: entity
+  parent: BaseWhistle
+  id: Whistle
+  components:
+  - type: Sprite
+    state: whistle
+
+- type: entity
+  parent: BaseWhistle
+  id: SecurityWhistle
+  description: The sound of it brings fear.
+  components:
+  - type: Sprite
+    state: sec
+  - type: Clothing
+    equippedPrefix: sec
+  - type: Whistle
+    distance: 5
+
+- type: entity
+  parent: [BaseWhistle, BaseMinorContraband]
+  id: SyndicateWhistle
+  name: trench whistle
+  description: A whistle used by Syndicate commanders to draw attention. Avanti!
+  components:
+  - type: Sprite
+    state: trench
+  - type: Clothing
+    equippedPrefix: trench
+  - type: EmitSoundOnUse
+    sound:
+      collection: TrenchWhistle
+  - type: Whistle
+    distance: 15 # Let your enemies hear the sound of death approaching
+
+## Other
+
+- type: entity
+  abstract: true
+  parent: [BaseItem, BaseStash]
+  id: BaseRubberToy
+  components:
+  - type: Tag
+    tags:
+    - Payload
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  parent: BaseRubberToy
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    slots:
+    - HEAD
+  - type: Item
+    size: Tiny
+  - type: EmitSoundOnUse
+    sound: &SoundQuack
+      path: /Audio/Items/Toys/quack.ogg
+  - type: EmitSoundOnLand
+    sound: *SoundQuack
+  - type: EmitSoundOnActivate
+    sound: *SoundQuack
+  - type: EmitSoundOnTrigger
+    sound: *SoundQuack
+  - type: EmitSoundOnCollide
+    sound: *SoundQuack
+  - type: MeleeWeapon
+    soundHit: *SoundQuack
+  - type: Tag
+    tags:
+    - ToyRubberDuck
+
+- type: entity
+  parent: BaseRubberToy
+  id: RubberChicken
+  name: rubber chicken
+  description: A stress inducing parody of nature's most delectable avian.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/rubber_chicken.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound: &SoundRubberChicken
+      collection: RubberChicken
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound: *SoundRubberChicken
+  - type: EmitSoundOnActivate
+    sound: *SoundRubberChicken
+  - type: EmitSoundOnCollide
+    sound: *SoundRubberChicken
+  - type: EmitSoundOnTrigger
+    sound: *SoundRubberChicken
+  - type: MeleeWeapon
+    wideAnimationRotation: 110
+    soundHit: *SoundRubberChicken
+
+- type: entity
+  parent: BaseItem
+  id: NewtonCradle
+  name: newton cradle
+  description: A device bored paper pushers use to remind themselves that time did not stop yet. Contains gravity.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/newton_cradle.rsi
+    state: icon-off
+  - type: Item
+    sprite: Objects/Fun/newton_cradle.rsi
+    storedRotation: -90
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }
+  - type: ItemToggle
+  - type: UseDelay
+    delay: 1
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Items/newton_cradle.ogg
+      params:
+        volume: -9
+        maxDistance: 3
+
+- type: entity
+  parent: BaseItem
+  id: ClownRecorder
+  name: clown recorder
+  description: When you just can't get those laughs coming the natural way!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/clownrecorder.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound: &SoundClownRecorder
+      collection: ClownRecorder
+  - type: EmitSoundOnLand
+    sound: *SoundClownRecorder
+  - type: EmitSoundOnActivate
+    sound: *SoundClownRecorder
+  - type: EmitSoundOnTrigger
+    sound: *SoundClownRecorder
+  - type: EmitSoundOnCollide
+    sound: *SoundClownRecorder
+  - type: UseDelay
+    delay: 30.0
+  - type: Tag
+    tags:
+    - ClownRecorder
+    - Payload
+
+- type: entity
+  parent: BaseItem
+  id: WhoopieCushion
+  name: whoopie cushion
+  description: A practical joke device involving flatulence humour.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/whoopie.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Payload
+  - type: EmitSoundOnUse
+    sound: &SoundParp
+      collection: Parp
+      params:
+        variation: 0.125
+  - type: EmitSoundOnLand
+    sound: *SoundParp
+  - type: EmitSoundOnActivate
+    sound: *SoundParp
+  - type: EmitSoundOnCollide
+    sound: *SoundParp
+  - type: UseDelay
+    delay: 0.8
+  - type: Slippery
+    staminaDamage: 0
+    frictionStatusTime: 0
+    slipData:
+      stunTime: 0
+      knockdownTime: 0
+      launchForwardsMultiplier: 0
+    slipSound: *SoundParp
+  - type: MeleeWeapon
+    soundHit: *SoundParp
+    damage:
+      types:
+        Blunt: 0
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 2
+  - type: TriggerOnStepTrigger # for payloads, that don't work because of trouble with sound prediction
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+
+- type: entity
+  parent: BaseItem
+  id: Skub
+  name: skub
+  description: Skub is the fifth Chaos God.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/skub.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - Payload
+  - type: Item
+    sprite: Objects/Misc/skub.rsi
+  - type: EmitSoundOnUse
+    sound: &SoundSkub
+      collection: Skub
+  - type: EmitSoundOnLand
+    sound: *SoundSkub
+  - type: EmitSoundOnTrigger
+    sound: *SoundSkub
+  - type: EmitSoundOnActivate
+    sound: *SoundSkub
+  - type: EmitSoundOnCollide
+    sound: *SoundSkub
+  - type: MeleeWeapon
+    soundHit: *SoundSkub
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: UseDelay
+    delay: 2.0

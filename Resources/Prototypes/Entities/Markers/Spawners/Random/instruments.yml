@@ -26,6 +26,7 @@
       - id: KalimbaInstrument
       - id: MicrophoneInstrument
       - id: BassGuitarInstrument
+      - id: FretlessBassGuitarInstrument
       - id: OcarinaInstrument
       - id: PanFluteInstrument
     - !type:GroupSelector
@@ -67,6 +68,7 @@
       - id: AcousticGuitarInstrument
       - id: ElectricGuitarInstrument
       - id: BassGuitarInstrument
+      - id: FretlessBassGuitarInstrument
       - id: RockGuitarInstrument
       - id: BanjoInstrument
       - id: ViolinInstrument
@@ -119,10 +121,6 @@
       weight: 0.1
       children:
       - id: DawInstrumentMachineCircuitboard
-    - !type:GroupSelector
-      weight: 0.05
-      children:
-      - id: SuperSynthesizerInstrument
 
 - type: entityTable
   id: SalvageInstrumentTable
@@ -140,8 +138,6 @@
       tableId: WoodwindInstrumentTable
     - !type:NestedSelector
       tableId: SpecialInstrumentTable
-    - id: SuperSynthesizerInstrument
-      weight: 0.3
 
 - type: entity
   id: RandomInstruments

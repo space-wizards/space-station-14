@@ -22,6 +22,12 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     public string? KeyPhrase;
 
     /// <summary>
+    /// The default keyphrase that is used when the trigger's keyphrase is reset.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId? DefaultKeyPhrase;
+
+    /// <summary>
     /// Range in which we listen for the keyphrase.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -74,6 +80,12 @@ public sealed partial class TriggerOnVoiceComponent : BaseTriggerOnXComponent
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId? RecordingVerbMessage;
+
+    /// <summary>
+    /// The verb text that is shown when you can reset keyphrase to default.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId ResetRecordingVerb = "trigger-on-voice-default";
 
     /// <summary>
     /// The verb text that is shown when you can clear a recording.

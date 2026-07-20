@@ -8,20 +8,16 @@
   },
   "states": [
     {
-      "name": "base",
-      "directions": 4
+      "name": "base"
     },
     {
-      "name": "empty",
-      "directions": 4
+      "name": "empty"
     },
 	  {
-      "name": "glow",
-      "directions": 4
+      "name": "glow"
     },
     {
-      "name": "broken",
-      "directions": 4
+      "name": "broken"
     }
   ]
 }

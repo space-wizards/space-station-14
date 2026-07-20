@@ -1,4 +1,7 @@
+using Content.Client.Items;
+using Content.Client.Weapons.Ranged.UI;
 using Content.Shared.Weapons.Ranged;
+using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
@@ -9,13 +12,15 @@ public sealed partial class GunSystem
         base.InitializeMagazine();
         SubscribeLocalEvent<MagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnMagazineAmmoUpdate);
         SubscribeLocalEvent<MagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnMagazineControl);
+
+        Subs.ItemStatus<BallisticAmmoProviderComponent>(entity => new MagazineStatusControl(entity));
     }
 
-    private void OnMagazineAmmoUpdate(EntityUid uid, MagazineAmmoProviderComponent component, UpdateAmmoCounterEvent args)
+    private void OnMagazineAmmoUpdate(Entity<MagazineAmmoProviderComponent> ent, ref UpdateAmmoCounterEvent args)
     {
-        var ent = GetMagazineEntity(uid);
+        var magEnt = GetMagazineEntity(ent);
 
-        if (ent == null)
+        if (magEnt == null)
         {
             if (args.Control is DefaultStatusControl control)
             {
@@ -25,14 +30,14 @@ public sealed partial class GunSystem
             return;
         }
 
-        RaiseLocalEvent(ent.Value, args, false);
+        RaiseLocalEvent(magEnt.Value, args, false);
     }
 
-    private void OnMagazineControl(EntityUid uid, MagazineAmmoProviderComponent component, AmmoCounterControlEvent args)
+    private void OnMagazineControl(Entity<MagazineAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
-        var ent = GetMagazineEntity(uid);
-        if (ent == null)
+        var magEnt = GetMagazineEntity(ent);
+        if (magEnt == null)
             return;
-        RaiseLocalEvent(ent.Value, args, false);
+        RaiseLocalEvent(magEnt.Value, args, false);
     }
 }

@@ -6,7 +6,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-        - !type:FlammableReaction
+        - !type:Flammable
   plantMetabolism:
     - !type:PlantAdjustWeeds
       amount: -2
@@ -28,7 +28,7 @@
   - !type:FlammableTileReaction
     temperatureMultiplier: 2
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -52,10 +52,10 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -63,7 +63,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # based off napalm being an irritant
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent
@@ -76,14 +76,14 @@
   flavor: bitter
   color: "#D4872A"
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
           types:
             Heat: 3
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.1
       - !type:AdjustTemperature
         amount: 6000
@@ -92,7 +92,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:Ignite
 
@@ -108,7 +108,7 @@
   tileReactions:
   - !type:PryTileReaction
   metabolisms:
-    Poison:
+    Bloodstream:
       effects:
       - !type:HealthChange
         damage:
@@ -116,7 +116,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # CLF3 is corrosive
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:AdjustTemperature
         amount: 6000
@@ -124,7 +124,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.3
       - !type:Ignite
       - !type:Emote
@@ -165,24 +165,22 @@
   tileReactions:
   - !type:FlammableTileReaction {}
   metabolisms:
-    Food:
+    Bloodstream:
       effects:
       - !type:SatiateThirst
         factor: 1
         conditions:
-        - !type:OrganType
-          type: Vox
-    Poison:
-      effects:
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
+          inverted: true
         damage:
           types:
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent

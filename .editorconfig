@@ -351,7 +351,7 @@ resharper_csharp_qualified_using_at_nested_scope = false
 resharper_csharp_prefer_qualified_reference = false
 resharper_csharp_allow_alias = false
 
-[*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
+[*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props,slnx}]
 indent_size = 2
 
 [nuget.config]
