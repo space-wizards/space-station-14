@@ -42,42 +42,14 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private static readonly ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
-    /// <inheritdoc/>
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnMechCanMoveEvent(Entity<MechComponent> ent, ref VehicleCanRunEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
-        SubscribeLocalEvent<MechComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<MechComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
-        SubscribeLocalEvent<MechComponent, MechOpenUiEvent>(OnOpenUi);
-        SubscribeLocalEvent<MechComponent, RemoveBatteryEvent>(OnRemoveBattery);
-        SubscribeLocalEvent<MechComponent, MechEntryEvent>(OnMechEntry);
-        SubscribeLocalEvent<MechComponent, MechExitEvent>(OnMechExit);
-        SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
-        SubscribeLocalEvent<MechComponent, VehicleCanRunEvent>(OnMechCanMoveEvent);
-
-        SubscribeLocalEvent<VehicleOperatorComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
-        SubscribeLocalEvent<VehicleOperatorComponent, InhaleLocationEvent>(OnInhale);
-        SubscribeLocalEvent<VehicleOperatorComponent, ExhaleLocationEvent>(OnExhale);
-        SubscribeLocalEvent<VehicleOperatorComponent, AtmosExposedGetAirEvent>(OnExpose);
-
-        SubscribeLocalEvent<MechAirComponent, GetFilterAirEvent>(OnGetFilterAir);
-
-        #region Equipment UI message relays
-        SubscribeLocalEvent<MechComponent, MechGrabberEjectMessage>(ReceiveEquipmentUiMesssages);
-        SubscribeLocalEvent<MechComponent, MechSoundboardPlayMessage>(ReceiveEquipmentUiMesssages);
-        #endregion
-    }
-
-    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, ref VehicleCanRunEvent args)
-    {
-        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
+        if (ent.Comp.Broken || ent.Comp.Integrity <= 0 || ent.Comp.Energy <= 0)
             args = args with { CanRun = false };
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
         if (TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
@@ -101,6 +73,7 @@ public sealed partial class MechSystem : SharedMechSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnInsertBattery(EntityUid uid, MechComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container != component.BatterySlot || !TryComp<BatteryComponent>(args.Entity, out var battery))
@@ -113,6 +86,7 @@ public sealed partial class MechSystem : SharedMechSystem
         Vehicle.RefreshCanRun(uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoveBattery(EntityUid uid, MechComponent component, RemoveBatteryEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -123,6 +97,7 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
     {
         var xform = Transform(uid);
@@ -141,6 +116,7 @@ public sealed partial class MechSystem : SharedMechSystem
         Dirty(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
         var equip = GetEntity(args.Equipment);
@@ -154,18 +130,21 @@ public sealed partial class MechSystem : SharedMechSystem
         RemoveEquipment(uid, equip, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
     {
         args.Handled = true;
         ToggleMechUi(uid, component);
     }
 
-    private void OnToolUseAttempt(EntityUid uid, VehicleOperatorComponent component, ref ToolUserAttemptUseEvent args)
+    [SubscribeLocalEvent]
+    private void OnToolUseAttempt(Entity<VehicleOperatorComponent> ent, ref ToolUserAttemptUseEvent args)
     {
-        if (component.Vehicle is { } vehicle && args.Target == vehicle)
+        if (ent.Comp.Vehicle is { } vehicle && args.Target == vehicle)
             args.Cancelled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || component.Broken)
@@ -222,6 +201,7 @@ public sealed partial class MechSystem : SharedMechSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnMechEntry(EntityUid uid, MechComponent component, MechEntryEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -237,6 +217,7 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnMechExit(EntityUid uid, MechComponent component, MechExitEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -248,6 +229,7 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageChanged(EntityUid uid, MechComponent component, DamageChangedEvent args)
     {
         var integrity = component.MaxIntegrity - _damageable.GetTotalDamage((uid, args.Damageable));
@@ -269,7 +251,19 @@ public sealed partial class MechSystem : SharedMechSystem
         UpdateUserInterface(uid, component);
     }
 
-    private void ReceiveEquipmentUiMesssages<T>(EntityUid uid, MechComponent component, T args) where T : MechEquipmentUiMessage
+    [SubscribeLocalEvent]
+    private void RelayGrabberUiMessage(EntityUid uid, MechComponent component, ref MechGrabberEjectMessage args)
+    {
+        ReceiveEquipmentUiMesssages(component, args);
+    }
+
+    [SubscribeLocalEvent]
+    private void RelaySoundboardUiMessage(EntityUid uid, MechComponent component, ref MechSoundboardPlayMessage args)
+    {
+        ReceiveEquipmentUiMesssages(component, args);
+    }
+
+    private void ReceiveEquipmentUiMesssages<T>(MechComponent component, T args) where T : MechEquipmentUiMessage
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
@@ -372,9 +366,10 @@ public sealed partial class MechSystem : SharedMechSystem
     }
 
     #region Atmos Handling
-    private void OnInhale(EntityUid uid, VehicleOperatorComponent component, InhaleLocationEvent args)
+    [SubscribeLocalEvent]
+    private void OnInhale(Entity<VehicleOperatorComponent> ent, ref InhaleLocationEvent args)
     {
-        if (component.Vehicle is not { } vehicle ||
+        if (ent.Comp.Vehicle is not { } vehicle ||
             !TryComp<MechComponent>(vehicle, out var mech) ||
             !TryComp<MechAirComponent>(vehicle, out var mechAir))
         {
@@ -385,9 +380,10 @@ public sealed partial class MechSystem : SharedMechSystem
             args.Gas = mechAir.Air;
     }
 
-    private void OnExhale(EntityUid uid, VehicleOperatorComponent component, ExhaleLocationEvent args)
+    [SubscribeLocalEvent]
+    private void OnExhale(Entity<VehicleOperatorComponent> ent, ref ExhaleLocationEvent args)
     {
-        if (component.Vehicle is not { } vehicle ||
+        if (ent.Comp.Vehicle is not { } vehicle ||
             !TryComp<MechComponent>(vehicle, out var mech) ||
             !TryComp<MechAirComponent>(vehicle, out var mechAir))
         {
@@ -398,9 +394,10 @@ public sealed partial class MechSystem : SharedMechSystem
             args.Gas = mechAir.Air;
     }
 
-    private void OnExpose(EntityUid uid, VehicleOperatorComponent component, ref AtmosExposedGetAirEvent args)
+    [SubscribeLocalEvent]
+    private void OnExpose(Entity<VehicleOperatorComponent> ent, ref AtmosExposedGetAirEvent args)
     {
-        if (args.Handled || component.Vehicle is not { } vehicle)
+        if (args.Handled || ent.Comp.Vehicle is not { } vehicle)
             return;
 
         if (!TryComp(vehicle, out MechComponent? mech))
@@ -417,6 +414,7 @@ public sealed partial class MechSystem : SharedMechSystem
         args.Handled = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnGetFilterAir(EntityUid uid, MechAirComponent comp, ref GetFilterAirEvent args)
     {
         if (args.Air != null)
