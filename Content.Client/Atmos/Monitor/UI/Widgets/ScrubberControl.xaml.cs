@@ -136,11 +136,11 @@ public sealed partial class ScrubberControl : BoxContainer
             };
             if (_data.FilterGases.Contains(value))
             {
-                gasButton.StyleClasses.Add("ButtonColorGreen");
+                gasButton.StyleClasses.Add(StyleClass.Positive);
             }
             else if (!_data.OverflowGases.Contains(value))
             {
-                gasButton.StyleClasses.Add(StyleBase.ButtonCaution);
+                gasButton.StyleClasses.Add(StyleClass.Negative);
             }
             gasButton.OnPressed += args =>
             {
@@ -156,8 +156,8 @@ public sealed partial class ScrubberControl : BoxContainer
 
                 _data.FilterGases.Remove(value);
                 _data.OverflowGases.Remove(value);
-                gasButton.StyleClasses.Remove("ButtonColorGreen");
-                gasButton.StyleClasses.Remove(StyleBase.ButtonCaution);
+                gasButton.StyleClasses.Remove(StyleClass.Positive);
+                gasButton.StyleClasses.Remove(StyleClass.Negative);
                 gasButton.Pressed = false;
 
                 switch (beforeState)
@@ -167,10 +167,10 @@ public sealed partial class ScrubberControl : BoxContainer
                         break;
                     case 1: // Overflow -> Filter
                         _data.FilterGases.Add(value);
-                        gasButton.StyleClasses.Add("ButtonColorGreen");
+                        gasButton.StyleClasses.Add(StyleClass.Positive);
                         break;
                     case 2: // Filter -> Disabled
-                        gasButton.StyleClasses.Add(StyleBase.ButtonCaution);
+                        gasButton.StyleClasses.Add(StyleClass.Negative);
                         break;
                 }
 
@@ -204,15 +204,15 @@ public sealed partial class ScrubberControl : BoxContainer
 
         foreach (var value in Enum.GetValues<Gas>())
         {
-            _gasControls[value].StyleClasses.Remove("ButtonColorGreen");
-            _gasControls[value].StyleClasses.Remove(StyleBase.ButtonCaution);
+            _gasControls[value].StyleClasses.Remove(StyleClass.Positive);
+            _gasControls[value].StyleClasses.Remove(StyleClass.Negative);
             if (data.FilterGases.Contains(value))
             {
-                _gasControls[value].StyleClasses.Add("ButtonColorGreen");
+                _gasControls[value].StyleClasses.Add(StyleClass.Positive);
             }
             else if (!data.OverflowGases.Contains(value))
             {
-                _gasControls[value].StyleClasses.Add(StyleBase.ButtonCaution);
+                _gasControls[value].StyleClasses.Add(StyleClass.Negative);
             }
         }
     }
