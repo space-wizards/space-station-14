@@ -186,8 +186,8 @@
       path: /Audio/Items/Handcuffs/rope_breakout.ogg
     startBreakoutSound:
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
-  - type: AddAccentClothing
-    accent: MumbleAccent
+  - type: MumbleAccent
+  - type: AccentRequireCuffed
 
 - type: entity
   parent: Nanostraps

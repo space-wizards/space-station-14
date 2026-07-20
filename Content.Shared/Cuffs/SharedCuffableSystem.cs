@@ -28,6 +28,8 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -90,8 +92,6 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<CuffableComponent, AttackAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, UseAttemptEvent>(CheckAct);
             SubscribeLocalEvent<CuffableComponent, InteractionAttemptEvent>(CheckInteract);
-            SubscribeLocalEvent<CuffableComponent, DamageChangedEvent>(OnDamage);
-            SubscribeLocalEvent<CuffableComponent, ExecutionStartedEvent>(OnExecutionStarted);
 
             SubscribeLocalEvent<HandcuffComponent, AfterInteractEvent>(OnCuffAfterInteract);
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
@@ -321,12 +321,17 @@ namespace Content.Shared.Cuffs
             }
         }
 
-        private void OnDamage(Entity<CuffableComponent> ent, ref DamageChangedEvent args)
+        [SubscribeLocalEvent]
+        private void OnDamage(Entity<CuffableComponent> ent, ref DamageDealtEvent args)
         {
             if (_timing.ApplyingState)
                 return;
 
-            if (args.DamageDelta == null || !args.DamageIncreased || !IsCuffed(ent))
+            var dmgSpecifier = args.Damage;
+            dmgSpecifier.ClampMin(0f);
+            var damageValue = dmgSpecifier.GetTotal();
+
+            if (damageValue <= 0f || !IsCuffed(ent.AsNullable()))
                 return;
 
             var destroyableCuffs = new List<Entity<HandcuffComponent>>();
@@ -336,7 +341,7 @@ namespace Content.Shared.Cuffs
                 if (!TryComp<HandcuffComponent>(cuffsEnt, out var handcuff) || handcuff.BreakOnDamageThreshold == null)
                     continue;
 
-                handcuff.DamageWhileWorn += args.DamageDelta.GetTotal();
+                handcuff.DamageWhileWorn += damageValue;
 
                 if (handcuff.DamageWhileWorn >= handcuff.BreakOnDamageThreshold)
                     destroyableCuffs.Add((cuffsEnt, handcuff));
@@ -350,9 +355,10 @@ namespace Content.Shared.Cuffs
                 Uncuff(ent.Owner, null, cuffsEnt.Owner, ent.Comp, cuffsEnt.Comp);
             }
 
-            _popup.PopupPredicted(Loc.GetString("handcuff-component-cuffs-broke"), ent, null, PopupType.MediumCaution);
+            _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broke"), ent, PopupType.MediumCaution);
         }
 
+        [SubscribeLocalEvent]
         private void OnExecutionStarted(Entity<CuffableComponent> ent, ref ExecutionStartedEvent args)
         {
             // We assume any execution will deal enough damage to break the cuffs.
@@ -377,6 +383,20 @@ namespace Content.Shared.Cuffs
 
             args.CancelExecution = true;
             args.CancelMessage = Loc.GetString("handcuff-component-cuffs-broke");
+        }
+
+        [SubscribeLocalEvent]
+        private void OnAttemptAccent(Entity<CuffableComponent> ent, ref AccentGetEvent args)
+        {
+            foreach (var cuffsEnt in GetAllCuffs((ent, ent)))
+            {
+                if (!HasComp<HandcuffComponent>(cuffsEnt) && !HasComp<AccentRequireCuffedComponent>(cuffsEnt))
+                    return;
+
+                var relayEv = new AccentGetEvent(args.Entity, args.Message);
+                RaiseLocalEvent(cuffsEnt, ref relayEv);
+                args.Message = relayEv.Message;
+            }
         }
 
         private void OnCuffAfterInteract(EntityUid uid, HandcuffComponent component, AfterInteractEvent args)
