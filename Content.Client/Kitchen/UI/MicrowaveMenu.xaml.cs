@@ -55,7 +55,7 @@ public sealed partial class MicrowaveMenu : FancyWindow
         IsBusy = state.IsMicrowaveBusy;
         CurrentCooktimeEnd = state.CurrentCookTimeEnd;
 
-        ToggleBusyDisableOverlayPanel(state.IsMicrowaveBusy);
+        ToggleBusyDisableOverlayPanel(state.IsMicrowaveBusy || state.ContainedSolids.Length == 0);
 
         IngredientGridHelper.PopulateIngredientsGrid(
             IngredientsGrid,

@@ -46,7 +46,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     /// <summary>
     ///     Send a message to toggle automatic grinding mode for this grinder.
     /// </summary>
-    private void ToggleAutoMode()
+    public void ToggleAutoMode()
     {
         SendPredictedMessage(new ReagentGrinderToggleAutoModeMessage());
     }
@@ -54,7 +54,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     /// <summary>
     ///     Send a message to begin grinding the grinder's contents.
     /// </summary>
-    private void StartGrinding()
+    public void StartGrinding()
     {
         SendPredictedMessage(new ReagentGrinderStartMessage(GrinderProgram.Grind));
     }
@@ -62,7 +62,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     /// <summary>
     ///     Send a message to begin juicing the grinder's contents.
     /// </summary>
-    private void StartJuicing()
+    public void StartJuicing()
     {
         SendPredictedMessage(new ReagentGrinderStartMessage(GrinderProgram.Juice));
     }
@@ -70,7 +70,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     /// <summary>
     ///     Send a message to request all entities be ejected from the grinder.
     /// </summary>
-    private void EjectAll()
+    public void EjectAll()
     {
         SendPredictedMessage(new ReagentGrinderEjectChamberAllMessage());
     }
@@ -78,7 +78,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     /// <summary>
     ///     Send a message to remove the reagent container from the grinder.
     /// </summary>
-    private void EjectBeaker()
+    public void EjectBeaker()
     {
         SendPredictedMessage(new ItemSlotButtonPressedEvent(ReagentGrinderComponent.BeakerSlotId));
     }
@@ -87,7 +87,7 @@ public sealed class ReagentGrinderBoundUserInterface(EntityUid owner, Enum uiKey
     ///     Send a message to request a specific entity be ejected from the grinder.
     /// </summary>
     /// <param name="uid">The entity to eject.</param>
-    private void EjectChamberContent(EntityUid uid)
+    public void EjectChamberContent(EntityUid uid)
     {
         SendPredictedMessage(new ReagentGrinderEjectChamberContentMessage(EntMan.GetNetEntity(uid)));
     }
