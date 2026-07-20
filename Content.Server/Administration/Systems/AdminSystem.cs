@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Ghost;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Players.PlayTimeTracking;
@@ -45,7 +44,6 @@ public sealed partial class AdminSystem : EntitySystem
     [Dependency] private HandsSystem _hands = default!;
     [Dependency] private SharedJobSystem _jobs = default!;
     [Dependency] private InventorySystem _inventory = default!;
-    [Dependency] private GhostSystem _ghost = default!;
     [Dependency] private MindSystem _minds = default!;
     [Dependency] private PopupSystem _popup = default!;
     [Dependency] private PhysicsSystem _physics = default!;
@@ -171,7 +169,6 @@ public sealed partial class AdminSystem : EntitySystem
 
         SendFullPlayerList(obj.Player);
     }
-
 
     private void OnPlayerDetached(PlayerDetachedEvent ev)
     {
