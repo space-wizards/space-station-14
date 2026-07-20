@@ -23,7 +23,7 @@ namespace Content.Shared.Guardian;
 /// <summary>
 /// A guardian has a host it's attached to that it fights for. A fighting spirit.
 /// </summary>
-public sealed partial class GuardianSystem : EntitySystem
+public abstract partial class SharedGuardianSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damage = default!;
     [Dependency] private GibbingSystem _gibbing = default!;
@@ -35,10 +35,14 @@ public sealed partial class GuardianSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SharedUserInterfaceSystem _ui = default!;
 
+    private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface"
+;
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<GuardianCreatorComponent, MapInitEvent>(OnCreatorInit);
         SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
         SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
         SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
@@ -60,6 +64,12 @@ public sealed partial class GuardianSystem : EntitySystem
         SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
 
         SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
+    }
+
+    private void OnCreatorInit(Entity<GuardianCreatorComponent> ent, ref MapInitEvent args)
+    {
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(ent);
+        _ui.SetUi((ent, userInterfaceComp), GuardianPickerUiKey.Key, new InterfaceData(GuardianPickerBuiXmlGeneratedName));
     }
 
     private void OnGuardianShutdown(Entity<GuardianComponent> ent, ref ComponentShutdown args)
@@ -206,6 +216,16 @@ public sealed partial class GuardianSystem : EntitySystem
             return;
         }
 
+        if (!TryComp<UserInterfaceComponent>(ent.Owner, out var userInterfaceComp))
+            return;
+
+        if (!_ui.IsUiOpen((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user))
+        {
+            _ui.OpenUi((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user);
+        }
+
+        return;
+
         // Can only inject things with the component...
         if (!HasComp<CanHostGuardianComponent>(target))
         {
@@ -246,7 +266,7 @@ public sealed partial class GuardianSystem : EntitySystem
 
         var hostXform = Transform(args.Args.Target.Value);
         var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
-
+        /*
         // Use map position so it's not inadvertently parented to the host + if it's in a container it spawns outside I guess.
         var guardian = PredictedSpawnAtPosition(ent.Comp.GuardianProto,
             _transform.GetMoverCoordinates(args.Args.Target.Value, xform: hostXform));
@@ -272,6 +292,7 @@ public sealed partial class GuardianSystem : EntitySystem
         }
 
         Dirty(ent);
+        */
         args.Handled = true;
     }
 

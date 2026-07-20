@@ -30,7 +30,8 @@
     layers:
       - state: lamp
   - type: GuardianCreator
-    guardianProto: MobIfritGuardian
+    guardians:
+    - GuardianBaseFist
     emptyPopup: guardian-deck-invalid-creation
     emptyExamine: guardian-deck-used-examine
     usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
@@ -74,3 +75,39 @@
     tags:
     - BoxCardboard
     - BoxHug
+
+- type: guardianEntry
+  id: GuardianBaseFist
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: fist
+  description: guardian-desc-fist
+  title: guardian-title-fist
+  guardian: MobHoloparasiteGuardian
+
+- type: guardianEntry
+  id: GuardianBaseHeal
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: heal
+  description: guardian-desc-heal
+  title: guardian-title-heal
+  guardian: MobHoloparasiteGuardian
+
+- type: guardianEntry
+  id: GuardianBaseSword
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: sword
+  description: guardian-desc-sword
+  title: guardian-title-sword
+  guardian: MobHoloparasiteGuardian
+
+- type: guardianEntry
+  id: GuardianBaseNuke
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: nuke
+  description: guardian-desc-nuke
+  title: guardian-title-nuke
+  guardian: MobHoloparasiteGuardian
