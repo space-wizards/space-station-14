@@ -10,7 +10,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; } = false;
         public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
-        public HashSet<Gas> OverflowGases { get; set; } = new(DefaultOverflowGases);
+        public HashSet<Gas> OverflowGases { get; set; } = new();
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
         public float VolumeRate { get; set; } = 200f;
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;

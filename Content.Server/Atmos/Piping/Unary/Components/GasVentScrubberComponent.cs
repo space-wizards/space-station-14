@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
 
         [DataField]
-        public HashSet<Gas> OverflowGases = new(GasVentScrubberData.DefaultOverflowGases);
+        public HashSet<Gas> OverflowGases = new();
 
         [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
