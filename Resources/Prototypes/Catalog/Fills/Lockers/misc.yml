@@ -65,6 +65,8 @@
         weight: 4
       - id: NitrogenTankFilled
 
+# Emergency lockers are intended to be somewhat random (for verisimilitude/suspense), so there should rarely be 100% guarenteed spawns
+# The items that people are almost always primarily going to these lockers for (suits and air tanks, mostly) should cap at 98% probably?
 - type: entityTable
   id: FillLockerEmergencyStandard
   table: !type:AllSelector
@@ -72,7 +74,9 @@
     - id: BoxMRE
       prob: 0.1
     - id: ClothingMaskBreath
+      prob: 0.98
     - id: ClothingOuterSuitEmergency
+      prob: 0.98
     - id: MedkitOxygenFilled # technically doesn't fit N2 lockers, but we don't have an N2 version of this yet, and (aside from the emergency O2 tank) N2-breathing species can still use its contents
       prob: 0.2
     - id: ToolboxEmergencyFilled
@@ -81,6 +85,7 @@
       prob: 0.1
     - !type:NestedSelector
       tableId: FillEmergencyInflatables
+      prob: 0.98
 
 - type: entity
   id: ClosetEmergencyFilledRandom
@@ -95,6 +100,7 @@
           tableId: FillLockerEmergencyStandard
         - !type:NestedSelector
           tableId: FillEmergencyO2
+          prob: 0.98
 
 - type: entity
   id: ClosetWallEmergencyFilledRandom
@@ -109,6 +115,7 @@
           tableId: FillLockerEmergencyStandard
         - !type:NestedSelector
           tableId: FillEmergencyO2
+          prob: 0.98
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom
@@ -123,6 +130,7 @@
           tableId: FillLockerEmergencyStandard
         - !type:NestedSelector
           tableId: FillEmergencyN2
+          prob: 0.98
 
 - type: entity
   parent: ClosetWallEmergencyN2
@@ -137,15 +145,20 @@
           tableId: FillLockerEmergencyStandard
         - !type:NestedSelector
           tableId: FillEmergencyN2
+          prob: 0.98
 
 - type: entityTable
   id: FillLockerFireStandard
   table: !type:AllSelector
     children:
     - id: ClothingHeadHelmetFire
+      prob: 0.98
     - id: ClothingMaskGas
+      prob: 0.98
     - id: ClothingOuterSuitFire
+      prob: 0.98
     - id: CrowbarRed
+      prob: 0.98
     - !type:GroupSelector
       children:
       - id: FireExtinguisher
@@ -171,6 +184,7 @@
             weight: 4
           - !type:NestedSelector
             tableId: FillEmergencyN2
+          prob: 0.98
 
 - type: entity
   id: ClosetWallFireFilledRandom
@@ -190,6 +204,7 @@
             weight: 4
           - !type:NestedSelector
             tableId: FillEmergencyN2
+          prob: 0.98
 
 - type: entityTable
   id: SyndieMaintLoot
