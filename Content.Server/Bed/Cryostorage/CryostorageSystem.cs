@@ -110,9 +110,17 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
             if (storage == null)
                 return;
 
-            string prefix = "ItemsStoredInside";
-            string numberPart = args.Key.Substring(prefix.Length);
-            entity = storage.Container.ContainedEntities[int.Parse(numberPart) - 1];
+            if (int.TryParse(args.Key, out var index) &&
+                index >= 0 &&
+                index < storage.Container.ContainedEntities.Count)
+            {
+                entity = storage.Container.ContainedEntities[index];
+            }
+            else
+            {
+                Log.Error("CryoSleep Invalid cryosleep Bui payload");
+                return;
+            }
         }
         if (entity == null)
             return;
