@@ -27,6 +27,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.NitrousOxide,
             Gas.Frezon
         };
+
         public static HashSet<Gas> DefaultOverflowGases = new()
         {
             Gas.Oxygen,
@@ -39,7 +40,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = true,
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
-            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
+            OverflowGases = [],
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             TargetPressure = Atmospherics.OneAtmosphere,

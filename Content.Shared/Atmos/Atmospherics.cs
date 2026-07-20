@@ -19,12 +19,6 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float OneAtmosphere = 101.325f;
 
-        /// <summary>
-        ///     Default target for vents in kPA.
-        ///     It is set slightly higher than 1 ATM, as to cause air to circulate.
-        /// </summary>
-        public const float OneAtmosphereTarget = OneAtmosphere * 1.05f;
-
         /// Global Atmospherics epsilon. Used for all general floating-point comparisons.
         /// </summary>
         public const float Epsilon = 0.5f;
