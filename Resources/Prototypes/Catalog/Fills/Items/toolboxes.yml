@@ -8,17 +8,22 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        # Guarenteed items
         - id: CrowbarRed
-        - id: RadioHandheld
-        - id: WelderMini
-        - id: FireExtinguisherMini
-        # Random lighting item GroupSelector
-        - !type:GroupSelector
+        - !type:GroupSelector #Random "disposable" light source
           children:
-          - id: FlashlightLantern
           - id: Flare
+            weight: 3
           - id: GlowstickGreen
-        # Low-chance items
+            weight: 1
+        # High-chance items (80%)
+        - id: RadioHandheld
+          prob: 0.8
+        - id: FireExtinguisherMini
+          prob: 0.8
+        - id: WelderMini
+          prob: 0.8
+        # Low-chance items (15%)
         - id: FoodSnackChocolate
           prob: 0.15
         - id: HarmonicaInstrument
