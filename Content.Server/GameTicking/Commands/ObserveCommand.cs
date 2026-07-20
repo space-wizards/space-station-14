@@ -34,11 +34,10 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var asAdmin = args.Length > 0 &&
-                args[0].Equals("admin", StringComparison.InvariantCultureIgnoreCase) &&
-                _adminManager.IsAdmin(player);
+            var isAdmin = _adminManager.IsAdmin(player);
+            var wantsAdmin = args.Length > 0 && args[0].Equals("admin", StringComparison.InvariantCultureIgnoreCase);
 
-            if (!asAdmin && _adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
+            if (isAdmin && !wantsAdmin && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
             {
                 _adminManager.DeAdmin(player);
             }
@@ -46,7 +45,7 @@ namespace Content.Server.GameTicking.Commands
             if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
                 status != PlayerGameStatus.JoinedGame)
             {
-                ticker.JoinAsObserver(player, asAdmin);
+                ticker.JoinAsObserver(player, isAdmin && wantsAdmin);
             }
             else
             {
