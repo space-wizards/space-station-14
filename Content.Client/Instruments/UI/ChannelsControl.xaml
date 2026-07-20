@@ -11,11 +11,11 @@
             <controls:VSpacer Spacing="10" />
             <Button Name="TrackSelectorButton"
                     Text="{Loc 'instruments-component-channels-name-display-selector-track-button'}"
-                    Pressed="True"
                     HorizontalExpand="true"
                     StyleClasses="OpenBoth" />
             <Button Name="ProgramSelectorButton"
                     Text="{Loc 'instruments-component-channels-name-display-selector-program-button'}"
+                    Pressed="True"
                     HorizontalExpand="true"
                     StyleClasses="OpenBoth" />
             <Button Name="InstrumentSelectorButton"
