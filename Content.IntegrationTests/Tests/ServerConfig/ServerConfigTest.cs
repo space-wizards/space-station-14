@@ -35,11 +35,11 @@ public sealed class ServerConfigTest : GameTest
 
         // Try to read cvars from various config files.
         Assert.That(res.TryContentFileRead(DefaultConfig, out var stream), $"Could not read default config at {DefaultConfig}");
-        var configCvars = cfg.LoadFromTomlStream(stream!);
+        var configCvars = cfg.ValidateTomlStream(stream!);
         Assert.That(res.TryContentFileRead(ToolsConfig, out stream), $"Could not read tools config at {ToolsConfig}");
-        var toolsCvars = cfg.LoadFromTomlStream(stream!);
+        var toolsCvars = cfg.ValidateTomlStream(stream!);
         Assert.That(res.TryContentFileRead(DebugConfig, out stream), $"Could not read dev config at {DebugConfig}");
-        var devCvars = cfg.LoadFromTomlStream(stream!);
+        var devCvars = cfg.ValidateTomlStream(stream!);
 
         // Check whether or not cvars overlap.
         Assert.That(CheckOverlap(configCvars, toolsCvars, out var overlappingCvars), $"Overlapping cvars between {DefaultConfig} and {ToolsConfig}: {overlappingCvars}");
