@@ -21,80 +21,67 @@ public abstract partial class SharedJetpackSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private ActionContainerSystem _actionContainer = default!;
 
-    [Dependency] private EntityQuery<JetpackComponent> _jetpackQuery = default!;
+    [Dependency] private EntityQuery<JetpackComponent> _jetpackQuery;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
-        SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
-        SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
-
-        SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserWeightlessMovement);
-        SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
-        SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
-        SubscribeLocalEvent<JetpackComponent, EntGotInsertedIntoContainerMessage>(OnJetpackMoved);
-
-        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
-        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
-    }
-
+    [SubscribeLocalEvent]
     private void OnJetpackUserWeightlessMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
     {
-        // Yes this bulldozes the values but primarily for backwards compat atm.
+        // Yes, this bulldozes the values but primarily for backwards compat atm.
         args.WeightlessAcceleration = ent.Comp.WeightlessAcceleration;
         args.WeightlessModifier = ent.Comp.WeightlessModifier;
         args.WeightlessFriction = ent.Comp.WeightlessFriction;
         args.WeightlessFrictionNoInput = ent.Comp.WeightlessFrictionNoInput;
     }
 
+    [SubscribeLocalEvent]
     private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
     {
         _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         Dirty(uid, component);
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
     {
         var gridUid = ev.ChangedGridIndex;
         var query = EntityQueryEnumerator<JetpackUserComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var user, out var transform))
         {
-            if (transform.GridUid == gridUid && ev.HasGravity &&
-                _jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack))
-            {
-                _popup.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
+            if (transform.GridUid != gridUid || !ev.HasGravity ||
+                !_jetpackQuery.TryGetComponent(user.Jetpack, out var jetpack)) continue;
 
-                SetEnabled(user.Jetpack, jetpack, false, uid);
-            }
+            _popup.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
+            SetEnabled(user.Jetpack, jetpack, false, uid);
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackDropped(EntityUid uid, JetpackComponent component, DroppedEvent args)
     {
         SetEnabled(uid, component, false, args.User);
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackMoved(Entity<JetpackComponent> ent, ref EntGotInsertedIntoContainerMessage args)
     {
         if (args.Container.Owner != ent.Comp.JetpackUser)
             SetEnabled(ent, ent.Comp, false, ent.Comp.JetpackUser);
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackUserCanWeightless(EntityUid uid, JetpackUserComponent component, ref CanWeightlessMoveEvent args)
     {
         args.CanMove = true;
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackUserEntParentChanged(EntityUid uid, JetpackUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<JetpackComponent>(component.Jetpack, out var jetpack) &&
-            !CanEnableOnGrid(args.Transform.GridUid))
-        {
-            SetEnabled(component.Jetpack, jetpack, false, uid);
+        if (!TryComp<JetpackComponent>(component.Jetpack, out var jetpack) ||
+            CanEnableOnGrid(args.Transform.GridUid)) return;
 
-            _popup.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
-        }
+        SetEnabled(component.Jetpack, jetpack, false, uid);
+        _popup.PopupEntity(Loc.GetString("jetpack-to-grid"), uid, uid);
     }
 
     private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
@@ -126,6 +113,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
         _movementSpeedModifier.RefreshWeightlessModifiers(uid);
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
     {
         if (args.Handled)
@@ -149,6 +137,7 @@ public abstract partial class SharedJetpackSystem : EntitySystem
                (!HasComp<GravityComponent>(gridUid));
     }
 
+    [SubscribeLocalEvent]
     private void OnJetpackGetAction(EntityUid uid, JetpackComponent component, GetItemActionsEvent args)
     {
         args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
