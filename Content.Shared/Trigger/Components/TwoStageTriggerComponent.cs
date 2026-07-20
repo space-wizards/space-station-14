@@ -33,7 +33,7 @@ public sealed partial class TwoStageTriggerComponent : Component
     /// <summary>
     /// This list of components that will be added on the first trigger.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public ComponentRegistry Components = new();
 
     /// <summary>
