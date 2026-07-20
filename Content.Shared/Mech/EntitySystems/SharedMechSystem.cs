@@ -7,7 +7,6 @@ using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Popups;
@@ -380,25 +379,6 @@ public abstract partial class SharedMechSystem : EntitySystem
         var weapon = mech.CurrentSelectedEquipment ?? vehicle;
         args.Weapon = weapon;
         args.Handled = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnCanAttackFromContainer(Entity<VehicleOperatorComponent> ent, ref CanAttackFromContainerEvent args)
-    {
-        if (ent.Comp.Vehicle is not { } vehicle)
-            return;
-
-        if (HasComp<MechComponent>(vehicle))
-            args.CanAttack = true;
-    }
-
-    [SubscribeLocalEvent]
-    private void OnAttackAttempt(Entity<VehicleOperatorComponent> ent, ref AttackAttemptEvent args)
-    {
-        if (ent.Comp.Vehicle is { } vehicle && args.Target == vehicle)
-        {
-            args.Cancel();
-        }
     }
 
     private void UpdateAppearance(EntityUid uid, MechComponent? component = null,
