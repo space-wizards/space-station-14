@@ -77,7 +77,7 @@
   components:
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Wallmounts/Boards/noticeboard.rsi
+    sprite: Structures/Wallmounts/postboard.rsi
     layers:
       - state: noticeboard
       - state: notice-0
