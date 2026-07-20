@@ -96,6 +96,9 @@ uplink-incendiary-grenade-desc = Releases a spray of incendiary fragments, ignit
 uplink-shrapnel-grenade-name = Shrapnel Grenade
 uplink-shrapnel-grenade-desc = Launches a spray of sharp fragments dealing great damage against unarmored targets.
 
+uplink-deadman-switch-name = Deadman's Switch
+uplink-deadman-switch-desc = A modified remote signaller that triggers when you let go of it. Useful for dramatic ultimatums, bombs optional.
+
 # Ammo
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 15 cartridges. Compatible with the Viper.
