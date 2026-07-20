@@ -6,15 +6,6 @@
         </ScrollContainer>
         <controls:HSpacer Spacing="10"></controls:HSpacer>
         <GridContainer Columns="5" HSeparationOverride="1" VSeparationOverride="1">
-            <!-- All channels switcher -->
-            <Label Text="{Loc 'instruments-component-channels-all-channels-label'}" />
-            <controls:VSpacer />
-            <controls:VSpacer />
-            <Button Name="AllButton" Text="{Loc 'instruments-component-channels-all-button'}" HorizontalExpand="true"
-                    VerticalExpand="true" StyleClasses="OpenBoth" />
-            <Button Name="ClearButton" Text="{Loc 'instruments-component-channels-clear-button'}"
-                    HorizontalExpand="true" VerticalExpand="true" StyleClasses="OpenBoth" />
-
             <!-- Name display selector -->
             <Label Text="{Loc 'instruments-component-channels-name-display-selector-label'}" />
             <controls:VSpacer Spacing="10" />

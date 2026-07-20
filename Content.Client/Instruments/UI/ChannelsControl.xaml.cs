@@ -24,8 +24,6 @@ public sealed partial class ChannelsControl : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        AllButton.OnPressed += OnAllPressed;
-        ClearButton.OnPressed += OnClearPressed;
         TrackSelectorButton.OnPressed += OnSelectorButtonPressed;
         InstrumentSelectorButton.OnPressed += OnSelectorButtonPressed;
         ProgramSelectorButton.OnPressed += OnSelectorButtonPressed;
@@ -52,30 +50,6 @@ public sealed partial class ChannelsControl : Control
     private void OnChannelSwitched(int id, bool state)
     {
         SwitchFilteredChannel?.Invoke(id, state);
-    }
-
-    private void OnAllPressed(BaseButton.ButtonEventArgs obj)
-    {
-        foreach (var item in ChannelsContainer.Children)
-        {
-            if (item is not ChannelItem cItem)
-                return;
-
-            // TODO: Make this efficient jfc
-            cItem.ChannelState = true;
-        }
-    }
-
-    private void OnClearPressed(BaseButton.ButtonEventArgs obj)
-    {
-        foreach (var item in ChannelsContainer.Children)
-        {
-            if (item is not ChannelItem cItem)
-                return;
-
-            // TODO: Make this efficient jfc
-            cItem.ChannelState = false;
-        }
     }
 
     private void InitChannels()
