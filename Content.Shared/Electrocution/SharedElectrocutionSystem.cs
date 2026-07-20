@@ -10,18 +10,6 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
 
     [Dependency] private SharedAppearanceSystem _appearance = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<InsulatedComponent, ElectrocutionAttemptEvent>(OnInsulatedElectrocutionAttempt);
-
-        // As long as legally distinct electric-mice are never added, this should be fine
-        // otherwise a mouse-hat will transfer its power to the wearer.
-        SubscribeLocalEvent<InsulatedComponent, InventoryRelayedEvent<ElectrocutionAttemptEvent>>(
-            (e, c, ev) => OnInsulatedElectrocutionAttempt(e, c, ev.Args));
-    }
-
     protected void SetInsulatedSiemensCoefficient(EntityUid uid, float siemensCoefficient, InsulatedComponent? insulated = null)
     {
         if (!Resolve(uid, ref insulated))
@@ -78,8 +66,17 @@ public abstract partial class SharedElectrocutionSystem : EntitySystem
         return false;
     }
 
+    [SubscribeLocalEvent]
     private static void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
     {
         args.SiemensCoefficient *= insulated.Coefficient;
+    }
+
+    [SubscribeLocalEvent]
+    private static void OnInventoryRelayedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, InventoryRelayedEvent<ElectrocutionAttemptEvent> args)
+    {
+        // As long as legally distinct electric-mice are never added, this should be fine
+        // otherwise a mouse-hat will transfer its power to the wearer.
+        OnInsulatedElectrocutionAttempt(uid, insulated, args.Args);
     }
 }

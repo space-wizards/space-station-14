@@ -75,14 +75,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ElectrifiedComponent, StartCollideEvent>(OnElectrifiedStartCollide);
-        SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
-        SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
-        SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<ElectrifiedComponent, ActivateInWorldEvent>(OnElectrifiedActivateInWorld, before: [typeof(AirlockSystem), typeof(DoorSystem)]);
-
-        SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
-        SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -152,12 +145,14 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         return true;
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
         if (electrified.OnBump)
             TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)
     {
         if (!electrified.OnAttacked)
@@ -169,12 +164,14 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedHandInteract(EntityUid uid, ElectrifiedComponent electrified, InteractHandEvent args)
     {
         if (electrified.OnHandInteract)
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
+    [SubscribeLocalEvent]
     private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
     {
         if (!component.CurrentLit || args.Used != args.User)
@@ -186,6 +183,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         TryDoElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
     }
 
+    [SubscribeLocalEvent]
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)
     {
         if (!electrified.OnInteractUsing)
@@ -487,6 +485,7 @@ public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnRandomInsulationMapInit(EntityUid uid, RandomInsulationComponent randomInsulation,
         MapInitEvent args)
     {

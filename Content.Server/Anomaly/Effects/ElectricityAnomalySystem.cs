@@ -18,13 +18,7 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
     [Dependency] private EmpSystem _emp = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
 
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalyPulseEvent>(OnPulse);
-        SubscribeLocalEvent<ElectricityAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
-    }
-
+    [SubscribeLocalEvent]
     private void OnPulse(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalyPulseEvent args)
     {
         var range = anomaly.Comp.MaxElectrocuteRange * args.Stability * args.PowerModifier;
@@ -34,6 +28,7 @@ public sealed partial class ElectricityAnomalySystem : EntitySystem
         _lightning.ShootRandomLightnings(anomaly, range, boltCount);
     }
 
+    [SubscribeLocalEvent]
     private void OnSupercritical(Entity<ElectricityAnomalyComponent> anomaly, ref AnomalySupercriticalEvent args)
     {
         var range = anomaly.Comp.MaxElectrocuteRange * 3 * args.PowerModifier;
