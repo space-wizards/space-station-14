@@ -607,3 +607,11 @@
     state: Unknown
   jobName: job-name-unknown
   isCrewJob: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSus
+  icon:
+    sprite: *icon-rsi
+    state: Sus
+  jobName: job-name-sus
