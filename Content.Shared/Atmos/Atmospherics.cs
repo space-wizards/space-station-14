@@ -19,6 +19,7 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float OneAtmosphere = 101.325f;
 
+        /// <summary>
         /// Global Atmospherics epsilon. Used for all general floating-point comparisons.
         /// </summary>
         public const float Epsilon = 0.5f;
