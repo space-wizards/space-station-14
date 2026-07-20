@@ -121,6 +121,11 @@ public abstract partial class SharedStackSystem
         if (donor == recipient)
             return false;
 
+        // Recipient is being torn down, don't give it anything.
+        if (TerminatingOrDeleted(recipient)
+            || EntityManager.IsQueuedForDeletion(recipient))
+            return false;
+
         // Check they're stacks of the same type
         if (!_stackQuery.Resolve(recipient, ref recipient.Comp, false)
             || !_stackQuery.Resolve(donor, ref donor.Comp, false)
