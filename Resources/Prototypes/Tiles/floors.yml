@@ -1360,6 +1360,7 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemMowedAstroGrass
+  weather: false
 
 - type: tile
   id: FloorJungleAstroGrass
@@ -1368,6 +1369,7 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemJungleAstroGrass
+  weather: false
 
 - type: tile
   parent: FloorGrassDark
@@ -1377,6 +1379,7 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemDarkAstroGrass
+  weather: false
 
 - type: tile
   parent: FloorGrassLight
@@ -1386,6 +1389,7 @@
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemLightAstroGrass
+  weather: false
 
 # Ice
 - type: tile
@@ -1405,6 +1409,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
+  weather: false
 
 # Asteroid Sand
 - type: tile
