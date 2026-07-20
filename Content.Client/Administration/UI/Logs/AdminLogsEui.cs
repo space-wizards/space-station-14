@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Content.Client.Administration.UI.Logs.Entries;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
@@ -13,16 +13,16 @@ using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
-public sealed class AdminLogsEui : BaseEui
+public sealed partial class AdminLogsEui : BaseEui
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
-    [Dependency] private readonly IFileDialogManager _dialogManager = default!;
-    [Dependency] private readonly ILogManager _log = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IUserInterfaceManager _uiManager = default!;
+    [Dependency] private IFileDialogManager _dialogManager = default!;
+    [Dependency] private ILogManager _log = default!;
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message,CurTime";
+    private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
 
     private ISawmill _sawmill;
 
@@ -109,10 +109,10 @@ public sealed class AdminLogsEui : BaseEui
             await writer.WriteLineAsync(CsvHeader);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
-                if (child is not AdminLogEntry entry || !child.Visible)
+                if (child is not AdminLogLabel logLabel || !child.Visible)
                     continue;
 
-                var log = entry.Log;
+                var log = logLabel.Log;
 
                 // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
@@ -138,9 +138,6 @@ public sealed class AdminLogsEui : BaseEui
                 await writer.WriteAsync(CsvQuote);
                 await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
                 await writer.WriteAsync(CsvQuote);
-                await writer.WriteAsync(CsvSeparator);
-                // CurTime
-                await writer.WriteAsync(log.CurTime.ToString());
 
                 await writer.WriteLineAsync();
             }
@@ -169,7 +166,7 @@ public sealed class AdminLogsEui : BaseEui
         ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
         {
             Maximized = false,
-            Title = "Admin Logs",
+            Title = Loc.GetString("admin-logs-title"),
             Monitor = monitor,
             Width = 1100,
             Height = 400
@@ -234,6 +231,11 @@ public sealed class AdminLogsEui : BaseEui
             case SetLogFilter setLogFilter:
                 if (setLogFilter.Search != null)
                     LogsControl.LogSearch.SetText(setLogFilter.Search);
+
+                if (setLogFilter.Players != null)
+                {
+                    LogsControl.SelectPlayers(setLogFilter.Players);
+                }
 
                 if (setLogFilter.Types != null)
                     LogsControl.SetTypesSelection(setLogFilter.Types, setLogFilter.InvertTypes);

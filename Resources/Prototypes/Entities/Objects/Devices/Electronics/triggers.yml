@@ -17,7 +17,7 @@
     sprite: Objects/Devices/timer.rsi
     state: timer
   - type: Item
-    size: Small
+    size: Tiny
   - type: StaticPrice
     price: 40
   - type: PayloadTrigger
@@ -79,6 +79,8 @@
   name: voice trigger
   description: Adds a machine link that is triggered by vocal keywords.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     sprite: Objects/Devices/voice.rsi
     state: voice

@@ -6,7 +6,8 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags: # ignore "WhitelistChameleon" tag
+      - ClothMade
     - type: Sprite
       sprite: Clothing/Head/Hats/beret.rsi
     - type: Clothing
@@ -24,7 +25,7 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: TriggerOnVoice
-    keyPhrase: "go go gadget"
+    defaultKeyPhrase: key-phrase-gadget
     listenRange: 0
   - type: ActiveListener
     range: 0

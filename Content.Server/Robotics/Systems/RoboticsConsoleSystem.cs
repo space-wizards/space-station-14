@@ -17,14 +17,14 @@ namespace Content.Server.Research.Systems;
 /// Handles UI and state receiving for the robotics control console.
 /// <c>BorgTransponderComponent<c/> broadcasts state from the station's borgs to consoles.
 /// </summary>
-public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
+public sealed partial class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 {
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly LockSystem _lock = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private LockSystem _lock = default!;
+    [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
 
     // almost never timing out more than 1 per tick so initialize with that capacity
     private List<string> _removing = new(1);

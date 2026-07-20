@@ -6,8 +6,13 @@
     snap:
     - Wallmount
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
   - type: Physics
     canCollide: false
+  - type: Fixtures
   - type: Clickable
   - type: WallMount
   - type: InteractionOutline
@@ -29,8 +34,9 @@
       Brute:
         collection: GlassSmash
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: Glass
+  - type: Injurable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: BaseWallmount
@@ -38,8 +44,9 @@
   abstract: true
   components:
   - type: Damageable
-    damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
+  - type: Injurable
+    damageContainer: StructuralInorganic
 
 - type: entity
   parent: BaseWallmountMetallic

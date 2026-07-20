@@ -1,6 +1,6 @@
 - type: entity
-  id: BoxFolderNuclearCodes
   parent: BaseItem
+  id: BoxFolderNuclearCodes
   name: nuclear code folder
   components:
   - type: Sprite
@@ -11,6 +11,9 @@
     - state: folder-base
     - state: folder-stamp-inverse
       color: "#1dff00"
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
   - type: SpawnItemsOnUse
     items:
     - id: NukeCodePaper
@@ -19,8 +22,8 @@
   - type: Appearance
 
 - type: entity
-  id: BoxFolderBase
   parent: BoxBase
+  id: BoxFolderBaseEmpty
   name: folder
   description: A folder filled with top secret paperwork.
   components:
@@ -58,26 +61,58 @@
         whitelist:
           tags:
           - Document
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 50
+  - type: StaticPrice
+    price: 15 # Weirdly this is more expensive than cardboard boxes. But if I have this any lower then I get an arbitrage testfail because the raw materials are worth ~$14.
   - type: Appearance
   - type: Tag
     tags:
     - Folder
-  - type: StorageFill
-    contents:
-      - id: Paper
-        prob: 0.5
-      - id: PaperOffice
-        prob: 0.4
-      - id: Paper
-        prob: 0.3
-      - id: PaperOffice
-        prob: 0.2
-      - id: Paper
-        prob: 0.2
 
 - type: entity
-  id: BoxFolderRed
-  parent: BoxFolderBase
+  abstract: true
+  id: BoxFolderFill # Include this as a parent prototype to add 0-5 random papers to a folder's inventory when spawned.
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Paper
+          prob: 0.5
+        - id: PaperOffice
+          prob: 0.4
+        - id: Paper
+          prob: 0.3
+        - id: PaperOffice
+          prob: 0.2
+        - id: Paper
+          prob: 0.2
+
+- type: entity
+  abstract: true
+  id: BoxFolderFillThreePapers # Like BoxFolderFill, but always has exactly three sheets of standard paper; use for things that should always be consistent, e.g roundstart items
+  suffix: 3 papers
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Paper
+        amount: 3
+
+- type: entity
+  parent: [BoxFolderBaseEmpty, BoxFolderFill]
+  id: BoxFolderBase
+
+- type: entity
+  parent: [BoxFolderBaseEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBaseThreePapers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderRedEmpty
   suffix: Red
   components:
   - type: Sprite
@@ -87,8 +122,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderBlue
-  parent: BoxFolderBase
+  parent: [BoxFolderRedEmpty, BoxFolderFill]
+  id: BoxFolderRed
+  suffix: Red, Filled
+
+- type: entity
+  parent: [BoxFolderRedEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderRedThreePapers
+  suffix: Red, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderBlueEmpty
   suffix: Blue
   components:
   - type: Sprite
@@ -98,8 +143,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderYellow
-  parent: BoxFolderBase
+  parent: [BoxFolderBlueEmpty, BoxFolderFill]
+  id: BoxFolderBlue
+  suffix: Blue, Filled
+
+- type: entity
+  parent: [BoxFolderBlueEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBlueThreePapers
+  suffix: Blue, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderYellowEmpty
   suffix: Yellow
   components:
   - type: Sprite
@@ -109,18 +164,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderWhite
-  parent: BoxFolderBase
-  suffix: White
-  components:
-  - type: Sprite
-    layers:
-    - state: folder-white
-    - state: folder-base
+  parent: [BoxFolderYellowEmpty, BoxFolderFill]
+  id: BoxFolderYellow
+  suffix: Yellow, Filled
 
 - type: entity
-  id: BoxFolderGrey
-  parent: BoxFolderBase
+  parent: [BoxFolderYellowEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderYellowThreePapers
+  suffix: Yellow, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderGreyEmpty
   suffix: Grey
   components:
   - type: Sprite
@@ -130,8 +185,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderBlack
-  parent: BoxFolderBase
+  parent: [BoxFolderGreyEmpty, BoxFolderFill]
+  id: BoxFolderGrey
+  suffix: Grey, Filled
+
+- type: entity
+  parent: [BoxFolderGreyEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderGreyThreePapers
+  suffix: Grey, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderBlackEmpty
   suffix: Black
   components:
   - type: Sprite
@@ -141,8 +206,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderGreen
-  parent: BoxFolderBase
+  parent: [BoxFolderBlackEmpty, BoxFolderFill]
+  id: BoxFolderBlack
+  suffix: Black, Filled
+
+- type: entity
+  parent: [BoxFolderBlackEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderBlackThreePapers
+  suffix: Black, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderGreenEmpty
   suffix: Green
   components:
   - type: Sprite
@@ -152,10 +227,40 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderCentCom
-  name: CentComm folder
-  parent: BoxFolderBase
+  parent: [BoxFolderGreenEmpty, BoxFolderFill]
+  id: BoxFolderGreen
+  suffix: Green, Filled
+
+- type: entity
+  parent: [BoxFolderGreenEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderGreenThreePapers
+  suffix: Green, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderWhiteEmpty
+  suffix: White
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-white
+    - state: folder-base
+
+- type: entity
+  parent: [BoxFolderWhiteEmpty, BoxFolderFill]
+  id: BoxFolderWhite
+  suffix: White, Filled
+
+- type: entity
+  parent: [BoxFolderWhiteEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderWhiteThreePapers
+  suffix: White, 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderCentComEmpty
   categories: [ DoNotMap ]
+  name: CentComm folder
   description: CentComm's miserable little pile of secrets!
   components:
   - type: Sprite
@@ -164,8 +269,18 @@
     - state: folder-base
 
 - type: entity
-  id: BoxFolderClipboard
-  parent: BoxFolderBase
+  parent: [BoxFolderCentComEmpty, BoxFolderFill]
+  id: BoxFolderCentCom
+  suffix: DO NOT MAP; Filled
+
+- type: entity
+  parent: [BoxFolderCentComEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderCentComThreePapers
+  suffix: DO NOT MAP; 3 papers
+
+- type: entity
+  parent: BoxFolderBaseEmpty
+  id: BoxFolderClipboardEmpty
   name: clipboard
   description: The weapon of choice for those on the front lines of bureaucracy.
   components:
@@ -200,12 +315,13 @@
     slots: [belt]
     quickEquip: false
     sprite: Objects/Misc/clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Wood: 50
+      Steel: 25
   - type: Storage
     grid:
     - 0,0,5,3
-    whitelist:
-      tags:
-      - Document
   - type: ItemMapper
     mapLayers:
       clipboard_paper:
@@ -223,8 +339,50 @@
         Blunt: 6
 
 - type: entity
-  id: BoxFolderCentComClipboard
-  parent: BoxFolderClipboard
+  parent: [BoxFolderClipboardEmpty, BoxFolderFill]
+  id: BoxFolderClipboard
+
+- type: entity
+  parent: [BoxFolderClipboardEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderClipboardThreePapers
+
+- type: entity
+  parent: BoxFolderClipboardEmpty
+  id: BoxFolderPlasticClipboardEmpty
+  name: plastic clipboard
+  description: A cheap clipboard made of blue plastic. For those who aren't yet ready to wield the bureaucratic might of a proper wooden clipboard.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/plastic_clipboard.rsi
+    layers:
+    - state: clipboard
+    - state: clipboard_paper
+      map: ["clipboard_paper"]
+      visible: false
+    - state: clipboard_pen
+      map: ["clipboard_pen"]
+      visible: false
+    - state: clipboard_over
+  - type: Item
+    sprite: Objects/Misc/plastic_clipboard.rsi
+  - type: Clothing
+    sprite: Objects/Misc/plastic_clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # half of autolathe printing cost
+      Plastic: 50
+      Steel: 25
+
+- type: entity
+  parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFill]
+  id: BoxFolderPlasticClipboard
+
+- type: entity
+  parent: [BoxFolderPlasticClipboardEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderPlasticClipboardThreePapers
+
+- type: entity
+  parent: BoxFolderClipboardEmpty
+  id: BoxFolderCentComClipboardEmpty
   name: CentComm clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
   components:
@@ -243,10 +401,23 @@
     sprite: Objects/Misc/cc-clipboard.rsi
   - type: Clothing
     sprite: Objects/Misc/cc-clipboard.rsi
+  - type: PhysicalComposition
+    materialComposition: # same composition as regular clipboard + bit of cloth because it's "upholstered with green velvet"
+      Wood: 50
+      Steel: 25
+      Cloth: 25
 
 - type: entity
+  parent: [BoxFolderCentComClipboardEmpty, BoxFolderFill]
+  id: BoxFolderCentComClipboard
+
+- type: entity
+  parent: [BoxFolderCentComClipboardEmpty, BoxFolderFillThreePapers]
+  id: BoxFolderCentComClipboardThreePapers
+
+- type: entity
+  parent: [BoxFolderClipboardEmpty, BaseGrandTheftContraband]
   id: BoxFolderQmClipboard
-  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
   components:
@@ -278,8 +449,6 @@
     grid:
     - 0,0,4,3
     quickInsert: true
-  - type: StorageFill
-    contents: [] #to override base clipboard fill
   - type: ItemMapper
     mapLayers:
       qm_clipboard_paper:

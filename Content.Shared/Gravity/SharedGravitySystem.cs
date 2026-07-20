@@ -14,14 +14,14 @@ namespace Content.Shared.Gravity;
 
 public abstract partial class SharedGravitySystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     public static readonly ProtoId<AlertPrototype> WeightlessAlert = "Weightless";
 
-    protected EntityQuery<GravityComponent> GravityQuery;
-    private EntityQuery<GravityAffectedComponent> _weightlessQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
+    [Dependency] protected EntityQuery<GravityComponent> GravityQuery = default!;
+    [Dependency] private EntityQuery<GravityAffectedComponent> _weightlessQuery = default!;
+    [Dependency] private EntityQuery<PhysicsComponent> _physicsQuery = default!;
 
     public override void Initialize()
     {
@@ -43,10 +43,6 @@ public abstract partial class SharedGravitySystem : EntitySystem
         // Impulse
         SubscribeLocalEvent<GravityAffectedComponent, ShooterImpulseEvent>(OnShooterImpulse);
         SubscribeLocalEvent<GravityAffectedComponent, ThrowerImpulseEvent>(OnThrowerImpulse);
-
-        GravityQuery = GetEntityQuery<GravityComponent>();
-        _weightlessQuery = GetEntityQuery<GravityAffectedComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
     }
 
     public override void Update(float frameTime)
@@ -55,27 +51,42 @@ public abstract partial class SharedGravitySystem : EntitySystem
         UpdateShake();
     }
 
+
+    /// <summary>
+    /// If the entity can be weightless and is weightless, return true, otherwise return false
+    /// </summary>
     public bool IsWeightless(Entity<GravityAffectedComponent?> entity)
     {
-        // If we can be weightless and are weightless, return true, otherwise return false
         return _weightlessQuery.Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
     }
 
-    private bool GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
+    /// <summary>
+    /// If the entity can be weightless and the status (whether weightless or not) is from the grid/map, return true, otherwise return false.
+    /// </summary>
+    public bool IsWeightlessStatusFromGrid(Entity<GravityAffectedComponent?> entity)
+    {
+        return _weightlessQuery.Resolve(entity, ref entity.Comp, false) && entity.Comp.GridWeightlessStatus;
+    }
+
+    /// <summary>
+    /// Gets an entity's weightless status.
+    /// </summary>
+    /// <returns>First bool returns true if the entity is weightless. Second bool returns true if the first bool was given via the grid/map gravity, false if from the entity.</returns>
+    private (bool, bool) GetWeightless(Entity<GravityAffectedComponent, PhysicsComponent?> entity)
     {
         if (!_physicsQuery.Resolve(entity, ref entity.Comp2, false))
-            return false;
+            return (false, false);
 
         if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
-            return false;
+            return (false, false);
 
         // Check if something other than the grid or map is overriding our gravity
         var ev = new IsWeightlessEvent();
         RaiseLocalEvent(entity, ref ev);
         if (ev.Handled)
-            return ev.IsWeightless;
+            return (ev.IsWeightless, false);
 
-        return !EntityGridOrMapHaveGravity(entity.Owner);
+        return (!EntityGridOrMapHaveGravity(entity.Owner), true);
     }
 
     /// <summary>
@@ -92,7 +103,8 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     /// <summary>
     /// Overload of <see cref="RefreshWeightless(Entity{GravityAffectedComponent?})"/> which also takes a bool for the weightlessness value we want to change to.
-    /// This method is LOAD BEARING for UninitializedSaveTest. DO NOT REMOVE IT.
+    /// This method should only be called if there is no chance something can override the weightless value you're trying to change to.
+    /// This is really only the case if you're applying a weightless value that overrides non-conditionally from events or are a grid with the gravity component.
     /// </summary>
     /// <param name="entity">The entity we are updating the weightless status of</param>
     /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
@@ -113,10 +125,11 @@ public abstract partial class SharedGravitySystem : EntitySystem
         var newWeightless = GetWeightless(entity);
 
         // Don't network or raise events if it's not changing
-        if (newWeightless == entity.Comp.Weightless)
+        if (newWeightless.Item1 == entity.Comp.Weightless && newWeightless.Item2 == entity.Comp.GridWeightlessStatus)
             return;
 
-        entity.Comp.Weightless = newWeightless;
+        entity.Comp.Weightless = newWeightless.Item1;
+        entity.Comp.GridWeightlessStatus = newWeightless.Item2;
         Dirty(entity);
 
         var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
@@ -131,9 +144,9 @@ public abstract partial class SharedGravitySystem : EntitySystem
     private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
     {
         if (args.Weightless)
-            _alerts.ShowAlert(entity, WeightlessAlert);
+            _alerts.ShowAlert(entity.AsNullable(), WeightlessAlert);
         else
-            _alerts.ClearAlert(entity, WeightlessAlert);
+            _alerts.ClearAlert(entity.AsNullable(), WeightlessAlert);
     }
 
     private void OnEntParentChanged(Entity<GravityAffectedComponent> entity, ref EntParentChangedMessage args)
@@ -142,7 +155,7 @@ public abstract partial class SharedGravitySystem : EntitySystem
         if (args.OldParent == args.Transform.GridUid)
             return;
 
-        RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
+        RefreshWeightless((entity.Owner, entity.Comp));
     }
 
     private void OnBodyTypeChanged(Entity<GravityAffectedComponent> entity, ref PhysicsBodyTypeChangedEvent args)
@@ -201,12 +214,12 @@ public abstract partial class SharedGravitySystem : EntitySystem
             _alerts.ClearAlert(ev.Euid, WeightlessAlert);
     }
 
-    private void OnAlertsParentChange(EntityUid uid, AlertsComponent component, ref EntParentChangedMessage args)
+    private void OnAlertsParentChange(Entity<AlertsComponent> entity, ref EntParentChangedMessage args)
     {
-        if (IsWeightless(uid))
-            _alerts.ShowAlert(uid, WeightlessAlert);
+        if (IsWeightless(entity.Owner))
+            _alerts.ShowAlert(entity.AsNullable(), WeightlessAlert);
         else
-            _alerts.ClearAlert(uid, WeightlessAlert);
+            _alerts.ClearAlert(entity.AsNullable(), WeightlessAlert);
     }
 
     private void OnGridInit(GridInitializeEvent ev)
@@ -227,12 +240,12 @@ public abstract partial class SharedGravitySystem : EntitySystem
 
     private void OnThrowerImpulse(Entity<GravityAffectedComponent> entity, ref ThrowerImpulseEvent args)
     {
-        args.Push = true;
+        args.Push |= IsWeightless((entity.Owner, entity.Comp));
     }
 
     private void OnShooterImpulse(Entity<GravityAffectedComponent> entity, ref ShooterImpulseEvent args)
     {
-        args.Push = true;
+        args.Push |= IsWeightless((entity.Owner, entity.Comp));
     }
 }
 

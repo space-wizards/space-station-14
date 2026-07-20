@@ -38,12 +38,6 @@ public sealed partial class CCVars
         CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
 
     /// <summary>
-    /// Determines the color to use when highlighting search results in the admin log browser.
-    /// </summary>
-    public static readonly CVarDef<string> AdminLogsHighlightColor =
-        CVarDef.Create("ui.admin_logs_highlight_color", Color.Red.ToHex(), CVar.CLIENTONLY | CVar.ARCHIVE);
-
-    /// <summary>
     /// Determines how antagonist status/roletype is displayed. Based on AdminOverlayAntagFormats enum
     /// Binary: Roletypes of interest get an "ANTAG" label
     /// Roletype: Roletypes of interest will have their roletype name displayed in their specific color
@@ -126,4 +120,16 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<int> AdminOverlayStackMax =
         CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The default state for showing admin overlays in the strip menu.
+    /// </summary>
+    public static readonly CVarDef<bool> AdminStripMenuOverlayDefault =
+        CVarDef.Create("ui.admin_strip_menu_overlay_default", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, ghosts will see an "(F)" button next to chat messages, which can be used to follow the sender.
+    /// </summary>
+    public static readonly CVarDef<bool> InterfaceChatFollowButton =
+        CVarDef.Create("ui.chat_follow_button", true, CVar.CLIENT | CVar.REPLICATED | CVar.ARCHIVE);
 }

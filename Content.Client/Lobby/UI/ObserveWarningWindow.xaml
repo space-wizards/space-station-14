@@ -7,7 +7,7 @@
         <BoxContainer Orientation="Horizontal">
             <Button Name="NevermindButton" Text="{Loc 'observe-nevermind'}" SizeFlagsStretchRatio="1"/>
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
-            <cc:CommandButton Command="observe" Name="ObserveButton" StyleClasses="Caution" Text="{Loc 'observe-confirm'}" SizeFlagsStretchRatio="1"/>
+            <cc:CommandButton Command="observe" Name="ObserveButton" StyleClasses="negative" Text="{Loc 'observe-confirm'}" SizeFlagsStretchRatio="1"/>
             <cc:CommandButton Command="observe admin" Name="ObserveAsAdminButton" Text="{Loc 'observe-as-admin'}" SizeFlagsStretchRatio="1" Visible="False"/>
         </BoxContainer>
     </BoxContainer>
