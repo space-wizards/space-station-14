@@ -552,7 +552,6 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
-  - type: Appearance
   - type: HideLayerClothing
     layers:
       Hair: HEAD
@@ -677,7 +676,6 @@
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/ushanka.rsi
-  - type: Appearance
   - type: RussianAccent
     relayAccent: true
   - type: Foldable
