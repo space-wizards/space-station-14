@@ -99,12 +99,13 @@ public sealed partial class AirlockSystem : SharedAirlockSystem
 
             emergencyLightsVisible = _appearanceSystem.TryGetData<bool>(uid, DoorVisuals.EmergencyLights, out var eaLights, args.Component) && eaLights;
             unlitVisible =
-                    (state == DoorState.Closing
-                ||  state == DoorState.Opening
-                ||  state == DoorState.Denying
-                || (state == DoorState.Open && comp.OpenUnlitVisible)
-                || (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights))
-                    && !boltedVisible && !emergencyLightsVisible;
+                (state == DoorState.Closing
+                 || state == DoorState.Closed
+                 ||  state == DoorState.Opening
+                 ||  state == DoorState.Denying
+                 || (state == DoorState.Open && comp.OpenUnlitVisible)
+                 || (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights))
+                && !boltedVisible && !emergencyLightsVisible;
         }
 
         _sprite.LayerSetVisible((uid, args.Sprite), DoorVisualLayers.BaseUnlit, unlitVisible);

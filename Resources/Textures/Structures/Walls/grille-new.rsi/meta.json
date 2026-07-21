@@ -11,6 +11,9 @@
             "name": "full"
         },
         {
+            "name": "broken"
+        },
+        {
             "name": "grille0",
             "directions": 4
         },

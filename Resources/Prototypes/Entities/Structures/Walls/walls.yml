@@ -360,10 +360,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -380,10 +380,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    sprite: Structures/Walls/plastitanium-diagonal.rsi
     state: state0
   - type: Destructible
     thresholds:
@@ -501,10 +501,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/reinforced_diagonal.rsi
+    sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/reinforced_diagonal.rsi
+    sprite: Structures/Walls/reinforced-diagonal.rsi
     state: state0
   - type: Damageable
     damageModifierSet: StructuralMetallicStrong
@@ -600,10 +600,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/shuttle_diagonal.rsi
+    sprite: Structures/Walls/shuttle-diagonal.rsi
     state: state0
   - type: Reflect
     reflectProb: 1
@@ -756,10 +756,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/solid_diagonal.rsi
+    sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/solid_diagonal.rsi
+    sprite: Structures/Walls/solid-diagonal.rsi
     state: state0
   - type: Destructible
     thresholds:
@@ -808,7 +808,7 @@
 - type: entity
   parent: BaseWall
   id: WallSolidChitin
-  name: solid chitin
+  name: exodermis wall
   components:
   - type: Tag
     tags:
@@ -844,7 +844,7 @@
 - type: entity
   parent: BaseWall
   id: WallReinforcedChitin
-  name: reinforced chitin
+  name: reinforced exodermis
   components:
   - type: Sprite
     sprite: Structures/Walls/xeno.rsi
@@ -912,10 +912,10 @@
   components:
   - type: Sprite
     drawdepth: Walls
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/xenoborg-diagonal.rsi
     state: state0
   - type: Icon
-    sprite: Structures/Walls/xenoborg_diagonal.rsi
+    sprite: Structures/Walls/xenoborg-diagonal.rsi
     state: state0
 
 - type: entity
@@ -1029,68 +1029,6 @@
   - type: Construction
     graph: WebStructures
     node: wall
-
-
-# Mining Walls
-
-- type: entity
-  parent: BaseWall
-  id: WallMining
-  name: mining wall
-  components:
-  - type: Sprite
-    sprite: Structures/Walls/mining.rsi
-  - type: Icon
-    sprite: Structures/Walls/mining.rsi
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 700
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: IconSmooth
-    key: walls
-    base: mining
-  - type: RandomIconSmooth
-    randomStates:
-    - mining
-    - miningB
-  - type: Appearance
-
-- type: entity
-  parent: WallDiagonalBase
-  id: WallMiningDiagonal
-  name: mining wall
-  components:
-  - type: Sprite
-    drawdepth: Walls
-    sprite: Structures/Walls/mining_diagonal.rsi
-    state: state0
-  - type: Icon
-    sprite: Structures/Walls/mining_diagonal.rsi
-    state: state0
-  - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Girder:
-            min: 1
-            max: 1
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalSlam
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
 
 # Mime
 

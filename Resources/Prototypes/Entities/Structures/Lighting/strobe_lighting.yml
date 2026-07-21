@@ -37,7 +37,7 @@
     energy: 5
     radius: 10
     softness: 1
-    offset: "0, 0.35"
+    offset: "0, 0.25"
   - type: RotatingLight
   - type: Physics
     bodyType: Static

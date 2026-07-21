@@ -239,7 +239,7 @@
     - Window
   components:
   - type: Sprite
-    sprite: Structures/Windows/window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal.rsi
     state: state0
   - type: Tag
     tags:
@@ -250,7 +250,7 @@
     key: walls
     base: state
   - type: Icon
-    sprite: Structures/Windows/window_diagonal.rsi
+    sprite: Structures/Windows/window-diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:
@@ -272,7 +272,7 @@
     - East
   - type: DamageVisuals
     damageOverlay:
-      sprite: Structures/Windows/cracks_diagonal.rsi
+      sprite: Structures/Windows/cracks-diagonal.rsi
   - type: Construction
     graph: WindowDiagonal
     node: windowDiagonal

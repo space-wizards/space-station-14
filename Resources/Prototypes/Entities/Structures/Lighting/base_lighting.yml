@@ -37,7 +37,7 @@
     energy: 0.8
     radius: 10
     softness: 1
-    offset: "0, 0.5"
+    offset: "0, 0.25"
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -434,7 +434,7 @@
     enabled: false
     radius: 5
     energy: 0.6
-    offset: "0, 0.35"
+    offset: "0, 0.25"
     color: "#7CFC00"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: ApcPowerReceiver

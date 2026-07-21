@@ -86,11 +86,6 @@
 
 - type: construction
   parent: Girder
-  id: PlasticWall
-  targetNode: plasticWall
-
-- type: construction
-  parent: Girder
   id: PlasmaWall
   targetNode: plasmaWall
 
@@ -110,11 +105,6 @@
   name: construction-recipe-diagonal-shuttle-wall
   targetNode: diagonalshuttleWall
   canRotate: true
-
-- type: construction
-  parent: Girder
-  id: ClownWall
-  targetNode: bananiumWall
 
 - type: construction
   parent: Girder
@@ -553,11 +543,6 @@
   parent: MetalDoor
   id: CardDoor
   targetNode: cardDoor
-
-- type: construction
-  parent: MetalDoor
-  id: BananiumDoor
-  targetNode: bananiumDoor
 # endregion Material Doors
 
 # region Plastic Flaps

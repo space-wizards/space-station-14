@@ -875,6 +875,8 @@ WallCobblebrick: WallConcrete
 WallAsteroidCobblebrick: WallConcrete
 WallBasaltCobblebrick: WallConcrete
 WallIce: WallRockSnow
+WallMining: WallSolid
+WallMiningDiagonal: WallSolidDiagonal
 
 #2026-07-17
 WeaponRifleM90GrenadeLauncher: null

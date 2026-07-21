@@ -16,24 +16,28 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
-    snapCardinals: true
+    sprite: Structures/Doors/Airlocks/New/airlock-base.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
-      visible: false
+      visible: true
     - state: welded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
@@ -46,6 +50,7 @@
       visible: false
       map: ["enum.ElectrifiedLayers.Sparks"]
     - state: sparks
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.DoorVisualLayers.BaseEmagging"]
       shader: unshaded
       visible: false
@@ -92,6 +97,7 @@
     fuel: 5
     time: 3
   - type: Airlock
+    openUnlitVisible: true
   - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
@@ -146,6 +152,7 @@
   - type: RadiationBlocker
     resistance: 3
   - type: Occluder
+    boundingBox: "-0.5,-0.470,0.5,0.470"
   - type: Damageable
     damageModifierSet: StrongMetallic
   - type: Injurable
@@ -217,7 +224,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+    sprite: Structures/Doors/Airlocks/New-Glass/airlock-base.rsi
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
