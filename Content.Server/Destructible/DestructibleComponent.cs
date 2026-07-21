@@ -13,7 +13,7 @@ public sealed partial class DestructibleComponent : Component
     /// A list of damage thresholds for the entity;
     /// includes their triggers and resultant behaviors.
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(DamageThresholdsSerializer))]
     public List<DamageThreshold> Thresholds = new();
 
     /// <summary>
