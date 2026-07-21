@@ -5182,3 +5182,33 @@
   id: 9886
   time: '2026-07-20T05:59:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44789
+- author: mqole
+  changes:
+  - message: Human characters can once again have coloured eyes.
+    type: Fix
+  id: 9887
+  time: '2026-07-20T18:28:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44809
+- author: AndrewFenriz
+  changes:
+  - message: The cardboard box no longer slides.
+    type: Fix
+  id: 9888
+  time: '2026-07-21T00:28:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43532
+- author: riccardi48
+  changes:
+  - message: Splitting stacks will now merge with the stack in hand if possible
+    type: Tweak
+  - message: You can now split the number of items in a stack to fully pick it up.
+    type: Tweak
+  id: 9889
+  time: '2026-07-21T00:28:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44662
+- author: ProPeperos
+  changes:
+  - message: Fire Helmets now have small power cell instead of medium one.
+    type: Tweak
+  id: 9890
+  time: '2026-07-21T02:20:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44811
