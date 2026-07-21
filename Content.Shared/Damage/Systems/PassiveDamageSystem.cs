@@ -4,10 +4,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class PassiveDamageSystem : EntitySystem
+public sealed partial class PassiveDamageSystem : EntitySystem
 {
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -33,9 +33,6 @@ public sealed class PassiveDamageSystem : EntitySystem
         {
             // Make sure they're up for a damage tick
             if (comp.NextDamage > curTime)
-                continue;
-
-            if (comp.DamageCap != 0 && damage.TotalDamage >= comp.DamageCap)
                 continue;
 
             // Set the next time they can take damage

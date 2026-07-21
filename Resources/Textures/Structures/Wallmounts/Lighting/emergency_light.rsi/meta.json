@@ -8,55 +8,14 @@
     "copyright": "juliang, modified by mirrorcult",
     "states": [
         {
-            "name": "base",
-            "directions": 4
+            "name": "base"
         },
         {
-            "name": "emergency_light_off",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "name": "emergency_light_off"
         },
         {
             "name": "emergency_light_on",
-            "directions": 4,
             "delays": [
-                [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
-                ],
-                [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
-                ],
-                [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
-                ],
                 [
                     0.3,
                     0.3,

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Whitelist;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.FeedbackSystem;
 
@@ -53,4 +54,14 @@ public sealed partial class FeedbackPopupPrototype : IPrototype
     /// </remarks>
     [DataField]
     public bool ShowRoundEnd = true;
+
+    /// <summary>
+    /// Will only show this feedback at round end if there is a rule that fits in the whitelist
+    /// </summary>
+    /// <remarks>
+    /// This will only work if <see cref="ShowRoundEnd"/> is true.
+    /// If this is null it will show the feedback at round end regardless of the rules present
+    /// </remarks>
+    [DataField]
+    public EntityWhitelist? RuleWhitelist;
 }

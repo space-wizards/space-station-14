@@ -18,16 +18,15 @@ namespace Content.Shared.Maps;
 /// <summary>
 ///     Handles server-side tile manipulation like prying/deconstructing tiles.
 /// </summary>
-public sealed class TileSystem : EntitySystem
+public sealed partial class TileSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly SharedDecalSystem _decal = default!;
-    [Dependency] private readonly SharedMapSystem _maps = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private SharedDecalSystem _decal = default!;
+    [Dependency] private SharedMapSystem _maps = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public const int ChunkSize = 16;
 
@@ -105,7 +104,7 @@ public sealed class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile)
     {
-        return PickVariant(tile, _robustRandom.GetRandom());
+        return PickVariant(tile, _robustRandom);
     }
 
     /// <summary>
@@ -113,15 +112,20 @@ public sealed class TileSystem : EntitySystem
     /// </summary>
     public byte PickVariant(ContentTileDefinition tile, int seed)
     {
-        var rand = new System.Random(seed);
+        var rand = new RobustRandom();
+        rand.SetSeed(seed);
         return PickVariant(tile, rand);
     }
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
     /// </summary>
-    public byte PickVariant(ContentTileDefinition tile, System.Random random)
+    public byte PickVariant(ContentTileDefinition tile, IRobustRandom random)
     {
+        // Null variants? Uniform distribution.
+        if (tile.PlacementVariants == null)
+            return random.NextByte(tile.Variants);
+
         var variants = tile.PlacementVariants;
 
         var sum = variants.Sum();
@@ -143,7 +147,7 @@ public sealed class TileSystem : EntitySystem
     /// <summary>
     ///     Returns a tile with a weighted random variant.
     /// </summary>
-    public Tile GetVariantTile(ContentTileDefinition tile, System.Random random)
+    public Tile GetVariantTile(ContentTileDefinition tile, IRobustRandom random)
     {
         return new Tile(tile.TileId, variant: PickVariant(tile, random));
     }
@@ -153,7 +157,8 @@ public sealed class TileSystem : EntitySystem
     /// </summary>
     public Tile GetVariantTile(ContentTileDefinition tile, int seed)
     {
-        var rand = new System.Random(seed);
+        var rand = new RobustRandom();
+        rand.SetSeed(seed);
         return new Tile(tile.TileId, variant: PickVariant(tile, rand));
     }
 
@@ -304,7 +309,7 @@ public sealed class TileSystem : EntitySystem
             previousTileId = tileDef.BaseTurf.Value;
         }
 
-        if (spawnItem)
+        if (spawnItem && tileDef.ItemDropPrototypeName != null)
         {
             //Actually spawn the relevant tile item at the right position and give it some random offset.
             var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
@@ -312,7 +317,7 @@ public sealed class TileSystem : EntitySystem
         }
 
         //Destroy any decals on the tile
-        var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
+        var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileRef.GridUid, id);

@@ -11,7 +11,6 @@
       weight: 5
       reagents:
       - Ichor
-      - Necrosol
     - quantity: 5
       weight: 4
       reagents:
@@ -97,10 +96,6 @@
   id: StrangePill
   description: This unusual pill bears no markings. There's no telling what it contains.
   components:
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
   - type: RandomFillSolution
     solution: food
     weightedRandomId: RandomFillStrangePill
