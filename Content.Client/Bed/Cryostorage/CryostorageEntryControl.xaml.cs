@@ -46,7 +46,7 @@ public sealed partial class CryostorageEntryControl : BoxContainer
         foreach (var (slotId, itemName) in data.ItemsStoredInsidePlayer)
         {
             var control = new CryostorageSlotControl($"{Loc.GetString("comp-storage-window-title")} {slotId}", itemName);
-            control.Button.OnPressed += _ => InsidePlayerButtonPressed?.Invoke("ItemsStoredInside" + slotId);
+            control.Button.OnPressed += _ => InsidePlayerButtonPressed?.Invoke(CryostorageSystem.ItemStoredSlotname + slotId);
             ItemsContainer.AddChild(control);
         }
 

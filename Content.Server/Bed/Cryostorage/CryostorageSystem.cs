@@ -110,11 +110,13 @@ public sealed partial class CryostorageSystem : SharedCryostorageSystem
             if (storage == null)
                 return;
 
-            if (int.TryParse(args.Key, out var index) &&
-                index >= 0 &&
-                index < storage.Container.ContainedEntities.Count)
+            string numberPart = args.Key.Substring(ItemStoredSlotname.Length);
+
+            if (int.TryParse(numberPart, out var index) &&
+                index >= 1 &&
+                index <= storage.Container.ContainedEntities.Count)
             {
-                entity = storage.Container.ContainedEntities[index];
+                entity = storage.Container.ContainedEntities[index-1];
             }
             else
             {
