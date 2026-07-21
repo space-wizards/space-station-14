@@ -3,7 +3,6 @@
   parent: BaseWallmount
   id: BaseWallmountBoard
   components:
-  - type: Appearance
   - type: Damageable
     damageModifierSet: Wood
   - type: Injurable
@@ -24,10 +23,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Tag
-    tags:
-    - Wooden
-
 
 - type: entity
   parent: BaseWallmountBoard
@@ -36,12 +31,11 @@
   description: Is there a job for a witcher?
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/noticeboard.rsi
     layers:
-      - state: noticeboard
-      - state: notice-0
-      - map: ["enum.StorageFillLayers.Fill"]
+    - state: noticeboard
+    - state: notice-0
+    - map: ["enum.StorageFillLayers.Fill"]
   - type: StorageFillVisualizer
     maxFillLevels: 6
     fillBaseName: notice
@@ -52,9 +46,9 @@
     maxItemSize: Small
     whitelist:
       tags:
-        - Folder
-        - Document
-        - Write
+      - Folder
+      - Document
+      - Write
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -67,21 +61,20 @@
     node: noticeBoard
 
 - type: entity
-  parent: [ BaseWallmount, BasePaperLabelable ]
+  parent: [ BaseWallmount, BasePaperLabelableVisualized ]
   id: PostBoard
   name: post board
   description: Apply paper directly to the boardhead.
   components:
   - type: Sprite
-    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/postboard.rsi
     layers:
-      - state: postboard
-      - state: paper
-        sprite: Structures/Wallmounts/labels.rsi
-        map: ["enum.PaperLabelVisuals.Layer"]
-      - state: postboard_over
-      - map: ["enum.StorageFillLayers.Fill"]
+    - state: postboard
+    - state: paper
+      sprite: Structures/Wallmounts/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+    - state: postboard_over
+    - map: ["enum.StorageFillLayers.Fill"]
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:

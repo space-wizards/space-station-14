@@ -1,20 +1,17 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "copyright": "Taken from Paradise Station from commit https://github.com/ParadiseSS13/Paradise/commit/137338f4dd3cb33124ab3fbd55a4865dd2bdab81, kitbashed by Dogbone10",
-  "license": "CC-BY-SA-3.0",
-  "states": [
-    {
-      "name": "postboard"
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "postboard_over"
-    },
-    {
-      "name": "postboard_paper"
-    }
-  ]
+    "copyright": "Taken from Paradise Station from commit https://github.com/ParadiseSS13/Paradise/commit/137338f4dd3cb33124ab3fbd55a4865dd2bdab81, kitbashed by Dogbone10",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "postboard"
+        },
+        {
+            "name": "postboard_over"
+        }
+    ]
 }
