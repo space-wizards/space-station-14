@@ -18,7 +18,6 @@ public sealed partial class NameIdentifierSystem : SharedNameIdentifierSystem
     [ViewVariables]
     public readonly Dictionary<string, List<int>> CurrentIds = [];
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
