@@ -966,15 +966,31 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletLaserMagnum
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum
       fireCost: 150
     - proto: BulletLaserWindowPiercingMagnum
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
+        state: magnum_piercing
       fireCost: 150
     - proto: BulletDisabler
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
       fireCost: 62.5
       pacifismAllowedMode: true
   - type: BatterySelfRecharger
     autoRechargeRate: 48
     autoRechargePauseTime: 10
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.BatteryWeaponFireModesUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BatteryWeaponFireModesUiKey.Key:
+        type: BatteryWeaponFireModesBoundUserInterface
 
 - type: entity
   name: temperature gun
