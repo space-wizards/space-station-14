@@ -393,13 +393,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         if (level == GameRunLevel.PreRoundLobby)
         {
-            if (!_preRoundLogQueue.IsEmpty)
-            {
-                // This technically means that you could get pre-round logs from
-                // a previous round passed onto the next one
-                // If this happens please file a complaint with your nearest lottery
-                // V2 logs use database identity keys
-            }
+            // Clear the round ID so that logs created in the lobby after a completed round
+            // are not permanently attributed to the previous round. Logs will receive the
+            // next round's ID when RoundStarting() fires.
+            _currentRoundId = 0;
 
             if (_metricsEnabled)
             {

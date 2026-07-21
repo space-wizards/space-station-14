@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Shared.Configuration;
@@ -196,6 +197,17 @@ public sealed class AdminAuditLogManager : IAdminAuditLogManager
             return;
 
         _ = TryFlushLogs();
+    }
+
+    public void RunLevelChanged(GameRunLevel level)
+    {
+        if (level != GameRunLevel.PreRoundLobby)
+            return;
+
+        // Clear the cached round ID so that audit logs created in the lobby after a
+        // completed round are buffered as pre-round (RoundId = null) rather than
+        // permanently attributed to the previous round.
+        _roundId = 0;
     }
 
     public async void RoundStarting(int roundId)

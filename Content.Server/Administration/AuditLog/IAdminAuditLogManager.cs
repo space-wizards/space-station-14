@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Content.Server.GameTicking;
 using Content.Shared.Database;
 
 namespace Content.Server.Administration.AuditLog;
@@ -9,6 +10,7 @@ public interface IAdminAuditLogManager
     void Shutdown();
     void Update();
     void RoundStarting(int roundId);
+    void RunLevelChanged(GameRunLevel level);
 
     void LogAction(
         Guid adminUserId,
