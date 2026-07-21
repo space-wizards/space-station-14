@@ -6,7 +6,6 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
@@ -16,9 +15,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
-using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Examine;
 using Content.Shared.Lathe;
 using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
@@ -37,25 +34,24 @@ using Robust.Shared.Timing;
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
-    public sealed class LatheSystem : SharedLatheSystem
+    public sealed partial class LatheSystem : SharedLatheSystem
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly EmagSystem _emag = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
-        [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly PuddleSystem _puddle = default!;
-        [Dependency] private readonly ReagentSpeedSystem _reagentSpeed = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-        [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly RadioSystem _radio = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private AtmosphereSystem _atmosphere = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private ContainerSystem _container = default!;
+        [Dependency] private EmagSystem _emag = default!;
+        [Dependency] private UserInterfaceSystem _uiSys = default!;
+        [Dependency] private MaterialStorageSystem _materialStorage = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private PuddleSystem _puddle = default!;
+        [Dependency] private ReagentSpeedSystem _reagentSpeed = default!;
+        [Dependency] private SharedSolutionContainerSystem _solution = default!;
+        [Dependency] private StackSystem _stack = default!;
+        [Dependency] private TransformSystem _transform = default!;
+        [Dependency] private RadioSystem _radio = default!;
 
         /// <summary>
         /// Per-tick cache
@@ -137,7 +133,7 @@ namespace Content.Server.Lathe
             var recipes = GetAvailableRecipes(uid, component, true);
             foreach (var id in recipes)
             {
-                if (!_proto.Resolve(id, out var proto))
+                if (!ProtoMan.Resolve(id, out var proto))
                     continue;
                 foreach (var (mat, _) in proto.Materials)
                 {
@@ -182,15 +178,8 @@ namespace Content.Server.Lathe
             if (!CanProduce(uid, recipe, quantity, component))
                 return false;
 
-            foreach (var (mat, amount) in recipe.Materials)
-            {
-                var adjustedAmount = recipe.ApplyMaterialDiscount
-                    ? (int)(-amount * component.MaterialUseMultiplier)
-                    : -amount;
-                adjustedAmount *= quantity;
-
-                _materialStorage.TryChangeMaterialAmount(uid, mat, adjustedAmount);
-            }
+            foreach (var (mat, amount) in GetAdjustedAmount(component, recipe))
+                _materialStorage.TryChangeMaterialAmount(uid, mat, -amount * quantity);
 
             if (component.Queue.Last is { } node && node.ValueRef.Recipe == recipe.ID)
                 node.ValueRef.ItemsRequested += quantity;
@@ -211,7 +200,7 @@ namespace Content.Server.Lathe
             batch.ItemsPrinted++;
             if (batch.ItemsPrinted >= batch.ItemsRequested || batch.ItemsPrinted < 0) // Rollover sanity check
                 component.Queue.RemoveFirst();
-            var recipe = _proto.Index(batch.Recipe);
+            var recipe = ProtoMan.Index(batch.Recipe);
 
             var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * component.TimeMultiplier;
 
@@ -241,7 +230,7 @@ namespace Content.Server.Lathe
 
             if (comp.CurrentRecipe != null)
             {
-                var currentRecipe = _proto.Index(comp.CurrentRecipe.Value);
+                var currentRecipe = ProtoMan.Index(comp.CurrentRecipe.Value);
                 if (currentRecipe.Result is { } resultProto)
                 {
                     var result = Spawn(resultProto, Transform(uid).Coordinates);
@@ -300,7 +289,7 @@ namespace Content.Server.Lathe
         {
             foreach (var id in packs)
             {
-                var pack = _proto.Index(id);
+                var pack = ProtoMan.Index(id);
                 foreach (var recipe in pack.Recipes)
                 {
                     if (args.GetUnavailable || database.UnlockedRecipes.Contains(recipe))
@@ -391,7 +380,7 @@ namespace Content.Server.Lathe
                 if (!potentialRecipes.Contains(new(recipeId)))
                     continue;
 
-                if (!_proto.TryIndex(recipeId, out LatheRecipePrototype? recipe))
+                if (!ProtoMan.TryIndex(recipeId, out LatheRecipePrototype? recipe))
                     continue;
 
                 var itemName = GetRecipeName(recipe!);
@@ -429,6 +418,48 @@ namespace Content.Server.Lathe
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
 
+        /// <summary>
+        /// Iterator returning adjusted amount of material needed to
+        /// produce a given recipe
+        /// </summary>
+        private static IEnumerable<(ProtoId<MaterialPrototype> mat, int amount)> GetAdjustedAmount(LatheComponent lathe, LatheRecipePrototype recipe)
+        {
+            foreach (var (mat, amount) in recipe.Materials)
+            {
+                var adjustedAmount = recipe.ApplyMaterialDiscount
+                    ? (int)(amount * lathe.MaterialUseMultiplier)
+                    : amount;
+
+                yield return (mat, adjustedAmount);
+            }
+        }
+
+        /// <summary>
+        /// Refunds the material cost of the currently running recipe,
+        /// without cancelling production
+        /// </summary>
+        private void RefundCurrentRecipe(EntityUid uid, LatheComponent lathe)
+        {
+            ProtoMan.Resolve(lathe.CurrentRecipe, out var recipe);
+
+            foreach (var (mat, amount) in GetAdjustedAmount(lathe, recipe!))
+                _materialStorage.TryChangeMaterialAmount(uid, mat, amount);
+        }
+
+        /// <summary>
+        /// Refunds the material cost of a given batch,
+        /// without deleting it
+        /// </summary>
+        private void RefundBatch(EntityUid uid, LatheComponent lathe, LatheRecipeBatch batch)
+        {
+            var delta = batch.ItemsRequested - batch.ItemsPrinted;
+
+            ProtoMan.Resolve(batch.Recipe, out var recipe);
+
+            foreach (var (mat, amount) in GetAdjustedAmount(lathe, recipe!))
+                _materialStorage.TryChangeMaterialAmount(uid, mat, amount * delta);
+        }
+
         public void AbortProduction(EntityUid uid, LatheComponent? component = null)
         {
             if (!Resolve(uid, ref component))
@@ -451,6 +482,7 @@ namespace Content.Server.Lathe
                     }
                 }
 
+                RefundCurrentRecipe(uid, component);
                 component.CurrentRecipe = null;
             }
             RemCompDeferred<LatheProducingComponent>(uid);
@@ -462,7 +494,7 @@ namespace Content.Server.Lathe
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)
         {
-            if (_proto.TryIndex(args.ID, out LatheRecipePrototype? recipe))
+            if (ProtoMan.TryIndex(args.ID, out LatheRecipePrototype? recipe))
             {
                 if (TryAddToQueue(uid, recipe, args.Quantity, component))
                 {
@@ -504,6 +536,7 @@ namespace Content.Server.Lathe
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):player} deleted a lathe job for ({batch.ItemsPrinted}/{batch.ItemsRequested}) {GetRecipeName(batch.Recipe)} at {ToPrettyString(uid):lathe}");
 
+            RefundBatch(uid, component, batch);
             component.Queue.Remove(node);
             UpdateUserInterfaceState(uid, component);
         }
@@ -562,6 +595,7 @@ namespace Content.Server.Lathe
                 LogImpact.Low,
                 $"{ToPrettyString(args.Actor):player} aborted printing {GetRecipeName(component.CurrentRecipe.Value)} at {ToPrettyString(uid):lathe}");
 
+            RefundCurrentRecipe(uid, component);
             component.CurrentRecipe = null;
             FinishProducing(uid, component);
         }

@@ -14,15 +14,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Interaction;
 
-public sealed class InteractionPopupSystem : EntitySystem
+public sealed partial class InteractionPopupSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -127,18 +127,16 @@ public sealed class InteractionPopupSystem : EntitySystem
             _popupSystem.PopupEntity(msgOthers, uid, Filter.PvsExcept(user, entityManager: EntityManager), true);
         }
 
+        _popupSystem.PopupEntity(msg, uid, user);
+
         if (!predict)
         {
-            _popupSystem.PopupEntity(msg, uid, user);
-
             if (component.SoundPerceivedByOthers)
                 _audio.PlayPvs(sfx, target);
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
             return;
         }
-
-        _popupSystem.PopupClient(msg, uid, user);
 
         if (sfx == null)
             return;

@@ -1033,31 +1033,26 @@ entities:
   - uid: 131
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 11.5,-16.5
       parent: 1
   - uid: 132
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 12.5,-16.5
       parent: 1
   - uid: 133
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 13.5,-16.5
       parent: 1
   - uid: 134
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 14.5,-16.5
       parent: 1
   - uid: 135
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 15.5,-16.5
       parent: 1
 - proto: MachineFrame

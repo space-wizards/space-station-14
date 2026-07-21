@@ -587,7 +587,7 @@
         settings: default
       job: CentralCommandOfficial
     - type: Loadout
-      prototypes: [ CentcomGear ]
+      prototypes: [ CentcommGear ]
       roleLoadout: [ RoleSurvivalStandard ]
 
 ## Syndicate
@@ -600,7 +600,10 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
-      nameSegments: [ NamesDeathCommando ]
+      nameSegments:
+      - NamesDeathCommandoFirst
+      - NamesDeathCommandoLast
+      nameFormat: name-format-standard
     - type: RandomHumanoidSpawner
       settings: SyndicateAgent
 

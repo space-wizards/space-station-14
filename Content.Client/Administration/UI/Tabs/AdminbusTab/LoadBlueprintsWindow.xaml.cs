@@ -14,8 +14,8 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
     [UsedImplicitly]
     public sealed partial class LoadBlueprintsWindow : DefaultWindow
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         public LoadBlueprintsWindow()
         {

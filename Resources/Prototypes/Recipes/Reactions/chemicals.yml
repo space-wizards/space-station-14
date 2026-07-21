@@ -1,5 +1,6 @@
 - type: reaction
   id: Ammonia
+  minTemp: 370 # prevents electrolyzed ammonia from recombining.
   reactants:
     Hydrogen:
       amount: 3
@@ -7,6 +8,21 @@
       amount: 1
   products:
     Ammonia: 4
+  effects:
+    - !type:AdjustSolutionThermalEnergy # remove heat to stop reaction on repeated recombination during electrolysis
+      delta: -92.28 # actual energy requirement of reaction, works surprisingly well.
+
+- type: reaction
+  id: AmmoniaBreakdown
+  source: true
+  requiredMixerCategories:
+  - Electrolysis
+  reactants:
+    Ammonia:
+      amount: 4
+  products:
+    Hydrogen: 3
+    Nitrogen: 1
 
 - type: reaction
   id: CelluloseBreakdown
@@ -349,8 +365,6 @@
   impact: Medium
   minTemp: 370
   reactants:
-    Uranium:
-      amount: 1
     Vestine:
       amount: 2
     SpaceGlue:

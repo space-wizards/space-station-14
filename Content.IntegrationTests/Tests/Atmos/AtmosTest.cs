@@ -18,6 +18,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 public abstract class AtmosTest : InteractionTest
 {
     protected AtmosphereSystem SAtmos = default!;
+    protected Content.Client.Atmos.EntitySystems.AtmosphereSystem CAtmos = default!;
     protected EntityLookupSystem LookupSystem = default!;
 
     protected Entity<GridAtmosphereComponent> RelevantAtmos;
@@ -38,6 +39,7 @@ public abstract class AtmosTest : InteractionTest
         await base.Setup();
 
         SAtmos = SEntMan.System<AtmosphereSystem>();
+        CAtmos = CEntMan.System<Content.Client.Atmos.EntitySystems.AtmosphereSystem>();
         LookupSystem = SEntMan.System<EntityLookupSystem>();
 
         SEntMan.TryGetComponent<GridAtmosphereComponent>(MapData.Grid, out var gridAtmosComp);
@@ -119,5 +121,21 @@ public abstract class AtmosTest : InteractionTest
     {
         Assert.That(MathHelper.CloseToPercent(mix1.TotalMoles, mix2.TotalMoles, tolerance),
             $"GasMixtures do not match. Got {mix1.TotalMoles} and {mix2.TotalMoles} moles");
+    }
+
+    /// <summary>
+    /// Sets the tile's air mixture to have a certain pressure at a certain temperature.
+    /// </summary>
+    /// <param name="tile">Tile to set the air mixture of.</param>
+    /// <param name="pressure">The pressure to set the tile to.</param>
+    /// <param name="temp">The temperature to set the tile to.</param>
+    /// <param name="gas">The gas to fill the tile with.</param>
+    /// <remarks>Yeah, it could be a general atmospherics API, but the test assertion is desired.</remarks>
+    protected static void SetTilePressure(TileAtmosphere tile, float pressure, float temp = Atmospherics.T20C, Gas gas = Gas.Nitrogen)
+    {
+        Assert.That(tile.Air, Is.Not.Null, "Target tile should have an air mixture.");
+        tile.Air!.Clear();
+        var moles = pressure * tile.Air.Volume / (Atmospherics.R * temp);
+        tile.Air.AdjustMoles(gas, moles);
     }
 }
