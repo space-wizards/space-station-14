@@ -161,7 +161,7 @@ public sealed class StunBatonTests : InteractionTest
         var baton = await PlaceInHands(StunBatonProtoId, enableToggleable: true);
         var sBaton = ToServer(baton);
         var batteryComp = Comp<BatteryComponent>(baton);
-        var batonIntialCharge = _battery.GetCharge(sBaton);
+        var batonIntialCharge = _battery.GetCharge(sBaton).Charge;
 
         using (Assert.EnterMultipleScope())
         {
@@ -174,7 +174,7 @@ public sealed class StunBatonTests : InteractionTest
         await RunSeconds(2); // Weapon cooldown.
         await AttemptLightAttackMiss();
 
-        var batonNewCharge = _battery.GetCharge(sBaton);
+        var batonNewCharge = _battery.GetCharge(sBaton).Charge;
         Assert.That(batonNewCharge, Is.EqualTo(batonIntialCharge), "Stun baton lost charge when missing an attack.");
     }
 }
