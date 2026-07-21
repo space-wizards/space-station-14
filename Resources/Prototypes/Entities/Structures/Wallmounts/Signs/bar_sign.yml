@@ -10,6 +10,7 @@
     sprite: Structures/Wallmounts/barsign.rsi
     state: empty
   - type: BarSign
+    emped: EmpBarSign
   - type: AccessReader
     access: [["Bar"]]
   - type: ActivatableUIRequiresPower
@@ -286,3 +287,12 @@
   components:
   - type: BarSign
     current: WhiskeyEchoes
+
+- type: entity
+  parent: BaseBarSign
+  id: BarSignEmped
+  name: glitchy bar sign 
+  description: You imagine a good smack might fix it.
+  components:
+  - type: BarSign
+    current: EmpBarSign

@@ -1559,5 +1559,329 @@ Entries:
   id: 189
   time: '2025-12-18T19:33:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41900
+- author: ScarKy0
+  changes:
+  - message: Station AI Radial actions are now logged. Search for "Station AI Radial"
+      in the logs menu under Actions.
+    type: Add
+  id: 190
+  time: '2025-12-20T18:23:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41911
+- author: eoineoineoin
+  changes:
+  - message: Fix bug where scrollbars were missing from player list
+    type: Fix
+  id: 191
+  time: '2025-12-22T16:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40525
+- author: ScarKy0
+  changes:
+  - message: Msg toolshed command. Used for sending messages to the target entities,
+      via popups, chat, tippy or as a subtle message.
+    type: Add
+  id: 192
+  time: '2026-01-05T21:13:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41936
+- author: mikeysaurus
+  changes:
+  - message: Admins can now vvwrite FTLCooldownOverride to override the FTL Cooldown's
+      timer.
+    type: Add
+  id: 193
+  time: '2026-01-09T06:58:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42209
+- author: Kowlin
+  changes:
+  - message: The super door remote can now set overcharge on airlocks.
+    type: Tweak
+  id: 194
+  time: '2026-01-13T01:02:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42370
+- author: Velken
+  changes:
+  - message: new Admin version of the Anomaly Scanner, that shows the hidden particle
+      types.
+    type: Add
+  id: 195
+  time: '2026-01-16T22:24:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42443
+- author: Samuka
+  changes:
+  - message: shuttle called and recalled logs now show who recalled or called the
+      shuttle
+    type: Fix
+  id: 196
+  time: '2026-01-24T19:15:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41557
+- author: M4rchy-S
+  changes:
+  - message: Admin logger for criminal status changes
+    type: Add
+  id: 197
+  time: '2026-01-29T06:05:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42691
+- author: Velken
+  changes:
+  - message: Log for buying from a store will be High instead of Low if user is not
+      of an expected faction for that store, or Extreme if they also have mindshield.
+    type: Tweak
+  id: 198
+  time: '2026-01-29T18:55:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42687
+- author: Samuka
+  changes:
+  - message: Central Command fax always tells admins where the fax came from instead
+      of saying "unknown" until it was refreshed
+    type: Fix
+  id: 199
+  time: '2026-02-01T18:12:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41108
+- author: Crude Oil
+  changes:
+  - message: Emitter toggle logs now show if the emitter was toggled on or off
+    type: Tweak
+  id: 200
+  time: '2026-02-01T22:01:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42736
+- author: M4rchy-S
+  changes:
+  - message: logging immovablerodsystem collisions for admin panel
+    type: Add
+  id: 201
+  time: '2026-02-04T07:41:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42769
+- author: Hitlinemoss
+  changes:
+  - message: Names for the diona, reptilian, and vox Urists have been tweaked to be
+      more consistent with other Urists.
+    type: Tweak
+  - message: The skeleton Urist is now named "Urist McBones".
+    type: Tweak
+  id: 202
+  time: '2026-02-09T13:31:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42791
+- author: slarticodefast
+  changes:
+  - message: Using the "fuckrules" command will now create an admin log and alert
+      the admins via chat.
+    type: Add
+  id: 203
+  time: '2026-02-21T20:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42988
+- author: Velken
+  changes:
+  - message: Admin door remote once again works through walls
+    type: Fix
+  id: 204
+  time: '2026-02-28T20:30:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43063
+- author: sowelipililimute
+  changes:
+  - message: Godmode no longer saves and restores the damage held before godmode.
+    type: Remove
+  id: 205
+  time: '2026-03-07T04:26:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43103
+- author: TheShuEd
+  changes:
+  - message: Added the "weatheradd", "weatherremove" and "weatherset" console commands.
+    type: Add
+  - message: Removed the "weather" console command.
+    type: Remove
+  id: 206
+  time: '2026-03-08T23:41:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41427
+- author: SlamBamActionman
+  changes:
+  - message: adduplink command now works properly, gives an uplink implant if there's
+      no PDA, and returns the uplink code in the command terminal.
+    type: Fix
+  id: 207
+  time: '2026-04-04T20:14:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38712
+- author: mikeysaurus
+  changes:
+  - message: The debug SetOutfit command now also fills target's storage containers
+      based on the gear preset.
+    type: Tweak
+  id: 208
+  time: '2026-04-09T05:05:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43346
+- author: UpAndLeaves
+  changes:
+  - message: Added container toolshed commands!
+    type: Add
+  - message: storage:query and inventory:query are now storage:contents and inventory:contents.
+    type: Tweak
+  id: 209
+  time: '2026-04-19T17:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43098
+- author: IProduceWidgets
+  changes:
+  - message: The `delaystart` command now accepts negative values, allowing to speed
+      up the start of the round.
+    type: Tweak
+  id: 210
+  time: '2026-05-09T19:27:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38270
+- author: Beck
+  changes:
+  - message: You can now see the contraband and chameleon status of items in the examine
+      menu
+    type: Add
+  id: 211
+  time: '2026-05-10T11:01:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43658
+- author: YoungThugSS14
+  changes:
+  - message: Removed the "spawnentitylist" command.
+    type: Remove
+  id: 212
+  time: '2026-05-12T19:52:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43934
+- author: Samuka
+  changes:
+  - message: Super bonk smite is slower now, to avoid giving people seizures
+    type: Tweak
+  id: 213
+  time: '2026-06-03T16:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44223
+- author: Zekins3366
+  changes:
+  - message: Construction menu now updates immediately after reloading construction
+      prototypes.
+    type: Fix
+  id: 214
+  time: '2026-06-05T15:24:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44243
+- author: PJB3005
+  changes:
+  - message: When a character name gets mentioned in an adminhelp message, the game will now attempt to provide a "quick info" link for the relevant player/entity.
+    type: Add
+  id: 215
+  time: '2026-06-20T23:47:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44319
+- author: Axionyxx
+  changes:
+  - message: Trust score and account creation date are now displayed in the player panel
+    type: Add
+  id: 216
+  time: '2026-06-21T20:23:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44317
+- author: PJB3005
+  changes:
+  - message: admin_overlay command to enable/disable admin overlay from scripts
+    type: Add
+  id: 217
+  time: '2026-06-21T22:16:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44326
+- author: PJB3005
+  changes:
+  - message: Admin logs now have their timezone displayed in local time rather than UTC
+    type: Fix
+  id: 218
+  time: '2026-06-22T14:49:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44332
+- author: PJB3005
+  changes:
+  - message: '"Respawn" admin action has been renamed to "return to lobby." Similar related actions have had tooltips added to clarify behavior.'
+    type: Tweak
+  id: 219
+  time: '2026-06-23T01:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44333
+- author: PJB3005
+  changes:
+  - message: '"Admin only" and "Play sound" options when sending bwoinks now work properly if the UI is popped out'
+    type: Fix
+  id: 220
+  time: '2026-06-23T18:21:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44334
+- author: JustinWinningham
+  changes:
+  - message: Admin panel now groups like types when sorting on 'Role Type' column
+    type: Fix
+  id: 221
+  time: '2026-06-26T03:02:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43897
+- author: ScarKy0
+  changes:
+  - message: Aghosts can now open several storage UIs at once. To bring back previous behaviour remove your "BypassOpenStorageLimit" tag.
+    type: Add
+  id: 222
+  time: '2026-06-29T09:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44404
+- author: Samuka-C
+  changes:
+  - message: Added a new button to the server tab which toggles dead chat!
+    type: Add
+  id: 223
+  time: '2026-06-29T19:22:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44367
+- author: Samuka-C
+  changes:
+  - message: Added the Stinky smite, for the stinkiest players
+    type: Add
+  id: 224
+  time: '2026-07-02T22:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44394
+- author: Doru991
+  changes:
+  - message: Quick info links in the ahelp window now only trigger for entities that are being or have been controlled by a player.
+    type: Tweak
+  id: 225
+  time: '2026-07-08T08:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44373
+- author: Errant-4
+  changes:
+  - message: The F7 playertab's filter now also works with role (Crew Aligned, Team Antagonist etc) and role subtype (Traitor, Zombie etc).
+    type: Tweak
+  id: 226
+  time: '2026-07-09T18:30:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44592
+- author: w3ryfrate
+  changes:
+  - message: Added "togglechat" command to easily toggle dead, ooc and looc channels on/off.
+    type: Add
+  - message: Removed commands "setdeadchat", "setlooc" and "setooc."
+    type: Remove
+  id: 227
+  time: '2026-07-13T06:06:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44480
+- author: Crude Oil
+  changes:
+  - message: Admin logs command autocompletes on players
+    type: Add
+  - message: Admins now have a "player logs" verb that opens admin logs with that player selected
+    type: Add
+  - message: Added "player logs" button to the ahelp window
+    type: Add
+  - message: Removed "ban list" button from the ahelp window
+    type: Remove
+  - message: Player selection in admin logs remains consistent when selecting different rounds
+    type: Tweak
+  id: 228
+  time: '2026-07-14T21:11:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44604
+- author: Samuka
+  changes:
+  - message: Added the event log button to log events more easily!
+    type: Add
+  id: 229
+  time: '2026-07-15T00:01:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44655
+- author: TriviaSolari
+  changes:
+  - message: Editing ion laws now properly randomizes law numbers
+    type: Fix
+  id: 230
+  time: '2026-07-15T03:04:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42806
+- author: SlamBamActionman
+  changes:
+  - message: Admin ghosts and Godmode are now immune to lube/glue effects on items.
+    type: Fix
+  id: 231
+  time: '2026-07-16T15:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44552
 Name: Admin
 Order: 3

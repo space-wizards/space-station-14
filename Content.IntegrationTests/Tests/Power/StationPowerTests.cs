@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.IntegrationTests.Fixtures;
 using Content.Server.GameTicking;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Maps;
@@ -12,7 +14,7 @@ using Robust.Shared.EntitySerialization;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-public sealed class StationPowerTests
+public sealed class StationPowerTests : GameTest
 {
     /// <summary>
     /// How long the station should be able to survive on stored power if nothing is changed from round start.
@@ -35,19 +37,22 @@ public sealed class StationPowerTests
         "Exo",
     ];
 
+    public override PoolSettings PoolSettings => new ()
+    {
+        Dirty = true,
+    };
+
     [Explicit]
     [Test, TestCaseSource(nameof(GameMaps))]
     public async Task TestStationStartingPowerWindow(string mapProtoId)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            Dirty = true,
-        });
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.EntMan;
         var protoMan = server.ProtoMan;
         var ticker = entMan.System<GameTicker>();
+        var batterySys = entMan.System<BatterySystem>();
 
         // Load the map
         await server.WaitAssertion(() =>
@@ -71,7 +76,8 @@ public sealed class StationPowerTests
             if (node.NodeGroup is not IBasePowerNet group)
                 continue;
             networks.TryGetValue(group.NetworkNode, out var charge);
-            networks[group.NetworkNode] = charge + battery.CurrentCharge;
+            var currentCharge = batterySys.GetCharge((uid, battery));
+            networks[group.NetworkNode] = charge + currentCharge;
         }
         var totalStartingCharge = networks.MaxBy(n => n.Value).Value;
 
@@ -93,17 +99,12 @@ public sealed class StationPowerTests
             Assert.That(totalStartingCharge, Is.GreaterThanOrEqualTo(requiredStoredPower),
                 $"Needs at least {requiredStoredPower - totalStartingCharge} more stored power!");
         });
-
-        await pair.CleanReturnAsync();
     }
 
     [Test, TestCaseSource(nameof(GameMaps))]
     public async Task TestApcLoad(string mapProtoId)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings
-        {
-            Dirty = true,
-        });
+        var pair = Pair;
         var server = pair.Server;
 
         var entMan = server.EntMan;
@@ -142,7 +143,5 @@ public sealed class StationPowerTests
                 }
             }
         });
-
-        await pair.CleanReturnAsync();
     }
 }

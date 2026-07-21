@@ -4,28 +4,48 @@
 # The datafields of the components copied using CopyComp.
 # Subscribe to CloningEvent instead if that is not enough.
 
+# Traits that root mentally or otherwise only affect you mentally.
+- type: cloningSettings
+  id: TraitsMental
+  components:
+  - Clumsy
+  - Pacified
+  - Paracusia
+  - LightweightDrunk
+
+# Traits that root in physical things in your body.
+- type: cloningSettings
+  id: TraitsPhysical
+  components:
+  - BlackAndWhiteOverlay
+  - Narcolepsy
+  - ImpairedMobility
+  # - LegsParalyzed (you get healed)
+  - Muted
+  - PermanentBlindness
+  - Snoring
+  - Unrevivable
+
+- type: cloningSettings
+  parent: [TraitsMental, TraitsPhysical]
+  id: Traits
+
 # for basic physical traits
 - type: cloningSettings
   id: Body
   components:
   # general
+  - CreamPied
   - DetailExaminable
   - Dna
   - Fingerprint
+  - Grammar # Pronouns
+  - HumanoidProfile # Age, Sex, Gender
+  - MeleeWeapon # Attack animation, damage and sound
   - NpcFactionMember
-  # traits
-  - BlackAndWhiteOverlay
-  - Clumsy
-  - ImpairedMobility
-  # - LegsParalyzed (you get healed)
-  - LightweightDrunk
-  - Muted
-  - Narcolepsy
-  - Pacified
-  - Paracusia
-  - PermanentBlindness
-  - Snoring
-  - Unrevivable
+  - RandomPrice
+  - TemperatureDamage
+  - TemperatureSpeed
   # accents
   - Accentless
   - BackwardsAccent
@@ -54,6 +74,9 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  eventComponents:
+  - Puller
+  - Vocal # voice sounds
 
 # for job-specific traits etc.
 - type: cloningSettings
@@ -74,16 +97,19 @@
   - Revolutionary
   - NukeOperative
 
+- type: cloningSettings
+  abstract: true
+  id: BaseEquipmentBlacklist
+  equipmentBlacklist:
+    components:
+    - AttachedClothing # helmets, which are part of the suit
+    - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
+    - VirtualItem
+
 # a full clone with all traits and items, but no antag roles
 - type: cloningSettings
   id: BaseClone
-  parent: [Body, Special]
-  blacklist:
-    components:
-    - AttachedClothing # helmets, which are part of the suit
-    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
-    - Implanter # they will spawn full again, but you already get the implant. And we can't do item slot copying yet
-    - VirtualItem
+  parent: [Body, Special, Traits, BaseEquipmentBlacklist]
 
 # for cloning pods
 - type: cloningSettings
@@ -104,7 +130,10 @@
 # changeling identity copying
 - type: cloningSettings
   id: ChangelingCloningSettings
-  parent: Body
+  parent: [Body, TraitsPhysical, BaseEquipmentBlacklist]
+  statusEffectWhitelist:
+    components:
+    - ChangelingCloneableStatusEffect
   components:
   # These are already part of the base species prototype that is spawned for the clone,
   # that means we only need to copy them over when switching between species.
@@ -120,15 +149,15 @@
   # these need special treatment in the event subscription
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
-  - Vocal # voice sounds
   - Storage # slime storage
   - Rootable # diona
   - Sericulture # arachnids
   - MovementSpeedModifier # moths when weightless
   - JumpAbility # vulp leaping
-  copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
+  raiseEntityRenamedEvent: false
+
 
 # spawner
 - type: entity

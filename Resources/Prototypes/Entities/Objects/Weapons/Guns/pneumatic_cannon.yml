@@ -129,10 +129,10 @@
   - type: BatteryAmmoProvider
     proto: FoodPieBananaCream
     fireCost: 30
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 90
     startingCharge: 90
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
