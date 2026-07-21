@@ -73,7 +73,7 @@
 - type: entity
   name: chair
   id: OfficeChairBase
-  parent: [ BaseVehicleStrap, UnanchoredChairBase ]
+  parent: UnanchoredChairBase
   abstract: true
   components:
   - type: Rotatable
