@@ -9,7 +9,7 @@ namespace Content.Client.Weapons.Ranged.UI;
 /// <summary>
 /// BUI for simple radial that helps to change battery-weapons fire mode.
 /// </summary>
-public sealed class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey)
+public sealed partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey)
     : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
