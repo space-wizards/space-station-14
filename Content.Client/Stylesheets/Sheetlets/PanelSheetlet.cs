@@ -23,14 +23,14 @@ public sealed class PanelSheetlet<T> : ISheetlet<T>
         };
         var boxInsetDark = new StyleBoxFlat()
         {
-            BackgroundColor = sheet.SecondaryPalette.BackgroundDark,
-            BorderColor = sheet.PrimaryPalette.Background,
+            BackgroundColor = config.SecondaryPalette.BackgroundDark,
+            BorderColor = config.PrimaryPalette.Background,
             BorderThickness = new Thickness(2f),
         };
 
-        var boxPositive = new StyleBoxFlat { BackgroundColor = sheet.PositivePalette.Background };
-        var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
-        var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
+        var boxPositive = new StyleBoxFlat { BackgroundColor = config.PositivePalette.Background };
+        var boxNegative = new StyleBoxFlat { BackgroundColor = config.NegativePalette.Background };
+        var boxHighlight = new StyleBoxFlat { BackgroundColor = config.HighlightPalette.Background };
         var boxDropTarget = new StyleBoxFlat
         {
             BackgroundColor = config.ButtonPalette.BackgroundDark.WithAlpha(0.5f),
