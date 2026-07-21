@@ -1,6 +1,6 @@
-﻿using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Trinary.Components;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Atmos;

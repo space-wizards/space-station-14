@@ -20,6 +20,20 @@ public sealed partial class SkinColorationPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public ISkinColorationStrategy Strategy = default!;
+
+    //// <summary>
+    ///     If true, will randomly generate realistic hair and eye colors.
+    ///     Will also crush randomly generated colors down to the skin's luminosity
+    ///     so markings don't appear too bright on darker skin.
+    /// </summary>
+    [DataField]
+    public bool RealisticColors;
+
+    /// <summary>
+    ///     If true, will also squash hair and eye colors to the coloration strategy.
+    /// </summary>
+    [DataField]
+    public bool SquashEyeHairColors;
 }
 
 /// <summary>
@@ -133,7 +147,7 @@ public sealed partial class HumanTonedSkinColoration : ISkinColorationStrategy
 
     public Color ClosestSkinColor(Color color)
     {
-        return ValidHumanSkinTone;
+        return FromUnary(ToUnary(color));
     }
 
     public Color FromUnary(float color)
