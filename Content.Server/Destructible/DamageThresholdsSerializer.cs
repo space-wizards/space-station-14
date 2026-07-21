@@ -90,8 +90,6 @@ public sealed class DamageThresholdsSerializer : ITypeSerializer<List<DamageThre
     private bool IsEqual<T1, T2>(T1 a, T2 b) where T1 : IThresholdTrigger where T2 : IThresholdTrigger
     {
         // Ensure same type and same thresholds!
-        return a is T2 trigger &&
-               // TODO: TEST TO ENSURE THIS IS DIFFERENT FROM "==" !!!
-               trigger.Equals(b);
+        return a is T2 trigger && trigger.Equals(b);
     }
 }
