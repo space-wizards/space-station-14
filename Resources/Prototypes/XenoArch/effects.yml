@@ -133,10 +133,13 @@
   table: !type:GroupSelector
     children:
     #- id: XenoArtifactBecomeRandomInstrument # removed until we have value-based system
+    #  weight: 1
     #- id: XenoArtifactGun
     #  weight: 0.4 #it conflicts with default interaction - it should activate artifact nodes
     - id: XenoArtifactOmnitool
+      weight: 1
     - id: XenoArtifactDrill
+      weight: 1
 
 - type: entity
   id: BaseXenoArtifactEffect
@@ -491,6 +494,7 @@
           weight: 35
         - !type:NestedSelector
           tableId: AllPlushiesTable
+          weight: 1
 
 - type: entity
   parent: BaseXenoArtifactEffect
@@ -732,30 +736,6 @@
       movementVisibilityRate: 0.10
 
 - type: entity
-  parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
-  id: XenoArtifactRareMaterialSpawn
-  description: Create rare materials
-  components:
-  - type: XAEApplyComponents
-    applyIfAlreadyHave: true
-    refreshOnReactivate: true
-    components:
-    - type: EntityTableSpawner
-      deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: SilverOre1
-          amount: &Binomial6at0.3 !type:BinomialNumberSelector
-            trials: 6
-            chance: 0.3
-        - id: PlasmaOre1
-          amount: *Binomial6at0.3
-        - id: GoldOre1
-          amount: *Binomial6at0.3
-        - id: UraniumOre1
-          amount: *Binomial6at0.3
-
-- type: entity
   parent: BaseXenoArtifactEffect
   id: XenoArtifactRareMaterialSpawnSilver
   description: Create rare materials
@@ -773,7 +753,9 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: SilverOre1
-        amount: *Binomial6at0.3
+        rolls: !type:ConstantNumberSelector
+          value: 6
+        prob: 0.3
 
 - type: entity
   parent: BaseXenoArtifactEffect
@@ -793,7 +775,9 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: PlasmaOre1
-        amount: *Binomial6at0.3
+        rolls: !type:ConstantNumberSelector
+          value: 6
+        prob: 0.3
 
 - type: entity
   parent: BaseXenoArtifactEffect
@@ -813,7 +797,9 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: GoldOre1
-        amount: *Binomial6at0.3
+        rolls: !type:ConstantNumberSelector
+          value: 6
+        prob: 0.3
 
 - type: entity
   parent: BaseXenoArtifactEffect
