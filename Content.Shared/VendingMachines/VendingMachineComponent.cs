@@ -1,7 +1,5 @@
-using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -74,7 +72,7 @@ public sealed partial class VendingMachineComponent : Component
     /// When true, will forcefully throw any object it dispenses
     /// </summary>
     [DataField]
-    public bool CanShoot = false;
+    public bool CanShoot;
 
     public bool ThrowNextItem = false;
 
@@ -198,106 +196,4 @@ public sealed partial class VendingMachineComponent : Component
     [DataField("loopDeny")]
     public bool LoopDenyAnimation = true;
     #endregion
-}
-
-[Serializable, NetSerializable, DataDefinition]
-public sealed partial class VendingMachineInventoryEntry
-{
-    [DataField]
-    public InventoryType Type;
-
-    [DataField]
-    public string ID;
-
-    [DataField]
-    public uint Amount;
-
-    public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
-    {
-        Type = type;
-        ID = id;
-        Amount = amount;
-    }
-
-    public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
-    {
-        Type = entry.Type;
-        ID = entry.ID;
-        Amount = entry.Amount;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum InventoryType : byte
-{
-    Regular,
-    Emagged,
-    Contraband
-}
-
-[Serializable, NetSerializable]
-public enum VendingMachineVisuals : byte
-{
-    VisualState
-}
-
-[Serializable, NetSerializable]
-public enum VendingMachineVisualState : byte
-{
-    Normal,
-    Off,
-    Broken,
-    Eject,
-    Deny
-}
-
-public enum VendingMachineVisualLayers : byte
-{
-    /// <summary>
-    /// Off / Broken. The other layers will overlay this if the machine is on.
-    /// </summary>
-    Base,
-    /// <summary>
-    /// Normal / Deny / Eject
-    /// </summary>
-    BaseUnshaded,
-    /// <summary>
-    /// Screens that are persistent (where the machine is not off or broken)
-    /// </summary>
-    Screen
-}
-
-[Serializable, NetSerializable]
-public enum ContrabandWireKey : byte
-{
-    StatusKey,
-    TimeoutKey
-}
-
-[Serializable, NetSerializable]
-public enum EjectWireKey : byte
-{
-    StatusKey
-}
-
-public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent;
-
-[Serializable, NetSerializable]
-public sealed class VendingMachineComponentState : ComponentState
-{
-    public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
-
-    public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
-
-    public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
-
-    public bool Contraband;
-
-    public TimeSpan? EjectEnd;
-
-    public TimeSpan? DenyEnd;
-
-    public TimeSpan? DispenseOnHitEnd;
-
-    public bool Broken;
 }
