@@ -23,20 +23,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
     private const float WallVendEjectDistanceFromWall = 1f;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<VendingMachineComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<VendingMachineComponent, DamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<VendingMachineComponent, PriceCalculationEvent>(OnVendingPrice);
-        SubscribeLocalEvent<VendingMachineComponent, TryVocalizeEvent>(OnTryVocalize);
-
-        SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
-
-        SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
-    }
-
+    [SubscribeLocalEvent]
     private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
     {
         var price = 0.0;
@@ -65,11 +52,13 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
     {
         TryUpdateVisualState((uid, component));
     }
 
+    [SubscribeLocalEvent]
     private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
     {
         if (!args.DamageIncreased && component.Broken)
@@ -96,6 +85,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnSelfDispense(EntityUid uid, VendingMachineComponent component, VendingMachineSelfDispenseEvent args)
     {
         if (args.Handled)
@@ -215,6 +205,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
+    [SubscribeLocalEvent]
     private void OnPriceCalculation(EntityUid uid, VendingMachineRestockComponent component, ref PriceCalculationEvent args)
     {
         List<double> priceSets = new();
@@ -239,6 +230,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         args.Price += priceSets.Max();
     }
 
+    [SubscribeLocalEvent]
     private void OnTryVocalize(Entity<VendingMachineComponent> ent, ref TryVocalizeEvent args)
     {
         args.Cancelled |= ent.Comp.Broken;
