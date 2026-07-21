@@ -130,7 +130,7 @@ namespace Content.Server.Construction
         /// Handling a successful edge traversal. Ensures the entity's node index, edge index, and pathfinding information are correct.
         /// </summary>
         /// <remarks>
-        /// Only a True result can may modify the pathfinding state.
+        /// Only a True result may modify the pathfinding state.
         /// In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
         /// In the case of Validated/False, the state should not be changed.
         /// </remarks>
