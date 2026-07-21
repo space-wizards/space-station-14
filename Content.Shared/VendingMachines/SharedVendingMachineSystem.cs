@@ -76,45 +76,54 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             EmaggedInventory = emaggedInventory,
             ContrabandInventory = contrabandInventory,
             Contraband = component.Contraband,
-            EjectEnd = component.EjectEnd,
-            DenyEnd = component.DenyEnd,
             DispenseOnHitEnd = component.DispenseOnHitEnd,
             Broken = component.Broken,
         };
+    }
+
+    [SubscribeLocalEvent]
+    private void OnEjectHandleState(Entity<VendingMachineEjectComponent> entity, ref AfterAutoHandleStateEvent args)
+    {
+        TryUpdateVisualState(entity.Owner);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<VendingMachineComponent>();
+        var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent>();
         var curTime = Timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var eject))
         {
-            if (comp.Ejecting)
+            if (eject.Ejecting)
             {
-                if (curTime > comp.EjectEnd)
+                if (curTime > eject.EjectEnd)
                 {
-                    comp.EjectEnd = null;
-                    Dirty(uid, comp);
+                    eject.EjectEnd = null;
+                    Dirty(uid, eject);
 
-                    EjectItem(uid, comp);
+                    EjectItem((uid, comp, eject));
                     UpdateUI((uid, comp));
                 }
             }
 
-            if (comp.Denying)
+            if (eject.Denying)
             {
-                if (curTime > comp.DenyEnd)
+                if (curTime > eject.DenyEnd)
                 {
-                    comp.DenyEnd = null;
-                    Dirty(uid, comp);
+                    eject.DenyEnd = null;
+                    Dirty(uid, eject);
 
-                    TryUpdateVisualState((uid, comp));
+                    TryUpdateVisualState((uid, comp), (uid, eject));
                 }
             }
+        }
 
+        var vendQuery = EntityQueryEnumerator<VendingMachineComponent>();
+
+        while (vendQuery.MoveNext(out var uid, out var comp))
+        {
             if (!comp.DispenseOnHitCoolingDown) continue;
             if (!(curTime > comp.DispenseOnHitEnd)) continue;
             comp.DispenseOnHitEnd = null;
@@ -148,7 +157,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         ent.Comp.NextEmpEject = Timing.CurTime;
     }
 
-    protected virtual void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false) { }
+    protected virtual void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false) { }
 
     /// <summary>
     /// Checks if the user is authorized to use this vending machine
@@ -201,7 +210,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         if (!Resolve(uid, ref vendComponent))
             return;
 
-        if (vendComponent.Ejecting || vendComponent.Broken || !_receiver.IsPowered(uid))
+        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+            return;
+
+        if (ejectComponent.Ejecting || vendComponent.Broken || !_receiver.IsPowered(uid))
         {
             return;
         }
@@ -222,33 +234,37 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        // Start Ejecting, and prevent users from ordering while anim playing
-        vendComponent.EjectEnd = Timing.CurTime + vendComponent.EjectDelay;
-        vendComponent.NextItemToEject = entry.ID;
-        vendComponent.ThrowNextItem = throwItem;
+        // Start Ejecting and prevent users from ordering while anim playing
+        ejectComponent.EjectEnd = Timing.CurTime + ejectComponent.EjectDelay;
+        ejectComponent.NextItemToEject = entry.ID;
+        ejectComponent.ThrowNextItem = throwItem;
 
         if (TryComp(uid, out SpeakOnUIClosedComponent? speakComponent))
             _speakOn.TrySetFlag((uid, speakComponent));
 
         entry.Amount--;
         Dirty(uid, vendComponent);
+        Dirty(uid, ejectComponent);
         UpdateUI((uid, vendComponent));
-        TryUpdateVisualState((uid, vendComponent));
-        Audio.PlayPredicted(vendComponent.SoundVend, uid, user);
+        TryUpdateVisualState((uid, vendComponent), (uid, ejectComponent));
+        Audio.PlayPredicted(ejectComponent.SoundVend, uid, user);
     }
 
-    public void Deny(Entity<VendingMachineComponent?> entity, EntityUid? user = null)
+    public void Deny(Entity<VendingMachineComponent?> entity, EntityUid? user = null, VendingMachineEjectComponent? ejectComponent = null)
     {
         if (!Resolve(entity.Owner, ref entity.Comp))
             return;
 
-        if (entity.Comp.Denying)
+        if (!Resolve(entity.Owner, ref ejectComponent))
             return;
 
-        entity.Comp.DenyEnd = Timing.CurTime + entity.Comp.DenyDelay;
-        Audio.PlayPredicted(entity.Comp.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
-        TryUpdateVisualState(entity);
-        Dirty(entity);
+        if (ejectComponent.Denying)
+            return;
+
+        ejectComponent.DenyEnd = Timing.CurTime + ejectComponent.DenyDelay;
+        Audio.PlayPredicted(ejectComponent.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
+        TryUpdateVisualState(entity, (entity.Owner, ejectComponent));
+        Dirty(entity.Owner, ejectComponent);
     }
 
     protected virtual void UpdateUI(Entity<VendingMachineComponent?> entity) { }
@@ -256,21 +272,25 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <summary>
     /// Tries to update the visuals of the component based on its current state.
     /// </summary>
-    public void TryUpdateVisualState(Entity<VendingMachineComponent?> entity)
+    public void TryUpdateVisualState(Entity<VendingMachineComponent?> entity, Entity<VendingMachineEjectComponent?>? ejectEntity = null)
     {
         if (!Resolve(entity.Owner, ref entity.Comp))
             return;
+
+        var ejectComponent = ejectEntity?.Comp;
+        if (ejectEntity == null || ejectEntity.Value.Owner != entity.Owner)
+            TryComp(entity.Owner, out ejectComponent);
 
         var finalState = VendingMachineVisualState.Normal;
         if (entity.Comp.Broken)
         {
             finalState = VendingMachineVisualState.Broken;
         }
-        else if (entity.Comp.Ejecting)
+        else if (ejectComponent?.Ejecting == true)
         {
             finalState = VendingMachineVisualState.Eject;
         }
-        else if (entity.Comp.Denying)
+        else if (ejectComponent?.Denying == true)
         {
             finalState = VendingMachineVisualState.Deny;
         }
@@ -301,7 +321,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     {
         if (IsAuthorized(uid, sender, component))
         {
-            TryEjectVendorItem(uid, type, itemId, component.CanShoot, sender, component);
+            TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent);
+            TryEjectVendorItem(uid, type, itemId, ejectComponent?.CanShoot == true, sender, component);
         }
     }
 

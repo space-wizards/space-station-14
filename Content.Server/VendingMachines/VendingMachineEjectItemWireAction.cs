@@ -15,7 +15,12 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
     public override object StatusKey => EjectWireKey.StatusKey;
 
     public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
-        => comp.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
+    {
+        if (!EntityManager.TryGetComponent(wire.Owner, out VendingMachineEjectComponent? eject))
+            return StatusLightState.Off;
+
+        return eject.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
+    }
 
     public override void Initialize()
     {
@@ -26,13 +31,13 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
 
     public override bool Cut(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
+        _vendingMachineSystem.SetShooting(wire.Owner, true);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
+        _vendingMachineSystem.SetShooting(wire.Owner, false);
         return true;
     }
 

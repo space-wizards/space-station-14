@@ -106,6 +106,7 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: VendingMachineEject
 
 - type: entity
   id: VendingMachineWallmount
@@ -170,6 +171,7 @@
     enabled: false
     usesApcPower: true
   - type: Rotatable
+  - type: VendingMachineEject
 
 # Vending machines
 
@@ -471,9 +473,10 @@
     ejectState: eject-unshaded
     denyState: deny-unshaded
     screenState: screen
+    initialStockQuality: 0.33
+  - type: VendingMachineEject
     ejectDelay: 5
     soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: HotDrinksMachineAds
   - type: SpeakOnUIClosed
@@ -511,8 +514,9 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 1.9
     initialStockQuality: 0.33
+  - type: VendingMachineEject
+    ejectDelay: 1.9
   - type: DatasetVocalizer
     dataset: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
@@ -656,8 +660,9 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 1.9
     initialStockQuality: 0.33
+  - type: VendingMachineEject
+    ejectDelay: 1.9
   - type: DatasetVocalizer
     dataset: RobustSoftdrinksAds
   - type: Sprite
@@ -690,8 +695,9 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 1.9
     initialStockQuality: 0.33
+  - type: VendingMachineEject
+    ejectDelay: 1.9
   - type: DatasetVocalizer
     dataset: RobustSoftdrinksAds
   - type: SpeakOnUIClosed
@@ -726,8 +732,9 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 1.9
     initialStockQuality: 0.33
+  - type: VendingMachineEject
+    ejectDelay: 1.9
   - type: DatasetVocalizer
     dataset: DrGibbAds
   - type: SpeakOnUIClosed
@@ -772,8 +779,9 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    ejectDelay: 1.9
     initialStockQuality: 0.33
+  - type: VendingMachineEject
+    ejectDelay: 1.9
   - type: DatasetVocalizer
     dataset: SmiteAds
   - type: SpeakOnUIClosed
@@ -923,6 +931,7 @@
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
+  - type: VendingMachineEject
     ejectDelay: 0.6
   - type: DatasetVocalizer
     dataset: NanoMedAds
@@ -1407,6 +1416,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
+  - type: VendingMachineEject
     ejectDelay: 1.8
   - type: DatasetVocalizer
     dataset: GoodCleanFunAds
@@ -2134,9 +2144,10 @@
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
+    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+  - type: VendingMachineEject
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
-    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/happyhonk.rsi
     layers:
@@ -2233,6 +2244,7 @@
     brokenState: broken
     normalState: normal
     denyState: deny
+  - type: VendingMachineEject
     ejectDelay: 2
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/chemvend.rsi
@@ -2263,6 +2275,7 @@
     brokenState: broken
     normalState: normal
     denyState: deny
+  - type: VendingMachineEject
     ejectDelay: 2
   - type: AccessReader
     access: [["SyndicateAgent"]]

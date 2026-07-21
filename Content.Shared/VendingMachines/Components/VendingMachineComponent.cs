@@ -1,11 +1,10 @@
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.VendingMachines.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class VendingMachineComponent : Component
 {
     /// <summary>
@@ -14,21 +13,6 @@ public sealed partial class VendingMachineComponent : Component
     // Okay so not using ProtoId here is load-bearing because the ProtoId serializer will log errors if the prototype doesn't exist.
     [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>), required: true)]
     public string PackPrototypeId = string.Empty;
-
-    /// <summary>
-    /// Used by the server to determine how long the vending machine stays in the "Deny" state.
-    /// Used by the client to determine how long the deny animation should be played.
-    /// </summary>
-    [DataField]
-    public TimeSpan DenyDelay = TimeSpan.FromSeconds(2);
-
-    /// <summary>
-    /// Used by the server to determine how long the vending machine stays in the "Eject" state.
-    /// The selected item is dispensed afer this delay.
-    /// Used by the client to determine how long the deny animation should be played.
-    /// </summary>
-    [DataField]
-    public TimeSpan EjectDelay = TimeSpan.FromSeconds(1.2);
 
     [DataField]
     public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
@@ -46,35 +30,13 @@ public sealed partial class VendingMachineComponent : Component
     public bool Contraband;
 
     [ViewVariables]
-    public bool Ejecting => EjectEnd != null;
-
-    [ViewVariables]
-    public bool Denying => DenyEnd != null;
-
-    [ViewVariables]
     public bool DispenseOnHitCoolingDown => DispenseOnHitEnd != null;
-
-    [DataField, AutoPausedField]
-    public TimeSpan? EjectEnd;
-
-    [DataField, AutoPausedField]
-    public TimeSpan? DenyEnd;
 
     [DataField]
     public TimeSpan? DispenseOnHitEnd;
 
-    public string? NextItemToEject;
-
     [DataField]
     public bool Broken;
-
-    /// <summary>
-    /// When true, will forcefully throw any object it dispenses
-    /// </summary>
-    [DataField]
-    public bool CanShoot;
-
-    public bool ThrowNextItem = false;
 
     /// <summary>
     ///     The chance that a vending machine will randomly dispense an item on hit.
@@ -92,37 +54,12 @@ public sealed partial class VendingMachineComponent : Component
 
     /// <summary>
     ///     Amount of time in seconds that need to pass before damage can cause a vending machine to eject again.
-    ///     This value is separate to <see cref="VendingMachineComponent.EjectDelay"/> because that value might be
+    ///     This value is separate to <see cref="VendingMachineEjectComponent.EjectDelay"/> because that value might be
     ///     0 for a vending machine for legitimate reasons (no desired delay/no eject animation)
     ///     and can be circumvented with forced ejections.
     /// </summary>
     [DataField]
     public TimeSpan? DispenseOnHitCooldown = TimeSpan.FromSeconds(1.0);
-
-    /// <summary>
-    ///     Sound that plays when ejecting an item
-    /// </summary>
-    [DataField]
-    // Grabbed from: https://github.com/tgstation/tgstation/blob/d34047a5ae911735e35cd44a210953c9563caa22/sound/machines/machine_vend.ogg
-    public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg")
-    {
-        Params = new AudioParams
-        {
-            Volume = -4f,
-            Variation = 0.15f
-        }
-    };
-
-    /// <summary>
-    ///     Sound that plays when an item can't be ejected
-    /// </summary>
-    [DataField]
-    // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-    public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
-
-    public float NonLimitedEjectForce = 7.5f;
-
-    public float NonLimitedEjectRange = 5f;
 
     /// <summary>
     /// The quality of the stock in the vending machine on spawn.
@@ -190,7 +127,7 @@ public sealed partial class VendingMachineComponent : Component
 
     /// <summary>
     /// If set to <c>true</c> (default) will loop the animation of the <see cref="DenyState"/> for the duration
-    /// of <see cref="VendingMachineComponent.DenyDelay"/>. If set to <c>false</c> will play a sprite
+    /// of <see cref="VendingMachineEjectComponent.DenyDelay"/>. If set to <c>false</c> will play a sprite
     /// flick animation for the state and then linger on the final frame until the end of the delay.
     /// </summary>
     [DataField("loopDeny")]

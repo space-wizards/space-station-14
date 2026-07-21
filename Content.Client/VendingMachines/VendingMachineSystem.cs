@@ -23,8 +23,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var component = entity.Comp;
 
         component.Contraband = state.Contraband;
-        component.EjectEnd = state.EjectEnd;
-        component.DenyEnd = state.DenyEnd;
         component.DispenseOnHitEnd = state.DispenseOnHitEnd;
         component.Broken = state.Broken;
 
@@ -88,7 +86,8 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             visualState = VendingMachineVisualState.Normal;
         }
 
-        UpdateAppearance(uid, visualState, component, sprite);
+        TryComp<VendingMachineEjectComponent>(uid, out var eject);
+        UpdateAppearance(uid, visualState, component, eject, sprite);
     }
 
     [SubscribeLocalEvent]
@@ -103,10 +102,16 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             visualState = VendingMachineVisualState.Normal;
         }
 
-        UpdateAppearance(uid, visualState, component, args.Sprite);
+        TryComp<VendingMachineEjectComponent>(uid, out var eject);
+        UpdateAppearance(uid, visualState, component, eject, args.Sprite);
     }
 
-    private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
+    private void UpdateAppearance(
+        EntityUid uid,
+        VendingMachineVisualState visualState,
+        VendingMachineComponent component,
+        VendingMachineEjectComponent? eject,
+        SpriteComponent sprite)
     {
         SetLayerState(VendingMachineVisualLayers.Base, component.OffState, (uid, sprite));
 
@@ -121,13 +126,13 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
                 if (component.LoopDenyAnimation)
                     SetLayerState(VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (uid, sprite));
                 else
-                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (float)component.DenyDelay.TotalSeconds, sprite);
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (float)(eject?.DenyDelay.TotalSeconds ?? 0), sprite);
 
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Eject:
-                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, (float)component.EjectDelay.TotalSeconds, sprite);
+                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, (float)(eject?.EjectDelay.TotalSeconds ?? 0), sprite);
                 SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
                 break;
 

@@ -97,9 +97,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     }
 
     /// <summary>
-    /// Sets the <see cref="VendingMachineComponent.CanShoot"/> property of the vending machine.
+    /// Sets the <see cref="VendingMachineEjectComponent.CanShoot"/> property of the vending machine.
     /// </summary>
-    public void SetShooting(EntityUid uid, bool canShoot, VendingMachineComponent? component = null)
+    public void SetShooting(EntityUid uid, bool canShoot, VendingMachineEjectComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -131,6 +131,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (!Resolve(uid, ref vendComponent))
             return;
 
+        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+            return;
+
         var availableItems = GetAvailableInventory(uid, vendComponent);
         if (availableItems.Count <= 0)
             return;
@@ -139,12 +142,12 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
         if (forceEject)
         {
-            vendComponent.NextItemToEject = item.ID;
-            vendComponent.ThrowNextItem = throwItem;
+            ejectComponent.NextItemToEject = item.ID;
+            ejectComponent.ThrowNextItem = throwItem;
             var entry = GetEntry(uid, item.ID, item.Type, vendComponent);
             if (entry != null)
                 entry.Amount--;
-            EjectItem(uid, vendComponent, forceEject);
+            EjectItem((uid, vendComponent, ejectComponent), forceEject);
         }
         else
         {
@@ -152,18 +155,22 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
-    protected override void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false)
+    protected override void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false)
     {
-        if (!Resolve(uid, ref vendComponent))
+        if (!Resolve(entity.Owner, ref entity.Comp1, ref entity.Comp2))
             return;
+
+        var uid = entity.Owner;
+        var vendComponent = entity.Comp1;
+        var ejectComponent = entity.Comp2;
 
         // No need to update the visual state because we never changed it during a forced eject
         if (!forceEject)
-            TryUpdateVisualState((uid, vendComponent));
+            TryUpdateVisualState((uid, vendComponent), (uid, ejectComponent));
 
-        if (string.IsNullOrEmpty(vendComponent.NextItemToEject))
+        if (string.IsNullOrEmpty(ejectComponent.NextItemToEject))
         {
-            vendComponent.ThrowNextItem = false;
+            ejectComponent.ThrowNextItem = false;
             return;
         }
 
@@ -178,31 +185,30 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             spawnCoordinates = spawnCoordinates.Offset(offset);
         }
 
-        var ent = Spawn(vendComponent.NextItemToEject, spawnCoordinates);
+        var ent = Spawn(ejectComponent.NextItemToEject, spawnCoordinates);
 
-        if (vendComponent.ThrowNextItem)
+        if (ejectComponent.ThrowNextItem)
         {
-            var range = vendComponent.NonLimitedEjectRange;
+            var range = ejectComponent.NonLimitedEjectRange;
             var direction = new Vector2(_random.NextFloat(-range, range), _random.NextFloat(-range, range));
-            _throwingSystem.TryThrow(ent, direction, vendComponent.NonLimitedEjectForce);
+            _throwingSystem.TryThrow(ent, direction, ejectComponent.NonLimitedEjectForce);
         }
 
-        vendComponent.NextItemToEject = null;
-        vendComponent.ThrowNextItem = false;
+        ejectComponent.NextItemToEject = null;
+        ejectComponent.ThrowNextItem = false;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent>();
-        while (disabled.MoveNext(out var uid, out _, out var comp))
+        var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();
+        while (disabled.MoveNext(out var uid, out _, out var comp, out var eject))
         {
-            if (comp.NextEmpEject < Timing.CurTime)
-            {
-                EjectRandom(uid, true, false, comp);
-                comp.NextEmpEject += (5 * comp.EjectDelay);
-            }
+            if (comp.NextEmpEject >= Timing.CurTime) continue;
+
+            EjectRandom(uid, true, false, comp);
+            comp.NextEmpEject += (5 * eject.EjectDelay);
         }
     }
 
