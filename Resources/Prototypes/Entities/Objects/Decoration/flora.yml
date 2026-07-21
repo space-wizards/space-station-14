@@ -57,6 +57,8 @@
           variation: 0.05
   - type: Damageable
     damageModifierSet: WoodMod
+  - type: Injurable
+    damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
     - trigger:

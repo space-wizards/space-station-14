@@ -32,9 +32,6 @@
     state: full
   - type: PlacementReplacement
     key: walls
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures

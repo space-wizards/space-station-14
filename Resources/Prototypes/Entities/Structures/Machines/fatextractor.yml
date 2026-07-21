@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: FatExtractor
-  parent: [ BaseMachinePowered, BaseMachineDestructible ]
+  parent: [ BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible ]
   name: lipid extractor
   description: Safely and efficiently extracts excess fat from a subject.
   components:
@@ -66,8 +66,6 @@
           True: { state: fat_yellow }
           False: { state: fat_red }
   - type: Construction
-    graph: Machine
-    node: machine
     containers:
     - machine_board
     - machine_parts
@@ -76,7 +74,7 @@
     containers:
      - entity_storage
   - type: Damageable
-    damageModifierSet: StructuralMetallicStrong
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
@@ -89,7 +87,6 @@
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
   - type: WiresVisuals
-  - type: Appearance
   - type: Speech
     speechVerb: Robotic
   - type: Vocalizer
