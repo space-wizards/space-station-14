@@ -154,7 +154,6 @@
         - HalfWallLayer
   - type: Damageable
     damageModifierSet: PerforatedMetallic
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
