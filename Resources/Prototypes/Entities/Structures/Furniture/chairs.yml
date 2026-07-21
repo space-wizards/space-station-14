@@ -82,18 +82,11 @@
 #Starts unanchored, can be used as a vehicle
 - type: entity
   abstract: true
-  parent: [ BaseVehicleStrap, OfficeChairBase ]
+  parent: [ OfficeChairBase, BaseVehicleStrap ]
   id: OfficeChairVehicleBase
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.2
-        density: 100 # The vehicle density is way higher, so we make it the same as other chairs use.
-        mask:
-        - TableMask
+  - type: Physics
+    bodyType: KinematicController
   - type: Vehicle
     requiresHands: false # you use your feet!
   - type: MovementSpeedModifier
