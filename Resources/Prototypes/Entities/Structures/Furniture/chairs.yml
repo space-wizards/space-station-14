@@ -73,11 +73,18 @@
 - type: entity
   name: chair
   id: OfficeChairBase
-  parent: UnanchoredChairBase
+  parent: [ BaseVehicleStrap, UnanchoredChairBase ]
   abstract: true
   components:
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Vehicle
+    requiresHands: false # you use your feet!
+  - type: MovementSpeedModifier
+    baseAcceleration: 2
+    baseFriction: 2
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
 
 #Starts anchored, can be rotated while anchored
 - type: entity
