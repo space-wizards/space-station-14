@@ -4,10 +4,10 @@
   name: hard-worn suit
   description: Someone who wears this means business.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/detective.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -15,10 +15,10 @@
   name: noir suit
   description: A hard-boiled private investigator's grey suit, complete with tie clip.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/detective_grey.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/detective_grey.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/detective_grey.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/detective_grey.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
@@ -27,8 +27,6 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
-  - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
   - type: Item
     inhandVisuals:
@@ -42,6 +40,8 @@
         color: "#C12D30"
         sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       - state: overlay-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
@@ -200,8 +200,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
   - type: Item
     inhandVisuals:
       left:
@@ -214,6 +212,8 @@
         color: "#C12D30"
         sprite: Clothing/Uniforms/Jumpsuit/color.rsi
       - state: overlay-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]

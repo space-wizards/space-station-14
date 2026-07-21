@@ -230,7 +230,6 @@
         color: "#008c1f"
       - state: equipped-INNERCLOTHING
 
-
 # Pink striped dress
 - type: entity
   parent: ClothingUniformSkirtBase

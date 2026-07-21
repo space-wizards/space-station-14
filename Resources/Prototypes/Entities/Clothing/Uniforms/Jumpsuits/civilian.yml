@@ -70,10 +70,10 @@
   name: flannel jumpsuit
   description: Smells like someones been grillin'.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
 
 - type: entity
   parent: ClothingUniformBase

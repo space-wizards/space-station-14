@@ -4,10 +4,10 @@
   name: hard-worn suitskirt
   description: Someone who wears this means business.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -15,10 +15,10 @@
   name: noir suitskirt
   description: A hard-boiled private investigator's grey suit, complete with tie clip.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -27,8 +27,6 @@
   description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
-  - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
   - type: Item
     inhandVisuals:
@@ -44,6 +42,8 @@
         sprite: Clothing/Uniforms/Jumpskirt/color.rsi
       - state: overlay-inhand-right
         sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
@@ -126,8 +126,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/security.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
   - type: Item
     inhandVisuals:
       left:
@@ -142,6 +140,8 @@
         sprite: Clothing/Uniforms/Jumpskirt/color.rsi
       - state: overlay-inhand-right
         sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
@@ -151,8 +151,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
   - type: Item
     inhandVisuals:
       left:
@@ -167,6 +165,8 @@
         sprite: Clothing/Uniforms/Jumpskirt/color.rsi
       - state: overlay-inhand-right
         sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]

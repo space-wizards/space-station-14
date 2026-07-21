@@ -212,7 +212,6 @@
       - state: trinkets-equipped-INNERCLOTHING
 
  # Dark Green Jumpskirt
-
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtColorDarkGreen

@@ -26,7 +26,7 @@
   name: quartermasters's turtleneck
   description: A sharp turtleneck made for the hardy work environment of supply.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi

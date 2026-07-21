@@ -39,10 +39,10 @@
   name: chaplain's jumpsuit
   description: It's a black jumpsuit, often worn by religious folk.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/chaplain.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -208,10 +208,10 @@
   name: dark monastic robe
   description: It's a dark robe, often worn by religious folk.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_dark.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -219,10 +219,10 @@
   name: light monastic robe
   description: It's a light robe, often worn by religious folk.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/monastic_robe_light.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -298,10 +298,10 @@
   name: good lawyer's suit
   description: A tacky suit perfect for a CRIMINAL lawyer!
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
 
 - type: entity
   parent: ClothingUniformBase

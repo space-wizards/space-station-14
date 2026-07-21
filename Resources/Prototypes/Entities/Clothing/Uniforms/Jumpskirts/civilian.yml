@@ -135,7 +135,7 @@
   name: skirt of life
   description: A skirt that symbolizes the joy and positivity of our life.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/skirtoflife.rsi

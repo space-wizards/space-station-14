@@ -15,10 +15,10 @@
   name: chaplain's jumpskirt
   description: It's a black jumpskirt, often worn by religious folk.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/chaplain.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -136,10 +136,10 @@
   name: psychologist suitskirt
   description: I don't lose things. I place things in locations which later elude me.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -162,10 +162,10 @@
   name: red lawyer suitskirt
   description: A flashy red suitskirt worn by lawyers and show-offs.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -173,10 +173,10 @@
   name: blue lawyer suitskirt
   description: A flashy blue suitskirt worn by lawyers and show-offs.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerblue.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -184,10 +184,10 @@
   name: black lawyer suitskirt
   description: A subtle black suitskirt worn by lawyers and gangsters.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerblack.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -195,10 +195,10 @@
   name: purple lawyer suitskirt
   description: A stylish purple piece worn by lawyers and show people.
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/lawyerpurple.rsi
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -206,7 +206,7 @@
   name: good lawyer's suitskirt
   description: A tacky suitskirt perfect for a CRIMINAL lawyer!
   components:
-    - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
-    - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
