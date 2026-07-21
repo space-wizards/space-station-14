@@ -7,7 +7,7 @@ namespace Content.Shared.FeedbackSystem;
 
 public abstract partial class SharedFeedbackManager : IEntityEventSubscriber
 {
-    [Dependency] private readonly IConfigurationManager _configManager = null!;
+    [Dependency] private IConfigurationManager _configManager = null!;
 
     private void InitSubscriptions()
     {
