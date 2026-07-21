@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseStructure, StructureHealthFurniture ]
   id: FleshBlocker
-  parent: BaseStructure
   name: flesh clump
   description: An annoying clump of flesh.
   components:
@@ -29,12 +29,20 @@
           ajar: ""
           open: ""
   - type: Damageable
+    damageModifierSet: MeatMod
   - type: Injurable
+    damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 40
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialSheetMeat1:
+            min: 0
+            max: 1

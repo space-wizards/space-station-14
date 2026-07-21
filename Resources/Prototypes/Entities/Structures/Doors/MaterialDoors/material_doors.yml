@@ -228,7 +228,7 @@
     graph: DoorGraph
     node: paperDoor
   - type: Damageable
-    damageModifierSet: CardMod
+    damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
     - trigger:
@@ -294,7 +294,7 @@
         path:
           "/Audio/Weapons/pierce.ogg"
   - type: Damageable
-    damageModifierSet: CardMod
+    damageModifierSet: CardboardMod
   - type: Destructible
     thresholds:
     - trigger:

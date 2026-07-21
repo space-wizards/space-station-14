@@ -146,8 +146,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: "/Audio/Weapons/grille_hit.ogg"
 
 # soon removed
 - type: entity

@@ -30,7 +30,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/balloon_pop.ogg
+          path: /Audio/Effects/balloon-pop.ogg
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableWallStack1
     disassembleTime: 3
@@ -92,7 +92,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/balloon_pop.ogg
+          path: /Audio/Effects/balloon-pop.ogg
   - type: DisassembleOnAltVerb
     prototypeToSpawn: InflatableDoorStack1
     disassembleTime: 3

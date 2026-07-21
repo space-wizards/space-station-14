@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseFloorDecoration
+  parent: [ BaseFloorDecoration, StructureHealthFurnitureStrong ]
   id: IronsandStep
   name: ironsand step
   description: Takes your ironsand up a level.
@@ -8,14 +8,12 @@
     sprite: Structures/ironsand_steps.rsi
     state: straight
   - type: Damageable
-    damageModifierSet: Rock
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -27,8 +25,6 @@
           SteelOre1:
             min: 0
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   parent: IronsandStep

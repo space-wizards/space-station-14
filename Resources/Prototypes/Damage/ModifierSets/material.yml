@@ -41,6 +41,15 @@
     Piercing: 3
     Structural: 3
 
+# Weak metal with an orange hue
+- type: damageModifierSet
+  id: BrassMod
+  coefficients:
+    Piercing: 0.7 # Bullets aren't a good option against metal
+    Heat: 1.2
+    Cold: 1.2
+    Shock: 1.2
+
 # Metals that you really shouldn't be building things out of. Gold, silver, uranium, etc.
 - type: damageModifierSet
   id: PreciousMetalMod

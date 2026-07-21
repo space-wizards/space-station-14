@@ -236,7 +236,6 @@
     - board
   - type: InteractionOutline
   - type: Damageable
-  - type: Damageable
     damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
