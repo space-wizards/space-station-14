@@ -179,7 +179,7 @@ public partial class SharedGunSystem
 
             if (!ValidateInsertionSpeed(ent.Owner))
             {
-                Popup(Loc.GetString("gun-insertion-too-fast"), ent, user);
+                PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), ent, user);
                 return false;
             }
 

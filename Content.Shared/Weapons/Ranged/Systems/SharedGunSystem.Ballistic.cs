@@ -118,7 +118,7 @@ public abstract partial class SharedGunSystem
         // Check if we somehow would've bypassed the insert delay with this doafter, if it exists
         if (IsInsertionTooFast(args.Target.Value))
         {
-            Popup(Loc.GetString("gun-insertion-too-fast"), uid, args.User);
+            PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), uid, args.User);
             return;
         }
 
@@ -347,7 +347,7 @@ public abstract partial class SharedGunSystem
 
         if (checkInsertionSpeed && !ValidateInsertionSpeed(entity.Owner))
         {
-            Popup(Loc.GetString("gun-insertion-too-fast"), entity, user);
+            PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), entity, user);
             return false;
         }
 
