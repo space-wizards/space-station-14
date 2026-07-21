@@ -4,7 +4,7 @@
             MinSize="480 400" Title="Canister">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <Label Text="{Loc comp-gas-canister-ui-canister-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <Label Text="{Loc comp-gas-canister-ui-canister-status}" StyleClasses="LabelHeading"/>
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc comp-gas-canister-ui-canister-pressure}"/>
                 <Label Name="CanisterPressureLabel" Align="Center" HorizontalExpand="True"/>
@@ -16,7 +16,7 @@
         </BoxContainer>
 
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <Label Text="{Loc comp-gas-canister-ui-holding-tank-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <Label Text="{Loc comp-gas-canister-ui-holding-tank-status}" StyleClasses="LabelHeading"/>
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc comp-gas-canister-ui-holding-tank-label}"/>
                 <Label Name="TankLabelLabel" Text="{Loc comp-gas-canister-ui-holding-tank-label-empty}" Align="Center" HorizontalExpand="True"/>
@@ -29,7 +29,7 @@
         </BoxContainer>
 
         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <Label Text="{Loc comp-gas-canister-ui-release-valve-status}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <Label Text="{Loc comp-gas-canister-ui-release-valve-status}" StyleClasses="LabelHeading"/>
             <BoxContainer Orientation="Horizontal">
                 <BoxContainer Orientation="Vertical">
                     <Label Text="{Loc comp-gas-canister-ui-release-pressure}"/>

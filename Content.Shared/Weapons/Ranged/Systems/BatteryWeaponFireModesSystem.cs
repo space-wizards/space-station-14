@@ -3,18 +3,17 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public sealed class BatteryWeaponFireModesSystem : EntitySystem
+public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -29,17 +28,17 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         TrySetFireMode(uid, component, args.ModeIndex, args.Actor);
     }
 
-    private void OnExamined(EntityUid uid, BatteryWeaponFireModesComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<BatteryWeaponFireModesComponent> ent, ref ExaminedEvent args)
     {
-        if (component.FireModes.Count < 2)
+        if (ent.Comp.FireModes.Count < 2)
             return;
 
-        var fireMode = GetMode(component);
+        var fireMode = GetMode(ent.Comp);
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
+        if (!ProtoMan.TryIndex<EntityPrototype>(fireMode.Prototype, out var proto))
             return;
 
-        args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name)));
+        args.PushMarkup(Loc.GetString("gun-set-fire-mode-examine", ("mode", proto.Name)));
     }
 
     private BatteryWeaponFireMode GetMode(BatteryWeaponFireModesComponent component)
@@ -112,16 +111,16 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         component.CurrentFireMode = component.FireModes.IndexOf(fireMode);
         Dirty(uid, component);
 
-        if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+        if (ProtoMan.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
         {
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-                _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+            if (TryComp<AppearanceComponent>(ent, out var appearance))
+                _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), ent, user.Value);
         }
 
-        if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
+        if (TryComp(ent, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))
         {
             // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
             projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;

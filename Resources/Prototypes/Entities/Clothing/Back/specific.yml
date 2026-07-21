@@ -20,7 +20,7 @@
           type: ChameleonBoundUserInterface
 
 - type: entity
-  parent: [Clothing, ClothingSlotBase]
+  parent: [SolutionTank, SolutionGinormous, Clothing, ClothingSlotBase]
   id: ClothingBackpackWaterTank
   name: backpack water tank
   description: Holds a large amount of fluids. Supplies to spray nozzles in your hands, and has a slot on the side for said spray nozzles.
@@ -54,10 +54,6 @@
   - type: SolutionAmmoProvider
     solutionId: tank
     proto: BulletWaterShot
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        maxVol: 1000 #much water
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100
@@ -122,3 +118,33 @@
         location: Middle
       extra_hand_2:
         location: Middle
+
+- type: entity
+  parent: ClothingBackpack
+  id: XenoborgMaterialBag
+  name: silicon storage square
+  description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
+    state: xenoborg
+  - type: MagnetPickup
+  - type: Dumpable
+  - type: Storage
+    grid:
+    - 0,0,7,3
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+        - Sheet
+        - ConstructionMaterial
+        - RawMaterial
+        - Ingot
+      components:
+        - Circuitboard
+        - Flatpack
+        - FloorTile
+    blacklist:
+      components:
+      - SiliconLawProvider

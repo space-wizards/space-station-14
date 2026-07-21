@@ -32,7 +32,6 @@
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            Zookeeper: [ 1, 1 ]
             Reporter: [ 1, 1 ]
             #engineering (8)
             AtmosphericTechnician: [ 3, 3 ]

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics.Tensors;
 using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Reactions;
@@ -42,7 +43,7 @@ namespace Content.Shared.Atmos
         public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => NumericsHelpers.HorizontalAdd(Moles);
+            get => TensorPrimitives.Sum(Moles);
         }
 
         [ViewVariables]
@@ -177,9 +178,9 @@ namespace Content.Shared.Atmos
             var removed = new GasMixture(Volume) { Temperature = Temperature };
 
             Moles.CopyTo(removed.Moles.AsSpan());
-            NumericsHelpers.Multiply(removed.Moles, ratio);
+            TensorPrimitives.Multiply(removed.Moles, ratio, removed.Moles);
             if (!Immutable)
-                NumericsHelpers.Sub(Moles, removed.Moles);
+                TensorPrimitives.Subtract(Moles, removed.Moles, Moles);
 
             for (var i = 0; i < Moles.Length; i++)
             {
@@ -223,7 +224,7 @@ namespace Content.Shared.Atmos
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            NumericsHelpers.Multiply(Moles, multiplier);
+            TensorPrimitives.Multiply(Moles, multiplier, Moles);
         }
 
         void ISerializationHooks.AfterDeserialization()

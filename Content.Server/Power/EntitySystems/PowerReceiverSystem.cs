@@ -12,11 +12,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
-    public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
+    public sealed partial class PowerReceiverSystem : SharedPowerReceiverSystem
     {
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        private EntityQuery<ApcPowerReceiverComponent> _recQuery;
-        private EntityQuery<ApcPowerProviderComponent> _provQuery;
+        [Dependency] private IAdminManager _adminManager = default!;
+
+        [Dependency] private EntityQuery<ApcPowerReceiverComponent> _recQuery = default!;
+        [Dependency] private EntityQuery<ApcPowerProviderComponent> _provQuery = default!;
+        [Dependency] private EntityQuery<HandsComponent> _handsQuery = default!;
 
         public override void Initialize()
         {
@@ -34,9 +36,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<PowerSwitchComponent, GetVerbsEvent<AlternativeVerb>>(AddSwitchPowerVerb);
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentGetState>(OnGetState);
-
-            _recQuery = GetEntityQuery<ApcPowerReceiverComponent>();
-            _provQuery = GetEntityQuery<ApcPowerProviderComponent>();
         }
 
         private void OnExamined(Entity<ApcPowerReceiverComponent> ent, ref ExaminedEvent args)
@@ -112,7 +111,7 @@ namespace Content.Server.Power.EntitySystems
             if(!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!HasComp<HandsComponent>(args.User))
+            if (!_handsQuery.HasComp(args.User))
                 return;
 
             if (!_recQuery.TryGetComponent(uid, out var receiver))
@@ -159,11 +158,6 @@ namespace Content.Server.Power.EntitySystems
         public bool IsPowered(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
         {
             return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
-        }
-
-        public void SetLoad(ApcPowerReceiverComponent comp, float load)
-        {
-            comp.Load = load;
         }
 
         public override bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component)
