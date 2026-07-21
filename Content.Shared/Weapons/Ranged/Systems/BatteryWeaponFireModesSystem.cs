@@ -113,28 +113,27 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
 
         if (ProtoMan.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
         {
-            if (TryComp<AppearanceComponent>(ent, out var appearance))
-                _appearanceSystem.SetData(ent, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), ent, user.Value);
+                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), uid, user.Value);
         }
 
-        if (TryComp(ent, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))
+        if (TryComp(uid, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))
         {
             // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
-            projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
-            projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
+            batteryAmmoProviderComponent.Prototype = fireMode.Prototype;
+            batteryAmmoProviderComponent.FireCost = fireMode.FireCost;
 
-            var oldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
+            var oldFireCost = batteryAmmoProviderComponent.FireCost;
             float fireCostDiff = fireMode.FireCost / oldFireCost;
-            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots / fireCostDiff);
-            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity / fireCostDiff);
+            batteryAmmoProviderComponent.Shots = (int)Math.Round(batteryAmmoProviderComponent.Shots / fireCostDiff);
+            batteryAmmoProviderComponent.Capacity = (int)Math.Round(batteryAmmoProviderComponent.Capacity / fireCostDiff);
 
-            Dirty(uid, projectileBatteryAmmoProviderComponent);
+            Dirty(uid, batteryAmmoProviderComponent);
 
-            var updateClientAmmoEvent = new UpdateClientAmmoEvent();
-            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
+            _gun.UpdateShots((uid, batteryAmmoProviderComponent));
         }
     }
 
