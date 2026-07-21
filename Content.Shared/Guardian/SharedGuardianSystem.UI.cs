@@ -7,7 +7,7 @@ namespace Content.Shared.Guardian;
 /// </summary>
 /// <param name="targetIdentity"></param>
 [Serializable, NetSerializable]
-public sealed class GuardianPicked(uint chosenGuardian) : BoundUserInterfaceMessage
+public sealed class GuardianPickedMessage(uint chosenGuardian) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// The index of the picked guardian type

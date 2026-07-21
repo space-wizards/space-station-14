@@ -11,12 +11,18 @@ using Robust.Shared.Utility;
 namespace Content.Client.Guardian;
 
 [UsedImplicitly]
-public sealed partial class GuardianPickerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed partial class GuardianPickerBoundUserInterface : BoundUserInterface
 {
     private SimpleRadialMenu? _menu;
     private static readonly Color SelectedOptionHoverBackground = Palettes.Green.HoveredElement.WithAlpha(128);
 
-    [Dependency] private ClientPrototypeManager _prototypes = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+
+    public GuardianPickerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+        IoCManager.InjectDependencies(this);
+    }
+
     protected override void Open()
     {
         base.Open();
@@ -68,6 +74,6 @@ public sealed partial class GuardianPickerBoundUserInterface(EntityUid owner, En
 
     private void SendGuardianSelect(uint index)
     {
-        SendPredictedMessage(new GuardianPicked(index));
+        SendPredictedMessage(new GuardianPickedMessage(index));
     }
 }

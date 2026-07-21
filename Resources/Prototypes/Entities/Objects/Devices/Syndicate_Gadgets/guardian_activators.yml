@@ -8,7 +8,11 @@
     sprite: Objects/Specific/Medical/hypospray.rsi
     state: combat_hypo
   - type: GuardianCreator
-    guardianProto: MobHoloparasiteGuardian
+    guardians:
+    - GuardianBaseFist
+    - GuardianBaseHeal
+    - GuardianBaseNuke
+    - GuardianBaseSword
 
 - type: entity
   parent: HoloparasiteInjector
@@ -17,7 +21,11 @@
   description: A complex artwork of handheld machinery allowing the user to host a holoclown guardian.
   components:
   - type: GuardianCreator
-    guardianProto: MobHoloClownGuardian
+    guardians:
+    - GuardianBaseFist
+    - GuardianBaseHeal
+    - GuardianBaseNuke
+    - GuardianBaseSword
 
 - type: entity
   parent: [BaseItem, BaseMagicalContraband]

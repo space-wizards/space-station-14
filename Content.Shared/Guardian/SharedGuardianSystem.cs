@@ -12,9 +12,11 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -36,6 +38,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface"
 ;
@@ -47,6 +50,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
         SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
         SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GuardianCreatorComponent, GuardianPickedMessage>(OnGuardianPicked);
 
         SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
         SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
@@ -64,6 +68,44 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
 
         SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
+    }
+
+    private void OnGuardianPicked(Entity<GuardianCreatorComponent> ent, ref GuardianPickedMessage args)
+    {
+        if (ent.Comp.CanChoose && ent.Comp.Guardians.Count > args.ChosenGuardian)
+            ent.Comp.Selected = args.ChosenGuardian;
+    }
+
+    [SubscribeLocalEvent]
+    private void OnCreatorGetAltVerb(Entity<GuardianCreatorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (ent.Comp.Used || !ent.Comp.CanChoose)
+            return;
+
+        var user = args.User;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () =>
+            {
+                OpenPickingUi(user, ent);
+            },
+            Text = Loc.GetString("guardian-pick-verb"),
+            Priority = 2
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private void OpenPickingUi(EntityUid user, Entity<GuardianCreatorComponent> ent)
+    {
+        if (!TryComp<UserInterfaceComponent>(ent.Owner, out var userInterfaceComp))
+            return;
+
+        if (!_ui.IsUiOpen((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user))
+        {
+            _ui.OpenUi((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user);
+        }
     }
 
     private void OnCreatorInit(Entity<GuardianCreatorComponent> ent, ref MapInitEvent args)
@@ -216,16 +258,6 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<UserInterfaceComponent>(ent.Owner, out var userInterfaceComp))
-            return;
-
-        if (!_ui.IsUiOpen((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user))
-        {
-            _ui.OpenUi((ent.Owner, userInterfaceComp), GuardianPickerUiKey.Key, user);
-        }
-
-        return;
-
         // Can only inject things with the component...
         if (!HasComp<CanHostGuardianComponent>(target))
         {
@@ -345,7 +377,15 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     private void OnCreatorExamine(Entity<GuardianCreatorComponent> ent, ref ExaminedEvent args)
     {
         if (!ent.Comp.Used)
+        {
+            if (ent.Comp.Selected >= ent.Comp.Guardians.Count)
+                return;
+
+            if (ent.Comp.CanChoose && _prototypes.Resolve(ent.Comp.Guardians[(int)ent.Comp.Selected], out var proto))
+                args.PushMarkup(Loc.GetString("guardian-picked-desc", ("type", Loc.GetString(proto.Title))));
+
             return;
+        }
 
         args.PushMarkup(Loc.GetString(ent.Comp.EmptyExamine));
     }

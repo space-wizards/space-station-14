@@ -42,3 +42,6 @@ guardian-title-nuke = Explosive
 
 guardian-desc-sword = Uses a sword to masterfully deflect bullets and cleave trough flesh.
 guardian-title-sword = Duelist
+
+guardian-pick-verb = Choose Type
+guardian-picked-desc = Chosen type: [color=cyan]{$type}[/color]

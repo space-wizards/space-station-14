@@ -42,5 +42,5 @@ public sealed partial class GuardianEntryPrototype : IPrototype
 
     [ViewVariables]
     [IdDataField]
-    public string ID => "guardianEntry";
+    public string ID { get; private set; } = default!;
 }

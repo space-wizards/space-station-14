@@ -57,6 +57,12 @@ public sealed partial class GuardianCreatorComponent : Component
     public bool CanChoose = true;
 
     /// <summary>
+    /// Current selected guardian type.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public uint Selected = 0;
+
+    /// <summary>
     /// How long it takes to inject someone.
     /// </summary>
     [DataField("delay")]
