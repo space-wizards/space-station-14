@@ -31,8 +31,8 @@ public sealed class LabelSheetlet<T> : ISheetlet<T>
                 .FontColor(config.HighlightPalette.Text),
             E<Label>()
                 .Class(StyleClass.LabelSubHeading)
-                .Font(sheet.BaseFont.GetFont(14, FontKind.Italic))
-                .FontColor(sheet.HighlightPalette.TextDark),
+                .Font(config.BaseFont.GetFont(14, FontKind.Italic))
+                .FontColor(config.HighlightPalette.TextDark),
             E<Label>()
                 .Class(StyleClass.LabelSubText)
                 .Font(config.BaseFont.GetFont(10))
