@@ -69,7 +69,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             contrabandInventory[weh.Key] = new(weh.Value);
         }
 
-        args.State = new VendingMachineComponentState()
+        args.State = new VendingMachineComponentState
         {
             Inventory = inventory,
             EmaggedInventory = emaggedInventory,
@@ -114,14 +114,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 }
             }
 
-            if (comp.DispenseOnHitCoolingDown)
-            {
-                if (curTime > comp.DispenseOnHitEnd)
-                {
-                    comp.DispenseOnHitEnd = null;
-                    Dirty(uid, comp);
-                }
-            }
+            if (!comp.DispenseOnHitCoolingDown) continue;
+            if (!(curTime > comp.DispenseOnHitEnd)) continue;
+            comp.DispenseOnHitEnd = null;
+            Dirty(uid, comp);
         }
     }
 
@@ -145,12 +141,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnEmpPulse(Entity<VendingMachineComponent> ent, ref EmpPulseEvent args)
     {
-        if (!ent.Comp.Broken && _receiver.IsPowered(ent.Owner))
-        {
-            args.Affected = true;
-            args.Disabled = true;
-            ent.Comp.NextEmpEject = Timing.CurTime;
-        }
+        if (ent.Comp.Broken || !_receiver.IsPowered(ent.Owner)) return;
+        args.Affected = true;
+        args.Disabled = true;
+        ent.Comp.NextEmpEject = Timing.CurTime;
     }
 
     protected virtual void EjectItem(EntityUid uid, VendingMachineComponent? vendComponent = null, bool forceEject = false) { }
@@ -399,28 +393,26 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         foreach (var (id, amount) in entries)
         {
-            if (ProtoMan.HasIndex<EntityPrototype>(id))
+            if (!ProtoMan.HasIndex<EntityPrototype>(id)) continue;
+            var restock = amount;
+            var chanceOfMissingStock = 1 - restockQuality;
+
+            var result = Randomizer.NextFloat(0, 1);
+            if (result < chanceOfMissingStock)
             {
-                var restock = amount;
-                var chanceOfMissingStock = 1 - restockQuality;
-
-                var result = Randomizer.NextFloat(0, 1);
-                if (result < chanceOfMissingStock)
-                {
-                    restock = (uint) Math.Floor(amount * result / chanceOfMissingStock);
-                }
-
-                if (inventory.TryGetValue(id, out var entry))
-                    // Prevent a machine's stock from going over three times
-                    // the prototype's normal amount. This is an arbitrary
-                    // number and meant to be a convenience for someone
-                    // restocking a machine who doesn't want to force vend out
-                    // all the items just to restock one empty slot without
-                    // losing the rest of the restock.
-                    entry.Amount = Math.Min(entry.Amount + amount, 3 * restock);
-                else
-                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, restock));
+                restock = (uint) Math.Floor(amount * result / chanceOfMissingStock);
             }
+
+            if (inventory.TryGetValue(id, out var entry))
+                // Prevent a machine's stock from going over three times
+                // the prototype's normal amount. This is an arbitrary
+                // number and meant to be a convenience for someone
+                // restocking a machine who doesn't want to force vend out
+                // all the items just to restock one empty slot without
+                // losing the rest of the restock.
+                entry.Amount = Math.Min(entry.Amount + amount, 3 * restock);
+            else
+                inventory.Add(id, new VendingMachineInventoryEntry(type, id, restock));
         }
     }
 

@@ -27,7 +27,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         component.DispenseOnHitEnd = state.DispenseOnHitEnd;
         component.Broken = state.Broken;
 
-        // If all we did was update amounts then we can leave BUI buttons in place.
+        // If all we did was update amounts, then we can leave BUI buttons in place.
         var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
                            !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
                            !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys);
@@ -51,16 +51,14 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             component.ContrabandInventory.Add(entry.Key, new(entry.Value));
         }
 
-        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui))
+        if (!UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui)) return;
+        if (fullUiUpdate)
         {
-            if (fullUiUpdate)
-            {
-                bui.Refresh();
-            }
-            else
-            {
-                bui.UpdateAmounts();
-            }
+            bui.Refresh();
+        }
+        else
+        {
+            bui.UpdateAmounts();
         }
     }
 
@@ -158,12 +156,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (string.IsNullOrEmpty(state))
             return;
 
-        if (!_animationPlayer.HasRunningAnimation(uid, state))
-        {
-            var animation = GetAnimation(layer, state, animationTime);
-            _sprite.LayerSetVisible((uid, sprite), layer, true);
-            _animationPlayer.Play(uid, animation, state);
-        }
+        if (_animationPlayer.HasRunningAnimation(uid, state)) return;
+        var animation = GetAnimation(layer, state, animationTime);
+        _sprite.LayerSetVisible((uid, sprite), layer, true);
+        _animationPlayer.Play(uid, animation, state);
     }
 
     private static Animation GetAnimation(VendingMachineVisualLayers layer, string state, float animationTime)

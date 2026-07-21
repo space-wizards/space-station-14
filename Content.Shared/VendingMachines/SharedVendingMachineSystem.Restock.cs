@@ -14,18 +14,14 @@ public abstract partial class SharedVendingMachineSystem
         EntityUid user,
         EntityUid target)
     {
-        if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
-        {
-            Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
-                    ("this", uid),
-                    ("user", user),
-                    ("target", target)),
-                user);
+        if (TryComp<WiresPanelComponent>(target, out var panel) && panel.Open) return true;
+        Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
+                ("this", uid),
+                ("user", user),
+                ("target", target)),
+            user);
 
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     public bool TryMatchPackageToMachine(EntityUid uid,
@@ -34,15 +30,11 @@ public abstract partial class SharedVendingMachineSystem
         EntityUid user,
         EntityUid target)
     {
-        if (!component.CanRestock.Contains(machineComponent.PackPrototypeId))
-        {
-            Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
-                ("target", target)), user);
+        if (component.CanRestock.Contains(machineComponent.PackPrototypeId)) return true;
+        Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
+            ("target", target)), user);
 
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
