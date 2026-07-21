@@ -178,12 +178,12 @@ SpyCrewMonitorEmpty: null
 SyndiCrewMonitor: null
 SyndiCrewMonitorEmpty: null
 
-SpawnVehicleWheelchair: null
+#SpawnVehicleWheelchair: null
 SpawnVehicleWheelchairFolded: null
-VehicleWheelchair: null
+#VehicleWheelchair: null
 VehicleWheelchairFolded: null
 VehicleSecwayStealObjective: null
-VehicleKeyJanicart: null
+#VehicleKeyJanicart: null
 VehicleKeySecway: null
 VehicleKeyATV: null
 VehicleKeySkeleton: null
@@ -203,8 +203,8 @@ MobTaxiBot: null
 SpawnVehicleMotobike: null
 SpawnVehicleATV: null
 SpawnVehicleSecway: null
-SpawnVehicleJanicart: null
-VehicleJanicart: null
+#SpawnVehicleJanicart: null
+#VehicleJanicart: null
 VehicleJanicartDestroyed: null
 
 # 2024-02-01
@@ -480,7 +480,7 @@ PresentRandomAsh: PresentRandomCoal
 CrateCrewMonitoringBoards: CrateCrewMonitoring
 
 # 2024-11-25
-CrateSlimepersonLifeSupport: CrateNitrogenInternals
+CrateSlimepersonLifeSupport: CrateEmergencyEVA
 
 # 2024-12-01
 DungeonMasterCircuitBoard: GameMasterCircuitBoard
@@ -715,12 +715,19 @@ VimChassis: null
 # 2025-08-01
 FoodDonutJellySlugcat: FoodDonutJellyScurret
 
+# 2025-08-06
+TrashBagBlue: TrashBagHolding
+BagOfSummoningGarbage: null
+
 # 2025-08-11
 ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
 ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
 
 # 2025-08-29
 PrefilledSyringe: Syringe
+
+# 2025-09-12
+BaseChemistryEmptyVial: ChemistryEmptyVial
 
 # 2025-10-6
 BibleTanakh: null
@@ -737,6 +744,10 @@ ToySkeleton: ToyFigurineSkeleton
 
 # 2025-10-28
 DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
+
+# 2025-12-02
+GhostWarpPoint: null
+DefaultStationBeaconGhost: null
 
 # 2025-11-08
 DebugSMES: SMESBasicEmpty
@@ -763,3 +774,129 @@ SpacemenFigureSpawner: SpacemenFigurineSpawner90
 # 2026-01-07
 HandheldHealthAnalyzerUnpowered: HandheldHealthAnalyzer
 HandheldHealthAnalyzerEmpty: HandheldHealthAnalyzer
+
+#2026-01-09
+BorgModuleAdvancedChemical: BorgModuleAdvancedTopical
+
+# 2026-01-14
+HeadHuman: OrganHumanHead
+HeadSkeleton: OrganSkeletonPersonHead
+LeftArmHuman: OrganHumanArmLeft
+LeftArmSkeleton: OrganSkeletonPersonArmLeft
+LeftHandSkeleton: OrganSkeletonPersonHandLeft
+LeftLegHuman: OrganHumanLegLeft
+LeftLegSkeleton: OrganSkeletonPersonLegLeft
+RightArmHuman: OrganHumanArmRight
+RightHandSkeleton: OrganSkeletonPersonHandRight
+RightLegHuman: OrganHumanLegRight
+TorsoSkeleton: OrganSkeletonPersonTorso
+RightArmSkeleton: OrganSkeletonPersonArmRight
+
+# 2026-01-19
+TowelColorPurple: null
+TowelColorRed: null
+TowelColorBlue: null
+TowelColorDarkBlue: null
+TowelColorLightBlue: null
+TowelColorTeal: null
+TowelColorBrown: null
+TowelColorLightBrown: null
+TowelColorGray: null
+TowelColorGreen: null
+TowelColorDarkGreen: null
+TowelColorGold: null
+TowelColorOrange: null
+TowelColorBlack: null
+TowelColorPink: null
+TowelColorYellow: null
+TowelColorMaroon: null
+TowelColorSilver: null
+TowelColorMime: null
+
+# 2026-02-18
+# Replace cargo order crates which contain exactly one item with the item, parcel wrapped.
+CrateVendingMachineRestockBoozeFilled: VendingMachineRestockBooze
+CrateVendingMachineRestockChefvendFilled: VendingMachineRestockChefvend
+CrateVendingMachineRestockClothesFilled: VendingMachineRestockClothes
+CrateVendingMachineRestockAutoDrobeFilled: VendingMachineRestockCostumes
+CrateVendingMachineRestockCondimentStationFilled: VendingMachineRestockCondimentStation
+CrateVendingMachineRestockDinnerwareFilled: VendingMachineRestockDinnerware
+CrateVendingMachineRestockGamesFilled: VendingMachineRestockGames
+CrateVendingMachineRestockPTechFilled: VendingMachineRestockPTech
+CrateVendingMachineRestockSalvageEquipmentFilled: VendingMachineRestockSalvageEquipment
+CrateVendingMachineRestockVendomatFilled: VendingMachineRestockVendomat
+CrateVendingMachineRestockTankDispenserFilled: VendingMachineRestockTankDispenser
+# The crates below contained _two_ of the restock items, so these are technically not direct migrations. But eh.
+CrateVendingMachineRestockHotDrinksFilled: VendingMachineRestockHotDrinks
+CrateVendingMachineRestockRobustSoftdrinksFilled: VendingMachineRestockRobustSoftdrinks
+CrateVendingMachineRestockSmokesFilled: VendingMachineRestockSmokes
+CrateVendingMachineRestockHappyHonkFilled: VendingMachineRestockHappyHonk
+CrateVendingMachineRestockGetmoreChocolateCorpFilled: VendingMachineRestockGetmoreChocolateCorp
+CrateVendingMachineRestockChangFilled: VendingMachineRestockChang
+CrateVendingMachineRestockDiscountDansFilled: VendingMachineRestockDiscountDans
+CrateVendingMachineRestockDonutFilled: VendingMachineRestockDonut
+
+# 2026-03-28
+# The great solutions YAML nuke
+FoodMeatSnail: MobSnail
+
+# 2026-04-25
+CratePartsT3: null
+CratePartsT3T4: null
+CratePartsT4: null
+
+#2027-07-17
+WeaponRifleM90GrenadeLauncher: null
+
+# 2026-07-18
+SheetGlassLingering0: null
+SheetRGlassLingering0: null
+SheetRPGlassLingering0: null
+SheetSteelLingering0: null
+SheetPlasteelLingering0: null
+SheetPlasmaLingering0: null
+PartRodMetalLingering0: null
+FloorTileItemSteelLingering0: null
+FloorTileItemWhiteLingering0: null
+FloorTileItemDarkLingering0: null
+SoapBorg: Soap
+Ointment10Lingering: Ointment
+RegenerativeMeshLingering0: null
+Brutepack10Lingering: Brutepack
+MedicatedSutureLingering0: null
+Bloodpack10Lingering: Bloodpack
+Gauze10Lingering: Gauze
+BorgVial: ChemistryEmptyVial
+BorgBeaker: Beaker
+CableHVStackLingering10: CableHVStack10
+CableMVStackLingering10: CableMVStack10
+CableApcStackLingering10: CableApcStack10
+
+# 2026-07-19
+BoxHugNitrogen: BoxSurvivalHugNitrogen
+BoxMime: BoxSurvival
+BoxMimeNitrogen: BoxSurvivalNitrogen
+BoxMimeMoth: BoxSurvival
+
+# 2026-07-19
+CrateChemistryVials: null
+CrateSecurityHelmet: null
+CrateEmergencyInternals: CrateEmergencyEVA
+CrateEmergencyInternalsLarge: CrateEmergencyEVA
+CrateNitrogenInternals: CrateEmergencyEVA
+CrateServiceCleanerGrenades: CrateJanitorialCleanerGrenades
+CrateServiceColorfulLights: CrateJanitorialColorfulLights
+CrateServiceHolidayLights: CrateJanitorialHolidayLights
+CrateMousetrapBoxes: CrateJanitorialMousetraps
+CrateServiceReplacementLights: CrateJanitorialReplacementLights
+CrateServiceJanitorialSupplies: CrateJanitorialSupplies
+CrateMaterialTextiles: CrateMaterialCloth
+CrateFoodBarSupply: CrateServiceBarSupply
+CrateFoodCooking: CrateServiceCooking
+CrateFoodDinnerware: CrateServiceDinnerware
+CrateFoodGetMore: CrateServiceGetMore
+CrateEngineeringGyroscope: CrateSpaceGyroscope
+CrateEngineeringJetpack: CrateSpaceMiniJetpack
+CrateEngineeringMiniJetpack: CrateSpaceMiniJetpack
+CrateEngineeringShuttle: CrateSpaceShuttlePower
+CrateEngineeringThruster: CrateSpaceThruster

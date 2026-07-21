@@ -11,24 +11,25 @@ using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Fluids;
 
 /// <summary>
 /// Mopping logic for interacting with puddle components.
 /// </summary>
-public abstract class SharedAbsorbentSystem : EntitySystem
+public abstract partial class SharedAbsorbentSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] protected readonly SharedPuddleSystem Puddle = default!;
-    [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
+    [Dependency] protected SharedPuddleSystem Puddle = default!;
+    [Dependency] private SharedMeleeWeaponSystem _melee = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] protected SharedSolutionContainerSystem SolutionContainer = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -36,7 +37,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<AbsorbentComponent, UserActivateInWorldEvent>(OnActivateInWorld);
-        SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
     }
 
     private void OnActivateInWorld(Entity<AbsorbentComponent> ent, ref UserActivateInWorldEvent args)
@@ -57,8 +58,12 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnAbsorbentSolutionChange(Entity<AbsorbentComponent> ent, ref SolutionContainerChangedEvent args)
+    private void OnAbsorbentSolutionChange(Entity<AbsorbentComponent> ent, ref SolutionChangedEvent args)
     {
+        // The changes are already networked as part of the same game state.
+        if (_timing.ApplyingState)
+            return;
+
         if (!SolutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution))
             return;
 
@@ -67,9 +72,9 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         var absorbentReagents = Puddle.GetAbsorbentReagents(solution);
         var mopReagent = solution.GetTotalPrototypeQuantity(absorbentReagents);
         if (mopReagent > FixedPoint2.Zero)
-            ent.Comp.Progress[solution.GetColorWithOnly(_proto, absorbentReagents)] = mopReagent.Float();
+            ent.Comp.Progress[solution.GetColorWithOnly(ProtoMan, absorbentReagents)] = mopReagent.Float();
 
-        var otherColor = solution.GetColorWithout(_proto, absorbentReagents);
+        var otherColor = solution.GetColorWithout(ProtoMan, absorbentReagents);
         var other = solution.Volume - mopReagent;
         if (other > FixedPoint2.Zero)
             ent.Comp.Progress[otherColor] = other.Float();
@@ -157,7 +162,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         var absorbentSolution = absorbentSoln.Comp.Solution;
         if (absorbentSolution.Volume <= 0)
         {
-            _popups.PopupClient(Loc.GetString("mopping-system-target-container-empty", ("target", target)), user, user);
+            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty", ("target", target)), user, user);
             return false;
         }
 
@@ -168,7 +173,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         if (transferAmount <= 0)
         {
-            _popups.PopupClient(Loc.GetString("mopping-system-full", ("used", absorbEnt)), absorbEnt, user);
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", absorbEnt)), absorbEnt, user);
             return false;
         }
 
@@ -203,7 +208,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
             && absorbentSolution.AvailableVolume == FixedPoint2.Zero)
         {
             // Nothing to transfer to refillable and no room to absorb anything extra
-            _popups.PopupClient(Loc.GetString("mopping-system-puddle-space", ("used", absorbEnt)), user, user);
+            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-space", ("used", absorbEnt)), user, user);
 
             // We can return cleanly because nothing was split from absorbent solution
             return false;
@@ -222,7 +227,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         if (waterFromRefillable.Volume == FixedPoint2.Zero && contaminantsFromAbsorbent.Volume == FixedPoint2.Zero)
         {
             // Nothing to transfer in either direction
-            _popups.PopupClient(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)),
+            _popups.PopupEntity(Loc.GetString("mopping-system-target-container-empty-water", ("target", target)),
                 user,
                 user);
 
@@ -244,7 +249,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         if (refillableSolution.AvailableVolume <= 0)
         {
-            _popups.PopupClient(Loc.GetString("mopping-system-full", ("used", target)), user, user);
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
         }
         else
         {
@@ -287,7 +292,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
                 puddleSolution.GetTotalPrototypeQuantity(Puddle.GetAbsorbentReagents(puddleSolution));
             if (puddleAbsorberVolume == puddleSolution.Volume)
             {
-                _popups.PopupClient(Loc.GetString("mopping-system-puddle-already-mopped", ("target", target)),
+                _popups.PopupEntity(Loc.GetString("mopping-system-puddle-already-mopped", ("target", target)),
                     target,
                     user);
                 return true;
@@ -300,7 +305,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
             // No material
             if (available == FixedPoint2.Zero)
             {
-                _popups.PopupClient(Loc.GetString("mopping-system-no-water", ("used", absorbEnt)), absorbEnt, user);
+                _popups.PopupEntity(Loc.GetString("mopping-system-no-water", ("used", absorbEnt)), absorbEnt, user);
                 return true;
             }
 

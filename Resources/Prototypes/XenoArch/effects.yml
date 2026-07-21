@@ -145,7 +145,6 @@
   id: BaseXenoArtifactEffect
   name: effect
   description: Unknown
-  categories: [ HideSpawnMenu ]
   abstract: true
   components:
   - type: XenoArtifactNode
@@ -153,11 +152,10 @@
     group: XenoArtifactNode
 
 - type: entity
-  id: BaseOneTimeXenoArtifactEffect
   parent: BaseXenoArtifactEffect
+  id: BaseOneTimeXenoArtifactEffect
   name: one-time-effect
   description: Unknown
-  categories: [ HideSpawnMenu ]
   abstract: true
   components:
   - type: XenoArtifactNode
@@ -169,8 +167,8 @@
     group: XenoArtifactNode
 
 - type: entity
-  id: XenoArtifactEffectUniversalIntercom
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactEffectUniversalIntercom
   description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
@@ -198,8 +196,8 @@
       - Supply
 
 - type: entity
-  id: XenoArtifactBecomeRandomInstrument
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactBecomeRandomInstrument
   description: Obtains ability of musical instrument
   components:
   - type: XAEApplyComponents
@@ -211,8 +209,8 @@
       key: enum.InstrumentUiKey.Key
 
 - type: entity
-  id: XenoArtifactStorage
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactStorage
   description: Obtains ability of hidden storage
   components:
   - type: XAEApplyComponents
@@ -225,15 +223,15 @@
       - 0,0,10,5
 
 - type: entity
-  id: XenoArtifactPhasing
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactPhasing
   description: Becomes phased
   components:
   - type: XAERemoveCollision
 
 - type: entity
-  id: XenoArtifactWandering
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactWandering
   description: Starts to move sporadically
   components:
   - type: XAEApplyComponents
@@ -245,16 +243,16 @@
       maxStepCooldown: 3
 
 - type: entity
-  id: XenoArtifactSolutionStorage
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSolutionStorage
   description: Obtains ability of container for chemical solutions
   components:
   - type: XAEApplyComponents
     components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 150
+    - type: Solution
+      id: beaker
+      solution:
+        maxVol: 120
     - type: FitsInDispenser
       solution: beaker
     - type: RefillableSolution
@@ -276,8 +274,8 @@
       utensil: None
 
 - type: entity
-  id: XenoArtifactSpeedUp
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSpeedUp
   description: Improves holder movement speed
   components:
   - type: XAEApplyComponents
@@ -287,8 +285,8 @@
       sprintModifier: 1.3
 
 - type: entity
-  id: XenoArtifactDrill
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactDrill
   description: Obtains ability of drill
   components:
   - type: XAEApplyComponents
@@ -300,11 +298,13 @@
           Blunt: 4
       soundHit:
         path: /Audio/Weapons/bladeslice.ogg
-    - type: Sharp
+    - type: Tool
+      qualities:
+      - Slicing
 
 - type: entity
-  id: XenoArtifactGenerateEnergy
   parent: BaseOneTimeXenoArtifactEffect # todo - increment power, but only once per node
+  id: XenoArtifactGenerateEnergy
   description: Produces power
   components:
   - type: XAEApplyComponents
@@ -319,8 +319,8 @@
           nodeGroupID: HVPower
 
 - type: entity
-  id: XenoArtifactGun
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactGun
   description: Obtains ability of firearm
   components:
   - type: XAEApplyComponents
@@ -350,8 +350,8 @@
         path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: entity
-  id: XenoArtifactGhost
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactGhost
   description: Becomes sentient
   components:
   - type: XAEApplyComponents
@@ -370,8 +370,8 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
-  id: XenoArtifactOmnitool
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactOmnitool
   description: Obtains ability of omnitool
   components:
   - type: XAEApplyComponents
@@ -417,8 +417,8 @@
           path: /Audio/Items/change_drill.ogg
 
 - type: entity
-  id: XenoArtifactEffectBadFeeling
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectBadFeeling
   description: Broadcasts sublime message
   components:
   - type: XAETelepathic
@@ -447,8 +447,8 @@
     - badfeeling-artifact-drastic-6
 
 - type: entity
-  id: XenoArtifactEffectGoodFeeling
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectGoodFeeling
   description: Broadcasts sublime message
   components:
   - type: XAETelepathic
@@ -476,8 +476,8 @@
     - goodfeeling-artifact-drastic-6
 
 - type: entity
-  id: XenoArtifactEffectJunkSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectJunkSpawn
   description: Create recyclable junk
   components:
   - type: XAEApplyComponents
@@ -498,15 +498,15 @@
           weight: 1
 
 - type: entity
-  id: XenoArtifactEffectLightFlicker
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectLightFlicker
   description: Minor electromagnetic interference
   components:
   - type: XAELightFlicker
 
 - type: entity
-  id: XenoArtifactPotassiumWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPotassiumWave
   description: Produces potassium
   components:
   - type: XAEApplyComponents
@@ -532,8 +532,8 @@
     - Potassium
 
 - type: entity
-  id: XenoArtifactFloraSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFloraSpawn
   description: Produces flora
   components:
   - type: XAEApplyComponents
@@ -547,8 +547,8 @@
         - id: RandomFloraTree
 
 - type: entity
-  id: XenoArtifactChemicalPuddle
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactChemicalPuddle
   description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
   - type: XAECreatePuddle
@@ -583,31 +583,31 @@
     - Sulfur
 
 - type: entity
-  id: XenoArtifactThrowThingsAround
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactThrowThingsAround
   description: Minor implosion
   components:
   - type: XAEThrowThingsAround
 
 - type: entity
-  id: XenoArtifactColdWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactColdWave
   description: Cools down surrounding gas
   components:
   - type: XAETemperature
     targetTemp: 50
 
 - type: entity
-  id: XenoArtifactHeatWave
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactHeatWave
   description: Heats up surrounding gas greatly
   components:
   - type: XAETemperature
     targetTemp: 500
 
 - type: entity
-  id: XenoArtifactFoamMild
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamMild
   description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
   components:
   - type: XAEFoam
@@ -626,8 +626,8 @@
     - JuiceThatMakesYouWeh
 
 - type: entity
-  id: XenoArtifactRandomInstrumentSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRandomInstrumentSpawn
   description: Creates musical instrument
   components:
   - type: XenoArtifactNode
@@ -646,8 +646,8 @@
         - id: RandomInstruments
 
 - type: entity
-  id: XenoArtifactMonkeySpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMonkeySpawn
   description: Creates primate
   components:
   - type: XenoArtifactNode
@@ -669,8 +669,8 @@
           weight: 5.0
 
 - type: entity
-  id: XenoArtifactRadioactive
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactRadioactive
   description: Becomes mildly radioactive
   components:
   - type: XAEApplyComponents
@@ -682,8 +682,8 @@
       slope: 0.3
 
 - type: entity
-  id: XenoArtifactChargeBattery
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactChargeBattery
   description: Charges up batteries
   components:
   - type: XAEChargeBattery
@@ -692,16 +692,16 @@
     - charge-artifact-popup
 
 - type: entity
-  id: XenoArtifactKnock
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactKnock
   description: Mild electromagnetic interference
   components:
   - type: XAEKnock
   - type: XAELightFlicker
 
 - type: entity
-  id: XenoArtifactMagnet
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactMagnet
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
@@ -714,8 +714,8 @@
       baseTangentialAcceleration: 3
 
 - type: entity
-  id: XenoArtifactMagnetNegative
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactMagnetNegative
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
@@ -728,8 +728,8 @@
       baseTangentialAcceleration: -3
 
 - type: entity
-  id: XenoArtifactStealth
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactStealth
   description: Create light interference
   components:
   - type: XAEApplyComponents
@@ -741,8 +741,8 @@
       movementVisibilityRate: 0.10
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawn
   parent: BaseXenoArtifactEffect # todo: splice into different well-named effects, amounts should reflect how rare material is
+  id: XenoArtifactRareMaterialSpawn
   description: Create rare materials
   components:
   - type: XAEApplyComponents
@@ -771,8 +771,8 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnSilver
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnSilver
   description: Create rare materials
   components:
   - type: XenoArtifactNode
@@ -794,8 +794,8 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnPlasma
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnPlasma
   description: Create plasma
   components:
   - type: XenoArtifactNode
@@ -817,8 +817,8 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnGold
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnGold
   description: Create gold
   components:
   - type: XenoArtifactNode
@@ -840,8 +840,8 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactRareMaterialSpawnUranium
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactRareMaterialSpawnUranium
   description: Create uranium
   components:
   - type: XenoArtifactNode
@@ -863,8 +863,8 @@
           prob: 0.3
 
 - type: entity
-  id: XenoArtifactAngryCarpSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactAngryCarpSpawn
   description: Create hostile fish
   components:
   - type: XenoArtifactNode
@@ -886,8 +886,8 @@
           weight: 1.0
 
 - type: entity
-  id: XenoArtifactFaunaSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFaunaSpawn
   description: Create friendly fauna
   components:
   - type: XenoArtifactNode
@@ -933,8 +933,8 @@
           prob: 0.03
 
 - type: entity
-  id: XenoArtifactHostileFaunaSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactHostileFaunaSpawn
   description: Create hostile fauna
   components:
   - type: XenoArtifactNode
@@ -960,8 +960,8 @@
         - id: MobKangarooSpace
 
 - type: entity
-  id: XenoArtifactCashSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactCashSpawn
   description: Create money
   components:
   - type: XenoArtifactNode
@@ -989,8 +989,8 @@
           weight: 0.1
 
 - type: entity
-  id: XenoArtifactShatterWindows
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactShatterWindows
   description: Break windows
   components:
   - type: XenoArtifactNode
@@ -1008,8 +1008,8 @@
         Structural: 200
 
 - type: entity
-  id: XenoArtifactFoamGood
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamGood
   description: Creates wave of helpful foam
   components:
   - type: XenoArtifactNode
@@ -1029,8 +1029,8 @@
     - Omnizine
 
 - type: entity
-  id: XenoArtifactFoamDangerous
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactFoamDangerous
   description: Creates wave of harmful foam
   components:
   - type: XAEFoam
@@ -1051,8 +1051,8 @@
     - Amatoxin
 
 - type: entity
-  id: XenoArtifactPuddleRare
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPuddleRare
   description: Creates puddle of helpful chemicals
   components:
   - type: XAECreatePuddle
@@ -1081,8 +1081,8 @@
     - Siderlac
 
 - type: entity
-  id: XenoArtifactAnomalySpawn
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactAnomalySpawn
   description: Creates anomaly
   components:
   - type: XAEApplyComponents
@@ -1096,8 +1096,8 @@
         - id: RandomAnomalySpawner
 
 - type: entity
-  id: XenoArtifactIgnite
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactIgnite
   description: Pyrokinesis
   components:
   - type: XAEIgnite
@@ -1107,15 +1107,15 @@
       max: 6
 
 - type: entity
-  id: XenoArtifactTeleport
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactTeleport
   description: Teleportation
   components:
   - type: XAERandomTeleportInvoker
 
 - type: entity
-  id: XenoArtifactEmp
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEmp
   description: Dangerous electromagnetic interference
   components:
   - type: XenoArtifactNode
@@ -1126,31 +1126,31 @@
   - type: XAEEmpInArea
 
 - type: entity
-  id: XenoArtifactPolyMonkey
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyMonkey
   description: Temporarily reshape flesh to fur
   components:
   - type: XAEPolymorph
 
 - type: entity
-  id: XenoArtifactPolyLizard
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyLizard
   description: Temporarily reshape flesh to scale
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLizard
 
 - type: entity
-  id: XenoArtifactPolyLuminous
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPolyLuminous
   description: Temporarily reshape flesh to light
   components:
   - type: XAEPolymorph
     polymorphPrototypeName: ArtifactLuminous
 
 - type: entity
-  id: XenoArtifactRadioactiveStrong
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactRadioactiveStrong
   description: Becomes highly radioactive
   components:
   - type: XAEApplyComponents
@@ -1162,8 +1162,8 @@
       slope: 0.3
 
 - type: entity
-  id: XenoArtifactMaterialSpawnGlass
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnGlass
   description: Create glass
   components:
   - type: XAEApplyComponents
@@ -1177,8 +1177,8 @@
         - id: SheetGlass
 
 - type: entity
-  id: XenoArtifactMaterialSpawnSteel
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnSteel
   description: Create steel
   components:
   - type: XAEApplyComponents
@@ -1192,8 +1192,8 @@
         - id: SheetSteel
 
 - type: entity
-  id: XenoArtifactMaterialSpawnPlastic
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactMaterialSpawnPlastic
   description: Create plastic
   components:
   - type: XAEApplyComponents
@@ -1207,15 +1207,15 @@
         - id: SheetPlastic
 
 - type: entity
-  id: XenoArtifactPortal
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactPortal
   description: Create short-living bluespace portal
   components:
   - type: XAEPortal
 
 - type: entity
-  id: XenoArtifactArtifactSpawn
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactArtifactSpawn
   description: Create artifact
   components:
   - type: XenoArtifactNode
@@ -1234,8 +1234,8 @@
         - id: RandomArtifactSpawner
 
 - type: entity
-  id: XenoArtifactShuffle
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactShuffle
   description: Switch places of sentient beings #not ALL beings, but oh well...
   components:
   - type: XAEShuffle
@@ -1245,9 +1245,9 @@
     - shuffle-artifact-popup
 
 - type: entity
-  id: XenoArtifactHealAll
   parent: BaseXenoArtifactEffect
-  description: Miraclous healing
+  id: XenoArtifactHealAll
+  description: Miraculous healing
   components:
   - type: XAEDamageInArea
     damageChance: 1
@@ -1256,13 +1256,17 @@
       components:
       - MobState
     damage:
-      groups:
-        Brute: -300
-        Burn: -300
+      types:
+        Blunt: -100
+        Piercing: -100
+        Slash: -100
+        Heat: -100
+        Cold: -100
+        Shock: -100
 
 - type: entity
-  id: XenoArtifactTesla
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactTesla
   description: Mass destruction
   components:
   - type: XAEApplyComponents
@@ -1276,8 +1280,8 @@
         - id: Singularity
 
 - type: entity
-  id: XenoArtifactSingularity
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactSingularity
   description: Imminent doom
   components:
   - type: XAEApplyComponents
@@ -1291,8 +1295,8 @@
         - id: TeslaEnergyBall
 
 - type: entity
-  id: XenoArtifactExplosionScary
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactExplosionScary
   description: Small scale high-speed nuclear reaction
   components:
   - type: XAETriggerExplosives
@@ -1306,8 +1310,8 @@
     repeatable: true
 
 - type: entity
-  id: XenoArtifactBoom
   parent: BaseOneTimeXenoArtifactEffect
+  id: XenoArtifactBoom
   description: Explosion
   components:
   - type: XAETriggerExplosives
@@ -1320,8 +1324,8 @@
     repeatable: true
 
 - type: entity
-  id: XenoArtifactEffectCreationGasPlasma
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasPlasma
   description: Expels plasma
   components:
   - type: XAECreateGas
@@ -1329,8 +1333,8 @@
       Plasma: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasTritium
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasTritium
   description: Expels tritium
   components:
   - type: XAECreateGas
@@ -1338,8 +1342,8 @@
       Tritium: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasAmmonia
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasAmmonia
   description: Expels ammonia
   components:
   - type: XAECreateGas
@@ -1347,8 +1351,8 @@
       Ammonia: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasFrezon
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasFrezon
   description: Expels frezon
   components:
   - type: XAECreateGas
@@ -1356,8 +1360,8 @@
       Frezon: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasNitrousOxide
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasNitrousOxide
   description: Expels nitrous oxide
   components:
   - type: XAECreateGas
@@ -1365,8 +1369,8 @@
       NitrousOxide: 300
 
 - type: entity
-  id: XenoArtifactEffectCreationGasCarbonDioxide
   parent: BaseXenoArtifactEffect
+  id: XenoArtifactEffectCreationGasCarbonDioxide
   description: Expels carbon dioxide
   components:
   - type: XAECreateGas

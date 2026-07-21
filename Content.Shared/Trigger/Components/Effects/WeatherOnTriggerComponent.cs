@@ -12,10 +12,10 @@ namespace Content.Shared.Trigger.Components.Effects;
 public sealed partial class WeatherOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
-    /// Weather type. Null to clear the weather.
+    /// Weather status effect proto. Null to clear the weather.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<WeatherPrototype>? Weather;
+    public EntProtoId? Weather;
 
     /// <summary>
     /// How long the weather should last. Null for forever.

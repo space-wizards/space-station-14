@@ -6,18 +6,17 @@ using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class VocalSystem : EntitySystem
+public sealed partial class VocalSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private ActionsSystem _actions = default!;
 
     public override void Initialize()
     {
@@ -25,22 +24,21 @@ public sealed class VocalSystem : EntitySystem
 
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
+        SubscribeLocalEvent<VocalComponent, VoiceChangedEvent>(OnVoiceChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
-        SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
+        SubscribeLocalEvent<VocalComponent, EmoteActionEvent>(OnEmoteAction);
     }
 
     /// <summary>
     /// Copy this component's datafields from one entity to another.
     /// This can't use CopyComp because of the ScreamActionEntity DataField, which should not be copied.
-    /// <summary>
+    /// </summary>
     public void CopyComponent(Entity<VocalComponent?> source, EntityUid target)
     {
         if (!Resolve(source, ref source.Comp))
             return;
 
         var targetComp = EnsureComp<VocalComponent>(target);
-        targetComp.Sounds = source.Comp.Sounds;
         targetComp.ScreamId = source.Comp.ScreamId;
         targetComp.Wilhelm = source.Comp.Wilhelm;
         targetComp.WilhelmProbability = source.Comp.WilhelmProbability;
@@ -52,22 +50,21 @@ public sealed class VocalSystem : EntitySystem
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         // try to add scream action when vocal comp added
-        _actions.AddAction(uid, ref component.ScreamActionEntity, component.ScreamAction);
-        LoadSounds(uid, component);
+        _actions.AddAction(uid, ref component.EmoteActionEntity, component.EmoteAction);
     }
 
     private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
     {
         // remove scream action when component removed
-        if (component.ScreamActionEntity != null)
+        if (component.EmoteActionEntity != null)
         {
-            _actions.RemoveAction(uid, component.ScreamActionEntity);
+            _actions.RemoveAction(uid, component.EmoteActionEntity);
         }
     }
 
-    private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
+    private void OnVoiceChanged(EntityUid uid, VocalComponent component, VoiceChangedEvent args)
     {
-        LoadSounds(uid, component, args.NewSex);
+        LoadSounds(uid, component, args.NewVoice);
     }
 
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
@@ -76,7 +73,7 @@ public sealed class VocalSystem : EntitySystem
             return;
 
         // snowflake case for wilhelm scream easter egg
-        if (args.Emote.ID == component.ScreamId)
+        if (args.Emote == component.ScreamId)
         {
             args.Handled = TryPlayScreamSound(uid, component);
             return;
@@ -86,15 +83,15 @@ public sealed class VocalSystem : EntitySystem
             return;
 
         // just play regular sound based on emote proto
-        args.Handled = _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), args.Emote);
     }
 
-    private void OnScreamAction(EntityUid uid, VocalComponent component, ScreamActionEvent args)
+    private void OnEmoteAction(EntityUid uid, VocalComponent component, EmoteActionEvent args)
     {
         if (args.Handled)
             return;
 
-        _chat.TryEmoteWithChat(uid, component.ScreamId);
+        _chat.TryEmoteWithChat(uid, args.Emote);
         args.Handled = true;
     }
 
@@ -109,20 +106,20 @@ public sealed class VocalSystem : EntitySystem
         if (component.EmoteSounds is not { } sounds)
             return false;
 
-        return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
+        return _chat.TryPlayEmoteSound(uid, ProtoMan.Index(sounds), component.ScreamId);
     }
 
-    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
+    /// <summary>
+    /// This only works on Humanoids. Mobs should have emoteSounds on <see cref="VocalComponent"/> set directly instead.
+    /// </summary>
+    private void LoadSounds(EntityUid uid, VocalComponent component, ProtoId<EmoteSoundsPrototype>? protoId = null)
     {
-        if (component.Sounds == null)
+        if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
             return;
 
-        sex ??= CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex ?? Sex.Unsexed;
+        protoId ??= humanoid.Voice;
 
-        if (!component.Sounds.TryGetValue(sex.Value, out var protoId))
-            return;
-
-        if (!_proto.HasIndex(protoId))
+        if (!ProtoMan.HasIndex(protoId))
             return;
 
         component.EmoteSounds = protoId;
