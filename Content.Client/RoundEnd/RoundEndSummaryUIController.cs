@@ -17,7 +17,7 @@ public sealed partial class RoundEndSummaryUIController : UIController,
 
     private RoundEndSummaryWindow? _window;
 
-    private void ToggleScoreboardWindow(ICommonSession? session = null)
+    public void ToggleScoreboardWindow(ICommonSession? session = null)
     {
         if (_window == null)
             return;
