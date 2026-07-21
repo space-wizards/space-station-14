@@ -4,6 +4,7 @@ using Content.Shared.VendingMachines;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using System.Linq;
+using Content.Shared.VendingMachines.Components;
 
 namespace Content.Client.VendingMachines;
 

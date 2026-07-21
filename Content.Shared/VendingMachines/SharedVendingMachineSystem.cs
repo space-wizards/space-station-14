@@ -91,14 +91,14 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent>();
+        var query = EntityQueryEnumerator<VendingMachineComponent>();
         var curTime = Timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp, out var eject))
+        while (query.MoveNext(out var uid, out var comp))
         {
-            if (eject.Ejecting)
+            if (TryComp<VendingMachineEjectComponent>(uid, out var eject))
             {
-                if (curTime > eject.EjectEnd)
+                if (eject.Ejecting && curTime > eject.EjectEnd)
                 {
                     eject.EjectEnd = null;
                     Dirty(uid, eject);
@@ -106,11 +106,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     EjectItem((uid, comp, eject));
                     UpdateUI((uid, comp));
                 }
-            }
 
-            if (eject.Denying)
-            {
-                if (curTime > eject.DenyEnd)
+                if (eject.Denying && curTime > eject.DenyEnd)
                 {
                     eject.DenyEnd = null;
                     Dirty(uid, eject);
@@ -118,12 +115,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     TryUpdateVisualState((uid, comp), (uid, eject));
                 }
             }
-        }
 
-        var vendQuery = EntityQueryEnumerator<VendingMachineComponent>();
-
-        while (vendQuery.MoveNext(out var uid, out var comp))
-        {
             if (!comp.DispenseOnHitCoolingDown) continue;
             if (!(curTime > comp.DispenseOnHitEnd)) continue;
             comp.DispenseOnHitEnd = null;
@@ -205,12 +197,20 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <param name="throwItem">Whether the item should be thrown in a random direction after ejection</param>
     /// <param name="user"></param>
     /// <param name="vendComponent"></param>
-    public void TryEjectVendorItem(EntityUid uid, InventoryType type, string itemId, bool throwItem, EntityUid? user = null, VendingMachineComponent? vendComponent = null)
+    /// <param name="ejectComponent"></param>
+    public void TryEjectVendorItem(
+        EntityUid uid,
+        InventoryType type,
+        string itemId,
+        bool throwItem,
+        EntityUid? user = null,
+        VendingMachineComponent? vendComponent = null,
+        VendingMachineEjectComponent? ejectComponent = null)
     {
         if (!Resolve(uid, ref vendComponent))
             return;
 
-        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+        if (!Resolve(uid, ref ejectComponent))
             return;
 
         if (ejectComponent.Ejecting || vendComponent.Broken || !_receiver.IsPowered(uid))
@@ -223,14 +223,14 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         if (string.IsNullOrEmpty(entry?.ID))
         {
             Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, uid);
-            Deny((uid, vendComponent));
+            Deny((uid, vendComponent), ejectComponent: ejectComponent);
             return;
         }
 
         if (entry.Amount <= 0)
         {
             Popup.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, uid);
-            Deny((uid, vendComponent));
+            Deny((uid, vendComponent), ejectComponent: ejectComponent);
             return;
         }
 

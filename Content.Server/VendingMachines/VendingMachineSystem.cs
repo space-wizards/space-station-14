@@ -74,16 +74,15 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             component.DispenseOnHitChance == null || args.DamageDelta == null)
             return;
 
-        if (args.DamageIncreased && args.DamageDelta.GetTotal() >= component.DispenseOnHitThreshold &&
-            _random.Prob(component.DispenseOnHitChance.Value))
-        {
-            if (component.DispenseOnHitCooldown != null)
-            {
-                component.DispenseOnHitEnd = Timing.CurTime + component.DispenseOnHitCooldown.Value;
-            }
+        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= component.DispenseOnHitThreshold) ||
+            !_random.Prob(component.DispenseOnHitChance.Value)) return;
 
-            EjectRandom(uid, throwItem: true, forceEject: true, component);
+        if (component.DispenseOnHitCooldown != null)
+        {
+            component.DispenseOnHitEnd = Timing.CurTime + component.DispenseOnHitCooldown.Value;
         }
+
+        EjectRandom(uid, throwItem: true, forceEject: true, component);
     }
 
     [SubscribeLocalEvent]
@@ -151,7 +150,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
         else
         {
-            TryEjectVendorItem(uid, item.Type, item.ID, throwItem, user: null, vendComponent: vendComponent);
+            TryEjectVendorItem(uid, item.Type, item.ID, throwItem, user: null, vendComponent: vendComponent, ejectComponent: ejectComponent);
         }
     }
 

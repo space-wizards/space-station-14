@@ -16,9 +16,7 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
 
     public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
     {
-        if (!EntityManager.TryGetComponent(wire.Owner, out VendingMachineEjectComponent? eject))
-            return StatusLightState.Off;
-
+        var eject = EntityManager.GetComponent<VendingMachineEjectComponent>(wire.Owner);
         return eject.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
     }
 

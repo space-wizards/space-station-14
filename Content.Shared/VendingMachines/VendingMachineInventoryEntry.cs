@@ -3,30 +3,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.VendingMachines;
 
 [Serializable, NetSerializable, DataDefinition]
-public sealed partial class VendingMachineInventoryEntry
+public sealed partial class VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
 {
     [DataField]
-    public InventoryType Type;
+    public InventoryType Type = type;
 
     [DataField]
-    public string ID;
+    public string ID = id;
 
     [DataField]
-    public uint Amount;
+    public uint Amount = amount;
 
-    public VendingMachineInventoryEntry(InventoryType type, string id, uint amount)
-    {
-        Type = type;
-        ID = id;
-        Amount = amount;
-    }
-
-    public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry)
-    {
-        Type = entry.Type;
-        ID = entry.ID;
-        Amount = entry.Amount;
-    }
+    public VendingMachineInventoryEntry(VendingMachineInventoryEntry entry) : this(entry.Type, entry.ID, entry.Amount) { }
 }
 
 [Serializable, NetSerializable]
