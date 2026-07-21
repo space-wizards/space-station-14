@@ -9,6 +9,7 @@ using Content.Shared.Emp;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wall;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

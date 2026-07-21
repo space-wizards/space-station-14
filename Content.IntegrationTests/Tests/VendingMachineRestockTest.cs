@@ -12,6 +12,7 @@ using Content.Shared.EntityTable;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.VendingMachines;
+using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
