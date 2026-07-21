@@ -352,7 +352,7 @@ namespace Content.Client.Inventory
                     // Get the color of the "most important" contraband using O(n) shenanigans
                     var hasContraColor = contraList
                         .Select(x => _proto.Index(x))
-                        .Aggregate((i1, i2) => i1.Priority > i2.Priority ? i1 : i2)
+                        .MaxBy(x => x.Priority)!
                         .Color;
 
                     var path = new ResPath(_hasContrabandTexturePathBeginning +
