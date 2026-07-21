@@ -127,7 +127,7 @@ namespace Content.Shared.Cuffs
             }
 
             if (args.Cancelled)
-                _popup.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, args.User);
+                _popup.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), entity, args.User);
         }
 
         private void OnStartup(EntityUid uid, CuffableComponent component, ComponentInit args)
