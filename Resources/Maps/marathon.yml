@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 269.0.1
+  engineVersion: 277.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/23/2025 21:10:24
-  entityCount: 23881
+  time: 05/26/2026 13:11:05
+  entityCount: 23879
 maps:
 - 5350
 grids:
@@ -6448,7 +6448,8 @@ entities:
           3,-6:
             0: 14527
           3,-9:
-            0: 65520
+            0: 32752
+            5: 32768
           4,-8:
             0: 65535
           4,-7:
@@ -6471,7 +6472,7 @@ entities:
             2: 34952
           6,-6:
             2: 61440
-            5: 224
+            6: 224
           6,-5:
             0: 112
             2: 2184
@@ -6480,7 +6481,7 @@ entities:
             3: 57344
           6,-7:
             3: 224
-            6: 57344
+            7: 57344
           6,-9:
             3: 57568
           7,-5:
@@ -7558,6 +7559,11 @@ entities:
           moles:
             Plasma: 6666.982
         - volume: 2500
+          temperature: 293.14993
+          moles:
+            Oxygen: 21.824879
+            Nitrogen: 82.10312
+        - volume: 2500
           temperature: 293.15
           moles:
             Nitrogen: 6666.982
@@ -7579,6 +7585,8 @@ entities:
     - type: GridPathfinding
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: TileHistory
+      chunkHistory: {}
   - uid: 5350
     components:
     - type: MetaData
@@ -11784,7 +11792,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -48347.26
+      secondsUntilStateChange: -48997.395
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13754,6 +13762,11 @@ entities:
     - type: Transform
       pos: -52.5,-67.5
       parent: 30
+  - uid: 4960
+    components:
+    - type: Transform
+      pos: -85.5,-58.5
+      parent: 30
   - uid: 12854
     components:
     - type: Transform
@@ -14153,11 +14166,6 @@ entities:
     components:
     - type: Transform
       pos: -84.5,-53.5
-      parent: 30
-  - uid: 18245
-    components:
-    - type: Transform
-      pos: -85.5,-58.5
       parent: 30
   - uid: 18246
     components:
@@ -64990,8 +64998,6 @@ entities:
     - type: Transform
       pos: -0.68636847,-9.05644
       parent: 30
-    - type: Tag
-      tags: []
 - proto: DrinkMug
   entities:
   - uid: 10991
@@ -65042,8 +65048,6 @@ entities:
     - type: Transform
       pos: -0.70199347,-9.447065
       parent: 30
-    - type: Tag
-      tags: []
 - proto: DrinkShaker
   entities:
   - uid: 702
@@ -65068,8 +65072,6 @@ entities:
     - type: Transform
       pos: -0.68636847,-9.259565
       parent: 30
-    - type: Tag
-      tags: []
 - proto: DrinkTeacup
   entities:
   - uid: 8071
@@ -65708,9 +65710,14 @@ entities:
   - uid: 23407
     components:
     - type: Transform
+      anchored: False
       rot: -1.5707963267948966 rad
       pos: -14.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
+    - type: PowerConsumer
+      drawRate: 1
 - proto: EmitterFlatpack
   entities:
   - uid: 16130
@@ -92105,11 +92112,15 @@ entities:
     - type: Transform
       pos: 1.5,-49.5
       parent: 30
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 23289
     components:
     - type: Transform
       pos: -2.5,-49.5
       parent: 30
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
 - proto: GasPressurePump
   entities:
   - uid: 337
@@ -92151,14 +92162,6 @@ entities:
       parent: 30
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 8781
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 16.5,-24.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
   - uid: 8792
     components:
     - type: Transform
@@ -92189,24 +92192,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 21.5,-33.5
       parent: 30
-  - uid: 9294
-    components:
-    - type: MetaData
-      name: TEG Supply
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 15.5,-31.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#947507FF'
-  - uid: 9303
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 16.5,-23.5
-      parent: 30
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
   - uid: 9342
     components:
     - type: Transform
@@ -92334,6 +92319,26 @@ entities:
       parent: 30
 - proto: GasValve
   entities:
+  - uid: 4967
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 16.5,-23.5
+      parent: 30
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
+  - uid: 8781
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 16.5,-24.5
+      parent: 30
+    - type: GasValve
+      open: False
+    - type: AtmosPipeColor
+      color: '#0335FCFF'
   - uid: 9000
     components:
     - type: Transform
@@ -92342,6 +92347,16 @@ entities:
       parent: 30
     - type: GasValve
       open: False
+    - type: AtmosPipeColor
+      color: '#947507FF'
+  - uid: 9294
+    components:
+    - type: MetaData
+      name: TEG Supply
+    - type: Transform
+      rot: -4.71238898038469 rad
+      pos: 15.5,-31.5
+      parent: 30
     - type: AtmosPipeColor
       color: '#947507FF'
   - uid: 21274
@@ -115208,23 +115223,35 @@ entities:
   - uid: 20450
     components:
     - type: Transform
+      anchored: False
       pos: -9.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23388
     components:
     - type: Transform
+      anchored: False
       pos: -10.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23389
     components:
     - type: Transform
+      anchored: False
       pos: -11.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23390
     components:
     - type: Transform
+      anchored: False
       pos: -12.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
 - proto: RadioHandheld
   entities:
   - uid: 11081
@@ -131687,59 +131714,89 @@ entities:
   - uid: 5732
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -8.5,-55.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 6095
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -7.5,-56.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 6271
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -7.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 6678
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -8.5,-56.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 6679
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -7.5,-55.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 13902
     components:
     - type: Transform
+      anchored: False
       rot: 3.141592653589793 rad
       pos: -8.5,-54.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 20456
     components:
     - type: Transform
+      anchored: False
       pos: -9.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 20462
     components:
     - type: Transform
+      anchored: False
       pos: -9.5,-59.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 20463
     components:
     - type: Transform
+      anchored: False
       pos: -25.5,-59.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23391
     components:
     - type: Transform
+      anchored: False
       pos: -25.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
 - proto: TeslaGenerator
   entities:
   - uid: 20270
@@ -131752,23 +131809,35 @@ entities:
   - uid: 23393
     components:
     - type: Transform
+      anchored: False
       pos: -12.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23394
     components:
     - type: Transform
+      anchored: False
       pos: -13.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23395
     components:
     - type: Transform
+      anchored: False
       pos: -21.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
   - uid: 23396
     components:
     - type: Transform
+      anchored: False
       pos: -22.5,-58.5
       parent: 30
+    - type: Physics
+      bodyType: Dynamic
 - proto: TintedWindow
   entities:
   - uid: 289
@@ -135131,11 +135200,6 @@ entities:
     - type: Transform
       pos: -22.5,32.5
       parent: 30
-  - uid: 4960
-    components:
-    - type: Transform
-      pos: -22.5,32.5
-      parent: 30
   - uid: 4962
     components:
     - type: Transform
@@ -135152,11 +135216,6 @@ entities:
       pos: -17.5,29.5
       parent: 30
   - uid: 4966
-    components:
-    - type: Transform
-      pos: -19.5,29.5
-      parent: 30
-  - uid: 4967
     components:
     - type: Transform
       pos: -19.5,29.5

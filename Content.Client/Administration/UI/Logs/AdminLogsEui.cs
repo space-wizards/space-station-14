@@ -232,6 +232,11 @@ public sealed partial class AdminLogsEui : BaseEui
                 if (setLogFilter.Search != null)
                     LogsControl.LogSearch.SetText(setLogFilter.Search);
 
+                if (setLogFilter.Players != null)
+                {
+                    LogsControl.SelectPlayers(setLogFilter.Players);
+                }
+
                 if (setLogFilter.Types != null)
                     LogsControl.SetTypesSelection(setLogFilter.Types, setLogFilter.InvertTypes);
 

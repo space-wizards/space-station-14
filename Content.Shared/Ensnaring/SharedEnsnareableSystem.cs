@@ -75,9 +75,9 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
         if (args.Cancelled || component.Container == null || !Container.Remove(args.Args.Used.Value, component.Container))
         {
             if (args.User == args.Target)
-                Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, args.User, PopupType.MediumCaution);
+                Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.Args.Used)), uid, args.User, PopupType.MediumCaution);
             else if (args.Target != null)
-                Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-fail-other", ("ensnare", args.Args.Used), ("user", args.Target)), uid, args.User, PopupType.MediumCaution);
+                Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail-other", ("ensnare", args.Args.Used), ("user", args.Target)), uid, args.User, PopupType.MediumCaution);
 
             return;
         }
@@ -88,9 +88,9 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
         ensnaring.Ensnared = null;
 
         if (args.User == args.Target)
-            Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, args.User, PopupType.Medium);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.Args.Used)), uid, args.User, PopupType.Medium);
         else if (args.Target != null)
-            Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-complete-other", ("ensnare", args.Args.Used), ("user", args.Target)), uid, args.User, PopupType.Medium);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete-other", ("ensnare", args.Args.Used), ("user", args.Target)), uid, args.User, PopupType.Medium);
 
         UpdateAlert(args.Args.Target.Value, component);
         var ev = new EnsnareRemoveEvent(ensnaring.WalkSpeed, ensnaring.SprintSpeed);
@@ -168,9 +168,9 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
             return;
 
         if (user == target)
-            Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target, target);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", ensnare)), target, target);
         else
-            Popup.PopupPredicted(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user, user);
+            Popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", ensnare), ("user", Identity.Entity(target, EntityManager))), user, user);
     }
 
     private void OnStripEnsnareMessage(EntityUid uid, EnsnareableComponent component, StrippingEnsnareButtonPressed args)
@@ -240,7 +240,7 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
     /// Used where you want to try to ensnare an entity with the <see cref="EnsnareableComponent"/>
     /// </summary>
     /// <param name="target">The entity that will be ensnared</param>
-    /// <paramref name="ensnare"> The entity that is used to ensnare</param>
+    /// <param name="ensnare"> The entity that is used to ensnare</param>
     /// <param name="component">The ensnaring component</param>
     public bool TryEnsnare(EntityUid target, EntityUid ensnare, EnsnaringComponent component)
     {
@@ -338,6 +338,7 @@ public abstract partial class SharedEnsnareableSystem : EntitySystem
     /// Update the Ensnared alert for an entity.
     /// </summary>
     /// <param name="target">The entity that has been affected by a snare</param>
+    /// <param name="component">Entity's EnsnareableComponent.</param>
     public void UpdateAlert(EntityUid target, EnsnareableComponent component)
     {
         if (!IsEnsnared(target))
