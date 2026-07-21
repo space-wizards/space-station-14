@@ -91,7 +91,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 100 # Because the vehicle makes it a kinematic controller, the density is way higher, so we make it the same as before.
+        density: 100 # The vehicle density is way higher, so we make it the same as other chairs use.
         mask:
         - TableMask
   - type: Vehicle
