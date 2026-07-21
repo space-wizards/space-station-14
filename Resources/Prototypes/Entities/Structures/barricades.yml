@@ -152,6 +152,8 @@
         - MachineMask
         layer:
         - HalfWallLayer
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Damageable
     damageModifierSet: PerforatedMetallic
   - type: Destructible
@@ -185,6 +187,8 @@
     sprite: Structures/barbed_wire.rsi
     state: assembly
     noRot: true
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Damageable
     damageModifierSet: PerforatedMetallic
   - type: Destructible
