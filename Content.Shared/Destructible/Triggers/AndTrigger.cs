@@ -39,7 +39,7 @@ public sealed partial class AndTrigger : IThresholdTrigger
 
     public bool Equals(IThresholdTrigger? other)
     {
-        if (other is not OrTrigger trigger || trigger.Triggers.Count != Triggers.Count)
+        if (other is not AndTrigger trigger || trigger.Triggers.Count != Triggers.Count)
             return false;
 
         for (var i = 0; i < Triggers.Count; i++)
