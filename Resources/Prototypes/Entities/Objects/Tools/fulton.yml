@@ -38,20 +38,16 @@
     - type: Clickable
     - type: InteractionOutline
     - type: FultonBeacon
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.FoldedVisuals.State:
-          foldedLayer:
-            True: { state: folded_extraction }
-            False: { state: extraction_point }
     - type: Sprite
       sprite: Objects/Tools/fulton.rsi
       drawdepth: SmallObjects
       noRot: true
       layers:
         - state: extraction_point
-          map: [ "foldedLayer" ]
+          map: ["unfoldedLayer"]
+          visible: false
+        - state: folded_extraction
+          map: ["foldedLayer"]
 
 - type: entity
   id: Fulton

@@ -52,7 +52,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
-        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
+        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry, seedEntity: ent))
             return;
 
         ent.Comp.RecipientName = entry.Name;
