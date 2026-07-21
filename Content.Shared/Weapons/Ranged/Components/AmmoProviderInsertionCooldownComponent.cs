@@ -1,6 +1,6 @@
-﻿using Content.Shared.Weapons.Ranged.Systems;
+﻿using Content.Shared.Timing;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -9,7 +9,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Currently compatible with <see cref="BallisticAmmoProviderComponent"/> and <see cref="RevolverAmmoProviderComponent"/>.
 /// Is ignored by <see cref="BallisticAmmoSelfRefillerComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(SharedGunSystem)), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGunSystem))]
 public sealed partial class AmmoProviderInsertionCooldownComponent : Component
 {
     /// <summary>
@@ -19,8 +19,8 @@ public sealed partial class AmmoProviderInsertionCooldownComponent : Component
     public TimeSpan InsertCooldown = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
-    /// Last time ammo was inserted into this provider.
+    /// The <see cref="UseDelayComponent.Delays"/> key used for the insertion UseDelay.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan LastInsertion = TimeSpan.Zero;
+    [DataField]
+    public string UseDelayId = SharedGunSystem.InsertionCooldownId;
 }

@@ -16,7 +16,7 @@ public sealed partial class UseDelayComponent : Component
     public Dictionary<string, UseDelayInfo> Delays = [];
 
     /// <summary>
-    /// Default delay time.
+    /// Default delay time. If set to 0, the default key is not initialized.
     /// </summary>
     /// <remarks>
     /// This is only used at MapInit and should not be expected

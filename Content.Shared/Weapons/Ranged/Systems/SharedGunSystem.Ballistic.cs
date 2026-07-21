@@ -115,12 +115,11 @@ public abstract partial class SharedGunSystem
             return;
         }
 
-        // Check if we somehow would've bypassed the insert delay with this doafter, if it exists
-        if (IsInsertionTooFast(args.Target.Value))
-        {
-            PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), uid, args.User);
+        // Final check before insertion
+        var providerEv = new CanAmmoInsertionEvent();
+        RaiseLocalEvent(args.Target.Value, ref providerEv);
+        if (providerEv.Cancelled)
             return;
-        }
 
         void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
         {
@@ -345,11 +344,13 @@ public abstract partial class SharedGunSystem
         if (!CanInsertBallistic(entity, ammo))
             return false;
 
-        if (checkInsertionSpeed && !ValidateInsertionSpeed(entity.Owner))
-        {
-            PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), entity, user);
+        var canInsertEv = new CanAmmoInsertionEvent();
+        RaiseLocalEvent(entity, ref canInsertEv);
+        if (canInsertEv.Cancelled)
             return false;
-        }
+
+        var providerEv = new AmmoInsertionEvent();
+        RaiseLocalEvent(entity, ref providerEv);
 
         entity.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, entity.Comp.Container);

@@ -177,11 +177,13 @@ public partial class SharedGunSystem
                 continue;
             }
 
-            if (!ValidateInsertionSpeed(ent.Owner))
-            {
-                PopupSystem.PopupEntity(Loc.GetString("gun-insertion-too-fast"), ent, user);
+            var canInsertEv = new CanAmmoInsertionEvent();
+            RaiseLocalEvent(ent, ref canInsertEv);
+            if (canInsertEv.Cancelled)
                 return false;
-            }
+
+            var providerEv = new AmmoInsertionEvent();
+            RaiseLocalEvent(ent, ref providerEv);
 
             ent.Comp.AmmoSlots[index] = insertEnt;
             Containers.Insert(insertEnt, ent.Comp.AmmoContainer);
