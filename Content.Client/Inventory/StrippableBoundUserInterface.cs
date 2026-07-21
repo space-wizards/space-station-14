@@ -336,7 +336,7 @@ namespace Content.Client.Inventory
                 }
 
                 // if the item has contraband, add a blue dotted outline (under the main contraband overlay if there is one)
-                if (_contraband.StorageHasContraband(entity.Value, Owner, out var contraList))
+                if (_contraband.ContainerHasContraband(entity.Value, Owner, out var contraList))
                 {
                     var hasContraColor = _hasContrabandDefaultColor;
                     if (contraList.Count() == 1)
