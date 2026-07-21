@@ -8,6 +8,13 @@ namespace Content.Shared.Administration.Logs;
 public static class SearchModeHelper
 {
     private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(250);
+
+    /// <summary>
+    /// Maximum allowed regex pattern length. Patterns longer than this are
+    /// rejected before reaching the database to prevent large patterns schnanagians.
+    /// This limit applies in both client-side validation and server-side query building.
+    /// </summary>
+    public const int MaxRegexPatternLength = 256;
     private static readonly char[] WordSeparators = [' '];
 
     public static bool Matches(string text, string search, LogSearchMode mode)
@@ -47,6 +54,9 @@ public static class SearchModeHelper
     {
         if (string.IsNullOrEmpty(pattern))
             return true;
+
+        if (pattern.Length > MaxRegexPatternLength)
+            return false;
 
         try
         {

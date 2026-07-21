@@ -1087,9 +1087,11 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             {
                 case LogSearchMode.Regex when SupportsRegex && IsValidRegex(search):
                     // Provider has native regex support and the pattern is valid.
+                    // Use the 2-argument Regex.IsMatch overload
+                    // (The Postgres override replaces this entirely for Postgres, becuase sqlite is stupid)
+                    var ciSearch = "(?i)" + search;
 #pragma warning disable RA0026
-                    return query.Where(log =>
-                        Regex.IsMatch(log.Message, search, RegexOptions.IgnoreCase));
+                    return query.Where(log => Regex.IsMatch(log.Message, ciSearch));
 #pragma warning restore RA0026
                 case LogSearchMode.Regex when !SupportsRegex && IsValidRegex(search):
                     // Provider has no native regex (e.g. SQLite). Skip the text filter
@@ -1144,6 +1146,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         /// </summary>
         protected static bool IsValidRegex(string pattern)
         {
+            // Enforce the shared length limit.
+            if (pattern.Length > SearchModeHelper.MaxRegexPatternLength)
+                return false;
+
             try
             {
                 _ = new Regex(pattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
@@ -1155,8 +1161,25 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             }
         }
 
+        /// <summary>
+        /// Command timeout applied to regex searches to bound how long a single
+        /// query can hold a database connection. 30 s is generous for any query that
+        /// has a round or date-range pre-filter but still prevents runaway scans.
+        /// </summary>
+        private static readonly TimeSpan RegexQueryTimeout = TimeSpan.FromSeconds(30);
+
         private IQueryable<AdminLogEvent> GetAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
+            // Apply a tighter command timeout for regex queries so a slow pattern
+            // cannot hold a connection indefinitely. Set this before building the
+            // IQueryable so it is in effect for the entire query execution.
+            if (filter?.SearchMode == LogSearchMode.Regex
+                && !string.IsNullOrWhiteSpace(filter.Search)
+                && IsValidRegex(filter.Search))
+            {
+                db.Database.SetCommandTimeout(RegexQueryTimeout);
+            }
+
             // Save me from SQLite
             var query = StartAdminLogsQuery(db, filter);
 
@@ -1483,6 +1506,13 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             AuditLogFilter filter,
             bool includePagination = true)
         {
+            if (filter.SearchMode == LogSearchMode.Regex
+                && !string.IsNullOrWhiteSpace(filter.Search)
+                && IsValidRegex(filter.Search))
+            {
+                db.Database.SetCommandTimeout(RegexQueryTimeout);
+            }
+
             var query = db.AdminAuditEvent.AsQueryable();
 
             if (filter.ServerId != null)

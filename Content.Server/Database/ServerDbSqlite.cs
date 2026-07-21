@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
@@ -330,10 +331,12 @@ namespace Content.Server.Database
                 switch (filter.SearchMode)
                 {
                     case LogSearchMode.Regex when IsValidRegex(search):
-                        // SQLite has no native regex. Skip text filter so other filters
-                        // (round, server, type, impact) still narrow the result set.
-                        // Client-side SearchModeHelper applies the real regex to loaded results.
-                        return db.AdminLogEvent.Include(log => log.Payload);
+                        var ciSearch = "(?i)" + search;
+#pragma warning disable RA0026
+                        return db.AdminLogEvent
+                            .Include(log => log.Payload)
+                            .Where(log => Regex.IsMatch(log.Payload.Message, ciSearch));
+#pragma warning restore RA0026
                     case LogSearchMode.Regex: // Invalid regex, return empty
                         return db.AdminLogEvent
                             .Include(log => log.Payload)
@@ -416,6 +419,9 @@ namespace Content.Server.Database
             // Notifications not implemented on SQLite.
             return Task.CompletedTask;
         }
+
+
+        protected override bool SupportsRegex => true;
 
         protected override DateTime NormalizeDatabaseTime(DateTime time)
         {
