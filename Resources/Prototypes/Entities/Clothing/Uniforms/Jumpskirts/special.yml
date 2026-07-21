@@ -1,0 +1,72 @@
+- type: entity
+  parent: [UnsensoredClothingUniformSkirtBase, BaseSyndicateContraband]
+  id: ClothingUniformJumpskirtOperative
+  name: operative jumpskirt
+  description: Uniform for elite syndicate operatives performing tactical operations in deep space.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtTacticool
+  name: tacticool jumpskirt
+  description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/tacticool_s.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/tacticool_s.rsi
+    # Too cool for sensors to be on
+    - type: SuitSensor
+      randomMode: false
+      mode: SensorOff
+
+- type: entity
+  parent: [ ClothingUniformSkirtBase, BaseSyndicateContraband ]
+  id: ClothingUniformJumpskirtSyndieFormalDress
+  name: syndicate formal dress
+  description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/syndieformaldress.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/syndieformaldress.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtTacticalMaid
+  name: tactical maid suitskirt
+  description: It is assumed that the best maids should have designer suits.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/tacticalmaid.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/tacticalmaid.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSlicingRefinable]
+  id: ClothingUniformJumpskirtWeb
+  name: web jumpskirt
+  description: Makes it clear that you are one with the webs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/web.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/web.rsi
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialWebSilk1
+      amount: 8
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: jumpskirt

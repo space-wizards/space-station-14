@@ -1,0 +1,251 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAncient
+  name: ancient jumpsuit
+  description: A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ancient.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKimono
+  name: kimono
+  description: Traditional chinese clothing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlack
+  name: black hawaiian shirt
+  description: Black as a starry night.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiBlue
+  name: blue hawaiian shirt
+  description: Blue as a huge ocean.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiblue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiRed
+  name: red hawaiian shirt
+  description: Red as a juicy watermelons.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaired.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHawaiYellow
+  name: yellow hawaiian shirt
+  description: Yellow as a bright sun.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFlannel
+  name: flannel jumpsuit
+  description: Smells like someones been grillin'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLoungewear
+  name: loungewear
+  description: A long stretch of fabric that wraps around your body for comfort.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/loungewear.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualBlue
+  name: casual blue jumpsuit
+  description: A loose worn blue shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#134fc1"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#134fc1"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#134fc1"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#134fc1"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualPurple
+  name: casual purple jumpsuit
+  description: A loose worn purple shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#9c0dff"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#9c0dff"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#9c0dff"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#9c0dff"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualRed
+  name: casual red jumpsuit
+  description: A loose worn red shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#b30000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#b30000"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#b30000"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualGreen
+  name: casual green jumpsuit
+  description: A loose worn green shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#00661D"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#00661D"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#00661D"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#00661D"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDameDane
+  name: yakuza outfit
+  description: Baka mitai...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCossack
+  name: cossack suit
+  description: The good old pants and brigantine.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/cossack.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGladiator
+  name: gladiator uniform
+  description: Made for true gladiators (or Ash Walkers).
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFamilyGuy
+  name: familiar garbs
+  description: Makes you remember the time you did something funny.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/familiar_garbs.rsi

@@ -1,0 +1,202 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDetective
+  name: hard-worn suitskirt
+  description: Someone who wears this means business.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDetectiveGrey
+  name: noir suitskirt
+  description: A hard-boiled private investigator's grey suit, complete with tie clip.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoS
+  name: head of security's jumpskirt
+  description: It's bright red and rather crisp, much like security's victims tend to be.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-left
+        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+      right:
+      - state: inhand-right
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-right
+        sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoSAlt
+  name: head of security's turtleneck
+  description: It's a turtleneck worn by those strong and disciplined enough to achieve the position of Head of Security.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoSParadeMale
+  name: head of security's parade uniform
+  description: A head of security's luxury-wear, for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hos_parade.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBrigmedic
+  name: brigmedic jumpskirt
+  description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/brigmedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtPrisoner
+  name: prisoner jumpskirt
+  description: A jumpskirt used for prisoners. It has suit sensors automatically enabled at all times.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    layers:
+    - state: icon
+      color: "#ff8300"
+    - state: prisoner-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#ff8300"
+      - state: prisoner-inhand-left
+      right:
+      - state: inhand-right
+        color: "#ff8300"
+      - state: prisoner-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#ff8300"
+      - state: prisoner-equipped-INNERCLOTHING
+  - type: SuitSensor
+    controlsLocked: true
+    randomMode: false
+    mode: SensorCords
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - PrisonUniform
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtSec
+  name: security jumpskirt
+  description: A jumpskirt made of strong material, providing robust protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/security.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-left
+        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+      right:
+      - state: inhand-right
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-right
+        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtWarden
+  name: warden's uniform
+  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/warden.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-left
+        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+      right:
+      - state: inhand-right
+        color: "#C12D30"
+        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+      - state: overlay-inhand-right
+        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHosFormal
+  name: hos's formal dress
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/hosformaldress.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtSeniorOfficer
+  name: senior officer jumpskirt
+  description: A sign of skill and prestige within the security department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtSecGrey
+  name: grey security jumpskirt
+  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
