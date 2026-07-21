@@ -311,6 +311,20 @@ public sealed partial class HijackBeaconSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Unanchoring helper
+    /// </summary>
+    private void Unanchor(Entity<TransformComponent?> ent, EntityUid? user = null)
+    {
+        ent.Comp ??= Transform(ent);
+
+        if (!ent.Comp.Anchored)
+            return;
+
+        _transform.Unanchor(ent, ent.Comp);
+        _popup.PopupEntity(Loc.GetString("hijack-beacon-popup-unanchor"), ent, user);
+    }
+
+    /// <summary>
     ///     Returns remaining time as an integer so it can be parsed for localization.
     /// </summary>
     private int? GetRemainingTime(Entity<ActiveHijackBeaconComponent?> ent)
