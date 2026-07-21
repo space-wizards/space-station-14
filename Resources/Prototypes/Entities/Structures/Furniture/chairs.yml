@@ -359,7 +359,6 @@
       visible: false
   - type: Item
     size: Huge
-  - type: Appearance
   - type: MeleeWeapon
     damage:
       types:

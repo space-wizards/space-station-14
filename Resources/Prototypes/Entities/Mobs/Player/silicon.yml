@@ -841,7 +841,10 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
   - type: RandomMetadata
-    nameSegments: [NamesDeathCommando]
+    nameSegments: # TODO: add unique syndieborg-specific names; right now this is the same pool that syndicate agents use
+    - NamesDeathCommandoFirst
+    - NamesDeathCommandoLast
+    nameFormat: name-format-standard
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict
