@@ -188,7 +188,6 @@
     noRot: true
   - type: Damageable
     damageModifierSet: PerforatedMetallic
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
