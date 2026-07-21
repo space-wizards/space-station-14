@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Destructible;
 using Content.Shared.RCD;
 using Content.Shared.Tag;
@@ -210,6 +211,31 @@ public sealed partial class ParentToWallSystem : EntitySystem
         }
     }
     #endregion Handlers
+
+    #region Public
+    /// <summary>
+    /// Destroys all of a wall's linked entities, optionally attempting to destroy them.
+    /// </summary>
+    public bool HasImportantWallmounts(Entity<ParentedWallComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        foreach (var child in ent.Comp.Children)
+        {
+            // FIXME: load-bearing cope - client is full of invalid entities
+            if (TerminatingOrDeleted(child))
+                continue;
+
+            if (_childWallmountQuery.TryComp(child, out var parentToWall)
+                && parentToWall.BlockDeconstruction)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion Public
 
     #region Internal
     /// <summary>
