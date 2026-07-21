@@ -225,11 +225,19 @@
     node: meatWall
   - type: Damageable
     damageModifierSet: MeatMod
+  - type: Injurable
+    damageContainer: StructuralBiological
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
       behaviors:
-      - *SpawnGirder
+      - &ChangeNodeGirder !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialSheetMeat1: &BaseWallSpawn
+            min: 0
+            max: 2
   - type: IconSmooth
     key: walls
     base: meat
@@ -337,12 +345,16 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
-      behaviors: &ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
       - &SoundMetalSlam !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
-      - !type:ChangeConstructionNodeBehavior
-        node: girder
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1: *BaseWallSpawn
   - type: Fixtures
     fixtures:
       fix1:
@@ -406,7 +418,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasma1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: plasma
@@ -546,7 +563,13 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - &ChangeNodeReinforcedGirder !type:ChangeConstructionNodeBehavior
+        node: reinforcedGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -614,7 +637,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeReinforcedGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1: *BaseWallSpawn
   - type: RadiationBlocker
     resistance: 5
 
@@ -694,7 +722,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotSilver1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: silver
@@ -739,7 +772,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeReinforcedGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1: *BaseWallSpawn
   - type: Construction
     graph: Girder
     node: diagonalshuttleWall
@@ -758,7 +796,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeReinforcedGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1: *BaseWallSpawn
   - type: StaticPrice
     price: 300
   - type: RadiationBlocker
@@ -824,7 +867,12 @@
     - trigger: &DamageWallNormal
         !type:DamageTrigger
         damage: 250
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: solid
@@ -844,7 +892,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: *BaseWallSpawn
 
 - type: entity
   parent: WallSolid
@@ -874,7 +927,9 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallNormal
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
   - type: Sprite
     sprite: Structures/Walls/xeno.rsi
   - type: Icon
@@ -905,7 +960,9 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeReinforcedGirder
+      - *SoundMetalSlam
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -973,7 +1030,12 @@
   - type: Destructible
     thresholds:
     - trigger: *DamageWallWeak
-      behaviors: *ChangeNodeGirder
+      behaviors:
+      - *ChangeNodeGirder
+      - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetUranium1: *BaseWallSpawn
   - type: Fixtures
     fixtures:
       fix1:
@@ -1017,6 +1079,9 @@
           collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
         node: Barricade
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1: *BaseWallSpawn
   - type: IconSmooth
     key: woods
     base: wood
@@ -1046,9 +1111,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialWebSilk:
-            min: 1
-            max: 1
+          MaterialWebSilk: *BaseWallSpawn
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
@@ -1410,9 +1473,7 @@
     node: cardwall
     deconstructionTarget: start
   - type: Damageable
-    damageModifierSet: CardMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: CardboardMod
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -1433,9 +1494,10 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard:
-            min: 1
-            max: 2
+          MaterialCardboard: *BaseWallSpawn
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
   - type: IconSmooth
     key: cards
     base: card
