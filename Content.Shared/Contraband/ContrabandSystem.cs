@@ -199,7 +199,6 @@ public sealed partial class ContrabandSystem : EntitySystem
             }
         }
 
-
         return contrabandList.Any();
     }
 }
