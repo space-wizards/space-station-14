@@ -912,7 +912,7 @@
         sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
         state: heavylaser-smg-spread
       fireCost: 48
-      # pacifismAllowedMode: true
+      pacifismAllowedMode: true
   - type: ActivatableUI
     inHandsOnly: true
     key: enum.BatteryWeaponFireModesUiKey.Key
