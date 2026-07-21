@@ -910,7 +910,7 @@
     - proto: BulletDisablerSmgSpread
       modeIcon:
         sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
-        state: heavylaser-smg-spread
+        state: heavylaser-spread-blue
       fireCost: 48
       pacifismAllowedMode: true
   - type: ActivatableUI
