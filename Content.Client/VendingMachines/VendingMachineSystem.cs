@@ -75,7 +75,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     }
 
     [SubscribeLocalEvent]
-    private void OnAnimationCompleted(EntityUid uid, VendingMachineComponent component, AnimationCompletedEvent args)
+    private void OnAnimationCompleted(EntityUid uid, VendingMachineVisualsComponent visuals, AnimationCompletedEvent args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
@@ -87,11 +87,11 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
 
         TryComp<VendingMachineEjectComponent>(uid, out var eject);
-        UpdateAppearance(uid, visualState, component, eject, sprite);
+        UpdateAppearance(uid, visualState, visuals, eject, sprite);
     }
 
     [SubscribeLocalEvent]
-    private void OnAppearanceChange(EntityUid uid, VendingMachineComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, VendingMachineVisualsComponent visuals, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -103,42 +103,42 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
 
         TryComp<VendingMachineEjectComponent>(uid, out var eject);
-        UpdateAppearance(uid, visualState, component, eject, args.Sprite);
+        UpdateAppearance(uid, visualState, visuals, eject, args.Sprite);
     }
 
     private void UpdateAppearance(
         EntityUid uid,
         VendingMachineVisualState visualState,
-        VendingMachineComponent component,
+        VendingMachineVisualsComponent visuals,
         VendingMachineEjectComponent? eject,
         SpriteComponent sprite)
     {
-        SetLayerState(VendingMachineVisualLayers.Base, component.OffState, (uid, sprite));
+        SetLayerState(VendingMachineVisualLayers.Base, visuals.OffState, (uid, sprite));
 
         switch (visualState)
         {
             case VendingMachineVisualState.Normal:
-                SetLayerState(VendingMachineVisualLayers.BaseUnshaded, component.NormalState, (uid, sprite));
-                SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
+                SetLayerState(VendingMachineVisualLayers.BaseUnshaded, visuals.NormalState, (uid, sprite));
+                SetLayerState(VendingMachineVisualLayers.Screen, visuals.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Deny:
-                if (component.LoopDenyAnimation)
-                    SetLayerState(VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (uid, sprite));
+                if (visuals.LoopDenyAnimation)
+                    SetLayerState(VendingMachineVisualLayers.BaseUnshaded, visuals.DenyState, (uid, sprite));
                 else
-                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.DenyState, (float)(eject?.DenyDelay.TotalSeconds ?? 0), sprite);
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.DenyState, (float)(eject?.DenyDelay.TotalSeconds ?? 0), sprite);
 
-                SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
+                SetLayerState(VendingMachineVisualLayers.Screen, visuals.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Eject:
-                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, component.EjectState, (float)(eject?.EjectDelay.TotalSeconds ?? 0), sprite);
-                SetLayerState(VendingMachineVisualLayers.Screen, component.ScreenState, (uid, sprite));
+                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.EjectState, (float)(eject?.EjectDelay.TotalSeconds ?? 0), sprite);
+                SetLayerState(VendingMachineVisualLayers.Screen, visuals.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Broken:
                 HideLayers((uid, sprite));
-                SetLayerState(VendingMachineVisualLayers.Base, component.BrokenState, (uid, sprite));
+                SetLayerState(VendingMachineVisualLayers.Base, visuals.BrokenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Off:

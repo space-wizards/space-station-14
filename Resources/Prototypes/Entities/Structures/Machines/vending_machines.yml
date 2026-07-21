@@ -183,6 +183,7 @@
   components:
   - type: VendingMachine
     pack: CondimentInventory
+  - type: VendingMachineVisuals
     offState: off
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/condiments.rsi
@@ -216,6 +217,7 @@
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -242,6 +244,7 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -276,6 +279,7 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -310,6 +314,7 @@
   components:
   - type: VendingMachine
     pack: PTechInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -340,6 +345,7 @@
   components:
   - type: VendingMachine
     pack: ChefvendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -375,6 +381,7 @@
     pack: CigaretteMachineInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -403,6 +410,7 @@
   components:
   - type: VendingMachine
     pack: ClothesMateInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -434,6 +442,7 @@
   components:
   - type: VendingMachine
     pack: WinterDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -467,13 +476,14 @@
     pack: HotDrinksMachineInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
     screenState: screen
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 5
     soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
@@ -509,12 +519,13 @@
     pack: RobustSoftdrinksInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
   - type: DatasetVocalizer
@@ -655,12 +666,13 @@
     pack: ShamblersJuiceInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
   - type: DatasetVocalizer
@@ -690,12 +702,13 @@
     pack: PwrGameInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
   - type: DatasetVocalizer
@@ -727,12 +740,13 @@
     pack: DrGibbInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
   - type: DatasetVocalizer
@@ -774,12 +788,13 @@
     pack: SmiteInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
   - type: DatasetVocalizer
@@ -799,6 +814,7 @@
   components:
   - type: VendingMachine
     pack: DinnerwareInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -832,6 +848,7 @@
   components:
   - type: VendingMachine
     pack: MagiVendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -864,10 +881,11 @@
     pack: DiscountDansInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: DiscountDansAds
   - type: SpeakOnUIClosed
@@ -895,6 +913,7 @@
   components:
   - type: VendingMachine
     pack: EngiVendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -926,6 +945,7 @@
   components:
   - type: VendingMachine
     pack: NanoMedCivilianInventory
+  - type: VendingMachineVisuals
     offState: off-civilian
     brokenState: broken
     normalState: normal-unshaded
@@ -963,6 +983,7 @@
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
+  - type: VendingMachineVisuals
     offState: off
   - type: Sprite
     layers:
@@ -984,6 +1005,7 @@
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1018,6 +1040,7 @@
   components:
   - type: VendingMachine
     pack: SecTechInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1057,6 +1080,7 @@
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1099,12 +1123,13 @@
     pack: GetmoreChocolateCorpInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: GetmoreChocolateCorpAds
   - type: SpeakOnUIClosed
@@ -1134,6 +1159,7 @@
     pack: SustenanceInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1245,12 +1271,13 @@
     pack: BodaInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: BodaAds
   - type: SpeakOnUIClosed
@@ -1279,6 +1306,7 @@
   components:
   - type: VendingMachine
     pack: AutoDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1315,6 +1343,7 @@
   components:
   - type: VendingMachine
     pack: VendomatInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1347,6 +1376,7 @@
   components:
   - type: VendingMachine
     pack: RoboticsInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1384,6 +1414,7 @@
   components:
   - type: VendingMachine
     pack: YouToolInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1412,6 +1443,7 @@
   components:
   - type: VendingMachine
     pack: GoodCleanFunInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1447,10 +1479,11 @@
     pack: ChangInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: ChangAds
   - type: SpeakOnUIClosed
@@ -1478,6 +1511,7 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1512,10 +1546,11 @@
     pack: DonutInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 0.33
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
-    initialStockQuality: 0.33
   - type: DatasetVocalizer
     dataset: DonutAds
   - type: SpeakOnUIClosed
@@ -1545,6 +1580,7 @@
   components:
   - type: VendingMachine
     pack: HyDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1577,6 +1613,7 @@
   components:
   - type: VendingMachine
     pack: LawDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1605,6 +1642,7 @@
   components:
   - type: VendingMachine
     pack: SecDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1637,6 +1675,7 @@
   components:
   - type: VendingMachine
     pack: BarDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1664,6 +1703,7 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1693,6 +1733,7 @@
   components:
   - type: VendingMachine
     pack: CargoDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1725,6 +1766,7 @@
   components:
   - type: VendingMachine
     pack: MediDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1753,6 +1795,7 @@
   components:
   - type: VendingMachine
     pack: ChemDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1782,6 +1825,7 @@
   components:
   - type: VendingMachine
     pack: CuraDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1810,6 +1854,7 @@
   components:
   - type: VendingMachine
     pack: AtmosDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1843,6 +1888,7 @@
   components:
   - type: VendingMachine
     pack: EngiDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1876,6 +1922,7 @@
   components:
   - type: VendingMachine
     pack: ChefDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1904,6 +1951,7 @@
   components:
   - type: VendingMachine
     pack: DetDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1932,6 +1980,7 @@
   components:
   - type: VendingMachine
     pack: JaniDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1964,6 +2013,7 @@
   components:
   - type: VendingMachine
     pack: SciDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -1992,6 +2042,7 @@
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2024,6 +2075,7 @@
   components:
   - type: VendingMachine
     pack: RoboDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2052,6 +2104,7 @@
   components:
   - type: VendingMachine
     pack: GeneDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2081,6 +2134,7 @@
   components:
   - type: VendingMachine
     pack: ViroDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2110,6 +2164,7 @@
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2140,11 +2195,12 @@
     pack: HappyHonkDispenserInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
+    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
     denyState: deny-unshaded
-    initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
   - type: VendingMachineEject
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
@@ -2179,6 +2235,7 @@
   components:
   - type: VendingMachine
     pack: PrideDrobeInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal-unshaded
@@ -2240,6 +2297,7 @@
   components:
   - type: VendingMachine
     pack: ChemVendInventory
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal
@@ -2271,6 +2329,7 @@
   components:
   - type: VendingMachine
     pack: ChemVendInventorySyndicate
+  - type: VendingMachineVisuals
     offState: off
     brokenState: broken
     normalState: normal
@@ -2289,6 +2348,7 @@
   components:
   - type: VendingMachine
     pack: NanoMedCivilianWallInventory
+  - type: VendingMachineVisuals
     offState: off-civilian
     brokenState: broken
     normalState: normal-unshaded
@@ -2318,6 +2378,7 @@
   components:
   - type: VendingMachine
     pack: NanoMedInventory
+  - type: VendingMachineVisuals
     offState: off
   - type: Sprite
     layers:
