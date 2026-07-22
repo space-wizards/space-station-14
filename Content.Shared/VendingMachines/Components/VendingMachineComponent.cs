@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -45,3 +46,5 @@ public sealed partial class VendingMachineComponent : Component
     [DataField]
     public EntityUid? RestockStream;
 }
+
+public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent;

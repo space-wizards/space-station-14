@@ -1,6 +1,8 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.VendingMachines.Components;
 
@@ -40,3 +42,6 @@ public sealed partial class VendingMachineRestockComponent : Component
     public SoundSpecifier SoundRestockDone = new SoundPathSpecifier("/Audio/Machines/vending_restock_done.ogg",
         AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
 }
+
+[Serializable, NetSerializable]
+public sealed partial class RestockDoAfterEvent : SimpleDoAfterEvent;

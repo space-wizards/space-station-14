@@ -106,6 +106,7 @@ namespace Content.IntegrationTests.Tests
     layoutId: Vending
   - type: VendingMachine
     pack: TestInventory
+  - type: VendingMachineEject
   - type: Sprite
     sprite: error.rsi
 ";

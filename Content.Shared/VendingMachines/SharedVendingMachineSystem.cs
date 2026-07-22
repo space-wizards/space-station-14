@@ -80,12 +80,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         };
     }
 
-    [SubscribeLocalEvent]
-    private void OnEjectHandleState(Entity<VendingMachineEjectComponent> entity, ref AfterAutoHandleStateEvent args)
-    {
-        TryUpdateVisualState(entity.Owner);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

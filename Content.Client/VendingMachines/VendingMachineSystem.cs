@@ -60,6 +60,19 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         }
     }
 
+    [SubscribeLocalEvent]
+    private void OnEjectHandleState(Entity<VendingMachineEjectComponent> entity, ref AfterAutoHandleStateEvent args)
+    {
+        TryUpdateVisualState(entity.Owner);
+
+        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner,
+                VendingMachineUiKey.Key,
+                out var bui))
+        {
+            bui.UpdateAmounts();
+        }
+    }
+
     protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
