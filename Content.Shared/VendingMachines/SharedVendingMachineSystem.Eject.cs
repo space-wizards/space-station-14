@@ -28,7 +28,9 @@ public abstract partial class SharedVendingMachineSystem
             UpdateUI((entity.Owner, entity.Comp));
         }
 
-        if (!eject.Denying || !(curTime > eject.DenyEnd)) return;
+        if (!eject.Denying || !(curTime > eject.DenyEnd))
+            return;
+
         eject.DenyEnd = null;
         Dirty(entity.Owner, eject);
 
@@ -49,8 +51,11 @@ public abstract partial class SharedVendingMachineSystem
     [SubscribeLocalEvent]
     private void OnEmpPulse(Entity<VendingMachineComponent> ent, ref EmpPulseEvent args)
     {
-        if (ent.Comp.Broken || !_receiver.IsPowered(ent.Owner)) return;
-        if (!TryComp<VendingMachineEjectComponent>(ent.Owner, out var eject)) return;
+        if (ent.Comp.Broken || !_receiver.IsPowered(ent.Owner))
+            return;
+
+        if (!TryComp<VendingMachineEjectComponent>(ent.Owner, out var eject))
+            return;
 
         args.Affected = true;
         args.Disabled = true;

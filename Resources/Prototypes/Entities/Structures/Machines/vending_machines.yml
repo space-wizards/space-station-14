@@ -106,6 +106,7 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+
 - type: entity
   id: VendingMachineWallmount
   parent: BaseWallmountMachine
