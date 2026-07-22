@@ -27,3 +27,13 @@
   cost: 1400
   category: cargoproduct-category-name-food
   group: service # DS14
+
+- type: cargoProduct
+  id: FoodDurf
+  icon:
+    sprite: _DeadSpace/Objects/Consumable/Drinks/durfcan.rsi
+    state: icon
+  product: CrateFoodDurf
+  cost: 3200
+  category: cargoproduct-category-name-food
+  group: service # DS14

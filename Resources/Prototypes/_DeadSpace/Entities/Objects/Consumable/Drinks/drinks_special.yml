@@ -82,3 +82,52 @@
     sprite: _DeadSpace/Objects/Consumable/Drinks/cmo_shaker.rsi
   - type: Item
     sprite: _DeadSpace/Objects/Consumable/Drinks/cmo_shaker.rsi
+
+- type: entity
+  parent: BaseStorageItem
+  id: DrinkDurfPack
+  name: Запасы дурфа
+  description: Шесть баночек Дурфа.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Drinks/durf_holder.rsi
+    layers:
+    - state: fill-1
+      map: [fill-1]
+    - state: fill-2
+      map: [fill-2]
+    - state: fill-3
+      map: [fill-3]
+    - state: fill-4
+      map: [fill-4]
+    - state: fill-5
+      map: [fill-5]
+    - state: fill-6
+      map: [fill-6]
+    - state: icon
+  - type: Item
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,2,3
+    whitelist:
+      tags:
+      - Durf
+    hideStackVisualsWhenClosed: false
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: DrinkDurfCan
+        amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Durf]
+    composite: true
+    layerStates:
+    - fill-1
+    - fill-2
+    - fill-3
+    - fill-4
+    - fill-5
+    - fill-6
+  - type: Appearance

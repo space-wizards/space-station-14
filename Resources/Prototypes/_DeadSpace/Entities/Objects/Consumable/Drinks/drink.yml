@@ -167,3 +167,32 @@
     tags:
     - Bottle
     - Durf
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkDurfCan
+  name: Баночка Дурфа
+  description: Легендарное пиво Дворфов
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Durf
+          Quantity: 30
+      grindable:
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 4
+        - ReagentId: Iron
+          Quantity: 1
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Drinks/durfcan.rsi
+  - type: Item
+    sprite: _DeadSpace/Objects/Consumable/Drinks/durfcan.rsi
+  - type: Tag
+    tags:
+    - Beer
+    - DrinkCan
+    - Durf

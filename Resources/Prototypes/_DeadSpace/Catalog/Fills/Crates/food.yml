@@ -22,3 +22,16 @@
       amount: 2
     - id: FoodBakedGingerbreadSanta
       amount: 2
+
+- type: entity
+  id: CrateFoodDurf
+  parent: CrateFreezer
+  name: Ящик дурфа
+  description: Содержит банки и бутылки дворфийского дурфа.
+  components:
+  - type: StorageFill
+    contents:
+    - id: DrinkDurfPack
+      amount: 2
+    - id: DrinkDurfBottleFull
+      amount: 4
