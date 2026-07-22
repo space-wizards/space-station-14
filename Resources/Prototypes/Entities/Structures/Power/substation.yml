@@ -143,13 +143,11 @@
 
 # Compact Wall Substation Base
 - type: entity
+  parent: [ CoreSubstation, BaseWallmount ]
   id: BaseSubstationWall
-  parent: CoreSubstation
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
-  placement:
-    mode: SnapgridCenter
   components:
   - type: AmbientSound
     range: 2
@@ -160,20 +158,12 @@
     netsync: false
     castShadows: false
     offset: 0, -0.2
-  - type: Clickable
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
-  - type: Fixtures
-  - type: Transform
-    anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     sprite: Structures/Power/substation.rsi
@@ -207,7 +197,15 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: WallMount
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.45,0.35,0.20"
+        density: 5
+        mask:
+        - FullTileMask
 
 # Substations in use
 

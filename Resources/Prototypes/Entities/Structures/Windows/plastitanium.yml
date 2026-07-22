@@ -21,6 +21,7 @@
     tags:
       - ForceFixRotations
       - Window
+      - SmeltingImmune
   - type: Physics
     bodyType: Static
   - type: ExaminableDamage

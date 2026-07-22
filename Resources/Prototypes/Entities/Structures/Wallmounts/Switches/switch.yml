@@ -75,8 +75,6 @@
   - type: DeviceLinkSource
     ports:
       - Pressed
-  - type: Transform
-    anchored: false
   - type: Destructible
     thresholds:
     - trigger:
@@ -445,7 +443,18 @@
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
   - type: Rotatable
+  - type: Transform
+    anchored: true
+  - type: Pullable
   - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 5
+        mask:
+        - FullTileMask
 
 - type: entity
   id: ButtonFrameGrey

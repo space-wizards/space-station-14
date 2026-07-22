@@ -177,6 +177,15 @@
     - entity_storage
   - type: Paintable
     group: WallCloset
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 5
+        mask:
+        - FullTileMask
 
 #Wall locker
 - type: entity

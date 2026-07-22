@@ -1,5 +1,6 @@
 # TODO move this to tiles once tile smoothing is supported
 - type: entity
+  parent: BaseStructure
   id: Catwalk
   name: catwalk
   description: A catwalk for easier EVA maneuvering and cable placement.
@@ -16,8 +17,6 @@
   - type: Icon
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
-  - type: Transform
-    anchored: true
   - type: IconSmooth
     key: catwalk
     base: catwalk_
@@ -54,3 +53,16 @@
     cost: 2
     delay: 2
     fx: EffectRCDDeconstruct2
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 5
+        mask:
+        - LowImpassable
+        layer:
+        - DoorPassable
