@@ -104,6 +104,8 @@
   - type: WiresVisuals
   - type: VendingMachineEject
   - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
 
 - type: entity
   id: VendingMachineWallmount
@@ -166,6 +168,8 @@
   - type: WiresVisuals
   - type: VendingMachineEject
   - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: Electrified
     enabled: false
     usesApcPower: true
