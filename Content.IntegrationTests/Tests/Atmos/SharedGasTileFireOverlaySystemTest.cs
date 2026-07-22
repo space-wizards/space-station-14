@@ -30,6 +30,7 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
             Assert.That(ItemToggle.TryActivate(welder)); //ignite it which will set the tile on fire, this test dubles as for ignition of flammable gasses
         });
 
+        await RunUntilSynced();
         await Pair.RunTicksSync(10);
 
         await Client.WaitPost(() =>
