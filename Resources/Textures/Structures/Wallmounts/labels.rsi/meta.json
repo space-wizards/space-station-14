@@ -8,16 +8,16 @@
     },
     "states": [
         {
-        "name": "paper"
+            "name": "bounty"
         },
         {
-        "name": "bounty"
+            "name": "captains_paper"
         },
         {
-        "name": "captains_paper"
+            "name": "invoice"
         },
         {
-        "name": "invoice"
+            "name": "paper"
         }
-  ]
+    ]
 }
