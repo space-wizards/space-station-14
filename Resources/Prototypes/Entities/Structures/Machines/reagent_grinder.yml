@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenReagentGrinder
-  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
   components:
@@ -39,6 +39,14 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Sprite
     sprite: Structures/Machines/grinder.rsi
     drawdepth: LargeObjects
