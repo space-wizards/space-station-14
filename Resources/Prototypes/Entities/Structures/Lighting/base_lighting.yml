@@ -5,10 +5,12 @@
 
 #Basic lights
 - type: entity
-  id: AlwaysPoweredWallLight
-  name: light
-  description: "An always powered light."
-  suffix: Always powered
+  abstract: true
+  id: BaseWallLight
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: MeleeSound
     soundGroups:
@@ -18,11 +20,7 @@
     anchored: true
   - type: Clickable
   - type: InteractionOutline
-  - type: Construction
-    graph: LightFixture
-    node: tubeLight
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     drawdepth: WallMountedItems
     layers:
     - map: ["enum.PoweredLightLayers.Base"]
@@ -30,7 +28,6 @@
     - map: ["enum.PoweredLightLayers.Glow"]
       state: glow
       shader: unshaded
-    state: base
   - type: PointLight
     color: "#FFE4CE" # 5000K color temp
     energy: 0.8
@@ -65,22 +62,43 @@
         damage: 50
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 2
-            max: 2
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
   - type: PlacementReplacement
     key: lights
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
+
+- type: entity
+  parent: BaseWallLight
+  id: AlwaysPoweredWallLight
+  name: light
+  suffix: Always powered
+  description: "An always powered light."
+  components:
+  - type: Construction
+    graph: LightFixture
+    node: tubeLight
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 2
+            max: 2
 
 - type: entity
   name: light
@@ -241,11 +259,11 @@
 
 #Small lights
 - type: entity
-  name: small light
-  description: "An always powered light."
+  parent: BaseWallLight
   id: SmallLight
+  name: small light
   suffix: Always Powered
-  parent: AlwaysPoweredWallLight
+  description: "An always powered light."
   components:
     - type: AmbientSound
       volume: -15
@@ -260,8 +278,6 @@
       radius: 6
       softness: 1.1
       enabled: true
-    - type: Physics
-      bodyType: Static
     - type: Fixtures
       fixtures:
         fix1:
@@ -273,23 +289,17 @@
           - None
           layer:
           - TabletopMachineLayer
-    - type: Damageable
-    - type: Injurable
-      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 25
+          damage: 50
         behaviors:
-        - !type:EmptyAllContainersBehaviour
         - !type:SpawnEntitiesBehavior
           spawn:
             SheetSteel1:
               min: 1
               max: 1
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
     - type: Construction
       graph: LightFixture
       node: bulbLight
@@ -422,11 +432,10 @@
 
 #Emergency Lights
 - type: entity
+  parent: BaseWallLight
   id: EmergencyLight
   name: emergency light
   description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
-  parent: AlwaysPoweredWallLight
-  suffix: ""
   components:
   - type: PointLight
     enabled: false
@@ -461,7 +470,6 @@
       color: "#7CFC00"
       shader: "unshaded"
       visible: false
-  - type: Appearance
   - type: Construction
     graph: LightFixture
     node: emergencyLight
@@ -469,7 +477,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 25
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -479,15 +487,6 @@
           ShardGlass:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 #Coloured lights
 

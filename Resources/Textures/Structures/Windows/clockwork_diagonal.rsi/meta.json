@@ -8,12 +8,10 @@
   },
   "states": [
     {
-	  "name": "state0",
-	  "directions": 4
+	  "name": "state0"
 	},
     {
-      "name": "state1",
-	  "directions": 4
+      "name": "state1"
     }
   ]
 }
