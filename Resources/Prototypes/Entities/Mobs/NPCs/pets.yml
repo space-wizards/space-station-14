@@ -251,7 +251,7 @@
     - VimPilot
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable ]
+  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
   id: MobBingus
   name: Bingus
   description: Bingus my beloved...
@@ -308,7 +308,7 @@
     stealGroup: AnimalNamedCat
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable ]
+  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
   id: MobMcGriff
   name: McGriff
   description: This dog can tell something smells around here, and that something is CRIME!
@@ -418,7 +418,7 @@
       gender: male
 
 - type: entity
-  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable ]
+  parent: [ BaseUniquePet, SimpleMobBase, StripableInventoryBase, BaseSlicingRefinable , BaseMobDestructible ]
   id: MobWalter
   name: Walter
   description: He likes chems and treats. Walter.

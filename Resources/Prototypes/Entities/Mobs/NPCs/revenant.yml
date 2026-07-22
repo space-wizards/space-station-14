@@ -93,3 +93,4 @@
     tags:
     - SlowImmune
     - KnockdownImmune
+    - AllowPortalTraversal
