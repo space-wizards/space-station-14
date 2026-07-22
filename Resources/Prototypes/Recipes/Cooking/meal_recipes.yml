@@ -1576,9 +1576,10 @@
   result: FoodCakeLemoon
   time: 5
   group: Cake
+  priority: 1 # Otherwise it breaks because of the berry cake recipe at higher portion counts
   solids:
     FoodCakePlain: 1
-    FoodLemoon: 2
+    FoodLemoon: 1
     FoodBerries: 1 #dark colouring
 
 - type: microwaveMealRecipe

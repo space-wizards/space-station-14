@@ -57,6 +57,17 @@ public sealed partial class FoodRecipePrototype : IPrototype
     /// </summary>
     [DataField]
     public bool SecretRecipe = false;
+
+    /// <summary>
+    ///     Manual priority field for recipes that take precedent over others. Higher number = picked over others.
+    /// </summary>
+    /// <remarks>
+    ///     Secret recipes always have higher priority over non-secret recipes. Only needed when a recipe's
+    ///     ingredients may overlap with another in a way that'll cause that recipe to be chosen over this one
+    ///     erroneously. This field should be used as minimally as possible.
+    /// </remarks>
+    [DataField]
+    public int Priority = 0;
 }
 
 /// <summary>

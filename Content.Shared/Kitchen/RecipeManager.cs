@@ -38,7 +38,8 @@ public sealed partial class RecipeManager : EntitySystem
         Recipes = ProtoMan
             .EnumeratePrototypes<FoodRecipePrototype>()
             .Where(x => !x.SecretRecipe)
-            .OrderByDescending(x => x.Ingredients.Count())
+            .OrderByDescending(x => x.Priority)
+            .ThenByDescending(x => x.Ingredients.Count())
             .ToList();
     }
 }
