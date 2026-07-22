@@ -1,30 +1,15 @@
 - type: entity
+  abstract: true
   parent: [ BaseStructureDynamic, BasePaperLabelableVisualized ]
-  id: CrateGeneric
-  categories: [ HideSpawnMenu ]
+  id: BaseCrate
   name: crate
   description: A large container for items.
   components:
   - type: Animateable
   - type: Transform
     noRot: true
-  - type: Icon
-    sprite: Structures/Storage/Crates/generic.rsi
-    state: icon
   - type: Sprite
     noRot: true
-    sprite: Structures/Storage/Crates/generic.rsi
-    layers:
-    - state: base
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
-      map: ["enum.PaperLabelVisuals.Layer"]
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
@@ -41,6 +26,38 @@
   - type: EntityStorage
   - type: PlaceableSurface
     isPlaceable: false # defaults to closed.
+  - type: EntityStorageVisuals
+    stateDoorOpen: open
+    stateDoorClosed: closed
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
+  - type: StaticPrice
+    price: 75
+  - type: RequireProjectileTarget
+
+- type: entity
+  parent: BaseCrate
+  id: CrateGeneric
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/generic.rsi
+    state: icon
+  - type: Sprite
+    sprite: Structures/Storage/Crates/generic.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -56,21 +73,11 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-  - type: EntityStorageVisuals
-    stateDoorOpen: open
-    stateDoorClosed: closed
-  - type: ContainerContainer
-    containers:
-      entity_storage: !type:Container
-      paper_label: !type:ContainerSlot
-  - type: StaticPrice
-    price: 75
   - type: Construction
     graph: CrateGenericSteel
     node: crategenericsteel
     containers:
-      - entity_storage
-  - type: RequireProjectileTarget
+    - entity_storage
 
 - type: entity
   parent: CrateGeneric
@@ -109,19 +116,6 @@
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Damageable
     damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: Construction
     graph: CrateSecure
     node: cratesecure
