@@ -24,7 +24,7 @@
   parent: BaseItem
   id: WeaponPlushieToolbox
   name: plushie toolbox
-  description: A clown tider's weapon.
+  description: A clown tider's weapon made of rubber.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/plush_toolbox.rsi
@@ -35,7 +35,7 @@
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 0
+        Blunt: 1
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcThrust
@@ -43,3 +43,5 @@
     damage: 11
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor
+    - type: DisarmMalus
+    malus: 0.4 # It's made of rubber.
