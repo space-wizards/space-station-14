@@ -1,12 +1,11 @@
 - type: entity
+  abstract: true
+  parent: BaseCartridge
   id: BaseCartridgeCap
   name: cartridge (cap)
-  parent: BaseCartridge
-  abstract: true
   components:
   - type: Tag
     tags:
-      - Cartridge
       - CartridgeCap
   - type: CartridgeAmmo
   - type: Sprite
@@ -20,9 +19,10 @@
     price: 5
 
 - type: entity
+  parent: BaseCartridgeCap
   id: CartridgeCap
   name: cap gun cartridge
-  parent: BaseCartridgeCap
+  description: A mock pistol cartridge that makes noise and smoke, but has no actual projectile.
   components:
   - type: CartridgeAmmo
     proto: BulletCap

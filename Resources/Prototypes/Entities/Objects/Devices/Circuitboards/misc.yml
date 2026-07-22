@@ -12,5 +12,3 @@
   - type: Tag
     tags:
       - StationMapElectronics
-  - type: StaticPrice
-    price: 30
