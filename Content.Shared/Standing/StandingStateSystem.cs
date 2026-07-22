@@ -204,7 +204,12 @@ public sealed class StandingStateSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct DropHandItemsEvent();
+public record struct DropHandItemsEvent
+{
+    // DS14-start: allow effects such as weapon-retention implants to block forced hand drops.
+    public bool Cancelled;
+    // DS14-end
+}
 
 /// <summary>
 /// Subscribe if you can potentially block a down attempt.

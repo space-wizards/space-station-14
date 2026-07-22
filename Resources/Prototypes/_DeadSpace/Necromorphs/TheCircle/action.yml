@@ -24,3 +24,31 @@
     icon: /Textures/_DeadSpace/Interface/Actions/obelisk.png
   - type: InstantAction
     event: !type:ObeliskActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionTheCircleGeistInvisibility
+  name: Войти в невидимость
+  description: Вы способны ненадолго стать невидимым для других, с возможостью самому выбрать тип невидимости для вашей ситуации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon: _DeadSpace/Demons/ability_icons/shadowling_ghost_action.png
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:OpenGeistInvisibilityMenuEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionDreadnoughtLastStand
+  name: Последний рубеж Дредноута
+  description: В течении 5 минут вы теряете критическое и пред-критическое состояния, но взамен получаете порог в жизни до 165, а не 100, а также +30% к скорости, но когда проходит 5 минут после активации, вы умираете от передоза фентанила в организме.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    icon:
+      sprite: Interface/Actions/actions_crit.rsi
+      state: lastwords
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:DreadnoughtLastStandActionEvent

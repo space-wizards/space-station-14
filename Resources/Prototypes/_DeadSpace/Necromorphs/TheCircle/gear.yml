@@ -172,6 +172,15 @@
     id: UnitologyMedicIDCard
 
 - type: entity
+  parent: UnitologyPDA
+  id: UnitologyGeistPDA
+  suffix: Гейст
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Pda
+    id: UnitologyGeistIDCard
+
+- type: entity
   parent: SyndicateIDCard
   id: UnitologyIDCard
   description: ID-карта, которая может воровать доступы с другой ID-карты.
@@ -268,6 +277,27 @@
     - SyndicateAgent
     - NuclearOperative
 
+- type: entity
+  parent: [ SyndicateIDCard, BaseSyndicateContraband ]
+  id: UnitologyGeistIDCard
+  name: ID-карта Гейста
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IdCard
+    jobIcon: JobIconUnitologyGeist
+  - type: Access
+    tags:
+    - Maintenance
+    - SyndicateAgent
+    - NuclearOperative
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/id.rsi
+    layers:
+    - state: circle
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconUnitology
@@ -313,6 +343,14 @@
   icon:
     sprite: /Textures/_DeadSpace/Necromorfs/TheCircle/Mics/etc/icon.rsi
     state: circle_engineer
+  allowSelection: false
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconUnitologyGeist
+  icon:
+    sprite: /Textures/_DeadSpace/Necromorfs/TheCircle/Mics/etc/icon.rsi
+    state: circle_geist
   allowSelection: false
 
 ## РПС
@@ -378,6 +416,19 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Gear/webbings/medic-webbing.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Gear/webbings/medic-webbing.rsi
+  - type: Tag
+    tags: []
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltUnitologyGeistWebbing
+  name: РПС «Морс»
+  description: Облегчённая ременно-плечевая система Гейста.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Gear/webbings/giest-webbing.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Gear/webbings/giest-webbing.rsi
   - type: Tag
     tags: []
 
@@ -516,9 +567,26 @@
     contents:
       - id: C4
         amount: 6
-      - id: RCDRecharging
+      - id: RCDTheCircleEngineer
+      - id: MobTheCircleRemoteCar
+        amount: 2
+      - id: TheCircleRemoteCarController
       - id: BoxMRE
       - id: PinpointerNecroobelisk
+
+- type: entity
+  parent: ClothingBackpackUnitology
+  id: ClothingBackpackUnitologyGeistFilled
+  name: штурмовой рюкзак
+  suffix: Заполненная, Гейст
+  components:
+  - type: StorageFill
+    contents:
+      - id: BearTrap
+        amount: 2
+      - id: C4
+        amount: 4
+      - id: TripwireStack
 
 ## Мантия штурмовика
 - type: entity
@@ -531,3 +599,124 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/heavy-mantle.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/heavy-mantle.rsi
+
+## Мантия гейста
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseCommandContraband ]
+  id: ClothingNeckUnitologyGeistMantle
+  name: порваный плащ
+  description: Конченый! Меня прозвали "Конченый". Отче мой, мне нечем тебя потчевать.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/geist-mantle.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/geist-mantle.rsi
+
+## Имплант удержания оружия
+- type: entity
+  id: UnitologyWeaponRetentionImplanter
+  parent: BaseImplantOnlyImplanterSyndi
+  name: имплантер удержания оружия
+  description: Имплантер с системой фиксации предметов в руках владельца.
+  components:
+  - type: Implanter
+    implant: UnitologyWeaponRetentionImplant
+
+- type: entity
+  id: UnitologyWeaponRetentionImplant
+  parent: BaseSubdermalImplant
+  name: имплант удержания оружия
+  description: Не позволяет выбить предметы из рук владельца при падении.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantComponents:
+    - type: WeaponRetention
+    whitelist:
+      components:
+      - Hands
+
+## Радиоуправляемая машинка Круга
+- type: entity
+  id: MobTheCircleRemoteCar
+  parent: MobToyCarWithCamera
+  name: штурмовая машинка
+  description: Быстрая радиоуправляемая машинка с камерой и креплением для взрывчатки.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/car.rsi
+    layers:
+    - state: base
+  - type: RandomSprite
+    available: []
+  - type: DetonateAttachedExplosives
+    explosiveWhitelist:
+      components:
+      - Explosive
+  - type: StickySurfaceOverride
+  - type: Access
+    groups:
+    - AllAccess
+    - Silicon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 20
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 4.5
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - SiliconEmotes
+    - Unimplantable
+    - FootstepSound
+    - ToyCarCamera
+    - TheCircleRemoteCar
+
+- type: entity
+  id: TheCircleRemoteCarController
+  parent: AdvancedRemoteController
+  name: пульт штурмовой машинки Круга
+  description: Пульт с защищённым каналом управления на дистанции до ста тайлов.
+  components:
+  - type: DroneRemoteController
+    isFPV: true
+    range: 100
+    warningRange: 90
+    connectWhitelist:
+      tags:
+      - TheCircleRemoteCar
+
+- type: entity
+  id: TheCircleRemoteCarKit
+  parent: ToolboxElectrical
+  name: комплект штурмовой машинки Круга
+  description: Машинка с камерой и пульт управления дальнего действия.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobTheCircleRemoteCar
+    - id: TheCircleRemoteCarController
+
+- type: Tag
+  id: TheCircleRemoteCar

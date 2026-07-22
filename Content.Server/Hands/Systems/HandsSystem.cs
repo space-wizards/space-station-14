@@ -5,6 +5,9 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
+// DS14-start
+using Content.Shared.DeadSpace.TheCircle.Geist;
+// DS14-end
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -57,7 +60,10 @@ namespace Content.Server.Hands.Systems
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
 
-            SubscribeLocalEvent<HandsComponent, DropHandItemsEvent>(OnDropHandItems);
+            // DS14-start: retention protection must process the forced-drop event first.
+            SubscribeLocalEvent<HandsComponent, DropHandItemsEvent>(OnDropHandItems,
+                after: new[] { typeof(WeaponRetentionSystem) });
+            // DS14-end
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -204,6 +210,11 @@ namespace Content.Server.Hands.Systems
 
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
+            // DS14-start: respect forced-drop protection without blocking voluntary drops.
+            if (args.Cancelled)
+                return;
+            // DS14-end
+
             // If the holder doesn't have a physics component, they ain't moving
             var holderVelocity = _physicsQuery.TryComp(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
             var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);

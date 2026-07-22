@@ -860,3 +860,226 @@
       soundHit:
         path: /Audio/_DeadSpace/Necromorfs/TheCircle/Weapon/sfx/hook-sfx/hit_hook.ogg
     - type: GrapplingProjectile
+
+## Пулемёт «Вихрь»
+- type: entity
+  id: WeaponMachineGunWhirl
+  parent: [ BaseWeaponRifle, BaseGunWieldable, BaseMajorContraband ]
+  name: пулемёт «Вихрь»
+  description: Точно не украденный пулемёт на основе чертежей от Redline Cybernetik.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/whirl/Smerch.rsi
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/whirl/Smerch.rsi
+    size: Huge
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/whirl/Smerch.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    minAngle: 2
+    maxAngle: 7
+    angleIncrease: 1
+    angleDecay: 12
+    fireRate: 8.5
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_DeadSpace/Necromorfs/TheCircle/Weapon/sfx/whirl-sfx/whirl.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: GunWieldBonus
+    minAngle: -1
+    maxAngle: -3
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineWhirl
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineWhirl
+        whitelistFailPopup: gun-magazine-whitelist-fail
+        insertSound: /Audio/Weapons/Guns/MagIn/lmg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeWhirl
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeWhirl
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+
+## КС-23
+- type: entity
+  id: WeaponShotgunKS23
+  parent: [ BaseWeaponShotgun, BaseGunWieldable, BaseMajorContraband ]
+  name: КС-23
+  description: Удобно фотографировать врагов в техах.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump.rsi
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump_inhands_64x.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump.rsi
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 1.8
+    soundGunshot:
+      path: /Audio/_DeadSpace/Necromorfs/TheCircle/Weapon/sfx/ks23-sfx/ks23.ogg
+  - type: GunSpreadModifier
+    spread: 0.7
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun22MM
+    capacity: 4
+    proto: ShellShotgun22MM
+
+## Проклятый ВАНТ
+- type: entity
+  id: ShieldCursedVANT
+  parent: [ BaseShield, BaseMajorContraband ]
+  name: Проклятый ВАНТ
+  description: Тяжёлый штурмовой щит Круга, способный выдержать чудовищное количество урона.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi
+    heldPrefix: icon
+  - type: ExclusiveHandUse
+    blockedItems:
+    - WeaponLightMachineGunRPL20
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+  - type: Blocking
+    passiveBlockModifier:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+    activeBlockModifier:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+
+## Имплант летального клинка
+- type: entity
+  id: UnitologyLethalBladeImplanter
+  parent: BaseImplantOnlyImplanterSyndi
+  name: имплантер летального клинка
+  description: Имплантер со скрытым боевым клинком Круга.
+  components:
+  - type: Implanter
+    implant: UnitologyLethalBladeImplant
+
+- type: entity
+  id: UnitologyLethalBladeImplant
+  parent: BaseSubdermalImplant
+  name: имплант летального клинка
+  description: Позволяет владельцу выпустить из руки скрытый клинок.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionRetractableUnitologyLethalBlade
+    whitelist:
+      components:
+      - Hands
+
+- type: entity
+  id: ActionRetractableUnitologyLethalBlade
+  parent: BaseAction
+  name: выпустить летальный клинок
+  description: Выпустить или убрать скрытый клинок.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/strike-blade.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: WeaponUnitologyLethalBlade
+    summonSounds:
+      collection: splinter-blade-extend
+    retractSounds:
+      collection: splinter-blade-retract
+
+- type: entity
+  id: WeaponUnitologyLethalBlade
+  parent: BaseItem
+  name: летальный клинок
+  description: Скрытый клинок для быстрых и смертельных ударов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/strike-blade.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/strike-blade.rsi
+  - type: MeleeWeapon
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 18
+        Structural: 20
+    soundHit:
+      collection: splinter-blade-attack
+    soundNoDamage:
+      collection: splinter-blade-miss
+  - type: GeistLethalStrike
+    damage:
+      types:
+        # GeistLethalStrike adds bonus damage to the blade's regular hit.
+        Slash: 42
+        Structural: 380
+  - type: Reflect
+    reflectProb: 0.15
+    spread: 90
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 4

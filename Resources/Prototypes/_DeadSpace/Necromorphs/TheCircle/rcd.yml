@@ -1,0 +1,63 @@
+- type: entity
+  parent: RCDRecharging
+  id: RCDTheCircleEngineer
+  name: экспериментальный РСУ Круга
+  description: Сохраняет стандартные строительные режимы и создаёт замаскированные некроморфные триггеры.
+  components:
+  - type: RCD
+    availablePrototypes:
+    - WallSolid
+    - FloorSteel
+    - Plating
+    - Catwalk
+    - Grille
+    - Window
+    - WindowDirectional
+    - WindowReinforcedDirectional
+    - ReinforcedWindow
+    - Airlock
+    - AirlockGlass
+    - Firelock
+    - TubeLight
+    - BulbLight
+    - LVCable
+    - MVCable
+    - HVCable
+    - CableTerminal
+    - Deconstruct
+    - CircleTriggerKudzu
+    - CircleTriggerMeleeTentacle
+    - CircleTriggerRangedTentacle
+
+- type: rcd
+  id: CircleTriggerKudzu
+  name: Триггер кудзу
+  category: NecromorphTriggers
+  sprite: { sprite: /Textures/Tiles/Misc/floortrap.rsi, state: floortrapspawn }
+  mode: ConstructObject
+  prototype: CircleRcdTriggerKudzu
+  cost: 2
+  delay: 1
+  rotation: Fixed
+
+- type: rcd
+  id: CircleTriggerMeleeTentacle
+  name: Триггер атакующей тентакли
+  category: NecromorphTriggers
+  sprite: { sprite: /Textures/_DeadSpace/Necromorfs/tentacle.rsi, state: tentacle }
+  mode: ConstructObject
+  prototype: CircleRcdTriggerMeleeTentacle
+  cost: 3
+  delay: 1
+  rotation: Fixed
+
+- type: rcd
+  id: CircleTriggerRangedTentacle
+  name: Триггер стрелковой тентакли
+  category: NecromorphTriggers
+  sprite: { sprite: /Textures/_DeadSpace/Necromorfs/bone_tentacle.rsi, state: bonetentacle }
+  mode: ConstructObject
+  prototype: CircleRcdTriggerRangedTentacle
+  cost: 3
+  delay: 1
+  rotation: Fixed

@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.DeadSpace.TheCircle.Dreadnought;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -76,6 +77,14 @@ public sealed class DamageOverlayUiController : UIController
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
     private void UpdateOverlays(EntityUid entity, MobStateComponent? mobState, DamageableComponent? damageable = null, MobThresholdsComponent? thresholds = null)
     {
+        // DS14-start
+        if (EntityManager.HasComponent<DreadnoughtLastStandActiveComponent>(entity))
+        {
+            ClearOverlay();
+            return;
+        }
+        // DS14-end
+
         if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState) ||
             thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds) ||
             damageable == null && !EntityManager.TryGetComponent(entity, out  damageable))

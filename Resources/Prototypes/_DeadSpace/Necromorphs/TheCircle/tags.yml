@@ -49,3 +49,14 @@
 
 - type: Tag
   id: MagazineLightRifleAsVal
+
+### Тэги пулемёта «Вихрь»
+- type: Tag
+  id: MagazineWhirl
+
+- type: Tag
+  id: CartridgeWhirl
+
+### Тэги КС-23
+- type: Tag
+  id: ShellShotgun22MM

@@ -218,3 +218,104 @@
        Structural: 35
   - type: TimedDespawn
     lifetime: 4
+
+## Боеприпасы пулемёта «Вихрь»
+- type: entity
+  id: MagazineWhirl
+  parent: MagazineLightRifleBox
+  name: короб пулемёта «Вихрь»
+  description: Короб на 180 патронов для пулемёта «Вихрь».
+  components:
+  - type: Tag
+    tags:
+    - MagazineWhirl
+  - type: BallisticAmmoProvider
+    proto: CartridgeWhirl
+    capacity: 180
+    whitelist:
+      tags:
+      - CartridgeWhirl
+
+- type: entity
+  id: CartridgeWhirl
+  parent: BaseCartridgeLightRifle
+  name: патрон «Вихря»
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - CartridgeWhirl
+  - type: CartridgeAmmo
+    proto: BulletWhirl
+
+- type: entity
+  id: BulletWhirl
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 17
+
+## Боеприпасы КС-23 калибра 22MM
+- type: entity
+  id: ShellShotgun22MM
+  parent: BaseShellShotgun
+  name: патрон 22MM
+  description: Крупнокалиберный патрон с пятнадцатью близко уложенными дробинами.
+  components:
+  - type: Tag
+    tags:
+    - ShellShotgun22MM
+  - type: Sprite
+    layers:
+    - state: slug
+      map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgun22MMSpread
+  - type: SpentAmmoVisuals
+    state: slug
+
+- type: entity
+  id: PelletShotgun22MM
+  parent: BulletTrace
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Piercing: 5
+
+- type: entity
+  id: PelletShotgun22MMSpread
+  parent: PelletShotgun22MM
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgun22MM
+    count: 15
+    spread: 7
+
+- type: entity
+  id: BoxShotgun22MM
+  parent: AmmoProviderShotgunShell
+  name: коробка патронов 22MM
+  description: Коробка специальных патронов для КС-23.
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun22MM
+    whitelist:
+      tags:
+      - ShellShotgun22MM
+  - type: MagazineVisuals
+    magState: mag-slug
+    steps: 3
+    zeroVisible: false
+  - type: Sprite
+    layers:
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-slug-1
+      map: [ "enum.GunVisualLayers.Mag" ]
+    - state: practice

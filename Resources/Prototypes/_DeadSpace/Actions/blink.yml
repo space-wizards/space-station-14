@@ -1,0 +1,6 @@
+- type: alert
+  id: BlinkCooldown
+  icons: [ /Textures/Interface/Emotes/jump.png ]
+  name: Блинк
+  description: Нажмите, чтобы показать или скрыть доступную дальность. Блинк выполняется через Alt+ПКМ.
+  clickEvent: !type:ToggleBlinkViewAlertEvent

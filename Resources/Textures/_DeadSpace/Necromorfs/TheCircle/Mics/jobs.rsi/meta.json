@@ -21,6 +21,12 @@
         },
         {
             "name": "medic"
+        },
+        {
+            "name": "geist"
+        },
+        {
+            "name": "dread"
         }
     ]
 }

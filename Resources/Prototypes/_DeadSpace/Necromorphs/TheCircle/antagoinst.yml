@@ -81,6 +81,26 @@
   guides: [ TheCircle ]
 
 - type: antag
+  id: CircleGeist
+  name: roles-antag-thecircle-geist-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-thecircle-geist-objective
+  requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 1296000 # 360 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 60h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 60h
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 60h
+  guides: [ TheCircle ]
+
+- type: antag
   id: CircleCommander
   name: roles-antag-thecircle-commander-name
   antagonist: true
@@ -156,3 +176,15 @@
     pocket1: UnitologyMedicHypospray
     belt: ClothingBeltUnitologyMedicWebbing
     id: UnitologyMedicPDA
+
+- type: startingGear
+  parent: TheCircleBaseGear
+  id: TheCircleGeistGear
+  equipment:
+    back: ClothingBackpackUnitologyGeistFilled
+    belt: ClothingBeltUnitologyGeistWebbing
+    id: UnitologyGeistPDA
+    head: ClothingHeadHelmetUnitologyGeist
+    neck: ClothingNeckUnitologyGeistMantle
+    pocket1: UniPhoneGeistUplink
+    pocket2: UnitologyLethalBladeImplanter

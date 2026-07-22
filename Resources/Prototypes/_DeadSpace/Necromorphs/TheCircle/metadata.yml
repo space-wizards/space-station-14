@@ -29,6 +29,12 @@
     count: 1
 
 - type: localizedDataset
+  id: UnitologyGeistFirst
+  values:
+    prefix: names-circle-geist-first-dataset-
+    count: 1
+
+- type: localizedDataset
   id: UnitologyFighterSecond
   values:
     prefix: names-circle-fighters-second-dataset-

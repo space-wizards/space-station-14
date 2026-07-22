@@ -30,6 +30,7 @@
     - EmergencyMedipen
     - KukriKnife
     - BoxMRE
+    - WeaponPlasmaCutter
 
 - type: startingGear
   id: BSAAFighterGear
@@ -59,6 +60,7 @@
     - WeaponPulsePistol
     - EmergencyMedipen
     - BoxMRE
+    - WeaponPlasmaCutter
 
 - type: startingGear
   id: BSAAMedicGear
@@ -91,6 +93,7 @@
     - BoxMRE
     - JugTheCircleOmnizine
     - JugDexPlusSaline
+    - WeaponPlasmaCutter
 
 # Спавн
 - type: entity

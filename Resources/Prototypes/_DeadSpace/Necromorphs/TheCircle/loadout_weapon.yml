@@ -119,3 +119,18 @@
         amount: 2
       - id: MagRifleZastaba
         amount: 2
+
+- type: entity
+  id: CrateDreadnoughtBundle
+  parent: CrateGenericSteel
+  name: ящик комплекта Дредноута «Бастион»
+  description: Серый ящик с полным комплектом тяжёлого вооружения Дредноута Круга.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitUnitologyDreadnought
+    - id: WeaponMachineGunWhirl
+    - id: MagazineWhirl
+      amount: 6
+    - id: DeathAcidifierImplanter
+    - id: UnitologyWeaponRetentionImplanter

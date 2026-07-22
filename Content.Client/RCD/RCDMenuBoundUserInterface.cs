@@ -24,6 +24,9 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
             ["Airlocks"] = ("rcd-component-airlocks", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/airlocks.png"))),
             ["Electrical"] = ("rcd-component-electrical", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/multicoil.png"))),
             ["Lighting"] = ("rcd-component-lighting", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png"))),
+            // DS14-start
+            ["NecromorphTriggers"] = ("rcd-component-necromorph-triggers", new SpriteSpecifier.Rsi(new ResPath("/Textures/Tiles/Misc/floortrap.rsi"), "floortrapspawn")),
+            // DS14-end
         };
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

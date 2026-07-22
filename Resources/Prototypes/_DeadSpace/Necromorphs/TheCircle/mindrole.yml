@@ -48,3 +48,11 @@
   components:
   - type: MindRole
     antagPrototype: CircleCommander
+
+- type: entity
+  parent: MindRoleBaseCircleFighters
+  id: MindRoleCircleGeist
+  name: роль Гейста Круга
+  components:
+  - type: MindRole
+    antagPrototype: CircleGeist

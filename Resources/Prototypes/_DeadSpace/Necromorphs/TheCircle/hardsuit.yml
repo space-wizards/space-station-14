@@ -190,6 +190,7 @@
         Radiation: 0.5
         Poison: 0.5
         Caustic: 0.5
+  - type: BlinkItem
   - type: StaminaResistance
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
@@ -407,6 +408,155 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+## Гейст
+- type: entity
+  parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
+  id: ClothingOuterHardsuitUnitologyGeist
+  name: скафандр «Морс»
+  description: Лёгкий скафандр отбитого психопата.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/geist.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/geist.rsi
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.6
+        Cold: 0.6
+        Radiation: 0.6
+        Poison: 0.6
+        Caustic: 0.6
+  - type: ExplosionResistance
+    damageCoefficient: 0.6
+  - type: StaminaResistance
+    damageCoefficient: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HeldSpeedModifier
+  - type: Tag
+    tags:
+    - SuitEVA
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ ClothingHeadEVAHelmetBase, BaseSyndicateContraband ]
+  id: ClothingHeadHelmetUnitologyGeist
+  name: лицевые обмотки
+  description: Вы даже не заметите кто вас убил.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+        Cold: 0.9
+        Radiation: 0.9
+        Poison: 0.9
+        Caustic: 0.9
+  - type: PNV
+    color: "#AFC4D111"
+    desaturation: 0.8
+    activateSound:
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
+  - type: Unremoveable
+  - type: Tag
+    tags:
+    - HelmetEVA
+    - WhitelistChameleon
+
+## Дредноут
+- type: entity
+  id: ClothingOuterHardsuitUnitologyDreadnought
+  parent: [ ClothingOuterHardsuitBase, BaseMajorContraband ]
+  name: бронескафандр «Бастион»
+  description: Чудовищно тяжёлый бронескафандр Дредноута Круга.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/dread.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/dread.rsi
+    equipDelay: 30
+    unequipDelay: 30
+  - type: Item
+    size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.01
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.05
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.05
+        Slash: 0.05
+        Piercing: 0.05
+        Heat: 0.05
+        Cold: 0.05
+        Shock: 0.05
+        Radiation: 0.05
+        Poison: 0.05
+        Caustic: 0.05
+  - type: StaminaResistance
+    damageCoefficient: 0.05
+  - type: ClothingSpeedModifier
+    walkModifier: 0.3
+    sprintModifier: 0.3
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitUnitologyDreadnought
+  - type: DreadnoughtLastStand
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+- type: entity
+  id: ClothingHeadHelmetHardsuitUnitologyDreadnought
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  name: шлем бронескафандра «Бастион»
+  description: Бронированный шлем Дредноута Круга.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/dread.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/dread.rsi
+  - type: PointLight
+    color: red
+    energy: 2
+    radius: 6
+  - type: PressureProtection
+    highPressureMultiplier: 0.01
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.05
+        Slash: 0.05
+        Piercing: 0.05
+        Heat: 0.05
+        Cold: 0.05
+        Shock: 0.05
+        Radiation: 0.05
+        Poison: 0.05
+        Caustic: 0.05
   - type: Tag
     tags:
     - WhitelistChameleon

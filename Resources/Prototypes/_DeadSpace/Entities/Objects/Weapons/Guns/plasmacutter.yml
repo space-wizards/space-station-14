@@ -38,6 +38,6 @@
     shape:
     - 0,0,1,1
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 2.5
+    rechargeCooldown: 1.8
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg

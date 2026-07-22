@@ -18,7 +18,7 @@
     key: enum.StoreUiKey.Key
   - type: Store
     balance:
-      Telecrystal: 597
+      Telecrystal: 700
 
 - type: entity
   id: UniPhonePresetUplink
@@ -78,7 +78,7 @@
 ### Вооружение
 - type: listing
   id: UniPhoneUplinkWeaponZastaba
-  name: Zastaba Nosle CZN-M22 (Можно купить 3 раза)
+  name: Zastaba Nosle CZN-M22
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/zastaba/zastaba-icon.rsi, state: icon }
   description: Штурмовой автомат специальных войск на утяжелённом калибре 5.7x39. Высокий темп стрельбы, что сбивает с ног врагов.
   productEntity: WeaponCaseHeavyFilledZastaba
@@ -92,7 +92,7 @@
 
 - type: listing
   id: UniPhoneUplinkWeaponVSK
-  name: VSK-94 (Можно купить 3 раза)
+  name: VSK-94
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/vsk/big.rsi, state: icon }
   description: Точный винторез, что заточен под дальний бой и разбитие позиций врагов, вместо тупого штурма.
   productEntity: WeaponCaseHeavyFilledVSK
@@ -106,7 +106,7 @@
 
 - type: listing
   id: UniPhoneUplinkWeaponRifleAsVal
-  name: АС "Вал" (Можно купить 3 раза)
+  name: АС "Вал"
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/asval/asval.rsi, state: icon }
   description: Бесшумный автомат, используется в ан-... Террористических операциях. Да, точно не украдено у СССП.
   productEntity: WeaponCaseHeavyFilledVAL
@@ -120,7 +120,7 @@
 
 - type: listing
   id: UniPhoneUplinkWeaponRPL20
-  name: РПЛ 20 (Можно купить 2 раза)
+  name: РПЛ 20
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/rpl20/rpl20.rsi, state: icon }
   description: Пулемёт предназначен для поражения живой силы и небронированных транспортных средств противника.
   productEntity: WeaponCaseHeavyFilledRPL20
@@ -133,8 +133,33 @@
     stock: 2
 
 - type: listing
+  id: UniPhoneUplinkCursedVANT
+  name: Проклятый ВАНТ
+  description: Щит, поглощающий девяносто процентов оружейного урона.
+  icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/vant/vant.rsi, state: icon }
+  productEntity: ShieldCursedVANT
+  cost:
+    Telecrystal: 10
+  categories:
+  - UniPhoneUplinkWeaponry
+
+- type: listing
+  id: UniPhoneUplinkWeaponKS23
+  name: КС-23
+  description: Крупнокалиберный четырёхзарядный дробовик под патроны 22MM.
+  icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ks23/pump.rsi, state: icon }
+  productEntity: WeaponShotgunKS23
+  cost:
+    Telecrystal: 15
+  categories:
+  - UniPhoneUplinkWeaponry
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
   id: UniPhoneUplinkWeaponSCARAB
-  name: SCARAB (Можно купить 3 раза)
+  name: SCARAB
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/scarab/scarab.rsi, state: icon }
   description: Автомат из семейства FN SCAR, модифицированный под патрон 6.8х51 мм. На месте пулевых попаданий оставляет порезы и впрыскивает в рану кислоту.
   productEntity: WeaponCaseHeavyFilledSCARAB
@@ -148,7 +173,7 @@
 
 - type: listing
   id: UniPhoneUplinkWeaponASh12
-  name: АШ-12 (Можно купить 2 раза)
+  name: АШ-12
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/weapons/ash12/ash12.rsi, state: icon }
   description: Крупнокалиберный штурмовой автомат под патрон 12.7х55 мм. Оружие разрабатывалось с расчетом на сверхсильную останавливающую силу.
   productEntity: WeaponCaseHeavyFilledASh12
@@ -183,8 +208,22 @@
    - UniPhoneUplinkWeaponry
 
 - type: listing
+  id: UniPhoneUplinkLethalBladeImplant
+  name: Летальный клинок
+  description: Вы подготовливаете летальный урон, а после чего делаете из врага пончик.
+  icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/strike-blade.rsi, state: icon }
+  productEntity: UnitologyLethalBladeImplanter
+  cost:
+    Telecrystal: 8
+  categories:
+  - UniPhoneUplinkWeaponry
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
   id: UniPhoneUplinkWeaponScytheHook
-  name: Хук-Рука (Можно купить 2 раза)
+  name: Хук-Рука
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/hand-hook.rsi, state: icon }
   description: "СВЕЖЕЕ МЯСО-!!!"
   productEntity: UnitologyWeaponHandHookImplanter
@@ -253,6 +292,17 @@
    - UniPhoneUplinkAmmo
 
 - type: listing
+  id: UniPhoneUplinkAmmoKS23
+  name: коробка патронов 22MM
+  description: Коробка дробовых патронов для КС-23.
+  icon: { sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi, state: practice }
+  productEntity: BoxShotgun22MM
+  cost:
+    Telecrystal: 1
+  categories:
+   - UniPhoneUplinkAmmo
+
+- type: listing
   id: UniPhoneUplinkMagazineVSK
   name: Магазин от VSK-94 
   icon: { sprite: Objects/Weapons/Guns/Ammunition/Magazine/Rifle/rifle_mag.rsi, state: base }
@@ -290,7 +340,7 @@
   name: Набор пополнения СиндиСоки
   icon: { sprite: _DeadSpace/Objects/Specific/Service/vending_machine_restock.rsi, state: base }
   productEntity: VendingMachineRestockChemVendSyndicate
-  description: Простое пополнение для СиндиСока. Пополнение можно купить 2 раза.
+  description: Простое пополнение для СиндиСока.
   cost:
     Telecrystal: 16
   categories:
@@ -304,7 +354,7 @@
   name: Набор медика "Круг"
   icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
   productEntity: ExtraborilKit
-  description: Важный набор для твоего медика Круга. Кстати, скажи спасибо своему медику, ему будет приятно. Данный набор можно купить 6 раз.
+  description: Важный набор для твоего медика Круга. Кстати, скажи спасибо своему медику, ему будет приятно.
   cost:
     Telecrystal: 6
   categories:
@@ -429,6 +479,33 @@
     stock: 1
 
 - type: listing
+  id: UniPhoneUplinkGeistHardsuit
+  name: Скафандр «Морс» / Скафандр Гейста
+  icon: { sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/geist.rsi, state: icon }
+  productEntity: ClothingOuterHardsuitUnitologyGeist
+  cost:
+    Telecrystal: 14
+  categories:
+   - UniPhoneUplinkGear
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: UniPhoneUplinkDreadnoughtBundle
+  name: комплект Дредноута «Бастион»
+  description: Скафандр «Бастион», пулемёт «Вихрь», шесть коробов, имплант растворения после смерти и имплант удержания оружия.
+  icon: { sprite: _DeadSpace/Necromorfs/TheCircle/HardSuit/dread.rsi, state: icon }
+  productEntity: CrateDreadnoughtBundle
+  cost:
+    Telecrystal: 148
+  categories:
+  - UniPhoneUplinkGear
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: UniPhoneUplinkMagBoots
   name: Трекинговые магнитные ботинки
   icon: { sprite: _DeadSpace/Necromorfs/TheCircle/Gear/accessories/magboots.rsi, state: icon }
@@ -483,6 +560,19 @@
     Telecrystal: 4
   categories:
     - UniPhoneUplinkImplants
+
+- type: listing
+  id: UniPhoneUplinkWeaponRetentionImplant
+  name: имплант удержания оружия
+  description: Не позволяет выбить предметы из рук при опрокидывании.
+  productEntity: UnitologyWeaponRetentionImplanter
+  cost:
+    Telecrystal: 5
+  categories:
+  - UniPhoneUplinkImplants
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
 
 - type: listing
   id: UniPhoneUplinkEmpImplanter
@@ -612,3 +702,102 @@
     Telecrystal: 4
   categories:
     - UniPhoneUplinkOther
+
+### Специализированный аплинк Гейста
+- type: entity
+  id: UniPhoneGeistUplink
+  parent: [ BaseItem, UniPhoneGeistPresetUplink ]
+  name: аплинк ловушек Гейста
+  description: Урезанный аплинк с диверсионным оснащением.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/uplink.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/uplink.rsi
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      Telecrystal: 30
+
+- type: entity
+  id: UniPhoneGeistPresetUplink
+  abstract: true
+  components:
+  - type: Store
+    name: circle-store-name
+    categories:
+    - UniPhoneGeistUplinkTraps
+    currencyWhitelist:
+    - Telecrystal
+    balance:
+      Telecrystal: 0
+
+- type: storeCategory
+  id: UniPhoneGeistUplinkTraps
+  name: Ловушки и диверсии
+  priority: 1
+
+- type: listing
+  id: UniPhoneGeistUplinkC4
+  name: взрывчатка C4
+  productEntity: C4
+  cost:
+    Telecrystal: 2
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkBearTrap
+  name: капкан
+  productEntity: BearTrap
+  cost:
+    Telecrystal: 4
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkAmmoKS23
+  name: коробка патронов 22MM
+  description: Коробка дробовых патронов для КС-23.
+  icon: { sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi, state: practice }
+  productEntity: BoxShotgun22MM
+  cost:
+    Telecrystal: 1
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkTripwire
+  name: жгут растяжки
+  productEntity: TripwireStack
+  cost:
+    Telecrystal: 2
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkRemoteCar
+  name: штурмовая машинка Круга
+  description: Быстрая радиоуправляемая машинка с камерой и креплением для взрывчатки.
+  productEntity: MobTheCircleRemoteCar
+  cost:
+    Telecrystal: 3
+  categories:
+  - UniPhoneGeistUplinkTraps
+
+- type: listing
+  id: UniPhoneGeistUplinkRemoteCarController
+  name: пульт штурмовой машинки Круга
+  description: Пульт управления машинками Круга на дистанции до ста тайлов.
+  productEntity: TheCircleRemoteCarController
+  cost:
+    Telecrystal: 6
+  categories:
+  - UniPhoneGeistUplinkTraps

@@ -166,3 +166,15 @@
     event: !type:TriggerActionEvent
   - type: TriggerOnAction
     keyOut: honk
+
+- type: entity
+  parent: BaseAction
+  id: ToyCarDetonateAttachedExplosives
+  name: Подорвать закреплённую взрывчатку
+  description: Моментально активирует взрывные устройства, закреплённые на машинке.
+  components:
+  - type: Action
+    icon: Interface/Alerts/Fire/fire.png
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:DetonateAttachedExplosivesActionEvent

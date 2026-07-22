@@ -179,6 +179,28 @@
       - sprite: _DeadSpace/Necromorfs/TheCircle/Mics/jobs.rsi
         state: engineer
 
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseSpawnPointGhostCircle
+  id: SpawnPointCircleGeist
+  components:
+  - type: GhostRole
+    name: roles-antag-thecircle-geist-name
+    description: roles-antag-thecircle-geist-objective
+    rules: ghost-role-information-rules-default-team-antagonist
+    mindRoles:
+    - MindRoleCircleGeist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 216000 # 60 hours
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _DeadSpace/Necromorfs/TheCircle/Mics/jobs.rsi
+        state: geist
+
 # НЕ ИСПОЛЬЗОВАТЬ, СОЗДАНО ДЛЯ ВНУТРЕННОГО ГАЙДА
 
 - type: entity
@@ -227,6 +249,24 @@
       state: engineer
 
 - type: entity
+  id: GuidePosterCircleGeist
+  parent: PosterBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Necromorfs/TheCircle/Mics/jobs.rsi
+      state: geist
+
+- type: entity
+  id: GuidePosterCircleDreadnought
+  parent: PosterBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Necromorfs/TheCircle/Mics/jobs.rsi
+      state: dread
+
+- type: entity
   id: GuideJobIconCircleCommander
   parent: PosterBase
   categories: [ HideSpawnMenu ]
@@ -269,4 +309,13 @@
   components:
     - type: Sprite
       sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/icon.rsi
-      state: circle_engineer     
+      state: circle_engineer
+
+- type: entity
+  id: GuideJobIconCircleGeist
+  parent: PosterBase
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Necromorfs/TheCircle/Mics/etc/icon.rsi
+      state: circle_geist

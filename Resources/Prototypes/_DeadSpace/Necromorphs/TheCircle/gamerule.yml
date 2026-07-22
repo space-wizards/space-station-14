@@ -46,6 +46,7 @@
     - Diona
     - Xenomorph
     - IPC
+    - Felinid
   - type: RandomMetadata
     nameSegments:
     - UnitologyHeavyFirst
@@ -77,7 +78,7 @@
     selectionTime: PrePlayerSpawn
     definitions:
     - prefRoles: [ CircleCommander ]
-      fallbackRoles: [ CircleEngineer, CircleMedic, CircleFighterHeavy, CircleFighterLight ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleCommander
       startingGear: TheCircleLeaderGear
       playerRatio: 12
@@ -119,7 +120,7 @@
       - MindRoleCircleCommander
       sponsorsPriority: true
     - prefRoles: [ CircleMedic ]
-      fallbackRoles: [ CircleEngineer, CircleCommander, CircleFighterHeavy, CircleFighterLight ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleMedic
       startingGear: TheCircleMedicGear
       playerRatio: 12
@@ -133,6 +134,7 @@
       - type: Skill
         group: ALL
       - type: ObeliskActivateAbility
+      - type: InstantCriticalCarry
       - type: IntrinsicRadioTransmitter
         channels:
         - Unitolog
@@ -162,7 +164,7 @@
       sponsorsPriority: true
 # Повторение потому-что по какой-то тупой причине не спавниться ещё 2 роли данных ролей
     - prefRoles: [ CircleFighterHeavy ]
-      fallbackRoles: [ CircleEngineer, CircleMedic, CircleFighterLight, CircleCommander ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleFighterHeavy
       playerRatio: 12
       startingGear: TheCircleHeavyGear
@@ -203,7 +205,7 @@
       mindRoles:
       - MindRoleCircleFighterHeavy
     - prefRoles: [ CircleFighterLight ]
-      fallbackRoles: [ CircleEngineer, CircleMedic, CircleFighterHeavy, CircleCommander ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleFighterLight
       playerRatio: 12
       startingGear: TheCircleLightGear
@@ -245,7 +247,7 @@
       - MindRoleCircleFighterLight
 # Конец повторение
     - prefRoles: [ CircleFighterHeavy ]
-      fallbackRoles: [ CircleEngineer, CircleMedic, CircleFighterLight, CircleCommander ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleFighterHeavy
       playerRatio: 12
       startingGear: TheCircleHeavyGear
@@ -286,7 +288,7 @@
       mindRoles:
       - MindRoleCircleFighterHeavy
     - prefRoles: [ CircleFighterLight ]
-      fallbackRoles: [ CircleEngineer, CircleMedic, CircleFighterHeavy, CircleCommander ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleFighterLight
       playerRatio: 12
       startingGear: TheCircleLightGear
@@ -327,7 +329,7 @@
       mindRoles:
       - MindRoleCircleFighterLight
     - prefRoles: [ CircleEngineer ]
-      fallbackRoles: [ CircleFighterLight, CircleMedic, CircleFighterHeavy, CircleCommander ]
+      fallbackRoles: []
       spawnerPrototype: SpawnPointCircleEngineer
       startingGear: TheCircleEngineerGear
       playerRatio: 12
@@ -367,5 +369,50 @@
         - GeneralLanguage
       mindRoles:
       - MindRoleCircleEngineer
+    - prefRoles: [ CircleGeist ]
+      fallbackRoles: []
+      spawnerPrototype: SpawnPointCircleGeist
+      startingGear: TheCircleGeistGear
+      playerRatio: 12
+      roleLoadout:
+        - RoleSurvivalExtended
+      briefing:
+        text: roles-antag-thecircle-geist-start
+        color: CornflowerBlue
+        sound: "/Audio/_DeadSpace/Necromorfs/TheCircle/the-circle-start.ogg"
+      components:
+      - type: Skill
+        group: ALL
+      - type: ObeliskActivateAbility
+      - type: TheCircleGeist
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: IntrinsicRadioTransmitter
+        channels:
+        - Unitolog
+      - type: ActiveRadio
+        channels:
+        - Unitolog
+      - type: IntrinsicRadioReceiver
+      - type: Unitology
+      - type: ImmunNecroobelisk
+      - type: IgnoreKudzu
+      - type: RandomMetadata
+        nameSegments:
+        - UnitologyGeistFirst
+        - UnitologyFighterSecond
+        nameFormat: name-format-nuclear-operation
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+        - Necromorfs
+      - type: Language
+        selectedLanguage: NecromorfLanguage
+        knownLanguages:
+        - NecromorfLanguage
+        - GeneralLanguage
+      mindRoles:
+      - MindRoleCircleGeist
   - type: DynamicRuleCost
     cost: 200

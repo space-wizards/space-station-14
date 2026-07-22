@@ -65,6 +65,10 @@
     quickEquip: false
     equipDelay: 3
     unequipDelay: 6
+  # DS14-start
+  - type: ScaleWhenStuck
+    scale: 0.7, 0.7
+  # DS14-end
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: TriggerOnStuck

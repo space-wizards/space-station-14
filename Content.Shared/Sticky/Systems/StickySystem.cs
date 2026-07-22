@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sticky.Components;
+using Content.Shared.DeadSpace.Sticky; // DS14
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -67,8 +68,11 @@ public sealed class StickySystem : EntitySystem
         var (uid, comp) = ent;
 
         // check whitelist and blacklist
+        // DS14-start
         if (_whitelist.IsWhitelistFail(comp.Whitelist, target) ||
-            _whitelist.IsWhitelistPass(comp.Blacklist, target))
+            _whitelist.IsWhitelistPass(comp.Blacklist, target) &&
+            !HasComp<StickySurfaceOverrideComponent>(target))
+        // DS14-end
             return false;
 
         var attemptEv = new AttemptEntityStickEvent(target, user);

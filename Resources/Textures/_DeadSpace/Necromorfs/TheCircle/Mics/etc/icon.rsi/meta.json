@@ -24,6 +24,9 @@
 		},
         {
             "name": "circle_medic"
+		},
+        {
+            "name": "circle_geist"
 		}
     ]
 }

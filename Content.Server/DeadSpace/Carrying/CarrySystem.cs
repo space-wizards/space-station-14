@@ -167,7 +167,7 @@ public sealed class CarrySystem : EntitySystem
         if (!CanCarryWithPullingFixup(carrier, target, popup))
             return false;
 
-        var delay = GetPickupDelay(target);
+        var delay = GetPickupDelay(carrier, target);
         var doAfter = new DoAfterArgs(EntityManager, carrier, delay, new CarryDoAfterEvent(), target, target: target)
         {
             BlockDuplicate = true,
@@ -291,8 +291,15 @@ public sealed class CarrySystem : EntitySystem
         return true;
     }
 
-    private TimeSpan GetPickupDelay(EntityUid target)
+    private TimeSpan GetPickupDelay(EntityUid carrier, EntityUid target)
     {
+        if (TryComp<InstantCriticalCarryComponent>(carrier, out var instant) &&
+            TryComp<MobStateComponent>(target, out var mob) &&
+            instant.States.Contains(mob.CurrentState))
+        {
+            return TimeSpan.Zero;
+        }
+
         if (HasComp<MobStateComponent>(target) && !HasComp<HumanoidAppearanceComponent>(target))
             return AnimalPickupTime;
 

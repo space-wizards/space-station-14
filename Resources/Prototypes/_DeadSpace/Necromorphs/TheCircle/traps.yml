@@ -1,0 +1,203 @@
+- type: entity
+  id: Tripwire
+  name: растяжка
+  description: Тонкий провод, способный мгновенно активировать подключённые мультитулом устройства.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Power/Cables/lv_cable.rsi
+    state: lvcable_0
+    color: "#80808080"
+    drawdepth: ThinWire
+  - type: CableVis
+    node: cordage
+  - type: NodeContainer
+    nodes:
+      cordage:
+        !type:CableNode
+        nodeGroupID: ExCable
+  - type: CableVisualizer
+    statePrefix: lvcable_
+  - type: Tripwire
+    port: Pressed
+    immediateTriggerKey: timer
+    disarmTime: 10
+  - type: TrapIgnore
+    factions:
+    - Necromorfs
+  - type: DeviceLinkSource
+    range: 3
+    ports:
+    - Pressed
+  - type: StepTrigger
+    intersectRatio: 0.1
+    requiredTriggeredSpeed: 0
+    stepOn: false
+  - type: Physics
+    bodyType: Static
+    canCollide: true
+    fixedRotation: true
+  - type: Fixtures
+    fixtures:
+      trigger:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.48,-0.48,0.48,0.48"
+        hard: false
+        layer:
+        - LowImpassable
+
+- type: entity
+  parent: CableStack
+  id: TripwireStack
+  name: жгут нитей для растяжки
+  suffix: Полный
+  description: Моток тонкой растяжки.
+  components:
+  - type: Stack
+    stackType: Tripwire
+    baseLayer: base
+    layerStates:
+    - coilex-10
+    - coilex-20
+    - coilex-30
+  - type: Sprite
+    state: coilex-30
+    layers:
+    - state: coilex-30
+      map: ["base"]
+  - type: Item
+    heldPrefix: coilex
+  - type: CablePlacer
+    cablePrototypeID: Tripwire
+    blockingWireType: ExCable
+    blacklist:
+      components:
+      - Tripwire
+    overTile: true
+  - type: Appearance
+
+- type: entity
+  parent: TripwireStack
+  id: TripwireStack1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+
+# Triggers constructed by the Circle engineer RCD.
+- type: entity
+  id: BaseCircleRcdTrigger
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Tiles/Misc/floortrap.rsi
+    state: floortrapspawn
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      trigger:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: BaseCircleRcdTrigger
+  id: CircleRcdTriggerKudzu
+  name: некротриггер кудзу
+  components:
+  - type: CircleRcdTrigger
+    flashTarget: true
+    spawnPrototype: NecroKudzu
+
+- type: entity
+  parent: BaseCircleRcdTrigger
+  id: CircleRcdTriggerMeleeTentacle
+  name: некротриггер тентакли
+  components:
+  - type: CircleRcdTrigger
+    flashTarget: true
+    spawnPrototype: WeaponTentacleNecro
+
+- type: entity
+  parent: BaseCircleRcdTrigger
+  id: CircleRcdTriggerRangedTentacle
+  name: некротриггер стрелковой тентакли
+  components:
+  - type: CircleRcdTrigger
+    spawnPrototype: WeaponBoneTentacleNecro
+
+- type: stack
+  parent: BaseMediumStack
+  id: Tripwire
+  name: stack-tripwire
+  icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilex-30 }
+  spawn: TripwireStack1
+
+- type: entity
+  parent: BaseItem
+  id: BearTrap
+  name: капкан
+  description: Тяжёлый капкан, который... Стоп, а почему он полу прозрачный?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/traps/bear_trap.rsi
+    state: idle
+    drawdepth: Items
+    layers:
+    - state: idle
+      map: [ "base" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.BearTrapVisuals.Armed:
+        base:
+          True: { state: armed }
+          False: { state: idle }
+  - type: BearTrap
+    armingTime: 1
+    stunTime: 10
+    minimumOpacity: 0.35
+    disarmTime: 15
+    damage:
+      types:
+        Slash: 50
+  - type: TrapIgnore
+    factions:
+    - Necromorfs
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: true
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      trigger:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.4,-0.35,0.4,0.35"
+        hard: false
+        layer:
+        - LowImpassable
+        mask:
+        - MobMask
+      item:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
