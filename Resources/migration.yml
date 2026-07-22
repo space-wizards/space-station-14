@@ -879,8 +879,6 @@ WallCobblebrick: WallConcrete
 WallAsteroidCobblebrick: WallConcrete
 WallBasaltCobblebrick: WallConcrete
 WallIce: WallRockSnow
-WallMining: WallSolid
-WallMiningDiagonal: WallSolidDiagonal
 
 #2026-07-17
 WeaponRifleM90GrenadeLauncher: null
@@ -937,3 +935,12 @@ CrateEngineeringJetpack: CrateSpaceMiniJetpack
 CrateEngineeringMiniJetpack: CrateSpaceMiniJetpack
 CrateEngineeringShuttle: CrateSpaceShuttlePower
 CrateEngineeringThruster: CrateSpaceThruster
+
+# 2026-07-20
+BlastDoorXenoborg: BlastDoorXeno
+BlastDoorXenoborgOpen: BlastDoorXenoOpen
+
+# 2026-07-22
+FloorTileItemBrassReebe: null
+FloorTileItemBrassFilled: null
+FloorBananiumEntity: null

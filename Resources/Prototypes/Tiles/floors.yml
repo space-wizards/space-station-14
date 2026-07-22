@@ -138,24 +138,6 @@
   itemDrop: FloorTileItemSteelHorizontalSlatsBordered
 
 - type: tile
-  id: FloorBrassFilled
-  parent: BaseStationTile
-  name: tiles-brass-floor-filled
-  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemBrassFilled
-
-- type: tile
-  id: FloorBrassReebe
-  parent: BaseStationTile
-  name: tiles-brass-floor-reebe
-  sprite: /Textures/Tiles/Misc/clockwork/reebe.png
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemBrassReebe
-
-- type: tile
   id: FloorPlastic
   parent: BaseStationTile
   name: tiles-plastic-floor
@@ -477,15 +459,6 @@
   footstepSounds:
     collection: FootstepPlating
   itemDrop: FloorTileItemDirty
-
-- type: tile
-  id: FloorElevatorShaft
-  parent: BaseStationTile
-  name: tiles-elevator-shaft
-  sprite: /Textures/Tiles/elevator_shaft.png
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemElevatorShaft
 
 - type: tile
   id: FloorMetalDiamond

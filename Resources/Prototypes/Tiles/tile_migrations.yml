@@ -70,3 +70,95 @@
 - type: tileAlias
   id: FloorSteelBurnt
   target: FloorSteelDamaged
+
+# 2026/07/22
+# The respritening! With this one simple trick, i give 200 mappers a collective aneurysm.
+
+- type: tileAlias
+  id: FloorSteelOffset
+  target: FloorSteelDamaged
+
+- type: tileAlias
+  id: FloorBrassReebe
+  target: FloorSteelDamaged
+
+- type: tileAlias
+  id: FloorBrassFilled
+  target: FloorSteelDamaged
+
+- type: tileAlias
+  id: PlatingBrass
+  target: Plating
+
+- type: tileAlias
+  id: FloorDarkDiagonal
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorDarkDiagonalMini
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorDarkOffset
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorSteelDiagonal
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelDiagonalMini
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelOffset
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelDirty
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorWhiteDiagonal
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorWhiteDiagonalMini
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorWhiteOffset
+  target: FloorWhite
+
+- type: tileAlias
+  id: FloorUraniumMarble
+  target: FloorDarkMarble
+
+- type: tileAlias
+  id: FloorPlasmaMarble
+  target: FloorMarble
+
+- type: tileAlias
+  id: FloorEighties
+  target: FloorArcadeBlue
+
+- type: tileAlias
+  id: FloorArcadeBlue2
+  target: FloorArcadeBlue
+
+- type: tileAlias
+  id: FloorSteelMono
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorHydro
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorHydro
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorElevatorShaft
+  target: FloorSteel
+

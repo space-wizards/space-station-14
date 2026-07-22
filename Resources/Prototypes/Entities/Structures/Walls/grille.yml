@@ -27,6 +27,7 @@
   - type: PlacementReplacement
     key: grilles
   - type: IconSmooth
+    index: 0
     key: grilles
     base: grille
   - type: Damageable
@@ -116,6 +117,7 @@
     sprite: Structures/Walls/grille-diagonal.rsi
     state: grille_diagonal
   - type: IconSmooth
+    index: 0
     mode: Diagonal
     key: grilles
     base: state

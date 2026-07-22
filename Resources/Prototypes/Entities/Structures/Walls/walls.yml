@@ -894,7 +894,7 @@
 - type: entity
   parent: WallPlastitanium
   id: WallXenoborg
-  name: xenoborg wall
+  name: mechadermis wall
   components:
   - type: Sprite
     sprite: Structures/Walls/xenoborg.rsi
@@ -907,7 +907,7 @@
 - type: entity
   parent: WallPlastitaniumDiagonal
   id: WallXenoborgDiagonal
-  name: xenoborg wall
+  name: mechadermis wall
   suffix: diagonal
   components:
   - type: Sprite

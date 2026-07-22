@@ -60,12 +60,6 @@
   sprite: /Textures/Tiles/Asteroid/asteroid_plating.png
 
 - type: tile
-  id: PlatingBrass
-  parent: BasePlating
-  name: tiles-brass-plating
-  sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor.png
-
-- type: tile
   id: PlatingSnow
   name: tiles-snow-plating
   parent: BasePlating

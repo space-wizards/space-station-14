@@ -136,11 +136,11 @@
   suffix: Mining(Salvage)
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/mining.rsi
+    sprite: Structures/Doors/Airlocks/New/cargo-mining.rsi
   - type: Wires
     layoutId: AirlockCargo
   - type: Paintable
-    group: null
+    group: nulls
 
 - type: entity
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
@@ -172,7 +172,7 @@
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-borg.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-xenoborg.rsi
       map: ["enum.DoorVisualLayers.BaseUnlit"]
       visible: true
     - state: welded
@@ -180,10 +180,10 @@
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-borg.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-xenoborg.rsi
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: emergency_unlit
-      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-borg.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects-exo-xenoborg.rsi
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
       shader: unshaded
     - state: panel_open
@@ -355,7 +355,7 @@
   suffix: Mining(Salvage)
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+    sprite: Structures/Doors/Airlocks/New-Glass/cargo-mining.rsi
   - type: Paintable
     group: null
 
@@ -365,7 +365,7 @@
   suffix: Central Command
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+    sprite: Structures/Doors/Airlocks/New-Glass/centcomm-base.rsi
 
 - type: entity
   parent: AirlockGlass
@@ -379,6 +379,7 @@
   parent: Airlock
   id: AirlockXeno
   suffix: Exo
+  name: exodermis airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/New/exo-base.rsi
@@ -426,6 +427,7 @@
   parent: AirlockGlass
   id: AirlockGlassXeno
   suffix: Exo
+  name: resin exodermis airlock
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/New-Glass/exo-base.rsi
