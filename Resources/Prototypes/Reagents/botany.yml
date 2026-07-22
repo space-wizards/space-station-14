@@ -223,7 +223,7 @@
       - !type:HealthChange
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat, Changeling ]
+          type: [ Rat ]
           inverted: true
         - !type:ReagentCondition
           reagent: Ammonia
@@ -237,7 +237,7 @@
         probability: 0.12
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Rat, Vox, Changeling ]
+          type: [ Rat, Vox ]
           inverted: true
         - !type:ReagentCondition
           reagent: Ammonia
