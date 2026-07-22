@@ -86,7 +86,7 @@ public abstract partial class SharedMicrowaveSystem
         if (!_power.IsPowered(ent.Owner))
         {
             var message = Loc.GetString("microwave-component-interact-using-no-power");
-            PopupSys.PopupPredicted(message, ent, args.User);
+            PopupSys.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -94,7 +94,7 @@ public abstract partial class SharedMicrowaveSystem
         if (ent.Comp.Broken)
         {
             var message = Loc.GetString("microwave-component-interact-using-broken");
-            PopupSys.PopupPredicted(message, ent, args.User);
+            PopupSys.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -102,7 +102,7 @@ public abstract partial class SharedMicrowaveSystem
         if (!TryComp<ItemComponent>(args.Used, out var item))
         {
             var message = Loc.GetString("microwave-component-interact-using-transfer-fail");
-            PopupSys.PopupPredicted(message, ent, args.User);
+            PopupSys.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -110,7 +110,7 @@ public abstract partial class SharedMicrowaveSystem
         if (_item.GetSizePrototype(item.Size) > _item.GetSizePrototype(ent.Comp.MaxItemSize))
         {
             var message = Loc.GetString("microwave-component-interact-item-too-big", ("item", args.Used));
-            PopupSys.PopupPredicted(message, ent, args.User);
+            PopupSys.PopupEntity(message, ent, args.User);
             return;
         }
 
@@ -118,7 +118,7 @@ public abstract partial class SharedMicrowaveSystem
         if (ent.Comp.Storage.Count >= ent.Comp.Capacity)
         {
             var message = Loc.GetString("microwave-component-interact-full");
-            PopupSys.PopupPredicted(message, ent, args.User);
+            PopupSys.PopupEntity(message, ent, args.User);
             return;
         }
 

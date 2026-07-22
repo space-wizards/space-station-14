@@ -4,7 +4,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Shared.Administration;
@@ -43,7 +42,6 @@ public sealed partial class GhostRoleSystem : EntitySystem
 {
     [Dependency] private IBanManager _ban = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private IEntityManager _ent = default!;
     [Dependency] private EuiManager _euiManager = default!;
     [Dependency] private IPlayerManager _playerManager = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -532,9 +530,8 @@ public sealed partial class GhostRoleSystem : EntitySystem
         foreach (var proto in roleEnt.Comp.MindRoles)
         {
             if (!ProtoMan.TryIndex(proto, out var indexed)
-                || !indexed.TryComp<MindRoleComponent>(out var comp, _ent.ComponentFactory))
+                || !indexed.TryComp<MindRoleComponent>(out var roleComp, Factory))
                 continue;
-            var roleComp = (MindRoleComponent)comp;
 
             if (roleComp.JobPrototype is not null)
                 jobs.Add(roleComp.JobPrototype.Value);
@@ -780,11 +777,13 @@ public sealed partial class GhostRoleSystem : EntitySystem
         if (string.IsNullOrEmpty(component.Prototype))
             throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-        var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
-        _transform.AttachToGridOrMap(mob);
+        if (!_transform.TryGetMapOrGridCoordinates(uid, out var spawnCoordinates))
+            return;
+
+        var mob = Spawn(component.Prototype, spawnCoordinates.Value);
 
         var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
-        RaiseLocalEvent(mob, spawnedEvent);
+        RaiseLocalEvent(mob, ref spawnedEvent);
 
         if (ghostRole.MakeSentient)
             _mindSystem.MakeSentient(mob, ghostRole.AllowMovement, ghostRole.AllowSpeech);
