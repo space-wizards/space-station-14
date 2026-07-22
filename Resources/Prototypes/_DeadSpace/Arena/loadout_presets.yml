@@ -172,7 +172,7 @@
   category: arena-category-melee
   equipment:
     jumpsuit: ClothingUniformJumpsuitSuitCheckered
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterCoatHoSTrench
     head: ClothingHeadHelmetBasic
     shoes: ClothingShoesBootsCombatFilled
     back: ClothingBackpack
