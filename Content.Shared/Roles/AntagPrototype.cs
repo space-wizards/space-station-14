@@ -1,4 +1,5 @@
 using Content.Shared.Guidebook;
+using Content.Shared.Preferences.Loadouts;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -56,4 +57,18 @@ public sealed partial class AntagPrototype : IPrototype
     /// </summary>
     [DataField]
     public List<ProtoId<GuideEntryPrototype>>? Guides;
+
+    // DS14-start
+    /// <summary>
+    /// Optional configurable loadout shown in the antagonist preference editor.
+    /// </summary>
+    [DataField]
+    public ProtoId<RoleLoadoutPrototype>? RoleLoadout;
+
+    /// <summary>
+    /// Optional base equipment used for antagonist preview. The preferred job is used when unset.
+    /// </summary>
+    [DataField]
+    public ProtoId<StartingGearPrototype>? PreviewStartingGear;
+    // DS14-end
 }

@@ -1125,6 +1125,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("construction_favorites");
 
+                    b.PrimitiveCollection<string>("FavoriteAntags")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("favorite_antags");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("selected_character_slot");

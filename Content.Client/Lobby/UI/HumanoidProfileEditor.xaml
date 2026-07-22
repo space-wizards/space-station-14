@@ -229,6 +229,12 @@
             </BoxContainer>
 
             <BoxContainer Orientation="Vertical" Margin="10">
+                <!-- DS14-start -->
+                <LineEdit Name="AntagSearch"
+                          PlaceHolder="{Loc 'antag-menu-search-placeholder'}"
+                          StyleClasses="DS14MenuProfileControl"
+                          Margin="0 0 0 6" />
+                <!-- DS14-end -->
                 <ScrollContainer VerticalExpand="True">
                     <BoxContainer Name="AntagList" Orientation="Vertical" />
                 </ScrollContainer>

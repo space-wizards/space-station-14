@@ -7,6 +7,8 @@ using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.DeadSpace.Preferences;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
@@ -45,6 +47,7 @@ namespace Content.Server.Preferences.Managers
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(HandleUpdateCharacterMessage);
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateConstructionFavorites>(HandleUpdateConstructionFavoritesMessage);
+            _netManager.RegisterNetMessage<MsgUpdateAntagFavorites>(HandleUpdateAntagFavoritesMessage);
             _sawmill = _log.GetSawmill("prefs");
 
             IoCManager.Instance!.TryResolveType(out _sponsorsManager); // DS14
@@ -74,7 +77,7 @@ namespace Content.Server.Preferences.Managers
                 return;
             }
 
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, curPrefs.InaccessibleCharacters); // DS14
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, curPrefs.InaccessibleCharacters, curPrefs.FavoriteAntags); // DS14
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -116,7 +119,7 @@ namespace Content.Server.Preferences.Managers
                 [slot] = profile
             };
 
-            prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, curPrefs.InaccessibleCharacters); // DS14
+            prefsData.Prefs = new PlayerPreferences(profiles, slot, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, curPrefs.InaccessibleCharacters, curPrefs.FavoriteAntags); // DS14
 
             if (ShouldStorePrefs(session.Channel.AuthType))
                 await _db.SaveCharacterSlotAsync(userId, profile, slot);
@@ -131,7 +134,7 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, favorites, curPrefs.InaccessibleCharacters); // DS14
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, favorites, curPrefs.InaccessibleCharacters, curPrefs.FavoriteAntags); // DS14
 
             var session = _playerManager.GetSessionById(userId);
             if (ShouldStorePrefs(session.Channel.AuthType))
@@ -178,7 +181,7 @@ namespace Content.Server.Preferences.Managers
             if (!arr.Remove(slot) && !inaccessible.Remove(slot))
                 return;
 
-            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, inaccessible);
+            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, curPrefs.ConstructionFavorites, inaccessible, curPrefs.FavoriteAntags);
             // DS14-end
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
@@ -220,13 +223,39 @@ namespace Content.Server.Preferences.Managers
             }
 
             var curPrefs = prefsData.Prefs!;
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, validatedList, curPrefs.InaccessibleCharacters); // DS14
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.SelectedCharacterIndex, curPrefs.AdminOOCColor, validatedList, curPrefs.InaccessibleCharacters, curPrefs.FavoriteAntags); // DS14
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
                 await _db.SaveConstructionFavoritesAsync(userId, validatedList);
             }
         }
+
+        // DS14-start
+        private async void HandleUpdateAntagFavoritesMessage(MsgUpdateAntagFavorites message)
+        {
+            var userId = message.MsgChannel.UserId;
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
+                return;
+
+            var favorites = message.Favorites
+                .Where(id => _prototypeManager.HasIndex(id))
+                .Distinct()
+                .Take(256)
+                .ToList();
+            var current = prefsData.Prefs!;
+            prefsData.Prefs = new PlayerPreferences(
+                current.Characters,
+                current.SelectedCharacterIndex,
+                current.AdminOOCColor,
+                current.ConstructionFavorites,
+                current.InaccessibleCharacters,
+                favorites);
+
+            if (ShouldStorePrefs(message.MsgChannel.AuthType))
+                await _db.SaveAntagFavoritesAsync(userId, favorites);
+        }
+        // DS14-end
 
         // Should only be called via UserDbDataManager.
         public async Task LoadData(ICommonSession session, CancellationToken cancel)
@@ -376,7 +405,8 @@ namespace Content.Server.Preferences.Managers
             var allowedMarkings = _sponsorsManager?.TryGetInfo(session.UserId, out var sponsor) == true ? sponsor.AllowedMarkings.ToArray() : [];
             var sanitized = EnumerateAllCharacters(prefs).Select(p =>
                 new KeyValuePair<int, ICharacterProfile>(p.Key, p.Value.Validated(session, collection, allowedMarkings)));
-            var sanitizedPrefs = new PlayerPreferences(sanitized, prefs.SelectedCharacterIndex, prefs.AdminOOCColor, prefs.ConstructionFavorites);
+            var sanitizedPrefs = new PlayerPreferences(sanitized, prefs.SelectedCharacterIndex, prefs.AdminOOCColor,
+                prefs.ConstructionFavorites, prefs.InaccessibleCharacters, prefs.FavoriteAntags);
             var normalizedPrefs = NormalizeCharacterSlots(session.UserId, sanitizedPrefs, out _, out _);
             // DS14-end
             return normalizedPrefs;
@@ -434,7 +464,8 @@ namespace Content.Server.Preferences.Managers
                 selectedSlot,
                 prefs.AdminOOCColor,
                 prefs.ConstructionFavorites,
-                inaccessible.OrderBy(p => p.Key));
+                inaccessible.OrderBy(p => p.Key),
+                prefs.FavoriteAntags);
         }
 
         private static IEnumerable<KeyValuePair<int, ICharacterProfile>> EnumerateAllCharacters(PlayerPreferences prefs)

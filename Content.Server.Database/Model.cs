@@ -347,6 +347,9 @@ namespace Content.Server.Database
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
         public List<string> ConstructionFavorites { get; set; } = new();
+        // DS14-start
+        public List<string> FavoriteAntags { get; set; } = new();
+        // DS14-end
         public List<Profile> Profiles { get; } = new();
     }
 

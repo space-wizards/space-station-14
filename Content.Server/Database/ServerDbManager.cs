@@ -46,6 +46,10 @@ namespace Content.Server.Database
 
         Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites);
 
+        // DS14-start
+        Task SaveAntagFavoritesAsync(NetUserId userId, List<ProtoId<AntagPrototype>> favoriteAntags);
+        // DS14-end
+
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel);
@@ -497,6 +501,14 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SaveConstructionFavoritesAsync(userId, constructionFavorites));
         }
+
+        // DS14-start
+        public Task SaveAntagFavoritesAsync(NetUserId userId, List<ProtoId<AntagPrototype>> favoriteAntags)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveAntagFavoritesAsync(userId, favoriteAntags));
+        }
+        // DS14-end
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel)
         {

@@ -24,6 +24,7 @@ using Content.Shared.Antag;
 using Content.Shared.Backmen.Blob.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.Necromorphs.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
@@ -32,7 +33,10 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Station;
 using Content.Shared.Store.Components;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
@@ -69,6 +73,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly BlobAntagRollbackSystem _blobRollback = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     // DS14-end
     private IServerSponsorsManager? _sponsorsManager; // DS14-sponsors
 
@@ -544,7 +549,33 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (def.StartingGear is not null)
             gear.Add(def.StartingGear.Value);
 
-        _loadout.Equip(player, gear, def.RoleLoadout);
+        // DS14-start
+        // Resolve the selected antagonist loadout before equipping anything so it replaces the definition defaults.
+        RoleLoadout? selectedAntagLoadout = null;
+        RoleLoadoutPrototype? selectedAntagLoadoutPrototype = null;
+        if (session != null && _pref.TryGetCachedPreferences(session.UserId, out var preferences) &&
+            preferences.SelectedCharacter is HumanoidCharacterProfile profile)
+        {
+            foreach (var antagId in def.PrefRoles.Concat(def.FallbackRoles))
+            {
+                if (!_prototypeManager.TryIndex(antagId, out var antag) || antag.RoleLoadout == null ||
+                    !profile.Loadouts.TryGetValue(antag.RoleLoadout.Value, out var selectedLoadout) ||
+                    !_prototypeManager.TryIndex(antag.RoleLoadout.Value, out RoleLoadoutPrototype? loadoutPrototype))
+                {
+                    continue;
+                }
+
+                selectedAntagLoadout = selectedLoadout;
+                selectedAntagLoadoutPrototype = loadoutPrototype;
+                break;
+            }
+        }
+
+        if (selectedAntagLoadout != null && selectedAntagLoadoutPrototype != null)
+            _loadout.Equip(player, gear, selectedAntagLoadout, selectedAntagLoadoutPrototype);
+        else
+            _loadout.Equip(player, gear, def.RoleLoadout);
+        // DS14-end
 
         if (session != null)
         {
@@ -775,7 +806,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session.AttachedEntity is not { } player ||
             session.GetMind() is not { } mindId ||
             !TryComp<MindComponent>(mindId, out var mind) ||
-            (!_role.MindIsAntagonist(mindId) && !HasComp<AntagRollbackTrackerComponent>(player)))
+            (!_role.MindIsAntagonist(mindId) &&
+             !_role.MindHasRole<UnitologyRoleComponent>(mindId) &&
+             !HasComp<AntagRollbackTrackerComponent>(player)))
         {
             return false;
         }
@@ -832,6 +865,9 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         }
 
         _role.MindRemoveAntagonistRoles((mindId, mind));
+        // Unitology roles must also be removed explicitly: transferred prophets may retain a
+        // UnitologyRoleComponent even when their inherited antagonist flag is unavailable.
+        _role.MindRemoveRole<UnitologyRoleComponent>((mindId, mind));
 
         var query = EntityQueryEnumerator<AntagSelectionComponent>();
         while (query.MoveNext(out _, out var selection))

@@ -169,6 +169,23 @@ public sealed class LoadoutSystem : EntitySystem
         GearEquipped(uid);
     }
 
+    // DS14-start
+    /// <summary>
+    /// Equips a previously selected role loadout instead of generating the default one.
+    /// </summary>
+    public void Equip(EntityUid uid,
+        List<ProtoId<StartingGearPrototype>>? startingGear,
+        RoleLoadout selectedLoadout,
+        RoleLoadoutPrototype loadoutPrototype)
+    {
+        if (startingGear != null && startingGear.Count > 0)
+            _station.EquipStartingGear(uid, _random.Pick(startingGear), false);
+
+        _station.EquipRoleLoadout(uid, selectedLoadout, loadoutPrototype);
+        GearEquipped(uid);
+    }
+    // DS14-end
+
     public void GearEquipped(EntityUid uid)
     {
         var ev = new StartingGearEquippedEvent(uid);

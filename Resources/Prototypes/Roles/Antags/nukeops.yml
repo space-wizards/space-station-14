@@ -12,6 +12,10 @@
       department: Security
       time: 20h
   guides: [ NuclearOperatives ]
+  # DS14-start
+  roleLoadout: RoleSurvivalNukie
+  previewStartingGear: SyndicateOperativeGearFull
+  # DS14-end
 
 - type: antag
   id: NukeopsMedic
@@ -30,6 +34,10 @@
       department: Security
       time: 20h
   guides: [ NuclearOperatives ]
+  # DS14-start
+  roleLoadout: RoleSurvivalNukie
+  previewStartingGear: SyndicateOperativeMedicFull
+  # DS14-end
 
 - type: antag
   id: NukeopsCommander
@@ -49,6 +57,10 @@
       time: 20h
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
+  # DS14-start
+  roleLoadout: RoleSurvivalNukie
+  previewStartingGear: SyndicateCommanderGearFull
+  # DS14-end
 
 - type: startingGear
   id: SyndicateOperativeGearFullNoUplink

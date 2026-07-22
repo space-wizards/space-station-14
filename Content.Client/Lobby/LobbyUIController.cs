@@ -370,6 +370,16 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
         }
     }
 
+    // DS14-start
+    /// <summary>
+    /// Equips antagonist starting gear on a profile preview dummy.
+    /// </summary>
+    public void GiveDummyAntagStartingGear(EntityUid uid, ProtoId<StartingGearPrototype> startingGear)
+    {
+        _spawn.EquipStartingGear(uid, startingGear);
+    }
+    // DS14-end
+
     /// <summary>
     /// Applies the specified job's clothes to the dummy.
     /// </summary>

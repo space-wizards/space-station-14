@@ -704,6 +704,13 @@ namespace Content.Server.Database
                 .ToList();
             newPrefs.ConstructionFavorites = favorites;
 
+            // DS14-start
+            newPrefs.FavoriteAntags = newPrefs.FavoriteAntags
+                .Concat(oldPrefs.FavoriteAntags)
+                .Distinct()
+                .ToList();
+            // DS14-end
+
             if (IsDefaultAdminOocColor(newPrefs.AdminOOCColor) && !IsDefaultAdminOocColor(oldPrefs.AdminOOCColor))
             {
                 newPrefs.AdminOOCColor = oldPrefs.AdminOOCColor;
@@ -1205,7 +1212,14 @@ namespace Content.Server.Database
             foreach (var favorite in prefs.ConstructionFavorites)
                 constructionFavorites.Add(new ProtoId<ConstructionPrototype>(favorite));
 
-            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor), constructionFavorites);
+            // DS14-start
+            var favoriteAntags = new List<ProtoId<AntagPrototype>>(prefs.FavoriteAntags.Count);
+            foreach (var favorite in prefs.FavoriteAntags)
+                favoriteAntags.Add(new ProtoId<AntagPrototype>(favorite));
+
+            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor),
+                constructionFavorites, null, favoriteAntags);
+            // DS14-end
         }
 
         // DS14-start
@@ -1321,6 +1335,7 @@ namespace Content.Server.Database
                     SelectedCharacterSlot = 0,
                     AdminOOCColor = Color.Red.ToHex(),
                     ConstructionFavorites = [],
+                    FavoriteAntags = [], // DS14
                 };
 
                 prefs.Profiles.Add(profile);
@@ -1370,6 +1385,18 @@ namespace Content.Server.Database
                 await db.SaveChangesAsync();
             });
         }
+
+        // DS14-start
+        public async Task SaveAntagFavoritesAsync(NetUserId userId, List<ProtoId<AntagPrototype>> favoriteAntags)
+        {
+            await WithUserIdMigrationWriteLockAsync(userId.UserId, async (db, _) =>
+            {
+                var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
+                prefs.FavoriteAntags = favoriteAntags.Select(favorite => favorite.Id).ToList();
+                await db.SaveChangesAsync();
+            });
+        }
+        // DS14-end
 
         private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
         {

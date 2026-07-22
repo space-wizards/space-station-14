@@ -15,6 +15,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Configurable;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.Necromorphs.Roles;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
@@ -194,6 +195,7 @@ namespace Content.Server.Administration.Systems
                     if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
                         _mindSystem.TryGetMind(args.Target, out var antagMind, out _) &&
                         (_role.MindIsAntagonist(antagMind) ||
+                         _role.MindHasRole<UnitologyRoleComponent>(antagMind) ||
                          HasComp<Content.Server.DeadSpace.Administration.AntagRollbackTrackerComponent>(args.Target)))
                     {
                         args.Verbs.Add(new Verb

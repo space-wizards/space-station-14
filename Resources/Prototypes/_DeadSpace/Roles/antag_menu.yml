@@ -1,0 +1,97 @@
+# Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
+
+- type: antagMenuCategory
+  id: Default
+  list:
+  - Syndicate
+  - Biohazard
+  - TheCircle
+  - Other
+
+- type: antagCategory
+  id: Syndicate
+  displayName: Синдикат
+  icon: /Textures/Interface/VerbIcons/antag-e_sword-temp.192dpi.png
+  outlineColor: "#d13b3b"
+  subcategories:
+  - displayName: Агенты
+    icon:
+      sprite: Interface/Misc/job_icons.rsi
+      state: Syndicate
+    antags:
+    - Traitor
+    - TraitorSleeper
+  - displayName: Ядерные оперативники
+    icon:
+      sprite: Interface/Misc/job_icons.rsi
+      state: SyndicateOperative
+    outlineColor: "#8f1f2d"
+    antags:
+    - Nukeops
+    - NukeopsMedic
+    - NukeopsCommander
+
+- type: antagCategory
+  id: Other
+  displayName: Другие
+  icon:
+    sprite: _DeadSpace/Interface/Misc/antag_icons.rsi
+    state: Event
+  outlineColor: "#4995ff"
+  antags:
+  - Thief
+  - HeadRev
+  - Shadowling
+  subcategories:
+  - displayName: Ксеноборги
+    outlineColor: "#020096"
+    antags:
+    - MothershipCore
+    - Xenoborg
+
+- type: antagCategory
+  id: Biohazard
+  displayName: Биоугроза
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: InitialInfected
+  outlineColor: "#b05ad9"
+  antags:
+  - InitialInfected
+  - SentientVirus
+  - Blob
+  subcategories:
+  - displayName: Пауки ужаса
+    outlineColor: "#8928ff"
+    icon: /Textures/_DeadSpace/LanguageIcons/spider.png
+    antags:
+    - SpiderTerrorQueen
+    - SpiderTerrorKing
+    - SpiderTerrorKingBlood
+
+- type: antagCategory
+  id: TheCircle
+  displayName: Круг
+  icon:
+    sprite: _DeadSpace/Interface/Misc/antag_icons.rsi
+    state: Unitology
+  outlineColor: "#b80564"
+  antags:
+  - Uni
+  - UniHead
+  subcategories:
+  - displayName: Ударный отряд Круга
+    outlineColor: "#720303"
+    subcategories:
+    - displayName: Обычные труперы
+      antags:
+      - CircleFighterLight
+      - CircleFighterHeavy
+    - displayName: Сапорт труперы
+      antags:
+      - CircleMedic
+      - CircleEngineer
+    - displayName: Кардинал / Шок труперы
+      antags:
+      - CircleCommander
+      - CircleGeist

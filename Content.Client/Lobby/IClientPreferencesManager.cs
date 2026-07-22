@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lobby
@@ -20,5 +21,6 @@ namespace Content.Client.Lobby
         void DeleteCharacter(ICharacterProfile profile);
         void DeleteCharacter(int slot);
         void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites);
+        void UpdateAntagFavorites(List<ProtoId<AntagPrototype>> favorites);
     }
 }

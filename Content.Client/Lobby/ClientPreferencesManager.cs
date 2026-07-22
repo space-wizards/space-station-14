@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DeadSpace.Preferences;
+using Content.Shared.Roles;
 using Content.DeadSpace.Interfaces.Client;
 using Content.Shared.Preferences;
 using Robust.Client;
@@ -33,6 +35,7 @@ namespace Content.Client.Lobby
             _netManager.RegisterNetMessage<MsgUpdateCharacter>();
             _netManager.RegisterNetMessage<MsgSelectCharacter>();
             _netManager.RegisterNetMessage<MsgDeleteCharacter>();
+            _netManager.RegisterNetMessage<MsgUpdateAntagFavorites>();
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
 
@@ -55,7 +58,7 @@ namespace Content.Client.Lobby
 
         public void SelectCharacter(int slot)
         {
-            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters); // DS14
+            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters, Preferences.FavoriteAntags); // DS14
             var msg = new MsgSelectCharacter
             {
                 SelectedCharacterIndex = slot
@@ -71,7 +74,7 @@ namespace Content.Client.Lobby
             profile.EnsureValid(_playerManager.LocalSession!, collection, allowedMarkings);
             // DS14-end
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters); // DS14
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters, Preferences.FavoriteAntags); // DS14
             var msg = new MsgUpdateCharacter
             {
                 Profile = profile,
@@ -95,7 +98,7 @@ namespace Content.Client.Lobby
 
             var l = lowest.Value;
             characters.Add(l, profile);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters); // DS14
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, Preferences.InaccessibleCharacters, Preferences.FavoriteAntags); // DS14
 
             UpdateCharacter(profile, l);
         }
@@ -110,7 +113,7 @@ namespace Content.Client.Lobby
             var characters = Preferences.Characters.Where(p => p.Key != slot);
             // DS14-start
             var inaccessibleCharacters = Preferences.InaccessibleCharacters.Where(p => p.Key != slot);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, inaccessibleCharacters);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites, inaccessibleCharacters, Preferences.FavoriteAntags);
             // DS14-end
             var msg = new MsgDeleteCharacter
             {
@@ -121,12 +124,24 @@ namespace Content.Client.Lobby
 
         public void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites)
         {
-            Preferences = new PlayerPreferences(Preferences.Characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, favorites, Preferences.InaccessibleCharacters); // DS14
+            Preferences = new PlayerPreferences(Preferences.Characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, favorites, Preferences.InaccessibleCharacters, Preferences.FavoriteAntags); // DS14
             var msg = new MsgUpdateConstructionFavorites
             {
                 Favorites = favorites
             };
             _netManager.ClientSendMessage(msg);
+        }
+
+        public void UpdateAntagFavorites(List<ProtoId<AntagPrototype>> favorites)
+        {
+            Preferences = new PlayerPreferences(
+                Preferences.Characters,
+                Preferences.SelectedCharacterIndex,
+                Preferences.AdminOOCColor,
+                Preferences.ConstructionFavorites,
+                Preferences.InaccessibleCharacters,
+                favorites);
+            _netManager.ClientSendMessage(new MsgUpdateAntagFavorites { Favorites = favorites });
         }
 
         private void HandlePreferencesAndSettings(MsgPreferencesAndSettings message)

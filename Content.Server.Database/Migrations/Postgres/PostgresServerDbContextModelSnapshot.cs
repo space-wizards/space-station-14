@@ -1188,6 +1188,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text[]")
                         .HasColumnName("construction_favorites");
 
+                    b.PrimitiveCollection<List<string>>("FavoriteAntags")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("favorite_antags");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")
                         .HasColumnName("selected_character_slot");

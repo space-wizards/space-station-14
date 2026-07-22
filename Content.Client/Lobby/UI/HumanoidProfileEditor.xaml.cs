@@ -15,6 +15,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Corvax.TTS; // Corvax-TTS
+using Content.Shared.DeadSpace.Roles;
 using Content.Shared.GameTicking;
 using Content.Shared.Guidebook;
 using Content.Shared.Humanoid;
@@ -30,6 +31,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
@@ -85,6 +87,17 @@ namespace Content.Client.Lobby.UI
         /// Temporary override of their selected job, used to preview roles.
         /// </summary>
         public JobPrototype? JobOverride;
+
+        // DS14-start
+        private AntagPrototype? _antagPreviewOverride;
+        private RoleLoadout? _antagPreviewLoadout;
+        private readonly HashSet<ProtoId<AntagPrototype>> _favoriteAntags = new();
+        private readonly HashSet<ProtoId<AntagPrototype>> _displayedFavoriteAntags = new();
+        private readonly Dictionary<ProtoId<AntagPrototype>, List<Button>> _favoriteAntagButtons = new();
+        private BoxContainer? _favoriteAntagContents;
+        private bool _antagFavoritesInitialized;
+        private static readonly ProtoId<AntagMenuPrototype> DefaultAntagMenu = "Default";
+        // DS14-end
 
         /// <summary>
         /// The character slot for the current profile.
@@ -151,6 +164,7 @@ namespace Content.Client.Lobby.UI
             ApplyDs14MenuStyle(SpawnPriorityButton);
             ApplyDs14MenuStyle(VoiceButton);
             ApplyDs14MenuStyle(PreferenceUnavailableButton);
+            AntagSearch.OnTextChanged += _ => RefreshAntags();
             // DS14-end
 
             ImportButton.OnPressed += args =>
@@ -683,7 +697,7 @@ namespace Content.Client.Lobby.UI
                     // Label
                     TraitsList.AddChild(new Label
                     {
-                        Text = Loc.GetString(category.Name),
+                        Text = category.Name,
                         Margin = new Thickness(0, 10, 0, 0),
                         StyleClasses = { "DS14MenuProfileSection" }, // DS14
                     });
@@ -806,83 +820,411 @@ namespace Content.Client.Lobby.UI
         public void RefreshAntags()
         {
             AntagList.RemoveAllChildren();
-            var items = new[]
+            _favoriteAntagContents = null;
+            _favoriteAntagButtons.Clear();
+
+            // DS14-start
+            if (!_antagFavoritesInitialized && _preferencesManager.Preferences is not null)
             {
-                ("humanoid-profile-editor-antag-preference-yes-button", 0),
-                ("humanoid-profile-editor-antag-preference-no-button", 1)
-            };
-
-            foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
-            {
-                if (!antag.SetPreference)
-                    continue;
-
-                var antagContainer = new BoxContainer()
-                {
-                    Orientation = LayoutOrientation.Horizontal,
-                };
-
-                var selector = new RequirementsSelector()
-                {
-                    Margin = new Thickness(3f, 3f, 3f, 0f),
-                    UseAntagPreferenceColors = true, // DS14
-                };
-                selector.OnOpenGuidebook += OnOpenGuidebook;
-
-                var title = Loc.GetString(antag.Name);
-                var description = Loc.GetString(antag.Objective);
-                selector.Setup(items, title, 250, description, guides: antag.Guides); // DS14
-                selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
-
-                // DS14-start
-                if (_sponsorsManager?.TryGetInfo(out var sponsor) == true && sponsor.HavePriorityAntag)
-                {
-                    selector.UnlockRequirements();
-                }
-                else if (!_requirements.IsAllowed(
-                        antag,
-                        (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
-                        out var reason))
-                {
-                    selector.LockRequirements(reason);
-                    if (!_readOnly) // DS14
-                    {
-                        Profile = Profile?.WithAntagPreference(antag.ID, false);
-                        SetDirty();
-                    }
-                }
-                else
-                {
-                    selector.UnlockRequirements();
-                }
-                // DS14-end
-
-                selector.OnSelected += preference =>
-                {
-                    if (_readOnly) // DS14
-                        return;
-
-                    Profile = Profile?.WithAntagPreference(antag.ID, preference == 0);
-                    SetDirty();
-                };
-
-                antagContainer.AddChild(selector);
-
-                antagContainer.AddChild(new Button()
-                {
-                    Disabled = true,
-                    Text = Loc.GetString("loadout-window"),
-                    HorizontalAlignment = HAlignment.Right,
-                    Margin = new Thickness(3f, 0f, 0f, 0f),
-                    StyleClasses = { "DS14MenuProfileControl" }, // DS14
-                });
-
-                AntagList.AddChild(antagContainer);
+                _favoriteAntags.UnionWith(_preferencesManager.Preferences.FavoriteAntags);
+                _displayedFavoriteAntags.UnionWith(_favoriteAntags);
+                _antagFavoritesInitialized = true;
             }
 
-            if (_readOnly) // DS14
+            _prototypeManager.TryIndex(DefaultAntagMenu, out var menu);
+
+            var roleColors = GetAntagRoleColors(menu);
+            var search = AntagSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(search))
+            {
+                foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>()
+                             .Where(antag => antag.SetPreference &&
+                                 (Loc.GetString(antag.Name).Contains(search, StringComparison.CurrentCultureIgnoreCase) ||
+                                  antag.ID.Contains(search, StringComparison.OrdinalIgnoreCase)))
+                             .OrderBy(antag => Loc.GetString(antag.Name)))
+                {
+                    AntagList.AddChild(CreateAntagSelector(
+                        antag,
+                        roleColors.GetValueOrDefault(antag.ID, AntagPrototype.GroupColor)));
+                }
+
+                if (_readOnly)
+                    SetInteractiveControlsDisabled(AntagList, true);
+                return;
+            }
+
+            if (_displayedFavoriteAntags.Count > 0)
+            {
+                AntagList.AddChild(CreateAntagCategory(
+                    Loc.GetString("antag-menu-category-favorites"),
+                    new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/examine-star.png")),
+                    Color.FromHex("#d9a928"),
+                    _displayedFavoriteAntags.OrderBy(id => id.Id).ToList(),
+                    Array.Empty<AntagSubcategory>(),
+                    0,
+                    true));
+            }
+
+            if (menu == null)
+            {
+                foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>()
+                             .Where(antag => antag.SetPreference)
+                             .OrderBy(antag => Loc.GetString(antag.Name)))
+                {
+                    AntagList.AddChild(CreateAntagSelector(antag, AntagPrototype.GroupColor));
+                }
+            }
+            else
+            {
+                foreach (var categoryId in menu.Categories)
+                {
+                    if (!_prototypeManager.TryIndex(categoryId, out var category))
+                    {
+                        _sawmill.Error($"Antag menu '{menu.ID}' references missing category '{categoryId}'.");
+                        continue;
+                    }
+
+                    AntagList.AddChild(CreateAntagCategory(
+                        category.Name,
+                        category.Icon,
+                        category.OutlineColor,
+                        category.Antags,
+                        category.Subcategories,
+                        0));
+                }
+            }
+
+            if (_readOnly)
                 SetInteractiveControlsDisabled(AntagList, true);
+            // DS14-end
         }
+
+        // DS14-start
+        private Control CreateAntagSelector(AntagPrototype antag, Color outlineColor)
+        {
+            var row = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalExpand = true,
+                Margin = new Thickness(5f, 3f),
+                SeparationOverride = 6,
+            };
+
+            var title = new Label
+            {
+                Text = Loc.GetString(antag.Name),
+                ToolTip = Loc.GetString(antag.Objective),
+                StyleClasses = { "DS14MenuProfileLabel" },
+                HorizontalExpand = true,
+                VerticalAlignment = VAlignment.Center,
+            };
+            row.AddChild(title);
+
+            var favoriteButton = new Button
+            {
+                Text = _favoriteAntags.Contains(antag.ID) ? "★" : "☆",
+                ToolTip = Loc.GetString(_favoriteAntags.Contains(antag.ID)
+                    ? "antag-menu-remove-favorite"
+                    : "antag-menu-add-favorite"),
+                StyleClasses = { "DS14MenuProfileControl" },
+                SetSize = new Vector2(28, 28),
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            if (!_favoriteAntagButtons.TryGetValue(antag.ID, out var favoriteButtons))
+            {
+                favoriteButtons = [];
+                _favoriteAntagButtons.Add(antag.ID, favoriteButtons);
+            }
+
+            favoriteButtons.Add(favoriteButton);
+            favoriteButton.OnPressed += _ =>
+            {
+                var added = _favoriteAntags.Add(antag.ID);
+                if (!added)
+                    _favoriteAntags.Remove(antag.ID);
+
+                // Keep removed entries visible in the favorites category until reconnecting.
+                var newlyDisplayed = added && _displayedFavoriteAntags.Add(antag.ID);
+
+                if (newlyDisplayed && string.IsNullOrWhiteSpace(AntagSearch.Text))
+                {
+                    if (_favoriteAntagContents != null)
+                    {
+                        _favoriteAntagContents.AddChild(CreateAntagSelector(antag, Color.FromHex("#d9a928")));
+                    }
+                    else
+                    {
+                        var favoritesCategory = CreateAntagCategory(
+                            Loc.GetString("antag-menu-category-favorites"),
+                            new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/examine-star.png")),
+                            Color.FromHex("#d9a928"),
+                            _displayedFavoriteAntags.OrderBy(id => id.Id).ToList(),
+                            Array.Empty<AntagSubcategory>(),
+                            0,
+                            true);
+                        AntagList.AddChild(favoritesCategory);
+                        favoritesCategory.SetPositionInParent(0);
+                    }
+                }
+
+                var favoriteText = added ? "★" : "☆";
+                var favoriteTooltip = Loc.GetString(added
+                    ? "antag-menu-remove-favorite"
+                    : "antag-menu-add-favorite");
+
+                if (_favoriteAntagButtons.TryGetValue(antag.ID, out var buttons))
+                {
+                    foreach (var button in buttons)
+                    {
+                        if (button.Disposed)
+                            continue;
+
+                        button.Text = favoriteText;
+                        button.ToolTip = favoriteTooltip;
+                    }
+                }
+
+                _preferencesManager.UpdateAntagFavorites(_favoriteAntags.OrderBy(id => id.Id).ToList());
+            };
+            row.AddChild(favoriteButton);
+
+            if (antag.Guides != null)
+            {
+                var guide = new TextureButton
+                {
+                    SetSize = new Vector2(21, 21),
+                    StyleClasses = { "HelpButton" },
+                    VerticalAlignment = VAlignment.Center,
+                };
+                guide.OnPressed += _ => OnOpenGuidebook?.Invoke(antag.Guides);
+                row.AddChild(guide);
+            }
+
+            var loadoutButton = new Button
+            {
+                Text = Loc.GetString("loadout-window"),
+                StyleClasses = { "DS14MenuProfileControl" },
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            if (antag.RoleLoadout == null ||
+                !_prototypeManager.TryIndex(antag.RoleLoadout.Value, out RoleLoadoutPrototype? roleLoadoutProto))
+            {
+                loadoutButton.Disabled = true;
+            }
+            else
+            {
+                loadoutButton.OnPressed += _ =>
+                {
+                    if (_readOnly || Profile == null)
+                        return;
+
+                    Profile.Loadouts.TryGetValue(roleLoadoutProto.ID, out var storedLoadout);
+                    var loadout = storedLoadout?.Clone() ?? new RoleLoadout(roleLoadoutProto.ID);
+                    if (storedLoadout == null)
+                        loadout.SetDefault(Profile, _playerManager.LocalSession, _prototypeManager);
+
+                    OpenAntagLoadout(antag, loadout, roleLoadoutProto);
+                };
+            }
+
+            row.AddChild(loadoutButton);
+
+            var checkBox = new CheckBox
+            {
+                Pressed = Profile?.AntagPreferences.Contains(antag.ID) == true,
+                LeftAlign = true,
+                SetSize = new Vector2(28, 28),
+                VerticalAlignment = VAlignment.Center,
+                ToolTip = Loc.GetString(antag.Objective),
+            };
+
+            if (_sponsorsManager?.TryGetInfo(out var sponsor) == true && sponsor.HavePriorityAntag)
+            {
+                checkBox.Disabled = false;
+            }
+            else if (!_requirements.IsAllowed(
+                         antag,
+                         (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
+                         out var reason))
+            {
+                checkBox.Disabled = true;
+                checkBox.Pressed = false;
+                var tooltip = new Tooltip();
+                tooltip.SetMessage(reason);
+                checkBox.TooltipSupplier = _ => tooltip;
+                if (!_readOnly)
+                {
+                    Profile = Profile?.WithAntagPreference(antag.ID, false);
+                    SetDirty();
+                }
+            }
+            else
+            {
+                checkBox.Disabled = false;
+            }
+
+            checkBox.OnToggled += args =>
+            {
+                if (_readOnly)
+                    return;
+
+                Profile = Profile?.WithAntagPreference(antag.ID, args.Pressed);
+                SetDirty();
+            };
+
+            row.AddChild(checkBox);
+
+            var outline = new PanelContainer
+            {
+                HorizontalExpand = true,
+                Margin = new Thickness(2f),
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.Transparent,
+                    BorderColor = outlineColor,
+                    BorderThickness = new Thickness(1),
+                },
+            };
+            outline.AddChild(row);
+            return outline;
+        }
+
+        private Control CreateAntagCategory(
+            string name,
+            SpriteSpecifier? icon,
+            Color outlineColor,
+            IReadOnlyList<ProtoId<AntagPrototype>> antags,
+            IReadOnlyList<AntagSubcategory> subcategories,
+            int depth,
+            bool favoritesCategory = false)
+        {
+            var contents = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(14f, 2f, 0f, 4f),
+            };
+
+            if (favoritesCategory)
+                _favoriteAntagContents = contents;
+
+            foreach (var antagId in antags)
+            {
+                if (!_prototypeManager.TryIndex(antagId, out var antag))
+                {
+                    _sawmill.Error($"Antag category '{name}' references missing antag '{antagId}'.");
+                    continue;
+                }
+
+                if (antag.SetPreference)
+                    contents.AddChild(CreateAntagSelector(antag, outlineColor));
+            }
+
+            foreach (var subcategory in subcategories)
+            {
+                contents.AddChild(CreateAntagCategory(
+                    subcategory.Name,
+                    subcategory.Icon,
+                    subcategory.OutlineColor ?? outlineColor,
+                    subcategory.Antags,
+                    subcategory.Subcategories,
+                    depth + 1));
+            }
+
+            var heading = new ContainerButton
+            {
+                ToggleMode = true,
+                HorizontalExpand = true,
+                Margin = new Thickness(depth * 8f, 2f, 0f, 2f),
+                StyleClasses = { "DS14MenuProfileControl" },
+            };
+            var headingContents = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 6,
+            };
+
+            if (icon != null)
+            {
+                headingContents.AddChild(new TextureRect
+                {
+                    Texture = _sprite.Frame0(icon),
+                    SetSize = new Vector2(32, 32),
+                    Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                    VerticalAlignment = VAlignment.Center,
+                });
+            }
+
+            headingContents.AddChild(new Label
+            {
+                Text = name,
+                VerticalAlignment = VAlignment.Center,
+            });
+            heading.AddChild(headingContents);
+
+            var body = new CollapsibleBody();
+            body.AddChild(contents);
+
+            var collapsible = new Collapsible
+            {
+                HorizontalExpand = true,
+                BodyVisible = false,
+            };
+            collapsible.AddChild(heading);
+            collapsible.AddChild(body);
+
+            var outline = new PanelContainer
+            {
+                HorizontalExpand = true,
+                Margin = new Thickness(2f),
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.Transparent,
+                    BorderColor = outlineColor,
+                    BorderThickness = new Thickness(2),
+                },
+            };
+            outline.AddChild(collapsible);
+            return outline;
+        }
+
+        private Dictionary<ProtoId<AntagPrototype>, Color> GetAntagRoleColors(AntagMenuPrototype? menu)
+        {
+            var colors = new Dictionary<ProtoId<AntagPrototype>, Color>();
+            if (menu == null)
+                return colors;
+
+            foreach (var categoryId in menu.Categories)
+            {
+                if (!_prototypeManager.TryIndex(categoryId, out var category))
+                    continue;
+
+                AddAntagRoleColors(colors, category.Antags, category.Subcategories, category.OutlineColor);
+            }
+
+            return colors;
+        }
+
+        private static void AddAntagRoleColors(
+            Dictionary<ProtoId<AntagPrototype>, Color> colors,
+            IReadOnlyList<ProtoId<AntagPrototype>> antags,
+            IReadOnlyList<AntagSubcategory> subcategories,
+            Color inheritedColor)
+        {
+            foreach (var antag in antags)
+                colors.TryAdd(antag, inheritedColor);
+
+            foreach (var subcategory in subcategories)
+            {
+                AddAntagRoleColors(
+                    colors,
+                    subcategory.Antags,
+                    subcategory.Subcategories,
+                    subcategory.OutlineColor ?? inheritedColor);
+            }
+        }
+        // DS14-end
 
         private void SetDirty()
         {
@@ -919,7 +1261,24 @@ namespace Content.Client.Lobby.UI
             if (Profile == null || !_prototypeManager.HasIndex(Profile.Species))
                 return;
 
-            PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
+            // DS14-start
+            if (_antagPreviewOverride?.PreviewStartingGear is { } startingGear)
+            {
+                PreviewDummy = _controller.LoadProfileEntity(Profile, null, false);
+                _controller.GiveDummyAntagStartingGear(PreviewDummy, startingGear);
+                _controller.GiveDummyLoadout(PreviewDummy, _antagPreviewLoadout);
+            }
+            else if (_antagPreviewOverride != null)
+            {
+                // Without antagonist gear, retain the highest-priority job as the preview base.
+                PreviewDummy = _controller.LoadProfileEntity(Profile, null, true);
+                _controller.GiveDummyLoadout(PreviewDummy, _antagPreviewLoadout);
+            }
+            else
+            {
+                PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
+            }
+            // DS14-end
             SpriteView.SetEntity(PreviewDummy);
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
@@ -1386,6 +1745,70 @@ namespace Content.Client.Lobby.UI
 
             UpdateJobPriorities();
         }
+
+        // DS14-start
+        private void OpenAntagLoadout(
+            AntagPrototype antag,
+            RoleLoadout roleLoadout,
+            RoleLoadoutPrototype roleLoadoutProto)
+        {
+            if (_readOnly)
+                return;
+
+            _loadoutWindow?.Dispose();
+            _loadoutWindow = null;
+            var collection = IoCManager.Instance;
+
+            if (collection == null || _playerManager.LocalSession == null || Profile == null)
+                return;
+
+            JobOverride = null;
+            _antagPreviewOverride = antag;
+            _antagPreviewLoadout = roleLoadout;
+            var session = _playerManager.LocalSession;
+
+            _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, session, collection)
+            {
+                Title = Loc.GetString("loadout-window-title-loadout", ("job", Loc.GetString(antag.Name))),
+            };
+            _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
+            _loadoutWindow.OpenCenteredLeft();
+
+            _loadoutWindow.OnNameChanged += name =>
+            {
+                roleLoadout.EntityName = name;
+                Profile = Profile.WithLoadout(roleLoadout);
+                SetDirty();
+            };
+
+            _loadoutWindow.OnLoadoutPressed += (loadoutGroup, loadoutProto) =>
+            {
+                roleLoadout.AddLoadout(loadoutGroup, loadoutProto, _prototypeManager);
+                _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
+                Profile = Profile?.WithLoadout(roleLoadout);
+                SetDirty();
+                ReloadPreview();
+            };
+
+            _loadoutWindow.OnLoadoutUnpressed += (loadoutGroup, loadoutProto) =>
+            {
+                roleLoadout.RemoveLoadout(loadoutGroup, loadoutProto, _prototypeManager);
+                _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
+                Profile = Profile?.WithLoadout(roleLoadout);
+                SetDirty();
+                ReloadPreview();
+            };
+
+            ReloadPreview();
+
+            _loadoutWindow.OnClose += () =>
+            {
+                _antagPreviewOverride = null;
+                _antagPreviewLoadout = null;
+                ReloadPreview();
+            };
+        }
+        // DS14-end
 
         private void OnFlavorTextChange(string content)
         {
