@@ -1,6 +1,7 @@
 # Base recharging behaviours
 - type: entity
   abstract: true
+  parent: BaseConstructibleMachineDestructible
   id: CoreRecharger
   placement:
     mode: SnapgridCenter
@@ -12,16 +13,6 @@
     slotId: charger_slot
   - type: ApcPowerReceiver
     powerLoad: 1 # same as draw given in ChargerComponent.PassiveDraw; increased when it is actually charging something
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 175
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
   - type: StaticPrice
     price: 75
 
@@ -41,7 +32,7 @@
 # Base physical rechargers
 - type: entity
   abstract: true
-  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine]
   id: BaseRecharger
   components:
   - type: Transform
@@ -52,7 +43,7 @@
 
 - type: entity
   abstract: true
-  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
+  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine]
   id: BaseItemRecharger
   components:
   - type: Sprite
