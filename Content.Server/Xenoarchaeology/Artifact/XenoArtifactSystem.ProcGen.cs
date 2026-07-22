@@ -175,11 +175,11 @@ public sealed partial class XenoArtifactSystem
 
     private Dictionary<XenoArchTriggerPrototype, float> GetTriggers(Entity<XenoArtifactComponent> ent)
     {
-        var weightsProto = PrototypeManager.Index(ent.Comp.TriggerWeights);
+        var weightsProto = ProtoMan.Index(ent.Comp.TriggerWeights);
         var weightByProto = new Dictionary<XenoArchTriggerPrototype, float>();
         foreach (var (triggerId, weight) in weightsProto.Weights)
         {
-            var trigger = PrototypeManager.Index<XenoArchTriggerPrototype>(triggerId);
+            var trigger = ProtoMan.Index<XenoArchTriggerPrototype>(triggerId);
             if (_entityWhitelist.IsWhitelistFail(trigger.Whitelist, ent))
                 continue;
 
@@ -190,11 +190,11 @@ public sealed partial class XenoArtifactSystem
 
     private Dictionary<EntityPrototype, float> GetEffects(Entity<XenoArtifactComponent> ent)
     {
-        var weightsProto = PrototypeManager.Index(ent.Comp.EffectsWeights);
+        var weightsProto = ProtoMan.Index(ent.Comp.EffectsWeights);
         var weightByProto = new Dictionary<EntityPrototype, float>();
         foreach (var (effectProtoId, weight) in weightsProto.Weights)
         {
-            var effect = PrototypeManager.Index<EntityPrototype>(effectProtoId);
+            var effect = ProtoMan.Index<EntityPrototype>(effectProtoId);
 
             weightByProto.Add(effect, weight);
         }

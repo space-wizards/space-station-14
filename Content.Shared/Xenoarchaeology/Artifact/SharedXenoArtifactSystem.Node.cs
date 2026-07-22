@@ -188,7 +188,8 @@ public abstract partial class SharedXenoArtifactSystem
             foreach (var netNode in segment)
             {
                 var node = GetEntity(netNode);
-                outSegment.Add((node, XenoArtifactNode(node)));
+                if(_nodeQuery.TryComp(node, out var comp))
+                    outSegment.Add((node, comp));
             }
 
             output.Add(outSegment);
