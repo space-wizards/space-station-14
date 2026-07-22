@@ -1,4 +1,5 @@
 using Content.Server.Wires;
+using Content.Server.VendingMachines.Components;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
 using Content.Shared.Wires;
@@ -16,10 +17,12 @@ public sealed partial class VendingMachineEjectItemWireAction : ComponentWireAct
 
     public override StatusLightState? GetLightState(Wire wire, VendingMachineComponent comp)
     {
-        if (!EntityManager.TryGetComponent(wire.Owner, out VendingMachineEjectComponent? eject))
+        if (!EntityManager.HasComponent<VendingMachineEjectComponent>(wire.Owner))
             return StatusLightState.Off;
 
-        return eject.CanShoot ? StatusLightState.BlinkingFast : StatusLightState.On;
+        return EntityManager.HasComponent<VendingMachineShootComponent>(wire.Owner)
+            ? StatusLightState.BlinkingFast
+            : StatusLightState.On;
     }
 
     public override void Initialize()

@@ -65,6 +65,11 @@ public abstract partial class SharedVendingMachineSystem
 
     protected virtual void OnEjectStateChanged(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null) { }
 
+    protected virtual bool ShouldThrowVendItem(EntityUid uid, VendingMachineEjectComponent ejectComponent)
+    {
+        return false;
+    }
+
     /// <summary>
     /// Checks if the user is authorized to use this vending machine
     /// </summary>
@@ -196,6 +201,6 @@ public abstract partial class SharedVendingMachineSystem
         if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
             return;
 
-        TryEjectVendorItem(uid, type, itemId, ejectComponent.CanShoot, sender, component, ejectComponent);
+        TryEjectVendorItem(uid, type, itemId, ShouldThrowVendItem(uid, ejectComponent), sender, component, ejectComponent);
     }
 }

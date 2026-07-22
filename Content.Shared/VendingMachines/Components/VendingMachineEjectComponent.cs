@@ -36,12 +36,6 @@ public sealed partial class VendingMachineEjectComponent : Component
 
     public string? NextItemToEject;
 
-    /// <summary>
-    /// When true, will forcefully throw any object it dispenses.
-    /// </summary>
-    [DataField]
-    public bool CanShoot;
-
     public bool ThrowNextItem;
 
     /// <summary>

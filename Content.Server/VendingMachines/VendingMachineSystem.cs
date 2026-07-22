@@ -79,15 +79,20 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         EjectRandom(uid, throwItem: true, forceEject: false, component);
     }
 
-    /// <summary>
-    /// Sets the <see cref="VendingMachineEjectComponent.CanShoot"/> property of the vending machine.
-    /// </summary>
     public void SetShooting(EntityUid uid, bool canShoot, VendingMachineEjectComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        component.CanShoot = canShoot;
+        if (canShoot)
+            EnsureComp<VendingMachineShootComponent>(uid);
+        else
+            RemComp<VendingMachineShootComponent>(uid);
+    }
+
+    protected override bool ShouldThrowVendItem(EntityUid uid, VendingMachineEjectComponent ejectComponent)
+    {
+        return HasComp<VendingMachineShootComponent>(uid);
     }
 
     /// <summary>
