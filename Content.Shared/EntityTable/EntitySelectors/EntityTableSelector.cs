@@ -1,6 +1,5 @@
-using System.Linq;
 using Content.Shared.EntityTable.Conditions;
-using Content.Shared.EntityTable.ValueSelector;
+using Content.Shared.ValueSelectors.Numbers;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;

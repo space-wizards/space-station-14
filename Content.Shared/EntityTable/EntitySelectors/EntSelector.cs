@@ -1,4 +1,4 @@
-using Content.Shared.EntityTable.ValueSelector;
+using Content.Shared.ValueSelectors.Numbers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
