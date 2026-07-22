@@ -1,7 +1,7 @@
 # These define Meteor Walls separate from Asteroid walls so they have different properties
 - type: entity
+  parent: BaseAsteroidRock
   id: MeteorRock
-  parent: AsteroidRock
   name: meteorite rock
   description: What remains of a meteorite.
   components:

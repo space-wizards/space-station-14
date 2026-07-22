@@ -1,9 +1,9 @@
 - type: entity
-  id: BaseFoldable
-  name: "foldable"
   abstract: true
+  id: BaseFoldable
   components:
   - type: Foldable
+  - type: Appearance
   - type: GenericVisualizer
     visuals:
       enum.FoldedVisuals.State:
@@ -18,6 +18,5 @@
   abstract: true
   parent: BaseFoldable
   id: BaseDeployFoldable
-  name: "deploy foldable"
   components:
   - type: DeployFoldable

@@ -52,14 +52,6 @@
     cost: 6
     delay: 6
     fx: EffectRCDDeconstruct6
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 300
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Occluder
   - type: BlockWeather
 
