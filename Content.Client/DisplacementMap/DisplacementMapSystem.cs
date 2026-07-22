@@ -109,6 +109,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         }
 
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
+        _sprite.SetAsParent(sprite, index, index + 1);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
 
         return true;

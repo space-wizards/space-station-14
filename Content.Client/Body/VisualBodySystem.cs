@@ -215,7 +215,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
                     //   an additional offset to ensure that the order of the base sprites is correct
                     //   after inserting a displacement layer
                     // - The +1 ensures that markings render on top of the base organ
-                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1);
+                    var spriteLayer = _sprite.AddLayer(target, sprite, index + i + numDisplacements + 1, index);
                     _sprite.LayerMapSet(target, layerId, spriteLayer);
                     _sprite.LayerSetSprite(target, layerId, rsi);
                 }
