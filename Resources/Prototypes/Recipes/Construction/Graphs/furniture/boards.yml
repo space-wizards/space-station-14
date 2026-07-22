@@ -9,7 +9,7 @@
     - to: noticeBoard
       completed:
       - !type:SnapToGrid
-      steps:
+      steps: &ConstructionStepsWood3
       - material: WoodPlank
         amount: 3
         doAfter: 2
@@ -17,15 +17,12 @@
     - to: postBoard
       completed:
       - !type:SnapToGrid
-      steps:
-      - material: WoodPlank
-        amount: 3
-        doAfter: 2
+      steps: *ConstructionStepsWood3
 
 
   - node: noticeBoard
     entity: NoticeBoard
-    edges:
+    edges: &EdgeToStart
     - to: start
       completed:
       - !type:EmptyAllContainers
@@ -40,14 +37,4 @@
 
   - node: postBoard
     entity: PostBoard
-    edges:
-    - to: start
-      completed:
-      - !type:EmptyAllContainers
-        emptyAtUser: true
-      - !type:GivePrototype
-        prototype: MaterialWoodPlank
-        amount: 3
-      steps:
-      - tool: Prying
-        doAfter: 3
+    edges: *EdgeToStart
