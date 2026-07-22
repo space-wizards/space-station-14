@@ -57,7 +57,7 @@
     containers:
       storagebase: !type:Container
   - type: Construction
-    graph: NoticeBoard
+    graph: WallBoard
     node: noticeBoard
 
 - type: entity
@@ -89,5 +89,5 @@
           Invoice: { state: invoice }
   - type: Appearance
   - type: Construction
-    graph: PostBoard
+    graph: WallBoard
     node: postBoard
