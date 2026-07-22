@@ -13,6 +13,7 @@
       - material: WoodPlank
         amount: 3
         doAfter: 2
+
     - to: postBoard
       completed:
       - !type:SnapToGrid
@@ -20,24 +21,30 @@
       - material: WoodPlank
         amount: 3
         doAfter: 2
-#Notice Board
+
+
   - node: noticeBoard
     entity: NoticeBoard
     edges:
     - to: start
       completed:
+      - !type:EmptyAllContainers
+        emptyAtUser: true
       - !type:GivePrototype
         prototype: MaterialWoodPlank
         amount: 3
       steps:
       - tool: Prying
         doAfter: 3
-#Post Board
+
+
   - node: postBoard
     entity: PostBoard
     edges:
     - to: start
       completed:
+      - !type:EmptyAllContainers
+        emptyAtUser: true
       - !type:GivePrototype
         prototype: MaterialWoodPlank
         amount: 3
