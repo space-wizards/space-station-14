@@ -793,6 +793,16 @@
   metabolisms:
     Bloodstream:
       effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hivarol
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [ Changeling ]
+        damage:
+          types:
+            Shock: 3
       - !type:PopupMessage
         conditions:
         - !type:ReagentCondition
@@ -820,4 +830,3 @@
           min: 4
         - !type:MetabolizerTypeCondition
           type: [ Changeling ]
-

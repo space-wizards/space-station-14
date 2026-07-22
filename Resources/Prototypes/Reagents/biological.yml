@@ -263,10 +263,10 @@
             Cellular: 2
 
 - type: reagent
-  id: LivingBlood
-  name: reagent-name-living-blood
+  id: LivingTissue
+  name: reagent-name-living-tissue
   group: Biological
-  desc: reagent-desc-living-blood
+  desc: reagent-desc-living-tissue
   flavor: metallic
   color: "#800000"
   physicalDesc: reagent-physical-desc-ferrous

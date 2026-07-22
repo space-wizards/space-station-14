@@ -115,7 +115,7 @@ public sealed partial class ChangelingDevourComponent : Component
     /// Solution that will be spilled at the location of the devoured entity when finished.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Solution? DevourSpill = new([new("LivingBlood", 10)]);
+    public Solution? DevourSpill = new([new("LivingTissue", 10)]);
 
     /// <summary>
     /// The list of protective damage types capable of preventing a devour if over the threshold.

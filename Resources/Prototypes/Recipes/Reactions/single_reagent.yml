@@ -61,12 +61,15 @@
 
 - type: reaction
   id: Hivarol
+  requiredMixerCategories:
+  - Electrolysis
+  minTemp: 370
   reactants:
-    LivingBlood:
+    LivingTissue:
       amount: 1
-    Omnizine:
+    Licoxide:
       amount: 1
-    Sulfur:
+    Impedrezene:
       amount: 1
   products:
     Hivarol: 1
