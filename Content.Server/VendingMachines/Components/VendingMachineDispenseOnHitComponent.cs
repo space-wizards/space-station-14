@@ -14,14 +14,14 @@ public sealed partial class VendingMachineDispenseOnHitComponent : Component
     /// <summary>
     /// The chance that a vending machine will randomly dispense an item on hit.
     /// </summary>
-    [DataField(required: true)]
-    public float Chance;
+    [DataField]
+    public float Chance = 0.25f;
 
     /// <summary>
     /// The minimum amount of damage that must be done per hit to have a chance of dispensing an item.
     /// </summary>
-    [DataField(required: true)]
-    public float Threshold;
+    [DataField]
+    public float Threshold = 2f;
 
     /// <summary>
     /// Amount of time that needs to pass before damage can cause a vending machine to eject again.
