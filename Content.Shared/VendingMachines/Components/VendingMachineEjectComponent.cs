@@ -1,5 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.VendingMachines.Components;
 
@@ -42,6 +43,12 @@ public sealed partial class VendingMachineEjectComponent : Component
     public bool CanShoot;
 
     public bool ThrowNextItem;
+
+    /// <summary>
+    /// While disabled by EMP it randomly ejects items.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextEmpEject = TimeSpan.Zero;
 
     /// <summary>
     /// Sound that plays when ejecting an item.

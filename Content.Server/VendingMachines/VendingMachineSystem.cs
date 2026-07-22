@@ -206,10 +206,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();
         while (disabled.MoveNext(out var uid, out _, out var comp, out var eject))
         {
-            if (comp.NextEmpEject >= Timing.CurTime) continue;
+            if (eject.NextEmpEject >= Timing.CurTime) continue;
 
             EjectRandom(uid, true, false, comp);
-            comp.NextEmpEject += (5 * eject.EjectDelay);
+            eject.NextEmpEject += (5 * eject.EjectDelay);
         }
     }
 

@@ -143,9 +143,11 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     private void OnEmpPulse(Entity<VendingMachineComponent> ent, ref EmpPulseEvent args)
     {
         if (ent.Comp.Broken || !_receiver.IsPowered(ent.Owner)) return;
+        if (!TryComp<VendingMachineEjectComponent>(ent.Owner, out var eject)) return;
+
         args.Affected = true;
         args.Disabled = true;
-        ent.Comp.NextEmpEject = Timing.CurTime;
+        eject.NextEmpEject = Timing.CurTime;
     }
 
     protected virtual void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false) { }
@@ -318,11 +320,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <param name="component"></param>
     public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
     {
-        if (IsAuthorized(uid, sender, component))
-        {
-            TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent);
-            TryEjectVendorItem(uid, type, itemId, ejectComponent?.CanShoot == true, sender, component);
-        }
+        if (!IsAuthorized(uid, sender, component)) return;
+        TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent);
+        TryEjectVendorItem(uid, type, itemId, ejectComponent?.CanShoot == true, sender, component);
     }
 
     public void RestockInventoryFromPrototype(EntityUid uid,

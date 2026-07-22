@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.VendingMachines.Components;
@@ -39,12 +38,6 @@ public sealed partial class VendingMachineComponent : Component
     /// </summary>
     [DataField]
     public float InitialStockQuality = 1.0f;
-
-    /// <summary>
-    ///     While disabled by EMP it randomly ejects items
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan NextEmpEject = TimeSpan.Zero;
 
     /// <summary>
     /// Audio entity used during restock in case the doafter gets canceled.
