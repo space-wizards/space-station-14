@@ -522,10 +522,10 @@
     state: blueshield
   - type: ThiefUndeterminedBackpack
     possibleSets:
-    - BerettaM92BlueShieldSet
     - ScarLBlueShieldSet
     - MP5SDBlueShieldSet
     - AresSWCBlueShieldSet
+    - CQCBlueShieldSet
     - TruncheonsecBlueShieldSet
     - PistolBlueShieldUpgradeKitSet
   - type: ActivatableUI
@@ -1025,18 +1025,19 @@
   - MagazinePistol
 
 - type: thiefBackpackSet
-  id: BerettaM92BlueShieldSet
-  name: ert-loadout-category-berettam92bs-name
-  description: ert-loadout-category-berettam92bs-description
+  id: CQCBlueShieldSet
+  name: ert-loadout-category-cqcbs-name
+  description: ert-loadout-category-cqcbs-description
   sprite:
-    sprite: _DeadSpace/Objects/Weapons/Guns/Pistols/beretta_m92.rsi
+    sprite: _DeadSpace/Objects/Misc/cqc_manual.rsi
     state: icon
   content:
+  - CQCManual
   - WeaponPistolBerettaM92
   - MagazinePistolHighCapacity
   - MagazinePistolHighCapacity
   - MagazinePistolHighCapacity
-  - TelescopicShield
+  - BulletShieldBlueShield
 
 - type: thiefBackpackSet
   id: BerettaM92Set

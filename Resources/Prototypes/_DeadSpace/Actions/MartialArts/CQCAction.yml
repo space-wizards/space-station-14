@@ -21,7 +21,7 @@
   components:
   - type: Action
     icon:
-      sprite: _DeadSpace/Actions/arkalyse_actions.rsi
+      sprite: _DeadSpace/Actions/cqc_actions.rsi
       state: mute
     priority: -6
     useDelay: 2
@@ -37,7 +37,7 @@
     icon:
       sprite: _DeadSpace/Actions/cqc_actions.rsi
       state: trip_punch
-    useDelay: 2
+    useDelay: 4
     priority: -6
   - type: InstantAction
     event: !type:CQCStepPunchEvent {}
@@ -50,7 +50,7 @@
   components:
   - type: Action
     icon:
-      sprite: _DeadSpace/Actions/arkalyse_actions.rsi
+      sprite: _DeadSpace/Actions/cqc_actions.rsi
       state: relax
     priority: -5
   - type: InstantAction
