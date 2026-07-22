@@ -14,18 +14,16 @@ public abstract partial class SharedVendingMachineSystem
     [Dependency] private AccessReaderSystem _accessReader = default!;
     [Dependency] private SharedSpeakOnUIClosedSystem _speakOn = default!;
 
-    private void UpdateEjectState(Entity<VendingMachineComponent> entity, TimeSpan curTime)
+    private void UpdateEjectState(Entity<VendingMachineComponent, VendingMachineEjectComponent> entity, TimeSpan curTime)
     {
-        if (!TryComp<VendingMachineEjectComponent>(entity.Owner, out var eject))
-            return;
-
+        var eject = entity.Comp2;
         if (eject.Ejecting && curTime > eject.EjectEnd)
         {
             eject.EjectEnd = null;
             Dirty(entity.Owner, eject);
 
-            EjectItem((entity.Owner, entity.Comp, eject));
-            UpdateUI((entity.Owner, entity.Comp));
+            EjectItem((entity.Owner, entity.Comp1, eject));
+            UpdateUI((entity.Owner, entity.Comp1));
         }
 
         if (!eject.Denying || !(curTime > eject.DenyEnd))
@@ -34,7 +32,7 @@ public abstract partial class SharedVendingMachineSystem
         eject.DenyEnd = null;
         Dirty(entity.Owner, eject);
 
-        TryUpdateVisualState((entity.Owner, entity.Comp), (entity.Owner, eject));
+        TryUpdateVisualState((entity.Owner, entity.Comp1), eject);
     }
 
     private void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
@@ -159,7 +157,7 @@ public abstract partial class SharedVendingMachineSystem
         Dirty(uid, vendComponent);
         Dirty(uid, ejectComponent);
         UpdateUI((uid, vendComponent));
-        TryUpdateVisualState((uid, vendComponent), (uid, ejectComponent));
+        TryUpdateVisualState((uid, vendComponent), ejectComponent);
         Audio.PlayPredicted(ejectComponent.SoundVend, uid, user);
     }
 
@@ -176,7 +174,7 @@ public abstract partial class SharedVendingMachineSystem
 
         ejectComponent.DenyEnd = Timing.CurTime + ejectComponent.DenyDelay;
         Audio.PlayPredicted(ejectComponent.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
-        TryUpdateVisualState(entity, (entity.Owner, ejectComponent));
+        TryUpdateVisualState(entity, ejectComponent);
         Dirty(entity.Owner, ejectComponent);
     }
 

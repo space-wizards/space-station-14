@@ -168,7 +168,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
         // No need to update the visual state because we never changed it during a forced eject
         if (!forceEject)
-            TryUpdateVisualState((uid, vendComponent), (uid, ejectComponent));
+            TryUpdateVisualState((uid, vendComponent), ejectComponent);
 
         if (string.IsNullOrEmpty(ejectComponent.NextItemToEject))
         {
@@ -204,13 +204,14 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     {
         base.Update(frameTime);
 
+        var curTime = Timing.CurTime;
         var dispenseOnHitQuery = EntityQueryEnumerator<VendingMachineDispenseOnHitComponent>();
         while (dispenseOnHitQuery.MoveNext(out _, out var dispenseOnHit))
         {
             if (!dispenseOnHit.CoolingDown)
                 continue;
 
-            if (Timing.CurTime <= dispenseOnHit.End)
+            if (curTime <= dispenseOnHit.End)
                 continue;
 
             dispenseOnHit.End = null;
@@ -219,7 +220,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();
         while (disabled.MoveNext(out var uid, out _, out var comp, out var eject))
         {
-            if (eject.NextEmpEject >= Timing.CurTime) continue;
+            if (eject.NextEmpEject >= curTime) continue;
 
             EjectRandom(uid, true, false, comp);
             eject.NextEmpEject += (5 * eject.EjectDelay);

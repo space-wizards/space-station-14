@@ -76,12 +76,12 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<VendingMachineComponent>();
+        var query = EntityQueryEnumerator<VendingMachineComponent, VendingMachineEjectComponent>();
         var curTime = Timing.CurTime;
 
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out var uid, out var comp, out var eject))
         {
-            UpdateEjectState((uid, comp), curTime);
+            UpdateEjectState((uid, comp, eject), curTime);
         }
     }
 
@@ -96,14 +96,12 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     /// <summary>
     /// Tries to update the visuals of the component based on its current state.
     /// </summary>
-    public void TryUpdateVisualState(Entity<VendingMachineComponent?> entity, Entity<VendingMachineEjectComponent?>? ejectEntity = null)
+    public void TryUpdateVisualState(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)
     {
         if (!Resolve(entity.Owner, ref entity.Comp))
             return;
 
-        var ejectComponent = ejectEntity?.Comp;
-        if (ejectEntity == null || ejectEntity.Value.Owner != entity.Owner)
-            TryComp(entity.Owner, out ejectComponent);
+        Resolve(entity.Owner, ref ejectComponent, false);
 
         var finalState = VendingMachineVisualState.Normal;
         if (entity.Comp.Broken)
