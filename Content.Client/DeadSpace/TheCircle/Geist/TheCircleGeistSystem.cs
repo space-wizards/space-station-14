@@ -20,7 +20,7 @@ public sealed class TheCircleGeistSystem : EntitySystem
 
     private void OnOpenMenu(Entity<TheCircleGeistComponent> ent, ref OpenGeistInvisibilityMenuEvent args)
     {
-        if (args.Handled || args.Performer != ent.Owner)
+        if (args.Handled || args.Performer != ent.Owner || ent.Comp.ActiveMode != null)
             return;
 
         args.Handled = true;

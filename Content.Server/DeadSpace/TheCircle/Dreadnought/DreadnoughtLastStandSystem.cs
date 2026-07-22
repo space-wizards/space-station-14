@@ -2,15 +2,13 @@
 
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.DeadSpace.TheCircle.Dreadnought;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs.Events;
 using Content.Shared.Movement.Systems;
@@ -33,10 +31,7 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
         SubscribeLocalEvent<DreadnoughtLastStandComponent, DreadnoughtLastStandActionEvent>(OnAction);
         SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, UpdateMobStateEvent>(OnUpdateMobState,
             after: [typeof(MobThresholdSystem)]);
-        SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, DamageChangedEvent>(OnDamageChanged,
-            after: [typeof(MobThresholdSystem)]);
         SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, BeforeAlertSeverityCheckEvent>(OnBeforeAlertSeverity);
         SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<DreadnoughtLastStandActiveComponent, ComponentShutdown>(OnActiveShutdown);
     }
@@ -65,18 +60,21 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
         var active = EnsureComp<DreadnoughtLastStandActiveComponent>(args.Performer);
         active.EndsAt = _timing.CurTime + ent.Comp.Duration;
         active.SpeedModifier = ent.Comp.SpeedModifier;
-        active.DeathDamage = ent.Comp.DeathDamage;
         active.Expired = false;
         if (!HasComp<IgnoreSlowOnDamageComponent>(args.Performer))
         {
             AddComp<IgnoreSlowOnDamageComponent>(args.Performer);
             active.AppliedIgnoreSlowOnDamage = true;
         }
+        _thresholds.SetMobStateThresholds(args.Performer, new SortedDictionary<FixedPoint2, MobState>
+        {
+            [0] = MobState.Alive,
+            [160] = MobState.Dead,
+        });
         EnsureComp<UnremoveableComponent>(ent);
         Dirty(args.Performer, active);
         _actions.RemoveAction(args.Performer, ent.Comp.ActionEntity);
         _movement.RefreshMovementSpeedModifiers(args.Performer);
-        _mobState.UpdateMobState(args.Performer);
     }
 
     public override void Update(float frameTime)
@@ -96,32 +94,8 @@ public sealed class DreadnoughtLastStandSystem : EntitySystem
 
     private void OnUpdateMobState(Entity<DreadnoughtLastStandActiveComponent> ent, ref UpdateMobStateEvent args)
     {
-        if (ent.Comp.Expired ||
-            TryComp<DamageableComponent>(ent, out var damageable) && damageable.TotalDamage >= ent.Comp.DeathDamage)
-        {
-            args.State = MobState.Dead;
-            return;
-        }
-
-        args.State = MobState.Alive;
-    }
-
-    private void OnDamageChanged(Entity<DreadnoughtLastStandActiveComponent> ent, ref DamageChangedEvent args)
-    {
-        if (ent.Comp.Expired || args.Damageable.TotalDamage >= ent.Comp.DeathDamage)
-            return;
-
-        _thresholds.SetCurrentThresholdState(ent, MobState.Alive);
-        _mobState.ChangeMobState(ent, MobState.Alive);
-    }
-
-    private void OnBeforeAlertSeverity(Entity<DreadnoughtLastStandActiveComponent> ent,
-        ref BeforeAlertSeverityCheckEvent args)
-    {
         if (ent.Comp.Expired)
-            return;
-
-        args.CancelUpdate = true;
+            args.State = MobState.Dead;
     }
 
     private void OnExamined(Entity<DreadnoughtLastStandActiveComponent> ent, ref ExaminedEvent args)

@@ -51,10 +51,19 @@ public sealed class TheCircleGeistSystem : EntitySystem
 
     private void OnOpenMenu(Entity<TheCircleGeistComponent> ent, ref OpenGeistInvisibilityMenuEvent args)
     {
-        if (args.Handled || ent.Comp.ActiveMode != null)
+        if (args.Handled)
             return;
 
         args.Handled = true;
+        if (ent.Comp.ActiveMode == GeistInvisibilityMode.Stationary)
+        {
+            EndEffect(ent, true);
+            return;
+        }
+
+        if (ent.Comp.ActiveMode != null)
+            return;
+
         ent.Comp.ModeSelectionExpires = _timing.CurTime + TimeSpan.FromSeconds(10);
         Dirty(ent);
     }

@@ -86,7 +86,7 @@ public sealed partial class TheCircleGeistComponent : Component
     [DataField]
     public float MovementThreshold = 0.05f;
 
-    [ViewVariables]
+    [AutoNetworkedField, ViewVariables]
     public GeistInvisibilityMode? ActiveMode;
 
     [ViewVariables]

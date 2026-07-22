@@ -61,6 +61,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/commander.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/commander.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: red
     energy: 2
@@ -143,6 +145,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/heavy.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/heavy.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: orange
     energy: 2
@@ -226,6 +230,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/light.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/light.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: red
     energy: 2
@@ -310,6 +316,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/engi.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/engi.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: cyan
     energy: 2
@@ -394,6 +402,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/medic.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/medic.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: purple
     energy: 2
@@ -459,6 +469,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: IngestionBlocker
     enabled: false
   - type: Armor
@@ -536,6 +548,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/dread.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/dread.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: PointLight
     color: red
     energy: 2
