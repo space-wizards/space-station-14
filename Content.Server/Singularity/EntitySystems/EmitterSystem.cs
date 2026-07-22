@@ -57,8 +57,10 @@ namespace Content.Server.Singularity.EntitySystems
             SwitchOff(uid, component);
         }
 
-        protected override void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid user)
+        protected override void ToggleActive(Entity<EmitterComponent> ent, EntityUid user)
         {
+            var uid = ent.Owner;
+            var component = ent.Comp;
             if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)

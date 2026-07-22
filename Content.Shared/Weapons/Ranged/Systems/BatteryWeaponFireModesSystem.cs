@@ -13,19 +13,13 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
     [Dependency] private SharedGunSystem _gun = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnModeSet(Entity<BatteryWeaponFireModesComponent> ent, ref BatteryWeaponFireModeChangeMessage args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<BatteryWeaponFireModesComponent, BatteryWeaponFireModeChangeMessage>(OnModeSet);
+        TrySetFireMode(ent, ent, args.ModeIndex, args.Actor);
     }
 
-    private void OnModeSet(EntityUid uid, BatteryWeaponFireModesComponent component, BatteryWeaponFireModeChangeMessage args)
-    {
-        TrySetFireMode(uid, component, args.ModeIndex, args.Actor);
-    }
-
+    [SubscribeLocalEvent]
     private void OnExamined(Entity<BatteryWeaponFireModesComponent> ent, ref ExaminedEvent args)
     {
         if (ent.Comp.FireModes.Count < 2)
