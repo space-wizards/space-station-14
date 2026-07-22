@@ -17,7 +17,7 @@ public abstract partial class SharedVendingMachineSystem
     private void UpdateEjectState(Entity<VendingMachineComponent, VendingMachineEjectComponent> entity, TimeSpan curTime)
     {
         var eject = entity.Comp2;
-        if (eject.Ejecting && curTime > eject.EjectEnd)
+        if (eject.EjectEnd is { } ejectEnd && curTime > ejectEnd)
         {
             eject.EjectEnd = null;
             Dirty(entity.Owner, eject);
@@ -27,7 +27,7 @@ public abstract partial class SharedVendingMachineSystem
             OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
         }
 
-        if (!eject.Denying || !(curTime > eject.DenyEnd))
+        if (eject.DenyEnd is not { } denyEnd || curTime <= denyEnd)
             return;
 
         eject.DenyEnd = null;
@@ -192,7 +192,10 @@ public abstract partial class SharedVendingMachineSystem
     public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
     {
         if (!IsAuthorized(uid, sender, component)) return;
-        TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent);
-        TryEjectVendorItem(uid, type, itemId, ejectComponent?.CanShoot == true, sender, component);
+
+        if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
+            return;
+
+        TryEjectVendorItem(uid, type, itemId, ejectComponent.CanShoot, sender, component, ejectComponent);
     }
 }

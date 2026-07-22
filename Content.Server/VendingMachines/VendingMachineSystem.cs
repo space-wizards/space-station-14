@@ -129,7 +129,12 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             ejectComponent.ThrowNextItem = throwItem;
             var entry = GetEntry(uid, item.ID, item.Type, vendComponent);
             if (entry != null)
+            {
                 entry.Amount--;
+                Dirty(uid, vendComponent);
+                UpdateUI((uid, vendComponent));
+            }
+
             EjectItem((uid, vendComponent, ejectComponent), forceEject);
         }
         else
@@ -184,10 +189,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var dispenseOnHitQuery = EntityQueryEnumerator<VendingMachineDispenseOnHitComponent>();
         while (dispenseOnHitQuery.MoveNext(out _, out var dispenseOnHit))
         {
-            if (!dispenseOnHit.CoolingDown)
-                continue;
-
-            if (curTime <= dispenseOnHit.End)
+            if (dispenseOnHit.End is not { } end || curTime <= end)
                 continue;
 
             dispenseOnHit.End = null;
