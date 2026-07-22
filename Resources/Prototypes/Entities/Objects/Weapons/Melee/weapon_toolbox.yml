@@ -19,3 +19,28 @@
         Blunt: 20
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
+
+- type: entity
+  parent: BaseItem
+  id: WeaponPlushieToolbox
+  name: plushie toolbox
+  description: A clown tider's weapon.
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plush_toolbox.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 0
+    bluntStaminaDamageFactor: 2.0
+    angle: 60
+    animation: WeaponArcThrust
+  - type: StaminaDamageOnHit
+    damage: 11
+    sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor

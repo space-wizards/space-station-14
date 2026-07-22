@@ -154,6 +154,7 @@
     - WeaponWaterPistol
     - WhoopieCushion
     - Whistle
+    - WeaponPlushieToolbox
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
