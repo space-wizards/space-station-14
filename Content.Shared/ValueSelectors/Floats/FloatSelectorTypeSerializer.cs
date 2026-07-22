@@ -47,7 +47,7 @@ public sealed class FloatSelectorTypeSerializer :
         {
             var x = float.Parse(args[0], CultureInfo.InvariantCulture);
             var y = float.Parse(args[1], CultureInfo.InvariantCulture);
-            return new RangeNumberSelector(new Vector2(x, y));
+            return new RangeFloatSelector(new Vector2(x, y));
         }
 
         return (FloatSelector) serializationManager.Read(type, node, context)!;
