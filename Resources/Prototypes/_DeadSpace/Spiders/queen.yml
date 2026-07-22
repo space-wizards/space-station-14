@@ -3,10 +3,10 @@
   parent: BaseMobSpiderTerror
   id: MobSpiderTerrorQueen
   suffix: уровень 1
-  description: Выглядит величественно.
+  description: Она пораждает ад!
   components:
   - type: Sprite
-    scale: 0.65, 0.65
+    scale: 1, 1
     drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
@@ -54,10 +54,10 @@
   parent: BaseMobSpiderTerror
   id: MobSpiderTerrorQueenLvl2
   suffix: уровень 2
-  description: Выглядит величественно.
+  description: Она пораждает ад!
   components:
   - type: Sprite
-    scale: 1, 1
+    scale: 1.5, 1.5
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
@@ -125,10 +125,10 @@
   parent: BaseMobSpiderTerror
   suffix: уровень 3
   id: MobSpiderTerrorQueenLvl3
-  description: Выглядит величественно.
+  description: Она порождает ад!
   components:
   - type: Sprite
-    scale: 1.5, 1.5
+    scale: 2, 2
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]

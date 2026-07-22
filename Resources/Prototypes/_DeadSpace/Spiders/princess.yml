@@ -2,7 +2,7 @@
   name: паук принцесса
   parent: BaseMobSpiderTerror
   id: MobSpiderTerrorPrincess
-  description: Она огромная, выглядит величественно.
+  description: Она огромная, страшно увидеть её родителей.
   components:
   - type: Butcherable
     spawned:
@@ -12,7 +12,7 @@
     baseWalkSpeed: 2.5
     baseSprintSpeed: 2.5
   - type: Sprite
-    scale: 1.5, 1.5
+    scale: 1.8, 1.8
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]

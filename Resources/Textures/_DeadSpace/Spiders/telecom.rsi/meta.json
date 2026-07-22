@@ -1,10 +1,10 @@
 {
-  "version": 1,
-  "license": "Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT",
-  "copyright": "Made by kloopre (discord) for Space station 14 server Мёртвый Космос",
+"license": "CC-BY-SA-4.0",
+    "copyright": "made by Sakento, https://github.com/Sakento (github) for Space Station 14",
+    "version": 1,
   "size": {
     "x": 64,
-    "y": 38
+    "y": 64
   },
   "states": [
     {
