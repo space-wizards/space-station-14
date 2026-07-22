@@ -24,6 +24,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 .HasAnnotation("ProductVersion", "10.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pg_trgm");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
@@ -122,6 +123,12 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("Id")
                         .HasName("PK_admin_audit_event");
+
+                    b.HasIndex("Message")
+                        .HasDatabaseName("IX_admin_audit_event_message_trgm");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Message"), "GIN");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Message"), new[] { "gin_trgm_ops" });
 
                     b.HasIndex("RoundId")
                         .HasDatabaseName("IX_admin_audit_event_round_id");
@@ -364,6 +371,12 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasKey("EventId")
                         .HasName("PK_admin_log_event_payload");
+
+                    b.HasIndex("Message")
+                        .HasDatabaseName("IX_admin_log_event_payload_message_trgm");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Message"), "GIN");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Message"), new[] { "gin_trgm_ops" });
 
                     b.HasIndex("SearchVector")
                         .HasDatabaseName("IX_admin_log_event_payload_search_vector_gin");
@@ -2500,6 +2513,8 @@ namespace Content.Server.Database.Migrations.Postgres
             modelBuilder.Entity("Content.Server.Database.Round", b =>
                 {
                     b.Navigation("AdminLogEvents");
+
+                    b.Navigation("CustomVoteLogs");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
