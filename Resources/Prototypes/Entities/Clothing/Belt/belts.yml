@@ -21,6 +21,7 @@
         ejectVerbText: sheath-eject-verb
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
+        ejectOnBreak: true
         whitelist:
           tags:
           - CaptainSabre

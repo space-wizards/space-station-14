@@ -2,7 +2,7 @@
 - type: entity
   name: burrower
   id: MobXeno
-  parent: SimpleSpaceMobBase
+  parent: [ SimpleSpaceMobBase, MobNightVision ]
   description: They mostly come at night. Mostly.
   components:
   - type: Insulated
