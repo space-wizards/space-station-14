@@ -108,3 +108,27 @@
     Mold: 2
     Protein: 1
     Toxin: 1
+
+- type: reaction
+  id: CognizineCreateSlime
+  quantized: true
+  reactants:
+    Cognizine:
+      amount: 5
+    Slime:
+      amount: 15
+  effects:
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreen
+
+- type: reaction
+  id: VestineCreateSlime
+  quantized: true
+  reactants:
+    Vestine:
+      amount: 5
+    Slime:
+      amount: 15
+  effects:
+  - !type:SpawnEntity
+    entity: MobAdultSlimesGreenAngry
