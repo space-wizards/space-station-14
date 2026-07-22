@@ -1,11 +1,9 @@
-using Content.Server.Light.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
 using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Atmos;
@@ -45,7 +43,7 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
             mixture.AdjustMoles(Gas.Oxygen, 100f); // Inject flamable gasses
 
             var welder = SEntMan.SpawnEntity("Welder", gridCoords);
-            Assert.That(ItemToggleSys.TryActivate(welder)); //ignite em
+            Assert.That(ItemToggle.TryActivate(welder)); //ignite em
         });
 
         await Pair.RunTicksSync(10);

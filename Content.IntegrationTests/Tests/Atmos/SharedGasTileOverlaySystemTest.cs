@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// <summary>
 /// Checks networking of temperature data inside GasTileOverlay
 /// </summary>
-public sealed partial class SharedGasTileOverlayTest : AtmosTest
+public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
 {
     protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/DeltaPressure/deltapressuretest.yml");
     public override PoolSettings PoolSettings => new()
@@ -116,8 +116,6 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
                 SAtmos.InvalidateVisuals(gridEnt, tileIndices);
             }
         });
-
-        await Pair.RunTicksSync(10);
         await Server.WaitRunTicks(10);
         await RunUntilSynced();
     }

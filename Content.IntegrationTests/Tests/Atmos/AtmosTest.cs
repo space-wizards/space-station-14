@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Atmos.EntitySystems;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Fixtures.Attributes;
@@ -6,12 +5,14 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Tests;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.IntegrationTests.Tests.Atmos;
 
@@ -22,6 +23,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// </summary>
 public abstract partial class AtmosTest : GameTest
 {
+    [SidedDependency(Side.Server)] protected ItemToggleSystem ItemToggle = default!;
     [SidedDependency(Side.Server)] protected Server.Atmos.EntitySystems.AtmosphereSystem SAtmos = default!;
     [SidedDependency(Side.Client)] protected Client.Atmos.EntitySystems.AtmosphereSystem CAtmos = default!;
 
