@@ -25,7 +25,6 @@
   id: WeaponPlushieToolbox
   name: plushie toolbox
   description: A clown tider's weapon.
-  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/plush_toolbox.rsi
