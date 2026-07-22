@@ -70,7 +70,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
                 continue;
 
-            ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
+            ent.Comp.AvailableWarps.Add(new TeleportPoint(Loc.GetString(warpPointComp.Location), GetNetEntity(warpEnt)));
         }
 
         Dirty(ent);

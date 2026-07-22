@@ -1,9 +1,9 @@
 - type: entity
-  id: StorageTank
+  abstract: true
   parent: [SolutionTank, SolutionGinormous, BaseStructureDynamic]
+  id: StorageTankIndestructible
   name: storage tank
   description: A liquids storage tank.
-  abstract: true
   components:
   - type: Animateable
   - type: Sprite
@@ -22,6 +22,19 @@
         layer:
         - MachineLayer
         - InteractImpassable
+  - type: DrainableSolution
+    solution: tank
+  - type: ReagentTank
+  - type: Transform
+    noRot: true
+
+- type: entity
+  abstract: true
+  parent: StorageTankIndestructible
+  id: StorageTank
+  name: storage tank
+  description: A liquids storage tank.
+  components:
   - type: Damageable
     damageModifierSet: Metallic
   - type: Injurable
@@ -53,11 +66,6 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: DrainableSolution
-    solution: tank
-  - type: ReagentTank
-  - type: Transform
-    noRot: true
 
 # For highcap tanks
 - type: entity

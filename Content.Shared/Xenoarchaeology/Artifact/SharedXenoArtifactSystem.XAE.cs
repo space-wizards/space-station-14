@@ -76,7 +76,7 @@ public abstract partial class SharedXenoArtifactSystem
 
         if (!success)
         {
-            _popup.PopupClient(Loc.GetString("artifact-activation-fail"), artifact, user);
+            _popup.PopupEntity(Loc.GetString("artifact-activation-fail"), artifact, user);
             return false;
         }
 
