@@ -82,7 +82,7 @@ public sealed partial class EmitterComponent : Component
     public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
 
     /// <summary>
-    /// Map of signal ports to index of fire mode of the entity that will be fired.
+    /// Map of signal ports to entity prototype IDs of the entity that will be fired.
     /// </summary>
     [DataField]
     public Dictionary<ProtoId<SinkPortPrototype>, EntProtoId> SetTypePorts = new();
