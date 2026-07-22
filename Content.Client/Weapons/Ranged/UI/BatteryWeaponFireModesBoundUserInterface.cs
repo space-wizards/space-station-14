@@ -9,15 +9,16 @@ namespace Content.Client.Weapons.Ranged.UI;
 /// <summary>
 /// BUI for simple radial that helps to change battery-weapons fire mode.
 /// </summary>
-public sealed partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey)
+[Virtual]
+public partial class BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey)
     : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     private SimpleRadialMenu? _menu;
 
-    private static readonly Color SelectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
-    private static readonly Color SelectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
+    protected static readonly Color SelectedModeBackgroundColor = StyleNano.ButtonColorGoodDefault.WithAlpha(128);
+    protected static readonly Color SelectedModeHoverBackgroundColor = StyleNano.ButtonColorGoodHovered.WithAlpha(128);
 
     /// <inheritdoc />
     protected override void Open()
@@ -40,7 +41,7 @@ public sealed partial class BatteryWeaponFireModesBoundUserInterface(EntityUid o
     /// <summary>
     /// Collect options for radial menu from component's <see cref="BatteryWeaponFireModesComponent.FireModes"/>.
     /// </summary>
-    private List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
+    protected virtual List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
         var list = new List<RadialMenuOptionBase>();
 
@@ -48,7 +49,7 @@ public sealed partial class BatteryWeaponFireModesBoundUserInterface(EntityUid o
         {
             var fireMode = fireModes.FireModes[index];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
-            var option = new RadialMenuActionOption<int>(HandleRadialMenuClick, index)
+            var option = new RadialMenuActionOption<int>(HandleSetFireMode, index)
             {
                 ToolTip = entProto.Name,
                 IconSpecifier = RadialMenuIconSpecifier.With(fireMode.ModeIcon)
@@ -65,7 +66,7 @@ public sealed partial class BatteryWeaponFireModesBoundUserInterface(EntityUid o
         return list;
     }
 
-    private void HandleRadialMenuClick(int modeIndex)
+    private void HandleSetFireMode(int modeIndex)
     {
         var msg = new BatteryWeaponFireModeChangeMessage { ModeIndex = modeIndex };
         SendPredictedMessage(msg);

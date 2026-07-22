@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Weapons.Ranged.Components;
@@ -10,10 +9,9 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
 {
-    [Dependency] private AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private SharedGunSystem _gun = default!;
-    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -57,9 +55,6 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
     public bool TrySetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
     {
         if (index < 0 || index >= component.FireModes.Count)
-            return false;
-
-        if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
             return false;
 
         SetFireMode(uid, component, index, user);
@@ -117,7 +112,7 @@ public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
                 _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
             if (user != null)
-                _popupSystem.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), uid, user.Value);
+                _popup.PopupEntity(Loc.GetString("gun-set-fire-mode-popup", ("mode", prototype.Name)), uid, user.Value);
         }
 
         if (TryComp(uid, out BatteryAmmoProviderComponent? batteryAmmoProviderComponent))

@@ -18,3 +18,6 @@ emitter-destroyed-broadcast = A powered emitter {$location} has been destroyed.
 emitter-deconstructed-broadcast = A powered emitter {$location} has been deconstructed.
 emitter-unlocked-broadcast = A powered emitter {$location} has been unlocked.
 emitter-unpowered-broadcast = A powered emitter {$location} has lost power.
+
+emitter-turn-on = Turn on
+emitter-turn-off = Turn off

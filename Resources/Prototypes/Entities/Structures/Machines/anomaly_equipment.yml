@@ -170,13 +170,17 @@
     fireBurstDelayMax: 6
   - type: ActivatableUI
     singleUser: true
-    verbOnly: true
-    key: enum.BatteryWeaponFireModesUiKey.Key
+    key: enum.EmitterModesUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.BatteryWeaponFireModesUiKey.Key:
-        type: BatteryWeaponFireModesBoundUserInterface
+      enum.EmitterModesUiKey.Key:
+        type: EmitterChangeModeBoundUserInterface
   - type: BatteryWeaponFireModes
+    accessDeniedPopup: comp-emitter-access-locked
+    accessDeniedSound:
+      path: /Audio/Machines/custom_deny.ogg
+      params:
+        volume: -5
     fireModes:
     - proto: AnomalousParticleDeltaStrong
       modeIcon:

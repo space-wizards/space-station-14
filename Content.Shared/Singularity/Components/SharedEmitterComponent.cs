@@ -7,13 +7,17 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;
 
-    // whether the power switch is in "on"
-    [ViewVariables] public bool IsOn;
+    /// <summary>
+    /// Whether the emitter is switched to emitting or now.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsOn;
+
     // Whether the power switch is on AND the machine has enough power (so is actively firing)
     [ViewVariables] public bool IsPowered;
 
@@ -139,3 +143,7 @@ public enum EmitterVisualState
     Underpowered,
     Off
 }
+
+
+[Serializable, NetSerializable]
+public sealed class EmitterToggleActiveMessage : BoundUserInterfaceMessage;

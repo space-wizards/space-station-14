@@ -11,21 +11,15 @@ using Content.Shared.Construction;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceLinking.Events;
-using Content.Shared.Examine;
-using Content.Shared.Emag.Systems;
-using Content.Shared.Interaction;
 using Content.Shared.Lock;
-using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -37,7 +31,6 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private IRobustRandom _random = default!;
         [Dependency] private IAdminLogManager _adminLogger = default!;
         [Dependency] private SharedAppearanceSystem _appearance = default!;
-        [Dependency] private SharedPopupSystem _popup = default!;
         [Dependency] private ProjectileSystem _projectile = default!;
         [Dependency] private GunSystem _gun = default!;
         [Dependency] private RadioSystem _radio = default!;
@@ -49,7 +42,6 @@ namespace Content.Server.Singularity.EntitySystems
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
-            SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
             SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<EmitterComponent, DestructionEventArgs>(OnDestruction);
@@ -65,43 +57,32 @@ namespace Content.Server.Singularity.EntitySystems
             SwitchOff(uid, component);
         }
 
-        private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
+        protected override void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid argsActor)
         {
-            if (args.Handled || !args.Complex)
-                return;
-
-            if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
-            {
-                _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
-                    ("target", uid)), uid, args.User);
-                return;
-            }
-
             if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
                     SwitchOn(uid, component);
-                    _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
-                        ("target", uid)), uid, args.User);
+                    Popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
+                        ("target", uid)), uid, argsActor);
                 }
                 else
                 {
                     SwitchOff(uid, component);
-                    _popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
-                        ("target", uid)), uid, args.User);
+                    Popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
+                        ("target", uid)), uid, argsActor);
                 }
 
                 var stateText = component.IsOn ? "on" : "off";
                 _adminLogger.Add(LogType.FieldGeneration,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
-                    $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter} to {stateText}");
-                args.Handled = true;
+                    $"{ToPrettyString(argsActor):player} toggled {ToPrettyString(uid):emitter} to {stateText}");
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
-                    ("target", uid)), uid, args.User);
+                Popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
+                    ("target", uid)), uid, argsActor);
             }
         }
 
@@ -145,6 +126,7 @@ namespace Content.Server.Singularity.EntitySystems
         public void SwitchOff(EntityUid uid, EmitterComponent component)
         {
             component.IsOn = false;
+            Dirty(uid, component);
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
                 powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
@@ -159,6 +141,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
 
             component.IsOn = true;
+            Dirty(uid, component);
             if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
                 powerConsumer.DrawRate = fireMode.FireCost;
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))

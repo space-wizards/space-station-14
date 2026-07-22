@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -26,6 +27,18 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     [AutoNetworkedField]
     public int CurrentFireMode;
+
+    /// <summary>
+    /// Sound to be played in case user attempts to change fire mode but access check fails.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? AccessDeniedSound;
+
+    /// <summary>
+    /// Popup to show when user attempts to change fire mode but access check fails.
+    /// </summary>
+    [DataField]
+    public LocId? AccessDeniedPopup;
 }
 
 [DataDefinition, Serializable, NetSerializable]
