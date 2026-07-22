@@ -1,14 +1,17 @@
-namespace Content.Server.Gatherable.Components;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Gatherable.Components;
 
 /// <summary>
 /// Destroys a gatherable entity when colliding with it.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(GatherableSystem))]
 public sealed partial class GatheringProjectileComponent : Component
 {
     /// <summary>
     /// How many more times we can gather.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("amount")]
+    [DataField, AutoNetworkedField]
     public int Amount = 1;
 }

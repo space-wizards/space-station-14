@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: [BaseStructure, ConstructibleMachine] # Not a BaseMachinePowered since we don't want the anchorable component
+  parent: [BaseStructure, ConstructibleMachine, BaseConstructibleMachineDestructible] # Not a BaseMachinePowered since we don't want the anchorable component
   id: CryoPod
   name: cryo pod
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
@@ -55,22 +55,16 @@
     layoutId: CryoPod
   - type: Damageable
     damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 175
       behaviors:
       - !type:EmptyAllContainersBehaviour
       - !type:PlaySoundBehavior
         sound:
           collection: WindowShatter
-      - !type:ChangeConstructionNodeBehavior
-        node: machineFrame
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 3000
   - type: ExtensionCableReceiver
