@@ -57,7 +57,7 @@ namespace Content.Server.Singularity.EntitySystems
             SwitchOff(uid, component);
         }
 
-        protected override void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid argsActor)
+        protected override void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid user)
         {
             if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
@@ -65,24 +65,24 @@ namespace Content.Server.Singularity.EntitySystems
                 {
                     SwitchOn(uid, component);
                     Popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
-                        ("target", uid)), uid, argsActor);
+                        ("target", uid)), uid, user);
                 }
                 else
                 {
                     SwitchOff(uid, component);
                     Popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
-                        ("target", uid)), uid, argsActor);
+                        ("target", uid)), uid, user);
                 }
 
                 var stateText = component.IsOn ? "on" : "off";
                 _adminLogger.Add(LogType.FieldGeneration,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
-                    $"{ToPrettyString(argsActor):player} toggled {ToPrettyString(uid):emitter} to {stateText}");
+                    $"{ToPrettyString(user):player} toggled {ToPrettyString(uid):emitter} to {stateText}");
             }
             else
             {
                 Popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
-                    ("target", uid)), uid, argsActor);
+                    ("target", uid)), uid, user);
             }
         }
 

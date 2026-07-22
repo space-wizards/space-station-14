@@ -43,7 +43,7 @@ public abstract partial class SharedEmitterSystem : EntitySystem
         args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
     }
 
-    protected virtual void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid argsActor)
+    protected virtual void ToggleActive(EntityUid uid, EmitterComponent component, EntityUid user)
     {
 
     }

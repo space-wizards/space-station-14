@@ -14,6 +14,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
 {
     private static readonly SpriteSpecifier.Texture TurnOnTexture = new(new("/Textures/Interface/Radial/turn-on.png"));
     private static readonly SpriteSpecifier.Texture TurnOffTexture = new(new("/Textures/Interface/Radial/turn-off.png"));
+
     protected override List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
         var options = base.CreateButtons(fireModes);
