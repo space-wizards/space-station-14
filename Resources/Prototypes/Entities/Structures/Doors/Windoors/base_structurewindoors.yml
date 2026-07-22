@@ -90,9 +90,9 @@
     damageModifierSet: GlassReinforcedMod
   - type: Destructible
     thresholds:
-    - trigger: &DamageTrigger125
+    - trigger: &DamageDoorWeak
         !type:DamageTrigger
-        damage: 125
+        damage: 100
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -175,7 +175,7 @@
     sprite: Structures/Doors/Windoors/windoor.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -201,7 +201,7 @@
     damageModifierSet: GlassReinforcedPlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -229,7 +229,7 @@
     sprite: Structures/Doors/Windoors/uranium.rsi
   - type: Destructible
     thresholds:
-    - trigger: *DamageTrigger125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:

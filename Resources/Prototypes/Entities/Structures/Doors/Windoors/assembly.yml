@@ -3,6 +3,8 @@
   id: WindoorAssembly
   name: windoor assembly
   description: It opens, it closes, and you can see through it!
+  placement:
+    mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -23,19 +25,17 @@
   - type: Anchorable
   - type: Pullable
   - type: Rotatable
-  - type: Damageable
-    damageModifierSet: SteelMod
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: RCDDeconstructable
     cost: 6
     delay: 8
     fx: EffectRCDDeconstruct8
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageDoorWeak
         !type:DamageTrigger
-        damage: 125
+        damage: 100
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -45,8 +45,6 @@
   - type: Construction
     graph: Windoor
     node: assembly
-  placement:
-    mode: SnapgridCenter
 
 - type: entity
   id: WindoorAssemblyClockwork
@@ -60,9 +58,7 @@
     - state: open
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -86,9 +82,7 @@
     - state: assembly
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -112,9 +106,7 @@
     - state: assembly
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 125
+    - trigger: *DamageDoorWeak
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
