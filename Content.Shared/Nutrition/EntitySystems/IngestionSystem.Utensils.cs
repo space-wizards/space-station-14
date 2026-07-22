@@ -43,7 +43,7 @@ public sealed partial class IngestionSystem
         //Prevents food usage with a wrong utensil
         if (ev.Types != UtensilType.None && (ev.Types & utensil.Comp.Types) == 0)
         {
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-wrong-utensil", ("verb", GetEdibleVerb(target)), ("food", target), ("utensil", utensil.Owner)), user, user);
+            _popup.PopupEntity(Loc.GetString("ingestion-try-use-wrong-utensil", ("verb", GetEdibleVerb(target)), ("food", target), ("utensil", utensil.Owner)), user, user);
             return true;
         }
 
@@ -120,7 +120,7 @@ public sealed partial class IngestionSystem
         if (!required || (usedTypes & requiredTypes) == requiredTypes)
             return true;
 
-        _popup.PopupClient(Loc.GetString("ingestion-you-need-to-hold-utensil", ("utensil", requiredTypes ^ usedTypes)), entity, entity);
+        _popup.PopupEntity(Loc.GetString("ingestion-you-need-to-hold-utensil", ("utensil", requiredTypes ^ usedTypes)), entity, entity);
         return false;
 
     }

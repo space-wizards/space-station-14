@@ -34,7 +34,7 @@
   - type: Prayable
     bibleUserOnly: true
   - type: Summonable
-    specialItem: SpawnPointGhostRemilia
+    summonEntity: SpawnPointGhostRemilia
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:
@@ -81,11 +81,14 @@
       types:
         Caustic: 50
     failChance: 0
-    locPrefix: "necro"
+    healFailOthersText: necro-heal-fail-others
+    healFailSelfText: necro-heal-fail-self
+    healSuccessOthersText: necro-heal-success-others
+    healSuccessSelfText: necro-heal-success-self
     healSound: "/Audio/Effects/lightburn.ogg"
     healingLightEffect: EvilLightEffect
   - type: Summonable
-    specialItem: SpawnPointGhostCerberus
+    summonEntity: SpawnPointGhostCerberus
     respawnTime: 300
   - type: Sprite
     sprite: Objects/Specific/Chapel/necronomicon.rsi
