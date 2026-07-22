@@ -18,8 +18,7 @@ public sealed class GasTileOverlayTemperatureNetworkingTest : AtmosTest
     protected override ResPath? TestMapPath => new("Maps/Test/Atmospherics/DeltaPressure/deltapressuretest.yml");
     public override PoolSettings PoolSettings => new()
     {
-        Connected = true,
-        DisableInterpolate = true
+        Connected = true
     };
 
     [SidedDependency(Side.Server)] private readonly SharedMapSystem _mapSys = default!;
