@@ -16,11 +16,9 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 175
       behaviors:
       - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -43,7 +41,7 @@
 # Base physical rechargers
 - type: entity
   abstract: true
-  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine]
+  parent: [CoreRecharger, BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
   id: BaseRecharger
   components:
   - type: Transform
@@ -54,7 +52,7 @@
 
 - type: entity
   abstract: true
-  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine]
+  parent: [CoreItemRecharger, BaseMachinePowered, ConstructibleMachine, BaseConstructibleMachineDestructible]
   id: BaseItemRecharger
   components:
   - type: Sprite
@@ -119,7 +117,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: [ BaseItemRecharger, ConstructibleMachine ]
+  parent: BaseItemRecharger
   id: PowerCageRecharger
   name: cage recharger
   description: A specialized machine made for recharging the heavy cage batteries used by ship-mounted weapons.
