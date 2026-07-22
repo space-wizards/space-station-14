@@ -5,152 +5,146 @@
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   components:
-    - type: Animateable
-    - type: InteractionOutline
-    - type: Transform
-      noRot: true
-    - type: Sprite
-      sprite: Structures/Storage/canister.rsi
-      noRot: true
-      layers:
-        - state: grey
-        - state: paper
-          visible: false
-          map: [ "enum.PaperLabelVisuals.Layer" ]
-        - state: integrity-unshaded-0
-          map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
-          shader: unshaded
-          visible: false
-        - state: mask-grey
-          map: [ "enum.MaxPressureVisualLayers.Base" ]
-          visible: false
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.AnchorVisuals.Anchored:
-          connectedToPort:
-            False: { state: can-connector, visible: false }
-            True: { state: can-connector, visible: true }
-        enum.GasCanisterVisuals.TankInserted:
-          tankInserted:
-            False: { state: can-open, visible: false }
-            True: { state: can-open, visible: true }
-        enum.LockVisuals.Locked:
-          locked:
-            False: { state: unlocked, shader: "unshaded" }
-            True: { state: locked, shader: "unshaded" }
-        enum.GasCanisterVisuals.PressureState:
-          pressureLight:
-            0: { state: can-o0, shader: "unshaded" }
-            1: { state: can-o1, shader: "unshaded" }
-            2: { state: can-o2, shader: "unshaded" }
-            3: { state: can-o3, shader: "unshaded" }
-        enum.PaperLabelVisuals.HasLabel:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: true }
-            False: { visible: false }
-        enum.StorageVisuals.Open:
-          enum.PaperLabelVisuals.Layer:
-            True: { visible: false }
-        enum.PaperLabelVisuals.LabelType:
-          enum.PaperLabelVisuals.Layer:
-            Paper: { state: paper }
-            Bounty: { state: bounty }
-            CaptainsPaper: { state: captains_paper }
-            Invoice: { state: invoice }
-    - type: ActivatableUI
-      key: enum.GasCanisterUiKey.Key
-    - type: UIRequiresLock
-      userInterfaceKeys:
-      - enum.GasCanisterUiKey.Key
-    - type: UserInterface
-      interfaces:
-        enum.GasCanisterUiKey.Key:
-          type: GasCanisterBoundUserInterface
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 600
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 300
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound:
-                collection: MetalBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                GasCanisterBrokenBase:
-                  min: 1
-                  max: 1
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:DumpCanisterBehavior
-    - type: Damageable
-      damageModifierSet: Metallic
-    - type: Injurable
-      damageContainer: Inorganic
-    - type: Physics
-      bodyType: Dynamic
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          density: 190
-          mask:
-          - SmallMobMask
-          layer:
-          - MachineLayer
-    - type: AtmosDevice
-      requireAnchored: false
-      joinSystem: true
-    - type: ContainerContainer
-      containers:
-        tank_slot: !type:ContainerSlot {}
-        paper_label: !type:ContainerSlot
-    - type: NodeContainer
-      nodes:
-        port:
-          !type:PortablePipeNode
-          nodeGroupID: Pipe
-          rotationsEnabled: false
-          volume: 1
-    - type: GasPortable
-    - type: MaxPressureVisuals
-      integrityMask: mask-grey
-    - type: GasCanister
-      maxIntegrity: 15 # 5 times stronger than a gas tank
-      integrity: 15
-      maxReleasePressure: 1013.25
-      safetyPressure: 10132.5 # High enough that liquid tanks don't burst immediately, with an extra 33% wiggle room to work with
-      overpressure: 20265 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
-      gasTankSlot:
-        name: comp-gas-canister-slot-name-gas-tank
-        ejectOnBreak: true
-        whitelist:
-          components:
-            - GasTank
-    - type: Explosive
-      explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
-      maxIntensity: 100
-      tileBreakScale: 0.2 # Keeps the can from spacing all the hot gas it has now vented :). If this proves to be too much it can be removed.
-    - type: StaticPrice
-      price: 200
-    - type: AccessReader
-      access: [["Atmospherics"], ["Engineering"], ["Research"]]
-    - type: Lock
-      locked: false
-    - type: GuideHelp
-      guides:
-      - GasCanisters
-    - type: Paintable
-      group: Canisters
+  - type: Animateable
+  - type: InteractionOutline
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: Structures/Storage/canister.rsi
+    noRot: true
+    layers:
+    - state: grey
+    - state: paper
+      visible: false
+      map: [ "enum.PaperLabelVisuals.Layer" ]
+    - state: integrity-unshaded-0
+      map: [ "enum.MaxPressureVisualLayers.BaseUnshaded" ]
+      shader: unshaded
+      visible: false
+    - state: mask-grey
+      map: [ "enum.MaxPressureVisualLayers.Base" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        connectedToPort:
+          False: { state: can-connector, visible: false }
+          True: { state: can-connector, visible: true }
+      enum.GasCanisterVisuals.TankInserted:
+        tankInserted:
+          False: { state: can-open, visible: false }
+          True: { state: can-open, visible: true }
+      enum.LockVisuals.Locked:
+        locked:
+          False: { state: unlocked, shader: "unshaded" }
+          True: { state: locked, shader: "unshaded" }
+      enum.GasCanisterVisuals.PressureState:
+        pressureLight:
+          0: { state: can-o0, shader: "unshaded" }
+          1: { state: can-o1, shader: "unshaded" }
+          2: { state: can-o2, shader: "unshaded" }
+          3: { state: can-o3, shader: "unshaded" }
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+  - type: ActivatableUI
+    key: enum.GasCanisterUiKey.Key
+  - type: UIRequiresLock
+    userInterfaceKeys:
+    - enum.GasCanisterUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.GasCanisterUiKey.Key:
+        type: GasCanisterBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GasCanisterBrokenBase:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
+  - type: Damageable
+    damageModifierSet: Metallic
+  - type: Injurable
+    damageContainer: Inorganic
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 190
+        mask:
+        - SmallMobMask
+        layer:
+        - MachineLayer
+  - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
+  - type: ContainerContainer
+    containers:
+      tank_slot: !type:ContainerSlot {}
+      paper_label: !type:ContainerSlot
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+        rotationsEnabled: false
+        volume: 1
+  - type: GasPortable
+  - type: MaxPressureVisuals
+    integrityMask: mask-grey
+  - type: GasCanister
+    maxIntegrity: 15 # 5 times stronger than a gas tank
+    integrity: 15
+    maxReleasePressure: 1013.25
+    safetyPressure: 10132.5 # High enough that liquid tanks don't burst immediately, with an extra 33% wiggle room to work with
+    overpressure: 20265 # Purposefully high because cans react really fucking fast, may need to redo this value if reactions change!
+    gasTankSlot:
+      name: comp-gas-canister-slot-name-gas-tank
+      ejectOnBreak: true
+      whitelist:
+        components:
+          - GasTank
+  - type: Explosive
+    explosionType: Minibomb # Mostly a pressure wave explosive so primarily blunt damage
+    maxIntensity: 100
+    tileBreakScale: 0.2 # Keeps the can from spacing all the hot gas it has now vented :). If this proves to be too much it can be removed.
+  - type: StaticPrice
+    price: 200
+  - type: AccessReader
+    access: [["Atmospherics"], ["Engineering"], ["Research"]]
+  - type: Lock
+    locked: false
+  - type: GuideHelp
+    guides:
+    - GasCanisters
+  - type: Paintable
+    group: Canisters
 
 - type: entity
   parent: GasCanister
@@ -178,12 +172,6 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -235,12 +223,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -284,12 +266,6 @@
       temperature: 293.15
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -352,12 +328,6 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -416,12 +386,6 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -486,12 +450,6 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -537,12 +495,6 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -592,12 +544,6 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -641,12 +587,6 @@
         temperature: 293.15
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -696,12 +636,6 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 600
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
@@ -749,12 +683,6 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
@@ -797,12 +725,6 @@
   components:
     - type: Destructible
       thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 100
