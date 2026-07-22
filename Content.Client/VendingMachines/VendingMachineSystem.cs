@@ -22,13 +22,14 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var uid = entity.Owner;
         var component = entity.Comp;
 
-        component.Contraband = state.Contraband;
-        component.Broken = state.Broken;
-
         // If all we did was update amounts, then we can leave BUI buttons in place.
         var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
                            !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
-                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys);
+                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys) ||
+                           component.Contraband != state.Contraband;
+
+        component.Contraband = state.Contraband;
+        component.Broken = state.Broken;
 
         component.Inventory.Clear();
         component.EmaggedInventory.Clear();
