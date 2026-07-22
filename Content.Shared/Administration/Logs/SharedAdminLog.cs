@@ -7,6 +7,9 @@ namespace Content.Shared.Administration.Logs;
 public readonly record struct SharedAdminLogEntity(int EntityUid, AdminLogEntityRole Role, string? PrototypeId, string? EntityName);
 
 [Serializable, NetSerializable]
+public readonly record struct SharedAdminLogPlayer(Guid UserId, AdminLogEntityRole Role);
+
+[Serializable, NetSerializable]
 public readonly record struct SharedAdminLog(
     int Id,
     int ServerId,
@@ -16,4 +19,5 @@ public readonly record struct SharedAdminLog(
     DateTime Date,
     string Message,
     Guid[] Players,
-    SharedAdminLogEntity[] Entities);
+    SharedAdminLogEntity[] Entities,
+    SharedAdminLogPlayer[]? PlayerRoles = null);

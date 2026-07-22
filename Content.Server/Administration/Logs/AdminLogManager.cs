@@ -588,15 +588,28 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         foreach (var (key, value) in values)
         {
-            if (value is not EntityStringRepresentation rep)
-                continue;
-            if (rep.Session is not { } session)
-                continue;
-
-            var role = GetEntityRole(type, key);
-            roles ??= new Dictionary<Guid, AdminLogEntityRole>();
-            // First role wins if the same player appears under multiple keys.
-            roles.TryAdd(session.UserId.UserId, role);
+            switch (value)
+            {
+                case EntityStringRepresentation rep:
+                {
+                    if (rep.Session is not { } repSession)
+                        continue;
+                    var role = GetEntityRole(type, key);
+                    roles ??= new Dictionary<Guid, AdminLogEntityRole>();
+                    roles.TryAdd(repSession.UserId.UserId, role);
+                    break;
+                }
+                case SerializablePlayer player:
+                {
+                    var role = GetEntityRole(type, key);
+                    if (role == AdminLogEntityRole.Other)
+                        continue;
+                    roles ??= new Dictionary<Guid, AdminLogEntityRole>();
+                    // First role wins if the same player appears under multiple keys.
+                    roles.TryAdd(player.UserId, role);
+                    break;
+                }
+            }
         }
 
         return roles;
@@ -691,7 +704,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         // generic fallbacks
         if (ContainsAny(key, "actor", "user", "player", "attacker"))
             return AdminLogEntityRole.Actor;
-        if (ContainsAny(key, "target", "recipient") || key == "entity")
+        if (ContainsAny(key, "target", "recipient"))
             return AdminLogEntityRole.Target;
         if (ContainsAny(key, "tool", "weapon", "instrument", "projectile", "using"))
             return AdminLogEntityRole.Tool;

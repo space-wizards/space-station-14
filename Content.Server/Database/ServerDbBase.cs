@@ -1458,10 +1458,26 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             foreach (var log in logs)
             {
                 var logParticipants = participantsByEvent.GetValueOrDefault(log.Id, []);
-                var players = logParticipants.Where(p => p.PlayerUserId != null).Select(p => p.PlayerUserId!.Value).Distinct().ToArray();
+                var playerParticipants = logParticipants.Where(p => p.PlayerUserId != null).ToArray();
+                var players = playerParticipants.Select(p => p.PlayerUserId!.Value).Distinct().ToArray();
                 var entityRows = logParticipants.Where(p => p.EntityUid != null).ToArray();
                 var entities = new SharedAdminLogEntity[entityRows.Length];
                 var serverName = servers.GetValueOrDefault(log.ServerId, "unknown");
+
+                SharedAdminLogPlayer[]? playerRoles = null;
+                if (players.Length > 0)
+                {
+                    var roleMap = new Dictionary<Guid, AdminLogEntityRole>(playerParticipants.Length);
+                    foreach (var pp in playerParticipants)
+                        roleMap.TryAdd(pp.PlayerUserId!.Value, pp.Role);
+
+                    playerRoles = new SharedAdminLogPlayer[players.Length];
+                    for (var j = 0; j < players.Length; j++)
+                    {
+                        var role = roleMap.TryGetValue(players[j], out var r) ? r : AdminLogEntityRole.Actor;
+                        playerRoles[j] = new SharedAdminLogPlayer(players[j], role);
+                    }
+                }
 
                 for (var i = 0; i < entityRows.Length; i++)
                 {
@@ -1470,7 +1486,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     entities[i] = new SharedAdminLogEntity(row.EntityUid!.Value, row.Role, dim?.PrototypeId, dim?.EntityName);
                 }
 
-                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities);
+                yield return new SharedAdminLog(log.Id, log.ServerId, serverName, log.Type, log.Impact, log.OccurredAt, log.Message, players, entities, playerRoles);
             }
         }
 

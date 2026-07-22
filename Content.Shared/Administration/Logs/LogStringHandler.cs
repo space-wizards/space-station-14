@@ -54,8 +54,8 @@ public ref struct LogStringHandler
         while (!(Values.TryAdd(format, value)
                  || Values[format] is T val2 && val2.Equals(value)))
         {
-            format = $"{originalFormat}_{i}";
             i++;
+            format = $"{originalFormat}_{i}";
         }
     }
 
@@ -163,7 +163,7 @@ public ref struct LogStringHandler
     public void AppendFormatted(ICommonSession? value, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AddFormat(null, player, argument);
+        AddFormat(format, player, argument);
         _handler.AppendFormatted(value, format);
     }
 
@@ -177,7 +177,7 @@ public ref struct LogStringHandler
     public void AppendFormatted(ICommonSession? value, int alignment, string? format, [CallerArgumentExpression("value")] string? argument = null)
     {
         SerializablePlayer? player = value == null ? null : new(value, Logger.EntityManager);
-        AddFormat(null, player, argument);
+        AddFormat(format, player, argument);
         _handler.AppendFormatted(value, alignment, format);
     }
     #endregion

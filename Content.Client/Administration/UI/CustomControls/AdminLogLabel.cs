@@ -174,6 +174,46 @@ public sealed class AdminLogLabel : BoxContainer
             }
         }
 
+        //Player role metadata
+        if (log.Players.Length > 0)
+        {
+            message.AddText("\n");
+
+            for (var i = 0; i < log.Players.Length; i++)
+            {
+                var playerGuid = log.Players[i];
+                var role = AdminLogEntityRole.Actor;
+                if (log.PlayerRoles != null)
+                {
+                    foreach (var pr in log.PlayerRoles)
+                    {
+                        if (pr.UserId == playerGuid)
+                        {
+                            role = pr.Role;
+                            break;
+                        }
+                    }
+                }
+
+                var roleColor = GetRoleColor(role);
+                var shortGuid = playerGuid.ToString()[..8];
+
+                message.AddText("    ");
+                message.PushColor(roleColor);
+                message.AddText(role.ToString());
+                message.Pop();
+
+                message.PushColor(MetadataLabelColor);
+                message.AddText($": [{shortGuid}\u2026]");
+                message.Pop();
+
+                if (i < log.Players.Length - 1)
+                    message.AddText("\n");
+            }
+
+            message.AddText("\n");
+        }
+
         //Type / impact / server metadata line
         message.AddText("\n    ");
         message.PushColor(MetadataLabelColor);
