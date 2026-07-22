@@ -238,8 +238,11 @@ public sealed partial class RevenantSystem
 
         if (!_mobThresholdSystem.TryGetThresholdForState(args.Args.Target.Value, MobState.Dead, out var damage))
             return;
+
+        var protoId = MetaData(args.Args.Target.Value).EntityPrototype?.ID;
+
         DamageSpecifier dspec = new();
-        dspec.DamageDict.Add("Cold", damage.Value);
+        dspec.DamageDict.Add(protoId == "MobIPC" ? "Heat" : "Cold", damage.Value);
         _damage.ChangeDamage(args.Args.Target.Value, dspec, true, origin: uid);
 
         args.Handled = true;
