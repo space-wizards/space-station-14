@@ -936,11 +936,42 @@ CrateEngineeringMiniJetpack: CrateSpaceMiniJetpack
 CrateEngineeringShuttle: CrateSpaceShuttlePower
 CrateEngineeringThruster: CrateSpaceThruster
 
-# 2026-07-20
+# 2026-07-22
+
 BlastDoorXenoborg: BlastDoorXeno
 BlastDoorXenoborgOpen: BlastDoorXenoOpen
 
-# 2026-07-22
+# Dark
+FloorTileItemDarkDiagonalMini: FloorTileItemDark
+FloorTileItemDarkDiagonal: FloorTileItemDark
+FloorTileItemDarkOffset: FloorTileItemDark
+FloorTileItemDarkSlatsContinuous: FloorTileItemDark
+
+# Steel
+FloorTileItemSteelDiagonalMini: FloorTileItemSteel
+FloorTileItemSteelDiagonal: FloorTileItemSteel
+FloorTileItemSteelOffset: FloorTileItemSteel
+FloorTileItemSteelMono: FloorTileItemSteel
+FloorTileItemShowroom: FloorTileItemSteel
+FloorTileItemSteelSlatsContinuous: FloorTileItemSteel
+
+# White
+FloorTileItemWhiteDiagonalMini: FloorTileItemWhite
+FloorTileItemWhiteDiagonal: FloorTileItemWhite
+FloorTileItemWhiteOffset: FloorTileItemWhite
+FloorTileItemWhiteSlatsContinuous: FloorTileItemWhite
+
+# Misc
+FloorTileItemUraniumMarble: FloorTileItemBlackMarble
+FloorTileItemPlasmaMarble: FloorTileItemWhiteMarble
+FloorTileItemEighties: FloorTileItemArcadeBlue
+FloorTileItemArcadeBlue2: FloorTileItemArcadeBlue
+FloorTileItemElevatorShaft: null
+FloorTileItemMining: null
+FloorTileItemMiningLight: null
+FloorTileItemMiningDark: null
+FloorTileItemRockVault: null
+
 FloorTileItemBrassReebe: null
 FloorTileItemBrassFilled: null
 FloorBananiumEntity: null

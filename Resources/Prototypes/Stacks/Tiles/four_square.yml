@@ -9,12 +9,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileShowroom
-  name: stack-showroom-tile
-  spawn: FloorTileItemShowroom
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileHydro
   name: stack-hydro-tile
   spawn: FloorTileItemHydro
@@ -79,34 +73,3 @@
   id: FloorTileLaundry
   name: stack-laundry-floor-tile
   spawn: FloorTileItemLaundry
-
-# Patterned
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileElevatorShaft
-  name: stack-elevator-shaft-tile
-  spawn: FloorTileItemElevatorShaft
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileRockVault
-  name: stack-rock-vault-tile
-  spawn: FloorTileItemRockVault
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileMining
-  name: stack-mining-floor-tile
-  spawn: FloorTileItemMining
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileMiningDark
-  name: stack-dark-mining-floor-tile
-  spawn: FloorTileItemMiningDark
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileMiningLight
-  name: stack-light-mining-floor-tile
-  spawn: FloorTileItemMiningLight

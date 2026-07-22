@@ -155,10 +155,37 @@
   target: FloorSteel
 
 - type: tileAlias
-  id: FloorHydro
-  target: FloorSteel
-
-- type: tileAlias
   id: FloorElevatorShaft
   target: FloorSteel
 
+- type: tileAlias
+  id: FloorMining
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorMiningLight
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorMiningDark
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorRockVault
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorShowroom
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorSteelSlatsContinuous
+  target: FloorSteel
+
+- type: tileAlias
+  id: FloorDarkSlatsContinuous
+  target: FloorDark
+
+- type: tileAlias
+  id: FloorWhiteSlatsContinuous
+  target: FloorWhite

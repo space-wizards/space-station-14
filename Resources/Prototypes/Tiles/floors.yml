@@ -66,29 +66,6 @@
   itemDrop: FloorTileItemSteelPavement
 
 - type: tile
-  id: FloorSteelDiagonal
-  parent: BaseStationTile
-  name: tiles-steel-floor-diagonal
-  sprite: /Textures/Tiles/steel_diagonal.png
-  variants: 4
-  itemDrop: FloorTileItemSteelDiagonal
-
-- type: tile
-  id: FloorSteelOffset
-  parent: BaseStationTile
-  name: tiles-steel-floor-offset
-  sprite: /Textures/Tiles/steel_offset.png
-  itemDrop: FloorTileItemSteelOffset
-
-- type: tile
-  id: FloorSteelMono
-  parent: BaseStationTile
-  name: tiles-steel-floor-mono
-  sprite: /Textures/Tiles/steel_mono.png
-  variants: 4
-  itemDrop: FloorTileItemSteelMono
-
-- type: tile
   id: FloorSteelPavementVertical
   parent: BaseStationTile
   name: tiles-steel-floor-pavement-vertical
@@ -103,23 +80,6 @@
   sprite: /Textures/Tiles/steel_herringbone.png
   variants: 4
   itemDrop: FloorTileItemSteelHerringbone
-
-- type: tile
-  id: FloorSteelDiagonalMini
-  parent: BaseStationTile
-  name: tiles-steel-floor-diagonal-mini
-  sprite: /Textures/Tiles/steel_diagonal_mini.png
-  variants: 4
-  itemDrop: FloorTileItemSteelDiagonalMini
-
-- type: tile
-  parent: BaseStationTile
-  id: FloorSteelSlatsContinuous
-  name: tiles-steel-floor-slats-continuous
-  sprite: /Textures/Tiles/steel_slats_continuous.png
-  variants: 4
-  itemDrop: FloorTileItemSteelSlatsContinuous
-  allowRotationMirror: true
 
 - type: tile
   parent: BaseStationTile
@@ -179,15 +139,6 @@
 
 - type: tile
   parent: BaseStationTile
-  id: FloorWhiteSlatsContinuous
-  name: tiles-white-floor-slats-continuous
-  sprite: /Textures/Tiles/white_slats_continuous.png
-  variants: 4
-  itemDrop: FloorTileItemWhiteSlatsContinuous
-  allowRotationMirror: true
-
-- type: tile
-  parent: BaseStationTile
   id: FloorWhiteVerticalSlatsBordered
   name: tiles-white-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/white_vertical_slats_bordered.png
@@ -211,25 +162,6 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhitePavement
-
-- type: tile
-  id: FloorWhiteDiagonal
-  parent: BaseStationTile
-  name: tiles-white-floor-diagonal
-  sprite: /Textures/Tiles/white_diagonal.png
-  variants: 4
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemWhiteDiagonal
-
-- type: tile
-  id: FloorWhiteOffset
-  parent: BaseStationTile
-  name: tiles-white-floor-offset
-  sprite: /Textures/Tiles/white_offset.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemWhiteOffset
 
 - type: tile
   id: FloorWhiteMono
@@ -260,16 +192,6 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemWhiteHerringbone
-
-- type: tile
-  id: FloorWhiteDiagonalMini
-  parent: BaseStationTile
-  name: tiles-white-floor-diagonal-mini
-  sprite: /Textures/Tiles/white_diagonal_mini.png
-  variants: 4
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemWhiteDiagonalMini
 
 - type: tile
   id: FloorWhitePlastic
@@ -303,15 +225,6 @@
 
 - type: tile
   parent: BaseStationTile
-  id: FloorDarkSlatsContinuous
-  name: tiles-dark-floor-slats-continuous
-  sprite: /Textures/Tiles/dark_slats_continuous.png
-  variants: 4
-  itemDrop: FloorTileItemDarkSlatsContinuous
-  allowRotationMirror: true
-
-- type: tile
-  parent: BaseStationTile
   id: FloorDarkVerticalSlatsBordered
   name: tiles-dark-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/dark_vertical_slats_bordered.png
@@ -335,25 +248,6 @@
   footstepSounds:
     collection: FootstepTile
   itemDrop: FloorTileItemDarkPavement
-
-- type: tile
-  id: FloorDarkDiagonal
-  parent: BaseStationTile
-  name: tiles-dark-floor-diagonal
-  sprite: /Textures/Tiles/dark_diagonal.png
-  variants: 4
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemDarkDiagonal
-
-- type: tile
-  id: FloorDarkOffset
-  parent: BaseStationTile
-  name: tiles-dark-floor-offset
-  sprite: /Textures/Tiles/dark_offset.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemDarkOffset
 
 - type: tile
   id: FloorDarkMono
@@ -470,15 +364,6 @@
   itemDrop: FloorTileItemMetalDiamond
 
 - type: tile
-  id: FloorRockVault
-  parent: BaseStationTile
-  name: tiles-rock-floor
-  sprite: /Textures/Tiles/rock_vault.png
-  footstepSounds:
-    collection: FootstepAsteroid
-  itemDrop: FloorTileItemRockVault
-
-- type: tile
   id: FloorBlue
   parent: BaseStationTile
   name: tiles-blue-tile
@@ -495,33 +380,6 @@
   variants: 4
   itemDrop: FloorTileItemLime
 
-- type: tile
-  id: FloorMining
-  parent: BaseStationTile
-  name: tiles-mining-tile
-  sprite: /Textures/Tiles/mining_floor.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemMining
-
-- type: tile
-  id: FloorMiningDark
-  parent: BaseStationTile
-  name: tiles-mining-dark-tile
-  sprite: /Textures/Tiles/mining_floor_dark.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemMiningDark
-
-- type: tile
-  id: FloorMiningLight
-  parent: BaseStationTile
-  name: tiles-mining-light-tile
-  sprite: /Textures/Tiles/mining_floor_light.png
-  footstepSounds:
-    collection: FootstepTile
-  itemDrop: FloorTileItemMiningLight
-
 # Departmental
 - type: tile
   id: FloorFreezer
@@ -531,13 +389,6 @@
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemFreezer
-
-- type: tile
-  id: FloorShowroom
-  parent: BaseStationTile
-  name: tiles-showroom-floor
-  sprite: /Textures/Tiles/showroom.png
-  itemDrop: FloorTileItemShowroom
 
 - type: tile
   id: FloorHydro
@@ -699,18 +550,6 @@
   itemDrop: FloorTileItemArcadeBlue
 
 - type: tile
-  id: FloorArcadeBlue2
-  parent: BaseStationTile
-  name: tiles-blue-arcade-floor
-  sprite: /Textures/Tiles/arcadeblue2.png
-  footstepSounds:
-    collection: FootstepCarpet
-  barestepSounds:
-    collection: BarestepCarpet
-  friction: 1.25
-  itemDrop: FloorTileItemArcadeBlue2
-
-- type: tile
   id: FloorArcadeRed
   parent: BaseStationTile
   name: tiles-red-arcade-floor
@@ -721,18 +560,6 @@
     collection: BarestepCarpet
   friction: 1.25
   itemDrop: FloorTileItemArcadeRed
-
-- type: tile
-  id: FloorEighties
-  parent: BaseStationTile
-  name: tiles-eighties-floor
-  sprite: /Textures/Tiles/eighties.png
-  footstepSounds:
-    collection: FootstepCarpet
-  barestepSounds:
-    collection: BarestepCarpet
-  friction: 1.25
-  itemDrop: FloorTileItemEighties
 
 - type: tile
   id: FloorCarpetClown
@@ -1520,25 +1347,3 @@
     collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemDarkMarble
-
-- type: tile
-  id: FloorPlasmaMarble
-  parent: BaseStationTile
-  name: tiles-plasma-marble
-  sprite: /Textures/Tiles/plasmarble.png
-  variants: 8
-  footstepSounds:
-    collection: FootstepTile
-  friction: 0.8
-  itemDrop: FloorTileItemPlasmaMarble
-
-- type: tile
-  id: FloorUraniumMarble
-  parent: BaseStationTile
-  name: tiles-uranium-marble
-  sprite: /Textures/Tiles/uranium_marble.png
-  variants: 8
-  footstepSounds:
-    collection: FootstepTile
-  friction: 0.8
-  itemDrop: FloorTileItemUraniumMarble

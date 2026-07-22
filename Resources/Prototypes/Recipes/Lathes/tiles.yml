@@ -187,11 +187,6 @@
 
 - type: latheRecipe
   parent: BaseSteelTileRecipe
-  id: FloorTileItemSteelMono
-  result: FloorTileItemSteelMono
-
-- type: latheRecipe
-  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavement
   result: FloorTileItemSteelPavement
 
@@ -199,11 +194,6 @@
   parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavementVertical
   result: FloorTileItemSteelPavementVertical
-
-- type: latheRecipe
-  parent: BaseSteelTileRecipe
-  id: FloorTileItemSteelSlatsContinuous
-  result: FloorTileItemSteelSlatsContinuous
 
 - type: latheRecipe
   parent: BaseSteelTileRecipe
@@ -263,11 +253,6 @@
 
 - type: latheRecipe
   parent: BaseDarkTileRecipe
-  id: FloorTileItemDarkSlatsContinuous
-  result: FloorTileItemDarkSlatsContinuous
-
-- type: latheRecipe
-  parent: BaseDarkTileRecipe
   id: FloorTileItemDarkVerticalSlatsBordered
   result: FloorTileItemDarkVerticalSlatsBordered
 
@@ -286,21 +271,6 @@
   parent: BaseWhiteTileRecipe
   id: FloorTileItemWhite
   result: FloorTileItemWhite
-
-- type: latheRecipe
-  parent: BaseWhiteTileRecipe
-  id: FloorTileItemWhiteOffset
-  result: FloorTileItemWhiteOffset
-
-- type: latheRecipe
-  parent: BaseWhiteTileRecipe
-  id: FloorTileItemWhiteDiagonalMini
-  result: FloorTileItemWhiteDiagonalMini
-
-- type: latheRecipe
-  parent: BaseWhiteTileRecipe
-  id: FloorTileItemWhiteDiagonal
-  result: FloorTileItemWhiteDiagonal
 
 - type: latheRecipe
   parent: BaseWhiteTileRecipe
@@ -326,11 +296,6 @@
   parent: BaseWhiteTileRecipe
   id: FloorTileItemWhitePavementVertical
   result: FloorTileItemWhitePavementVertical
-
-- type: latheRecipe
-  parent: BaseWhiteTileRecipe
-  id: FloorTileItemWhiteSlatsContinuous
-  result: FloorTileItemWhiteSlatsContinuous
 
 - type: latheRecipe
   parent: BaseWhiteTileRecipe
@@ -366,38 +331,8 @@
 # Industrial
 - type: latheRecipe
   parent: BaseIndustrialTileRecipe
-  id: FloorTileItemMining
-  result: FloorTileItemMining
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
-  id: FloorTileItemMiningDark
-  result: FloorTileItemMiningDark
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
-  id: FloorTileItemMiningLight
-  result: FloorTileItemMiningLight
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
-  id: FloorTileItemElevatorShaft
-  result: FloorTileItemElevatorShaft
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
-  id: FloorTileItemRockVault
-  result: FloorTileItemRockVault
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
   id: FloorTileItemMetalDiamond
   result: FloorTileItemMetalDiamond
-
-- type: latheRecipe
-  parent: BaseIndustrialTileRecipe
-  id: FloorTileItemShowroom
-  result: FloorTileItemShowroom
 
 - type: latheRecipe
   parent: BaseIndustrialTileRecipe
@@ -569,24 +504,6 @@
   id: FloorTileItemDarkMarble
   result: FloorTileItemDarkMarble
 
-- type: latheRecipe
-  parent: BaseMarbleTileRecipe
-  id: FloorTileItemUraniumMarble
-  result: FloorTileItemUraniumMarble
-  materials:
-    Steel: 25
-    Glass: 25
-    Uranium: 25
-
-- type: latheRecipe
-  parent: BaseMarbleTileRecipe
-  id: FloorTileItemPlasmaMarble
-  result: FloorTileItemPlasmaMarble
-  materials:
-    Steel: 25
-    Glass: 25
-    Plasma: 25
-
 # Shuttle
 - type: latheRecipe
   parent: BaseShuttleTileRecipe
@@ -646,18 +563,8 @@
 
 - type: latheRecipe
   parent: BaseCarpetTileRecipe
-  id: FloorTileItemArcadeBlue2
-  result: FloorTileItemArcadeBlue2
-
-- type: latheRecipe
-  parent: BaseCarpetTileRecipe
   id: FloorTileItemArcadeRed
   result: FloorTileItemArcadeRed
-
-- type: latheRecipe
-  parent: BaseCarpetTileRecipe
-  id: FloorTileItemEighties
-  result: FloorTileItemEighties
 
 - type: latheRecipe
   parent: BaseCarpetTileRecipe

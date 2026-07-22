@@ -9,7 +9,6 @@
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
-  - FloorTileItemDarkSlatsContinuous
   - FloorTileItemDarkVerticalSlatsBordered
   - FloorTileItemDarkHorizontalSlatsBordered
   - FloorTileItemDarkPavement
@@ -26,10 +25,8 @@
   - FloorTileItemSteelDiagonal
   - FloorTileItemSteelHerringbone
   - FloorTileItemSteelMini
-  - FloorTileItemSteelSlatsContinuous
   - FloorTileItemSteelVerticalSlatsBordered
   - FloorTileItemSteelHorizontalSlatsBordered
-  - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
   - FloorTileItemSteelCheckerDark
@@ -39,13 +36,9 @@
   id: FloorWhiteTilesStatic
   recipes:
   - FloorTileItemWhite
-  - FloorTileItemWhiteOffset
-  - FloorTileItemWhiteDiagonalMini
-  - FloorTileItemWhiteDiagonal
   - FloorTileItemWhiteHerringbone
   - FloorTileItemWhiteMini
   - FloorTileItemWhiteMono
-  - FloorTileItemWhiteSlatsContinuous
   - FloorTileItemWhiteVerticalSlatsBordered
   - FloorTileItemWhiteHorizontalSlatsBordered
   - FloorTileItemWhitePavement
@@ -62,14 +55,8 @@
 - type: latheRecipePack
   id: FloorIndustrialTilesStatic
   recipes:
-  - FloorTileItemMining
-  - FloorTileItemMiningDark
-  - FloorTileItemMiningLight
-  - FloorTileItemElevatorShaft
-  - FloorTileItemRockVault
   - FloorTileItemMetalDiamond
   - FloorTileItemFreezer
-  - FloorTileItemShowroom
 
 - type: latheRecipePack
   id: FloorWoodTilesStatic
@@ -106,8 +93,6 @@
   recipes:
   - FloorTileItemWhiteMarble
   - FloorTileItemDarkMarble
-  - FloorTileItemUraniumMarble
-  - FloorTileItemPlasmaMarble
 
 - type: latheRecipePack
   id: FloorShuttleTilesStatic
@@ -131,9 +116,7 @@
   id: CarpetTilesStatic
   recipes:
   - FloorTileItemArcadeBlue
-  - FloorTileItemArcadeBlue2
   - FloorTileItemArcadeRed
-  - FloorTileItemEighties
   - FloorTileItemCarpetClown
   - FloorTileItemCarpetOffice
 
