@@ -74,7 +74,6 @@
       sprite: Structures/Wallmounts/labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
     - state: postboard_over
-    - map: ["enum.StorageFillLayers.Fill"]
   - type: Construction
     graph: WallBoard
     node: postBoard
