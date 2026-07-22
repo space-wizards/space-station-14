@@ -44,23 +44,22 @@
   - type: PlantHolderVisuals
 
 - type: entity
-  parent: BaseHydroponicsSoil
+  parent: [ BaseHydroponicsSoil, StructureHealthContainer ]
   id: hydroponicsSoil
   name: soil
   description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
   components:
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: RockMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
