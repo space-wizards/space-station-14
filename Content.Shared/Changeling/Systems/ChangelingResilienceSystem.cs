@@ -2,6 +2,7 @@
 using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Gibbing;
+using Content.Shared.Metabolism;
 using Content.Shared.Revolutionary;
 using Content.Shared.Species.Components;
 using Robust.Shared.Containers;
@@ -11,6 +12,7 @@ namespace Content.Shared.Changeling.Systems;
 public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private MetabolizerSystem _metabolizer = default!;
 
     public override void Initialize()
     {
@@ -21,8 +23,8 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingResilienceComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.ReplacementOrgans.Count > 0 || ent.Comp.PreventOrganNymphs)
-            ReplaceOrgans(ent);
+        if (ent.Comp.AppendedMetabolizer != null || ent.Comp.PreventOrganNymphs)
+            UpdateOrgans(ent);
 
         if (ent.Comp.PreventGibbing)
             PreventGibbing(ent);
@@ -40,7 +42,7 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
         args.Cancelled |= ent.Comp.PreventGibbing;
     }
 
-    private void ReplaceOrgans(Entity<ChangelingResilienceComponent> ent)
+    private void UpdateOrgans(Entity<ChangelingResilienceComponent> ent)
     {
         if (!TryComp<ContainerManagerComponent>(ent, out var containerComp))
             return;
@@ -50,28 +52,16 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 
         if (!_container.TryGetContainer(ent, BodyComponent.ContainerID, out var container, containerComp))
         {
-            Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(ChangelingResilienceComponent)} is missing a container ({BodyComponent.ContainerID}) when attempting to replace organs.");
+            Log.Error($"Entity {ToPrettyString(ent)} with a {nameof(ChangelingResilienceComponent)} is missing a container ({BodyComponent.ContainerID}) when attempting to update organs.");
             return;
         }
 
         var organs = container.ContainedEntities.ToList();
 
-        // We will likely replace our lungs, empty them first and max out our saturation.
-        HandleGasp(ent);
-
         foreach (var organ in organs)
         {
-            foreach (var replacement in ent.Comp.ReplacementOrgans)
-            {
-                if (TryComp<OrganComponent>(organ, out var organComp) && organComp.Category == replacement.Key)
-                {
-                    if (TrySpawnInContainer(replacement.Value, ent, BodyComponent.ContainerID, out _))
-                    {
-                        QueueDel(organ);
-                        break;
-                    }
-                }
-            }
+            if (TryComp<MetabolizerComponent>(organ, out var metabolizer) && ent.Comp.AppendedMetabolizer != null)
+                _metabolizer.TryAddMetabolizerType((organ, metabolizer), ent.Comp.AppendedMetabolizer.Value);
 
             if (ent.Comp.PreventOrganNymphs)
                 RemCompDeferred<NymphComponent>(organ);
@@ -79,6 +69,4 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
     }
 
     protected virtual void PreventGibbing(Entity<ChangelingResilienceComponent> ent) { }
-
-    protected virtual void HandleGasp(EntityUid ent) { }
 }

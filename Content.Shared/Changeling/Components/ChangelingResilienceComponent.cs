@@ -1,5 +1,5 @@
-using Content.Shared.Body;
 using Content.Shared.Changeling.Systems;
+using Content.Shared.Metabolism;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -33,10 +33,11 @@ public sealed partial class ChangelingResilienceComponent : Component
     public bool PreventOrganNymphs = true;
 
     /// <summary>
-    /// Replaces the organs in a changeling's body based on the specified categories on init.
+    /// What metabolizer should be added to all organs on the owning entity.
+    /// Happens on map init.
     /// </summary>
     [DataField]
-    public Dictionary<ProtoId<OrganCategoryPrototype>, EntProtoId<OrganComponent>> ReplacementOrgans = new();
+    public ProtoId<MetabolizerTypePrototype>? AppendedMetabolizer = "Changeling";
 
     public override bool SendOnlyToOwner => true;
 }
