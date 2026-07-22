@@ -532,11 +532,6 @@
 
 - type: construction
   parent: Windoor
-  id: SecureWindoor
-  targetNode: windoorSecure
-
-- type: construction
-  parent: Windoor
   id: ClockworkWindoor
   targetNode: windoorClockwork
 # endregion Windoors

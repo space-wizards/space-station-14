@@ -661,9 +661,9 @@
           - MachineLayer
     - type: PhysicalComposition
       materialComposition:
-        Plasteel: 500
+        Plasteel: 200
     - type: StaticPrice
-      price: 125
+      price: 200
 
 - type: entity
   parent: GasCanisterBrokenBase
