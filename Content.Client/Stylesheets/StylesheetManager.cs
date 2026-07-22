@@ -1,8 +1,10 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.StylesheetDefinitions;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Stylesheets;
 
@@ -13,7 +15,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private IResourceCache _resCache = default!;
 
-    private readonly Dictionary<Control, Func<IStylesheetAccessor, Stylesheet?>> _controlStylesheetSubs = [];
+    private readonly List<Action<IStylesheetAccessor>> _subscriptions = [];
     private readonly Dictionary<string, Stylesheet> _stylesheets = [];
     private readonly StylesheetAccessorImpl _accessor;
 
@@ -25,6 +27,9 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     private Stylesheet? _sheetSystem;
     private Stylesheet? _sheetNanoLegacy;
     private Stylesheet? _sheetSpaceLegacy;
+
+    private IFontConfig? _fontNanotrasen;
+    private IFontConfig? _fontSystem;
 
     public StylesheetManager()
     {
@@ -44,17 +49,27 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     }
 
     /// <inheritdoc/>
-    public void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet?> getStylesheet)
+    public void UseStyle(Action<IStylesheetAccessor> action)
     {
-        _controlStylesheetSubs[control] = getStylesheet;
-        control.Stylesheet = getStylesheet(_accessor);
+        DebugTools.Assert(!_subscriptions.Contains(action), "Attempted to subscribe the same style action twice.");
+        _subscriptions.Add(action);
+
+        try
+        {
+            action(_accessor);
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Caught exception while updating styles on controls! {e}");
+        }
     }
 
     /// <inheritdoc/>
-    public void StopStylesheet(Control control)
+    public void StopStyle(Action<IStylesheetAccessor> action)
     {
-        // Not unsetting the stylesheet here (which would make it resolve to the default) for performance reasons.
-        _controlStylesheetSubs.Remove(control);
+        DebugTools.Assert(_subscriptions.Contains(action),
+            "Attempted to unsubscribe from a style action that was not subscribed.");
+        _subscriptions.Remove(action);
     }
 
     private void RegenerateStylesheets()
@@ -64,8 +79,13 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         _stylesheets.Clear();
 
         // TODO: these definitions can be saved/cached, but it's so infrequently used that it doesn't feel necessary.
-        _sheetNanotrasen = new NanotrasenStylesheetDefinition().Build();
-        _sheetSystem = new SystemStylesheetDefinition().Build();
+        var nano = new NanotrasenStylesheetDefinition();
+        _sheetNanotrasen = nano.Build();
+        _fontNanotrasen = nano;
+
+        var system = new SystemStylesheetDefinition();
+        _sheetSystem = system.Build();
+        _fontSystem = system;
 
 #pragma warning disable CS0618
         _sheetNanoLegacy = new StyleNano(_resCache).Stylesheet;
@@ -78,23 +98,23 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         // Default stylesheet (which will automatically propagate and update any UIs without a specific Stylesheet set)
         _userInterfaceManager.Stylesheet = _sheetNanotrasen;
 
-        UpdateControls();
+        UpdateStyles();
     }
 
     /// <summary>
-    /// Updates all controls that have specifically selected a stylesheet.
+    /// Updates all controls that have subscribed to style changes.
     /// </summary>
-    private void UpdateControls()
+    private void UpdateStyles()
     {
-        foreach (var (control, getStylesheet) in _controlStylesheetSubs)
+        foreach (var sub in _subscriptions)
         {
             try
             {
-                control.Stylesheet = getStylesheet(_accessor);
+                sub.Invoke(_accessor);
             }
             catch (Exception e)
             {
-                _sawmill.Error($"Caught exception while updating stylesheets on controls! {e}");
+                _sawmill.Error($"Caught exception while updating styles on controls! {e}");
             }
         }
     }
@@ -112,7 +132,13 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         public Stylesheet SheetNanotrasen => GetOrThrow(owner._sheetNanotrasen);
 
         /// <inheritdoc/>
+        public IFontConfig FontNanotrasen => GetOrThrow(owner._fontNanotrasen);
+
+        /// <inheritdoc/>
         public Stylesheet SheetSystem => GetOrThrow(owner._sheetSystem);
+
+        /// <inheritdoc/>
+        public IFontConfig FontSystem => GetOrThrow(owner._fontSystem);
 
         /// <inheritdoc/>
         public Stylesheet? GetStylesheet(string name)
@@ -128,7 +154,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         public bool TryGetStylesheet(string name, [NotNullWhen(true)] out Stylesheet? stylesheet)
         {
             if (!owner._initialized)
-                ThrowNotInitialized();
+                ThrowNotInitialized<Stylesheet>();
 
             return owner._stylesheets.TryGetValue(name, out stylesheet);
         }
@@ -144,23 +170,23 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         }
 
         /// <summary>
-        /// Gets the non-null stylesheet, or throws a not-initialized exception.
+        /// Gets the non-null object, or throws a not-initialized exception.
         /// </summary>
-        /// <param name="sheet">The stylesheet</param>
-        /// <returns>The stylesheet, or does not return</returns>
-        /// <exception cref="InvalidOperationException">Stylesheets not initialized yet.</exception>
-        private static Stylesheet GetOrThrow(Stylesheet? sheet)
+        /// <param name="sheet">The style object</param>
+        /// <returns>The style object, or does not return</returns>
+        /// <exception cref="InvalidOperationException">Style object not initialized yet.</exception>
+        private static T GetOrThrow<T>(T? sheet)
         {
-            return sheet ?? ThrowNotInitialized();
+            return sheet ?? ThrowNotInitialized<T>();
         }
 
         /// <summary>
         /// Throws a not initialized error.
         /// </summary>
         /// <returns>Does not return</returns>
-        /// <exception cref="InvalidOperationException">Stylesheets not initialized yet.</exception>
+        /// <exception cref="InvalidOperationException">Style object not initialized yet.</exception>
         [DoesNotReturn]
-        private static Stylesheet ThrowNotInitialized()
+        private static T ThrowNotInitialized<T>()
         {
             throw new InvalidOperationException("Stylesheets not initialized yet!");
         }
@@ -169,11 +195,11 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     #region Obsolete
 
     /// <inheritdoc/>
-    [Obsolete("Access through UseStylesheet/IStylesheetAccessor instead")]
+    [Obsolete("Access through UseStyle instead")]
     public Stylesheet SheetNanotrasen => _accessor.SheetNanotrasen;
 
     /// <inheritdoc/>
-    [Obsolete("Access through UseStylesheet/IStylesheetAccessor instead")]
+    [Obsolete("Access through UseStyle instead")]
     public Stylesheet SheetSystem => _accessor.SheetSystem;
 
     /// <inheritdoc/>
@@ -187,7 +213,7 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         _sheetSpaceLegacy ?? throw new InvalidOperationException("Stylesheets not initialized yet!");
 
     /// <inheritdoc/>
-    [Obsolete("Access through UseStylesheet/IStylesheetAccessor instead")]
+    [Obsolete("Access through UseStyle instead")]
     public bool TryGetStylesheet(string name, [MaybeNullWhen(false)] out Stylesheet stylesheet)
     {
         return _accessor.TryGetStylesheet(name, out stylesheet);

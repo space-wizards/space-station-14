@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Stylesheets;
@@ -13,13 +14,13 @@ public interface IStylesheetManager
     /// <summary>
     /// Default UI style, used for in-game/in-context UIs, but used basically everywhere regardless.
     /// </summary>
-    [Obsolete("Access via UseStylesheet/IStylesheetAccessor instead")]
+    [Obsolete("Access via UseStyle instead")]
     Stylesheet SheetNanotrasen { get; }
 
     /// <summary>
     /// For heavily out-of-context UIs, such as admin UIs/debug UIs/changelog.
     /// </summary>
-    [Obsolete("Access via UseStylesheet/IStylesheetAccessor instead")]
+    [Obsolete("Access via UseStyle instead")]
     Stylesheet SheetSystem { get; }
 
     /// <summary>
@@ -43,41 +44,34 @@ public interface IStylesheetManager
     #endregion
 
     /// <summary>
-    /// Apply a stylesheet to a control and automatically subscribe to updates.
+    /// Subscribe to style changes.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This will automatically update the stylesheet on the control if the backing stylesheet changed,
+    /// This will let you automatically update the stylesheet/fonts on the control if the backing stylesheet changed,
     /// for example due to user preferences.
     /// </para>
     /// <para>
-    /// A call to <see cref="UseStylesheet"/> should always be paired with a call to <see cref="StopStylesheet"/>,
-    /// otherwise memory leaks will ensue! The best way to do this is to call <see cref="UseStylesheet"/> in
-    /// <see cref="Control.EnteredTree"/>, and call <see cref="StopStylesheet"/> in <see cref="Control.ExitedTree"/>.
-    /// </para>
-    /// <para>
-    /// If this method gets called twice on the same control, it will simply replace the previous
-    /// <paramref name="getStylesheet"/> method. In this scenario, <see cref="StopStylesheet"/> does <b>not</b> need to
-    /// be called another time for cleanup, in this scenario.
+    /// A call to <see cref="UseStyle"/> should always be paired with a call to <see cref="StopStyle"/>,
+    /// otherwise memory leaks will ensue! The best way to do this is to call <see cref="UseStyle"/> in
+    /// <see cref="Control.EnteredTree"/>, and call <see cref="StopStyle"/> in <see cref="Control.ExitedTree"/>.
     /// </para>
     /// </remarks>
-    /// <param name="control">The control to apply the stylesheet to.</param>
-    /// <param name="getStylesheet">
-    /// A function used to select the stylesheet from the <see cref="IStylesheetAccessor"/>.
+    /// <param name="action">
+    /// A function used to select style properties (e.g. stylesheet, font) from <see cref="IStylesheetAccessor"/>.
     /// </param>
-    void UseStylesheet(Control control, Func<IStylesheetAccessor, Stylesheet?> getStylesheet);
+    void UseStyle(Action<IStylesheetAccessor> action);
 
     /// <summary>
-    /// Stop stylesheet update subscription from <see cref="UseStylesheet"/>.
+    /// Unsubscribe from style changes.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This does not (currently) unset the stylesheet on <paramref name="control"/>, as a performance optimization.
-    /// Do not rely on this.
+    /// This will not return you to defaults. If you wish to change a style, call UseStyle again with a different Action.
     /// </para>
     /// </remarks>
-    /// <param name="control">The control to unsubscribe.</param>
-    void StopStylesheet(Control control);
+    /// <param name="action">The action to unsubscribe.</param>
+    void StopStyle(Action<IStylesheetAccessor> action);
 
     /// <summary>
     /// Initialize the stylesheet manager.
@@ -99,9 +93,19 @@ public interface IStylesheetAccessor
     Stylesheet SheetNanotrasen { get; }
 
     /// <summary>
+    /// Fonts used by the Nanotrasen stylesheet.
+    /// </summary>
+    IFontConfig FontNanotrasen { get; }
+
+    /// <summary>
     /// System stylesheet: used for OOC UIs.
     /// </summary>
     Stylesheet SheetSystem { get; }
+
+    /// <summary>
+    /// Fonts used by the System stylesheet.
+    /// </summary>
+    IFontConfig FontSystem { get; }
 
     /// <summary>
     /// Gets a stylesheet, or prints an error and falls back to [].
