@@ -27,18 +27,6 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     [DataField]
     [AutoNetworkedField]
     public int CurrentFireMode;
-
-    /// <summary>
-    /// Sound to be played in case user attempts to change fire mode but access check fails.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? AccessDeniedSound;
-
-    /// <summary>
-    /// Popup to show when user attempts to change fire mode but access check fails.
-    /// </summary>
-    [DataField]
-    public LocId? AccessDeniedPopup;
 }
 
 [DataDefinition, Serializable, NetSerializable]

@@ -23,7 +23,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
         RadialMenuActionOption<int> option;
         if (emitter.IsOn)
         {
-            option = new RadialMenuActionOption<int>(i => HandleSendToggle(), 0)
+            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
                 ToolTip = Loc.GetString("emitter-turn-off"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TurnOffTexture),
@@ -33,7 +33,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
         }
         else
         {
-            option = new RadialMenuActionOption<int>(i => HandleSendToggle(), 0)
+            option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
                 ToolTip = Loc.GetString("emitter-turn-on"),
                 IconSpecifier = RadialMenuIconSpecifier.With(TurnOnTexture),

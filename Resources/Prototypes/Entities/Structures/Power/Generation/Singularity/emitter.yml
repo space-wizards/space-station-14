@@ -38,11 +38,6 @@
   - type: Emitter
     alertRadio: true
   - type: BatteryWeaponFireModes
-    accessDeniedPopup: comp-emitter-access-locked
-    accessDeniedSound:
-      path: /Audio/Machines/custom_deny.ogg
-      params:
-        volume: -5
     fireModes:
     - proto: EmitterBolt
       modeIcon:
