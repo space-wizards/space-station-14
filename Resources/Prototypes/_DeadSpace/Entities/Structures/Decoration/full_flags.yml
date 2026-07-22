@@ -1,7 +1,7 @@
 - type: entity
   id: FullFlagOPZ
   parent: BaseStructure
-  name: Флаг ОПЗ
+  name: флаг ОПЗ
   suffix: На шесте
   description: Олицетворяет собой государство, чья гегемония перекроила карту галактики благодаря военной и политической силе.
   components:
@@ -27,7 +27,7 @@
 - type: entity
   id: FullFlagSNK
   parent: BaseStructure
-  name: Флаг СНК
+  name: флаг СНК
   suffix: На шесте
   description: Пестрый символ свободного мира, который, однако, стал удобной кормушкой для мегакорпораций и сброда.
   components:
@@ -53,7 +53,7 @@
 - type: entity
   id: FullFlagUSSP
   parent: BaseStructure
-  name: Флаг СССП
+  name: флаг СССП
   suffix: На шесте
   description: Лаконичное напоминание о том, что даже в 3-е тысячелетие нельзя забывать про рабочий класс.
   components:
@@ -79,7 +79,7 @@
 - type: entity
   id: FullFlagEmpire
   parent: BaseStructure
-  name: Флаг Империи
+  name: флаг Империи
   suffix: На шесте
   description: Пропитан духом многовековой войны, и даже его внешний вид дышит сражением.
   components:
@@ -87,6 +87,58 @@
     noRot: true
     sprite: _DeadSpace/Structures/Decoration/full_flags.rsi
     state: empire
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.06,-0.4,0.06,0.9"
+        density: 190
+        hard: true
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  id: FullFlagNanoTrasen
+  parent: BaseStructure
+  name: флаг NanoTrasen
+  suffix: На шесте
+  description: Слава НТ! Подождите, они реально сделали флаг для корпорации?
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/full_flags.rsi
+    state: nanotrasen
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.06,-0.4,0.06,0.9"
+        density: 190
+        hard: true
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  id: FullFlagSyndicate
+  parent: BaseStructure
+  name: флаг Синдиката
+  suffix: На шесте
+  description: Пахнет кровью. Смерть НТ!
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/full_flags.rsi
+    state: syndie
     drawdepth: Mobs
     offset: "0.0,0.5"
   - type: Fixtures
