@@ -153,16 +153,14 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     private string GetItemText(EntityPrototype prototype, uint amount)
     {
-        var itemName = _loc.TryGetString(prototype.Name, out var localizedName)
-            ? localizedName
-            : prototype.Name;
+        var itemName = prototype.Name;
 
         if (prototype.TryComp<LabelComponent>(out var label, _componentFactory) &&
             label.LocalizedLabel is { } locId)
         {
-            itemName = Loc.GetString("comp-label-format",
+            itemName = _loc.GetString("comp-label-format",
                 ("baseName", itemName),
-                ("label", Loc.GetString(locId)));
+                ("label", _loc.GetString(locId)));
         }
 
         return $"{itemName} [{amount}]";
