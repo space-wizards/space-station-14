@@ -296,17 +296,6 @@
     - Lattice
     - Plating
 
-- type: construction
-  parent: BaseStructureFullTile
-  id: FloorBananium
-  graph: FloorBananium
-  targetNode: BananiumFloor
-  conditions:
-  - !type:TileNotBlocked
-    failIfSpace: false
-  - !type:TileType
-    targets:
-    - Plating
 # endregion Floors
 
 # region Barricades

@@ -7,7 +7,7 @@
   - type: AccessReader
     containerAccessProvider: board
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/airlock-blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -55,6 +55,8 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
+  - type: PlacementReplacement
+    key: blastdoors
 
 - type: entity
   id: BlastDoorOpen
@@ -123,12 +125,12 @@
   description: Don't lose an arm!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/exo-blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/exo-blastdoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: welded
-      sprite: Structures/Doors/Airlocks/Effects/exo-effects.rsi
+      sprite: Structures/Doors/Airlocks/Effects/airlock-effects.rsi
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: Door
     closeTimeOne: 0.4
@@ -209,7 +211,7 @@
   description: Don't lose a head!
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/airlock-blastdoor.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-blastdoor.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]

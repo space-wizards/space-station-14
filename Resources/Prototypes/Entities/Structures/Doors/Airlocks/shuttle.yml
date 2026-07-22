@@ -29,7 +29,7 @@
           position: "0,-0.5"
         hard: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/shuttle-base.rsi
+    sprite: Structures/Doors/Airlocks/Standard/shuttle-base.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -102,7 +102,7 @@
   suffix: Glass, Docking
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New-Glass/shuttle-base.rsi
+    sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
   - type: Occluder
     enabled: false
   - type: Door
@@ -125,7 +125,7 @@
     noRot: false
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    sprite: Structures/Doors/Airlocks/Glass/shuttle-base.rsi
     state: closed
     snapCardinals: false
   - type: Construction
@@ -137,14 +137,14 @@
   parent: AirlockGlassShuttle
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New-Glass/shuttle-syndicate.rsi
+    sprite: Structures/Doors/Airlocks/Glass/shuttle-syndicate.rsi
 
 - type: entity
   parent: AirlockShuttle
   id: AirlockShuttleSyndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/shuttle-syndicate.rsi
+    sprite: Structures/Doors/Airlocks/Standard/shuttle-syndicate.rsi
 
 - type: entity
   parent: AirlockShuttle
@@ -152,7 +152,7 @@
   name: external mechadermis airlock
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/shuttle-xenoborg.rsi
+    sprite: Structures/Doors/Airlocks/Standard/shuttle-xenoborg.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]

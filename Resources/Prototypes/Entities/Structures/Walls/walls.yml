@@ -1030,6 +1030,61 @@
     graph: WebStructures
     node: wall
 
+- type: entity
+  parent: BaseWall
+  id: WallMining
+  name: mining wall
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/mining.rsi
+  - type: Icon
+    sprite: Structures/Walls/mining.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 700
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: mining
+  - type: Appearance
+
+- type: entity
+  parent: WallDiagonalBase
+  id: WallMiningDiagonal
+  name: mining wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/mining-diagonal.rsi
+    state: state0
+  - type: Icon
+    sprite: Structures/Walls/mining-diagonal.rsi
+    state: state0
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: Injurable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
 # Mime
 
 - type: entity

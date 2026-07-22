@@ -75,10 +75,6 @@
 # The respritening! With this one simple trick, i give 200 mappers a collective aneurysm.
 
 - type: tileAlias
-  id: FloorSteelOffset
-  target: FloorSteelDamaged
-
-- type: tileAlias
   id: FloorBrassReebe
   target: FloorSteelDamaged
 
@@ -148,10 +144,6 @@
 
 - type: tileAlias
   id: FloorSteelMono
-  target: FloorSteel
-
-- type: tileAlias
-  id: FloorHydro
   target: FloorSteel
 
 - type: tileAlias

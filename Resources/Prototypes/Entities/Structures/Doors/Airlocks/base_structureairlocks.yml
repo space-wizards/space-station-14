@@ -16,7 +16,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New/airlock-base.rsi
+    sprite: Structures/Doors/Airlocks/Standard/airlock-base.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -224,7 +224,7 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/New-Glass/airlock-base.rsi
+    sprite: Structures/Doors/Airlocks/Glass/airlock-base.rsi
   - type: AnimationPlayer
   - type: Fixtures
     fixtures:
