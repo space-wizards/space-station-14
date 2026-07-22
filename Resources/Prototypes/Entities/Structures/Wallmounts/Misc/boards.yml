@@ -35,7 +35,7 @@
     layers:
     - state: noticeboard
     - state: notice-0
-    - map: ["enum.StorageFillLayers.Fill"]
+      map: ["enum.StorageFillLayers.Fill"]
   - type: StorageFillVisualizer
     maxFillLevels: 6
     fillBaseName: notice
