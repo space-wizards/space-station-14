@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: NamesFirstGuardian
+  values:
+    prefix: names-guardian-first-dataset-
+    count: 26
+
+- type: localizedDataset
+  id: NamesLastGuardian
+  values:
+    prefix: names-guardian-last-dataset-
+    count: 26

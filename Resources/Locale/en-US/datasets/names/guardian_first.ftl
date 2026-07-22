@@ -1,0 +1,27 @@
+# Bizarre. Composed of an adjective + a noun, so this here is the adjective / things that come before pool
+names-guardian-first-dataset-1 = Shiny
+names-guardian-first-dataset-2 = Red
+names-guardian-first-dataset-3 = Blue
+names-guardian-first-dataset-4 = Green
+names-guardian-first-dataset-5 = Yellow
+names-guardian-first-dataset-6 = Cyan
+names-guardian-first-dataset-7 = Blood
+names-guardian-first-dataset-8 = Magenta
+names-guardian-first-dataset-9 = Flashy
+names-guardian-first-dataset-10 = Agentic
+names-guardian-first-dataset-11 = Mysterious
+names-guardian-first-dataset-12 = Shiny
+names-guardian-first-dataset-13 = Strange
+names-guardian-first-dataset-14 = Star
+names-guardian-first-dataset-15 = Iron
+names-guardian-first-dataset-16 = Frosty
+names-guardian-first-dataset-17 = Hot
+names-guardian-first-dataset-18 = Spicy
+names-guardian-first-dataset-19 = Robust
+names-guardian-first-dataset-20 = Frail
+names-guardian-first-dataset-21 = Midnight
+names-guardian-first-dataset-22 = Early
+names-guardian-first-dataset-23 = The
+names-guardian-first-dataset-24 = Vanilla
+names-guardian-first-dataset-25 = Chocolate
+names-guardian-first-dataset-26 = Strawberry

@@ -32,20 +32,6 @@
           Blunt: 5
       soundHit:
         collection: MetalThud
-    - type: RandomSprite
-      available:
-        - enum.DamageStateVisualLayers.Base:
-            magic_base: ""
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            magic_flare: Sixteen
-        - enum.DamageStateVisualLayers.Base:
-            miner_base: ""
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            miner_flare: Sixteen
-        - enum.DamageStateVisualLayers.Base:
-            tech_base: ""
-          enum.DamageStateVisualLayers.BaseUnshaded:
-            tech_flare: Sixteen
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Guardians/guardians.rsi
@@ -114,6 +100,11 @@
         - CannotSuicide
         - StunImmune
         - SlowImmune
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstGuardian
+      - NamesLastGuardian
+      nameFormat: name-format-standard
 
 # From the uplink injector
 - type: entity
@@ -144,6 +135,47 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            tech_flare: Rainbow
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  name: Duelist
+  id: MobSwordGuardian
+  parent: MobGuardianBase
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-holoparasite-name
+      description: ghost-role-information-holoparasite-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: NameIdentifier
+      group: Holoparasite
+    - type: TypingIndicator
+      proto: holo
+    - type: Sprite
+      layers:
+        - state: sword_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: sword_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#40a7d7"
+          shader: unshaded
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            sword_flare: Sixteen
+
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound

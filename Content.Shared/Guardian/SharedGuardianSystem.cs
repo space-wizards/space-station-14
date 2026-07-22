@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -38,7 +39,6 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
 
     private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface"
 ;
@@ -296,12 +296,24 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         if (!_hands.IsHolding(args.Args.User, ent.Owner) || HasComp<GuardianHostComponent>(args.Args.Target))
             return;
 
+        if (ent.Comp.Selected >= ent.Comp.Guardians.Count)
+            return;
+
+        var index = (int)ent.Comp.Selected;
+        if (!ent.Comp.CanChoose)
+            index = Math.Abs(SharedRandomExtensions.PredictedRandom(_timing, GetNetEntity(ent.Owner)).Next()) % ent.Comp.Guardians.Count;
+        if (!ProtoMan.Resolve(ent.Comp.Guardians[index], out var prototype))
+            return;
+
+        if (prototype.Components != null && ProtoMan.Resolve(prototype.Components, out var comps))
+            EntityManager.AddComponents(args.Args.Target.Value, comps);
         var hostXform = Transform(args.Args.Target.Value);
         var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
-        /*
+
         // Use map position so it's not inadvertently parented to the host + if it's in a container it spawns outside I guess.
-        var guardian = PredictedSpawnAtPosition(ent.Comp.GuardianProto,
+        var guardian = PredictedSpawnAtPosition(prototype.Guardian,
             _transform.GetMoverCoordinates(args.Args.Target.Value, xform: hostXform));
+
         _container.Insert(guardian, host.GuardianContainer);
         host.HostedGuardian = guardian;
 
@@ -324,7 +336,6 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         }
 
         Dirty(ent);
-        */
         args.Handled = true;
     }
 
@@ -381,7 +392,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             if (ent.Comp.Selected >= ent.Comp.Guardians.Count)
                 return;
 
-            if (ent.Comp.CanChoose && _prototypes.Resolve(ent.Comp.Guardians[(int)ent.Comp.Selected], out var proto))
+            if (ent.Comp.CanChoose && ProtoMan.Resolve(ent.Comp.Guardians[(int)ent.Comp.Selected], out var proto))
                 args.PushMarkup(Loc.GetString("guardian-picked-desc", ("type", Loc.GetString(proto.Title))));
 
             return;

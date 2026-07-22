@@ -84,6 +84,10 @@
     - BoxCardboard
     - BoxHug
 
+## Guardian HUD prototypes
+
+# Holoparasites
+
 - type: guardianEntry
   id: GuardianBaseFist
   icon:
@@ -109,7 +113,7 @@
     state: sword
   description: guardian-desc-sword
   title: guardian-title-sword
-  guardian: MobHoloparasiteGuardian
+  guardian: MobSwordGuardian
 
 - type: guardianEntry
   id: GuardianBaseNuke
@@ -119,3 +123,5 @@
   description: guardian-desc-nuke
   title: guardian-title-nuke
   guardian: MobHoloparasiteGuardian
+
+# Holoclown

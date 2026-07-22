@@ -53,7 +53,7 @@ public sealed partial class GuardianCreatorComponent : Component
     /// If true, then the user will get a radial UI to choose its guardian (from Guardians).
     /// If false, the guardian will be randomly picked.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanChoose = true;
 
     /// <summary>
