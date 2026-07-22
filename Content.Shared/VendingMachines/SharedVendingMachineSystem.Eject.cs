@@ -196,7 +196,8 @@ public abstract partial class SharedVendingMachineSystem
     /// <param name="component"></param>
     public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
     {
-        if (!IsAuthorized(uid, sender, component)) return;
+        if (!IsAuthorized(uid, sender, component))
+            return;
 
         if (!TryComp<VendingMachineEjectComponent>(uid, out var ejectComponent))
             return;

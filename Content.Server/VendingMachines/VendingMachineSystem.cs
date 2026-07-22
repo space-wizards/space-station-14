@@ -79,9 +79,9 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         EjectRandom(uid, throwItem: true, forceEject: false, component);
     }
 
-    public void SetShooting(EntityUid uid, bool canShoot, VendingMachineEjectComponent? component = null)
+    public void SetShooting(EntityUid uid, bool canShoot)
     {
-        if (!Resolve(uid, ref component))
+        if (!HasComp<VendingMachineEjectComponent>(uid))
             return;
 
         if (canShoot)

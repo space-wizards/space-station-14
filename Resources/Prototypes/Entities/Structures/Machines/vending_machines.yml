@@ -102,6 +102,8 @@
     price: 100
   - type: Appearance
   - type: WiresVisuals
+  - type: VendingMachineEject
+  - type: VendingMachineDispenseOnHit
 
 - type: entity
   id: VendingMachineWallmount
@@ -162,6 +164,8 @@
   - type: LitOnPowered
   - type: Appearance
   - type: WiresVisuals
+  - type: VendingMachineEject
+  - type: VendingMachineDispenseOnHit
   - type: Electrified
     enabled: false
     usesApcPower: true
@@ -177,8 +181,6 @@
   components:
   - type: VendingMachine
     pack: CondimentInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
   - type: Sprite
@@ -213,8 +215,6 @@
   components:
   - type: VendingMachine
     pack: AmmoVendInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -242,8 +242,6 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -279,8 +277,6 @@
   components:
   - type: VendingMachine
     pack: BoozeOMatInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -316,8 +312,6 @@
   components:
   - type: VendingMachine
     pack: PTechInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -349,8 +343,6 @@
   components:
   - type: VendingMachine
     pack: ChefvendInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -385,8 +377,6 @@
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -416,8 +406,6 @@
   components:
   - type: VendingMachine
     pack: ClothesMateInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -450,8 +438,6 @@
   components:
   - type: VendingMachine
     pack: WinterDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -488,7 +474,6 @@
   - type: VendingMachineEject
     ejectDelay: 5
     soundVend: /Audio/Machines/machine_vend_hot_drink.ogg
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -529,7 +514,6 @@
     initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -604,8 +588,6 @@
   components:
   - type: VendingMachine
     pack: SpaceUpInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/spaceup.rsi
     layers:
@@ -628,8 +610,6 @@
   components:
   - type: VendingMachine
     pack: SodaInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/soda.rsi
     layers:
@@ -653,8 +633,6 @@
   components:
   - type: VendingMachine
     pack: StarkistInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/starkist.rsi
     layers:
@@ -681,7 +659,6 @@
     initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -716,7 +693,6 @@
     initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -753,7 +729,6 @@
     initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -800,7 +775,6 @@
     initialStockQuality: 0.33
   - type: VendingMachineEject
     ejectDelay: 1.9
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -824,8 +798,6 @@
   components:
   - type: VendingMachine
     pack: DinnerwareInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -860,8 +832,6 @@
   components:
   - type: VendingMachine
     pack: MagiVendInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -894,8 +864,6 @@
   - type: VendingMachine
     pack: DiscountDansInventory
     initialStockQuality: 0.33
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -927,8 +895,6 @@
   components:
   - type: VendingMachine
     pack: EngiVendInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -963,7 +929,6 @@
     pack: NanoMedCivilianInventory
   - type: VendingMachineEject
     ejectDelay: 0.6
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off-civilian
     brokenState: broken
@@ -1000,8 +965,6 @@
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
   - type: Sprite
@@ -1024,8 +987,6 @@
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1061,8 +1022,6 @@
   components:
   - type: VendingMachine
     pack: SecTechInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1103,8 +1062,6 @@
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1147,8 +1104,6 @@
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
     initialStockQuality: 0.33
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1182,8 +1137,6 @@
   components:
   - type: VendingMachine
     pack: SustenanceInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1295,8 +1248,6 @@
   - type: VendingMachine
     pack: BodaInventory
     initialStockQuality: 0.33
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1331,8 +1282,6 @@
   components:
   - type: VendingMachine
     pack: AutoDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1370,8 +1319,6 @@
   components:
   - type: VendingMachine
     pack: VendomatInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1405,8 +1352,6 @@
   components:
   - type: VendingMachine
     pack: RoboticsInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1445,8 +1390,6 @@
   components:
   - type: VendingMachine
     pack: YouToolInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1478,7 +1421,6 @@
     pack: GoodCleanFunInventory
   - type: VendingMachineEject
     ejectDelay: 1.8
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1512,8 +1454,6 @@
   - type: VendingMachine
     pack: ChangInventory
     initialStockQuality: 0.33
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1545,8 +1485,6 @@
   components:
   - type: VendingMachine
     pack: SalvageEquipmentInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1581,8 +1519,6 @@
   - type: VendingMachine
     pack: DonutInventory
     initialStockQuality: 0.33
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1616,8 +1552,6 @@
   components:
   - type: VendingMachine
     pack: HyDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1651,8 +1585,6 @@
   components:
   - type: VendingMachine
     pack: LawDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1682,8 +1614,6 @@
   components:
   - type: VendingMachine
     pack: SecDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1717,8 +1647,6 @@
   components:
   - type: VendingMachine
     pack: BarDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1747,8 +1675,6 @@
   components:
   - type: VendingMachine
     pack: PietyVendInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1779,8 +1705,6 @@
   components:
   - type: VendingMachine
     pack: CargoDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1814,8 +1738,6 @@
   components:
   - type: VendingMachine
     pack: MediDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1845,8 +1767,6 @@
   components:
   - type: VendingMachine
     pack: ChemDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1877,8 +1797,6 @@
   components:
   - type: VendingMachine
     pack: CuraDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1908,8 +1826,6 @@
   components:
   - type: VendingMachine
     pack: AtmosDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1944,8 +1860,6 @@
   components:
   - type: VendingMachine
     pack: EngiDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1980,8 +1894,6 @@
   components:
   - type: VendingMachine
     pack: ChefDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2011,8 +1923,6 @@
   components:
   - type: VendingMachine
     pack: DetDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2042,8 +1952,6 @@
   components:
   - type: VendingMachine
     pack: JaniDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2077,8 +1985,6 @@
   components:
   - type: VendingMachine
     pack: SciDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2108,8 +2014,6 @@
   components:
   - type: VendingMachine
     pack: SyndieDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2143,8 +2047,6 @@
   components:
   - type: VendingMachine
     pack: RoboDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2174,8 +2076,6 @@
   components:
   - type: VendingMachine
     pack: GeneDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2206,8 +2106,6 @@
   components:
   - type: VendingMachine
     pack: ViroDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2238,8 +2136,6 @@
   components:
   - type: VendingMachine
     pack: CentDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2273,7 +2169,6 @@
   - type: VendingMachineEject
     ejectDelay: 1.9
     soundVend: /Audio/Items/bikehorn.ogg
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2310,8 +2205,6 @@
   components:
   - type: VendingMachine
     pack: PrideDrobeInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2347,8 +2240,6 @@
   components:
   - type: VendingMachine
     pack: TankDispenserEVAInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
     state: dispenser
@@ -2362,8 +2253,6 @@
   components:
   - type: VendingMachine
     pack: TankDispenserEngineeringInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/tankdispenser.rsi #TODO add visualiser for remaining tanks as layers
     layers:
@@ -2380,7 +2269,6 @@
     pack: ChemVendInventory
   - type: VendingMachineEject
     ejectDelay: 2
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2413,7 +2301,6 @@
     pack: ChemVendInventorySyndicate
   - type: VendingMachineEject
     ejectDelay: 2
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2431,8 +2318,6 @@
   components:
   - type: VendingMachine
     pack: NanoMedCivilianWallInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off-civilian
     brokenState: broken
@@ -2463,8 +2348,6 @@
   components:
   - type: VendingMachine
     pack: NanoMedInventory
-  - type: VendingMachineEject
-  - type: VendingMachineDispenseOnHit
   - type: VendingMachineVisuals
     offState: off
   - type: Sprite
