@@ -1390,6 +1390,8 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: NoShuttleFTL
+    - type: CircleSecondaryShuttle
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -2222,6 +2224,7 @@ entities:
       color: '#5F9C89FF'
     - type: NavMap
     - type: NoShuttleFTL
+    - type: CirclePrimaryShuttle
     - type: TileHistory
       chunkHistory: {}
     - type: ExplosionAirtightGrid

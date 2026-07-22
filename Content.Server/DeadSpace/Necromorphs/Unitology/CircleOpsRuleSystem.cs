@@ -25,6 +25,7 @@ using Content.Shared.DeadSpace.Necromorphs.Necroobelisk;
 using Content.Server.DeadSpace.NoShuttleFTL;
 using Content.Server.GameTicking;
 using Content.Server.Database;
+using Content.Shared.DeadSpace.TheCircle.Shuttles;
 
 namespace Content.Server.DeadSpace.Necromorphs.Unitology;
 
@@ -136,6 +137,11 @@ public sealed class CircleOpsRuleSystem : GameRuleSystem<CircleOpsRuleComponent>
             && HasComp<NoShuttleFTLComponent>(component.Shuttle.Value))
         {
             RemComp<NoShuttleFTLComponent>(component.Shuttle.Value);
+            if (TryComp<CirclePrimaryShuttleComponent>(component.Shuttle.Value, out var shuttle))
+            {
+                shuttle.Unlocked = true;
+                Dirty(component.Shuttle.Value, shuttle);
+            }
         }
 
         if (component.State == CircleOpsState.ObeliskActivated
@@ -152,7 +158,7 @@ public sealed class CircleOpsRuleSystem : GameRuleSystem<CircleOpsRuleComponent>
 
     private void OnRuleLoadedGrids(Entity<CircleOpsRuleComponent> ent, ref RuleLoadedGridsEvent args)
     {
-        var query = EntityQueryEnumerator<NoShuttleFTLComponent>();
+        var query = EntityQueryEnumerator<CirclePrimaryShuttleComponent>();
         while (query.MoveNext(out var uid, out _))
         {
             if (Transform(uid).MapID == args.Map)
@@ -199,6 +205,15 @@ public sealed class CircleOpsRuleSystem : GameRuleSystem<CircleOpsRuleComponent>
 
             component.State = CircleOpsState.WarDeclared;
             _timedWindow.Reset(component.WindowAfterWarDeclare);
+
+            if (component.Shuttle is { } shuttleUid &&
+                TryComp<CirclePrimaryShuttleComponent>(shuttleUid, out var shuttle))
+            {
+                shuttle.UnlockAt = component.WindowAfterWarDeclare.Remaining;
+                shuttle.TimerStarted = true;
+                shuttle.Unlocked = false;
+                Dirty(shuttleUid, shuttle);
+            }
 
             _alertLevel.SetLevel(component.TargetStation.Value, AlertLevel, false, true, true);
 

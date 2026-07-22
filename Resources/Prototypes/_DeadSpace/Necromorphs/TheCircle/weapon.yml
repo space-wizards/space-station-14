@@ -979,6 +979,8 @@
     slots:
     - suitStorage
   - type: Blocking
+    passiveBlockFraction: 0.8
+    activeBlockFraction: 0.8
     passiveBlockModifier:
       coefficients:
         Blunt: 0.8

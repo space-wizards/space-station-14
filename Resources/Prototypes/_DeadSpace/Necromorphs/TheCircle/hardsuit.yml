@@ -459,6 +459,8 @@
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
   - type: Clothing
     sprite: _DeadSpace/Necromorfs/TheCircle/Helmet/geist.rsi
+  - type: IngestionBlocker
+    enabled: false
   - type: Armor
     modifiers:
       coefficients:
@@ -466,10 +468,6 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-        Cold: 0.9
-        Radiation: 0.9
-        Poison: 0.9
-        Caustic: 0.9
   - type: PNV
     color: "#AFC4D111"
     desaturation: 0.8
@@ -548,15 +546,10 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.05
-        Slash: 0.05
-        Piercing: 0.05
-        Heat: 0.05
-        Cold: 0.05
-        Shock: 0.05
-        Radiation: 0.05
-        Poison: 0.05
-        Caustic: 0.05
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon

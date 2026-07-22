@@ -587,6 +587,7 @@
       - id: C4
         amount: 4
       - id: TripwireStack
+      - id: PinpointerNecroobelisk
 
 ## Мантия штурмовика
 - type: entity
