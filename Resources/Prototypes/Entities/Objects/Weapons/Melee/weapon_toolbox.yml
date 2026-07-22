@@ -43,5 +43,5 @@
     damage: 11
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor
-    - type: DisarmMalus
+  - type: DisarmMalus
     malus: 0.4 # It's made of rubber.
