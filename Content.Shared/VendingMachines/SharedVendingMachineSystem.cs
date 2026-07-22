@@ -76,7 +76,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             EmaggedInventory = emaggedInventory,
             ContrabandInventory = contrabandInventory,
             Contraband = component.Contraband,
-            DispenseOnHitEnd = component.DispenseOnHitEnd,
             Broken = component.Broken,
         };
     }
@@ -116,10 +115,10 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                 }
             }
 
-            if (!comp.DispenseOnHitCoolingDown) continue;
-            if (!(curTime > comp.DispenseOnHitEnd)) continue;
-            comp.DispenseOnHitEnd = null;
-            Dirty(uid, comp);
+            if (!TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit)) continue;
+            if (!dispenseOnHit.CoolingDown) continue;
+            if (!(curTime > dispenseOnHit.End)) continue;
+            dispenseOnHit.End = null;
         }
     }
 

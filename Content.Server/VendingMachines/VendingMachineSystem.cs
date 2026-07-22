@@ -70,16 +70,18 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             return;
         }
 
-        if (component.Broken || component.DispenseOnHitCoolingDown ||
-            component.DispenseOnHitChance == null || args.DamageDelta == null)
+        if (!TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit))
             return;
 
-        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= component.DispenseOnHitThreshold) ||
-            !_random.Prob(component.DispenseOnHitChance.Value)) return;
+        if (component.Broken || dispenseOnHit.CoolingDown || args.DamageDelta == null)
+            return;
 
-        if (component.DispenseOnHitCooldown != null)
+        if (!(args.DamageIncreased && args.DamageDelta.GetTotal() >= dispenseOnHit.Threshold) ||
+            !_random.Prob(dispenseOnHit.Chance)) return;
+
+        if (dispenseOnHit.Cooldown != null)
         {
-            component.DispenseOnHitEnd = Timing.CurTime + component.DispenseOnHitCooldown.Value;
+            dispenseOnHit.End = Timing.CurTime + dispenseOnHit.Cooldown.Value;
         }
 
         EjectRandom(uid, throwItem: true, forceEject: true, component);

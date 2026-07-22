@@ -36,7 +36,5 @@ public sealed class VendingMachineComponentState : ComponentState
 
     public bool Contraband;
 
-    public TimeSpan? DispenseOnHitEnd;
-
     public bool Broken;
 }

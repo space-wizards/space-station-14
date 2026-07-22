@@ -23,7 +23,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         var component = entity.Comp;
 
         component.Contraband = state.Contraband;
-        component.DispenseOnHitEnd = state.DispenseOnHitEnd;
         component.Broken = state.Broken;
 
         // If all we did was update amounts, then we can leave BUI buttons in place.

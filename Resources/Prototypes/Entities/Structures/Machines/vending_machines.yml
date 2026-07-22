@@ -379,8 +379,9 @@
   components:
   - type: VendingMachine
     pack: CigaretteMachineInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -474,9 +475,10 @@
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -517,9 +519,10 @@
   components:
   - type: VendingMachine
     pack: RobustSoftdrinksInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -664,9 +667,10 @@
   components:
   - type: VendingMachine
     pack: ShamblersJuiceInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -700,9 +704,10 @@
   components:
   - type: VendingMachine
     pack: PwrGameInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -738,9 +743,10 @@
   components:
   - type: VendingMachine
     pack: DrGibbInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -786,9 +792,10 @@
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
   - type: VendingMachine
     pack: SmiteInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -879,9 +886,10 @@
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1121,9 +1129,10 @@
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1157,8 +1166,9 @@
   components:
   - type: VendingMachine
     pack: SustenanceInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1269,9 +1279,10 @@
   components:
   - type: VendingMachine
     pack: BodaInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1477,9 +1488,10 @@
   components:
   - type: VendingMachine
     pack: ChangInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -1544,9 +1556,10 @@
   components:
   - type: VendingMachine
     pack: DonutInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 0.33
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
@@ -2193,9 +2206,10 @@
   components:
   - type: VendingMachine
     pack: HappyHonkDispenserInventory
-    dispenseOnHitChance: 0.25
-    dispenseOnHitThreshold: 2
     initialStockQuality: 1.0 # Nobody knows how Honk does it, but their vending machines always seem well-stocked...
+  - type: VendingMachineDispenseOnHit
+    chance: 0.25
+    threshold: 2
   - type: VendingMachineVisuals
     offState: off
     brokenState: broken
