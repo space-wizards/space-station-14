@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.EntityTable.ValueSelector;
+namespace Content.Shared.ValueSelectors.Numbers;
 
 [TypeSerializer]
 public sealed class NumberSelectorTypeSerializer :

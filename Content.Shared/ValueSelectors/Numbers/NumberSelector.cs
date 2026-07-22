@@ -1,11 +1,10 @@
-using Content.Shared.EntityTable.EntitySelectors;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
-namespace Content.Shared.EntityTable.ValueSelector;
+namespace Content.Shared.ValueSelectors.Numbers;
 
 /// <summary>
-/// Used for implementing custom value selection for <see cref="EntityTableSelector"/>
+/// Used for implementing custom value selection.
 /// </summary>
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
 public abstract partial class NumberSelector
@@ -16,14 +15,14 @@ public abstract partial class NumberSelector
     public abstract int Get(IRobustRandom rand);
 
     /// <summary>
-    /// Odds of occurrence
+    /// Odds of occurrence.
     /// </summary>
-    /// <returns>An odds multiplier of at least one occurrence</returns>
+    /// <returns>An odds multiplier of at least one occurrence.</returns>
     public abstract float Odds();
 
     /// <summary>
-    /// Average number of occurrences
+    /// Average number of occurrences.
     /// </summary>
-    /// <returns>The average amount of occurrences</returns>
+    /// <returns>The average amount of occurrences.</returns>
     public abstract float Average();
 }

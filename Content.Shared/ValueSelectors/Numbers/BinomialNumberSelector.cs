@@ -1,9 +1,9 @@
 using Robust.Shared.Random;
 
-namespace Content.Shared.EntityTable.ValueSelector;
+namespace Content.Shared.ValueSelectors.Numbers;
 
 /// <summary>
-/// Picks a value based on a Binomial Distribution of N Trials given P Chance
+/// Picks a value based on a Binomial Distribution of N Trials given P Chance.
 /// </summary>
 public sealed partial class BinomialNumberSelector : NumberSelector
 {
