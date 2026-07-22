@@ -1,4 +1,5 @@
 - type: entity
+  parent: StructureHealthFurniture
   id: FloorBananiumEntity
   name: bananium floor
   placement:
@@ -22,22 +23,18 @@
     graph: FloorBananium
     node: BananiumFloor
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: BananiumMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 40
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialBananium:
             min: 0
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.2

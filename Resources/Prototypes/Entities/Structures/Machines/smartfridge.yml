@@ -96,6 +96,8 @@
   - type: Anchorable
     delay: 2
   - type: InteractionOutline
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
@@ -104,8 +106,6 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: Damageable
-    damageModifierSet: Metallic
   - type: DamageOnHighSpeedImpact
     damage:
       types:

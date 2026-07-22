@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalSwitch
   name: signal switch
   description: It's a switch for toggling power to things.
@@ -35,10 +35,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -46,7 +44,7 @@
             volume: -8
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: SignalButton
   name: signal button
   description: It's a button for activating something.
@@ -81,10 +79,8 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 40
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

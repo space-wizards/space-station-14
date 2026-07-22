@@ -1,9 +1,9 @@
 - type: entity
+  parent: [ BaseStructure, BaseLightHousingDestructible ]
   id: LightPostSmall
   name: post light
   description: "An always powered light."
   suffix: Always Powered
-  parent: BaseStructure
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
@@ -37,27 +37,17 @@
     color: "#EEEEFF"
   - type: Anchorable
   - type: InteractionOutline
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 2
             max: 4
-      - !type:EmptyAllContainersBehaviour
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalGlassBreak
   - type: StaticPrice
     price: 75
   - type: RequireProjectileTarget

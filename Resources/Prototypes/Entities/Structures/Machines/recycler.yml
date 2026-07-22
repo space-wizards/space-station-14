@@ -1,6 +1,6 @@
 - type: entity
+  parent: [ BaseMachinePowered, StructureHealthMachineStrong ]
   id: Recycler
-  parent: BaseMachinePowered
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
   components:
@@ -95,11 +95,26 @@
   - type: Repairable
     doAfterDelay: 5
     fuelCost: 25
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 275
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        offset: 0
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]

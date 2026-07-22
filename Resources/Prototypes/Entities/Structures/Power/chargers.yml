@@ -121,6 +121,8 @@
         - MachineMask
         layer:
         - MachineLayer
+  - type: Damageable
+    damageModifierSet: PlasteelMod
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5

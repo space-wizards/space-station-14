@@ -13,10 +13,6 @@
   - type: InteractionOutline
   - type: Transform
     anchored: true
-  - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -59,8 +55,8 @@
     - SolarPanels
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachine ]
   id: SolarPanelPlasma
-  parent: SolarPanelBasePhysSprite
   name: solar panel plasma
   description: A few sheets of plasma glass that generate electricity when hit by photons.
   components:
@@ -72,35 +68,31 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_panel_plasma
+  - type: Damageable
+    damageModifierSet: GlassPlasmaMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
+    - trigger: &DamageMachineNormal # Excess damage, don't spawn entities
         !type:DamageTrigger
-        damage: 300
+        damage: 175
       behaviors:
-      - !type:PlaySoundBehavior
+      - &SoundGlassBreak !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 75
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: solarpanelplasma_broken
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
   - type: Construction
     graph: SolarPanel
     node: solarpanelplasma
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachineStrong ]
   id: SolarPanelUranium
-  parent: SolarPanelBasePhysSprite
   name: solar panel uranium
   description: A few sheets of uranium glass that generate electricity when hit by photons.
   components:
@@ -112,35 +104,29 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_panel_uranium
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger: # Excess damage, don't spawn entities
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 275
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - *SoundGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: solarpaneluranium_broken
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
   - type: Construction
     graph: SolarPanel
     node: solarpaneluranium
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachineWeak ]
   id: SolarPanel
-  parent: SolarPanelBasePhysSprite
   name: solar panel
   description: A few sheets of glass that generate electricity when hit by photons.
   components:
@@ -148,121 +134,110 @@
     supplyRampTolerance: 500
     supplyRampRate: 500
   - type: SolarPanel
+  - type: Damageable
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
     - trigger: # Excess damage, don't spawn entities
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - *SoundGlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: solarpanel_broken
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
   - type: Construction
     graph: SolarPanel
     node: solarpanel
   - type: SolarPanelReplacementMarker
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachineFlimsy ]
   id: SolarPanelBroken
-  parent: SolarPanelBasePhysSprite
   name: solar panel
   description: A broken solar panel.
   suffix: Broken
   components:
   - type: Sprite
     state: solar_panel_glass_broken
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: &DamageMachineWeak
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
+      - &ChangeNodeAssembly !type:ChangeConstructionNodeBehavior
+        node: solarassembly
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: SolarPanel
     node: solarpanel_broken
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachineFlimsy ]
   id: SolarPanelPlasmaBroken
-  parent: SolarPanelBasePhysSprite
   name: plasma solar panel
   description: A broken plasma solar panel.
   suffix: Broken
   components:
   - type: Sprite
     state: solar_panel_plasma_broken
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageMachineWeak
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
+      - *ChangeNodeAssembly
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: SolarPanel
     node: solarpanelplasma_broken
 
 - type: entity
+  parent: [ SolarPanelBasePhysSprite, StructureHealthMachineFlimsy ]
   id: SolarPanelUraniumBroken
-  parent: SolarPanelBasePhysSprite
   name: uranium solar panel
   description: A broken uranium solar panel.
   suffix: Broken
   components:
   - type: Sprite
     state: solar_panel_uranium_broken
+  - type: Damageable
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
+    - trigger: *DamageMachineWeak
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
+      - *SoundGlassBreak
+      - *ChangeNodeAssembly
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassUranium:
             min: 1
             max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
     graph: SolarPanel
     node: solarpaneluranium_broken
 
 - type: entity
+  parent: StructureHealthMachineWeak
   id: SolarAssembly
   name: solar assembly
   description: A solar assembly. Anchor to a wire to start building a solar panel.
@@ -291,23 +266,14 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
+    - trigger: *DamageMachineWeak
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: Anchorable
   - type: Pullable
   - type: Construction
@@ -320,6 +286,7 @@
     - SolarPanels
 
 - type: entity
+  parent: StructureHealthMachine
   id: SolarTracker
   name: solar tracker
   description: A solar tracker. Tracks the nearest star.
@@ -347,17 +314,21 @@
     anchored: true
     noRot: true
   - type: Damageable
-    damageModifierSet: StructuralMetallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: GlassMod
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
+    - trigger: *DamageMachineNormal
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+      - *SoundGlassBreak
+      - *ChangeNodeAssembly
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 0
+            max: 2
+          SolarTrackerElectronics:
+            min: 0
+            max: 1
   - type: Anchorable
   - type: Pullable
   - type: Construction

@@ -1,6 +1,6 @@
 - type: entity
-  parent: BaseItem
-  id: BaseStationBeacon 
+  parent: [ BaseItem, StructureHealthMachine ]
+  id: BaseStationBeacon
   name: station beacon
   description: A small device that transmits information to station maps. Can be configured.
   placement:
@@ -45,17 +45,9 @@
   - type: Transform
     anchored: true
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: Inorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
-    - trigger: # for nukes
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -70,9 +62,6 @@
           SheetSteel1:
             min: 1
             max: 1
-        offset: 0
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
   - type: StaticPrice
     price: 25
 
