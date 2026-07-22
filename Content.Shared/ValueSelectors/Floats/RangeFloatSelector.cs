@@ -4,9 +4,9 @@ using Robust.Shared.Random;
 namespace Content.Shared.ValueSelectors.Floats;
 
 /// <summary>
-/// Gives a value between the two numbers specified, inclusive.
+/// Gives a value between the two floats specified, inclusive.
 /// </summary>
-public sealed partial class RangeNumberSelector : FloatSelector
+public sealed partial class RangeFloatSelector : FloatSelector
 {
     /// <summary>
     /// The min and max value of this selector, both are inclusive.
@@ -14,7 +14,7 @@ public sealed partial class RangeNumberSelector : FloatSelector
     [DataField]
     public Vector2 Range = new(1f, 1f);
 
-    public RangeNumberSelector(Vector2 range)
+    public RangeFloatSelector(Vector2 range)
     {
         Range = range;
     }
@@ -22,13 +22,19 @@ public sealed partial class RangeNumberSelector : FloatSelector
     public override float Get(IRobustRandom rand)
     {
         // rand.NextFloat() is inclusive on the first number and exclusive on the second number,
-        // so we add 1 to the second number.
-        return rand.NextFloat(Range.X, Range.Y + 1f);
+        // so we increment it by a single bit to also include the next floating point.
+        return rand.NextFloat(Range.X, MathF.BitIncrement(Range.Y));
     }
 
     public override float Odds()
     {
-        return Range.X == 0 ? 1f / (Range.Y + 1f) : 1f;
+        if (Range.Y < 1f)
+            return 0f;
+
+        if (Range.X >= 1f)
+            return 1f;
+
+        return (Range.Y - 1f) / (Range.Y - Range.X);
     }
 
     public override float Average()
