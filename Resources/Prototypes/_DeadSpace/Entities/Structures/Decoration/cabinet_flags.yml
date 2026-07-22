@@ -1,0 +1,11 @@
+- type: entity
+  id: CabinetFlagNanoTrasen
+  parent: BannerBase
+  name: флаг NanoTrasen
+  suffix: Кабинетный
+  description: Слава НТ! Подождите, они реально сделали флаг для корпорации?
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _DeadSpace/Structures/Decoration/cabinet_flags.rsi
+    state: nanotrasen
