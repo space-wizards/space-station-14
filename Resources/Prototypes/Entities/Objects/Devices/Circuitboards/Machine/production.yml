@@ -912,15 +912,15 @@
           defaultPrototype: Beaker
 
 - type: entity
-  id: HotplateMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: hotplate machine board
-  description: A machine printed circuit board for a hotplate.
+  id: ThermobathMachineCircuitboard
+  name: thermobath machine board
+  description: A machine printed circuit board for a thermobath.
   components:
   - type: Sprite
     state: medical
   - type: MachineBoard
-    prototype: ChemistryHotplate
+    prototype: MachineThermobath
     stackRequirements:
       Manipulator: 2
       Glass: 1
