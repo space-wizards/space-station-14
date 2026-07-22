@@ -4935,3 +4935,10 @@ Entries:
   changes:
   - type: Add
     message: Полноразмерные флаги синдиката и НТ для маппинга.
+- id: 488
+  author: Sakento
+  time: '2026-07-22T11:31:54.051538+00:00'
+  pr: 1964
+  changes:
+  - type: Tweak
+    message: Полный респрайт пауков ужаса by Sakento
