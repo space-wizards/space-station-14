@@ -1,0 +1,5 @@
+- type: disposalTubeNetwork
+  id: Disposal
+
+- type: disposalTubeNetwork
+  id: Atmospherics

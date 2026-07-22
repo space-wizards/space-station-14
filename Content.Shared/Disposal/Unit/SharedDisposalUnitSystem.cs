@@ -349,7 +349,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
         foreach (var entity in GetContainedEntities(ent))
         {
             _container.Insert(entity, holder.Comp.Container);
-            _disposalHolder.AttachEntity((holderUid, holder), entity);
+            _disposalHolder.AttachEntity(holderUid, entity);
         }
 
         if (tags != null)
@@ -395,7 +395,7 @@ public abstract partial class SharedDisposalUnitSystem : EntitySystem
 
         if (!Terminating(toRemove) &&
             ent.Comp.Container != null &&
-            _container.Remove(toRemove, ent.Comp.Container))
+            !_container.Remove(toRemove, ent.Comp.Container))
         {
             _climb.Climb(toRemove, toRemove, ent, silent: true);
         }
