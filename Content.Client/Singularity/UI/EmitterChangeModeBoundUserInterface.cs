@@ -12,8 +12,7 @@ namespace Content.Client.Singularity.UI;
 public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner, Enum uiKey)
     : BatteryWeaponFireModesBoundUserInterface(owner, uiKey)
 {
-    private static readonly SpriteSpecifier.Texture TurnOnTexture = new(new("/Textures/Interface/Radial/turn-on.png"));
-    private static readonly SpriteSpecifier.Texture TurnOffTexture = new(new("/Textures/Interface/Radial/turn-off.png"));
+    private static readonly SpriteSpecifier.Texture TogglePowerTexture = new(new("/Textures/Interface/Radial/toggle-power.png"));
 
     protected override List<RadialMenuOptionBase> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
@@ -27,7 +26,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
             option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
                 ToolTip = Loc.GetString("emitter-turn-off"),
-                IconSpecifier = RadialMenuIconSpecifier.With(TurnOffTexture),
+                IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
                 BackgroundColor = SelectedModeBackgroundColor,
                 HoverBackgroundColor = SelectedModeHoverBackgroundColor,
             };
@@ -37,7 +36,7 @@ public sealed partial class EmitterChangeModeBoundUserInterface(EntityUid owner,
             option = new RadialMenuActionOption<int>(_ => HandleSendToggle(), 0)
             {
                 ToolTip = Loc.GetString("emitter-turn-on"),
-                IconSpecifier = RadialMenuIconSpecifier.With(TurnOnTexture),
+                IconSpecifier = RadialMenuIconSpecifier.With(TogglePowerTexture),
             };
         }
 
