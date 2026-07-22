@@ -106,6 +106,22 @@ public abstract class AtmosTest : InteractionTest
     }
 
     /// <summary>
+    /// Sums every gas species across all tiles into a single mixture.
+    /// </summary>
+    protected GasMixture GetGridComposition(Entity<GridAtmosphereComponent> grid)
+    {
+        var total = new GasMixture();
+        foreach (var tile in grid.Comp.Tiles.Values)
+        {
+            if (tile.Air == null)
+                continue;
+            SAtmos.Merge(total, tile.Air);
+        }
+
+        return total;
+    }
+
+    /// <summary>
     /// Asserts that test grid has this many moles, within tolerance percentage.
     /// </summary>
     protected void AssertGridMoles(float moles, float tolerance)
