@@ -37,22 +37,14 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 125
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassClockwork:
             min: 1
             max: 2
-          SheetBrass1:
-            min: 0
-            max: 2
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
   - type: Construction
-    graph: Windoor
     node: windoorClockwork
-    containers:
-    - board
   - type: StaticPrice
     price: 240
