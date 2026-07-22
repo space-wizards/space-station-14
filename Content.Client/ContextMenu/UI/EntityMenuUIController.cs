@@ -52,6 +52,9 @@ namespace Content.Client.ContextMenu.UI
         [UISystemDependency] private readonly TransformSystem _xform = default!;
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
 
+        private EntityQuery<TransformComponent> _xformQuery;
+        private EntityQuery<SpriteComponent> _spriteQuery;
+
         private bool _updating;
 
         /// <summary>
@@ -71,6 +74,9 @@ namespace Content.Client.ContextMenu.UI
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.UseSecondary,  new PointerInputCmdHandler(HandleOpenEntityMenu, outsidePrediction: true))
                 .Register<EntityMenuUIController>();
+
+            _xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            _spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
         }
 
         public void OnStateExited(GameplayState state)
@@ -211,21 +217,29 @@ namespace Content.Client.ContextMenu.UI
             visibility = ev.Visibility;
 
             _entityManager.TryGetComponent(player, out ExaminerComponent? examiner);
-            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (!xformQuery.TryGetComponent(entity, out var xform))
+                if (!_xformQuery.TryGetComponent(entity, out var xform))
                 {
                     // entity was deleted
                     RemoveEntity(entity);
                     continue;
                 }
 
+                if ((visibility & MenuVisibility.Invisible) == 0)
+                {
+                    if (_spriteQuery.TryGetComponent(entity, out var sprite) && !sprite.Visible)
+                    {
+                        RemoveEntity(entity);
+                        continue;
+                    }
+                }
+
                 if ((visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov)
                     continue;
 
-                var pos = new MapCoordinates(_xform.GetWorldPosition(xform, xformQuery), xform.MapID);
+                var pos = new MapCoordinates(_xform.GetWorldPosition(xform, _xformQuery), xform.MapID);
 
                 if (!_examineSystem.CanExamine(player, pos, e => e == player || e == entity, entity, examiner))
                     RemoveEntity(entity);
