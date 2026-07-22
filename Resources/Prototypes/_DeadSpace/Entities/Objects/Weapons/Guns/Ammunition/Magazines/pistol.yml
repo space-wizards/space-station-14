@@ -41,3 +41,107 @@
       - state: inhand-left-mag
       right:
       - state: inhand-right-mag
+
+- type: entity
+  parent: BaseMagazinePistolSubMachineGun
+  id: DrumPistolSubMachineGun
+  name: барабанный магазин ПП (9х19 мм)
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistol
+    capacity: 60
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  
+- type: entity
+  parent: DrumPistolSubMachineGun
+  id: DrumPistolSubMachineGunEmpty
+  name: барабанный магазин ПП (9х19 мм любые)
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм.
+  suffix: Пустой
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: DrumPistolSubMachineGun
+  id: DrumPistolSubMachineGunPractice
+  name: барабанный магазин ПП (9х19 мм учебные)
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании учебных боеприпасов.
+  suffix: Учебные
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: DrumPistolSubMachineGun
+  id: DrumPistolSubMachineGunIncendiary
+  name: барабанный магазин ПП (9х19 мм зажигательные)
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании зажигательных боеприпасов.
+  suffix: Зажигательные
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  parent: DrumPistolSubMachineGun
+  id: DrumPistolSubMachineGunuranium
+  name: барабанный магазин ПП (9х19 мм урановые)
+  description: Магазин барабанного типа на 60 патронов калибра 9х19 мм. Имеется пометка о содержании урановых боеприпасов.
+  suffix: Урановые
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolUranium
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_drum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
