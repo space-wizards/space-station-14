@@ -20,8 +20,8 @@ public sealed partial class VendingMachineMenu : FancyWindow
     [Dependency] private ILocalizationManager _loc = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
 
-    private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
-    private readonly Dictionary<EntProtoId, uint> _amounts = new();
+    private readonly Dictionary<VendorItemKey, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
+    private readonly Dictionary<VendorItemKey, uint> _amounts = new();
 
     /// <summary>
     /// Whether the vending machine is able to be interacted with or not.
@@ -53,14 +53,18 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
     private void GenerateButton(ListData data, ListContainerButton button)
     {
-        if (data is not VendorItemsListData { ItemProtoID: var protoID, ItemText: var text })
+        if (data is not VendorItemsListData { ItemType: var type, ItemProtoID: var protoID, ItemText: var text })
             return;
 
         var item = new VendingMachineItem(protoID, text);
-        _listItems[protoID] = (button, item);
+        var key = new VendorItemKey(type, protoID);
+        _listItems[key] = (button, item);
         button.AddChild(item);
         button.AddStyleClass(StyleClass.ButtonSquare);
-        button.Disabled = !_enabled || _amounts[protoID] == 0;
+        button.Disabled =
+            !_enabled ||
+            !_amounts.TryGetValue(key, out var amount) ||
+            amount == 0;
     }
 
     /// <summary>
@@ -103,17 +107,18 @@ public sealed partial class VendingMachineMenu : FancyWindow
 
             if (!_prototypeManager.Resolve(entry.ID, out var prototype))
             {
-                _amounts[entry.ID] = 0;
+                _amounts[new VendorItemKey(entry.Type, entry.ID)] = 0;
                 continue;
             }
 
             var itemText = GetItemText(prototype, entry.Amount);
-            _amounts[entry.ID] = entry.Amount;
+            var key = new VendorItemKey(entry.Type, prototype.ID);
+            _amounts[key] = entry.Amount;
 
             if (itemText.Length > longestEntry.Length)
                 longestEntry = itemText;
 
-            listData.Add(new VendorItemsListData(prototype.ID, i)
+            listData.Add(new VendorItemsListData(entry.Type, prototype.ID, i)
             {
                 ItemText = itemText,
             });
@@ -131,19 +136,17 @@ public sealed partial class VendingMachineMenu : FancyWindow
     {
         _enabled = enabled;
 
-        foreach (var proto in _listItems.Keys)
+        foreach (var (key, button) in _listItems)
         {
-            if (!_listItems.TryGetValue(proto, out var button))
+            if (!cachedInventory.TryFirstOrDefault(o => o.Type == key.Type && o.ID == key.Prototype, out var entry))
                 continue;
 
-            if (!cachedInventory.TryFirstOrDefault(o => o.ID == proto, out var entry))
-                continue;
-
-            if (!_prototypeManager.Resolve(proto, out var prototype))
+            if (!_prototypeManager.Resolve(key.Prototype, out var prototype))
                 continue;
 
             var amount = entry.Amount;
-            // Could be better? Problem is all inventory entries get squashed.
+            _amounts[key] = amount;
+
             var text = GetItemText(prototype, amount);
 
             button.Item.SetText(text);
@@ -173,7 +176,9 @@ public sealed partial class VendingMachineMenu : FancyWindow
     }
 }
 
-public record VendorItemsListData(EntProtoId ItemProtoID, int ItemIndex) : ListData
+public record VendorItemsListData(InventoryType ItemType, EntProtoId ItemProtoID, int ItemIndex) : ListData
 {
     public string ItemText = string.Empty;
 }
+
+public readonly record struct VendorItemKey(InventoryType Type, EntProtoId Prototype);

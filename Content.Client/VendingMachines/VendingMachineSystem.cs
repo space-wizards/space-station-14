@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.VendingMachines.Components;
 using Content.Shared.Power;
@@ -58,7 +59,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (brokenChanged)
             TryUpdateVisualState((uid, component));
 
-        if (!UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui)) return;
+        if (!TryGetOpenUi(uid, out var bui)) return;
         if (fullUiUpdate)
         {
             bui.Refresh();
@@ -73,13 +74,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     private void OnEjectHandleState(Entity<VendingMachineEjectComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         TryUpdateVisualState(entity.Owner);
-
-        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner,
-                VendingMachineUiKey.Key,
-                out var bui))
-        {
-            bui.UpdateAmounts();
-        }
     }
 
     protected override void UpdateUI(Entity<VendingMachineComponent?> entity)
@@ -87,9 +81,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner,
-                VendingMachineUiKey.Key,
-                out var bui))
+        if (TryGetOpenUi(entity.Owner, out var bui))
         {
             bui.UpdateAmounts();
         }
@@ -188,16 +180,20 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
                 break;
 
             case VendingMachineVisualState.Deny:
-                if (visuals.LoopDenyAnimation)
+                if (visuals.LoopDenyAnimation || eject == null)
                     SetLayerState(VendingMachineVisualLayers.BaseUnshaded, visuals.DenyState, (uid, sprite));
                 else
-                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.DenyState, (float)(eject?.DenyDelay.TotalSeconds ?? 0), sprite);
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.DenyState, (float)eject.DenyDelay.TotalSeconds, sprite);
 
                 SetLayerState(VendingMachineVisualLayers.Screen, visuals.ScreenState, (uid, sprite));
                 break;
 
             case VendingMachineVisualState.Eject:
-                PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.EjectState, (float)(eject?.EjectDelay.TotalSeconds ?? 0), sprite);
+                if (eject == null)
+                    SetLayerState(VendingMachineVisualLayers.BaseUnshaded, visuals.EjectState, (uid, sprite));
+                else
+                    PlayAnimation(uid, VendingMachineVisualLayers.BaseUnshaded, visuals.EjectState, (float)eject.EjectDelay.TotalSeconds, sprite);
+
                 SetLayerState(VendingMachineVisualLayers.Screen, visuals.ScreenState, (uid, sprite));
                 break;
 
@@ -264,5 +260,10 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         _sprite.LayerSetVisible(sprite.AsNullable(), actualLayer, false);
+    }
+
+    private bool TryGetOpenUi(EntityUid uid, [NotNullWhen(true)] out VendingMachineBoundUserInterface? bui)
+    {
+        return UISystem.TryGetOpenUi(uid, VendingMachineUiKey.Key, out bui);
     }
 }
