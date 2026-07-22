@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
+using Content.Server.VendingMachines.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Damage.Systems;
@@ -202,6 +203,18 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        var dispenseOnHitQuery = EntityQueryEnumerator<VendingMachineDispenseOnHitComponent>();
+        while (dispenseOnHitQuery.MoveNext(out _, out var dispenseOnHit))
+        {
+            if (!dispenseOnHit.CoolingDown)
+                continue;
+
+            if (Timing.CurTime <= dispenseOnHit.End)
+                continue;
+
+            dispenseOnHit.End = null;
+        }
 
         var disabled = EntityQueryEnumerator<EmpDisabledComponent, VendingMachineComponent, VendingMachineEjectComponent>();
         while (disabled.MoveNext(out var uid, out _, out var comp, out var eject))

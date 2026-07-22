@@ -82,11 +82,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             UpdateEjectState((uid, comp), curTime);
-
-            if (!TryComp<VendingMachineDispenseOnHitComponent>(uid, out var dispenseOnHit)) continue;
-            if (!dispenseOnHit.CoolingDown) continue;
-            if (!(curTime > dispenseOnHit.End)) continue;
-            dispenseOnHit.End = null;
         }
     }
 
