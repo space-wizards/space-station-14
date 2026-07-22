@@ -24,6 +24,7 @@ public abstract partial class SharedVendingMachineSystem
 
             EjectItem((entity.Owner, entity.Comp1, eject));
             UpdateUI((entity.Owner, entity.Comp1));
+            OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
         }
 
         if (!eject.Denying || !(curTime > eject.DenyEnd))
@@ -32,7 +33,7 @@ public abstract partial class SharedVendingMachineSystem
         eject.DenyEnd = null;
         Dirty(entity.Owner, eject);
 
-        TryUpdateVisualState((entity.Owner, entity.Comp1), eject);
+        OnEjectStateChanged((entity.Owner, entity.Comp1), eject);
     }
 
     private void OnInventoryEjectMessage(Entity<VendingMachineComponent> entity, ref VendingMachineEjectMessage args)
@@ -61,6 +62,8 @@ public abstract partial class SharedVendingMachineSystem
     }
 
     protected virtual void EjectItem(Entity<VendingMachineComponent?, VendingMachineEjectComponent?> entity, bool forceEject = false) { }
+
+    protected virtual void OnEjectStateChanged(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null) { }
 
     /// <summary>
     /// Checks if the user is authorized to use this vending machine
@@ -157,7 +160,7 @@ public abstract partial class SharedVendingMachineSystem
         Dirty(uid, vendComponent);
         Dirty(uid, ejectComponent);
         UpdateUI((uid, vendComponent));
-        TryUpdateVisualState((uid, vendComponent), ejectComponent);
+        OnEjectStateChanged((uid, vendComponent), ejectComponent);
         Audio.PlayPredicted(ejectComponent.SoundVend, uid, user);
     }
 
@@ -174,7 +177,7 @@ public abstract partial class SharedVendingMachineSystem
 
         ejectComponent.DenyEnd = Timing.CurTime + ejectComponent.DenyDelay;
         Audio.PlayPredicted(ejectComponent.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
-        TryUpdateVisualState(entity, ejectComponent);
+        OnEjectStateChanged(entity, ejectComponent);
         Dirty(entity.Owner, ejectComponent);
     }
 

@@ -18,10 +18,8 @@ namespace Content.Shared.VendingMachines;
 public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;
-    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] protected SharedAudioSystem Audio = default!;
     [Dependency] private SharedDoAfterSystem _doAfter = default!;
-    [Dependency] protected SharedPointLightSystem Light = default!;
     [Dependency] private SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected SharedPopupSystem Popup = default!;
     [Dependency] protected SharedUserInterfaceSystem UISystem = default!;
@@ -92,44 +90,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     }
 
     protected virtual void UpdateUI(Entity<VendingMachineComponent?> entity) { }
-
-    /// <summary>
-    /// Tries to update the visuals of the component based on its current state.
-    /// </summary>
-    public void TryUpdateVisualState(Entity<VendingMachineComponent?> entity, VendingMachineEjectComponent? ejectComponent = null)
-    {
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return;
-
-        Resolve(entity.Owner, ref ejectComponent, false);
-
-        var finalState = VendingMachineVisualState.Normal;
-        if (entity.Comp.Broken)
-        {
-            finalState = VendingMachineVisualState.Broken;
-        }
-        else if (ejectComponent?.Ejecting == true)
-        {
-            finalState = VendingMachineVisualState.Eject;
-        }
-        else if (ejectComponent?.Denying == true)
-        {
-            finalState = VendingMachineVisualState.Deny;
-        }
-        else if (!_receiver.IsPowered(entity.Owner))
-        {
-            finalState = VendingMachineVisualState.Off;
-        }
-
-        // TODO: You know this should really live on the client with netsync off because client knows the state.
-        if (Light.TryGetLight(entity.Owner, out var pointlight))
-        {
-            var lightEnabled = finalState != VendingMachineVisualState.Broken && finalState != VendingMachineVisualState.Off;
-            Light.SetEnabled(entity.Owner, lightEnabled, pointlight);
-        }
-
-        _appearanceSystem.SetData(entity.Owner, VendingMachineVisuals.VisualState, finalState);
-    }
 
     public void RestockInventoryFromPrototype(EntityUid uid,
         VendingMachineComponent? component = null, float restockQuality = 1f)
@@ -255,7 +215,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     {
         vendComponent.Broken = true;
         Dirty(uid, vendComponent);
-        TryUpdateVisualState((uid, vendComponent));
 
         UISystem.CloseUi(uid, VendingMachineUiKey.Key);
     }

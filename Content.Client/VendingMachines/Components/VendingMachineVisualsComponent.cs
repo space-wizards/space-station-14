@@ -1,4 +1,6 @@
-namespace Content.Shared.VendingMachines.Components;
+using Content.Shared.VendingMachines.Components;
+
+namespace Content.Client.VendingMachines.Components;
 
 [RegisterComponent]
 public sealed partial class VendingMachineVisualsComponent : Component

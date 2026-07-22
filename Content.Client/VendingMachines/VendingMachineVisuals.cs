@@ -1,14 +1,5 @@
-using Robust.Shared.Serialization;
+namespace Content.Client.VendingMachines;
 
-namespace Content.Shared.VendingMachines;
-
-[Serializable, NetSerializable]
-public enum VendingMachineVisuals : byte
-{
-    VisualState
-}
-
-[Serializable, NetSerializable]
 public enum VendingMachineVisualState : byte
 {
     Normal,
@@ -24,10 +15,12 @@ public enum VendingMachineVisualLayers : byte
     /// Off / Broken. The other layers will overlay this if the machine is on.
     /// </summary>
     Base,
+
     /// <summary>
     /// Normal / Deny / Eject
     /// </summary>
     BaseUnshaded,
+
     /// <summary>
     /// Screens that are persistent (where the machine is not off or broken)
     /// </summary>

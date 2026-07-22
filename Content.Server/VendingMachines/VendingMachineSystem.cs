@@ -1,13 +1,11 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Cargo.Systems;
-using Content.Server.Power.Components;
 using Content.Server.VendingMachines.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Cargo;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Emp;
-using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Content.Shared.VendingMachines.Components;
@@ -44,22 +42,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         args.Price += price;
     }
 
-    protected override void OnMapInit(EntityUid uid, VendingMachineComponent component, MapInitEvent args)
-    {
-        base.OnMapInit(uid, component, args);
-
-        if (HasComp<ApcPowerReceiverComponent>(uid))
-        {
-            TryUpdateVisualState((uid, component));
-        }
-    }
-
-    [SubscribeLocalEvent]
-    private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
-    {
-        TryUpdateVisualState((uid, component));
-    }
-
     [SubscribeLocalEvent]
     private void OnDamageChanged(EntityUid uid, VendingMachineComponent component, DamageChangedEvent args)
     {
@@ -67,7 +49,6 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
         {
             component.Broken = false;
             Dirty(uid, component);
-            TryUpdateVisualState((uid, component));
             return;
         }
 
@@ -163,12 +144,7 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         var uid = entity.Owner;
-        var vendComponent = entity.Comp1;
         var ejectComponent = entity.Comp2;
-
-        // No need to update the visual state because we never changed it during a forced eject
-        if (!forceEject)
-            TryUpdateVisualState((uid, vendComponent), ejectComponent);
 
         if (string.IsNullOrEmpty(ejectComponent.NextItemToEject))
         {

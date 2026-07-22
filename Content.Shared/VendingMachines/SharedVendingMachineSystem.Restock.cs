@@ -46,7 +46,6 @@ public abstract partial class SharedVendingMachineSystem
         RestockInventoryFromPrototype(uid, vendComponent);
 
         Dirty(uid, vendComponent);
-        TryUpdateVisualState((uid, vendComponent));
     }
 
     [SubscribeLocalEvent]
