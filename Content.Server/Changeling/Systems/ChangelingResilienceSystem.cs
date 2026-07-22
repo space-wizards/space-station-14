@@ -1,6 +1,4 @@
-﻿using Content.Server.Body.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Destructible;
+﻿using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Changeling.Systems;
@@ -11,8 +9,6 @@ namespace Content.Server.Changeling.Systems;
 
 public sealed partial class ChangelingResilienceSystem : SharedChangelingResilienceSystem
 {
-    [Dependency] private RespiratorSystem _respirator = default!;
-
     protected override void PreventGibbing(Entity<ChangelingResilienceComponent> ent)
     {
         if (!TryComp<DestructibleComponent>(ent, out var destructible))
@@ -33,14 +29,5 @@ public sealed partial class ChangelingResilienceSystem : SharedChangelingResilie
                 threshold.Behaviors.Remove(behavior);
             }
         }
-    }
-
-    protected override void HandleGasp(EntityUid ent)
-    {
-        if (!TryComp<RespiratorComponent>(ent, out var respirator))
-            return;
-
-        _respirator.Exhale((ent, respirator));
-        _respirator.UpdateSaturation(ent, respirator.MaxSaturation, respirator);
     }
 }

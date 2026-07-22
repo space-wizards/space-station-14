@@ -18,9 +18,6 @@
   - type: ChangelingIdentity
   - type: ChangelingTransform
   - type: ChangelingResilience
-    replacementOrgans:
-      Lungs: OrganChangelingLungs
-      Stomach: OrganChangelingStomach
   - type: ZombieImmune
   - type: ActionGrant
     actions:

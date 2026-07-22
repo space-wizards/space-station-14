@@ -44,15 +44,6 @@
             ]
         },
         {
-            "name": "not_enough_air",
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
-        },
-        {
             "name": "too_much_co2",
             "delays": [
                 [
