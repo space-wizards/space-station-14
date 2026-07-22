@@ -368,7 +368,7 @@
 - type: construction
   parent: BaseFurniture
   id: NoticeBoard
-  graph: NoticeBoard
+  graph: WallBoard
   targetNode: noticeBoard
   canRotate: true
   canBuildInImpassable: true
@@ -378,7 +378,7 @@
 - type: construction
   parent: BaseFurniture
   id: PostBoard
-  graph: PostBoard
+  graph: WallBoard
   targetNode: postBoard
   canRotate: true
   canBuildInImpassable: true
