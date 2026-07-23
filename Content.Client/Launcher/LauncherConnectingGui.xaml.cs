@@ -76,14 +76,19 @@ namespace Content.Client.Launcher
         {
             base.EnteredTree();
 
-            _stylesheets.UseStylesheet(this, accessor => accessor.SheetSystem);
+            _stylesheets.StyleChanged += OnStyleChanged;
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
 
-            _stylesheets.StopStylesheet(this);
+            _stylesheets.StyleChanged -= OnStyleChanged;
+        }
+
+        private void OnStyleChanged(IStylesheetAccessor accessor)
+        {
+            Stylesheet = accessor.SheetSystem;
         }
 
         // Just button, there's only one at once anyways :)
@@ -148,7 +153,6 @@ namespace Content.Client.Launcher
                 {
                     _waitTime = RedialWaitTimeSeconds;
                 }
-
             }
         }
 

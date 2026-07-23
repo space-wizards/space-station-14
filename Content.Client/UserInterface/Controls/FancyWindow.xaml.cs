@@ -16,12 +16,14 @@ namespace Content.Client.UserInterface.Controls
     public partial class FancyWindow : BaseWindow
     {
         [Dependency] private IEntitySystemManager _sysMan = default!;
-        [Dependency] private IStylesheetManager _styleMan = default!;
+        [Dependency] private IStylesheetManager _stylesheets = default!;
         private GuidebookSystem? _guidebookSystem;
         private const int DRAG_MARGIN_SIZE = 7;
 
         public const string StyleClassWindowHelpButton = "windowHelpButton";
         public const string StyleClassWindowCloseButton = "windowCloseButton";
+
+        private bool _styleSubscribed;
 
         public FancyWindow()
         {
@@ -44,20 +46,42 @@ namespace Content.Client.UserInterface.Controls
             get;
             set
             {
-                field = value;
-                if (value is null)
-                    return;
+                if (_styleSubscribed)
+                {
+                    _stylesheets.StyleChanged -= OnStyleChanged;
+                    _styleSubscribed = false;
+                }
 
-                _styleMan.UseStylesheet(this, accessor => accessor.GetStylesheet(value));
+                if (value == null)
+                {
+                    field = value;
+                    return;
+                }
+
+                field = value;
+
+                _styleSubscribed = true;
+                _stylesheets.StyleChanged += OnStyleChanged;
             }
         }
 
         protected override void ExitedTree()
         {
-            if (Stylesheet is not null)
-                _styleMan.StopStylesheet(this);
-
             base.ExitedTree();
+
+            if (!_styleSubscribed)
+                return;
+
+            _stylesheets.StyleChanged -= OnStyleChanged;
+            _styleSubscribed = false;
+        }
+
+        private void OnStyleChanged(IStylesheetAccessor accessor)
+        {
+            if (Stylesheet is null)
+                return;
+
+            base.Stylesheet = accessor.GetStylesheet(Stylesheet);
         }
 
         private List<ProtoId<GuideEntryPrototype>>? _helpGuidebookIds;

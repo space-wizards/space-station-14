@@ -42,14 +42,19 @@ public sealed partial class AdminMessagePopupWindow : Control
     {
         base.EnteredTree();
 
-        _stylesheets.UseStylesheet(this, accessor => accessor.SheetSystem);
+        _stylesheets.StyleChanged += OnStyleChanged;
     }
 
     protected override void ExitedTree()
     {
         base.ExitedTree();
 
-        _stylesheets.StopStylesheet(this);
+        _stylesheets.StyleChanged -= OnStyleChanged;
+    }
+
+    private void OnStyleChanged(IStylesheetAccessor accessor)
+    {
+        Stylesheet = accessor.SheetSystem;
     }
 
     public void SetState(AdminMessageEuiState state)

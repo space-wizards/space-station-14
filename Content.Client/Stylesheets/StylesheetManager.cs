@@ -19,6 +19,29 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
     private readonly Dictionary<string, Stylesheet> _stylesheets = [];
     private readonly StylesheetAccessorImpl _accessor;
 
+    public event Action<IStylesheetAccessor> StyleChanged
+    {
+        add
+        {
+            DebugTools.Assert(!_subscriptions.Contains(value), "Attempted to subscribe the same style action twice.");
+            _subscriptions.Add(value);
+
+            try
+            {
+                value(_accessor);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Caught exception while updating styles on controls! {e}");
+            }
+        }
+        remove
+        {
+            DebugTools.Assert(_subscriptions.Contains(value), "Attempted to unsubscribe from a style action that was not subscribed.");
+            _subscriptions.Remove(value);
+        }
+    }
+
     private ISawmill _sawmill = null!;
 
     private bool _initialized;
@@ -46,30 +69,6 @@ public sealed partial class StylesheetManager : IStylesheetManager, IPostInjectI
         _sawmill.Debug(
             $"Initialized {_sheetNanotrasen?.Rules.Count + _sheetSystem?.Rules.Count} style rules in {sw.Elapsed}");
         _initialized = true;
-    }
-
-    /// <inheritdoc/>
-    public void UseStyle(Action<IStylesheetAccessor> action)
-    {
-        DebugTools.Assert(!_subscriptions.Contains(action), "Attempted to subscribe the same style action twice.");
-        _subscriptions.Add(action);
-
-        try
-        {
-            action(_accessor);
-        }
-        catch (Exception e)
-        {
-            _sawmill.Error($"Caught exception while updating styles on controls! {e}");
-        }
-    }
-
-    /// <inheritdoc/>
-    public void StopStyle(Action<IStylesheetAccessor> action)
-    {
-        DebugTools.Assert(_subscriptions.Contains(action),
-            "Attempted to unsubscribe from a style action that was not subscribed.");
-        _subscriptions.Remove(action);
     }
 
     private void RegenerateStylesheets()

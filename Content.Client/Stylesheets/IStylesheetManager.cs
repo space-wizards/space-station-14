@@ -46,32 +46,14 @@ public interface IStylesheetManager
     /// <summary>
     /// Subscribe to style changes.
     /// </summary>
-    /// <remarks>
     /// <para>
-    /// This will let you automatically update the stylesheet/fonts on the control if the backing stylesheet changed,
-    /// for example due to user preferences.
+    /// Callers are immediately invoked on subscription and invoked each time the stylesheets/fonts change.
     /// </para>
     /// <para>
-    /// A call to <see cref="UseStyle"/> should always be paired with a call to <see cref="StopStyle"/>,
-    /// otherwise memory leaks will ensue! The best way to do this is to call <see cref="UseStyle"/> in
-    /// <see cref="Control.EnteredTree"/>, and call <see cref="StopStyle"/> in <see cref="Control.ExitedTree"/>.
+    /// You must then unsubscribe from the same delegate later, otherwise there'll be a memory leak!
+    /// It's recommended to subscribe in <see cref="Control.EnteredTree"/> and unsubscribe in <see cref="Control.ExitedTree"/> to mitigate these issues.
     /// </para>
-    /// </remarks>
-    /// <param name="action">
-    /// A function used to select style properties (e.g. stylesheet, font) from <see cref="IStylesheetAccessor"/>.
-    /// </param>
-    void UseStyle(Action<IStylesheetAccessor> action);
-
-    /// <summary>
-    /// Unsubscribe from style changes.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This will not return you to defaults. If you wish to change a style, call UseStyle again with a different Action.
-    /// </para>
-    /// </remarks>
-    /// <param name="action">The action to unsubscribe.</param>
-    void StopStyle(Action<IStylesheetAccessor> action);
+    event Action<IStylesheetAccessor> StyleChanged;
 
     /// <summary>
     /// Initialize the stylesheet manager.

@@ -32,7 +32,7 @@ namespace Content.Client.Voting.UI
         [Dependency] private IEntityNetworkManager _entNetManager = default!;
         [Dependency] private IConfigurationManager _cfg = default!;
         [Dependency] private IStateManager _state = default!;
-        [Dependency] private IStylesheetManager _stylesheet = default!;
+        [Dependency] private IStylesheetManager _stylesheets = default!;
 
         private VotingSystem _votingSystem;
 
@@ -103,14 +103,19 @@ namespace Content.Client.Voting.UI
         {
             base.EnteredTree();
 
-            _stylesheet.UseStylesheet(this, accessor => accessor.SheetSystem);
+            _stylesheets.StyleChanged += OnStyleChanged;
         }
 
         protected override void ExitedTree()
         {
             base.ExitedTree();
 
-            _stylesheet.StopStylesheet(this);
+            _stylesheets.StyleChanged -= OnStyleChanged;
+        }
+
+        private void OnStyleChanged(IStylesheetAccessor accessor)
+        {
+            Stylesheet = accessor.SheetSystem;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
