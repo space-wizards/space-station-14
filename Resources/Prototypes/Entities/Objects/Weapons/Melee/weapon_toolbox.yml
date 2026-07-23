@@ -30,6 +30,7 @@
     sprite: Objects/Weapons/Melee/plush_toolbox.rsi
     state: icon
   - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     size: Small
   - type: MeleeWeapon
     wideAnimationRotation: -135
