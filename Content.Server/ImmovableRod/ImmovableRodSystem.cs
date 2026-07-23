@@ -135,9 +135,10 @@ public sealed partial class ImmovableRodSystem : EntitySystem
 
             _gibbing.Gib(ent);
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
-
+            return;
         }
 
+        _destructible.DestroyEntity(ent);
     }
 
     private void OnExamined(EntityUid uid, ImmovableRodComponent component, ExaminedEvent args)

@@ -36,6 +36,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedDestructibleSystem _destructible = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -154,24 +155,26 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
+        if (!_destructible.CanDestroy(item))
+            return;
+
+        var playSound = true;
+
         if (CanGib(uid, item, component))
         {
             var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
-            if (component.ReclaimSolutions)
-                SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
+            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity}");
+
+            playSound = false; // Gibbing already make the noise!
+
             _gibbing.Gib(item);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
-        else
-        {
-            if (component.ReclaimSolutions)
-                SpawnChemicalsFromComposition(uid, item, completion, true, component, xform);
-        }
 
-        var eventArgs = new DestructionEventArgs();
-        RaiseLocalEvent(item, eventArgs);
-        QueueDel(item);
+        if (component.ReclaimSolutions)
+            SpawnChemicalsFromComposition(uid, item, completion, playSound, component, xform);
+
+        _destructible.DestroyEntity(item);
     }
 
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,
