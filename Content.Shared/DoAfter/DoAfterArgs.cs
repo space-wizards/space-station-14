@@ -85,7 +85,7 @@ public sealed partial class DoAfterArgs
     public bool NeedHand;
 
     /// <summary>
-    /// Whether or not this do after requires an empty hand.
+    /// Whether or not this do after requires your active hand to be empty,
     /// </summary>
     [DataField]
     public bool NeedFreeHand;
