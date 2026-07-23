@@ -21,6 +21,7 @@ namespace Content.Client.Stylesheets
 {
     public static class ResCacheExtension
     {
+        [Obsolete("Use IStylesheetManager's accessors to access fonts instead.")]
         public static Font NotoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
         {
             var ds = display ? "Display" : "";
