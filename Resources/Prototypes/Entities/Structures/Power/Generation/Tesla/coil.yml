@@ -111,7 +111,8 @@
     - SingularityTeslaEngine
 
 - type: entity
-  id: [ TeslaGroundingRod, BaseStructureHealth ]
+  parent: BaseStructureHealth
+  id: TeslaGroundingRod
   name: grounding rod
   description: A machine that keeps lightning from striking too far away.
   placement:
