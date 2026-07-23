@@ -65,6 +65,7 @@ internal static class ServerContentIoC
         deps.Register<ServerInfoManager>();
         deps.Register<DiscordWebhook>();
         deps.Register<VoteWebhooks>();
+        deps.Register<EventWebhook>();
         deps.Register<ServerDbEntryManager>();
         deps.Register<ISharedPlaytimeManager, PlayTimeTrackingManager>();
         deps.Register<ServerApi>();

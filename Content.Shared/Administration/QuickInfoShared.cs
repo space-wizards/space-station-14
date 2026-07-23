@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
 
@@ -27,5 +28,5 @@ public static class QuickInfoShared
     }
 
     [Serializable, NetSerializable]
-    public sealed record SingleEntityInfo(NetEntity Entity, bool Exists, string Name, string? Prototype);
+    public sealed record SingleEntityInfo(NetEntity Entity, bool Exists, string Name, string? Prototype, NetUserId? LastPlayer);
 }

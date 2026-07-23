@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using static Content.Shared.Decals.DecalGridComponent;
 
@@ -10,7 +9,6 @@ namespace Content.Shared.Decals
 {
     public abstract partial class SharedDecalSystem : EntitySystem
     {
-        [Dependency] protected IMapManager MapManager = default!;
 
         protected bool PvsEnabled;
 
