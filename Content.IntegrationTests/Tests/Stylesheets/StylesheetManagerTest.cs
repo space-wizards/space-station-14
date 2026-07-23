@@ -33,18 +33,41 @@ public sealed class StylesheetManagerTest : GameTest
 #pragma warning restore CS0618
 
         var control = new Control();
-        _stylesheet.UseStylesheet(control, a => a.SheetNanotrasen);
+        var i = 0;
+        var sheet = false;
+
+        // Test subscribing to a stylesheet
+        _stylesheet.StyleChanged += OnStyleChanged;
         using (Assert.EnterMultipleScope())
         {
             Assert.That(control.Stylesheet, Is.Not.Null);
             Assert.That(control.Stylesheet, Is.SameAs(nanotrasen));
+            Assert.That(i, Is.EqualTo(1));
         }
 
-        _stylesheet.UseStylesheet(control, a => a.SheetSystem);
-        Assert.That(control.Stylesheet, Is.SameAs(system));
+        // TODO: implement functionality that would actually trigger a rebuild and call it here.
 
-        // We don't currently reset to defaults right now.
-        _stylesheet.StopStylesheet(control);
-        Assert.That(control.Stylesheet, Is.SameAs(system));
+        _stylesheet.StyleChanged -= OnStyleChanged;
+        // Verify that it doesn't reset any values nor calls OnStyleChanged again.
+        sheet = true;
+        Assert.That(control.Stylesheet, Is.SameAs(nanotrasen));
+        Assert.That(i, Is.EqualTo(1));
+
+        // Test that it is called on subscription and changes the sheet.
+        _stylesheet.StyleChanged += OnStyleChanged;
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(control.Stylesheet, Is.SameAs(system));
+            Assert.That(i, Is.EqualTo(2));
+        }
+
+        _stylesheet.StyleChanged -= OnStyleChanged;
+        return;
+
+        void OnStyleChanged(IStylesheetAccessor accessor)
+        {
+            i++;
+            control.Stylesheet = sheet ? accessor.SheetSystem : accessor.SheetNanotrasen;
+        }
     }
 }
