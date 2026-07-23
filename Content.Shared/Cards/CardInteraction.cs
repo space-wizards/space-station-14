@@ -1,11 +1,9 @@
 using System.Linq;
-using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Cards;
 
