@@ -9,6 +9,9 @@ namespace Content.Shared.EntityTable.EntitySelectors;
 /// </summary>
 public sealed partial class NestedSelector : EntityTableSelector
 {
+    /// <summary>
+    /// The prototype from which to draw random items.
+    /// </summary>
     [DataField(required: true)]
     public ProtoId<EntityTablePrototype> TableId;
 

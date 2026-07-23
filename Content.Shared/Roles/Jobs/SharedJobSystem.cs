@@ -1,7 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles.Components;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -49,6 +50,25 @@ public abstract partial class SharedJobSystem : EntitySystem
     {
         DebugTools.Assert(ProtoMan.HasIndex<PlayTimeTrackerPrototype>(trackerProto));
         return _inverseTrackerLookup[trackerProto];
+    }
+
+    /// <summary>
+    /// Tries to get the first job prototype using the given job icon.
+    /// </summary>
+    public bool TryGetJobFromIcon(ProtoId<JobIconPrototype> jobIcon, [NotNullWhen(true)] out JobPrototype? jobPrototype)
+    {
+        jobPrototype = null;
+
+        foreach (var prototype in ProtoMan.EnumeratePrototypes<JobPrototype>())
+        {
+            if (prototype.Icon != jobIcon)
+                continue;
+
+            jobPrototype = prototype;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -136,18 +156,18 @@ public abstract partial class SharedJobSystem : EntitySystem
         return true;
     }
 
-    public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
+    public bool MindHasJobWithId(EntityUid? mindId, params ProtoId<JobPrototype>[] prototypes)
     {
-
         if (mindId is null)
             return false;
 
-        _roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role);
-
-        if (role is null)
+        if (!_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
             return false;
 
-        return role.Value.Comp1.JobPrototype == prototypeId;
+        if (role.Value.Comp1.JobPrototype is not { } protoId)
+            return false;
+
+        return prototypes.Contains(protoId);
     }
 
     public bool MindTryGetJob(

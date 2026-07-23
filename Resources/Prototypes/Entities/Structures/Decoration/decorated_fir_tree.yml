@@ -5,6 +5,7 @@
   description: A very festive tree for a very festive holiday.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Decoration/decorated_fir_tree.rsi
     layers:
       - state: base
