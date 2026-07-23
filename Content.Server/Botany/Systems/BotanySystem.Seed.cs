@@ -22,7 +22,6 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private AppearanceSystem _appearance = default!;
     [Dependency] private PopupSystem _popupSystem = default!;
@@ -52,7 +51,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && ProtoMan.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
             seed = protoSeed;
             return true;
@@ -71,7 +70,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && ProtoMan.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
             seed = protoSeed;
             return true;
@@ -105,7 +104,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// </summary>
     public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
-        var seed = Spawn(proto.PacketPrototype, coords);
+        var seed = SpawnAtPosition(proto.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seed);
         seedComp.Seed = proto;
         seedComp.HealthOverride = healthOverride;
@@ -151,6 +150,10 @@ public sealed partial class BotanySystem : EntitySystem
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 
+    /// <summary>
+    /// Spawns produce from given SeedData on the floor at a position.
+    /// </summary>
+    /// <param name="yieldMod">A coefficient to multiply the number of produced entities by. Resulting yield will always be at least 1.</param>
     public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, int yieldMod = 1)
     {
         var totalYield = 0;
@@ -173,7 +176,7 @@ public sealed partial class BotanySystem : EntitySystem
         {
             var product = _robustRandom.Pick(proto.ProductPrototypes);
 
-            var entity = Spawn(product, position);
+            var entity = SpawnAtPosition(product, position);
             _randomHelper.RandomOffset(entity, 0.25f);
             products.Add(entity);
 

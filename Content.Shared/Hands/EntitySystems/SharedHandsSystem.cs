@@ -56,7 +56,8 @@ public abstract partial class SharedHandsSystem
         var container = EnsureComp<ContainerManagerComponent>(ent);
         foreach (var id in ent.Comp.Hands.Keys)
         {
-            ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+            var slot = ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+            slot.OccludesLight = false;
         }
     }
 
@@ -114,11 +115,11 @@ public abstract partial class SharedHandsSystem
 
         TryDrop(ent, handName, null, false);
 
-        if (!ent.Comp.Hands.Remove(handName))
-            return;
-
         if (ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
+
+        if (!ent.Comp.Hands.Remove(handName))
+            return;
 
         ent.Comp.SortedHands.Remove(handName);
         if (ent.Comp.ActiveHandId == handName)
@@ -362,6 +363,23 @@ public abstract partial class SharedHandsSystem
         TrySetActiveHand(ent, nextHand);
     }
 
+    /// <summary>
+    /// Checks if an item is being held by another entity.
+    /// </summary>
+    /// <param name="item">Item that we are checking.</param>
+    /// <param name="user">User who is holding our item.</param>
+    /// <returns>Returns true if our item is being held.</returns>
+    public bool IsHeld(Entity<TransformComponent?> item, [NotNullWhen(true)] out EntityUid? user)
+    {
+        user = null;
+        item.Comp ??= Transform(item);
+        if (!IsHolding(item.Comp.ParentUid, item))
+            return false;
+
+        user = item.Comp.ParentUid;
+        return true;
+    }
+
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
     {
         return IsHolding(entity, item, out _);
@@ -409,18 +427,27 @@ public abstract partial class SharedHandsSystem
     }
 
     /// <summary>
-    /// Gets the item currently held in the entity's specified hand. Returns null if no hands are present or there is no item.
+    /// Retrieves the item currently held in the specified hand of an entity.
     /// </summary>
-    public EntityUid? GetHeldItem(Entity<HandsComponent?> ent, string? handId)
+    /// <param name="ent">The entity whose hands are being checked.</param>
+    /// <param name="handId">The ID of the specific hand to check.</param>
+    /// <param name="hideVirtualItems">If true, treats hands holding virtual items as if they are empty.</param>
+    /// <returns>The UID of the held item, or null if the hand is empty, the hand ID is invalid, or the entity has no hands.</returns>
+    public EntityUid? GetHeldItem(Entity<HandsComponent?> ent, string? handId, bool hideVirtualItems = false)
     {
-        TryGetHeldItem(ent, handId, out var held);
+        TryGetHeldItem(ent, handId, out var held, hideVirtualItems);
         return held;
     }
 
     /// <summary>
-    /// Gets the item currently held in the entity's specified hand. Returns false if no hands are present or there is no item.
+    /// Attempts to retrieve the item currently held in the specified hand of an entity.
     /// </summary>
-    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held)
+    /// <param name="ent">The entity whose hands are being checked.</param>
+    /// <param name="handId">The ID of the specific hand to check.</param>
+    /// <param name="held">Outputs the UID of the held item, if one is found.</param>
+    /// <param name="hideVirtualItems">If true, ignores virtual items and returns false if only a virtual item is present.</param>
+    /// <returns>True if a valid item is found in the hand; otherwise, false.</returns>
+    public bool TryGetHeldItem(Entity<HandsComponent?> ent, string? handId, [NotNullWhen(true)] out EntityUid? held, bool hideVirtualItems = false)
     {
         held = null;
         if (!Resolve(ent, ref ent.Comp, false))
@@ -434,6 +461,10 @@ public abstract partial class SharedHandsSystem
             return false;
 
         held = container.ContainedEntities.FirstOrNull();
+
+        if (hideVirtualItems && HasComp<VirtualItemComponent>(held))
+            held = null;
+
         return held != null;
     }
 
