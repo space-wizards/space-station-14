@@ -328,8 +328,6 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
                 damageVisComp.TopMostLayerKey = $"DamageOverlay";
             }
         }
-
-        _spriteDirection.RegenerateCachedOverrides(entity);
     }
 
     /// <summary>
@@ -353,6 +351,8 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         if (sprite.Color != null)
             SpriteSystem.LayerSetColor(spriteEnt, newLayer, Color.FromHex(sprite.Color));
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
+
+        _spriteDirection.RegenerateCachedOverrides(spriteEnt.Owner);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)
@@ -500,6 +500,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         SpriteSystem.LayerSetVisible(spriteEnt.AsNullable(), spriteLayer, visibility);
         // this is somewhat iffy since it constantly reallocates
         damageVisComp.TopMostLayerKey = key;
+        _spriteDirection.RegenerateCachedOverrides(spriteEnt.Owner);
     }
 
     /// <summary>
@@ -756,10 +757,6 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             if (displacement != null)
             {
                 _displacement.TryAddDisplacement(displacement, spriteEnt, spriteLayer, layerKey, out _);
-            }
-            else
-            {
-                _displacement.EnsureDisplacementIsNotOnSprite(spriteEnt, layerKey);
             }
         }
     }

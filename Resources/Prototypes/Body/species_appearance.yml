@@ -21,16 +21,16 @@
     # Underwear & clothing
     - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
     - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: ["jumpsuit"]
+    - map: [ "jumpsuit" ]
 
     # Extremities
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
 
     # Stuff that goes over the body but below equipment
-    - map: ["enum.HumanoidVisualLayers.Overlay"]
+    - map: [ "enum.HumanoidVisualLayers.Overlay" ]
 
     # More equipment
     - map: [ "gloves" ]
@@ -60,7 +60,7 @@
     - map: [ "pocket2" ]
 
     # Extra stuff
-    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
@@ -108,8 +108,10 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+      - map: [ "suitstorage" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Overlay" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
@@ -133,7 +135,6 @@
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      - map: [ "clownedon" ]
       North:
       - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.SnoutCover" ]
@@ -150,6 +151,8 @@
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Overlay" ]
+      - map: [ "suitstorage" ]
       - map: [ "jumpsuit" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
@@ -169,7 +172,6 @@
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      - map: [ "clownedon" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "enum.HumanoidVisualLayers.TailOverlay" ]
       East:
@@ -187,6 +189,8 @@
       - map: [ "enum.HumanoidVisualLayers.RFoot" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Overlay" ]
+      - map: [ "suitstorage" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
       - map: [ "gloves" ]
@@ -207,7 +211,6 @@
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      - map: [ "clownedon" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "enum.HumanoidVisualLayers.TailOverlay" ]
       West:
@@ -225,6 +228,8 @@
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Overlay" ]
+      - map: [ "suitstorage" ]
       - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "gloves" ]
@@ -245,6 +250,5 @@
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      - map: [ "clownedon" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "enum.HumanoidVisualLayers.TailOverlay" ]

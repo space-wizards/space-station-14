@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Sprite;
 using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -9,8 +10,9 @@ namespace Content.Client.DisplacementMap;
 
 public sealed partial class DisplacementMapSystem : EntitySystem
 {
-    [Dependency] private ISerializationManager _serialization = null!;
-    [Dependency] private SpriteSystem _sprite = null!;
+    [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private SpriteDirectionLayeringSystem _spriteDirection = default!;
 
     //needs to be replaced later: see comment on line 48
     private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
@@ -112,6 +114,8 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         _sprite.SetAsParent(sprite, index, index + 1);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
 
+        _spriteDirection.RegenerateCachedOverrides(sprite.Owner);
+
         return true;
     }
 
@@ -127,6 +131,12 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         if (displacementLayerKey is null)
             return false;
 
-        return _sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false);
+        if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
+        {
+            _spriteDirection.RegenerateCachedOverrides(sprite.Owner);
+            return true;
+        }
+
+        return false;
     }
 }
