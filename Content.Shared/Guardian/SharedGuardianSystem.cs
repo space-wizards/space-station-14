@@ -136,7 +136,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
 
         if (_container.IsEntityInContainer(ent.Owner))
         {
-            _popup.PopupPredicted(Loc.GetString("guardian-inside-container"), ent.Owner, ent.Owner);
+            _popup.PopupEntity(Loc.GetString("guardian-inside-container"), ent.Owner, ent.Owner);
             return;
         }
 
@@ -171,7 +171,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             return;
         }
 
-        _popup.PopupPredicted(Loc.GetString("guardian-available"), host.Value, host.Value);
+        _popup.PopupEntity(Loc.GetString("guardian-available"), host.Value, host.Value);
     }
 
     private void OnHostInit(Entity<GuardianHostComponent> ent, ref ComponentInit args)
@@ -201,7 +201,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         if (args.Cancelled || args.Target != ent.Comp.Host)
             return;
 
-        _popup.PopupPredictedCursor(Loc.GetString("guardian-attack-host"), ent.Owner, PopupType.LargeCaution);
+        _popup.PopupCursor(Loc.GetString("guardian-attack-host"), ent.Owner, PopupType.LargeCaution);
         args.Cancel();
     }
 
@@ -211,7 +211,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         if (args.Args.Cancelled)
             return;
 
-        _popup.PopupPredictedCursor(Loc.GetString("guardian-attack-host"),
+        _popup.PopupCursor(Loc.GetString("guardian-attack-host"),
             args.Args.Attacker,
             PopupType.LargeCaution);
         args.Args.Cancelled = true;
@@ -253,7 +253,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     {
         if (ent.Comp.Used)
         {
-            _popup.PopupPredicted(Loc.GetString(ent.Comp.EmptyPopup), user, user);
+            _popup.PopupEntity(Loc.GetString(ent.Comp.EmptyPopup), user, user);
 
             return;
         }
@@ -263,14 +263,14 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         {
             var msg = Loc.GetString("guardian-activator-invalid-target",
                 ("entity", Identity.Entity(target, EntityManager, user)));
-            _popup.PopupPredicted(msg, user, user);
+            _popup.PopupEntity(msg, user, user);
             return;
         }
 
         // If user is already a host don't duplicate.
         if (HasComp<GuardianHostComponent>(target))
         {
-            _popup.PopupPredicted(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
+            _popup.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
             return;
         }
 
@@ -323,7 +323,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             _audio.PlayPredicted(ent.Comp.UsedSound,
                 ent.Owner,
                 args.Args.Target);
-            _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHauntedPopup),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianHauntedPopup),
                 args.Args.Target.Value,
                 args.Args.Target.Value);
             // Exhaust the activator
@@ -350,7 +350,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
 
         if (args.NewMobState == MobState.Critical)
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.GuardianHostCritWarn),
+            _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianHostCritWarn),
                 ent.Comp.HostedGuardian.Value,
                 ent.Comp.HostedGuardian.Value);
             _audio.PlayPredicted(guardianComp.CriticalSound, ent.Comp.HostedGuardian.Value, args.Target);
@@ -379,7 +379,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             origin: args.Origin,
             ignoreResistances: true,
             interruptsDoAfters: false);
-        _popup.PopupClient(Loc.GetString(ent.Comp.GuardianDamagePopup), ent.Comp.Host.Value, ent.Comp.Host.Value);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.GuardianDamagePopup), ent.Comp.Host.Value, ent.Comp.Host.Value);
     }
 
     /// <summary>
@@ -456,6 +456,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
 
     private void ReleaseGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent> guardian)
     {
+        _audio.PlayPredicted(host.Comp.ReleaseSound, guardian, host);
         if (guardian.Comp.GuardianLoose)
         {
             DebugTools.Assert(!host.Comp.GuardianContainer.Contains(guardian));
@@ -486,7 +487,7 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         }
 
         _container.Insert(guardian.Owner, host.Comp.GuardianContainer);
-        _popup.PopupPredicted(Loc.GetString(host.Comp.GuardianHostRecall), host.Owner, host.Owner);
+        _popup.PopupEntity(Loc.GetString(host.Comp.GuardianHostRecall), host.Owner, host.Owner);
         guardian.Comp.GuardianLoose = false;
 
         Dirty(host);

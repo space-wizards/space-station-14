@@ -1060,8 +1060,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/pirate.rsi
-  - type: AddAccentClothing
-    accent: PirateAccent
+  - type: PirateAccent
+    relayAccent: true
 
 - type: entity
   parent: ClothingUniformBase

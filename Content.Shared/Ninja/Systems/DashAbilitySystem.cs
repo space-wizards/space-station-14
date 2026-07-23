@@ -57,7 +57,7 @@ public sealed partial class DashAbilitySystem : EntitySystem
 
         if (!_hands.IsHolding(user, uid, out var _))
         {
-            _popup.PopupClient(Loc.GetString("dash-ability-not-held", ("item", uid)), user, user);
+            _popup.PopupEntity(Loc.GetString("dash-ability-not-held", ("item", uid)), user, user);
             return;
         }
 
@@ -66,13 +66,13 @@ public sealed partial class DashAbilitySystem : EntitySystem
         if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
         {
             // can only dash if the destination is visible on screen
-            _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);
+            _popup.PopupEntity(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);
             return;
         }
 
         if (!_sharedCharges.TryUseCharge(uid))
         {
-            _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
+            _popup.PopupEntity(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
             return;
         }
 
