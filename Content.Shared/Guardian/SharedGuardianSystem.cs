@@ -16,6 +16,7 @@ using Content.Shared.Random.Helpers;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -450,8 +451,20 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         if (!guardian.Comp.GuardianLoose)
             return;
 
-        if (!_transform.InRange(guardianXform.Coordinates, hostXform.Coordinates, guardian.Comp.DistanceAllowed))
+        if (!guardianXform.Coordinates.TryDistance(EntityManager, hostXform.Coordinates, out var dist))
+        {
             RetractGuardian((host.Owner, host.Comp), guardian);
+            return;
+        }
+        if (dist > guardian.Comp.DistanceAllowed)
+        {
+            var coords = _transform.ToMapCoordinates(hostXform.Coordinates);
+            var basePos = coords.Position;
+            var delta = _transform.ToMapCoordinates(guardianXform.Coordinates).Position - basePos;
+            var pos = basePos + delta / dist * (guardian.Comp.DistanceAllowed - 0.1f);
+            _transform.SetMapCoordinates(guardian.Owner, new MapCoordinates(pos, coords.MapId));
+        }
+
     }
 
     private void ReleaseGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent> guardian)
