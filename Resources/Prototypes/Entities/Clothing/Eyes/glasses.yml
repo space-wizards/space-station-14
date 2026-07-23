@@ -69,6 +69,26 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - EngiGoggles
+
+- type: entity
+  parent: ClothingEyesGlassesMeson
+  id: ClothingEyesGlassesMesonDiagnostic
+  name: diagnostic engineering goggles
+  description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types. Made out of see-borg-ium.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/engihud.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/engihud.rsi
+  - type: Construction
+    graph: GlassesEngiHUD
+    node: glassesEngi
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: ShowAccessReaderSettings
 
 - type: entity
   parent: ClothingEyesBase
