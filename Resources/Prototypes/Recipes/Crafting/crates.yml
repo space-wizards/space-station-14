@@ -88,14 +88,7 @@
   targetNode: foodboxpizza
 
 - type: construction
-  id: CrateCoffin
-  graph: CrateCoffin
-  startNode: start
-  targetNode: cratecoffin
-  category: construction-category-storage
-  objectType: Structure
-  
-- type: construction
+  parent: BaseBox
   id: Barrel
   graph: Barrel
   startNode: start
