@@ -8,7 +8,7 @@ public sealed partial class DestructionResistanceSystem : EntitySystem
     /// <summary>
     /// Prevent destruction via non-ashing sources, if appropriate.
     /// </summary>
-    /// <param name="ent">Changeling entity.</param>
+    /// <param name="ent">The entity.</param>
     /// <param name="args">The destruction event args. Canceled if the component is set to disable gibbing.</param>
     [SubscribeLocalEvent]
     private void OnDestruction(Entity<DestructionResistanceComponent> ent, ref DestructionAttemptEvent args)
@@ -28,5 +28,6 @@ public sealed partial class DestructionResistanceSystem : EntitySystem
             return;
 
         ent.Comp.Enabled = enabled;
+        Dirty(ent);
     }
 }
