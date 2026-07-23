@@ -346,11 +346,10 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
     /// <param name="modifiers">Values for cost modification.</param>
     public void AddCostModifier(string modifierSourceId, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> modifiers)
     {
-        CostModifiersBySourceId.Add(modifierSourceId, modifiers);
+        CostModifiersBySourceId.TryAdd(modifierSourceId, modifiers);
+
         if (_costModified != null)
-        {
             _costModified = ApplyAllModifiers();
-        }
     }
 
     /// <summary> Remove cost modifier with passed sourceId. </summary>

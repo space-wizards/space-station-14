@@ -1,6 +1,6 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable ]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, BaseMobDestructible ]
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -115,6 +115,7 @@
         reagents:
         - ReagentId: Laughter
           Quantity: 300
+          
 - type: entity
   name: behonker
   parent: BaseMobBehonker
