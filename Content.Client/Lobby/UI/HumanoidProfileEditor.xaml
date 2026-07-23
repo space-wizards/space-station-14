@@ -5,7 +5,6 @@
          xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
          xmlns:profile="clr-namespace:Content.Client.Lobby.UI.ProfileEditorControls"
          HorizontalExpand="True">
-        <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10" HorizontalExpand="True">
             <!-- Middle container -->
             <BoxContainer Orientation="Horizontal" SeparationOverride="10" HorizontalExpand="True">
@@ -60,10 +59,10 @@
                 </BoxContainer>
             </BoxContainer>
             <Control MinHeight="10" />
-            <!-- Customization Tab and Character Preview -->
+            <!-- Customization Tabs and Character Preview -->
             <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                 <!-- tabContainer -->
-                <TabContainer Name="TabContainer" VerticalExpand="True"  HorizontalExpand="True" MinWidth="200">
+                <TabContainer Name="TabContainer" VerticalExpand="True"  HorizontalExpand="True">
                     <BoxContainer Orientation="Vertical" >
                         <ScrollContainer VerticalExpand="True">
                             <!-- appearanceList -->
@@ -153,6 +152,7 @@
                         <humanoid:MarkingPicker Name="Markings" HorizontalExpand="True" VerticalExpand="True" />
                     </BoxContainer>
                 </TabContainer>
+                <!-- Character Preview -->
                 <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
                     <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" />
                     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5">
@@ -163,13 +163,4 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-        <!-- Right side -->
-        <!-- <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center" MinWidth="100"> -->
-        <!--     <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" /> -->
-        <!--     <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5"> -->
-        <!--         <Button Name="SpriteRotateLeft" Text="◀" StyleClasses="OpenRight" /> -->
-        <!--         <cc:VSeparator Margin="2 0 3 0" /> -->
-        <!--         <Button Name="SpriteRotateRight" Text="▶" StyleClasses="OpenLeft" /> -->
-        <!--     </BoxContainer> -->
-        <!-- </BoxContainer> -->
 </BoxContainer>
