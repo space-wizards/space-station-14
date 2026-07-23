@@ -869,7 +869,7 @@
   sprite: /Textures/Tiles/gold.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemGold
+  itemDrop: IngotGold1
 
 - type: tile
   id: FloorSilver
@@ -878,7 +878,7 @@
   sprite: /Textures/Tiles/silver.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemSilver
+  itemDrop: IngotSilver1
 
 - type: tile
   id: FloorGlass
@@ -1327,7 +1327,7 @@
   sprite: /Textures/Tiles/super_reinforced.png
   footstepSounds:
     collection: FootstepHull
-  itemDrop: PartRodMetal1 #same case as FloorHull
+  itemDrop: SheetPlasteel1
 
 # Faux sci tiles
 

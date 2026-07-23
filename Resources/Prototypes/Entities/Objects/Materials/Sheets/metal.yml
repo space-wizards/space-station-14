@@ -167,6 +167,9 @@
         Quantity: 9
       - ReagentId: Carbon
         Quantity: 1
+  - type: FloorTile
+    outputs:
+    - FloorReinforcedHardened
 
 - type: entity
   parent: SheetPlasteel
