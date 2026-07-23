@@ -6,10 +6,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Changeling.Components;
 
 /// <summary>
-/// Component responsible for Changelings immunity to certain effects, such as revolutionary conversion, gibbing, or zombification.
+/// Component responsible for Changelings immunity to certain effects, such as revolutionary conversion or gibbing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedChangelingResilienceSystem))]
+[Access(typeof(ChangelingResilienceSystem))]
 public sealed partial class ChangelingResilienceComponent : Component
 {
     /// <summary>
@@ -26,11 +26,11 @@ public sealed partial class ChangelingResilienceComponent : Component
     public bool PreventConversion = true;
 
     /// <summary>
-    /// Causes the organs of this changeling to be unable to turn into nymphs.
-    /// Works by removing their respective components on init.
+    /// Removes these components from every organ on the owning entity.
+    /// Happens only once on init.
     /// </summary>
     [DataField]
-    public bool PreventOrganNymphs = true;
+    public ComponentRegistry? OrganRemovedComponents;
 
     /// <summary>
     /// What metabolizer should be added to all organs on the owning entity.

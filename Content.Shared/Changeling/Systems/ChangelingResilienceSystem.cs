@@ -9,7 +9,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Changeling.Systems;
 
-public abstract partial class SharedChangelingResilienceSystem : EntitySystem
+public sealed partial class ChangelingResilienceSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
@@ -23,11 +23,8 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingResilienceComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.AppendedMetabolizer != null || ent.Comp.PreventOrganNymphs)
+        if (ent.Comp.AppendedMetabolizer != null || ent.Comp.OrganRemovedComponents != null)
             UpdateOrgans(ent);
-
-        if (ent.Comp.PreventGibbing)
-            PreventGibbing(ent);
     }
 
     [SubscribeLocalEvent]
@@ -63,10 +60,8 @@ public abstract partial class SharedChangelingResilienceSystem : EntitySystem
             if (TryComp<MetabolizerComponent>(organ, out var metabolizer) && ent.Comp.AppendedMetabolizer != null)
                 _metabolizer.TryAddMetabolizerType((organ, metabolizer), ent.Comp.AppendedMetabolizer.Value);
 
-            if (ent.Comp.PreventOrganNymphs)
-                RemCompDeferred<NymphComponent>(organ);
+            if (ent.Comp.OrganRemovedComponents != null)
+                EntityManager.RemoveComponents(organ, ent.Comp.OrganRemovedComponents);
         }
     }
-
-    protected virtual void PreventGibbing(Entity<ChangelingResilienceComponent> ent) { }
 }

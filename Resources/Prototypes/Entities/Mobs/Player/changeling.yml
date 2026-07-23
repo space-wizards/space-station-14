@@ -8,6 +8,9 @@
   - type: ChangelingIdentity
   - type: ChangelingTransform
   - type: ChangelingResilience
+    organRemovedComponents:
+    - type: Nymph
+      entityPrototype: MobLing # This does not matter. This shouldn't be a registry, but we have no better way to store components like this.
   - type: ZombieImmune
   - type: ActionGrant
     actions:
