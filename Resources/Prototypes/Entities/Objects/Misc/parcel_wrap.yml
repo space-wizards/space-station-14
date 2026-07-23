@@ -96,7 +96,7 @@
     - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.
 
 - type: entity
-  parent: [ BaseItem, BaseWrappedParcel ]
+  parent: [ BaseItem, BaseWrappedParcel, BasePaperLabelable ]
   id: WrappedParcel
   name: wrapped parcel
   description: Something wrapped up in paper. I wonder what's inside...
