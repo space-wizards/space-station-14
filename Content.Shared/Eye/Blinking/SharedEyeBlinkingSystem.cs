@@ -123,10 +123,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void OnBlindnessChanged(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
-        ent.Comp.EyesClosed = args.Blind;
-
         if (ent.Comp.EyeToggleActionEntity != null)
-            _actionsSystem.SetToggled(ent.Comp.EyeToggleActionEntity, ent.Comp.EyesClosed);
+            _actionsSystem.SetToggled(ent.Comp.EyeToggleActionEntity, args.Blind);
 
         if (!args.Blind)
         {
