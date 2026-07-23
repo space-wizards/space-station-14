@@ -77,6 +77,9 @@ public interface IStylesheetAccessor
     /// <summary>
     /// Fonts used by the Nanotrasen stylesheet.
     /// </summary>
+    /// <remarks>
+    /// These should only be used if you are outside the control lifecycle, otherwise use stylesheets and styleclasses.
+    /// </remarks>
     IFontConfig FontNanotrasen { get; }
 
     /// <summary>
@@ -87,6 +90,9 @@ public interface IStylesheetAccessor
     /// <summary>
     /// Fonts used by the System stylesheet.
     /// </summary>
+    /// <remarks>
+    /// These should only be used if you are outside the control lifecycle, otherwise use stylesheets and styleclasses.
+    /// </remarks>
     IFontConfig FontSystem { get; }
 
     /// <summary>
