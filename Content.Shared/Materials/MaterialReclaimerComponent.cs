@@ -143,7 +143,7 @@ public sealed partial class MaterialReclaimerComponent : Component
     public int ItemsProcessed;
 
     /// <summary>
-    /// Damage that gets dealt when a creature is in the emaged recycler.
+    /// Damage that gets dealt when a creature is in the emagged recycler.
     /// </summary>
     [DataField]
     public DamageSpecifier? DamageOnEmag = new DamageSpecifier
