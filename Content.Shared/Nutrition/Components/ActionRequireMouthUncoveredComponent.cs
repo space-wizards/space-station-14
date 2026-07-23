@@ -9,5 +9,5 @@ namespace Content.Shared.Nutrition.Components;
 public sealed partial class ActionRequireMouthUncoveredComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public SlotFlags Slots = SlotFlags.MASK;
+    public SlotFlags Slots = SlotFlags.HEAD | SlotFlags.MASK;
 }

@@ -20,7 +20,6 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Tools.Systems;
 using System.Linq;
-using Content.Shared.Popups;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -236,7 +235,7 @@ public partial class MobStateSystem
         if (ent.Comp.Popup is { } popup)
         {
             var states = string.Join(", ", ent.Comp.States.Order().Select(s => Loc.GetString($"mob-state-{s}")));
-            _popup.PopupClient(Loc.GetString("mob-state-action-requires-state", ("states", states)), args.User, args.User, popup);
+            _popup.PopupEntity(Loc.GetString("mob-state-action-requires-state", ("states", states)), args.User, args.User, popup);
         }
 
         args.Cancelled = true;
