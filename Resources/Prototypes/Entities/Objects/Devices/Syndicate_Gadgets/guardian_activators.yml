@@ -40,7 +40,10 @@
       - state: deck
   - type: GuardianCreator
     guardians:
-    - GuardianBaseFighter
+    - GuardianWizardFighter
+    - GuardianWizardHeal
+    - GuardianWizardNuke
+    - GuardianWizardSword
     emptyPopup: guardian-deck-invalid-creation
     emptyExamine: guardian-deck-used-examine
     usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
@@ -96,7 +99,7 @@
     state: fist
   description: guardian-desc-fist
   title: guardian-title-fist
-  guardian: MobFighterGuardian
+  guardian: MobFighterGuardianBase
 
 - type: guardianEntry
   id: GuardianBaseHeal
@@ -105,7 +108,7 @@
     state: heal
   description: guardian-desc-heal
   title: guardian-title-heal
-  guardian: MobHoloparasiteGuardian
+  guardian: MobHealerGuardianBase
 
 - type: guardianEntry
   id: GuardianBaseSword
@@ -114,7 +117,7 @@
     state: sword
   description: guardian-desc-sword
   title: guardian-title-sword
-  guardian: MobSwordGuardian
+  guardian: MobSwordGuardianBase
 
 - type: guardianEntry
   id: GuardianBaseNuke
@@ -123,6 +126,43 @@
     state: nuke
   description: guardian-desc-nuke
   title: guardian-title-nuke
-  guardian: MobHoloparasiteGuardian
+  guardian: MobNukeGuardianBase
+
+# Djinns
+- type: guardianEntry
+  id: GuardianWizardFighter
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: fist
+  description: guardian-desc-fist
+  title: guardian-title-fist
+  guardian: MobFighterGuardianWizard
+
+- type: guardianEntry
+  id: GuardianWizardHeal
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: heal
+  description: guardian-desc-heal
+  title: guardian-title-heal
+  guardian: MobHealerGuardianWizard
+
+- type: guardianEntry
+  id: GuardianWizardSword
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: sword
+  description: guardian-desc-sword
+  title: guardian-title-sword
+  guardian: MobSwordGuardianWizard
+
+- type: guardianEntry
+  id: GuardianWizardNuke
+  icon:
+    sprite: Interface/Actions/guardian.rsi
+    state: nuke
+  description: guardian-desc-nuke
+  title: guardian-title-nuke
+  guardian: MobNukeGuardianWizard
 
 # Holoclown

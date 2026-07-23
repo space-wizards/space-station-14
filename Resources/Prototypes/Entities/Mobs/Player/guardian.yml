@@ -109,7 +109,7 @@
 - type: entity
   name: Fighter
   id: MobFighterGuardianBase
-  parent: MobFighterBase
+  parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
@@ -143,9 +143,9 @@
         task: SimpleHumanoidHostileCompound
 
 - type: entity
-  name: Fighter
-  id: MobFighterGuardianBase
-  parent: MobFighterBase
+  name: Explosive
+  id: MobExplosiveGuardianBase
+  parent: MobNukeBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
@@ -164,9 +164,9 @@
       proto: holo
     - type: Sprite
       layers:
-        - state: tech_base
+        - state: miner_base
           map: [ "enum.DamageStateVisualLayers.Base" ]
-        - state: tech_flare
+        - state: miner_flare
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
@@ -196,6 +196,8 @@
     - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
+    - type: Reflect
+      reflectProb: 0.5
     - type: TypingIndicator
       proto: holo
     - type: Sprite
@@ -206,19 +208,30 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+    - type: MeleeWeapon
+      hidden: false
+      altDisarm: false
+      animation: WeaponArcSlash
+      attackRate: 1.8
+      autoAttack: true
+      soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+      damage:
+        types:
+          Slash: 15
+          Blunt: 5
+          Structural: 10
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
             sword_flare: Sixteen
-
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
 
-# From Wizard deck of cards
 - type: entity
   name: Healer
-  parent: MobHealerGuardianBase
+  parent: MobGuardianBase
   id: MobHealerGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
@@ -245,6 +258,7 @@
           color: "#40a7d7"
           shader: unshaded
 
+# From holoclown injector
 - type: entity
   name: HoloClown
   id: MobHoloClownGuardian
@@ -333,3 +347,25 @@
     useDelay: 2
   - type: InstantAction
     event: !type:GuardianToggleActionEvent
+
+# From Wizard deck of cards
+
+- type: entity
+  parent: MobFighterGuardianBase
+  id: MobFighterGuardianWizard
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
+
+- type: entity
+  parent: MobHealerGuardianBase
+  id: MobHealerGuardianWizard
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
+
+- type: entity
+  parent: MobFighterGuardianBase
+  id: MobNukeGuardianWizard
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
+
+- type: entity
+  parent: MobFighterGuardianBase
+  id: MobFighterGuardianWizard
+  description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
