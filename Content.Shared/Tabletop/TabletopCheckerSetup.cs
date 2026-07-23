@@ -22,7 +22,7 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
         session.Entities.Add(
-            entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0))
+            entityManager.SpawnEntity(BoardPrototype, session.Position)
         );
 
         SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
@@ -59,9 +59,8 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
 
         const int numCrowns = 3;
         const float overlap = 0.25f;
-        const float xOffset = 9f / 32;
-        const float xOffsetBlack = 9 + xOffset;
-        const float xOffsetWhite = 8 + xOffset;
+        const float xOffsetBlack = 9 + 2f / 32;
+        const float xOffsetWhite = 8 + 7f / 32;
 
         // Crowns.
         for (var i = 0; i < numCrowns; i++)

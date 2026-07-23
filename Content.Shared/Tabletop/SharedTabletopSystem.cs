@@ -37,7 +37,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
     /// </summary>
-    protected static readonly EntProtoId GamePiecePrototype = "GenericTabletopPiece";
+    protected static readonly EntProtoId GamePiecePrototype = "BaseTabletopPiece";
 
     public override void Initialize()
     {

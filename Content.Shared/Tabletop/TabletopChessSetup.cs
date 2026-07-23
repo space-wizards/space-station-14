@@ -10,7 +10,7 @@ public sealed partial class TabletopChessSetup : TabletopSetup
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
-        var chessboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
+        var chessboard = entityManager.SpawnEntity(BoardPrototype, session.Position);
 
         session.Entities.Add(chessboard);
 
@@ -30,9 +30,9 @@ public sealed partial class TabletopChessSetup : TabletopSetup
         SpawnPiecesRow(session, entityManager, "White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
         // Extra queens.
-        var tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+        var tempQualifier = entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 5f / 32, y - 3 * separation, mapId));
         session.Entities.Add(tempQualifier);
-        var tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
+        var tempQualifier1 = entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 5f / 32, y - 4 * separation, mapId));
         session.Entities.Add(tempQualifier1);
     }
 

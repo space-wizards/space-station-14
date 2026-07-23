@@ -5,13 +5,11 @@
   description: Cross and circle board game famous for destroying countless friendships.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/parchis.rsi
-    state: board
+    state: parchis
   - type: TabletopGame
     boardName: tabletop-parchis-board-name
     size: 574, 574
-    setup:
-      !type:TabletopParchisSetup
+    setup: !type:TabletopParchisSetup
       boardPrototype: ParchisBoardTabletop
 
 - type: entity
@@ -21,6 +19,5 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/parchis_tabletop.rsi
+    sprite: Objects/Fun/Tabletop/Tabletops/parchis.rsi
     state: board
-

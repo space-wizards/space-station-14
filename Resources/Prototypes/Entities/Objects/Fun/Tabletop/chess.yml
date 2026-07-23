@@ -5,13 +5,11 @@
   description: A chessboard. Pieces included!
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
-    state: chessboard
+    state: chess
   - type: TabletopGame
     boardName: tabletop-chess-board-name
     size: 338, 274
-    setup:
-      !type:TabletopChessSetup
+    setup: !type:TabletopChessSetup
       boardPrototype: ChessBoardTabletop
 
 - type: entity
@@ -21,8 +19,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
-    state: chessboard_tabletop
+    sprite: Objects/Fun/Tabletop/Tabletops/chess.rsi
+    state: board
 
 # White pieces
 - type: entity

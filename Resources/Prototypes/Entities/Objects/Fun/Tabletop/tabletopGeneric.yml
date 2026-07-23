@@ -1,9 +1,4 @@
-# A placeholder entity type for draggable items.
-- type: entity
-  parent: BaseTabletopPiece
-  id: GenericTabletopPiece
-  categories: [ HideSpawnMenu ]
-
+# Instances used in backgammon/parchis setup
 - type: entity
   parent: BaseTabletopPiece
   id: RedTabletopPiece
@@ -11,7 +6,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"
@@ -25,7 +19,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"
@@ -39,7 +32,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"
@@ -53,7 +45,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"
@@ -67,7 +58,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"
@@ -80,7 +70,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
     layers:
     - state: outer_ring
       color: "#222034"

@@ -6,50 +6,44 @@
   description: A checkerboard. Pieces included!
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
-    state: chessboard
+    state: checkers
   - type: TabletopGame
     boardName: tabletop-checkers-board-name
     size: 338, 274
-    setup:
-      !type:TabletopCheckerSetup
-      boardPrototype: CheckerBoardTabletop
-      prototypePieceWhite: CheckerPieceWhite
-      prototypeCrownWhite: CheckerCrownWhite
+    setup: !type:TabletopCheckerSetup
+      boardPrototype: ChessBoardTabletop
+      prototypePieceWhite: CheckerPieceRed
+      prototypeCrownWhite: CheckerCrownRed
       prototypePieceBlack: CheckerPieceBlack
       prototypeCrownBlack: CheckerCrownBlack
-
-# Checkerboard tabletop item (item only visible in tabletop game)
-- type: entity
-  id: CheckerBoardTabletop
-  name: checkerboard
-  parent: BaseBoardTabletop
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
-    state: chessboard_tabletop
 
 # The pieces
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerPieceWhite
-  name: white checkers piece
+  id: CheckerPieceRed
+  name: red checkers piece
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-    state: w_checker_piece
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#dd3845"
 
 - type: entity
   parent: BaseTabletopPiece
-  id: CheckerCrownWhite
-  name: white checkers king
+  id: CheckerCrownRed
+  name: red checkers king
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-    state: w_checker_crown
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#dd3845"
+    - state: crown
 
 - type: entity
   parent: BaseTabletopPiece
@@ -58,8 +52,11 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-    state: b_checker_piece
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#000000"
 
 - type: entity
   parent: BaseTabletopPiece
@@ -68,5 +65,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/checker_pieces.rsi
-    state: b_checker_crown
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#000000"
+    - state: crown
+      color: "#ffff00"
