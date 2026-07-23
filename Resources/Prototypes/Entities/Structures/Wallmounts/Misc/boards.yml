@@ -31,7 +31,7 @@
   description: Is there a job for a witcher?
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/boards.rsi
+    sprite: Structures/Wallmounts/noticeboard.rsi
     layers:
     - state: noticeboard
     - state: notice-0
@@ -67,7 +67,7 @@
   description: Apply paper directly to the boardhead.
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/boards.rsi
+    sprite: Structures/Wallmounts/postboard.rsi
     layers:
     - state: postboard
     - state: paper

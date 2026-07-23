@@ -8,6 +8,12 @@
     },
     "states": [
         {
+            "name": "postboard"
+        },
+        {
+            "name": "postboard_over"
+        },
+        {
             "name": "bounty"
         },
         {
