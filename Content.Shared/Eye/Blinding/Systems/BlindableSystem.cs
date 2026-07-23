@@ -9,7 +9,6 @@ namespace Content.Shared.Eye.Blinding.Systems;
 public sealed partial class BlindableSystem : EntitySystem
 {
     [Dependency] private BlurryVisionSystem _blurriness = default!;
-    [Dependency] private EyeClosingSystem _eyelids = default!;
 
     public override void Initialize()
     {
@@ -28,7 +27,6 @@ public sealed partial class BlindableSystem : EntitySystem
     private void OnDamageChanged(Entity<BlindableComponent> ent, ref EyeDamageChangedEvent args)
     {
         _blurriness.UpdateBlurMagnitude((ent.Owner, ent.Comp));
-        _eyelids.UpdateEyesClosable((ent.Owner, ent.Comp));
     }
 
     private void OnGetEyePvsScaleAttemptEvent(Entity<BlindableComponent> ent, ref GetEyePvsScaleAttemptEvent args)
