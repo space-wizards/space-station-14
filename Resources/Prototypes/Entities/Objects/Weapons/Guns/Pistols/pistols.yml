@@ -281,7 +281,7 @@
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponFingerGunsGun
   description: Point and shoot.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: FingerGunsGun
   - type: Sprite
