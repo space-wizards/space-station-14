@@ -77,7 +77,8 @@ public sealed partial class ActiveMicrowaveComponent : Component
 ///     Represents a specific quantity of a recipe to cook.
 /// </summary>
 [Serializable, NetSerializable]
-public struct PortionedRecipe(ProtoId<FoodRecipePrototype> recipe, uint count)
+[DataDefinition]
+public partial struct PortionedRecipe(ProtoId<FoodRecipePrototype> recipe, uint count)
 {
     /// <summary>
     ///     The recipe to make.
