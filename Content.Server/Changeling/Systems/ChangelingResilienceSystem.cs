@@ -9,6 +9,11 @@ namespace Content.Server.Changeling.Systems;
 
 public sealed partial class ChangelingResilienceSystem : SharedChangelingResilienceSystem
 {
+    /// <summary>
+    /// Removes <see cref="GibBehavior"/> from changeling <see cref="DestructibleComponent"/> behaviors on an entity
+    /// that are triggered via damage.
+    /// </summary>
+    /// <param name="ent">Entity with a <see cref="ChangelingResilienceComponent"/> to have gibbing prevented.</param>
     protected override void PreventGibbing(Entity<ChangelingResilienceComponent> ent)
     {
         if (!TryComp<DestructibleComponent>(ent, out var destructible))

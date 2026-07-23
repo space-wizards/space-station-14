@@ -19,13 +19,7 @@ public sealed partial class GibbingSystem : EntitySystem
 
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
 
-    /// <summary>
-    /// Attempts to gib an entity.
-    /// </summary>
-    /// <param name="ent">The entity to gib.</param>
-    /// <param name="dropGiblets">Whether or not to drop giblets.</param>
-    /// <param name="user">The user gibbing the entity, if any.</param>
-    /// <returns>True if the entity was gibbed, otherwise False.</returns>
+    /// <inheritdoc cref="TryGib(EntityUid,out HashSet&lt;EntityUid&gt;?, bool, EntityUid?)"/>
     public bool TryGib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
     {
         return TryGib(ent, out _, dropGiblets, user);

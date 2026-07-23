@@ -11,8 +11,8 @@ namespace Content.Shared.Changeling.Systems;
 
 public abstract partial class SharedChangelingResilienceSystem : EntitySystem
 {
-    [Dependency] private SharedContainerSystem _container = default!;
     [Dependency] private MetabolizerSystem _metabolizer = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
