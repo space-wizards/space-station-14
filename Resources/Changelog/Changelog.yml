@@ -5233,3 +5233,10 @@
   id: 9893
   time: '2026-07-23T01:06:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44344
+- author: B_Kirill
+  changes:
+  - message: Added sharpness adjustment option to graphics settings.
+    type: Add
+  id: 9894
+  time: '2026-07-23T06:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43315
