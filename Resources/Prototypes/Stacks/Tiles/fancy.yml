@@ -2,18 +2,6 @@
 
 - type: stack
   parent: BaseTileStack
-  id: FloorTileGold
-  name: stack-gold-floor
-  spawn: FloorTileItemGold
-
-- type: stack
-  parent: BaseTileStack
-  id: FloorTileSilver
-  name: stack-silver-floor-tile
-  spawn: FloorTileItemSilver
-
-- type: stack
-  parent: BaseTileStack
   id: FloorTileWhiteMarble
   name: stack-white-marble-floor
   spawn: FloorTileItemWhiteMarble
