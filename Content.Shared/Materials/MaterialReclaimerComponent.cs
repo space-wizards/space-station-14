@@ -142,6 +142,9 @@ public sealed partial class MaterialReclaimerComponent : Component
     [DataField, AutoNetworkedField]
     public int ItemsProcessed;
 
+    /// <summary>
+    /// Damage that gets dealt when a creature is in the emaged recycler.
+    /// </summary>
     [DataField]
     public DamageSpecifier? DamageOnEmag = new DamageSpecifier
     {
@@ -151,6 +154,9 @@ public sealed partial class MaterialReclaimerComponent : Component
         },
     };
 
+    /// <summary>
+    /// If it should gib creatures when they enter and the machine is emagged
+    /// </summary>
     [DataField]
     public bool GibOnEmag = true;
 }
