@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Destructible;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
@@ -18,35 +17,6 @@ public sealed partial class GibbingSystem : EntitySystem
     [Dependency] private SharedTransformSystem _transform = default!;
 
     private static readonly SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
-
-    /// <inheritdoc cref="TryGib(EntityUid,out HashSet&lt;EntityUid&gt;?, bool, EntityUid?)"/>
-    public bool TryGib(EntityUid ent, bool dropGiblets = true, EntityUid? user = null)
-    {
-        return TryGib(ent, out _, dropGiblets, user);
-    }
-
-    /// <summary>
-    /// Attempts to gib an entity.
-    /// </summary>
-    /// <param name="ent">The entity to gib.</param>
-    /// <param name="giblets">A hashset of giblets this entity dropped. Not null if the gibbing was successful.</param>
-    /// <param name="dropGiblets">Whether or not to drop giblets.</param>
-    /// <param name="user">The user gibbing the entity, if any.</param>
-    /// <returns>True if the entity was gibbed, otherwise False.</returns>
-    public bool TryGib(EntityUid ent, [NotNullWhen(true)] out HashSet<EntityUid>? giblets, bool dropGiblets = true, EntityUid? user = null)
-    {
-        giblets = null;
-
-        var ev = new AttemptGibEvent();
-        RaiseLocalEvent(ent, ref ev);
-
-        if (ev.Cancelled)
-            return false;
-
-        giblets = Gib(ent, dropGiblets, user);
-
-        return true;
-    }
 
     /// <summary>
     /// Gibs an entity.
@@ -98,12 +68,6 @@ public sealed partial class GibbingSystem : EntitySystem
         _physics.ApplyLinearImpulse(target, scatterVec);
     }
 }
-
-/// <summary>
-/// Raised on an entity when it attempts to gib.
-/// </summary>
-[ByRefEvent]
-public record struct AttemptGibEvent(bool Cancelled);
 
 /// <summary>
 /// Raised on an entity when it is being gibbed.

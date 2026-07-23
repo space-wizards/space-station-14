@@ -33,12 +33,6 @@ public sealed partial class ChangelingResilienceSystem : EntitySystem
         args.Cancelled |= ent.Comp.PreventConversion;
     }
 
-    [SubscribeLocalEvent]
-    private void OnGibAttempt(Entity<ChangelingResilienceComponent> ent, ref AttemptGibEvent args)
-    {
-        args.Cancelled |= ent.Comp.PreventGibbing;
-    }
-
     private void UpdateOrgans(Entity<ChangelingResilienceComponent> ent)
     {
         if (!TryComp<ContainerManagerComponent>(ent, out var containerComp))
