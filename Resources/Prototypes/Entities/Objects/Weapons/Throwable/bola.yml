@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: [BaseItem, BaseSecurityContraband]
   id: BaseBola
-  abstract: true
   name: bola
   components:
   - type: Item
