@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Components;
@@ -37,6 +38,7 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
     [Dependency] private SharedMindSystem _mind = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SharedDestructibleSystem _destructible = default!;
+    [Dependency] private readonly DamageableSystem _damage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -155,23 +157,32 @@ public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSys
         if (component.ReclaimMaterials)
             SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
-        if (!_destructible.CanDestroy(item))
-            return;
-
         var playSound = true;
 
-        if (CanGib(uid, item, component))
+        if (CanDamageAndGib(uid, item, component))
         {
-            var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity}");
+            var didBloody = false;
 
-            playSound = false; // Gibbing already make the noise!
+            if (component.DamageOnEmag is not null && _damage.TryChangeDamage(item, component.DamageOnEmag, false)) // It shouldn't ignore resistance
+                didBloody = true;
 
-            _gibbing.Gib(item);
-            _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
+            if (_destructible.CanDestroy(item) && component.GibOnEmag)
+            {
+                var logImpact = HasComp<HumanoidProfileComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
+                _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity}");
+
+                playSound = false; // Gibbing already make the noise!
+
+                _gibbing.Gib(item);
+
+                didBloody = true;
+            }
+
+            if (didBloody)
+                _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
         }
 
-        if (component.ReclaimSolutions)
+        if (_destructible.CanDestroy(item) && component.ReclaimSolutions)
             SpawnChemicalsFromComposition(uid, item, completion, playSound, component, xform);
 
         _destructible.DestroyEntity(item);
