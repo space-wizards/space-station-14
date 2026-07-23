@@ -25,6 +25,7 @@ using Content.Shared.Nutrition;
 using Content.Shared.Overlays;
 using Content.Shared.Projectiles;
 using Content.Shared.Radio;
+using Content.Shared.Screech;
 using Content.Shared.Slippery;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
@@ -85,6 +86,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, UnwieldAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, BeforeHeatExchangeEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ScreechEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNightVisionEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GluedEffectAttemptEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, LubedEffectAttemptEvent>(RefRelayInventoryEvent);
