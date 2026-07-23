@@ -25,11 +25,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
-        SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
+        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChange);
+        SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
+
+        SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyes);
         SubscribeNetworkEvent<OpenEyesEvent>(OnOpenEyes);
-        SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(ComponentInitHandler);
     }
 
     private void OnOpenEyes(OpenEyesEvent ev)
@@ -47,7 +48,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Initial eyelid initialization for all entities that should blink.
     /// </summary>
-    private void ComponentInitHandler(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
+    private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
     {
         InitEyeBlinking(ent);
     }
@@ -55,7 +56,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Initializes eyelids following the <see cref="ApplyOrganMarkingsEvent">, when the entity receives skin color data for its organs
     /// </summary>
-    private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
@@ -161,7 +162,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Handles the appearance change event for entities with the <see cref="EyeBlinkingComponent"/>. This method checks if the eye state has changed (open or closed) and updates the eyelid layers accordingly. If the eyes are closed or if a blink is not in progress, it changes the eye state immediately. Otherwise, it allows the blink to complete before changing the state.
     /// </summary>
-    private void OnApperanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
+    private void OnApperanceChange(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
         if (!(args.AppearanceData.TryGetValue(EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
             return;
@@ -177,7 +178,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// <summary>
     /// Handles the blink eye event received from the network. This method retrieves the entity associated with the event and checks if it has a valid <see cref="EyeBlinkingComponent"/>. If the entity is valid and has the component, it initiates a blink action for that entity.
     /// </summary>
-    private void OnBlinkEyeEvent(BlinkEyeEvent ev)
+    private void OnBlinkEyes(BlinkEyeEvent ev)
     {
         var ent = GetEntity(ev.NetEntity);
 

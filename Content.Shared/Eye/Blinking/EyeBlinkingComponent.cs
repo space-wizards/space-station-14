@@ -115,10 +115,4 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool EyesClosed = false;
-
-    /// <summary>
-    /// Whether the entity's eyes are currently closed. This is used to determine if the entity can see or not.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Init = false;
 }
