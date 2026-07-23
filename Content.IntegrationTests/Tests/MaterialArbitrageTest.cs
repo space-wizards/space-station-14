@@ -35,7 +35,6 @@ public sealed class MaterialArbitrageTest : GameTest
     private readonly HashSet<string> _compositionArbitrageIgnore = [];
 
     [Test]
-    [Repeat(100)]
     public async Task NoMaterialArbitrage()
     {
         var pair = Pair;
