@@ -1,5 +1,4 @@
 using Content.Shared.Changeling.Systems;
-using Content.Shared.Metabolism;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 

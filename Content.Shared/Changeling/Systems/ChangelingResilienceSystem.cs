@@ -2,10 +2,7 @@
 using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
 using Content.Shared.Destructible;
-using Content.Shared.Gibbing;
-using Content.Shared.Metabolism;
 using Content.Shared.Revolutionary;
-using Content.Shared.Species.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Changeling.Systems;
