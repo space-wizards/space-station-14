@@ -1,0 +1,154 @@
+- type: entity
+  parent: BaseItem
+  id: BaseCards
+  name: Deck of Cards
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Cards
+    cards: []
+    maxFanned: 10
+  - type: Stack
+    stackType: CardsStack
+    baseLayer: base
+    halfOnAltInteract: false
+    animatePickup: false
+    layerStates:
+    - deck_single
+    - deck_nanotrasen_low
+    - deck_nanotrasen_half
+    - deck_nanotrasen_full
+    count: 1
+    throwIndividually: true
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [2, 20, 35]
+  - type: Sprite
+    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    state: deck_single
+    layers:
+    - state: deck_single
+      map: ["base"]
+  - type: Item
+    sprite: Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi
+    size: Normal
+    state: deck_single
+  - type: Appearance
+
+- type: entity
+  id: standardDeck
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Cards
+      cards:
+        - ace_of_clubs
+        - two_of_clubs
+        - three_of_clubs
+        - four_of_clubs
+        - five_of_clubs
+        - six_of_clubs
+        - seven_of_clubs
+        - eight_of_clubs
+        - nine_of_clubs
+        - ten_of_clubs
+        - jack_of_clubs
+        - queen_of_clubs
+        - king_of_clubs
+        - ace_of_diamonds
+        - two_of_diamonds
+        - three_of_diamonds
+        - four_of_diamonds
+        - five_of_diamonds
+        - six_of_diamonds
+        - seven_of_diamonds
+        - eight_of_diamonds
+        - nine_of_diamonds
+        - ten_of_diamonds
+        - jack_of_diamonds
+        - queen_of_diamonds
+        - king_of_diamonds
+        - ace_of_hearts
+        - two_of_hearts
+        - three_of_hearts
+        - four_of_hearts
+        - five_of_hearts
+        - six_of_hearts
+        - seven_of_hearts
+        - eight_of_hearts
+        - nine_of_hearts
+        - ten_of_hearts
+        - jack_of_hearts
+        - queen_of_hearts
+        - king_of_hearts
+        - ace_of_spades
+        - two_of_spades
+        - three_of_spades
+        - four_of_spades
+        - five_of_spades
+        - six_of_spades
+        - seven_of_spades
+        - eight_of_spades
+        - nine_of_spades
+        - ten_of_spades
+        - jack_of_spades
+        - queen_of_spades
+        - king_of_spades
+
+- type: entity
+  parent: [standardDeck, BaseCards]
+  id: cardDeck
+  name: Deck of Cards
+  components:
+    - type: Stack
+      count: 52
+    - type: Sprite
+      state: deck_nanotrasen_full
+
+- type: stack
+  id: CardsStack
+  maxCount: 52
+  spawn: BaseCards
+  icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }
+
+
+
+- type: entity
+  parent: [standardDeck, syndiBaseCards]
+  id: syndiCards
+  name: Deck of Syndicate Cards
+  components:
+    - type: Stack
+      count: 52
+
+- type: entity
+  parent: [ BaseCards, BaseSyndicateContraband ]
+  id: syndiBaseCards
+  name: Deck of Syndicate Cards
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Cards
+      cardBack: syndi_backside
+      baseState: syndi_base
+    - type: Stack
+      stackType: SyndicateCardsStack
+      layerStates:
+      - deck_single
+      - deck_syndicate_low
+      - deck_syndicate_half
+      - deck_syndicate_full
+      count: 1
+    - type: Sprite
+      state: deck_syndicate_full
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Piercing: 10
+          Slash: 8
+    - type: EmbeddableProjectile
+      offset: 0.0,0.0
+    - type: LandAtCursor
+
+- type: stack
+  id: SyndicateCardsStack
+  maxCount: 52
+  spawn: syndiBaseCards
+  icon: { sprite: /Textures/Objects/Fun/PlayingCards/nanotrasenbasiccards.rsi, state: deck_single }

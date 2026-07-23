@@ -1,0 +1,104 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e5ed72520eb453c116ccd96f8495af683aabcde4",
+    "size": {
+        "x": 24,
+        "y": 24
+    },
+    "states": [
+        {
+            "name": "deck_single"
+        },
+        {
+            "name": "deck_nanotrasen_low"
+        },
+        {
+            "name": "deck_nanotrasen_half"
+        },
+        {
+            "name": "deck_nanotrasen_full"
+        },
+        {
+            "name": "deck_syndicate_low"
+        },
+        {
+            "name": "deck_syndicate_half"
+        },
+        {
+            "name": "deck_syndicate_full"
+        },
+        {
+            "name": "sc_Ace_of_Clubs"
+        },
+        {
+            "name": "sc_Ace_of_Diamonds"
+        },
+        {
+            "name": "sc_Ace_of_Hearts"
+        },
+        {
+            "name": "sc_Ace_of_Spades"
+        },
+        {
+            "name": "sc_Hearts"
+        },
+        {
+            "name": "sc_Clubs"
+        },
+        {
+            "name": "sc_Spades"
+        },
+        {
+            "name": "sc_Diamonds"
+        },
+        {
+            "name": "sc_2"
+        },
+        {
+            "name": "sc_3"
+        },
+        {
+            "name": "sc_4"
+        },
+        {
+            "name": "sc_5"
+        },
+        {
+            "name": "sc_6"
+        },
+        {
+            "name": "sc_7"
+        },
+        {
+            "name": "sc_8"
+        },
+        {
+            "name": "sc_9"
+        },
+        {
+            "name": "sc_10"
+        },
+        {
+            "name": "sc_base"
+        },
+        {
+            "name": "syndi_base"
+        },
+        {
+            "name": "sc_Jack"
+        },
+        {
+            "name": "sc_King"
+        },
+        {
+            "name": "sc_Queen"
+        },
+        {
+            "name": "sc_backside"
+        },
+        {
+            "name": "syndi_backside"
+        }
+    ]
+}
