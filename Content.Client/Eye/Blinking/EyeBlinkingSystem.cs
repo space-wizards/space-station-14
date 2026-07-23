@@ -58,8 +58,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// </summary>
     private void OnAfterAutoHandleState(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
         InitEyeBlinking(ent);
     }
 

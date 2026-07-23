@@ -145,9 +145,9 @@
   - TemperatureProtection
   - TypingIndicator
   - ScaleVisuals # for dwarf height
-  - EyeBlinking # for rsiPath and other blinking settings
   eventComponents:
   # these need special treatment in the event subscription
+  - EyeBlinking # for rsiPath and other blinking settings
   - Inventory # arachnid pockets and diona feet
   - Wagging # lizard tails
   - Storage # slime storage

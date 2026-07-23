@@ -3,9 +3,11 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Body;
 using Content.Shared.Changeling;
 using Content.Shared.Chat;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
+using Content.Shared.Wagging;
 using Robust.Shared.Graphics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -23,7 +25,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<EyeBlinkingComponent, BlindnessChangedEvent>(OnBlindnessChanged);
         SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<EyeBlinkingComponent, AfterChangelingTransformEvent>(OnAfterChangelingTransform);
         SubscribeLocalEvent<EyeBlinkingComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<EyeBlinkingComponent, ApplyOrganMarkingsEvent>(OnApplyOrganMarking);
 
@@ -34,6 +35,18 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(OnSleepStateChanged);
 
+        SubscribeLocalEvent<EyeBlinkingComponent, CloningEvent>(OnCloning);
+    }
+
+    private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref MapInitEvent args)
+    {
+        _actionsSystem.AddAction(ent, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+    }
+
+    private void OnShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
+    {
+
+        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
     }
 
     private void OnSleepStateChanged(Entity<EyeBlinkingComponent> ent, ref SleepStateChangedEvent args)
@@ -79,15 +92,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         Dirty(ent);
     }
 
-    /// <summary>
-    /// Handles changeling transformation/cloning and enables the component if it was copied from a dead original in a disabled state.
-    /// </summary>
-    private void OnAfterChangelingTransform(Entity<EyeBlinkingComponent> ent, ref AfterChangelingTransformEvent args)
-    {
-        ent.Comp.Enabled = true;
-        Dirty(ent);
-    }
-
     private void OnEmote(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
     {
         if (!ent.Comp.BlinkEmoteId.Contains(args.Emote.ID))
@@ -103,6 +107,18 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnMobStateChanged(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)
     {
         SetEnabled(ent, args.NewMobState != MobState.Dead);
+        // Remove action if entity dead.
+        if (args.NewMobState == MobState.Dead)
+        {
+            if (ent.Comp.EyeToggleActionEntity != null)
+            {
+                _actionsSystem.RemoveAction(ent.Owner, ent.Comp.EyeToggleActionEntity);
+            }
+        }
+        if (ent.Comp.EyeToggleActionEntity == null)
+        {
+            _actionsSystem.AddAction(ent, ref ent.Comp.EyeToggleActionEntity, ent.Comp.EyeToggleAction);
+        }
     }
 
     private void OnBlindnessChanged(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
@@ -135,27 +151,16 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         Dirty(ent);
     }
 
-    private void OnMapInit(Entity<EyeBlinkingComponent> eye, ref MapInitEvent args)
-    {
-        _actionsSystem.AddAction(eye, ref eye.Comp.EyeToggleActionEntity, eye.Comp.EyeToggleAction);
-        Dirty(eye);
-    }
-
-    private void OnShutdown(Entity<EyeBlinkingComponent> eye, ref ComponentShutdown args)
-    {
-        _actionsSystem.RemoveAction(eye.Owner, eye.Comp.EyeToggleActionEntity);
-    }
-
-    private void OnToggleAction(Entity<EyeBlinkingComponent> eye, ref ToggleEyesActionEvent args)
+    private void OnToggleAction(Entity<EyeBlinkingComponent> ent, ref ToggleEyesActionEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
 
-        eye.Comp.EyesClosed = !eye.Comp.EyesClosed;
+        ent.Comp.EyesClosed = !ent.Comp.EyesClosed;
 
-        _blindableSystem.UpdateIsBlind(eye.Owner);
+        _blindableSystem.UpdateIsBlind(ent.Owner);
     }
 
     private void OnTrySee(Entity<EyeBlinkingComponent> ent, ref CanSeeAttemptEvent args)
@@ -164,6 +169,32 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
             args.Cancel();
     }
 
+    private void OnCloning(Entity<EyeBlinkingComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        // Make sure to set the datafields before adding the component so that the correct action gets spawned on map init.
+        var cloneComp = Factory.GetComponent<EyeBlinkingComponent>();
+        cloneComp.EyeToggleAction = ent.Comp.EyeToggleAction;
+
+        cloneComp.Enabled = true;
+        cloneComp.EyesClosed = false;
+
+        cloneComp.EyelidsSprite = ent.Comp.EyelidsSprite;
+        cloneComp.EyelidsColor = ent.Comp.EyelidsColor;
+
+        cloneComp.MaxAsyncBlink = ent.Comp.MaxAsyncBlink;
+        cloneComp.MaxAsyncOpenBlink = ent.Comp.MaxAsyncOpenBlink;
+
+        cloneComp.MinBlinkDuration = ent.Comp.MinBlinkDuration;
+        cloneComp.MinBlinkInterval = ent.Comp.MinBlinkInterval;
+
+
+        cloneComp.BlinkSkinColorMultiplier = ent.Comp.BlinkSkinColorMultiplier;
+        AddComp(args.CloneUid, cloneComp, true);
+        _blindableSystem.UpdateIsBlind(args.CloneUid);
+    }
 }
 
 /// <summary>
