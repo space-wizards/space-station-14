@@ -1,10 +1,11 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Species.Components;
 /// <summary>
 /// This will replace one entity with another entity when it is removed from a body part.
-/// Obviously hyper-specific. If you somehow find another use for this, good on you. 
+/// Obviously hyper-specific. If you somehow find another use for this, good on you.
 /// </summary>
 
 [RegisterComponent, NetworkedComponent]
@@ -21,4 +22,10 @@ public sealed partial class NymphComponent : Component
     /// </summary>
     [DataField]
     public bool TransferMind = false;
+
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }
