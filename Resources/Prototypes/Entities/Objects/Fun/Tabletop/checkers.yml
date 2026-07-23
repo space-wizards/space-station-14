@@ -34,7 +34,7 @@
 - type: entity
   parent: BaseTabletopPiece
   id: CheckerPieceWhite
-  name: white checker piece
+  name: white checkers piece
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -44,7 +44,7 @@
 - type: entity
   parent: BaseTabletopPiece
   id: CheckerCrownWhite
-  name: white checker crown
+  name: white checkers king
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
 - type: entity
   parent: BaseTabletopPiece
   id: CheckerPieceBlack
-  name: black checker piece
+  name: black checkers piece
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -64,7 +64,7 @@
 - type: entity
   parent: BaseTabletopPiece
   id: CheckerCrownBlack
-  name: black checker crown
+  name: black checkers king
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
