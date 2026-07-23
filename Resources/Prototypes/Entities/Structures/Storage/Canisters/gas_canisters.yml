@@ -663,7 +663,7 @@
       materialComposition:
         Plasteel: 200
     - type: StaticPrice
-      price: 200
+      price: 125
 
 - type: entity
   parent: GasCanisterBrokenBase

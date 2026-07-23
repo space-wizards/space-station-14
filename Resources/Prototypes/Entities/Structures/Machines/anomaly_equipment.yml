@@ -296,7 +296,7 @@
     boardName: wires-board-name-anomalygenerator
     layoutId: AnomalyGenerator
 #  - type: Injurable                        Indestructible because
-#    damageContainer: StructuralBiological
+#    damageContainer: StructuralInorganic
 #  - type: Damageable
 #    damageModifierSet: PlastitaniumMod
   - type: ActivatableUI

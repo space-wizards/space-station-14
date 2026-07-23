@@ -234,7 +234,10 @@
         spawn:
           MaterialSheetMeat1: &BaseWallSpawn
             min: 0
-            max: 2
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
   - type: IconSmooth
     key: walls
     base: meat
@@ -267,7 +270,7 @@
     base: cult
 
 - type: entity
-  parent: BaseWall
+  parent: [ BaseWall, BaseStructureHealth ]
   id: WallDebug
   name: debug wall
   suffix: DEBUG
@@ -349,6 +352,9 @@
           collection: MetalSlam
           params:
             volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1: *BaseWallSpawn
   - type: Fixtures
     fixtures:
       fix1:
@@ -415,6 +421,9 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasma1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: plasma
@@ -558,6 +567,9 @@
       - &ChangeNodeReinforcedGirder !type:ChangeConstructionNodeBehavior
         node: reinforcedGirder
       - *SoundMetalSlam
+      - &SpawnPlasteel !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: reinf_over
@@ -628,6 +640,7 @@
       behaviors:
       - *ChangeNodeReinforcedGirder
       - *SoundMetalSlam
+      - *SpawnPlasteel
   - type: RadiationBlocker
     resistance: 5
 
@@ -649,6 +662,7 @@
       behaviors:
       - *SoundMetalSlam
       - *SpawnGirder
+      - *SpawnPlasteel
   - type: IconSmooth
     key: walls
     base: riveted
@@ -710,6 +724,9 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotSilver1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: silver
@@ -757,6 +774,7 @@
       behaviors:
       - *ChangeNodeReinforcedGirder
       - *SoundMetalSlam
+      - *SpawnPlasteel
   - type: Construction
     graph: Girder
     node: diagonalshuttleWall
@@ -778,6 +796,7 @@
       behaviors:
       - *ChangeNodeReinforcedGirder
       - *SoundMetalSlam
+      - *SpawnPlasteel
   - type: StaticPrice
     price: 300
   - type: RadiationBlocker
@@ -846,6 +865,9 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - &SpawnSteel !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1: *BaseWallSpawn
   - type: IconSmooth
     key: walls
     base: solid
@@ -868,6 +890,7 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - *SpawnSteel
 
 - type: entity
   parent: WallSolid
@@ -900,6 +923,7 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - *SpawnSteel
   - type: Sprite
     sprite: Structures/Walls/xeno.rsi
   - type: Icon
@@ -933,6 +957,7 @@
       behaviors:
       - *ChangeNodeReinforcedGirder
       - *SoundMetalSlam
+      - *SpawnPlasteel
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -1003,6 +1028,9 @@
       behaviors:
       - *ChangeNodeGirder
       - *SoundMetalSlam
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetUranium1: *BaseWallSpawn
   - type: Fixtures
     fixtures:
       fix1:
@@ -1046,6 +1074,9 @@
           collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
         node: Barricade
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1: *BaseWallSpawn
   - type: IconSmooth
     key: woods
     base: wood
@@ -1079,6 +1110,9 @@
       - !type:PlaySoundBehavior
         sound:
           collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk1: *BaseWallSpawn
   - type: IconSmooth
     key: webs
     base: wall
@@ -1458,7 +1492,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          MaterialCardboard: *BaseWallSpawn
+          MaterialCardboard1: *BaseWallSpawn
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/poster_broken.ogg

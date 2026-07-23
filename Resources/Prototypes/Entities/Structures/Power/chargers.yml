@@ -322,9 +322,6 @@
         !type:DamageTrigger
         damage: 175
       behaviors:
-      - !type:EmptyContainersBehaviour
-        containers:
-        - entity_storage
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak

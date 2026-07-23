@@ -818,7 +818,7 @@
 #Debug
 
 - type: entity
-  parent: TableBase
+  parent: [ TableBase, BaseStructureHealth ]
   id: TableDebug
   name: table
   description: PUT ON THEM CODERSOCKS!!
@@ -828,9 +828,6 @@
     sprite: Structures/Furniture/Tables/debug.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/debug.rsi
-  - type: Damageable
-  - type: Injurable
-    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

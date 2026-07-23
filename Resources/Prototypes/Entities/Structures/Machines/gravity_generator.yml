@@ -78,7 +78,7 @@
     fuelCost: 10
     doAfterDelay: 5
 #  - type: Injurable                          Indestructible because
-#    damageContainer: StructuralBiological
+#    damageContainer: StructuralInorganic
 #  - type: Damageable
 #    damageModifierSet: PlastitaniumMod
 

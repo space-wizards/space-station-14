@@ -127,8 +127,8 @@
           - MachineBoard
 
 - type: entity
+  parent: [ BaseStructureDynamic, StructureHealthMachineFlimsy ]
   id: MachineFrameDestroyed
-  parent: BaseStructureDynamic
   name: destroyed machine frame
   placement:
     mode: SnapgridCenter
@@ -143,22 +143,18 @@
     graph: Machine
     node: destroyedMachineFrame
   - type: Damageable
-    damageModifierSet: Metallic
-  - type: Injurable
-    damageContainer: StructuralInorganic
+    damageModifierSet: SteelMod
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
             min: 1
             max: 3
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Sprite
     sprite: Structures/Machines/parts.rsi
     state: destroyed

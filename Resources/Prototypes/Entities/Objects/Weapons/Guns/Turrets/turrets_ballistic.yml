@@ -117,7 +117,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/gib1.ogg
+          collection: gib
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatXeno:

@@ -106,11 +106,11 @@
           SheetSteel1:
             min: 0
             max: 1
-      - !type:ChangeConstructionNodeBehavior
-        node: frame
       - !type:EmptyContainersBehaviour
         containers:
         - DisposalUnitComponent
+      - !type:ChangeConstructionNodeBehavior
+        node: frame
   - type: Appearance
   - type: UserInterface
     interfaces:
