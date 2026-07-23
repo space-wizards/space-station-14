@@ -315,8 +315,7 @@ public sealed partial class MetabolizerSystem : EntitySystem
             return false;
 
         // If there is no metabolizer types, we still want to add one.
-        if (ent.Comp.MetabolizerTypes == null)
-            ent.Comp.MetabolizerTypes = new HashSet<ProtoId<MetabolizerTypePrototype>>();
+        ent.Comp.MetabolizerTypes ??= new HashSet<ProtoId<MetabolizerTypePrototype>>();
 
         return ent.Comp.MetabolizerTypes.Add(metabolizer);
     }
