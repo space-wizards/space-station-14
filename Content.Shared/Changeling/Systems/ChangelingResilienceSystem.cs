@@ -24,7 +24,7 @@ public sealed partial class ChangelingResilienceSystem : EntitySystem
 
     private void OnMapInit(Entity<ChangelingResilienceComponent> ent, ref MapInitEvent args)
     {
-        if (ent.Comp.AppendedMetabolizer != null || ent.Comp.OrganRemovedComponents != null)
+        if (ent.Comp.OrganRemovedComponents != null)
             UpdateOrgans(ent);
     }
 
@@ -64,9 +64,6 @@ public sealed partial class ChangelingResilienceSystem : EntitySystem
 
         foreach (var organ in organs)
         {
-            if (TryComp<MetabolizerComponent>(organ, out var metabolizer) && ent.Comp.AppendedMetabolizer != null)
-                _metabolizer.TryAddMetabolizerType((organ, metabolizer), ent.Comp.AppendedMetabolizer.Value);
-
             if (ent.Comp.OrganRemovedComponents != null)
                 EntityManager.RemoveComponents(organ, ent.Comp.OrganRemovedComponents);
         }

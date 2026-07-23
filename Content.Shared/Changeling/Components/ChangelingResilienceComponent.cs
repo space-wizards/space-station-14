@@ -32,12 +32,5 @@ public sealed partial class ChangelingResilienceComponent : Component
     [DataField]
     public ComponentRegistry? OrganRemovedComponents;
 
-    /// <summary>
-    /// What metabolizer should be added to all organs on the owning entity.
-    /// Happens on map init.
-    /// </summary>
-    [DataField]
-    public ProtoId<MetabolizerTypePrototype>? AppendedMetabolizer = "Changeling";
-
     public override bool SendOnlyToOwner => true;
 }
