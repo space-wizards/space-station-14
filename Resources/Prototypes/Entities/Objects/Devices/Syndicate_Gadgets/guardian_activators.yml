@@ -9,7 +9,7 @@
     state: combat_hypo
   - type: GuardianCreator
     guardians:
-    - GuardianBaseFist
+    - GuardianBaseFighter
     - GuardianBaseHeal
     - GuardianBaseNuke
     - GuardianBaseSword
@@ -21,8 +21,9 @@
   description: A complex artwork of handheld machinery allowing the user to host a holoclown guardian.
   components:
   - type: GuardianCreator
+    canChoose: false
     guardians:
-    - GuardianBaseFist
+    - GuardianBaseFighter
     - GuardianBaseHeal
     - GuardianBaseNuke
     - GuardianBaseSword
@@ -39,7 +40,7 @@
       - state: lamp
   - type: GuardianCreator
     guardians:
-    - GuardianBaseFist
+    - GuardianBaseFighter
     emptyPopup: guardian-deck-invalid-creation
     emptyExamine: guardian-deck-used-examine
     usedSound: /Audio/Effects/guardian_deck_shuffle.ogg
@@ -89,13 +90,13 @@
 # Holoparasites
 
 - type: guardianEntry
-  id: GuardianBaseFist
+  id: GuardianBaseFighter
   icon:
     sprite: Interface/Actions/guardian.rsi
     state: fist
   description: guardian-desc-fist
   title: guardian-title-fist
-  guardian: MobHoloparasiteGuardian
+  guardian: MobFighterGuardian
 
 - type: guardianEntry
   id: GuardianBaseHeal

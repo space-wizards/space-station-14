@@ -106,11 +106,46 @@
       - NamesLastGuardian
       nameFormat: name-format-standard
 
-# From the uplink injector
 - type: entity
-  name: Holoparasite
-  id: MobHoloparasiteGuardian
-  parent: MobGuardianBase
+  name: Fighter
+  id: MobFighterGuardianBase
+  parent: MobFighterBase
+  description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-holoparasite-name
+      description: ghost-role-information-holoparasite-description
+      rules: ghost-role-information-familiar-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+    - type: NameIdentifier
+      group: Holoparasite
+    - type: TypingIndicator
+      proto: holo
+    - type: Sprite
+      layers:
+        - state: tech_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: tech_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#40a7d7"
+          shader: unshaded
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.BaseUnshaded:
+            tech_flare: Rainbow
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  name: Fighter
+  id: MobFighterGuardianBase
+  parent: MobFighterBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
@@ -145,7 +180,7 @@
 
 - type: entity
   name: Duelist
-  id: MobSwordGuardian
+  id: MobSwordGuardianBase
   parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
@@ -182,9 +217,9 @@
 
 # From Wizard deck of cards
 - type: entity
-  name: Ifrit
-  parent: MobGuardianBase
-  id: MobIfritGuardian
+  name: Healer
+  parent: MobHealerGuardianBase
+  id: MobHealerGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into its owner's life to sustain itself.
   components:
     - type: GhostRole
