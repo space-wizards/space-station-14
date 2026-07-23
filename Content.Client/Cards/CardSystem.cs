@@ -1,20 +1,10 @@
-using System.Linq;
 using System.Numerics;
-using Content.Client.Gameplay;
-using Content.Client.Stack;
-using Content.Client.Storage.Systems;
 using Content.Shared.Cards;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
-using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
-using Robust.Client.State;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Cards;
 
@@ -23,19 +13,7 @@ namespace Content.Client.Cards;
 public sealed partial class CardSystem : SharedCardSystem
 {
     [Dependency]
-    private SharedStorageSystem _storage = default!;
-
-    [Dependency]
     private SpriteSystem _sprite = default!;
-
-    [Dependency]
-    private IStateManager _stateManager = default!;
-
-    [Dependency]
-    private StackSystem _stacks = default!;
-
-    [Dependency]
-    private ItemCounterSystem _counterSystem = default!;
 
     [Dependency]
     private IPlayerManager _playerManager = default!;
@@ -130,9 +108,9 @@ public sealed partial class CardSystem : SharedCardSystem
             var (baseLayer, layerOne, layerTwo) = CardLayers(i);
             if (!_sprite.LayerExists((uid, sprite), baseLayer))
                 break;
-            _sprite.RemoveLayer((uid, sprite), baseLayer, false);
-            _sprite.RemoveLayer((uid, sprite), layerOne, false);
-            _sprite.RemoveLayer((uid, sprite), layerTwo, false);
+            _sprite.RemoveLayer((uid, sprite), baseLayer);
+            _sprite.RemoveLayer((uid, sprite), layerOne);
+            _sprite.RemoveLayer((uid, sprite), layerTwo);
         }
 
         for (var i = 0; i < count; i++)
@@ -170,9 +148,6 @@ public sealed partial class CardSystem : SharedCardSystem
             // Moves the stack texture below the left most card
             if (i == 0)
                 TransformLayer("base", position, rotation, (uid, sprite));
-
-            if (i == count - 1)
-                TransformLayer("base_2", position, rotation, (uid, sprite));
         }
     }
 

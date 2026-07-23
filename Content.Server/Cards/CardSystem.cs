@@ -1,9 +1,5 @@
 using Content.Shared.Cards;
-using Content.Shared.Stacks;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Cards;
 

@@ -1,6 +1,4 @@
 using Content.Shared.Stacks;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cards;
