@@ -126,7 +126,7 @@
     state: nuke
   description: guardian-desc-nuke
   title: guardian-title-nuke
-  guardian: MobNukeGuardianBase
+  guardian: MobExplosiveGuardianBase
 
 # Djinns
 - type: guardianEntry
@@ -163,6 +163,6 @@
     state: nuke
   description: guardian-desc-nuke
   title: guardian-title-nuke
-  guardian: MobNukeGuardianWizard
+  guardian: MobExplosiveGuardianWizard
 
 # Holoclown
