@@ -10,9 +10,9 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public sealed partial class FingerGunsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private INetManager _net = default!;
 
     public override void Initialize()
     {
