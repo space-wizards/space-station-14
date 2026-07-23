@@ -267,7 +267,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
-        // The NeedFreeHand arg requires us to have our active hand empty, and to stay on that same hand.
+        // The NeedFreeHand arg requires us to have our active hand empty.
         if (args.NeedHand && (args.BreakOnHandChange || args.BreakOnDropItem))
         {
             if (!TryComp(args.User, out HandsComponent? handsComponent))
