@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Body;
 using Content.Shared.Changeling.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Gibbing;
 using Content.Shared.Metabolism;
 using Content.Shared.Revolutionary;
@@ -25,6 +26,18 @@ public sealed partial class ChangelingResilienceSystem : EntitySystem
     {
         if (ent.Comp.AppendedMetabolizer != null || ent.Comp.OrganRemovedComponents != null)
             UpdateOrgans(ent);
+    }
+
+    /// <summary>
+    /// Prevent destruction via non-ashing sources, if appropriate.
+    /// </summary>
+    /// <param name="ent">Changeling entity.</param>
+    /// <param name="args">The destruction event args. Canceled if the component is set to disable gibbing.</param>
+    [SubscribeLocalEvent]
+    private void OnDestruction(Entity<ChangelingResilienceComponent> ent, ref DestructionAttemptEvent args)
+    {
+        if (ent.Comp.PreventGibbing)
+            args.Cancel();
     }
 
     [SubscribeLocalEvent]

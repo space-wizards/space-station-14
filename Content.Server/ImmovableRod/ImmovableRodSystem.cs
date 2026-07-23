@@ -133,6 +133,7 @@ public sealed partial class ImmovableRodSystem : EntitySystem
                 return;
             }
 
+            _gibbing.Gib(ent);
             _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
 
         }
