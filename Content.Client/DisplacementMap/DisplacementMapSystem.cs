@@ -114,7 +114,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
         _sprite.SetAsParent(sprite, index, index + 1);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
 
-        _spriteDirection.RegenerateCachedOverrides(sprite.Owner);
+        _spriteDirection.DirtyCachedOverrides(sprite.Owner);
 
         return true;
     }
@@ -133,7 +133,7 @@ public sealed partial class DisplacementMapSystem : EntitySystem
 
         if (_sprite.RemoveLayer(sprite.AsNullable(), displacementLayerKey, false))
         {
-            _spriteDirection.RegenerateCachedOverrides(sprite.Owner);
+            _spriteDirection.DirtyCachedOverrides(sprite.Owner);
             return true;
         }
 

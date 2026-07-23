@@ -206,7 +206,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
         {
             _sprite.RemoveLayer(entity.AsNullable(), layer);
         }
-        _spriteDirection.RegenerateCachedOverrides((entity, null));
+        _spriteDirection.DirtyCachedOverrides((entity, null));
         revealedLayers.Clear();
     }
 
@@ -343,7 +343,7 @@ public sealed partial class ClientClothingSystem : ClothingSystem
             }
         }
 
-        _spriteDirection.RegenerateCachedOverrides(equipee);
+        _spriteDirection.DirtyCachedOverrides(equipee);
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
     }
 }

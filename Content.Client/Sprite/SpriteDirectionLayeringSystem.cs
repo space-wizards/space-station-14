@@ -8,43 +8,40 @@ namespace Content.Client.Sprite;
 
 public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
 {
-    [Dependency] private TransformSystem _xform = default!;
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IEyeManager _eyeManager = default!;
     [Dependency] private IReflectionManager _reflection = default!;
 
     private EntityQuery<SpriteComponent> _spriteQuery;
-    private EntityQuery<SpriteDirectionLayeringComponent> _spriteDirectionQuery;
 
     public override void Initialize()
     {
         _spriteQuery = GetEntityQuery<SpriteComponent>();
-        _spriteDirectionQuery = GetEntityQuery<SpriteDirectionLayeringComponent>();
     }
 
     public override void FrameUpdate(float frameTime)
     {
-        // This ensures the layer order override updates based on the entity's direction.
-        // However this is technically calculated twice, as SpriteSystem.Render does the same to determine which sprite to use for directional sprites.
-        // If you can figure out a way to not do this twice, let me know.
         var query = EntityQueryEnumerator<SpriteDirectionLayeringComponent, TransformComponent, SpriteComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform, out var sprite))
         {
-            var angle = _xform.GetWorldRotation(uid) + _eyeManager.CurrentEye.Rotation; // angle on-screen. Used to decide the direction of 4/8 directional RSIs
-            angle = angle.Reduced().FlipPositive();  // Reduce the angles to fix math shenanigans
-
-            var direction = SpriteComponent.Layer.GetDirection(RsiDirectionType.Dir4, angle);
-
-            if (direction == comp.PreviousDirection)
+            if (!comp.DirtyOverrides)
                 continue;
 
-            comp.PreviousDirection = direction;
-
-            if (comp.CachedLayerOverrides.TryGetValue(direction, out var layersOverride))
-            {
-                sprite.LayersOrderOverride = layersOverride;
-            }
+            RegenerateCachedOverrides((uid, comp));
+            comp.DirtyOverrides = false;
         }
+    }
+
+    /// <summary>
+    /// Marks an entity to have its cached layer overrides regenerated before rendering.
+    /// Must be ran whenever new layers have been added or removed to ensure the indexes point to the correct layers.
+    /// </summary>
+    /// <param name="entity">The entity to update the overrides of.</param>
+    public void DirtyCachedOverrides(Entity<SpriteDirectionLayeringComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        entity.Comp.DirtyOverrides = true;
     }
 
     /// <summary>
@@ -58,14 +55,12 @@ public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
         return keyString;
     }
 
-    /// <summary>
-    /// Regenerates the directional layer order overrides for an entity.
-    /// Must be ran whenever new layers have been added or removed to ensure the indexes point to the correct layers.
-    /// </summary>
-    /// <param name="entity">The entity to update the overrides of.</param>
-    public void RegenerateCachedOverrides(Entity<SpriteDirectionLayeringComponent?> entity)
+    private void RegenerateCachedOverrides(Entity<SpriteDirectionLayeringComponent?> entity)
     {
-        if (!_spriteQuery.TryComp(entity.Owner, out var sprite) || entity.Comp == null && !_spriteDirectionQuery.TryComp(entity.Owner, out entity.Comp))
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (!_spriteQuery.TryComp(entity.Owner, out var sprite) || entity.Comp == null)
             return;
 
         foreach (var (direction, list) in entity.Comp.DirectionLayers)
@@ -100,5 +95,7 @@ public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
 
             entity.Comp.CachedLayerOverrides[direction] = subList;
         }
+
+        _sprite.SetLayersOrderOverride((entity.Owner, sprite), entity.Comp.CachedLayerOverrides, entity.Comp.DirectionType);
     }
 }

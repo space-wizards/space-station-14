@@ -3,7 +3,7 @@
   id: BaseSpeciesLayers
   components:
   - type: Sprite
-    layers:
+    layers: # Make sure any changes here also get reflected in BaseMobDirectionalLayers
     # Torso
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
 

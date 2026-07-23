@@ -352,7 +352,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
             SpriteSystem.LayerSetColor(spriteEnt, newLayer, Color.FromHex(sprite.Color));
         SpriteSystem.LayerSetVisible(spriteEnt, newLayer, false);
 
-        _spriteDirection.RegenerateCachedOverrides(spriteEnt.Owner);
+        _spriteDirection.DirtyCachedOverrides(spriteEnt.Owner);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, DamageVisualsComponent damageVisComp, ref AppearanceChangeEvent args)
@@ -500,7 +500,7 @@ public sealed partial class DamageVisualsSystem : VisualizerSystem<DamageVisuals
         SpriteSystem.LayerSetVisible(spriteEnt.AsNullable(), spriteLayer, visibility);
         // this is somewhat iffy since it constantly reallocates
         damageVisComp.TopMostLayerKey = key;
-        _spriteDirection.RegenerateCachedOverrides(spriteEnt.Owner);
+        _spriteDirection.DirtyCachedOverrides(spriteEnt.Owner);
     }
 
     /// <summary>

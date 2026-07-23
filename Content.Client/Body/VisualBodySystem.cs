@@ -252,7 +252,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             applied.Add(marking);
         }
 
-        _spriteDirection.RegenerateCachedOverrides(target.Owner);
+        _spriteDirection.DirtyCachedOverrides(target.Owner);
         ent.Comp.AppliedMarkings = applied;
     }
 
@@ -289,7 +289,7 @@ public sealed partial class VisualBodySystem : SharedVisualBodySystem
             }
         }
 
-        _spriteDirection.RegenerateCachedOverrides(target.Owner);
+        _spriteDirection.DirtyCachedOverrides(target.Owner);
     }
 
     private void OnMarkingsChangedVisibility(Entity<VisualOrganMarkingsComponent> ent, ref BodyRelayedEvent<HumanoidLayerVisibilityChangedEvent> args)
