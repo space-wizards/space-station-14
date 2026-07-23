@@ -69,7 +69,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // Still allow changing the setting without power
         ent.Comp.Setting = setting;
         _audio.PlayPredicted(ent.Comp.SettingSound, ent, user);
-        _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
+        _popup.PopupEntity(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
         Dirty(ent);
 
         // Only show the glowing heating element layer if there's power

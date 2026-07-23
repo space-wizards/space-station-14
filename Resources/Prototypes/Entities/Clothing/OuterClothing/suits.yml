@@ -156,6 +156,7 @@
     - type: Stealth
       minVisibility: 0.1
       lastVisibility: 0.1
+      shimmerFrequency: 0.05
   - type: PowerCellDraw
     drawRate: 1.8 # 200 seconds on the default cell
   - type: ToggleCellDraw
@@ -269,8 +270,8 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: AddAccentClothing
-    accent: BarkAccent
+  - type: BarkAccent
+    relayAccent: true
 
 - type: entity
   parent: [ ClothingOuterBaseToggleable, AllowSuitStorageClothing ]

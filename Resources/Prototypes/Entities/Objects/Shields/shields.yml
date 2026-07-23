@@ -24,27 +24,32 @@
       damageContainer: Shield
     - type: ExaminableDamage
       messages: ShieldMessages
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 125 #This is probably enough damage before it breaks
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetSteel:
-              min: 2
-              max: 2
-            SheetGlass:
-              min: 2
-              max: 2
     - type: StaticPrice
       price: 100
+
+- type: entity
+  abstract: true
+  id: BaseShieldDestructible
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125 #This is probably enough damage before it breaks
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 2
+            max: 2
+          SheetGlass:
+            min: 2
+            max: 2
 
 - type: entity
   name: base repairable shield
@@ -68,7 +73,7 @@
 
 - type: entity
   name: riot shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseShieldDestructible, BaseSecurityContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
@@ -84,7 +89,7 @@
 
 - type: entity
   name: laser shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseShieldDestructible, BaseSecurityContraband ]
   id: RiotLaserShield
   description: A shield built for withstanding lasers, but not much else.
   components:
@@ -102,7 +107,7 @@
 
 - type: entity
   name: ballistic shield
-  parent: [ BaseRepairableShield, BaseSecurityContraband ]
+  parent: [ BaseRepairableShield, BaseShieldDestructible, BaseSecurityContraband ]
   id: RiotBulletShield
   description: A shield built for protecting against ballistics, but not much else.
   components:
@@ -268,7 +273,7 @@
 
 - type: entity
   name: clockwork shield
-  parent: BaseRepairableShield
+  parent: [ BaseRepairableShield, BaseShieldDestructible ]
   id: ClockworkShield
   description: Ratvar oyrffrf lbh jvgu uvf cebgrpgvba.
   components:
@@ -425,7 +430,7 @@
 
 - type: entity
   name: telescopic shield
-  parent: BaseRepairableShield
+  parent: [ BaseRepairableShield, BaseShieldDestructible ]
   id: TelescopicShield
   description: An advanced riot shield made of lightweight materials that collapses for easy storage.
   components:
