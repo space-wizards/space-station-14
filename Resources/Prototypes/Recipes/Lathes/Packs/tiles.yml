@@ -137,12 +137,6 @@
   - FloorTileItemCarpetClown
   - FloorTileItemCarpetOffice
 
-- type: latheRecipePack
-  id: PreciousTilesStatic
-  recipes:
-  - FloorTileItemGold
-  - FloorTileItemSilver
-
 ## Dynamic
 
 - type: latheRecipePack
