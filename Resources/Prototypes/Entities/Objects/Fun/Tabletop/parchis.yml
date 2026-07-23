@@ -12,11 +12,11 @@
     size: 574, 574
     setup:
       !type:TabletopParchisSetup
-      boardPrototype: &ParchisBoard ParchisBoardTabletop
+      boardPrototype: ParchisBoardTabletop
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *ParchisBoard
+  id: ParchisBoardTabletop
   name: parchís
   categories: [ HideSpawnMenu ]
   components:

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop;
 
@@ -6,14 +7,14 @@ namespace Content.Shared.Tabletop;
 public sealed partial class TabletopBackgammonSetup : TabletopSetup
 {
     [DataField]
-    public string WhitePiecePrototype { get; private set; } = "WhiteTabletopPiece";
+    public EntProtoId WhitePiecePrototype = "WhiteTabletopPiece";
 
     [DataField]
-    public string BlackPiecePrototype { get; private set; } = "BlackTabletopPiece";
+    public EntProtoId BlackPiecePrototype = "BlackTabletopPiece";
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {
-        var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
+        entityManager.SpawnEntity(BoardPrototype, session.Position);
 
         const float borderLengthX = 7.35f; //BORDER
         const float borderLengthY = 5.60f; //BORDER

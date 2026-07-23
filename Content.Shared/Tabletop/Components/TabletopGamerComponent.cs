@@ -9,6 +9,9 @@ namespace Content.Shared.Tabletop.Components;
 [Access(typeof(SharedTabletopSystem))]
 public sealed partial class TabletopGamerComponent : Component
 {
+    /// <summary>
+    /// The tabletop this entity is playing on.
+    /// </summary>
     [DataField]
     public EntityUid Tabletop = EntityUid.Invalid;
 }

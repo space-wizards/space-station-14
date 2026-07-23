@@ -24,7 +24,7 @@
   - type: TabletopGame
     setup:
       !type:TabletopEmptySetup
-      boardPrototype: &GrassBoard GrassBoardTabletop
+      boardPrototype: GrassBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -37,7 +37,7 @@
   - type: TabletopGame
     setup:
       !type:TabletopEmptySetup
-      boardPrototype: &MoonBoard MoonBoardTabletop
+      boardPrototype: MoonBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -50,7 +50,7 @@
   - type: TabletopGame
     setup:
       !type:TabletopEmptySetup
-      boardPrototype: &SandBoard SandBoardTabletop
+      boardPrototype: SandBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -63,7 +63,7 @@
   - type: TabletopGame
     setup:
       !type:TabletopEmptySetup
-      boardPrototype: &SnowBoard SnowBoardTabletop
+      boardPrototype: SnowBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -77,12 +77,12 @@
     size: 543, 543
     setup:
       !type:TabletopEmptySetup
-      boardPrototype: &ShipBoard ShipBoardTabletop
+      boardPrototype: ShipBoardTabletop
 
 # Background entity (actually shown in the board)
 - type: entity
   parent: BaseBoardTabletop
-  id: *GrassBoard
+  id: GrassBoardTabletop
   name: grass battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -92,7 +92,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *MoonBoard
+  id: MoonBoardTabletop
   name: grass battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -102,7 +102,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *SandBoard
+  id: SandBoardTabletop
   name: sand battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -112,7 +112,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *SnowBoard
+  id: SnowBoardTabletop
   name: snow battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -122,7 +122,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: *ShipBoard
+  id: ShipBoardTabletop
   name: ship battlemap
   categories: [ HideSpawnMenu ]
   components:

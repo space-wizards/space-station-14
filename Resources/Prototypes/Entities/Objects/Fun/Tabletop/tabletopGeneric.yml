@@ -1,55 +1,88 @@
+# A placeholder entity type for draggable items.
 - type: entity
-  abstract: true
   parent: BaseTabletopPiece
-  id: BaseGenericTabletopPiece
+  id: GenericTabletopPiece
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: BaseTabletopPiece
+  id: RedTabletopPiece
+  name: red piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#9a353e"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
-  id: RedTabletopPiece
-  name: red piece
-  components:
-  - type: Sprite
-    state: red
-
-- type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: GreenTabletopPiece
   name: green piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: green
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#3d8822"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: YellowTabletopPiece
   name: yellow piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: yellow
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#b4ae27"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: BlueTabletopPiece
   name: blue piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: blue
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#313a91"
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: WhiteTabletopPiece
   name: white piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: white
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
 
 - type: entity
-  parent: BaseGenericTabletopPiece
+  parent: BaseTabletopPiece
   id: BlackTabletopPiece
   name: black piece
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    state: black
+    sprite: Objects/Fun/Tabletop/generic_pieces.rsi
+    layers:
+    - state: outer_ring
+      color: "#222034"
+    - state: inner_circle
+      color: "#222034"

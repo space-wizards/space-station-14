@@ -16,26 +16,21 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
 
-    public override void Initialize()
+    #region Network Events
+    [SubscribeNetworkEvent]
+    private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
     {
-        base.Initialize();
-
-        SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
-
-        SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
-        SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
-        SubscribeLocalEvent<TabletopGamerComponent, PlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<TabletopGamerComponent, ComponentShutdown>(OnGamerShutdown);
-
-        InitializeMap();
+        CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
     }
+    #endregion Network Events
 
+    #region Local Events
     protected override void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession is not { } playerSession)
             return;
 
-        if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!GameQuery.TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
             return;
 
         // Check if player is actually playing at this table.
@@ -45,37 +40,36 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         base.OnTabletopMove(msg, args);
     }
 
+    [SubscribeLocalEvent]
     private void OnTabletopActivate(Entity<TabletopGameComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
         // Check that a player is attached to the entity.
-        if (!TryComp(args.User, out ActorComponent? actor))
+        if (!ActorQuery.TryComp(args.User, out ActorComponent? actor))
             return;
 
         OpenSessionFor(actor.PlayerSession, ent.Owner);
     }
 
+    [SubscribeLocalEvent]
     private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
     {
         CleanupSession(ent.Owner);
     }
 
-    private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
-    {
-        CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
-    }
-
+    [SubscribeLocalEvent]
     private void OnPlayerDetached(Entity<TabletopGamerComponent> ent, ref PlayerDetachedEvent args)
     {
         if (ent.Comp.Tabletop.IsValid())
             CloseSessionFor(args.Player, ent.Comp.Tabletop);
     }
 
+    [SubscribeLocalEvent]
     private void OnGamerShutdown(Entity<TabletopGamerComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp(ent.Owner, out ActorComponent? actor))
+        if (!ActorQuery.TryComp(ent.Owner, out ActorComponent? actor))
             return;
 
         if (ent.Comp.Tabletop.IsValid())
@@ -92,7 +86,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
             if (!Exists(gamer.Tabletop))
                 continue;
 
-            if (!TryComp(uid, out ActorComponent? actor))
+            if (!ActorQuery.TryComp(uid, out ActorComponent? actor))
             {
                 RemCompDeferred<TabletopGamerComponent>(uid);
                 continue;
@@ -102,4 +96,5 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
                 CloseSessionFor(actor.PlayerSession, gamer.Tabletop);
         }
     }
+    #endregion Local Events
 }

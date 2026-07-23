@@ -1,5 +1,7 @@
 # When adding a new board game, also add it to id: AllBoardGamesTable
 
+# Note: all board game pieces should be marked as HideSpawnMenu, they lack most of the physical components for practical use.
+
 # The actual item that players can pick up, or throw when they lose
 - type: entity
   abstract: true
@@ -19,20 +21,20 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
   id: BaseTabletopPiece # Board piece
   components:
   - type: TabletopDraggable
   - type: Sprite
     noRot: true
   - type: Appearance
+  - type: Clickable
+  - type: InteractionOutline
 
 # Entity which acts as the background sprite in the tabletop game
 - type: entity
   abstract: true
   id: BaseBoardTabletop
   name: baseboard
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     noRot: false

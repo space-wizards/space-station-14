@@ -15,24 +15,25 @@ public sealed partial class TabletopSystem
     /// </summary>
     /// <param name="tabletop">The tabletop game in question.</param>
     /// <returns>The session for the given tabletop game.</returns>
-    public TabletopSession EnsureSession(TabletopGameComponent tabletop)
+    public TabletopSession EnsureSession(Entity<TabletopGameComponent> ent)
     {
         // We already have a session, return it.
         // TODO: if tables are connected, treat them as a single entity. This can be done by sharing the session.
-        if (tabletop.Session != null)
-            return tabletop.Session;
+        if (ent.Comp.Session != null)
+            return ent.Comp.Session;
 
         // We make sure that the tabletop map exists before continuing.
         EnsureTabletopMap();
 
         // Create new session.
         var session = new TabletopSession(TabletopMap, GetNextTabletopPosition());
-        tabletop.Session = session;
+        ent.Comp.Session = session;
+        Dirty(ent);
 
         // Since this is the first time opening this session, set up the game.
-        tabletop.Setup.SetupTabletop(session, EntityManager);
+        ent.Comp.Setup.SetupTabletop(session, EntityManager);
 
-        Log.Info($"Created tabletop session number {tabletop} at position {session.Position}.");
+        Log.Info($"Created tabletop session number {ent.Comp} at position {session.Position}.");
 
         return session;
     }
@@ -43,7 +44,7 @@ public sealed partial class TabletopSystem
     /// <param name="uid">The UID of the tabletop game entity.</param>
     public void CleanupSession(EntityUid uid)
     {
-        if (!TryComp(uid, out TabletopGameComponent? tabletop))
+        if (!GameQuery.TryComp(uid, out TabletopGameComponent? tabletop))
             return;
 
         if (tabletop.Session is not { } session)
@@ -56,15 +57,16 @@ public sealed partial class TabletopSystem
             QueueDel(euid);
 
         tabletop.Session = null;
+        Dirty(uid, tabletop);
     }
 
     public override void OpenSessionFor(ICommonSession player, EntityUid uid)
     {
-        if (!TryComp(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not { Valid: true } attachedEntity)
+        if (!GameQuery.TryComp(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not { Valid: true } attachedEntity)
             return;
 
         // Make sure we have a session, and add the player to it if not added already.
-        var session = EnsureSession(tabletop);
+        var session = EnsureSession((uid, tabletop));
 
         if (session.Players.ContainsKey(player))
             return;

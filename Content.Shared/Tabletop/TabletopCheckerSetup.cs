@@ -1,24 +1,23 @@
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Tabletop;
 
 [UsedImplicitly]
 public sealed partial class TabletopCheckerSetup : TabletopSetup
 {
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypePieceWhite = default!;
+    [DataField]
+    public EntProtoId PrototypePieceWhite = "CheckerPieceWhite";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeCrownWhite = default!;
+    [DataField]
+    public EntProtoId PrototypeCrownWhite = "CheckerCrownWhite";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypePieceBlack = default!;
+    [DataField]
+    public EntProtoId PrototypePieceBlack = "CheckerPieceBlack";
 
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string PrototypeCrownBlack = default!;
+    [DataField]
+    public EntProtoId PrototypeCrownBlack = "CheckerCrownBlack";
 
     public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
     {

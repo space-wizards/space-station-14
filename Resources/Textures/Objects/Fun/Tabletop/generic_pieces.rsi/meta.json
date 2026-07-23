@@ -8,22 +8,10 @@
     },
     "states": [
         {
-            "name": "red"
+            "name": "inner_circle"
         },
         {
-            "name": "green"
-        },
-        {
-            "name": "yellow"
-        },
-        {
-            "name": "blue"
-        },
-        {
-            "name": "white"
-        },
-        {
-            "name": "black"
+            "name": "outer_ring"
         }
     ]
 }

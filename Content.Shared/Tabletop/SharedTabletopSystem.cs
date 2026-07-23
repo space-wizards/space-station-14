@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -20,8 +21,9 @@ namespace Content.Shared.Tabletop;
 
 public abstract partial class SharedTabletopSystem : EntitySystem
 {
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private MetaDataSystem _meta = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
@@ -29,18 +31,20 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transforms = default!;
 
+    [Dependency] protected EntityQuery<ActorComponent> ActorQuery = default!;
+    [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery = default!;
+
+    /// <summary>
+    /// The prototype to use to represent items dragged into the tabletop map.
+    /// </summary>
+    protected static readonly EntProtoId GamePiecePrototype = "GenericTabletopPiece";
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeAllEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChanged);
-
         SubscribeLocalEvent<TabletopGameComponent, GetVerbsEvent<ActivationVerb>>(AddPlayGameVerb);
-        SubscribeLocalEvent<TabletopGameComponent, InteractUsingEvent>(OnInteractUsing);
-
         SubscribeNetworkEvent<TabletopRequestTakeOut>(OnTabletopRequestTakeOut);
-
-        SubscribeAllEvent<TabletopMoveEvent>(OnTabletopMove);
     }
 
     private void OnTabletopRequestTakeOut(TabletopRequestTakeOut msg, EntitySessionEventArgs args)
@@ -50,7 +54,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
 
         var table = GetEntity(msg.TableUid);
 
-        if (!TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+        if (!GameQuery.TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
             return;
 
         if (!msg.Entity.IsValid())
@@ -74,6 +78,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         PredictedQueueDel(result);
     }
 
+    [SubscribeLocalEvent]
     private void OnInteractUsing(Entity<TabletopGameComponent> ent, ref InteractUsingEvent args)
     {
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
@@ -85,20 +90,22 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (ent.Comp.Session is not { } session)
             return;
 
-        if (!_hands.TryGetActiveItem(ent.Owner, out var handEnt))
+        if (!_hands.TryGetActiveItem(args.User, out var maybeHandEnt) || maybeHandEnt is not { } handEnt)
             return;
 
         if (!HasComp<ItemComponent>(handEnt))
             return;
 
-        var meta = MetaData(handEnt.Value);
-        var protoId = meta.EntityPrototype?.ID;
+        var meta = MetaData(handEnt);
 
-        var hologram = EntityManager.PredictedSpawn(protoId, session.Position.Offset(-1, 0));
+        var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, session.Position.Offset(-1, 0));
 
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);
         EnsureComp<TabletopHologramComponent>(hologram);
+        _meta.SetEntityName(hologram, Name(handEnt));
+        if (meta.EntityPrototype is { } proto)
+            _appearance.SetData(hologram, TabletopItemVisuals.Prototype, proto.ID);
         session.Entities.Add(hologram);
 
         _popup.PopupEntity(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
@@ -112,7 +119,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!TryComp(args.User, out ActorComponent? actor))
+        if (!ActorQuery.TryComp(args.User, out ActorComponent? actor))
             return;
 
         var playVerb = new ActivationVerb()
@@ -128,6 +135,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     /// <summary>
     /// Move an entity which is dragged by the user, but check if they are allowed to do so and to these coordinates.
     /// </summary>
+    [EventSubscription] // Both local and networked events
     protected virtual void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession is not { AttachedEntity: { } playerEntity })
@@ -145,6 +153,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         _transforms.SetLocalPosition(moved, msg.Coordinates.Position, transform);
     }
 
+    [EventSubscription] // Both local and networked events
     private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
     {
         var dragged = GetEntity(msg.DraggedEntityUid);
@@ -168,6 +177,20 @@ public abstract partial class SharedTabletopSystem : EntitySystem
             _appearance.SetData(dragged, TabletopItemVisuals.Scale, Vector2.One, appearance);
             _appearance.SetData(dragged, TabletopItemVisuals.DrawDepth, (int)DrawDepth.DrawDepth.Items, appearance);
         }
+    }
+
+    [SubscribeLocalEvent]
+    private void OnInRangeOverride(Entity<TabletopGamerComponent> ent, ref InRangeOverrideEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!HasComp<TabletopDraggableComponent>(args.Target))
+            return;
+
+        // Assume that this can be dragged.
+        args.InRange = true;
+        args.Handled = true;
     }
 
     [Serializable, NetSerializable]
