@@ -14,7 +14,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 

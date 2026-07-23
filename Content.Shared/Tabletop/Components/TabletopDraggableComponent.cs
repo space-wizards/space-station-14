@@ -1,6 +1,5 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Tabletop.Components;
 
