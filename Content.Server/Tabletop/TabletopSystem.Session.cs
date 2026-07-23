@@ -28,7 +28,6 @@ public sealed partial class TabletopSystem
         // Create new session.
         var session = new TabletopSession(TabletopMap, GetNextTabletopPosition());
         ent.Comp.Session = session;
-        Dirty(ent);
 
         // Since this is the first time opening this session, set up the game.
         ent.Comp.Setup.SetupTabletop(session, EntityManager);
@@ -57,7 +56,6 @@ public sealed partial class TabletopSystem
             QueueDel(euid);
 
         tabletop.Session = null;
-        Dirty(uid, tabletop);
     }
 
     public override void OpenSessionFor(ICommonSession player, EntityUid uid)
