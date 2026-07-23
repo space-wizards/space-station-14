@@ -15,12 +15,6 @@ public abstract partial class SharedMicrowaveSystem
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectAll);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectSolidIndexed);
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectCookTime);
-        SubscribeLocalEvent<MicrowaveComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
-    }
-
-    private void OnAfterAutoHandleState(Entity<MicrowaveComponent> ent, ref AfterAutoHandleStateEvent args)
-    {
-        UpdateUserInterfaceState(ent.AsNullable());
     }
 
     /// <summary>
