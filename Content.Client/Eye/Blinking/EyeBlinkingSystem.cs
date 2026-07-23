@@ -14,11 +14,12 @@ namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private SpriteSystem _sprite = default!;
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private SharedAppearanceSystem _apperance = default!;
     [Dependency] private IResourceCache _resCache = default!;
     [Dependency] private StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private IGameTiming _timing = default!;
+
 
     public override void Initialize()
     {
@@ -26,8 +27,21 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
+        SubscribeNetworkEvent<OpenEyesEvent>(OnOpenEyes);
         SubscribeLocalEvent<EyeBlinkingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleStateEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(ComponentInitHandler);
+    }
+
+    private void OnOpenEyes(OpenEyesEvent ev)
+    {
+        var ent = GetEntity(ev.NetEntity);
+
+        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
+            return;
+
+        var entComp = (ent, blinkingComp);
+        ChangeEyesState(entComp, false);
+        ResetBlink(entComp);
     }
 
     /// <summary>
@@ -43,6 +57,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// </summary>
     private void AfterAutoHandleStateEventHandler(Entity<EyeBlinkingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
         InitEyeBlinking(ent);
     }
 
@@ -73,11 +89,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         // Apply the initial eye state (open or closed).
         if (!(_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
         {
-            ChangeEyeState(ent, false);
+            ChangeEyesState(ent, false);
             return;
         }
 
-        ChangeEyeState(ent, eyeClosed);
+        ChangeEyesState(ent, eyeClosed);
     }
 
     private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent)
@@ -153,7 +169,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if ((eyeClosed == false && ent.Comp.BlinkInProgress == false) ||
             eyeClosed)
         {
-            ChangeEyeState(ent, eyeClosed);
+            ChangeEyesState(ent, eyeClosed);
             return;
         }
     }
@@ -175,7 +191,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     /// Changes the eye state (open or closed) for the specified entity. This method updates the visibility of the eyelid layers based on the provided eye state. If the entity does not have a valid <see cref="SpriteComponent"/> or if the eyelid layer is not found, the method exits without making any changes.
     /// </summary>
     /// <param name="eyeClsoed">Value close eye if true, and open if false</param>
-    private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
+    private void ChangeEyesState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
@@ -205,10 +221,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         if (ent.Comp.Enabled == false)
-            return;
-
-        // Checks whether the eyes are forcefully closed (e.g., due to sleeping, blindness, etc.).
-        if (_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed && eyeClosed)
             return;
 
         // Checks if a blink is still in progress to avoid a "frozen eyes" effect caused by emote spamming. A blink must complete fully before the next one can start.

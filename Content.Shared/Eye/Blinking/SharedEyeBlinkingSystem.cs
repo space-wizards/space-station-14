@@ -1,15 +1,22 @@
+using Content.Shared.Actions;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Body;
 using Content.Shared.Changeling;
 using Content.Shared.Chat;
+using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
+using Robust.Shared.Graphics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Eye.Blinking;
 
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _apperance = default!;
+    [Dependency] private BlindableSystem _blindableSystem = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
 
     public override void Initialize()
     {
@@ -20,6 +27,18 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         SubscribeLocalEvent<EyeBlinkingComponent, EmoteEvent>(EmoteEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, ApplyOrganMarkingsEvent>(OnApplyOrganMarkingEvent);
 
+        SubscribeLocalEvent<EyeBlinkingComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<EyeBlinkingComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<EyeBlinkingComponent, ToggleEyesActionEvent>(OnToggleAction);
+        SubscribeLocalEvent<EyeBlinkingComponent, CanSeeAttemptEvent>(OnTrySee);
+
+        SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(OnSleepStateChanged);
+
+    }
+
+    private void OnSleepStateChanged(Entity<EyeBlinkingComponent> ent, ref SleepStateChangedEvent args)
+    {
+        ent.Comp.EyesClosed = args.FellAsleep;
     }
 
     private void OnApplyOrganMarkingEvent(Entity<EyeBlinkingComponent> ent, ref ApplyOrganMarkingsEvent args)
@@ -88,7 +107,22 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
-        _apperance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
+        ent.Comp.EyesClosed = args.Blind;
+
+        if (ent.Comp.EyeToggleActionEntity != null)
+            _actionsSystem.SetToggled(ent.Comp.EyeToggleActionEntity, ent.Comp.EyesClosed);
+
+        if (!args.Blind)
+        {
+            _apperance.RemoveData(ent, EyeBlinkingVisuals.EyesClosed);
+            var ev = new OpenEyesEvent(GetNetEntity(ent.Owner));
+            RaiseNetworkEvent(ev);
+        }
+        else
+        {
+            _apperance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
+        }
+
         SetEnabled(ent, !args.Blind);
     }
 
@@ -100,6 +134,36 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         ent.Comp.Enabled = enabled;
         Dirty(ent);
     }
+
+    private void OnMapInit(Entity<EyeBlinkingComponent> eye, ref MapInitEvent args)
+    {
+        _actionsSystem.AddAction(eye, ref eye.Comp.EyeToggleActionEntity, eye.Comp.EyeToggleAction);
+        Dirty(eye);
+    }
+
+    private void OnShutdown(Entity<EyeBlinkingComponent> eye, ref ComponentShutdown args)
+    {
+        _actionsSystem.RemoveAction(eye.Owner, eye.Comp.EyeToggleActionEntity);
+    }
+
+    private void OnToggleAction(Entity<EyeBlinkingComponent> eye, ref ToggleEyesActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        eye.Comp.EyesClosed = !eye.Comp.EyesClosed;
+
+        _blindableSystem.UpdateIsBlind(eye.Owner);
+    }
+
+    private void OnTrySee(Entity<EyeBlinkingComponent> ent, ref CanSeeAttemptEvent args)
+    {
+        if (ent.Comp.EyesClosed)
+            args.Cancel();
+    }
+
 }
 
 /// <summary>
@@ -119,6 +183,20 @@ public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
 {
     /// <summary>
     /// The entity performing the blink.
+    /// </summary>
+    public readonly NetEntity NetEntity = netEntity;
+}
+
+public sealed partial class ToggleEyesActionEvent : InstantActionEvent;
+
+/// <summary>
+/// Open Eyes after remove EyeClosing from apperanceData
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class OpenEyesEvent(NetEntity netEntity) : EntityEventArgs
+{
+    /// <summary>
+    /// The entity performing the open Eye.
     /// </summary>
     public readonly NetEntity NetEntity = netEntity;
 }

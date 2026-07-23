@@ -1,6 +1,7 @@
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Eye.Blinking;
@@ -96,4 +97,28 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ResPath? EyelidsSprite { get; set; }
+
+    /// <summary>
+    /// The prototype to grant to enable eye-toggling action.
+    /// </summary>
+    [DataField("eyeToggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string EyeToggleAction = "ActionToggleEyes";
+
+    /// <summary>
+    /// The actual eye toggling action entity itself.
+    /// </summary>
+    [DataField]
+    public EntityUid? EyeToggleActionEntity;
+
+    /// <summary>
+    /// Whether the entity's eyes are currently closed. This is used to determine if the entity can see or not.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool EyesClosed = false;
+
+    /// <summary>
+    /// Whether the entity's eyes are currently closed. This is used to determine if the entity can see or not.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Init = false;
 }

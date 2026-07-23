@@ -22,7 +22,7 @@ public sealed partial class EyeClosingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeClosingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<EyeClosingComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<EyeClosingComponent, ToggleEyesActionEvent>(OnToggleAction);
+        //SubscribeLocalEvent<EyeClosingComponent, ToggleEyesActionEvent>(OnToggleAction);
         SubscribeLocalEvent<EyeClosingComponent, CanSeeAttemptEvent>(OnTrySee);
         SubscribeLocalEvent<EyeClosingComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
@@ -40,14 +40,14 @@ public sealed partial class EyeClosingSystem : EntitySystem
         SetEyelids((eyelids.Owner, eyelids.Comp), false);
     }
 
-    private void OnToggleAction(Entity<EyeClosingComponent> eyelids, ref ToggleEyesActionEvent args)
-    {
-        if (args.Handled)
-            return;
+    //private void OnToggleAction(Entity<EyeClosingComponent> eyelids, ref ToggleEyesActionEvent args)
+    //{
+    //    if (args.Handled)
+    //        return;
 
-        args.Handled = true;
-        SetEyelids((eyelids.Owner, eyelids.Comp), !eyelids.Comp.EyesClosed);
-    }
+    //    args.Handled = true;
+    //    SetEyelids((eyelids.Owner, eyelids.Comp), !eyelids.Comp.EyesClosed);
+    //}
 
     private void OnHandleState(Entity<EyeClosingComponent> eyelids, ref AfterAutoHandleStateEvent args)
     {
@@ -134,4 +134,4 @@ public sealed partial class EyeClosingSystem : EntitySystem
     }
 }
 
-public sealed partial class ToggleEyesActionEvent : InstantActionEvent;
+
