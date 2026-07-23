@@ -1,7 +1,7 @@
 - type: entity
-  parent: BaseItem
-  id: BaseLightbulb
   abstract: true
+  parent: BaseItem
+  id: BaseReplacementLight
   components:
   - type: MeleeSound
     soundGroups:
@@ -10,8 +10,8 @@
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     layers:
-      - map: [ enum.LightBulbVisualLayers.Base ]
-        state: normal
+    - map: [ enum.LightBulbVisualLayers.Base ]
+      state: normal
   - type: LightBulb
   - type: Damageable
   - type: Injurable
@@ -34,10 +34,10 @@
         sound:
           collection: GlassBreak
           params:
-            volume: -8
+            volume: -4
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
-    - trigger:
+    - trigger: &DamageTrigger10
         !type:DamageTrigger
         damage: 10
       behaviors:
@@ -45,12 +45,7 @@
         sound:
           collection: GlassBreak
           params:
-            volume: -8
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          ShardGlass:
-            min: 1
-            max: 1
+            volume: -4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
@@ -66,9 +61,24 @@
     - id: SheetGlass1
 
 - type: entity
-  parent: BaseLightbulb
-  id: BaseLightTube
   abstract: true
+  parent: BaseReplacementLight
+  id: BaseLightbulb
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger10
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          LightBulbBroken:
+            min: 1
+            max: 1
+
+- type: entity
+  abstract: true
+  parent: BaseReplacementLight
+  id: BaseLightTube
   components:
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
@@ -76,29 +86,13 @@
     bulb: Tube
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
+    - trigger: *DamageTrigger10
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:DoActsBehavior
-        acts: [ "Breakage" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
-          ShardGlass:
+          LightTubeBroken:
             min: 1
             max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
