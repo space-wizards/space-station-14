@@ -165,6 +165,9 @@
   - type: Construction
     graph: DoorGraph
     node: bananiumDoor
+  - type: Damageable
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger: *DamageDoorWeak
@@ -326,6 +329,8 @@
     deconstructable: false
   - type: Damageable
     damageModifierSet: Rock
+  - type: Injurable
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

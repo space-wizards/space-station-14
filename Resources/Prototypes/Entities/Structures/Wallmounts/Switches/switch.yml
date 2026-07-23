@@ -88,7 +88,7 @@
             volume: -8
 
 - type: entity
-  parent: BaseWallmountMetallic
+  parent: [ BaseWallmountMetallic, StructureHealthMachineFlimsy ]
   id: ApcNetSwitch
   name: apc net switch
   description: It's a switch for toggling lights that are connected to the same apc.
@@ -111,6 +111,17 @@
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
 
 #directional
 

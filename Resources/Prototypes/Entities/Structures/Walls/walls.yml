@@ -488,8 +488,6 @@
         layer:
         - WallLayer
         density: 4000
-  - type: Damageable
-    damageModifierSet: PlastitaniumMod
   - type: RadiationBlocker
     resistance: 5
 
@@ -499,6 +497,8 @@
   name: plastitanium wall
   suffix: ""
   components:
+  - type: Damageable
+    damageModifierSet: PlastitaniumMod
   - type: Destructible
     thresholds:
     - trigger: &DamageWallStrong
@@ -520,8 +520,6 @@
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
-  - type: Damageable
-    damageModifierSet: PlastitaniumMod
   - type: RadiationBlocker
     resistance: 5
 
@@ -538,6 +536,8 @@
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
+  - type: Damageable
+    damageModifierSet: PlastitaniumMod
   - type: Destructible
     thresholds:
     - trigger: *DamageWallStrong
