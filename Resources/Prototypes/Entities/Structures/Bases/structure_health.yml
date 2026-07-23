@@ -68,7 +68,7 @@
         damage: 30
       behaviors: *DoDestruction
 
-# full window / reinforced direction window / girder
+# full window / reinforced direction window
 - type: entity
   abstract: true
   parent: BaseStructureHealth
@@ -80,7 +80,7 @@
         damage: 80
       behaviors: *DoDestruction
 
-# reinforced full window / deployable security barrier
+# reinforced full window / deployable security barrier / girder
 - type: entity
   abstract: true
   parent: BaseStructureHealth
@@ -89,7 +89,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 130
+        damage: 120
       behaviors: *DoDestruction
 
 #endregion
@@ -235,10 +235,10 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 175
+        damage: 100
       behaviors: *DoDestruction
     - trigger: !type:DamageTrigger
-        damage: 75
+        damage: 50
       behaviors: *DoBreakage
 
 # Airlocks / firelocks
@@ -250,10 +250,10 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 250
+        damage: 200
       behaviors: *DoDestruction
     - trigger: !type:DamageTrigger
-        damage: 150
+        damage: 100
       behaviors: *DoBreakage
 
 # High-security airlocks / blast doors
@@ -283,7 +283,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 200
+        damage: 150
       behaviors: *DoDestruction
 
 # Basic steel wall
@@ -295,7 +295,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 300
+        damage: 250
       behaviors: *DoDestruction
 
 # Heavy walls like plasteel
@@ -307,7 +307,7 @@
   - type: Destructible
     thresholds:
     - trigger: !type:DamageTrigger
-        damage: 400
+        damage: 350
       behaviors: *DoDestruction
 
 #endregion
