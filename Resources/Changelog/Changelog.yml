@@ -5219,3 +5219,17 @@
   id: 9891
   time: '2026-07-22T08:29:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38108
+- author: whatston3
+  changes:
+  - message: Pipes no longer take longer to reanchor after unanchoring while at high pressure.
+    type: Fix
+  id: 9892
+  time: '2026-07-22T23:35:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44387
+- author: whatston3
+  changes:
+  - message: The recycler now spills again when reclaiming drainable items.
+    type: Fix
+  id: 9893
+  time: '2026-07-23T01:06:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44344
