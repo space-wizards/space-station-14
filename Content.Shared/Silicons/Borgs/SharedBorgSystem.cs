@@ -289,6 +289,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnBeingGibbed(Entity<BorgChassisComponent> chassis, ref BeingGibbedEvent args)
     {
+        // Don't use the ItemSlotsSystem eject method since we don't want to play a sound and want we to eject the battery even if the slot is locked.
         if (TryComp<PowerCellSlotComponent>(chassis, out var slotComp) &&
             _container.TryGetContainer(chassis, slotComp.CellSlotId, out var slotContainer))
         {
