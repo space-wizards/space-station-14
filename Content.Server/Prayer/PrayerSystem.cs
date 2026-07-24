@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
-using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -11,6 +10,7 @@ using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Content.Shared.Bible.Components;
 
 namespace Content.Server.Prayer;
 /// <summary>
@@ -49,7 +49,7 @@ public sealed partial class PrayerSystem : EntitySystem
             Icon = comp.VerbImage,
             Act = () =>
             {
-                if (comp.BibleUserOnly && !TryComp<BibleUserComponent>(args.User, out var bibleUser))
+                if (comp.BibleUserOnly && !HasComp<BibleUserComponent>(args.User))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-pray-locked"), uid, actor.PlayerSession, PopupType.Large);
                     return;

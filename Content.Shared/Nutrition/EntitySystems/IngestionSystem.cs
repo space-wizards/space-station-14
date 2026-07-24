@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions.Events;
 
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body;
@@ -93,6 +94,9 @@ public sealed partial class IngestionSystem : EntitySystem
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
         SubscribeLocalEvent<EdibleComponent, BeforeToolRefinedEvent>(OnBeforeToolRefined);
+
+        // Actions
+        SubscribeLocalEvent<ActionRequireMouthUncoveredComponent, ActionAttemptEvent>(OnMouthUncoveredActionAttempt);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -608,5 +612,11 @@ public sealed partial class IngestionSystem : EntitySystem
                 quantity = reagent.Quantity,
             }),
         };
+    }
+
+    private void OnMouthUncoveredActionAttempt(Entity<ActionRequireMouthUncoveredComponent> ent, ref ActionAttemptEvent args)
+    {
+        if (!HasMouthAvailable(args.User, args.User, ent.Comp.Slots))
+            args.Cancelled = true;
     }
 }
