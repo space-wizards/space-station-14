@@ -122,11 +122,16 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!ActorQuery.TryComp(args.User, out ActorComponent? actor))
             return;
 
+        // Will get closed later if CanSeeTable returns false.
+        var disabled = !CanSeeTable(args.User, ent);
+
         var playVerb = new ActivationVerb()
         {
             Text = Loc.GetString("tabletop-verb-play-game"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-            Act = () => OpenSessionFor(actor.PlayerSession, ent.Owner)
+            Act = () => OpenSessionFor(actor.PlayerSession, ent.Owner),
+            Disabled = disabled,
+            Message = Loc.GetString(disabled ? "tabletop-verb-play-game-message-disabled" : "tabletop-verb-play-game-message")
         };
 
         args.Verbs.Add(playVerb);
