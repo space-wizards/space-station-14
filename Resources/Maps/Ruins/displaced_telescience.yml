@@ -4033,13 +4033,10 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 477
-- proto: IntercomAll
+- proto: IntercomFreelance
   entities:
   - uid: 469
     components:
-    - type: MetaData
-      name: emergency intercom
-      desc: An intercom for emergency situations. It's in pristine condition.
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
