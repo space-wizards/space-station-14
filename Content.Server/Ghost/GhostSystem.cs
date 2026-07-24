@@ -155,7 +155,8 @@ namespace Content.Server.Ghost
             var anythingAffected = false;
             foreach (var ent in entities)
             {
-                var handled = DoGhostBooEvent(ent, out var intensity);
+                GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Normal ? GhostBooIntensity.Normal : (GhostBooIntensity)remainingIntensity;
+                var handled = DoGhostBooEvent(ent, out var intensity, allowedIntensity);
 
                 if (handled)
                 {
