@@ -154,6 +154,7 @@ namespace Content.Server.Ghost
             // Shuffle the possible targets so we don't favor any particular entities
             _random.Shuffle(entities);
 
+            // Set our desired intensity based on how many normal events the ghost wants to create.
             var remainingIntensity = component.BooCount * (int)GhostBooIntensity.Normal;
             var anythingAffected = false;
             foreach (var ent in entities)
@@ -163,6 +164,7 @@ namespace Content.Server.Ghost
                 if (!DoGhostBooEvent(ent, out var intensity, allowedIntensity))
                     continue;
 
+                // Handle our response depending on the intensity of the action.
                 anythingAffected = true;
                 switch (intensity)
                 {
@@ -170,7 +172,7 @@ namespace Content.Server.Ghost
                     case GhostBooIntensity.Normal:
                         remainingIntensity -= (int)intensity;
                         break;
-                    default:
+                    default: // Out of enum, treat as though it's the highest intensity.
                         remainingIntensity -= (int)GhostBooIntensity.Normal;
                         break;
                 }
