@@ -1,7 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Gibbing;
 using Content.Shared.Guardian.Components;
 using Content.Shared.Hands.Components;
@@ -13,10 +15,13 @@ using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -40,6 +45,8 @@ public abstract partial class SharedGuardianSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private SharedEntityEffectsSystem _effects = default!;
+    [Dependency] private StatusEffectsSystem _status = default!;
 
     private static readonly string GuardianPickerBuiXmlGeneratedName = "GuardianPickerBoundUserInterface"
 ;
@@ -69,6 +76,38 @@ public abstract partial class SharedGuardianSystem : EntitySystem
         SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
 
         SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
+
+        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<ContactInteractionEvent>>(OnTrapContact);
+        SubscribeLocalEvent<GuardianTrappedStatusEffectComponent, StatusEffectRelayedEvent<StartCollideEvent>>(OnTrapCollide);
+    }
+
+    private void OnTrapCollide(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<StartCollideEvent> args)
+    {
+        TriggerTrap(ent.Comp, ent.Owner, args.Args.OtherEntity);
+    }
+
+    private void OnTrapContact(Entity<GuardianTrappedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ContactInteractionEvent> args)
+    {
+        TriggerTrap(ent.Comp, ent.Owner, args.Args.Other);
+    }
+
+    private void TriggerTrap(GuardianTrappedStatusEffectComponent comp, EntityUid statusEffect, EntityUid other)
+    {
+        if (HasComp<GuardianTrapImmuneComponent>(other))
+            return;
+
+        if (!TryComp<StatusEffectComponent>(statusEffect, out var effectComponent) || effectComponent.AppliedTo == null)
+            return;
+
+        var source = effectComponent.AppliedTo.Value;
+
+        if (comp.VictimEffects != null)
+            _effects.ApplyEffects(other, comp.VictimEffects, FixedPoint2.New(1f), source);
+
+        if (comp.SelfEffects != null)
+            _effects.ApplyEffects(source, comp.SelfEffects, FixedPoint2.New(1f), source);
+
+        _status.TryRemoveStatusEffect(source, comp.SelfPrototype);
     }
 
     private void OnGuardianPicked(Entity<GuardianCreatorComponent> ent, ref GuardianPickedMessage args)

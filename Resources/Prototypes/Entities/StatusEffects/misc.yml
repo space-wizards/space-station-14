@@ -120,3 +120,15 @@
       - Blindable
       requireAll: true
   - type: FlashedStatusEffect
+
+- type: entity
+  parent: StatusEffectBase
+  id: StatusEffectGuardianTrapped
+  name: guardian trapped
+  components:
+  - type: StatusEffect
+  - type: GuardianTrappedStatusEffect
+    selfPrototype: StatusEffectGuardianTrapped
+    selfEffects:
+    - !type:Explode
+      delete: false

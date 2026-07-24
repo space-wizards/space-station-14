@@ -105,6 +105,9 @@
       - NamesFirstGuardian
       - NamesLastGuardian
       nameFormat: name-format-standard
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
 
 # bases
 
@@ -129,9 +132,25 @@
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
             tech_flare: Rainbow
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  id: ActionGuardianTrap # killer queen has already touched the doorknob
+  name: Explosive Trap
+  description: Turn mundane objects into lethal explosives.
+  components:
+  - type: Action
+    icon: { sprite : Interface/Actions/guardian.rsi, state: nuke }
+    itemIconStyle: BigAction
+    useDelay: 5
+  - type: TargetAction
+  - type: EntityTargetAction
+    rotateOnUse: true
+    event: !type:EntityEffectActionEvent
+  - type: EntityEffectAction
+    effects:
+    - !type:ModifyStatusEffect
+      effectProto: StatusEffectGuardianTrapped
+      time: 90 # 1m 30 s
 
 - type: entity
   name: Explosive
@@ -154,9 +173,22 @@
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
             tech_flare: Rainbow
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
+    - type: MeleeWeapon
+      hidden: false
+      altDisarm: false
+      animation: WeaponArcFist
+      attackRate: 1.8
+      autoAttack: true
+      soundHit:
+        collection: Punch
+      damage:
+        types:
+          Blunt: 20
+          Structural: 20
+    - type: GuardianTrapImmune
+    - type: ActionGrant
+      actions:
+      - ActionGuardianTrap
 
 - type: entity
   name: Duelist
@@ -194,9 +226,6 @@
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
             sword_flare: Sixteen
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
 
 - type: entity
   name: Healer
@@ -307,9 +336,6 @@
     - type: RandomMetadata
       nameSegments:
       - NamesClown
-    - type: HTN
-      rootTask:
-        task: SimpleHumanoidHostileCompound
 
 - type: entity
   parent: BaseMentalAction
