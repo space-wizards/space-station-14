@@ -80,10 +80,11 @@ public sealed partial class MicrowaveMenu : FancyWindow
         if (!IsBusy)
             return;
 
-        if (CurrentCooktimeEnd > _timing.CurTime)
+        var remaining = CurrentCooktimeEnd - _timing.CurTime;
+        if (remaining > TimeSpan.Zero)
         {
             CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
-            ("time", CurrentCooktimeEnd.Subtract(_timing.CurTime).Seconds));
+                ("time", Math.Ceiling(remaining.TotalSeconds)));
         }
     }
 

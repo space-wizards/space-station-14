@@ -63,7 +63,10 @@ public abstract partial class SharedMicrowaveSystem
         var getRecipesEv = new GetSecretRecipesEvent();
         RaiseLocalEvent(uid, ref getRecipesEv);
 
-        var recipes = getRecipesEv.Recipes;
+        var recipes = getRecipesEv.Recipes
+            .OrderByDescending(recipe => recipe.Priority)
+            .ThenByDescending(recipe => recipe.Ingredients.Count())
+            .ToList();
         recipes.AddRange(_recipeManager.Recipes);
 
         return recipes;

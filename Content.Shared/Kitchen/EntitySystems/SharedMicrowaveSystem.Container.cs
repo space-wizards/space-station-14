@@ -61,6 +61,9 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container.ID != ent.Comp.ContainerId)
             return;
 

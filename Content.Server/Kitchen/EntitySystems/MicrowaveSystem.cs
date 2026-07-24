@@ -63,6 +63,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
 
         AudioSys.PlayPvs(ent.Comp.ClickSound, ent.Owner, AudioParams.Default.WithVolume(-2));
         ent.Comp.CurrentCookTimerTime = 10;
+        DirtyField(ent.AsNullable(), nameof(MicrowaveComponent.CurrentCookTimeButtonIndex));
         StartCooking(ent, args.Victim);
         UpdateUserInterfaceState(ent.AsNullable());
         args.Handled = true;

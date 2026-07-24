@@ -49,7 +49,7 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     private void OnCookEnd(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
     {
-        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent) || _timing.ApplyingState)
+        if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
             return;
 
         DeactivateMicrowaveCycle((ent, microwaveComponent));
