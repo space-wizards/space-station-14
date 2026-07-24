@@ -16,7 +16,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant ]
+          type: [ Human, Animal, Rat, LikesRadiation, Plant ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -47,7 +47,7 @@
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition
-          type: [ Human, Animal, Rat, Plant, Arachnid, Moth ]
+          type: [ Human, Animal, Rat, LikesRadiation, Plant, Arachnid, Moth ]
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:
@@ -139,12 +139,20 @@
     Bloodstream:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
+          inverted: true
         damage:
           types:
             Radiation: 1.5
     Respiration:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
+          inverted: true
         ignoreResistances: true
         damage:
           types:
@@ -156,6 +164,27 @@
         minScale: 1.5
         clear: True
         time: 5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
+        - !type:ReagentCondition
+          reagent: Tritium
+          min: 1
+        ignoreResistances: true
+        damage:
+          Brute: -10
+          Burn: -10
+          Airloss: -5
+          Toxin: -3
+      - !type:ModifyBloodLevel
+        amount: 3
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ LikesRadiation ]
+        - !type:ReagentCondition
+          reagent: Tritium
+          min: 1
 
 - type: reagent
   id: CarbonDioxide

@@ -2177,6 +2177,14 @@
     heldPrefix: 2
 
 - type: entity
+  parent: OrganAnimalLungs
+  id: OrganLikesRadiationLungs
+  suffix: Likes radiation
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ LikesRadiation ]
+
+- type: entity
   abstract: true
   id: MobCancerBase
   components:
@@ -2202,6 +2210,16 @@
         Quantity: 5
       - ReagentId: Uranium
         Quantity: 10
+  - type: Body
+  - type: EntityTableContainerFill
+    containers:
+      body_organs: !type:AllSelector
+        children:
+        - id: OrganLikesRadiationLungs
+        - id: OrganAnimalHeart
+        - id: OrganAnimalStomach
+        - id: OrganAnimalLiver
+        - id: OrganAnimalKidneys
   - type: ToolRefinable
     refineResult:
     - id: FoodMeatRat
