@@ -900,7 +900,3 @@ CrateEngineeringJetpack: CrateSpaceMiniJetpack
 CrateEngineeringMiniJetpack: CrateSpaceMiniJetpack
 CrateEngineeringShuttle: CrateSpaceShuttlePower
 CrateEngineeringThruster: CrateSpaceThruster
-
-# 2026-07-23
-FloorTileItemGold: IngotGold1
-FloorTileItemSilver: IngotSilver1

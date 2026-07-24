@@ -1404,6 +1404,39 @@
   - type: Stack
     stackType: FloorTileStackShuttleBlack
 
+# Materials
+- type: entity
+  name: gold floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGold
+  components:
+  - type: Sprite
+    state: gold
+  - type: Item
+    heldPrefix: gold
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorGold
+  - type: Stack
+    stackType: FloorTileGold
+
+- type: entity
+  name: silver tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSilver
+  components:
+  - type: Sprite
+    state: silver
+  - type: Item
+    heldPrefix: silver
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSilver
+  - type: Stack
+    stackType: FloorTileSilver
+
 # Circuits
 - type: entity
   name: green circuit floor

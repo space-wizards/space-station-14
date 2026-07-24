@@ -43,9 +43,6 @@
       reagents:
       - ReagentId: Gold
         Quantity: 10
-  - type: FloorTile
-    outputs:
-    - FloorGold
 
 - type: entity
   parent: IngotGold
@@ -86,9 +83,6 @@
       reagents:
       - ReagentId: Silver
         Quantity: 10
-  - type: FloorTile
-    outputs:
-    - FloorSilver
 
 - type: entity
   parent: IngotSilver
