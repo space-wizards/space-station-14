@@ -6,13 +6,18 @@ using Content.Shared.Light.EntitySystems;
 namespace Content.Server.Light.EntitySystems;
 
 /// <inheritdoc/>
-public sealed class PoweredLightSystem : SharedPoweredLightSystem
+public sealed partial class PoweredLightSystem : SharedPoweredLightSystem
 {
+    /// <summary>
+    /// The intensity of flickering due to a <see cref="GhostBooEvent"/> .
+    /// </summary>
+    const GhostBooIntensity BooIntensity = GhostBooIntensity.Normal;
+
     [SubscribeLocalEvent]
     private void OnGhostBoo(Entity<PoweredLightComponent> ent, ref GhostBooEvent args)
     {
         // Already handled
-        if (args.AllowedIntensity < GhostBooIntensity.Normal
+        if (args.AllowedIntensity < BooIntensity
             || args.ResponseIntensity != GhostBooIntensity.None)
             return;
 
@@ -30,7 +35,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         blinkingComp.StopBlinkingTime = curTime + ent.Comp.GhostBlinkingTime;
         Dirty(ent, blinkingComp);
 
-        args.ResponseIntensity = GhostBooIntensity.Normal;
+        args.ResponseIntensity = BooIntensity;
     }
 
     [SubscribeLocalEvent]
