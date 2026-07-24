@@ -107,6 +107,9 @@
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
+    spawnedGas:
+      moles:
+        Ammonia: 200
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
@@ -176,13 +179,18 @@
   - type: RadiationSource
     intensity: 1
     slope: 0.25
+  - type: RatKing
+    armyMobSpawnId: MobRatServantCancer
+    spawnedGas:
+      moles:
+        Tritium: 400
 
 - type: entity
+  abstract: true
   name: rat servant
-  id: MobRatServant
+  id: MobRatServantBase
   parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable ]
   description: He's da mini rat. He don't make da roolz.
-  categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: CombatMode
   - type: MovementSpeedModifier
@@ -216,7 +224,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -314,6 +321,18 @@
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
+
+- type: entity
+  name: rat servant
+  id: MobRatServant
+  parent: MobRatServantBase
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  name: cancer rat servant
+  id: MobRatServantCancer
+  parent: [ MobRatServantBase, MobCancerBase ]
+  categories: [ HideSpawnMenu ]
 
 - type: entityTable
   id: RatKingLoot

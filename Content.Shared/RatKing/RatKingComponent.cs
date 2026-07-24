@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -50,6 +51,12 @@ public sealed partial class RatKingComponent : Component
     /// </summary>
     [DataField("molesAmmoniaPerDomain"), ViewVariables(VVAccess.ReadWrite)]
     public float MolesAmmoniaPerDomain = 200f;
+
+    /// <summary>
+    /// The gas mixture that is spawned when the Rat King uses its Domain ability.
+    /// </summary>
+    [DataField]
+    public GasMixture SpawnedGas;
 
     /// <summary>
     /// The current order that the Rat King assigned.
