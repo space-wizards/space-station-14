@@ -226,7 +226,8 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
                 && proto.TryComp<SpriteComponent>(out var protoSprite, Factory))
             {
                 // HACK: we don't actually have an entity to pass, but the first parameter here is unused.
-                CopyComp(EntityUid.Invalid, ent, protoSprite);
+                var outSprite = CopyComp(EntityUid.Invalid, ent, protoSprite);
+                outSprite.NoRotation = true;
             }
 
             // Reset our scale/draw depth after copying our new sprite, if the data exists.

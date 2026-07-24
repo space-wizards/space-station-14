@@ -31,13 +31,18 @@ public abstract partial class SharedTabletopSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transforms = default!;
 
-    [Dependency] protected EntityQuery<ActorComponent> ActorQuery = default!;
-    [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery = default!;
+    [Dependency] protected EntityQuery<ActorComponent> ActorQuery;
+    [Dependency] protected EntityQuery<TabletopGameComponent> GameQuery;
 
     /// <summary>
     /// The prototype to use to represent items dragged into the tabletop map.
     /// </summary>
     protected static readonly EntProtoId GamePiecePrototype = "BaseTabletopPiece";
+
+    /// <summary>
+    /// The maximum number of pieces to allow placement on a table.
+    /// </summary>
+    protected static readonly int MaxTabletopPieces = 50;
 
     public override void Initialize()
     {
@@ -96,6 +101,13 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         if (!HasComp<ItemComponent>(handEnt))
             return;
 
+        // Delay count check - prints should happen last.
+        if (session.Entities.Count >= MaxTabletopPieces)
+        {
+            _popup.PopupEntity(Loc.GetString("tabletop-cant-add-more"), ent.Owner, args.User);
+            return;
+        }
+
         var meta = MetaData(handEnt);
 
         var hologram = EntityManager.PredictedSpawn(GamePiecePrototype, session.Position.Offset(-1, 0));
@@ -103,7 +115,7 @@ public abstract partial class SharedTabletopSystem : EntitySystem
         // Make sure the entity can be dragged and can be removed, move it into the board game world and add it to the Entities hashmap.
         EnsureComp<TabletopDraggableComponent>(hologram);
         EnsureComp<TabletopHologramComponent>(hologram);
-        _meta.SetEntityName(hologram, Name(handEnt));
+        _meta.SetEntityName(hologram, Name(handEnt, meta));
         if (meta.EntityPrototype is { } proto)
             _appearance.SetData(hologram, TabletopItemVisuals.Prototype, proto.ID);
         session.Entities.Add(hologram);
