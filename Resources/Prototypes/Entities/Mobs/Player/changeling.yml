@@ -7,6 +7,9 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
+  - type: ZombieImmune
   - type: ActionGrant
     actions:
     - ActionChangelingStore
