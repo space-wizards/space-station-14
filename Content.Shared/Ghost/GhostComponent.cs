@@ -108,13 +108,13 @@ public enum GhostVisuals : byte
 }
 
 /// <summary>
-/// The intensity of a given responseto a boo action.
+/// The intensity of a given response to a boo action.
 /// </summary>
 public enum GhostBooIntensity
 {
-    None = 0, /// <summary>No action at all.</summary>
-    Subtle = 1, /// <summary>A subtle action - short in duration or small in effect.</summary>
-    Normal = 2, /// <summary>A normal action - moderate in duration, attention-grabbing.</summary>
+    None = 0, /// <summary>No response at all.</summary>
+    Subtle = 1, /// <summary>A subtle response - short in duration or small in effect.</summary>
+    Normal = 2, /// <summary>A normal response - moderate in duration, attention-grabbing.</summary>
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
