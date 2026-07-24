@@ -1207,4 +1207,40 @@
   id: 149
   time: '2026-07-14T07:38:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/44651
+- author: SlamBamActionman
+  changes:
+  - message: Exo's chapel interior decoration has been changed to include a more interesting layout.
+    type: Tweak
+  - message: Exo's Cargo front has been reworked to reduce the gap to Cargo.
+    type: Tweak
+  - message: Reworked space access in the southwest section of Exo.
+    type: Tweak
+  - message: Exo has had various small fixes and changes.
+    type: Tweak
+  id: 150
+  time: '2026-07-18T09:11:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44218
+- author: ProPeperos
+  changes:
+  - message: On Reach, added even more improvements
+    type: Tweak
+  id: 151
+  time: '2026-07-18T09:28:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/43438
+- author: ProPeperos
+  changes:
+  - message: On Plasma - Modernized atmos, and other tweaks and fixes
+    type: Tweak
+  id: 152
+  time: '2026-07-19T11:40:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44660
+- author: ProPeperos
+  changes:
+  - message: On Elkridge - Replaced some pressure pumps to manual valves in atmos
+    type: Tweak
+  - message: On Elkridge - Upgraded TEG slightly
+    type: Tweak
+  id: 153
+  time: '2026-07-22T07:15:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/44754
 Order: 2
