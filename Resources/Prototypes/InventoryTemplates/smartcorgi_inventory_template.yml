@@ -18,6 +18,8 @@
     whitelist:
       tags:
       - PetWearable
+      components:
+      - Smokable
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
