@@ -1718,10 +1718,16 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             for (var i = 0; i < limit && i < count; i++)
             {
+                // selecting a random element in the database is a little bit wacky, but this should work
+                // get a random number from 0 to the number of non-blocked memories
+                var messageIndex = random.Next(0, count);
+
+                // then select the memory at N
                 var selectedMemory = db.DbContext.ParrotMemory
                     .Where(message => !message.Block)
-                    .ElementAt(random.Next(0, count));
+                    .ElementAt(messageIndex);
 
+                // this should always return a memory, otherwise we would not have passed the count == 0 check earlier
                 yield return selectedMemory;
             }
         }

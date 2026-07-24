@@ -11,12 +11,12 @@
             <BoxContainer Orientation="Horizontal" Margin="4">
                 <Label Name="MemoryCountLabel" Text="{Loc parrot-memory-loading}" HorizontalExpand="True"></Label>
                 <cc:HSeparator Margin="4 0" />
-                <Button Name="PrevRoundButton" Access="Public" Text="Previous round"></Button>
+                <Button Name="PrevRoundButton" Access="Public" Text="{Loc parrot-memory-prev-round}"></Button>
                 <cc:HSeparator></cc:HSeparator>
                 <LineEdit Name="RoundLineEdit" Access="Public" MinWidth="80"></LineEdit>
                 <Button Name="GoToRoundButton" Access="Public" Text="{Loc parrot-memory-go-to-round}"></Button>
                 <cc:HSeparator></cc:HSeparator>
-                <Button Name="NextRoundButton" Access="Public" Text="Next round"></Button>
+                <Button Name="NextRoundButton" Access="Public" Text="{Loc parrot-memory-next-round}"></Button>
                 <cc:HSeparator Margin="4 0" />
                 <Button Name="CurrentRoundButton" Access="Public" Text="{Loc parrot-memory-to-current-round}"></Button>
                 <cc:HSeparator Margin="4 0" />

@@ -35,12 +35,18 @@ public sealed class ParrotMemoryEui : BaseEui
 
         ParrotMemoryWindow.NextRoundButton.OnPressed += (_) =>
         {
-            ChangeRound(ParrotMemoryWindow.RoundId + 1, true);
+            if (!int.TryParse(ParrotMemoryWindow.RoundLineEdit.Text, out var roundId))
+                return;
+
+            ParrotMemoryWindow.RoundLineEdit.Text = (roundId + 1).ToString();
         };
 
         ParrotMemoryWindow.PrevRoundButton.OnPressed += (_) =>
         {
-            ChangeRound(ParrotMemoryWindow.RoundId - 1, true);
+            if (!int.TryParse(ParrotMemoryWindow.RoundLineEdit.Text, out var roundId))
+                return;
+
+            ParrotMemoryWindow.RoundLineEdit.Text = (roundId - 1).ToString();
         };
 
         // Handler for the button to choose a specific round
