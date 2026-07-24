@@ -2177,17 +2177,9 @@
     heldPrefix: 2
 
 - type: entity
-  name: cancer mouse
-  description: Toxic. Squeak!
-  parent: MobMouse
-  id: MobMouseCancer
+  abstract: true
+  id: MobCancerBase
   components:
-  - type: GhostRole
-    name: ghost-role-information-cancer-mouse-name
-    description: ghost-role-information-cancer-mouse-description
-    rules: ghost-role-information-freeagent-rules
-    mindRoles:
-    - MindRoleGhostRoleFreeAgent
   - type: Sprite
     color: LightGreen
   - type: PointLight
@@ -2218,6 +2210,19 @@
       amount: 1
   - type: Damageable
     damageModifierSet: Zombie
+
+- type: entity
+  name: cancer mouse
+  description: Toxic. Squeak!
+  parent: [ MobMouse, MobCancerBase ]
+  id: MobMouseCancer
+  components:
+  - type: GhostRole
+    name: ghost-role-information-cancer-mouse-name
+    description: ghost-role-information-cancer-mouse-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
 
 - type: entity
   name: lizard #Weh

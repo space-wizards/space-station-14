@@ -168,6 +168,16 @@
     - MinorAntagonists
 
 - type: entity
+  name: cancer rat king
+  description: He's da rat. He make da acute radiation syndrome.
+  id: MobRatKingCancer
+  parent: [ MobRatKing, MobCancerBase ]
+  components:
+  - type: RadiationSource
+    intensity: 1
+    slope: 0.25
+
+- type: entity
   name: rat servant
   id: MobRatServant
   parent: [ BaseMobRat, SimpleMobBase, MobCombat, BaseSlicingRefinable ]
