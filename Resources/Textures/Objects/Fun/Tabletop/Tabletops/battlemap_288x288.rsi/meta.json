@@ -1,7 +1,7 @@
 ﻿{
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "By Just-a-Unity-Dev (GitHub). grass/sand texture from https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82, moon from https://github.com/vgstation-coders/vgstation13/tree/e4d3ea7f69d21c3667be12b114fa935c4640cb05, snow from https://github.com/tgstation/tgstation/tree/8abb19545828230d92ba18827feeb42a67a55d49",
+    "copyright": "Assembled by Just-a-Unity-Dev (GitHub). grass/sand texture from https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82, moon from https://github.com/vgstation-coders/vgstation13/tree/e4d3ea7f69d21c3667be12b114fa935c4640cb05, snow from https://github.com/tgstation/tgstation/tree/8abb19545828230d92ba18827feeb42a67a55d49",
     "size": {
         "x": 288,
         "y": 288
