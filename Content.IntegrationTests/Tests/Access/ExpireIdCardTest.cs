@@ -55,11 +55,12 @@ namespace Content.IntegrationTests.Tests.Access
             });
 
             // Check that default component values are all correct
+            Assume.That(expireComp.Expired, Is.False);
+            Assume.That(expireComp.Permanent, Is.True);
+            Assume.That(expireComp.ExpireTime, Is.Null);
+
             using (Assert.EnterMultipleScope())
             {
-                Assume.That(expireComp.Expired, Is.False);
-                Assume.That(expireComp.Permanent, Is.True);
-                Assume.That(expireComp.ExpireTime, Is.Null);
                 Assert.That(accessComp.Tags, Is.EqualTo(new HashSet<ProtoId<AccessLevelPrototype>> { GenpopEnter }));
                 Assert.That(expireComp.ExpiredAccess, Is.EqualTo(new HashSet<ProtoId<AccessLevelPrototype>> { GenpopLeave }));
                 Assert.That(expireComp.ExpireMessage, Is.EqualTo(new LocId("genpop-prisoner-id-expire")));
