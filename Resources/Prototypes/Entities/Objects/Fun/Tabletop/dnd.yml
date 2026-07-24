@@ -66,6 +66,7 @@
   - type: Sprite
     state: battlemap-ship
   - type: TabletopGame
+    boardName: tabletop-battlemap-board-name
     size: 543, 543
     setup: !type:TabletopEmptySetup
       boardPrototype: ShipBoardTabletop
