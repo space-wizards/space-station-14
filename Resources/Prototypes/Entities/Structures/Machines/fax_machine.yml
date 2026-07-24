@@ -14,7 +14,7 @@
     - state: printing
       map: [ "printing" ]
       visible: false
-    - state: 
+    - state:
       map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: Icon
     sprite: Structures/Machines/fax_machine.rsi
@@ -33,6 +33,16 @@
         - TabletopMachineMask
         layer:
         - TabletopMachineLayer
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: ActivatableUI
     key: enum.FaxUiKey.Key
   - type: ActivatableUIRequiresPower
@@ -89,7 +99,7 @@
   suffix: CentCom
   components:
   - type: Sprite
-    layers:      
+    layers:
     - state: icon
       color: "#bfe3ff"
     - state: idle
@@ -97,7 +107,7 @@
     - state: printing
       map: [ "printing" ]
       visible: false
-    - state: 
+    - state:
       map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: FaxMachine
     name: "Central Command"
@@ -110,7 +120,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    layers:      
+    layers:
     - state: icon
       color: "#a3a3a3"
     - state: idle
@@ -118,7 +128,7 @@
     - state: printing
       map: [ "printing" ]
       visible: false
-    - state: 
+    - state:
       map: [ "enum.FaxMachineVisuals.VisualState" ]
   - type: FaxMachine
     name: "ERR*?*%!"
