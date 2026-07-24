@@ -17,7 +17,7 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public string ID { get; private set; } = default!;
 
     /// <inheritdoc/>
-    [ParentDataField(typeof(PrototypeIdArraySerializer<CloningSettingsPrototype>))]
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<CloningSettingsPrototype>))]
     public string[]? Parents { get; private set; }
 
     /// <inheritdoc/>

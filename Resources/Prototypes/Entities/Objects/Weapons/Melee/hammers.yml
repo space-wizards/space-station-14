@@ -66,6 +66,10 @@
         Structural: 40
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,1
+    - 1,2,2,5
+    storedRotation: -45
 
 - type: entity
   id: SingularityHammer
@@ -105,3 +109,7 @@
         Blunt: 15
   - type: Item
     size: Ginormous
+    shape:
+    - 0,0,3,1
+    - 1,2,2,5
+    storedRotation: -45
