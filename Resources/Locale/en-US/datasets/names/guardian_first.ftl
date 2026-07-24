@@ -25,3 +25,4 @@ names-guardian-first-dataset-23 = The
 names-guardian-first-dataset-24 = Vanilla
 names-guardian-first-dataset-25 = Chocolate
 names-guardian-first-dataset-26 = Strawberry
+names-guardian-first-dataset-27 = Purple

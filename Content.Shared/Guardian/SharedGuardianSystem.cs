@@ -456,15 +456,19 @@ public abstract partial class SharedGuardianSystem : EntitySystem
             RetractGuardian((host.Owner, host.Comp), guardian);
             return;
         }
-        if (dist > guardian.Comp.DistanceAllowed)
+
+        if (dist > guardian.Comp.HardCapDistance)
+        {
+            RetractGuardian((host.Owner, host.Comp), guardian);
+        }
+        else if (dist > guardian.Comp.DistanceAllowed)
         {
             var coords = _transform.ToMapCoordinates(hostXform.Coordinates);
             var basePos = coords.Position;
             var delta = _transform.ToMapCoordinates(guardianXform.Coordinates).Position - basePos;
-            var pos = basePos + delta / dist * (guardian.Comp.DistanceAllowed - 0.1f);
+            var pos = basePos + delta / dist * (guardian.Comp.DistanceAllowed - 0.05f);
             _transform.SetMapCoordinates(guardian.Owner, new MapCoordinates(pos, coords.MapId));
         }
-
     }
 
     private void ReleaseGuardian(Entity<GuardianHostComponent> host, Entity<GuardianComponent> guardian)

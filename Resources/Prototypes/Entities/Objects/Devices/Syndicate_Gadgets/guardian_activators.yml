@@ -99,7 +99,7 @@
     state: fist
   description: guardian-desc-fist
   title: guardian-title-fist
-  guardian: MobFighterGuardianBase
+  guardian: MobFighterGuardianSyndicate
 
 - type: guardianEntry
   id: GuardianBaseHeal
@@ -108,7 +108,7 @@
     state: heal
   description: guardian-desc-heal
   title: guardian-title-heal
-  guardian: MobHealerGuardianBase
+  guardian: MobHealerGuardianSyndicate
 
 - type: guardianEntry
   id: GuardianBaseSword
@@ -117,7 +117,7 @@
     state: sword
   description: guardian-desc-sword
   title: guardian-title-sword
-  guardian: MobSwordGuardianBase
+  guardian: MobSwordGuardianSyndicate
 
 - type: guardianEntry
   id: GuardianBaseNuke
@@ -126,7 +126,7 @@
     state: nuke
   description: guardian-desc-nuke
   title: guardian-title-nuke
-  guardian: MobExplosiveGuardianBase
+  guardian: MobExplosiveGuardianSyndicate
 
 # Djinns
 - type: guardianEntry
