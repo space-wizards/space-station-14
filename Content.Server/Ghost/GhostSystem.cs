@@ -142,6 +142,9 @@ namespace Content.Server.Ghost
             Dirty(uid, component);
         }
 
+        /// <summary>
+        /// BooActionEvent handler. Raises BooActionEvents on nearby entities we run out of entities or we receive a response deemed sufficient.
+        /// </summary>
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
             if (args.Handled)
