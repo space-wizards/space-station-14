@@ -16,7 +16,7 @@ public abstract partial class SharedVendingMachineSystem
     {
         if (!TryComp<WiresPanelComponent>(target, out var panel) || !panel.Open)
         {
-            Popup.PopupPredictedCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
+            Popup.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                     ("this", uid),
                     ("user", user),
                     ("target", target)),
@@ -36,7 +36,7 @@ public abstract partial class SharedVendingMachineSystem
     {
         if (!component.CanRestock.Contains(machineComponent.PackPrototypeId))
         {
-            Popup.PopupPredictedCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
+            Popup.PopupCursor(Loc.GetString("vending-machine-restock-invalid-inventory", ("this", uid), ("user", user),
                 ("target", target)), user);
 
             return false;
@@ -56,6 +56,7 @@ public abstract partial class SharedVendingMachineSystem
         TryUpdateVisualState((uid, vendComponent));
     }
 
+    [SubscribeLocalEvent]
     private void OnAfterInteract(EntityUid uid, VendingMachineRestockComponent component, AfterInteractEvent args)
     {
         if (args.Target is not { } target || !args.CanReach || args.Handled)
@@ -92,7 +93,7 @@ public abstract partial class SharedVendingMachineSystem
         var othersMessage = Loc.GetString("vending-machine-restock-start-others",
             ("user", Identity.Entity(args.User, EntityManager)),
             ("target", target));
-        Popup.PopupPredicted(selfMessage, othersMessage, target, args.User, PopupType.Medium);
+        Popup.PopupEntity(selfMessage, othersMessage, target, args.User, PopupType.Medium);
 
 
         if (!Timing.IsFirstTimePredicted)
@@ -102,6 +103,7 @@ public abstract partial class SharedVendingMachineSystem
         machineComponent.RestockStream = Audio.PlayPredicted(component.SoundRestockStart, target, args.User)?.Entity;
     }
 
+    [SubscribeLocalEvent]
     private void OnRestockDoAfter(Entity<VendingMachineComponent> ent, ref RestockDoAfterEvent args)
     {
         if (args.Cancelled)
@@ -127,7 +129,7 @@ public abstract partial class SharedVendingMachineSystem
         var othersMessage = Loc.GetString("vending-machine-restock-done-others",
             ("user", Identity.Entity(args.User, EntityManager)),
             ("target", ent));
-        Popup.PopupPredicted(userMessage, othersMessage, ent, args.User, PopupType.Medium);
+        Popup.PopupEntity(userMessage, othersMessage, ent, args.User, PopupType.Medium);
 
         Audio.PlayPredicted(restockComponent.SoundRestockDone, ent, args.User);
 

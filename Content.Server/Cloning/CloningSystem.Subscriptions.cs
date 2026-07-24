@@ -1,5 +1,7 @@
 using Content.Server.Forensics;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -38,6 +40,7 @@ public sealed partial class CloningSystem
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private SharedChameleonClothingSystem _chameleonClothing = default!;
     [Dependency] private PullingSystem _pulling = default!;
+    [Dependency] private SharedBloodstreamSystem _bloodstream = default!;
 
     public override void Initialize()
     {
@@ -62,6 +65,7 @@ public sealed partial class CloningSystem
         SubscribeLocalEvent<InventoryComponent, CloningEvent>(OnCloneInventory);
         SubscribeLocalEvent<MovementSpeedModifierComponent, CloningEvent>(OnCloneMovementSpeedModifier);
         SubscribeLocalEvent<PullerComponent, CloningEvent>(OnClonePuller);
+        SubscribeLocalEvent<BloodstreamComponent, CloningEvent>(OnCloneBloodstream);
     }
 
     private void OnCloneItemStack(Entity<StackComponent> ent, ref CloningItemEvent args)
@@ -148,5 +152,13 @@ public sealed partial class CloningSystem
             return;
 
         _pulling.CopyPullerComponent(ent.AsNullable(), args.CloneUid);
+    }
+
+    private void OnCloneBloodstream(Entity<BloodstreamComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        _bloodstream.CopyComponent(ent.AsNullable(), args.CloneUid);
     }
 }

@@ -402,7 +402,7 @@ public sealed partial class GameTicker
     /// </summary>
     public IEnumerable<EntityPrototype> GetAllGameRulePrototypes()
     {
-        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in ProtoMan.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract)
                 continue;
@@ -465,7 +465,7 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
-            if (!_prototypeManager.HasIndex(rule))
+            if (!ProtoMan.HasIndex(rule))
             {
                 shell.WriteError($"Invalid game rule {rule} was skipped.");
 
