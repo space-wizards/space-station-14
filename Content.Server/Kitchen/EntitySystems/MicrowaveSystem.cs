@@ -1,18 +1,18 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
-using Content.Server.Explosion.EntitySystems;
-using Content.Server.Temperature.Systems;
-using Content.Shared.Database;
-using Content.Shared.Interaction.Events;
-using Robust.Shared.Random;
-using Robust.Shared.Audio;
-using Content.Server.Lightning;
-using Content.Shared.Kitchen.Components;
-using Robust.Shared.Player;
 using Content.Server.Construction.Components;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Lightning;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
+using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Kitchen.EntitySystems;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
@@ -26,14 +26,6 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     [Dependency] private SharedSuicideSystem _suicide = default!;
     [Dependency] private TemperatureSystem _temperature = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<MicrowaveComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
-        SubscribeLocalEvent<ActivelyMicrowavedComponent, OnConstructionTemperatureEvent>(OnConstructionTemp);
-    }
-
     /// <summary>
     ///     Kills the user by microwaving their head.
     /// </summary>
@@ -41,7 +33,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     ///     TODO: Make this not awful, it keeps any items attached to your head still on and you can
     ///     revive someone and cogni them so you have some dumb headless fuck running around. I've seen it happen.
     /// </remarks>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnSuicideByEnvironment(Entity<MicrowaveComponent> ent, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
@@ -75,7 +67,7 @@ public sealed partial class MicrowaveSystem : SharedMicrowaveSystem
     /// <remarks>
     ///     For example: raw meat will not turn into steak while it is actively being microwaved.
     /// </remarks>
-    /// <param name="ent">An entity that is actively being microwaved.</param>
+    [SubscribeLocalEvent]
     private void OnConstructionTemp(Entity<ActivelyMicrowavedComponent> ent, ref OnConstructionTemperatureEvent args)
     {
         args.Result = HandleResult.False;

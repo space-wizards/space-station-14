@@ -12,15 +12,12 @@ public abstract partial class SharedMicrowaveSystem
     private void InitializeUI()
     {
         SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((e, ref m) => StartCooking(e, m.Actor));
-        SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectAll);
-        SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectSolidIndexedMessage>(OnEjectSolidIndexed);
-        SubscribeLocalEvent<MicrowaveComponent, MicrowaveSelectCookTimeMessage>(OnSelectCookTime);
     }
 
     /// <summary>
     ///     Ejects all ingredients from the microwave.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnEjectAll(Entity<MicrowaveComponent> ent, ref MicrowaveEjectMessage args)
     {
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
@@ -33,20 +30,20 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Ejects an ingredient entity from the microwave.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnEjectSolidIndexed(Entity<MicrowaveComponent> ent, ref MicrowaveEjectSolidIndexedMessage args)
     {
         if (!HasContents(ent.AsNullable()) || IsActiveMicrowave(ent.AsNullable()))
             return;
 
-        ContainerSys.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
+        ContainerSys.Remove(GetEntity(args.EntityId), ent.Comp.Storage);
         AudioSys.PlayPredicted(ent.Comp.ClickSound, ent, args.Actor, AudioParams.Default.WithVolume(-2));
     }
 
     /// <summary>
     ///     Change the cook time of the microwave by selecting a new button index.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnSelectCookTime(Entity<MicrowaveComponent> ent, ref MicrowaveSelectCookTimeMessage args)
     {
         if (!HasContents(ent.AsNullable())
@@ -74,22 +71,22 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     /// <param name="microwave">The microwave to update.</param>
     public virtual void UpdateUserInterfaceState(Entity<MicrowaveComponent?> microwave)
-    { }
+    {
+
+    }
 }
 
 /// <summary>
 ///     Sent from client to server to request the microwave to start cooking.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage
-{ }
+public sealed class MicrowaveStartCookMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 ///     Sent from client to server to request ejecting all contents of the microwave.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage
-{ }
+public sealed class MicrowaveEjectMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 ///     Sent from client to server to request ejecting an entity from the microwave.
@@ -100,7 +97,7 @@ public sealed class MicrowaveEjectSolidIndexedMessage(NetEntity entityId) : Boun
     /// <summary>
     ///     The entity to eject from the microwave.
     /// </summary>
-    public NetEntity EntityID = entityId;
+    public NetEntity EntityId = entityId;
 }
 
 /// <summary>

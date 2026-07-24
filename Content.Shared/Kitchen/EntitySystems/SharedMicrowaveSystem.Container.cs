@@ -13,22 +13,40 @@ public abstract partial class SharedMicrowaveSystem
     /// </summary>
     private void InitializeContainer()
     {
-        SubscribeLocalEvent<MicrowaveComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<MicrowaveComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<MicrowaveComponent, EntInsertedIntoContainerMessage>(OnContentsUpdated);
         SubscribeLocalEvent<MicrowaveComponent, EntRemovedFromContainerMessage>(OnContentsUpdated);
-        SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing,
-            after: [typeof(AnchorableSystem)]);
+        SubscribeLocalEvent<MicrowaveComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(AnchorableSystem)]);
     }
 
     /// <summary>
     ///     Initializes the microwave's storage container.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnComponentInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
     {
         // this really does have to be in ComponentInit
         ent.Comp.Storage = ContainerSys.EnsureContainer<Container>(ent, ent.Comp.ContainerId);
+    }
+
+    /// <summary>
+    ///     Prevents inserting entities into the microwave if the microwave is broken, active,
+    ///     or the item is invalid.
+    /// </summary>
+    [SubscribeLocalEvent]
+    private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+    {
+        if (_timing.ApplyingState)
+            return;
+
+        if (args.Container.ID != ent.Comp.ContainerId)
+            return;
+
+        if (ent.Comp.Broken
+            || IsActiveMicrowave(ent.AsNullable())
+            || !CanFitInMicrowave(ent.AsNullable(), args.EntityUid))
+        {
+            args.Cancel();
+        }
     }
 
     /// <summary>
@@ -55,31 +73,8 @@ public abstract partial class SharedMicrowaveSystem
     }
 
     /// <summary>
-    ///     Prevents inserting entities into the microwave if the microwave is broken, active,
-    ///     or the item is invalid.
-    /// </summary>
-    /// <param name="ent">The microwave entity.</param>
-    private void OnInsertAttempt(Entity<MicrowaveComponent> ent, ref ContainerIsInsertingAttemptEvent args)
-    {
-        if (_timing.ApplyingState)
-            return;
-
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        if (ent.Comp.Broken
-            || IsActiveMicrowave(ent.AsNullable())
-            || !CanFitInMicrowave(ent.AsNullable(), args.EntityUid))
-        {
-            args.Cancel();
-            return;
-        }
-    }
-
-    /// <summary>
     ///     Attempt to insert an entity into the microwave, resulting in a pop-up message if this is not possible.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
     private void OnInteractUsing(Entity<MicrowaveComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -132,8 +127,6 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Updates the microwave UI when entities are added/removed from the microwave.
     /// </summary>
-    /// <param name="uid">The microwave entity ID.</param>
-    /// <param name="component">The microwave entity's component.</param>
     // For some reason ContainerModifiedMessage just can't be used at all with Entity<T>.
     // TODO: replace with Entity<T> syntax once that's possible
     private void OnContentsUpdated(EntityUid uid, MicrowaveComponent component, ContainerModifiedMessage args)

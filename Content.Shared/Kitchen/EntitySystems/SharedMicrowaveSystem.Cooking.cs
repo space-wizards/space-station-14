@@ -12,21 +12,17 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="ent">The microwave entity.</param>
     /// <param name="time">The heating time that has elapsed, in seconds.</param>
     protected virtual void AddTemperature(Entity<MicrowaveComponent> ent, float time)
-    { }
+    {
+
+    }
 
     /// <summary>
     ///     Attempts to roll random "malfunction" events on a malfunctioning microwave.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
     protected virtual void RollMalfunction(Entity<MicrowaveComponent> ent)
     {
-        var comp = ent.Comp;
-
-        if (SharedRandomExtensions.PredictedProb(_timing, comp.ExplosionChance, GetNetEntity(ent)))
-        {
+        if (SharedRandomExtensions.PredictedProb(_timing, ent.Comp.ExplosionChance, GetNetEntity(ent)))
             Explode(ent.AsNullable());
-            return;
-        }
     }
 
     public virtual void Explode(Entity<MicrowaveComponent?> ent)
@@ -74,6 +70,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <param name="microwave">The microwave entity.</param>
     /// <param name="recipe">The recipe and portion count associated with this operaton.</param>
     /// <param name="malfunctioning">Whether or not this microwave is malfunctioning.</param>
+    /// <param name="user">The entity that is activating the microwave.</param>
     private void ActivateMicrowave(Entity<MicrowaveComponent> microwave,
         PortionedRecipe? recipe,
         bool malfunctioning,
@@ -249,7 +246,7 @@ public abstract partial class SharedMicrowaveSystem
         if (active.PortionedRecipe != null)
             SpawnFinishedRecipe(microwaveEnt, active.PortionedRecipe.Value);
 
-        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, active.User, null); // beep... beep... beep
+        AudioSys.PlayPredicted(microwave.FoodDoneSound, ent, active.User); // beep... beep... beep
 
         // Clean up the microwave.
         ContainerSys.EmptyContainer(microwave.Storage);

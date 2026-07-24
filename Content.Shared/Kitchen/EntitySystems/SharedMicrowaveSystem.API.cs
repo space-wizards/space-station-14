@@ -145,7 +145,9 @@ public abstract partial class SharedMicrowaveSystem
         var ingredients = new CookingIngredients();
 
         foreach (var item in items)
+        {
             AddItemIngredients(item, ref ingredients);
+        }
 
         return ingredients;
     }

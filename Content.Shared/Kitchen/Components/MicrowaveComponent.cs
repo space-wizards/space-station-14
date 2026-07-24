@@ -119,7 +119,7 @@ public sealed partial class MicrowaveComponent : Component
     /// </remarks>
     [DataField, Access(typeof(SharedMicrowaveSystem), Other = AccessPermissions.ReadExecute)]
     [AutoNetworkedField]
-    public uint CurrentCookTimerTime = 0;
+    public uint CurrentCookTimerTime;
 
     /// <summary>
     ///     The index of the currently-selected "cook time" button.
@@ -183,7 +183,7 @@ public sealed partial class MicrowaveComponent : Component
     ///     This is rolled every <see cref="MalfunctionInterval"/>.
     /// </remarks>
     [DataField]
-    public float ExplosionChance = .1f;
+    public float ExplosionChance = 0.1f;
 
     /// <summary>
     ///     Chance of lightning occurring when we microwave a metallic object.
@@ -192,7 +192,7 @@ public sealed partial class MicrowaveComponent : Component
     ///     This is rolled every <see cref="MalfunctionInterval"/>.
     /// </remarks>
     [DataField]
-    public float LightningChance = .75f;
+    public float LightningChance = 0.75f;
 
     /// <summary>
     ///     If this microwave can give ID cards new accesses without exploding.

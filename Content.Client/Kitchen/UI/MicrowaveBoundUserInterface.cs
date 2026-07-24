@@ -9,16 +9,13 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Kitchen.UI;
 
 [UsedImplicitly]
-public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
+public sealed partial class MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private MicrowaveMenu? _menu;
 
     [ViewVariables]
     private readonly Dictionary<int, EntityUid> _solids = new();
-
-    public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    { }
 
     protected override void Open()
     {
@@ -31,14 +28,13 @@ public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
             SendPredictedMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(_solids[args.ItemIndex])));
         };
 
-        _menu.OnCookTimeSelected += (args, buttonIndex) =>
+        _menu.OnCookTimeSelected += (args, _) =>
         {
             var selectedCookTime = (uint)0;
 
-            if (args.Button is MicrowaveMenu.MicrowaveCookTimeButton microwaveCookTimeButton)
+            if (args.Button is MicrowaveMenu.MicrowaveCookTimeButton actualButton)
             {
                 // args.Button is a MicrowaveCookTimeButton
-                var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton)args.Button;
                 selectedCookTime = actualButton.CookTime == 0 ? 0 : actualButton.CookTime;
                 SendPredictedMessage(new MicrowaveSelectCookTimeMessage((int)selectedCookTime / 5, actualButton.CookTime));
 
@@ -84,7 +80,6 @@ public sealed partial class MicrowaveBoundUserInterface : BoundUserInterface
     /// <summary>
     ///     Update the state of various controls in this menu based on the active / empty status of the microwave.
     /// </summary>
-    /// <param name="comp">The microwave component associated with this entity.</param>
     private void UpdateActiveDisplay(MicrowaveComponent? comp, MicrowaveSystem? microwaveSys = null)
     {
         if (_menu is null)

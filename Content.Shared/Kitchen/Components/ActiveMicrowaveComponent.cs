@@ -3,7 +3,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Kitchen.Components;
 
@@ -18,7 +17,7 @@ public sealed partial class ActiveMicrowaveComponent : Component
     ///     Whether or not this microwave cooking process is malfunctioning.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Malfunctioning = false;
+    public bool Malfunctioning;
 
     /// <summary>
     ///     The recipe we are currently cooking.
@@ -30,7 +29,7 @@ public sealed partial class ActiveMicrowaveComponent : Component
     ///     The user who activated this microwave.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid? User = null;
+    public EntityUid? User;
 
     /// <summary>
     ///     The total cooking time of this operation.

@@ -9,21 +9,9 @@ namespace Content.Shared.Kitchen.EntitySystems;
 public abstract partial class SharedMicrowaveSystem
 {
     /// <summary>
-    ///     Subscribe to events related to active microwaves.
-    /// </summary>
-    private void InitializeActive()
-    {
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentStartup>(OnCookStart);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, ComponentShutdown>(OnCookEnd);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntInsertedIntoContainerMessage>(OnActiveMicrowaveInsert);
-        SubscribeLocalEvent<ActiveMicrowaveComponent, EntRemovedFromContainerMessage>(OnActiveMicrowaveRemove);
-
-        SubscribeLocalEvent<ActivelyMicrowavedComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
-    }
-
-    /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCookStart(Entity<ActiveMicrowaveComponent> ent, ref ComponentStartup args)
     {
         if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
@@ -47,6 +35,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when activated.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnCookEnd(Entity<ActiveMicrowaveComponent> ent, ref ComponentShutdown args)
     {
         if (!_microwaveQuery.TryComp(ent, out var microwaveComponent))
@@ -58,7 +47,6 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Adjusts a microwave's visuals, audio, and power draw when deactivated.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
     private void DeactivateMicrowaveCycle(Entity<MicrowaveComponent> ent)
     {
         SetAppearance(ent.AsNullable(), MicrowaveVisualState.Idle);
@@ -79,7 +67,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Adds ActivelyMicrowavedComponent to entities inserted into an active microwave.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnActiveMicrowaveInsert(Entity<ActiveMicrowaveComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (_timing.ApplyingState)
@@ -92,7 +80,7 @@ public abstract partial class SharedMicrowaveSystem
     /// <summary>
     ///     Removes ActivelyMicrowavedComponent from entities removed from an active microwave.
     /// </summary>
-    /// <param name="ent">The microwave entity.</param>
+    [SubscribeLocalEvent]
     private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (_timing.ApplyingState)
@@ -108,7 +96,7 @@ public abstract partial class SharedMicrowaveSystem
     ///     For example, raw egg would otherwise turn into cooked egg during the process, preventing it from being
     ///     "spent" when the microwave is finished cooking.
     /// </remarks>
-    /// <param name="ent">An entity that is actively being microwaved.</param>
+    [SubscribeLocalEvent]
     private void OnReactionAttempt(Entity<ActivelyMicrowavedComponent> ent, ref SolutionRelayEvent<ReactionAttemptEvent> args)
     {
         if (!TryComp<ActiveMicrowaveComponent>(ent.Comp.Microwave, out var activeMicrowaveComp))

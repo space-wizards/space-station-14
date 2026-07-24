@@ -38,7 +38,7 @@ public sealed partial class FoodRecipePrototype : IPrototype
     ///     The cooking ingredients used in this recipe.
     /// </summary>
     [IncludeDataField]
-    public CookingIngredients Ingredients = default!;
+    public CookingIngredients Ingredients;
 
     /// <summary>
     ///     The resulting entity made from this recipe.
@@ -56,7 +56,7 @@ public sealed partial class FoodRecipePrototype : IPrototype
     ///     Is this recipe unavailable in normal circumstances?
     /// </summary>
     [DataField]
-    public bool SecretRecipe = false;
+    public bool SecretRecipe;
 
     /// <summary>
     ///     Manual priority field for recipes that take precedent over others. Higher number = picked over others.
@@ -67,7 +67,7 @@ public sealed partial class FoodRecipePrototype : IPrototype
     ///     erroneously. This field should be used as minimally as possible.
     /// </remarks>
     [DataField]
-    public int Priority = 0;
+    public int Priority;
 }
 
 /// <summary>
@@ -229,13 +229,19 @@ public partial record struct CookingIngredients
         var newIngredients = c1;
 
         foreach (var (key, count) in c2.Solids)
+        {
             newIngredients.AddSolid(key, count);
+        }
 
         foreach (var (key, count) in c2.Stacks)
+        {
             newIngredients.AddStack(key, count);
+        }
 
         foreach (var (key, quantity) in c2.Reagents)
+        {
             newIngredients.AddReagent(key, quantity);
+        }
 
         return newIngredients;
     }

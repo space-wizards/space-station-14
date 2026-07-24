@@ -27,7 +27,6 @@ public sealed class MicrowaveRecipeTest
         var protoMan = server.ProtoMan;
         var entMan = server.EntMan;
         var microwaveSystem = entMan.System<MicrowaveSystem>();
-        var transformSystem = entMan.System<SharedTransformSystem>();
 
         var testMap = await pair.CreateTestMap();
 
@@ -37,7 +36,7 @@ public sealed class MicrowaveRecipeTest
             var microwave = entMan.Spawn(MicrowavePrototype, coordinates: testMap.MapCoords);
             var microwaveString = entMan.ToPrettyString(microwave);
 
-            Assert.That(entMan.TryGetComponent<MicrowaveComponent>(microwave, out var comp),
+            Assert.That(entMan.HasComponent<MicrowaveComponent>(microwave),
                 $"Microwave entity {microwaveString} lacks a {nameof(MicrowaveComponent)}!");
 
             // Get the parameters we need to make this recipe.
