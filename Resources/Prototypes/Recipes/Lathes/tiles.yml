@@ -623,6 +623,21 @@
   id: FloorTileItemShuttleBlack
   result: FloorTileItemShuttleBlack
 
+# Precious
+- type: latheRecipe
+  parent: BasePreciousTileRecipe
+  id: FloorTileItemGold
+  result: FloorTileItemGold
+  materials:
+    Gold: 50
+
+- type: latheRecipe
+  parent: BasePreciousTileRecipe
+  id: FloorTileItemSilver
+  result: FloorTileItemSilver
+  materials:
+    Silver: 50
+
 # Carpets
 - type: latheRecipe
   parent: BaseCarpetTileRecipe
