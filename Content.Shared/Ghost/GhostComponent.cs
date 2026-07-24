@@ -64,11 +64,11 @@ public sealed partial class GhostComponent : Component
     public float BooRadius = 3;
 
     /// <summary>
-    /// The boo budget when causing a boo.
-    /// Entities handling the <see cref="GhostBooEvent"/> will subtract their cost from this.
+    /// The number of boo events (of normal intensity) that should happen at most.
+    /// There may be more handled events if the responses are subtle.
     /// </summary>
     [DataField]
-    public int BooIntensity = 3 * (int)GhostBooIntensity.Normal;
+    public int BooCount = 3;
 
     /// <summary>
     /// Is this ghost allowed to interact with entities?

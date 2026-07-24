@@ -154,7 +154,7 @@ namespace Content.Server.Ghost
             // Shuffle the possible targets so we don't favor any particular entities
             _random.Shuffle(entities);
 
-            var remainingIntensity = component.BooIntensity;
+            var remainingIntensity = component.BooCount * (int)GhostBooIntensity.Normal;
             var anythingAffected = false;
             foreach (var ent in entities)
             {
