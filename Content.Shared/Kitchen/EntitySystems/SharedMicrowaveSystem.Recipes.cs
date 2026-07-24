@@ -16,11 +16,14 @@ public abstract partial class SharedMicrowaveSystem
     /// This event tries to get secret recipes that the microwave might be capable of.
     /// Currently, we only check the microwave itself, but in the future, the user might be able to learn recipes.
     /// </summary>
+    [SubscribeLocalEvent]
     private void OnGetSecretRecipes(Entity<FoodRecipeProviderComponent> ent, ref GetSecretRecipesEvent args)
     {
         foreach (var recipeId in ent.Comp.ProvidedRecipes)
+        {
             if (ProtoMan.Resolve(recipeId, out var recipeProto))
                 args.Recipes.Add(recipeProto);
+        }
     }
 
     /// <summary>
@@ -41,9 +44,13 @@ public abstract partial class SharedMicrowaveSystem
         if (TryGetStackId(item, out var stackId, out var stack))
             ingredients.AddStack(stackId.Value, stack.Value.Comp.Count);
 
-        if (TryGetUsableIngredientSolution(item, out var _, out var solution))
+        if (TryGetUsableIngredientSolution(item, out _, out var solution))
+        {
             foreach (var (reagent, quantity) in solution.Contents)
+            {
                 ingredients.AddReagent(reagent.Prototype, quantity);
+            }
+        }
     }
 
     /// <summary>
@@ -219,7 +226,7 @@ public abstract partial class SharedMicrowaveSystem
         stack = stackComp.StackTypeId;
         stackEnt = (item, stackComp);
 
-        return stack != null && stackEnt != null;
+        return true;
     }
 
     /// <summary>
