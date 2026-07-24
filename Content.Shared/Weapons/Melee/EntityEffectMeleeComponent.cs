@@ -13,5 +13,5 @@ public sealed partial class EntityEffectMeleeComponent : Component
     /// List of entity effects to apply to hit entities.
     /// </summary>
     [DataField(required: true)]
-    public List<EntityEffect> Effects = [];
+    public EntityEffect[] Effects;
 }
