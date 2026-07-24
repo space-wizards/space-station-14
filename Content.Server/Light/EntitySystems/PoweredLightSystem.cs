@@ -5,47 +5,44 @@ using Content.Shared.Light.EntitySystems;
 
 namespace Content.Server.Light.EntitySystems;
 
-/// <summary>
-///     System for the PoweredLightComponents
-/// </summary>
+/// <inheritdoc/>
 public sealed class PoweredLightSystem : SharedPoweredLightSystem
 {
-    public override void Initialize()
+    [SubscribeLocalEvent]
+    private void OnGhostBoo(Entity<PoweredLightComponent> ent, ref GhostBooEvent args)
     {
-        base.Initialize();
-        SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
+        // Already handled
+        if (args.AllowedIntensity < GhostBooIntensity.Normal
+            || args.ResponseIntensity != GhostBooIntensity.None)
+            return;
 
-        SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-    }
-
-    private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
-    {
-        if (light.IgnoreGhostsBoo || args.AllowedIntensity < GhostBooIntensity.Normal || HasComp<BlinkingPoweredLightComponent>(uid))
+        if (ent.Comp.IgnoreGhostsBoo || HasComp<BlinkingPoweredLightComponent>(ent))
             return; // The light is immune or already blinking.
 
         // check cooldown first to prevent abuse
         var curTime = GameTiming.CurTime;
-        if (light.LastGhostBlink != null && curTime <= light.LastGhostBlink + light.GhostBlinkingCooldown)
+        if (ent.Comp.LastGhostBlink != null && curTime <= ent.Comp.LastGhostBlink + ent.Comp.GhostBlinkingCooldown)
             return;
 
-        light.LastGhostBlink = curTime;
+        ent.Comp.LastGhostBlink = curTime;
 
-        var blinkingComp = EnsureComp<BlinkingPoweredLightComponent>(uid);
-        blinkingComp.StopBlinkingTime = curTime + light.GhostBlinkingTime;
-        Dirty(uid, blinkingComp);
+        var blinkingComp = EnsureComp<BlinkingPoweredLightComponent>(ent);
+        blinkingComp.StopBlinkingTime = curTime + ent.Comp.GhostBlinkingTime;
+        Dirty(ent, blinkingComp);
 
         args.ResponseIntensity = GhostBooIntensity.Normal;
     }
 
-    private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
+    [SubscribeLocalEvent]
+    private void OnMapInit(Entity<PoweredLightComponent> ent, ref MapInitEvent args)
     {
         // TODO: Use ContainerFill dog
-        if (light.HasLampOnSpawn != null)
+        if (ent.Comp.HasLampOnSpawn != null)
         {
-            var entity = Spawn(light.HasLampOnSpawn, Comp<TransformComponent>(uid).Coordinates);
-            ContainerSystem.Insert(entity, light.LightBulbContainer);
+            var entity = Spawn(ent.Comp.HasLampOnSpawn, Transform(ent).Coordinates);
+            ContainerSystem.Insert(entity, ent.Comp.LightBulbContainer);
         }
         // need this to update visualizers
-        UpdateLight(uid, light);
+        UpdateLight(ent, ent.Comp);
     }
 }

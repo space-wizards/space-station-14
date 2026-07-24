@@ -1,4 +1,5 @@
 using Content.Shared.Dataset;
+using Content.Shared.Ghost;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Ghost.Components;
@@ -36,8 +37,8 @@ public sealed partial class SpookySpeakerComponent : Component
     public TimeSpan NextSpeakTime;
 
     /// <summary>
-    /// The cost to activate this component.
+    /// The intensity of this response.
     /// </summary>
     [DataField]
-    public int Cost = 4;
+    public GhostBooIntensity Intensity = GhostBooIntensity.Normal;
 }

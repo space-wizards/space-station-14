@@ -22,21 +22,23 @@ public sealed partial class GhostSystem
     [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
 
     [SubscribeLocalEvent]
-    private void OnSpeakerBoo(Entity<SpookySpeakerComponent> entity, ref GhostBooEvent args)
+    private void OnSpeakerBoo(Entity<SpookySpeakerComponent> ent, ref GhostBooEvent args)
     {
-        if (args.AllowedIntensity < GhostBooIntensity.Normal)
+        // Check if already handled, or too intense.
+        if (args.ResponseIntensity != GhostBooIntensity.None
+            || args.AllowedIntensity < ent.Comp.Intensity)
             return;
 
         // Only activate sometimes, so groups don't all trigger together
-        if (!_random.Prob(entity.Comp.SpeakChance))
+        if (!_random.Prob(ent.Comp.SpeakChance))
             return;
 
         var curTime = _timing.CurTime;
         // Enforce a delay between messages to prevent spam
-        if (curTime < entity.Comp.NextSpeakTime)
+        if (curTime < ent.Comp.NextSpeakTime)
             return;
 
-        if (!ProtoMan.Resolve(entity.Comp.MessageSet, out var messages))
+        if (!ProtoMan.Resolve(ent.Comp.MessageSet, out var messages))
             return;
 
         // Grab a random localized message from the set
@@ -45,32 +47,34 @@ public sealed partial class GhostSystem
         // So this is a stupid trick to make the "...Oooo"-style messages work.
         message = '>' + message;
         // Say the message
-        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, hideChat: true);
+        _chat.TrySendInGameICMessage(ent, message, InGameICChatType.Speak, hideChat: true);
 
         // Set the delay for the next message
-        entity.Comp.NextSpeakTime = curTime + entity.Comp.Cooldown;
+        ent.Comp.NextSpeakTime = curTime + ent.Comp.Cooldown;
 
-        args.ResponseIntensity = GhostBooIntensity.Normal;
+        args.ResponseIntensity = ent.Comp.Intensity;
     }
 
     [SubscribeLocalEvent]
-    private void OnExtinguishBoo(Entity<SpookyExtinguishComponent> entity, ref GhostBooEvent args)
+    private void OnExtinguishBoo(Entity<SpookyExtinguishComponent> ent, ref GhostBooEvent args)
     {
-        if (args.AllowedIntensity < GhostBooIntensity.Subtle)
+        // Check if already handled, or too intense.
+        if (args.ResponseIntensity != GhostBooIntensity.None
+            || args.AllowedIntensity < ent.Comp.Intensity)
             return;
 
         // Check if we can extinguish the entity.
-        if (!_flammableQuery.TryComp(entity, out var flammable))
+        if (!_flammableQuery.TryComp(ent, out var flammable))
             return;
 
         // Check if we need to extinguish this entity.
-        if (!_random.Prob(entity.Comp.ExtinguishChance))
+        if (!_random.Prob(ent.Comp.ExtinguishChance))
             return;
 
-        _flammable.Extinguish(entity, flammable);
+        _flammable.Extinguish(ent, flammable);
 
-        if (entity.Comp.ExtinguishSound != null)
-            _audio.PlayPvs(entity.Comp.ExtinguishSound, entity);
+        if (ent.Comp.ExtinguishSound != null)
+            _audio.PlayPvs(ent.Comp.ExtinguishSound, ent);
 
         // Only set handled if we random
         args.ResponseIntensity = GhostBooIntensity.Subtle;

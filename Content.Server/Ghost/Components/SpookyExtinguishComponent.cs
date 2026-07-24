@@ -1,3 +1,4 @@
+using Content.Shared.Ghost;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Ghost.Components;
@@ -17,13 +18,13 @@ public sealed partial class SpookyExtinguishComponent : Component
     public float ExtinguishChance = 0.8f;
 
     /// <summary>
-    /// The cost from the boo budget of extinguishing this.
+    /// The intensity of this response.
     /// </summary>
     /// <remarks>
-    /// Extinguishing a candle, for example, is less distracting than a flickering light, so the default cost is very low.
+    /// Extinguishing a candle, for example, is less distracting than a flickering light, so the default is Subtle.
     /// </remarks>
     [DataField]
-    public int Cost = 1;
+    public GhostBooIntensity Intensity = GhostBooIntensity.Subtle;
 
     /// <summary>
     /// An optional sound that should play when this is extinguished.
