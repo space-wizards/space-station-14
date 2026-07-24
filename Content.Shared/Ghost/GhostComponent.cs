@@ -68,7 +68,7 @@ public sealed partial class GhostComponent : Component
     /// Entities handling the <see cref="GhostBooEvent"/> will subtract their cost from this.
     /// </summary>
     [DataField]
-    public int BooValue = 10;
+    public int BooIntensity = 3 * (int)GhostBooIntensity.Normal;
 
     /// <summary>
     /// Is this ghost allowed to interact with entities?
@@ -105,6 +105,16 @@ public sealed partial class GhostComponent : Component
 public enum GhostVisuals : byte
 {
     Damage
+}
+
+/// <summary>
+/// The intensity of a given responseto a boo action.
+/// </summary>
+public enum GhostBooIntensity
+{
+    None = 0, /// <summary>No action at all.</summary>
+    Subtle = 1, /// <summary>A subtle action - short in duration or small in effect.</summary>
+    Normal = 2, /// <summary>A normal action - moderate in duration, attention-grabbing.</summary>
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }

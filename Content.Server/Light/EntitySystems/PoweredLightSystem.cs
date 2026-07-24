@@ -1,4 +1,5 @@
 using Content.Server.Ghost;
+using Content.Shared.Ghost;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 
@@ -9,11 +10,6 @@ namespace Content.Server.Light.EntitySystems;
 /// </summary>
 public sealed class PoweredLightSystem : SharedPoweredLightSystem
 {
-    /// <summary>
-    /// The cost, in boo budget points, of flickering a light.
-    /// </summary>
-    const int FlickerBooCost = 4;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -24,7 +20,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
 
     private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
     {
-        if (light.IgnoreGhostsBoo || HasComp<BlinkingPoweredLightComponent>(uid))
+        if (light.IgnoreGhostsBoo || args.AllowedIntensity < GhostBooIntensity.Normal || HasComp<BlinkingPoweredLightComponent>(uid))
             return; // The light is immune or already blinking.
 
         // check cooldown first to prevent abuse
@@ -38,8 +34,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
         blinkingComp.StopBlinkingTime = curTime + light.GhostBlinkingTime;
         Dirty(uid, blinkingComp);
 
-        args.Cost = FlickerBooCost;
-        args.Handled = true;
+        args.ResponseIntensity = GhostBooIntensity.Normal;
     }
 
     private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)

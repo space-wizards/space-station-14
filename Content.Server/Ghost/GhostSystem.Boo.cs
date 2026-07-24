@@ -3,6 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Chat;
+using Content.Shared.Ghost;
 using Content.Shared.Random.Helpers;
 using Robust.Server.Audio;
 using Robust.Shared.Random;
@@ -10,6 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost;
 
+// Handlers for interactions with the GhostBooEvent.
 public sealed partial class GhostSystem
 {
     [Dependency] private IGameTiming _timing = default!;
@@ -17,11 +19,14 @@ public sealed partial class GhostSystem
     [Dependency] private ChatSystem _chat = default!;
     [Dependency] private FlammableSystem _flammable = default!;
 
-    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery = default!;
+    [Dependency] private EntityQuery<FlammableComponent> _flammableQuery;
 
     [SubscribeLocalEvent]
     private void OnSpeakerBoo(Entity<SpookySpeakerComponent> entity, ref GhostBooEvent args)
     {
+        if (args.AllowedIntensity < GhostBooIntensity.Normal)
+            return;
+
         // Only activate sometimes, so groups don't all trigger together
         if (!_random.Prob(entity.Comp.SpeakChance))
             return;
@@ -45,13 +50,15 @@ public sealed partial class GhostSystem
         // Set the delay for the next message
         entity.Comp.NextSpeakTime = curTime + entity.Comp.Cooldown;
 
-        args.Cost = entity.Comp.Cost;
-        args.Handled = true;
+        args.ResponseIntensity = GhostBooIntensity.Normal;
     }
 
     [SubscribeLocalEvent]
     private void OnExtinguishBoo(Entity<SpookyExtinguishComponent> entity, ref GhostBooEvent args)
     {
+        if (args.AllowedIntensity < GhostBooIntensity.Subtle)
+            return;
+
         // Check if we can extinguish the entity.
         if (!_flammableQuery.TryComp(entity, out var flammable))
             return;
@@ -66,7 +73,6 @@ public sealed partial class GhostSystem
             _audio.PlayPvs(entity.Comp.ExtinguishSound, entity);
 
         // Only set handled if we random
-        args.Cost = entity.Comp.Cost;
-        args.Handled = true;
+        args.ResponseIntensity = GhostBooIntensity.Subtle;
     }
 }

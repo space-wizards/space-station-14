@@ -48,10 +48,10 @@ public sealed partial class RevenantSystem
     [Dependency] private SharedTransformSystem _transformSystem = default!;
     [Dependency] private SharedMapSystem _mapSystem = default!;
 
-    [Dependency] private EntityQuery<ItemComponent> _itemQuery = default!;
-    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery = default!;
-    [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery = default!;
-    [Dependency] private EntityQuery<SpookyExtinguishComponent> _extinguishQuery = default!;
+    [Dependency] private EntityQuery<ItemComponent> _itemQuery;
+    [Dependency] private EntityQuery<MobStateComponent> _mobStateQuery;
+    [Dependency] private EntityQuery<PoweredLightComponent> _poweredLightQuery;
+    [Dependency] private EntityQuery<SpookyExtinguishComponent> _extinguishQuery;
 
     private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
@@ -76,12 +76,9 @@ public sealed partial class RevenantSystem
             return;
         var target = args.Target;
 
-        // Flicker lights, extinguish candles with a spooky noise
-        if (_poweredLightQuery.HasComp(target) || _extinguishQuery.HasComp(target))
-        {
-            args.Handled = _ghost.DoGhostBooEvent(target, out _);
+        // Try to do something spooky first.
+        if (_ghost.DoGhostBooEvent(target, out _))
             return;
-        }
 
         if (!_mobStateQuery.HasComp(target) || !HasComp<HumanoidProfileComponent>(target) || HasComp<RevenantComponent>(target))
             return;
@@ -289,9 +286,8 @@ public sealed partial class RevenantSystem
                 TryComp<PhysicsComponent>(ent, out var phys) && phys.BodyType != BodyType.Static)
                 _throwing.TryThrow(ent, _random.NextAngle().ToWorldVec());
 
-            //flicker lights
-            if (_poweredLightQuery.HasComp(ent) || _extinguishQuery.HasComp(ent))
-                _ghost.DoGhostBooEvent(ent, out _);
+            //spooky stuff
+            _ghost.DoGhostBooEvent(ent, out _);
         }
     }
 

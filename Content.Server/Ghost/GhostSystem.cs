@@ -41,6 +41,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Ghost
 {
+    /// <summary>
+    /// A system for handling interactions with ghosts ("observers").
+    /// These are noncorporeal player entities (generally after dying in-round) that can roam and warp around.
+    /// </summary>
     public sealed partial class GhostSystem : SharedGhostSystem
     {
         [Dependency] private SharedActionsSystem _actions = default!;
@@ -147,20 +151,29 @@ namespace Content.Server.Ghost
             // Shuffle the possible targets so we don't favor any particular entities
             _random.Shuffle(entities);
 
-            var booBudget = component.BooValue;
+            var remainingIntensity = component.BooIntensity;
             var anythingAffected = false;
             foreach (var ent in entities)
             {
-                var handled = DoGhostBooEvent(ent, out var cost);
+                var handled = DoGhostBooEvent(ent, out var intensity);
 
                 if (handled)
                 {
                     anythingAffected = true;
-                    booBudget -= cost;
-                }
+                    switch (intensity)
+                    {
+                        case GhostBooIntensity.Subtle:
+                        case GhostBooIntensity.Normal:
+                            remainingIntensity -= (int)intensity;
+                            break;
+                        default:
+                            remainingIntensity -= (int)GhostBooIntensity.Normal;
+                            break;
+                    }
 
-                if (booBudget <= 0)
-                    break;
+                    if (remainingIntensity <= 0)
+                        break;
+                }
             }
 
             if (!anythingAffected)
@@ -477,13 +490,20 @@ namespace Content.Server.Ghost
             }
         }
 
-        public bool DoGhostBooEvent(EntityUid target, out int cost)
+        /// <summary>
+        /// Raises a GhostBooEvent on a particular entity.
+        /// </summary>
+        /// <param name="target">The target of the action.</param>
+        /// <param name="intensity">The actual intensity of the response.</param>
+        /// <param name="allowedIntensity">The permitted intensity of the response.</param>
+        /// <returns>Whether or not the target had a response.</returns>
+        public bool DoGhostBooEvent(EntityUid target, out GhostBooIntensity intensity, GhostBooIntensity allowedIntensity = GhostBooIntensity.Normal)
         {
-            var ghostBoo = new GhostBooEvent();
+            var ghostBoo = new GhostBooEvent(allowedIntensity);
             RaiseLocalEvent(target, ghostBoo, true);
 
-            cost = int.Max(1, ghostBoo.Cost);
-            return ghostBoo.Handled;
+            intensity = ghostBoo.AllowedIntensity;
+            return intensity != GhostBooIntensity.None;
         }
 
         public EntityUid? SpawnGhost(Entity<MindComponent?> mind, EntityUid targetEntity,

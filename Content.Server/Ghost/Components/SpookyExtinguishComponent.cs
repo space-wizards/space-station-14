@@ -3,14 +3,15 @@ using Robust.Shared.Audio;
 namespace Content.Server.Ghost.Components;
 
 /// <summary>
-/// Causes this entity to react to ghost player using the "Boo!" action by
+/// Causes an entity to react to ghost player using the "Boo!" action by
 /// extinguishing its fire stacks if it has any.
 /// </summary>
+/// <seealso cref="GhostBooEvent"/>
 [RegisterComponent]
 public sealed partial class SpookyExtinguishComponent : Component
 {
     /// <summary>
-    /// The likelihood that a ghost boo extinguishes this candle.
+    /// The likelihood that a <see cref="GhostBooEvent"/> extinguishes this entity.
     /// </summary>
     [DataField]
     public float ExtinguishChance = 0.8f;
@@ -19,7 +20,7 @@ public sealed partial class SpookyExtinguishComponent : Component
     /// The cost from the boo budget of extinguishing this.
     /// </summary>
     /// <remarks>
-    /// Extinguishing a candle is less distracting than a flickering light, so the cost is very low.
+    /// Extinguishing a candle, for example, is less distracting than a flickering light, so the default cost is very low.
     /// </remarks>
     [DataField]
     public int Cost = 1;
