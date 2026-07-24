@@ -697,6 +697,7 @@
     - FloorShuttleTilesStatic
     - PlasticTilesStatic
     - CarpetTilesStatic
+    - PreciousTilesStatic
     dynamicPacks:
     - FauxTiles
   - type: MaterialStorage
