@@ -159,25 +159,24 @@ namespace Content.Server.Ghost
             foreach (var ent in entities)
             {
                 GhostBooIntensity allowedIntensity = remainingIntensity > (int)GhostBooIntensity.Normal ? GhostBooIntensity.Normal : (GhostBooIntensity)remainingIntensity;
-                var handled = DoGhostBooEvent(ent, out var intensity, allowedIntensity);
 
-                if (handled)
+                if (!DoGhostBooEvent(ent, out var intensity, allowedIntensity))
+                    continue;
+
+                anythingAffected = true;
+                switch (intensity)
                 {
-                    anythingAffected = true;
-                    switch (intensity)
-                    {
-                        case GhostBooIntensity.Subtle:
-                        case GhostBooIntensity.Normal:
-                            remainingIntensity -= (int)intensity;
-                            break;
-                        default:
-                            remainingIntensity -= (int)GhostBooIntensity.Normal;
-                            break;
-                    }
-
-                    if (remainingIntensity <= 0)
+                    case GhostBooIntensity.Subtle:
+                    case GhostBooIntensity.Normal:
+                        remainingIntensity -= (int)intensity;
+                        break;
+                    default:
+                        remainingIntensity -= (int)GhostBooIntensity.Normal;
                         break;
                 }
+
+                if (remainingIntensity <= 0)
+                    break;
             }
 
             if (!anythingAffected)
