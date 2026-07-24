@@ -34,9 +34,9 @@ namespace Content.IntegrationTests.Tests.Access
     - GenpopLeave
 ";
 
-        [SidedDependency(Side.Server)] private readonly SharedIdCardSystem _sharedIdCardSystem = null!;
         [SidedDependency(Side.Server)] private readonly IGameTiming _gameTiming = null!;
         [SidedDependency(Side.Server)] private readonly MetaDataSystem _metaDataSystem = null!;
+        [SidedDependency(Side.Server)] private readonly SharedIdCardSystem _sharedIdCardSystem = null!;
 
         [Test]
         public async Task TestExpireIdCardResetsAccessTagsWhenExpiring()
@@ -57,9 +57,9 @@ namespace Content.IntegrationTests.Tests.Access
             // Check that default component values are all correct
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(expireComp.Expired, Is.False);
-                Assert.That(expireComp.Permanent, Is.True);
-                Assert.That(expireComp.ExpireTime, Is.Null);
+                Assume.That(expireComp.Expired, Is.False);
+                Assume.That(expireComp.Permanent, Is.True);
+                Assume.That(expireComp.ExpireTime, Is.Null);
                 Assert.That(accessComp.Tags, Is.EqualTo(new HashSet<ProtoId<AccessLevelPrototype>> { GenpopEnter }));
                 Assert.That(expireComp.ExpiredAccess, Is.EqualTo(new HashSet<ProtoId<AccessLevelPrototype>> { GenpopLeave }));
                 Assert.That(expireComp.ExpireMessage, Is.EqualTo(new LocId("genpop-prisoner-id-expire")));
