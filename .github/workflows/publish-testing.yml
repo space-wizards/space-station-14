@@ -29,6 +29,17 @@ jobs:
       run: |
         cd RobustToolbox
         git fetch --depth=1
+        echo "ENGINE_VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
+    - name: Check engine version exists
+      run: |
+        echo "Checking for engine version $ENGINE_VERSION"
+        curl -sSf https://robust-builds.cdn.spacestation14.com/manifest.json -o manifest.json
+        if ! jq -e --arg v "$ENGINE_VERSION" 'has($v)' manifest.json > /dev/null; then
+          echo "::error::Engine version $ENGINE_VERSION not found in the manifest."
+          exit 1
+        fi
+        echo "Engine version $ENGINE_VERSION found."
 
     - name: Install dependencies
       run: dotnet restore
