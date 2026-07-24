@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenMicrowave
-  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
+  parent: [ BaseMachinePowered, SmallConstructibleMachine, BaseSmallConstructibleMachineDestructible ]
   name: microwave
   description: It's magic.
   components:
@@ -80,16 +80,11 @@
     thresholds:
     - trigger: # Excess damage, don't spawn entities
         !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:DoActsBehavior
-        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
@@ -98,7 +93,10 @@
     canCreateVacuum: false
     deleteAfterExplosion: false
   - type: ApcPowerReceiver
-    powerLoad: 400
+    powerLoad: 5
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 1000
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer
@@ -148,7 +146,7 @@
 
 - type: entity
   id: SyndicateMicrowave
-  parent: KitchenMicrowave
+  parent: [ KitchenMicrowave, BaseSyndicateContraband ]
   name: donk co. microwave
   description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
   components:
