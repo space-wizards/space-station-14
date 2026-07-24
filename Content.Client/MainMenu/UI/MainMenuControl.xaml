@@ -60,8 +60,12 @@
                         Access="Public"
                         Text="{Loc 'main-menu-quit-button'}"
                         TextAlign="Center"
-                        StyleIdentifier="mainMenu"
-                        StyleClasses="negative OpenRight" />
+                        StyleIdentifier="mainMenu">
+                    <Control.StyleClasses>
+                        <system:String>negative</system:String>
+                        <system:String>OpenRight</system:String>
+                    </Control.StyleClasses>
+                </Button>
             </BoxContainer>
         </PanelContainer>
     </BoxContainer>
