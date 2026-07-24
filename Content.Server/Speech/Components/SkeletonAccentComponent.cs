@@ -1,10 +1,12 @@
-﻿namespace Content.Server.Speech.Components;
+﻿using Content.Shared.Speech.Components;
+
+namespace Content.Server.Speech.Components;
 
 /// <summary>
 ///     Rattle me bones!
 /// </summary>
 [RegisterComponent]
-public sealed partial class SkeletonAccentComponent : Component
+public sealed partial class SkeletonAccentComponent : BaseAccentComponent
 {
     /// <summary>
     ///     Chance that the message will be appended with "ACK ACK!"

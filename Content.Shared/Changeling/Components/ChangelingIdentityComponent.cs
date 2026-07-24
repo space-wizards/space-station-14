@@ -132,6 +132,7 @@ public sealed partial class ChangelingIdentityData
 /// A net-serializable version of <see cref="ChangelingIdentityData"/> used for networking purposes.
 /// It needs to be like this because EntityUid cannot be networked, so we convert it to NetEntity and send it over to the client using this class.
 /// </summary>
+[DataDefinition]
 [Serializable, NetSerializable]
 public sealed partial class ChangelingNetworkedIdentityData
 {
