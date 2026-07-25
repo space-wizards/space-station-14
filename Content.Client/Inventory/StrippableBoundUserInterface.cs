@@ -289,6 +289,23 @@ namespace Content.Client.Inventory
             var button = new SlotButton(new SlotData(slotDef, container));
             button.Pressed += SlotPressed;
 
+            // TODO: Rework how stripping BUI works. Updating this on every action is stupid.
+            // Maybe make InventoryUIController somehow support multiple BUI inventories?
+            var blockers = new List<EntityUid>();
+            var enumerator = _inv.GetSlotEnumerator(invUid, ~slotDef.SlotFlags);
+            while (enumerator.NextItem(out var item))
+            {
+                if (!EntMan.TryGetComponent<InventorySlotBlockComponent>(item, out var comp))
+                    continue;
+
+                if ((slotDef.SlotFlags & comp.Slots) == 0)
+                    continue;
+
+                blockers.Add(item);
+            }
+
+            button.UpdateBlockers(blockers);
+
             _strippingMenu!.InventoryContainer.AddChild(button);
 
             UpdateEntityIcon(button, entity);
