@@ -179,6 +179,11 @@
   - type: RadiationSource
     intensity: 1
     slope: 0.25
+  - type: RandomMetadata
+    nameSegments:
+    - NamesRegalratCancerKingdom
+    - NamesRegalratTitle
+    nameFormat: name-format-regal-rat
   - type: RatKing
     armyMobSpawnId: MobRatServantCancer
     spawnedGas:

@@ -9,3 +9,9 @@
   values:
     prefix: names-regal-rat-title-dataset-
     count: 17
+
+- type: localizedDataset
+  id: NamesRegalratCancerKingdom
+  values:
+    prefix: names-regal-rat-kingdom-cancer-dataset-
+    count: 8
