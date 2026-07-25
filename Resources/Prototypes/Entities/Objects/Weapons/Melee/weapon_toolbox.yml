@@ -19,30 +19,3 @@
         Blunt: 20
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
-
-- type: entity
-  parent: BaseItem
-  id: WeaponPlushieToolbox
-  name: plushie toolbox
-  description: A clown tider's weapon made of rubber.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/plush_toolbox.rsi
-    state: icon
-  - type: Item
-    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
-    size: Small
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    damage:
-      types:
-        Blunt: 1
-    bluntStaminaDamageFactor: 2.0
-    angle: 60
-    animation: WeaponArcThrust
-  - type: StaminaDamageOnHit
-    damage: 11
-    sound: /Audio/Weapons/egloves.ogg
-  - type: LandAtCursor
-  - type: DisarmMalus
-    malus: 0.4 # It's made of rubber.
