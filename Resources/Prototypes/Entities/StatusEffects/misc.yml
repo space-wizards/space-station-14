@@ -132,3 +132,5 @@
     selfEffects:
     - !type:Explode
       delete: false
+      intensity: 1
+      radius: 1

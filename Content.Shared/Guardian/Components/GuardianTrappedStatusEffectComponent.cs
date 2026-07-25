@@ -26,6 +26,6 @@ public sealed partial class GuardianTrappedStatusEffectComponent : Component
     /// <summary>
     /// This status effect's prototype. Needed so that we may remove the status effect.
     /// </summary>
-    [DataField, Required]
+    [DataField(required: true)]
     public EntProtoId SelfPrototype;
 }

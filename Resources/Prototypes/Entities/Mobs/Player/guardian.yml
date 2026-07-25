@@ -142,8 +142,10 @@
     icon: { sprite : Interface/Actions/guardian.rsi, state: nuke }
     itemIconStyle: BigAction
     useDelay: 5
+    raiseOnAction: true
   - type: TargetAction
   - type: EntityTargetAction
+    interactOnMiss: false
     rotateOnUse: true
     event: !type:EntityEffectActionEvent
   - type: EntityEffectAction
@@ -151,6 +153,7 @@
     - !type:ModifyStatusEffect
       effectProto: StatusEffectGuardianTrapped
       time: 90 # 1m 30 s
+
 
 - type: entity
   name: Explosive
