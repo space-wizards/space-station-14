@@ -4979,3 +4979,13 @@ Entries:
   changes:
   - type: Add
     message: больше предметов перерабатывается в мусорке
+- id: 493
+  author: Genes1us
+  time: '2026-07-25T17:47:51.307294+00:00'
+  pr: 2011
+  changes:
+  - type: Remove
+    message: Вторая папка DeadSpace в билде проекта.
+  - type: Tweak
+    message: Стандартизация отделов на карте Silly, добавления панелей и коллекторов
+      радиации как альтернативное электропитания. by Bogoslav.
