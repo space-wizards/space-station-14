@@ -263,7 +263,7 @@
     tags:
     - Meat
     - Ruminant
-    - type: Temperature
+  - type: Temperature
   - type: TemperatureDamage
     heatDamage:
       types:
