@@ -9,7 +9,7 @@ guardian-selector-standard-name = Standard
 guardian-selector-standard-description = Brutal armor-piercing punches, low damage transfer, and a configurable battle cry.
 guardian-selector-standard-details =
     Stats:
-    - Melee: 30 armor-piercing blunt damage and 100 structural damage.
+    - Melee: 24 armor-piercing blunt damage and 100 structural damage.
     - Damage transfer: 0.4 to the host.
     - Link range: 10 tiles.
     Battle cry:
@@ -21,7 +21,7 @@ guardian-selector-assassin-name = Assassin
 guardian-selector-assassin-description = Stealthy movement, high melee damage, and full damage transfer to the host.
 guardian-selector-assassin-details =
     Stats:
-    - Melee: 30 blunt damage and 5 poison damage.
+    - Melee: 25 blunt damage and 5 poison damage.
     - Damage transfer: 0.8 to the host.
     - Link range: 10 tiles.
     Stealth:

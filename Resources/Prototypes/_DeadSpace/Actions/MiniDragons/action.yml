@@ -116,6 +116,7 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+  - type: EntityTargetAction
 
 - type: entity
   id: MiniDragonsProjectileIcicle
@@ -156,6 +157,7 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+  - type: EntityTargetAction
 
 - type: entity
   categories: [ HideSpawnMenu ]

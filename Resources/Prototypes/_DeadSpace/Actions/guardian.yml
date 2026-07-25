@@ -54,6 +54,7 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+  - type: EntityTargetAction
 
 - type: entity
   parent: BaseMentalAction
@@ -74,6 +75,7 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+  - type: EntityTargetAction
 
 - type: entity
   parent: BaseMentalAction

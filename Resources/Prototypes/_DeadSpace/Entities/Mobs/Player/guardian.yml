@@ -107,7 +107,7 @@
     attackRate: 1.4
     damage:
       types:
-        Blunt: 30
+        Blunt: 25
         Poison: 5
   - type: SolutionContainerManager
     solutions:

@@ -616,6 +616,7 @@
     range: 0
   - type: WorldTargetAction
     event: !type:ActionGunShootEvent
+  - type: EntityTargetAction
     
 - type: entity
   categories: [ HideSpawnMenu ]

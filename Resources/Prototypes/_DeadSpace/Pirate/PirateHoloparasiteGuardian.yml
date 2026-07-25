@@ -25,7 +25,7 @@
 - type: entity
   name: Летучий голландец
   id: MobPirateHoloparasiteGuardian
-  parent: [MobGuardianBase, InventoryBase]
+  parent: [BaseStrainsHoloparasiteGuardian, InventoryBase]
   description: Изъеденный временем эфирный капитан, чей призрачный облик источает могильный холод и неутолимую жажду чужих душ.
   components:
     - type: GhostRole

@@ -8,3 +8,6 @@
     state: red_particles
     drawdepth: OverMobs
     noRot: true
+  - type: Tag
+    tags:
+      - HideContextMenu
