@@ -4,18 +4,23 @@ using Content.Shared.Clothing;
 using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.Mindshield.Components;
+using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Mindshield;
 
+/// <summary>
+/// This system handles fake mindshields represented by <see cref="FakeMindShieldComponent"/>. Works using <see cref="SharedMindshieldSystem"/>'s <see cref="RefreshMindshieldStatus"/>
+/// </summary>
 public sealed partial class FakeMindShieldSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private TagSystem _tag = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedMindShieldSystem _mindShields = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
 
     public override void Initialize()
     {
@@ -44,6 +49,22 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
 
         // Innate things
         SubscribeLocalEvent<FakeMindShieldComponent, MapInitEvent>(OnMapInit);
+    }
+
+    /// <summary>
+    /// Displays a popup to inform the player of activation or deactivation.
+    /// </summary>
+    /// <param name="ent">
+    /// An associated tuple. The state in <see cref="FakeMindShieldComponent"/> will be used
+    /// to display the appropriate popup.
+    /// </param>
+    private void ShowTogglePopup(Entity<FakeMindShieldComponent> ent)
+    {
+        var message = ent.Comp.IsEnabled
+            ? Loc.GetString("fake-mindshield-enabled")
+            : Loc.GetString("fake-mindshield-disabled");
+
+        _popups.PopupEntity(message, ent, ent);
     }
 
     private void OnFakeMindshieldEquip(Entity<FakeMindShieldComponent> ent, ref ClothingGotEquippedEvent args)
@@ -96,6 +117,7 @@ public sealed partial class FakeMindShieldSystem : EntitySystem
         ent.Comp.IsEnabled = !ent.Comp.IsEnabled;
         args.Toggle = true;
         args.Handled = true;
+        ShowTogglePopup(ent);
         Dirty(ent.Owner, ent.Comp);
         _mindShields.RefreshMindshieldStatus(args.Performer);
     }
