@@ -23,7 +23,6 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// </summary>
 public abstract partial class AtmosTest : GameTest
 {
-    [SidedDependency(Side.Server)] protected ItemToggleSystem ItemToggle = default!;
     [SidedDependency(Side.Server)] protected Server.Atmos.EntitySystems.AtmosphereSystem SAtmos = default!;
     [SidedDependency(Side.Client)] protected Client.Atmos.EntitySystems.AtmosphereSystem CAtmos = default!;
 

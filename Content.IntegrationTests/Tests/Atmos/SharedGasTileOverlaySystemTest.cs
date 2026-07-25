@@ -2,6 +2,7 @@ using Content.IntegrationTests.Fixtures.Attributes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Item.ItemToggle;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -20,6 +21,7 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
     };
 
     [SidedDependency(Side.Server)] private readonly SharedMapSystem _mapSys = default!;
+    [SidedDependency(Side.Server)] private ItemToggleSystem _itemToggle = default!;
 
     [Test]
     [Description("Checks networking of temperature data inside GasTileOverlay.")]

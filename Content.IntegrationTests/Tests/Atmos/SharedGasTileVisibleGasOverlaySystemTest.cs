@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// <summary>
 /// Checks networking of visible gasses inside GasTileOverlay.
 /// </summary>
-public sealed partial class SharedGasTileOverlayTest : AtmosTest
+public sealed partial class SharedGasTileOverlayTest
 {
     [Test]
     [Description("Checks networking of visible gasses inside GasTileOverlay.")]

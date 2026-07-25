@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// <summary>
 /// Checks networking of fire visuals inside GasTileOverlay
 /// </summary>
-public sealed partial class SharedGasTileOverlayTest : AtmosTest
+public sealed partial class SharedGasTileOverlayTest
 {
     [Test]
     [Description("Checks networking of fire visuals inside GasTileOverlay.")]
@@ -27,7 +27,7 @@ public sealed partial class SharedGasTileOverlayTest : AtmosTest
             mixture.AdjustMoles(Gas.Oxygen, 100f); // Inject flamable gasses
 
             var welder = SEntMan.SpawnEntity("Welder", gridCoords); // spawn welder
-            Assert.That(ItemToggle.TryActivate(welder)); //ignite it which will set the tile on fire, this test dubles as for ignition of flammable gasses
+            Assert.That(_itemToggle.TryActivate(welder)); //ignite it which will set the tile on fire, this test dubles as for ignition of flammable gasses
         });
 
         await RunUntilSynced();
