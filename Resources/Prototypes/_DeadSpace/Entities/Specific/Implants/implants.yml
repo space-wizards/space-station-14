@@ -145,6 +145,8 @@
   components:
   - type: SubdermalImplant
     implantAction: ActionActivateSandevistanImplant
+    implantComponents:
+    - type: SandevistanBodyVisual
   - type: SandevistanImplant
     duration: 25
     softcapTime: 18
@@ -165,7 +167,6 @@
     endWarningLeadTime: 5
     endWarningInterval: 2.5
     endWarningPopupCount: 1
-    recoveryMovementSpeedModifier: 0.75
     recoveryTickInterval: 3
     recoveryDamage:
       types:

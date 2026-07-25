@@ -406,7 +406,6 @@ public sealed class SandevistanSystem : EntitySystem
         active.DeactivationVisualDuration = component.DeactivationVisualDuration;
         active.AfterimageColor = component.AfterimageColor;
         active.AfterimageFallbackEffect = component.AfterimageFallbackEffect;
-        active.RecoveryMovementSpeedModifier = component.RecoveryMovementSpeedModifier;
         active.RecoveryTickInterval = component.RecoveryTickInterval;
         active.RecoveryDamage = new(component.RecoveryDamage);
         active.RecoveryJitterAmplitude = component.RecoveryJitterAmplitude;
@@ -671,7 +670,6 @@ public sealed class SandevistanSystem : EntitySystem
         recovery.EndTime = curTime + duration;
         recovery.NextTickTime = curTime;
         recovery.NextPopupTime = curTime;
-        recovery.MovementSpeedModifier = active.RecoveryMovementSpeedModifier;
         recovery.TickInterval = active.RecoveryTickInterval;
         recovery.Damage = new(active.RecoveryDamage);
         recovery.JitterAmplitude = active.RecoveryJitterAmplitude;
@@ -683,7 +681,6 @@ public sealed class SandevistanSystem : EntitySystem
         recovery.PopupBag.Clear();
 
         Dirty(uid, recovery);
-        _movement.RefreshMovementSpeedModifiers(uid);
     }
 
     private void ApplyJitter(EntityUid uid, ActiveSandevistanComponent active, float frameTime)

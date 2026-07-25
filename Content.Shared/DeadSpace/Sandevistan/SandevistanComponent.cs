@@ -144,9 +144,6 @@ public sealed partial class SandevistanImplantComponent : Component
     };
 
     [DataField]
-    public float RecoveryMovementSpeedModifier = 0.75f;
-
-    [DataField]
     public float RecoveryTickInterval = 3f;
 
     [DataField]
@@ -403,9 +400,6 @@ public sealed partial class ActiveSandevistanComponent : Component
     public string AfterimageFallbackEffect = "MantisDodgeEffect";
 
     [DataField]
-    public float RecoveryMovementSpeedModifier = 0.75f;
-
-    [DataField]
     public float RecoveryTickInterval = 3f;
 
     [DataField]
@@ -444,9 +438,6 @@ public sealed partial class SandevistanRecoveryComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextPopupTime;
-
-    [DataField, AutoNetworkedField]
-    public float MovementSpeedModifier = 0.75f;
 
     [DataField, AutoNetworkedField]
     public float Duration;

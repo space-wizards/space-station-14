@@ -20,9 +20,6 @@ public sealed class SharedSandevistanSystem : EntitySystem
         SubscribeLocalEvent<ActiveSandevistanComponent, ComponentShutdown>(OnActiveShutdown);
         SubscribeLocalEvent<ActiveSandevistanComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
         SubscribeLocalEvent<ActiveSandevistanComponent, GetMeleeAttackRateEvent>(OnGetMeleeAttackRate);
-        SubscribeLocalEvent<SandevistanRecoveryComponent, ComponentStartup>(OnRecoveryStartup);
-        SubscribeLocalEvent<SandevistanRecoveryComponent, ComponentShutdown>(OnRecoveryShutdown);
-        SubscribeLocalEvent<SandevistanRecoveryComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshRecoveryMovementSpeed);
     }
 
     private void OnActiveStartup(Entity<ActiveSandevistanComponent> ent, ref ComponentStartup args)
@@ -57,24 +54,5 @@ public sealed class SharedSandevistanSystem : EntitySystem
             : ent.Comp.AttackRateModifier;
 
         args.Multipliers *= modifier;
-    }
-
-    private void OnRecoveryStartup(Entity<SandevistanRecoveryComponent> ent, ref ComponentStartup args)
-    {
-        _movement.RefreshMovementSpeedModifiers(ent.Owner);
-    }
-
-    private void OnRecoveryShutdown(Entity<SandevistanRecoveryComponent> ent, ref ComponentShutdown args)
-    {
-        _movement.RefreshMovementSpeedModifiers(ent.Owner);
-    }
-
-    private void OnRefreshRecoveryMovementSpeed(Entity<SandevistanRecoveryComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
-    {
-        if (ent.Comp.LifeStage > ComponentLifeStage.Running ||
-            _timing.CurTime >= ent.Comp.EndTime)
-            return;
-
-        args.LimitSpeed(MathF.Max(ent.Comp.MovementSpeedModifier, 0f));
     }
 }
