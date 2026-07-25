@@ -1,6 +1,9 @@
-using Content.Shared.Audio.Jukebox;
+using Content.Shared.Audio.Jukebox; // DS14
+using Content.Shared.DeadSpace.CCCCVars;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio.Components; // DS14
+using Robust.Shared.Configuration; // DS14
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
@@ -13,15 +16,24 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!; // DS14
+
+    private const float MinimalVolume = -14f; // DS14
+    private float _jukeboxAutoVolume; // DS14
 
     public override void Initialize()
     {
         base.Initialize();
+
+        UpdatesOutsidePrediction = true; // DS14
+        UpdatesAfter.Add(typeof(Robust.Client.Audio.AudioSystem)); // DS14
+
         SubscribeLocalEvent<JukeboxComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<JukeboxComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<JukeboxComponent, AfterAutoHandleStateEvent>(OnJukeboxAfterState);
 
         _protoManager.PrototypesReloaded += OnProtoReload;
+        Subs.CVar(_cfg, CCCCVars.JukeboxAutoVolume, SetJukeboxAutoVolume, true); // DS14
     }
 
     public override void Shutdown()
@@ -29,6 +41,30 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         base.Shutdown();
         _protoManager.PrototypesReloaded -= OnProtoReload;
     }
+
+    // DS14-Start
+    private void SetJukeboxAutoVolume(float volume)
+    {
+        _jukeboxAutoVolume = volume;
+    }
+    // DS14-End
+
+    // DS14-Start
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        var volume = _jukeboxAutoVolume <= 0f ? float.NegativeInfinity : MinimalVolume + _jukeboxAutoVolume;
+        var query = AllEntityQuery<JukeboxComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.AudioStream == null || !TryComp<AudioComponent>(comp.AudioStream.Value, out var audioComp))
+                continue;
+
+            audioComp.Volume = volume;
+        }
+    }
+    // DS14-End
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
     {

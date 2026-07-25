@@ -105,6 +105,11 @@ public sealed partial class AudioTab : Control
             CCCCVars.JukeboxMusicVolume,
             SliderVolumeJukeboxMusic,
             scale: ContentAudioSystem.JukeboxMusicMultiplier);
+
+        Control.AddOptionPercentSlider(
+            CCCCVars.JukeboxAutoVolume,
+            SliderVolumeJukeboxAuto,
+            scale: ContentAudioSystem.JukeboxAutoMultiplier);
         // DS14-End
 
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
