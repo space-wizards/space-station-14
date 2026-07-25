@@ -4,7 +4,7 @@
   id: BasePlushieMothJob
   components:
   - type: Sprite
-    sprite: _Funkystation/Objects/Fun/plushiemoth_jobs.rsi
+    sprite: Objects/Fun/plushiemoth_jobs.rsi
 
 - type: entity
   parent: BasePlushieMothJob
