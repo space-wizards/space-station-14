@@ -4,20 +4,28 @@ using System.Numerics;
 using Content.Server.Chat;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DeadSpace.Weapons.Ranged;
 using Content.Shared.DoAfter;
+using Content.Shared.Explosion.Components;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Projectiles;
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.DeadSpace.Weapons.Ranged;
@@ -26,6 +34,9 @@ public sealed class GunExecutionSystem : EntitySystem
 {
     private static readonly TimeSpan ExecutionDuration = TimeSpan.FromSeconds(5);
     private const float CourageFailureChance = 0.25f;
+    private static readonly FixedPoint2 MinimumExecutionDamage = FixedPoint2.New(2);
+    private static readonly FixedPoint2 TriggerPayloadMinimumExecutionDamage = FixedPoint2.New(7);
+    private const float MinimumExecutionExplosionIntensity = 1f;
 
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -34,6 +45,7 @@ public sealed class GunExecutionSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SuicideSystem _suicide = default!;
 
@@ -51,7 +63,8 @@ public sealed class GunExecutionSystem : EntitySystem
             args.Using != gun.Owner ||
             !args.CanAccess ||
             !HasComp<DamageableComponent>(args.Target) ||
-            !HasComp<MobStateComponent>(args.Target))
+            !HasComp<MobStateComponent>(args.Target) ||
+            !HasLethalExecutionShot(gun))
         {
             return;
         }
@@ -228,9 +241,8 @@ public sealed class GunExecutionSystem : EntitySystem
             return false;
         }
 
-        if (_gun.GetAmmoCount(gun.Owner) <= 0)
+        if (!TryGetLethalExecutionShot(gun, out failure))
         {
-            failure = "gun-execution-error-empty";
             return false;
         }
 
@@ -241,6 +253,157 @@ public sealed class GunExecutionSystem : EntitySystem
         }
 
         return true;
+    }
+
+    private bool HasLethalExecutionShot(Entity<GunComponent> gun)
+    {
+        return TryGetLethalExecutionShot(gun, out _);
+    }
+
+    private bool TryGetLethalExecutionShot(Entity<GunComponent> gun, out string failure)
+    {
+        failure = "gun-execution-error-nonlethal";
+
+        if (HasComp<PacifismAllowedGunComponent>(gun))
+            return false;
+
+        if (TryComp<BatteryWeaponFireModesComponent>(gun, out var fireModes))
+        {
+            if (fireModes.CurrentFireMode < 0 ||
+                fireModes.CurrentFireMode >= fireModes.FireModes.Count ||
+                fireModes.FireModes[fireModes.CurrentFireMode].PacifismAllowedMode)
+            {
+                return false;
+            }
+        }
+
+        var ammo = new GetAmmoCountEvent();
+        RaiseLocalEvent(gun, ref ammo);
+        if (ammo.Count <= 0 ||
+            !TryResolveExecutionProjectile(
+                ref ammo.NextAmmoEntity,
+                ref ammo.NextAmmoPrototype))
+        {
+            failure = "gun-execution-error-empty";
+            return false;
+        }
+
+        if (ammo.NextAmmoEntity is { } entity)
+            return IsLethalExecutionProjectile(entity);
+
+        return ammo.NextAmmoPrototype is { } prototype &&
+               IsLethalExecutionProjectile(prototype);
+    }
+
+    private bool TryResolveExecutionProjectile(ref EntityUid? entity, ref EntProtoId? prototype)
+    {
+        const int depthLimit = 8;
+        for (var depth = 0; depth < depthLimit; depth++)
+        {
+            if (entity is { } ammoEntity)
+            {
+                if (!TryComp<CartridgeAmmoComponent>(ammoEntity, out var cartridge))
+                    return true;
+
+                if (cartridge.Spent)
+                    return false;
+
+                entity = null;
+                prototype = cartridge.Prototype;
+                continue;
+            }
+
+            if (prototype is not { } ammoPrototype ||
+                !_prototype.TryIndex(ammoPrototype, out var entityPrototype))
+            {
+                return false;
+            }
+
+            if (!entityPrototype.TryGetComponent<CartridgeAmmoComponent>(out var prototypeCartridge, Factory))
+                return true;
+
+            if (prototypeCartridge.Spent)
+                return false;
+
+            prototype = prototypeCartridge.Prototype;
+        }
+
+        return false;
+    }
+
+    private bool IsLethalExecutionProjectile(EntityUid projectile)
+    {
+        if (HasComp<StaminaDamageOnCollideComponent>(projectile) ||
+            HasComp<HitscanStaminaDamageComponent>(projectile))
+        {
+            return false;
+        }
+
+        var triggerPayload = HasComp<TriggerOnCollideComponent>(projectile);
+        if (TryComp<ProjectileComponent>(projectile, out var projectileComponent) &&
+            HasEnoughExecutionDamage(projectileComponent.Damage, triggerPayload))
+        {
+            return true;
+        }
+
+        if (TryComp<HitscanBasicDamageComponent>(projectile, out var hitscan) &&
+            HasEnoughExecutionDamage(hitscan.Damage, triggerPayload))
+        {
+            return true;
+        }
+
+        return TryComp<ExplosiveComponent>(projectile, out var explosive) &&
+               HasEnoughExecutionExplosion(explosive);
+    }
+
+    private bool IsLethalExecutionProjectile(EntProtoId projectile)
+    {
+        if (!_prototype.TryIndex(projectile, out var prototype))
+            return false;
+
+        if (prototype.TryGetComponent<StaminaDamageOnCollideComponent>(out _, Factory) ||
+            prototype.TryGetComponent<HitscanStaminaDamageComponent>(out _, Factory))
+        {
+            return false;
+        }
+
+        var triggerPayload = prototype.TryGetComponent<TriggerOnCollideComponent>(out _, Factory);
+        if (prototype.TryGetComponent<ProjectileComponent>(out var projectileComponent, Factory) &&
+            HasEnoughExecutionDamage(projectileComponent.Damage, triggerPayload))
+        {
+            return true;
+        }
+
+        if (prototype.TryGetComponent<HitscanBasicDamageComponent>(out var hitscan, Factory) &&
+            HasEnoughExecutionDamage(hitscan.Damage, triggerPayload))
+        {
+            return true;
+        }
+
+        return prototype.TryGetComponent<ExplosiveComponent>(out var explosive, Factory) &&
+               HasEnoughExecutionExplosion(explosive);
+    }
+
+    private static bool HasEnoughExecutionDamage(
+        Content.Shared.Damage.DamageSpecifier damage,
+        bool triggerPayload)
+    {
+        var total = FixedPoint2.Zero;
+        foreach (var (type, value) in damage.DamageDict)
+        {
+            if (type != "Structural" && value > FixedPoint2.Zero)
+                total += value;
+        }
+
+        var minimumDamage = triggerPayload
+            ? TriggerPayloadMinimumExecutionDamage
+            : MinimumExecutionDamage;
+        return total > minimumDamage;
+    }
+
+    private static bool HasEnoughExecutionExplosion(ExplosiveComponent explosive)
+    {
+        return explosive.TotalIntensity >= MinimumExecutionExplosionIntensity;
     }
 
     private void ShowFailure(EntityUid user, string failure)

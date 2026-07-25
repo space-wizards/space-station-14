@@ -25,6 +25,7 @@
   - PizzaRecipes
   - SavoryRecipes
   - BreadRecipes
+  - DoughRecipes # DS14
   - BreakfastRecipes
   - MothRecipes
   - PastaRecipes
@@ -55,6 +56,14 @@
   name: guide-entry-bread-recipes
   text: "/ServerInfo/Guidebook/Service/BreadRecipes.xml"
   filterEnabled: True
+
+# DS14-start
+- type: guideEntry
+  id: DoughRecipes
+  name: guide-entry-dough-recipes
+  text: "/ServerInfo/Guidebook/Service/DoughRecipes.xml"
+  filterEnabled: True
+# DS14-end
 
 - type: guideEntry
   id: BreakfastRecipes

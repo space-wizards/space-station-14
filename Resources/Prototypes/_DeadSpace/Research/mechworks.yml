@@ -72,6 +72,12 @@
   - AutolatheHyperConvectionMachineCircuitboardTaipan
   - ProtolatheHyperConvectionMachineCircuitboardTaipan
   - CircuitImprinterHyperConvectionMachineCircuitboardTaipan
+  - DetailTechFabMachineCircuitboardTaipan
+  - CraftConsoleCircuitboard
+  - CraftMachineCircuitboard
+  - BlueprintRIGEVAOneUse
+  - ClothingHeadHelmetRIGEVA
+  - PlastineOfEVARIG
   - SheetifierMachineCircuitboard
   - TaipanHandCuttingMachineRecipe
 

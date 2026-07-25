@@ -47,4 +47,6 @@ public sealed partial class RevenantMindCapturedComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public FixedPoint2 CritThreshold = default!;
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    public bool EndingCapture;
 }

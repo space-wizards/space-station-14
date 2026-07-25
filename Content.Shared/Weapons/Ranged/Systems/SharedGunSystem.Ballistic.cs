@@ -272,6 +272,13 @@ public abstract partial class SharedGunSystem
     {
         args.Count = GetBallisticShots(ent.Comp);
         args.Capacity = ent.Comp.Capacity;
+
+        // DS14-start
+        if (ent.Comp.Entities.Count > 0)
+            args.NextAmmoEntity = ent.Comp.Entities[^1];
+        else if (ent.Comp.UnspawnedCount > 0)
+            args.NextAmmoPrototype = ent.Comp.Proto;
+        // DS14-end
     }
 
     /// <summary>

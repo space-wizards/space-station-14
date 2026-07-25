@@ -14,6 +14,7 @@ gun-execution-error-not-wielded = Это оружие необходимо де�
 gun-execution-error-cannot-attack = Сейчас вы не можете выстрелить.
 gun-execution-error-range = Цель слишком далеко или путь к ней перекрыт.
 gun-execution-error-empty = Оружие разряжено.
+gun-execution-error-nonlethal = Это оружие не может произвести смертельный выстрел.
 gun-execution-error-not-ready = Оружие ещё не готово к выстрелу.
 gun-execution-error-start-failed = Не удалось начать выстрел.
 gun-execution-error-interrupted = Выстрел был прерван.

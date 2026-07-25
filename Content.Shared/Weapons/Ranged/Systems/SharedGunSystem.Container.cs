@@ -46,5 +46,6 @@ public partial class SharedGunSystem
 
         args.Capacity = int.MaxValue;
         args.Count = container.ContainedEntities.Count;
+        args.NextAmmoEntity = args.Count > 0 ? container.ContainedEntities[0] : null; // DS14
     }
 }

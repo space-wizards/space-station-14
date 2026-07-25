@@ -2,6 +2,8 @@ using System.Numerics;
 using Content.Client.Gameplay;
 using Content.Shared.CCVar;
 using Content.Shared.Light.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weather;
 using Robust.Shared.Audio;
 using Robust.Client.Audio;
@@ -28,13 +30,19 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly IStateManager _state = default!; // DS14
 
     private float _ambienceVolume; // DS14
+    private readonly HashSet<EntityUid> _activeWeatherStreams = new(); // DS14
 
     public override void Initialize()
     {
         base.Initialize();
         Subs.CVar(_cfg, CCVars.AmbienceVolume, SetAmbienceVolume, true); // DS14
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
-        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnLocalPlayerDetached); // DS14
+        // DS14-start
+        SubscribeLocalEvent<WeatherComponent, ComponentShutdown>(OnWeatherShutdown);
+        SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnLocalPlayerDetached);
+        SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        _state.OnStateChanged += OnStateChanged;
+        // DS14-end
     }
 
     protected override void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime)
@@ -43,7 +51,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         if (!TryGetWeatherAudioTarget(uid, out var entXform)) // DS14
         {
-            weather.Stream = _audio.Stop(weather.Stream);
+            StopWeatherAudio(weather); // DS14
             return;
         }
 
@@ -141,6 +149,12 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (ent == null)
             return false;
 
+        if (!TryComp<MobStateComponent>(ent.Value, out var mobState) ||
+            mobState.CurrentState is not (MobState.Alive or MobState.PreCritical or MobState.Critical))
+        {
+            return false;
+        }
+
         var mapUid = Transform(uid).MapUid;
         if (mapUid == null)
             return false;
@@ -155,7 +169,20 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return null;
 
         var audioParams = weatherProto.Sound.Params.WithVolume(weatherProto.Sound.Params.Volume + _ambienceVolume);
-        return _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, audioParams)?.Entity;
+        var stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, audioParams)?.Entity;
+        if (stream != null)
+            _activeWeatherStreams.Add(stream.Value);
+
+        return stream;
+    }
+
+    private void StopWeatherAudio(WeatherData weather)
+    {
+        if (weather.Stream is not { } stream)
+            return;
+
+        _activeWeatherStreams.Remove(stream);
+        weather.Stream = _audio.Stop(stream);
     }
 
     private void OnLocalPlayerDetached(LocalPlayerDetachedEvent args)
@@ -163,14 +190,46 @@ public sealed class WeatherSystem : SharedWeatherSystem
         StopAllWeatherAudio();
     }
 
+    private void OnMobStateChanged(MobStateChangedEvent args)
+    {
+        if (args.Target != _playerManager.LocalEntity ||
+            args.NewMobState is MobState.Alive or MobState.PreCritical or MobState.Critical)
+        {
+            return;
+        }
+
+        StopAllWeatherAudio();
+    }
+
+    private void OnWeatherShutdown(Entity<WeatherComponent> ent, ref ComponentShutdown args)
+    {
+        foreach (var weather in ent.Comp.Weather.Values)
+        {
+            StopWeatherAudio(weather);
+        }
+    }
+
+    private void OnStateChanged(StateChangedEventArgs args)
+    {
+        if (args.NewState is not GameplayState)
+            StopAllWeatherAudio();
+    }
+
     private void StopAllWeatherAudio()
     {
+        foreach (var stream in _activeWeatherStreams)
+        {
+            _audio.Stop(stream);
+        }
+
+        _activeWeatherStreams.Clear();
+
         var query = EntityQueryEnumerator<WeatherComponent>();
         while (query.MoveNext(out _, out var component))
         {
             foreach (var weather in component.Weather.Values)
             {
-                weather.Stream = _audio.Stop(weather.Stream);
+                weather.Stream = null;
             }
         }
     }
@@ -185,7 +244,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return true;
 
         // TODO: Fades (properly)
-        weather.Stream = _audio.Stop(weather.Stream);
+        StopWeatherAudio(weather); // DS14
 
         // DS14-start
         if (TryGetWeatherAudioTarget(uid, out _))
@@ -194,6 +253,16 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         return true;
     }
+
+    // DS14-start
+    protected override void EndWeather(EntityUid uid, WeatherComponent component, string proto)
+    {
+        if (component.Weather.TryGetValue(proto, out var weather))
+            StopWeatherAudio(weather);
+
+        base.EndWeather(uid, component, proto);
+    }
+    // DS14-end
 
     private void OnWeatherHandleState(EntityUid uid, WeatherComponent component, ref ComponentHandleState args)
     {
@@ -224,4 +293,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
             StartWeather(uid, component, ProtoMan.Index<WeatherPrototype>(proto), weather.EndTime);
         }
     }
+
+    // DS14-start
+    public override void Shutdown()
+    {
+        _state.OnStateChanged -= OnStateChanged;
+        StopAllWeatherAudio();
+        base.Shutdown();
+    }
+    // DS14-end
 }

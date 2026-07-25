@@ -117,6 +117,7 @@ guide-entry-others = Другие
 guide-entry-pizza-recipes = Пиццы
 guide-entry-savory-recipes = Солёно-пряное
 guide-entry-bread-recipes = Хлеба
+guide-entry-dough-recipes = Тесто
 guide-entry-breakfast-recipes = Завтраки
 guide-entry-moth-recipes = Еда для молей
 guide-entry-pasta-recipes = Паста и лапша

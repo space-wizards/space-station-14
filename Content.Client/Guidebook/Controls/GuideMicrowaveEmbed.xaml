@@ -16,7 +16,7 @@
             </PanelContainer.PanelOverride>
         </PanelContainer>
 
-        <GridContainer Columns="2" Margin="10">
+        <GridContainer Name="MicrowaveDetails" Columns="2" Margin="10"> <!-- DS14 -->
             <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                 <Label Text="{Loc 'guidebook-microwave-ingredients-header'}"/>
                 <GridContainer Columns="3" Name="IngredientsGrid"/>
@@ -27,6 +27,14 @@
                 <RichTextLabel Name="CookTimeLabel"/>
             </BoxContainer>
         </GridContainer>
+
+        <!-- DS14-start -->
+        <BoxContainer Name="ReactionContainer"
+                      Orientation="Vertical"
+                      HorizontalExpand="True"
+                      Visible="False"
+                      Margin="10 5 10 0"/>
+        <!-- DS14-end -->
 
         <BoxContainer Margin="10">
             <RichTextLabel Name="ResultDescription" HorizontalAlignment="Left"/>

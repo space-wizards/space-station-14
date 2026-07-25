@@ -28,6 +28,7 @@
   id: Meatification
   impact: Low
   quantized: true
+  guidebookFoodCategory: Secret # DS14
   reactants:
     Fat:
       amount: 25

@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityEffects.Effects.EntitySpawning;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
@@ -66,10 +67,19 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             var data = new ReagentReactionSourceData(
                 reaction.MixingCategories ?? new () { DefaultMixingCategory },
                 reaction);
-            foreach (var product in reaction.Products.Keys)
+
+            // DS14-start: reactions may output reagent-bearing entities instead of a reagent product.
+            var sourceReagents = new HashSet<string>(reaction.Products.Keys);
+            foreach (var reagent in reaction.GuidebookSourceReagents)
             {
-                _reagentSources[product].Add(data);
+                sourceReagents.Add(reagent);
             }
+
+            foreach (var reagent in sourceReagents)
+            {
+                _reagentSources[reagent].Add(data);
+            }
+            // DS14-end
         }
 
         foreach (var gas in PrototypeManager.EnumeratePrototypes<GasPrototype>())
@@ -198,7 +208,11 @@ public sealed class ReagentReactionSourceData : ReagentSourceData
 {
     public readonly ReactionPrototype ReactionPrototype;
 
-    public override int OutputCount => ReactionPrototype.Products.Count + ReactionPrototype.Reactants.Count(r => r.Value.Catalyst);
+    // DS14-start: Count entity products rendered by the guidebook.
+    public override int OutputCount => ReactionPrototype.Products.Count +
+        ReactionPrototype.Reactants.Count(r => r.Value.Catalyst) +
+        ReactionPrototype.Effects.Count(effect => effect is SpawnEntity);
+    // DS14-end
 
     public override string IdentifierString => ReactionPrototype.ID;
 

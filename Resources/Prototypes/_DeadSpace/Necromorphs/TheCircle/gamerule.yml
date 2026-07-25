@@ -87,7 +87,7 @@
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Necromorfs/TheCircle/the-circle-start.ogg"
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       components:
       - type: Skill
         group: ALL
@@ -129,7 +129,7 @@
         color: CornflowerBlue
         sound: "/Audio/_DeadSpace/Necromorfs/TheCircle/the-circle-start.ogg"
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       components:
       - type: Skill
         group: ALL
@@ -169,7 +169,7 @@
       playerRatio: 12
       startingGear: TheCircleHeavyGear
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       briefing:
         text: roles-antag-thecircle-heavy-start
         color: CornflowerBlue
@@ -210,7 +210,7 @@
       playerRatio: 12
       startingGear: TheCircleLightGear
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       briefing:
         text: roles-antag-thecircle-light-start
         color: CornflowerBlue
@@ -252,7 +252,7 @@
       playerRatio: 12
       startingGear: TheCircleHeavyGear
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       briefing:
         text: roles-antag-thecircle-heavy-start
         color: CornflowerBlue
@@ -293,7 +293,7 @@
       playerRatio: 12
       startingGear: TheCircleLightGear
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       briefing:
         text: roles-antag-thecircle-light-start
         color: CornflowerBlue
@@ -334,7 +334,7 @@
       startingGear: TheCircleEngineerGear
       playerRatio: 12
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircle
       briefing:
         text: roles-antag-thecircle-engineer-start
         color: CornflowerBlue
@@ -375,7 +375,7 @@
       startingGear: TheCircleGeistGear
       playerRatio: 12
       roleLoadout:
-        - RoleSurvivalExtended
+        - RoleSurvivalTheCircleGeist
       briefing:
         text: roles-antag-thecircle-geist-start
         color: CornflowerBlue

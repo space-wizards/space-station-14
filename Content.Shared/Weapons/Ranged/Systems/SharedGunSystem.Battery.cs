@@ -78,6 +78,10 @@ public abstract partial class SharedGunSystem
     {
         args.Count = ent.Comp.Shots;
         args.Capacity = ent.Comp.Capacity;
+        // DS14-start
+        if (ent.Comp.Shots > 0)
+            args.NextAmmoPrototype = ent.Comp.Prototype;
+        // DS14-end
     }
 
     /// <summary>

@@ -29,13 +29,37 @@ public sealed class StationAiOverlay : Overlay
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
 
+    // DS14-start
+    private readonly EntityUid _owner;
+    private EntityUid _lastGrid = EntityUid.Invalid;
+    // DS14-end
+
     private float _updateRate = 1f / 30f;
     private float _accumulator;
 
-    public StationAiOverlay()
+    public StationAiOverlay(EntityUid owner) // DS14
     {
         IoCManager.InjectDependencies(this);
+        _owner = owner; // DS14
     }
+
+    // DS14-start
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (_player.LocalEntity != _owner ||
+            !_entManager.HasComponent<StationAiOverlayComponent>(_owner) ||
+            !_entManager.TryGetComponent<EyeComponent>(_owner, out var eye) ||
+            args.Viewport.Eye != eye.Eye)
+        {
+            _visibleTiles.Clear();
+            _lastGrid = EntityUid.Invalid;
+            _accumulator = 0f;
+            return false;
+        }
+
+        return base.BeforeDraw(in args);
+    }
+    // DS14-end
 
     protected override void Draw(in OverlayDrawArgs args)
     {
@@ -58,6 +82,14 @@ public sealed class StationAiOverlay : Overlay
         var playerEnt = _player.LocalEntity;
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);
         var gridUid = playerXform?.GridUid ?? EntityUid.Invalid;
+        // DS14-start
+        if (_lastGrid != gridUid)
+        {
+            _lastGrid = gridUid;
+            _visibleTiles.Clear();
+            _accumulator = 0f;
+        }
+        // DS14-end
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
         _entManager.TryGetComponent(gridUid, out BroadphaseComponent? broadphase);
 

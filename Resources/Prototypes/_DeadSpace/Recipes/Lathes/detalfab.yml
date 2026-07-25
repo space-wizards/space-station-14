@@ -8,6 +8,13 @@
     Plastic: 500
 
 - type: latheRecipe
+  id: DetailTechFabMachineCircuitboardTaipan
+  result: DetailTechFabMachineCircuitboardTaipan
+  materials:
+    Steel: 500
+    Plastic: 500
+
+- type: latheRecipe
   id: SecDetailTechFabMachineCircuitboard
   result: SecDetailTechFabMachineCircuitboard
   materials:

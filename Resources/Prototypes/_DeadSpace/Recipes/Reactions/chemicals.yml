@@ -21,6 +21,9 @@
 - type: reaction
   id: uraniumhexafluorideBreakdown
   source: true
+  quantized: true
+  guidebookSourceReagents:
+  - Uranium
   requiredMixerCategories:
   - Centrifuge
   reactants:

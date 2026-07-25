@@ -43,7 +43,13 @@ public abstract class SharedSuperNecroobeliskSystem : EntitySystem
             return;
         }
 
-        var entities = _lookup.GetEntitiesInRange<MobStateComponent>(_transform.GetMapCoordinates(uid, Transform(uid)), component.RangeSanity);
+        var entities = new HashSet<Entity<MobStateComponent>>();
+        foreach (var entity in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(uid, Transform(uid)), component.RangeSanity))
+        {
+            if (TryComp<MobStateComponent>(entity, out var mobState))
+                entities.Add((entity, mobState));
+        }
+
         foreach (var entity in component.MobsInRange.ToArray())
         {
             if (!entities.Contains(entity))

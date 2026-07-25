@@ -10,6 +10,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.RCD.Components;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Shared.Audio.Systems;
@@ -376,6 +377,16 @@ public sealed class RCDSystem : EntitySystem
     {
         target = NormalizeTarget(target); // DS14
         var prototype = _protoManager.Index(component.ProtoId);
+
+        // DS14-start
+        if (HasComp<InsideEntityStorageComponent>(user))
+        {
+            if (popMsgs)
+                _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-inside-storage"), uid, user);
+
+            return false;
+        }
+        // DS14-end
 
         // Check that the RCD has enough ammo to get the job done
         var charges = _sharedCharges.GetCurrentCharges(uid);

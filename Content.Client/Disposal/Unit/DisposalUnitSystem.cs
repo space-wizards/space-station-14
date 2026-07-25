@@ -69,7 +69,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
 
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Unanchored, state == DisposalUnitComponent.VisualState.UnAnchored);
-        _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.Base, state == DisposalUnitComponent.VisualState.Anchored);
+        // DS14-start
+        _sprite.LayerSetVisible(
+            (ent, sprite),
+            DisposalUnitVisualLayers.Base,
+            state is DisposalUnitComponent.VisualState.Anchored or DisposalUnitComponent.VisualState.OverlayFlushing);
+        // DS14-end
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.OverlayFlush, state == DisposalUnitComponent.VisualState.OverlayFlushing);
         _sprite.LayerSetVisible((ent, sprite), DisposalUnitVisualLayers.BaseCharging, state == DisposalUnitComponent.VisualState.OverlayCharging);
 

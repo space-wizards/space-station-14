@@ -11,6 +11,7 @@ rcd-component-change-build-mode = РСУ переключён в режим ст
 # Ammo count
 rcd-component-no-ammo-message = В РСУ закончились заряды!
 rcd-component-insufficient-ammo-message = В РСУ не хватает зарядов!
+rcd-component-cannot-build-inside-storage = Нельзя использовать РСУ, находясь внутри хранилища!
 # Deconstruction
 rcd-component-tile-indestructible-message = Эта клетка не может быть демонтирова!
 rcd-component-deconstruct-target-not-on-whitelist-message = Вы не можете демонтировать это!

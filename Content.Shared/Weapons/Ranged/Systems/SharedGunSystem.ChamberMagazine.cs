@@ -341,6 +341,12 @@ public abstract partial class SharedGunSystem
         args.Capacity += 1;
         var chambered = GetChamberEntity(uid);
 
+        // DS14-start
+        // A full magazine cannot fire until a round is actually chambered, and an open bolt cannot fire at all.
+        args.NextAmmoEntity = component.BoltClosed == false ? null : chambered;
+        args.NextAmmoPrototype = null;
+        // DS14-end
+
         if (chambered != null)
         {
             args.Count += 1;

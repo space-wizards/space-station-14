@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Guidebook.Richtext;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Kitchen;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
@@ -59,5 +60,16 @@ public sealed partial class GuideMicrowaveGroupEmbed : BoxContainer, IDocumentTa
             var embed = new GuideMicrowaveEmbed(recipe);
             AddChild(embed);
         }
+
+        // DS14-start: Some food products are created by mixing reactions instead of microwave recipes.
+        var reactions = _prototype.EnumeratePrototypes<ReactionPrototype>()
+            .Where(p => p.GuidebookFoodCategory == group)
+            .OrderBy(p => p.ID);
+
+        foreach (var reaction in reactions)
+        {
+            AddChild(new GuideMicrowaveEmbed(reaction));
+        }
+        // DS14-end
     }
 }

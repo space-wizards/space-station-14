@@ -1,7 +1,7 @@
 
 cargo-gift-necro-art = особый артефакт
 
-uni-ops-cargo-gifts-obelisk-event-announcement = { $sender } отправили { $description } { $dest } станции. Всё прибудет со следующей партией груза.
+uni-ops-cargo-gifts-obelisk-event-announcement = Внимание, станция! Цель вашей текущей смены изменена. { $sender } отправили { $description } { $dest } станции. Изучите объект и отправьте подробный отчёт. Всё прибудет со следующей партией груза.
 uni-ops-gift-obelisk-description = объект исследования
 
 paper-order-name = приказ сектрального штаба

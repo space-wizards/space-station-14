@@ -15,6 +15,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Light.Components;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.NodeContainer;
 using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Popups;
@@ -43,6 +44,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _meleeWeapon = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!; // DS14
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -155,8 +157,17 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
-        if (electrified.OnBump)
-            TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
+        // DS14-start
+        // Avoid running the full shock pipeline once per overlapping electrified fixture.
+        if (!electrified.OnBump ||
+            _mobState.IsDead(args.OtherEntity) ||
+            HasComp<ElectrocutedComponent>(args.OtherEntity))
+        {
+            return;
+        }
+
+        TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
+        // DS14-end
     }
 
     private void OnElectrifiedAttacked(EntityUid uid, ElectrifiedComponent electrified, AttackedEvent args)

@@ -14,6 +14,7 @@ gun-execution-error-not-wielded = This weapon must be held in both hands.
 gun-execution-error-cannot-attack = You cannot fire right now.
 gun-execution-error-range = The target is too far away or the path is blocked.
 gun-execution-error-empty = The weapon is unloaded.
+gun-execution-error-nonlethal = This weapon cannot fire a lethal shot.
 gun-execution-error-not-ready = The weapon is not ready to fire yet.
 gun-execution-error-start-failed = You failed to begin the shot.
 gun-execution-error-interrupted = The shot was interrupted.

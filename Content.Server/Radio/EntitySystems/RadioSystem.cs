@@ -1,6 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Power.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -42,6 +43,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LanguageSystem _language = default!; // DS14-Languages
     [Dependency] private readonly IAdminManager _admin = default!; // DS14
+    [Dependency] private readonly GameTicker _gameTicker = default!; // DS14
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -97,6 +99,9 @@ public sealed class RadioSystem : EntitySystem
         // DS14-start
         if (TryComp(uid, out ActorComponent? actor))
         {
+            if (!_gameTicker.UserHasJoinedGame(actor.PlayerSession))
+                return;
+
             if (ShouldSendCommandLinkSender(uid, actor.PlayerSession, args.MessageSource))
                 msg = WithCommandLinkSender(msg, args.MessageSource);
 

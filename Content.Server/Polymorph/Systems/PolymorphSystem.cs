@@ -194,6 +194,13 @@ public sealed partial class PolymorphSystem : EntitySystem
             _gameTiming.CurTime < polymorphableComponent.LastPolymorphEnd + configuration.Cooldown)
             return null;
 
+        // DS14-start
+        var attempt = new PolymorphAttemptEvent(configuration);
+        RaiseLocalEvent(uid, ref attempt);
+        if (attempt.Cancelled)
+            return null;
+        // DS14-end
+
         // mostly just for vehicles
         _buckle.TryUnbuckle(uid, uid, true);
 

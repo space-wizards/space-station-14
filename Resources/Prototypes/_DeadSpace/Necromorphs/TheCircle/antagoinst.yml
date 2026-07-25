@@ -135,7 +135,6 @@
     eyes: ClothingEyesHudUnitologyVisor
     gloves: ClothingHandsGlovesCombatUnitology
     mask: ClothingMaskGasUnitology
-    pocket2: DoubleEmergencyOxygenTankFilled
 
 - type: startingGear
   id: TheCircleLeaderGear

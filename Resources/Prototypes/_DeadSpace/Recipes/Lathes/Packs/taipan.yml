@@ -122,6 +122,9 @@
   id: TaipanScienceBoards
   recipes:
   - TurboItemRechargerCircuitboard
+  - DetailTechFabMachineCircuitboardTaipan
+  - CraftConsoleCircuitboard
+  - CraftMachineCircuitboard
   - AutolatheHyperConvectionMachineCircuitboardTaipan
   - ProtolatheHyperConvectionMachineCircuitboardTaipan
   - CircuitImprinterHyperConvectionMachineCircuitboardTaipan

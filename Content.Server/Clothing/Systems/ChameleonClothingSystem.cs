@@ -1,5 +1,6 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Emp;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
@@ -18,6 +19,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         base.Initialize();
         SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
+        SubscribeLocalEvent<ChameleonClothingComponent, CloningItemEvent>(OnCloningItem); // DS14
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -29,6 +31,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     {
         SetSelectedPrototype(uid, args.SelectedId, component: component);
     }
+
+    // DS14-start
+    private void OnCloningItem(EntityUid uid, ChameleonClothingComponent component, ref CloningItemEvent args)
+    {
+        if (TryComp<ChameleonClothingComponent>(args.CloneUid, out var clone))
+            SetSelectedPrototype(args.CloneUid, component.Default, forceUpdate: true, component: clone);
+    }
+    // DS14-end
 
     private void UpdateUi(EntityUid uid, ChameleonClothingComponent? component = null)
     {

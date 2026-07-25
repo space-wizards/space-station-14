@@ -46,6 +46,9 @@
     sprite: _DeadSpace/Objects/Misc/cqc_manual.rsi
     layers:
     - state: icon_after
+  - type: Tag
+    tags:
+    - Trash
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_DeadSpace/Items/Handing/paper_pickup.ogg

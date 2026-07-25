@@ -1,0 +1,109 @@
+- type: roleLoadout
+  id: RoleSurvivalTheCircle
+  groups:
+  - SurvivalExtended
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - TheCircleEmergencyTank
+
+# Starting gear is equipped before role loadouts. Keep the Geist's pocket2 implanter
+# and put its species-appropriate tank into the backpack instead.
+- type: roleLoadout
+  id: RoleSurvivalTheCircleGeist
+  groups:
+  - SurvivalExtended
+  - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - TheCircleEmergencyTankGeist
+
+- type: loadoutGroup
+  id: TheCircleEmergencyTank
+  name: loadout-group-survival-military
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - TheCircleEmergencyNitrogenTank
+  - TheCircleEmergencyOxygenTank
+  - TheCircleEmergencyOxygenTankDwarf
+  - TheCircleEmergencyOxygenTankMoth
+
+- type: loadoutGroup
+  id: TheCircleEmergencyTankGeist
+  name: loadout-group-survival-military
+  minLimit: 1
+  maxLimit: 1
+  hidden: true
+  loadouts:
+  - TheCircleEmergencyNitrogenTankGeist
+  - TheCircleEmergencyOxygenTankGeist
+  - TheCircleEmergencyOxygenTankDwarfGeist
+  - TheCircleEmergencyOxygenTankMothGeist
+
+- type: loadout
+  id: TheCircleEmergencyNitrogenTank
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    pocket2: DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTank
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    pocket2: DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTankDwarf
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  equipment:
+    pocket2: DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTankMoth
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  equipment:
+    pocket2: DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyNitrogenTankGeist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTankGeist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTankDwarfGeist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesDwarf
+  storage:
+    back:
+    - DoubleEmergencyOxygenTankFilled
+
+- type: loadout
+  id: TheCircleEmergencyOxygenTankMothGeist
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - DoubleEmergencyOxygenTankFilled

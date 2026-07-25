@@ -14,6 +14,11 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
 
     protected override void Open()
     {
+        // DS14-start
+        if (IsOpened)
+            return;
+        // DS14-end
+
         base.Open();
 
         var sign = EntMan.GetComponentOrNull<BarSignComponent>(Owner)?.Current is { } current
@@ -41,5 +46,17 @@ public sealed class BarSignBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         if (_prototype.Resolve(signComp.Current, out var signPrototype))
             _menu?.UpdateState(signPrototype);
     }
+
+    // DS14-start
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
+
+        _menu?.Dispose();
+        _menu = null;
+    }
+    // DS14-end
 }
 

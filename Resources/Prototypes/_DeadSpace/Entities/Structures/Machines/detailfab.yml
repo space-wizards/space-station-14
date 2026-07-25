@@ -29,6 +29,16 @@
   - type: OreSiloClient
 
 - type: entity
+  id: DetailTechFabTaipan
+  parent: DetailTechFab
+  suffix: Тайпан
+  components:
+  - type: Machine
+    board: DetailTechFabMachineCircuitboardTaipan
+  - type: ResearchClient
+    isTaipan: true
+
+- type: entity
   id: SecDetailTechFab
   parent: BaseLatheLube
   name: оружейный деталь фаб

@@ -3,6 +3,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Other # DS14
   reactants:
     Milk:
       amount: 40
@@ -18,6 +19,7 @@
   impact: low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Other # DS14
   reactants:
     MilkGoat:
       amount: 10 #Batches of chevre are traditionally made in far lower quantities than that of milk
@@ -33,6 +35,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Flour:
       amount: 15
@@ -47,6 +50,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Cornmeal:
       amount: 15
@@ -63,6 +67,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Cornmeal:
       amount: 15
@@ -77,6 +82,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Fiber:
       amount: 10
@@ -93,6 +99,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Flour:
       amount: 15
@@ -111,6 +118,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Other # DS14
   reactants:
     Milk:
       amount: 15
@@ -126,6 +134,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Flour:
       amount: 15
@@ -145,6 +154,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Dough # DS14
   reactants:
     Flour:
       amount: 15
@@ -161,6 +171,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Savory # DS14
   reactants:
     MilkSoy:
       amount: 30
@@ -176,6 +187,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: Savory # DS14
   reactants:
     UncookedAnimalProteins:
       amount: 5
@@ -192,6 +204,7 @@
   impact: Low
   quantized: true
   conserveEnergy: false
+  guidebookFoodCategory: BarsAndCookies # DS14
   reactants:
     CocoaPowder:
       amount: 4

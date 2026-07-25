@@ -241,13 +241,16 @@ public sealed partial class StoreMenu : DefaultWindow
         StoreListingsContainer.Children.Clear();
     }
 
-    public void PopulateStoreCategoryButtons(HashSet<ListingDataWithCostModifiers> listings)
+    public void PopulateStoreCategoryButtons(HashSet<ListingDataWithCostModifiers> listings, HashSet<ProtoId<StoreCategoryPrototype>> allowedCategories) // DS14
     {
         var allCategories = new List<StoreCategoryPrototype>();
         foreach (var listing in listings)
         {
             foreach (var cat in listing.Categories)
             {
+                if (!allowedCategories.Contains(cat)) // DS14
+                    continue;
+
                 var proto = _prototypeManager.Index(cat);
                 if (!allCategories.Contains(proto))
                     allCategories.Add(proto);

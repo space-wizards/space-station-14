@@ -1,4 +1,5 @@
 using Content.Server.Administration.Managers;
+using Content.Server.GameTicking;
 using Content.Shared.Chat;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory.Events;
@@ -23,6 +24,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     [Dependency] private readonly AudioSystem _audio = default!; // DS14-TTS
     [Dependency] private readonly LanguageSystem _language = default!; // DS14-Languages
     [Dependency] private readonly IAdminManager _admin = default!; // DS14
+    [Dependency] private readonly GameTicker _gameTicker = default!; // DS14
 
     public override void Initialize()
     {
@@ -154,6 +156,14 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (args.Receivers.Contains(receiver))
             return;
 
+        // DS14-start
+        if (TryComp(receiver, out ActorComponent? actor) &&
+            !_gameTicker.UserHasJoinedGame(actor.PlayerSession))
+        {
+            return;
+        }
+        // DS14-end
+
         var msg = chatMsg;
 
         if (languageId != null && !_language.KnowsLanguage(receiver, languageId))
@@ -162,7 +172,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
         if (receiveSound != null)
             _audio.PlayPvs(receiveSound, receiver, AudioParams.Default.WithVolume(-10f));
 
-        if (TryComp(receiver, out ActorComponent? actor))
+        if (actor != null) // DS14
         {
             // DS14-start
             if (sendMessage)

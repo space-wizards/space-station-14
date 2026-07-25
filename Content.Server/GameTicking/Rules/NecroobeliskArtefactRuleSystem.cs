@@ -3,7 +3,6 @@
 using Content.Shared.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Robust.Shared.Timing;
-using Content.Server.Chat.Systems;
 using Content.Shared.Fax.Components;
 using Content.Shared.Paper;
 using Content.Server.Fax;
@@ -17,7 +16,6 @@ public sealed class NecroobeliskArtefactRuleSystem : GameRuleSystem<Necroobelisk
 {
     private static readonly ResPath ObeliskOrderPath = new("/Paperwork/StationGoal/Obelisk.xml");
 
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly FaxSystem _faxSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -50,7 +48,6 @@ public sealed class NecroobeliskArtefactRuleSystem : GameRuleSystem<Necroobelisk
         if (!Resolve(uid, ref component))
             return;
 
-        _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("uni-centcomm-announcement-send-obelisk-artefact"), playSound: true, colorOverride: Color.Green);
         GameTicker.StartGameRule("GiftsNecroobeliskArtefact");
         component.IsArtefactSended = true;
 

@@ -50,6 +50,22 @@ public partial class SharedGunSystem
     {
         args.Count += GetRevolverUnspentCount(ent.Comp);
         args.Capacity += ent.Comp.Capacity;
+
+        // DS14-start
+        if (ent.Comp.CurrentIndex >= 0 &&
+            ent.Comp.CurrentIndex < ent.Comp.Capacity &&
+            ent.Comp.CurrentIndex < ent.Comp.AmmoSlots.Count &&
+            ent.Comp.CurrentIndex < ent.Comp.Chambers.Length)
+        {
+            args.NextAmmoEntity = ent.Comp.AmmoSlots[ent.Comp.CurrentIndex];
+            if (args.NextAmmoEntity == null &&
+                ent.Comp.Chambers[ent.Comp.CurrentIndex] == true &&
+                ent.Comp.FillPrototype is { } fillPrototype)
+            {
+                args.NextAmmoPrototype = fillPrototype;
+            }
+        }
+        // DS14-end
     }
 
     private void OnRevolverInteractUsing(Entity<RevolverAmmoProviderComponent> ent, ref InteractUsingEvent args)

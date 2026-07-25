@@ -2,6 +2,7 @@
 
 #nullable enable
 
+using System.Linq;
 using Content.Server.DeadSpace.RoundEnd;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
@@ -12,9 +13,11 @@ using Content.Shared.DeadSpace.Languages.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
+using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -234,6 +237,37 @@ public sealed class RoundEndManifestStatsTests
                 Is.EqualTo(Loc.GetString("round-end-summary-window-antag-manifest-quote-fallback")));
         });
 
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task DeletingAllEntitiesDoesNotCreateManifestSnapshot()
+    {
+        var settings = new PoolSettings
+        {
+            Connected = true,
+            Destructive = true,
+            Dirty = true,
+            DummyTicker = false
+        };
+        await using var pair = await PoolManager.GetServerClient(settings);
+        var server = pair.Server;
+        var context = GetContext(server);
+        var body = pair.Player!.AttachedEntity!.Value;
+        var mindId = pair.PlayerData!.Mind!.Value;
+        var mind = context.EntMan.GetComponent<MindComponent>(mindId);
+        context.ManifestStats.EnsureManifestEntry(mindId, mind);
+
+        var consoleHost = server.ResolveDependency<IConsoleHost>();
+        await server.WaitPost(() => consoleHost.ExecuteCommand("entities delete"));
+        await pair.RunTicksSync(5);
+
+        Assert.That(
+            context.EntMan.EntityCount,
+            Is.Zero,
+            string.Join(
+                Environment.NewLine,
+                context.EntMan.GetEntities().Select(uid => context.EntMan.ToPrettyString(uid).ToString())));
         await pair.CleanReturnAsync();
     }
 

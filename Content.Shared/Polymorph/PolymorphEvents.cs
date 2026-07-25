@@ -1,5 +1,14 @@
 namespace Content.Shared.Polymorph;
 
+// DS14-start
+/// <summary>
+/// Raised before an entity is polymorphed. Cancelling this event prevents all
+/// polymorph side effects.
+/// </summary>
+[ByRefEvent]
+public record struct PolymorphAttemptEvent(PolymorphConfiguration Configuration, bool Cancelled = false);
+// DS14-end
+
 /// <summary>
 /// Raised locally on an entity when it polymorphs into another entity
 /// </summary>

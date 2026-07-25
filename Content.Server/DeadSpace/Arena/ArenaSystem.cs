@@ -263,6 +263,7 @@ public sealed class ArenaSystem : EntitySystem
         _minds.SetUserId(originalMindId, null, originalMind);
         _minds.TransferTo(originalMindId, null, createGhost: false, mind: originalMind);
         var temporaryMind = _minds.CreateMind(who.UserId, who.Name);
+        EnsureComp<ArenaMindComponent>(temporaryMind); // Never include the disposable arena mind in round data.
         _minds.TransferTo(temporaryMind, fresh, mind: temporaryMind.Comp);
         QueueDel(sourceGhost);
         _roles.MindAddJobRole(temporaryMind, silent: true, jobPrototype: "ArenaWarrior");

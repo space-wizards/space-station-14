@@ -46,6 +46,10 @@ public abstract partial class SharedGunSystem
     {
         args.Capacity = ent.Comp.Capacity ?? int.MaxValue;
         args.Count = ent.Comp.Count ?? int.MaxValue;
+        // DS14-start
+        if (args.Count > 0)
+            args.NextAmmoPrototype = ent.Comp.Proto;
+        // DS14-end
     }
 
     private void UpdateBasicEntityAppearance(Entity<BasicEntityAmmoProviderComponent> ent)

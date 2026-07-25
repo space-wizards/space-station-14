@@ -13,6 +13,18 @@
       Steel: 5
 
 - type: entity
+  id: DetailTechFabMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: деталь фаб (машинная плата)
+  description: Из этой машинной платы собирается станок для производства деталей РИГов.
+  components:
+  - type: MachineBoard
+    prototype: DetailTechFabTaipan
+    stackRequirements:
+      Plastic: 5
+      Steel: 5
+
+- type: entity
   id: SecDetailTechFabMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: оружейный деталь фаб (машинная плата)

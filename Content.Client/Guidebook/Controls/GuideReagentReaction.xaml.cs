@@ -5,6 +5,7 @@ using Content.Shared.Atmos.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.EntityEffects.Effects.EntitySpawning;
 using Content.Shared.FixedPoint;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
@@ -43,6 +44,28 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
                 products.Add(reagent, reactantProto.Amount);
         }
         SetReagents(products, ref productContainer, protoMan, false);
+
+        // DS14-start: entity products are part of the reaction output too.
+        if (prototype.Source || prototype.GuidebookFoodCategory != null)
+        {
+            foreach (var effect in prototype.Effects.OfType<SpawnEntity>())
+            {
+                var product = protoMan.Index<EntityPrototype>(effect.Entity);
+                var msg = new FormattedMessage();
+                msg.AddMarkupOrThrow(Loc.GetString("guidebook-reagent-recipes-reagent-display",
+                    ("reagent", product.Name),
+                    ("ratio", effect.Number)));
+
+                var label = new GuidebookRichPrototypeLink
+                {
+                    LinkedPrototype = product
+                };
+                label.SetMessage(msg);
+                productContainer.AddChild(label);
+                productContainer.Visible = true;
+            }
+        }
+        // DS14-end
 
         var mixingCategories = new List<MixingCategoryPrototype>();
         if (prototype.MixingCategories != null)

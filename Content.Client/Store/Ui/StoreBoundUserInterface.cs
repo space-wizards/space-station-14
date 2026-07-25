@@ -22,6 +22,9 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private HashSet<ListingDataWithCostModifiers> _listings = new();
 
+    [ViewVariables]
+    private HashSet<ProtoId<StoreCategoryPrototype>> _categories = new(); // DS14
+
     public StoreBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this); // DS14
@@ -74,6 +77,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
                 // end-backmen: bank
 
                 _listings = msg.Listings;
+                _categories = msg.Categories; // DS14
 
                 _menu?.UpdateBalance(msg.Balance);
 
@@ -95,7 +99,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             filteredListings.RemoveWhere(listingData => !ListingLocalisationHelpers.GetLocalisedNameOrEntityName(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search) &&
                                                         !ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(listingData, _prototypeManager).Trim().ToLowerInvariant().Contains(_search));
         }
-        _menu.PopulateStoreCategoryButtons(filteredListings);
+        _menu.PopulateStoreCategoryButtons(filteredListings, _categories); // DS14
         _menu.UpdateListing(filteredListings.ToList());
     }
 }

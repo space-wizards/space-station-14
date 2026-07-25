@@ -13,6 +13,11 @@
   ## Хлеба
   <GuideMicrowaveGroupEmbed Group="Breads"/>
 
+  <!-- DS14-start -->
+  ## Тесто
+  <GuideMicrowaveGroupEmbed Group="Dough"/>
+  <!-- DS14-end -->
+
   ## Завтраки
   <GuideMicrowaveGroupEmbed Group="Breakfast"/>
 

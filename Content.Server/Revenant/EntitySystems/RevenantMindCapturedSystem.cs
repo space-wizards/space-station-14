@@ -14,6 +14,7 @@ using Content.Shared.DeadSpace.Languages.Components;
 using Robust.Shared.Containers;
 using Content.Shared.Mobs;
 using Content.Shared.Actions; //DS14
+using Content.Shared.Polymorph;
 using Content.Shared.Revenant.Components; //DS14
 
 namespace Content.Server.Revenant.EntitySystems;
@@ -31,6 +32,7 @@ public sealed class RevenantMindCapturedSystem : EntitySystem
     {
         SubscribeLocalEvent<RevenantMindCapturedComponent, MindUnvisitedMessage>(OnUnvisited);
         SubscribeLocalEvent<RevenantMindCapturedComponent, MobStateChangedEvent>(OnStateChange);
+        SubscribeLocalEvent<RevenantMindCapturedComponent, PolymorphAttemptEvent>(OnPolymorphAttempt);
     }
 
     public override void Update(float frameTime)
@@ -61,8 +63,21 @@ public sealed class RevenantMindCapturedSystem : EntitySystem
             EndCapture(uid, comp);
     }
 
-    private void EndCapture(EntityUid uid, RevenantMindCapturedComponent comp)
+    private void OnPolymorphAttempt(
+        Entity<RevenantMindCapturedComponent> ent,
+        ref PolymorphAttemptEvent args)
     {
+        args.Cancelled = true;
+        EndCapture(ent, ent.Comp, killHost: true);
+    }
+
+    private void EndCapture(EntityUid uid, RevenantMindCapturedComponent comp, bool killHost = false)
+    {
+        if (comp.EndingCapture)
+            return;
+
+        comp.EndingCapture = true;
+
         if (_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var crit))
             _mobThresholdSystem.SetMobStateThreshold(uid, comp.CritThreshold, MobState.Critical);
 
@@ -100,6 +115,9 @@ public sealed class RevenantMindCapturedSystem : EntitySystem
 
         if (_mind.TryGetMind(comp.RevenantUid, out var mindId, out var mind) && mind.VisitingEntity == uid)
             _mind.UnVisit(mindId, mind);
+
+        if (killHost)
+            _mobState.ChangeMobState(uid, MobState.Dead);
 
         RemCompDeferred(uid, comp);
     }

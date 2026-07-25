@@ -732,6 +732,7 @@
   name: world peazza recipe
   result: FoodPizzaWorldpeas
   time: 30
+  group: Pizza # DS14
   solids:
     FoodDoughFlat: 1
     FoodWorldPeas: 3
@@ -1838,6 +1839,7 @@
   name: warm moth-pocket recipe
   result: FoodDonkpocketMothWarm
   time: 5
+  group: Moth # DS14
   solids:
     FoodDonkpocketMoth: 1
 
@@ -2118,6 +2120,7 @@
   name: dried tea leaves recipe
   result: LeavesTeaDried
   time: 10
+  group: Other # DS14
   solids:
     LeavesTea: 1
 
@@ -2153,6 +2156,7 @@
   name: baked banana peel recipe
   result: TrashBakedBananaPeel
   time: 5
+  group: Other # DS14
   solids:
     TrashBananaPeel: 1
 
@@ -2162,6 +2166,7 @@
   name: suppermatter recipe
   result: FoodCakeSuppermatter
   time: 30
+  group: Cake # DS14
   solids:
     FoodCakeBatter: 2
   reagents:
@@ -2194,6 +2199,7 @@
   name: cannabis butter recipe
   result: FoodCannabisButter
   time: 15
+  group: Other # DS14
   solids:
     FoodButter: 1
     LeavesCannabis: 6

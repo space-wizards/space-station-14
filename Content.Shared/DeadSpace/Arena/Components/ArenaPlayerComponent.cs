@@ -10,3 +10,9 @@ public sealed partial class ArenaPlayerComponent : Component
     public EntityUid OriginalGhost;
     public bool CanReturnToBody;
 }
+
+/// <summary>
+/// Marks a disposable mind created for an arena body.
+/// </summary>
+[RegisterComponent]
+public sealed partial class ArenaMindComponent : Component;
