@@ -60,7 +60,9 @@
       prob: 0.001
     specialEntries:
     - id: SpawnPointGhostRatKing
-      prob: 0.001
+      prob: 0.9
+    - id: SpawnPointGhostRatKingCancer
+      prob: 0.1
 
 - type: entity
   id: CockroachMigration

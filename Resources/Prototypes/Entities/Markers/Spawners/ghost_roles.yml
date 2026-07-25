@@ -37,6 +37,18 @@
         state: icon
 
 - type: entity
+  id: SpawnPointGhostRatKingCancer
+  suffix: cancer rat king
+  parent: SpawnPointGhostRatKing
+  components:
+  - type: GhostRole
+    name: ghost-role-information-rat-king-cancer-name
+    description: ghost-role-information-rat-king-cancer-description
+    rules: ghost-role-information-antagonist-rules
+  - type: GhostRoleMobSpawner
+    prototype: MobRatKingCancer
+
+- type: entity
   id: SpawnPointGhostRemilia
   name: ghost role spawn point
   suffix: Remilia
