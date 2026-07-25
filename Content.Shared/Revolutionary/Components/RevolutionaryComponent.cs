@@ -28,7 +28,7 @@ public sealed partial class RevolutionaryComponent : Component
     /// The duration of the stun when you get deconverted.
     /// </summary>
     [DataField]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(4d);
+    public TimeSpan StunTime = TimeSpan.FromSeconds(4f);
 
     public override bool SessionSpecific => true;
 }

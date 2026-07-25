@@ -24,7 +24,7 @@ public sealed partial class FakeMindShieldComponent : Component
     public ProtoId<TagPrototype> ActionTag = "FakeMindShieldImplant";
 
     /// <summary>
-    /// Makes it so chameleon implants affect this fake mindshield. Is off by default on changeling fake mindshields, for instance.
+    /// Makes it so chameleon implants affect this fake mindshield.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ChameleonControllable = true;
