@@ -30,6 +30,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.DeadSpace.Flamethrower;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -425,8 +426,14 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
+            // Components may be added or removed while processing fire. Snapshot
+            // the query so those changes cannot invalidate its enumerator.
+            var flammableEntities = new List<(EntityUid Uid, FlammableComponent Flammable)>();
             var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var flammable, out _))
+            while (query.MoveNext(out var queryUid, out var queryFlammable, out _))
+                flammableEntities.Add((queryUid, queryFlammable));
+
+            foreach (var (uid, flammable) in flammableEntities)
             {
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)
@@ -447,7 +454,8 @@ namespace Content.Server.Atmos.EntitySystems
                     var air = _atmosphereSystem.GetContainingMixture(uid);
 
                     // If we're in an oxygenless environment, put the fire out.
-                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    if ((air == null || air.GetMoles(Gas.Oxygen) < 1f) &&
+                        !HasComp<FlamethrowerBurningComponent>(uid))
                     {
                         Extinguish(uid, flammable);
                         continue;

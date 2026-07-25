@@ -211,7 +211,9 @@ namespace Content.Server.Hands.Systems
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
             // DS14-start: respect forced-drop protection without blocking voluntary drops.
-            if (args.Cancelled)
+            // Check the component directly as well: forced drops can be raised by several
+            // independent stun/knockdown systems, so retention must not depend on handler order.
+            if (args.Cancelled || HasComp<WeaponRetentionComponent>(entity))
                 return;
             // DS14-end
 

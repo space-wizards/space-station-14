@@ -514,24 +514,25 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.05
-        Slash: 0.05
-        Piercing: 0.05
-        Heat: 0.05
-        Cold: 0.05
-        Shock: 0.05
-        Radiation: 0.05
-        Poison: 0.05
-        Caustic: 0.05
+        Blunt: 0.15
+        Slash: 0.15
+        Piercing: 0.15
+        Heat: 0.15
+        Cold: 0.15
+        Shock: 0.15
+        Radiation: 0.15
+        Poison: 0.15
+        Caustic: 0.15
   - type: StaminaResistance
     damageCoefficient: 0.05
   - type: ClothingSpeedModifier
-    walkModifier: 0.3
-    sprintModifier: 0.3
+    walkModifier: 0.4
+    sprintModifier: 0.4
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitUnitologyDreadnought
   - type: DreadnoughtLastStand
+    speedModifier: 4.3333335
   - type: Tag
     tags:
     - Hardsuit

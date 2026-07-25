@@ -24,8 +24,32 @@ public sealed class DetonateAttachedExplosivesSystem : EntitySystem
         SubscribeLocalEvent<DetonateAttachedExplosivesComponent, DetonateAttachedExplosivesActionEvent>(OnDetonate);
         SubscribeLocalEvent<DetonateAttachedExplosivesComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<DetonateAttachedExplosivesComponent, EntityTerminatingEvent>(OnTerminating);
+        SubscribeLocalEvent<StickyComponent, AttemptEntityStickEvent>(OnExplosiveStickAttempt);
         SubscribeLocalEvent<StickyComponent, EntityStuckEvent>(OnExplosiveStuck);
         SubscribeLocalEvent<StickyComponent, EntityUnstuckEvent>(OnExplosiveUnstuck);
+    }
+
+    private void OnExplosiveStickAttempt(Entity<StickyComponent> ent, ref AttemptEntityStickEvent args)
+    {
+        if (!TryComp<DetonateAttachedExplosivesComponent>(args.Target, out var detonate) ||
+            !_whitelist.IsWhitelistPassOrNull(detonate.ExplosiveWhitelist, ent.Owner))
+            return;
+
+        var attached = 0;
+        var query = EntityQueryEnumerator<StickyComponent>();
+        while (query.MoveNext(out var explosive, out var sticky))
+        {
+            if (explosive == ent.Owner ||
+                sticky.StuckTo != args.Target ||
+                !_whitelist.IsWhitelistPassOrNull(detonate.ExplosiveWhitelist, explosive))
+                continue;
+
+            if (++attached >= detonate.MaxAttachedExplosives)
+            {
+                args.Cancelled = true;
+                return;
+            }
+        }
     }
 
     private void OnExplosiveStuck(Entity<StickyComponent> ent, ref EntityStuckEvent args)

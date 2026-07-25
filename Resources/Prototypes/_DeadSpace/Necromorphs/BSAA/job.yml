@@ -23,9 +23,25 @@
   - type: PresetIdCard
     job: BSAAMedicJob
 
+- type: entity
+  parent: CBURNLeaderIDcard
+  id: BSAAIDSpecialist
+  name: ID карта специалиста АПБТ
+  components:
+  - type: PresetIdCard
+    job: BSAASpecialistJob
+
+- type: entity
+  parent: CBURNLeaderIDcard
+  id: BSAAIDFlamer
+  name: ID карта флеймера АПБТ
+  components:
+  - type: PresetIdCard
+    job: BSAAFlamerJob
+
 # КПК
 - type: entity
-  parent: CBURNLeaderPDA
+  parent: CentcomFieldOfficerPDA
   id: BSAALeaderPDA
   name: КПК Лидера АПБТ
   suffix: лидер
@@ -35,7 +51,7 @@
     id: BSAAIDLeader
 
 - type: entity
-  parent: CBURNPDA
+  parent: CentcomFieldOfficerPDA
   id: BSAAFighterPDA
   name: КПК Бойца АПБТ
   suffix: боец
@@ -45,7 +61,7 @@
     id: BSAAIDFighter
 
 - type: entity
-  parent: CBURNPDA
+  parent: CentcomFieldOfficerPDA
   id: BSAAMedicPDA
   name: КПК Медика АПБТ
   suffix: медик
@@ -53,6 +69,25 @@
   components:
   - type: Pda
     id: BSAAIDMedic
+
+- type: entity
+  parent: CentcomFieldOfficerPDA
+  id: BSAASpecialistPDA
+  name: КПК Специалиста АПБТ
+  suffix: специалист
+  components:
+  - type: Pda
+    id: BSAAIDSpecialist
+
+- type: entity
+  parent: CentcomFieldOfficerPDA
+  id: BSAAFlamerPDA
+  name: КПК Флеймера АПБТ
+  suffix: флеймер
+  description: Боевой КПК АПБТ в корпусе офицера специальных операций.
+  components:
+  - type: Pda
+    id: BSAAIDFlamer
 
 # Джобка
 
@@ -128,6 +163,55 @@
   - !type:AddImplantSpecial
     implants: [ RezervImplant ]
 
+- type: job
+  id: BSAASpecialistJob
+  name: Специалист АПБТ
+  description: "Специалист АПБТ, живой ходячий труп некроморфа."
+  playTimeTracker: JobBSAASpecialist
+  setPreference: false
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 50400 # 14 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 360000 # doxuia
+    - !type:OverallPlaytimeRequirement
+      time: 1296000 # 360 hours
+  icon: "JobIconBSAASpecialist"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+  special:
+  - !type:AddImplantSpecial
+    implants: [ RezervImplant, BSAAPhaseBladeImplant ]
+
+- type: job
+  id: BSAAFlamerJob
+  name: Флеймер АПБТ
+  description: "Огнемётчик АПБТ, что потерял рассудок в порыке поджёгов."
+  playTimeTracker: JobBSAAFlamer
+  setPreference: false
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 50400 # 14 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 360000 # doxuia
+    - !type:OverallPlaytimeRequirement
+      time: 1296000 # 360 hours
+  icon: "JobIconBSAAFlamer"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+  access:
+  - CentralCommand
+
 - type: playTimeTracker
   id: JobBSAA
 
@@ -136,6 +220,12 @@
   
 - type: playTimeTracker
   id: JobBSAAMedic
+
+- type: playTimeTracker
+  id: JobBSAASpecialist
+
+- type: playTimeTracker
+  id: JobBSAAFlamer
 
 - type: jobIcon
   parent: JobIcon
@@ -157,3 +247,17 @@
   icon:
     sprite: /Textures/_DeadSpace/Necromorfs/BSAA/jobicon.rsi
     state: fighter
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBSAASpecialist
+  icon:
+    sprite: /Textures/_DeadSpace/Necromorfs/BSAA/jobicon.rsi
+    state: spec
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconBSAAFlamer
+  icon:
+    sprite: /Textures/_DeadSpace/Necromorfs/BSAA/jobicon.rsi
+    state: flame

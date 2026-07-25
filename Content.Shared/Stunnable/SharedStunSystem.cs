@@ -7,6 +7,7 @@ using Content.Shared.Item;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeadSpace.TheCircle.Geist;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Mobs;
@@ -203,8 +204,11 @@ public abstract partial class SharedStunSystem : EntitySystem
         var ev = new StunnedEvent(); // todo: rename event or change how it is raised - this event is raised each time duration of stun was externally changed
         RaiseLocalEvent(uid, ref ev);
 
-        var evDropHands = new DropHandItemsEvent();
-        RaiseLocalEvent(uid, ref evDropHands);
+        if (!HasComp<WeaponRetentionComponent>(uid))
+        {
+            var evDropHands = new DropHandItemsEvent();
+            RaiseLocalEvent(uid, ref evDropHands);
+        }
 
         var timeForLogs = duration.HasValue
             ? duration.Value.Seconds.ToString()
@@ -325,7 +329,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         else
         {
             // Only drop items the first time we want to fall...
-            if (drop)
+            if (drop && !HasComp<WeaponRetentionComponent>(uid))
             {
                 var ev = new DropHandItemsEvent();
                 RaiseLocalEvent(uid, ref ev);

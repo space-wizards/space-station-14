@@ -15,6 +15,12 @@ public sealed partial class DetonateAttachedExplosivesComponent : Component
     [DataField]
     public EntProtoId Action = "ToyCarDetonateAttachedExplosives";
 
+    /// <summary>
+    /// Maximum number of matching explosives that can be attached at once.
+    /// </summary>
+    [DataField]
+    public int MaxAttachedExplosives = 1;
+
     public EntityUid? ActionEntity;
 }
 

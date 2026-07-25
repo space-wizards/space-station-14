@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - FlamethrowerBackTank
+  - type: FlamethrowerFuelTank
   - type: Sprite
     sprite: _DeadSpace/Objects/Tanks/Flamethrower/syndie_flametank.rsi
     state: icon
@@ -17,23 +18,6 @@
     quickEquip: false
     slots:
     - suitStorage
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-      enum.SharedGasTankUiKey.Key:
-        type: GasTankBoundUserInterface
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      volume: 5
-      temperature: 293.15
-    tankLowPressure: 30.0
-  - type: Explosive
-    explosionType: MicroBomb
-    maxIntensity: 20
   - type: ItemSlots
     slots:
       item:
@@ -41,9 +25,10 @@
         whitelist:
           tags:
           - FlamethrowerNozzle
-  - type: SolutionAmmoProvider
-    solutionId: tank
-    proto: BulletFireShot
+  - type: DrainableSolution
+    solution: tank
+  - type: Spillable
+    solution: tank
 
 - type: entity
   parent: ClothingBackpackSyndieFlametank
@@ -59,14 +44,6 @@
           Quantity: 100
         - ReagentId: Napalm
           Quantity: 900
-  - type: GasTank
-    outputPressure: 101.3
-    air:
-      volume: 5
-      moles:
-      - 0.451303391 # 22% oxygen
-      - 1.600075659 # 78% nitrogen
-      temperature: 293.15
 
 - type: entity
   parent: ClothingBackpack

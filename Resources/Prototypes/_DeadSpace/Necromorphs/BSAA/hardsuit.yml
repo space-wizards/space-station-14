@@ -240,4 +240,139 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Heat: 0.9   
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: BSAASpecialistHardSuit
+  name: скафандр специалиста АПБТ
+  description: Скоростной экспериментальный скафандр специалиста АПБТ.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/hardsuits/bsaa-spec.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/BSAA/hardsuits/bsaa-spec.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.45
+        Cold: 0.45
+        Shock: 0.45
+        Radiation: 0.45
+        Caustic: 0.45
+        Poison: 0.45
+  - type: StaminaResistance
+    damageCoefficient: 0.45
+  - type: BlinkItem
+  - type: ClothingSpeedModifier
+    walkModifier: 1.3
+    sprintModifier: 1.3
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.45
+  - type: ToggleableClothing
+    clothingPrototype: BSAASpecialistHelmet
+  - type: VirusResistance
+    virusResistanceCoefficient: 0.9
+  - type: HardsuitIdentification
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: BSAASpecialistHelmet
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра специалиста АПБТ
+  description: Герметичный шлем с мощным красным фонарём.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/helmets/bsaa-spec.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/BSAA/helmets/bsaa-spec.rsi
+  - type: PointLight
+    color: "#ff0000"
+    radius: 10
+    energy: 4
+  - type: PressureProtection
+    highPressureMultiplier: 0.53
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: BSAAFlamerHardSuit
+  name: скафандр флеймера АПБТ
+  description: Скафандр от которого исходит жар.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/hardsuits/bsaa-flame.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/BSAA/hardsuits/bsaa-flame.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 10000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.55
+        Heat: 0.15
+        Cold: 0.45
+        Shock: 0.45
+        Radiation: 0.45
+        Caustic: 0.45
+        Poison: 0.45
+  - type: StaminaResistance
+    damageCoefficient: 0.45
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: ToggleableClothing
+    clothingPrototype: BSAAFlamerHelmet
+  - type: VirusResistance
+    virusResistanceCoefficient: 0.9
+  - type: HardsuitIdentification
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: BSAAFlamerHelmet
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра флеймера АПБТ
+  description: Герметичный шлем с мощным красным фонарём.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/helmets/bsaa-flame.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Necromorfs/BSAA/helmets/bsaa-flame.rsi
+  - type: PointLight
+    color: "#ff0000"
+    radius: 10
+    energy: 4
+  - type: PressureProtection
+    highPressureMultiplier: 0.53
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: SyndieFlamethrower
   name: огнемёт
@@ -12,24 +12,28 @@
     state: icon
   - type: Item
     sprite: _DeadSpace/Objects/Weapons/Guns/Basic/syndie_flamethrower.rsi
-    size: Ginormous
-  - type: Gun
-    cameraRecoilScalar: 0
-    fireRate: 3.5
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-    soundGunshot:
+    size: Large
+    shape:
+    - 0,0,4,1
+  - type: ContinuousFlamethrower
+    shotSound:
       path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/flamethrower.ogg
+    ambientSound:
+      path: /Audio/_DeadSpace/Weapons/Guns/Gunshots/flamethrower_effect.ogg
+  - type: PointLight
+    enabled: false
+    color: "#FF4A08"
+    radius: 5
+    energy: 4
+    softness: 1
+    castShadows: false
+  - type: MultiHandedItem
   - type: Appearance
-  - type: ClothingSlotAmmoProvider
   - type: SlotBasedConnectedContainer
     targetSlot: suitStorage
     containerWhitelist:
       tags:
       - FlamethrowerBackTank
-  - type: UseDelay
-    delay: 0.75
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_DeadSpace/Items/Handing/gun/gun_pickup.ogg

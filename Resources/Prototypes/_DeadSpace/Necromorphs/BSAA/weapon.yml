@@ -391,3 +391,82 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: BSAAPhaseBladeImplant
+  parent: BaseSubdermalImplant
+  name: имплант фазового клинка АПБТ
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionRetractableBSAAPhaseBlade
+    whitelist:
+      components:
+      - Hands
+
+- type: entity
+  id: ActionRetractableBSAAPhaseBlade
+  parent: BaseAction
+  name: выпустить фазовый клинок
+  description: Выпустить или убрать встроенный фазовый клинок.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: _DeadSpace/Necromorfs/BSAA/weapons/phase_blade.rsi
+      state: action
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: WeaponBSAAPhaseBlade
+    summonSounds:
+      collection: MantisExtend
+    retractSounds:
+      collection: MantisRetract
+
+- type: entity
+  id: WeaponBSAAPhaseBlade
+  parent: BaseItem
+  name: фазовый клинок АПБТ
+  description: Встроенный клинок, фазовая кромка которого проходит сквозь броню.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/weapons/phase_blade.rsi
+    state: animation-icon
+  - type: Item
+    sprite: _DeadSpace/Necromorfs/BSAA/weapons/phase_blade.rsi
+  - type: MeleeWeapon
+    autoAttack: true
+    attackRate: 1.35
+    damage:
+      types:
+        Piercing: 15
+    resistanceBypass: true
+    animation: WeaponArcBSAAPhaseBlade
+    wideAnimation: WeaponArcBSAAPhaseBlade
+    angle: 0
+    soundHit:
+      collection: MantisAttack
+    soundNoDamage:
+      collection: MantisAttack
+    soundSwing:
+      collection: MantisAttack
+  - type: Sharp
+
+- type: entity
+  id: WeaponArcBSAAPhaseBlade
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+    fadeOut: false
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/weapons/phase_arcs.rsi
+    state: phase-precise
+    drawdepth: Effects
+  - type: TimedDespawn
+    lifetime: 0.4

@@ -50,6 +50,20 @@
       enum.ThiefBackpackUIKey.Key:
         type: ThiefBackpackBoundUserInterface
 
+- type: entity
+  id: BSAAJugFlame
+  suffix: топливо для огнемёта
+  parent: JugTheCircle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: Napalm
+          Quantity: 270
+        - ReagentId: Phlogiston
+          Quantity: 30
+
 ## Лодауты
 
 - type: thiefBackpackSet

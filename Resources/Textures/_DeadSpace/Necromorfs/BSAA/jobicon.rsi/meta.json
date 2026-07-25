@@ -15,6 +15,12 @@
 		},
         {
             "name": "medic"
+		},
+        {
+            "name": "spec"
+		},
+        {
+            "name": "flame"
 		}
     ]
 }

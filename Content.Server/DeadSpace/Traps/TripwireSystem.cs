@@ -1,10 +1,12 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.DeadSpace.Traps;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DoAfter;
+using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
@@ -19,6 +21,7 @@ namespace Content.Server.DeadSpace.Traps;
 public sealed class TripwireSystem : EntitySystem
 {
     [Dependency] private readonly DeviceLinkSystem _links = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly NpcFactionSystem _factions = default!;
     [Dependency] private readonly SharedToolSystem _tools = default!;
@@ -99,7 +102,13 @@ public sealed class TripwireSystem : EntitySystem
             {
                 if (Deleted(target))
                     continue;
-                _trigger.Trigger(target, user, segment.Comp.ImmediateTriggerKey);
+
+                // Explosives must detonate immediately. Routing an already armed C4
+                // through its timer trigger can delete it before the explosion is processed.
+                if (TryComp<ExplosiveComponent>(target, out var explosive))
+                    _explosion.TriggerExplosive(target, explosive, user: user);
+                else
+                    _trigger.Trigger(target, user, segment.Comp.ImmediateTriggerKey);
             }
 
             TryComp<DeviceLinkSourceComponent>(segment, out var source);

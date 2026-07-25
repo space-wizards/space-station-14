@@ -900,6 +900,7 @@
   - type: GunWieldBonus
     minAngle: -1
     maxAngle: -3
+  - type: GunRequiresWield
   - type: ChamberMagazineAmmoProvider
   - type: ItemSlots
     slots:
@@ -1064,11 +1065,11 @@
   - type: Item
     sprite: _DeadSpace/Necromorfs/TheCircle/Weapon/melee/strike-blade.rsi
   - type: MeleeWeapon
-    attackRate: 1.2
+    attackRate: 1
     damage:
       types:
         Slash: 18
-        Structural: 20
+        Structural: 55
     soundHit:
       collection: splinter-blade-attack
     soundNoDamage:

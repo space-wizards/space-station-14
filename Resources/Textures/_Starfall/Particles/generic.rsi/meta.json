@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By TrixxedHeart",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cross"
+    },
+    {
+      "name": "curl"
+    },
+    {
+      "name": "dot"
+    },
+    {
+      "name": "soft_dot"
+    },
+    {
+      "name": "soft_dot_big"
+    },
+    {
+      "name": "drop"
+    }
+  ]
+}

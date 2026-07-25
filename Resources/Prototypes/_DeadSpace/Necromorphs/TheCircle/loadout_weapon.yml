@@ -131,6 +131,6 @@
     - id: ClothingOuterHardsuitUnitologyDreadnought
     - id: WeaponMachineGunWhirl
     - id: MagazineWhirl
-      amount: 6
+      amount: 3
     - id: DeathAcidifierImplanter
     - id: UnitologyWeaponRetentionImplanter

@@ -95,6 +95,66 @@
     - JugDexPlusSaline
     - WeaponPlasmaCutter
 
+- type: startingGear
+  id: BSAASpecialistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBSAA
+    back: ClothingBSAABackpack
+    mask: ClothingMaskBSAA
+    eyes: ClothingEyesBSAA
+    ears: ClothingHeadsetAltAERT
+    gloves: ClothingHandsGlovesBSAA
+    outerClothing: BSAASpecialistHardSuit
+    shoes: ClothingShoesBootsMagBSAA
+    id: BSAASpecialistPDA
+    belt: ClothingBeltBSAA
+    pocket1: DoubleEmergencyOxygenTankFilled
+  storage:
+    back:
+    - MedkitCombatFilled
+    - InjectorCaseStimFilled
+    - InjectorCaseERTFilled
+    - BSAAloadout
+    - PinpointerNecroobelisk
+    - PinpointerNuclear
+    - CrowbarRed
+    - RCDRecharging
+    - WeaponPulsePistol
+    - EmergencyMedipen
+    - BoxMRE
+    - WeaponPlasmaCutter
+
+- type: startingGear
+  id: BSAAFlamerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBSAA
+    back: ClothingBSAABackpack
+    mask: ClothingMaskBSAA
+    eyes: ClothingEyesBSAA
+    ears: ClothingHeadsetAltAERT
+    gloves: ClothingHandsGlovesBSAA
+    outerClothing: BSAAFlamerHardSuit
+    shoes: ClothingShoesBootsMagBSAA
+    id: BSAAFlamerPDA
+    suitstorage: ClothingBackpackSyndieFlametankFilled
+    belt: ClothingBeltBSAA
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: WeaponPulsePistol
+  storage:
+    back:
+    - MedkitCombatFilled
+    - InjectorCaseStimFilled
+    - InjectorCaseERTFilled
+    - BSAAloadout
+    - PinpointerNecroobelisk
+    - PinpointerNuclear
+    - CrowbarRed
+    - RCDRecharging
+    - BoxMRE
+    - WeaponPlasmaCutter
+    - SyndieFlamethrower
+    - BSAAJugFlame
+
 # Спавн
 - type: entity
   id: RandomHumanoidSpawnerBSAALeader
@@ -174,6 +234,57 @@
     prototypes:
     - RandomHumanoidSpawnerBSAAMedic
 
+- type: entity
+  id: RandomHumanoidSpawnerBSAASpecialist
+  parent: RandomHumanoidSpawnerERTLeaderAmber
+  name: АПБТ специалист
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/misc/misc.rsi
+    state: s
+  - type: RandomHumanoidSpawner
+    settings: BSAASpecialist
+
+- type: entity
+  name: специалист АПБТ, spawner
+  id: BSAASpecialistSpawner
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _DeadSpace/Necromorfs/BSAA/misc/misc.rsi
+      state: s
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSpawnerBSAASpecialist
+
+- type: entity
+  id: RandomHumanoidSpawnerBSAAFlamer
+  parent: RandomHumanoidSpawnerERTLeaderAmber
+  name: АПБТ флеймер
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Necromorfs/BSAA/misc/misc.rsi
+    state: f
+  - type: RandomHumanoidSpawner
+    settings: BSAAFlamer
+
+- type: entity
+  name: флеймер АПБТ, spawner
+  id: BSAAFlamerSpawner
+  parent: MarkerBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _DeadSpace/Necromorfs/BSAA/misc/misc.rsi
+      state: f
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidSpawnerBSAAFlamer
 # Настройки спавна
 - type: randomHumanoidSettings
   id: BSAALeader
@@ -246,3 +357,75 @@
       prototypes: [ BSAAMedicGear ]
     - type: GhostRoleNotifys 
       groupPrototype: BSAAGroup
+
+- type: randomHumanoidSettings
+  id: BSAASpecialist
+  parent: EventHumanoidERTZombieImmune
+  components:
+  - type: GhostRole
+    name: Специалист АПБТ
+    description: Элита НТ, живой труп некроморфа, которого сами некроморфы не видят.
+    rules: ghost-role-information-nonantagonist-rules
+    category: ghost-role-information-centcomm-category
+    raffle:
+      settings: short
+    job: BSAASpecialistJob
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstBSAASpec
+    - NamesLastERT
+    nameFormat: name-format-ert
+  - type: ImmunNecroobelisk
+  - type: IgnoreKudzu
+  - type: BSAASpecialist
+  - type: AutoImplant
+    implants:
+    - RezervImplant
+    - BSAAPhaseBladeImplant
+    - MindShieldImplant
+    - TrackingImplant
+    - RadioImplantSOC
+    - DeathRattleImplantSOD
+  - type: Loadout
+    prototypes: [ BSAASpecialistGear ]
+  - type: GhostRoleNotifys
+    groupPrototype: BSAAGroup
+
+- type: randomHumanoidSettings
+  id: BSAAFlamer
+  parent: EventHumanoidERTZombieImmune
+  components:
+  - type: GhostRole
+    name: Флеймер АПБТ
+    description: Специалист по поджогу 5 точки врагов.
+    rules: ghost-role-information-nonantagonist-rules
+    category: ghost-role-information-centcomm-category
+    raffle:
+      settings: short
+    job: BSAAFlamerJob
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstBSAAFlamer
+    - NamesLastERT
+    nameFormat: name-format-ert
+  - type: ImmunNecroobelisk
+  - type: IgnoreKudzu
+  - type: WeaponRetention
+  - type: Loadout
+    prototypes: [ BSAAFlamerGear ]
+  - type: GhostRoleNotifys
+    groupPrototype: BSAAGroup
+
+# Названия ролей
+
+- type: localizedDataset
+  id: NamesFirstBSAASpec
+  values:
+    prefix: names-bsaa-first-spec-dataset-
+    count: 1
+
+- type: localizedDataset
+  id: NamesFirstBSAAFlamer
+  values:
+    prefix: names-bsaa-first-flamer-dataset-
+    count: 1
