@@ -1,0 +1,76 @@
+#DS14
+- type: entity
+  name: чёрное кресло
+  id: ADTBlackChair
+  parent: SeatBase
+  description: Выглядит крайне комфортно
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Furniture/chairs.rsi
+    state: chair_black
+  - type: Construction
+    graph: Seat
+    node: adtblackchair
+
+- type: entity
+  name: белое кресло
+  id: ADTVioletChair
+  parent: SeatBase
+  description: Выглядит крайне комфортно
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Furniture/chairs.rsi
+    state: chair_white
+  - type: Construction
+    graph: Seat
+    node: adtvioletchair
+
+- type: entity
+  name: красное кресло
+  id: ADTRedChair
+  parent: SeatBase
+  description: Выглядит крайне комфортно
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Furniture/chairs.rsi
+    state: chair_red
+  - type: Construction
+    graph: Seat
+    node: adtredchair
+
+- type: entity
+  name: кожаное кресло
+  id: ADTLeatherChair
+  parent: SeatBase
+  description: Выглядит крайне комфортно
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Furniture/chairs.rsi
+    state: chair_brown
+  - type: Construction
+    graph: Seat
+    node: adtleatherchair

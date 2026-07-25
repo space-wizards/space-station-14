@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/ss220club/Paradise-SS220, edited by mtf0036(discord) for SS14 Мёртвый Космос",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "chair_white",
+            "directions": 4
+        },
+        {
+            "name": "chair_red",
+            "directions": 4
+        },
+        {
+            "name": "chair_black",
+            "directions": 4
+        },
+        {
+            "name": "chair_brown",
+            "directions": 4
+        }
+    ]
+}
+
