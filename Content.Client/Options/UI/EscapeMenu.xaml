@@ -17,7 +17,17 @@
         <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
         <Button Access="Public" Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
         <PanelContainer StyleClasses="LowDivider" Margin="0 2.5 0 2.5" />
-        <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" StyleClasses="negative OpenLeft" />
-        <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}" StyleClasses="negative OpenRight" />
+        <Button Access="Public" Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}">
+            <Control.StyleClasses>
+                <system:String>negative</system:String>
+                <system:String>OpenLeft</system:String>
+            </Control.StyleClasses>
+        </Button>
+        <Button Access="Public" Name="QuitButton" Text="{Loc 'ui-escape-quit'}">
+            <Control.StyleClasses>
+                <system:String>negative</system:String>
+                <system:String>OpenRight</system:String>
+            </Control.StyleClasses>
+        </Button>
     </BoxContainer>
 </ui1:EscapeMenu>
