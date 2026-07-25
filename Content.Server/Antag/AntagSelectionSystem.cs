@@ -1009,6 +1009,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (!_jobs.CanBeAntag(session))
             return false;
 
+        // DS14-start
+        if (def.JobWhitelist != null &&
+            (!_jobs.MindTryGetJobId(mind, out var jobId) || jobId is not { } job || !def.JobWhitelist.Contains(job)))
+            return false;
+        // DS14-end
         return true;
     }
 

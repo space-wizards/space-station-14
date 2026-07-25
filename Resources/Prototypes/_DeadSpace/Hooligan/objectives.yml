@@ -1,0 +1,201 @@
+- type: entity
+  parent: BaseTargetObjective
+  id: HooliganBeatObjective
+  description: Кажись этот индивид чё-то сказал про мою прическу. Вот урод!
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Objects/Weapons/Melee/baseball_bat.rsi
+      state: icon
+  - type: TargetObjective
+    title: objective-condition-hooligan-beat-title
+  - type: PickRandomPerson
+    filters:
+    - !type:SameMapMindFilter
+    - !type:BlacklistedJobsMindFilter
+      blacklist:
+      - TaipanAtmosphericsEngineer
+      - TaipanBotanist
+      - TaipanCargotech
+      - TaipanChef
+      - TaipanCommunicationsOfficer
+      - TaipanMedic
+      - TaipanParamedic
+      - TaipanRecruit
+      - TaipanResearchDirector
+      - TaipanResearcher
+      - TaipanTechnicalOperationsSupervisor
+      - TaipanTechnician
+  - type: NumberObjective
+    min: 30
+    max: 50
+  - type: HooliganBeatCondition
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-beat-description
+      - objective-condition-hooligan-beat-description-1
+      - objective-condition-hooligan-beat-description-2
+      - objective-condition-hooligan-beat-description-3
+      - objective-condition-hooligan-beat-description-4
+      - objective-condition-hooligan-beat-description-5
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganFightObjective
+  description: Интересно было бы посмотреть как два болвана бьют друг другу морды!
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Clothing/Hands/Gloves/Boxing/boxingred.rsi
+      state: icon
+  - type: NumberObjective
+    min: 25
+    max: 40
+  - type: HooliganFightCondition
+    filters:
+    - !type:SameMapMindFilter
+    - !type:BlacklistedJobsMindFilter
+      blacklist:
+      - TaipanAtmosphericsEngineer
+      - TaipanBotanist
+      - TaipanCargotech
+      - TaipanChef
+      - TaipanCommunicationsOfficer
+      - TaipanMedic
+      - TaipanParamedic
+      - TaipanRecruit
+      - TaipanResearchDirector
+      - TaipanResearcher
+      - TaipanTechnicalOperationsSupervisor
+      - TaipanTechnician
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-fight-description
+      - objective-condition-hooligan-fight-description-1
+      - objective-condition-hooligan-fight-description-2
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganVandalismObjective
+  description: Эта станция слишком чистая и скучная. Пора выразить своё истинное мнение про неё.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Objects/Fun/crayons.rsi
+      state: black
+  - type: NumberObjective
+    min: 4
+    max: 8
+  - type: HooliganVandalismCondition
+    range: 8
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-vandalism-description
+      - objective-condition-hooligan-vandalism-description-1
+      - objective-condition-hooligan-vandalism-description-2
+      - objective-condition-hooligan-vandalism-description-3
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganSmashWindowsObjective
+  description: Стёкла на этой станции давно напрашиваются на кулак. Или на стул. Не важно.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Structures/Windows/window.rsi
+      state: full
+  - type: NumberObjective
+    min: 4
+    max: 6
+    title: objective-condition-hooligan-smash-windows-title
+  - type: HooliganDestroyCondition
+    targets:
+      - Window
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-smash-windows-description
+      - objective-condition-hooligan-smash-windows-description-1
+      - objective-condition-hooligan-smash-windows-description-2
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganSmashGlassesObjective
+  description: Ничто так не разряжает обстановку, как звон бьющегося стекла. Пусть бар звенит.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Objects/Consumable/Drinks/glass_clear.rsi
+      state: icon
+  - type: NumberObjective
+    min: 4
+    max: 6
+    title: objective-condition-hooligan-smash-glasses-title
+  - type: HooliganDestroyCondition
+    targets:
+      - DrinkGlass
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-smash-glasses-description
+      - objective-condition-hooligan-smash-glasses-description-1
+      - objective-condition-hooligan-smash-glasses-description-2
+
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganProfitObjective
+  description: Мне не хватает на новенький ховербайк. Придётся немного "поработать" с местным населением.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Objects/Economy/cash.rsi
+      state: cash_1000
+  - type: NumberObjective
+    min: 2000
+    max: 5000
+    title: objective-condition-hooligan-profit-title
+  - type: HooliganProfitCondition
+  - type: RandomObjectiveDescription
+    descriptions:
+      - objective-condition-hooligan-profit-description-1
+      - objective-condition-hooligan-profit-description-2
+      - objective-condition-hooligan-profit-description-3
+      - objective-condition-hooligan-profit-description-4
+      - objective-condition-hooligan-profit-description-5
+      - objective-condition-hooligan-profit-description-6
+
+
+- type: entity
+  parent: BaseObjective
+  id: HooliganDrugObjective
+  description: Трезвость это яд. Настоящий пацан всегда под чем-то. Пора расширить сознание.
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-hooligan
+    icon:
+      sprite: Objects/Specific/Chemistry/pills.rsi
+      state: pill1
+  - type: NumberObjective
+    min: 10
+    max: 30
+    title: objective-condition-hooligan-drug-title
+  - type: HooliganDrugCondition
+  - type: RandomObjectiveDescription
+    descriptions:
+    - objective-condition-hooligan-narcotic-description-1
+    - objective-condition-hooligan-narcotic-description-2
+    - objective-condition-hooligan-narcotic-description-3
+    - objective-condition-hooligan-narcotic-description-4
+    - objective-condition-hooligan-narcotic-description-5

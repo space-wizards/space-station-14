@@ -1,0 +1,15 @@
+- type: weightedRandom
+  id: HooliganObjectiveGroups
+  weights:
+    HooliganObjectiveGroup: 1
+
+- type: weightedRandom
+  id: HooliganObjectiveGroup
+  weights:
+    HooliganBeatObjective: 1
+    HooliganFightObjective: 1
+    HooliganVandalismObjective: 1
+    HooliganSmashWindowsObjective: 1
+    HooliganSmashGlassesObjective: 1
+    HooliganProfitObjective: 1
+    HooliganDrugObjective: 1

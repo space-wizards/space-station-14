@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.DeadSpace.Hooligan.Objectives; // DS14
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Explosion.EntitySystems;
@@ -95,6 +96,15 @@ namespace Content.Server.Destructible
                     }
 
                     Execute(threshold, uid, args.Origin);
+                    // DS14-start
+                    if (args.Origin != null &&
+                        threshold.Behaviors.Any(b => b is DoActsBehavior acts &&
+                            (acts.HasAct(ThresholdActs.Breakage) || acts.HasAct(ThresholdActs.Destruction))))
+                    {
+                        var smashEv = new HooliganSmashEvent(args.Origin.Value, uid);
+                        RaiseLocalEvent(ref smashEv);
+                    }
+                    // DS14-end
                 }
 
                 if (threshold.OldTriggered)

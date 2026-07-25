@@ -226,6 +226,12 @@ public partial struct AntagSelectionDefinition()
     /// </summary>
     [DataField("sponsorsPriorityRatio")]
     public float? SponsorsPriorityRatio;
+
+    /// <summary>
+    /// Job WhiteList for Antag.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<JobPrototype>>? JobWhitelist;
     // DS14-end
 }
 

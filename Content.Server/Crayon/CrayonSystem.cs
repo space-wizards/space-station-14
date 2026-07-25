@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
+using Content.Server.DeadSpace.Hooligan.Objectives; // DS14
 
 namespace Content.Server.Crayon;
 
@@ -90,6 +91,10 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
         args.Handled = true;
+        // DS14-start
+        var graffitiEv = new HooliganGraffitiDrawnEvent(args.User);
+        RaiseLocalEvent(ref graffitiEv);
+        // DS14-end
 
         if (component.DeleteEmpty && _charges.IsEmpty(uid))
             UseUpCrayon(uid, args.User);

@@ -19,7 +19,7 @@ namespace Content.Server.Damage.Systems
 
         private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, ref LandEvent args)
         {
-            _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
+            _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances, origin: args.User); // DS14
         }
     }
 }

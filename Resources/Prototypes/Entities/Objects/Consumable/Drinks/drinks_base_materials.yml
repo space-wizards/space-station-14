@@ -50,6 +50,9 @@
     materialComposition:
       Glass: 25
   #DS14-Start
+  - type: Tag
+    tags:
+      - DrinkGlass
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_DeadSpace/Items/Handing/drinkglass_pickup.ogg

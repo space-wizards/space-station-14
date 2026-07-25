@@ -39,4 +39,6 @@ admin-verb-text-make-ninja = Сделть цель Ниндзей
 admin-verb-make-ninja = Сделать Ниндзей
 admin-verb-text-make-renegade = Сделать цель Ренегатом
 admin-verb-make-renegade = Сделать Ренегатом
+admin-verb-text-make-hooligan = Сделать хулиганом
+admin-verb-make-hooligan = Сделать цель Хулиганом.
 #DS14-end

@@ -1,0 +1,21 @@
+- type: antag
+  id: Hooligan
+  name: roles-antag-hooligan-name
+  antagonist: true
+  setPreference: true
+  objective: roles-antag-hooligan-objective
+  guides: [ Hooligan ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 5h
+
+- type: startingGear
+  id: HooliganGear
+  equipment:
+    outerClothing: ClothingOuterCoatJensen
+    gloves: ClothingHandsGlovesFingerless
+    eyes: ClothingEyesGlassesSunglasses
+  storage:
+    back:
+    - CrayonBlack # чёрный мелок для граффити
+    - BarberScissors # ножницы - сделать крутой причесон

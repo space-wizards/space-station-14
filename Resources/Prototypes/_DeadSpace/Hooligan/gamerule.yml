@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseGameRule
+  id: Hooligan
+  components:
+  - type: HooliganRule
+  - type: AntagRandomObjectives
+    maxDifficulty: 30
+    sets:
+    - groups: HooliganObjectiveGroups
+      maxPicks: 3
+  - type: AntagSelection
+    agentName: hooligan-round-end-agent-name
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Hooligan ]
+      jobWhitelist: [ Passenger ] # Глупо, если хулиганом может стать инженер или врач.
+      max: 3
+      playerRatio: 15
+      lateJoinAdditional: true
+      multiAntagSetting: NotExclusive
+      startingGear: HooliganGear
+      mindRoles:
+      - MindRoleHooligan
+  - type: GameRule
+    minPlayers: 5
+    cancelPresetOnTooFewPlayers: false

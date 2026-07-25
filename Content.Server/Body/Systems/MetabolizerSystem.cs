@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Body.Components;
+using Content.Server.DeadSpace.Hooligan.Objectives; // DS14
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
@@ -38,6 +39,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
     private EntityQuery<BloodstreamComponent> _bloodstreamQuery; // DS14
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
     private static readonly ProtoId<MetabolismGroupPrototype> Gas = "Gas";
+    private static readonly ProtoId<MetabolismGroupPrototype> Narcotic = "Narcotic"; // DS14
 
     // DS14-start
     private readonly PriorityQueue<ScheduledMetabolizer, TimeSpan> _scheduledMetabolizers = new();
@@ -313,6 +315,12 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
                     // We have processed a reagant, so count it towards the cap
                     reagents += 1;
+
+                    if (proto.Metabolisms.ContainsKey(Narcotic))
+                    {
+                        var drugEv = new HooliganDrugConsumedEvent(actualEntity, removed);
+                        RaiseLocalEvent(ref drugEv);
+                    }
                 }
                 // DS14-end
             }

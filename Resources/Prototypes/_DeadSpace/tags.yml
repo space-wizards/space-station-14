@@ -50,6 +50,9 @@
   id: DrinkBeerBottleFull
 
 - type: Tag
+  id: DrinkGlass
+
+- type: Tag
   id: CantChangeScale
 
 - type: Tag

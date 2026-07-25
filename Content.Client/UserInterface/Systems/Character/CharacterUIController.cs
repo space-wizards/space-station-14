@@ -185,9 +185,11 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
                     var titleMessage = new FormattedMessage();
                     var descriptionMessage = new FormattedMessage();
-
-                    titleMessage.AddText(condition.Title);
-                    descriptionMessage.AddText(condition.Description);
+                    
+                    //DS14-start
+                    titleMessage.AddMarkupPermissive(condition.Title);
+                    descriptionMessage.AddMarkupPermissive(condition.Description);
+                    // DS14-end
 
                     conditionControl.Title.SetMessage(titleMessage);
                     conditionControl.Description.SetMessage(descriptionMessage);
@@ -234,8 +236,10 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 conditionControl.ProgressTexture.Progress = condition.Progress;
                 var titleMessage = new FormattedMessage();
                 var descriptionMessage = new FormattedMessage();
-                titleMessage.AddText(condition.Title);
-                descriptionMessage.AddText(condition.Description);
+                // DS14-start
+                titleMessage.AddMarkupPermissive(condition.Title);
+                descriptionMessage.AddMarkupPermissive(condition.Description);
+                // DS14-end
 
                 conditionControl.Title.SetMessage(titleMessage);
                 conditionControl.Description.SetMessage(descriptionMessage);

@@ -1,0 +1,10 @@
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleHooligan
+  name: Роль Хулигана
+  components:
+  - type: MindRole
+    antagPrototype: Hooligan
+    roleType: FreeAgent
+    subtype: role-subtype-hooligan
+  - type: HooliganRole

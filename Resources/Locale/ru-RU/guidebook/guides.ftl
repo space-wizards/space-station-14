@@ -137,6 +137,7 @@ guide-entry-revolutionaries = Революционеры
 guide-entry-minor-antagonists = Малые антагонисты
 guide-entry-space-ninja = Космический ниндзя
 guide-entry-thieves = Воры
+guide-entry-hooligan = Хулиган
 guide-entry-wizard = Волшебник
 guide-entry-rules = Правила сервера
 guide-entry-rules-core-only = Только основные правила
