@@ -2,6 +2,7 @@
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.Input;
 
 namespace Content.Client.Instruments.UI;
 
@@ -9,7 +10,7 @@ namespace Content.Client.Instruments.UI;
 public sealed partial class ChannelItem : Control
 {
     /// <summary>
-    /// Raised when a channel is toggled.
+    /// Raised when a channel is toggled by the user.
     /// </summary>
     public event Action<int, bool>? SwitchFilteredChannel;
 
@@ -26,11 +27,7 @@ public sealed partial class ChannelItem : Control
     public bool ChannelState
     {
         get => ChannelEnableSwitchButton.Pressed;
-        set
-        {
-            ChannelEnableSwitchButton.Pressed = value;
-            SwitchFilteredChannel?.Invoke(ChannelId, value);
-        }
+        set => ChannelEnableSwitchButton.Pressed = value;
     }
 
     public string? ChannelName
@@ -51,11 +48,15 @@ public sealed partial class ChannelItem : Control
     protected override void KeyBindUp(GUIBoundKeyEventArgs args)
     {
         base.KeyBindUp(args);
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
         ChannelState = !ChannelState;
+        SwitchFilteredChannel?.Invoke(ChannelId, ChannelState);
     }
 
     private void OnChannelEnableSwitchButtonPressed(BaseButton.ButtonEventArgs obj)
     {
-        SwitchFilteredChannel?.Invoke(ChannelId, obj.Button.Pressed);
+        SwitchFilteredChannel?.Invoke(ChannelId, ChannelState);
     }
 }

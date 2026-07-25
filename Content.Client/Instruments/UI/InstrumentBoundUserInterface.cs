@@ -283,8 +283,6 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<InstrumentComponent>(Owner, out var instrument))
             return;
 
-        // Ignore channel switch request while updating.
-        _channelsControl.SwitchFilteredChannel -= OnSwitchFilteredChannel;
         List<(int, string, string, string, bool)> channelSettings = [];
 
         var activeInstrument = ResolveActiveInstrument(instrument);
@@ -307,6 +305,5 @@ public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
         }
 
         _channelsControl.SetChannels(channelSettings.ToArray());
-        _channelsControl.SwitchFilteredChannel += OnSwitchFilteredChannel;
     }
 }
