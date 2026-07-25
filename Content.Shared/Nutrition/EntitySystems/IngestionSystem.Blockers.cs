@@ -13,7 +13,7 @@ namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed partial class IngestionSystem
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
+    [Dependency] private OpenableSystem _openable = default!;
 
     public void InitializeBlockers()
     {
@@ -43,9 +43,10 @@ public sealed partial class IngestionSystem
         args.Cancelled = true;
     }
 
-    private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> ent, ref ItemMaskToggledEvent args)
+    private void OnBlockerMaskToggled(Entity<IngestionBlockerComponent> entity, ref ItemMaskToggledEvent args)
     {
-        ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        entity.Comp.Enabled = !args.Mask.Comp.IsToggled;
+        Dirty(entity);
     }
 
     private void OnIngestionBlockerAttempt(Entity<IngestionBlockerComponent> entity, ref IngestionAttemptEvent args)
@@ -82,7 +83,7 @@ public sealed partial class IngestionSystem
         {
             args.Cancelled = true;
 
-            _popup.PopupClient(Loc.GetString("ingestion-try-use-is-empty", ("entity", entity)), entity, args.User);
+            _popup.PopupEntity(Loc.GetString("ingestion-try-use-is-empty", ("entity", entity)), entity, args.User);
             return;
         }
 
@@ -100,7 +101,7 @@ public sealed partial class IngestionSystem
 
         args.Cancelled = true;
 
-        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
+        _popup.PopupEntity(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
     }
 
     private void OnItemSlotsEdible(Entity<ItemSlotsComponent> ent, ref EdibleEvent args)
@@ -113,7 +114,7 @@ public sealed partial class IngestionSystem
 
         args.Cancelled = true;
 
-        _popup.PopupClient(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
+        _popup.PopupEntity(Loc.GetString("edible-has-used-storage", ("food", ent), ("verb", GetEdibleVerb(ent.Owner))), args.User, args.User);
     }
 
     private void OnOpenableEdible(Entity<OpenableComponent> ent, ref EdibleEvent args)

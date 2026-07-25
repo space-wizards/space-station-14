@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
-using Content.Server.Maps;
+using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting.Pool;
 using SixLabors.ImageSharp;
@@ -145,7 +145,7 @@ namespace Content.MapRenderer
                 {
                     Console.Write($"Following map files did not exist on disk directly, searching through prototypes: {string.Join(", ", lookupPrototypeFiles)}");
 
-                    await using var pair = await PoolManager.GetServerClient();
+                    await using var pair = await PoolManager.GetServerClient(testContext: testContext);
                     var mapPrototypes = pair.Server
                         .ResolveDependency<IPrototypeManager>()
                         .EnumeratePrototypes<GameMapPrototype>()

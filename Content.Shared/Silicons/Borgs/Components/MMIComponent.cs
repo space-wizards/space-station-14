@@ -12,7 +12,8 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// in an item slot before transferring consciousness.
 /// Used for borg stuff.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedBorgSystem))]
 public sealed partial class MMIComponent : Component
 {
     /// <summary>
@@ -22,10 +23,10 @@ public sealed partial class MMIComponent : Component
     public string BrainSlotId = "brain_slot";
 
     /// <summary>
-    /// The <see cref="ItemSlot"/> for this implanter
+    /// The <see cref="ItemSlot"/> for this MMI. Holds the brain.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public ItemSlot BrainSlot = default!;
+    [DataField(required: true)]
+    public ItemSlot BrainSlot = new();
 
     /// <summary>
     /// The sprite state when the brain inserted has a mind.

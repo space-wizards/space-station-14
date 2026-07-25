@@ -1,5 +1,6 @@
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.DisplacementMap;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.StatusIcon;
@@ -22,14 +23,6 @@ namespace Content.Shared.Damage.Components;
 public sealed partial class DamageableComponent : Component
 {
     /// <summary>
-    ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
-    ///     If null, all damage types will be supported.
-    /// </summary>
-    [DataField("damageContainer")]
-    // ReSharper disable once InconsistentNaming - This is wrong but fixing it is potentially annoying for downstreams.
-    public ProtoId<DamageContainerPrototype>? DamageContainerID;
-
-    /// <summary>
     ///     This <see cref="DamageModifierSetPrototype"/> will be applied to any damage that is dealt to this container,
     ///     unless the damage explicitly ignores resistances.
     /// </summary>
@@ -46,7 +39,8 @@ public sealed partial class DamageableComponent : Component
     /// <remarks>
     ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
     /// </remarks>
-    [DataField(readOnly: true)] //TODO FULL GAME SAVE
+    [DataField]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
     public DamageSpecifier Damage = new();
 
     /// <summary>
@@ -56,12 +50,15 @@ public sealed partial class DamageableComponent : Component
     ///     Groups which have no members that are supported by this component will not be present in this
     ///     dictionary.
     /// </remarks>
-    [ViewVariables] public Dictionary<string, FixedPoint2> DamagePerGroup = new();
+    [ViewVariables]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
+    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2> DamagePerGroup = new();
 
     /// <summary>
     ///     The sum of all damages in the DamageableComponent.
     /// </summary>
     [ViewVariables]
+    [Access(typeof(DamageableSystem), Other = AccessPermissions.None)]
     public FixedPoint2 TotalDamage;
 
     [DataField("radiationDamageTypes")]
@@ -69,38 +66,19 @@ public sealed partial class DamageableComponent : Component
     public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };
 
     /// <summary>
-    ///     Group types that affect the pain overlay.
+    /// Sets the displacement map used for any of the DamageVisuals sprites for this entity.
+    /// TODO: The entirety of DamageVisualsSystem needs to be rewritten.
     /// </summary>
-    ///     TODO: Add support for adding damage types specifically rather than whole damage groups
     [DataField]
-    // ReSharper disable once UseCollectionExpression - Cannot refactor this as it's a potential sandbox volation.
-    public List<ProtoId<DamageGroupPrototype>> PainDamageGroups = new() { "Brute", "Burn" };
-
-    [DataField]
-    public Dictionary<MobState, ProtoId<HealthIconPrototype>> HealthIcons = new()
-    {
-        { MobState.Alive, "HealthIconFine" },
-        { MobState.Critical, "HealthIconCritical" },
-        { MobState.Dead, "HealthIconDead" },
-    };
-
-    [DataField]
-    public ProtoId<HealthIconPrototype> RottingIcon = "HealthIconRotting";
-
-    [DataField]
-    public FixedPoint2? HealthBarThreshold;
+    public ProtoId<DisplacementDataPrototype>? Displacement;
 }
 
 [Serializable, NetSerializable]
 public sealed class DamageableComponentState(
-    Dictionary<string, FixedPoint2> damageDict,
-    ProtoId<DamageContainerPrototype>? damageContainerId,
-    ProtoId<DamageModifierSetPrototype>? modifierSetId,
-    FixedPoint2? healthBarThreshold)
+    DamageSpecifier damage,
+    ProtoId<DamageModifierSetPrototype>? modifierSetId)
     : ComponentState
 {
-    public readonly Dictionary<string, FixedPoint2> DamageDict = damageDict;
-    public readonly ProtoId<DamageContainerPrototype>? DamageContainerId = damageContainerId;
+    public readonly DamageSpecifier Damage = damage;
     public readonly ProtoId<DamageModifierSetPrototype>? ModifierSetId = modifierSetId;
-    public readonly FixedPoint2? HealthBarThreshold = healthBarThreshold;
 }

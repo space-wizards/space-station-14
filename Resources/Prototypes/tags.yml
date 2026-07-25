@@ -25,6 +25,9 @@
   id: AllowGhostShownByEvent # Used by GhostSystem to show tagged ghosts (usually at round end).
 
 - type: Tag
+  id: AllowPortalTraversal # Used by PortalSystem to allow traversing a portal by verb.
+
+- type: Tag
   id: Ambrosia # ConstructionGraph: flowerwreath
 
 - type: Tag
@@ -159,7 +162,7 @@
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
 - type: Tag
-  id: BoxCardboard # CargoBounty: BountyCardboardBox
+  id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart
 
 - type: Tag
   id: BoxHug # ConstructionGraph: HugBot
@@ -202,6 +205,9 @@
 
 - type: Tag
   id: BypassInteractionRangeChecks # Tagged entities don't care about distance or walls when touching things (Aghost).
+
+- type: Tag
+  id: BypassOpenStorageLimit # Tagged entities can open several storage UIs at once (Aghost).
 
 ## C ##
 
@@ -295,7 +301,7 @@
   id: ChefPilot # Tagged entity can control someone wearing a Chef's hat if inside their hat.
 
 - type: Tag
-  id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleAdvancedChemical
+  id: ChemDispensable # Storage whitelist: ChemDispenserEmpty, SmartFridge, BorgModuleChemical
 
 - type: Tag
   id: Chicken # Reproductive partner key. MetamorphRecipe: FoodBurgerChicken
@@ -319,16 +325,19 @@
   id: Cleaver # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
+  id: CleanerGrenade # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
+
+- type: Tag
   id: ClothMade # SpecialDigestible: OrganMothStomach. Storage whitelist: FoodBoxCloth
 
 - type: Tag
-  id: ClownMask # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownMask
+  id: ClownMask # ConstructionGraph: Honker, BananaClownMask
 
 - type: Tag
   id: ClownRecorder # ConstructionGraph: ClownHardsuit
 
 - type: Tag
-  id: ClownShoes # CargoBounty: BountyClownCostume. ConstructionGraph: Honker, BananaClownShoes
+  id: ClownShoes # ConstructionGraph: Honker, BananaClownShoes
 
 - type: Tag
   id: ClownSuit # ConstructionGraph: BananaClownJumpsuit
@@ -355,7 +364,7 @@
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
 
 - type: Tag
-  id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
+  id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
 
 - type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
@@ -441,6 +450,9 @@
 - type: Tag
   id: CubanCarp # CargoBounty: BountyCubanCarp
 
+- type: Tag
+  id: Cutlet # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerDuck
+
 ## D ##
 
 - type: Tag # Exists on diagonal walls and windows
@@ -465,7 +477,7 @@
   id: DockEmergency # Used bv EmergencyShuttleSystem for finding a priority FTL destination.
 
 - type: Tag
-  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself.
+  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself. Storage whitelist: MailCart
 
 - type: Tag
   id: DonkPocket # Storage whitelist: FoodBoxDonkpocket
@@ -482,6 +494,9 @@
 
 - type: Tag
   id: DoorElectronicsConfigurator # Used by ActivatableUIComponent on entity DoorElectronics to whitelist a tagged tool to open the UI.
+
+- type: Tag
+  id: DoorRemoteWhitelist # Doors with this tag can be interacted with door remotes
 
 - type: Tag
   id: DrinkBottle # Storage whitelist: BoozeDispenserEmpty, SodaDispenserEmpty
@@ -581,7 +596,7 @@
   id: Flower # CargoBounty: flowerwreath. CargoBounty: BountyFlower
 
 - type: Tag
-  id: Folder # Storage whitelist: Bookshelf, NoticeBoard
+  id: Folder # Storage whitelist: Bookshelf, NoticeBoard, MailCart
 
 - type: Tag
   id: FoodSnack # Storage whitelist: CandyBucket, CandyBowl. ItemMapper: CandyBowl
@@ -620,10 +635,6 @@
 
 - type: Tag
   id: GeigerCounter # Storage whitelist: BaseClothingBeltEngineering
-
-# Used for warps
-- type: Tag
-  id: GhostOnlyWarp
 
 - type: Tag
   id: GenderPin #  Chameleon key for ClothingGenderPinBase.
@@ -712,7 +723,7 @@
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
 - type: Tag # Used on DungeonRoom prototypes.
-  id: Haunted # Unused. Exists on various DungeonRoomPrototypes in haunted.yml, presumably for an unimplemented PrefabDunGen whitelist.
+  id: Haunted # PrefabDunGen whitelist on Haunted DungeonConfig.
 
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
@@ -781,6 +792,9 @@
 - type: Tag
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
 
+- type: Tag
+  id: Hypospray # ItemMapper: ClothingBeltMedical
+
 ## I ##
 
 - type: Tag
@@ -816,6 +830,9 @@
 - type: Tag
   id: JawsOfLife # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering
 
+- type: Tag
+  id: JanicartKeys # Uses for GenericKeyedVehicle of Janicart
+
 ## K ##
 
 - type: Tag
@@ -839,6 +856,9 @@
 
 ## L ##
 
+- type: Tag
+  id: LaserWeapon # Used for a cargo bounty. Added to all hitscan weapons that shoot lasers.
+
 - type: Tag # Used on DungeonRoom prototypes.
   id: LavaBrig # PrefabDunGen whitelist on LavaBrig DungeonConfig.
 
@@ -847,6 +867,9 @@
 
 - type: Tag
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
+
+- type: Tag
+  id: LightReplacer # Storage whitelist: ClothingBeltJanitor. ItemMapper: ClothingBeltJanitor
 
 - type: Tag
   id: Lime # CargoBounty: BountyLime
@@ -859,16 +882,10 @@
 # Tagged entities always have BallisticAmmoProviderComponent.
 
 - type: Tag
-  id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
-
-- type: Tag
   id: MagazineDebug # WeaponPistolDebug
 
 - type: Tag
   id: MagazineGrenade # ShuttleGunDuster
-
-- type: Tag
-  id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
   id: MagazineLightRifle # WeaponRifleAk
@@ -895,7 +912,7 @@
   id: MagazinePistolSubMachineGunTopMounted # WeaponSubMachineGunWt550
 
 - type: Tag
-  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+  id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -972,6 +989,9 @@
   id: MothershipModule # Cyborg module category for evil xenoborg core
 
 - type: Tag
+  id: MothershipPinpointerPiece # ConstructionGraph: RepairMothershipPinpointer
+
+- type: Tag
   id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag
@@ -981,8 +1001,12 @@
   id: Mushroom  # ConstructionGraph: Soil
 
 ## N ##
+
 - type: Tag
-  id: NinjaBombingTargetBlocker # Ninjas will not target this warp point
+  id: NinjaBombingTarget # Ninjas will target this warp point
+
+- type: Tag
+  id: NinjaBombingTargetBlacklist # Ninjas will not target this warp point
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
@@ -1025,13 +1049,16 @@
 ## P ##
 
 - type: Tag
+  id: PackageDelivery # ItemMapper: MailCart
+
+- type: Tag
   id: Packet # Storage whitelist: ClothingBeltChef
 
 - type: Tag
   id: Pancake # CargoBounty: BountyPancake
 
 - type: Tag
-  id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
+  id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach. Storage whitelist: MailCart
 
 - type: Tag
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
@@ -1150,6 +1177,9 @@
   id: PreventAccessLogging # Tagged entities (aghost) will not be added to a device's log. Used by AccessReaderSystem.
 
 - type: Tag
+  id: PreventPortalCollision # Used by PortalSystem to prevent portal traversal on collision.
+
+- type: Tag
   id: PrisonUniform # CargoBounty: BountyPrisonUniform
 
 - type: Tag
@@ -1165,6 +1195,9 @@
 - type: Tag
   id: Radio # Storage whitelist: BaseClothingBeltEngineering, ClothingBeltMedical, ClothingBeltSecurity.
             # CargoBounty: BountyRadio. ConstructionGraph: HudMedSec
+
+- type: Tag
+  id: Raw # MaterialStorage whitelist: Sheetifier
 
 - type: Tag
   id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
@@ -1251,6 +1284,9 @@
   id: SecurityHelmet # ConstructionGraph: HelmetJustice
 
 - type: Tag
+  id: Sheep # Reproductive partner key
+
+- type: Tag
   id: Sheet # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 - type: Tag
@@ -1314,12 +1350,6 @@
   id: SpeedLoaderMagnum # Ammo: BaseWeaponRevolver, XenoArtifactGun
 
 - type: Tag
-  id: SpeedLoaderPistol # Unused (Exists on BaseSpeedLoaderPistol)
-
-- type: Tag
-  id: SpeedLoaderRifle # Unused (Exists on SpeedLoaderLightRifle)
-
-- type: Tag
   id: SpiderCraft # Used on various ConstructionPrototypes to create exclusive recipes for tagged entity.
 
 - type: Tag
@@ -1349,6 +1379,9 @@
 
 - type: Tag
   id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: Structure # # Targeting whitelist: HandLabeler
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
@@ -1392,6 +1425,15 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
+  id: TeleportScrollWarp # whitelists a warp point for the wizard's teleport scroll
+
+- type: Tag
+  id: TeleportScrollWarpBlacklist # blacklists a warp point for the wizard's teleport scroll
+
+- type: Tag
+  id: TheaterBagel # used for Bagel Station's randomized theater
+
+- type: Tag
   id: TimerBrigElectronics # ConstructionGraph: Timer
 
 - type: Tag
@@ -1413,10 +1455,16 @@
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
 
 - type: Tag
+  id: Tourniquet # Storage whitelist: ClothingBeltMedical
+
+- type: Tag
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
 
 - type: Tag
   id: ToySidearm # Storage whitelist: ClothingShoesClownBase
+
+- type: Tag
+  id: ToyKnife # Storage whitelist: ClothingShoesClownBase
 
 - type: Tag
   id: Trash # Tagged entities are generic garbage. They fit inside TrashBag and are destroyed by Recycler.
@@ -1424,6 +1472,9 @@
 
 - type: Tag
   id: TrashBag # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
+
+- type: Tag
+  id: TrashBagHolding # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
   id: Truncheon # Storage whitelist: ClothingBeltSecurity

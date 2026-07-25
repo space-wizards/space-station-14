@@ -11,6 +11,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCarp
     capacity: 5
@@ -52,6 +53,7 @@
     fireRate: 0.25
     soundGunshot:
       path: /Audio/Magic/fireball.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectileFireball
     capacity: 5
@@ -72,6 +74,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectileLocker
     capacity: 5
@@ -107,6 +110,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg # PUNCH
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: BulletInstakillMagic
     capacity: 3
@@ -126,6 +130,7 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/Magic/staff_door.ogg
+    projectileSpeed: 25
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltDoor
     capacity: 10

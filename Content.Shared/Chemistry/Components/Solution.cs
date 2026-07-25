@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Linq;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -58,12 +57,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [DataField]
         public float Temperature { get; set; } = 293.15f;
-
-        /// <summary>
-        ///     The name of this solution, if it is contained in some <see cref="SolutionContainerManagerComponent"/>
-        /// </summary>
-        [DataField]
-        public string? Name;
 
         /// <summary>
         ///     Checks if a solution can fit into the container.
@@ -167,7 +160,12 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
-            Contents = solution.Contents.ShallowClone();
+            Contents = new(solution.Contents.Count);
+            foreach (var item in solution.Contents)
+            {
+                Contents.Add(item.Clone());
+            }
+
             Volume = solution.Volume;
             MaxVolume = solution.MaxVolume;
             Temperature = solution.Temperature;
@@ -183,6 +181,11 @@ namespace Content.Shared.Chemistry.Components
             return new Solution(this);
         }
 
+        public override string ToString()
+        {
+            return string.Join("; ", Contents);
+        }
+
         [AssertionMethod]
         public void ValidateSolution()
         {
@@ -195,7 +198,7 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(!Contents.Any(x => x.Quantity <= FixedPoint2.Zero));
 
             // No duplicate reagents iDs
-            DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count);
+            DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count, $"Solution: {this}, contained duplcate contents {Contents}");
 
             // If it isn't flagged as dirty, check heat capacity is correct.
             if (!_heatCapacityDirty)
@@ -472,6 +475,37 @@ namespace Content.Shared.Chemistry.Components
 
             _heatCapacityDirty = true;
             ValidateSolution();
+        }
+
+        /// <summary>
+        ///     Scales the amount of solution.
+        /// </summary>
+        /// <param name="scale">The scalar to modify the solution by.</param>
+        public void ScaleSolution(FixedPoint2 scale)
+        {
+            ScaleSolution(scale.Float());
+        }
+
+        /// <summary>
+        ///     Scales the amount of solution to a given target.
+        /// </summary>
+        /// <param name="target">The volume the solutions should have after scaling.</param>
+        public void ScaleTo(FixedPoint2 target)
+        {
+            if (Volume == FixedPoint2.Zero || Volume == target)
+                return;
+
+            if (target == FixedPoint2.Zero)
+            {
+                RemoveAllSolution();
+                return;
+            }
+
+            var nearestIntScale = (int)Math.Ceiling(target.Float() / Volume.Float());
+            ScaleSolution(nearestIntScale);
+
+            var overflow = Volume - target;
+            RemoveSolution(overflow);
         }
 
         /// <summary>
@@ -964,6 +998,16 @@ namespace Content.Shared.Chemistry.Components
                 dict[proto] = quantity + dict.GetValueOrDefault(proto);
             }
             return dict;
+        }
+
+        public void SetReagentData(List<ReagentData>? data)
+        {
+            for (var i = 0; i < Contents.Count; i++)
+            {
+                var old = Contents[i];
+                Contents[i] = new ReagentQuantity(new ReagentId(old.Reagent.Prototype, data), old.Quantity);
+            }
+            ValidateSolution();
         }
     }
 }
