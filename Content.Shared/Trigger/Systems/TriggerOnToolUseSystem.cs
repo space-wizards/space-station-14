@@ -14,7 +14,6 @@ public sealed class TriggerOnToolUseSystem : TriggerOnXSystem
 
     private void OnToolUse(Entity<TriggerOnSimpleToolUsageComponent> ent, ref SimpleToolDoAfterEvent args)
     {
-        if (args.Cancelled) return;
         if (args.Cancelled)
             return;
 
