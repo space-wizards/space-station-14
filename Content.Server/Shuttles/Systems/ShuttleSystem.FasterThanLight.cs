@@ -992,7 +992,6 @@ public sealed partial class ShuttleSystem
                                                                 $" {ToPrettyString(uid)} arriving from FTL at {xform.Coordinates:coordinates}");
                     var gibs = _gibbing.Gib(ent);
                     _immuneEnts.UnionWith(gibs);
-
                     continue;
                 }
 
