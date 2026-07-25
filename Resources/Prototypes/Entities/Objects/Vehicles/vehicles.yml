@@ -11,6 +11,7 @@
   - type: Physics
     bodyType: KinematicController
   - type: Vehicle
+    canAttack: true
   - type: StrapVehicle
   - type: Strap
   - type: MovementSpeedModifier
@@ -51,7 +52,6 @@
     - state: wheelchair_folded
       map: ["foldedLayer"]
       visible: false
-  - type: Appearance
   - type: Item
     size: Ginormous
   - type: Damageable

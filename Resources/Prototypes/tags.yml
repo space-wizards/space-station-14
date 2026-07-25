@@ -1504,7 +1504,7 @@
   id: TrashBag # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
-  id: TrashBagBlue # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
+  id: TrashBagHolding # Storage whitelist: BoxTrashbag, ClothingBeltJanitor, JanitorialTrolley. ItemMapper: JanitorialTrolley
 
 - type: Tag
   id: Truncheon # Storage whitelist: ClothingBeltSecurity

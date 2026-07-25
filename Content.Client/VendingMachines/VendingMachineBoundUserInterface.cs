@@ -6,97 +6,92 @@ using Robust.Shared.Input;
 using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
 
-namespace Content.Client.VendingMachines
+namespace Content.Client.VendingMachines;
+
+public sealed class VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    public sealed class VendingMachineBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private VendingMachineMenu? _menu;
+
+    [ViewVariables]
+    private List<VendingMachineInventoryEntry> _cachedInventory = new();
+
+    protected override void Open()
     {
-        [ViewVariables]
-        private VendingMachineMenu? _menu;
+        base.Open();
 
-        [ViewVariables]
-        private List<VendingMachineInventoryEntry> _cachedInventory = new();
+        _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
+        _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _menu.OnItemSelected += OnItemSelected;
+        _menu.OnCategorySelected += OnCategorySelected;
 
-        public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
+        EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
+        _menu.CreateCategories(categories);
 
-        protected override void Open()
-        {
-            base.Open();
+        Refresh();
+    }
 
-            _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
-            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-            _menu.OnItemSelected += OnItemSelected;
-            _menu.OnCategorySelected += OnCategorySelected;
+    public void Refresh()
+    {
+        var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-            EntMan.TryGetComponent<VendingCategoryComponent>(Owner, out var categories);
-            _menu.CreateCategories(categories);
+        var system = EntMan.System<VendingMachineSystem>();
+        _cachedInventory = system.GetAllInventory(Owner);
 
-            Refresh();
-        }
+        _menu?.Populate(_cachedInventory, enabled);
+    }
 
-        public void Refresh()
-        {
-            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+    public void UpdateAmounts()
+    {
+        var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
 
-            var system = EntMan.System<VendingMachineSystem>();
-            _cachedInventory = system.GetAllInventory(Owner);
+        var system = EntMan.System<VendingMachineSystem>();
+        _cachedInventory = system.GetAllInventory(Owner);
+        _menu?.UpdateAmounts(_cachedInventory, enabled);
+    }
 
-            _menu?.Populate(_cachedInventory, enabled);
-        }
+    private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
 
-        public void UpdateAmounts()
-        {
-            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+        if (data is not VendorItemsListData { ItemIndex: var itemIndex })
+            return;
 
-            var system = EntMan.System<VendingMachineSystem>();
-            _cachedInventory = system.GetAllInventory(Owner);
-            _menu?.UpdateAmounts(_cachedInventory, enabled);
-        }
+        if (_cachedInventory.Count == 0)
+            return;
 
-        private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
-        {
-            if (args.Function != EngineKeyFunctions.UIClick)
-                return;
+        var selectedItem = _cachedInventory.ElementAtOrDefault(itemIndex);
 
-            if (data is not VendorItemsListData { ItemIndex: var itemIndex })
-                return;
+        if (selectedItem == null)
+            return;
 
-            if (_cachedInventory.Count == 0)
-                return;
+        SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+    }
 
-            var selectedItem = _cachedInventory.ElementAtOrDefault(itemIndex);
+    private void OnCategorySelected(GUIBoundKeyEventArgs args, ListData data)
+    {
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
 
-            if (selectedItem == null)
-                return;
+        if (data is not CategoryListData { Category: var category })
+            return;
 
-            SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
-        }
+        _menu?.SetCategory(category);
+        Refresh();
+    }
 
-        private void OnCategorySelected(GUIBoundKeyEventArgs args, ListData data)
-        {
-            if (args.Function != EngineKeyFunctions.UIClick)
-                return;
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (!disposing)
+            return;
 
-            if (data is not CategoryListData { Category: var category })
-                return;
+        if (_menu == null)
+            return;
 
-            _menu?.SetCategory(category);
-            Refresh();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            if (_menu == null)
-                return;
-
-            _menu.OnItemSelected -= OnItemSelected;
-            _menu.OnClose -= Close;
-            _menu.Close();
-        }
+        _menu.OnItemSelected -= OnItemSelected;
+        _menu.OnClose -= Close;
+        _menu.Close();
     }
 }
