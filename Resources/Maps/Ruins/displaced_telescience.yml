@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 282.0.0
+  engineVersion: 284.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/17/2026 15:32:24
+  time: 07/25/2026 02:47:37
   entityCount: 485
 maps: []
 grids:
@@ -1827,7 +1827,7 @@ entities:
       pos: -1.5,-7.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -5859.55
+      secondsUntilStateChange: -5958.768
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -4033,7 +4033,7 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
       storage: 477
-- proto: IntercomFreelance
+- proto: IntercomScience
   entities:
   - uid: 469
     components:
@@ -4280,7 +4280,7 @@ entities:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
-      pos: 6.482854,-4.201713
+      pos: 6.5,-4.5
 - proto: PosterLegit50thAnniversaryVintageReprint
   entities:
   - uid: 350
@@ -4297,7 +4297,7 @@ entities:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
-      pos: 1.3414617,-9.541878
+      pos: 1.5,-9.5
 - proto: PosterLegitJustAWeekAway
   entities:
   - uid: 354
@@ -4305,7 +4305,7 @@ entities:
     - type: Transform
       parent: 1
       rot: 1.5707963267948966 rad
-      pos: 1.769932,-9.483023
+      pos: 1.5,-9.5
 - proto: PosterLegitSafetyEyeProtection
   entities:
   - uid: 352
@@ -4313,7 +4313,7 @@ entities:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
-      pos: 6.431637,-3.7712698
+      pos: 6.5,-3.5
 - proto: PosterLegitSafetyInternals
   entities:
   - uid: 351
@@ -4321,7 +4321,7 @@ entities:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
-      pos: 6.5175743,-3.3569915
+      pos: 6.5,-3.5
 - proto: PosterLegitScience
   entities:
   - uid: 348
@@ -4329,7 +4329,7 @@ entities:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
-      pos: -4.598712,-4.6862397
+      pos: -4.5,-4.5
 - proto: PottedPlantBioluminscent
   entities:
   - uid: 356
@@ -4717,26 +4717,26 @@ entities:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
-      pos: -4.5,0.35
+      pos: -4.5,0.5
 - proto: SignScience
   entities:
   - uid: 467
     components:
     - type: Transform
       parent: 1
-      pos: -1.5797484,-9.469645
+      pos: -1.5,-9.5
 - proto: SignSecureSmallRed
   entities:
   - uid: 392
     components:
     - type: Transform
       parent: 1
-      pos: -1.5,-6.75
+      pos: -1.5,-6.5
   - uid: 393
     components:
     - type: Transform
       parent: 1
-      pos: 6.5,-8.25
+      pos: 6.5,-8.5
 - proto: SMESBasic
   entities:
   - uid: 394
