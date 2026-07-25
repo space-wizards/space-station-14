@@ -83,7 +83,7 @@
       - id: ClothingOuterHardsuitPirateCap
       - id: OxygenTankFilled
       - id: ClothingMaskGas
-      - id: ClothingHandsGlovesColorYellowBudget
+      - id: ClothingHandsGlovesColorYellow
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -97,7 +97,7 @@
       - id: ClothingOuterHardsuitPirateEVA
       - id: OxygenTankFilled
       - id: ClothingMaskGas
-      - id: ClothingHandsGlovesColorYellowBudget
+      - id: ClothingHandsGlovesColorYellow
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedical

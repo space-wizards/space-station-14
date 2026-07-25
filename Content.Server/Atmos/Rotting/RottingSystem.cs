@@ -8,6 +8,7 @@ using Content.Shared.Temperature.Components;
 using Robust.Server.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Content.Shared.DeadSpace.Virus.Components; // DS14
 
 namespace Content.Server.Atmos.Rotting;
 
@@ -55,6 +56,11 @@ public sealed class RottingSystem : SharedRottingSystem
     /// <returns></returns>
     private float GetRotRate(EntityUid uid)
     {
+        // DS14-start
+        if (TryComp<RotAccelerationComponent>(uid, out var rotAccel))
+            return rotAccel.DecayMultiplier;
+        // DS14-end
+
         if (_container.TryGetContainingContainer((uid, null, null), out var container) &&
             TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
         {

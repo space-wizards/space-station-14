@@ -606,3 +606,133 @@
     radius: 1.5
     energy: 1.6
     color: "#8B0000"
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanDiagnoserConsole
+  name: консоль диагноста заболеваний
+  description: Центральный элемент системы вирусологии, величайшего достижения медицины. В нём множество портов и проводов.
+  components:
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: diagnoser
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+      state: generic_panel_open
+  - type: Computer
+    board: ComputerTaipanDiagnoserConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: DeviceLinkSource
+    range: 50
+    ports:
+      - VirusDiagnoserSender
+      - VirusDiagnoserDataServerSender
+      - VirusSolutionAnalyzerSender
+  - type: ActivatableUI
+    key: enum.VirusDiagnoserConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.VirusDiagnoserConsoleUiKey.Key:
+          type: VirusDiagnoserConsoleBoundUserInterface
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Tag
+    tags:
+    - Taipan
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: VirusDiagnoserConsole
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access:
+    - - TaipanResearchDirector
+    - - TaipanMedical
+    - - TaipanCommunicationsOfficer
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerTaipanVirusEvolutionConsole
+  name: консоль эволюции заболеваний
+  description: Элемент системы вирусологии, для модификации вирусных заболеваний. В нём множество портов и проводов.
+  components:
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: diagnoser2
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+      state: generic_panel_open
+  - type: Computer
+    board: ComputerTaipanVirusEvolutionConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: DeviceLinkSource
+    range: 50
+    ports:
+      - VirusDiagnoserDataServerSender
+      - VirusSolutionAnalyzerSender
+  - type: ActivatableUI
+    key: enum.VirusEvolutionConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+        enum.VirusEvolutionConsoleUiKey.Key:
+          type: VirusEvolutionConsoleBoundUserInterface
+  - type: Tag
+    tags:
+    - Taipan
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: VirusEvolutionConsole
+    isTaipan: true
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access:
+    - - TaipanResearchDirector
+    - - TaipanMedical
+    - - TaipanCommunicationsOfficer
+
+- type: entity
+  id: VirusDataServerTaipan
+  parent: VirusDataServer
+  name: сервер данных вирусологии
+  description: Получает и передает информацию об известных вирусах станции.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/server.rsi
+  - type: Machine
+    board: ComputerTaipanDiagnoserDataServerCircuitboard
+  - type: Tag
+    tags:
+    - Taipan

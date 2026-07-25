@@ -166,9 +166,23 @@ public sealed class SentientVirusSystem : EntitySystem
                         || component.Data == null)
                         return;
 
+                    if (!VirusSystem.CanAddSymptom(
+                            component.Data.ActiveSymptom,
+                            args.Symptom,
+                            proto,
+                            isTaipan: false))
+                        return;
+
                     var price = _virusSystem.GetSymptomPrice(component.Data, proto);
                     if (component.Data.MutationPoints < price)
                         return;
+
+                    if (proto.RequiredSymptom != null)
+                    {
+                        component.Data.ActiveSymptom.Remove(proto.RequiredSymptom.Value);
+                        var oldInstance = _virusSystem.CreateSymptomInstance(proto.RequiredSymptom.Value);
+                        oldInstance.ApplyDataEffect(component.Data, false);
+                    }
 
                     component.Data.MutationPoints -= price;
                     component.Data.ActiveSymptom.Add(args.Symptom);
@@ -405,7 +419,8 @@ public sealed class SentientVirusSystem : EntitySystem
             infectivity,
             infectedCount,
             pointsPerSecond,
-            isSentientVirus: true
+            isSentientVirus: true,
+            isTaipan: false
         );
     }
 }

@@ -162,22 +162,24 @@ public sealed class VirusMutationSystem : EntitySystem
         if (!Resolve(host, ref host.Comp2, false))
             return;
 
-        // список доступных симптомов = те, которых ещё нет в вирусе
-        var available = _allSymptomsCache
-            .Where(protoId =>
-            {
-                // возвращаем те, которых ещё нет
-                return !host.Comp2.Data.ActiveSymptom.Contains(protoId.Id);
-            })
-            .ToList();
-
-        if (available.Count == 0)
-            return;
-
         bool needRefresh = false;
 
         for (int i = 0; i < MutateAttempts; i++)
         {
+            var available = new List<ProtoId<VirusSymptomPrototype>>();
+            foreach (var protoId in _allSymptomsCache)
+            {
+                if (_prototype.TryIndex(protoId, out var candidate) &&
+                    VirusSystem.CanAddSymptom(
+                        host.Comp2.Data.ActiveSymptom,
+                        protoId,
+                        candidate,
+                        isTaipan: false))
+                {
+                    available.Add(protoId);
+                }
+            }
+
             if (available.Count == 0)
                 break;
 
@@ -199,7 +201,6 @@ public sealed class VirusMutationSystem : EntitySystem
                 $"ТекущиеСимптомы=[{string.Join(", ", host.Comp2.Data.ActiveSymptom)}]"
             );
 
-            available.RemoveAt(index); // удаляем выбранный симптом
             needRefresh = true;
         }
 

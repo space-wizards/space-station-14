@@ -11,7 +11,6 @@ game-preset-name-placeholder = Название пресета
 game-preset-type-rdm = РДМ
 game-preset-settings-window-title = Настройки пресетов
 game-preset-settings-enable-max-rdm-row = Ограничение РДМ подряд
-game-preset-settings-enable-max-rdm-day = Ограничение РДМ в день (WIP)
 game-preset-menu-button = Меню пресетов
 game-preset-window-title = Управление пресетами
 game-preset-vote-title = Следующий режим игры

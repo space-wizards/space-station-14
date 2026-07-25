@@ -173,6 +173,15 @@
       params:
         volume: -3
   - type: AmmoCounter
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_DeadSpace/Items/Handing/gun/ballistics/pistol/pistol_drop.ogg
 
 ## РПЛ-20
 - type: entity

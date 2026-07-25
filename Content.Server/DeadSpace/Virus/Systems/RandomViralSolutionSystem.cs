@@ -69,7 +69,8 @@ public sealed class RandomViralSolutionSystem : EntitySystem
             .EnumeratePrototypes<VirusSymptomPrototype>()
             .Where(proto =>
                 component.AllowedDangers.Contains(proto.DangerIndicator) &&
-                proto.DangerIndicator != DangerIndicatorSymptom.Cataclysm)
+                proto.DangerIndicator != DangerIndicatorSymptom.Cataclysm &&
+                !proto.TaipanOnly) // исключаем тайпановские симптомы
             .ToList();
 
         foreach (var danger in component.RequiredDangers)

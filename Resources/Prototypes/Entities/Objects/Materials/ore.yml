@@ -23,17 +23,6 @@
           - ItemMask
         restitution: 0.3
         friction: 0.2
-  #DS14-Start
-  - type: EmitSoundOnPickup
-    sound:
-      path: /Audio/_DeadSpace/Items/Handing/materials/glass_pickup.ogg
-  - type: EmitSoundOnDrop
-    sound:
-      path: /Audio/_DeadSpace/Items/Handing/materials/metal_drop.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/_DeadSpace/Items/Handing/materials/metal_drop.ogg
-  #DS14-End
 
 - type: entity
   parent: OreBase

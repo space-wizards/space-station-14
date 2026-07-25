@@ -33,5 +33,8 @@ public sealed partial class VirusEvolutionConsoleComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public bool SolutionAnalyzerInRange = true;
+
+    [DataField]
+    public bool IsTaipan = false;
 }
 

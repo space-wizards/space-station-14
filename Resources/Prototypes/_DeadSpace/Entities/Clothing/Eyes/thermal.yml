@@ -3,6 +3,7 @@
   id: ClothingEyesGlassesThermalVisor
   name: оптический тепловизор
   description: Тепловизор, который оснащён инфракрасными сенсорами для обнаружения живых существ по тепловым сигнатурам сквозь твёрдые преграды.
+  suffix: Термалы
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/thermal.rsi
@@ -44,6 +45,7 @@
   id: ClothingEyesGlassesThermalVisorExperimental
   name: экспериментальный оптический тепловизор
   description: Прототип тепловизора с ограниченным временем работы.
+  suffix: Термалы
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/thermal_experimental.rsi

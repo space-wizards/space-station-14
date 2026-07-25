@@ -43,7 +43,9 @@
   symptomType: Necrosis
   danger: High
   price: 800
-  
+  blockedBySymptoms:
+    - EnhancedNecrosisSymptom
+
 - type: virusSymptom
   id: ZombificationSymptom
   name: зомби
@@ -51,6 +53,8 @@
   symptomType: Zombification
   danger: Cataclysm
   price: 3000
+  blockedBySymptoms:
+    - NecromutationSymptom
 
 - type: virusSymptom
   id: LowComplexityChangeSymptom
@@ -189,3 +193,60 @@
   danger: High
   price: 700
 
+- type: virusSymptom
+  id: PartialParalysisSymptom
+  name: частичный паралич
+  description: замедляет носителя.
+  symptomType: PartialParalysis
+  danger: Medium
+  price: 500
+  minInterval: 10
+  maxInterval: 30
+  taipanOnly: true
+
+- type: virusSymptom
+  id: RespiratoryFailureSymptom
+  name: отказ дыхательной системы
+  description: лёгкие перестают нормально функционировать, вызывая кислородное голодание.
+  symptomType: RespiratoryFailure
+  danger: High
+  minInterval: 2.5
+  maxInterval: 2.5
+  price: 1000
+  taipanOnly: true
+
+- type: virusSymptom
+  id: VascularRuptureSymptom
+  name: разрыв сосудов
+  description: вызывает внутреннее кровотечение.
+  symptomType: VascularRupture
+  danger: High
+  minInterval: 5
+  maxInterval: 5
+  price: 900
+  taipanOnly: true
+
+- type: virusSymptom
+  id: EnhancedNecrosisSymptom
+  name: усиленный некроз
+  description: усиленная версия некроза, ускоряет разложение после смерти.
+  symptomType: EnhancedNecrosis
+  danger: Cataclysm
+  minInterval: 8
+  maxInterval: 12
+  price: 1800
+  requiredSymptom: NecrosisSymptom
+  taipanOnly: true
+
+- type: virusSymptom
+  id: NecromutationSymptom
+  name: некромутации
+  description: превращает носителя в некроморфа.
+  symptomType: Necromutation
+  danger: Cataclysm
+  minInterval: 40
+  maxInterval: 40
+  price: 3000
+  blockedBySymptoms:
+    - ZombificationSymptom
+  taipanOnly: true

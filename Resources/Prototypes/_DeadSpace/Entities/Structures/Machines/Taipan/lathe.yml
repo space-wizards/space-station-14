@@ -185,6 +185,7 @@
     - SalvageSecurityBoards
     - SecurityBoards
     - TaipanCloning
+    - TaipanVirologyBoards
   - type: MaterialStorage
     whitelist:
       tags:

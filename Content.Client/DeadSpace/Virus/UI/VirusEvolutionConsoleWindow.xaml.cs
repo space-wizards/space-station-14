@@ -1,5 +1,6 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 
+using System.Linq;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.DeadSpace.Virus.Prototypes;
 using Content.Shared.DeadSpace.Virus;
@@ -178,7 +179,17 @@ public sealed partial class VirusEvolutionConsoleWindow : DefaultWindow
                 if (state.ActiveSymptoms.Contains(proto.ID))
                     continue;
 
-                if (proto.DangerIndicator == DangerIndicatorSymptom.Cataclysm)
+                if (!state.IsTaipan && proto.DangerIndicator == DangerIndicatorSymptom.Cataclysm)
+                    continue;
+
+                if (proto.TaipanOnly && !state.IsTaipan)
+                    continue;
+
+                if (proto.RequiredSymptom != null &&
+                    !state.ActiveSymptoms.Contains(proto.RequiredSymptom.Value))
+                    continue;
+
+                if (proto.BlockedBySymptoms.Any(blocked => state.ActiveSymptoms.Contains(blocked)))
                     continue;
 
                 var price = virusSystem.GetSymptomPrice(state.ActiveSymptoms, proto.ID);

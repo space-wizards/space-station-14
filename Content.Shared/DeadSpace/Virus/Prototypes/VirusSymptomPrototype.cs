@@ -52,6 +52,15 @@ public sealed partial class VirusSymptomPrototype : IPrototype
     /// </summary>
     [DataField]
     public float MaxInterval = 60f;
+
+    [DataField]
+    public bool TaipanOnly = false;
+
+    [DataField]
+    public ProtoId<VirusSymptomPrototype>? RequiredSymptom = null;
+
+    [DataField]
+    public List<ProtoId<VirusSymptomPrototype>> BlockedBySymptoms = new();
 }
 
 public enum DangerIndicatorSymptom

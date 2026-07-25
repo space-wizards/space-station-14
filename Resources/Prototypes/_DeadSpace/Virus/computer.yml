@@ -71,3 +71,42 @@
     stackRequirements:
       Steel: 1
       Cable: 2
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerTaipanDiagnoserConsoleCircuitboard
+  name: машинная плата консоли диагноста заболеваний
+  description: Компьютерная печатная плата для консоли диагноста заболеваний.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Misc/module.rsi
+      state: cpu_syndicate
+    - type: ComputerBoard
+      prototype: ComputerTaipanDiagnoserConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerTaipanVirusEvolutionConsoleCircuitboard
+  name: машинная плата консоли эволюции вирусов
+  description: Компьютерная печатная плата для консоли эволюции вирусов.
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Misc/module.rsi
+      state: cpu_syndicate
+    - type: ComputerBoard
+      prototype: ComputerTaipanVirusEvolutionConsole
+
+- type: entity
+  id: ComputerTaipanDiagnoserDataServerCircuitboard
+  parent: BaseMachineCircuitboard
+  name: машинная плата сервера данных диагноста заболеваний
+  description: омпьютерная печатная плата для сервера данных диагноста заболеваний.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/module.rsi
+    state: syndicate
+  - type: MachineBoard
+    prototype: VirusDataServerTaipan
+    stackRequirements:
+      Steel: 1
+      Cable: 2

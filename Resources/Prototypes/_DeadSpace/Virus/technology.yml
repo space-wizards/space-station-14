@@ -15,3 +15,6 @@
   - ComputerDiagnoserDataServerCircuitboardRecipe
   - ComputerVirusEvolutionConsoleCircuitboardRecipe
   - VirusSolutionAnalyzerMachineCircuitboardRecipe
+  - ComputerTaipanDiagnoserConsoleCircuitboardRecipe
+  - ComputerTaipanDiagnoserDataServerCircuitboardRecipe
+  - ComputerTaipanVirusEvolutionConsoleCircuitboardRecipe

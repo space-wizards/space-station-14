@@ -27,6 +27,7 @@ public sealed class VirusEvolutionConsoleBoundUserInterfaceState : BoundUserInte
     public float Infectivity { get; }
     public int InfectedCount { get; }
     public int PointsPerSecond { get; }
+    public bool IsTaipan { get; }
 
     public VirusEvolutionConsoleBoundUserInterfaceState(
         int mutationPoints,
@@ -43,7 +44,8 @@ public sealed class VirusEvolutionConsoleBoundUserInterfaceState : BoundUserInte
         int infectedCount = 0,
         int pointsPerSecond = 0,
         bool isSentientVirus = false,
-        VirusSolutionAnalyzerStatus solutionAnalyzerStatus = VirusSolutionAnalyzerStatus.Off)
+        VirusSolutionAnalyzerStatus solutionAnalyzerStatus = VirusSolutionAnalyzerStatus.Off,
+        bool isTaipan = false)
     {
         MutationPoints = mutationPoints;
         MultiPriceDeleteSymptom = multyPriceDeleteSymptom;
@@ -61,6 +63,7 @@ public sealed class VirusEvolutionConsoleBoundUserInterfaceState : BoundUserInte
         InfectedCount = infectedCount;
         PointsPerSecond = pointsPerSecond;
         IsSentientVirus = isSentientVirus;
+        IsTaipan = isTaipan;
     }
 }
 

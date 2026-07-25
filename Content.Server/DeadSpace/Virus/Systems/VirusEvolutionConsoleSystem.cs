@@ -82,16 +82,23 @@ public sealed class VirusEvolutionConsoleSystem : EntitySystem
             case EvolutionConsoleUiButton.EvolutionSymptom:
                 {
                     if (args.Symptom == null
-                        || !_prototypeManager.TryIndex<VirusSymptomPrototype>(args.Symptom, out _)
+                        || !_prototypeManager.TryIndex<VirusSymptomPrototype>(args.Symptom, out var symptomProto)
                         || virusData == null)
                         return;
 
-                    if (virusData.ActiveSymptom.Contains(args.Symptom))
+                    if (!VirusSystem.CanAddSymptom(
+                            virusData.ActiveSymptom,
+                            args.Symptom,
+                            symptomProto,
+                            component.IsTaipan))
                         return;
 
                     var price = _virusSystem.GetSymptomPrice(virusData, args.Symptom);
                     if (server.Points < price)
                         return;
+
+                    if (symptomProto.RequiredSymptom != null)
+                        _virusSolutionAnalyzer.RemSymptom((component.VirusSolutionAnalyzer.Value, analyzer), symptomProto.RequiredSymptom.Value);
 
                     if (!_virusSolutionAnalyzer.AddSymptom((component.VirusSolutionAnalyzer.Value, analyzer), args.Symptom))
                         return;
@@ -333,7 +340,8 @@ public sealed class VirusEvolutionConsoleSystem : EntitySystem
             virusData?.ActiveSymptom,
             virusData?.BodyWhitelist,
             isSentientVirus: false,
-            solutionAnalyzerStatus: solutionAnalyzerStatus
+            solutionAnalyzerStatus: solutionAnalyzerStatus,
+            isTaipan: console.Comp.IsTaipan
         );
     }
 

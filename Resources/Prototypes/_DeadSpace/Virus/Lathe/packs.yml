@@ -7,3 +7,12 @@
   - DiagnoserMachineCircuitboardRecipe
   - ComputerVirusEvolutionConsoleCircuitboardRecipe
   - VirusSolutionAnalyzerMachineCircuitboardRecipe
+
+- type: latheRecipePack
+  id: TaipanVirologyBoards
+  recipes:
+  - ComputerTaipanDiagnoserConsoleCircuitboardRecipe
+  - ComputerTaipanDiagnoserDataServerCircuitboardRecipe
+  - DiagnoserMachineCircuitboardRecipe
+  - ComputerTaipanVirusEvolutionConsoleCircuitboardRecipe
+  - VirusSolutionAnalyzerMachineCircuitboardRecipe

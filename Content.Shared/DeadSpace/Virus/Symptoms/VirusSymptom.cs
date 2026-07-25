@@ -26,5 +26,10 @@ public enum VirusSymptom
     NeuroSpike,
     VocalDisruption,
     Blindable,
-    ParalyzedLegs
+    ParalyzedLegs,
+    PartialParalysis,
+    RespiratoryFailure,
+    VascularRupture,
+    EnhancedNecrosis,
+    Necromutation
 }

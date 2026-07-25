@@ -324,7 +324,8 @@ public sealed class VirusSolutionAnalyzerSystem : EntitySystem
         if (!Resolve(console, ref console.Comp, false))
             return false;
 
-        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On)
+        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On &&
+            console.Comp.Status != VirusSolutionAnalyzerStatus.Successfully)
             return false;
 
         if (!_prototypeManager.HasIndex<VirusSymptomPrototype>(symptom))
@@ -351,7 +352,8 @@ public sealed class VirusSolutionAnalyzerSystem : EntitySystem
         if (!Resolve(console, ref console.Comp, false))
             return false;
 
-        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On)
+        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On &&
+            console.Comp.Status != VirusSolutionAnalyzerStatus.Successfully)
             return false;
 
         if (!_prototypeManager.HasIndex<BodyPrototype>(body))
@@ -378,7 +380,8 @@ public sealed class VirusSolutionAnalyzerSystem : EntitySystem
         if (!Resolve(console, ref console.Comp, false))
             return false;
 
-        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On)
+        if (console.Comp.Status != VirusSolutionAnalyzerStatus.On &&
+            console.Comp.Status != VirusSolutionAnalyzerStatus.Successfully)
             return false;
 
         if (!_prototypeManager.HasIndex<VirusSymptomPrototype>(symptom))

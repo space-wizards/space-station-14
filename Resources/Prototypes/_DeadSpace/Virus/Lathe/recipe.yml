@@ -22,3 +22,18 @@
   parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
   id: VirusSolutionAnalyzerMachineCircuitboardRecipe
   result: VirusSolutionAnalyzerMachineCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: ComputerTaipanDiagnoserConsoleCircuitboardRecipe
+  result: ComputerTaipanDiagnoserConsoleCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: ComputerTaipanVirusEvolutionConsoleCircuitboardRecipe
+  result: ComputerTaipanVirusEvolutionConsoleCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: ComputerTaipanDiagnoserDataServerCircuitboardRecipe
+  result: ComputerTaipanDiagnoserDataServerCircuitboard
