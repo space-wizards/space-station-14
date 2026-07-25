@@ -21,7 +21,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Tools.Systems;
 
-public sealed partial class ToolRefinablSystem : EntitySystem
+public sealed partial class ToolRefinableSystem : EntitySystem
 {
     [Dependency] private SharedToolSystem _toolSystem = default!;
     [Dependency] private GibbingSystem _gib = default!;

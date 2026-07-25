@@ -17,7 +17,8 @@
   - type: ChangelingDevour
   - type: ChangelingIdentity
   - type: ChangelingTransform
-  - type: ChangelingResilience
+  - type: DestructionResistance
+  - type: RevolutionaryImmune
   - type: ZombieImmune
   - type: ActionGrant
     actions:
